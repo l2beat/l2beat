@@ -1,3 +1,144 @@
+Generated with discovered.json: 0x1738944701c59394d29ef8fa043bb1804af34400
+
+# Diff at Mon, 21 Oct 2024 11:09:39 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20675893
+- current block number: 20675893
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20675893 (main branch discovery), not current.
+
+```diff
+    contract MainchainBridgeManager (0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0x0ac26945032143f6196d4bb5Ae03592BfAf822FD"]
+      values.$pastUpgrades.2.1:
+-        ["0x0ac26945032143f6196d4bb5Ae03592BfAf822FD"]
++        "0xa88f4f7faf165a2053d9b4d818f0066d5962357ee4ee87b63f000e3082bd6456"
+      values.$pastUpgrades.1.2:
++        ["0x3BA040BC32352E2dC21f9A85C5573E84696a74Dd"]
+      values.$pastUpgrades.1.1:
+-        ["0x3BA040BC32352E2dC21f9A85C5573E84696a74Dd"]
++        "0xb87845e4e3a93dd8add11bc2d20a94056f3a034277717f90f127b782f9bd1f21"
+      values.$pastUpgrades.0.2:
++        ["0x0ac26945032143f6196d4bb5Ae03592BfAf822FD"]
+      values.$pastUpgrades.0.1:
+-        ["0x0ac26945032143f6196d4bb5Ae03592BfAf822FD"]
++        "0xc27c133224cfdedc302afcc3ee36878f6cd706edd2d84d7933911ca5703e6f3c"
+    }
+```
+
+```diff
+    contract MainchainGateway (0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08) {
+    +++ description: None
+      values.$pastUpgrades.5.2:
++        ["0xD6c4986bbe09f2dDb262B4611b0BA06891be605e"]
+      values.$pastUpgrades.5.1:
+-        ["0xD6c4986bbe09f2dDb262B4611b0BA06891be605e"]
++        "0x167c741a87278fa0a50f0ed15e89edd1d05ed43a5808476e564347f1d34f784d"
+      values.$pastUpgrades.4.2:
++        ["0xfc274EC92bBb1A1472884558d1B5CaaC6F8220Ee"]
+      values.$pastUpgrades.4.1:
+-        ["0xfc274EC92bBb1A1472884558d1B5CaaC6F8220Ee"]
++        "0x855dd3b1194e3b889f4667b6a0996220e350e034d35d3eab29b4f23bc205767e"
+      values.$pastUpgrades.3.2:
++        ["0x72E28A9009Ad12dE019BFF418CD210D4bbc3D403"]
+      values.$pastUpgrades.3.1:
+-        ["0x72E28A9009Ad12dE019BFF418CD210D4bbc3D403"]
++        "0xbbbeadcbf7df225dfef18cb3add0f29cbd2e90921acb7a3851b3a250832d12fe"
+      values.$pastUpgrades.2.2:
++        ["0xa67BA5315AF4961Eb937158032AF9300C657dAcD"]
+      values.$pastUpgrades.2.1:
+-        ["0xa67BA5315AF4961Eb937158032AF9300C657dAcD"]
++        "0xa090f035d1895ab7b69fc72303e122d0c565becf9c6c684ecf7257c0311233af"
+      values.$pastUpgrades.1.2:
++        ["0x71356E37e0368Bd10bFDbF41dC052fE5FA24cD05"]
+      values.$pastUpgrades.1.1:
+-        ["0x71356E37e0368Bd10bFDbF41dC052fE5FA24cD05"]
++        "0xbb60c9f020bd6f9c6737b28290f75272d2090f529d8450deafdf5d675fa8bcc0"
+      values.$pastUpgrades.0.2:
++        ["0x2DBA725f0a3485382a7F125a31cBF4361539aF73"]
+      values.$pastUpgrades.0.1:
+-        ["0x2DBA725f0a3485382a7F125a31cBF4361539aF73"]
++        "0x8f2924a52e63564c9cb0b119d72dc8290daa39c59cbe02e7f1ab6b2160ac9aa4"
+    }
+```
+
+Generated with discovered.json: 0xd86849f639eaaf1fac5d07ed08c2f078676b4588
+
+# Diff at Mon, 14 Oct 2024 10:55:09 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20675893
+- current block number: 20675893
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20675893 (main branch discovery), not current.
+
+```diff
+    contract MainchainBridgeManager (0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB) {
+    +++ description: None
+      sourceHashes:
++        ["0x33cd2cf791b018347e2c994f787d0a24c830435bccfe913456ab337de909570e","0xb95d73d375b1e25c5ddb15cbfa79b70a14b58ce1467a12bd841a4f59b063e2f9"]
+    }
+```
+
+```diff
+    contract RoninManagerMultiSig (0x2DA02aC5f19Ae362a4121718d990e655eB628D96) {
+    +++ description: None
+      sourceHashes:
++        ["0x34de320a4a2a66cb410c0b6b04558c98586ea66fe69b35df6ee3ff7816eae03b"]
+    }
+```
+
+```diff
+    contract RoninAdminMultisig (0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract MainchainGateway (0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08) {
+    +++ description: None
+      sourceHashes:
++        ["0xdf743526ddd44d53db1ae516488019ca52e6b6434e33ad8fbd5b060c138653a2","0x2d39ee54cf7dc52198aeac3324e8b8034b0d5db06ad5192305aaa80c1e10fca6"]
+    }
+```
+
+```diff
+    contract WETH9 (0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2) {
+    +++ description: None
+      sourceHashes:
++        ["0xec8c1fea9a5a10c4c028664a56d678a0776b07cfc510fc7fa54db0aed0978f49"]
+    }
+```
+
+```diff
+    contract PauseEnforcer (0xe514d9DEB7966c8BE0ca922de8a064264eA6bcd4) {
+    +++ description: None
+      sourceHashes:
++        ["0x38ea3c443d8341f4b59ebeae4d05a6064ff361f2f672ae8e49e2a96514a2261d"]
+    }
+```
+
 Generated with discovered.json: 0xccfeb558d600b03e7888e1cb5d794c0e03e59e11
 
 # Diff at Tue, 01 Oct 2024 10:54:44 GMT:

@@ -99,18 +99,6 @@ describe('layer3s', () => {
     })
   })
 
-  describe('every purpose is short', () => {
-    const purposes = layer3s.map((x) => x.display.purposes)
-    for (const purpose of purposes) {
-      const totalLength = purpose.reduce((acc, curr) => {
-        return acc + curr.length
-      }, 0)
-      it(purpose.join(', '), () => {
-        expect(totalLength).toBeLessThanOrEqual(20)
-      })
-    }
-  })
-
   describe('milestones', () => {
     describe('knowledgeNuggets', () => {
       const knowledgeNuggets = layer3s.flatMap(
@@ -167,6 +155,17 @@ describe('layer3s', () => {
       if (layer3.isUpcoming) {
         it(layer3.display.name, () => {
           expect(layer3.createdAt).not.toEqual(undefined)
+        })
+      }
+    }
+  })
+
+  describe('other category projects have proposer and challenger', () => {
+    for (const layer3 of layer3s) {
+      if (layer3.display.category === 'Other') {
+        it(layer3.display.name, () => {
+          expect(layer3.display.proposer).not.toEqual(undefined)
+          expect(layer3.display.challenger).not.toEqual(undefined)
         })
       }
     }

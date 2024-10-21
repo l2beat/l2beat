@@ -10,11 +10,11 @@ const discovery = new ProjectDiscovery('mint')
 export const mint: Layer2 = opStackL2({
   discovery,
   badges: [Badge.RaaS.Conduit],
+  additionalPurposes: ['NFT'],
   display: {
     name: 'Mint',
     slug: 'mint',
     description: 'Mint Blockchain is a Layer 2 network for NFTs.',
-    purposes: ['Universal', 'NFT'],
     links: {
       websites: ['https://mintchain.io/'],
       apps: ['https://bridge.mintchain.io/', 'https://mintchain.io/faucet'],

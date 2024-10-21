@@ -1,3 +1,112 @@
+Generated with discovered.json: 0xea3f7c2806fa7839f02a3571fa55666579be6259
+
+# Diff at Mon, 21 Oct 2024 11:15:48 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 8983528
+- current block number: 8983528
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 8983528 (main branch discovery), not current.
+
+```diff
+    contract zkLink (0x119B9459D9119D07c23aD06778AeaBec804Fd1a2) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D"]
+      values.$pastUpgrades.0.1:
+-        ["0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D"]
++        "0x9d2ffc640100c25deacf7308dafb540b000bfc8a3d6fa8dab19ec9150ce38434"
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x067c7126a83560Ed2Fc345d25799F696B7Ea47Ca"]
+      values.$pastUpgrades.0.1:
+-        ["0x067c7126a83560Ed2Fc345d25799F696B7Ea47Ca"]
++        "0xd2775129688587d97fff37813acd0581f68fdfe7f1a52b36a779e4ef9021c3fe"
+    }
+```
+
+```diff
+    contract ScrollL2Gateway (0xd8428A59B60Df2d81514D429D57DF23293f1bCe7) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xe469c1330cEEcC375fE17E7D649eA270186D344F"]
+      values.$pastUpgrades.0.1:
+-        ["0xe469c1330cEEcC375fE17E7D649eA270186D344F"]
++        "0xa45f6d61d7c5c041f10950e9448a39a9fbf490d2fcb3155ff9add77b43cfc0c6"
+    }
+```
+
+Generated with discovered.json: 0x76d5dfc642bb70b37911e7a89e73b36f5d6b639e
+
+# Diff at Mon, 14 Oct 2024 11:01:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 8983528
+- current block number: 8983528
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 8983528 (main branch discovery), not current.
+
+```diff
+    contract zkLink (0x119B9459D9119D07c23aD06778AeaBec804Fd1a2) {
+    +++ description: None
+      sourceHashes:
++        ["0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6","0xcbd3207b9109e4f409b0253248655dee17cc83299a5e19d4d7c8bdc792b30008"]
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c) {
+    +++ description: None
+      sourceHashes:
++        ["0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8","0xd57c5157a667afc64df8bc542f1eb01744f7d6b961e031361d442aac61b7d5a0"]
+    }
+```
+
+```diff
+    contract ScrollProxyAdmin (0xC4673dAbfAf04D2A430e244B63F040D27199102f) {
+    +++ description: None
+      sourceHashes:
++        ["0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"]
+    }
+```
+
+```diff
+    contract ScrollL2Gateway (0xd8428A59B60Df2d81514D429D57DF23293f1bCe7) {
+    +++ description: None
+      sourceHashes:
++        ["0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6","0x3712da36508b3467318e72889e31c55c8421214be5ff058dba1d8a7cd33b4f9b"]
+    }
+```
+
+```diff
+    contract AdminMultisig (0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"]
+    }
+```
+
 Generated with discovered.json: 0x0207862695d7aed5e6c12dd54a711aa774318bb9
 
 # Diff at Tue, 01 Oct 2024 11:14:48 GMT:

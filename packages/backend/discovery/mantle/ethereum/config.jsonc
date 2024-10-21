@@ -40,13 +40,13 @@
       "extends": "opstack/AddressManager" // shape does not work (tofix)
     },
     "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83": {
-      "extends": "opstack/ProxyAdmin" // shape does not work (tofix)
+      "extends": "global/ProxyAdmin" // shape does not work (tofix)
     },
     "0x47D58744D8515d9aaEAf961bc03625118bd91EBb": {
-      "extends": "opstack/ProxyAdmin" // shape does not work (tofix)
+      "extends": "global/ProxyAdmin" // shape does not work (tofix)
     },
     "MantleTokenProxyAdmin": {
-      "extends": "opstack/ProxyAdmin" // shape does not work (tofix)
+      "extends": "global/ProxyAdmin" // shape does not work (tofix)
     },
     "InvestmentManager": {
       "description": "Contract managing different investment strategies, forked from EigenLayer StrategyManager."

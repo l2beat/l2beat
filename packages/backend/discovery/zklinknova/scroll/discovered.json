@@ -8,6 +8,10 @@
       "name": "zkLink",
       "address": "0x119B9459D9119D07c23aD06778AeaBec804Fd1a2",
       "template": "zklinknova/secondaryZkLink",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0xcbd3207b9109e4f409b0253248655dee17cc83299a5e19d4d7c8bdc792b30008"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -31,6 +35,7 @@
         "$pastUpgrades": [
           [
             "2024-06-10T07:26:01.000Z",
+            "0x9d2ffc640100c25deacf7308dafb540b000bfc8a3d6fa8dab19ec9150ce38434",
             ["0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D"]
           ]
         ],
@@ -65,6 +70,10 @@
     {
       "name": "L1ERC20Bridge",
       "address": "0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
+      "sourceHashes": [
+        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8",
+        "0xd57c5157a667afc64df8bc542f1eb01744f7d6b961e031361d442aac61b7d5a0"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -80,6 +89,7 @@
         "$pastUpgrades": [
           [
             "2024-06-10T13:41:17.000Z",
+            "0xd2775129688587d97fff37813acd0581f68fdfe7f1a52b36a779e4ef9021c3fe",
             ["0x067c7126a83560Ed2Fc345d25799F696B7Ea47Ca"]
           ]
         ],
@@ -93,6 +103,9 @@
     {
       "name": "ScrollProxyAdmin",
       "address": "0xC4673dAbfAf04D2A430e244B63F040D27199102f",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -111,6 +124,10 @@
       "name": "ScrollL2Gateway",
       "address": "0xd8428A59B60Df2d81514D429D57DF23293f1bCe7",
       "template": "zklinknova/secondaryGateway",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x3712da36508b3467318e72889e31c55c8421214be5ff058dba1d8a7cd33b4f9b"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -126,6 +143,7 @@
         "$pastUpgrades": [
           [
             "2024-06-10T07:30:34.000Z",
+            "0xa45f6d61d7c5c041f10950e9448a39a9fbf490d2fcb3155ff9add77b43cfc0c6",
             ["0xe469c1330cEEcC375fE17E7D649eA270186D344F"]
           ]
         ],
@@ -143,6 +161,10 @@
       "name": "AdminMultisig",
       "address": "0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
@@ -403,9 +425,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "zklinknova/secondaryGateway": "0xb8fdb3c993db014b3b0c1cdd56f21ecb1aac5dd63185bc3f87a6c0e45e9168c6",
     "zklinknova/secondaryZkLink": "0x3038879967ecfd740f8377d1280264034b6959ad28bea99ebcedd97c6127a904"
-  },
-  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
+  }
 }

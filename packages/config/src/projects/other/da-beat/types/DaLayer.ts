@@ -1,3 +1,5 @@
+import { ScalingProjectTechnologyChoice } from '../../../../common'
+import { DataAvailabilityLayer as ScalingDaLayerOption } from '../../../../common'
 import {
   DacBridge,
   EnshrinedBridge,
@@ -9,6 +11,7 @@ import { DaEconomicSecurity } from './DaEconomicSecurity'
 import { DaEconomicSecurityRisk } from './DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from './DaFraudDetectionRisk'
 import { DaLinks } from './DaLinks'
+import { DaTechnology } from './DaTechnology'
 import { DataAvailabilitySampling } from './DataAvailabilitySampling'
 import { UsedInProject } from './UsedInProject'
 
@@ -36,18 +39,26 @@ export type CommonDaLayer = {
   type: 'DaLayer'
   /** Unique identifier of the data availability layer. */
   id: string
+  /** Classification layers will be split based on */
+  systemCategory: 'public' | 'custom'
+  /** Whether given solution has challenge mechanism in place */
+  hasChallengeMechanism?: boolean
+  /** Fallback */
+  fallback?: ScalingDaLayerOption
   /** Display information for the data availability layer. */
   display: DaLayerDisplay
   /** Is the DA layer upcoming? */
   isUpcoming?: boolean
   /** Is the DA layer under review? */
   isUnderReview?: boolean
-  /** The technology used by the data availability layer. [MARKDOWN] */
-  technology: string
+  /** The technology used by the data availability layer. */
+  technology: DaTechnology
   /** List of projects given da layer is being used in. */
   usedIn: UsedInProject[]
   /** Risks associated with the data availability layer. */
   risks: DaLayerRisks
+  /** Other considerations */
+  otherConsiderations?: ScalingProjectTechnologyChoice[]
 }
 
 export type DaLayerRisks = {

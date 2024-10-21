@@ -1,3 +1,176 @@
+Generated with discovered.json: 0x7507918b819333a739f10230310aaf849c17cc74
+
+# Diff at Mon, 21 Oct 2024 11:07:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20059608
+- current block number: 20059608
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20059608 (main branch discovery), not current.
+
+```diff
+    contract ExchangeV3 (0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4) {
+    +++ description: None
+      values.$pastUpgrades.6.2:
++        ["0x26d8Ba776a067C5928841985bCe342f75BAE7E82"]
+      values.$pastUpgrades.6.1:
+-        ["0x26d8Ba776a067C5928841985bCe342f75BAE7E82"]
++        "0x0fa3763c4bd69cf9e77636b37b5b12c29f3b260d8e822ebe215b14c4602a716d"
+      values.$pastUpgrades.5.2:
++        ["0x3c294fCF74129d649325F8995afC2f9CfaFAB9dA"]
+      values.$pastUpgrades.5.1:
+-        ["0x3c294fCF74129d649325F8995afC2f9CfaFAB9dA"]
++        "0x2ccbfd61faf2015457ec43fab0324dca7d75091aba7423fe2990307bbfe32e22"
+      values.$pastUpgrades.4.2:
++        ["0x4fb117dcd6D09abF1a99B502d488A99F5a17e7eC"]
+      values.$pastUpgrades.4.1:
+-        ["0x4fb117dcd6D09abF1a99B502d488A99F5a17e7eC"]
++        "0xb54c93da349065cc82e2ef150f07319b2522709e8fe7acbcb5a5edfdcf46f2d6"
+      values.$pastUpgrades.3.2:
++        ["0xCFba78aecfBcc0B4B748fA58c530D4675BB5D32F"]
+      values.$pastUpgrades.3.1:
+-        ["0xCFba78aecfBcc0B4B748fA58c530D4675BB5D32F"]
++        "0x155d094b0d053837b4e252b69cb10c8157795274da1a9f4325519791c27bd294"
+      values.$pastUpgrades.2.2:
++        ["0x8c63D8E608fF702a92D5908730C91457b0447Ad7"]
+      values.$pastUpgrades.2.1:
+-        ["0x8c63D8E608fF702a92D5908730C91457b0447Ad7"]
++        "0xce34e9483ec139aa6628ed29279b80f163ba9094ce1a848cbe640e438ad2eb20"
+      values.$pastUpgrades.1.2:
++        ["0x2fefbeF4d1445F523941c56349C2414cd5e9675d"]
+      values.$pastUpgrades.1.1:
+-        ["0x2fefbeF4d1445F523941c56349C2414cd5e9675d"]
++        "0xcfbaf71a511297fd7bc1452e5b274c056ba5a3ddf271b59012eff877dd4351b9"
+      values.$pastUpgrades.0.2:
++        ["0xa01d4d1FE18A34902Ac2e4045a5e8f553dDe9685"]
+      values.$pastUpgrades.0.1:
+-        ["0xa01d4d1FE18A34902Ac2e4045a5e8f553dDe9685"]
++        "0xed8a952216607c164559f01d5f90066a7de65fdcc72146e71956865685a8eeab"
+    }
+```
+
+Generated with discovered.json: 0xf51b4b07999bb9f2a5e573a6a35edf7fafccbb26
+
+# Diff at Mon, 14 Oct 2024 10:52:39 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20059608
+- current block number: 20059608
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20059608 (main branch discovery), not current.
+
+```diff
+    contract ExchangeV3 (0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4) {
+    +++ description: None
+      sourceHashes:
++        ["0x09274cec6469e731822a31ef5a200ae33fc319aca366cf599f707b6359f97613","0x7e59ed579f658f2c8c645a1794f79626a3d8578e8700d19bbd866122f9dd9b8e"]
+    }
+```
+
+```diff
+    contract LoopringIOExchangeOwner (0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512) {
+    +++ description: None
+      sourceHashes:
++        ["0x854356c3464284cf48c4c2a41fbf7ed907ee1d2c43c5458f8600e8a002947277"]
+    }
+```
+
+```diff
+    contract AgentRegistry (0x39B9bf169a7e225ba037C443A40460c77438ea14) {
+    +++ description: None
+      sourceHashes:
++        ["0xf3a59d4207b07dcef7f7b28021c025bdf4aed5f887d551dd04964981d8fb14a6"]
+    }
+```
+
+```diff
+    contract ProtocolFeeVault (0x4b89f8996892d137c3dE1312d1dD4E4F4fFcA171) {
+    +++ description: None
+      sourceHashes:
++        ["0x1fccaeadbe094a36ba3c786c5a1a767db2b6f5a5a5c29354d11af915f72d3174"]
+    }
+```
+
+```diff
+    contract ForcedWithdrawalAgent (0x52ea1971C05B0169c02a0bBeC05Fe8b5E3A24470) {
+    +++ description: Auxiliary contract able to force withdrawals from L1 on behalf of users.
+      sourceHashes:
++        ["0xa8b1d474b6c7b4007833dea307178402243d15952eb22c992be9b107651cbc2f"]
+    }
+```
+
+```diff
+    contract BlockVerifier (0x6150343E0F43A17519c0327c41eDd9eBE88D01ef) {
+    +++ description: None
+      sourceHashes:
++        ["0x96312ffe5cf6781390d5f01454bb7545a2fc23abcb9e660842c19382a140f812"]
+    }
+```
+
+```diff
+    contract DefaultDepositContract (0x674bdf20A0F284D710BC40872100128e2d66Bd3f) {
+    +++ description: None
+      sourceHashes:
++        ["0x39433073646a8004de25a709c09d4ccff1dd95a2a125f6065c8cc6cb44c6c7b9"]
+    }
+```
+
+```diff
+    contract LRC_v2 (0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD) {
+    +++ description: None
+      sourceHashes:
++        ["0x4ffbbfe62c887a44eead8dc5c421a3021e88d97eafe47ba5e4ac69fee9b0421a"]
+    }
+```
+
+```diff
+    contract ProxyOwner (0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97) {
+    +++ description: None
+      sourceHashes:
++        ["0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract LoopringV3 (0xe56D6ccab6551932C0356E4e8d5dAF0630920C71) {
+    +++ description: None
+      sourceHashes:
++        ["0xf4fab34f6089e2323fbf6d585fe758509ffff5bfc8f1152a393b5a170cf28929"]
+    }
+```
+
+```diff
+    contract FastWithdrawalAgent (0xec3Cc6Cf0252565b56FC7AC396017Df5b9B78a31) {
+    +++ description: None
+      sourceHashes:
++        ["0x404f9c5448f8dc0d3026c67724fad6dadb0ce98afcb11ac23be4f3159db1e40a"]
+    }
+```
+
+```diff
+    contract UserStakingPool (0xF4662bB1C4831fD411a95b8050B3A5998d8A4A5b) {
+    +++ description: None
+      sourceHashes:
++        ["0x99d65209b6a37a5338021e870cb30cc131cd3d701c0b30fa072bbe3615d2c71f"]
+    }
+```
+
 Generated with discovered.json: 0xe20cbfd2d4f510ce90e334d0e76036e7d11b56c7
 
 # Diff at Tue, 01 Oct 2024 10:52:18 GMT:

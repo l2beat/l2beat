@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "worldchain",
+  "initialAddresses": [
+    "0xd5ec14a83B7d95BE1E2Ac12523e2dEE12Cbeea6C", // L1StandardBridge
+    "0x153A69e4bb6fEDBbAaF463CB982416316c84B2dB" // L1OpUSDCBridgeAdapter
+    // below contracts can be ignored because an old OptimismPortal and L2OutputOracle are used
+    // "0x1325C4966d17038C5592fb38416AeE85EE73c0cb", // AnchorStateRegistry
+    // "0x8eeF04eef96fef1050702453f75F0Fc4f8F70973", // ProtocolVersions
+    // "0xF9adF7c9502C5C60352C20a4d22683422DbD061F" // DelayedWETH
+  ],
+  "names": {
+    "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d": "WorldchainMultisig",
+    "0x153A69e4bb6fEDBbAaF463CB982416316c84B2dB": "L1OpUSDCBridgeAdapter"
+  },
+  "overrides": {
+    "L1OpUSDCBridgeAdapter": {
+      "displayName": "L1OpUSDCBridgeAdapter",
+      "description": "Custom external escrow for USDC bridged to Worldchain.",
+      "ignoreMethods": ["proxiableUUID"],
+      "ignoreRelatives": ["USDC", "LINKED_ADAPTER"]
+    },
+    "0xa231f8be37e583f276f93dF516D88a043bfe47E3": {
+      "extends": "opstack/SuperchainConfigFake" // manual because otherwise it matches the real superchain shape
+    }
+  }
+}

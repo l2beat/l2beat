@@ -1,0 +1,48 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "xchain",
+  "initialAddresses": [
+    "0xE961Ef06c26D0f032F0298c97C41e648d3bb715a" // Inbox
+  ],
+  "names": {
+    "0xeb61c3FA03544021cf76412eFb9D0Ce7D8c0290d": "RollupProxy",
+    "0x2Be65c5b58F78B02AB5c0e798A9ffC181703D3C1": "Bridge",
+    "0xC0880Eea7Ad1B28a39344D48B411bC96f3daf60D": "ChallengeManager",
+    "0x47861E0419BE83d0175818a09221B6DF2EFD7793": "SequencerInbox",
+    "0x0b8071337dcB089478Ea740efC10904d9F359141": "Outbox",
+    "0xE961Ef06c26D0f032F0298c97C41e648d3bb715a": "Inbox",
+    "0x20195677a6De5f0f7dF4e21cE48F0D24e5477110": "UpgradeExecutor"
+  },
+  "overrides": {
+    "ChallengeManager": {
+      "ignoreMethods": ["challenges"]
+    },
+    "RollupProxy": {
+      "extends": "orbitstack/RollupProxy"
+    },
+    "Outbox": {
+      "ignoreMethods": ["spent", "isSpent"]
+    },
+    "Bridge": {
+      "ignoreMethods": ["sequencerInboxAccs", "delayedInboxAccs"],
+      "ignoreInWatchMode": [
+        "delayedMessageCount",
+        "sequencerMessageCount",
+        "sequencerReportedSubMessageCount"
+      ]
+    },
+    "SequencerInbox": {
+      "extends": "orbitstack/SequencerInbox"
+    },
+    "UpgradeExecutor": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
+    }
+  }
+}

@@ -2,11 +2,14 @@
   "name": "alephzero",
   "chain": "ethereum",
   "blockNumber": 20942700,
-  "configHash": "0x7a197dfe956104571f5d68aabc2880fdbfe8da2aa50a67af3117e10f8634912a",
+  "configHash": "0xa8d729a638fa5ebd21aee68e17887ee33d6f58e181c5e3e9e6e71e0e1bf82779",
   "contracts": [
     {
       "name": "OneStepProverHostIo",
       "address": "0x17e7F68ce50A77e55C7834ddF31AEf86403B8010",
+      "sourceHashes": [
+        "0x5b0a5e16100b7e163dcf39dc6a9034f12a7bad7a475cdffc73054b937be0683d"
+      ],
       "sinceTimestamp": 1710413171,
       "values": { "$immutable": true }
     },
@@ -14,6 +17,11 @@
       "name": "RollupProxy",
       "address": "0x1CA12290D954CFe022323b6A6Df92113ed6b1C98",
       "template": "orbitstack/RollupProxy",
+      "sourceHashes": [
+        "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca",
+        "0x8b48118fe606012c0dcac2ccc1821785935aec89fab8f219f47b32c482b0017e",
+        "0xef94a66bd5339efd18fb9ca1f8031482e7ef7bbe6c5a0a10fae254ab83712406"
+      ],
       "proxyType": "Arbitrum proxy",
       "descriptions": [
         "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
@@ -22,6 +30,11 @@
         {
           "permission": "upgrade",
           "target": "0x830D41c5624EE982cddEd92Ba01DAB3a4856116f",
+          "via": []
+        },
+        {
+          "permission": "validate",
+          "target": "0x2b2566944f8ff8a256b39C6A36900991EC1fF3c6",
           "via": []
         }
       ],
@@ -40,6 +53,7 @@
         "$pastUpgrades": [
           [
             "2024-07-29T13:18:23.000Z",
+            "0x16528bf78b7d2110129529a7a0435a35b5443e3638f89fb2f917a7c92ef587b9",
             [
               "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A",
               "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"
@@ -131,12 +145,19 @@
     {
       "name": "ValidatorUtils",
       "address": "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
+      "sourceHashes": [
+        "0xd9b36ec321be937cc727b5bdb0afa0e1a0a28448ef1a202d4f181a01ce57bdc8"
+      ],
       "sinceTimestamp": 1701973151,
       "values": { "$immutable": true }
     },
     {
       "name": "Bridge",
       "address": "0x41Ec9456AB918f2aBA81F38c03Eb0B93b78E84d9",
+      "sourceHashes": [
+        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+        "0x057de68a7007d55f4394ba6eafb2c802efcaf13583ff9342ea4d0ee3924d9be1"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -157,6 +178,7 @@
         "$pastUpgrades": [
           [
             "2024-07-29T13:18:23.000Z",
+            "0x16528bf78b7d2110129529a7a0435a35b5443e3638f89fb2f917a7c92ef587b9",
             ["0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab"]
           ]
         ],
@@ -179,6 +201,10 @@
     {
       "name": "ERC20RollupEventInbox",
       "address": "0x4e008aEeA79Fcd5708A7b46CA1732dFAf2a25B7d",
+      "sourceHashes": [
+        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+        "0x88c3a2fa81cad2f98a156402c78de0fc804b2a1866ea4f449aa90ae92ceabc6c"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -194,6 +220,7 @@
         "$pastUpgrades": [
           [
             "2024-07-29T13:18:23.000Z",
+            "0x16528bf78b7d2110129529a7a0435a35b5443e3638f89fb2f917a7c92ef587b9",
             ["0x302275067251F5FcdB9359Bda735fD8f7A4A54c0"]
           ]
         ],
@@ -205,6 +232,10 @@
     {
       "name": "Inbox",
       "address": "0x56D8EC76a421063e1907503aDd3794c395256AEb",
+      "sourceHashes": [
+        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+        "0xcb390b491549387c8fcc09fb22fbea7adf54cc74b7247a0c738369ddd7049b92"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -220,6 +251,7 @@
         "$pastUpgrades": [
           [
             "2024-07-29T13:18:23.000Z",
+            "0x16528bf78b7d2110129529a7a0435a35b5443e3638f89fb2f917a7c92ef587b9",
             ["0x31fAAAB44e74eB408d1FC69A14806B4b9cA09da2"]
           ]
         ],
@@ -236,6 +268,9 @@
     {
       "name": "OneStepProofEntry",
       "address": "0x57EA090Ac0554d174AE0e2855B460e84A1A7C221",
+      "sourceHashes": [
+        "0xf3479c667d20b1c17ea2573dc7fe09e4315a3e20bc09d31bc92603520cc962cc"
+      ],
       "sinceTimestamp": 1710413183,
       "values": {
         "$immutable": true,
@@ -248,12 +283,19 @@
     {
       "name": "OneStepProver0",
       "address": "0x72B166070781a552D7b95a907eF59ca05d3D5a62",
+      "sourceHashes": [
+        "0x20330713abbbcf0219ef7d1c0aa3a6ede1b421f14c9d21b25c973e54fb75f5df"
+      ],
       "sinceTimestamp": 1710413135,
       "values": { "$immutable": true }
     },
     {
       "name": "Outbox",
       "address": "0x73bb50c32a3BD6A1032aa5cFeA048fBDA3D6aF6e",
+      "sourceHashes": [
+        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+        "0x3073f29910dee50069a001fb20e58cca3dcc1b3c8da4b91809af2dd356ef0c8c"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -269,6 +311,7 @@
         "$pastUpgrades": [
           [
             "2024-07-29T13:18:23.000Z",
+            "0x16528bf78b7d2110129529a7a0435a35b5443e3638f89fb2f917a7c92ef587b9",
             ["0x19431dc37098877486532250FB3158140717C00C"]
           ]
         ],
@@ -296,6 +339,9 @@
     {
       "name": "ProxyAdmin",
       "address": "0x80622fe04c5e1c3fbb3A9c62996dB27B53E9F77b",
+      "sourceHashes": [
+        "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -343,6 +389,10 @@
     {
       "name": "UpgradeExecutor",
       "address": "0x830D41c5624EE982cddEd92Ba01DAB3a4856116f",
+      "sourceHashes": [
+        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+        "0xa7ff878cfd433a428d567d3b90fe1df400a048a1af5298f22cd4cd4fc25bdecd"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -364,6 +414,7 @@
         "$pastUpgrades": [
           [
             "2024-07-29T13:18:23.000Z",
+            "0x16528bf78b7d2110129529a7a0435a35b5443e3638f89fb2f917a7c92ef587b9",
             ["0x6c21303F5986180B1394d2C89f3e883890E2867b"]
           ]
         ],
@@ -391,18 +442,27 @@
     {
       "name": "OneStepProverMemory",
       "address": "0x8b73Ef238ADaB31EBC7c05423d243c345241a22f",
+      "sourceHashes": [
+        "0x731b4466319a83c95ce227d1a6c85aa03864f5d2bed03bda186843033a8b8d61"
+      ],
       "sinceTimestamp": 1710413147,
       "values": { "$immutable": true }
     },
     {
       "name": "OneStepProverMath",
       "address": "0x90eC62De2EB7C7512a22bD2D55926AD6bA609F38",
+      "sourceHashes": [
+        "0xb2555ede3dfe7d6df28bd96d12a0113b658c213c7ce4e34fa539df7497bc51a1"
+      ],
       "sinceTimestamp": 1710413159,
       "values": { "$immutable": true }
     },
     {
       "name": "ValidatorWalletCreator",
       "address": "0x9CAd81628aB7D8e239F1A5B497313341578c5F71",
+      "sourceHashes": [
+        "0x4ef3473c840bed3b4c6258271a494794c1545f0d0f13c6a386d1e39e6180d67c"
+      ],
       "sinceTimestamp": 1701973211,
       "values": {
         "$immutable": true,
@@ -413,6 +473,10 @@
     {
       "name": "ChallengeManager",
       "address": "0xb9e6987d1E0936b93f512bC89632E15DcA706d87",
+      "sourceHashes": [
+        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+        "0x58a6261c83c2766f749641902ad6fdb695ea189d2747f073b57a8f35b9a547e5"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -428,6 +492,7 @@
         "$pastUpgrades": [
           [
             "2024-07-29T13:18:23.000Z",
+            "0x16528bf78b7d2110129529a7a0435a35b5443e3638f89fb2f917a7c92ef587b9",
             ["0x1D901DD7A5eFE421C3C437B147040E5AF22E6A43"]
           ]
         ],
@@ -443,6 +508,10 @@
     {
       "name": "L1OrbitERC20Gateway",
       "address": "0xccaF21F002EAF230c9Fa810B34837a3739B70F7B",
+      "sourceHashes": [
+        "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
+        "0x17c9d8bf5017982cb88ab1d4f22a085c097ab9c7a910fa109fe9e7204840bef8"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -458,6 +527,7 @@
         "$pastUpgrades": [
           [
             "2024-07-29T13:59:35.000Z",
+            "0x7d95b8115b846835b6da60e35cc04647b957e35301e9cb72b1d148b26acac93a",
             ["0xe80b4E0ed5e92d865F4708eeE0E1564287a7D848"]
           ]
         ],
@@ -473,6 +543,10 @@
     {
       "name": "L1OrbitGatewayRouter",
       "address": "0xeBb17f398ed30d02F2e8733e7c1e5cf566e17812",
+      "sourceHashes": [
+        "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
+        "0x33422e0ac90902db5dad442b006c9df60e262556d8ad286808d133b5429a3eb0"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -488,6 +562,7 @@
         "$pastUpgrades": [
           [
             "2024-07-29T13:59:35.000Z",
+            "0x7d95b8115b846835b6da60e35cc04647b957e35301e9cb72b1d148b26acac93a",
             ["0x5Ff3feD7aad041ACe66E4ecDd7AfbCC43b6446b0"]
           ]
         ],
@@ -504,9 +579,18 @@
       "name": "SequencerInbox",
       "address": "0xF75206c49c1694594E3e69252E519434f1579876",
       "template": "orbitstack/SequencerInbox",
+      "sourceHashes": [
+        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+        "0x50cf57b01499408fa99da27cf0fee96ec30f0d40667d1aa090c442bc80f0636b"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": ["State batches / commitments get posted here."],
       "issuedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0xbc35c3fBd56318Bf360086f50576233Dc93AFF20",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0x80622fe04c5e1c3fbb3A9c62996dB27B53E9F77b",
@@ -521,6 +605,7 @@
         "$pastUpgrades": [
           [
             "2024-07-29T13:18:23.000Z",
+            "0x16528bf78b7d2110129529a7a0435a35b5443e3638f89fb2f917a7c92ef587b9",
             ["0x383f16fB2809a56fC639c1eE2c93Ad2aa7Ee130A"]
           ]
         ],
@@ -568,13 +653,23 @@
     { "address": "0x2A5a79061b723BBF453ef7E07c583C750AFb9BD6" },
     {
       "address": "0x2b2566944f8ff8a256b39C6A36900991EC1fF3c6",
-      "roles": ["Validator"]
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "target": "0x1CA12290D954CFe022323b6A6Df92113ed6b1C98"
+        }
+      ]
     },
     { "address": "0x380636029F3E079683fF06e80Dc3e1B7FAC30C86" },
     { "address": "0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341" },
     {
       "address": "0xbc35c3fBd56318Bf360086f50576233Dc93AFF20",
-      "roles": ["Sequencer"]
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0xF75206c49c1694594E3e69252E519434f1579876"
+        }
+      ]
     },
     { "address": "0xD296d45171B97720D3aBdb68B0232be01F1A9216" }
   ],
@@ -1211,8 +1306,7 @@
     ]
   },
   "usedTemplates": {
-    "orbitstack/RollupProxy": "0xdd22b1785ae5df34e829d0b04131559e112131325c3f223825d0fe61e675fb1a",
-    "orbitstack/SequencerInbox": "0x096f13a8297d3243cf02cbc39d065c1c6f37b23602fce0c63f3ff74d7d65b1ee"
-  },
-  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
+    "orbitstack/RollupProxy": "0x8c92364349ca720f3e801d028dc260fdbc1a9cca4651ed19af6f16a250949729",
+    "orbitstack/SequencerInbox": "0x914a19d66f742b381e9ac6579e688ae6a07cddcf5b144eb7528c121bc81eca28"
+  }
 }

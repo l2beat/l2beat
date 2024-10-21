@@ -7,6 +7,9 @@
     {
       "name": "OrderRegistry",
       "address": "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
+      "sourceHashes": [
+        "0x1e28fda3c245bc1fc13d0ddc7b108be510d1e0220fc67552921c87724bb45a4c"
+      ],
       "sinceTimestamp": 1626352379,
       "values": {
         "$immutable": true,
@@ -17,6 +20,9 @@
     {
       "name": "Committee",
       "address": "0x879cD57975d596004863D30c59d579ef78BBbe32",
+      "sourceHashes": [
+        "0xbd4b616703456361720d7aaaa8a8d995f0efbd262e650ecd109f807107476380"
+      ],
       "sinceTimestamp": 1630836435,
       "values": {
         "$immutable": true,
@@ -38,6 +44,9 @@
     {
       "name": "GpsFactRegistryAdapter",
       "address": "0xbcc17446B99465fF01E6816d9bcb2d8b1D7cEdB1",
+      "sourceHashes": [
+        "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
+      ],
       "sinceTimestamp": 1678702991,
       "values": {
         "$immutable": true,
@@ -51,6 +60,10 @@
       "name": "GnosisSafe",
       "address": "0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
@@ -80,6 +93,16 @@
     {
       "name": "StarkExchange",
       "address": "0xF5C9F957705bea56a7e806943f98F7777B995826",
+      "sourceHashes": [
+        "0x945d79fba7fe6f3e3e40f582b69b67983dbd63977e2fce47328aa12e16175fd7",
+        "0xadae235d029868dddc287e823167705942660a99a9154a4e487f5dfb4ddd01c9",
+        "0x70e4767336d4a44ecedb78b7cef6dc2810f5d8bc87a46c360083e65af451cb97",
+        "0x75d386d73767f57d5f11c11f7bf837a48cd417754eea559931fc98a96ef34152",
+        "0x0e101cfdb791ca1a86402273377c7da5e67225cf5799ac2f51d9a940227ee6be",
+        "0x7d557870276c694154e12790f8c0c09930c8c75320f470c47b67968bffd536a6",
+        "0x2a703c051ff2524868f044282fc50b01913736a92f794b64b31bd31363cd3fca",
+        "0xd5b06286e3bf5dccd0bb360c8cc876aec0a2ce288120d9f83dec45fa47c1aabc"
+      ],
       "proxyType": "StarkWare diamond",
       "issuedPermissions": [
         {
@@ -119,6 +142,7 @@
         "$pastUpgrades": [
           [
             "2021-07-15T12:35:27.000Z",
+            "0xe2ec50ba9067943e14a3c85524aba01510bcdb20170a83b1e2835dd5f701774d",
             [
               "0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC",
               "0xF65C115efd24102315Af53f84aD65aD240bc9D57",
@@ -131,6 +155,7 @@
           ],
           [
             "2021-09-05T10:29:04.000Z",
+            "0x9285c2e269ca580e3c078f6e7aa2f4e87c367a34ed2d51c81fa2dbf96fabd25e",
             [
               "0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC",
               "0xF65C115efd24102315Af53f84aD65aD240bc9D57",
@@ -143,6 +168,7 @@
           ],
           [
             "2021-09-05T21:56:06.000Z",
+            "0x142bdcaf57cdb74a2828011c3b5d066b9ef73210eca9538c43cb27e70c16e6af",
             [
               "0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC",
               "0xF65C115efd24102315Af53f84aD65aD240bc9D57",
@@ -155,6 +181,7 @@
           ],
           [
             "2021-12-06T14:14:16.000Z",
+            "0x0beae1d64f579787e365d3a33dfe2d88b2e5bc10df71c8c411d8e5ea9c268401",
             [
               "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
               "0x62BCA4DB742A99c834e2c24b609656A70EA25379",
@@ -167,6 +194,7 @@
           ],
           [
             "2021-12-19T09:58:01.000Z",
+            "0xcd456864796a62ff92d2edd58c10165b4a90d29539f16696ba96f3fd87de7960",
             [
               "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
               "0x62BCA4DB742A99c834e2c24b609656A70EA25379",
@@ -179,6 +207,7 @@
           ],
           [
             "2022-01-05T20:34:03.000Z",
+            "0x823a4f9509effa14b4560117a1bae7348d352f1a6cde174aa8117af85aa238ba",
             [
               "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
               "0x62BCA4DB742A99c834e2c24b609656A70EA25379",
@@ -191,6 +220,7 @@
           ],
           [
             "2022-09-08T22:38:37.000Z",
+            "0x1f43e53b394f1fa8ea3c70d941c07ede120baecc024aff03b39b401977a83814",
             [
               "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
               "0x62BCA4DB742A99c834e2c24b609656A70EA25379",
@@ -203,6 +233,7 @@
           ],
           [
             "2023-03-13T09:40:23.000Z",
+            "0x1e3c7e7455b03587bf7358f91df9c0180a46fdca04e7319e92cd7be93006da90",
             [
               "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
               "0x62BCA4DB742A99c834e2c24b609656A70EA25379",
@@ -215,6 +246,7 @@
           ],
           [
             "2023-03-13T11:06:35.000Z",
+            "0x451e60d8e7c176588763097ad90ac39b74379fa15b66a9e82b17c8876e726c9b",
             [
               "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
               "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
@@ -227,6 +259,7 @@
           ],
           [
             "2023-03-15T11:55:47.000Z",
+            "0x20e32fd5434e9ff5fb030bd6a42d62a0827d0692600cb084f294bf9534e764b0",
             [
               "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
               "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
@@ -239,6 +272,7 @@
           ],
           [
             "2023-04-09T08:13:35.000Z",
+            "0xc8cd48c9ba8aeff7d0832707ffd07829cfa03e32108f69184b12d3f4dfce9506",
             [
               "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
               "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
@@ -717,7 +751,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
-  },
-  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+  }
 }

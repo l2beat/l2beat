@@ -1,3 +1,571 @@
+Generated with discovered.json: 0x2cf5eca3597315276a12c07545e2e36da67e37d5
+
+# Diff at Mon, 21 Oct 2024 11:07:37 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20928041
+- current block number: 20928041
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20928041 (main branch discovery), not current.
+
+```diff
+    contract BLSRegistry (0x1eD35B793d887e028493dAC4a11AA5Feb811dd67) {
+    +++ description: This contract stores the number of Mantle DA operators and their public keys. It also store the quorum threshold and the minimum stake required to be part of the quorum.
+      values.$pastUpgrades.1.2:
++        ["0x64F4244eEA17a361bb919A28F614C3ad1aC565ad"]
+      values.$pastUpgrades.1.1:
+-        ["0x64F4244eEA17a361bb919A28F614C3ad1aC565ad"]
++        "0x43792ca3e5547575169e63a6c3d65cb80aea4d078f8b74c67e0db11a14d64012"
+      values.$pastUpgrades.0.2:
++        ["0x4b64d1Fd7cf1230468AEdF3a401cFe74cA9B366f"]
+      values.$pastUpgrades.0.1:
+-        ["0x4b64d1Fd7cf1230468AEdF3a401cFe74cA9B366f"]
++        "0x9d5d1ea782248f506d764d83e7cbf9f5f3b612481d064348e55e2b9192b6202b"
+    }
+```
+
+```diff
+    contract InvestmentManager (0x23754725a49c0f003C349A6C7869fF8609a7CEfd) {
+    +++ description: Contract managing different investment strategies, forked from EigenLayer StrategyManager.
+      values.$pastUpgrades.1.2:
++        ["0x7C4813A9AF2FEA4ca765a26b05d128926E94e72E"]
+      values.$pastUpgrades.1.1:
+-        ["0x7C4813A9AF2FEA4ca765a26b05d128926E94e72E"]
++        "0xdbf4832652157cf7ac7025536a4ea46c98eb9ea0fd8aea5d9806ae0a88ec037f"
+      values.$pastUpgrades.0.2:
++        ["0xa288E750401E6d15A62e3400C87d3ee331650a0C"]
+      values.$pastUpgrades.0.1:
+-        ["0xa288E750401E6d15A62e3400C87d3ee331650a0C"]
++        "0xeb7dc422709447d9ec652639cd04c817fe931d17a444f63c347c26b76aa64720"
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      values.$pastUpgrades.0.2:
++        ["0xD1230865641561653406906Fb08873F011c19080"]
+      values.$pastUpgrades.0.1:
+-        ["0xD1230865641561653406906Fb08873F011c19080"]
++        "0xa5fff128e999954c7dfe8e3360d0844e439425124922e85cd32fdcf2e3582247"
+    }
+```
+
+```diff
+    contract L1MantleToken (0x3c3a81e81dc49A522A592e7622A7E711c06bf354) {
+    +++ description: MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.
+      values.$pastUpgrades.0.2:
++        ["0xCd368c1d80120b0Dd92447c87eB570154f8e685c"]
+      values.$pastUpgrades.0.1:
+-        ["0xCd368c1d80120b0Dd92447c87eB570154f8e685c"]
++        "0x8f7867724cfba4b9b1b19ca140711809b40dda9ae245caf7bcff9473a5a7e45e"
+    }
+```
+
+```diff
+    contract SystemConfig (0x427Ea0710FA5252057F0D88274f7aeb308386cAf) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.$pastUpgrades.0.2:
++        ["0x6Dbb7D9C5dC60844B8CF442ddC6Be081c060B2E3"]
+      values.$pastUpgrades.0.1:
+-        ["0x6Dbb7D9C5dC60844B8CF442ddC6Be081c060B2E3"]
++        "0x667a55493b70812eedb69586be570fa87bb305ff046ebd1419cdc71163f770ac"
+    }
+```
+
+```diff
+    contract EigenDataLayerChain (0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xDF401d4229Fc6cA52238f7e55A04FA8EBc24C55a"]
+      values.$pastUpgrades.0.1:
+-        ["0xDF401d4229Fc6cA52238f7e55A04FA8EBc24C55a"]
++        "0x2b2bda7f01a3baec5d0e7b369e36172365d35b9eb9137c074d3260308c838ce8"
+    }
+```
+
+```diff
+    contract DataLayrServiceManager (0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1) {
+    +++ description: This contract is the main entry point for data availability. It is responsible for storing transaction data headers and confirming the data store by verifying operators signatures.
+      values.$pastUpgrades.1.2:
++        ["0xAB42127980a3bff124E6465e097a5fC97228827e"]
+      values.$pastUpgrades.1.1:
+-        ["0xAB42127980a3bff124E6465e097a5fC97228827e"]
++        "0x8c0b0f089bb73496f62f5676329337f1c6df8c9678fced830fb8ae25573c04e0"
+      values.$pastUpgrades.0.2:
++        ["0x4b64d1Fd7cf1230468AEdF3a401cFe74cA9B366f"]
+      values.$pastUpgrades.0.1:
+-        ["0x4b64d1Fd7cf1230468AEdF3a401cFe74cA9B366f"]
++        "0x09367d337ef0395ea117d413b4a06a2dca0e5e7e1f4e40270716e26dfe750a35"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x676A795fe6E43C17c668de16730c3F690FEB7120) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$pastUpgrades.2.2:
++        ["0xb8DE82551fA4BA3bE4B3d9097763EDBeED541308"]
+      values.$pastUpgrades.2.1:
+-        ["0xb8DE82551fA4BA3bE4B3d9097763EDBeED541308"]
++        "0xa5fff128e999954c7dfe8e3360d0844e439425124922e85cd32fdcf2e3582247"
+      values.$pastUpgrades.1.2:
++        ["0x0000000000000000000000000000000000000000"]
+      values.$pastUpgrades.1.1:
+-        ["0x0000000000000000000000000000000000000000"]
++        "0x667a55493b70812eedb69586be570fa87bb305ff046ebd1419cdc71163f770ac"
+      values.$pastUpgrades.0.2:
++        ["0x4692363048d0F32a2dE7816860D48fff0c61B24B"]
+      values.$pastUpgrades.0.1:
+-        ["0x4692363048d0F32a2dE7816860D48fff0c61B24B"]
++        "0x3ef2116cdd9366a646b6625affcf0cbe96bb3c59c3ffc629432d3f79ff1f886c"
+    }
+```
+
+```diff
+    contract PubkeyCompendium (0x92986cd63C3409b7dA2882624B6d6E7Cf660707a) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x18Dd3cBE484f955217165FEaC6fe928D04a56a72"]
+      values.$pastUpgrades.1.1:
+-        ["0x18Dd3cBE484f955217165FEaC6fe928D04a56a72"]
++        "0x50bd8f78f61dc27f5c2359db587111c67e23cc9de4703a0c8e1657b351461e53"
+      values.$pastUpgrades.0.2:
++        ["0x4b64d1Fd7cf1230468AEdF3a401cFe74cA9B366f"]
+      values.$pastUpgrades.0.1:
+-        ["0x4b64d1Fd7cf1230468AEdF3a401cFe74cA9B366f"]
++        "0x09d04d4b63ad6b712ebdfb04212905e21e2c64b5ba19cf01bfcc07d66dd652fb"
+    }
+```
+
+```diff
+    contract MantleSecondStrat (0xA937660031787C4408587D2c6A67Ec4B260630F5) {
+    +++ description: Basic do-nothing investment strategy.
+      values.$pastUpgrades.0.2:
++        ["0x9FEcF38689349a5CFf97526610CdB27618edc6b9"]
+      values.$pastUpgrades.0.1:
+-        ["0x9FEcF38689349a5CFf97526610CdB27618edc6b9"]
++        "0xfbe66fac37b117b0700dd1c6711a91362ebf626904438f6f6c336b28db471d76"
+    }
+```
+
+```diff
+    contract RegistryPermission (0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xAb00B934DE01c1b4931047125C2ba5B3d6186b85"]
+      values.$pastUpgrades.1.1:
+-        ["0xAb00B934DE01c1b4931047125C2ba5B3d6186b85"]
++        "0x199dbe55b2c0f54e8fa60a1eebcac985184a17b405e277c1abde3e8bd9524436"
+      values.$pastUpgrades.0.2:
++        ["0xa288E750401E6d15A62e3400C87d3ee331650a0C"]
+      values.$pastUpgrades.0.1:
+-        ["0xa288E750401E6d15A62e3400C87d3ee331650a0C"]
++        "0x2cd887c0e49e302ecc909ae1ef5987405940228e4cae643f191801919e08a235"
+    }
+```
+
+```diff
+    contract OptimismPortal (0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.$pastUpgrades.0.2:
++        ["0xe1399f54ba2597b4EaDA9E3450c34D393fb131A7"]
+      values.$pastUpgrades.0.1:
+-        ["0xe1399f54ba2597b4EaDA9E3450c34D393fb131A7"]
++        "0xa5fff128e999954c7dfe8e3360d0844e439425124922e85cd32fdcf2e3582247"
+    }
+```
+
+```diff
+    contract DataLayrChallenge (0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x6EE53D3d6e622Ac0296369445AFB3CBBDc57C066"]
+      values.$pastUpgrades.1.1:
+-        ["0x6EE53D3d6e622Ac0296369445AFB3CBBDc57C066"]
++        "0x957f5ec20d401a1a74111cb01b0f840afea478a31759b127b37ab8b7faaebb2d"
+      values.$pastUpgrades.0.2:
++        ["0x4b64d1Fd7cf1230468AEdF3a401cFe74cA9B366f"]
+      values.$pastUpgrades.0.1:
+-        ["0x4b64d1Fd7cf1230468AEdF3a401cFe74cA9B366f"]
++        "0xb95bdea06d55863c8b2e41ca71ab8dbe459408d0017f2bbdfaef7e1bf30fbad1"
+    }
+```
+
+```diff
+    contract MantleFirstStrat (0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1) {
+    +++ description: Basic do-nothing investment strategy.
+      values.$pastUpgrades.0.2:
++        ["0x9FEcF38689349a5CFf97526610CdB27618edc6b9"]
+      values.$pastUpgrades.0.1:
+-        ["0x9FEcF38689349a5CFf97526610CdB27618edc6b9"]
++        "0x4a9c5808169c5a6fabfae05048c44c24dfb04d48815357a215a5af3809123f4f"
+    }
+```
+
+```diff
+    contract DataLayrChallengeUtils (0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xd8d731624d97a66e012E62208cFc921d7033c564"]
+      values.$pastUpgrades.1.1:
+-        ["0xd8d731624d97a66e012E62208cFc921d7033c564"]
++        "0xdde13172352499d10a1ff109d22d19980be5b84634ac36b003b0fb25eaf54508"
+      values.$pastUpgrades.0.2:
++        ["0x4b64d1Fd7cf1230468AEdF3a401cFe74cA9B366f"]
+      values.$pastUpgrades.0.1:
+-        ["0x4b64d1Fd7cf1230468AEdF3a401cFe74cA9B366f"]
++        "0xfa65c0cef1bde23cdca16d9863bf43a83579f73cb40199ed18bda7e4853033df"
+    }
+```
+
+```diff
+    contract Delegation (0xeA4F1fE4928f1f83a450899C068bcd455BaF4798) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xAdA69A18B30B3B9235AB2748116bB9195e16aDba"]
+      values.$pastUpgrades.1.1:
+-        ["0xAdA69A18B30B3B9235AB2748116bB9195e16aDba"]
++        "0x609574ecb43797c58ee51ad0c87bdf5dc9f1b6a21f72406c1679f579bb865e5d"
+      values.$pastUpgrades.0.2:
++        ["0xa288E750401E6d15A62e3400C87d3ee331650a0C"]
+      values.$pastUpgrades.0.1:
+-        ["0xa288E750401E6d15A62e3400C87d3ee331650a0C"]
++        "0xccf37452298ddc5f50e741118a64f4ee4b8ff9d1ea7c60bda84bf22a3c11a719"
+    }
+```
+
+Generated with discovered.json: 0xc2f3a90e11e7fdd6cba7115ca15e9412c288ff61
+
+# Diff at Wed, 16 Oct 2024 11:37:48 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a3d139b799cc0b28e5e912febb17464d4e5aef5d block: 20928041
+- current block number: 20928041
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20928041 (main branch discovery), not current.
+
+```diff
+    contract MantleEngineeringMultisig (0x2F44BD2a54aC3fB20cd7783cF94334069641daC9) {
+    +++ description: None
+      roles:
+-        ["Challenger","Guardian"]
+      receivedPermissions:
++        [{"permission":"challenge","target":"0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"},{"permission":"guard","target":"0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb"}]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","via":[{"address":"0xca35F8338054739D138884685e08b39EE2217794","delay":0}]}
+      issuedPermissions.1:
++        {"permission":"propose","target":"0x6667961f5e9C98A76a48767522150889703Ed77D","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "challenge"
+      issuedPermissions.0.target:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9"
+      issuedPermissions.0.via.0:
+-        {"address":"0xca35F8338054739D138884685e08b39EE2217794","delay":0}
+    }
+```
+
+```diff
+    contract SystemConfig (0x427Ea0710FA5252057F0D88274f7aeb308386cAf) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","via":[{"address":"0xca35F8338054739D138884685e08b39EE2217794","delay":0}]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "sequence"
+      issuedPermissions.1.target:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749"
+      issuedPermissions.1.via.0:
+-        {"address":"0xca35F8338054739D138884685e08b39EE2217794","delay":0}
+    }
+```
+
+```diff
+    contract OptimismPortal (0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","via":[{"address":"0xca35F8338054739D138884685e08b39EE2217794","delay":0}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "guard"
+      issuedPermissions.0.target:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9"
+      issuedPermissions.0.via.0:
+-        {"address":"0xca35F8338054739D138884685e08b39EE2217794","delay":0}
+    }
+```
+
+Generated with discovered.json: 0xaab779aa74b0bcbb74641ca22b729257df8a023c
+
+# Diff at Mon, 14 Oct 2024 10:52:53 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20928041
+- current block number: 20928041
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20928041 (main branch discovery), not current.
+
+```diff
+    contract PauserRegistry (0x075a48633dc6845f92339741E9c96b88f1b2A86f) {
+    +++ description: None
+      sourceHashes:
++        ["0x8fa8f20d7c33aea934963671e5ac4fc1d3b586d40deb93cc4768d4a6ef323662"]
+    }
+```
+
+```diff
+    contract MantleTokenProxyAdmin (0x0cac2B1a172ac24012621101634DD5ABD6399ADd) {
+    +++ description: None
+      template:
+-        "opstack/ProxyAdmin"
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"]
+    }
+```
+
+```diff
+    contract BLSRegistry (0x1eD35B793d887e028493dAC4a11AA5Feb811dd67) {
+    +++ description: This contract stores the number of Mantle DA operators and their public keys. It also store the quorum threshold and the minimum stake required to be part of the quorum.
+      sourceHashes:
++        ["0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3","0x25c9049ce3c6e3d0fb455a5ceecf01cc2d9a92f415e869786ef2f2221e85b803"]
+    }
+```
+
+```diff
+    contract InvestmentManager (0x23754725a49c0f003C349A6C7869fF8609a7CEfd) {
+    +++ description: Contract managing different investment strategies, forked from EigenLayer StrategyManager.
+      sourceHashes:
++        ["0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3","0x943049d488a42420a15934ca27ae2fc159c395727536ee64c38afdde4215c561"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83) {
+    +++ description: None
+      template:
+-        "opstack/ProxyAdmin"
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"]
+    }
+```
+
+```diff
+    contract MantleEngineeringMultisig (0x2F44BD2a54aC3fB20cd7783cF94334069641daC9) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0x45368d302fba850124115aa8ee67238f47d47d89c2b1b8c5dfd39818369e6cea"]
+    }
+```
+
+```diff
+    contract L1MantleToken (0x3c3a81e81dc49A522A592e7622A7E711c06bf354) {
+    +++ description: MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.
+      sourceHashes:
++        ["0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1","0x13e07c3c64aef03cfd7f5c01b2b1b443fd1dfb19c4128447fe316bb5fcd128cd"]
+    }
+```
+
+```diff
+    contract SystemConfig (0x427Ea0710FA5252057F0D88274f7aeb308386cAf) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0xb2a3bda11c08328ecb46ec5789f3264be5d816bc218a5024a4cafd1c59017160"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x47D58744D8515d9aaEAf961bc03625118bd91EBb) {
+    +++ description: None
+      template:
+-        "opstack/ProxyAdmin"
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"]
+    }
+```
+
+```diff
+    contract PauserRegistry2 (0x4ca725D446EcE6e3fFd3E072A6f2A6a16Ca492D0) {
+    +++ description: None
+      sourceHashes:
++        ["0x8fa8f20d7c33aea934963671e5ac4fc1d3b586d40deb93cc4768d4a6ef323662"]
+    }
+```
+
+```diff
+    contract MantleSecurityMultisig (0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract EigenDataLayerChain (0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A) {
+    +++ description: None
+      sourceHashes:
++        ["0x63677738b5ca073872cd350783b51e6dcd4bf6469f02eadf4cead9aef171c781","0x5333d2d13f53d445ff99fbe5845e2658fbafd68944683fb56a2644d76e5a4f36"]
+    }
+```
+
+```diff
+    contract DataLayrServiceManager (0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1) {
+    +++ description: This contract is the main entry point for data availability. It is responsible for storing transaction data headers and confirming the data store by verifying operators signatures.
+      sourceHashes:
++        ["0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3","0xf52658c0dbe857c858ac93c9c3dad449fff36d7e6454b67ac61a5bf3dcecca30"]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x676A795fe6E43C17c668de16730c3F690FEB7120) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes:
++        ["0x6e4b297b822bdda2bb8bbf4dde360ee51379af5a0de55c0d726a2d7b68791bf7","0x430d270834512dafe98bf268d6912f12a10c5a6287e7463830a22e4616dd63a0"]
+    }
+```
+
+```diff
+    contract Lib_AddressManager (0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      sourceHashes:
++        ["0x763c5728a19538783edf38c17731f9cf79ff6f38bfa4bce61333cef0aac5452e"]
+    }
+```
+
+```diff
+    contract GnosisSafe (0x7735cDcc85E63A7684C29652DbE8B845e0b4635A) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract PubkeyCompendium (0x92986cd63C3409b7dA2882624B6d6E7Cf660707a) {
+    +++ description: None
+      sourceHashes:
++        ["0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3","0x8ae883de7991fc1ec2291f58deabd148cec4b61384f2eafa6c703304b9a2c757"]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      sourceHashes:
++        ["0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd","0x1cd5cb2fa146b2a5dfb07279a52cd93855b268115912df60292b18394cc532e8"]
+    }
+```
+
+```diff
+    contract MantleSecondStrat (0xA937660031787C4408587D2c6A67Ec4B260630F5) {
+    +++ description: Basic do-nothing investment strategy.
+      sourceHashes:
++        ["0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3","0x20018f70ed5942c8b643f26e7f19c6d30f27dead8e6eb6f1127d87a2f2a04589"]
+    }
+```
+
+```diff
+    contract RegistryPermission (0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01) {
+    +++ description: None
+      sourceHashes:
++        ["0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3","0xc65400995a550bff2a6272beee2e54f8cf8f9369406fe8531bd5d39add1635b7"]
+    }
+```
+
+```diff
+    contract OptimismPortal (0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0x3a064711ad01291b3644b5f657fd8317cd07f19222c9f216e25557d4d69ea295"]
+    }
+```
+
+```diff
+    contract DataLayrChallenge (0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94) {
+    +++ description: None
+      sourceHashes:
++        ["0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3","0xe8b1ba037124dea50d3eec5112ed3b8507e29739b723810a9f6f00976b9e2d08"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xca35F8338054739D138884685e08b39EE2217794) {
+    +++ description: None
+      template:
+-        "opstack/ProxyAdmin"
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"]
+    }
+```
+
+```diff
+    contract MantleFirstStrat (0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1) {
+    +++ description: Basic do-nothing investment strategy.
+      sourceHashes:
++        ["0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3","0x20018f70ed5942c8b643f26e7f19c6d30f27dead8e6eb6f1127d87a2f2a04589"]
+    }
+```
+
+```diff
+    contract DataLayrChallengeUtils (0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D) {
+    +++ description: None
+      sourceHashes:
++        ["0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3","0x9dc36b80e92cea40c02d3b9d2684d85d4141dcab44cf882b91cf3148476432ee"]
+    }
+```
+
+```diff
+    contract Delegation (0xeA4F1fE4928f1f83a450899C068bcd455BaF4798) {
+    +++ description: None
+      sourceHashes:
++        ["0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3","0xa961eebaaac6cb33d38501294b0f98165b96d04af2f99311bd99b282798990be"]
+    }
+```
+
 Generated with discovered.json: 0x245c7ed19c7553bb6880d725a68bbcc743ec7b08
 
 # Diff at Wed, 09 Oct 2024 12:30:38 GMT:

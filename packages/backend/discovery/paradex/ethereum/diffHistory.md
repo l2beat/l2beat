@@ -1,3 +1,105 @@
+Generated with discovered.json: 0x44ab48f71bfdcd945a79d579c492d972aa6299e6
+
+# Diff at Mon, 21 Oct 2024 11:08:50 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20711342
+- current block number: 20711342
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20711342 (main branch discovery), not current.
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77"]
+      values.$pastUpgrades.2.1:
+-        ["0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77"]
++        "0x7288e6bd014f04b9aa916599a60854eb8de2106cb95030762a2372751de95922"
+      values.$pastUpgrades.1.2:
++        ["0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77"]
+      values.$pastUpgrades.1.1:
+-        ["0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77"]
++        "0x015d716fec0e72b13c6ec480a008653d2402eb0e216c3b1adcb87d13582c6a7a"
+      values.$pastUpgrades.0.2:
++        ["0x6Fd62239f3A441d1898683C5a84ce3681bB42C16"]
+      values.$pastUpgrades.0.1:
+-        ["0x6Fd62239f3A441d1898683C5a84ce3681bB42C16"]
++        "0x25fbb19a94fb450c7254e45b992272c2d6dd6b24692e34e87052621e4df3cfed"
+    }
+```
+
+```diff
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC"]
+      values.$pastUpgrades.2.1:
+-        ["0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC"]
++        "0xe78b11cbf1332af60b8da9b2eaf51ec52cdc5bdc7cc0a89af3c2fbb0936c14d8"
+      values.$pastUpgrades.1.2:
++        ["0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24"]
+      values.$pastUpgrades.1.1:
+-        ["0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24"]
++        "0x7292984e71d89bd82d8555a1060cf741e9090f33874c6bc3b87db6d1352784d0"
+      values.$pastUpgrades.0.2:
++        ["0xA964D693cd45FCBe4303524E0EFe0988cfF5ed08"]
+      values.$pastUpgrades.0.1:
+-        ["0xA964D693cd45FCBe4303524E0EFe0988cfF5ed08"]
++        "0x7862f09db4097dc43ad1972ca9ee11eaf64a1fbfdb21fe6f84ad6b68d4b9fa56"
+    }
+```
+
+Generated with discovered.json: 0x88a9ed2bdb9de6914e7c8cfeae2a6714954671aa
+
+# Diff at Mon, 14 Oct 2024 10:54:12 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20711342
+- current block number: 20711342
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20711342 (main branch discovery), not current.
+
+```diff
+    contract ParadexImplementationGovernorMultisig (0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a134f478bcc2b72c5f77df62e5b52cd55cefd6329f8e306ac6d28f31d467c2","0xbe08cd77d92ae2b4d333c5d2850e16d06e16d98de2a8435e0a49dc35ad73b915"]
+    }
+```
+
+```diff
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+    +++ description: None
+      sourceHashes:
++        ["0xfd5ac94c5a362e7426efd613abbaca3b838cf7f6089b44d9c0d4f675ca4467b3","0x2738adbe41339934ae57e5c96fb9d7e42a43ba2b112878bc9227cc1c81de8ee6"]
+    }
+```
+
 Generated with discovered.json: 0x3feebd6e9b9d1b6de86173f784d48831f04f959c
 
 # Diff at Tue, 01 Oct 2024 10:54:01 GMT:

@@ -45,6 +45,9 @@ export async function getScalingSummaryEntries() {
             associatedTokens: project.config.associatedTokens ?? [],
           })
         : undefined
+    const associatedTokensExcludedWarnings = compact([
+      project.display.tvlWarning,
+    ])
 
     const common = {
       entryType: 'scaling' as const,
@@ -56,11 +59,14 @@ export async function getScalingSummaryEntries() {
       tvl: {
         breakdown: latestTvl?.breakdown,
         change: latestTvl?.change,
+        associatedTokensExcludedChange:
+          latestTvl?.associatedTokensExcludedChange,
         associatedTokens: project.config.associatedTokens ?? [],
         warnings: compact([
-          project.display.tvlWarning,
+          ...associatedTokensExcludedWarnings,
           associatedTokenWarning?.sentiment === 'bad' && associatedTokenWarning,
         ]),
+        associatedTokensExcludedWarnings,
       },
       activity: activity
         ? {

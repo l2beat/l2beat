@@ -7,6 +7,9 @@
     {
       "name": "FPValidator",
       "address": "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6",
+      "sourceHashes": [
+        "0x0d505ac1b08cd930c4b902daa632eaa029531d5c1aa50c45169b63c310b2da62"
+      ],
       "sinceTimestamp": 1665890525,
       "values": {
         "$immutable": true,
@@ -21,6 +24,9 @@
     {
       "name": "TreasuryV2",
       "address": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
+      "sourceHashes": [
+        "0x8b908351f18fdaeaf600ae46ef1450c535f741fc95bb25acade77f8b59fdc168"
+      ],
       "sinceTimestamp": 1661528757,
       "values": {
         "$immutable": true,
@@ -35,6 +41,9 @@
     {
       "name": "ProxyAdmin",
       "address": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
+      "sourceHashes": [
+        "0xeb95d39e1b35f76b6331da863f87bf2e148dd21abf5666590443b65f6a125630"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -54,6 +63,9 @@
     {
       "name": "Endpoint",
       "address": "0x3c2269811836af69497E5F486A85D7316753cf62",
+      "sourceHashes": [
+        "0x945c3299d0cf62b9ea7a77d6328295d54327299d6a153e1e7b48d85fa9b77215"
+      ],
       "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"],
       "sinceTimestamp": 1647316942,
       "values": {
@@ -83,6 +95,9 @@
     {
       "name": "MPTValidator01",
       "address": "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+      "sourceHashes": [
+        "0x965651ae50a316c3ab842d2c8c9242c34d6e40eefa61f7c731bba9a1faf2ccea"
+      ],
       "sinceTimestamp": 1661528745,
       "values": {
         "$immutable": true,
@@ -98,6 +113,9 @@
     {
       "name": "UltraLightNodeV2",
       "address": "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
+      "sourceHashes": [
+        "0x38c85ab54f670eaa1fc2b351aee39913bc12e2b26c460ee31cf89d3f1f7d59b9"
+      ],
       "ignoreInWatchMode": [
         "chainAddressSizeMap",
         "defaultAppConfig",
@@ -1443,10 +1461,12 @@
         "$pastUpgrades": [
           [
             "2023-02-08T19:55:32.000Z",
+            "0x31f47a097b7bd9f63239dbc3fa2e1c2557c61434ca6afdb25b4561eee80007b4",
             ["0xf75C2919c8fddF9D6f34531EBDC7Ad28E1a192e2"]
           ],
           [
             "2023-04-27T02:37:47.000Z",
+            "0xf63ed6dc94a1fbfba0050f3fd911a2783aadb094b645eb3b4eeb3d155a06427c",
             ["0x47bc8fb02aA30f7ec413f60aFD2C90D8ee96B583"]
           ]
         ],
@@ -1469,6 +1489,9 @@
     {
       "name": "NonceContract",
       "address": "0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068",
+      "sourceHashes": [
+        "0x895867397d61409de8476975bae4d871fec1c289e52fe97b31872726808dae38"
+      ],
       "sinceTimestamp": 1661280106,
       "values": {
         "$immutable": true,
@@ -1514,14 +1537,17 @@
         "$pastUpgrades": [
           [
             "2023-06-26T19:44:20.000Z",
+            "0x89dde5652c34f71e7337186bea268a09a9caa409ea40edb4bcf61f5483c8f67b",
             ["0x23768Cfd95B699d9B772ce042e490F9deA5ae6d6"]
           ],
           [
             "2024-03-11T19:12:16.000Z",
+            "0xc270073cd459d99b6a86001e756530ae0c22761bf47e42089bdfae585e9f2443",
             ["0xa79dE9B3409361Cd3367856b5Fa9BC258C1f9F0F"]
           ],
           [
             "2024-07-04T23:52:09.000Z",
+            "0xfd690c14f615eced61d756cd43013ce3409f77b4875d6268a67884501ca4d29e",
             ["0x893BB42a352CA8Ee8bCb58348455DD3966368737"]
           ]
         ],
@@ -1532,6 +1558,10 @@
       "name": "LayerZero Multisig",
       "address": "0x8D452629c5FfCDDE407069da48c096e1F8beF22c",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1648073735,
@@ -1559,6 +1589,9 @@
     {
       "name": "ProxyAdmin",
       "address": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
+      "sourceHashes": [
+        "0xeb95d39e1b35f76b6331da863f87bf2e148dd21abf5666590443b65f6a125630"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -1578,6 +1611,10 @@
     {
       "name": "RelayerV2",
       "address": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182",
+      "sourceHashes": [
+        "0x2cffb288804b4b9aa5855910610b396abe44ded0ad8ed35981ed74d056ae8ba1",
+        "0x09e8ef64d88f50d1728775b0716905d15bbe17af7dad266027d75f85e6276d49"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -1593,26 +1630,32 @@
         "$pastUpgrades": [
           [
             "2022-11-21T22:34:18.000Z",
+            "0xc8142d7bedc7b69fc6946c60bfe7920560036a570ab9b1a0dbd80611d3013db6",
             ["0x50002CdFe7CCb0C41F519c6Eb0653158d11cd907"]
           ],
           [
             "2023-02-03T23:05:57.000Z",
+            "0x836cf185eb81a7c91b2aaea511c9f1a87ce030596f1f750848666ae37b8f9e4d",
             ["0x48486ECbB22Ca392f99C21FF02f6106580f526F8"]
           ],
           [
             "2023-04-23T04:35:55.000Z",
+            "0x6f17740ee2451bdc90723be62bd6c5bf2896e27c2656aa442f8b1abe86dc6862",
             ["0x1a9a68b8Af58eA2b9130622e3bEA2373AaA79EFa"]
           ],
           [
             "2023-06-26T23:18:31.000Z",
+            "0x8ecbced18a0e42909acc3cdae10feca174cf9b3bed09cee3b43cf09b069fb792",
             ["0x92B9a8278ce3a1E17C66B3a6B61d807b2616bcED"]
           ],
           [
             "2023-09-20T19:37:03.000Z",
+            "0x47a7ec5b68119851c4f03560f3aaed318454b512a7a5ad2235a54fad20205fe7",
             ["0x26fdA154E76e53F078e7096459d9132542db3b9d"]
           ],
           [
             "2023-09-22T14:16:28.000Z",
+            "0x14c6afd1411f336c05539d9bcc5c1b9d79babf7de84343615816229cd1c25371",
             ["0x7701C12D268847dB94bbF37A4C4af53Bb6bAF8B0"]
           ]
         ],
@@ -1634,6 +1677,9 @@
     {
       "name": "VerifierNetwork",
       "address": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
+      "sourceHashes": [
+        "0x1be31a02ca7158d467a49eeb964f0f8aa1d1e74019df854c1881d89d51260701"
+      ],
       "sinceTimestamp": 1694218835,
       "values": {
         "$immutable": true,
@@ -1651,6 +1697,10 @@
     {
       "name": "RelayerV2Radar",
       "address": "0xde19274c009A22921E3966a1Ec868cEba40A5DaC",
+      "sourceHashes": [
+        "0x2cffb288804b4b9aa5855910610b396abe44ded0ad8ed35981ed74d056ae8ba1",
+        "0xb04546b4c05b8647cba50bd7560426e2d11b5b874b85b0f0b61dad7221bf0558"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -1675,6 +1725,9 @@
     {
       "name": "VerifierFeeLib",
       "address": "0xdeA04ef31C4B4FDf31CB58923F37869739280d49",
+      "sourceHashes": [
+        "0x37e1cee9d0a4ad6ebb439d27dbbf23925fcd9f9c0d5b43a33a6335e62b54d18c"
+      ],
       "sinceTimestamp": 1694218841,
       "values": { "$immutable": true }
     }
@@ -2127,7 +2180,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
-  },
-  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+  }
 }

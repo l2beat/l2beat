@@ -1,3 +1,179 @@
+Generated with discovered.json: 0x1f846c86ef42022fa6caf675b7b48ab460f5a22d
+
+# Diff at Mon, 21 Oct 2024 11:07:11 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20685269
+- current block number: 20685269
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20685269 (main branch discovery), not current.
+
+```diff
+    contract Challenge (0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x4Fc6a6A2e3864709ae6AdCf29280dA01c95Aa10B"]
+      values.$pastUpgrades.1.1:
+-        ["0x4Fc6a6A2e3864709ae6AdCf29280dA01c95Aa10B"]
++        "0x4395a7f970de1003c82254f83fbf42c5f11a97842d23ff171be9d0d6c683010b"
+      values.$pastUpgrades.0.2:
++        ["0x2785D4Af59bf299C1f2DBC5132E72B2eE015B3aC"]
+      values.$pastUpgrades.0.1:
+-        ["0x2785D4Af59bf299C1f2DBC5132E72B2eE015B3aC"]
++        "0x84c616f81289c7637be644c43b7a1bf740daa615896f9bb9d141c3d383c4b6f1"
+    }
+```
+
+```diff
+    contract ChainOracle (0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x79B3E839333a74137e78b0DaF84FC12512a8c704"]
+      values.$pastUpgrades.0.1:
+-        ["0x79B3E839333a74137e78b0DaF84FC12512a8c704"]
++        "0x777ffc74cdda4dadf5067e5736ed319792fa6e37c5eab24573e3fd01f33e2334"
+    }
+```
+
+```diff
+    contract LightLinkBridge (0x3ca373F5ecB92ac762f9876f6e773082A4589995) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x468b89D930ca7974196D7195033600B658011756"]
+      values.$pastUpgrades.0.1:
+-        ["0x468b89D930ca7974196D7195033600B658011756"]
++        "0xa5257a1dff2fd90764950a9d0b5767fcf4d7a9d1fb7d27084ccfc03b78e947d2"
+    }
+```
+
+```diff
+    contract L1BridgeRegistry (0x624631881655a310adcF0d1336658Cc977609b72) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xC48F0e7C3c4E385ae84B4f678A0482E00208cf3E"]
+      values.$pastUpgrades.0.1:
+-        ["0xC48F0e7C3c4E385ae84B4f678A0482E00208cf3E"]
++        "0xd39a80831c0c0fdc27b6e030d6e1a393b0d3cbc0f8b9d22d0fa2046b33e2fc76"
+    }
+```
+
+```diff
+    contract LightLinkERC20Bridge (0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xa8372d6FF00d48A25BaA1AF16d6a86C936708f4E"]
+      values.$pastUpgrades.0.1:
+-        ["0xa8372d6FF00d48A25BaA1AF16d6a86C936708f4E"]
++        "0x2a6786734b18517394bf675986e76ba59c82e093d87180792e3f5287c98af7a0"
+    }
+```
+
+```diff
+    contract CanonicalStateChain (0x65E325A22c0F519041db69F5693EbAc3b4AE71bE) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xeFE38Bd58ADDf23eFab1FFa16312030384929289"]
+      values.$pastUpgrades.1.1:
+-        ["0xeFE38Bd58ADDf23eFab1FFa16312030384929289"]
++        "0xcc066ac45b2d6527afdb41a5254a2093bcbc6d8e7d8571f6139b08db97f6e50b"
+      values.$pastUpgrades.0.2:
++        ["0xd8C81A0CB0044fC45B51531A8dcc48Ed385937B5"]
+      values.$pastUpgrades.0.1:
+-        ["0xd8C81A0CB0044fC45B51531A8dcc48Ed385937B5"]
++        "0x39c4618d14675071a6b0f6183c7cf605373987d3ed2677426598aa67e5d15e56"
+    }
+```
+
+Generated with discovered.json: 0x85b4f192d1b2fba467c4bb6306bd5a80063c3804
+
+# Diff at Mon, 14 Oct 2024 10:52:25 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20685269
+- current block number: 20685269
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20685269 (main branch discovery), not current.
+
+```diff
+    contract Challenge (0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd) {
+    +++ description: None
+      sourceHashes:
++        ["0x7e52f67f6162bc66d00626c817dcd5b11c2189fcf7bf5efcd32fd0821c22c0ad","0x90fc7abf9460afe3940188c51d98ab5da40ece530f7fc0e6e10c459a1b7f35f5"]
+    }
+```
+
+```diff
+    contract ChainOracle (0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04) {
+    +++ description: None
+      sourceHashes:
++        ["0x7e52f67f6162bc66d00626c817dcd5b11c2189fcf7bf5efcd32fd0821c22c0ad","0x219c5860c98ee65c799aa9b6549168915088c6de2369583a157ee3a60cf65b47"]
+    }
+```
+
+```diff
+    contract LightLinkMultisig (0x3345702FeA1669Efa1e085610A62F89d159Bc0c8) {
+    +++ description: None
+      sourceHashes:
++        ["0x4bbdb661859a4bbfa25496630a4c393bc0999fe0bdf4910997d7c098294d19e6"]
+    }
+```
+
+```diff
+    contract LightLinkBridge (0x3ca373F5ecB92ac762f9876f6e773082A4589995) {
+    +++ description: None
+      sourceHashes:
++        ["0x271f364b7e28b516246603be8769c5002d3e585faea009e131bf170f073129e8","0x71f4b3f45f14bd6064069c36b9bb52b9b3efa4e4b40344614eaad2e50f5b78c6"]
+    }
+```
+
+```diff
+    contract L1BridgeRegistry (0x624631881655a310adcF0d1336658Cc977609b72) {
+    +++ description: None
+      sourceHashes:
++        ["0xb5af2f6166dd24adeb4b7faf21f2bbfc8512fe699c249b64b565127766ff6e3d","0xc12eca0e011860efa4f71723a172994a15e062d037a0d89ef36b5aed423fb37a"]
+    }
+```
+
+```diff
+    contract LightLinkERC20Bridge (0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9) {
+    +++ description: None
+      sourceHashes:
++        ["0x271f364b7e28b516246603be8769c5002d3e585faea009e131bf170f073129e8","0xc53e364c720158d2d3f89d1c4ffb1a3550689489699dfdaca67ee8a51967c9cc"]
+    }
+```
+
+```diff
+    contract CanonicalStateChain (0x65E325A22c0F519041db69F5693EbAc3b4AE71bE) {
+    +++ description: None
+      sourceHashes:
++        ["0x7e52f67f6162bc66d00626c817dcd5b11c2189fcf7bf5efcd32fd0821c22c0ad","0x7c0a4f7fb2f2948ffde2e5550debf14c02fa682bec9a57aac718daf43c80c2c7"]
+    }
+```
+
+```diff
+    contract RLPReader (0xEe055Dddc462e35521005e1b00FcEFd78E1fc9E2) {
+    +++ description: None
+      sourceHashes:
++        ["0xa54be4566b369d95be75b2911bdb9216ec62e1bc5dc86dff8ec6bcff42c7ec28"]
+    }
+```
+
 Generated with discovered.json: 0x91707214dfe048181dad5534da69db6b710d6c12
 
 # Diff at Tue, 01 Oct 2024 10:52:09 GMT:

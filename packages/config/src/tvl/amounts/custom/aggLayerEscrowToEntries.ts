@@ -2,6 +2,7 @@ import { assert, AmountConfigEntry, AssetId } from '@l2beat/shared-pure'
 import { BackendProject, BackendProjectEscrow } from '../../../backend'
 import { chains } from '../../../chains'
 import { ethereum } from '../../../chains/ethereum'
+import { ChainConfig } from '../../../common/ChainConfig'
 import { tokenList } from '../../../tokens'
 import { getAggLayerL2TokenEntry } from '../aggLayerL2Tokens'
 import { getAggLayerNativeEtherPremintedEntry } from '../aggLayerNativeEtherPreminted'
@@ -22,17 +23,14 @@ export function aggLayerEscrowToEntries(
     ) {
       continue
     }
-    const chain = chains.find((x) => x.chainId === +token.chainId)
-    assert(chain, `Chain not found for token ${token.id}`)
-    assert(chain.name === escrow.chain, 'Programmer error: chain mismatch')
+    const chain = getChain(project)
 
     const configEntry = getAggLayerL2TokenEntry(chain, token, escrow, project)
 
     entries.push(configEntry)
   }
   if (escrow.sharedEscrow.nativeAsset === 'etherPreminted') {
-    const chain = chains.find((x) => x.name === project.projectId)
-    assert(chain, `Chain not found for project ${project.projectId}`)
+    const chain = getChain(project)
     assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
 
     const configEntry = getAggLayerNativeEtherPremintedEntry(
@@ -44,8 +42,7 @@ export function aggLayerEscrowToEntries(
     entries.push(configEntry)
   }
   if (escrow.sharedEscrow.nativeAsset === 'etherWrapped') {
-    const chain = chains.find((x) => x.name === project.projectId)
-    assert(chain, `Chain not found for project ${project.projectId}`)
+    const chain = getChain(project)
     assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
     const l1Weth = tokenList.find(
       (t) => AssetId.create(ethereum.name, t.address) === AssetId.WETH,
@@ -63,4 +60,10 @@ export function aggLayerEscrowToEntries(
   }
 
   return entries
+}
+
+function getChain(project: BackendProject): ChainConfig {
+  const chain = chains.find((x) => x.name === project.projectId)
+  assert(chain, `Chain not found for project ${project.projectId}`)
+  return chain
 }

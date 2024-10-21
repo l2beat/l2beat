@@ -24,6 +24,7 @@ import {
   ScalingProjectContract,
   ScalingProjectEscrow,
   ScalingProjectPermission,
+  ScalingProjectPurpose,
   ScalingProjectRiskView,
   ScalingProjectRiskViewEntry,
   ScalingProjectStateDerivation,
@@ -106,22 +107,17 @@ export interface OpStackConfigCommon {
   stage?: StageConfig
   badges?: BadgeId[]
   discoveryDrivenData?: boolean
+  additionalPurposes?: ScalingProjectPurpose[]
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
-  display: Omit<
-    Layer2Display,
-    'provider' | 'category' | 'dataAvailabilityMode'
-  > & {
+  display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'> & {
     category?: Layer2Display['category']
   }
 }
 
 export interface OpStackConfigL3 extends OpStackConfigCommon {
-  display: Omit<
-    Layer3Display,
-    'provider' | 'category' | 'dataAvailabilityMode'
-  > & {
+  display: Omit<Layer3Display, 'provider' | 'category' | 'purposes'> & {
     category?: Layer3Display['category']
   }
   stackedRiskView?: ScalingProjectRiskView
@@ -181,9 +177,9 @@ export function opStackCommon(
     technology: {
       stateCorrectness: templateVars.nonTemplateTechnology
         ?.stateCorrectness ?? {
-        name: 'Fraud proofs are in development',
+        name: 'Fraud proofs are not enabled',
         description:
-          'Ultimately, OP stack chains will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the system permits invalid state roots.',
+          'OP Stack projects can use the OP fault proof system, already being deployed on some. This project though is not using fault proofs yet and is relying on the honesty of the permissioned Proposer and Challengers to ensure state correctness. The smart contract system permits invalid state roots.',
         risks: [
           {
             category: 'Funds can be stolen if',
@@ -314,10 +310,7 @@ export function opStackCommon(
     },
     permissions:
       templateVars.discoveryDrivenData === true
-        ? [
-            ...templateVars.discovery.getDiscoveredRoles(),
-            ...templateVars.discovery.getDiscoveredPermissions(),
-          ]
+        ? templateVars.discovery.getDiscoveredPermissions()
         : [
             ...templateVars.discovery.getOpStackPermissions({
               batcherHash: 'Sequencer',
@@ -424,16 +417,14 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     type: 'layer2',
     ...opStackCommon(templateVars),
     display: {
+      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       architectureImage,
       ...templateVars.display,
       provider: 'OP Stack',
       category:
         templateVars.display.category ??
         (daProvider !== undefined ? 'Optimium' : 'Optimistic Rollup'),
-      warning:
-        templateVars.display.warning === undefined
-          ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
-          : templateVars.display.warning,
+      warning: templateVars.display.warning,
       liveness:
         daProvider !== undefined
           ? undefined
@@ -787,6 +778,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     hostChain: templateVars.hostChain,
     display: {
       architectureImage,
+      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       ...templateVars.display,
       provider: 'OP Stack',
       category:

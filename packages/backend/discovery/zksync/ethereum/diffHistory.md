@@ -1,3 +1,109 @@
+Generated with discovered.json: 0x8f01f894bad9f0f854d5972808549b8416ca4697
+
+# Diff at Mon, 14 Oct 2024 10:58:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20532597
+- current block number: 20532597
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20532597 (main branch discovery), not current.
+
+```diff
+    contract Multisig 1 (0x002A5dc50bbB8d5808e418Aeeb9F060a2Ca17346) {
+    +++ description: None
+      sourceHashes:
++        ["0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605","0x263aadde480629cd3ca5704cc7d4e7df809d437e68f8d9864039801ddf820367"]
+    }
+```
+
+```diff
+    contract Multisig 2 (0x19eD6cc20D44e5cF4Bb4894F50162F72402d8567) {
+    +++ description: None
+      sourceHashes:
++        ["0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605","0x263aadde480629cd3ca5704cc7d4e7df809d437e68f8d9864039801ddf820367"]
+    }
+```
+
+```diff
+    contract Multisig 3 (0x225d3822De44E58eE935440E0c0B829C4232086e) {
+    +++ description: None
+      sourceHashes:
++        ["0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract Governance (0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01) {
+    +++ description: None
+      sourceHashes:
++        ["0xa4356b8fe23f3499a5494bac2e9e1588ba6976f987fff80e2261aa7ebaa20ce6","0x56f13113f7f861d8b45c18702ac8aa2b4d13d510e35a53f063d80afb36d0785f"]
+    }
+```
+
+```diff
+    contract TokenGovernance (0x35cc31f63deef017c38d51B038891bAE7d614e86) {
+    +++ description: None
+      sourceHashes:
++        ["0xbc5215ffaf06b3d4f7facebe48a2d345c8b0cf97c800aa3f8e644d843a86ae03"]
+    }
+```
+
+```diff
+    contract UpgradeGatekeeper (0x38A43F4330f24fe920F943409709fc9A6084C939) {
+    +++ description: None
+      sourceHashes:
++        ["0x1359a771e28c9c71730920ab6bee9509009c60908022ff865419a483f74f702b"]
+    }
+```
+
+```diff
+    contract Verifier (0x5290E9582B4FB706EaDf87BB1c129e897e04d06D) {
+    +++ description: None
+      sourceHashes:
++        ["0xa4356b8fe23f3499a5494bac2e9e1588ba6976f987fff80e2261aa7ebaa20ce6","0xcf125cd39e9e7620aea95320666f3e3c19a3ae1da200337d94d11de29e8d97af"]
+    }
+```
+
+```diff
+    contract NftFactory (0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D) {
+    +++ description: None
+      sourceHashes:
++        ["0x92b72fece19e4149fd14048afb074cee743d6f3386911f19d109ab73a8cc0208"]
+    }
+```
+
+```diff
+    contract ZkSync (0xaBEA9132b05A70803a4E85094fD0e1800777fBEF) {
+    +++ description: None
+      sourceHashes:
++        ["0xa4356b8fe23f3499a5494bac2e9e1588ba6976f987fff80e2261aa7ebaa20ce6","0xa219a8a62191e08fe0803a9bee5d9b4cf73ae71a969ff2e1bcbc00330880de07","0x51cc7e771fc0a90a4ac4c584004569333b8e5355dea67cb3b6a5e19d602e4a7c"]
+    }
+```
+
+```diff
+    contract Proxy (0xAfC2F2D803479A2AF3A72022D54cc0901a0ec0d6) {
+    +++ description: None
+      sourceHashes:
++        ["0x379cacebf61f1aa488b2a43b02fff3f8d7835d9dca8f342a13570553219e6e8c"]
+    }
+```
+
+```diff
+    contract ZkSync Multisig (0xE24f4870Ab85DE8E356C5fC56138587206c70d99) {
+    +++ description: None
+      sourceHashes:
++        ["0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605","0x263aadde480629cd3ca5704cc7d4e7df809d437e68f8d9864039801ddf820367"]
+    }
+```
+
 Generated with discovered.json: 0x21c05225811617af316de0e7f0c20f796292fb75
 
 # Diff at Tue, 01 Oct 2024 11:12:18 GMT:

@@ -1,3 +1,359 @@
+Generated with discovered.json: 0x6d4521da31477fee385b3d2158ab0b51eb18fec8
+
+# Diff at Mon, 21 Oct 2024 11:12:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20827058
+- current block number: 20827058
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20827058 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.$pastUpgrades.2.2:
++        ["0xde8B916B972cE3c27C21157Fc2b107c413062b9d"]
+      values.$pastUpgrades.2.1:
+-        ["0xde8B916B972cE3c27C21157Fc2b107c413062b9d"]
++        "0x472c4b57b3828c3f8a846702da5707eccb216d672b4ede4eb4186ffe606b14b3"
+      values.$pastUpgrades.1.2:
++        ["0x304a52C8354f323672191Ebf1347Cd3d494Ea830"]
+      values.$pastUpgrades.1.1:
+-        ["0x304a52C8354f323672191Ebf1347Cd3d494Ea830"]
++        "0xf3c21a1c1d5df7cd11018e70254ed8b78bba36107c8231dfee6ff1b1c5702196"
+      values.$pastUpgrades.0.2:
++        ["0x8Ab1b1E21c2f229a7bB1430CF3ADfb0644a69ab7"]
+      values.$pastUpgrades.0.1:
+-        ["0x8Ab1b1E21c2f229a7bB1430CF3ADfb0644a69ab7"]
++        "0x67e7390665dd0d4d9d7ad86cf3ae11c0dce8d7538b69d5fc15d176b36474e08f"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x2a721cBE81a128be0F01040e3353c3805A5EA091) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$pastUpgrades.0.2:
++        ["0x6c01D349d3010Cc2953fFA0A5e8d176fc273B834"]
+      values.$pastUpgrades.0.1:
+-        ["0x6c01D349d3010Cc2953fFA0A5e8d176fc273B834"]
++        "0xba20c00dc03b009737ebbcaa3db1263524a1322c5984a4f51fbf7c4ebc979575"
+    }
+```
+
+```diff
+    contract SystemConfig (0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.$pastUpgrades.0.2:
++        ["0xA03E2f3Ee6dBa20411A2326D7FA9CCCc6a9A53de"]
+      values.$pastUpgrades.0.1:
+-        ["0xA03E2f3Ee6dBa20411A2326D7FA9CCCc6a9A53de"]
++        "0x9cebd2cdbd71bf96668e003794de90cf09858ccebb8f93c41e3d7822df207505"
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      values.$pastUpgrades.3.2:
++        ["0xA4ba8bd753695B6121722CBB7cd81c71BCFBCA28"]
+      values.$pastUpgrades.3.1:
+-        ["0xA4ba8bd753695B6121722CBB7cd81c71BCFBCA28"]
++        "0x472c4b57b3828c3f8a846702da5707eccb216d672b4ede4eb4186ffe606b14b3"
+      values.$pastUpgrades.2.2:
++        ["0x0Fc6203310c494963eBAdd1157780a613B67eCDf"]
+      values.$pastUpgrades.2.1:
+-        ["0x0Fc6203310c494963eBAdd1157780a613B67eCDf"]
++        "0xf3c21a1c1d5df7cd11018e70254ed8b78bba36107c8231dfee6ff1b1c5702196"
+      values.$pastUpgrades.1.2:
++        ["0xE14b12F4843447114A093D99Dc9322b93a967DE6"]
+      values.$pastUpgrades.1.1:
+-        ["0xE14b12F4843447114A093D99Dc9322b93a967DE6"]
++        "0xf3c21a1c1d5df7cd11018e70254ed8b78bba36107c8231dfee6ff1b1c5702196"
+      values.$pastUpgrades.0.2:
++        ["0x7409668285336dBBe720bE3525AEe372Fce4c2ab"]
+      values.$pastUpgrades.0.1:
+-        ["0x7409668285336dBBe720bE3525AEe372Fce4c2ab"]
++        "0xd13642194be1a1b8947f8d3cd1504ec56ca67f4ba953cc45e4f135fb118a46f7"
+    }
+```
+
+```diff
+    contract Verifier (0x6BCe7408c0781dcE7b71494274302D4b75a1447c) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0x13A06FF21E46BCCd4B03E5Cb04372bB7aE7f2168"]
+      values.$pastUpgrades.2.1:
+-        ["0x13A06FF21E46BCCd4B03E5Cb04372bB7aE7f2168"]
++        "0x535806593d5f6ff8537efafb51d759ec64c8e93cc4edbde4a5c55f7ef585bacc"
+      values.$pastUpgrades.1.2:
++        ["0xA153Ec874DaB9e6590cFcf4DC3f5bb86FfaC08B9"]
+      values.$pastUpgrades.1.1:
+-        ["0xA153Ec874DaB9e6590cFcf4DC3f5bb86FfaC08B9"]
++        "0x539b48f8704b83bab6fa24d7b2c46c400a2240c99dd810ebe23fb55aa7399b18"
+      values.$pastUpgrades.0.2:
++        ["0x6a8497798ae8B398608B49b003ECB23aC0756E06"]
+      values.$pastUpgrades.0.1:
+-        ["0x6a8497798ae8B398608B49b003ECB23aC0756E06"]
++        "0x4aadbfa3f415e08a48b58c5047394f912decf4410020f8412353b1e953f161a1"
+    }
+```
+
+```diff
+    contract ZircuitSuperchainConfig (0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xA47314C96ab9572af656788e15143B459F99AE0f"]
+      values.$pastUpgrades.0.1:
+-        ["0xA47314C96ab9572af656788e15143B459F99AE0f"]
++        "0xb5e745182a810d657ce620881623f4109ba08309028552c87519442deef98a13"
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x92Ef6Af472b39F1b363da45E35530c24619245A4) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      values.$pastUpgrades.0.2:
++        ["0xaaF7FCc7252eb739E0001D8727800deAE04A84f1"]
+      values.$pastUpgrades.0.1:
+-        ["0xaaF7FCc7252eb739E0001D8727800deAE04A84f1"]
++        "0xb7f011bd8d0fabfe82b954ebee2fdb2bc366baa21dcceaedf227bf8cf6803232"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x994eEb321F9cD79B077a5455fC248c77f30Dd244) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.$pastUpgrades.0.2:
++        ["0x3B21dC86c412aC34fF4c679497b274509D73cDcC"]
+      values.$pastUpgrades.0.1:
+-        ["0x3B21dC86c412aC34fF4c679497b274509D73cDcC"]
++        "0xd6346f4354e7b4f58d6ef747d0ac04afa4c80319963ac187a69403ff1dcebdc8"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xf885DA6A3B4c93905b02f36f9a13680922A554b0"]
+      values.$pastUpgrades.0.1:
+-        ["0xf885DA6A3B4c93905b02f36f9a13680922A554b0"]
++        "0x25c6d394396aef5f15c5f4fd388c8ebf206b71dfe6ced6d1933573016d7cee77"
+    }
+```
+
+Generated with discovered.json: 0xffc1f4e59cfb0817460af8d85544d63023976fb2
+
+# Diff at Wed, 16 Oct 2024 11:43:13 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a3d139b799cc0b28e5e912febb17464d4e5aef5d block: 20827058
+- current block number: 20827058
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20827058 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "guard"
+      issuedPermissions.0.target:
+-        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
++        "0x2c0B27F7C8F083B539557a0bA787041BF22DB276"
+    }
+```
+
+```diff
+    contract ZircuitGuardianMultiSig (0x2c0B27F7C8F083B539557a0bA787041BF22DB276) {
+    +++ description: None
+      roles:
+-        ["Guardian"]
+      receivedPermissions:
++        [{"permission":"guard","target":"0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1"}]
+    }
+```
+
+```diff
+    contract SystemConfig (0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257","via":[]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "sequence"
+      issuedPermissions.1.target:
+-        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
++        "0xAF1E4f6a47af647F87C0Ec814d8032C4a4bFF145"
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x92Ef6Af472b39F1b363da45E35530c24619245A4) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257","via":[]}
+      issuedPermissions.1:
++        {"permission":"propose","target":"0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "challenge"
+      issuedPermissions.0.target:
+-        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
++        "0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
+    }
+```
+
+```diff
+    contract ZircuitMultiSig (0xC463EaC02572CC964D43D2414023E2c6B62bAF38) {
+    +++ description: None
+      roles:
+-        ["Challenger"]
+      receivedPermissions.1:
++        {"permission":"configure","target":"0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."}
+      receivedPermissions.0.permission:
+-        "configure"
++        "challenge"
+      receivedPermissions.0.target:
+-        "0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff"
++        "0x92Ef6Af472b39F1b363da45E35530c24619245A4"
+      receivedPermissions.0.description:
+-        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+    }
+```
+
+Generated with discovered.json: 0x8d402841bbe226ee88c8e03608a48f88597290b3
+
+# Diff at Mon, 14 Oct 2024 10:58:02 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20827058
+- current block number: 20827058
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20827058 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      sourceHashes:
++        ["0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50","0x9388575e8cf83880125e7770a596c83a0ad9c191b71f1990544987cbd0dbd4c0"]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x2a721cBE81a128be0F01040e3353c3805A5EA091) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes:
++        ["0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50","0x1e3673770550301c22eadd847cc822cfbc995c36019d1dfce07b2ec9cffd930f"]
+    }
+```
+
+```diff
+    contract ZircuitGuardianMultiSig (0x2c0B27F7C8F083B539557a0bA787041BF22DB276) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract SystemConfig (0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes:
++        ["0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50","0x06f2d961bb4a244d73779f83003fd66fcda3cc297693cd348d8ac1aa8c29dc63"]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      sourceHashes:
++        ["0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50","0x3a72e01a50e4baf0c333aa3ad2413675a95c2fc68a18d8a95b3a65179e98ccbc"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257) {
+    +++ description: None
+      sourceHashes:
++        ["0x9097b28161923c9e2353a796f1580ecf8bf3415bae9a69f49102bdf7a1b94da8"]
+    }
+```
+
+```diff
+    contract Verifier (0x6BCe7408c0781dcE7b71494274302D4b75a1447c) {
+    +++ description: None
+      sourceHashes:
++        ["0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50","0x15cce087eeab52950ec9f98df3ec3bb507edb1fac086fa0674aad4994d49049d"]
+    }
+```
+
+```diff
+    contract ZircuitSuperchainConfig (0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0) {
+    +++ description: None
+      sourceHashes:
++        ["0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50","0x39037837abcc5e06ffe85b07ad5f5ce901ed8551155a1b3b81cfd181bd683593"]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x92Ef6Af472b39F1b363da45E35530c24619245A4) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      sourceHashes:
++        ["0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50","0x2f020370d4312debb7d9c97dbf80a48a0a0ee81d261d6d239d6b01d0dd076c81"]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x994eEb321F9cD79B077a5455fC248c77f30Dd244) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sourceHashes:
++        ["0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50","0x7328459427570e205526a415613989750227c38d95138613a718c573132fdd17"]
+    }
+```
+
+```diff
+    contract ZircuitMultiSig (0xC463EaC02572CC964D43D2414023E2c6B62bAF38) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932) {
+    +++ description: None
+      sourceHashes:
++        ["0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50","0xae58fedc9cba4efd31498542acf99901aec1544412fb8cf69fa5c7e804602cc7"]
+    }
+```
+
 Generated with discovered.json: 0x504f3c5a439bf4c23b96ea7798ec84dc7a81ca5f
 
 # Diff at Tue, 01 Oct 2024 11:11:57 GMT:

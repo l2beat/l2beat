@@ -1,3 +1,254 @@
+Generated with discovered.json: 0xebfa1d5ba77fb39d275f5e59944a2143e86b16b6
+
+# Diff at Mon, 21 Oct 2024 11:14:25 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 122593187
+- current block number: 122593187
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 122593187 (main branch discovery), not current.
+
+```diff
+    contract GasPriceOracle (0x420000000000000000000000000000000000000F) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xa919894851548179A0750865e7974DA599C0Fac7"]
+      values.$pastUpgrades.1.1:
+-        ["0xa919894851548179A0750865e7974DA599C0Fac7"]
++        "0x2f63bbe08a66796dde569281a58a53e0b0f64b7aa067297e9c70455fb8e375bc"
+      values.$pastUpgrades.0.2:
++        ["0xb528D11cC114E026F138fE568744c6D45ce6Da7A"]
+      values.$pastUpgrades.0.1:
+-        ["0xb528D11cC114E026F138fE568744c6D45ce6Da7A"]
++        "0xedbfdad1f44ea830b863eac45eca4408398351b30511826012882059625963d2"
+    }
+```
+
+```diff
+    contract L2ERC721Bridge (0x4200000000000000000000000000000000000014) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x5a7749f83b81B301cAb5f48EB8516B986DAef23D"]
+      values.$pastUpgrades.0.1:
+-        ["0x5a7749f83b81B301cAb5f48EB8516B986DAef23D"]
++        "0x02985bade8b066202067f455d11aa0996a23c022fcd923e113af5d9997ddb5ce"
+    }
+```
+
+```diff
+    contract L1Block (0x4200000000000000000000000000000000000015) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x07dbe8500fc591d1852B76feE44d5a05e13097Ff"]
+      values.$pastUpgrades.0.1:
+-        ["0x07dbe8500fc591d1852B76feE44d5a05e13097Ff"]
++        "0x9f2b2d34dfa2cb55cceb9860cade0cb03cfbd7ff1dd07d48b4708b29a46b4a24"
+    }
+```
+
+```diff
+    contract SchemaRegistry (0x4200000000000000000000000000000000000020) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x6232208d66bAc2305b46b4Cb6BCB3857B298DF13"]
+      values.$pastUpgrades.0.1:
+-        ["0x6232208d66bAc2305b46b4Cb6BCB3857B298DF13"]
++        "0xe09a2d85965656572055111f1968491e9bb6b174bfaa5b3e38dbbb82ef94e6fb"
+    }
+```
+
+```diff
+    contract EAS (0x4200000000000000000000000000000000000021) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x4E0275Ea5a89e7a3c1B58411379D1a0eDdc5b088"]
+      values.$pastUpgrades.0.1:
+-        ["0x4E0275Ea5a89e7a3c1B58411379D1a0eDdc5b088"]
++        "0xe09a2d85965656572055111f1968491e9bb6b174bfaa5b3e38dbbb82ef94e6fb"
+    }
+```
+
+Generated with discovered.json: 0x85e07267569ada99b58fe175959a05fe0bd134c1
+
+# Diff at Mon, 14 Oct 2024 11:00:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 122593187
+- current block number: 122593187
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 122593187 (main branch discovery), not current.
+
+```diff
+    contract MintManagerOwner (0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"]
+    }
+```
+
+```diff
+    contract DeployerWhitelist (0x4200000000000000000000000000000000000002) {
+    +++ description: None
+      sourceHashes:
++        ["0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44","0x40a3a457f0e922425ed48d80603e24e652453f57be197487f62795991cff2c2b"]
+    }
+```
+
+```diff
+    contract L2CrossDomainMessenger (0x4200000000000000000000000000000000000007) {
+    +++ description: None
+      sourceHashes:
++        ["0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44","0x54d303632c7acb15a0f8c319289166a6c178e02f2c930685ab3cdcbe5b19ca29"]
+    }
+```
+
+```diff
+    contract GasPriceOracle (0x420000000000000000000000000000000000000F) {
+    +++ description: None
+      sourceHashes:
++        ["0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44","0x6d0f92051952bf3dcccae9e0ff5cf654e3b386df386bc0609b0c7234a2a108bb"]
+    }
+```
+
+```diff
+    contract L2StandardBridge (0x4200000000000000000000000000000000000010) {
+    +++ description: None
+      sourceHashes:
++        ["0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44","0xb1264cdbc9eb25c5d5f9542dc05d942009b4443379d97b246c66b11e2319215f"]
+    }
+```
+
+```diff
+    contract SequencerFeeVault (0x4200000000000000000000000000000000000011) {
+    +++ description: None
+      sourceHashes:
++        ["0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44","0xf13800f6674424ad602d8daac646acfc10794f492253796903ac26b7fdb3eabf"]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x4200000000000000000000000000000000000012) {
+    +++ description: None
+      sourceHashes:
++        ["0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44","0x33cbc2e27551e9c304842740517adbe533ed12516557dc9a8b7c63f7d599998b"]
+    }
+```
+
+```diff
+    contract L1BlockNumber (0x4200000000000000000000000000000000000013) {
+    +++ description: None
+      sourceHashes:
++        ["0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44","0x0ac40be66f726a1d64904e03831f746ee3fd847922d5e54ba4ad0e509602ccf8"]
+    }
+```
+
+```diff
+    contract L2ERC721Bridge (0x4200000000000000000000000000000000000014) {
+    +++ description: None
+      sourceHashes:
++        ["0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44","0x5e60fa0150197ecbd302b46ad0cc0b6f3f024342d97f052ed2f9a8c2a6ed3846"]
+    }
+```
+
+```diff
+    contract L1Block (0x4200000000000000000000000000000000000015) {
+    +++ description: None
+      sourceHashes:
++        ["0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44","0xbdd7533735ef92fffadfbee431b476e72f2f048487c921c5570443e3cba5cb30"]
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (0x4200000000000000000000000000000000000016) {
+    +++ description: None
+      sourceHashes:
++        ["0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44","0x362ef15b4c72a78e42b10222a63ec31da455fc051e5fc3e6bade09de4d19bdd9"]
+    }
+```
+
+```diff
+    contract OptimismMintableERC721Factory (0x4200000000000000000000000000000000000017) {
+    +++ description: None
+      sourceHashes:
++        ["0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44","0x8dc81ca02eba8fc262038825d8c633ed5542af30e92e629f65787cf7161c0b69"]
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0x4200000000000000000000000000000000000018) {
+    +++ description: None
+      template:
+-        "opstack/ProxyAdmin"
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44","0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"]
+    }
+```
+
+```diff
+    contract BaseFeeVault (0x4200000000000000000000000000000000000019) {
+    +++ description: None
+      sourceHashes:
++        ["0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44","0x0c18a8a786c9a78d1ea6a3f71ee3369ae8acc817629b8bf4934b05f8a38a41a2"]
+    }
+```
+
+```diff
+    contract L1FeeVault (0x420000000000000000000000000000000000001A) {
+    +++ description: None
+      sourceHashes:
++        ["0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44","0xa5448c99f954f5f48195d1e118c0513d52fe9a6357928d1d29f617258ca935ff"]
+    }
+```
+
+```diff
+    contract SchemaRegistry (0x4200000000000000000000000000000000000020) {
+    +++ description: None
+      sourceHashes:
++        ["0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44","0x612d21c1676a505153f40dceb55f1251798affb5ed211cfc9c00efa2a51fcbfd"]
+    }
+```
+
+```diff
+    contract EAS (0x4200000000000000000000000000000000000021) {
+    +++ description: None
+      sourceHashes:
++        ["0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44","0x662edc082d445c579bb50a631e8c4137c8d9d9016da29683e3f1ccf24b835092"]
+    }
+```
+
+```diff
+    contract OPToken (0x4200000000000000000000000000000000000042) {
+    +++ description: None
+      sourceHashes:
++        ["0xbaac8c2c26ae66ca5f26a277a6fc9ad2cac1d8e638fae5ab2589b8fec8262316"]
+    }
+```
+
+```diff
+    contract MintManager (0x5C4e7Ba1E219E47948e6e3F55019A647bA501005) {
+    +++ description: None
+      sourceHashes:
++        ["0x132b4ddf43264613a6251435ddd7443efbd8ed51129af51edb5c6ab298471b3d"]
+    }
+```
+
 Generated with discovered.json: 0xc3527c08f9f1468797be981c8cc9c3858d6d3d87
 
 # Diff at Tue, 01 Oct 2024 11:13:41 GMT:

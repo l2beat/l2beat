@@ -4,6 +4,7 @@ import {
 } from '~/utils/project/get-diagram-params'
 import { Markdown } from '../../markdown/markdown'
 import { ProjectSection } from './project-section'
+import { RiskList, type TechnologyRisk } from './risk-list'
 import { type ProjectSectionProps } from './types'
 
 export interface MarkdownSectionProps extends ProjectSectionProps {
@@ -13,12 +14,14 @@ export interface MarkdownSectionProps extends ProjectSectionProps {
   }
   content: string
   mdClassName?: string
+  risks?: TechnologyRisk[]
 }
 
 export function MarkdownSection({
   diagram,
   content,
   mdClassName,
+  risks,
   ...projectSectionProps
 }: MarkdownSectionProps) {
   const diagramParams = diagram
@@ -41,6 +44,7 @@ export function MarkdownSection({
         </figure>
       ) : null}
       <Markdown className={mdClassName}>{content}</Markdown>
+      {risks && risks?.length > 0 && <RiskList risks={risks} />}
     </ProjectSection>
   )
 }

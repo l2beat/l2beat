@@ -1,40 +1,35 @@
-import { MainPageCard } from '~/components/main-page-card'
-import { MainPageHeader } from '~/components/main-page-header'
 import {
-  type DaSummaryEntry,
-  getDaSummaryEntries,
-} from '~/server/features/data-availability/summary/get-da-summary-entries'
-import { DaSummaryDacsTable } from './_components/table/da-summary-dacs-table'
+  DirectoryTabs,
+  DirectoryTabsContent,
+  DirectoryTabsList,
+  DirectoryTabsTrigger,
+} from '~/components/core/directory-tabs'
+import { MainPageHeader } from '~/components/main-page-header'
+import { getDaSummaryEntries } from '~/server/features/data-availability/summary/get-da-summary-entries'
+import { groupBySystem } from '../_utils/group-by-system'
+import { DaSummaryCustomSystemsTable } from './_components/table/da-summary-custom-systems-table'
 import { DaSummaryTable } from './_components/table/da-summary-table'
 
 export default async function Page() {
   const items = await getDaSummaryEntries()
-  const { dacs, other } = items.reduce<
-    Record<'dacs' | 'other', DaSummaryEntry[]>
-  >(
-    (acc, item) => {
-      if (item.kind === 'DAC') {
-        acc.dacs.push(item)
-      } else {
-        acc.other.push(item)
-      }
-      return acc
-    },
-    { dacs: [], other: [] },
-  )
+  const { publicSystems, customSystems } = groupBySystem(items)
 
   return (
     <div>
       <MainPageHeader>Summary</MainPageHeader>
       <div className="flex flex-col gap-6">
-        <MainPageCard className="flex flex-col gap-4">
-          <h2 className="text-xl font-bold">Public blockchains</h2>
-          <DaSummaryTable items={other} />
-        </MainPageCard>
-        <MainPageCard className="flex flex-col gap-4">
-          <h2 className="text-xl font-bold">DACs</h2>
-          <DaSummaryDacsTable items={dacs} />
-        </MainPageCard>
+        <DirectoryTabs defaultValue="public">
+          <DirectoryTabsList>
+            <DirectoryTabsTrigger value="public">Public</DirectoryTabsTrigger>
+            <DirectoryTabsTrigger value="custom">Custom</DirectoryTabsTrigger>
+          </DirectoryTabsList>
+          <DirectoryTabsContent value="public">
+            <DaSummaryTable items={publicSystems} />
+          </DirectoryTabsContent>
+          <DirectoryTabsContent value="custom">
+            <DaSummaryCustomSystemsTable items={customSystems} />
+          </DirectoryTabsContent>
+        </DirectoryTabs>
       </div>
     </div>
   )

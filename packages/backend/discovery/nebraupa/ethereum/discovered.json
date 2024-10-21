@@ -7,6 +7,10 @@
     {
       "name": "UpaVerifier",
       "address": "0x3B946743DEB7B6C97F05B7a31B23562448047E3E",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0xe582f3eab54999f776908b50e2e0f6f3bf03ed8d3c1e5c0d4c7f106234259e85"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -29,6 +33,7 @@
         "$pastUpgrades": [
           [
             "2024-08-14T16:32:47.000Z",
+            "0xd84efac6fc5304747cf72def5bcb7bc2248bd43a6ea4fa7e00f6097269880077",
             ["0xB6cD7eD75c008d0033ED241872639a1D8a35020a"]
           ]
         ],
@@ -68,6 +73,10 @@
       "name": "NebraOwner",
       "address": "0xb463603469Bf31f189E3F6625baf8378880Df14e",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
@@ -313,7 +322,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
-  },
-  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+  }
 }

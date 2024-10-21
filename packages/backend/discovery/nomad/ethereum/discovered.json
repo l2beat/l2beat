@@ -7,6 +7,10 @@
     {
       "name": "ReplicaBeaconProxy",
       "address": "0x049b51e531Fd8f90da6d92EA83dC4125002F20EF",
+      "sourceHashes": [
+        "0xbe5d364ff65b55d089681036cc772258083d96100d71309b7cd76d6f69ced388",
+        "0x5a213a8e0ec856d7338e82299deea6e024ae062e3529eba107f202a6d8600857"
+      ],
       "proxyType": "Optics Beacon proxy",
       "issuedPermissions": [
         {
@@ -23,14 +27,17 @@
         "$pastUpgrades": [
           [
             "2022-01-11T10:52:17.000Z",
+            "0xfa18f505b85ddcf628daace22a887b59d6a65005975d0abcf71d33398d9984a7",
             ["0x7F58bb8311DB968AB110889F2Dfa04ab7E8E831B"]
           ],
           [
             "2022-06-21T18:39:29.000Z",
+            "0x7bccd64f4c4d5f6f545c2edf904857e6ddb460532fc0ac7eb5ac175cd21e56b1",
             ["0xB92336759618F55bd0F8313bd843604592E27bd8"]
           ],
           [
             "2022-11-30T19:54:11.000Z",
+            "0x6795e8b0dc56aa4f3c7f1cc549b7c95efd97cb381f0d3227cce61c1700e9db65",
             ["0x7f221A1850c12b57fed1f0831dd25399a13b68c2"]
           ]
         ],
@@ -54,6 +61,9 @@
     {
       "name": "HomeUpgradeBeacon",
       "address": "0x063e871f8DB991CEAd34B557A00B157B360084cc",
+      "sourceHashes": [
+        "0x22841c972728a5327e28da1a887ae68b6db4dc5f1d658e516abcba1a265b21d8"
+      ],
       "proxyType": "immutable",
       "sinceTimestamp": 1641898210,
       "values": { "$immutable": true },
@@ -62,6 +72,9 @@
     {
       "name": "ReplicaUpgradeBeacon",
       "address": "0x0876dFe4AcAe0e1c0a43302716483f5752298b71",
+      "sourceHashes": [
+        "0x22841c972728a5327e28da1a887ae68b6db4dc5f1d658e516abcba1a265b21d8"
+      ],
       "proxyType": "immutable",
       "sinceTimestamp": 1641898337,
       "values": { "$immutable": true },
@@ -70,12 +83,19 @@
     {
       "name": "UpgradeBeaconProxy",
       "address": "0x0A6f564C5c9BeBD66F1595f1B51D1F3de6Ef3b79",
+      "sourceHashes": [
+        "0xbe5d364ff65b55d089681036cc772258083d96100d71309b7cd76d6f69ced388"
+      ],
       "sinceTimestamp": 1641899379,
       "values": { "$immutable": true }
     },
     {
       "name": "GovernanceRouterBeaconProxy",
       "address": "0x3009C99D370B780304D2098196f1EBF779a4777a",
+      "sourceHashes": [
+        "0xbe5d364ff65b55d089681036cc772258083d96100d71309b7cd76d6f69ced388",
+        "0xa84df7e66da3df341f1c36dbdb91392d9fa74a77013330c97f73274f59d0be15"
+      ],
       "proxyType": "Optics Beacon proxy",
       "issuedPermissions": [
         {
@@ -91,14 +111,17 @@
         "$pastUpgrades": [
           [
             "2022-01-11T10:51:01.000Z",
+            "0xa9005bc6bbfdb16ae648a796e15a1ebea3f62af29f617647bb1b3399dff1dfbe",
             ["0x569D80f7FC17316B4C83f072b92EF37B72819DE0"]
           ],
           [
             "2022-06-21T18:39:29.000Z",
+            "0x7bccd64f4c4d5f6f545c2edf904857e6ddb460532fc0ac7eb5ac175cd21e56b1",
             ["0xfBea6D67DDd90E1f726C2622c6C42b016fDad5a7"]
           ],
           [
             "2022-11-30T19:54:11.000Z",
+            "0x6795e8b0dc56aa4f3c7f1cc549b7c95efd97cb381f0d3227cce61c1700e9db65",
             ["0xE9F0a0a787CEEA82f1c8fE7A783826eBD181e707"]
           ]
         ],
@@ -120,6 +143,9 @@
     {
       "name": "GovernanceUpgradeBeacon",
       "address": "0x67833a48b3F509d4252ac2c19cd604556eD6c981",
+      "sourceHashes": [
+        "0x22841c972728a5327e28da1a887ae68b6db4dc5f1d658e516abcba1a265b21d8"
+      ],
       "proxyType": "immutable",
       "sinceTimestamp": 1641898261,
       "values": { "$immutable": true },
@@ -128,6 +154,10 @@
     {
       "name": "BridgeRouterBeaconProxy",
       "address": "0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3",
+      "sourceHashes": [
+        "0xbe5d364ff65b55d089681036cc772258083d96100d71309b7cd76d6f69ced388",
+        "0x2e0076ec20cd768884b443f77a4c1a9b0e7532b23d3f961c0d2d3160f8057fe9"
+      ],
       "proxyType": "Optics Beacon proxy",
       "issuedPermissions": [
         {
@@ -143,14 +173,17 @@
         "$pastUpgrades": [
           [
             "2022-01-11T11:10:23.000Z",
+            "0xbeb76185575a5352f7b9c9c2d302883fd092525e741f33434faea86af8bbcc7b",
             ["0xD3dfD3eDe74E0DCEBC1AA685e151332857efCe2d"]
           ],
           [
             "2022-06-21T18:39:29.000Z",
+            "0x7bccd64f4c4d5f6f545c2edf904857e6ddb460532fc0ac7eb5ac175cd21e56b1",
             ["0x15fdA9F60310d09FEA54E3c99d1197DfF5107248"]
           ],
           [
             "2022-11-30T19:54:11.000Z",
+            "0x6795e8b0dc56aa4f3c7f1cc549b7c95efd97cb381f0d3227cce61c1700e9db65",
             ["0xe0db61ac718f502B485DEc66D013afbbE0B52F84"]
           ]
         ],
@@ -168,6 +201,9 @@
     {
       "name": "UpdaterManager",
       "address": "0x9272C9d5fa902Ef3804EC81e0333Ae420D57f715",
+      "sourceHashes": [
+        "0x4ac3e27d1d1ef6c9a05335874ae7286f305ae29a71c239cd1095617d01efbaf0"
+      ],
       "sinceTimestamp": 1641898065,
       "values": {
         "$immutable": true,
@@ -178,6 +214,10 @@
     {
       "name": "HomeBeaconProxy",
       "address": "0x92d3404a7E6c91455BbD81475Cd9fAd96ACFF4c8",
+      "sourceHashes": [
+        "0xbe5d364ff65b55d089681036cc772258083d96100d71309b7cd76d6f69ced388",
+        "0x49bd5136e54546da3f230903b88d542e5e2f6ceedb105ba13642063f86972ab3"
+      ],
       "proxyType": "Optics Beacon proxy",
       "issuedPermissions": [
         {
@@ -193,14 +233,17 @@
         "$pastUpgrades": [
           [
             "2022-01-11T10:50:10.000Z",
+            "0x04d115136ab73cee543d5ab5635aa11f085511306720cbd77c75f175b7713802",
             ["0x8F184D6Aa1977fd2F9d9024317D0ea5cF5815b6f"]
           ],
           [
             "2022-06-21T18:39:29.000Z",
+            "0x7bccd64f4c4d5f6f545c2edf904857e6ddb460532fc0ac7eb5ac175cd21e56b1",
             ["0x1f98FDc4D8d0806eB3902d57df7a2183b333B80C"]
           ],
           [
             "2022-11-30T19:54:11.000Z",
+            "0x6795e8b0dc56aa4f3c7f1cc549b7c95efd97cb381f0d3227cce61c1700e9db65",
             ["0xf3bb7e2d4B26ae2C3EAC41171840c227f457EA06"]
           ]
         ],
@@ -231,6 +274,10 @@
       "name": "Governor",
       "address": "0x93277b8f5939975b9E6694d5Fd2837143afBf68A",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1641859677,
@@ -257,12 +304,18 @@
     {
       "name": "UpgradeBeaconProxy",
       "address": "0xa4B86BcbB18639D8e708d6163a0c734aFcDB770c",
+      "sourceHashes": [
+        "0xbe5d364ff65b55d089681036cc772258083d96100d71309b7cd76d6f69ced388"
+      ],
       "sinceTimestamp": 1669736603,
       "values": { "$immutable": true }
     },
     {
       "name": "BridgeUpgradeBeacon",
       "address": "0xB70588b1A51F847d13158ff18E9Cac861dF5Fb00",
+      "sourceHashes": [
+        "0x22841c972728a5327e28da1a887ae68b6db4dc5f1d658e516abcba1a265b21d8"
+      ],
       "proxyType": "immutable",
       "sinceTimestamp": 1641899423,
       "values": { "$immutable": true },
@@ -272,6 +325,10 @@
       "name": "RecoveryManager",
       "address": "0xda2f881f7f4e9D2b9559F97c7670472A85C1986A",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1641860106,
@@ -296,6 +353,9 @@
     {
       "name": "UpgradeBeaconController",
       "address": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
+      "sourceHashes": [
+        "0x12e387edec9bf90c8c2ee351a4b607488ae3e01f861eb7dabbf3e4fdd078ad48"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -323,6 +383,9 @@
     {
       "name": "XAppConnectionManager",
       "address": "0xFe8874778f946Ac2990A29eba3CFd50760593B2F",
+      "sourceHashes": [
+        "0xb64e5af8c508ce86c29728805a64c3b45bf37a0a28c4ea602902a3e23de80dfd"
+      ],
       "sinceTimestamp": 1641898174,
       "values": {
         "$immutable": true,
@@ -620,7 +683,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
-  },
-  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+  }
 }

@@ -11,11 +11,8 @@ export const dbk: Layer2 = opStackL2({
   display: {
     name: 'DeBank Chain',
     slug: 'dbk',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
       'DeBank Chain is an OP stack Layer 2 on Ethereum that is deeply integrated into the DeBank ecosystem, allowing bridging directly from inside the Rabby Wallet.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://dbkchain.io/'],
       apps: [],

@@ -7,6 +7,9 @@
     {
       "name": "TokenMessaging",
       "address": "0x5f688F563Dc16590e570f97b542FA87931AF2feD",
+      "sourceHashes": [
+        "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
+      ],
       "sinceTimestamp": 1716837017,
       "values": {
         "$immutable": true,
@@ -47,6 +50,9 @@
     {
       "name": "StargatePoolNative",
       "address": "0x81F6138153d473E8c5EcebD3DC8Cd4903506B075",
+      "sourceHashes": [
+        "0x63ac97930921267a1251904351ae2409e0d62d3d3c3fcb2ed7bc1fc4775321f7"
+      ],
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -268,6 +274,5 @@
       "function withdrawTreasuryFee(address _to, uint64 _amountSD)"
     ]
   },
-  "usedTemplates": {},
-  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
+  "usedTemplates": {}
 }

@@ -1,3 +1,216 @@
+Generated with discovered.json: 0xa37ad6488350690729323af1c94af547bd7e341d
+
+# Diff at Mon, 21 Oct 2024 11:14:40 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 40976255
+- current block number: 40976255
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 40976255 (main branch discovery), not current.
+
+```diff
+    contract  (0x5a54fe5234E811466D5366846283323c954310B2) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x47bc8fb02aA30f7ec413f60aFD2C90D8ee96B583"]
+      values.$pastUpgrades.1.1:
+-        ["0x47bc8fb02aA30f7ec413f60aFD2C90D8ee96B583"]
++        "0xf63ed6dc94a1fbfba0050f3fd911a2783aadb094b645eb3b4eeb3d155a06427c"
+      values.$pastUpgrades.0.2:
++        ["0xf75C2919c8fddF9D6f34531EBDC7Ad28E1a192e2"]
+      values.$pastUpgrades.0.1:
+-        ["0xf75C2919c8fddF9D6f34531EBDC7Ad28E1a192e2"]
++        "0x31f47a097b7bd9f63239dbc3fa2e1c2557c61434ca6afdb25b4561eee80007b4"
+    }
+```
+
+```diff
+    contract  (0x7A50b180265eb5347Ce7b92224F0B0Cd6cE0493b) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0x893BB42a352CA8Ee8bCb58348455DD3966368737"]
+      values.$pastUpgrades.2.1:
+-        ["0x893BB42a352CA8Ee8bCb58348455DD3966368737"]
++        "0xfd690c14f615eced61d756cd43013ce3409f77b4875d6268a67884501ca4d29e"
+      values.$pastUpgrades.1.2:
++        ["0xa79dE9B3409361Cd3367856b5Fa9BC258C1f9F0F"]
+      values.$pastUpgrades.1.1:
+-        ["0xa79dE9B3409361Cd3367856b5Fa9BC258C1f9F0F"]
++        "0xc270073cd459d99b6a86001e756530ae0c22761bf47e42089bdfae585e9f2443"
+      values.$pastUpgrades.0.2:
++        ["0x23768Cfd95B699d9B772ce042e490F9deA5ae6d6"]
+      values.$pastUpgrades.0.1:
+-        ["0x23768Cfd95B699d9B772ce042e490F9deA5ae6d6"]
++        "0x89dde5652c34f71e7337186bea268a09a9caa409ea40edb4bcf61f5483c8f67b"
+    }
+```
+
+```diff
+    contract RelayerV2 (0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182) {
+    +++ description: None
+      values.$pastUpgrades.5.2:
++        ["0x7701C12D268847dB94bbF37A4C4af53Bb6bAF8B0"]
+      values.$pastUpgrades.5.1:
+-        ["0x7701C12D268847dB94bbF37A4C4af53Bb6bAF8B0"]
++        "0x14c6afd1411f336c05539d9bcc5c1b9d79babf7de84343615816229cd1c25371"
+      values.$pastUpgrades.4.2:
++        ["0x26fdA154E76e53F078e7096459d9132542db3b9d"]
+      values.$pastUpgrades.4.1:
+-        ["0x26fdA154E76e53F078e7096459d9132542db3b9d"]
++        "0x47a7ec5b68119851c4f03560f3aaed318454b512a7a5ad2235a54fad20205fe7"
+      values.$pastUpgrades.3.2:
++        ["0x92B9a8278ce3a1E17C66B3a6B61d807b2616bcED"]
+      values.$pastUpgrades.3.1:
+-        ["0x92B9a8278ce3a1E17C66B3a6B61d807b2616bcED"]
++        "0x8ecbced18a0e42909acc3cdae10feca174cf9b3bed09cee3b43cf09b069fb792"
+      values.$pastUpgrades.2.2:
++        ["0x1a9a68b8Af58eA2b9130622e3bEA2373AaA79EFa"]
+      values.$pastUpgrades.2.1:
+-        ["0x1a9a68b8Af58eA2b9130622e3bEA2373AaA79EFa"]
++        "0x6f17740ee2451bdc90723be62bd6c5bf2896e27c2656aa442f8b1abe86dc6862"
+      values.$pastUpgrades.1.2:
++        ["0x48486ECbB22Ca392f99C21FF02f6106580f526F8"]
+      values.$pastUpgrades.1.1:
+-        ["0x48486ECbB22Ca392f99C21FF02f6106580f526F8"]
++        "0x836cf185eb81a7c91b2aaea511c9f1a87ce030596f1f750848666ae37b8f9e4d"
+      values.$pastUpgrades.0.2:
++        ["0x50002CdFe7CCb0C41F519c6Eb0653158d11cd907"]
+      values.$pastUpgrades.0.1:
+-        ["0x50002CdFe7CCb0C41F519c6Eb0653158d11cd907"]
++        "0xc8142d7bedc7b69fc6946c60bfe7920560036a570ab9b1a0dbd80611d3013db6"
+    }
+```
+
+Generated with discovered.json: 0x7e438dfd22241d621e50034437b93bdb757186ca
+
+# Diff at Mon, 14 Oct 2024 11:00:17 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 40976255
+- current block number: 40976255
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 40976255 (main branch discovery), not current.
+
+```diff
+    contract FPValidator (0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6) {
+    +++ description: None
+      sourceHashes:
++        ["0x0d505ac1b08cd930c4b902daa632eaa029531d5c1aa50c45169b63c310b2da62"]
+    }
+```
+
+```diff
+    contract TreasuryV2 (0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d) {
+    +++ description: None
+      sourceHashes:
++        ["0x8b908351f18fdaeaf600ae46ef1450c535f741fc95bb25acade77f8b59fdc168"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x38dE71124f7a447a01D67945a51eDcE9FF491251) {
+    +++ description: None
+      sourceHashes:
++        ["0xeb95d39e1b35f76b6331da863f87bf2e148dd21abf5666590443b65f6a125630"]
+    }
+```
+
+```diff
+    contract Endpoint (0x3c2269811836af69497E5F486A85D7316753cf62) {
+    +++ description: None
+      sourceHashes:
++        ["0x945c3299d0cf62b9ea7a77d6328295d54327299d6a153e1e7b48d85fa9b77215"]
+    }
+```
+
+```diff
+    contract MPTValidator01 (0x462F7eC57C6492B983a8C8322B4369a7f149B859) {
+    +++ description: None
+      sourceHashes:
++        ["0x965651ae50a316c3ab842d2c8c9242c34d6e40eefa61f7c731bba9a1faf2ccea"]
+    }
+```
+
+```diff
+    contract UltraLightNodeV2 (0x4D73AdB72bC3DD368966edD0f0b2148401A178E2) {
+    +++ description: None
+      sourceHashes:
++        ["0x38c85ab54f670eaa1fc2b351aee39913bc12e2b26c460ee31cf89d3f1f7d59b9"]
+    }
+```
+
+```diff
+    contract NonceContract (0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068) {
+    +++ description: None
+      sourceHashes:
++        ["0x895867397d61409de8476975bae4d871fec1c289e52fe97b31872726808dae38"]
+    }
+```
+
+```diff
+    contract LayerZero Multisig (0x8D452629c5FfCDDE407069da48c096e1F8beF22c) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8) {
+    +++ description: None
+      sourceHashes:
++        ["0xeb95d39e1b35f76b6331da863f87bf2e148dd21abf5666590443b65f6a125630"]
+    }
+```
+
+```diff
+    contract RelayerV2 (0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cffb288804b4b9aa5855910610b396abe44ded0ad8ed35981ed74d056ae8ba1","0x09e8ef64d88f50d1728775b0716905d15bbe17af7dad266027d75f85e6276d49"]
+    }
+```
+
+```diff
+    contract VerifierNetwork (0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc) {
+    +++ description: None
+      sourceHashes:
++        ["0x1be31a02ca7158d467a49eeb964f0f8aa1d1e74019df854c1881d89d51260701"]
+    }
+```
+
+```diff
+    contract RelayerV2Radar (0xde19274c009A22921E3966a1Ec868cEba40A5DaC) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cffb288804b4b9aa5855910610b396abe44ded0ad8ed35981ed74d056ae8ba1","0xb04546b4c05b8647cba50bd7560426e2d11b5b874b85b0f0b61dad7221bf0558"]
+    }
+```
+
+```diff
+    contract VerifierFeeLib (0xdeA04ef31C4B4FDf31CB58923F37869739280d49) {
+    +++ description: None
+      sourceHashes:
++        ["0x37e1cee9d0a4ad6ebb439d27dbbf23925fcd9f9c0d5b43a33a6335e62b54d18c"]
+    }
+```
+
 Generated with discovered.json: 0xc23597de36404eeaff36e475d2ed0e3ffc459f01
 
 # Diff at Fri, 11 Oct 2024 07:38:55 GMT:

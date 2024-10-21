@@ -1,16 +1,19 @@
 import { useQuery } from '@tanstack/react-query'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { get4ByteSignatures } from './api/FourByte'
 import { getOpenChainSignatures } from './api/OpenChain'
 import { SimpleValue } from './components/SimpleValue'
 import { ValueHeading } from './components/ValueHeading'
-import { Value, decode } from './decode'
+import { Value, decode, decodeCustom } from './decode'
 
 interface DecodedProps {
   encoded: `0x${string}`
 }
 
 export function Decoded(props: DecodedProps) {
+  const inputRef = useRef<HTMLInputElement>(null)
+  const [customAbi, setCustomAbi] = useState<string | undefined>()
+
   const selector = props.encoded.slice(0, 10)
 
   const q1 = useQuery({
@@ -36,20 +39,58 @@ export function Decoded(props: DecodedProps) {
   if (q2.data) {
     signatures.push(...q2.data.map((x) => `function ${x}`))
   }
-  const decoded = decode(props.encoded, signatures)
+  const decoded = customAbi
+    ? decodeCustom(props.encoded, customAbi)
+    : decode(props.encoded, signatures)
 
   const error = q1.error ?? q2.error
   if (error) {
     return <div>Error: {error.message}</div>
   }
 
+  const name =
+    decoded?.type === 'function'
+      ? decoded.name
+      : decoded?.type === 'parameters'
+        ? 'Custom parameters'
+        : 'Unknown'
+
+  const info = customAbi || selector
+
   return (
     <>
       <h2 className="mb-1">
-        <span className="font-bold text-lg">{decoded?.name ?? 'Unknown'}</span>{' '}
-        <span className="pl-2 font-mono text-sm">{selector}</span>
+        <span className="font-bold text-lg">{name}</span>{' '}
+        <span className="pl-2 font-mono text-sm">{info}</span>
       </h2>
-      {decoded && (
+      {(!decoded || decoded.type === 'error') && (
+        <div>
+          <div className="mb-2 flex gap-2">
+            <input
+              ref={inputRef}
+              className="block w-full rounded-sm bg-zinc-800 px-2.5 py-1 font-mono text-sm shadow-inner"
+              placeholder="Input custom ABI"
+            />
+            <button
+              className="rounded-sm border-zinc-900 border-b-4 bg-zinc-800 px-2.5 py-1 active:mt-1 active:border-b-0"
+              onClick={() => setCustomAbi(inputRef.current?.value)}
+            >
+              Decode
+            </button>
+          </div>
+          {decoded?.type === 'error' ? (
+            <div className="text-red-600 text-xs">
+              Cannot decode with provided ABI. See console for details.
+            </div>
+          ) : (
+            <div className="text-xs">
+              Examples: 1. <code>function foo(address, uint)</code> 2.{' '}
+              <code>(address, uint[], string)</code>
+            </div>
+          )}
+        </div>
+      )}
+      {decoded && decoded?.type !== 'error' && (
         <ol>
           {decoded.values.map((v, i) => (
             <DecodedValue key={i} value={v} />

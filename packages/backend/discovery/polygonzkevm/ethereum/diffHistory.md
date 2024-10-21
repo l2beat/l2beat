@@ -1,3 +1,146 @@
+Generated with discovered.json: 0x211f698e7103ca1f1041c810857bdada90077456
+
+# Diff at Mon, 21 Oct 2024 11:09:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20878349
+- current block number: 20878349
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20878349 (main branch discovery), not current.
+
+```diff
+    contract daiBridge (0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xF684f2CB299cCDaAB483ffc1573B82f40C6b775b"]
+      values.$pastUpgrades.0.1:
+-        ["0xF684f2CB299cCDaAB483ffc1573B82f40C6b775b"]
++        "0x2c7c12aeaf738701352017fc49f5268db9632b84bdc6f76474e6776371f53b7e"
+    }
+```
+
+```diff
+    contract PolygonZkEVMEtrog (0x519E42c24163192Dca44CD3fBDCEBF6be9130987) {
+    +++ description: None
+      values.$pastUpgrades.3.2:
++        ["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"]
+      values.$pastUpgrades.3.1:
+-        ["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"]
++        "0x069690e412d29d96bc94d6bf5c816e43bb401cbf948f3e3cad261e073e2d2afe"
+      values.$pastUpgrades.2.2:
++        ["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"]
+      values.$pastUpgrades.2.1:
+-        ["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"]
++        "0x67e892c44b9d14709693e74dd5e17fb40d98c8c2cc1c5330265e758e8958a01b"
+      values.$pastUpgrades.1.2:
++        ["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"]
+      values.$pastUpgrades.1.1:
+-        ["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"]
++        "0xeba0bc3b2674c961c5a998f22f789ea610a7c3e57e622a4dd951cca2702b8be3"
+      values.$pastUpgrades.0.2:
++        ["0x79BCB82B35A335cD8A8Ec433b304a0c91f67CDE0"]
+      values.$pastUpgrades.0.1:
+-        ["0x79BCB82B35A335cD8A8Ec433b304a0c91f67CDE0"]
++        "0x4e3fc80071c2d0852584cb59bfcd784519bfb3582aa3334098a4b32b5f6aaef4"
+    }
+```
+
+```diff
+    contract usdcBridge (0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xA4e6762eAAf259DA74696F46fAAF79bA9DdE14E6"]
+      values.$pastUpgrades.0.1:
+-        ["0xA4e6762eAAf259DA74696F46fAAF79bA9DdE14E6"]
++        "0x6402dc60bb9c4f704f126f4b11e40b33c287b4ac7f73ea60c50d7452d52ce735"
+    }
+```
+
+```diff
+    contract wstETHBridge (0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x18FED1E19dC564DC917D203be9d40790472D22e9"]
+      values.$pastUpgrades.0.1:
+-        ["0x18FED1E19dC564DC917D203be9d40790472D22e9"]
++        "0x12c54f4243dc8e3b41be87984b78248eecbf98b92e30ff10b487be2599d7e3a1"
+    }
+```
+
+Generated with discovered.json: 0xa52a6e95e97f6f81ea4e73f44b254a0cf5482586
+
+# Diff at Mon, 14 Oct 2024 10:54:24 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20878349
+- current block number: 20878349
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20878349 (main branch discovery), not current.
+
+```diff
+    contract daiBridge (0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98) {
+    +++ description: None
+      sourceHashes:
++        ["0x612fcbfe67b3a142750d4b383ec80c3df15e053a88579b6d54660253f4c19baa","0x608730e7656b64bd18a9a04f2b0024b9dc95d2145d3e6cde1f5d590f31f4fff4"]
+    }
+```
+
+```diff
+    contract PolygonZkEVMEtrog (0x519E42c24163192Dca44CD3fBDCEBF6be9130987) {
+    +++ description: None
+      sourceHashes:
++        ["0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4","0xf303702e52579ed796873f92868d2ebedd55360bf53043519e6061b19df3eb4b"]
+    }
+```
+
+```diff
+    contract usdcBridge (0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB) {
+    +++ description: None
+      sourceHashes:
++        ["0x74f36c1c292d2992d00c72ffd2ff8a4b8648a1c9058e63210c2742186a9daf50","0xefc52c461b0de070fb85381ef77033d1a68b13e59d2ca477477b766802ab1164"]
+    }
+```
+
+```diff
+    contract PolygonzkEVMVerifier (0xc521580cd8586Cc688A7430F9DcE0f6A803F2883) {
+    +++ description: None
+      sourceHashes:
++        ["0x1b9299553467d8c5557640b4aa02efa58c4fd2cec8e008db1a70ce0a1c5a131b"]
+    }
+```
+
+```diff
+    contract wstETHBridge (0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01) {
+    +++ description: None
+      sourceHashes:
++        ["0x612fcbfe67b3a142750d4b383ec80c3df15e053a88579b6d54660253f4c19baa","0x768cec78a852b6918281dca4675713010a4e764f5eb658f4f98c8ae258523e62"]
+    }
+```
+
+```diff
+    contract EscrowsAdmin (0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
 Generated with discovered.json: 0x917901b9460d0dd2a0523a068882d3b1aa9a7536
 
 # Diff at Wed, 02 Oct 2024 14:16:59 GMT:

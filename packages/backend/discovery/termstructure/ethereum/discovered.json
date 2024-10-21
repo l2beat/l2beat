@@ -7,6 +7,19 @@
     {
       "name": "ZkTrueUp",
       "address": "0x09E01425780094a9754B2bd8A3298f73ce837CF9",
+      "sourceHashes": [
+        "0xaf4593a06cce3e50624c82a06b485e27462a6374717492c2830694f306501a24",
+        "0xaf4593a06cce3e50624c82a06b485e27462a6374717492c2830694f306501a24",
+        "0xfe9a185d63abab90311e0fe1c1ac9cf8ff75eb18b8894eec37fc861eaad40d34",
+        "0xa0a7ab911e7d45110b829d570dafda338f8d219d6019764635afa4bca84fc59a",
+        "0xbe47fc752b9cc901076df497fc8cb6a2ddbcb637a2bd4933e613cceb18dd3402",
+        "0xf7c59de1978d9e9fc84cd56a13c68c6e5ed1927c1ae7254246618c7060ffcae5",
+        "0x642645c3c922206e870ca2360d10224c192a227d6d54c8faa196f25ad2611213",
+        "0x1b6b15362c8920645517802d39895f30af39a6b2f35827f36b2dc5bb93165043",
+        "0xe98e94b140bcf95af7426dfd8ef8d9898155a8f2b1b0ba63ac31d11dd3c6bc4a",
+        "0xdc8abdeeb2ddb258e61ab5c393c746cf9dde680b929037b31a3741aea32fd2b5",
+        "0x7330507f8514566e42d7ae9942cb8825f30a89685dfadea06e8f02d6477e9ec8"
+      ],
       "proxyType": "EIP2535 diamond proxy",
       "ignoreInWatchMode": [
         "getAccountNum",
@@ -234,6 +247,9 @@
     {
       "name": "Verifier",
       "address": "0x23369A60E5A8f422E38d799eD55e7AD8Ed4A86cE",
+      "sourceHashes": [
+        "0x67dda2434d66037220b8cf67f02205cb656fc8378fc0b5d0371ce8031274f4ce"
+      ],
       "sinceTimestamp": 1716263747,
       "values": { "$immutable": true }
     },
@@ -241,6 +257,10 @@
       "name": "VaultMultisig",
       "address": "0x23bCad9BFB1378cd45b32525B835F037b673f529",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1716254495,
@@ -269,6 +289,10 @@
       "name": "InsuranceMultisig",
       "address": "0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1716254831,
@@ -303,6 +327,9 @@
     {
       "name": "EvacuationFacet",
       "address": "0x882aBFb2F6A67d36350499991638044e8Bd83a72",
+      "sourceHashes": [
+        "0x7330507f8514566e42d7ae9942cb8825f30a89685dfadea06e8f02d6477e9ec8"
+      ],
       "sinceTimestamp": 1716263891,
       "values": { "$immutable": true, "isEvacuMode": false },
       "derivedName": "EvacuationFacet"
@@ -310,6 +337,9 @@
     {
       "name": "AccountFacet",
       "address": "0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A",
+      "sourceHashes": [
+        "0xfe9a185d63abab90311e0fe1c1ac9cf8ff75eb18b8894eec37fc861eaad40d34"
+      ],
       "sinceTimestamp": 1716263771,
       "values": { "$immutable": true, "getAccountNum": 0 },
       "derivedName": "AccountFacet"
@@ -317,6 +347,9 @@
     {
       "name": "RollupFacet",
       "address": "0x955cdD2E56Ca2776a101a552A318d28fe311398D",
+      "sourceHashes": [
+        "0x1b6b15362c8920645517802d39895f30af39a6b2f35827f36b2dc5bb93165043"
+      ],
       "sinceTimestamp": 1716263831,
       "values": {
         "$immutable": true,
@@ -328,6 +361,9 @@
     {
       "name": "EvacuVerifier",
       "address": "0x9c7Df3981A89eD04588907843fe2a6c1BcCc4467",
+      "sourceHashes": [
+        "0x5c5089086b3995e62860454cc54ad1f86295fb59c0104a9bd303b2c1c0993c20"
+      ],
       "sinceTimestamp": 1716263759,
       "values": { "$immutable": true }
     },
@@ -335,6 +371,10 @@
       "name": "TermStructureMultisig",
       "address": "0xa00d50A40B1635D293c87BA36503bD2504b5D818",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1716253799,
@@ -363,6 +403,10 @@
       "name": "TreasuryMultisig",
       "address": "0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1716254159,
@@ -843,7 +887,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
-  },
-  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+  }
 }

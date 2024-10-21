@@ -1,3 +1,122 @@
+Generated with discovered.json: 0x3796bf492dd81a108064026de8bcb3de84cf9c6c
+
+# Diff at Mon, 21 Oct 2024 11:15:50 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 8312690
+- current block number: 8312690
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 8312690 (main branch discovery), not current.
+
+```diff
+    contract zkLink (0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xDe4Be50Bfe9503180231357Eab19d709F8F73C66"]
+      values.$pastUpgrades.1.1:
+-        ["0xDe4Be50Bfe9503180231357Eab19d709F8F73C66"]
++        "0xb0fd8cd86cd093af8f866f6fd599067fc5d202d36fd1f4967bda245c41ee16aa"
+      values.$pastUpgrades.0.2:
++        ["0x35E808DB3A37eec12ecF6A22Cc951C9F867f1D64"]
+      values.$pastUpgrades.0.1:
+-        ["0x35E808DB3A37eec12ecF6A22Cc951C9F867f1D64"]
++        "0xd2b32d00ff07d1bb06d1fb01f3aedb6163ee3bf6fbe547310c4674f592d4d7f5"
+    }
+```
+
+```diff
+    contract BlastL2Gateway (0x3f64e2e09732969813904a8473074CFADeE66AF1) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xd1dCd063A4e650DCECd8BD211fe6D18a934ecCaD"]
+      values.$pastUpgrades.0.1:
+-        ["0xd1dCd063A4e650DCECd8BD211fe6D18a934ecCaD"]
++        "0x05e9bceb1c88e60beabf453da2cfc31525989a529e5d600fbe170dfdb1325c88"
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xc24864769346073f5fEf0386A18734F0eF5503F5"]
+      values.$pastUpgrades.1.1:
+-        ["0xc24864769346073f5fEf0386A18734F0eF5503F5"]
++        "0x319fa19f70ff861bf9b573f1cc6054d236dcb99dec620756e3f85d2c35c0040b"
+      values.$pastUpgrades.0.2:
++        ["0x4D7012d5C62c351804CCe49c2d7C09A401fD3deC"]
+      values.$pastUpgrades.0.1:
+-        ["0x4D7012d5C62c351804CCe49c2d7C09A401fD3deC"]
++        "0x6c75a5c435f7e399d35fa65b31295cfa722742a9cd03208bcf726891f028d0b2"
+    }
+```
+
+Generated with discovered.json: 0x9fc0d5099d8fc0ff99862da51ba388b4376355ac
+
+# Diff at Mon, 14 Oct 2024 11:01:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 8312690
+- current block number: 8312690
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 8312690 (main branch discovery), not current.
+
+```diff
+    contract zkLink (0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD) {
+    +++ description: None
+      sourceHashes:
++        ["0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6","0x9d3b6cf7c8756dc6cce424dc754ed146f84d3201e5223d47b0a4fcd994a76a7f"]
+    }
+```
+
+```diff
+    contract BlastL2Gateway (0x3f64e2e09732969813904a8473074CFADeE66AF1) {
+    +++ description: None
+      sourceHashes:
++        ["0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6","0x54984eed0ba905283811bcd69e63428602cc4c290c8eed30fc28011383549ff2"]
+    }
+```
+
+```diff
+    contract BlastOwner (0x730200f698cc8Ff16C00F4E8520Fd780B916D50E) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"]
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b) {
+    +++ description: None
+      sourceHashes:
++        ["0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8","0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"]
+    }
+```
+
+```diff
+    contract BlastProxyAdmin (0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19) {
+    +++ description: None
+      sourceHashes:
++        ["0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"]
+    }
+```
+
 Generated with discovered.json: 0xa8f63a3833c49f92aed8dcd694791cc10c8a9fd1
 
 # Diff at Tue, 01 Oct 2024 11:14:53 GMT:

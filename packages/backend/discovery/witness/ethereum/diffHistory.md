@@ -1,3 +1,104 @@
+Generated with discovered.json: 0x8c26e562e74768b384f3fa356cec9577737ff38c
+
+# Diff at Mon, 21 Oct 2024 11:11:58 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20491473
+- current block number: 20491473
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20491473 (main branch discovery), not current.
+
+```diff
+    contract WitnessValidium (0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"]
+      values.$pastUpgrades.0.1:
+-        ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"]
++        "0x059ddb2af7337bacc9f85aed058936b67c1c439d56744b05336952c1792d811d"
+    }
+```
+
+```diff
+    contract WitnessValidiumDAC (0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xD26B535AD58715C4c2ffFAC32908b13674533DAe"]
+      values.$pastUpgrades.0.1:
+-        ["0xD26B535AD58715C4c2ffFAC32908b13674533DAe"]
++        "0x189f2f8a9bf53ece3537b3b9a10ec0a98d7e6b506c2fa368cf818e2344f7b9ad"
+    }
+```
+
+Generated with discovered.json: 0xe0f2ad519ae3b885e1dc02dddc8d26cc6be82757
+
+# Diff at Mon, 14 Oct 2024 10:57:51 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20491473
+- current block number: 20491473
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20491473 (main branch discovery), not current.
+
+```diff
+    contract FflonkVerifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81) {
+    +++ description: None
+      sourceHashes:
++        ["0x0bc67d276b40b2ba13903d94fd6c25ae4d3d5162bc942763c418afdc11bc9b32"]
+    }
+```
+
+```diff
+    contract WitnessValidium (0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238) {
+    +++ description: None
+      sourceHashes:
++        ["0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4","0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8"}]
+      template:
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"]
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8"}]
+    }
+```
+
+```diff
+    contract WitnessValidiumDAC (0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039"
++        "0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
+      issuedPermissions.0.via.0:
++        {"address":"0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039","delay":0}
+      sourceHashes:
++        ["0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1","0xf7c38d00c4b6000f1840ed38f9ae99d753da8ac69ee1b6ac9ed614f2b60d470f"]
+    }
+```
+
 Generated with discovered.json: 0xa7c36a4bae4181515b08dacc2bc51d002b761e8d
 
 # Diff at Tue, 01 Oct 2024 11:11:47 GMT:

@@ -1,3 +1,122 @@
+Generated with discovered.json: 0x1eaad339d9d79f50a14c1666d940187b18df397d
+
+# Diff at Mon, 21 Oct 2024 11:14:34 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 124973335
+- current block number: 124973335
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 124973335 (main branch discovery), not current.
+
+```diff
+    contract zkLink (0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xe71A6Cfb42D0398f6d6aeD8a19987C83bbE3B86E"]
+      values.$pastUpgrades.1.1:
+-        ["0xe71A6Cfb42D0398f6d6aeD8a19987C83bbE3B86E"]
++        "0xc9ff607b3fb208f26fadc47cde08c41273c79039e1f7bf2c9f5313d4b3869107"
+      values.$pastUpgrades.0.2:
++        ["0xebdA7f097EF976e8E82FA11F05ef1906f3068105"]
+      values.$pastUpgrades.0.1:
+-        ["0xebdA7f097EF976e8E82FA11F05ef1906f3068105"]
++        "0x412ad99eb52f12520a7367ec39f9b56a06e25aa1b17847dbe23f6700baa4bfaa"
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x5Bd51296423A9079b931414C1De65e7057326EaA) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x21Fe89FfB96d4092b42c8ab35dcFEee50a86C3B8"]
+      values.$pastUpgrades.1.1:
+-        ["0x21Fe89FfB96d4092b42c8ab35dcFEee50a86C3B8"]
++        "0x5154061f44b9d3baf51c0211c4a0126b47486e3e06d89006106034afd62e24f8"
+      values.$pastUpgrades.0.2:
++        ["0x683669E5B6cDc6636673a5f7ddB68E20812216F5"]
+      values.$pastUpgrades.0.1:
+-        ["0x683669E5B6cDc6636673a5f7ddB68E20812216F5"]
++        "0x965f198c04e811f47221086ef6452f50af7e949ff2f5bb10125ba1a516999e44"
+    }
+```
+
+```diff
+    contract OptimismL2Gateway (0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x3C3f4b866f8c6F0D2c912feE36D5Ad337a9AA98e"]
+      values.$pastUpgrades.0.1:
+-        ["0x3C3f4b866f8c6F0D2c912feE36D5Ad337a9AA98e"]
++        "0x2da77621f5936cebac55ac1c25951289f2aad1fae1a7a0ccb8388b2332f804e4"
+    }
+```
+
+Generated with discovered.json: 0xac2bac7da476091f0ae776db784c603caa226b1c
+
+# Diff at Mon, 14 Oct 2024 11:00:12 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 124973335
+- current block number: 124973335
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 124973335 (main branch discovery), not current.
+
+```diff
+    contract OptimismOwner (0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"]
+    }
+```
+
+```diff
+    contract zkLink (0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b) {
+    +++ description: None
+      sourceHashes:
++        ["0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6","0x9d3b6cf7c8756dc6cce424dc754ed146f84d3201e5223d47b0a4fcd994a76a7f"]
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x5Bd51296423A9079b931414C1De65e7057326EaA) {
+    +++ description: None
+      sourceHashes:
++        ["0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8","0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"]
+    }
+```
+
+```diff
+    contract OptimismProxyAdmin (0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4) {
+    +++ description: None
+      sourceHashes:
++        ["0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"]
+    }
+```
+
+```diff
+    contract OptimismL2Gateway (0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c) {
+    +++ description: None
+      sourceHashes:
++        ["0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6","0x650e6121058aa74419a8d997f6cf169c5bb82b7e6302193672de5f10c1c1e561"]
+    }
+```
+
 Generated with discovered.json: 0x4530b258d40ebe165cca891aa6dbddbecdd3ab09
 
 # Diff at Tue, 01 Oct 2024 11:13:49 GMT:

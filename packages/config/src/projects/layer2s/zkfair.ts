@@ -53,7 +53,9 @@ const exitWindowRisk = {
   ...RISK_VIEW.EXIT_WINDOW(
     upgradeDelay,
     trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
-    0,
+    {
+      upgradeDelay2: 0,
+    },
   ),
   description: `Even though there is a ${upgradeDelayString} Timelock for upgrades, forced transactions are disabled. Even if they were to be enabled, user withdrawals can be censored up to ${formatSeconds(
     trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
@@ -92,10 +94,10 @@ export const zkfair: Layer2 = {
   display: {
     name: 'ZKFair',
     slug: 'zkfair',
+    purposes: ['Universal'],
     warning:
       'The forced transaction mechanism is currently disabled. The project claims to use CelestiaDA but smart contracts on L1 use DAC. Arbitrary messaging passing is removed from the bridge.',
     description: 'ZKFair is a Validium based on Polygon CDK and Celestia DA.',
-    purposes: ['Universal'],
     category: 'Validium',
     provider: 'Polygon',
     links: {

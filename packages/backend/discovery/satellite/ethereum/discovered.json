@@ -7,6 +7,10 @@
     {
       "name": "AxelarGasService",
       "address": "0x2d5d7d31F671F86C782533cc367F14109a082712",
+      "sourceHashes": [
+        "0x8fa191bfa9dc72a70e40c3074333b73f30f8db135dc11d16443f6f26a079ddfe",
+        "0xffdc4806ed0369d49b542adf6eb3b3572e0f76d44bda8f0a093467ebcbe225df"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -22,10 +26,12 @@
         "$pastUpgrades": [
           [
             "2023-12-14T07:19:11.000Z",
+            "0xfc2554f725e599e45041529be0d88fd97508a5d3fb043cd26fc93a0bb45bf887",
             ["0x4Fe2d119873790cc9e15F6cC53cae1C2eb2039dC"]
           ],
           [
             "2024-06-04T04:22:47.000Z",
+            "0x89d167023ab2edd2f46e1c80f09118d7ab37362d845b2a9a781ec97eaa5c6563",
             ["0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b"]
           ]
         ],
@@ -41,6 +47,10 @@
     {
       "name": "Gateway",
       "address": "0x4F4495243837681061C4743b74B3eEdf548D56A5",
+      "sourceHashes": [
+        "0xe65732e356e64373f949ce1e543c2af7a89f91a8e3e8337cf9b83a3cd6ae9082",
+        "0x5247a49385cad8b341a34b9f96cde901c1b9567eeb27372b65747f673832df87"
+      ],
       "proxyType": "Axelar proxy",
       "sinceTimestamp": 1640210870,
       "values": {
@@ -48,38 +58,47 @@
         "$pastUpgrades": [
           [
             "2022-03-02T19:54:40.000Z",
+            "0x680f83631a2288b45997619247b9b8f385dcf80fdec5bba479c4fce26ea8e6e7",
             ["0x59C38B3A349BCf7e46b024Cddfb4778229609C28"]
           ],
           [
             "2022-04-28T16:27:39.000Z",
+            "0x50848f5e6afe00c30b6911c95de896725aa453e51f5bf941d484c5eee113cb33",
             ["0xBD3e8d41874bC123fB6913a2a6c6C8984c71876c"]
           ],
           [
             "2022-05-09T17:27:03.000Z",
+            "0x78ced8b5edfc79dad979666b40c5c19224c265fcf8e559bea2078f69c2d1ee3f",
             ["0xBc421722aDd7AD3cF23e7BbEFE709330bbfD6188"]
           ],
           [
             "2022-06-09T01:50:50.000Z",
+            "0x5344ca726c0a87185bb2e124398f230cb3353765834f554b32539e22dd71a12e",
             ["0x46E1F8E746ee9037fA42b3a718dcE6c36CB3f16f"]
           ],
           [
             "2022-08-29T17:23:40.000Z",
+            "0x7d2d73f72a273a7f8995744d8a4737c14b128d2df15318d632bb7452a1ef5fc2",
             ["0x212207006e5Ae344481Fa34a6F4960EB0f302Ff5"]
           ],
           [
             "2022-12-08T00:29:47.000Z",
+            "0xa75765b7fbdc94a8625940f66bcce34423d5ed463e6cc5cc129770814b5f3e98",
             ["0xEd9938294aCF9EE52D097133CA2cAafF0C804F16"]
           ],
           [
             "2023-10-23T21:13:23.000Z",
+            "0x23e155b748b569a1c7b26692ccef22da39a65a0cc7b3214e7a5bd1a8bfb518a9",
             ["0x99B5FA03a5ea4315725c43346e55a6A6fbd94098"]
           ],
           [
             "2023-10-24T06:02:35.000Z",
+            "0x4b3d43d30af4c0ceafe04e65253a137f8c7cfe58c266bc4f9b580b122621d17b",
             ["0x99B5FA03a5ea4315725c43346e55a6A6fbd94098"]
           ],
           [
             "2023-10-29T02:12:23.000Z",
+            "0x5f29d6eccb046d7d92d563231170f817e8a942f76106a86e5defe79d9d00ff19",
             ["0x99B5FA03a5ea4315725c43346e55a6A6fbd94098"]
           ]
         ],
@@ -97,6 +116,9 @@
     {
       "name": "AxelarGasServiceOperators",
       "address": "0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC",
+      "sourceHashes": [
+        "0xa898c8df7706ef8117978fb0d8653aea9d509fa5e96475894390689c93b28187"
+      ],
       "sinceTimestamp": 1702533995,
       "values": {
         "$immutable": true,
@@ -108,12 +130,18 @@
     {
       "name": "TokenDeployer",
       "address": "0xb28478319B64f8D47e19A120209A211D902F8b8f",
+      "sourceHashes": [
+        "0xb697944037f1be572b23ca3eabbb455b59abdb05b45851313635da227ccc52c3"
+      ],
       "sinceTimestamp": 1697785883,
       "values": { "$immutable": true }
     },
     {
       "name": "Multisig",
       "address": "0xCC940AE49C78F20E3F13F3cF37e996b98Ac3EC68",
+      "sourceHashes": [
+        "0xfca353778b820ad49261c7887cf13ab259a89edab86eef4aeb90e1b2b2a948f5"
+      ],
       "sinceTimestamp": 1697769227,
       "values": {
         "$immutable": true,
@@ -133,6 +161,9 @@
     {
       "name": "AxelarAuthWeighted",
       "address": "0xE3B83f79Fbf01B25659f8A814945aB82186A8AD0",
+      "sourceHashes": [
+        "0xc6735e0060a5046f6ed1ea96805049e3e5167271060aa505f72fbade315a82cb"
+      ],
       "ignoreInWatchMode": ["currentEpoch"],
       "sinceTimestamp": 1697785871,
       "values": {
@@ -146,6 +177,9 @@
     {
       "name": "InterchainGovernance",
       "address": "0xfDF36A30070ea0241d69052ea85ff44Ad0476a66",
+      "sourceHashes": [
+        "0x36106df3599f7c698c4c70652810248df4da03bd579b99553e2852b368632ff6"
+      ],
       "sinceTimestamp": 1697842379,
       "values": {
         "$immutable": true,
@@ -454,6 +488,5 @@
       "function withdraw(address recipient, uint256 amount)"
     ]
   },
-  "usedTemplates": {},
-  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
+  "usedTemplates": {}
 }

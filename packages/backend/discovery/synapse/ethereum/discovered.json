@@ -7,6 +7,10 @@
     {
       "name": "SynapseBridge",
       "address": "0x2796317b0fF8538F253012862c06787Adfb8cEb6",
+      "sourceHashes": [
+        "0xb9b3a683fe4dda991e2c9f0c79d7b8f5b2dd518535c692b5887aa3c03a030de3",
+        "0x81d007102ce6d41c4e245cc562c41b762d6fe49738f3dac3eb5e159caa6dc853"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -22,46 +26,57 @@
         "$pastUpgrades": [
           [
             "2021-08-20T14:42:12.000Z",
+            "0x8847102cd287f156f6bea7ef8b0d8a1a769b217a31f31271e1772fa03360f5b2",
             ["0x1622B32113bd2dFE1d92B30dA7FB68b7E5FA81b2"]
           ],
           [
             "2021-08-24T02:26:46.000Z",
+            "0x24867a819247c16b6440e0fe4bb15d829486af9d30fd709cfe41d3376399330d",
             ["0x346B928D29827a02bC06A4A66D7FF37D250bcEE8"]
           ],
           [
             "2021-08-24T03:58:48.000Z",
+            "0xfc4ec72e51cd01fa4978d2a69158283a8c2278ce2c7d505bc50b0e76b048c4e6",
             ["0x36829ba54e6A0f11fB6e5A45aC5aD2742ec86a0B"]
           ],
           [
             "2021-08-27T07:21:29.000Z",
+            "0xccf0ecdff27457425d6773ec52a0b17bcfbb93fdb77525872e403bc0efbf6cc9",
             ["0xEfD2F730c9D92E53d0B402ACA05FE597F1A47001"]
           ],
           [
             "2021-08-27T07:50:15.000Z",
+            "0xa557f92319df5c9aec27f0b1ce3afb80a927b02414a1c126c100a21e603de40c",
             ["0x7D971Ffc482d70831075fCf07c50EDED782aA9Fd"]
           ],
           [
             "2021-08-27T08:12:40.000Z",
+            "0x66385af6901af24ec47e8e749eae6d1fba76b22283985e8f142440d922f882e1",
             ["0xFb4a5F07427C4de0051c5FCe5b6f9E8cBf8A544C"]
           ],
           [
             "2021-09-01T20:52:07.000Z",
+            "0xacba2f9c94fa7d3c1ee39ed72d22b694cde721578bf4f06280d78bcba6a21d02",
             ["0x64f80a3B1ac0d394d652DF0beCfBeA9DB2320782"]
           ],
           [
             "2021-09-15T02:17:08.000Z",
+            "0x22a8ee90c8add53b09b8df08310fc9c683218265ea07613479c63b2f94207801",
             ["0x9007A80247D23Cc5C213A6DAcB385c632c4e19F2"]
           ],
           [
             "2021-09-28T05:07:48.000Z",
+            "0x685c294cb7313495cefbce2d17e06f5590788bd34326e2490018aa6004dc03a3",
             ["0x4cF1471B56D18c7D5a16D48ff5B761BdAEBd2f0b"]
           ],
           [
             "2021-11-07T08:18:09.000Z",
+            "0x2a8561645a9afa147fef47215d41b40b4fb7a3e1dff18cdd8a7431dd0006e57c",
             ["0x472822517a019e1eEd4533De2d800719057716F1"]
           ],
           [
             "2022-02-17T18:32:45.000Z",
+            "0x18789557d2706535171fc5e5083def545c9728b4427b6110ebb1476c597cc979",
             ["0x31fe393815822edacBd81C2262467402199EFD0D"]
           ]
         ],
@@ -94,6 +109,9 @@
     {
       "name": "TimelockController",
       "address": "0x647489df0673E17dB3163c47d5233EBB6F5cAc70",
+      "sourceHashes": [
+        "0xb8860ecb88ce9ef535fd75652844536335a1ab72f54ccfd0159be7e57422dc03"
+      ],
       "sinceTimestamp": 1630038897,
       "values": {
         "$immutable": true,
@@ -125,6 +143,10 @@
       "name": "Bridge Multisig",
       "address": "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1628970480,
@@ -149,6 +171,9 @@
     {
       "name": "ProxyAdmin",
       "address": "0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2",
+      "sourceHashes": [
+        "0xeb95d39e1b35f76b6331da863f87bf2e148dd21abf5666590443b65f6a125630"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -164,6 +189,15 @@
     {
       "name": "AllowanceModule",
       "address": "0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134",
+      "sourceHashes": [
+        "0x739427cbd7c2389a7c03972460f1e89b911776b7fdd5332f544dac83493eabb1"
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
+        }
+      ],
       "sinceTimestamp": 1603880884,
       "values": {
         "$immutable": true,
@@ -372,7 +406,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
-  },
-  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+  }
 }

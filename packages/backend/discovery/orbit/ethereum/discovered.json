@@ -23,18 +23,22 @@
         "$pastUpgrades": [
           [
             "2024-02-23T02:38:47.000Z",
+            "0x31ec94bc2c28b44d3390b639f19673371816d7b503960eed6b615b60477faab2",
             ["0x88022f07eB8F5c6FfECCd50152A6c7CAf69Bfc62"]
           ],
           [
             "2024-03-18T08:25:23.000Z",
+            "0x4c04a6a28b38b19f8f5d17e6cc454fd948dea95ea89fe7b2a19ba07b5034f326",
             ["0x2BeBced27D2c7ECE9C6cEa9daFD2711aDdc8a1Bc"]
           ],
           [
             "2024-06-20T02:59:11.000Z",
+            "0x96eafc66472aedb0c290a3b972b8b8c1c4f3eb95cc03e14cc279fe5a6ce6145b",
             ["0xb4D37E8f6e970344c1cc99F65D8D1Afd5F7590D9"]
           ],
           [
             "2024-09-20T05:02:35.000Z",
+            "0x9553335896b187c5265343e52c5491224b6bc45e9a9d6eb1d3f91dbbbd4b0e66",
             ["0x59fF8Eb9B384a6e1146194D7b2e754694957c5Af"]
           ]
         ],
@@ -44,6 +48,10 @@
     {
       "name": "ETH Vault",
       "address": "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a",
+      "sourceHashes": [
+        "0x14ff670031a318957fb84a598af08c637cec739b303d25c08d5d870d3df03482",
+        "0x2e54618fac09ff40e0bfc745f840cab0e89c2aa480df85e74a97612aa959df76"
+      ],
       "proxyType": "call implementation proxy",
       "ignoreInWatchMode": ["depositCount", "transactionCount"],
       "sinceTimestamp": 1603950507,
@@ -202,6 +210,9 @@
     {
       "name": "ProxyAdmin",
       "address": "0xFb504CD4eD46024B83c4337044995CF112205f18",
+      "sourceHashes": [
+        "0x579c6df39480618101e39d5b997df14c347d7f8a880df6cf0e1ae526771a0444"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -412,6 +423,5 @@
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ]
   },
-  "usedTemplates": {},
-  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
+  "usedTemplates": {}
 }

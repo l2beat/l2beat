@@ -1,12 +1,9 @@
 import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
 import { mantle } from '../../../../layer2s/mantle'
-import {
-  DaAccessibilityRisk,
-  DaAttestationSecurityRisk,
-  DaExitWindowRisk,
-} from '../../types'
+import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../../types'
 import { DaBridge } from '../../types/DaBridge'
+import { DaRelayerFailureRisk } from '../../types/DaRelayerFailureRisk'
 import { DacTransactionDataType } from '../../types/DacTransactionDataType'
 import { toUsedInProject } from '../../utils/to-used-in-project'
 
@@ -81,12 +78,14 @@ export const mantleDABridge = {
     ],
     risks: [],
   },
-  technology: ` The DA bridge contract is used for storing transaction data headers and confirming the data store by verifying operators signatures.
+  technology: {
+    description: ` The DA bridge contract is used for storing transaction data headers and confirming the data store by verifying operators signatures.
       The Mantle sequencer posts the data hash as a commitment to the DataLayrServiceManager contract on Ethereum thorugh an InitDataStore() transaction.
       Once the commitment is posted, the sequencer sends the data to the permissioned set of nodes, who sign the data and send back the signatures to the sequencer.
       The sequencer then posts the signatures to the DataLayrServiceManager contract on Ethereum through a confirmDataStore() transaction.
       The confirmDataStore() function verify the signatures and if the quorum is reached, the data is considered available.
     `,
+  },
   permissions: [
     ...discovery.getMultisigPermission(
       'MantleEngineeringMultisig',
@@ -119,15 +118,12 @@ export const mantleDABridge = {
   ],
   chain: ChainId.ETHEREUM,
   transactionDataType: DacTransactionDataType.TransactionData,
-  members: {
-    type: 'unknown',
-  },
   requiredMembers: threshold,
-  totalMembers: committeeMembers,
+  membersCount: committeeMembers,
   usedIn: toUsedInProject([mantle]),
   risks: {
-    attestations: DaAttestationSecurityRisk.SigVerified(true),
-    accessibility: DaAccessibilityRisk.NotEnshrined,
-    exitWindow: DaExitWindowRisk.LowOrNoDelay(), // no delay
+    committeeSecurity: DaCommitteeSecurityRisk.NoCommiteeSecurity(),
+    upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay
+    relayerFailure: DaRelayerFailureRisk.NoMechanism,
   },
 } satisfies DaBridge

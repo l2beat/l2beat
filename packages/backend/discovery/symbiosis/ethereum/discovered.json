@@ -7,6 +7,9 @@
     {
       "name": "ProxyAdminBridgeV2",
       "address": "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75",
+      "sourceHashes": [
+        "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -27,6 +30,9 @@
     {
       "name": "ProxyAdminBridge",
       "address": "0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA",
+      "sourceHashes": [
+        "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -44,6 +50,10 @@
       "name": "Multisig",
       "address": "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1668412331,
@@ -70,6 +80,10 @@
     {
       "name": "BridgeV2",
       "address": "0x5523985926Aa12BA58DC5Ad00DDca99678D7227E",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0xbd76088c97afed7c4594c70e7bca2da6186fb16ab28e0f1f3f2521d3a62e67b8"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -86,6 +100,7 @@
         "$pastUpgrades": [
           [
             "2022-11-14T06:18:47.000Z",
+            "0x8d70a079e68bae0596cd599d2b50aa56dede90682baecc815c437d8ca845922c",
             ["0x7057aB3fB2BeE9c18e0cDe4240DE4ff7f159E365"]
           ]
         ],
@@ -102,6 +117,10 @@
     {
       "name": "Portal",
       "address": "0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0x4754c4887d8e1782eeead45b2652e3639e4887315d18aaac0050cbcdbdf3a0fa"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -118,26 +137,32 @@
         "$pastUpgrades": [
           [
             "2022-11-14T06:19:11.000Z",
+            "0xa6b0f1f0ceb73f04ad16e77c6e34ae45d66ebfb47bd79bbfb3a6ce3e5225d3ab",
             ["0xda8057acB94905eb6025120cB2c38415Fd81BfEB"]
           ],
           [
             "2022-12-13T13:24:47.000Z",
+            "0xa27c1953da399d8a96d6bdb83764afce79bb5f39dee68c4097e472e934b184ec",
             ["0x81aB74A9f9d7457fF47dfD102e78A340cF72EC39"]
           ],
           [
             "2022-12-16T05:47:35.000Z",
+            "0x5a0e52f0ad8f1b772f6ddfb273f0305b8aa1cb2799a514e5a000f2b478181cca",
             ["0x1a039cE63AE35a67Bf0E9F6DbFaE969639D59eC8"]
           ],
           [
             "2023-02-08T06:36:35.000Z",
+            "0xa516cd7be1b5e791cc2841c6bde1983bc0e7cc1d77de772a0cf085ea84146595",
             ["0x8a7F930003BedD63A1ebD99C5917FD6aE7E3dedf"]
           ],
           [
             "2023-09-19T05:08:35.000Z",
+            "0x99966ad9c454210af91fbcf16132efe59875356423913fc577d3294d01cec23d",
             ["0x086488E659253FF26D0C743325C059FB57Ca7934"]
           ],
           [
             "2023-12-19T10:42:59.000Z",
+            "0x39b772a5e9ebcd7384b27fa529f91ecf5fc67e6c81740c3540b5bb580287844b",
             ["0x326adbE46D7E6C1B3927e9309B96DF478bda6D16"]
           ]
         ],
@@ -171,22 +196,27 @@
         "$pastUpgrades": [
           [
             "2022-02-04T09:48:01.000Z",
+            "0x77271c4c7ee4d81365e45f17f7ef56f136c34267b1f87c8abbe5688e17b7b81f",
             ["0xFb8aBa430cE64DC038a3078CDcB01A838d7f64b7"]
           ],
           [
             "2022-02-23T07:23:54.000Z",
+            "0x5ca5ffbf5b95c1292438467c25dc4757774cb38b841db82b153c933c1681fc64",
             ["0x9c13159c5D5903dd07F52f46308Dbd7A6Ea68DB9"]
           ],
           [
             "2022-05-11T06:52:49.000Z",
+            "0x6120072e1c29fcbef36b984dd51064bffe9fbfb95a40835e8ebd92500f992309",
             ["0xFC875FbdBaFeCD99FF0D2Cdf3DEF93FfcEc73949"]
           ],
           [
             "2022-06-21T08:42:53.000Z",
+            "0x5ed6a3a9f80ba301d1b3279efa35695abf0f8a7cf184a9d572f8cb9749ddb149",
             ["0xa3E661b51e9F6D8577968065D5d0f286553452c6"]
           ],
           [
             "2022-06-23T08:11:24.000Z",
+            "0x86759bd1988e1fb0afd3d804b79293a471c95b61e5c9d7f4d8c89cbd0a3227aa",
             ["0x61608F9520C311052D88Bc7d0c2c4Cba1c964662"]
           ]
         ],
@@ -197,6 +227,9 @@
     {
       "name": "MetaRouter",
       "address": "0xf621Fb08BBE51aF70e7E0F4EA63496894166Ff7F",
+      "sourceHashes": [
+        "0xfdf630e9703ba4569d93c7c67f39804b269eb0215618561b27da33c2dce9fc86"
+      ],
       "sinceTimestamp": 1702970243,
       "values": {
         "$immutable": true,
@@ -207,6 +240,9 @@
     {
       "name": "MetaRouterGateway",
       "address": "0xfCEF2Fe72413b65d3F393d278A714caD87512bcd",
+      "sourceHashes": [
+        "0xf78ec1ebb9770d063d83b96f47dbc97738175104c0ca567882812245a5939087"
+      ],
       "sinceTimestamp": 1702970243,
       "values": {
         "$immutable": true,
@@ -418,7 +454,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
-  },
-  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+  }
 }

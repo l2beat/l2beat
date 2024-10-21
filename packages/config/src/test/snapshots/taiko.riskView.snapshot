@@ -1,0 +1,41 @@
+// taiko riskView didn't change 1
+
+{
+  dataAvailability: {
+    definingMetric: Infinity
+    description: "All of the data needed for proof construction is published on Ethereum L1."
+    sentiment: "good"
+    value: "Onchain"
+  }
+  destinationToken: {
+    description: "ETH transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain."
+    sentiment: "good"
+    value: "Native & Canonical"
+  }
+  exitWindow: {
+    description: "There is no window for users to exit in case of an unwanted upgrade since contracts are instantly upgradable."
+    sentiment: "bad"
+    value: "None"
+  }
+  proposerFailure: {
+    description: "Provers can examine the proposed blocks on the TaikoL1 contract, and generate SGX proofs for them. Currently, any prover providing a valid SGX attestation can register a SGX instance and create proofs for proposed blocks."
+    sentiment: "good"
+    value: "Self propose"
+  }
+  sequencerFailure: {
+    description: "The system uses a based (or L1-sequenced) rollup sequencing mechanism. Users can propose L2 blocks directly on the Taiko L1 contract. The TaikoAdmin multisig can pause block proposals without delay."
+    sentiment: "good"
+    value: "Self sequence"
+  }
+  stateValidation: {
+    description: "Taiko uses a multi-tier proof system to validate the state. However, current tier proofs include either SGX (secure-enclave) execution verification, or approval by a minimum number of Guardians. State validation through the Zk-proof tier is not yet active. \n        Each proof goes through a cooldown window allowing for contestation. Contested blocks require proof from a higher level tier. If no contestation is made, or the block has been proven by the highest tier, the proof is considered valid.\n        The system allows for an invalid state to be proven by either a compromised SGX instance or compromised Guardians (the highest tier). This can lead to a state being proven as valid when it is not."
+    secondLine: "1d challenge period"
+    sentiment: "bad"
+    value: "SGX proofs"
+  }
+  validatedBy: {
+    description: "Smart contracts on Ethereum validate all bridge transfers."
+    sentiment: "good"
+    value: "Ethereum"
+  }
+}

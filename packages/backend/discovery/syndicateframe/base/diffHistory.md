@@ -1,3 +1,223 @@
+Generated with discovered.json: 0xa5327a9cf4df07c3f4b47c1b7fb8c8fe7bcbc368
+
+# Diff at Mon, 21 Oct 2024 11:14:12 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20760966
+- current block number: 20760966
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20760966 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x0ED44be59Ea62a9960CB97f8aC54088304D05791) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$pastUpgrades.1.2:
++        ["0x06DDDA853506cECa671a06136f955f7f042FD667"]
+      values.$pastUpgrades.1.1:
+-        ["0x06DDDA853506cECa671a06136f955f7f042FD667"]
++        "0x64273f6d08fd5de9b9d3480c7d387e64b13c3364e227601a6af78c5a49057427"
+      values.$pastUpgrades.0.2:
++        ["0x0ED44be59Ea62a9960CB97f8aC54088304D05791"]
+      values.$pastUpgrades.0.1:
+-        ["0x0ED44be59Ea62a9960CB97f8aC54088304D05791"]
++        "0x2eea12a1949fd31d0b78093777274d93d22abbfe7f8c3a146336baf9d413037d"
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x520D972B4A7C1CE4d5e01bCd4349a93a8AeaEAC5) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      values.$pastUpgrades.0.2:
++        ["0x6042DE5a64709d8d4bBb227891AD886ECff49c6d"]
+      values.$pastUpgrades.0.1:
+-        ["0x6042DE5a64709d8d4bBb227891AD886ECff49c6d"]
++        "0xaf623829a347e0ac10b6be166c1c32a64bb61fc9866d9bc1fcbfad71e6803107"
+    }
+```
+
+```diff
+    contract OptimismPortal (0x52fA397D799f1CE416a2089B964Aa293c347994F) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.$pastUpgrades.0.2:
++        ["0x44Ce95273E69246fe258b02a68E3a6FfCA66fdf2"]
+      values.$pastUpgrades.0.1:
+-        ["0x44Ce95273E69246fe258b02a68E3a6FfCA66fdf2"]
++        "0x7365eb094277a0147c55d12fe495f56b4c4297ea9aa6672b3e3c7845b4b0d88d"
+    }
+```
+
+```diff
+    contract SystemConfig (0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.$pastUpgrades.0.2:
++        ["0x5581A42BAF9bd77e1c56aFB2c74dEF20dfe26f9A"]
+      values.$pastUpgrades.0.1:
+-        ["0x5581A42BAF9bd77e1c56aFB2c74dEF20dfe26f9A"]
++        "0x31c3e3a0a7efc91fa8eec9137a7d19fe4ab6ed13e92c9cd4cbf28f5ea10a6154"
+    }
+```
+
+Generated with discovered.json: 0x69d15f67cbdc0fb108bf6e7a722c641e4d5fe2bf
+
+# Diff at Wed, 16 Oct 2024 11:45:16 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a3d139b799cc0b28e5e912febb17464d4e5aef5d block: 20760966
+- current block number: 20760966
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20760966 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x520D972B4A7C1CE4d5e01bCd4349a93a8AeaEAC5) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d","via":[{"address":"0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E","delay":0}]}
+      issuedPermissions.1:
++        {"permission":"propose","target":"0xADE1F8C181934052fD1958F06B63Ef0D875803C5","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "challenge"
+      issuedPermissions.0.target:
+-        "0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d"
++        "0xdC545dDC657A1E2EDA8F6cBBE382927E3C9aA6E4"
+      issuedPermissions.0.via.0:
+-        {"address":"0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E","delay":0}
+    }
+```
+
+```diff
+    contract OptimismPortal (0x52fA397D799f1CE416a2089B964Aa293c347994F) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d","via":[{"address":"0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E","delay":0}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "guard"
+      issuedPermissions.0.target:
+-        "0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d"
++        "0xdC545dDC657A1E2EDA8F6cBBE382927E3C9aA6E4"
+      issuedPermissions.0.via.0:
+-        {"address":"0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E","delay":0}
+    }
+```
+
+```diff
+    contract SystemConfig (0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d","via":[{"address":"0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E","delay":0}]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "sequence"
+      issuedPermissions.1.target:
+-        "0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d"
++        "0x63d02F40A14c54283D5Dc3451d3Ed4DC134833e5"
+      issuedPermissions.1.via.0:
+-        {"address":"0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E","delay":0}
+    }
+```
+
+Generated with discovered.json: 0xe9bfd9de2362790bd58c9fb3088188fff329cfb0
+
+# Diff at Mon, 14 Oct 2024 10:59:51 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20760966
+- current block number: 20760966
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20760966 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x0ED44be59Ea62a9960CB97f8aC54088304D05791) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes:
++        ["0x20a2eb4d3677fc8a15e944f7b1843acd01b2e92acdc4c7a7f7a35b07b891149b","0x6d9fd2364c536d73c3e3064034991a037e4e43313e72fb130782bf63ca586437"]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x520D972B4A7C1CE4d5e01bCd4349a93a8AeaEAC5) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      sourceHashes:
++        ["0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44","0x66cdacb7ee63d044769108a364e635bea065ba30dc12d4e5ec83f8b90c228d3a"]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x52fA397D799f1CE416a2089B964Aa293c347994F) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      sourceHashes:
++        ["0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44","0xd7fe53899c31d6d8e73b6724694736dc3c3c4ebc8f4ddbe989fe9d3dba26692d"]
+    }
+```
+
+```diff
+    contract SyndicateFrameMultisig (0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"]
+    }
+```
+
+```diff
+    contract AddressManager (0x9Bf9cd5aD745076b5bFb7Cc2d3b871532973C2c0) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      sourceHashes:
++        ["0xdc86a850f11dc2b5c0472a05d0e3c14f239baf2c3b1ab19631591b0827985380"]
+    }
+```
+
+```diff
+    contract SystemConfig (0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes:
++        ["0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44","0x5afa3e86b6524528383af0276ca7f40885c1eb2ae2e9932f65dabc6b58a99643"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E) {
+    +++ description: None
+      template:
+-        "opstack/ProxyAdmin"
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xF7Cb313CB6D146dAbB8c5E31798BDCeFc67B831b) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      sourceHashes:
++        ["0xbfb58685ff2f2f07eaa01a3c4e3c33c97686bfd3ae7c50c49f9da6ef5098cb31","0x9acaa683f4e228c0e24b38c1b79cf896a311a7b85c6f036e915d0fb8593a3ca5"]
+    }
+```
+
 Generated with discovered.json: 0x9f667d79d8557520b948bc11d44c506d40dc180f
 
 # Diff at Wed, 09 Oct 2024 13:11:18 GMT:

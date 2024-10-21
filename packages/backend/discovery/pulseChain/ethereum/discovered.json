@@ -7,6 +7,10 @@
     {
       "name": "ForeignOmnibridge",
       "address": "0x1715a3E4A142d8b698131108995174F37aEBA10D",
+      "sourceHashes": [
+        "0x10e99708bf71d6d77c20b34a6e991e6ca7487e63931b612a5224d32ca72b63b5",
+        "0x9720f814127b9abe2e0b23ce0cf1e96d96219277e21d382e52407db172c73c76"
+      ],
       "proxyType": "Eternal Storage proxy",
       "issuedPermissions": [
         {
@@ -23,6 +27,7 @@
         "$pastUpgrades": [
           [
             "2023-05-15T09:06:11.000Z",
+            "0x210fa683ddb0e587885dea0582bc328b80b7a87d700a10cc7a81f6fa1cf9612b",
             ["0xB7DF1E00ae030e966E635ede273625240546B873"]
           ]
         ],
@@ -45,6 +50,10 @@
     {
       "name": "BridgeValidators",
       "address": "0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d",
+      "sourceHashes": [
+        "0xc2d647dd43d1a5c348b27b8b2bd671627d194c85cb69a865e67ae8dbdf38b705",
+        "0x5568dae309b68b3870831f43f7a6eb3459ab46bee27f0f282f5b9a0b2f2ed720"
+      ],
       "proxyType": "Eternal Storage proxy",
       "issuedPermissions": [
         {
@@ -60,6 +69,7 @@
         "$pastUpgrades": [
           [
             "2023-05-15T08:53:47.000Z",
+            "0x91a1946de8485c208882fb51238a8771821502849535a638f25651804f3ef0d4",
             ["0x95B303987A60C71504D99Aa1b13B4DA07b0790ab"]
           ]
         ],
@@ -94,6 +104,9 @@
     {
       "name": "WETHOmnibridgeRouter",
       "address": "0x8AC4ae65b3656e26dC4e0e69108B392283350f55",
+      "sourceHashes": [
+        "0x55a672aa33e48959212349f94f7522a8a142bc17931854f79636d4564226b7b3"
+      ],
       "sinceTimestamp": 1684141547,
       "values": {
         "$immutable": true,
@@ -105,6 +118,9 @@
     {
       "name": "TokenFactory",
       "address": "0x98bf93ebf5c380C0e6Ae8e192A7e2AE08edAcc02",
+      "sourceHashes": [
+        "0xc3fc18a2178145d16d7d8d6b50d97b6d7a405421b3fae66cdeb31fb52f4e7eed"
+      ],
       "sinceTimestamp": 1684141535,
       "values": {
         "$immutable": true,
@@ -116,6 +132,9 @@
     {
       "name": "PermittableToken",
       "address": "0xA1077a294dDE1B09bB078844df40758a5D0f9a27",
+      "sourceHashes": [
+        "0x064c46a3015079f17e93b171ff684cda28a0ecdbd55ecec09c4ddf50e0a5c312"
+      ],
       "sinceTimestamp": 1684141523,
       "values": {
         "$immutable": true,
@@ -136,6 +155,10 @@
     {
       "name": "ForeignAMB",
       "address": "0xd0764FAe29E0a6a96fF685f71CfC685456D5636c",
+      "sourceHashes": [
+        "0xc2d647dd43d1a5c348b27b8b2bd671627d194c85cb69a865e67ae8dbdf38b705",
+        "0x580afb6cca5222e2dcaa0dcab547ed491b14414cabd97992abf96566d6af0fa0"
+      ],
       "proxyType": "Eternal Storage proxy",
       "issuedPermissions": [
         {
@@ -151,6 +174,7 @@
         "$pastUpgrades": [
           [
             "2023-05-15T08:54:59.000Z",
+            "0x5d1c2bd55b6e6af2311067e52dd8a45a69550547c71593ad890f1d8e63caaf04",
             ["0xe98699957d3504aCD57ffF861E4b77b57eB02467"]
           ]
         ],
@@ -454,6 +478,5 @@
       "event OwnershipTransferred(address previousOwner, address newOwner)"
     ]
   },
-  "usedTemplates": {},
-  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
+  "usedTemplates": {}
 }

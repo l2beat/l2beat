@@ -8,6 +8,10 @@
       "name": "OptimismOwner",
       "address": "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
@@ -44,6 +48,10 @@
       "name": "zkLink",
       "address": "0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b",
       "template": "zklinknova/secondaryZkLink",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x9d3b6cf7c8756dc6cce424dc754ed146f84d3201e5223d47b0a4fcd994a76a7f"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -67,10 +75,12 @@
         "$pastUpgrades": [
           [
             "2024-03-22T07:28:05.000Z",
+            "0x412ad99eb52f12520a7367ec39f9b56a06e25aa1b17847dbe23f6700baa4bfaa",
             ["0xebdA7f097EF976e8E82FA11F05ef1906f3068105"]
           ],
           [
             "2024-04-18T13:21:33.000Z",
+            "0xc9ff607b3fb208f26fadc47cde08c41273c79039e1f7bf2c9f5313d4b3869107",
             ["0xe71A6Cfb42D0398f6d6aeD8a19987C83bbE3B86E"]
           ]
         ],
@@ -106,6 +116,10 @@
     {
       "name": "L1ERC20Bridge",
       "address": "0x5Bd51296423A9079b931414C1De65e7057326EaA",
+      "sourceHashes": [
+        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8",
+        "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -121,10 +135,12 @@
         "$pastUpgrades": [
           [
             "2024-03-22T08:18:31.000Z",
+            "0x965f198c04e811f47221086ef6452f50af7e949ff2f5bb10125ba1a516999e44",
             ["0x683669E5B6cDc6636673a5f7ddB68E20812216F5"]
           ],
           [
             "2024-04-04T06:24:53.000Z",
+            "0x5154061f44b9d3baf51c0211c4a0126b47486e3e06d89006106034afd62e24f8",
             ["0x21Fe89FfB96d4092b42c8ab35dcFEee50a86C3B8"]
           ]
         ],
@@ -138,6 +154,9 @@
     {
       "name": "OptimismProxyAdmin",
       "address": "0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -156,6 +175,10 @@
       "name": "OptimismL2Gateway",
       "address": "0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c",
       "template": "zklinknova/secondaryGateway",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x650e6121058aa74419a8d997f6cf169c5bb82b7e6302193672de5f10c1c1e561"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -171,6 +194,7 @@
         "$pastUpgrades": [
           [
             "2024-03-22T07:29:37.000Z",
+            "0x2da77621f5936cebac55ac1c25951289f2aad1fae1a7a0ccb8388b2332f804e4",
             ["0x3C3f4b866f8c6F0D2c912feE36D5Ad337a9AA98e"]
           ]
         ],
@@ -415,9 +439,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "zklinknova/secondaryGateway": "0xb8fdb3c993db014b3b0c1cdd56f21ecb1aac5dd63185bc3f87a6c0e45e9168c6",
     "zklinknova/secondaryZkLink": "0x3038879967ecfd740f8377d1280264034b6959ad28bea99ebcedd97c6127a904"
-  },
-  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
+  }
 }

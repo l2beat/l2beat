@@ -8,6 +8,10 @@
       "name": "CronosChainAdminMultisig",
       "address": "0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1723609295,
@@ -32,6 +36,9 @@
     {
       "name": "CronosZkEVMAdmin",
       "address": "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4",
+      "sourceHashes": [
+        "0xe77f0ac44ab78d4c02668f0f81051a448ab8a4b96343747f6bd1143acc7748a8"
+      ],
       "sinceTimestamp": 1726967543,
       "values": {
         "$immutable": true,
@@ -83,6 +90,9 @@
     {
       "name": "Verifier",
       "address": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
+      "sourceHashes": [
+        "0xb36dfb10be7530bb56af796b85f6c84bf90513603fe59c2f7f0d78fc2a9a9235"
+      ],
       "sinceTimestamp": 1717507391,
       "values": {
         "$immutable": true,
@@ -92,6 +102,13 @@
     {
       "name": "CronosZkEvm",
       "address": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
+      "sourceHashes": [
+        "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f",
+        "0x9ae32beaa5dc29055f75d3cd08fbec35ed3eee3e2ff35de263a78f7d63c610f9",
+        "0xd272def5b4e3f0a68e3019d7d40675ca6d3e3fc35500e9aafe864bce8c697de2",
+        "0x419cee160f60572fc9189007ec7c1e3c13e54d80bf1e78f837bc8fa001519685",
+        "0xe521f6bd6250a2c92af323768ad8a2274cc334725b5ed8960d8421f063fc3285"
+      ],
       "proxyType": "EIP2535 diamond proxy",
       "ignoreInWatchMode": [
         "getPriorityQueueSize",
@@ -117,6 +134,7 @@
         "$pastUpgrades": [
           [
             "2024-07-30T16:30:35.000Z",
+            "0x98231507bfbba69996de5a8572d8f83ccf9756be6232d3f9431e2fc68c98d58b",
             [
               "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a",
               "0xE60E94fCCb18a81D501a38959E532C0A85A1be89",
@@ -126,6 +144,7 @@
           ],
           [
             "2024-07-30T16:30:35.000Z",
+            "0x98231507bfbba69996de5a8572d8f83ccf9756be6232d3f9431e2fc68c98d58b",
             [
               "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a",
               "0xE60E94fCCb18a81D501a38959E532C0A85A1be89",
@@ -135,6 +154,7 @@
           ],
           [
             "2024-10-02T06:36:11.000Z",
+            "0xe5711797fb601abc2d70e9265a897ba5a16a10125a9cadbd616f938592604fe7",
             [
               "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a",
               "0xE60E94fCCb18a81D501a38959E532C0A85A1be89",
@@ -296,6 +316,9 @@
     {
       "name": "TransactionFiltererDenyList",
       "address": "0xA8998F231a660Eca365B382943c71ad9b7619139",
+      "sourceHashes": [
+        "0x69b34ba871ceb0dbecab437be2d0701a5d768bb541a738bb3a7d2883d10a403e"
+      ],
       "sinceTimestamp": 1722304883,
       "values": {
         "$immutable": true,
@@ -307,6 +330,10 @@
       "name": "TxFiltererOwnerMultisig",
       "address": "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1722375731,
@@ -559,7 +586,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
-  },
-  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+  }
 }

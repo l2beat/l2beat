@@ -7,6 +7,10 @@
     {
       "name": "ExchangeV3",
       "address": "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4",
+      "sourceHashes": [
+        "0x09274cec6469e731822a31ef5a200ae33fc319aca366cf599f707b6359f97613",
+        "0x7e59ed579f658f2c8c645a1794f79626a3d8578e8700d19bbd866122f9dd9b8e"
+      ],
       "proxyType": "ZeppelinOS proxy",
       "issuedPermissions": [
         {
@@ -30,30 +34,37 @@
         "$pastUpgrades": [
           [
             "2020-10-29T11:12:20.000Z",
+            "0xed8a952216607c164559f01d5f90066a7de65fdcc72146e71956865685a8eeab",
             ["0xa01d4d1FE18A34902Ac2e4045a5e8f553dDe9685"]
           ],
           [
             "2020-12-14T06:16:14.000Z",
+            "0xcfbaf71a511297fd7bc1452e5b274c056ba5a3ddf271b59012eff877dd4351b9",
             ["0x2fefbeF4d1445F523941c56349C2414cd5e9675d"]
           ],
           [
             "2021-01-18T03:06:54.000Z",
+            "0xce34e9483ec139aa6628ed29279b80f163ba9094ce1a848cbe640e438ad2eb20",
             ["0x8c63D8E608fF702a92D5908730C91457b0447Ad7"]
           ],
           [
             "2021-03-25T03:26:10.000Z",
+            "0x155d094b0d053837b4e252b69cb10c8157795274da1a9f4325519791c27bd294",
             ["0xCFba78aecfBcc0B4B748fA58c530D4675BB5D32F"]
           ],
           [
             "2021-03-29T03:54:19.000Z",
+            "0xb54c93da349065cc82e2ef150f07319b2522709e8fe7acbcb5a5edfdcf46f2d6",
             ["0x4fb117dcd6D09abF1a99B502d488A99F5a17e7eC"]
           ],
           [
             "2021-09-01T04:24:19.000Z",
+            "0x2ccbfd61faf2015457ec43fab0324dca7d75091aba7423fe2990307bbfe32e22",
             ["0x3c294fCF74129d649325F8995afC2f9CfaFAB9dA"]
           ],
           [
             "2021-12-14T02:21:21.000Z",
+            "0x0fa3763c4bd69cf9e77636b37b5b12c29f3b260d8e822ebe215b14c4602a716d",
             ["0x26d8Ba776a067C5928841985bCe342f75BAE7E82"]
           ]
         ],
@@ -102,6 +113,9 @@
     {
       "name": "LoopringIOExchangeOwner",
       "address": "0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512",
+      "sourceHashes": [
+        "0x854356c3464284cf48c4c2a41fbf7ed907ee1d2c43c5458f8600e8a002947277"
+      ],
       "sinceTimestamp": 1616396742,
       "values": {
         "$immutable": true,
@@ -130,6 +144,9 @@
     {
       "name": "AgentRegistry",
       "address": "0x39B9bf169a7e225ba037C443A40460c77438ea14",
+      "sourceHashes": [
+        "0xf3a59d4207b07dcef7f7b28021c025bdf4aed5f887d551dd04964981d8fb14a6"
+      ],
       "sinceTimestamp": 1603946693,
       "values": {
         "$immutable": true,
@@ -281,6 +298,9 @@
     {
       "name": "ProtocolFeeVault",
       "address": "0x4b89f8996892d137c3dE1312d1dD4E4F4fFcA171",
+      "sourceHashes": [
+        "0x1fccaeadbe094a36ba3c786c5a1a767db2b6f5a5a5c29354d11af915f72d3174"
+      ],
       "sinceTimestamp": 1583852946,
       "values": {
         "$immutable": true,
@@ -307,6 +327,9 @@
     {
       "name": "ForcedWithdrawalAgent",
       "address": "0x52ea1971C05B0169c02a0bBeC05Fe8b5E3A24470",
+      "sourceHashes": [
+        "0xa8b1d474b6c7b4007833dea307178402243d15952eb22c992be9b107651cbc2f"
+      ],
       "descriptions": [
         "Auxiliary contract able to force withdrawals from L1 on behalf of users."
       ],
@@ -329,6 +352,9 @@
     {
       "name": "BlockVerifier",
       "address": "0x6150343E0F43A17519c0327c41eDd9eBE88D01ef",
+      "sourceHashes": [
+        "0x96312ffe5cf6781390d5f01454bb7545a2fc23abcb9e660842c19382a140f812"
+      ],
       "sinceTimestamp": 1603946469,
       "values": {
         "$immutable": true,
@@ -339,6 +365,9 @@
     {
       "name": "DefaultDepositContract",
       "address": "0x674bdf20A0F284D710BC40872100128e2d66Bd3f",
+      "sourceHashes": [
+        "0x39433073646a8004de25a709c09d4ccff1dd95a2a125f6065c8cc6cb44c6c7b9"
+      ],
       "sinceTimestamp": 1603949642,
       "values": {
         "$immutable": true,
@@ -351,6 +380,9 @@
     {
       "name": "LRC_v2",
       "address": "0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD",
+      "sourceHashes": [
+        "0x4ffbbfe62c887a44eead8dc5c421a3021e88d97eafe47ba5e4ac69fee9b0421a"
+      ],
       "sinceTimestamp": 1554948637,
       "values": {
         "$immutable": true,
@@ -365,6 +397,10 @@
       "name": "ProxyOwner",
       "address": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
@@ -404,6 +440,9 @@
     {
       "name": "LoopringV3",
       "address": "0xe56D6ccab6551932C0356E4e8d5dAF0630920C71",
+      "sourceHashes": [
+        "0xf4fab34f6089e2323fbf6d585fe758509ffff5bfc8f1152a393b5a170cf28929"
+      ],
       "sinceTimestamp": 1603955371,
       "values": {
         "$immutable": true,
@@ -424,6 +463,9 @@
     {
       "name": "FastWithdrawalAgent",
       "address": "0xec3Cc6Cf0252565b56FC7AC396017Df5b9B78a31",
+      "sourceHashes": [
+        "0x404f9c5448f8dc0d3026c67724fad6dadb0ce98afcb11ac23be4f3159db1e40a"
+      ],
       "sinceTimestamp": 1603946697,
       "values": { "$immutable": true },
       "derivedName": "FastWithdrawalAgent"
@@ -431,6 +473,9 @@
     {
       "name": "UserStakingPool",
       "address": "0xF4662bB1C4831fD411a95b8050B3A5998d8A4A5b",
+      "sourceHashes": [
+        "0x99d65209b6a37a5338021e870cb30cc131cd3d701c0b30fa072bbe3615d2c71f"
+      ],
       "ignoreInWatchMode": ["total", "getTotalStaking", "numAddresses"],
       "sinceTimestamp": 1574241665,
       "values": {
@@ -825,7 +870,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
-  },
-  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+  }
 }

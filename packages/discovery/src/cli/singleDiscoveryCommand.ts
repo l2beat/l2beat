@@ -38,7 +38,7 @@ export const SingleDiscoveryCommand = command({
     )
     const http = new HttpClient()
 
-    const { result, blockNumber, shapeFilesHash } = await discover(
+    const { result, blockNumber } = await discover(
       chainConfigs,
       projectConfig,
       DiscoveryLogger.CLI,
@@ -54,7 +54,6 @@ export const SingleDiscoveryCommand = command({
       projectConfig,
       blockNumber,
       DiscoveryLogger.CLI,
-      shapeFilesHash,
       { rootFolder },
     )
 

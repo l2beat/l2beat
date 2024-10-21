@@ -8,6 +8,9 @@
       "name": "ZkTokenGovernor",
       "address": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
       "template": "shared-zk-stack/ZkGovernor",
+      "sourceHashes": [
+        "0x3d8c2d3bcd396a14d951c81ad0c163139768c7439152292846ce2ef8a34affe8"
+      ],
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1723145395,
       "values": {
@@ -53,6 +56,9 @@
     {
       "name": "ProtocolTimelockController",
       "address": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
+      "sourceHashes": [
+        "0x2d84b1bb959469a8ddf00b906d14914c4b3e902442e41cd94f6c6b48f845c77f"
+      ],
       "sinceTimestamp": 1723144916,
       "values": {
         "$immutable": true,
@@ -90,6 +96,9 @@
     {
       "name": "TokenTimelockController",
       "address": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+      "sourceHashes": [
+        "0x2d84b1bb959469a8ddf00b906d14914c4b3e902442e41cd94f6c6b48f845c77f"
+      ],
       "sinceTimestamp": 1723145391,
       "values": {
         "$immutable": true,
@@ -128,6 +137,9 @@
       "name": "ZkGovOpsGovernor",
       "address": "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb",
       "template": "shared-zk-stack/ZkGovernor",
+      "sourceHashes": [
+        "0x7132507bdacfea50a991d23f4b78d18a03a78fe5a265fd7a07397c4f6ce93399"
+      ],
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1723145514,
       "values": {
@@ -171,6 +183,10 @@
     {
       "name": "ZkToken",
       "address": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+      "sourceHashes": [
+        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+        "0x3a3b3a9708ad3a6179afe0f24a1426254e558d14bbaa4f155ed0db49027b2099"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -187,10 +203,12 @@
         "$pastUpgrades": [
           [
             "2024-05-21T18:48:46.000Z",
+            "0x5bfce59c2ad18019ef20d58a3f1ec496cdc85537fc9564c932f7dcbbb2a15b56",
             ["0x3931e73ebA79a7C898D3b0e02c7C62bA4F11cB14"]
           ],
           [
             "2024-06-10T09:25:38.000Z",
+            "0xa6bc022ba0f60ac6f10a6efb84b261e9ca1b327a611bdd7a1f4d37cc9b027a3c",
             ["0x01a6715d3560241E09E865a46122bf347A576c09"]
           ]
         ],
@@ -253,6 +271,9 @@
       "name": "ZkProtocolGovernor",
       "address": "0x76705327e682F2d96943280D99464Ab61219e34f",
       "template": "shared-zk-stack/ZkGovernor",
+      "sourceHashes": [
+        "0x82c5a05996248ee29f451f121ff0f973a3b17f7c7a8ed31878d30c5eaa51b245"
+      ],
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1723144920,
       "values": {
@@ -295,6 +316,9 @@
     {
       "name": "GovOpsTimelockController",
       "address": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
+      "sourceHashes": [
+        "0x2d84b1bb959469a8ddf00b906d14914c4b3e902442e41cd94f6c6b48f845c77f"
+      ],
       "sinceTimestamp": 1723145510,
       "values": {
         "$immutable": true,
@@ -332,6 +356,9 @@
     {
       "name": "ZkTokenProxyAdmin",
       "address": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
+      "sourceHashes": [
+        "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -756,6 +783,5 @@
   },
   "usedTemplates": {
     "shared-zk-stack/ZkGovernor": "0xe15d64e5edc29411af258c9d294f406eed6ab8e538f5a7818a7d9c2e6784c2e2"
-  },
-  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
+  }
 }

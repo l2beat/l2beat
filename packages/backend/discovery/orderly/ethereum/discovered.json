@@ -8,6 +8,10 @@
       "name": "ConduitMultisig",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
@@ -82,11 +86,25 @@
       "name": "L2OutputOracle",
       "address": "0x5e76821C3c1AbB9fD6E310224804556C61D860e0",
       "template": "opstack/L2OutputOracle",
+      "sourceHashes": [
+        "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
+        "0xcca8986d0789aa489ba57cd234e886bd92cb5a0d477e1f5ae5e6e030e15fb183"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
       ],
       "issuedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0xcE10372313Ca39Fbf75A09e7f4c0E57F070259f4",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "target": "0x74BaD482a7f73C8286F50D8Aa03e53b7d24A5f3B",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
@@ -111,6 +129,7 @@
         "$pastUpgrades": [
           [
             "2023-10-06T16:10:47.000Z",
+            "0xca444e38e6211cc12586b9e29fe3e5612c2571e945baf37bb82f7dd892409292",
             ["0x334251f91a3795c043663172CB59a963a9029aed"]
           ]
         ],
@@ -134,6 +153,9 @@
       "name": "AddressManager",
       "address": "0x87630a802a3789463eC4b00f89b27b1e9f6b92e9",
       "template": "opstack/AddressManager",
+      "sourceHashes": [
+        "0xdc86a850f11dc2b5c0472a05d0e3c14f239baf2c3b1ab19631591b0827985380"
+      ],
       "descriptions": [
         "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
       ],
@@ -160,6 +182,10 @@
       "name": "SystemConfig",
       "address": "0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664",
       "template": "opstack/SystemConfig",
+      "sourceHashes": [
+        "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
+        "0x29908eb7685943ff431cd384af851ce36a30997bbad880f9b4385bfc3abb86a2"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
@@ -168,6 +194,11 @@
         {
           "permission": "configure",
           "target": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+          "via": []
+        },
+        {
+          "permission": "sequence",
+          "target": "0xf8dB8Aba597fF36cCD16fECfbb1B816B3236E9b8",
           "via": []
         },
         {
@@ -189,6 +220,7 @@
         "$pastUpgrades": [
           [
             "2023-10-06T16:08:47.000Z",
+            "0x92a61db152c2af8b75d8189eb9248997deaa06614e070a29476867af140f5562",
             ["0x240B3bd6b95cE40497Aafd71aD4705d0345A33CD"]
           ]
         ],
@@ -228,11 +260,20 @@
       "name": "OptimismPortal",
       "address": "0x91493a61ab83b62943E6dCAa5475Dd330704Cc84",
       "template": "opstack/OptimismPortal",
+      "sourceHashes": [
+        "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
+        "0xd7fe53899c31d6d8e73b6724694736dc3c3c4ebc8f4ddbe989fe9d3dba26692d"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
       ],
       "issuedPermissions": [
+        {
+          "permission": "guard",
+          "target": "0xcE10372313Ca39Fbf75A09e7f4c0E57F070259f4",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
@@ -252,6 +293,7 @@
         "$pastUpgrades": [
           [
             "2023-10-06T16:11:11.000Z",
+            "0xe67534a97b70fa009f2193161a0bc01c5ab1e858d26eb90ee81ee9b279a31d3b",
             ["0x7A163eb6Df3EEBbf817A7A9769F53FB2a441D47E"]
           ]
         ],
@@ -273,6 +315,10 @@
       "name": "L1ERC721Bridge",
       "address": "0x934Ab59Ef14b638653b1C0FEf7aB9a72186393DC",
       "template": "opstack/L1ERC721Bridge",
+      "sourceHashes": [
+        "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
+        "0x95c690f70db8f82a05347087d704333c180048757ff015d74a5b186c1b6b24ab"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "Used to bridge ERC-721 tokens from host chain to this chain."
@@ -296,6 +342,7 @@
         "$pastUpgrades": [
           [
             "2023-10-06T16:09:35.000Z",
+            "0xdf70e83fd16bf306ecd7497a9f24817d028e8e7bd267ead870360777b9e1a0a8",
             ["0x701E95156dfD378d1985C6CC405D0Ee3d2af8503"]
           ]
         ],
@@ -310,7 +357,10 @@
     {
       "name": "ProxyAdmin",
       "address": "0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9",
-      "template": "opstack/ProxyAdmin",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
+      ],
       "directlyReceivedPermissions": [
         {
           "permission": "configure",
@@ -351,6 +401,10 @@
       "name": "L1CrossDomainMessenger",
       "address": "0xc76543A64666d9a073FaEF4e75F651c88e7DBC08",
       "template": "opstack/L1CrossDomainMessenger",
+      "sourceHashes": [
+        "0x20a2eb4d3677fc8a15e944f7b1843acd01b2e92acdc4c7a7f7a35b07b891149b",
+        "0xebfb36a18bcaa176678925149b43fdc5f9f943d98a6405ae1cbc26f4c168ff88"
+      ],
       "proxyType": "resolved delegate proxy",
       "descriptions": [
         "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
@@ -364,10 +418,12 @@
         "$pastUpgrades": [
           [
             "2023-10-06T16:06:11.000Z",
+            "0x690ab35045db8f46db127951b24b5241e3848503c9e5d6dd6888e34e9373f283",
             ["0xc76543A64666d9a073FaEF4e75F651c88e7DBC08"]
           ],
           [
             "2023-10-06T16:10:23.000Z",
+            "0xe8bb9753ef91830bd4bae629e76232efcfb35cd39d6b2e2e5bf5384e08e82bbe",
             ["0xB6767fA038e8fbe3B60d42866dbeF0fca3B1a7d6"]
           ]
         ],
@@ -392,8 +448,21 @@
       "name": "OrderlyMultisig",
       "address": "0xcE10372313Ca39Fbf75A09e7f4c0E57F070259f4",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
-      "roles": ["Challenger", "Guardian"],
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x5e76821C3c1AbB9fD6E310224804556C61D860e0"
+        },
+        {
+          "permission": "guard",
+          "target": "0x91493a61ab83b62943E6dCAa5475Dd330704Cc84"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1696524155,
       "values": {
@@ -421,6 +490,10 @@
       "name": "L1StandardBridge",
       "address": "0xe07eA0436100918F157DF35D01dCE5c11b16D1F1",
       "template": "opstack/L1StandardBridge",
+      "sourceHashes": [
+        "0xbfb58685ff2f2f07eaa01a3c4e3c33c97686bfd3ae7c50c49f9da6ef5098cb31",
+        "0x79abdbd90460fe2ac0535b5cb7b4c45284322b49a0a090d1c509cdaf35dbc87e"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
@@ -460,7 +533,12 @@
     { "address": "0x71884086Cfacc370cf5EC34363Bf3938C6c6d888" },
     {
       "address": "0x74BaD482a7f73C8286F50D8Aa03e53b7d24A5f3B",
-      "roles": ["Proposer"]
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "target": "0x5e76821C3c1AbB9fD6E310224804556C61D860e0"
+        }
+      ]
     },
     { "address": "0x985Fa8958Aa3dcE89a83E519e6FAAeCAa4930b32" },
     { "address": "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038" },
@@ -472,7 +550,12 @@
     { "address": "0xF3313C48BD8E17b823d5498D62F37019dFEA647D" },
     {
       "address": "0xf8dB8Aba597fF36cCD16fECfbb1B816B3236E9b8",
-      "roles": ["Sequencer"]
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664"
+        }
+      ]
     }
   ],
   "abis": {
@@ -761,15 +844,14 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
+    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
-    "opstack/L2OutputOracle": "0x3115dc811ed6d817de9e32e09c4d7eb9434085e53936b3a2b3733e2041ca263a",
-    "opstack/OptimismPortal": "0x2a32f6874a8c0e85e685fa944143e7968d675fed43b46e7385411ad11f8a1a43",
-    "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
-  },
-  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
+    "opstack/L2OutputOracle": "0xfc8737561d85bab2fe5e39a7a02436a0cb0e7f96d7a7adc2ee3ea486b391c2fc",
+    "opstack/OptimismPortal": "0x5fb419891d613086f39879ae360e765fdb6d154ef5ea5b2f5f98a4443a1b4839",
+    "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3"
+  }
 }

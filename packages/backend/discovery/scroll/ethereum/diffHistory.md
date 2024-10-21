@@ -1,3 +1,737 @@
+Generated with discovered.json: 0x9a42cb161d5a63ef5379e507db48f193259f9917
+
+# Diff at Mon, 21 Oct 2024 11:09:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20891049
+- current block number: 20891049
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20891049 (main branch discovery), not current.
+
+```diff
+    contract L1MessageQueue (0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0x137CC585F607EDeBBc3CA6360AffCFeab507B374"]
+      values.$pastUpgrades.2.1:
+-        ["0x137CC585F607EDeBBc3CA6360AffCFeab507B374"]
++        "0x3928e0223337a112ea68c84db95441185a3e1da809638be13c0135761aa19ee7"
+      values.$pastUpgrades.1.2:
++        ["0xeBaed7A81c298B24EE6d59c22698A951dc448E01"]
+      values.$pastUpgrades.1.1:
+-        ["0xeBaed7A81c298B24EE6d59c22698A951dc448E01"]
++        "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826"
+      values.$pastUpgrades.0.2:
++        ["0xBC9D741501A20F962756C95BF906b4abffadcf8F"]
+      values.$pastUpgrades.0.1:
+-        ["0xBC9D741501A20F962756C95BF906b4abffadcf8F"]
++        "0xdd4c82f4c38c76c6bb222f2b319e870ed48d8d4dc2a73e0baa5d560a286924b2"
+    }
+```
+
+```diff
+    contract L1BatchBridgeGateway (0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x7999cdD5E2893475D89211A2E3FdA67a841E3233"]
+      values.$pastUpgrades.1.1:
+-        ["0x7999cdD5E2893475D89211A2E3FdA67a841E3233"]
++        "0x3ee1ca7b7a92d6181b5a38859b4ae747c6fb4b42e4407c3a854f55b82564aba1"
+      values.$pastUpgrades.0.2:
++        ["0xFAf8f72e54d1089fa1882b6f597BfDFF59a8AFca"]
+      values.$pastUpgrades.0.1:
+-        ["0xFAf8f72e54d1089fa1882b6f597BfDFF59a8AFca"]
++        "0x56e31c0072f983bfee035b6bf464b53b9d998afab20e0046cdc3fc209b4a191e"
+    }
+```
+
+```diff
+    contract L1ERC721Gateway (0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xd1841c5756428812233eEA78afC17cb2D3e392bb"]
+      values.$pastUpgrades.1.1:
+-        ["0xd1841c5756428812233eEA78afC17cb2D3e392bb"]
++        "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826"
+      values.$pastUpgrades.0.2:
++        ["0xDE3be7C2AA151D1E152DDfcBf0962FcDf5323DAe"]
+      values.$pastUpgrades.0.1:
+-        ["0xDE3be7C2AA151D1E152DDfcBf0962FcDf5323DAe"]
++        "0x5cb06c63fb2583db9eba85a73ca794a9d36eace7f91925962b8cc97fd06b9b7d"
+    }
+```
+
+```diff
+    contract wstETHescrowLido (0x6625C6332c9F91F2D27c304E729B86db87A3f504) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xF4f2066EE72D62e3caF9678459149BA7FCf2262F"]
+      values.$pastUpgrades.1.1:
+-        ["0xF4f2066EE72D62e3caF9678459149BA7FCf2262F"]
++        "0xd755174ba6bacec85b68b77c9ec2a8b966955746be59a6efa932f47c37dda482"
+      values.$pastUpgrades.0.2:
++        ["0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb"]
+      values.$pastUpgrades.0.1:
+-        ["0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb"]
++        "0xec5c25ea4b3e6d1dc9fa4cb7b7dd37a7a245a171cd3d16fb312628b5ecc9e841"
+    }
+```
+
+```diff
+    contract DaiEscrow (0x67260A8B73C5B77B55c1805218A42A7A6F98F515) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb"]
+      values.$pastUpgrades.0.1:
+-        ["0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb"]
++        "0x9776779beb429ea826a81a8c1c5f782933bfc8ce568afa1c6f2c2b866be2a3a5"
+    }
+```
+
+```diff
+    contract L1ScrollMessenger (0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x72981fD00087fF4F60aBFdE9f353cB1912A37fb6"]
+      values.$pastUpgrades.1.1:
+-        ["0x72981fD00087fF4F60aBFdE9f353cB1912A37fb6"]
++        "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826"
+      values.$pastUpgrades.0.2:
++        ["0xAf2F898a8680cb52766ABE0588ebe6b9bFe37845"]
+      values.$pastUpgrades.0.1:
+-        ["0xAf2F898a8680cb52766ABE0588ebe6b9bFe37845"]
++        "0xcad9f31340db6aca3a5da0d704ee33a9b6c43a5b1be4406cc0ed33edbdd7c92e"
+    }
+```
+
+```diff
+    contract EnforcedTxGateway (0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x642af405bF64660665B37977449C9C536B806318"]
+      values.$pastUpgrades.0.1:
+-        ["0x642af405bF64660665B37977449C9C536B806318"]
++        "0xd2e3c3d2839a35492419c5a1ae863e7a23d963cb4853c59e8e20832e0ee4ed3e"
+    }
+```
+
+```diff
+    contract L1WETHGateway (0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xa4F400593DFfc0ae02F940ab58f6e3Cc6fb9FB49"]
+      values.$pastUpgrades.1.1:
+-        ["0xa4F400593DFfc0ae02F940ab58f6e3Cc6fb9FB49"]
++        "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826"
+      values.$pastUpgrades.0.2:
++        ["0xd3c42158682D55E082EaBe08a29F7515A97cA307"]
+      values.$pastUpgrades.0.1:
+-        ["0xd3c42158682D55E082EaBe08a29F7515A97cA307"]
++        "0x0f1df3c211e6b201b0bb0cc41c87c2fbb36683f2a24080d935ffdc587723c033"
+    }
+```
+
+```diff
+    contract L1ETHGateway (0x7F2b8C31F88B6006c382775eea88297Ec1e3E905) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x546E0bF31FB6e7babD493452e4e6999191367B42"]
+      values.$pastUpgrades.1.1:
+-        ["0x546E0bF31FB6e7babD493452e4e6999191367B42"]
++        "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826"
+      values.$pastUpgrades.0.2:
++        ["0x1fcbE079c4Bbab37406daB7Dfd35AcAe37D5C55d"]
+      values.$pastUpgrades.0.1:
+-        ["0x1fcbE079c4Bbab37406daB7Dfd35AcAe37D5C55d"]
++        "0xbd63d1902c6343a9cdb81aa8944621690e4dd62a82640fded7f7c3d969e3647a"
+    }
+```
+
+```diff
+    contract OLD_L2GasPriceOracle (0x987e300fDfb06093859358522a79098848C33852) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xfDF1eE0098168eaa61BF87Db68C39c85151a4E9E"]
+      values.$pastUpgrades.0.1:
+-        ["0xfDF1eE0098168eaa61BF87Db68C39c85151a4E9E"]
++        "0xf25a4fbbd1569b188ce8855ff12760904d976be976c35afeb4abd9566db5ca38"
+    }
+```
+
+```diff
+    contract pufETHEscrow (0xA033Ff09f2da45f0e9ae495f525363722Df42b2a) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0x08D77Ea90DB9BF6c0d3f66E6b8394DA2E81B9a03"]
+      values.$pastUpgrades.2.1:
+-        ["0x08D77Ea90DB9BF6c0d3f66E6b8394DA2E81B9a03"]
++        "0xb367f770c26a72ea837a51c2c1fc84a3396914db1d58c020177b207e0f876a79"
+      values.$pastUpgrades.1.2:
++        ["0x08D77Ea90DB9BF6c0d3f66E6b8394DA2E81B9a03"]
+      values.$pastUpgrades.1.1:
+-        ["0x08D77Ea90DB9BF6c0d3f66E6b8394DA2E81B9a03"]
++        "0xe03abd155a10591ed1fa4a1e2ad0d6042549bfd67769dbf6bd66d25743950905"
+      values.$pastUpgrades.0.2:
++        ["0xc4d46E8402F476F269c379677C99F18E22Ea030e"]
+      values.$pastUpgrades.0.1:
+-        ["0xc4d46E8402F476F269c379677C99F18E22Ea030e"]
++        "0xa2ff9275d6280e3cc298653463c5d8423c44cfbc66a52a9a138becbb106dc0f8"
+    }
+```
+
+```diff
+    contract ScrollChain (0xa13BAF47339d63B743e7Da8741db5456DAc1E556) {
+    +++ description: None
+      values.$pastUpgrades.4.2:
++        ["0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f"]
+      values.$pastUpgrades.4.1:
+-        ["0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f"]
++        "0x3928e0223337a112ea68c84db95441185a3e1da809638be13c0135761aa19ee7"
+      values.$pastUpgrades.3.2:
++        ["0x4F250B05262240C787a1eE222687C6eC395C628A"]
+      values.$pastUpgrades.3.1:
+-        ["0x4F250B05262240C787a1eE222687C6eC395C628A"]
++        "0x87f533704b3cdac75c20bbdcd202a97ee62075c188ccea27ab7ff494cdeea247"
+      values.$pastUpgrades.2.2:
++        ["0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8"]
+      values.$pastUpgrades.2.1:
+-        ["0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8"]
++        "0x6eb161ed649cf22771e586a8546eec157717e2dec4c871e7ad4e4d2c5c59a905"
+      values.$pastUpgrades.1.2:
++        ["0xFA148514d03420b7b1a13eC74da06D2Ca875539C"]
+      values.$pastUpgrades.1.1:
+-        ["0xFA148514d03420b7b1a13eC74da06D2Ca875539C"]
++        "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826"
+      values.$pastUpgrades.0.2:
++        ["0x2E07f0FBA71709bb5e1f045b02152E45B451D75f"]
+      values.$pastUpgrades.0.1:
+-        ["0x2E07f0FBA71709bb5e1f045b02152E45B451D75f"]
++        "0xecc94033ca66ea9068acde109b0c9e3c539191645916a35952bb6d9fd2be3a02"
+    }
+```
+
+```diff
+    contract L1CustomERC20Gateway (0xb2b10a289A229415a124EFDeF310C10cb004B6ff) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x7F512E2E9dfC4552941D99A5b2405BBcF5781C2c"]
+      values.$pastUpgrades.1.1:
+-        ["0x7F512E2E9dfC4552941D99A5b2405BBcF5781C2c"]
++        "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826"
+      values.$pastUpgrades.0.2:
++        ["0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb"]
+      values.$pastUpgrades.0.1:
+-        ["0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb"]
++        "0x12f874f5ca5a8dbdc5162db5179a4e4b753f4fcff8dab3f416bd1ce707ecb9ff"
+    }
+```
+
+```diff
+    contract L1ERC1155Gateway (0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x244BF7aEf29F03916569470a51fA0794B62F8cd7"]
+      values.$pastUpgrades.1.1:
+-        ["0x244BF7aEf29F03916569470a51fA0794B62F8cd7"]
++        "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826"
+      values.$pastUpgrades.0.2:
++        ["0xCb4638620E4C6DeCef26374e71b0dd4871863593"]
+      values.$pastUpgrades.0.1:
+-        ["0xCb4638620E4C6DeCef26374e71b0dd4871863593"]
++        "0xe6cabeddb49c286b33e0e6d4a43af76e1a2108ac9fc91afb508a5ea86a8fc646"
+    }
+```
+
+```diff
+    contract L1StandardERC20Gateway (0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x4015Fc868C06689ABEba4a9dC8FA43B804F6239c"]
+      values.$pastUpgrades.1.1:
+-        ["0x4015Fc868C06689ABEba4a9dC8FA43B804F6239c"]
++        "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826"
+      values.$pastUpgrades.0.2:
++        ["0x9218732389D80f9b8723C3f32a38865B7a63564A"]
+      values.$pastUpgrades.0.1:
+-        ["0x9218732389D80f9b8723C3f32a38865B7a63564A"]
++        "0x85d366c40632340d9e835fdd0a1646909a56d60c680373f15f9d36878ff13029"
+    }
+```
+
+```diff
+    contract L1USDCGateway (0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x56ce8A8E8399f6cD5e7e4f549E8BfD673f2AfF5e"]
+      values.$pastUpgrades.1.1:
+-        ["0x56ce8A8E8399f6cD5e7e4f549E8BfD673f2AfF5e"]
++        "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826"
+      values.$pastUpgrades.0.2:
++        ["0x6667123b5017AAB9945F73345848B82D7A953AA8"]
+      values.$pastUpgrades.0.1:
+-        ["0x6667123b5017AAB9945F73345848B82D7A953AA8"]
++        "0x394b36151c614a7dfd048ddc1085046d2a50e5fd54af4c335d4a08aa79dd773d"
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xb93Ac04010Bd61F45BF492022A5b49a902F798F3"]
+      values.$pastUpgrades.0.1:
+-        ["0xb93Ac04010Bd61F45BF492022A5b49a902F798F3"]
++        "0x8f6851c707737c446ee55f39be1442ce8cfa50ef8522b34bac247c0bb39a14ec"
+    }
+```
+
+Generated with discovered.json: 0xafd1c1ddac67caddf5e22e82e7cc0db2def73728
+
+# Diff at Mon, 14 Oct 2024 10:55:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20891049
+- current block number: 20891049
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20891049 (main branch discovery), not current.
+
+```diff
+    contract L1MessageQueue (0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xEB803eb3F501998126bf37bB823646Ed3D59d072"
++        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
+      issuedPermissions.0.via.0:
++        {"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072","delay":0}
+      sourceHashes:
++        ["0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad","0x3e38728c8eff2d4e99a76036010214e6ece1aebfa85496f776910c3e674d90e0"]
+    }
+```
+
+```diff
+    contract TimelockFast (0x0e58939204eEDa84F796FBc86840A50af10eC4F4) {
+    +++ description: None
+      sourceHashes:
++        ["0x9dd794c91c0c92b8b8129a7c4d61c361b75602f161dc7b58f5908edafb920049"]
+    }
+```
+
+```diff
+    contract TimelockSlow (0x1A658B88fD0a3c82fa1a0609fCDbD32e7dd4aB9C) {
+    +++ description: None
+      sourceHashes:
++        ["0x9dd794c91c0c92b8b8129a7c4d61c361b75602f161dc7b58f5908edafb920049"]
+    }
+```
+
+```diff
+    contract ExecutorMultisig (0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract Whitelist (0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37) {
+    +++ description: None
+      sourceHashes:
++        ["0x118a84c5ed8e5625f8df5325e4bd028d66a65a2d08b9b7d3b72b6c9f7a955e95"]
+    }
+```
+
+```diff
+    contract ZkEvmVerifierV2 (0x2d6e16d8e8a0C3Bc7750E774B108Ec39Ab0C18fB) {
+    +++ description: None
+      sourceHashes:
++        ["0xa3e375ce1143ce7410edcfff2fbfa0ee90c06ef0710c4f11af9533ca40cdbb61"]
+    }
+```
+
+```diff
+    contract ZkEvmVerifierV1 (0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247) {
+    +++ description: None
+      sourceHashes:
++        ["0xac7d02f7eaff4b15c79e0507b392db7e05fbf7f5f5a594a7b091a936d951bb3a"]
+    }
+```
+
+```diff
+    contract MultipleVersionRollupVerifier (0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F) {
+    +++ description: Used to update the verifier and keep track of current and old versions.
+      sourceHashes:
++        ["0x6e45af76d6f6e2d8cc55ec530468293a0af33a8ab5e385883527a3330ff21ed6"]
+    }
+```
+
+```diff
+    contract ZkEvmVerifierV0 (0x585DfaD7bF4099E011D185E266907A8ab60DAD2D) {
+    +++ description: None
+      sourceHashes:
++        ["0xac7d02f7eaff4b15c79e0507b392db7e05fbf7f5f5a594a7b091a936d951bb3a"]
+    }
+```
+
+```diff
+    contract L1BatchBridgeGateway (0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xEB803eb3F501998126bf37bB823646Ed3D59d072"
++        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
+      issuedPermissions.0.via.0:
++        {"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072","delay":0}
+      sourceHashes:
++        ["0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad","0xcba3cc3603700feae97964e6eff747508e82a958b820d7d48c7f7399faf4d771"]
+    }
+```
+
+```diff
+    contract L2ERC1155GatewayFallback (0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc) {
+    +++ description: None
+      sourceHashes:
++        ["0xbd93ab76adebffc57b218e617f8072475f3ebc90b734fbad60c100d603b3121b"]
+    }
+```
+
+```diff
+    contract L1ERC721Gateway (0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xEB803eb3F501998126bf37bB823646Ed3D59d072"
++        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
+      issuedPermissions.0.via.0:
++        {"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072","delay":0}
+      sourceHashes:
++        ["0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad","0x2a543ae77e08fc2293b99836986b16db46b713eb958556cd1c95fcabce559b4b"]
+    }
+```
+
+```diff
+    contract ZkEvmVerifierV1-1 (0x63FB51C55d9605a75F8872C80De260a00fACfaA2) {
+    +++ description: None
+      sourceHashes:
++        ["0xac7d02f7eaff4b15c79e0507b392db7e05fbf7f5f5a594a7b091a936d951bb3a"]
+    }
+```
+
+```diff
+    contract L2CustomERC20GatewayFallback (0x64CCBE37c9A82D85A1F2E74649b7A42923067988) {
+    +++ description: None
+      sourceHashes:
++        ["0xbd93ab76adebffc57b218e617f8072475f3ebc90b734fbad60c100d603b3121b"]
+    }
+```
+
+```diff
+    contract wstETHescrowLido (0x6625C6332c9F91F2D27c304E729B86db87A3f504) {
+    +++ description: None
+      sourceHashes:
++        ["0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad","0x255712204c1736d1d147513fc6d0ded282eb2cd0cff359e7710a06463935c260"]
+    }
+```
+
+```diff
+    contract L2TokenFactoryFallback (0x66e5312EDeEAef6e80759A0F789e7914Fb401484) {
+    +++ description: None
+      sourceHashes:
++        ["0xbd93ab76adebffc57b218e617f8072475f3ebc90b734fbad60c100d603b3121b"]
+    }
+```
+
+```diff
+    contract DaiEscrow (0x67260A8B73C5B77B55c1805218A42A7A6F98F515) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xEB803eb3F501998126bf37bB823646Ed3D59d072"
++        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
+      issuedPermissions.0.via.0:
++        {"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072","delay":0}
+      sourceHashes:
++        ["0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad","0x5d09a2c78d20d4e9f61774a32aa4da8e74be21a247188625d5eeffdac11e5eb4"]
+    }
+```
+
+```diff
+    contract L1ScrollMessenger (0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xEB803eb3F501998126bf37bB823646Ed3D59d072"
++        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
+      issuedPermissions.0.via.0:
++        {"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072","delay":0}
+      sourceHashes:
++        ["0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad","0xe550fda323606a4b4fd2a05cf45dda231290e1d57a077828632c098fa0579161"]
+    }
+```
+
+```diff
+    contract L2ETHGatewayFallback (0x6EA73e05AdC79974B931123675ea8F78FfdacDF0) {
+    +++ description: None
+      sourceHashes:
++        ["0xbd93ab76adebffc57b218e617f8072475f3ebc90b734fbad60c100d603b3121b"]
+    }
+```
+
+```diff
+    contract L2WETHGatewayFallback (0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9) {
+    +++ description: None
+      sourceHashes:
++        ["0xbd93ab76adebffc57b218e617f8072475f3ebc90b734fbad60c100d603b3121b"]
+    }
+```
+
+```diff
+    contract EnforcedTxGateway (0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xEB803eb3F501998126bf37bB823646Ed3D59d072"
++        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
+      issuedPermissions.0.via.0:
++        {"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072","delay":0}
+      sourceHashes:
++        ["0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad","0xcb83aeace6c4751da7d9340ffa2eff5c9c9fdf2e9c1f25d6bc2f31ffabfcb477"]
+    }
+```
+
+```diff
+    contract L2ScrollMessengerFallback (0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC) {
+    +++ description: None
+      sourceHashes:
++        ["0xbd93ab76adebffc57b218e617f8072475f3ebc90b734fbad60c100d603b3121b"]
+    }
+```
+
+```diff
+    contract ScrollOwner (0x798576400F7D662961BA15C6b3F3d813447a26a6) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      sourceHashes:
++        ["0x92fd37cca83c3ecf2b4b1343a3287484d39591016bdd853e572e12c286c0d952"]
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","target":"0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","target":"0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","target":"0x67260A8B73C5B77B55c1805218A42A7A6F98F515","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","target":"0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","target":"0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","target":"0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","target":"0x7F2b8C31F88B6006c382775eea88297Ec1e3E905","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","target":"0x987e300fDfb06093859358522a79098848C33852","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","target":"0xa13BAF47339d63B743e7Da8741db5456DAc1E556","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","target":"0xb2b10a289A229415a124EFDeF310C10cb004B6ff","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","target":"0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","target":"0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","target":"0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]},{"permission":"upgrade","target":"0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6","via":[{"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0xEB803eb3F501998126bf37bB823646Ed3D59d072"}]
+    }
+```
+
+```diff
+    contract L1WETHGateway (0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xEB803eb3F501998126bf37bB823646Ed3D59d072"
++        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
+      issuedPermissions.0.via.0:
++        {"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072","delay":0}
+      sourceHashes:
++        ["0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad","0xb90cab5924c6894e3047536242125cdface40857b9c70a6551210bc6de166b42"]
+    }
+```
+
+```diff
+    contract L2ERC721GatewayFallback (0x7bC08E1c04fb41d75F1410363F0c5746Eae80582) {
+    +++ description: None
+      sourceHashes:
++        ["0xbd93ab76adebffc57b218e617f8072475f3ebc90b734fbad60c100d603b3121b"]
+    }
+```
+
+```diff
+    contract L1ETHGateway (0x7F2b8C31F88B6006c382775eea88297Ec1e3E905) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xEB803eb3F501998126bf37bB823646Ed3D59d072"
++        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
+      issuedPermissions.0.via.0:
++        {"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072","delay":0}
+      sourceHashes:
++        ["0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad","0xa874514fbf17dc321480a8270dcdc3a5a0d9b8e37ff5de1187df641cd4a2f6e4"]
+    }
+```
+
+```diff
+    contract FeeVaultMultisig (0x8FA3b4570B4C96f8036C13b64971BA65867eEB48) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract OLD_L2GasPriceOracle (0x987e300fDfb06093859358522a79098848C33852) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xEB803eb3F501998126bf37bB823646Ed3D59d072"
++        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
+      issuedPermissions.0.via.0:
++        {"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072","delay":0}
+      sourceHashes:
++        ["0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad","0x5987f713ef726c459b82ad7473f780457f91510e0d04802551136d8133e531d1"]
+    }
+```
+
+```diff
+    contract pufETHEscrow (0xA033Ff09f2da45f0e9ae495f525363722Df42b2a) {
+    +++ description: None
+      sourceHashes:
++        ["0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad","0xe564c04903b37a6ee36ca18aeb567c15ce70fe0a8022621e7c93c833bc2fbbf3"]
+    }
+```
+
+```diff
+    contract ScrollChain (0xa13BAF47339d63B743e7Da8741db5456DAc1E556) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xEB803eb3F501998126bf37bB823646Ed3D59d072"
++        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
+      issuedPermissions.0.via.0:
++        {"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072","delay":0}
+      sourceHashes:
++        ["0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad","0x2069ff6eafc8fa79ae2c7e13a2618c44102f1f1b273cc5584e0b7cd3961948e1"]
+    }
+```
+
+```diff
+    contract L1CustomERC20Gateway (0xb2b10a289A229415a124EFDeF310C10cb004B6ff) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xEB803eb3F501998126bf37bB823646Ed3D59d072"
++        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
+      issuedPermissions.0.via.0:
++        {"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072","delay":0}
+      sourceHashes:
++        ["0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad","0xe564c04903b37a6ee36ca18aeb567c15ce70fe0a8022621e7c93c833bc2fbbf3"]
+    }
+```
+
+```diff
+    contract L1ERC1155Gateway (0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xEB803eb3F501998126bf37bB823646Ed3D59d072"
++        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
+      issuedPermissions.0.via.0:
++        {"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072","delay":0}
+      sourceHashes:
++        ["0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad","0x35e9a9e7a691f357e642a73662c88a202224b73a44fc022f833ccc8aff9a4a64"]
+    }
+```
+
+```diff
+    contract EmergencyMultisig (0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract L2TokenImplementationFallback (0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69) {
+    +++ description: None
+      sourceHashes:
++        ["0xbd93ab76adebffc57b218e617f8072475f3ebc90b734fbad60c100d603b3121b"]
+    }
+```
+
+```diff
+    contract ZkEvmVerifierV2-1 (0xCAECeE2E815e7f758c2477f900AFA14bDDce54B3) {
+    +++ description: None
+      sourceHashes:
++        ["0xa3e375ce1143ce7410edcfff2fbfa0ee90c06ef0710c4f11af9533ca40cdbb61"]
+    }
+```
+
+```diff
+    contract L1StandardERC20Gateway (0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xEB803eb3F501998126bf37bB823646Ed3D59d072"
++        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
+      issuedPermissions.0.via.0:
++        {"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072","delay":0}
+      sourceHashes:
++        ["0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad","0x93fe70d828e5646f5acb7768083ab2e5b9cfb5b6691a5dff48ff3c188ffd05a7"]
+    }
+```
+
+```diff
+    contract TimelockMid (0xDC1d1189Da69Ae2016E4976A43De20972D349B1b) {
+    +++ description: None
+      sourceHashes:
++        ["0x9dd794c91c0c92b8b8129a7c4d61c361b75602f161dc7b58f5908edafb920049"]
+    }
+```
+
+```diff
+    contract L2StandardERC20GatewayFallback (0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A) {
+    +++ description: None
+      sourceHashes:
++        ["0xbd93ab76adebffc57b218e617f8072475f3ebc90b734fbad60c100d603b3121b"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xEB803eb3F501998126bf37bB823646Ed3D59d072) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"},{"permission":"upgrade","target":"0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4"},{"permission":"upgrade","target":"0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B"},{"permission":"upgrade","target":"0x67260A8B73C5B77B55c1805218A42A7A6F98F515"},{"permission":"upgrade","target":"0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367"},{"permission":"upgrade","target":"0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d"},{"permission":"upgrade","target":"0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE"},{"permission":"upgrade","target":"0x7F2b8C31F88B6006c382775eea88297Ec1e3E905"},{"permission":"upgrade","target":"0x987e300fDfb06093859358522a79098848C33852"},{"permission":"upgrade","target":"0xa13BAF47339d63B743e7Da8741db5456DAc1E556"},{"permission":"upgrade","target":"0xb2b10a289A229415a124EFDeF310C10cb004B6ff"},{"permission":"upgrade","target":"0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6"},{"permission":"upgrade","target":"0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9"},{"permission":"upgrade","target":"0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B"},{"permission":"upgrade","target":"0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"}]
+      template:
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"]
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"},{"permission":"upgrade","target":"0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4"},{"permission":"upgrade","target":"0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B"},{"permission":"upgrade","target":"0x67260A8B73C5B77B55c1805218A42A7A6F98F515"},{"permission":"upgrade","target":"0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367"},{"permission":"upgrade","target":"0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d"},{"permission":"upgrade","target":"0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE"},{"permission":"upgrade","target":"0x7F2b8C31F88B6006c382775eea88297Ec1e3E905"},{"permission":"upgrade","target":"0x987e300fDfb06093859358522a79098848C33852"},{"permission":"upgrade","target":"0xa13BAF47339d63B743e7Da8741db5456DAc1E556"},{"permission":"upgrade","target":"0xb2b10a289A229415a124EFDeF310C10cb004B6ff"},{"permission":"upgrade","target":"0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6"},{"permission":"upgrade","target":"0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9"},{"permission":"upgrade","target":"0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B"},{"permission":"upgrade","target":"0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"}]
+    }
+```
+
+```diff
+    contract ScrollMultisig (0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract L1USDCGateway (0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xEB803eb3F501998126bf37bB823646Ed3D59d072"
++        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
+      issuedPermissions.0.via.0:
++        {"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072","delay":0}
+      sourceHashes:
++        ["0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad","0x390ebeb0e223ceead94e94a21c34b8bc5bde0351a7c29ca6b8abb4776ce58524"]
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xEB803eb3F501998126bf37bB823646Ed3D59d072"
++        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
+      issuedPermissions.0.via.0:
++        {"address":"0xEB803eb3F501998126bf37bB823646Ed3D59d072","delay":0}
+      sourceHashes:
++        ["0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad","0x3257fd4336e925899e6352562238124ef46e51d144d4a4d12526837be49a062f"]
+    }
+```
+
 Generated with discovered.json: 0x733494d407e555a98739d03978d0302e5362a2a4
 
 # Diff at Fri, 04 Oct 2024 08:46:27 GMT:

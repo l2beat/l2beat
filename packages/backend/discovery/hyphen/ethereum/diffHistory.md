@@ -1,3 +1,142 @@
+Generated with discovered.json: 0xd3249b0edf4ffd9964cc4224dac381b3e0f7bb67
+
+# Diff at Mon, 21 Oct 2024 11:06:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20138492
+- current block number: 20138492
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20138492 (main branch discovery), not current.
+
+```diff
+    contract LiquidityPool (0x2A5c2568b10A0E826BfA892Cf21BA7218310180b) {
+    +++ description: None
+      values.$pastUpgrades.4.2:
++        ["0x4906b8E690EB1E09Fec924422452d1105D59d042"]
+      values.$pastUpgrades.4.1:
+-        ["0x4906b8E690EB1E09Fec924422452d1105D59d042"]
++        "0x81220b4a19598c78d9baafde8f385fe5b8f30bf37eb2d1f5a3bbb3396ae65f1c"
+      values.$pastUpgrades.3.2:
++        ["0x256415A1f9468E5405abdAfD9B76c4f24451d7E7"]
+      values.$pastUpgrades.3.1:
+-        ["0x256415A1f9468E5405abdAfD9B76c4f24451d7E7"]
++        "0xc69f859e020b3fd7be7cf68a8312619f7d8a2eae2a973fbd58d77c9440cae71a"
+      values.$pastUpgrades.2.2:
++        ["0x6C0CbaC5337Cf577452e99A18320fc5656Bd61E7"]
+      values.$pastUpgrades.2.1:
+-        ["0x6C0CbaC5337Cf577452e99A18320fc5656Bd61E7"]
++        "0xf51208b5beea659d588ce2679994091b37da05092451520582e5ad0100665ff0"
+      values.$pastUpgrades.1.2:
++        ["0xD0eE149a4Ceec165C456C1E2D4372318e4Df82bd"]
+      values.$pastUpgrades.1.1:
+-        ["0xD0eE149a4Ceec165C456C1E2D4372318e4Df82bd"]
++        "0x89435cc86efe3739441ec79e390332495c8b945afccd961cf74bd3558973d150"
+      values.$pastUpgrades.0.2:
++        ["0x279ac60785A2FCb85550EB243B9A42A543171Cc7"]
+      values.$pastUpgrades.0.1:
+-        ["0x279ac60785A2FCb85550EB243B9A42A543171Cc7"]
++        "0x245f83993782e4e19ca2da7bae1d84a6d660385f09b073e0a938da5248664e42"
+    }
+```
+
+```diff
+    contract TokenManager (0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x79E559AC5b499A5676e28f0074e29763F6c2A27e"]
+      values.$pastUpgrades.0.1:
+-        ["0x79E559AC5b499A5676e28f0074e29763F6c2A27e"]
++        "0xeacd5eca940d53ffa4087fc97ed30e39b2dc0e5aa37985515a442d6a9df80d54"
+    }
+```
+
+```diff
+    contract LiquidityProviders (0xebaB24F13de55789eC1F3fFe99A285754e15F7b9) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0x38391eA26F9EeE3ab81DE3C7eE9e168da5149103"]
+      values.$pastUpgrades.2.1:
+-        ["0x38391eA26F9EeE3ab81DE3C7eE9e168da5149103"]
++        "0x35b76ffae4b8e3bbc0ec3ff36d75a854060576ce53d6cea3997b1d3f902465fa"
+      values.$pastUpgrades.1.2:
++        ["0x52a592fFE0377b351c8FD99189e5333ec362d66A"]
+      values.$pastUpgrades.1.1:
+-        ["0x52a592fFE0377b351c8FD99189e5333ec362d66A"]
++        "0xae1eb9c87a71fdec0cfbe39300f075392a09014d1056f620ca2551e4f491b77b"
+      values.$pastUpgrades.0.2:
++        ["0x6cc7E949807c0945afcb2be0C92F42191b31dFD7"]
+      values.$pastUpgrades.0.1:
+-        ["0x6cc7E949807c0945afcb2be0C92F42191b31dFD7"]
++        "0x9167ef6bb6cd9922c1a3b2689077289f38d602f778e03d68eb87146dd1ad3063"
+    }
+```
+
+Generated with discovered.json: 0x8a05133975bb1027304e2670f309337f5b486160
+
+# Diff at Mon, 14 Oct 2024 10:51:36 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20138492
+- current block number: 20138492
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20138492 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x13a4cC0750296bB72Eb0006febec306551A4f472) {
+    +++ description: None
+      sourceHashes:
++        ["0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"]
+    }
+```
+
+```diff
+    contract LiquidityPool (0x2A5c2568b10A0E826BfA892Cf21BA7218310180b) {
+    +++ description: None
+      sourceHashes:
++        ["0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a","0x2704718af75269b1336700ebb7c17f20b7c71a8cfda9618bf04f5c3b6c1ed995"]
+    }
+```
+
+```diff
+    contract ExecutorManager (0xbd761D917fB77381B4398Bda89C7F0d9A2BD1399) {
+    +++ description: None
+      sourceHashes:
++        ["0x892e396c29b5c992295525eefa7f4625709df8fd34d319dcc638eb61bacef0d6"]
+    }
+```
+
+```diff
+    contract TokenManager (0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168) {
+    +++ description: None
+      sourceHashes:
++        ["0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a","0xb4b188b21027295cc23be58bdfb8244712968fff71cb2dd2af67a5b10df99202"]
+    }
+```
+
+```diff
+    contract LiquidityProviders (0xebaB24F13de55789eC1F3fFe99A285754e15F7b9) {
+    +++ description: None
+      sourceHashes:
++        ["0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a","0xbf180146f00753d63babbadf58b1dd574f2f626ca5e0f02e65e2ab5a4975fbe5"]
+    }
+```
+
 Generated with discovered.json: 0x365cdb12b6bb4c57fe799d04f671f936b2a68aef
 
 # Diff at Tue, 01 Oct 2024 10:51:29 GMT:

@@ -20,7 +20,7 @@ export type ApiError = {
   code?: number
 }
 
-export type Transaction = {
+export type CountedTransaction = {
   type: string
   hash: string
   operationsCount: number
@@ -29,12 +29,12 @@ export type Transaction = {
   includesUnknown?: boolean
 }
 
-export type Block = {
+export type CountedBlock = {
   number: number
   timestamp: number
   hash: string
-  status: string
-  transactions: Transaction[]
+  status?: string
+  transactions: CountedTransaction[]
 }
 
 export type BlockRatio = {
@@ -44,7 +44,7 @@ export type BlockRatio = {
   includesUnknown?: boolean
 }
 
-export type BlockWithChain = Block & { chain: Chain }
+export type BlockWithChain = CountedBlock & { chain: Chain }
 
 export interface CountedOperation {
   id: string
@@ -52,32 +52,10 @@ export interface CountedOperation {
   methodSelector: string
   methodSignature?: string
   methodName?: string
-  contractAddress: string
+  contractAddress?: string
   contractName?: string
   count: number
   children: CountedOperation[]
-}
-
-export type Operation = StaticOperation | RecursiveOperation
-
-export interface StaticOperation {
-  type: 'static'
-  name: string
-  count: number
-}
-
-export interface RecursiveOperation {
-  type: 'recursive'
-  calldata: string
-  to: string
-}
-
-export interface Method {
-  name: string
-  contractName?: string
-  selector: string
-  signature: string
-  count(calldata: string): Operation[]
 }
 
 export type StatParams = {

@@ -7,6 +7,9 @@
     {
       "name": "MPTValidator01",
       "address": "0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
+      "sourceHashes": [
+        "0x965651ae50a316c3ab842d2c8c9242c34d6e40eefa61f7c731bba9a1faf2ccea"
+      ],
       "sinceTimestamp": 1689350896,
       "values": {
         "$immutable": true,
@@ -22,6 +25,9 @@
     {
       "name": "UltraLightNodeV2",
       "address": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
+      "sourceHashes": [
+        "0x38c85ab54f670eaa1fc2b351aee39913bc12e2b26c460ee31cf89d3f1f7d59b9"
+      ],
       "ignoreInWatchMode": [
         "chainAddressSizeMap",
         "defaultAppConfig",
@@ -860,6 +866,10 @@
       "name": "LayerZero Multisig",
       "address": "0x5e306343ecf32B605d88c1e44f3879699ab5144D",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1691909044,
@@ -886,6 +896,9 @@
     {
       "name": "NonceContract",
       "address": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
+      "sourceHashes": [
+        "0x895867397d61409de8476975bae4d871fec1c289e52fe97b31872726808dae38"
+      ],
       "sinceTimestamp": 1689350908,
       "values": {
         "$immutable": true,
@@ -895,6 +908,9 @@
     {
       "name": "TreasuryV2",
       "address": "0x980205D352F198748B626f6f7C38A8a5663Ec981",
+      "sourceHashes": [
+        "0x9a8a40656962f8df570994ee72e4262dc5beb926ffc7686740df457bade87efb"
+      ],
       "sinceTimestamp": 1689350932,
       "values": {
         "$immutable": true,
@@ -925,14 +941,17 @@
         "$pastUpgrades": [
           [
             "2023-07-14T16:23:48.000Z",
+            "0x89a4db6091313816b1a56948608303fe905eabf9626fb01fef4b0a33fad93be7",
             ["0x5B19bd330A84c049b62D5B0FC2bA120217a18C1C"]
           ],
           [
             "2023-09-20T19:41:08.000Z",
+            "0xff74215370891d87c949c0f7a05a6514ade104ffc5addfc704680fc644688cea",
             ["0xd27B2Fe1d0a60E06A0ec7e64501d2f15e6c65Bd9"]
           ],
           [
             "2023-09-22T14:20:47.000Z",
+            "0x32899d9143a2ea03680cd23ab7a3d62eaa47132232a71b7ac80d1ed6acc72a58",
             ["0xC614E9C511a5149f1969F2CB0199d508bBB5b915"]
           ]
         ],
@@ -942,6 +961,9 @@
     {
       "name": "Endpoint",
       "address": "0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7",
+      "sourceHashes": [
+        "0x945c3299d0cf62b9ea7a77d6328295d54327299d6a153e1e7b48d85fa9b77215"
+      ],
       "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"],
       "sinceTimestamp": 1689350872,
       "values": {
@@ -969,6 +991,9 @@
     {
       "name": "FPValidator",
       "address": "0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36",
+      "sourceHashes": [
+        "0x0d505ac1b08cd930c4b902daa632eaa029531d5c1aa50c45169b63c310b2da62"
+      ],
       "sinceTimestamp": 1689350884,
       "values": {
         "$immutable": true,
@@ -990,6 +1015,9 @@
     {
       "name": "VerifierNetwork",
       "address": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
+      "sourceHashes": [
+        "0x1be31a02ca7158d467a49eeb964f0f8aa1d1e74019df854c1881d89d51260701"
+      ],
       "sinceTimestamp": 1694219109,
       "values": {
         "$immutable": true,
@@ -1007,6 +1035,9 @@
     {
       "name": "VerifierFeeLib",
       "address": "0xdeA04ef31C4B4FDf31CB58923F37869739280d49",
+      "sourceHashes": [
+        "0x37e1cee9d0a4ad6ebb439d27dbbf23925fcd9f9c0d5b43a33a6335e62b54d18c"
+      ],
       "sinceTimestamp": 1694219121,
       "values": { "$immutable": true }
     },
@@ -1330,7 +1361,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
-  },
-  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+  }
 }

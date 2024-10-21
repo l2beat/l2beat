@@ -64,9 +64,6 @@ export const mantle: Layer2 = opStackL2({
     architectureImage: 'mantle',
     description:
       'Mantle is an under development EVM compatible Optimium, based on the OP Stack.',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://mantle.xyz/'],
       apps: ['https://bridge.mantle.xyz'],

@@ -1,3 +1,307 @@
+Generated with discovered.json: 0xf6c6dbe2b5fe75d76da5aba1a33a91a524031704
+
+# Diff at Mon, 21 Oct 2024 11:10:40 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20240852
+- current block number: 20240852
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20240852 (main branch discovery), not current.
+
+```diff
+    contract TSS Oracle (0x5a54fe5234E811466D5366846283323c954310B2) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x3eEA8d627ab6983fFFc7027ee623Fd7699343fc1"]
+      values.$pastUpgrades.1.1:
+-        ["0x3eEA8d627ab6983fFFc7027ee623Fd7699343fc1"]
++        "0x9b7aa9602e9b7c0835daf01b281300d8ca0a51e42942ab9bda92104e05b118c5"
+      values.$pastUpgrades.0.2:
++        ["0xccEf13cFEB6873c167f62A365548A57C9ed29DC5"]
+      values.$pastUpgrades.0.1:
+-        ["0xccEf13cFEB6873c167f62A365548A57C9ed29DC5"]
++        "0x552bd37cf291bcc16f62985e1c87e65f26e063eefbbbbf0c7874517af2356d59"
+    }
+```
+
+```diff
+    contract LayerZero Relayer (0x902F09715B6303d4173037652FA7377e5b98089E) {
+    +++ description: None
+      values.$pastUpgrades.5.2:
++        ["0xB830a5AfCBEBb936c30C607a18BbbA9f5B0a592f"]
+      values.$pastUpgrades.5.1:
+-        ["0xB830a5AfCBEBb936c30C607a18BbbA9f5B0a592f"]
++        "0x73b24db83de84a82dae12cc42405822b258a762a7c18206498f869be5d676866"
+      values.$pastUpgrades.4.2:
++        ["0x8775e9D584008f84daFe7abe75a62f6C91491027"]
+      values.$pastUpgrades.4.1:
+-        ["0x8775e9D584008f84daFe7abe75a62f6C91491027"]
++        "0x432c0e623817af575b5382c38b9bd117f34da874f0f4c9a3f170e74d6a71cd8f"
+      values.$pastUpgrades.3.2:
++        ["0xaF34771b16960ea77484A866a34CCDAFDc913D9C"]
+      values.$pastUpgrades.3.1:
+-        ["0xaF34771b16960ea77484A866a34CCDAFDc913D9C"]
++        "0x26f56a3da2382a89bead8d00ea9e93ed15f4fd83627a31c5721dcebe690a1f73"
+      values.$pastUpgrades.2.2:
++        ["0x9512a85438606dEdE54297634dEd7C7C0c231874"]
+      values.$pastUpgrades.2.1:
+-        ["0x9512a85438606dEdE54297634dEd7C7C0c231874"]
++        "0x1605419ac94c967804d0d4c2b809620b593fea2c47f3fc2f3f2a8cf677da7551"
+      values.$pastUpgrades.1.2:
++        ["0xDD55F55CB9a39EF1eed4Ee1a84EE1b7411bE306a"]
+      values.$pastUpgrades.1.1:
+-        ["0xDD55F55CB9a39EF1eed4Ee1a84EE1b7411bE306a"]
++        "0x368b49a019b69220edb9dfcedf34c3b9354a56bed285e21b897e8523237270c9"
+      values.$pastUpgrades.0.2:
++        ["0x4E341b9Cf90514A5b7dfec2c9A1f20AA4514C260"]
+      values.$pastUpgrades.0.1:
+-        ["0x4E341b9Cf90514A5b7dfec2c9A1f20AA4514C260"]
++        "0x665e97daa183fb3d57ee6aac0438d555feeeb570b782e03e7b972919aa57212f"
+    }
+```
+
+Generated with discovered.json: 0x1178ba55a07e7d0f85df04ddda7abc21b76ae35e
+
+# Diff at Mon, 14 Oct 2024 10:56:13 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20240852
+- current block number: 20240852
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20240852 (main branch discovery), not current.
+
+```diff
+    contract Factory (0x06D538690AF257Da524f25D0CD52fD85b1c2173E) {
+    +++ description: None
+      sourceHashes:
++        ["0xbc704e600b52db9b8f9530b3e75e45a8f0561c0d52beab8121e42c3fa18aefaf"]
+    }
+```
+
+```diff
+    contract DAI Pool (0x0Faf1d2d3CED330824de3B8200fc8dc6E397850d) {
+    +++ description: None
+      sourceHashes:
++        ["0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"]
+    }
+```
+
+```diff
+    contract SG-ETH Pool (0x101816545F6bd2b1076434B54383a1E633390A2E) {
+    +++ description: None
+      sourceHashes:
++        ["0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"]
+    }
+```
+
+```diff
+    contract WOO Pool (0x1CE66c52C36757Daf6551eDc04800A0Ec9983A09) {
+    +++ description: None
+      sourceHashes:
++        ["0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"]
+    }
+```
+
+```diff
+    contract Bridge (0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97) {
+    +++ description: None
+      sourceHashes:
++        ["0xcfc56af1501e5fdb6791848b058bbdd819db31eb1e168d31c30743c57eb88a41"]
+    }
+```
+
+```diff
+    contract TreasuryV2 (0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d) {
+    +++ description: None
+      sourceHashes:
++        ["0x8b908351f18fdaeaf600ae46ef1450c535f741fc95bb25acade77f8b59fdc168"]
+    }
+```
+
+```diff
+    contract USDT Pool (0x38EA452219524Bb87e18dE1C24D3bB59510BD783) {
+    +++ description: None
+      sourceHashes:
++        ["0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"]
+    }
+```
+
+```diff
+    contract USDT Pool2 (0x430Ebff5E3E80A6C58E7e6ADA1d90F5c28AA116d) {
+    +++ description: None
+      sourceHashes:
++        ["0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"]
+    }
+```
+
+```diff
+    contract UltraLightNodeV2 (0x4D73AdB72bC3DD368966edD0f0b2148401A178E2) {
+    +++ description: None
+      sourceHashes:
++        ["0x38c85ab54f670eaa1fc2b351aee39913bc12e2b26c460ee31cf89d3f1f7d59b9"]
+    }
+```
+
+```diff
+    contract sUSD Pool (0x590d4f8A68583639f215f675F3a259Ed84790580) {
+    +++ description: None
+      sourceHashes:
++        ["0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"]
+    }
+```
+
+```diff
+    contract NonceContract (0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068) {
+    +++ description: None
+      sourceHashes:
++        ["0x895867397d61409de8476975bae4d871fec1c289e52fe97b31872726808dae38"]
+    }
+```
+
+```diff
+    contract StarGate Multisig (0x65bb797c2B9830d891D87288F029ed8dACc19705) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract Endpoint (0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675) {
+    +++ description: None
+      sourceHashes:
++        ["0x945c3299d0cf62b9ea7a77d6328295d54327299d6a153e1e7b48d85fa9b77215"]
+    }
+```
+
+```diff
+    contract USDD Pool (0x692953e758c3669290cb1677180c64183cEe374e) {
+    +++ description: None
+      sourceHashes:
++        ["0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"]
+    }
+```
+
+```diff
+    contract Router (0x8731d54E9D02c286767d56ac03e8037C07e01e98) {
+    +++ description: None
+      sourceHashes:
++        ["0xaca03a3990b02abbdfb3479c15740adb67918d89a2b2ba4a789156a84a23895f"]
+    }
+```
+
+```diff
+    contract StarGateFeeLibrary7 (0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F) {
+    +++ description: None
+      sourceHashes:
++        ["0xa8c87025dca83b0d7859efc30fa933d23dc2c4a29483706d9123f2c0248ff35e"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8) {
+    +++ description: None
+      sourceHashes:
++        ["0xeb95d39e1b35f76b6331da863f87bf2e148dd21abf5666590443b65f6a125630"]
+    }
+```
+
+```diff
+    contract MAI Pool (0x9cef9a0b1bE0D289ac9f4a98ff317c33EAA84eb8) {
+    +++ description: None
+      sourceHashes:
++        ["0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"]
+    }
+```
+
+```diff
+    contract mETH Pool (0xA572d137666DCbAdFA47C3fC41F15e90134C618c) {
+    +++ description: None
+      sourceHashes:
++        ["0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9) {
+    +++ description: None
+      sourceHashes:
++        ["0xeb95d39e1b35f76b6331da863f87bf2e148dd21abf5666590443b65f6a125630"]
+    }
+```
+
+```diff
+    contract LayerZero Multisig (0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract Google Cloud Oracle (0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc) {
+    +++ description: None
+      sourceHashes:
++        ["0x1be31a02ca7158d467a49eeb964f0f8aa1d1e74019df854c1881d89d51260701"]
+    }
+```
+
+```diff
+    contract METIS Pool (0xd8772edBF88bBa2667ed011542343b0eDDaCDa47) {
+    +++ description: None
+      sourceHashes:
++        ["0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"]
+    }
+```
+
+```diff
+    contract VerifierFeeLib (0xdeA04ef31C4B4FDf31CB58923F37869739280d49) {
+    +++ description: None
+      sourceHashes:
++        ["0x37e1cee9d0a4ad6ebb439d27dbbf23925fcd9f9c0d5b43a33a6335e62b54d18c"]
+    }
+```
+
+```diff
+    contract USDC Pool (0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56) {
+    +++ description: None
+      sourceHashes:
++        ["0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"]
+    }
+```
+
+```diff
+    contract LUSD Pool (0xE8F55368C82D38bbbbDb5533e7F56AfC2E978CC2) {
+    +++ description: None
+      sourceHashes:
++        ["0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"]
+    }
+```
+
+```diff
+    contract Frax Pool (0xfA0F307783AC21C39E939ACFF795e27b650F6e68) {
+    +++ description: None
+      sourceHashes:
++        ["0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"]
+    }
+```
+
 Generated with discovered.json: 0x4e354eec060dee36a608f249b5e8a44f10ea30d8
 
 # Diff at Tue, 01 Oct 2024 10:55:35 GMT:

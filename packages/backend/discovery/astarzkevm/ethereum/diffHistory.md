@@ -1,3 +1,129 @@
+Generated with discovered.json: 0x1b524a34a4111aef11046d81df2527fb3fcf9089
+
+# Diff at Mon, 21 Oct 2024 11:04:26 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20325048
+- current block number: 20325048
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20325048 (main branch discovery), not current.
+
+```diff
+    contract AstarValidium (0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"]
+      values.$pastUpgrades.1.1:
+-        ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"]
++        "0xf735ab474ff2e48c6231cc834828e35736c6fc9fec9759b74e5cf58a88075a36"
+      values.$pastUpgrades.0.2:
++        ["0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30"]
+      values.$pastUpgrades.0.1:
+-        ["0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30"]
++        "0xd68a284c1d748ff541d3339f650f5b90e2faf2744db5fdfc27edfffc702e2dbd"
+    }
+```
+
+```diff
+    contract AstarValidiumDAC (0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xF4e87685e323818E0aE35dCdFc3B65106002E456"]
+      values.$pastUpgrades.0.1:
+-        ["0xF4e87685e323818E0aE35dCdFc3B65106002E456"]
++        "0x72856ab866229053e930b1e4ec2c8505ed4b72feffdf13db4a218eced4364fa2"
+    }
+```
+
+Generated with discovered.json: 0x60db18bbf616e56be12eb0232005fb4d9e473094
+
+# Diff at Mon, 14 Oct 2024 10:49:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20325048
+- current block number: 20325048
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20325048 (main branch discovery), not current.
+
+```diff
+    contract AstarVerifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81) {
+    +++ description: None
+      sourceHashes:
++        ["0x0bc67d276b40b2ba13903d94fd6c25ae4d3d5162bc942763c418afdc11bc9b32"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0"}]
+      template:
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"]
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0"}]
+    }
+```
+
+```diff
+    contract AstarValidium (0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80) {
+    +++ description: None
+      sourceHashes:
++        ["0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4","0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"]
+    }
+```
+
+```diff
+    contract GnosisSafe (0x6c4876Ecb5de33f76700f44d547C593065806dAC) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract AstarValidiumDAC (0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d"
++        "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E"
+      issuedPermissions.0.via.0:
++        {"address":"0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d","delay":0}
+      sourceHashes:
++        ["0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1","0xf7c38d00c4b6000f1840ed38f9ae99d753da8ac69ee1b6ac9ed614f2b60d470f"]
+    }
+```
+
+```diff
+    contract LocalAdmin (0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0","via":[{"address":"0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d"}]
+    }
+```
+
 Generated with discovered.json: 0x9bd8193a78bf39e9848d2145e1ed2d573e3f3a9d
 
 # Diff at Tue, 01 Oct 2024 10:49:53 GMT:

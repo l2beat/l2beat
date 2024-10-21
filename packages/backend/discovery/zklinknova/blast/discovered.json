@@ -8,6 +8,10 @@
       "name": "zkLink",
       "address": "0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD",
       "template": "zklinknova/secondaryZkLink",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x9d3b6cf7c8756dc6cce424dc754ed146f84d3201e5223d47b0a4fcd994a76a7f"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -31,10 +35,12 @@
         "$pastUpgrades": [
           [
             "2024-03-14T12:02:09.000Z",
+            "0xd2b32d00ff07d1bb06d1fb01f3aedb6163ee3bf6fbe547310c4674f592d4d7f5",
             ["0x35E808DB3A37eec12ecF6A22Cc951C9F867f1D64"]
           ],
           [
             "2024-04-22T02:30:45.000Z",
+            "0xb0fd8cd86cd093af8f866f6fd599067fc5d202d36fd1f4967bda245c41ee16aa",
             ["0xDe4Be50Bfe9503180231357Eab19d709F8F73C66"]
           ]
         ],
@@ -71,6 +77,10 @@
       "name": "BlastL2Gateway",
       "address": "0x3f64e2e09732969813904a8473074CFADeE66AF1",
       "template": "zklinknova/secondaryGateway",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x54984eed0ba905283811bcd69e63428602cc4c290c8eed30fc28011383549ff2"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -86,6 +96,7 @@
         "$pastUpgrades": [
           [
             "2024-03-14T12:13:05.000Z",
+            "0x05e9bceb1c88e60beabf453da2cfc31525989a529e5d600fbe170dfdb1325c88",
             ["0xd1dCd063A4e650DCECd8BD211fe6D18a934ecCaD"]
           ]
         ],
@@ -101,6 +112,10 @@
       "name": "BlastOwner",
       "address": "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
@@ -140,6 +155,10 @@
     {
       "name": "L1ERC20Bridge",
       "address": "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b",
+      "sourceHashes": [
+        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8",
+        "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -155,10 +174,12 @@
         "$pastUpgrades": [
           [
             "2024-03-14T14:36:53.000Z",
+            "0x6c75a5c435f7e399d35fa65b31295cfa722742a9cd03208bcf726891f028d0b2",
             ["0x4D7012d5C62c351804CCe49c2d7C09A401fD3deC"]
           ],
           [
             "2024-04-04T06:41:11.000Z",
+            "0x319fa19f70ff861bf9b573f1cc6054d236dcb99dec620756e3f85d2c35c0040b",
             ["0xc24864769346073f5fEf0386A18734F0eF5503F5"]
           ]
         ],
@@ -172,6 +193,9 @@
     {
       "name": "BlastProxyAdmin",
       "address": "0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -411,9 +435,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "zklinknova/secondaryGateway": "0xb8fdb3c993db014b3b0c1cdd56f21ecb1aac5dd63185bc3f87a6c0e45e9168c6",
     "zklinknova/secondaryZkLink": "0x3038879967ecfd740f8377d1280264034b6959ad28bea99ebcedd97c6127a904"
-  },
-  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
+  }
 }

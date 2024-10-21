@@ -8,6 +8,10 @@
       "name": "EraOwner",
       "address": "0x3334552599C9aA1FE08CfF276A02033FF37646ca",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
@@ -59,10 +63,12 @@
         "$pastUpgrades": [
           [
             "2024-03-01T12:44:39.000Z",
+            "0x0564dfd39bc1c198014393565488b4808d94d76790f60c342ac6b031a000233d",
             ["0x022c9D356d6B020D3128de430458A28C7183a13d"]
           ],
           [
             "2024-04-04T06:25:17.000Z",
+            "0x7886648572871a6eb12027c117e273d16ee8026b5f51c0b01b209c0218caf005",
             ["0xdBA32e62e929a7e2Fa65782F812416CA65208E40"]
           ]
         ],
@@ -89,14 +95,17 @@
         "$pastUpgrades": [
           [
             "2024-03-01T08:10:24.000Z",
+            "0xc46fbc277cb8c7a4cc234225d13ef11be35301d8aae17df2537a2b54692ab750",
             ["0x1D3A82B3BDE1d23D3989b77325C4875395c9D6a9"]
           ],
           [
             "2024-03-09T10:21:56.000Z",
+            "0x36b4b07ab7556a46e511974d1e6ef3baacce9b569299326bba10f33d8166d0f0",
             ["0xCaAeA20e1e35214342f4Efe87d3912493E3e1CE5"]
           ],
           [
             "2024-04-22T02:28:56.000Z",
+            "0x35dad9f42bcd7e9c55385a3656325f94616498878f636e080dbd059f80618492",
             ["0xC9bBbdCf1778A4aA86544F02CccBf09fd3A0706E"]
           ]
         ],
@@ -107,6 +116,9 @@
     {
       "name": "EraProxyAdmin",
       "address": "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98",
+      "sourceHashes": [
+        "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -198,7 +210,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
-  },
-  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+  }
 }

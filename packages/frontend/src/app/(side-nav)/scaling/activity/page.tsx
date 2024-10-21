@@ -24,7 +24,7 @@ export default async function Page() {
       range,
       filter: { type: 'all' },
     }),
-    api.activity.scalingFactor.prefetch({
+    api.activity.chartStats.prefetch({
       filter: { type: 'all' },
     }),
   ])

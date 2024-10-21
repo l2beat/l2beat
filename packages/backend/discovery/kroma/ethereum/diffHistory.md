@@ -1,3 +1,505 @@
+Generated with discovered.json: 0x434a34a25191acb813b1ed81b407a2f0bf6eef41
+
+# Diff at Mon, 21 Oct 2024 11:06:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20912649
+- current block number: 20912649
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20912649 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x14126FFa3889a026A79F0f99FaE80B3dc9E38095"]
+      values.$pastUpgrades.0.1:
+-        ["0x14126FFa3889a026A79F0f99FaE80B3dc9E38095"]
++        "0xf1ce5facb5ac6b858552c8af4867797e1c69ad89629f1c836b7f489770683783"
+    }
+```
+
+```diff
+    contract Timelock (0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xe44da6e9fA92E3FD897Da84d38fa6B9322Dd22c3"]
+      values.$pastUpgrades.1.1:
+-        ["0xe44da6e9fA92E3FD897Da84d38fa6B9322Dd22c3"]
++        "0xf4e23f51e23f9549e6bed354f5330524c65d5796b765bd38fdacdb6758e7f8ff"
+      values.$pastUpgrades.0.2:
++        ["0x595E1b330892Fcbf18b2BF099DE501Ad4d6A07C4"]
+      values.$pastUpgrades.0.1:
+-        ["0x595E1b330892Fcbf18b2BF099DE501Ad4d6A07C4"]
++        "0xc92251d7f8a454b533f0e272ba324cb7572ca4142aabf17cd29821e1d8ebfe1b"
+    }
+```
+
+```diff
+    contract KromaPortal (0x31F648572b67e60Ec6eb8E197E1848CC5F5558de) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x381F53695230BAF83a39D1a08304D233A35730Fa"]
+      values.$pastUpgrades.0.1:
+-        ["0x381F53695230BAF83a39D1a08304D233A35730Fa"]
++        "0x3166f6173eb630e96f74c5c9d6765cd93e39566dc592a423fddae11eb09f8d17"
+    }
+```
+
+```diff
+    contract SystemConfig (0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x2af8a383C395EBa6551E674EeD02344936fE36f5"]
+      values.$pastUpgrades.0.1:
+-        ["0x2af8a383C395EBa6551E674EeD02344936fE36f5"]
++        "0x3dcaff162fff51f2f6ba6264967bb5a3e6e9aefeb290b159109038ae38455e10"
+    }
+```
+
+```diff
+    contract SecurityCouncil (0x3de211088dF516da72efe68D386b561BEE256Ec4) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x61c7C854Dcdf8393230B1242a4c1107f4d023c28"]
+      values.$pastUpgrades.1.1:
+-        ["0x61c7C854Dcdf8393230B1242a4c1107f4d023c28"]
++        "0xf4e23f51e23f9549e6bed354f5330524c65d5796b765bd38fdacdb6758e7f8ff"
+      values.$pastUpgrades.0.2:
++        ["0x2BB1c629c46a4018fBe2538a98da7162F8355583"]
+      values.$pastUpgrades.0.1:
+-        ["0x2BB1c629c46a4018fBe2538a98da7162F8355583"]
++        "0x7aed5f7b2d0d4843ead380d9f809554d9d3f379d81ca91a8645fcd4873e4d4bf"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x675924D68200F2C967Ba12349d5d510676C7214c"]
+      values.$pastUpgrades.0.1:
+-        ["0x675924D68200F2C967Ba12349d5d510676C7214c"]
++        "0xc077167cfc27b631ad397c64fd72bcaf2c8fcc7c9f08498eb247abc0094354a5"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x46d07221dfC313afe1BF104F4bB1f185301D65B9) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xbB1cDB5Cc35B1c9801DA8772aCBcDbd323A912D9"]
+      values.$pastUpgrades.1.1:
+-        ["0xbB1cDB5Cc35B1c9801DA8772aCBcDbd323A912D9"]
++        "0x2aaca06bcfebdfe7511fe20033c1af5dd9c4cae053340995621ce10da29392ec"
+      values.$pastUpgrades.0.2:
++        ["0x0257e4d92C00C9EfcCa1d641b224d7d09cfa4522"]
+      values.$pastUpgrades.0.1:
+-        ["0x0257e4d92C00C9EfcCa1d641b224d7d09cfa4522"]
++        "0xb5f090dda7636b95e017de8e0619fc4d6f706b7b4a2a9bbd07996bd85ef70bad"
+    }
+```
+
+```diff
+    contract ZKVerifier (0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0x4cd05aB629055a449617a28E3466660403eA7126"]
+      values.$pastUpgrades.2.1:
+-        ["0x4cd05aB629055a449617a28E3466660403eA7126"]
++        "0xe56ba658fc810d727438e3bb124aa2e8ef1c25e5c21cbfe9715983ba5ce65a63"
+      values.$pastUpgrades.1.2:
++        ["0x7E79726560B140fd6e089547bD049509F5423BFf"]
+      values.$pastUpgrades.1.1:
+-        ["0x7E79726560B140fd6e089547bD049509F5423BFf"]
++        "0x66fecb7dffc867d91d6f840e65fc28f81ad1301204cfca38b3bbb22146ffa361"
+      values.$pastUpgrades.0.2:
++        ["0xD3b1D396330EA8dd79615f12433B856160d7D8B4"]
+      values.$pastUpgrades.0.1:
+-        ["0xD3b1D396330EA8dd79615f12433B856160d7D8B4"]
++        "0x6ab34004b7846a1d1406bc53825ee386d905f8499c72ab9bfe07f4721d773ae9"
+    }
+```
+
+```diff
+    contract Colosseum (0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0xb87eaB624EE684C1799f1E8b24936A1c90759eEc"]
+      values.$pastUpgrades.2.1:
+-        ["0xb87eaB624EE684C1799f1E8b24936A1c90759eEc"]
++        "0x0fb2eca6483b1d042af562bf0e8e804c1356df56d7b8094e9d6edd4b63edf715"
+      values.$pastUpgrades.1.2:
++        ["0x311b4A33b6dC4e080eE0d98caAaf8dF86C833066"]
+      values.$pastUpgrades.1.1:
+-        ["0x311b4A33b6dC4e080eE0d98caAaf8dF86C833066"]
++        "0xd420f3a8af8254ca1095409b3c4c2a3a1faa26fbe50c0477663e1bcb39727dfc"
+      values.$pastUpgrades.0.2:
++        ["0x7526F997ea040B3949415c3a44e708273863AA2b"]
+      values.$pastUpgrades.0.1:
+-        ["0x7526F997ea040B3949415c3a44e708273863AA2b"]
++        "0x70494d42df3a5668be6ac9bd1a46cdcfebe8980cae31dddcb7ec86c97200d60f"
+    }
+```
+
+```diff
+    contract USDCBridge (0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xE4e9F3AD8A6F224c4b39854D3550AD258441AfE3"]
+      values.$pastUpgrades.0.1:
+-        ["0xE4e9F3AD8A6F224c4b39854D3550AD258441AfE3"]
++        "0x04a7ec0dad1a7a0ebf4cb2bd1f983b19d43e57972e91c4e73aabf2bff3530014"
+    }
+```
+
+```diff
+    contract SpectrumHub (0x7fe71D0Dde2f6Bbc8474c41dc39bDFd6bCd9Eca5) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0x5d55AEC0a39c660f369F147c4133cc099f095508"]
+      values.$pastUpgrades.2.1:
+-        ["0x5d55AEC0a39c660f369F147c4133cc099f095508"]
++        "0x1db635b7f09a772f64f347dd3ce8393a2aae5d78bcd215c8551c0de6758d1512"
+      values.$pastUpgrades.1.2:
++        ["0x736058a55d3D711aC2DC131A6B926A4C245c7351"]
+      values.$pastUpgrades.1.1:
+-        ["0x736058a55d3D711aC2DC131A6B926A4C245c7351"]
++        "0xddf911daed4f7da04853f3c52b8d49c9b4221ed29e9d1ff79b26a2e1472cf259"
+      values.$pastUpgrades.0.2:
++        ["0xbb1C83Da81A6eb02B3156A894a58325b741e0F0F"]
+      values.$pastUpgrades.0.1:
+-        ["0xbb1C83Da81A6eb02B3156A894a58325b741e0F0F"]
++        "0x22e682ffba1c1e5f191a38d64dd37dbf464961c89ae771cbb7d46c2e1ebf2b80"
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x827962404D7104202C5aaa6b929115C8211d9596) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x404133EdF24F56b7dD9c6d89Fb56bb35244461B4"]
+      values.$pastUpgrades.0.1:
+-        ["0x404133EdF24F56b7dD9c6d89Fb56bb35244461B4"]
++        "0xe67e8f042d304b70f1fd718343378219e0be9c49ed4a8242f8f96ea9ced2c0fd"
+    }
+```
+
+```diff
+    contract SpectrumCore (0x88b6bBb148748C18B377A57c9d4E6c714AF28078) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x89792dDc14209A3156d90F5e4A34F4c532bB4EC6"]
+      values.$pastUpgrades.1.1:
+-        ["0x89792dDc14209A3156d90F5e4A34F4c532bB4EC6"]
++        "0x1210763148011b6c3e5c21d85fa5926a6436157be454f7f44534af56210ba703"
+      values.$pastUpgrades.0.2:
++        ["0xCa977F1D10Dd2361ae57295AdC0C6fFc06f1E6C0"]
+      values.$pastUpgrades.0.1:
+-        ["0xCa977F1D10Dd2361ae57295AdC0C6fFc06f1E6C0"]
++        "0x1d2561062b895b73850985943534cf27aeb54c7cca7775f31ec41c8e3bac14ef"
+    }
+```
+
+```diff
+    contract SH_ProxyAdmin (0x9841bC06C8284095824e9397AC818aD1114C444C) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x0114fd85c342F39e22E2c8e1Be512ade856309C0"]
+      values.$pastUpgrades.0.1:
+-        ["0x0114fd85c342F39e22E2c8e1Be512ade856309C0"]
++        "0x22e682ffba1c1e5f191a38d64dd37dbf464961c89ae771cbb7d46c2e1ebf2b80"
+    }
+```
+
+```diff
+    contract spETH_ProxyAdmin (0xa50f2b3d55fb311c81f6FB75998B48A67505c6F4) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x0114fd85c342F39e22E2c8e1Be512ade856309C0"]
+      values.$pastUpgrades.0.1:
+-        ["0x0114fd85c342F39e22E2c8e1Be512ade856309C0"]
++        "0x2193af686678c3946482fc5b9506c6360d5c7b7810e917e86c82b3676278f46f"
+    }
+```
+
+```diff
+    contract UpgradeGovernor (0xb3c415c2Aad428D5570208e1772cb68e7D06a537) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x64F8F4EB207D51F74caf6db644Bf710Ad86989b3"]
+      values.$pastUpgrades.1.1:
+-        ["0x64F8F4EB207D51F74caf6db644Bf710Ad86989b3"]
++        "0xf4e23f51e23f9549e6bed354f5330524c65d5796b765bd38fdacdb6758e7f8ff"
+      values.$pastUpgrades.0.2:
++        ["0x2a51e099CC7AF922CcDe7F3db909DC7b71B8D030"]
+      values.$pastUpgrades.0.1:
+-        ["0x2a51e099CC7AF922CcDe7F3db909DC7b71B8D030"]
++        "0x1474ff104cbd078775403ee9b33a18394d045e5e00e03e94586e73a3596cbde0"
+    }
+```
+
+```diff
+    contract SC_ProxyAdmin (0xd26F4195B147b988E7497779f7DED22ba130204d) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x0114fd85c342F39e22E2c8e1Be512ade856309C0"]
+      values.$pastUpgrades.0.1:
+-        ["0x0114fd85c342F39e22E2c8e1Be512ade856309C0"]
++        "0x1d2561062b895b73850985943534cf27aeb54c7cca7775f31ec41c8e3bac14ef"
+    }
+```
+
+```diff
+    contract SecurityCouncilToken (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x108eDc4Df0b9B04dcE9f6FFBD65Dd9895562c14C"]
+      values.$pastUpgrades.1.1:
+-        ["0x108eDc4Df0b9B04dcE9f6FFBD65Dd9895562c14C"]
++        "0xf4e23f51e23f9549e6bed354f5330524c65d5796b765bd38fdacdb6758e7f8ff"
+      values.$pastUpgrades.0.2:
++        ["0x54140F4Cd6e6665BE0151eD5a8aC949EC2942439"]
+      values.$pastUpgrades.0.1:
+-        ["0x54140F4Cd6e6665BE0151eD5a8aC949EC2942439"]
++        "0xa1a5d4f87ba3ebc2951c5f2d521882061eaf5ee68bc8c6179ba1dfc0ed6b8a7b"
+    }
+```
+
+```diff
+    contract spETH (0xf96d4B1e0a0B129e1471e88dF6f1281b933Bc474) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x05F3e2b5f90EF4543D3E147AD4DDAa0C7A8C3Fcc"]
+      values.$pastUpgrades.0.1:
+-        ["0x05F3e2b5f90EF4543D3E147AD4DDAa0C7A8C3Fcc"]
++        "0x2193af686678c3946482fc5b9506c6360d5c7b7810e917e86c82b3676278f46f"
+    }
+```
+
+```diff
+    contract ValidatorPool (0xFdFF462845953D90719A78Fd12a2d103541d2103) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0x8EDc4cCa2aF96f5D5141d55333043a65c3f59Ec4"]
+      values.$pastUpgrades.2.1:
+-        ["0x8EDc4cCa2aF96f5D5141d55333043a65c3f59Ec4"]
++        "0xd420f3a8af8254ca1095409b3c4c2a3a1faa26fbe50c0477663e1bcb39727dfc"
+      values.$pastUpgrades.1.2:
++        ["0x3eb033BAc5c449bDcb6D082c4f728eDAfC8D75fa"]
+      values.$pastUpgrades.1.1:
+-        ["0x3eb033BAc5c449bDcb6D082c4f728eDAfC8D75fa"]
++        "0xf4e23f51e23f9549e6bed354f5330524c65d5796b765bd38fdacdb6758e7f8ff"
+      values.$pastUpgrades.0.2:
++        ["0x6e1781678ffE6CDc109fd3bC0833c47BD0F23de1"]
+      values.$pastUpgrades.0.1:
+-        ["0x6e1781678ffE6CDc109fd3bC0833c47BD0F23de1"]
++        "0x31c5282eb4cc1bcf3b3a3fbbbb0116c0ee335b4ccabd497f02b2761b0bc65dbd"
+    }
+```
+
+Generated with discovered.json: 0xae4d22496c8fabd8e7c78c6e9b24cd65c4ba6c89
+
+# Diff at Mon, 14 Oct 2024 10:52:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20912649
+- current block number: 20912649
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20912649 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0x23bd4269751ee622a2c70f6ff77812e48b54e0f5b236f7b143e78d31fd26ce19"]
+    }
+```
+
+```diff
+    contract Timelock (0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0x6bcef64b35598149aee2e622e06fb8e414063ee43de09312ca4bbd0306b0eea9"]
+    }
+```
+
+```diff
+    contract KromaPortal (0x31F648572b67e60Ec6eb8E197E1848CC5F5558de) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0x110b957ac30147c969242967fdb5705351484239bca1c7060fe8b522d8d9cc44"]
+    }
+```
+
+```diff
+    contract ZKMerkleTrie (0x339208824010425cBE73201ceD4372308ACD610B) {
+    +++ description: None
+      sourceHashes:
++        ["0x90927c331f5a5d562d23263a9343eb8828b5dc83798239506f42fcd382b903a4"]
+    }
+```
+
+```diff
+    contract SystemConfig (0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0x579a99eb751c6e2b976e753d11220cfa89229ac2225f9ce87d4dfdabc7371ff0"]
+    }
+```
+
+```diff
+    contract SecurityCouncil (0x3de211088dF516da72efe68D386b561BEE256Ec4) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0x1a3ad305d7acaa5f74c8de3149553a1eb31fa3be9e4649c601512623645015a4"]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0xaff375ae74ed132384e4286ac5de5830f7c8e7c3f2bb6b31f4f2251e0dc2b8d2"]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x46d07221dfC313afe1BF104F4bB1f185301D65B9) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0x4a2ad213ff7b5da7d065bc134bb2392837364747089248e4083d17a39ea87fd7"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x665c23A5722B6A237fa6Be2B49c0A94504db1edd) {
+    +++ description: None
+      sourceHashes:
++        ["0x82e048446e41433c990a710c946cb691f4cde26f99023a0afcfda2d22e1f30d0"]
+    }
+```
+
+```diff
+    contract ZKVerifier (0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0xd974fa3206ad97d493c1fadcbb131b7fee176407ad7aae0d92d9b54b47bfbc32"]
+    }
+```
+
+```diff
+    contract Colosseum (0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0x044a9955ffcea5b68400e934c9bd2a7e7f856ad28b98727c0cf762a44a428601"]
+    }
+```
+
+```diff
+    contract USDCBridge (0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0x531e0a3d7e3c3cf7433e6462f1606d0470104dfd9eb9e500fecc14e8334670dd"]
+    }
+```
+
+```diff
+    contract SpectrumHub (0x7fe71D0Dde2f6Bbc8474c41dc39bDFd6bCd9Eca5) {
+    +++ description: None
+      sourceHashes:
++        ["0x452d0da14e8093b03552229d64244a198eadf6e81731f2c5755cf5c4efae5df6","0x7c08ca7f13985a63106aa5f6dc1ea45a6706252a7c4e9578523365d6d77ca826"]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x827962404D7104202C5aaa6b929115C8211d9596) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0xe4eddca14af777a8abcb70781c5881acfaec17ce822a4231242061a4032ace9a"]
+    }
+```
+
+```diff
+    contract SpectrumCore (0x88b6bBb148748C18B377A57c9d4E6c714AF28078) {
+    +++ description: None
+      sourceHashes:
++        ["0x452d0da14e8093b03552229d64244a198eadf6e81731f2c5755cf5c4efae5df6","0x4e05028ce6debb60bfcfc5262ccc5afbc807b98fca7b0e0afbe849724f16e5ed"]
+    }
+```
+
+```diff
+    contract SH_ProxyAdmin (0x9841bC06C8284095824e9397AC818aD1114C444C) {
+    +++ description: None
+      sourceHashes:
++        ["0xeb2472cd0f50272a33698b0eea38767d493d4d4f25ef378a981cde4ed201c258","0x1ec7e35ec363a1c5133b29101701dabc1f1cf8774648944bfb44ee8684ddb9d3"]
+    }
+```
+
+```diff
+    contract spETH_ProxyAdmin (0xa50f2b3d55fb311c81f6FB75998B48A67505c6F4) {
+    +++ description: None
+      sourceHashes:
++        ["0xeb2472cd0f50272a33698b0eea38767d493d4d4f25ef378a981cde4ed201c258","0x1ec7e35ec363a1c5133b29101701dabc1f1cf8774648944bfb44ee8684ddb9d3"]
+    }
+```
+
+```diff
+    contract UpgradeGovernor (0xb3c415c2Aad428D5570208e1772cb68e7D06a537) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0x83b27c2e32131de05d6b3676aea653f8a46267dd75c421acd51b2c53fa145604"]
+    }
+```
+
+```diff
+    contract SC_ProxyAdmin (0xd26F4195B147b988E7497779f7DED22ba130204d) {
+    +++ description: None
+      sourceHashes:
++        ["0xeb2472cd0f50272a33698b0eea38767d493d4d4f25ef378a981cde4ed201c258","0x1ec7e35ec363a1c5133b29101701dabc1f1cf8774648944bfb44ee8684ddb9d3"]
+    }
+```
+
+```diff
+    contract SecurityCouncilToken (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0x5143e277c3037f518a48916fbdf29d6ab69cb265fedb2d68e4e2ba404b42a453"]
+    }
+```
+
+```diff
+    contract spETH (0xf96d4B1e0a0B129e1471e88dF6f1281b933Bc474) {
+    +++ description: None
+      sourceHashes:
++        ["0x452d0da14e8093b03552229d64244a198eadf6e81731f2c5755cf5c4efae5df6","0xd221fde741d3a22b1b97b9996ba58d404be2eb771c22e87a783d59d6fa5f01f9"]
+    }
+```
+
+```diff
+    contract ValidatorPool (0xFdFF462845953D90719A78Fd12a2d103541d2103) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0x22ee68d5248870b98295dbc19fb66375ddbb2b23f040c2c6d8cc43a946f9940f"]
+    }
+```
+
 Generated with discovered.json: 0x192ec46727290d3f2d3b8213fa58f007f2fd1280
 
 # Diff at Mon, 07 Oct 2024 09:02:03 GMT:
