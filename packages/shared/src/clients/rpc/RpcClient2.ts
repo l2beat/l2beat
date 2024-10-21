@@ -32,8 +32,7 @@ export class RpcClient2 {
 
     const block = EVMBlock.safeParse(blockResponse)
     if (!block.success) {
-      this.$.logger.error(JSON.stringify(blockResponse))
-      throw new Error('Error during parsing of eth_getBlockByNumber response')
+      throw new Error(`Block ${blockNumber}: Error during parsing`)
     }
     return block.data
   }
