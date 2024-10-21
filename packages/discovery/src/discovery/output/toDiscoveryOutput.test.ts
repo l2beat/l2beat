@@ -4,9 +4,10 @@ import { expect } from 'earl'
 import { AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
 import { processAnalysis, sortByKeys } from './toDiscoveryOutput'
+import { Meta } from '@l2beat/discovery-types'
 
-const emptyOutputMeta = {
-  descriptions: undefined,
+const emptyOutputMeta: Meta = {
+  description: undefined,
   issuedPermissions: undefined,
   receivedPermissions: undefined,
   directlyReceivedPermissions: undefined,

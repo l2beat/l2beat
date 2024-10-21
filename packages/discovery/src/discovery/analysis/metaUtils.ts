@@ -24,7 +24,7 @@ type AddressToMetaMap = { [address: string]: ContractMeta }
 export interface ContractMeta {
   canActIndependently?: boolean
   displayName?: string
-  descriptions?: string[]
+  description?: string
   permissions?: PermissionConfiguration[]
   categories?: Set<StackCategory>
   types?: Set<ContractValueType>
@@ -37,7 +37,7 @@ export function mergeContractMeta(
 ): ContractMeta | undefined {
   const result: ContractMeta = {
     displayName: a?.displayName ?? b?.displayName,
-    descriptions: concatArrays(a?.descriptions, b?.descriptions),
+    description: a?.description ?? b?.description,
     permissions: mergePermissions(a?.permissions, b?.permissions),
     categories: mergeSets(a?.categories, b?.categories),
     types: mergeSets(a?.types, b?.types),
@@ -95,7 +95,7 @@ export function getSelfMeta(
   return {
     canActIndependently: overrides.canActIndependently,
     displayName: overrides.displayName ?? undefined,
-    descriptions: [description],
+    description,
     permissions: undefined,
     categories: undefined,
     severity: undefined,
@@ -140,7 +140,7 @@ export function getMetaFromUpgradeability(
       result[upgradeabilityAdmin.toString()] = {
         displayName: undefined,
         categories: undefined,
-        descriptions: undefined,
+        description: undefined,
         severity: undefined,
         types: undefined,
         permissions: [{ type: 'upgrade', target: self, delay: 0 }],
@@ -162,7 +162,7 @@ export function targetConfigToMeta(
 
   const result: ContractMeta = {
     displayName: undefined,
-    descriptions: undefined,
+    description: undefined,
     permissions: target.permissions?.map((p) =>
       linkPermission(p, self, analysis.values, analysis),
     ),
