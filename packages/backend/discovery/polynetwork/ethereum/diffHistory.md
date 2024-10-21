@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x718f61a0a9b43d25812984523e5fe81296437f49
+
+# Diff at Mon, 21 Oct 2024 12:47:23 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e660599f23a07618fe949a07be1f516ce44f1914 block: 20675914
+- current block number: 20675914
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20675914 (main branch discovery), not current.
+
+```diff
+    contract EthCrossChainManager (0x14413419452Aaf089762A0c5e95eD2A13bBC488C) {
+    +++ description: Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs.
+      descriptions:
+-        ["Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs."]
+      description:
++        "Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs."
+    }
+```
+
+```diff
+    contract EthCrossChainManagerProxy (0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb) {
+    +++ description: Used to proxy requests from LockProxy to EthCrossChainManager and to pause/unpause it.
+      descriptions:
+-        ["Used to proxy requests from LockProxy to EthCrossChainManager and to pause/unpause it."]
+      description:
++        "Used to proxy requests from LockProxy to EthCrossChainManager and to pause/unpause it."
+    }
+```
+
+```diff
+    contract EthCrossChainData (0xcF2afe102057bA5c16f899271045a0A37fCb10f2) {
+    +++ description: Used to store Keepers’ signatures and other parameters used by EthCrossChainManager.
+      descriptions:
+-        ["Used to store Keepers’ signatures and other parameters used by EthCrossChainManager."]
+      description:
++        "Used to store Keepers’ signatures and other parameters used by EthCrossChainManager."
+    }
+```
+
 Generated with discovered.json: 0x4b3a04870aef5f52d2f16cbb234f123bfb3e4069
 
 # Diff at Mon, 14 Oct 2024 10:54:28 GMT:

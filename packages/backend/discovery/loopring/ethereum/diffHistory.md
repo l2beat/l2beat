@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xdf369d3bcbc7e1fe1597b0265fab2173955de017
+
+# Diff at Mon, 21 Oct 2024 12:45:38 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e660599f23a07618fe949a07be1f516ce44f1914 block: 20059608
+- current block number: 20059608
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20059608 (main branch discovery), not current.
+
+```diff
+    contract ForcedWithdrawalAgent (0x52ea1971C05B0169c02a0bBeC05Fe8b5E3A24470) {
+    +++ description: Auxiliary contract able to force withdrawals from L1 on behalf of users.
+      descriptions:
+-        ["Auxiliary contract able to force withdrawals from L1 on behalf of users."]
+      description:
++        "Auxiliary contract able to force withdrawals from L1 on behalf of users."
+    }
+```
+
 Generated with discovered.json: 0x7507918b819333a739f10230310aaf849c17cc74
 
 # Diff at Mon, 21 Oct 2024 11:07:21 GMT:

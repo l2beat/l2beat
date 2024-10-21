@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x5e100b8388d2136485b63eae4fbb04c5448d649a
+
+# Diff at Mon, 21 Oct 2024 12:49:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e660599f23a07618fe949a07be1f516ce44f1914 block: 20340229
+- current block number: 20340229
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20340229 (main branch discovery), not current.
+
+```diff
+    contract EndpointV2 (0x1a44076050125825900e736c501f859c50fE728c) {
+    +++ description: Its configuration and MessageLib to use is set for each OApp and destination by the OApp owner.
+      descriptions:
+-        ["Its configuration and MessageLib to use is set for each OApp and destination by the OApp owner."]
+      description:
++        "Its configuration and MessageLib to use is set for each OApp and destination by the OApp owner."
+    }
+```
+
+```diff
+    contract TokenMessaging (0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980) {
+    +++ description: This is a Layer Zero OApp. It also handles the batching logic: bus, taxi, quotes
+      descriptions:
+-        ["This is a Layer Zero OApp. It also handles the batching logic: bus, taxi, quotes"]
+      description:
++        "This is a Layer Zero OApp. It also handles the batching logic: bus, taxi, quotes"
+    }
+```
+
+```diff
+    contract SendUln302 (0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1) {
+    +++ description: Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.
+      descriptions:
+-        ["Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to."]
+      description:
++        "Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to."
+    }
+```
+
+```diff
+    contract ReceiveUln302 (0xc02Ab410f0734EFa3F14628780e6e695156024C2) {
+    +++ description: Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.
+      descriptions:
+-        ["Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to."]
+      description:
++        "Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to."
+    }
+```
+
 Generated with discovered.json: 0x87c879b1ba3960898824c2e627deb29372885e75
 
 # Diff at Mon, 21 Oct 2024 11:10:47 GMT:
