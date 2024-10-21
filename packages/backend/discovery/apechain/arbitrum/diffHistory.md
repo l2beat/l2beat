@@ -7,7 +7,7 @@ Generated with discovered.json: 0xd6fa4a4ad8fc42903fa2372bb7a447c0dd4cbe1d
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Standard Orbit stack AnyTrust optimium with APE gas token and max supply premint (bridged via LayerZero) on L3.
 
 ## Initial discovery
 
