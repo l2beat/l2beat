@@ -350,7 +350,13 @@ export const optimism: Layer2 = {
       secondLine: `${formatSeconds(maxClockDuration)} challenge period`,
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    exitWindow: RISK_VIEW.EXIT_WINDOW(0, FINALIZATION_PERIOD_SECONDS), // TODO: find out the max delay in the worst case challenge
+    exitWindow: {
+      value: 'None',
+      description:
+        'There is no exit window for users to exit in case of unwanted regular upgrades as they are initiated by the Security Council with instant upgrade power and without proper notice.',
+      sentiment: 'bad',
+      definingMetric: FINALIZATION_PERIOD_SECONDS,
+    },
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
         HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
