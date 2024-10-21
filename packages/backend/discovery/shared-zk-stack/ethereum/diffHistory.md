@@ -1,3 +1,59 @@
+Generated with discovered.json: 0x03f189e9a43739247b980d79767b1d27ad6069b3
+
+# Diff at Mon, 21 Oct 2024 10:48:51 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20998125
+- current block number: 21013457
+
+## Description
+
+Add metadata and triggers for the two new ZK stack chains launching soon.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20998125 (main branch discovery), not current.
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
+      values.SophonDiamond:
++        "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3"
+      values.SophonSTM:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.ZeroNetworkDiamond:
++        "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"
+      values.ZeroNetworkSTM:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
++++ description: If non-zero, the first batch has been posted.
++++ severity: MEDIUM
+      values.sophonFirstBatchTS:
++        0
+      values.sophonValidatorsAdded:
++        ["0x4cc87B0A504047967CeD9A955431B3229237e7de","0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f"]
+      values.sophonValidatorsRemoved:
++        []
++++ description: If non-zero, the first batch has been posted.
++++ severity: MEDIUM
+      values.zeronetworkFirstBatchTS:
++        0
+      values.zeronetworkValidatorsAdded:
++        ["0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F","0x479B7c95b9509E1A834C994fc94e3581aA8A73B9"]
+      values.zeronetworkValidatorsRemoved:
++        []
+      fieldMeta:
++        {"zeronetworkFirstBatchTS":{"severity":"MEDIUM","description":"If non-zero, the first batch has been posted."},"sophonFirstBatchTS":{"severity":"MEDIUM","description":"If non-zero, the first batch has been posted."}}
+    }
+```
+
 Generated with discovered.json: 0x32eed5a1b6eaf7441ca6eafe6f85ee2e932531ab
 
 # Diff at Sat, 19 Oct 2024 07:29:48 GMT:
