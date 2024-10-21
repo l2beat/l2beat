@@ -34,7 +34,7 @@ export const apechain: Layer3 = orbitStackL3({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   rpcUrl: 'https://rpc.apechain.com/http',
   // associatedTokens: ['APE'],
-  // nativeToken: 'APE',
+  nativeToken: 'APE',
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'ApeChainMultisig',
