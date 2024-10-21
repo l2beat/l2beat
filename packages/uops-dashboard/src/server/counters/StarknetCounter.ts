@@ -1,19 +1,23 @@
-import { Block, CountedBlock, StatResults, Transaction } from '@/types'
+import { CountedBlock, StatResults } from '@/types'
+import { Block, StarknetTransaction, Transaction } from '@l2beat/shared'
 import { Counter } from './counter'
 
 export class StarknetCounter implements Counter {
-  async countForBlock(block: Block): Promise<CountedBlock> {
+  countForBlock(block: Block): CountedBlock {
     return {
       ...block,
-      transactions: block.transactions.map((tx: Transaction) => ({
-        type: tx.type ?? 'UNKNOWN',
-        hash: tx.hash,
-        operationsCount: this.getOperationsCount(tx, block.number),
-      })),
+      transactions: block.transactions.map((tx: Transaction) => {
+        const starknetTx = tx as StarknetTransaction
+        return {
+          type: starknetTx.type,
+          hash: starknetTx.hash,
+          operationsCount: this.getOperationsCount(starknetTx, block.number),
+        }
+      }),
     }
   }
 
-  async countForBlocks(blocks: Block[]): Promise<StatResults> {
+  countForBlocks(blocks: Block[]): StatResults {
     const results: StatResults = {
       dateStart: new Date(),
       dateEnd: new Date(),
@@ -23,7 +27,7 @@ export class StarknetCounter implements Counter {
     }
 
     for (let i = 0; i < blocks.length; i++) {
-      const countedBlock = await this.countForBlock(blocks[i])
+      const countedBlock = this.countForBlock(blocks[i])
 
       const uops = countedBlock.transactions.reduce(
         (acc, tx) => acc + tx.operationsCount,
@@ -51,7 +55,10 @@ export class StarknetCounter implements Counter {
     return results
   }
 
-  private getOperationsCount(tx: Transaction, blockNumber: number): number {
+  private getOperationsCount(
+    tx: StarknetTransaction,
+    blockNumber: number,
+  ): number {
     // Starknet has different execute signatures over time:
     //	- up to block 2999 it's a single-call only, calldata is pointing directly to a contract so we count it as 1
     //	- since block 3000 up to 299 999 it's a multi-call with signature  __execute__(call_array_len, call_array, calldata_len, calldata, nonce)

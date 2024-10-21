@@ -20,7 +20,25 @@ export interface Method {
   count(calldata: string): Operation[]
 }
 
-export interface Transaction {
+export type Block = {
+  number: number
+  timestamp: number
+  hash: string
+  status?: string
+  transactions: Transaction[]
+}
+
+export type Transaction = GenericTransaction | StarknetTransaction
+
+export type GenericTransaction = {
+  hash: string
   data: string
+  to?: string
+}
+
+export type StarknetTransaction = {
+  hash: string
+  data: string[]
+  type: string
   to?: string
 }

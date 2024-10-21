@@ -1,6 +1,6 @@
+import { Block } from '@l2beat/shared'
 import { providers } from 'ethers'
 import { Chain } from '../../../chains'
-import { Block } from '../../../types'
 import { getApiKey, getApiUrl } from '../apiUrls'
 import { BlockClient } from './BlockClient'
 

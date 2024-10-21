@@ -1,5 +1,5 @@
 import { Chain } from '@/chains'
-import { Block } from '@/types'
+import { Block } from '@l2beat/shared'
 import { z } from 'zod'
 import { getApiUrl } from '../apiUrls'
 import { BlockClient } from './BlockClient'
@@ -68,14 +68,15 @@ export class StarknetClient implements BlockClient {
 
     const { result: block } =
       StarknetGetBlockWithTxsResponseBodySchema.parse(json)
+
     return {
       number: block.block_number,
       timestamp: block.timestamp,
       hash: block.block_hash,
       status: block.status,
-      transactions: block.transactions.map((tx: StarknetTransaction) => ({
+      transactions: block.transactions.map((tx: StarknetApiTransaction) => ({
         hash: tx.transaction_hash,
-        data: tx.calldata ?? '',
+        data: tx.calldata ?? [],
         type: tx.type,
       })),
     }
@@ -98,7 +99,7 @@ const StarknetTransaction = z.object({
   transaction_hash: z.string(),
 })
 
-type StarknetTransaction = z.infer<typeof StarknetTransaction>
+type StarknetApiTransaction = z.infer<typeof StarknetTransaction>
 
 const StarknetBlock = z.object({
   block_hash: z.string(),

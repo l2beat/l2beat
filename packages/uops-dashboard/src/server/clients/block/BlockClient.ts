@@ -1,4 +1,4 @@
-import { Block } from '../../../types'
+import { Block } from '@l2beat/shared'
 
 export interface BlockClient {
   getBlockNumber(): Promise<number>

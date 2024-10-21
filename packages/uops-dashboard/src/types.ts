@@ -20,21 +20,6 @@ export type ApiError = {
   code?: number
 }
 
-export type Block = {
-  number: number
-  timestamp: number
-  hash: string
-  status?: string
-  transactions: Transaction[]
-}
-
-export type Transaction = {
-  hash: string
-  data: string | string[]
-  type?: string
-  to?: string
-}
-
 export type CountedTransaction = {
   type: string
   hash: string

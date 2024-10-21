@@ -1,14 +1,13 @@
 import type {
-  Block,
   BlockRatio,
   CountedBlock,
   CountedOperation,
   CountedTransaction,
   StatResults,
-  Transaction,
 } from '@/types'
 
 import {
+  Block,
   ENTRY_POINT_ADDRESS_0_6_0,
   ENTRY_POINT_ADDRESS_0_7_0,
   ERC4337_methods,
@@ -17,6 +16,9 @@ import {
   SAFE_EXEC_TRANSACTION_SELECTOR,
   SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
   SAFE_methods,
+  Transaction,
+  isErc4337,
+  isGnosisSafe,
 } from '@l2beat/shared'
 import { generateId } from '../../utils/generateId'
 import { rankBlocks } from '../../utils/rankBlocks'
@@ -24,17 +26,17 @@ import { traverseOperationTree } from '../../utils/traverseOperationTree'
 import type { Counter } from './counter'
 
 export class RpcCounter implements Counter {
-  async countForBlock(block: Block): Promise<CountedBlock> {
+  countForBlock(block: Block): CountedBlock {
     return {
       ...block,
       status: '<unknown>',
-      transactions: await Promise.all(
-        block.transactions.map((tx: Transaction) => this.mapTransaction(tx)),
+      transactions: block.transactions.map((tx: Transaction) =>
+        this.mapTransaction(tx),
       ),
     }
   }
 
-  async countForBlocks(blocks: Block[]): Promise<StatResults> {
+  countForBlocks(blocks: Block[]): StatResults {
     let dateStart = new Date()
     let dateEnd = new Date()
     let numberOfTransactions = 0
@@ -44,7 +46,7 @@ export class RpcCounter implements Counter {
     const smartAccountUsage = new Map<string, number>()
 
     for (let i = 0; i < blocks.length; i++) {
-      const current = await this.countForBlock(blocks[i])
+      const current = this.countForBlock(blocks[i])
 
       dateStart = i === 0 ? new Date(current.timestamp * 1000) : dateStart
       dateEnd = new Date(current.timestamp * 1000)
@@ -84,22 +86,27 @@ export class RpcCounter implements Counter {
     }
   }
 
-  private async mapTransaction(tx: Transaction): Promise<CountedTransaction> {
-    if (tx.to?.toLowerCase() === ENTRY_POINT_ADDRESS_0_6_0) {
-      return await this.createTransaction('ERC-4337 Entry Point 0.6.0', tx)
-    }
+  mapTransaction(tx: Transaction): CountedTransaction {
+    const methods = ERC4337_methods.concat(SAFE_methods)
 
-    if (tx.to?.toLowerCase() === ENTRY_POINT_ADDRESS_0_7_0) {
-      return await this.createTransaction('ERC-4337 Entry Point 0.7.0', tx)
-    }
+    if (isErc4337(tx) || isGnosisSafe(tx)) {
+      const countedOperation = this.countUserOperations(
+        tx.data as string,
+        tx.to ?? '',
+        methods,
+      )
 
-    if (tx.to?.toLowerCase() === SAFE_MULTI_SEND_CALL_ONLY_1_3_0) {
-      return this.createTransaction('Safe: Multi Send Call Only 1.3.0', tx)
-    }
+      const { includesBatch, includesUnknown } =
+        this.checkOperations(countedOperation)
 
-    const selector = tx.data.slice(0, 10)
-    if (selector === SAFE_EXEC_TRANSACTION_SELECTOR) {
-      return this.createTransaction('Safe: Singleton 1.3.0', tx)
+      return {
+        type: this.getTransactionType(tx.to),
+        hash: tx.hash,
+        operationsCount: countedOperation.count,
+        details: countedOperation,
+        includesBatch,
+        includesUnknown,
+      }
     }
 
     return {
@@ -110,64 +117,11 @@ export class RpcCounter implements Counter {
     }
   }
 
-  private async createTransaction(
-    type: string,
-    tx: Transaction,
-  ): Promise<CountedTransaction> {
-    const methods = ERC4337_methods.concat(SAFE_methods)
-
-    const countedOperation = await this.countUserOperations(
-      tx.data as string,
-      tx.to ?? '',
-      methods,
-    )
-    const batchOperations: string[] = []
-    const unknownOperations: string[] = []
-
-    traverseOperationTree(
-      countedOperation,
-      batchOperations,
-      (operation, batchOperations) => {
-        if (operation.level > 0 && operation.children.length > 1) {
-          batchOperations.push(operation.id)
-        }
-
-        if (
-          operation.contractAddress?.toLowerCase() !==
-            ENTRY_POINT_ADDRESS_0_6_0 &&
-          operation.contractAddress?.toLowerCase() !== ENTRY_POINT_ADDRESS_0_7_0
-        ) {
-          return
-        }
-
-        for (const child of operation.children) {
-          if (child.methodName === 'contract_deployment') {
-            continue
-          }
-
-          if (!child.methodSignature) {
-            unknownOperations.push(operation.id)
-            break
-          }
-        }
-      },
-    )
-
-    return {
-      type,
-      hash: tx.hash,
-      operationsCount: countedOperation.count,
-      details: countedOperation,
-      includesBatch: batchOperations.length > 0,
-      includesUnknown: unknownOperations.length > 0,
-    }
-  }
-
-  private async countUserOperations(
+  countUserOperations(
     calldata: string,
     to: string,
     methods: Method[],
-  ): Promise<CountedOperation> {
+  ): CountedOperation {
     const countOperationsRecursive = (
       operation: Operation,
       level: number,
@@ -228,9 +182,64 @@ export class RpcCounter implements Counter {
     return rootOperation
   }
 
-  private generateSmartAccountUsageForBlock(
-    block: CountedBlock,
-  ): Map<string, number> {
+  checkOperations(countedOperation: CountedOperation): {
+    includesBatch: boolean
+    includesUnknown: boolean
+  } {
+    const batchOperations: string[] = []
+    const unknownOperations: string[] = []
+
+    traverseOperationTree(
+      countedOperation,
+      batchOperations,
+      (operation, batchOperations) => {
+        if (operation.level > 0 && operation.children.length > 1) {
+          batchOperations.push(operation.id)
+        }
+
+        if (
+          operation.contractAddress?.toLowerCase() !==
+            ENTRY_POINT_ADDRESS_0_6_0 &&
+          operation.contractAddress?.toLowerCase() !== ENTRY_POINT_ADDRESS_0_7_0
+        ) {
+          return
+        }
+
+        for (const child of operation.children) {
+          if (child.methodName === 'contract_deployment') {
+            continue
+          }
+
+          if (!child.methodSignature) {
+            unknownOperations.push(operation.id)
+            break
+          }
+        }
+      },
+    )
+
+    return {
+      includesBatch: batchOperations.length > 0,
+      includesUnknown: unknownOperations.length > 0,
+    }
+  }
+
+  getTransactionType(to?: string): string {
+    switch (to?.toLowerCase()) {
+      case ENTRY_POINT_ADDRESS_0_6_0:
+        return 'ERC-4337 Entry Point 0.6.0'
+      case ENTRY_POINT_ADDRESS_0_7_0:
+        return 'ERC-4337 Entry Point 0.7.0'
+      case SAFE_MULTI_SEND_CALL_ONLY_1_3_0:
+        return 'Safe: Multi Send Call Only 1.3.0'
+      case SAFE_EXEC_TRANSACTION_SELECTOR:
+        return 'Safe: Singleton 1.3.0'
+      default:
+        return 'unknown'
+    }
+  }
+
+  generateSmartAccountUsageForBlock(block: CountedBlock): Map<string, number> {
     const smartAccountUsage = new Map<string, number>()
 
     for (const tx of block.transactions) {
