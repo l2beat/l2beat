@@ -28,7 +28,7 @@ export const sankoDac = AnytrustDAC({
     permissions: [
       // BLS sigs, not EOAs
     ],
-    chain: ChainId.ETHEREUM,
+    chain: ChainId.ARBITRUM,
     requiredMembers: requiredSignatures,
     membersCount: membersCount,
     transactionDataType: DacTransactionDataType.TransactionDataCompressed,

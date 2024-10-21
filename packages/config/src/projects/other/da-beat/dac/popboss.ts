@@ -4,8 +4,9 @@ import { popapex } from '../../../layer3s/popapex'
 import { DAC } from '../templates/dac-template'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 import { AnytrustDAC } from '../templates/anytrust-template'
+import { popboss } from '../../../layer3s/popboss'
 
-const discovery = new ProjectDiscovery('popapex', 'arbitrum')
+const discovery = new ProjectDiscovery('popboss', 'arbitrum')
 
 const dac = discovery.getContractValue<{
   membersCount: number
@@ -13,8 +14,8 @@ const dac = discovery.getContractValue<{
 }>('SequencerInbox', 'dacKeyset')
 const { membersCount, requiredSignatures } = dac
 
-export const popapexDac = AnytrustDAC({
-  project: popapex,
+export const popbossDac = AnytrustDAC({
+  project: popboss,
   bridge: {
     contracts: {
       addresses: [

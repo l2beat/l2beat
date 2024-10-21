@@ -44,7 +44,7 @@ export const playblockDac = AnytrustDAC({
           'Multisig that can upgrade authorized batch posters via the UpgradeExecutor contract.',
       },
     ],
-    chain: ChainId.ETHEREUM,
+    chain: ChainId.ARBITRUM,
     requiredMembers: requiredSignatures,
     membersCount: membersCount,
     transactionDataType: DacTransactionDataType.TransactionDataCompressed,

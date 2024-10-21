@@ -1,11 +1,12 @@
 import { ChainId } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
-import { popapex } from '../../../layer3s/popapex'
+import { sanko } from '../../../layer3s/sanko'
 import { DAC } from '../templates/dac-template'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 import { AnytrustDAC } from '../templates/anytrust-template'
+import { apechain } from '../../../layer3s/apechain'
 
-const discovery = new ProjectDiscovery('popapex', 'arbitrum')
+const discovery = new ProjectDiscovery('apechain', 'arbitrum')
 
 const dac = discovery.getContractValue<{
   membersCount: number
@@ -13,8 +14,8 @@ const dac = discovery.getContractValue<{
 }>('SequencerInbox', 'dacKeyset')
 const { membersCount, requiredSignatures } = dac
 
-export const popapexDac = AnytrustDAC({
-  project: popapex,
+export const apechainDac = AnytrustDAC({
+  project: apechain,
   bridge: {
     contracts: {
       addresses: [
@@ -26,23 +27,7 @@ export const popapexDac = AnytrustDAC({
       risks: [],
     },
     permissions: [
-      // Members: DAC uses BLS sigs, not EOAs
-      {
-        name: 'Sequencers',
-        accounts: discovery.getPermissionsByRole('sequence'),
-        description:
-          'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
-        chain: discovery.chain,
-      },
-      {
-        name: 'RollupOwner',
-        accounts: discovery.getAccessControlRolePermission(
-          'UpgradeExecutor',
-          'EXECUTOR_ROLE',
-        ),
-        description:
-          'Multisig that can upgrade authorized batch posters via the UpgradeExecutor contract.',
-      },
+      // BLS sigs, not EOAs
     ],
     chain: ChainId.ARBITRUM,
     requiredMembers: requiredSignatures,

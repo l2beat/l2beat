@@ -39,7 +39,7 @@ export const degenDac = AnytrustDAC({
         'It can update whether an address is authorized to be a batch poster at the sequencer inbox. The UpgradeExecutor retains the ability to update the batch poster manager (along with any batch posters).',
       ),
     ],
-    chain: ChainId.ETHEREUM,
+    chain: ChainId.BASE,
     requiredMembers: requiredSignatures,
     membersCount: membersCount,
     transactionDataType: DacTransactionDataType.TransactionDataCompressed,

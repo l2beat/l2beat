@@ -1,11 +1,11 @@
 import { ChainId } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
-import { popapex } from '../../../layer3s/popapex'
-import { DAC } from '../templates/dac-template'
+import { rari } from '../../../layer3s/rari'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 import { AnytrustDAC } from '../templates/anytrust-template'
+import { winr } from '../../../layer3s/winr'
 
-const discovery = new ProjectDiscovery('popapex', 'arbitrum')
+const discovery = new ProjectDiscovery('winr', 'arbitrum')
 
 const dac = discovery.getContractValue<{
   membersCount: number
@@ -13,8 +13,8 @@ const dac = discovery.getContractValue<{
 }>('SequencerInbox', 'dacKeyset')
 const { membersCount, requiredSignatures } = dac
 
-export const popapexDac = AnytrustDAC({
-  project: popapex,
+export const winrDac = AnytrustDAC({
+  project: winr,
   bridge: {
     contracts: {
       addresses: [

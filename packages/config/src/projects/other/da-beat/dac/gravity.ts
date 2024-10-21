@@ -1,11 +1,11 @@
 import { ChainId } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
-import { popapex } from '../../../layer3s/popapex'
-import { DAC } from '../templates/dac-template'
+import { rari } from '../../../layer3s/rari'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 import { AnytrustDAC } from '../templates/anytrust-template'
+import { galxegravity } from '../../../layer2s/galxegravity'
 
-const discovery = new ProjectDiscovery('popapex', 'arbitrum')
+const discovery = new ProjectDiscovery('galxegravity', 'ethereum')
 
 const dac = discovery.getContractValue<{
   membersCount: number
@@ -13,8 +13,8 @@ const dac = discovery.getContractValue<{
 }>('SequencerInbox', 'dacKeyset')
 const { membersCount, requiredSignatures } = dac
 
-export const popapexDac = AnytrustDAC({
-  project: popapex,
+export const galxegravityDac = AnytrustDAC({
+  project: galxegravity,
   bridge: {
     contracts: {
       addresses: [
@@ -44,7 +44,7 @@ export const popapexDac = AnytrustDAC({
           'Multisig that can upgrade authorized batch posters via the UpgradeExecutor contract.',
       },
     ],
-    chain: ChainId.ARBITRUM,
+    chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignatures,
     membersCount: membersCount,
     transactionDataType: DacTransactionDataType.TransactionDataCompressed,
