@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import round from 'lodash/round'
 import { type ReactNode } from 'react'
-import { ProjectsUsedIn } from '~/app/(new-side-nav)/data-availability/summary/_components/table/projects-used-in'
+import { ProjectsUsedIn } from '~/app/(side-nav)/data-availability/summary/_components/table/projects-used-in'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import {
   Tooltip,
@@ -12,7 +12,7 @@ import { EM_DASH } from '~/consts/characters'
 import { InfoIcon } from '~/icons/info'
 import { type DaProjectEntry } from '~/server/features/data-availability/project/get-da-project-entry'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/format'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 
 interface Props {
   project: DaProjectEntry
@@ -37,9 +37,7 @@ export function DaProjectStats({ project }: Props) {
       <ProjectStat title="Type" value={project.type} />
       <ProjectStat
         title="Total value secured"
-        value={formatCurrency(project.header.tvs, 'usd', {
-          showLessThanMinimum: false,
-        })}
+        value={formatCurrency(project.header.tvs, 'usd')}
         tooltip="The total value locked of all L2s using this layer."
       />
       <ProjectStat
@@ -53,9 +51,6 @@ export function DaProjectStats({ project }: Props) {
               ? formatCurrency(
                   project.header.economicSecurity.economicSecurity,
                   'usd',
-                  {
-                    showLessThanMinimum: false,
-                  },
                 )
               : 'Not synced'
             : EM_DASH
@@ -70,7 +65,8 @@ export function DaProjectStats({ project }: Props) {
           project.header.usedIn.length !== 0 ? (
             <ProjectsUsedIn
               usedIn={project.header.usedIn}
-              className="flex-wrap justify-end"
+              className="flex-wrap justify-start"
+              maxProjects={Infinity}
             />
           ) : (
             'None'
@@ -110,7 +106,7 @@ function ProjectStat(props: ProjectStat) {
         )}
       </div>
 
-      <span className="text-lg font-semibold !leading-none md:text-xl md:font-bold">
+      <span className="text-lg font-medium !leading-none md:text-xl md:font-bold">
         {props.value}
       </span>
     </li>

@@ -3,7 +3,6 @@ import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { getCommittee } from '../../../../discovery/starkware'
 import { myria } from '../../../layer2s/myria'
 import { DAC } from '../templates/dac-template'
-import { DaAttestationSecurityRisk } from '../types'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('myria')
@@ -11,9 +10,6 @@ const committee = getCommittee(discovery)
 
 export const myriaDac = DAC({
   project: myria,
-  risks: {
-    attestations: DaAttestationSecurityRisk.SigVerified(true),
-  },
   bridge: {
     contracts: {
       addresses: [
@@ -36,10 +32,7 @@ export const myriaDac = DAC({
     ],
     chain: ChainId.ETHEREUM,
     requiredMembers: committee.minSigners,
-    totalMembers: committee.accounts.length,
+    membersCount: committee.accounts.length,
     transactionDataType: DacTransactionDataType.StateDiffs,
-    members: {
-      type: 'unknown',
-    },
   },
 })

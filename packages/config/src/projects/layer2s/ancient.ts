@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
+import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
@@ -15,16 +16,14 @@ const upgradeability = {
 export const ancient: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
   badges: [Badge.DA.Celestia, Badge.RaaS.Conduit],
+  additionalPurposes: ['Gaming'],
   discovery,
   associatedTokens: ['A8'],
   display: {
     name: 'Ancient8',
     slug: 'ancient8',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
       'Ancient8 Chain is a gaming-focused community-driven Ethereum Layer 2 built using OP Stack.',
-    purposes: ['Gaming'],
     links: {
       websites: ['https://ancient8.gg/'],
       apps: ['https://bridge.ancient8.gg/', 'https://space3.gg/A8Layer2'],
@@ -54,6 +53,13 @@ export const ancient: Layer2 = opStackL2({
       date: '2024-02-22T00:00:00Z',
       description: 'Ancient8 Chain is live on mainnet.',
       type: 'general',
+    },
+  ],
+  knowledgeNuggets: [
+    {
+      title: 'Blobstream and Celestia Architecture',
+      url: 'https://www.youtube.com/watch?v=cn_fN6pkakQ',
+      thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
     },
   ],
   nonTemplatePermissions: [

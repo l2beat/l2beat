@@ -1,4 +1,326 @@
-Generated with discovered.json: 0x42df160769b3a3a9ae1c8f4019c5b3d572129eda
+Generated with discovered.json: 0x3d39ce076a2d38d3609fe3fc8527f5a130c6c129
+
+# Diff at Mon, 14 Oct 2024 10:50:38 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 19825321
+- current block number: 19825321
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19825321 (main branch discovery), not current.
+
+```diff
+    contract MerkleDistributor (0x01d3348601968aB85b4bb028979006eac235a588) {
+    +++ description: None
+      sourceHashes:
++        ["0x5e3d09f8089d63a7a6d8546086c617af3d5dd46af7590b5ef30cc4ca39754dda","0x5eb26cee90dca2178b42fc264fc447af3272c9c84f97decb89285baa230ed77b"]
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0x04D4E67F8B6c67D63219Cd088bC45E8e89fE6D73) {
+    +++ description: None
+      sourceHashes:
++        ["0x4ed0a8fed2fb6b8cc5ecf363781107f0fea73b810fb2a78b6ff0e7565fac2f62"]
+    }
+```
+
+```diff
+    contract CpuOods (0x0c6dEc0B366b1bb4C14597cf1Da8b4af2E7799b5) {
+    +++ description: None
+      sourceHashes:
++        ["0xc9f95b23f16315cabf114838b357854b67aa18bffeb85f3e4763dd0b2ebdac5b"]
+    }
+```
+
+```diff
+    contract MerkleStatementContract (0x0d62bac5c346c78DC1b27107CAbC5F4DE057a830) {
+    +++ description: None
+      sourceHashes:
++        ["0xa671d6ba3e3803dbd31bbc7ade04cc66b5b41ef6553c5efe6b8645e4d2ea6030"]
+    }
+```
+
+```diff
+    contract ClaimsProxy (0x0fd829C3365A225FB9226e75c97c3A114bD3199e) {
+    +++ description: None
+      sourceHashes:
++        ["0x14247f67293c931189c2f13126a402c94b2afb17f22e034e27562a726393e921"]
+    }
+```
+
+```diff
+    contract PedersenHashPointsYColumn (0x0fED12bD8B1B11c629001c436b90bcd99F4Fec92) {
+    +++ description: None
+      sourceHashes:
++        ["0x05c19e648542d62b4ddf24a4fa4c15a3a6e25cd850736e41c5544eb570a9f2a2"]
+    }
+```
+
+```diff
+    contract CairoBootloaderProgram (0x1dd8945200f5a09D6Fe0ed68494c2ac41cd02E2D) {
+    +++ description: None
+      sourceHashes:
++        ["0x910ee17561c1bd968dbc0547bafcc9e8321d4ee336392525c0956ec59c94b799"]
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (0x1F5459AA7857291112A8172ae1328248948d9d13) {
+    +++ description: None
+      sourceHashes:
++        ["0xeda6df888e68f267f04ff010db56b1a7b83756e14076d73718df7d33b1e2ae41"]
+    }
+```
+
+```diff
+    contract TreasuryProxyAdmin (0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d) {
+    +++ description: None
+      sourceHashes:
++        ["0xe1359792802f19276b6aa89d864b80a04eeaad44be992fe8e81aba9feec27af4"]
+    }
+```
+
+```diff
+    contract WrappedEthereumDydxToken (0x46b2DeAe6eFf3011008EA27EA36b7c27255ddFA9) {
+    +++ description: None
+      sourceHashes:
++        ["0xece96853a5bdf87e554329700585a08c5c2cd492e0bd37f88d30bc44e530cc74"]
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0x4922f8750DFd040954b44F23980160342e308863) {
+    +++ description: None
+      sourceHashes:
++        ["0x40ad0c189ae6d45546284ca7cfba8a4147e474ac91828f587c736afe8ef3a668"]
+    }
+```
+
+```diff
+    contract EcdsaPointsXColumn (0x52c4bb16FbA75f6EBD672568267BC334255Fb3c5) {
+    +++ description: None
+      sourceHashes:
++        ["0x412fb414e7fea74325d60a077f704a49cf6d23a7a1d43c9fd09be7e9a4e5e76f"]
+    }
+```
+
+```diff
+    contract LiquidityStaking (0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941) {
+    +++ description: None
+      sourceHashes:
++        ["0x5e3d09f8089d63a7a6d8546086c617af3d5dd46af7590b5ef30cc4ca39754dda","0x0111ff9c30eb270b8df99390defd855542974eb8a6a6200212cee243a9ba9679"]
+    }
+```
+
+```diff
+    contract PerpetualEscapeVerifier (0x626211C1e9BC633f4D342Af99f4E8bc93f11F3DD) {
+    +++ description: None
+      sourceHashes:
++        ["0x684921b3b4e6212f66865889daeb916ea5de2487eb8558ef4ef000b6fb159b35"]
+    }
+```
+
+```diff
+    contract TreasuryBridge (0x639192D54431F8c816368D3FB4107Bc168d0E871) {
+    +++ description: None
+      sourceHashes:
++        ["0x5e3d09f8089d63a7a6d8546086c617af3d5dd46af7590b5ef30cc4ca39754dda","0xa1f45598b0f289ead20121783ac8f948cb7005845b5646ab5b8918e8252d2644"]
+    }
+```
+
+```diff
+    contract ShortTimelockExecutor (0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc) {
+    +++ description: None
+      sourceHashes:
++        ["0x2b69eb06923cd9704b99e54ed0d1294ea96da2ec719476b1f93b1d9176b6fe98"]
+    }
+```
+
+```diff
+    contract SafetyModule (0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC) {
+    +++ description: None
+      sourceHashes:
++        ["0x5e3d09f8089d63a7a6d8546086c617af3d5dd46af7590b5ef30cc4ca39754dda","0x57553f9e7638b7b9c78914908fedcfd695b2973d1860afc5395c8328e8a55a1d"]
+    }
+```
+
+```diff
+    contract SafetyModuleProxyAdmin (0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C) {
+    +++ description: None
+      sourceHashes:
++        ["0xe1359792802f19276b6aa89d864b80a04eeaad44be992fe8e81aba9feec27af4"]
+    }
+```
+
+```diff
+    contract MerkleDistributorProxyAdmin (0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0) {
+    +++ description: None
+      sourceHashes:
++        ["0xe1359792802f19276b6aa89d864b80a04eeaad44be992fe8e81aba9feec27af4"]
+    }
+```
+
+```diff
+    contract DydxGovernor (0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2) {
+    +++ description: None
+      sourceHashes:
++        ["0x2fe37952f2fff616157e00a7389810ee76f2ee19c2fd0449571e0c362f030aa1"]
+    }
+```
+
+```diff
+    contract GpsStatementVerifier (0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3) {
+    +++ description: None
+      sourceHashes:
++        ["0xfe731822f194cf686e57ab136911f5128f6262c4ecadef68cee6eba0751ca77b"]
+    }
+```
+
+```diff
+    contract Committee (0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1) {
+    +++ description: None
+      sourceHashes:
++        ["0xca16a90f8e3d769dcf7c193aade241726dd9cca439bdf131740e54b7725ee599"]
+    }
+```
+
+```diff
+    contract DydxToken (0x92D6C1e31e14520e676a687F0a93788B716BEff5) {
+    +++ description: None
+      sourceHashes:
++        ["0xa1c6b779016519cd0e36109115853fdb48caef5ca257585e2ff61ca5a6e990c6"]
+    }
+```
+
+```diff
+    contract ChainlinkAdapter (0x99B0599952a4FD2d1A1561Fa4C010827EaD30354) {
+    +++ description: None
+      sourceHashes:
++        ["0x3450d9fd6eeaee34343e727534e9aef6f035cc7b19eab0f5690268f9ddd379d6"]
+    }
+```
+
+```diff
+    contract PedersenHashPointsXColumn (0x9Bcf13C6b68450B427bfa86698D61901A8a3456D) {
+    +++ description: None
+      sourceHashes:
++        ["0x6eb94f42b6ee59326d27f5ec055a5872adf1df7825af5df411459832c72ba175"]
+    }
+```
+
+```diff
+    contract PriorityExecutor (0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE) {
+    +++ description: None
+      sourceHashes:
++        ["0x5e7ffe4bf5cc430b1f4d7ee4515f29578b78793ea6192f9c9015849f1a25b493"]
+    }
+```
+
+```diff
+    contract LiquidityStakingProxyAdmin (0xAc5D8bCD13da463bea96c75f9085c4e40037F790) {
+    +++ description: None
+      sourceHashes:
++        ["0xe1359792802f19276b6aa89d864b80a04eeaad44be992fe8e81aba9feec27af4"]
+    }
+```
+
+```diff
+    contract TreasuryVester (0xb9431E19B29B952d9358025f680077C3Fd37292f) {
+    +++ description: None
+      sourceHashes:
++        ["0xaf50c3a07aac286f2f2dd23fc63624b681a2aadccbf3a8629dc58d9316cddd23"]
+    }
+```
+
+```diff
+    contract GovernanceStrategyV2 (0xc2f5F3505910Da80F0592a3Cc023881C50b16505) {
+    +++ description: None
+      sourceHashes:
++        ["0xee1844f59c7ff492ee5430d8673a00537a966cb0de1e21ec8c8ff1adf630e0af"]
+    }
+```
+
+```diff
+    contract EcdsaPointsYColumn (0xD14fd39630Ec941C3bA6C791E3af9E0027013A15) {
+    +++ description: None
+      sourceHashes:
++        ["0x16786b57094cb8c3157552703287a310748c4453d743f9f2fa22adc7a6bf991c"]
+    }
+```
+
+```diff
+    contract StarkPerpetual (0xD54f502e184B6B739d7D27a6410a67dc462D69c8) {
+    +++ description: None
+      sourceHashes:
++        ["0xcbc560d276343abe292d73f08cd9006d7faaf560c300a437744a6e8646c9baa6","0x74ee5c93d85e8e3f9a076d643a1f10dbc07160631e7b7ddf00cf54b7f4218bd8","0x30ebdecf2dc34bef72c4db7e2fc3ed61f8f12fd248455fda41cadfc6076c4ab5","0x2ca4953b47f855531afeb05271bc0a2a40ef59696a328130b04419b2ffab757a","0x55d6a4cd67a46f33d25cf27c466b0794bf83409eefb65aa00799943d4519273f","0x78eb03e490fcb196d0b884db041c442d39699b0f0434493a89834ad53949e95d"]
+    }
+```
+
+```diff
+    contract MerklePauserExecutor (0xd98e7A71BacB6F11438A8271dDB2EFd7f9361F52) {
+    +++ description: None
+      sourceHashes:
++        ["0x2b69eb06923cd9704b99e54ed0d1294ea96da2ec719476b1f93b1d9176b6fe98"]
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0xeCa5Da0287D407a23f7c0a13a9AAD87c7fBC10A3) {
+    +++ description: None
+      sourceHashes:
++        ["0x0b61340aa73762dba13146142086ff4fbd1b253748bc6c19238d628db084e076"]
+    }
+```
+
+```diff
+    contract LongTimelockExecutor (0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B) {
+    +++ description: None
+      sourceHashes:
++        ["0x2b69eb06923cd9704b99e54ed0d1294ea96da2ec719476b1f93b1d9176b6fe98"]
+    }
+```
+
+```diff
+    contract MemoryPageFactRegistry (0xEfbCcE4659db72eC6897F46783303708cf9ACef8) {
+    +++ description: None
+      sourceHashes:
++        ["0x1a064332cbf420353ceab684146a9c730873a5617ce302e26a88da05ea14b449"]
+    }
+```
+
+```diff
+    contract FinalizableGpsFactAdapter (0xF23754231BC4cE8C8E92C3bADfB37d922d46053C) {
+    +++ description: None
+      sourceHashes:
++        ["0x395444e8f8af03cea56ff4137d997fc94a06817d06cea35a2b467a45c6ee136b"]
+    }
+```
+
+```diff
+    contract FriStatementContract (0xf6b83CcaDeee478FC372AF6ca7069b14FBc5E1B1) {
+    +++ description: None
+      sourceHashes:
++        ["0x193add6f23ec1dadc0f158bf31a76ebee58c7f4c229944b80585c7abf71b4d2d"]
+    }
+```
+
+```diff
+    contract StarkExRemoverGovernorV2 (0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0) {
+    +++ description: None
+      sourceHashes:
++        ["0x7ee1d0e428b5a170c7e988d1e0e774b05e9cba8e2678f9837e51ee50555c5065"]
+    }
+```
+
+Generated with discovered.json: 0x0e9639e40e05d87045bb595dfc07d60697877ea9
 
 # Diff at Tue, 01 Oct 2024 10:50:53 GMT:
 

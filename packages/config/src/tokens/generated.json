@@ -549,6 +549,20 @@
       "supply": "zero"
     },
     {
+      "name": "Binary Token",
+      "coingeckoId": "binary-holdings",
+      "address": "0x04E9D7e336f79Cdab911b06133D3Ca2Cd0721ce3",
+      "symbol": "BNRY",
+      "decimals": 18,
+      "deploymentTimestamp": 1718764151,
+      "coingeckoListingTimestamp": 1714608000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37521/large/Vector-1.png?1714634222",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "BitDAO",
       "coingeckoId": "bitdao",
       "address": "0x1A4b46696b2bB4794Eb3D4c26f1c55F9170fa4C5",
@@ -1048,6 +1062,20 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/7310/large/cro_token_logo.png?1696507599",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Cronos zkEVM CRO",
+      "coingeckoId": "cronos-zkevm-cro",
+      "address": "0x28Ff2E4dD1B58efEB0fC138602A28D5aE81e44e2",
+      "symbol": "zkCRO",
+      "decimals": 18,
+      "deploymentTimestamp": 1718769911,
+      "coingeckoListingTimestamp": 1724803200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39734/large/Screenshot_2024-08-16_at_10.42.41%E2%80%AFAM.png?1723776225",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -1926,7 +1954,7 @@
       "address": "0xCdb4A8742ed7D0259b51E3454C46C9D6C48d5e88",
       "symbol": "GPT",
       "decimals": 18,
-      "deploymentTimestamp": 1705478411,
+      "deploymentTimestamp": 1716807971,
       "coingeckoListingTimestamp": 1710201600,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/35929/large/gpt.png?1710225428",
@@ -4399,6 +4427,20 @@
       "supply": "zero"
     },
     {
+      "name": "Veno yield bearing ETH",
+      "coingeckoId": "veno-eth",
+      "address": "0x76bf2D1e6dFda645c0c17440B17Eccc181dfC351",
+      "symbol": "ybETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1721279435,
+      "coingeckoListingTimestamp": 1724198400,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39776/large/Screenshot_2024-08-19_at_5.07.51%E2%80%AFPM.png?1724058891",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "VENT",
       "coingeckoId": "vent-finance",
       "address": "0x5F0bc16D50F72d10b719dBF6845DE2E599eb5624",
@@ -4758,20 +4800,6 @@
       "coingeckoListingTimestamp": 1627430400,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/17358/large/Shield_Mark_-_Colored_-_Iridescent.png?1696516909",
-      "chainId": 1,
-      "source": "canonical",
-      "supply": "zero"
-    },
-    {
-      "name": "Zipmex Token",
-      "coingeckoId": "zipmex-token",
-      "address": "0xaa602dE53347579f86b996D2Add74bb6F79462b2",
-      "symbol": "ZMT",
-      "decimals": 18,
-      "deploymentTimestamp": 1576744001,
-      "coingeckoListingTimestamp": 1612396800,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/13866/large/ZMT_Token.png?1696513611",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -5729,7 +5757,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Free Bridge"
+            "name": "Free.tech Bridge (Meson)"
           }
         ]
       }
@@ -6619,20 +6647,6 @@
       }
     },
     {
-      "name": "USD+",
-      "coingeckoId": "dinari-usd",
-      "address": "0x6F086dB0f6A621a915bC90295175065c9e5d9b8c",
-      "symbol": "USD+",
-      "decimals": 6,
-      "deploymentTimestamp": 1718908690,
-      "coingeckoListingTimestamp": 1719360000,
-      "category": "stablecoin",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/38879/large/USDplus-200.png?1719374938",
-      "chainId": 7887,
-      "source": "native",
-      "supply": "totalSupply"
-    },
-    {
       "name": "Aerodrome",
       "coingeckoId": "aerodrome-finance",
       "address": "0x940181a94A35A4569E4529A3CDfB74e38FD98631",
@@ -6728,6 +6742,20 @@
       "chainId": 8453,
       "source": "canonical",
       "supply": "zero"
+    },
+    {
+      "name": "EURC",
+      "coingeckoId": "euro-coin",
+      "address": "0x60a3E35Cc302bFA44Cb288Bc5a4F316Fdb1adb42",
+      "symbol": "EURC",
+      "decimals": 6,
+      "deploymentTimestamp": 1717005065,
+      "coingeckoListingTimestamp": 1656547200,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/26045/large/euro.png?1696525125",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "name": "FRIEND",
@@ -7041,7 +7069,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Free Bridge"
+            "name": "Free.tech Bridge (Meson)"
           }
         ]
       }
@@ -7193,6 +7221,27 @@
       }
     },
     {
+      "name": "Aethir Token",
+      "coingeckoId": "aethir",
+      "address": "0xc87B37a581ec3257B734886d9d3a581F5A9d056c",
+      "symbol": "ATH",
+      "decimals": 18,
+      "deploymentTimestamp": 1717572209,
+      "coingeckoListingTimestamp": 1718150400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36179/large/logogram_circle_dark_green_vb_green_%281%29.png?1718232706",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Axelar (ITS)"
+          }
+        ]
+      }
+    },
+    {
       "name": "Arbitrum",
       "coingeckoId": "arbitrum",
       "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
@@ -7279,6 +7328,20 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "CATCH",
+      "coingeckoId": "spacecatch",
+      "address": "0xbC4c97Fb9befaa8B41448e1dFcC5236dA543217F",
+      "symbol": "CATCH",
+      "decimals": 18,
+      "deploymentTimestamp": 1718880774,
+      "coingeckoListingTimestamp": 1712016000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36632/large/Logomark_colours.png?1712022405",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "CHEESE",
       "coingeckoId": "cheese-2",
       "address": "0x05AEa20947A9A376eF50218633BB0a5A05d40A0C",
@@ -7324,6 +7387,20 @@
       "coingeckoListingTimestamp": 1684800000,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/30505/large/dmt.png?1696529391",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "name": "Eigenpie",
+      "coingeckoId": "eigenpie",
+      "address": "0x7E7a7C916c19a45769f6BDAF91087f93c6C12F78",
+      "symbol": "EGP",
+      "decimals": 18,
+      "deploymentTimestamp": 1726032245,
+      "coingeckoListingTimestamp": 1727222400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37810/large/eigenpie.jpeg?1715597613",
       "chainId": 42161,
       "source": "native",
       "supply": "circulatingSupply"
@@ -7500,6 +7577,20 @@
       "chainId": 42161,
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      "name": "GAM3S.GG",
+      "coingeckoId": "gam3s-gg",
+      "address": "0xc24A365A870821EB83Fd216c9596eDD89479d8d7",
+      "symbol": "G3",
+      "decimals": 18,
+      "deploymentTimestamp": 1712151381,
+      "coingeckoListingTimestamp": 1712620800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35662/large/G3_logo.jpg?1709454143",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "Gho Token",
@@ -7774,6 +7865,20 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Neuron",
+      "coingeckoId": "neuron",
+      "address": "0xdadeca1167fe47499e53Eb50F261103630974905",
+      "symbol": "NRN",
+      "decimals": 18,
+      "deploymentTimestamp": 1717527783,
+      "coingeckoListingTimestamp": 1719187200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38838/large/Nrn_with_gradient_-NEW_TO_BE_UPDATED.png?1728551601",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Polkamon",
       "coingeckoId": "polychain-monsters",
       "address": "0xBC9B77acA82f6BE43927076D71cd453b625165B8",
@@ -7968,6 +8073,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "StarHeroes",
+      "coingeckoId": "starheroes",
+      "address": "0xB299751B088336E165dA313c33e3195B8c6663A6",
+      "symbol": "STAR",
+      "decimals": 18,
+      "deploymentTimestamp": 1709244341,
+      "coingeckoListingTimestamp": 1710201600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34147/large/Screenshot_2024-03-08_180444.png?1709892309",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "TapToken",
@@ -8272,6 +8391,90 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Free Bridged BBTC",
+      "coingeckoId": "bouncebit-btc",
+      "address": "0x93C12084dCFC08c759ad96B94234D9C39705689f",
+      "symbol": "BBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1718170153,
+      "coingeckoListingTimestamp": 1716249600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37985/large/bbtc_icon.png?1716215414",
+      "chainId": 59144,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Free Bridged SolvBTC",
+      "coingeckoId": "solv-btc",
+      "address": "0x5FFcE65A40f6d3de5332766ffF6A28BF491C868c",
+      "symbol": "SolvBTC.m",
+      "decimals": 18,
+      "deploymentTimestamp": 1715238002,
+      "coingeckoListingTimestamp": 1712448000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
+      "chainId": 59144,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Free Bridged SolvBTC.b",
+      "coingeckoId": "solv-btc",
+      "address": "0x96155858A02c410c3C814BB32Fdc413b3241b62E",
+      "symbol": "SolvBTC.b",
+      "decimals": 18,
+      "deploymentTimestamp": 1716875713,
+      "coingeckoListingTimestamp": 1712448000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
+      "chainId": 59144,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "InceptionLRT restaked ETH",
+      "coingeckoId": "genesislrt-restaked-eth",
+      "address": "0x5A7a183B6B44Dc4EC2E3d2eF43F98C5152b1d76d",
+      "symbol": "inETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1714467441,
+      "coingeckoListingTimestamp": 1713657600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34127/large/inETH.png?1715036464",
+      "chainId": 59144,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Inception Bridge (xERC-20)"
+          }
+        ]
+      }
+    },
+    {
       "name": "KelpDao Restaked ETH",
       "coingeckoId": "kelp-dao-restaked-eth",
       "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
@@ -8348,6 +8551,27 @@
       "chainId": 59144,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "Merlin BTC",
+      "coingeckoId": "merlin-s-seal-btc",
+      "address": "0xe4D584ae9b753e549cAE66200A6475d2f00705f7",
+      "symbol": "M-BTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1715526671,
+      "coingeckoListingTimestamp": 1711929600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36566/large/photo_2024-03-25_22-04-42.jpg?1711936162",
+      "chainId": 59144,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
     },
     {
       "name": "Nile Exchange",
@@ -8854,6 +9078,20 @@
       "supply": "totalSupply"
     },
     {
+      "name": "UK Real Estate",
+      "coingeckoId": "uk-real-estate",
+      "address": "0x835d3E1C0aA079C6164AAd21DCb23E60eb71AF48",
+      "symbol": "UKRE",
+      "decimals": 18,
+      "deploymentTimestamp": 1716417748,
+      "coingeckoListingTimestamp": 1720483200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38625/large/image_%281%29.png?1718168417",
+      "chainId": 111188,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "US T-Bill",
       "coingeckoId": "real-us-t-bill",
       "address": "0x83feDBc0B85c6e29B589aA6BdefB1Cc581935ECD",
@@ -8950,7 +9188,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Free Bridge"
+            "name": "Free.tech Bridge (Meson)"
           }
         ]
       }
@@ -9109,7 +9347,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Free Bridge"
+            "name": "Free.tech Bridge (Meson)"
           }
         ]
       }
@@ -9130,7 +9368,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Free Bridge"
+            "name": "Free.tech Bridge (Meson)"
           }
         ]
       }

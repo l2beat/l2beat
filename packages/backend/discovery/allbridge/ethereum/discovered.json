@@ -3,11 +3,13 @@
   "chain": "ethereum",
   "blockNumber": 20785156,
   "configHash": "0x849d1c199ab72e8c4bfcbd944c1df393655ea421b29a431a4d7b3bf1604946d2",
-  "version": 15,
   "contracts": [
     {
       "name": "GasOracle",
       "address": "0x0BdF6139F2841A7856Ca154D851182C52F5b96e0",
+      "sourceHashes": [
+        "0x61437d07b213292a6639ca58a2549f8fec70a7497940aba88e8d137a2b23e5a1"
+      ],
       "sinceTimestamp": 1685102099,
       "values": {
         "$immutable": true,
@@ -19,6 +21,9 @@
     {
       "name": "AllbridgeMessenger",
       "address": "0x203e8785b4d4312c4152D0c42Ba3FA8BD79086dA",
+      "sourceHashes": [
+        "0xb232ad1147747fd0ac80fb67952fcf5297e1a534c2009196849b29ac950afdcf"
+      ],
       "sinceTimestamp": 1685102279,
       "values": {
         "$immutable": true,
@@ -39,6 +44,9 @@
     {
       "name": "LPBridge",
       "address": "0x609c690e8F7D68a59885c9132e812eEbDaAf0c9e",
+      "sourceHashes": [
+        "0x814861bc3f9f100efbeb6a574409097f4080e9c4765d678fca86ffa46e453d7f"
+      ],
       "sinceTimestamp": 1685102447,
       "values": {
         "$immutable": true,
@@ -55,6 +63,9 @@
       "name": "Pool",
       "address": "0x7DBF07Ad92Ed4e26D5511b4F285508eBF174135D",
       "template": "allbridge/pool",
+      "sourceHashes": [
+        "0xb2eff5db97a89eb54072562067b928bf496762048db22261130e67145170d1b5"
+      ],
       "ignoreInWatchMode": [
         "accRewardPerShareP",
         "adminFeeAmount",
@@ -103,6 +114,9 @@
     {
       "name": "WormholeMessenger",
       "address": "0x7f02294f065A605C8D21D9812b8d1De7E5E1da74",
+      "sourceHashes": [
+        "0xd907a740abab7d5003a704cad4c8273b66cd185386078939c9c8abccec6ec131"
+      ],
       "sinceTimestamp": 1685102363,
       "values": {
         "$immutable": true,
@@ -123,6 +137,9 @@
     {
       "name": "OldLPBridge",
       "address": "0xA314330482f325D38A83B492EF6B006224a3bea9",
+      "sourceHashes": [
+        "0x227ed0f9173e33afccdd9e79a6d7d760104d62875552f49b4ef2a9c7c7431ba6"
+      ],
       "sinceTimestamp": 1662596119,
       "values": {
         "$immutable": true,
@@ -137,6 +154,9 @@
       "name": "Pool",
       "address": "0xa7062bbA94c91d565Ae33B893Ab5dFAF1Fc57C4d",
       "template": "allbridge/pool",
+      "sourceHashes": [
+        "0xb2eff5db97a89eb54072562067b928bf496762048db22261130e67145170d1b5"
+      ],
       "ignoreInWatchMode": [
         "accRewardPerShareP",
         "adminFeeAmount",
@@ -196,6 +216,9 @@
     {
       "name": "TokenBridge",
       "address": "0xBBbD1BbB4f9b936C3604906D7592A644071dE884",
+      "sourceHashes": [
+        "0x130012988c91475c96e6c32d27893406b8a1837f48f56d47571e53852d863a6d"
+      ],
       "sinceTimestamp": 1636635220,
       "values": {
         "$immutable": true,
@@ -230,6 +253,9 @@
     {
       "name": "CctpBridge",
       "address": "0xC51397b75B783E31469bFaADE79913F3f82210d6",
+      "sourceHashes": [
+        "0x2953fb7cbb1c9e0950eac2b3e6206de8087063655779e90a024f7aaf8f31d55c"
+      ],
       "sinceTimestamp": 1711380611,
       "values": {
         "$immutable": true,
@@ -590,6 +616,5 @@
   },
   "usedTemplates": {
     "allbridge/pool": "0xbb30bf6f8a272cfbe6959733a828fa750a29898e627c9a1aa4ef1a5ed4e223f8"
-  },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  }
 }

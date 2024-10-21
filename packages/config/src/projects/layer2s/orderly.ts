@@ -1,5 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
+import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
@@ -7,25 +8,19 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('orderly')
 
-const upgradeability = {
-  upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
-
 export const orderly: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
   badges: [Badge.DA.Celestia, Badge.Infra.Superchain, Badge.RaaS.Conduit],
+  additionalPurposes: ['Exchange'],
   discovery,
   display: {
     name: 'Orderly Network',
+    shortName: 'Orderly',
     slug: 'orderly',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
       'Orderly is an OP stack Optimium on Ethereum using Celestia for data availability. It has a unified ledger for assets from multiple chains and an orderbook that can be used by apps that build on top of it.',
     detailedDescription:
       'While ETH deposited to Orderly is using an OP Stack canonical bridge, the multichain USDC escrows are sending / receiving their deposit / withdrawal messages through the external LayerZero v1 AMB.',
-    purposes: ['DeFi', 'Exchange'],
     links: {
       websites: ['https://orderly.network/'],
       apps: ['https://app.orderly.network/'],
@@ -120,10 +115,10 @@ export const orderly: Layer2 = opStackL2({
       },
     },
   ],
-  upgradeability,
   rpcUrl: 'https://rpc.orderly.network',
   genesisTimestamp: new UnixTime(1696566432),
   isNodeAvailable: false,
+  discoveryDrivenData: true,
   milestones: [
     {
       name: 'Orderly Network Mainnet Launch',
@@ -133,10 +128,11 @@ export const orderly: Layer2 = opStackL2({
       type: 'general',
     },
   ],
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'ConduitMultisig',
-      'This address is the owner of the following contracts: ProxyAdmin, SystemConfig.',
-    ),
+  knowledgeNuggets: [
+    {
+      title: 'Blobstream and Celestia Architecture',
+      url: 'https://www.youtube.com/watch?v=cn_fN6pkakQ',
+      thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
+    },
   ],
 })

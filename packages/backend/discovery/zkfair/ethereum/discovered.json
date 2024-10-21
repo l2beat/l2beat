@@ -3,12 +3,15 @@
   "chain": "ethereum",
   "blockNumber": 20711816,
   "configHash": "0xb7055c80cbad157609938410529e9cd3df380055c0f402a834c492918f2cba62",
-  "version": 15,
   "contracts": [
     {
       "name": "BridgeAdminMultiSig",
       "address": "0x0110B1B231aA3b96a94c900eb3056297526AB725",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1702833323,
@@ -34,12 +37,21 @@
     {
       "name": "ZKFairValidium",
       "address": "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0xf130a993ad1c6ad92168bdcb2f36fa45071cfdfccb13dd005d7d45e454089482"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3",
-          "via": []
+          "target": "0x52882c7564fAca480549145fAc4d0b09eD0D9c17",
+          "via": [
+            {
+              "address": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1702879355,
@@ -81,6 +93,37 @@
     {
       "name": "Timelock",
       "address": "0x52882c7564fAca480549145fAc4d0b09eD0D9c17",
+      "sourceHashes": [
+        "0x1946b3da4b7b9101624b6f56e88c5546848e9acadd62375f5cc8772c0f11f92c"
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5",
+          "via": [{ "address": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b",
+          "via": [{ "address": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x997CfB0838544f68E59f877EDc905001456F125b",
+          "via": [{ "address": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x9cb4706e20A18E59a48ffa7616d700A3891e1861",
+          "via": [{ "address": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"
+        }
+      ],
       "sinceTimestamp": 1702879391,
       "values": {
         "$immutable": true,
@@ -117,12 +160,21 @@
     {
       "name": "GlobalExitRoot",
       "address": "0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0xb7beee2e185ac88119ddf52a7b183100c31b13dbb35154dd5b60e74c16684cba"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3",
-          "via": []
+          "target": "0x52882c7564fAca480549145fAc4d0b09eD0D9c17",
+          "via": [
+            {
+              "address": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1702879331,
@@ -144,6 +196,9 @@
     {
       "name": "FflonkVerifier",
       "address": "0x769E285d2120472c3400A09684B82A842012F46d",
+      "sourceHashes": [
+        "0x2a8d8b10f3b85cd700a19db2ebb050c5acc6bdfd7bbd10f8b8229541fd5264ab"
+      ],
       "sinceTimestamp": 1702879247,
       "values": { "$immutable": true }
     },
@@ -151,6 +206,10 @@
       "name": "ZKFairOwner",
       "address": "0x8933Fa0A97f39cd38f56b1887d5cc56cF04F3A88",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1702833011,
@@ -176,6 +235,10 @@
     {
       "name": "ZKFairValidiumDAC",
       "address": "0x997CfB0838544f68E59f877EDc905001456F125b",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0x9cc000b5f37484491701d9b554b9a01ea89a6a59f918d1d53c8e173b5b14a0fe"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time."
@@ -183,8 +246,13 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3",
-          "via": []
+          "target": "0x52882c7564fAca480549145fAc4d0b09eD0D9c17",
+          "via": [
+            {
+              "address": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1702879319,
@@ -233,12 +301,21 @@
     {
       "name": "Bridge",
       "address": "0x9cb4706e20A18E59a48ffa7616d700A3891e1861",
+      "sourceHashes": [
+        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
+        "0x63f00c3d965d6858168ed7d73fd0c413524877b196c4c5e3cf8fbc6ba40846e8"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3",
-          "via": []
+          "target": "0x52882c7564fAca480549145fAc4d0b09eD0D9c17",
+          "via": [
+            {
+              "address": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1702879283,
@@ -268,7 +345,11 @@
     {
       "name": "ProxyAdmin",
       "address": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3",
-      "receivedPermissions": [
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
+      ],
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "target": "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5"
@@ -296,6 +377,10 @@
       "name": "ZKFairAdmin",
       "address": "0xcd14BE1959928BB8c160D11817E2BE2129e2F25F",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1702832627,
@@ -722,7 +807,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
-  },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+  }
 }

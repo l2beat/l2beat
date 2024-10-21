@@ -1,8 +1,10 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
 export const polygonmiden: Layer2 = upcomingL2({
   id: 'polygon-miden',
+  createdAt: new UnixTime(1690896554), // 2023-08-01T13:29:14Z
   display: {
     name: 'Polygon Miden',
     slug: 'polygon-miden',

@@ -1,4 +1,62 @@
-Generated with discovered.json: 0x61979540e9ca0b8f4b5601c46bfdac125cc546a4
+Generated with discovered.json: 0xa09907ba10fd4a69aa6f0c4a8b9a18a9d3e86ce3
+
+# Diff at Mon, 14 Oct 2024 10:49:32 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20361394
+- current block number: 20361394
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20361394 (main branch discovery), not current.
+
+```diff
+    contract AztecFeeDistributor (0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734) {
+    +++ description: None
+      sourceHashes:
++        ["0x13139c06d2946718f6b4470f6346e54f4e2b26075fe5daa3b3a631092f7dd76e"]
+    }
+```
+
+```diff
+    contract TurboVerifier (0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8) {
+    +++ description: None
+      sourceHashes:
++        ["0x72846aa5544e4499c54463014cbacb03ad291385be297b56c638ccfb15717b8b"]
+    }
+```
+
+```diff
+    contract RollupProcessor (0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba) {
+    +++ description: None
+      sourceHashes:
++        ["0xc055a6555317d1508d60d0c1bf5b2332973126ca1ba545b095e733d95e490844"]
+    }
+```
+
+```diff
+    contract HistoricalTurboVerifier (0xd3a6D9De4cbC2CC7529361941e85b1c3269CcBb1) {
+    +++ description: None
+      sourceHashes:
++        ["0x3026ade4746f8009a4bb4fbd6de2afc3c1af13c8d71ff5a54d3cf3c006de26d8"]
+    }
+```
+
+```diff
+    contract Aztec Multisig (0xE298a76986336686CC3566469e3520d23D1a8aaD) {
+    +++ description: None
+      sourceHashes:
++        ["0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+Generated with discovered.json: 0x15aabbbd4c3efb19deb557855dd1cac208f3e577
 
 # Diff at Fri, 09 Aug 2024 10:08:41 GMT:
 

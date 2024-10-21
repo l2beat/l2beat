@@ -10,6 +10,7 @@ export const sxnetwork: Layer2 = orbitStackL2({
   discovery,
   nativeToken: 'SX',
   badges: [Badge.DA.DAC, Badge.RaaS.Gelato],
+  additionalPurposes: ['Betting'],
   display: {
     name: 'SX Network',
     slug: 'sxnetwork',
@@ -17,7 +18,6 @@ export const sxnetwork: Layer2 = orbitStackL2({
       'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     description:
       "SX Network is an Orbit stack Optimium, built to scale the SX team's existing sports betting platform.",
-    purposes: ['Betting'],
     links: {
       websites: ['https://sx.technology/'],
       apps: [

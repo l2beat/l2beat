@@ -1,4 +1,4 @@
-import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { EXITS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -6,19 +6,6 @@ import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('blast')
-
-const upgradeability = {
-  upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
-
-const optimismPortalImplementation =
-  discovery.get$Implementations('OptimismPortal')[0]
-const l2OutputOracleImplementation =
-  discovery.get$Implementations('L2OutputOracle')[0]
-
-assert(optimismPortalImplementation, 'OptimismPortal implementation not found')
-assert(l2OutputOracleImplementation, 'L2OutputOracle implementation not found')
 
 export const blast: Layer2 = opStackL2({
   discovery,
@@ -28,14 +15,13 @@ export const blast: Layer2 = opStackL2({
     architectureImage: 'blast',
     description:
       'Blast is an EVM-compatible Optimistic Rollup supporting native yield. It invests funds deposited into the L1 bridge into various DeFi protocols transferring yield back to the L2.',
-    purposes: ['Universal', 'DeFi'],
     links: {
       websites: ['https://blast.io/en'],
       apps: ['https://blast.io/en/bridge'],
       documentation: ['https://docs.blast.io/about-blast'],
       explorers: ['https://blastscan.io', 'https://blastexplorer.io'],
-      repositories: [],
-      socialMedia: ['https://twitter.com/blast'],
+      repositories: ['https://github.com/blast-io'],
+      socialMedia: ['https://twitter.com/blast', 'https://discord.gg/blast-l2'],
     },
     activityDataSource: 'Blockchain RPC',
     tvlWarning: {
@@ -56,15 +42,15 @@ export const blast: Layer2 = opStackL2({
         references: [
           {
             text: 'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
-            href: `https://etherscan.io/address/${optimismPortalImplementation.toString()}#code`,
+            href: `https://etherscan.io/address/0xA280aEBF81c917DbD2aA1b39f979dfECEc9e4391#code`,
           },
           {
             text: 'OptimismPortal.sol - Etherscan source code, finalizeWithdrawalTransaction function',
-            href: `https://etherscan.io/address/${optimismPortalImplementation.toString()}#code`,
+            href: `https://etherscan.io/address/0xA280aEBF81c917DbD2aA1b39f979dfECEc9e4391#code`,
           },
           {
             text: 'L2OutputOracle.sol - Etherscan source code, PROPOSER check',
-            href: `https://etherscan.io/address/${l2OutputOracleImplementation.toString()}#code`,
+            href: `https://etherscan.io/address/0x1C90963D451316E3DBFdD5A30354EE56C29016EB#code`,
           },
         ],
         risks: [EXITS.RISK_REHYPOTHECATED_ASSETS, EXITS.RISK_LACK_OF_LIQUIDITY],
@@ -80,7 +66,6 @@ export const blast: Layer2 = opStackL2({
       },
     ],
   },
-  upgradeability,
   rpcUrl: 'https://rpc.blast.io/',
   chainConfig: {
     name: 'blast',
@@ -107,42 +92,6 @@ export const blast: Layer2 = opStackL2({
     stateUpdate: 'disabled',
   },
   genesisTimestamp: new UnixTime(1708825259), //First sequencer transaction
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'BlastMultisig',
-      'This address is the owner of all upgradable contracts. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals and as a Challenger. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
-    ),
-    {
-      name: 'SystemConfig owner',
-      description:
-        'Account privileged to change System Config parameters such as Sequencer Address and gas limit.',
-      accounts: [discovery.getPermissionedAccount('SystemConfig', 'owner')],
-    },
-  ],
-  nonTemplateContracts: [
-    discovery.getContractDetails('L1BlastBridge', {
-      description:
-        'The L1 Bridge to Blast with the facility to invest escrowed tokens.',
-      ...upgradeability,
-    }),
-    discovery.getContractDetails('ETHYieldManager', {
-      description: 'Contract managing Yield Providers for ETH.',
-      ...upgradeability,
-    }),
-    discovery.getContractDetails('USDYieldManager', {
-      description: 'Contract managing Yield Providers for stablecoins.',
-      ...upgradeability,
-    }),
-    discovery.getContractDetails('LidoYieldProvider', {
-      description: 'Yield Provider for ETH investing ETH into stETH.',
-      ...upgradeability,
-    }),
-    discovery.getContractDetails('DSRYieldProvider', {
-      description:
-        'Yield Provider for DAI investing DAI into the MakerDAO DSR.',
-      ...upgradeability,
-    }),
-  ],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d'),
@@ -158,18 +107,12 @@ export const blast: Layer2 = opStackL2({
       description:
         'Escrow for ETH that is invested into a yield-bearing contracts such as stETH.',
     }),
-    discovery.getEscrowDetails({
-      address: EthereumAddress('0xa230285d5683C74935aD14c446e137c8c8828438'),
-      name: 'Interest-bearing DAI Vault',
-      tokens: [],
-      description:
-        'Escrow for DAI that is invested into a yield-bearing contracts such as MakerDAO DSR.',
-    }),
   ],
   isNodeAvailable: true,
   usesBlobs: true,
   associatedTokens: ['BLAST'],
   nodeSourceLink: 'https://github.com/blast-io/blast',
+  discoveryDrivenData: true,
   stateDerivation: {
     nodeSoftware:
       'Node software can be found [here](https://github.com/blast-io/blast).',

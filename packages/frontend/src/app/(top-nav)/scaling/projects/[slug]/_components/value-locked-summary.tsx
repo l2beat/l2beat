@@ -7,12 +7,12 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
 import { CustomLink } from '~/components/link/custom-link'
-import { PercentChange } from '~/components/percent-change'
 import { Square } from '~/components/square'
+import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
-import { formatCurrency } from '~/utils/format'
 import { unifyPercentagesAsIntegers } from '~/utils/math'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 
 export interface ValueLockedBreakdown {
   totalChange: number
@@ -38,27 +38,21 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
     {
       label: 'Canonically Bridged',
       shortLabel: 'Canonical',
-      value: formatCurrency(params.breakdown.canonical, 'usd', {
-        showLessThanMinimum: false,
-      }),
+      value: formatCurrency(params.breakdown.canonical, 'usd'),
       usage: params.usage.canonical,
       icon: <Square variant="canonical" size="small" />,
     },
     {
       label: 'Externally Bridged',
       shortLabel: 'External',
-      value: formatCurrency(params.breakdown.external, 'usd', {
-        showLessThanMinimum: false,
-      }),
+      value: formatCurrency(params.breakdown.external, 'usd'),
       usage: params.usage.external,
       icon: <Square variant="external" size="small" />,
     },
     {
       label: 'Natively Minted',
       shortLabel: 'Native',
-      value: formatCurrency(params.breakdown.native, 'usd', {
-        showLessThanMinimum: false,
-      }),
+      value: formatCurrency(params.breakdown.native, 'usd'),
       usage: params.usage.native,
       icon: <Square variant="native" size="small" />,
     },
@@ -78,16 +72,13 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
           params.breakdown.warning ? (
             <Tooltip>
               <TooltipTrigger className="flex items-center gap-1">
-                <p className="text-lg font-bold md:text-2xl md:leading-none">
-                  {formatCurrency(params.breakdown.total, 'usd', {
-                    showLessThanMinimum: false,
-                  })}
-                </p>
-                {params.breakdown.total > 0 && (
-                  <p className="text-xs font-bold md:text-base">
-                    <PercentChange value={params.breakdown.totalChange} />
-                  </p>
-                )}
+                <ValueWithPercentageChange
+                  className="text-lg font-bold md:text-2xl md:leading-none"
+                  changeClassName="text-xs font-bold md:text-base"
+                  change={params.breakdown.totalChange}
+                >
+                  {formatCurrency(params.breakdown.total, 'usd')}
+                </ValueWithPercentageChange>
                 {params.breakdown.warning && (
                   <RoundedWarningIcon
                     className="size-4"
@@ -101,16 +92,13 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
             </Tooltip>
           ) : (
             <div className="flex items-center gap-1">
-              <p className="text-nowrap text-lg font-bold md:text-2xl md:leading-none">
-                {formatCurrency(params.breakdown.total, 'usd', {
-                  showLessThanMinimum: false,
-                })}
-              </p>
-              {params.breakdown.total > 0 && (
-                <p className="text-xs font-bold md:text-base">
-                  <PercentChange value={params.breakdown.totalChange} />
-                </p>
-              )}
+              <ValueWithPercentageChange
+                className="text-nowrap text-lg font-bold md:text-2xl md:leading-none"
+                changeClassName="text-xs font-bold md:text-base"
+                change={params.breakdown.totalChange}
+              >
+                {formatCurrency(params.breakdown.total, 'usd')}
+              </ValueWithPercentageChange>
               {params.breakdown.warning && (
                 <RoundedWarningIcon className="size-4" sentiment="warning" />
               )}
@@ -141,10 +129,10 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
                 <span className="hidden md:inline">{s.shortLabel}</span>
               </span>
             </div>
-            <span className="whitespace-nowrap text-base font-semibold leading-none">
+            <span className="whitespace-nowrap text-base font-medium leading-none">
               {s.value}
               {params.breakdown.total > 0 && (
-                <span className="hidden font-normal text-gray-500 @[200px]:inline">
+                <span className="hidden w-[54px] text-right font-normal text-gray-500 @[210px]:inline-block">
                   {` (${s.usage}%)`}
                 </span>
               )}

@@ -22,7 +22,6 @@ export const l3x: Layer3 = orbitStackL3({
     slug: 'l3x',
     description:
       'L3X is an Orbit stack Appchain on Arbitrum focusing on DeFi (leveraged trading and liquid restaking).',
-    purposes: ['DeFi'],
     links: {
       websites: ['https://l3x.com/'],
       apps: [

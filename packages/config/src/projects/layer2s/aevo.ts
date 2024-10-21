@@ -1,5 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
+import { NUGGETS } from '../../common'
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -13,22 +14,24 @@ export const aevo: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
   associatedTokens: ['AEVO'],
   discovery,
+  additionalPurposes: ['Exchange'],
   display: {
     name: 'Aevo',
     slug: 'aevo',
     architectureImage: 'aevo',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
       'Aevo is a high-performance decentralized options exchange, powered by the OP Stack and Celestia DA.',
-    purposes: ['Exchange'],
     links: {
       websites: ['https://aevo.xyz/'],
       apps: ['https://app.aevo.xyz/'],
       documentation: ['https://docs.aevo.xyz/'],
       explorers: ['https://explorer.aevo.xyz/'],
       repositories: ['https://github.com/aevoxyz'],
-      socialMedia: ['https://twitter.com/aevoxyz'],
+      socialMedia: [
+        'https://twitter.com/aevoxyz',
+        'https://discord.com/invite/aevo',
+        'https://t.me/aevoupdates',
+      ],
     },
     activityDataSource: 'Blockchain RPC',
   },
@@ -59,6 +62,7 @@ export const aevo: Layer2 = opStackL2({
   },
   genesisTimestamp: new UnixTime(1679202395),
   isNodeAvailable: false,
+  discoveryDrivenData: true,
   milestones: [
     {
       name: 'Aevo Open Mainnet Launch',
@@ -83,10 +87,11 @@ export const aevo: Layer2 = opStackL2({
       type: 'general',
     },
   ],
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'ConduitMultisig',
-      'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
-    ),
+  knowledgeNuggets: [
+    {
+      title: 'Blobstream and Celestia Architecture',
+      url: 'https://www.youtube.com/watch?v=cn_fN6pkakQ',
+      thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
+    },
   ],
 })

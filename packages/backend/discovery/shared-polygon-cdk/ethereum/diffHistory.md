@@ -1,4 +1,161 @@
-Generated with discovered.json: 0x158df7004c72605e0164f64edfbef74dd4bf964b
+Generated with discovered.json: 0x18eab5e0edbd82da09278ec51331826d7e85fac7
+
+# Diff at Sat, 19 Oct 2024 06:43:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@493c96785a6a32c6417182bb9548d3a990297dbe block: 20878362
+- current block number: 20997898
+
+## Description
+
+Expected Oct 28.
+
+Queued tx for new rollup types (targeting zkEVM and validiums) implementing the [Polygon zkEVM servicing upgrade](https://polygon.technology/blog/polygon-zkevm-servicing-update-coming-to-mainnet-beta). Also queued are the according upgrades to the PolygonRollupManager and GlobalExitRoot as described in the above post.
+
+TLDR of what this will change:
+* add rollback functionality to all managed chains
+* new local 'polygoncdkprojectcontract.admin' role for each project that can call `updateRollupByRollupAdmin(existing_rolluptype)` and `rollbackBatches()` for their respective project
+
+## Watched changes
+
+```diff
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: None
+      values.scheduledTransactionsDecoded.18:
++        {"target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":"0","function":"addNewRollupType","inputs":{"consensusImplementation":"0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F","verifier":"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D","forkID":12,"rollupCompatibilityID":0,"genesis":"0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272","description":"Type: Validium, Version: Banana , genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"864000"}
+      values.scheduledTransactionsDecoded.17:
++        {"target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":"0","function":"addNewRollupType","inputs":{"consensusImplementation":"0x7253F329302b1b5E774Ac641EA3743E9E3244f2E","verifier":"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D","forkID":12,"rollupCompatibilityID":0,"genesis":"0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272","description":"Type: zkEVM, Version: Banana , genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"864000"}
+      values.scheduledTransactionsDecoded.16:
++        {"target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":"0","function":"upgrade","inputs":{"proxy":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","implementation":"0x103388f5661d224F4aFb555C7E4a8FB52d0b752d"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"864000"}
+      values.scheduledTransactionsDecoded.15:
++        {"target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":"0","function":"upgradeAndCall","inputs":{"proxy":"0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb","implementation":"0x9Bdda421219900454E94e01d641fE64c60D8f4C8","data":{}},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"864000"}
+    }
+```
+
+Generated with discovered.json: 0x0803fbee8125f1ef849384fb04386a798a92cf21
+
+# Diff at Mon, 14 Oct 2024 10:55:40 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20878362
+- current block number: 20878362
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20878362 (main branch discovery), not current.
+
+```diff
+    contract Permit2 (0x000000000022D473030F116dDEE9F6B43aC78BA3) {
+    +++ description: None
+      sourceHashes:
++        ["0x84beffbcb4624fb74fab61c80beeb566023a939418284a8f44357b71cd40b63b"]
+    }
+```
+
+```diff
+    contract SharedProxyAdmin (0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"},{"permission":"upgrade","target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"},{"permission":"upgrade","target":"0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"}]
+      template:
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"]
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"},{"permission":"upgrade","target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"},{"permission":"upgrade","target":"0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"}]
+    }
+```
+
+```diff
+    contract RollupManagerAdminMultisig (0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract Bridge (0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
++        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
+      issuedPermissions.0.via.0:
++        {"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","delay":0}
+      sourceHashes:
++        ["0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3","0x058729592838a622eff2eb394278ff5d53065feeca04c216a67e973178ac1ac2"]
+    }
+```
+
+```diff
+    contract SecurityCouncil (0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract POL (0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6) {
+    +++ description: None
+      sourceHashes:
++        ["0xb814773e3a4cf3d1dd288afdeed9cbdc361edda62de8fa393290e5be836ffae0"]
+    }
+```
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
++        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
+      issuedPermissions.0.via.0:
++        {"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","delay":0}
+      sourceHashes:
++        ["0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a","0x0457cd9bbeaa5adb6ffff74ca828707e8797cdd25b13768eb37dcc7a120ce3c6"]
+    }
+```
+
+```diff
+    contract GlobalExitRootV2 (0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
++        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
+      issuedPermissions.0.via.0:
++        {"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","delay":0}
+      sourceHashes:
++        ["0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a","0x23dd296130348943833ff04807c22fab6b51e87b4d0d59ba0e35e802e3e1f079"]
+    }
+```
+
+```diff
+    contract CreateRollupMultisig (0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: None
+      sourceHashes:
++        ["0x7de9e4256607fc137552230010585d417c818730e4f56e29065699cdb97f9cf1"]
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe","via":[{"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"}]},{"permission":"upgrade","target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","via":[{"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"}]},{"permission":"upgrade","target":"0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb","via":[{"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"}]
+    }
+```
+
+Generated with discovered.json: 0x3670b5544c223abe3dba83ca8052cf1964c1d922
 
 # Diff at Wed, 02 Oct 2024 14:18:36 GMT:
 

@@ -51,7 +51,11 @@ export class ValueService {
     const filteredAmounts = amounts.filter((x) => {
       const amountConfig = amountConfigs.get(x.configId)
       assert(amountConfig, 'Config not found')
-      return amountConfig.sinceTimestamp.lte(x.timestamp)
+
+      const until = amountConfig.untilTimestamp
+        ? amountConfig.untilTimestamp.gt(x.timestamp)
+        : true
+      return amountConfig.sinceTimestamp.lte(x.timestamp) && until
     })
     const amountsByTimestamp = groupBy(
       filteredAmounts.map((x) => ({ ...x, timestamp: x.timestamp.toNumber() })),

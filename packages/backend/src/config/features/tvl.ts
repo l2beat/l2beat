@@ -29,14 +29,18 @@ export function getTvlConfig(
     .concat(bridges.map(bridgeToBackendProject))
     .concat(layer3s.map(layer3ToBackendProject))
 
-  const aggLayerChains = layer2s
+  const sharedEscrowsChains = layer2s
     .filter((c) =>
-      c.config.escrows.some((e) => e.sharedEscrow?.type === 'AggLayer'),
+      c.config.escrows.some(
+        (e) =>
+          e.sharedEscrow?.type === 'AggLayer' ||
+          e.sharedEscrow?.type === 'ElasticChian',
+      ),
     )
     .map((l) => l.id)
 
   const chainConfigs = uniq(
-    getChainsWithTokens(tokenList, chains).concat(aggLayerChains),
+    getChainsWithTokens(tokenList, chains).concat(sharedEscrowsChains),
   ).map((chain) =>
     getChainTvlConfig(flags.isEnabled('tvl', chain), env, chain, {
       minTimestamp: minTimestampOverride,

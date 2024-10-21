@@ -1,4 +1,478 @@
-Generated with discovered.json: 0x694a82011a5d2eac83b64388b2bb44db8b15339e
+Generated with discovered.json: 0x5c01b9d549184d634e7d32f167de18259c782792
+
+# Diff at Wed, 16 Oct 2024 09:34:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b6ff61526cf3d704839d0155008ae72cc9070de8 block: 20912886
+- current block number: 20977251
+
+## Description
+
+New plug for USD0++ (not added). Refreshed crawl data.
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.103:
++        "0x80f5143AF6BF51B38C038BaFF71465Be9b48cAEe"
+    }
+```
+
+Generated with discovered.json: 0xdd8088e5cdc88df48d54b85c0508d693ad7455a0
+
+# Diff at Mon, 14 Oct 2024 10:56:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20912886
+- current block number: 20912886
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20912886 (main branch discovery), not current.
+
+```diff
+    contract WETH Vault Kinto (0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94) {
+    +++ description: None
+      sourceHashes:
++        ["0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"]
+    }
+```
+
+```diff
+    contract PolygonL1Switchboard (0x053407DFA30267f6332f3c94a9e9F704A55e62CD) {
+    +++ description: None
+      sourceHashes:
++        ["0x1173a4411a4a452037ed000a299c3136ab3d547cca61ee51628aa7c54ff20651"]
+    }
+```
+
+```diff
+    contract OptimismSwitchboard2 (0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA) {
+    +++ description: None
+      sourceHashes:
++        ["0x5ce8017c8b58163d4cf21dc4e0dec9218e5b4e093c40fb19d970e8c807fbf4d4"]
+    }
+```
+
+```diff
+    contract MKR Vault Kinto (0x0fC783f611A888A2cAbC3dA482Add3215334dCc2) {
+    +++ description: None
+      sourceHashes:
++        ["0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"]
+    }
+```
+
+```diff
+    contract CapacitorFactory (0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a) {
+    +++ description: None
+      sourceHashes:
++        ["0x6464768c2bcc3c1a2d6c108a2366460fe668d285547a02040bdac245de51ca89"]
+    }
+```
+
+```diff
+    contract DAI Vault Kinto (0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5) {
+    +++ description: None
+      sourceHashes:
++        ["0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"]
+    }
+```
+
+```diff
+    contract OptimismSwitchboard (0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287) {
+    +++ description: None
+      sourceHashes:
++        ["0x5ce8017c8b58163d4cf21dc4e0dec9218e5b4e093c40fb19d970e8c807fbf4d4"]
+    }
+```
+
+```diff
+    contract WBTC Vault Reya (0x2344621d5aA6e784e8C6f4c54b0B29Dd9c3Ad4B6) {
+    +++ description: None
+      sourceHashes:
++        ["0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"]
+    }
+```
+
+```diff
+    contract LyraMultisig (0x246d38588b16Dd877c558b245e6D5a711C649fCF) {
+    +++ description: None
+      sourceHashes:
++        ["0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract eBTC Vault Lyra (0x25d35C8796c9dcD3857abE90D802FC17b1FB55A5) {
+    +++ description: None
+      sourceHashes:
++        ["0x31b99c44ab28174db25b94c3cca9ad4f335866894a5437384040c7bd682fca11"]
+    }
+```
+
+```diff
+    contract PAXG Vault Kinto (0x25f0D71Da51A77Ca231484eBbAD1f588A0230ef2) {
+    +++ description: None
+      sourceHashes:
++        ["0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"]
+    }
+```
+
+```diff
+    contract USDe Vault Lyra (0x26Cf1Dc84694E04277F2Fe4C13E43597c6010C2A) {
+    +++ description: None
+      sourceHashes:
++        ["0x31b99c44ab28174db25b94c3cca9ad4f335866894a5437384040c7bd682fca11"]
+    }
+```
+
+```diff
+    contract KINTO Vault Kinto (0x2f87464d5F5356dB350dcb302FE28040986783a7) {
+    +++ description: None
+      sourceHashes:
++        ["0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"]
+    }
+```
+
+```diff
+    contract ENA Vault Kinto (0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd) {
+    +++ description: None
+      sourceHashes:
++        ["0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"]
+    }
+```
+
+```diff
+    contract rsETH Vault Lyra (0x35d4D9bc79B0a543934b1769304B90d752691caD) {
+    +++ description: None
+      sourceHashes:
++        ["0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"]
+    }
+```
+
+```diff
+    contract WBTC Vault Lyra (0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab) {
+    +++ description: None
+      sourceHashes:
++        ["0xfd7de25c0b5615fb9cdd221236caa984819b6dd0511764ecfc6d0c724721741c"]
+    }
+```
+
+```diff
+    contract sUSDe Vault Kinto (0x43b718Aa5e678b08615CA984cbe25f690B085b32) {
+    +++ description: None
+      sourceHashes:
++        ["0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"]
+    }
+```
+
+```diff
+    contract rswETH Vault Lyra (0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4) {
+    +++ description: None
+      sourceHashes:
++        ["0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"]
+    }
+```
+
+```diff
+    contract sDAI Vault Kinto (0x5B8Ae1C9c5970e2637Cf3Af431acAAebEf7aFb85) {
+    +++ description: None
+      sourceHashes:
++        ["0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"]
+    }
+```
+
+```diff
+    contract Hasher (0x5C71beE4a6b0D617D8c3d107D331292741789E27) {
+    +++ description: None
+      sourceHashes:
++        ["0x621783ceb3c37cf9cd41112e917d760d40dbfa18e43c59f5c925fe9f7037f9be"]
+    }
+```
+
+```diff
+    contract USDT Vault Lyra (0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa) {
+    +++ description: None
+      sourceHashes:
++        ["0xfd7de25c0b5615fb9cdd221236caa984819b6dd0511764ecfc6d0c724721741c"]
+    }
+```
+
+```diff
+    contract sDAI Vault Lyra (0x613e87BE1cd75dEBC5e6e56a2AF2fED84162C142) {
+    +++ description: None
+      sourceHashes:
++        ["0x31b99c44ab28174db25b94c3cca9ad4f335866894a5437384040c7bd682fca11"]
+    }
+```
+
+```diff
+    contract sDAI Vault Polynomial (0x615172e47c0C5A6dA8ea959632Ac0166f7a59eDc) {
+    +++ description: None
+      sourceHashes:
++        ["0x6a891f3b93e83143ab3b768e2a7a5e2fee324b1f98745e241faaf97608eaa3ae"]
+    }
+```
+
+```diff
+    contract WETH Vault Reya (0x64dF894688c5052BeAdC35371cF69151Ebc5D658) {
+    +++ description: None
+      sourceHashes:
++        ["0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"]
+    }
+```
+
+```diff
+    contract USDC Vault Lyra (0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d) {
+    +++ description: None
+      sourceHashes:
++        ["0x7388ebff48e70528bc58f3586fb97581b1a933f704450fa7ed625674671cfef2"]
+    }
+```
+
+```diff
+    contract USDC Vault Kinto (0x755cD5d147036E11c76F1EeffDd94794fC265f0d) {
+    +++ description: None
+      sourceHashes:
++        ["0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"]
+    }
+```
+
+```diff
+    contract LBTC Vault Lyra (0x76624ff43D610F64177Bb9c194A2503642e9B803) {
+    +++ description: None
+      sourceHashes:
++        ["0x31b99c44ab28174db25b94c3cca9ad4f335866894a5437384040c7bd682fca11"]
+    }
+```
+
+```diff
+    contract SNX Vault Lyra (0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592) {
+    +++ description: None
+      sourceHashes:
++        ["0xfd7de25c0b5615fb9cdd221236caa984819b6dd0511764ecfc6d0c724721741c"]
+    }
+```
+
+```diff
+    contract DAI Vault Lyra (0x7E1d17b580dD4F89037DB331430eAEe8B8e50c91) {
+    +++ description: None
+      sourceHashes:
++        ["0x31b99c44ab28174db25b94c3cca9ad4f335866894a5437384040c7bd682fca11"]
+    }
+```
+
+```diff
+    contract weETH Vault Lyra (0x8180EcCC825b692ef65FF099a0A387743788bf78) {
+    +++ description: None
+      sourceHashes:
++        ["0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"]
+    }
+```
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
+      sourceHashes:
++        ["0x0a472e41e2b0da865c051222fc77f1a0e9a6f6462383cbf9a6e4da8b9b332167"]
+    }
+```
+
+```diff
+    contract ETHFI Vault Kinto (0x95d60E34aB2E626407d98dF8C240e6174e5D37E5) {
+    +++ description: None
+      sourceHashes:
++        ["0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"]
+    }
+```
+
+```diff
+    contract ExecutionManager (0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C) {
+    +++ description: None
+      sourceHashes:
++        ["0x4090ed28f96c48d603c9a606a131adf14f1ac4c81c478cde49b5b62ea4310ac3"]
+    }
+```
+
+```diff
+    contract SOL Vault Kinto (0xA2bc0DaA9BF98820632bCa0663a9616f6bC180f8) {
+    +++ description: None
+      sourceHashes:
++        ["0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"]
+    }
+```
+
+```diff
+    contract LOOKS Vault Blast (0xa83B4006c16DAeAb2718294696c0122519195137) {
+    +++ description: None
+      sourceHashes:
++        ["0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"]
+    }
+```
+
+```diff
+    contract USDe Vault Reya (0xaA2f2B6cD33Eaabb795c6DB60AAec599C8450F35) {
+    +++ description: None
+      sourceHashes:
++        ["0x1ca1782228ebefdeb92c0a3be06dac3dca400826838bb68b5500e8b8f3fac727"]
+    }
+```
+
+```diff
+    contract wstETH Vault Kinto (0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc) {
+    +++ description: None
+      sourceHashes:
++        ["0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"]
+    }
+```
+
+```diff
+    contract sUSDe Vault Polynomial (0xC6cfb996A7CFEB89813A68CD13942CD75553032b) {
+    +++ description: None
+      sourceHashes:
++        ["0x6a891f3b93e83143ab3b768e2a7a5e2fee324b1f98745e241faaf97608eaa3ae"]
+    }
+```
+
+```diff
+    contract LooksRareMultisig (0xC8C57e4C73c71f72cA0a7e043E5D2D144F98ef13) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract XAUt Vault Kinto (0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF) {
+    +++ description: None
+      sourceHashes:
++        ["0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"]
+    }
+```
+
+```diff
+    contract WETH Vault Lyra (0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e) {
+    +++ description: None
+      sourceHashes:
++        ["0xfd7de25c0b5615fb9cdd221236caa984819b6dd0511764ecfc6d0c724721741c"]
+    }
+```
+
+```diff
+    contract FastSwitchboard (0xD5a83a40F262E2247e6566171f9ADc76b745F5cD) {
+    +++ description: None
+      sourceHashes:
++        ["0x4c26d29d2554c606bb1c2391ea7b837be27ba2f6cc80d7a022bbd672f534fba4"]
+    }
+```
+
+```diff
+    contract eUSD Vault Kinto (0xDB0e855F55ff35dA8754e5297925bd6c4Cb1Fa48) {
+    +++ description: None
+      sourceHashes:
++        ["0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"]
+    }
+```
+
+```diff
+    contract EIGEN Vault Kinto (0xdb161cdc9c11892922F7121a409b196f3b00e640) {
+    +++ description: None
+      sourceHashes:
++        ["0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"]
+    }
+```
+
+```diff
+    contract USDC Vault Polynomial (0xDE1617Ddb7C8A250A409D986930001985cfad76F) {
+    +++ description: None
+      sourceHashes:
++        ["0x6a891f3b93e83143ab3b768e2a7a5e2fee324b1f98745e241faaf97608eaa3ae"]
+    }
+```
+
+```diff
+    contract USDe Vault Kinto (0xdf34E61B6e7B9e348713d528fEB019d504d38c1e) {
+    +++ description: None
+      sourceHashes:
++        ["0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"]
+    }
+```
+
+```diff
+    contract ArbitrumL1Switchboard (0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe) {
+    +++ description: None
+      sourceHashes:
++        ["0xdacec605e22dae6e18ca1d184d8aec5d3307537166fbd48449491dc2227c6497"]
+    }
+```
+
+```diff
+    contract USDC Vault Reya (0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7) {
+    +++ description: None
+      sourceHashes:
++        ["0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"]
+    }
+```
+
+```diff
+    contract sUSDe Vault Lyra (0xE3E96892D30E0ee1a8131BAf87c891201F7137bf) {
+    +++ description: None
+      sourceHashes:
++        ["0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"]
+    }
+```
+
+```diff
+    contract weETH Vault Kinto (0xeB66259d2eBC3ed1d3a98148f6298927d8A36397) {
+    +++ description: None
+      sourceHashes:
++        ["0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"]
+    }
+```
+
+```diff
+    contract wstETH Vault Lyra (0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3) {
+    +++ description: None
+      sourceHashes:
++        ["0xfd7de25c0b5615fb9cdd221236caa984819b6dd0511764ecfc6d0c724721741c"]
+    }
+```
+
+```diff
+    contract TransmitManager (0xeD037aFBffC65a94E9CC592947E851FB2f730341) {
+    +++ description: None
+      sourceHashes:
++        ["0x20fd759cdae5666df50f4b5723ba03796b69ef7b2b3ec33712cb158d77b97133"]
+    }
+```
+
+```diff
+    contract KintoMultisig (0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract SignatureVerifier (0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98) {
+    +++ description: None
+      sourceHashes:
++        ["0x92dc8defa29353a843ae6cb6d7508811be7c65f617fe92ef87739ccdbc3fa95b"]
+    }
+```
+
+Generated with discovered.json: 0x7e793b8eb1972aef96146082a4be74d43b7eb250
 
 # Diff at Mon, 07 Oct 2024 09:49:08 GMT:
 

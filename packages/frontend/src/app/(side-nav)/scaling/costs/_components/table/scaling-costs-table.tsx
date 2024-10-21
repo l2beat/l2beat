@@ -5,7 +5,6 @@ import { useScalingFilter } from '~/app/(side-nav)/scaling/_components/scaling-f
 import { ScalingFilters } from '~/app/(side-nav)/scaling/_components/scaling-filters'
 import { BasicTable } from '~/components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
-import { COSTS_UPCOMING_PROJECTS } from '~/server/features/scaling/costs/consts'
 import { type CostsTableData } from '~/server/features/scaling/costs/get-costs-table-data'
 import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { type CostsUnit } from '~/server/features/scaling/costs/types'
@@ -70,8 +69,8 @@ export function ScalingCostsTable(props: Props) {
   }
 
   return (
-    <div className="space-y-2">
-      <div className="flex flex-col gap-2 md:flex-row md:justify-between">
+    <div className="space-y-3 md:space-y-6">
+      <div className="flex flex-col gap-2 lg:flex-row lg:justify-between">
         <ScalingFilters items={filteredEntries} />
         <CostsMetricControls value={metric} onValueChange={onMetricChange} />
       </div>
@@ -100,9 +99,7 @@ function mapToTableEntry(
       ...entry,
       data: {
         type: 'not-available',
-        reason: COSTS_UPCOMING_PROJECTS.includes(entry.id)
-          ? 'coming-soon'
-          : 'no-data',
+        reason: 'no-data',
       },
     }
   }

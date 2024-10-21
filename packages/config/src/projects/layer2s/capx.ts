@@ -1,14 +1,16 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
 export const capx: Layer2 = upcomingL2({
   id: 'capx',
+  createdAt: new UnixTime(1692958606), // '2023-08-25T10:16:46Z'
   display: {
     name: 'Capx',
     slug: 'capx',
     description:
       'Capx is a sector-specific Layer 2 blockchain, specialized for token distribution and trading, facilitating curated distributions for project communities, token streaming for investor distributions, and a liquid secondary market for tokens.',
-    purposes: ['DeFi'],
+    purposes: ['Universal'],
     category: 'ZK Rollup',
     provider: 'Polygon',
     links: {

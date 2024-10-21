@@ -10,12 +10,12 @@ const discovery = new ProjectDiscovery('bob')
 export const bob: Layer2 = opStackL2({
   discovery,
   badges: [Badge.RaaS.Conduit],
+  additionalPurposes: ['Bitcoin DApps'],
   display: {
     name: 'BOB',
     slug: 'bob',
     description:
       "BOB (Build on Bitcoin) is an OP Stack rollup that aims to natively support the Bitcoin stack. The current implementation supports a variety of canonical and external bridging for BTC-related assets and a tBTC-v2 LightRelay smart contract for verifying Bitcoin transaction proofs through their blocks' headers on the L2.",
-    purposes: ['Bitcoin DApps'],
     links: {
       websites: ['https://gobob.xyz'],
       apps: ['https://app.gobob.xyz'],
@@ -27,34 +27,20 @@ export const bob: Layer2 = opStackL2({
     activityDataSource: 'Blockchain RPC',
     architectureImage: 'opstack',
   },
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'RollupOwnerMultisig',
-      "Owner of the ProxyAdmin and the rollup system. It can upgrade the main bridge's implementation potentially gaining access to the funds therein, and change any rollup system component.",
-    ),
-    ...discovery.getMultisigPermission(
-      'UsdcBridgeOwnerMultisig',
-      "Owner of the ProxyAdmin and the rollup system. It can upgrade the main bridge's implementation potentially gaining access to the funds therein, and change any rollup system component.",
-    ),
-  ],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0x091dF5E1284E49fA682407096aD34cfD42B95B72'),
       tokens: ['wstETH'],
-      description:
-        'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
     }),
     discovery.getEscrowDetails({
       address: EthereumAddress('0x450D55a4B4136805B0e5A6BB59377c71FC4FaCBb'),
       tokens: ['USDC'],
-      description: 'USDC Vault.',
-      upgradableBy: ['UsdcBridgeOwnerMultisig'],
-      upgradeDelay: 'instant',
     }),
   ],
   usesBlobs: true,
   genesisTimestamp: new UnixTime(1712861989),
   isNodeAvailable: 'UnderReview',
+  discoveryDrivenData: true,
   milestones: [
     {
       name: 'Phase 1: Optimistic BOB',

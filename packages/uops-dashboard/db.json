@@ -70,7 +70,10 @@
       "0x77edae6a5f332605720688c7fda7476476e8f83f",
       "TransparentUpgradeableProxy"
     ],
-    ["0xd692f41fd540abb39aff27d7914ad7f1831f785b", "Login"]
+    ["0xd692f41fd540abb39aff27d7914ad7f1831f785b", "Login"],
+    ["0x974474c8bcb36302be93858466728271fb36544e", "SCVirtualAssetEvents"],
+    ["0x4af334f9ae78edd787750063b22a2eaefdbcd3ee", "SCVirtualAssetEvents"],
+    ["0x91ff962f7de9865d3ca8ca151bac28969f52f34b", "Smart"]
   ],
   "METHODS": [
     ["0xfec93e49", "follow"],
@@ -88,7 +91,7 @@
     ["0x3a6bf43a", "safeMint"],
     ["0x38eff67f", "safeMint"],
     ["0x0471c456", "finishDuel"],
-    ["0x", "fallback"],
+    ["0x", "cancelTransactionAndTransfer"],
     ["0x049639fb", "call"],
     ["0x9ddf93bb", "swap"],
     ["0x541d63c8", "executeUserOpWithErrorString"],
@@ -127,6 +130,10 @@
     ["0xb91d544e", "u"],
     ["0x2f2ff15d", "grantRole"],
     ["0x98a6e993", "mintWithSignature"],
-    ["0x3dbfd97c", "login"]
+    ["0x3dbfd97c", "login"],
+    ["0x82ad56cb", "aggregate3"],
+    ["0x8c7a3e2c", "EmitGameUserActivityWithSign"],
+    ["0x54d62dc7", "prepapreClaim"],
+    ["0x4e71d92d", "claim"]
   ]
 }

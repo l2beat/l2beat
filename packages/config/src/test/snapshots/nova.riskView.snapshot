@@ -1,0 +1,64 @@
+// nova riskView didn't change 1
+
+{
+  dataAvailability: {
+    definingMetric: 0.8333333333333334
+    description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 5/6 that is tasked with protecting and supplying the data."
+    sentiment: "warning"
+    value: "External (DAC)"
+  }
+  destinationToken: {
+    description: "ETH transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain."
+    sentiment: "good"
+    value: "Native & Canonical"
+  }
+  exitWindow: {
+    definingMetric: 172800
+    description: "Non-emergency upgrades are initiated on L2 and go through a 3d delay. Since there is a 1d delay to force a tx (forcing the inclusion in the following state update), users have only 2d to exit. \n    \n  If users post a tx after that time, they would only be able to self propose a state root 12d 17h after the last state root was proposed and then wait for the 6d 8h challenge window, while the upgrade would be confirmed just after the 6d 8h challenge window and the 3d L1 timelock."
+    secondLine: undefined
+    sentiment: "bad"
+    sources: [
+      {
+        contract: "RollupProxy"
+        references: [
+          "https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F1#L43"
+        ]
+      }
+      {
+        contract: "Outbox"
+        references: [
+          "https://etherscan.io/address/0x7439d8d4F3b9d9B6222f3E9760c75a47e08a7b3f#code"
+        ]
+      }
+    ]
+    value: "2d"
+    warning: {
+      sentiment: "bad"
+      value: "The Security Council can upgrade with no delay."
+    }
+  }
+  proposerFailure: {
+    definingMetric: 1099632
+    description: "Anyone can become a Proposer after 12d 17h of inactivity from the currently whitelisted Proposers."
+    sentiment: "good"
+    value: "Self propose"
+  }
+  sequencerFailure: {
+    definingMetric: 86400
+    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There is a 1d delay on this operation."
+    sentiment: "good"
+    value: "Self sequence"
+  }
+  stateValidation: {
+    definingMetric: 13
+    description: "Fraud proofs allow 13 WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. There is a 6d 8h challenge period."
+    secondLine: "6d 8h challenge period"
+    sentiment: "warning"
+    value: "Fraud proofs (INT)"
+  }
+  validatedBy: {
+    description: "Smart contracts on Ethereum validate all bridge transfers."
+    sentiment: "good"
+    value: "Ethereum"
+  }
+}

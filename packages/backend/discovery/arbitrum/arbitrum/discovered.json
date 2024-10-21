@@ -1,13 +1,16 @@
 {
   "name": "arbitrum",
   "chain": "arbitrum",
-  "blockNumber": 256572673,
+  "blockNumber": 264777898,
   "configHash": "0x7ce82aed984bee2ddba4926b8b4b3729e64a78877c09ef4b2fad92e173bfe2c4",
-  "version": 15,
   "contracts": [
     {
       "name": "L2ERC20Gateway",
       "address": "0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
+      "sourceHashes": [
+        "0x26f6b72513d780b4c7f3855e9b8c63f3ea90b9d15ce1cf38534887619daaa18b",
+        "0x7ab56232b17ce06beb4a64963bb9e8d0c7fdef3c45ab8f1ae306699d7b80c637"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -43,7 +46,7 @@
         "beaconProxyFactory": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
         "counterpartGateway": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "exitNum": 25525,
+        "exitNum": 26252,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "derivedName": "L2ERC20Gateway"
@@ -51,6 +54,9 @@
     {
       "name": "ConstitutionHash",
       "address": "0x1D62fFeB72e4c360CcBbacf7c965153b00260417",
+      "sourceHashes": [
+        "0xbef9d19875be92a7955c003ae08cc03e029249d8fb5b882ad8ed916d36d87490"
+      ],
       "sinceTimestamp": 1678968508,
       "values": {
         "$immutable": true,
@@ -62,6 +68,9 @@
     {
       "name": "L2SurplusFee",
       "address": "0x32e7AF5A8151934F3787d0cD59EB6EDd0a736b1d",
+      "sourceHashes": [
+        "0xef8d56213b60d676b88afce25cb17bb89c7c3fc10c4ec06f77fe4820529e409b"
+      ],
       "sinceTimestamp": 1678989500,
       "values": {
         "$immutable": true,
@@ -87,12 +96,21 @@
     {
       "name": "L2Timelock",
       "address": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x34c1cd41f1d2a210cfb4daa6921fc003239f0565c9c678999dcca010df526f55"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xdb216562328215E010F819B5aBe947bad4ca961e",
-          "via": []
+          "target": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
+          "via": [
+            {
+              "address": "0xdb216562328215E010F819B5aBe947bad4ca961e",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1678968508,
@@ -144,6 +162,9 @@
     {
       "name": "StandardArbERC20",
       "address": "0x3f770Ac673856F105b586bb393d122721265aD46",
+      "sourceHashes": [
+        "0xf98882c836bb8026b07fe0c6af0e5fc52578e78078c523fcd7974fb69b833732"
+      ],
       "sinceTimestamp": 1634920833,
       "values": {
         "$immutable": true,
@@ -160,6 +181,9 @@
     {
       "name": "BeaconProxyFactory",
       "address": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
+      "sourceHashes": [
+        "0x4522be863ce454f4a528c27299d26dc69d407f11e5807129aaff93f36b44dd53"
+      ],
       "sinceTimestamp": 1623784070,
       "values": {
         "$immutable": true,
@@ -171,6 +195,10 @@
       "name": "L2SecurityCouncilEmergency",
       "address": "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1692138844,
@@ -196,7 +224,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": ["0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"],
         "multisigThreshold": "9 of 12 (75%)",
-        "nonce": 2,
+        "nonce": 3,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -204,6 +232,9 @@
     {
       "name": "L2DAIGateway",
       "address": "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
+      "sourceHashes": [
+        "0x88d1226b13a00325eaaf0822116a64fc4a6a5dc3b56c15fc942a24a6be815715"
+      ],
       "sinceTimestamp": 1632133487,
       "values": {
         "$immutable": true,
@@ -219,6 +250,10 @@
     {
       "name": "L2GatewayRouter",
       "address": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933",
+      "sourceHashes": [
+        "0x26f6b72513d780b4c7f3855e9b8c63f3ea90b9d15ce1cf38534887619daaa18b",
+        "0x6b2f9c454049196975edab9674208890663911ceebf0cf2c64d3c26a32aa300c"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -255,6 +290,10 @@
     {
       "name": "L2WethGateway",
       "address": "0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B",
+      "sourceHashes": [
+        "0x26f6b72513d780b4c7f3855e9b8c63f3ea90b9d15ce1cf38534887619daaa18b",
+        "0xadf7f548448c8cfc2273cb5feeb31bcdd088e2d60e9be8756da94535ef5667d7"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -300,6 +339,9 @@
     {
       "name": "L2LPTGateway",
       "address": "0x6D2457a4ad276000A615295f7A80F79E48CcD318",
+      "sourceHashes": [
+        "0xed35d20c6e0ab17ec40fb3266b83c36153ce768a59b7b850e22dad1c84eb93b0"
+      ],
       "sinceTimestamp": 1644595982,
       "values": {
         "$immutable": true,
@@ -316,6 +358,9 @@
     {
       "name": "UpgradeExecRouteBuilder",
       "address": "0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a",
+      "sourceHashes": [
+        "0x4ed0927cf3d1bda79c1506ba72809f27e5eca436a34b45c47d5e1fa221a685b3"
+      ],
       "sinceTimestamp": 1692138965,
       "values": {
         "$immutable": true,
@@ -331,12 +376,21 @@
     {
       "name": "TreasuryGovernor",
       "address": "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x11ca3427c1f5954198dc46a75aefa2f2e29b40a4e18f78ecaac06fd242502431"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xdb216562328215E010F819B5aBe947bad4ca961e",
-          "via": []
+          "target": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
+          "via": [
+            {
+              "address": "0xdb216562328215E010F819B5aBe947bad4ca961e",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1678968508,
@@ -372,12 +426,21 @@
     {
       "name": "L2ArbitrumToken",
       "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x637d7a1e879804c928473dab6d06d80f9fd85ea5d889c3d5fac43411f6e59346"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xdb216562328215E010F819B5aBe947bad4ca961e",
-          "via": []
+          "target": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
+          "via": [
+            {
+              "address": "0xdb216562328215E010F819B5aBe947bad4ca961e",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1678968508,
@@ -408,6 +471,9 @@
     {
       "name": "SecurityCouncilMemberSyncAction",
       "address": "0x9BF7b8884Fa381a45f8CB2525905fb36C996297a",
+      "sourceHashes": [
+        "0x91e27e9c4588835bc07a823b2eebf255b0ad88bf9f7dc94bd0d785e53a8f24a7"
+      ],
       "sinceTimestamp": 1692138730,
       "values": {
         "$immutable": true,
@@ -421,6 +487,10 @@
       "name": "L2SecurityCouncilPropose",
       "address": "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1692138742,
@@ -446,7 +516,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": ["0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"],
         "multisigThreshold": "9 of 12 (75%)",
-        "nonce": 6,
+        "nonce": 7,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -454,6 +524,9 @@
     {
       "name": "L2BaseFee",
       "address": "0xbF5041Fc07E1c866D15c749156657B8eEd0fb649",
+      "sourceHashes": [
+        "0xef8d56213b60d676b88afce25cb17bb89c7c3fc10c4ec06f77fe4820529e409b"
+      ],
       "sinceTimestamp": 1678989486,
       "values": {
         "$immutable": true,
@@ -479,12 +552,21 @@
     {
       "name": "TreasuryTimelock",
       "address": "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x34c1cd41f1d2a210cfb4daa6921fc003239f0565c9c678999dcca010df526f55"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xdb216562328215E010F819B5aBe947bad4ca961e",
-          "via": []
+          "target": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
+          "via": [
+            {
+              "address": "0xdb216562328215E010F819B5aBe947bad4ca961e",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1678968508,
@@ -532,12 +614,21 @@
     {
       "name": "L2ARBGateway",
       "address": "0xCaD7828a19b363A2B44717AFB1786B5196974D8E",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0xc6750fc78a712b7df53681fe94fecdda2f06e26d6bc08a7742dbbc68c48c040b"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xdb216562328215E010F819B5aBe947bad4ca961e",
-          "via": []
+          "target": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
+          "via": [
+            {
+              "address": "0xdb216562328215E010F819B5aBe947bad4ca961e",
+              "delay": 0
+            }
+          ]
         }
       ],
       "ignoreInWatchMode": ["exitNum"],
@@ -553,7 +644,7 @@
         ],
         "$upgradeCount": 1,
         "counterpartGateway": "0xbbcE8aA77782F13D4202a230d978F361B011dB27",
-        "exitNum": 1962,
+        "exitNum": 1974,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "derivedName": "L2ReverseCustomGateway"
@@ -561,12 +652,77 @@
     {
       "name": "L2UpgradeExecutor",
       "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x17d2fa21e1bf7dff5e335a08bb2b6b996e34c00b1175c3711875720dde509401"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xdb216562328215E010F819B5aBe947bad4ca961e",
-          "via": []
+          "target": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
+          "via": [
+            {
+              "address": "0xdb216562328215E010F819B5aBe947bad4ca961e",
+              "delay": 0
+            }
+          ]
+        }
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+          "via": [{ "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4",
+          "via": [{ "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+          "via": [{ "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58",
+          "via": [{ "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xCaD7828a19b363A2B44717AFB1786B5196974D8E",
+          "via": [{ "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
+          "via": [{ "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+          "via": [{ "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9",
+          "via": [{ "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
+        },
+        {
+          "permission": "act",
+          "target": "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"
+        },
+        {
+          "permission": "act",
+          "target": "0xdb216562328215E010F819B5aBe947bad4ca961e"
         }
       ],
       "sinceTimestamp": 1678968508,
@@ -606,12 +762,21 @@
     {
       "name": "SecurityCouncilManager",
       "address": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0xad301a24e9bb35dd5c200ced58fcd66b9b9b8bdeb182b6d4243fe3339c632072"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xdb216562328215E010F819B5aBe947bad4ca961e",
-          "via": []
+          "target": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
+          "via": [
+            {
+              "address": "0xdb216562328215E010F819B5aBe947bad4ca961e",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1692138965,
@@ -639,8 +804,8 @@
           "0x5DD2205C3aac13E592F0a3D85188c948D1781df1",
           "0x5a09A94eE8198D3c474d723337aa58023810022C",
           "0x475816ca2a31D601B4e336f5c2418A67978aBf09",
-          "0xA821c8c245d1F3A257e3B0DEC99268cA05144422",
-          "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75"
+          "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75",
+          "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
         ],
         "getFirstCohort": [
           "0x3Bd8e2AC65ad6f0F094BA6766cBd9484AB49eF23",
@@ -655,8 +820,8 @@
           "0x5DD2205C3aac13E592F0a3D85188c948D1781df1",
           "0x5a09A94eE8198D3c474d723337aa58023810022C",
           "0x475816ca2a31D601B4e336f5c2418A67978aBf09",
-          "0xA821c8c245d1F3A257e3B0DEC99268cA05144422",
-          "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75"
+          "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75",
+          "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
         ],
         "l2CoreGovTimelock": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
         "MAX_SECURITY_COUNCILS": 500,
@@ -689,7 +854,7 @@
           ]
         ],
         "securityCouncilsLength": 4,
-        "updateNonce": 6
+        "updateNonce": 7
       },
       "fieldMeta": {
         "getBothCohorts": {
@@ -702,6 +867,9 @@
     {
       "name": "L2GatewaysProxyAdmin",
       "address": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86",
+      "sourceHashes": [
+        "0x579c6df39480618101e39d5b997df14c347d7f8a880df6cf0e1ae526771a0444"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -726,7 +894,11 @@
     {
       "name": "L2ProxyAdmin",
       "address": "0xdb216562328215E010F819B5aBe947bad4ca961e",
-      "receivedPermissions": [
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
+      ],
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "target": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"
@@ -770,6 +942,9 @@
     {
       "name": "UpgradeableBeacon",
       "address": "0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333",
+      "sourceHashes": [
+        "0xc8db6bf1c1522e439ab4b7d52970913a9d905bb60e32473199eb4ad572932bad"
+      ],
       "sinceTimestamp": 1623784070,
       "values": {
         "$immutable": true,
@@ -780,12 +955,21 @@
     {
       "name": "CoreGovernor",
       "address": "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x11ca3427c1f5954198dc46a75aefa2f2e29b40a4e18f78ecaac06fd242502431"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xdb216562328215E010F819B5aBe947bad4ca961e",
-          "via": []
+          "target": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
+          "via": [
+            {
+              "address": "0xdb216562328215E010F819B5aBe947bad4ca961e",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1678968508,
@@ -832,6 +1016,7 @@
     { "address": "0x6142f1C8bBF02E6A6bd074E8d564c9A5420a0676" },
     { "address": "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75" },
     { "address": "0x8F10e3413586c4a8DCfcE19D009872b19e9cd8E3" },
+    { "address": "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC" },
     { "address": "0xa723C008e76E379c55599D2E4d93879BeaFDa79C" },
     { "address": "0xA821c8c245d1F3A257e3B0DEC99268cA05144422" },
     { "address": "0xb07dc9103328A51128bC6Cc1049d1137035f5E28" },
@@ -1546,7 +1731,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
-  },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+  }
 }

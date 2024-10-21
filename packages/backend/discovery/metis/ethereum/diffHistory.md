@@ -1,4 +1,204 @@
-Generated with discovered.json: 0xbd0baca94ce82f9193776bf19d50d0385beb18b3
+Generated with discovered.json: 0xc823b4ffab0465686326f926227fda7a063de0b5
+
+# Diff at Mon, 14 Oct 2024 10:53:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20211335
+- current block number: 20211335
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20211335 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x081D1101855bD523bA69A9794e0217F0DB6323ff) {
+    +++ description: None
+      sourceHashes:
++        ["0x6e4b297b822bdda2bb8bbf4dde360ee51379af5a0de55c0d726a2d7b68791bf7","0xda7b05d88be95072ae926d6f2b176d60c2d568f45ef6c67071b28159388c81e7"]
+    }
+```
+
+```diff
+    contract LockingInfo (0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48) {
+    +++ description: None
+      sourceHashes:
++        ["0xccb5b222f823953e2082d6174b99d09cb9046c862bb91c6fe6cb57e5289a9738","0x3052e020792c1a42febb86916d737ca4d3962b80b97fe18c7a778bf270acf023"]
+    }
+```
+
+```diff
+    contract ChainStorageContainer (0x10739F09f6e62689c0aA8A1878816de9e166d6f9) {
+    +++ description: None
+      sourceHashes:
++        ["0x94ea4eb57654b23e5ce34a8f4571a446786efb3080044f3ecfc2f3870e601ee0"]
+    }
+```
+
+```diff
+    contract ChainStorageContainer (0x38473Feb3A6366757A249dB2cA4fBB2C663416B7) {
+    +++ description: None
+      sourceHashes:
++        ["0x94ea4eb57654b23e5ce34a8f4571a446786efb3080044f3ecfc2f3870e601ee0"]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b) {
+    +++ description: None
+      sourceHashes:
++        ["0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd","0x6e30dabe85a54d5753ec304088b4cc9f1fc2ba202fb3982bf202b0cc4a922c99"]
+    }
+```
+
+```diff
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      receivedPermissions.5:
++        {"permission":"upgrade","target":"0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"}
+      receivedPermissions.4.target:
+-        "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
++        "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
+      receivedPermissions.3.target:
+-        "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
++        "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
+      receivedPermissions.2.target:
+-        "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
++        "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
+      receivedPermissions.1.target:
+-        "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
++        "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      receivedPermissions.0.target:
+-        "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
++        "0x918778e825747a892b17C66fe7D24C618262867d"
+      receivedPermissions.0.description:
++        "set and change address mappings."
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract CanonicalTransactionChain (0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9) {
+    +++ description: None
+      sourceHashes:
++        ["0x70010b1d5bb98964174a28e3c3a229763fb65df55575104adbec0bc0552cd31d"]
+    }
+```
+
+```diff
+    contract BondManager (0x595801b85628ec6979C420988b8843A40F850528) {
+    +++ description: None
+      sourceHashes:
++        ["0xe429226928e3766e14dbbf6391a4caa68cf9e4c12cb9e81ef04b84a38747449a"]
+    }
+```
+
+```diff
+    contract RewardEscrowerMultisig (0x62478E4eeb4070fE399866aB05e821AB97200947) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract MVM_CanonicalTransaction (0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a) {
+    +++ description: None
+      sourceHashes:
++        ["0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd","0xc5bc8dddf764177767a3613d96c31c0fcc86db07c909c72cbf2f6a2443942109"]
+    }
+```
+
+```diff
+    contract MVM_DiscountOracle (0x7f6B0b7589febc40419a8646EFf9801b87397063) {
+    +++ description: None
+      sourceHashes:
++        ["0x8406419ac446023c37b27d0154da77b664a20b7da231802e32193c8883d32d06"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8) {
+    +++ description: None
+      sourceHashes:
++        ["0x1c9416031605fbda74b5da95a290e00995eaed2f6f6ba85ff2681131efe940a0"]
+    }
+```
+
+```diff
+    contract Lib_AddressManager (0x918778e825747a892b17C66fe7D24C618262867d) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      template:
++        "opstack/AddressManager"
+      sourceHashes:
++        ["0x763c5728a19538783edf38c17731f9cf79ff6f38bfa4bce61333cef0aac5452e"]
+      displayName:
++        "AddressManager"
+      descriptions:
++        ["Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."]
+      issuedPermissions:
++        [{"permission":"configure","target":"0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21","via":[]}]
+    }
+```
+
+```diff
+    contract MToken (0x9E32b13ce7f2E80A01932B42553652E053D6ed8e) {
+    +++ description: None
+      sourceHashes:
++        ["0xd0f9d9680beb2766f32df8f35302771cde6d0ccb5c3e7f32fdacd13bf5c58203"]
+    }
+```
+
+```diff
+    contract StateCommitmentChain (0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6) {
+    +++ description: None
+      sourceHashes:
++        ["0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd","0xc6bcfffdfe15d4c259332b8f62b29950aecdec253e8eeed2ebfa9e78ca1cea2b"]
+    }
+```
+
+```diff
+    contract ChainStorageContainer (0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57) {
+    +++ description: None
+      sourceHashes:
++        ["0x94ea4eb57654b23e5ce34a8f4571a446786efb3080044f3ecfc2f3870e601ee0"]
+    }
+```
+
+```diff
+    contract LockingPool (0xD54c868362C2098E0E46F12E7D924C6A332952Dd) {
+    +++ description: None
+      sourceHashes:
++        ["0xccb5b222f823953e2082d6174b99d09cb9046c862bb91c6fe6cb57e5289a9738","0xff86f55c7d91dbdd408e8b44c6aa3647e5d7cef144de8a65bc84e13e3bf3524f"]
+    }
+```
+
+```diff
+    contract MVM_Verifier (0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb) {
+    +++ description: None
+      sourceHashes:
++        ["0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd","0x85cae352a6b900f9d20a913095da6267900b8e10f04d7277743dcdd0ce8c809e"]
+    }
+```
+
+```diff
+    contract MVM_L2ChainManagerOnL1 (0xf3d58D1794f2634d6649a978f2dc093898FEEBc0) {
+    +++ description: None
+      sourceHashes:
++        ["0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd","0x8be6c2abbd355799e149ebae677a3814685c6b43ebad0b7853fe236af7a84fe7"]
+    }
+```
+
+Generated with discovered.json: 0xb81d3b00e3bf20bbf472f7ce4bf1ae1c9a9021bd
 
 # Diff at Tue, 01 Oct 2024 10:53:04 GMT:
 

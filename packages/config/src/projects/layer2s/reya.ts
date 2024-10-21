@@ -15,7 +15,6 @@ export const reya: Layer2 = orbitStackL2({
     slug: 'reya',
     description:
       'Reya is an Arbitrum Orbit stack L2 with AnyTrust data availability, optimizing for trading and liquidity provision.',
-    purposes: ['DeFi', 'AMM', 'Exchange'],
     links: {
       websites: ['https://reya.network/'],
       apps: [

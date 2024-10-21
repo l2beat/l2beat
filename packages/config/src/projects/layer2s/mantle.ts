@@ -7,11 +7,6 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('mantle')
 
-const regularUpgrades = {
-  upgradableBy: ['MantleSecurityMultisig'],
-  upgradeDelay: 'No delay',
-}
-
 const committeeMembers = discovery.getContractValue<number>(
   'BLSRegistry',
   'numOperators',
@@ -69,9 +64,6 @@ export const mantle: Layer2 = opStackL2({
     architectureImage: 'mantle',
     description:
       'Mantle is an under development EVM compatible Optimium, based on the OP Stack.',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://mantle.xyz/'],
       apps: ['https://bridge.mantle.xyz'],
@@ -108,50 +100,7 @@ export const mantle: Layer2 = opStackL2({
     ],
     coingeckoPlatform: 'mantle',
   },
-  nonTemplateContracts: [
-    discovery.getContractDetails('DataLayrServiceManager', {
-      description:
-        'This contract is the main entry point for data availability. It is responsible for storing transaction data headers and confirming the data store by verifying operators signatures.',
-    }),
-    discovery.getContractDetails('BLSRegistry', {
-      description:
-        'This contract stores the number of Mantle DA operators and their public keys. It also store the quorum threshold and the minimum stake required to be part of the quorum.',
-    }),
-    discovery.getContractDetails('InvestmentManager', {
-      description:
-        'Contract managing different investment strategies, forked from EigenLayer StrategyManager.',
-    }),
-    discovery.getContractDetails('MantleFirstStrat', {
-      description: 'Basic do-nothing investment strategy.',
-    }),
-    discovery.getContractDetails('MantleSecondStrat', {
-      description: 'Basic do-nothing investment strategy.',
-    }),
-    discovery.getContractDetails('AddressManager', {
-      description:
-        'This is a library that stores the mappings between names and their addresses. Changing the values effectively upgrades the system. It is controlled by the MantleSecurityMultisig.',
-      ...regularUpgrades,
-    }),
-    discovery.getContractDetails('PubkeyCompendium'),
-    discovery.getContractDetails('RegistryPermission'),
-    discovery.getContractDetails('Delegation'),
-    discovery.getContractDetails('PauserRegistry'),
-    discovery.getContractDetails('PauserRegistry2'),
-    discovery.getContractDetails('L1MantleToken', {
-      description:
-        'Mantle uses Mantle (MNT) as the designated gas token, allowing users to utilize MNT to pay for blockspace.',
-    }),
-  ],
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'MantleSecurityMultisig',
-      'This address can upgrade the following contracts: L1CrossDomainMessenger, L1StandardBridge, AddressManager, L1MantleToken, EigenDataLayerChain, SystemConfig.',
-    ),
-    ...discovery.getMultisigPermission(
-      'MantleEngineeringMultisig',
-      'This address is the owner of the following contracts: EigenDataLayerChain, DataLayrServiceManager, BLSRegistry, Delegation. It is also designated as a Challenger and Guardian of the OptimismPortal, meaning it can halt withdrawals and change incorrect state roots.',
-    ),
-  ],
+  discoveryDrivenData: true,
   milestones: [
     {
       name: 'Mainnet launch',

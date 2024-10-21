@@ -63,7 +63,7 @@ you need to talk to devs to handle this case.
    and fill it:
 
    - `type` (required): set it as `'starkex'`
-   - `product` (required): set it for you project `product` property from swaggerhub
+   - `product` (required): set it for your project `product` property from swaggerhub
    - `sinceTimestamp` (required): from which timestamp you want to start fetching data
    - `resyncLastDays` (required): set it to 7
 

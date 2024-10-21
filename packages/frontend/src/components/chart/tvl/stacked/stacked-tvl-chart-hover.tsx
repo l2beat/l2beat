@@ -1,6 +1,6 @@
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
-import { formatCurrency } from '~/utils/format'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 import { type ChartUnit } from '../../types'
 
 interface Props {
@@ -44,7 +44,7 @@ export function StackedTvlChartHover(props: Props) {
       </div>
       <div className="flex w-full items-center justify-between gap-2">
         <span className="text-sm text-gray-700 dark:text-gray-50">
-          Total TVL
+          Total value locked
         </span>
         {total}
       </div>
@@ -65,7 +65,7 @@ export function StackedTvlChartHover(props: Props) {
                   ></div>
                   <span>{v.title}</span>
                 </span>
-                <span className="font-semibold">
+                <span className="font-medium">
                   {formatCurrency(v.value / divideBy, props.unit)}
                 </span>
               </div>

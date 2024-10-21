@@ -7,7 +7,6 @@ import { processAnalysis, sortByKeys } from './toDiscoveryOutput'
 
 const emptyOutputMeta = {
   descriptions: undefined,
-  roles: undefined,
   issuedPermissions: undefined,
   receivedPermissions: undefined,
   directlyReceivedPermissions: undefined,
@@ -136,6 +135,7 @@ describe(processAnalysis.name, () => {
           sinceTimestamp: base.deploymentTimestamp.toNumber(),
           values: CONTRACT_B.values,
           errors: CONTRACT_B.errors,
+          sourceHashes: [],
         },
       ],
       eoas: [],
@@ -157,6 +157,7 @@ describe(processAnalysis.name, () => {
           proxyType: CONTRACT_C.proxyType,
           sinceTimestamp: base.deploymentTimestamp.toNumber(),
           values: CONTRACT_C.values,
+          sourceHashes: [],
         },
       ],
       eoas: [{ ...emptyOutputMeta, address: ADDRESS_D }],
@@ -192,6 +193,7 @@ describe(processAnalysis.name, () => {
           values: CONTRACT_B.values,
           errors: CONTRACT_B.errors,
           sinceTimestamp: base.deploymentTimestamp.toNumber(),
+          sourceHashes: [],
         },
         {
           address: ADDRESS_C,
@@ -199,6 +201,7 @@ describe(processAnalysis.name, () => {
           name: 'C',
           values: CONTRACT_C.values,
           sinceTimestamp: base.deploymentTimestamp.toNumber(),
+          sourceHashes: [],
         },
       ],
       eoas: [{ ...emptyOutputMeta, address: ADDRESS_D }],

@@ -1,4 +1,70 @@
-Generated with discovered.json: 0x81bc99f7d3631e4e6ca49e3c1699b55d8d2801fe
+Generated with discovered.json: 0xe0988fdd6989c21b01a27b944407bd8b2490446b
+
+# Diff at Mon, 14 Oct 2024 10:50:33 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20640703
+- current block number: 20640703
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20640703 (main branch discovery), not current.
+
+```diff
+    contract Committee (0x28780349A33eEE56bb92241bAAB8095449e24306) {
+    +++ description: None
+      sourceHashes:
++        ["0x83a4f7af4e5a371aadb57903aed1b1f96556a0b3eb4665044a65ad8f70a89edc"]
+    }
+```
+
+```diff
+    contract GpsFactRegistryAdapter (0x3b1298395290Bb7924F0Fcc176DECF3B4879FE73) {
+    +++ description: None
+      sourceHashes:
++        ["0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"]
+    }
+```
+
+```diff
+    contract OrderRegistry (0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8) {
+    +++ description: None
+      sourceHashes:
++        ["0x1e28fda3c245bc1fc13d0ddc7b108be510d1e0220fc67552921c87724bb45a4c"]
+    }
+```
+
+```diff
+    contract DeversiFiTreasuryMultisig (0x520Cf70a2D0B3dfB7386A2Bc9F800321F62a5c3a) {
+    +++ description: None
+      sourceHashes:
++        ["0x379cacebf61f1aa488b2a43b02fff3f8d7835d9dca8f342a13570553219e6e8c"]
+    }
+```
+
+```diff
+    contract StarkExchange (0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b) {
+    +++ description: None
+      sourceHashes:
++        ["0x46eae4f2e7b6b0f5096ba403f113ff3c86205368a36af081ab280441d64942fc","0xa6841fa395d89b246e6ab746f0501d13a8c570e1c9fa282241c39b48c738067c","0x70e4767336d4a44ecedb78b7cef6dc2810f5d8bc87a46c360083e65af451cb97","0x86d6fa45382a22e80ccfc3c25098fbb8d33ef8ae32da21e4fe8257f0caf8c114","0x0e101cfdb791ca1a86402273377c7da5e67225cf5799ac2f51d9a940227ee6be","0x7d557870276c694154e12790f8c0c09930c8c75320f470c47b67968bffd536a6","0x2a703c051ff2524868f044282fc50b01913736a92f794b64b31bd31363cd3fca","0xd5b06286e3bf5dccd0bb360c8cc876aec0a2ce288120d9f83dec45fa47c1aabc"]
+    }
+```
+
+```diff
+    contract GovernanceMultisig (0xCCa5De1e10c05c50C51ac551D9182cd31aca1889) {
+    +++ description: This Multisig itself is one of the two Governors, the other being an EOA, both equally permissioned to upgrade the bridge.
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+Generated with discovered.json: 0x892b57a5c51efa33135fb2afe99b1b125aa235fd
 
 # Diff at Tue, 01 Oct 2024 10:50:48 GMT:
 

@@ -3,11 +3,14 @@
   "chain": "ethereum",
   "blockNumber": 20777943,
   "configHash": "0xfbb3570feb3d238191d020b83aef7f44dced8f32455ceb32377ae614f91f52c2",
-  "version": 15,
   "contracts": [
     {
       "name": "StakeRegistry",
       "address": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x249715f12cf118070103f30534be5816b6847d0b1cd8fe8cae8e1833c6afd1f8"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -75,6 +78,10 @@
     {
       "name": "BLSApkRegistry",
       "address": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0xb4ca65ab7fb0cd9a8fd6f0c4b7805ea96914dcb6dd65309b2557931358ad1ff3"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -104,6 +111,10 @@
     {
       "name": "RegistryCoordinator",
       "address": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x223309c7d816ce318a9371a50683d99b1ace4ccb775c4a4b3e6ec1238f0a5c68"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum"
@@ -426,6 +437,10 @@
       "name": "StrategyBaseTVLLimits",
       "address": "0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6",
       "template": "eigenlayer/Strategy",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "A strategy implementation allowing to deposit a specific token as a restakable asset."
@@ -474,6 +489,10 @@
       "name": "EjectionManager",
       "address": "0x130d8EA0052B45554e4C99079B84df292149Bd5E",
       "template": "eigenlayer/EjectionManager",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0xe0842698f9d2aadda65d129ee9797efd5820d2c146dc3f368826b9815f5b8c9f"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "Contract used for ejection of operators from the RegistryCoordinator."
@@ -525,6 +544,10 @@
       "name": "StrategyBaseTVLLimits",
       "address": "0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff",
       "template": "eigenlayer/Strategy",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "A strategy implementation allowing to deposit a specific token as a restakable asset."
@@ -573,6 +596,10 @@
       "name": "GnosisSafe",
       "address": "0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1721762183,
@@ -599,6 +626,10 @@
       "name": "StrategyBaseTVLLimits",
       "address": "0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2",
       "template": "eigenlayer/Strategy",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "A strategy implementation allowing to deposit a specific token as a restakable asset."
@@ -647,6 +678,10 @@
       "name": "StrategyBaseTVLLimits",
       "address": "0x298aFB19A105D59E74658C4C334Ff360BadE6dd2",
       "template": "eigenlayer/Strategy",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "A strategy implementation allowing to deposit a specific token as a restakable asset."
@@ -695,6 +730,10 @@
       "name": "StrategyBaseTVLLimits",
       "address": "0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc",
       "template": "eigenlayer/Strategy",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "A strategy implementation allowing to deposit a specific token as a restakable asset."
@@ -743,6 +782,10 @@
       "name": "StrategyBaseTVLLimits",
       "address": "0x57ba429517c3473B6d34CA9aCd56c0e735b94c02",
       "template": "eigenlayer/Strategy",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "A strategy implementation allowing to deposit a specific token as a restakable asset."
@@ -798,6 +841,10 @@
       "name": "StrategyBaseTVLLimits",
       "address": "0x7CA911E83dabf90C90dD3De5411a10F1A6112184",
       "template": "eigenlayer/Strategy",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "A strategy implementation allowing to deposit a specific token as a restakable asset."
@@ -845,6 +892,10 @@
     {
       "name": "eigenDAProxyAdmin",
       "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -881,6 +932,10 @@
     {
       "name": "EigenDAServiceManager",
       "address": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0xb0f8e019272d9343047a9e89cbb9526954b9e2a1149fdc2476e7c29759b38951"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -986,6 +1041,10 @@
       "name": "StrategyBaseTVLLimits",
       "address": "0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6",
       "template": "eigenlayer/Strategy",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "A strategy implementation allowing to deposit a specific token as a restakable asset."
@@ -1034,6 +1093,10 @@
       "name": "StrategyBaseTVLLimits",
       "address": "0x93c4b944D05dfe6df7645A86cd2206016c51564D",
       "template": "eigenlayer/Strategy",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "A strategy implementation allowing to deposit a specific token as a restakable asset."
@@ -1082,6 +1145,10 @@
       "name": "StrategyBaseTVLLimits",
       "address": "0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d",
       "template": "eigenlayer/Strategy",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "A strategy implementation allowing to deposit a specific token as a restakable asset."
@@ -1130,6 +1197,10 @@
       "name": "StrategyBaseTVLLimits",
       "address": "0xa4C637e0F704745D182e4D38cAb7E7485321d059",
       "template": "eigenlayer/Strategy",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "A strategy implementation allowing to deposit a specific token as a restakable asset."
@@ -1178,6 +1249,10 @@
       "name": "EigenStrategy",
       "address": "0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7",
       "template": "eigenlayer/Strategy",
+      "sourceHashes": [
+        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+        "0x4c5ff062896caf72eb8999dc0f839adca5dbec7dd71c1aa6d0b1defce8ee6046"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "A strategy implementation allowing to deposit a specific token as a restakable asset."
@@ -1220,6 +1295,10 @@
       "name": "StrategyBaseTVLLimits",
       "address": "0xAe60d8180437b5C34bB956822ac2710972584473",
       "template": "eigenlayer/Strategy",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "A strategy implementation allowing to deposit a specific token as a restakable asset."
@@ -1267,6 +1346,10 @@
     {
       "name": "IndexRegistry",
       "address": "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x0a21d40cd8eeee384b8feb55d745d69c6793753a08622872cc24972811a97da9"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -1867,7 +1950,7 @@
   "usedTemplates": {
     "eigenlayer/EjectionManager": "0xb5c46205bf1e35452e10c8015c98bece257b7c2adb82ab4999fda33193a8a894",
     "eigenlayer/Strategy": "0xecfa84ed37fe2b3a715680ef8f3137e1bfd82351afa85222bc0241a5c8714272",
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
-  },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+  }
 }

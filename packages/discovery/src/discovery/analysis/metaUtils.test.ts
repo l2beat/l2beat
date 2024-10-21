@@ -24,7 +24,6 @@ describe('metaUtils', () => {
       const a: ContractMeta = {
         displayName: 'ContractA',
         descriptions: ['description 1'],
-        roles: new Set(['Challenger', 'Guardian']),
         permissions: [
           {
             type: 'configure',
@@ -44,7 +43,6 @@ describe('metaUtils', () => {
       const b: ContractMeta = {
         displayName: undefined,
         descriptions: ['description 2', 'description 3'],
-        roles: new Set(['Proposer', 'Challenger']),
         permissions: [
           {
             type: 'configure',
@@ -68,7 +66,7 @@ describe('metaUtils', () => {
       expect(result).toEqual({
         displayName: 'ContractA',
         descriptions: ['description 1', 'description 2', 'description 3'],
-        roles: new Set(['Challenger', 'Guardian', 'Proposer']),
+        canActIndependently: false,
         permissions: [
           {
             type: 'configure',
@@ -156,7 +154,6 @@ describe('metaUtils', () => {
       const fields: { [address: string]: DiscoveryContractField } = {
         overhead: {
           target: {
-            role: 'Challenger',
             permissions: [{ type: 'configure', delay: 0 }],
             category: 'Core',
           },
@@ -165,7 +162,6 @@ describe('metaUtils', () => {
         },
         owner: {
           target: {
-            role: 'Challenger',
             permissions: [
               {
                 type: 'configure',
@@ -182,7 +178,6 @@ describe('metaUtils', () => {
         resourceConfig: {
           target: {
             // description: 'The resource config of the contract {{ $.address }}',
-            role: ['Guardian', 'Challenger'],
             permissions: [
               {
                 type: 'upgrade',
@@ -205,7 +200,6 @@ describe('metaUtils', () => {
         scalar: {
           target: {
             // description: 'The scalar of the contract',
-            role: 'Challenger',
             permissions: [{ type: 'configure', delay: 0 }],
             category: 'Core',
           },
@@ -230,9 +224,9 @@ describe('metaUtils', () => {
 
       expect(result).toEqual({
         '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
+          canActIndependently: false,
           displayName: undefined,
           descriptions: undefined,
-          roles: new Set(['Challenger']),
           permissions: [
             { type: 'upgrade', delay: 0, target: selfAddress },
             {
@@ -248,6 +242,7 @@ describe('metaUtils', () => {
           types: new Set(['CODE_CHANGE']),
         },
         '0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf': {
+          canActIndependently: false,
           displayName: undefined,
           categories: new Set(['Core', 'Gateways&Escrows']),
           descriptions: undefined,
@@ -267,11 +262,11 @@ describe('metaUtils', () => {
                 'configuring the 0x0000000000000000000000000000000000001234 contract allows freeze funds',
             },
           ],
-          roles: new Set(['Challenger', 'Guardian']),
           severity: 'HIGH',
           types: new Set(['EXTERNAL', 'L2']),
         },
         '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf': {
+          canActIndependently: false,
           displayName: undefined,
           categories: new Set(['Core', 'Gateways&Escrows']),
           descriptions: undefined,
@@ -291,7 +286,6 @@ describe('metaUtils', () => {
                 'configuring the 0x0000000000000000000000000000000000001234 contract allows freeze funds',
             },
           ],
-          roles: new Set(['Challenger', 'Guardian']),
           severity: 'HIGH',
           types: new Set(['EXTERNAL', 'L2']),
         },
@@ -319,7 +313,6 @@ describe('metaUtils', () => {
           '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
             displayName: undefined,
             descriptions: ['Important contract'],
-            roles: new Set(['Challenger']),
             permissions: [
               {
                 type: 'configure',
@@ -347,7 +340,6 @@ describe('metaUtils', () => {
                 target: EthereumAddress.from('0x1234'),
               },
             ],
-            roles: new Set(['Challenger', 'Guardian']),
             severity: 'HIGH',
             types: new Set(['EXTERNAL', 'L2']),
           },
@@ -357,7 +349,6 @@ describe('metaUtils', () => {
           '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
             displayName: undefined,
             descriptions: ['Very important contract'],
-            roles: undefined,
             permissions: [
               {
                 type: 'configure',
@@ -385,7 +376,6 @@ describe('metaUtils', () => {
                 target: EthereumAddress.from('0xbeef'),
               },
             ],
-            roles: new Set(['Challenger', 'Guardian']),
             severity: 'HIGH',
             types: new Set(['EXTERNAL', 'L2']),
           },
@@ -397,9 +387,9 @@ describe('metaUtils', () => {
       expect(result).toEqual({
         // merged:
         '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
+          canActIndependently: false,
           displayName: undefined,
           descriptions: ['Important contract', 'Very important contract'],
-          roles: new Set(['Challenger']),
           permissions: [
             {
               type: 'configure',
@@ -417,9 +407,9 @@ describe('metaUtils', () => {
           severity: 'MEDIUM',
         },
         '0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf': {
+          canActIndependently: false,
           displayName: undefined,
           descriptions: ['The resource config of the contract'],
-          roles: new Set(['Challenger', 'Guardian']),
           permissions: [
             {
               type: 'configure',
@@ -437,9 +427,9 @@ describe('metaUtils', () => {
           severity: 'HIGH',
         },
         '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf': {
+          canActIndependently: false,
           displayName: undefined,
           descriptions: ['The resource config of the contract'],
-          roles: new Set(['Challenger', 'Guardian']),
           permissions: [
             {
               type: 'configure',
@@ -472,7 +462,6 @@ describe('metaUtils', () => {
           displayName: undefined,
           categories: undefined,
           descriptions: undefined,
-          roles: undefined,
           severity: undefined,
           types: undefined,
           permissions: [{ type: 'upgrade', delay: 0, target: selfAddress }],

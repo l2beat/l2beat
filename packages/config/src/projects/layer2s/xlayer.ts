@@ -91,7 +91,6 @@ export const xlayer: Layer2 = polygonCDKStack({
     slug: 'xlayer',
     description:
       'X Layer is Validium by OKX with seamless integration with OKX products. It is powered by the Polygon CDK.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://okx.com/xlayer'],
       apps: [],
@@ -116,7 +115,7 @@ export const xlayer: Layer2 = polygonCDKStack({
         wethAddress: EthereumAddress(
           '0x5a77f1443d16ee5761d310e38b62f77f726bc71c',
         ),
-        includeAllOKBFromL1: true,
+        tokensToAssignFromL1: ['OKB'],
       },
     }),
   ],

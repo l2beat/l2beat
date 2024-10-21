@@ -1,32 +1,22 @@
-import { cn } from '~/utils/cn'
+import { ClockIcon } from '~/icons/clock'
 import { formatTimestamp } from '~/utils/dates'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '../core/tooltip/tooltip'
-import { Badge } from './badge'
 
 interface NotSyncedBadgeProps {
   syncedUntil?: number
-  className?: string
 }
 
-export function NotSyncedBadge({
-  syncedUntil,
-  className,
-}: NotSyncedBadgeProps) {
-  if (!syncedUntil)
-    return (
-      <div className={cn('inline', className)}>
-        <NotSynced />
-      </div>
-    )
+export function NotSyncedIcon({ syncedUntil }: NotSyncedBadgeProps) {
+  if (!syncedUntil) return <ClockIcon />
 
   return (
     <Tooltip>
-      <TooltipTrigger className="inline">
-        <NotSynced />
+      <TooltipTrigger>
+        <ClockIcon />
       </TooltipTrigger>
       <TooltipContent>
         The data for this item is not synced since{' '}
@@ -37,13 +27,5 @@ export function NotSyncedBadge({
         .
       </TooltipContent>
     </Tooltip>
-  )
-}
-
-function NotSynced() {
-  return (
-    <Badge size="extraSmall" padding="regular" type="gray">
-      NOT SYNCED
-    </Badge>
   )
 }

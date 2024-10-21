@@ -8,10 +8,9 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { PercentChange } from '~/components/percent-change'
-import { EM_DASH } from '~/consts/characters'
+import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import { formatCurrency } from '~/utils/format'
+import { formatTvlTableNumber } from '~/utils/number-format/format-tvl-number'
 
 export interface TotalCellProps {
   breakdown: {
@@ -31,36 +30,20 @@ export function TotalCell(data: TotalCellProps) {
 
   const totalTvl = data.breakdown.total
 
-  if (totalTvl === 0) {
-    return (
-      <div className="flex flex-col items-end">
-        <span className="text-base v2:text-xs md:!text-lg">{EM_DASH}</span>
-      </div>
-    )
-  }
-
   return (
     <Tooltip>
       <TooltipTrigger>
         <div className="flex flex-col items-end">
-          <div className="flex items-center gap-1">
+          <div className="flex items-center">
             {tvlWarnings.length ? (
               <RoundedWarningIcon
-                className="size-4"
+                className="mr-1 size-4"
                 sentiment={anyBadWarnings ? 'bad' : 'warning'}
               />
             ) : null}
-            <span className="text-base font-bold v2:text-xs md:!text-lg">
-              {formatCurrency(totalTvl, 'usd', {
-                showLessThanMinimum: false,
-              })}
-            </span>
-            {data.change !== undefined && (
-              <PercentChange
-                value={data.change}
-                className="ml-1 text-base font-medium v2:max-md:text-xs"
-              />
-            )}
+            <ValueWithPercentageChange change={data.change}>
+              {formatTvlTableNumber(totalTvl)}
+            </ValueWithPercentageChange>
           </div>
           <TokenBreakdown
             total={data.breakdown.total}

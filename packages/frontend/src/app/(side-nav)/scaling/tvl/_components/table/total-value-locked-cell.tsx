@@ -8,10 +8,9 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { PercentChange } from '~/components/percent-change'
-import { EM_DASH } from '~/consts/characters'
+import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import { formatCurrency } from '~/utils/format'
+import { formatTvlTableNumber } from '~/utils/number-format/format-tvl-number'
 
 export interface TotalValueLockedCellProps {
   breakdown: {
@@ -29,18 +28,10 @@ export function TotalValueLockedCell(data: TotalValueLockedCellProps) {
   const total =
     data.breakdown.canonical + data.breakdown.external + data.breakdown.native
 
-  if (total === 0) {
-    return (
-      <div className="flex flex-col items-center">
-        <span className="text-base font-bold md:text-lg">{EM_DASH}</span>
-      </div>
-    )
-  }
-
   return (
     <Tooltip>
       <TooltipTrigger>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-end">
           <div className="flex items-center gap-1">
             {tvlWarnings.length ? (
               <RoundedWarningIcon
@@ -48,15 +39,9 @@ export function TotalValueLockedCell(data: TotalValueLockedCellProps) {
                 sentiment={anyBadWarnings ? 'bad' : 'warning'}
               />
             ) : null}
-            <span className="text-base font-bold md:text-lg">
-              {formatCurrency(total, 'usd')}
-            </span>
-            {data.change !== undefined && (
-              <PercentChange
-                value={data.change}
-                className="ml-1 !text-base font-medium"
-              />
-            )}
+            <ValueWithPercentageChange change={data.change}>
+              {formatTvlTableNumber(total)}
+            </ValueWithPercentageChange>
           </div>
           <ValueLockedBreakdown
             canonical={data.breakdown.canonical}

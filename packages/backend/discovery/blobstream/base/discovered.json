@@ -3,11 +3,13 @@
   "chain": "base",
   "blockNumber": 20544837,
   "configHash": "0x9b907e4fc32177873443c0f64c40e269ec7a3143880ec39a0f92196346fa326f",
-  "version": 15,
   "contracts": [
     {
       "name": "SP1Verifier",
       "address": "0x1764C29FBd94865198588f10FC75D4f6636d158d",
+      "sourceHashes": [
+        "0xeb051b88e210e28fd696d01528e3cc9a131a08d69e20bf1983ac8d90dd9b1f4f"
+      ],
       "sinceTimestamp": 1726276225,
       "values": {
         "$immutable": true,
@@ -18,6 +20,9 @@
     {
       "name": "SuccinctFeeVault",
       "address": "0x296666e937b270193B960a7cEC526B351F353166",
+      "sourceHashes": [
+        "0x503f175ab3807eb7f958512d3dc2501bb2ab62286bcd8cd1f85d7d24b2ce90cc"
+      ],
       "sinceTimestamp": 1706573417,
       "values": {
         "$immutable": true,
@@ -28,6 +33,9 @@
       "name": "SuccinctGatewaySP1",
       "address": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
       "template": "succinct/SP1SuccinctGateway",
+      "sourceHashes": [
+        "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
+      ],
       "sinceTimestamp": 1719523667,
       "values": {
         "$immutable": true,
@@ -53,6 +61,10 @@
       "name": "BlobstreamMultisig",
       "address": "0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1710507013,
@@ -80,6 +92,9 @@
     {
       "name": "SP1Verifier",
       "address": "0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc",
+      "sourceHashes": [
+        "0xabb95b2d66749481071b7a258a3305198760dbaf12d7411cfaba5e4c26cc3a65"
+      ],
       "sinceTimestamp": 1725472217,
       "values": {
         "$immutable": true,
@@ -90,6 +105,9 @@
     {
       "name": "SuccinctGateway",
       "address": "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776",
+      "sourceHashes": [
+        "0xa148b7dcb3095dbb66f26d1428d50a59e1cd1384c80b0efe88efead152e6ebe2"
+      ],
       "sinceTimestamp": 1706574051,
       "values": {
         "$immutable": true,
@@ -129,6 +147,10 @@
       "name": "Blobstream",
       "address": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
       "template": "succinct/SP1Blobstream",
+      "sourceHashes": [
+        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
+        "0x424268ec553b52a09ec29bc220e95a4dc19def7e459d1cc8a541ee0e2fd578e9"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -193,6 +215,9 @@
     {
       "name": "SP1Verifier",
       "address": "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB",
+      "sourceHashes": [
+        "0x6e3bfeae0d549b79decfd956f551a8aeac66523cdd66da389ef55eb56ef72aac"
+      ],
       "sinceTimestamp": 1722645803,
       "values": {
         "$immutable": true,
@@ -204,6 +229,10 @@
       "name": "SuccinctGatewaySP1Multisig",
       "address": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1724206353,
@@ -229,6 +258,10 @@
       "name": "SuccinctGatewayMultisig",
       "address": "0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1706568681,
@@ -254,6 +287,9 @@
     {
       "name": "FunctionVerifier",
       "address": "0xe859F565f4AdF7AAc3a94a6C6d89093d754Ec4f6",
+      "sourceHashes": [
+        "0xa56a53a05b7201f86a6987201b5a99cb4f9e7fba1060ecf8290515990b6f6b5e"
+      ],
       "sinceTimestamp": 1711140063,
       "values": {
         "$immutable": true,
@@ -264,6 +300,9 @@
     {
       "name": "FunctionVerifier",
       "address": "0xF2415C44F47983F7dD22003B46A034B1F1d04e44",
+      "sourceHashes": [
+        "0x205b995df6bf32d996abb3bf617459c0102ba36f15f7ec1b12994eba3346f12f"
+      ],
       "sinceTimestamp": 1711140011,
       "values": {
         "$immutable": true,
@@ -662,9 +701,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "succinct/SP1Blobstream": "0xb0717b3e2a9ebc9678d934fa77de178537019305cf6fd12950b8f116da2a0e9c",
     "succinct/SP1SuccinctGateway": "0xe0ec8df0fec605a6cb059948b08432aee71379584a5fa43412fa24a07701c877"
-  },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  }
 }

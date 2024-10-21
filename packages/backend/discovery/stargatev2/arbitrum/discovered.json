@@ -3,11 +3,13 @@
   "chain": "arbitrum",
   "blockNumber": 223440408,
   "configHash": "0x2dedeb686ae7973502d6a4c436d14370f30589fa594b644de6706b9310331a28",
-  "version": 15,
   "contracts": [
     {
       "name": "TokenMessaging",
       "address": "0x19cFCE47eD54a88614648DC3f19A5980097007dD",
+      "sourceHashes": [
+        "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
+      ],
       "sinceTimestamp": 1716837025,
       "values": {
         "$immutable": true,
@@ -48,6 +50,9 @@
     {
       "name": "StargatePoolNative",
       "address": "0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F",
+      "sourceHashes": [
+        "0x63ac97930921267a1251904351ae2409e0d62d3d3c3fcb2ed7bc1fc4775321f7"
+      ],
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -87,6 +92,9 @@
     {
       "name": "StargatePoolMigratable",
       "address": "0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0",
+      "sourceHashes": [
+        "0xad746913c310c0ee643e98f0a0f4bc6095877e7c82e0779cb5d5e852e0e12c8d"
+      ],
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -128,6 +136,9 @@
     {
       "name": "StargatePoolUSDC",
       "address": "0xe8CDF27AcD73a434D661C84887215F7598e7d0d3",
+      "sourceHashes": [
+        "0x0ef9b0bca6f74cd24daa9d50e734dfec2ecbc71cef5b209fa0c0f93561ad2640"
+      ],
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -525,6 +536,5 @@
       "function withdrawTreasuryFee(address _to, uint64 _amountSD)"
     ]
   },
-  "usedTemplates": {},
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "usedTemplates": {}
 }

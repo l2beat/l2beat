@@ -1,25 +1,15 @@
-import { CustomLink } from './link/custom-link'
-import { SocialLinks } from './social-links'
-
 export function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer>
-      <div className="flex flex-row items-center border-t border-gray-200 dark:border-gray-850 max-xl:py-4 xl:h-20">
-        <div className="mx-auto flex max-w-[1216px] flex-1 grid-cols-3 flex-col gap-4 px-4 md:grid md:px-12">
-          <p className="text-center text-sm font-medium md:text-left">
-            Made with 💗 by the L2BEAT research team.{' '}
-            <br className="hidden lg:inline" />
-            Support us by <CustomLink href="/donate">donating</CustomLink>.
-          </p>
-          <ul className="flex w-full justify-center gap-4">
-            <SocialLinks />
-          </ul>
-          <p className="text-center text-sm font-medium md:text-right">
-            Copyright {currentYear} L2BEAT
-          </p>
-        </div>
+    <footer className="border-t border-gray-200 px-4 pb-6 pt-4 sidebar:bg-surface-primary sidebar:px-4 dark:border-zinc-700 md:border-t-0 md:px-12 md:pb-10 sidebar:md:bg-transparent sidebar:md:px-12 sidebar:md:pt-8 sidebar:lg:pl-6 sidebar:lg:pr-9">
+      <div className="mx-auto flex max-w-[1216px] flex-col items-center gap-2 sidebar:max-w-[1142px] md:h-6 md:flex-row md:justify-between">
+        <p className="text-center text-xs font-medium leading-none">
+          Made with 💗 by the L2BEAT team
+        </p>
+        <p className="text-center text-xs font-medium leading-none md:text-right">
+          Copyright {currentYear} L2BEAT
+        </p>
       </div>
     </footer>
   )

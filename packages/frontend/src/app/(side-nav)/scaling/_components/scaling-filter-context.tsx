@@ -24,14 +24,13 @@ import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling
 import { type ScalingLivenessEntry } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
 import { type ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
-import { type ScalingSummaryEntryV2 } from '~/server/features/scaling/summary/get-scaling-summary-entries-v2'
 import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
 import { type ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/get-scaling-upcoming-entries'
 
 export type ScalingFilterContextValue = {
   rollupsOnly: boolean
   category?: ScalingProjectCategory
-  stack?: Layer2Provider | Layer3Provider
+  stack?: Layer2Provider | Layer3Provider | 'No stack'
   stage?: StageConfig['stage']
   purpose?: ScalingProjectPurpose
   hostChain?: string
@@ -82,7 +81,6 @@ type ScalingEntry =
   | ScalingFinalityEntry
   | ScalingDataAvailabilityEntry
   | ScalingSummaryEntry
-  | ScalingSummaryEntryV2
   | ScalingCostsEntry
   | ScalingTvlEntry
   | ScalingLivenessEntry
@@ -101,7 +99,10 @@ export function useScalingFilter() {
           ? entry.category === scalingFilters.category
           : undefined,
         scalingFilters.stack !== undefined
-          ? entry.provider === scalingFilters.stack
+          ? entry.provider ===
+            (scalingFilters.stack === 'No stack'
+              ? undefined
+              : scalingFilters.stack)
           : undefined,
         scalingFilters.stage !== undefined
           ? entry.stage?.stage === scalingFilters.stage

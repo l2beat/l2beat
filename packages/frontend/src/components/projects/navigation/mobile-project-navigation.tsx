@@ -42,8 +42,7 @@ export function MobileProjectNavigation({ sections }: Props) {
           ref={isSummarySection ? selectedItem : undefined}
           className={cn(
             'whitespace-nowrap p-4 text-xs transition-colors',
-            isSummarySection &&
-              'border-b-2 border-current text-pink-900 dark:text-pink-200',
+            isSummarySection && 'border-b-2 border-current text-brand',
           )}
         >
           Summary
@@ -58,8 +57,7 @@ export function MobileProjectNavigation({ sections }: Props) {
               href={`#${section.id}`}
               className={cn(
                 'whitespace-nowrap p-4 text-xs transition-colors',
-                selected &&
-                  'border-b-2 border-current text-pink-900 dark:text-pink-200',
+                selected && 'border-b-2 border-current text-brand',
               )}
             >
               {section.title}

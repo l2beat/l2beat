@@ -1,4 +1,134 @@
-Generated with discovered.json: 0x4d11be63e49aea2abde36822366cae4f580fd7f8
+Generated with discovered.json: 0x819d76b4f8acf20b7d12c107d1f05c58adc56bd2
+
+# Diff at Mon, 14 Oct 2024 10:54:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20420398
+- current block number: 20420398
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20420398 (main branch discovery), not current.
+
+```diff
+    contract ERC20 Vault V1 (0x112334f50Cb6efcff4e35Ae51A022dBE41a48135) {
+    +++ description: None
+      sourceHashes:
++        ["0xdf2e47952904a5d0bc18604cdb2be843cfbc6ae2be79ca98e0d1fcf9f69d70d4"]
+    }
+```
+
+```diff
+    contract pNetworkDAOVoting (0x2211bFD97b1c02aE8Ac305d206e9780ba7D8BfF4) {
+    +++ description: None
+      sourceHashes:
++        ["0xe95d65e50752cf7b137131ff78cb164641fe141b0780189482701ebda1b66d4a","0xeec9883cfc8cce2215f09608d831b1e64c31e57e4daf63da14701cdbe8b2a291"]
+    }
+```
+
+```diff
+    contract Kernel (0x2732fD9fD5F0E84B1b774cf5E6f5c812EAfd455b) {
+    +++ description: None
+      sourceHashes:
++        ["0x3ef00bf119dbb1f46a05a35111f35da84bb45cac1abfa574989211677d16787a","0x452458b35204910fe71376b423bd8d2887a1e82d22843fd79880d4ac0dce2a33"]
+    }
+```
+
+```diff
+    contract EVMScriptRegistry (0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478) {
+    +++ description: None
+      sourceHashes:
++        ["0x3cab9c9a12a52c625f55b2d3d9693f8eb062cb0d41841589b557888ad01afced","0x00350407c4a32b62d60dbac5ac3093bf4bffd482f40b2df2a9cd3268365b84e5"]
+    }
+```
+
+```diff
+    contract UOS Vault (0x9f8622b11984AfC8f0a42A394928702017c5968D) {
+    +++ description: None
+      sourceHashes:
++        ["0xe6b0ad564ecf0ee4b47b19a605101ce2c680b5e451c154acaaabb25f454aed1a"]
+    }
+```
+
+```diff
+    contract MiniMeTokenFactory (0xA29EF584c389c67178aE9152aC9C543f9156E2B3) {
+    +++ description: None
+      sourceHashes:
++        ["0xab441847b55bfdc5cf90792906cf0effcd43d3390a7cc05e690aad5fb349c19b"]
+    }
+```
+
+```diff
+    contract pNetwork Multisig (0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xB6D14DdFBE01AC537accBe35cCd771C30D53c535) {
+    +++ description: None
+      sourceHashes:
++        ["0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"]
+    }
+```
+
+```diff
+    contract TokenManager (0xD7E8E79d318eCE001B39D83Ea891ebD5fC22d254) {
+    +++ description: None
+      sourceHashes:
++        ["0xe95d65e50752cf7b137131ff78cb164641fe141b0780189482701ebda1b66d4a","0x07aae7f3026cf9986df7e9587978c4a61f37310b62ac418c63e182d2fdb51fef"]
+    }
+```
+
+```diff
+    contract PProxyAdmin (0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a) {
+    +++ description: None
+      sourceHashes:
++        ["0x90607504d5e8f365803601eeade9548daa56d981da3ce27d42acb6d7e01150b2"]
+    }
+```
+
+```diff
+    contract ERC20 Vault V2 (0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8) {
+    +++ description: None
+      sourceHashes:
++        ["0x421304ff20b039c820bfc9af779d8ec7444153822c329251f1bbaec68febf02c","0x9a4dab9a6c79e6054401f76b1b8df918bf8b24d341078c87aef7d619f3787d3c"]
+    }
+```
+
+```diff
+    contract MiniMeToken (0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E) {
+    +++ description: None
+      sourceHashes:
++        ["0x1098670857010f37e15b128a92baa1ccb42e961bd5e02b478a0c69fd8d66eb46"]
+    }
+```
+
+```diff
+    contract EthPntv2 (0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2) {
+    +++ description: None
+      sourceHashes:
++        ["0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a","0xf9ab1306492850c52f787f8af996c1c4df97d8c382b73d65e0e8e60fd346c056"]
+    }
+```
+
+```diff
+    contract ACL (0xFDcae423E5e92B76FE7D1e2bcabd36fca8a6a8Fe) {
+    +++ description: None
+      sourceHashes:
++        ["0xe95d65e50752cf7b137131ff78cb164641fe141b0780189482701ebda1b66d4a","0xe780841a8c7ccdd14b49db877aa5f4c96632a8a751af71424973cb40b5a8a726"]
+    }
+```
+
+Generated with discovered.json: 0x9e285b4f843aa0880b0cd0dd80f360cbe2927449
 
 # Diff at Tue, 01 Oct 2024 10:53:59 GMT:
 

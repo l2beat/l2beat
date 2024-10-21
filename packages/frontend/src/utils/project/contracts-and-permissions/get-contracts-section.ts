@@ -29,6 +29,7 @@ import {
 } from '../../../components/projects/sections/contract-entry'
 import { type ContractsSectionProps } from '../../../components/projects/sections/contracts/contracts-section'
 import { type Reference } from '../../../components/projects/sections/reference-list'
+import { toTechnologyRisk } from '../risk-summary/to-technology-risk'
 import { getChain } from './get-chain'
 import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
@@ -134,10 +135,7 @@ export function getContractsSection(
         )
       }) ?? []
 
-  const risks = projectParams.contracts.risks.map((risk) => ({
-    text: `${risk.category} ${risk.text}`,
-    isCritical: !!risk.isCritical,
-  }))
+  const risks = projectParams.contracts.risks.map(toTechnologyRisk)
 
   /*
     TODO: isVerified should not be required after https://linear.app/l2beat/issue/L2B-6497/refactor-verification-status is done
@@ -414,7 +412,7 @@ function isEscrowUnverified(
   contractsVerificationStatuses: ContractsVerificationStatuses,
 ): boolean {
   const chain = escrow.newVersion
-    ? escrow.contract.chain ?? 'ethereum'
+    ? (escrow.contract.chain ?? 'ethereum')
     : 'ethereum'
   return (
     contractsVerificationStatuses[chain]?.[escrow.address.toString()] === false

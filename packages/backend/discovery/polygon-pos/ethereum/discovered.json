@@ -1,9 +1,8 @@
 {
   "name": "polygon-pos",
   "chain": "ethereum",
-  "blockNumber": 20862639,
+  "blockNumber": 20997846,
   "configHash": "0x0150a8b6be88d55f9ccc5854f6760f648aaf86ff630cbfdf52675a284392a7b2",
-  "version": 15,
   "contracts": [
     {
       "name": "SlashingManager",
@@ -16,6 +15,9 @@
     {
       "name": "ValidatorShare",
       "address": "0x053FA9b934b83E1E0ffc7e98a41aAdc3640bB462",
+      "sourceHashes": [
+        "0xa285ec05fa42906a15190dac19b3737d705cec2feac2e84aaa9666c40bd8f336"
+      ],
       "sinceTimestamp": 1724338823,
       "values": {
         "$immutable": true,
@@ -47,6 +49,10 @@
       "name": "ERC1155Predicate",
       "address": "0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f",
       "template": "polygonposbridge/predicate",
+      "sourceHashes": [
+        "0x428926e63c344a25fc6e1854be10f620c64143f66904314e15837a6734e132b1",
+        "0xda2db56264809ae744116955fe8ee8083707b093633a4d3aa1713a6d5fc0ee1c"
+      ],
       "proxyType": "Polygon proxy",
       "issuedPermissions": [
         {
@@ -103,6 +109,9 @@
       "name": "CustomPredicate",
       "address": "0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35",
       "template": "polygonposbridge/predicate",
+      "sourceHashes": [
+        "0xd873771bacc2ec458452d650f61ff1f7907e3a4fe09888ae8b93cd61125511fa"
+      ],
       "sinceTimestamp": 1617750281,
       "values": {
         "$immutable": true,
@@ -126,6 +135,9 @@
       "name": "ERC20EscrowPredicate",
       "address": "0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4",
       "template": "polygonposbridge/predicate",
+      "sourceHashes": [
+        "0x66815b2f8b05e9960d6f4c23ca95251145298d7577c32c5e029b90f9a4e38bbb"
+      ],
       "sinceTimestamp": 1627373890,
       "values": {
         "$immutable": true,
@@ -143,11 +155,14 @@
     {
       "name": "StateSender",
       "address": "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE",
+      "sourceHashes": [
+        "0x2f6878db7119cba5b64851fc04d0bd822ce210db74bf11ca1255f000eb88065f"
+      ],
       "ignoreInWatchMode": ["counter"],
       "sinceTimestamp": 1590850580,
       "values": {
         "$immutable": true,
-        "counter": 2965675,
+        "counter": 2970591,
         "isOwner": false,
         "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "REGISTRATIONS": [
@@ -167,6 +182,10 @@
     {
       "name": "WithdrawManager",
       "address": "0x2A88696e0fFA76bAA1338F2C74497cC013495922",
+      "sourceHashes": [
+        "0x05029129ea02d46e1d659b46c83ec5822b7d15f5d332a3dd100436ebeabb01b4",
+        "0xee5a9e827bcc91e480a2d03b37006a7a028e7785a3c351f49251fd7e6521ad30"
+      ],
       "proxyType": "EIP897 proxy",
       "sinceTimestamp": 1590850831,
       "values": {
@@ -187,6 +206,10 @@
       "name": "MintableERC1155Predicate",
       "address": "0x2d641867411650cd05dB93B59964536b1ED5b1B7",
       "template": "polygonposbridge/predicate",
+      "sourceHashes": [
+        "0xe451506fc197d18a883ecbc36c3792de9fb5966cf3ed7031a09148cb12b7f8fe",
+        "0x6bcd5917763490ae131f09d4c3a6866f1af10ca4a99f233b8965efaa8c358b6a"
+      ],
       "proxyType": "Polygon proxy",
       "issuedPermissions": [
         {
@@ -253,6 +276,9 @@
     {
       "name": "Registry",
       "address": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
+      "sourceHashes": [
+        "0x918d93a767fea4cb4801e9046bb76680284c46253d3d3f38614e9999be36e5e8"
+      ],
       "sinceTimestamp": 1590849877,
       "values": {
         "$immutable": true,
@@ -274,12 +300,19 @@
     {
       "name": "ERC721PredicateBurnOnly",
       "address": "0x36C2503d53C6948331144b85D1e74a3B96731d1b",
+      "sourceHashes": [
+        "0xf09e81f94877953f148b12864ec341367f4708956fbcd7803208c364bce87f8d"
+      ],
       "sinceTimestamp": 1724593763,
       "values": { "$immutable": true, "CHAINID": 15001, "networkId": "0x3a99" }
     },
     {
       "name": "DepositManager",
       "address": "0x401F6c983eA34274ec46f84D70b31C151321188b",
+      "sourceHashes": [
+        "0x56357b4fdb898e49aff0370db0c900b81a28004a5c5932d0cbe0f8ac8e017b39",
+        "0xc5b5f88996b07c7bbc95a43cde9d9dd36d460beb6780e633858131ed36e1cbc9"
+      ],
       "proxyType": "EIP897 proxy",
       "sinceTimestamp": 1590850640,
       "values": {
@@ -303,6 +336,10 @@
       "name": "ERC20Predicate",
       "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
       "template": "polygonposbridge/predicate",
+      "sourceHashes": [
+        "0x63f5481a49da196498b6cd77450d4e12da12c7608ab022b417dbed836935e0f7",
+        "0xdb2c7a7688883aa90817563334c9613daee6ccad8d086ff273d6b484340444ab"
+      ],
       "proxyType": "Polygon proxy",
       "issuedPermissions": [
         {
@@ -358,6 +395,9 @@
       "name": "PolygonERC20MintBurnPredicate",
       "address": "0x436f5Ba0DCf22f991475fC7A6DE75DAAE2f40cB5",
       "template": "polygonposbridge/predicate",
+      "sourceHashes": [
+        "0x802005602f9307c4394cd8cee610c3c1373e6876b348605733983a5d3d5b9248"
+      ],
       "sinceTimestamp": 1657162305,
       "values": {
         "$immutable": true,
@@ -375,6 +415,9 @@
     {
       "name": "StakingNFT",
       "address": "0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F",
+      "sourceHashes": [
+        "0x3d5900e83820883d56342fee2c6ac21046702b686ae86d2ce5d2ac1beafe8b9e"
+      ],
       "sinceTimestamp": 1593189650,
       "values": {
         "$immutable": true,
@@ -402,6 +445,9 @@
     {
       "name": "RootChainInitialImplementation",
       "address": "0x5A09cD4601b66bc107D377AB81E0dbb5dFABaA84",
+      "sourceHashes": [
+        "0xd8261395dc342e63946716f52052725e094de2da9b6dca487e1f7cf3cecd797f"
+      ],
       "sinceTimestamp": 1590849948,
       "values": {
         "_nextHeaderBlock": 10000,
@@ -420,6 +466,10 @@
     {
       "name": "StakeManager",
       "address": "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908",
+      "sourceHashes": [
+        "0xb67879bcf8a6042a86ae7689dda6879e93241b0d8a0a4f82adb4d00ab828cd13",
+        "0xa084de5be3dc11f2a48e65491394d0ee5c3c2aecf08f90d10c9d1cce6faba01d"
+      ],
       "proxyType": "Polygon proxy",
       "issuedPermissions": [
         {
@@ -478,16 +528,16 @@
         ],
         "$upgradeCount": 8,
         "auctionPeriod": 20,
-        "CHECKPOINT_REWARD": "71795000000000000000000",
+        "CHECKPOINT_REWARD": "53870967741900000000000",
         "checkPointBlockInterval": 5120,
         "checkpointRewardDelta": 10,
-        "currentEpoch": 69485,
+        "currentEpoch": 70445,
         "currentValidatorSetSize": 105,
-        "currentValidatorSetTotalStake": "3470491690550980380111083954",
+        "currentValidatorSetTotalStake": "3358187971673987720345903739",
         "delegationEnabled": true,
         "delegatorsReward": [0, 0, 0, 0],
         "dynasty": 80,
-        "epoch": 69485,
+        "epoch": 70445,
         "eventsHub": "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
         "extensionCode": "0xef49Ea6996073752b6840CDA34773FFA78F78166",
         "getRegistry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
@@ -515,19 +565,19 @@
         "registry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
         "replacementCoolDown": 2018083,
         "rewardDecreasePerCheckpoint": 30,
-        "rewardPerStake": "2900486981912362749941029",
+        "rewardPerStake": "2928269060685984485217714",
         "rootChain": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
         "signerUpdateLimit": 100,
         "token": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "tokenMatic": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
-        "totalHeimdallFee": "10155939209428901681108",
+        "totalHeimdallFee": "10160939209428901681108",
         "totalRewards": "201179489204211582010647007",
-        "totalRewardsLiquidated": "114301753551637203642639342",
+        "totalRewardsLiquidated": "115777642701817788937473511",
         "totalStaked": "10904213879282518567372038",
         "validatorReward": [0, 0, "1081182134824116177126", 0],
         "validatorShareFactory": "0xc4FA447A0e77Eff9717b09C057B40570813bb642",
         "validatorState": {
-          "amount": "3470491690550980380111083954",
+          "amount": "3358187971673987720345903739",
           "stakerCount": 105
         },
         "validatorThreshold": 105,
@@ -539,12 +589,19 @@
     {
       "name": "ERC20PredicateBurnOnly",
       "address": "0x626fb210bf50e201ED62cA2705c16DE2a53DC966",
+      "sourceHashes": [
+        "0x092f79b45e87c85adda18907fcbba7aed8e404cfabc82f58091060b80b179a2c"
+      ],
       "sinceTimestamp": 1724593763,
       "values": { "$immutable": true, "CHAINID": 15001, "networkId": "0x3a99" }
     },
     {
       "name": "EventsHub",
       "address": "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
+      "sourceHashes": [
+        "0x66fd0eba29db6a9a912c2986bcbdbd0e2dbef00e6507132ecf8a9e358d9ce7bd",
+        "0x6739012cebcf9f8a3b471a230adc99bb3840a605867d4f20a9c11bf6e7a05d96"
+      ],
       "proxyType": "Polygon proxy",
       "issuedPermissions": [
         {
@@ -577,6 +634,10 @@
     {
       "name": "Governance",
       "address": "0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48",
+      "sourceHashes": [
+        "0x0df18be01283a9eaa99600142abf19bdd63f71974788d53044022ba32643a2f7",
+        "0x5a4efa55552545ebc05194d3649859f5731b5beb3358f26dadb38330cec78719"
+      ],
       "proxyType": "EIP897 proxy",
       "sinceTimestamp": 1590849863,
       "values": {
@@ -592,6 +653,10 @@
       "name": "EtherPredicate",
       "address": "0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30",
       "template": "polygonposbridge/predicate",
+      "sourceHashes": [
+        "0xcd0a12ca9277d60031fd022482b8174c79dabb5d731b80609041c6778a899455",
+        "0x366c91202d3a2d7866e03ca63c5642da8ae32252a79ec9f171a4ddb75437df71"
+      ],
       "proxyType": "Polygon proxy",
       "issuedPermissions": [
         {
@@ -650,6 +715,10 @@
     {
       "name": "RootChain",
       "address": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
+      "sourceHashes": [
+        "0xf3a9eafd244e85252bdcfb1873e8503ed1e03781a220e97d71c01fa9dc3a5b33",
+        "0xd35b67d8f30e644710988f565f06bbc06eee75ae1ed4b4d46c3e193266e7163c"
+      ],
       "proxyType": "EIP897 proxy",
       "ignoreInWatchMode": [
         "_nextHeaderBlock",
@@ -658,7 +727,7 @@
       ],
       "sinceTimestamp": 1590849960,
       "values": {
-        "_nextHeaderBlock": 694850000,
+        "_nextHeaderBlock": 704450000,
         "$immutable": false,
         "$implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "CHAINID": 137,
@@ -667,8 +736,8 @@
           "_registry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
           "_heimdallId": "heimdall-137"
         },
-        "currentHeaderBlock": 694840000,
-        "getLastChildBlock": 62453925,
+        "currentHeaderBlock": 704440000,
+        "getLastChildBlock": 63218853,
         "heimdallId": "0x7e10229e6df5851dc336f813dde0cf6559cd517f9ff1980e2e57e192ba3a2329",
         "implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "isOwner": false,
@@ -683,6 +752,10 @@
       "name": "MintableERC721Predicate",
       "address": "0x932532aA4c0174b8453839A6E44eE09Cc615F2b7",
       "template": "polygonposbridge/predicate",
+      "sourceHashes": [
+        "0x378a22860f926f5ba4dd478549ef1dc9f126335557b56556444e5c1393bdbfef",
+        "0x4dcf96c463738c373c6726e2304e718115843041080f89a520d8d6fb2f357820"
+      ],
       "proxyType": "Polygon proxy",
       "issuedPermissions": [
         {
@@ -757,6 +830,10 @@
       "name": "MintableERC20Predicate",
       "address": "0x9923263fA127b3d1484cFD649df8f1831c2A74e4",
       "template": "polygonposbridge/predicate",
+      "sourceHashes": [
+        "0x34f85d595f0b3aa60f0923146a83aa86f341f7af1ef6f77e26c1a270622921d8",
+        "0x32f8c95c75000ff3e167903d7561c542e4365588e0a7c4cdc6651b3891a40591"
+      ],
       "proxyType": "Polygon proxy",
       "issuedPermissions": [
         {
@@ -811,6 +888,10 @@
     {
       "name": "RootChainManager",
       "address": "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
+      "sourceHashes": [
+        "0xbbbf27b3fdffff6edc7bb78c7f8d8b0e49e427ea37c77f6c0ee0824742a1480a",
+        "0xdc4360c93969702ab43800fb0154ca71259a30c57fa03a1f9567c3a3937c4b3e"
+      ],
       "proxyType": "Polygon proxy",
       "issuedPermissions": [
         {
@@ -904,6 +985,9 @@
     {
       "name": "MaticWETH",
       "address": "0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8",
+      "sourceHashes": [
+        "0x0d48a92770ee4436f7954622fc986c7382432501a9ff5b4753d102af8ae18c0f"
+      ],
       "sinceTimestamp": 1590840981,
       "values": {
         "$immutable": true,
@@ -917,6 +1001,9 @@
     {
       "name": "StakingInfo",
       "address": "0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B",
+      "sourceHashes": [
+        "0x6f083446e02260d9c548d8b66bfe0bf437ae747e1e7163a71a5f1a6c4cabcd54"
+      ],
       "sinceTimestamp": 1593189612,
       "values": {
         "$immutable": true,
@@ -933,18 +1020,27 @@
     {
       "name": "MerklePatriciaProof",
       "address": "0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa",
+      "sourceHashes": [
+        "0x4ed456a42fb2d64a519655fec3e48ae6f791f0dbd06960ead61664e86828a82b"
+      ],
       "sinceTimestamp": 1598436340,
       "values": { "$immutable": true }
     },
     {
       "name": "ValidatorShareFactory",
       "address": "0xc4FA447A0e77Eff9717b09C057B40570813bb642",
+      "sourceHashes": [
+        "0xe388adb0a2a9179ef6156bc2aff8d97746405656abea331f24a11da4b622a864"
+      ],
       "sinceTimestamp": 1593189596,
       "values": { "$immutable": true }
     },
     {
       "name": "Timelock",
       "address": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
+      "sourceHashes": [
+        "0x8dc59ef7baa1bce6bb67f6ec23ed1ceaebe480311b8e2a82f989d89be1b410f6"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -1027,6 +1123,10 @@
       "name": "ChainExitERC1155Predicate",
       "address": "0xDB2382413bCb9c2F1B6b62B52238558266361D68",
       "template": "polygonposbridge/predicate",
+      "sourceHashes": [
+        "0x75b6f36e579b7ca292618007259914df1193b03e1d05204fea00bc8e4d2eec83",
+        "0xbde7c4ae6d29f2d5ac51feeb27ed9d65ea22f779fda4a41e97f24622dcf84a46"
+      ],
       "proxyType": "Polygon proxy",
       "issuedPermissions": [
         {
@@ -1072,6 +1172,9 @@
     {
       "name": "ExitNFT",
       "address": "0xDF74156420Bd57ab387B195ed81EcA36F9fABAca",
+      "sourceHashes": [
+        "0x8ab86a61175e5d05a7397611f3be4b4979a70b9c498bf772de63c31455e9393d"
+      ],
       "sinceTimestamp": 1590850785,
       "values": { "$immutable": true, "getApproved": [], "ownerOf": [] },
       "derivedName": "ExitNFT"
@@ -1080,6 +1183,10 @@
       "name": "ERC721Predicate",
       "address": "0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD",
       "template": "polygonposbridge/predicate",
+      "sourceHashes": [
+        "0x1d84e4aa2ca9808f7866a5d3c6c804956136d56a985525328da76b85a63238f3",
+        "0xfb5adba76f3e09db109bb95a396cf305bba6d711df04b5bfd12b226816fc5556"
+      ],
       "proxyType": "Polygon proxy",
       "issuedPermissions": [
         {
@@ -1147,6 +1254,9 @@
     {
       "name": "StakeManagerExtension",
       "address": "0xef49Ea6996073752b6840CDA34773FFA78F78166",
+      "sourceHashes": [
+        "0x0efa258772085a1651cde756807a2fa451169f701ccba9eae9d4e25cb85fa558"
+      ],
       "sinceTimestamp": 1616774545,
       "values": {
         "$immutable": true,
@@ -1195,6 +1305,10 @@
       "name": "PolygonMultisig",
       "address": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
@@ -1223,7 +1337,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 9 (56%)",
-        "nonce": 215,
+        "nonce": 216,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -2402,8 +2516,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "polygonposbridge/predicate": "0xd0002593506440cc569c7eaae5de56a803422500de47fb71f70657bc32793f78"
-  },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  }
 }

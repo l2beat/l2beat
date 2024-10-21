@@ -1,4 +1,214 @@
-Generated with discovered.json: 0x7e83399f80f2e85ba6baf73b486bd44d1ff98ac9
+Generated with discovered.json: 0xe090f9a24a0d1e75044c61472210a93dbe843519
+
+# Diff at Sat, 19 Oct 2024 06:28:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@493c96785a6a32c6417182bb9548d3a990297dbe block: 20934247
+- current block number: 20997821
+
+## Description
+
+The two operator addresses are changed, which will be reflected in the permissions section.
+Context: Team also helpfully notified us in advance on telegram.
+
+## Watched changes
+
+```diff
+    contract zkEVM (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: None
+      values.accessControl.OPERATOR_ROLE.members.1:
+-        "0xa9268341831eFa4937537bc3e9EB36DbecE83C7e"
++        "0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754"
+      values.accessControl.OPERATOR_ROLE.members.0:
+-        "0x9228624C3185FCBcf24c1c9dB76D8Bef5f5DAd64"
++        "0x46d2F319fd42165D4318F099E143dEA8124E9E3e"
+    }
+```
+
+Generated with discovered.json: 0x5f40de8e0cb83216d42503be0c8d068da862a1db
+
+# Diff at Fri, 18 Oct 2024 10:56:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@0295165a89d86b7450439f24f100d1baa74381fc block: 20934247
+- current block number: 20934247
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20934247 (main branch discovery), not current.
+
+```diff
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]
+    }
+```
+
+Generated with discovered.json: 0x88c0a18d920ef566720eea6c23276ed64b5884f5
+
+# Diff at Mon, 14 Oct 2024 10:52:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20934247
+- current block number: 20934247
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20934247 (main branch discovery), not current.
+
+```diff
+    contract ERC20Bridge (0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
++        "0xd6B95c960779c72B8C6752119849318E5d550574"
+      issuedPermissions.0.via.0:
++        {"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6","delay":0}
+      sourceHashes:
++        ["0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1","0x4c5d4e5696bc435eefd0ba909c6a8a7748c4c49260fcb51a360f07af3c38d76f"]
+    }
+```
+
+```diff
+    contract BridgedToken (0x36f274C1C197F277EA3C57859729398FCc8a3763) {
+    +++ description: None
+      sourceHashes:
++        ["0x8a6c3f5b047664111c8f981a4cb5d8a79c5652771665343ffdd15ae64fa253bf"]
+    }
+```
+
+```diff
+    contract USDCBridgeProxyAdmin (0x41fAD3Df1B07B647D120D055259E474fE8046eb5) {
+    +++ description: None
+      sourceHashes:
++        ["0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"]
+    }
+```
+
+```diff
+    contract USDCBridge (0x504A330327A089d8364C4ab3811Ee26976d388ce) {
+    +++ description: None
+      sourceHashes:
++        ["0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a","0x27a9694e3bfad3a6ec23be7f15d8e6093b4d3a12eba4d10de0d9c660f5a47d30"]
+    }
+```
+
+```diff
+    contract AdminMultisig (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract ERC20UpgradableBeacon (0x971f46a2852d11D59dbF0909e837cfd06f357DeB) {
+    +++ description: None
+      sourceHashes:
++        ["0x02777a2575f23718a66224f10ac65db704c8c844f66d08dd5f9afd58b869f133"]
+    }
+```
+
+```diff
+    contract MultiSend (0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761) {
+    +++ description: None
+      sourceHashes:
++        ["0x3b1182a0432445f884d447d11823ec4b120a198eeaa3d9f3024384d87ee77cf1"]
+    }
+```
+
+```diff
+    contract VerifierProofType3 (0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F) {
+    +++ description: None
+      sourceHashes:
++        ["0x47f89dc90dfffe4c8914bdac8b7c92bc4cbee0df1bf52f3926e43fe0934a2ff4"]
+    }
+```
+
+```diff
+    contract zkEVM (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
++        "0xd6B95c960779c72B8C6752119849318E5d550574"
+      issuedPermissions.0.via.0:
++        {"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6","delay":0}
+      sourceHashes:
++        ["0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1","0x9107909af0d0c9abd3904984ff1b8b0824d489b8b1ac2902b805ce7d417e2e9f"]
+    }
+```
+
+```diff
+    contract Timelock (0xd6B95c960779c72B8C6752119849318E5d550574) {
+    +++ description: None
+      sourceHashes:
++        ["0xaf04cf94ef4bf759d6466fa262a5e8e54f6d5c9652286fe5d71c9a904de27e5c"]
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","via":[{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"}]},{"permission":"upgrade","target":"0xd19d4B5d358258f05D7B411E21A1460D11B0876F","via":[{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"}]
+    }
+```
+
+```diff
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083) {
+    +++ description: None
+      sourceHashes:
++        ["0x699a67bde09c0d73c29ec9de66133bfee484544494865d954ac01f9736efed30"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xF5058616517C068C7b8c7EbC69FF636Ade9066d6) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"},{"permission":"upgrade","target":"0xd19d4B5d358258f05D7B411E21A1460D11B0876F"}]
+      template:
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"]
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"},{"permission":"upgrade","target":"0xd19d4B5d358258f05D7B411E21A1460D11B0876F"}]
+    }
+```
+
+Generated with discovered.json: 0xa513efaf6e24057f268b8cace31dbb24a947c021
+
+# Diff at Thu, 10 Oct 2024 09:15:27 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@cb5ff535ffc194baf7396bd6db8232883e2ad088 block: 20389671
+- current block number: 20934247
+
+## Description
+
+Signer swapped in AdminMultisig.
+
+## Watched changes
+
+```diff
+    contract AdminMultisig (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      values.$members.4:
+-        "0x36a0b60162d7F407d74bd1def01410D20437F87B"
++        "0x9376c137AF5124FFc39bD8940A3D88D1cd508992"
+    }
+```
+
+Generated with discovered.json: 0xe6232787bad87e3865c174553e77fde10d29dcbf
 
 # Diff at Tue, 01 Oct 2024 10:52:12 GMT:
 

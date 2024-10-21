@@ -2,7 +2,6 @@ import { type WarningWithSentiment } from '@l2beat/config'
 
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
-import { UpcomingBadge } from '~/components/badge/upcoming-badge'
 import { CostsBreakdown } from '~/components/breakdown/costs-breakdown'
 import { Callout } from '~/components/callout'
 import { Skeleton } from '~/components/core/skeleton'
@@ -12,6 +11,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
 import { DetailedOnHover } from '~/components/detailed-on-hover'
+import { PrimaryValueCell } from '~/components/table/cells/primary-value-cell'
 import { EM_DASH } from '~/consts/characters'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { formatCostValue } from '../_utils/format-cost-value'
@@ -32,8 +32,6 @@ export function CostsTotalCell({ data, warning }: CellProps) {
     switch (data.reason) {
       case 'loading':
         return <Skeleton className="h-8 w-full" />
-      case 'coming-soon':
-        return <UpcomingBadge />
       case 'no-data':
         return <NoDataBadge />
       case 'no-per-tx-metric':
@@ -50,9 +48,9 @@ export function CostsTotalCell({ data, warning }: CellProps) {
       <div className="flex flex-col items-end">
         <div className="flex items-center gap-1">
           {warning && <Warning warning={warning} />}
-          <span className="text-lg font-semibold">
+          <PrimaryValueCell>
             <DetailedOnHover value={data.total}>{formatted}</DetailedOnHover>
-          </span>
+          </PrimaryValueCell>
         </div>
         <CostsBreakdown
           blobs={data.blobs}

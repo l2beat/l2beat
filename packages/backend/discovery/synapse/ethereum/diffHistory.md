@@ -1,4 +1,88 @@
-Generated with discovered.json: 0x338012dac1e483902682f7612829278609ab1313
+Generated with discovered.json: 0xa3c9210350bfff6bf6c31c9ef9771341c9cfc3e9
+
+# Diff at Fri, 18 Oct 2024 11:01:37 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@0295165a89d86b7450439f24f100d1baa74381fc block: 19876012
+- current block number: 19876012
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19876012 (main branch discovery), not current.
+
+```diff
+    contract AllowanceModule (0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"}]
+    }
+```
+
+Generated with discovered.json: 0x8b9c835749969ad3363171ca13c07976f3ac669a
+
+# Diff at Mon, 14 Oct 2024 10:56:44 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 19876012
+- current block number: 19876012
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19876012 (main branch discovery), not current.
+
+```diff
+    contract SynapseBridge (0x2796317b0fF8538F253012862c06787Adfb8cEb6) {
+    +++ description: None
+      sourceHashes:
++        ["0xb9b3a683fe4dda991e2c9f0c79d7b8f5b2dd518535c692b5887aa3c03a030de3","0x81d007102ce6d41c4e245cc562c41b762d6fe49738f3dac3eb5e159caa6dc853"]
+    }
+```
+
+```diff
+    contract TimelockController (0x647489df0673E17dB3163c47d5233EBB6F5cAc70) {
+    +++ description: None
+      sourceHashes:
++        ["0xb8860ecb88ce9ef535fd75652844536335a1ab72f54ccfd0159be7e57422dc03"]
+    }
+```
+
+```diff
+    contract Bridge Multisig (0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55) {
+    +++ description: None
+      sourceHashes:
++        ["0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2) {
+    +++ description: None
+      sourceHashes:
++        ["0xeb95d39e1b35f76b6331da863f87bf2e148dd21abf5666590443b65f6a125630"]
+    }
+```
+
+```diff
+    contract AllowanceModule (0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134) {
+    +++ description: None
+      sourceHashes:
++        ["0x739427cbd7c2389a7c03972460f1e89b911776b7fdd5332f544dac83493eabb1"]
+    }
+```
+
+Generated with discovered.json: 0x14adb1baf1cda825cdf9da55e8649636ca9a2551
 
 # Diff at Tue, 01 Oct 2024 11:11:16 GMT:
 

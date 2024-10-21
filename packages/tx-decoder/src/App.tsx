@@ -6,6 +6,7 @@ export function App() {
   const [toDecode, setToDecode] = useState('')
 
   function onChange(value: string) {
+    value = value.replaceAll(/\s+/g, '')
     if (!/^(0x?)?[a-f0-9]*$/i.test(value)) {
       return
     }
@@ -22,7 +23,7 @@ export function App() {
         onChange={(e) => onChange(e.target.value)}
       />
       <button
-        className="mb-8 rounded-md border-zinc-900 border-b-4 bg-zinc-800 px-2.5 py-1 active:mt-1 active:border-b-0"
+        className="mb-8 rounded-sm border-zinc-900 border-b-4 bg-zinc-800 px-2.5 py-1 active:mt-1 active:border-b-0"
         onClick={() => setToDecode(encoded)}
       >
         Decode

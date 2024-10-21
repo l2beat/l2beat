@@ -15,8 +15,14 @@ import { Skeleton } from '~/components/core/skeleton'
 import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { type CostsUnit } from '~/server/features/scaling/costs/types'
 import { type CostsProjectsFilter } from '~/server/features/scaling/costs/utils/get-costs-projects'
+import {
+  type CostsTimeRange,
+  rangeToResolution,
+} from '~/server/features/scaling/costs/utils/range'
 import { api } from '~/trpc/react'
+import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
 import { useChartLoading } from '../core/chart-loading-context'
+import { ChartTimeRange } from '../core/chart-time-range'
 import { CostsChartHover } from './costs-chart-hover'
 import { CostsChartTimeRangeControls } from './costs-chart-time-range-controls'
 import { useCostChartRenderParams } from './use-cost-chart-render-params'
@@ -63,7 +69,6 @@ export function ScalingCostsChart({ milestones, entries }: Props) {
 
   return (
     <section className="flex flex-col gap-4">
-      <Header />
       <ChartProvider
         columns={columns}
         valuesStyle={valuesStyle}
@@ -74,26 +79,32 @@ export function ScalingCostsChart({ milestones, entries }: Props) {
           <CostsChartHover data={data} unit={unit} />
         )}
       >
-        <CostsChartTimeRangeControls
-          timeRange={range}
-          setTimeRange={setRange}
-          range={chartRange}
-        />
+        <Header range={range} chartRange={chartRange} />
         <Chart />
-        <UnitControls unit={unit} setUnit={setUnit} />
+        <ChartControlsWrapper>
+          <UnitControls unit={unit} setUnit={setUnit} />
+          <CostsChartTimeRangeControls
+            timeRange={range}
+            setTimeRange={setRange}
+          />
+        </ChartControlsWrapper>
       </ChartProvider>
     </section>
   )
 }
 
-function Header() {
+function Header({
+  range,
+  chartRange,
+}: { range: CostsTimeRange; chartRange: [number, number] | undefined }) {
+  const resolution = rangeToResolution(range)
   return (
     <header>
-      <h1 className="mb-1 text-3xl font-bold">Onchain costs</h1>
-      <p className="hidden text-base text-gray-500 dark:text-gray-600 md:block">
-        The page shows the costs that L2s pay to Ethereum for security. By
-        default, the projects are sorted by TVL.
-      </p>
+      <h1 className="text-xl font-bold first-letter:capitalize md:text-2xl">
+        {resolution} onchain costs
+        <span className="max-md:hidden"> stacked by type</span>
+      </h1>
+      <ChartTimeRange range={chartRange} />
     </header>
   )
 }

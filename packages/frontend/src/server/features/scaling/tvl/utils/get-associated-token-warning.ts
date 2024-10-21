@@ -1,4 +1,5 @@
-import { formatPercent } from '~/utils/get-percentage-change'
+import { type WarningWithSentiment } from '@l2beat/config'
+import { formatPercent } from '~/utils/calculate-percentage-change'
 
 interface Params {
   name: string
@@ -10,7 +11,7 @@ export function getAssociatedTokenWarning({
   name,
   associatedRatio,
   associatedTokens,
-}: Params) {
+}: Params): WarningWithSentiment | undefined {
   if (associatedRatio < 0.1) return
   const sentiment: 'bad' | 'warning' = associatedRatio > 0.8 ? 'bad' : 'warning'
 

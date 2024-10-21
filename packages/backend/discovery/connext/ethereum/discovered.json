@@ -3,11 +3,13 @@
   "chain": "ethereum",
   "blockNumber": 17129653,
   "configHash": "0x156856f12762aafeeafb55abf0e9517240b29a5845960b2d1f77825a44889230",
-  "version": 15,
   "contracts": [
     {
       "name": "TransactionManager",
       "address": "0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09",
+      "sourceHashes": [
+        "0x5a10f30a0039faccfa89f130d4f1114d81bb965bf1e050e64d2806982289ad52"
+      ],
       "sinceTimestamp": 1636004546,
       "values": {
         "$immutable": true,
@@ -30,6 +32,9 @@
     {
       "name": "FulfillInterpreter",
       "address": "0x5b9E4D0Dd21f4E071729A9eB522A2366AbeD149a",
+      "sourceHashes": [
+        "0xd97bc069bf47ba9568177032f0a27cb51ad0564b0a2c9480fdcd09f5e3dff02d"
+      ],
       "sinceTimestamp": 1636004546,
       "values": {
         "$immutable": true,
@@ -102,6 +107,5 @@
       "function getTransactionManager() view returns (address)"
     ]
   },
-  "usedTemplates": {},
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "usedTemplates": {}
 }

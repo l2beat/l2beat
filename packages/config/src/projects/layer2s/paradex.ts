@@ -75,7 +75,7 @@ export const paradex: Layer2 = {
     provider: 'Starknet',
     description:
       'Paradex is a high-performance crypto-derivatives exchange built on a Starknet Appchain.',
-    purposes: ['Exchange'],
+    purposes: ['Universal', 'Exchange'],
     category: 'ZK Rollup',
 
     links: {
@@ -159,8 +159,29 @@ export const paradex: Layer2 = {
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: new UnixTime(1710764843),
+          untilTimestamp: new UnixTime(1725811535),
           programHashes: [
             '3383082961563516565935611087683915026448707331436034043529592588079494402084',
+          ],
+        },
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestamp: new UnixTime(1725811535),
+          programHashes: [
+            '853638403225561750106379562222782223909906501242604214771127703946595519856', // Starknet OS
+          ],
+        },
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestamp: new UnixTime(1725811535),
+          programHashes: [
+            '1161178844461337253856226043908368523817098764221830529880464854589141231910', // Aggregator
           ],
         },
       },
@@ -188,6 +209,7 @@ export const paradex: Layer2 = {
           functionSignature:
             'function updateStateKzgDA(uint256[] programOutput, bytes kzgProof)',
           sinceTimestamp: new UnixTime(1710346919),
+          untilTimestamp: new UnixTime(1725811535),
         },
       },
       {

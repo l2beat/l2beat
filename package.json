@@ -34,7 +34,7 @@
     "checkout": "yarn clean && yarn && yarn build"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.7.0",
+    "@biomejs/biome": "1.9.3",
     "@changesets/cli": "^2.26.2",
     "@sinonjs/fake-timers": "^10.0.2",
     "@types/mocha": "^10.0.6",

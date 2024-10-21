@@ -1,8 +1,10 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
 export const abstract: Layer2 = upcomingL2({
   id: 'abstract',
+  createdAt: new UnixTime(1724863689), // 2024-08-28T16:48:09Z
   display: {
     name: 'Abstract',
     slug: 'abstract',
@@ -13,11 +15,16 @@ export const abstract: Layer2 = upcomingL2({
     provider: 'ZK Stack',
     links: {
       websites: ['https://abs.xyz/'],
-      apps: [],
+      apps: ['https://portal.testnet.abs.xyz/bridge/'],
       documentation: ['https://docs.abs.xyz/'],
-      explorers: [],
+      explorers: ['https://explorer.testnet.abs.xyz/'],
       repositories: [],
-      socialMedia: ['https://x.com/abstractchain'],
+      socialMedia: [
+        'https://x.com/abstractchain',
+        'https://discord.com/invite/abstractchain',
+        'https://x.com/Abstract_Eco',
+        'https://t.me/abstract_chain',
+      ],
     },
   },
 })

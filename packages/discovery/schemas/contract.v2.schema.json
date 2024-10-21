@@ -9,6 +9,7 @@
       "type": "string"
     },
     "extends": { "type": "string" },
+    "canActIndependently": { "type": "boolean" },
     "ignoreDiscovery": { "type": "boolean" },
     "proxyType": { "type": "string" },
     "ignoreInWatchMode": {
@@ -98,7 +99,16 @@
       "properties": {
         "type": {
           "type": "string",
-          "enum": ["configure", "upgrade", "act"]
+          "enum": [
+            "propose",
+            "challenge",
+            "validate",
+            "sequence",
+            "guard",
+            "configure",
+            "upgrade",
+            "act"
+          ]
         },
         "delay": {
           "type": "integer",
@@ -116,15 +126,6 @@
       "properties": {
         "description": { "type": ["string", "null"] },
         "template": { "type": ["string", "null"] },
-        "role": {
-          "anyOf": [
-            { "$ref": "#/$defs/stackRole" },
-            {
-              "type": "array",
-              "items": { "$ref": "#/$defs/stackRole" }
-            }
-          ]
-        },
         "category": {
           "anyOf": [
             { "$ref": "#/$defs/stackCategory" },

@@ -9,13 +9,13 @@ const discovery = new ProjectDiscovery('sanko', 'arbitrum')
 export const sanko: Layer3 = orbitStackL3({
   discovery,
   badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum, Badge.RaaS.Caldera],
+  additionalPurposes: ['Gaming', 'Social'],
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Sanko',
     slug: 'sanko',
     description:
       'Sanko is an NFT and gaming-focused Orbit stack L3 on Arbitrum with AnyTrust DA and DMT as its native token, created by Sanko GameCorp.',
-    purposes: ['Gaming', 'NFT', 'Social'],
     links: {
       websites: ['https://sanko.xyz/'],
       apps: ['https://sanko.xyz/bridge', 'https://swap.sanko.xyz'],
@@ -59,6 +59,12 @@ export const sanko: Layer3 = orbitStackL3({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+  nonTemplateContracts: [
+    discovery.getContractDetails('OrbitProxyOFT1_2', {
+      description:
+        'OFT Adapter contract using the LayerZero v1 AMB for messaging. This contract can mint tokens on Sanko and steal tokens in the main Bridge escrow. Its security depends on LayerZero v1 security.',
+    }),
+  ],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       includeInTotal: false,
@@ -72,6 +78,10 @@ export const sanko: Layer3 = orbitStackL3({
     ...discovery.getMultisigPermission(
       'Sanko Multisig',
       'Rollup Owner: Can execute upgrades for the entire rollup system via the UpgradeExecutor.',
+    ),
+    ...discovery.getMultisigPermission(
+      'SankoOftMultisig',
+      'Can change security parameters of the DMT token (Sanko gas token) and its OFT (LayerZero) adapters. This includes the permission to mint unlimited tokens or steal tokens in the main bridge.',
     ),
   ],
 })

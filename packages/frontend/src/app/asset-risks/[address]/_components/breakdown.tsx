@@ -5,7 +5,7 @@ import { type ClassNameValue } from 'tailwind-merge'
 import { useEventCallback } from '~/hooks/use-event-callback'
 import { useEventListener } from '~/hooks/use-event-listener'
 import { cn } from '~/utils/cn'
-import { formatNumberWithCommas } from '~/utils/format-number'
+import { formatNumberWithCommas } from '~/utils/number-format/format-number'
 
 type BreakdownValue = {
   name: string
@@ -84,16 +84,16 @@ export function Breakdown() {
                   g.className,
                 )}
               />
-              <span className="hidden pl-1 font-extrabold text-pink-900 sm:inline-block">
+              <span className="hidden pl-1 font-bold text-pink-900 sm:inline-block">
                 ${formatNumberWithCommas(g.value)}
               </span>
               <span className="hidden font-medium text-zinc-500 sm:inline-block">
                 ({g.weight}%)
               </span>
-              <span className="font-semibold text-zinc-800">{g.name}</span>
+              <span className="font-medium text-zinc-800">{g.name}</span>
             </div>
             <div className="block sm:hidden">
-              <span className="pl-1 font-extrabold text-pink-900">
+              <span className="pl-1 font-bold text-pink-900">
                 ${formatNumberWithCommas(g.value)}
               </span>
               <span className="font-medium text-zinc-500">({g.weight}%)</span>
@@ -162,7 +162,7 @@ function BreakdownItem({
       </span>
       <span
         ref={textRef}
-        className="hidden text-ellipsis whitespace-nowrap text-sm font-semibold leading-[15px] md:inline-block"
+        className="hidden text-ellipsis whitespace-nowrap text-sm font-medium leading-[15px] md:inline-block"
       >
         {group.name}
       </span>

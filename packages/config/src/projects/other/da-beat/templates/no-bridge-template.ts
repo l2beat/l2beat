@@ -1,11 +1,11 @@
 import {
-  DaAccessibilityRisk,
-  DaAttestationSecurityRisk,
   DaBridgeRisks,
-  DaExitWindowRisk,
+  DaCommitteeSecurityRisk,
+  DaUpgradeabilityRisk,
   NoDaBridge,
 } from '../types'
 import { DaLinks } from '../types/DaLinks'
+import { DaRelayerFailureRisk } from '../types/DaRelayerFailureRisk'
 import { linkByDA } from '../utils/link-by-da'
 
 type TemplateSpecific = {
@@ -21,6 +21,7 @@ type Optionals = Partial<{
   redWarnings: NoDaBridge['display']['redWarning']
   description: NoDaBridge['display']['description']
   technology: NoDaBridge['technology']
+  otherConsiderations: NoDaBridge['otherConsiderations']
 }>
 
 type TemplateVars = Optionals & TemplateSpecific
@@ -32,7 +33,11 @@ export function NO_BRIDGE(template: TemplateVars): NoDaBridge {
     template.description ??
     'This project does not have a DA bridge on Ethereum.'
 
-  const technology = template.technology ?? 'There is no DA bridge on Ethereum.'
+  const technology = {
+    description:
+      template.technology?.description ?? 'There is no DA bridge on Ethereum.',
+    risks: template.technology?.risks,
+  }
 
   const usedIn =
     template.usedIn ??
@@ -44,8 +49,6 @@ export function NO_BRIDGE(template: TemplateVars): NoDaBridge {
     name: 'No bridge',
     slug: `no-bridge`,
     description,
-    redWarning:
-      'Without a DA bridge, Ethereum has no proof of data availability for this project.',
     links: {
       websites: [],
       documentation: [],
@@ -58,9 +61,9 @@ export function NO_BRIDGE(template: TemplateVars): NoDaBridge {
   }
 
   const risks = {
-    accessibility: DaAccessibilityRisk.NotEnshrined,
-    attestations: DaAttestationSecurityRisk.NoBridge,
-    exitWindow: DaExitWindowRisk.NoBridge,
+    committeeSecurity: DaCommitteeSecurityRisk.NoBridge,
+    upgradeability: DaUpgradeabilityRisk.NoBridge,
+    relayerFailure: DaRelayerFailureRisk.NoBridge,
     ...template.risks,
   } satisfies DaBridgeRisks
 
@@ -71,5 +74,6 @@ export function NO_BRIDGE(template: TemplateVars): NoDaBridge {
     risks,
     technology,
     usedIn,
+    otherConsiderations: template.otherConsiderations,
   }
 }

@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   ChainConfig,
@@ -17,11 +17,14 @@ import { ScalingProjectStateDerivation } from '../../../common/ScalingProjectSta
 import { ScalingProjectStateValidation } from '../../../common/ScalingProjectStateValidation'
 import { ScalingProjectTechnology } from '../../../common/ScalingProjectTechnology'
 import { type BadgeId } from '../../badges'
+import { StageConfig } from '../../layer2s'
 
 export interface Layer3 {
   type: 'layer3'
   /** Unique, readable id, will be used in DB. DO NOT EDIT THIS PROPERTY */
   id: ProjectId
+  /** Date of creation of the file (not the project), required by test for upcoming projects */
+  createdAt?: UnixTime
   /** Is this layer3 an upcoming rollup? */
   isUpcoming?: boolean
   /** Is this layer3 archived? */
@@ -40,6 +43,8 @@ export interface Layer3 {
   riskView: ScalingProjectRiskView
   /** Stacked risk view values for this layer3 and it's base chain */
   stackedRiskView: ScalingProjectRiskView
+  /** Rollup stage */
+  stage?: StageConfig
   /** Data availability of scaling project */
   dataAvailability?: DataAvailabilityWithSentiment
   /** Deep dive into layer3 technology */
@@ -69,7 +74,7 @@ export interface Layer3Config extends ScalingProjectConfig {
   transactionApi?: ScalingProjectTransactionApi
 }
 
-export interface Layer3Display extends ScalingProjectDisplay {
+export type Layer3Display = ScalingProjectDisplay & {
   /** Technology provider */
   provider?: Layer3Provider
 }

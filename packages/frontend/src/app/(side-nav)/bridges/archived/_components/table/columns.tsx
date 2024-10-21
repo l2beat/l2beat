@@ -1,5 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { UpcomingBadge } from '~/components/badge/upcoming-badge'
+import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { NoInfoCell } from '~/components/table/cells/no-info-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { RiskCell } from '~/components/table/cells/risk-cell'
@@ -7,7 +7,7 @@ import { TypeCell } from '~/components/table/cells/type-cell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { sortSentiments } from '~/components/table/sorting/functions/sentiment-sorting'
 import { type BridgesArchivedEntry } from '~/server/features/bridges/get-bridges-archived-entries'
-import { formatCurrency } from '~/utils/format'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 
 const columnHelper = createColumnHelper<BridgesArchivedEntry>()
 
@@ -44,18 +44,16 @@ export const bridgesArchivedColumns = [
   }),
   columnHelper.accessor('totalTvl', {
     id: 'total',
-    header: 'Total',
+    header: 'Total value locked',
     cell: (ctx) => {
       const value = ctx.getValue()
       if (value === undefined) {
-        return <UpcomingBadge />
+        return <NoDataBadge />
       }
 
       return (
-        <span className="text-base font-bold md:text-lg">
-          {formatCurrency(value, 'usd', {
-            showLessThanMinimum: false,
-          })}
+        <span className="text-xs font-bold md:text-base">
+          {formatCurrency(value, 'usd')}
         </span>
       )
     },
@@ -72,7 +70,7 @@ export const bridgesArchivedColumns = [
     meta: {
       align: 'right',
       tooltip:
-        'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
+        'Total Value Locked is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens.',
     },
   }),
 ]

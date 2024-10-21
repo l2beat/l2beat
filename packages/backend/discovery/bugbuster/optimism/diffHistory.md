@@ -1,4 +1,62 @@
-Generated with discovered.json: 0x71463400e7fd16ab62425bc66c7e8be527478872
+Generated with discovered.json: 0xc95627c1c4eae15bdad5c5cf2b57cc5e89a704e9
+
+# Diff at Mon, 14 Oct 2024 10:59:55 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 125928338
+- current block number: 125928338
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 125928338 (main branch discovery), not current.
+
+```diff
+    contract History (0x04395d494624D2B6e30C0dfDB74498a2839f805d) {
+    +++ description: None
+      sourceHashes:
++        ["0x10336484f22cf6f3d30e974fe43a4aa644807bee582c7ee3c03b116024554eaa"]
+    }
+```
+
+```diff
+    contract BugBuster (0x3FF5C7383F614256053c3F6B86A47bA974937299) {
+    +++ description: None
+      sourceHashes:
++        ["0x4ea587588e6035764e827917418aee9c41a353454a7a13fe807ca56724350d47"]
+    }
+```
+
+```diff
+    contract Authority (0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35) {
+    +++ description: None
+      sourceHashes:
++        ["0xe4cf627ec9b7ed3b6b18711555d50a7002525d34e84a6242a2b1bd41aedb2f11"]
+    }
+```
+
+```diff
+    contract InputBox (0x59b22D57D4f067708AB0c00552767405926dc768) {
+    +++ description: None
+      sourceHashes:
++        ["0x3bfaa3fe125375dfb9181df0c144cda2b17aa368e57292e88d6258c4aafe51ed"]
+    }
+```
+
+```diff
+    contract ERC20Portal (0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB) {
+    +++ description: None
+      sourceHashes:
++        ["0x0cb29769a693a89712c9c05a29f52a6e610ed38585db5d66f1fc56118e39493d"]
+    }
+```
+
+Generated with discovered.json: 0xa5f15b4ed10bd06bfa754fc05d5a8cf72d0be2c6
 
 # Diff at Fri, 27 Sep 2024 16:44:20 GMT:
 

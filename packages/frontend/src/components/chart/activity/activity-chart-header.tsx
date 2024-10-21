@@ -1,59 +1,80 @@
 import { InfoIcon } from '~/icons/info'
+import { type ActivityChartStats } from '~/server/features/scaling/activity/get-activity-chart-stats'
+import { countToTps } from '~/server/features/scaling/activity/utils/count-to-tps'
+import { cn } from '~/utils/cn'
+import { formatTps } from '~/utils/number-format/format-tps'
 import { Skeleton } from '../../core/skeleton'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '../../core/tooltip/tooltip'
+import { ChartTimeRange } from '../core/chart-time-range'
 
 interface Props {
-  scalingFactor: number | undefined
+  stats: ActivityChartStats | undefined
+  range: [number, number] | undefined
 }
 
-export function ActivityChartHeader({ scalingFactor }: Props) {
+export function ActivityChartHeader({ stats, range }: Props) {
   return (
-    <header className="mb-4" data-role="chart-header">
-      <div className="flex items-baseline justify-between">
-        <h1 className="mb-1 text-3xl font-bold">Activity</h1>
-        {scalingFactor !== undefined ? (
-          <p className="text-right text-3xl font-bold group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0">
-            <span className="hidden text-sm md:inline md:text-2xl">
-              Scaling factor:{' '}
+    <header data-role="chart-header">
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold max-md:hidden">
+          Daily average transactions per second
+        </h1>
+        <h1 className="text-xl font-bold md:hidden">Daily average TPS</h1>
+        {stats !== undefined ? (
+          <p className="text-right font-bold group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0">
+            <span className="text-xl md:text-2xl">
+              {formatTps(countToTps(stats.latestProjectsTxCount))} TPS
             </span>
-            <span>{scalingFactor.toFixed(2)}x</span>
           </p>
         ) : (
-          <Skeleton className="h-[29px] w-20 md:w-[243px]" />
+          <Skeleton className="my-[5px] h-5 w-28 md:my-1.5 md:h-6 md:w-[200px] lg:w-[243px]" />
         )}
       </div>
-      <div className="flex items-baseline justify-end text-xs md:justify-between md:text-base">
-        <p className="hidden text-gray-500 dark:text-gray-600 md:block">
-          Transactions per second
-        </p>
-        <div className="flex items-center gap-1.5 text-right text-gray-500 group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0 dark:text-gray-600 md:w-auto">
-          Observed over the last 7 days
-          <Tooltip>
-            <TooltipTrigger>
-              <InfoIcon className="fill-current" />
-            </TooltipTrigger>
-            <TooltipContent>
-              <div className="flex flex-col gap-2">
-                <div>
-                  How many more transactions are settled by Ethereum if we take
-                  into account projects listed below.
-                </div>
-                <div className="flex flex-col gap-1">
-                  <div className="text-xs font-bold">Exact formula:</div>
-                  <div className="text-xs">
-                    (project txs/7d + ETH txs/7d) / ETH txs/7d
-                  </div>
-                </div>
-              </div>
-            </TooltipContent>
-          </Tooltip>
-        </div>
+
+      <div className="flex justify-between text-xs lg:text-base">
+        <ChartTimeRange range={range} />
+        {stats !== undefined ? (
+          <div className="flex items-center gap-1.5 text-right text-secondary group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0 lg:w-auto">
+            <div>
+              <span className="max-md:hidden">Scaling factor: </span>
+              {stats.scalingFactor.toFixed(2)}x
+            </div>
+            <ScalingFactorTooltip />
+          </div>
+        ) : (
+          <Skeleton className="h-5 w-16 md:h-6 md:w-44" />
+        )}
       </div>
-      <hr className="mt-2 w-full border-gray-200 dark:border-zinc-700 md:hidden md:border-t" />
     </header>
+  )
+}
+
+export function ScalingFactorTooltip({ className }: { className?: string }) {
+  return (
+    <Tooltip>
+      <TooltipTrigger>
+        <InfoIcon className={cn('size-3.5 fill-current', className)} />
+      </TooltipTrigger>
+      <TooltipContent>
+        <div className="flex flex-col gap-2">
+          <div className="font-bold">What is scaling factor?</div>
+
+          <div>
+            How many more transactions are settled by Ethereum if we take into
+            account projects listed below.
+          </div>
+          <div className="flex flex-col gap-1">
+            <div className="text-xs font-bold">Exact formula:</div>
+            <div className="text-xs">
+              (project txs/7d + ETH txs/7d) / ETH txs/7d
+            </div>
+          </div>
+        </div>
+      </TooltipContent>
+    </Tooltip>
   )
 }

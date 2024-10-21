@@ -8,13 +8,13 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { StatWithChange } from '~/components/projects/stat-with-change'
 import { StageTooltip } from '~/components/table/cells/stage/stage-tooltip'
 import { TypeCell } from '~/components/table/cells/type-cell'
+import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { InfoIcon } from '~/icons/info'
 import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { cn } from '~/utils/cn'
-import { formatNumber } from '~/utils/format-number'
+import { formatNumber } from '~/utils/number-format/format-number'
 import { TokenBreakdownStat } from './token-breakdown-stat'
 
 interface Props {
@@ -41,10 +41,12 @@ export function ScalingProjectStats({ project, className }: Props) {
         tooltip="Transactions per second averaged over the past day displayed together with a percentage change compared to 7D ago."
         value={
           project.header.activity ? (
-            <StatWithChange
-              stat={project.header.activity.lastDayTps}
+            <ValueWithPercentageChange
               change={project.header.activity.tpsWeeklyChange}
-            />
+              changeClassName="text-base font-medium"
+            >
+              {project.header.activity.lastDayTps.toFixed(2)}
+            </ValueWithPercentageChange>
           ) : (
             <UpcomingBadge />
           )
@@ -67,7 +69,7 @@ export function ScalingProjectStats({ project, className }: Props) {
           value={
             <span className="relative -top-0.5 flex items-center">
               <a href="#stage">
-                <StageBadge stage={project.stageConfig.stage} big />
+                <StageBadge stage={project.stageConfig.stage} />
               </a>
               <Tooltip>
                 <TooltipTrigger className="inline-block px-2">
@@ -122,7 +124,7 @@ function ProjectStat(props: ProjectStat) {
         )}
       </div>
 
-      <span className="text-lg font-semibold !leading-none md:text-xl md:font-bold">
+      <span className="text-lg font-medium !leading-none md:text-xl md:font-bold">
         {props.value}
       </span>
     </li>

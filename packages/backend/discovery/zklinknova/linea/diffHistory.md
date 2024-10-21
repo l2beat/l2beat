@@ -1,4 +1,78 @@
-Generated with discovered.json: 0x5ed7cb27486ad96c6adc79fb7e32df9d7ea4115e
+Generated with discovered.json: 0x9d2588624d742d3a7b3935246485044c1540b822
+
+# Diff at Mon, 14 Oct 2024 11:00:25 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 9010064
+- current block number: 9010064
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 9010064 (main branch discovery), not current.
+
+```diff
+    contract LineaOwner (0x0Bff4B38792a95314b3463E1Bf9831BDa1995391) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"]
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x509ff56c152315EdeE91A2e0f059195519507e01) {
+    +++ description: None
+      sourceHashes:
++        ["0x12cecfbcc6781dd4b8196aa7774f756e4f6b1ffa89386aee473d301f8b6e50a9"]
+    }
+```
+
+```diff
+    contract zkLink (0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05) {
+    +++ description: None
+      sourceHashes:
++        ["0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f","0x0aeeb5887677b09d5c9b6dfb6fd52bf2c97728ae0aedb533baab3f7fe0653ac3","0xe7e19467e9bc94a61947db08bfecea640d85dd166beac055385b877417dfbd71","0xb6a5aa1fb38aec46fe13d3e977cb8a06b3e3fd7e5c1ec2ef87f58fa4d21d3f45","0xbe5fe6b595b02be18ecb35c95a6b4b18c75aa4a08ab3cf035b72e9e5f71109d9"]
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x62cE247f34dc316f93D3830e4Bf10959FCe630f8) {
+    +++ description: None
+      sourceHashes:
++        ["0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad","0xa03991e1bce15902cbac3b622d56b1d1a7ffac18bd69a20e1b22a38a350b1246"]
+    }
+```
+
+```diff
+    contract LineaL2Gateway (0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB) {
+    +++ description: None
+      sourceHashes:
++        ["0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6","0x9cdec4676ceb81fecae56fb51bb2b303a5e0c13d98bb75c91e343bbe6b6d3d59"]
+    }
+```
+
+```diff
+    contract Verifier (0x902C3806A84f4e855a8746e92d7F1C9a51400458) {
+    +++ description: None
+      sourceHashes:
++        ["0x456c64183a7130a9bf99039d4d381b4b827b7efe87e684f81c20871836d975cb"]
+    }
+```
+
+```diff
+    contract Governance (0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec) {
+    +++ description: None
+      sourceHashes:
++        ["0x200762223206dfe40a648627db22f3403b1bdb04c59d8753a1e7525591876fda"]
+    }
+```
+
+Generated with discovered.json: 0x68be1854901efa50732995e8e547f158d367442c
 
 # Diff at Tue, 01 Oct 2024 11:13:57 GMT:
 

@@ -32,11 +32,12 @@ import { xaiDac } from './dac/xai'
 import { xlayerDac } from './dac/xlayer'
 import { xterioDA } from './dac/xterioDA'
 import { zkfairDac } from './dac/zkfair'
+import { applyProcessor } from './processors'
 import { DaLayer } from './types/DaLayer'
 
 export * from './types'
 
-export const daLayers: DaLayer[] = [
+export const daLayers: DaLayer[] = applyProcessor([
   avail,
   rhinofiDac,
   zkfairDac,
@@ -71,4 +72,4 @@ export const daLayers: DaLayer[] = [
   eigenDA,
   redstoneDA,
   xterioDA,
-]
+])

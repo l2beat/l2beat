@@ -1,4 +1,110 @@
-Generated with discovered.json: 0x4f3aadb37b8b77f4fb14f5f3e269417e1be9de05
+Generated with discovered.json: 0x59c2f6bb3798716fe1d3280176a3368a0ed60606
+
+# Diff at Mon, 14 Oct 2024 10:58:34 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 259634526
+- current block number: 259634526
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 259634526 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (0x1764C29FBd94865198588f10FC75D4f6636d158d) {
+    +++ description: None
+      sourceHashes:
++        ["0xeb051b88e210e28fd696d01528e3cc9a131a08d69e20bf1983ac8d90dd9b1f4f"]
+    }
+```
+
+```diff
+    contract SuccinctFeeVault (0x296666e937b270193B960a7cEC526B351F353166) {
+    +++ description: None
+      sourceHashes:
++        ["0x503f175ab3807eb7f958512d3dc2501bb2ab62286bcd8cd1f85d7d24b2ce90cc"]
+    }
+```
+
+```diff
+    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: None
+      sourceHashes:
++        ["0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"]
+    }
+```
+
+```diff
+    contract FunctionVerifier (0x4d0C32ddA9De7CD89e198cFe5E01470A49b8acD3) {
+    +++ description: None
+      sourceHashes:
++        ["0x205b995df6bf32d996abb3bf617459c0102ba36f15f7ec1b12994eba3346f12f"]
+    }
+```
+
+```diff
+    contract SuccinctGateway (0x6c7a05e0AE641c6559fD76ac56641778B6eCd776) {
+    +++ description: None
+      sourceHashes:
++        ["0xa148b7dcb3095dbb66f26d1428d50a59e1cd1384c80b0efe88efead152e6ebe2"]
+    }
+```
+
+```diff
+    contract BlobstreamMultisig (0x738a9b55304f9fcF776B3BA285e50c0f9eF77997) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"]
+    }
+```
+
+```diff
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: None
+      sourceHashes:
++        ["0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b","0x424268ec553b52a09ec29bc220e95a4dc19def7e459d1cc8a541ee0e2fd578e9"]
+    }
+```
+
+```diff
+    contract SP1Verifier (0xc350F063C13a3Ca21331610fe159E697a5c9c2FB) {
+    +++ description: None
+      sourceHashes:
++        ["0x6e3bfeae0d549b79decfd956f551a8aeac66523cdd66da389ef55eb56ef72aac"]
+    }
+```
+
+```diff
+    contract SuccinctGatewaySP1Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract SuccinctGatewayMultisig (0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"]
+    }
+```
+
+```diff
+    contract FunctionVerifier (0xfEA1EFaE3cDe8C524168726a7fc46BF2134bb72C) {
+    +++ description: None
+      sourceHashes:
++        ["0xa56a53a05b7201f86a6987201b5a99cb4f9e7fba1060ecf8290515990b6f6b5e"]
+    }
+```
+
+Generated with discovered.json: 0xa8fac87e1d40486f32dce5b155f9a6e3a8bc98dc
 
 # Diff at Wed, 02 Oct 2024 14:23:43 GMT:
 

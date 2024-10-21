@@ -1,4 +1,78 @@
-Generated with discovered.json: 0x419cb3d40447214146cdadae5b98d3f3d019e01b
+Generated with discovered.json: 0xf64dea4536430bf44fd1d38e3ef785b82946a786
+
+# Diff at Mon, 14 Oct 2024 10:55:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20017695
+- current block number: 20017695
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20017695 (main branch discovery), not current.
+
+```diff
+    contract AxelarGasService (0x2d5d7d31F671F86C782533cc367F14109a082712) {
+    +++ description: None
+      sourceHashes:
++        ["0x8fa191bfa9dc72a70e40c3074333b73f30f8db135dc11d16443f6f26a079ddfe","0xffdc4806ed0369d49b542adf6eb3b3572e0f76d44bda8f0a093467ebcbe225df"]
+    }
+```
+
+```diff
+    contract Gateway (0x4F4495243837681061C4743b74B3eEdf548D56A5) {
+    +++ description: None
+      sourceHashes:
++        ["0xe65732e356e64373f949ce1e543c2af7a89f91a8e3e8337cf9b83a3cd6ae9082","0x5247a49385cad8b341a34b9f96cde901c1b9567eeb27372b65747f673832df87"]
+    }
+```
+
+```diff
+    contract AxelarGasServiceOperators (0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC) {
+    +++ description: None
+      sourceHashes:
++        ["0xa898c8df7706ef8117978fb0d8653aea9d509fa5e96475894390689c93b28187"]
+    }
+```
+
+```diff
+    contract TokenDeployer (0xb28478319B64f8D47e19A120209A211D902F8b8f) {
+    +++ description: None
+      sourceHashes:
++        ["0xb697944037f1be572b23ca3eabbb455b59abdb05b45851313635da227ccc52c3"]
+    }
+```
+
+```diff
+    contract Multisig (0xCC940AE49C78F20E3F13F3cF37e996b98Ac3EC68) {
+    +++ description: None
+      sourceHashes:
++        ["0xfca353778b820ad49261c7887cf13ab259a89edab86eef4aeb90e1b2b2a948f5"]
+    }
+```
+
+```diff
+    contract AxelarAuthWeighted (0xE3B83f79Fbf01B25659f8A814945aB82186A8AD0) {
+    +++ description: None
+      sourceHashes:
++        ["0xc6735e0060a5046f6ed1ea96805049e3e5167271060aa505f72fbade315a82cb"]
+    }
+```
+
+```diff
+    contract InterchainGovernance (0xfDF36A30070ea0241d69052ea85ff44Ad0476a66) {
+    +++ description: None
+      sourceHashes:
++        ["0x36106df3599f7c698c4c70652810248df4da03bd579b99553e2852b368632ff6"]
+    }
+```
+
+Generated with discovered.json: 0xf88245b9d159fbebb8172c35cb99a4992a99ddc4
 
 # Diff at Tue, 01 Oct 2024 10:54:49 GMT:
 

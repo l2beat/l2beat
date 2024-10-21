@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": ["protocolVersionToUpgradeTimestamp"],
+  "fields": {
+    "upgradeTimestamps": {
+      "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)",
+      "handler": {
+        "type": "stateFromEvent",
+        "event": "UpdateUpgradeTimestamp",
+        "returnParams": ["_protocolVersion", "_upgradeTimestamp"]
+      }
+    }
+  }
+}

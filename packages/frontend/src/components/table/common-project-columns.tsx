@@ -23,10 +23,10 @@ export function getCommonProjectColumns<T extends BaseProject>(
       id: 'logo',
       cell: (ctx) => (
         <Image
-          className="min-h-[18px] min-w-[18px]"
+          className="min-h-[20px] min-w-[20px]"
           src={`/icons/${ctx.row.original.slug}.png`}
-          width={18}
-          height={18}
+          width={20}
+          height={20}
           alt={`${ctx.row.original.name} logo`}
         />
       ),
@@ -34,7 +34,7 @@ export function getCommonProjectColumns<T extends BaseProject>(
         headClassName: 'w-0',
         cellClassName: 'lg:!pr-1.5',
       },
-      size: 26,
+      size: 28,
     }),
   ]
 }

@@ -4,7 +4,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
 import { cn } from '~/utils/cn'
-import { formatNumberWithCommas } from '~/utils/format-number'
+import { formatNumberWithCommas } from '~/utils/number-format/format-number'
 
 interface Props {
   usdValue: number
@@ -17,7 +17,7 @@ export function TokenCanonicalValueCell({ usdValue, isDescendant }: Props) {
       <TooltipTrigger
         className={cn(
           'text-xs font-medium',
-          isDescendant && 'text-black/80 dark:text-white/80',
+          isDescendant && 'text-primary text-opacity-80',
         )}
       >
         ${formatNumberWithCommas(Number(usdValue))}

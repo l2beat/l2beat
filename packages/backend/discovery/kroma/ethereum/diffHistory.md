@@ -1,4 +1,198 @@
-Generated with discovered.json: 0xe972edd067044bb0946089f40200546de137be38
+Generated with discovered.json: 0xae4d22496c8fabd8e7c78c6e9b24cd65c4ba6c89
+
+# Diff at Mon, 14 Oct 2024 10:52:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20912649
+- current block number: 20912649
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20912649 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0x23bd4269751ee622a2c70f6ff77812e48b54e0f5b236f7b143e78d31fd26ce19"]
+    }
+```
+
+```diff
+    contract Timelock (0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0x6bcef64b35598149aee2e622e06fb8e414063ee43de09312ca4bbd0306b0eea9"]
+    }
+```
+
+```diff
+    contract KromaPortal (0x31F648572b67e60Ec6eb8E197E1848CC5F5558de) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0x110b957ac30147c969242967fdb5705351484239bca1c7060fe8b522d8d9cc44"]
+    }
+```
+
+```diff
+    contract ZKMerkleTrie (0x339208824010425cBE73201ceD4372308ACD610B) {
+    +++ description: None
+      sourceHashes:
++        ["0x90927c331f5a5d562d23263a9343eb8828b5dc83798239506f42fcd382b903a4"]
+    }
+```
+
+```diff
+    contract SystemConfig (0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0x579a99eb751c6e2b976e753d11220cfa89229ac2225f9ce87d4dfdabc7371ff0"]
+    }
+```
+
+```diff
+    contract SecurityCouncil (0x3de211088dF516da72efe68D386b561BEE256Ec4) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0x1a3ad305d7acaa5f74c8de3149553a1eb31fa3be9e4649c601512623645015a4"]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0xaff375ae74ed132384e4286ac5de5830f7c8e7c3f2bb6b31f4f2251e0dc2b8d2"]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x46d07221dfC313afe1BF104F4bB1f185301D65B9) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0x4a2ad213ff7b5da7d065bc134bb2392837364747089248e4083d17a39ea87fd7"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x665c23A5722B6A237fa6Be2B49c0A94504db1edd) {
+    +++ description: None
+      sourceHashes:
++        ["0x82e048446e41433c990a710c946cb691f4cde26f99023a0afcfda2d22e1f30d0"]
+    }
+```
+
+```diff
+    contract ZKVerifier (0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0xd974fa3206ad97d493c1fadcbb131b7fee176407ad7aae0d92d9b54b47bfbc32"]
+    }
+```
+
+```diff
+    contract Colosseum (0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0x044a9955ffcea5b68400e934c9bd2a7e7f856ad28b98727c0cf762a44a428601"]
+    }
+```
+
+```diff
+    contract USDCBridge (0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0x531e0a3d7e3c3cf7433e6462f1606d0470104dfd9eb9e500fecc14e8334670dd"]
+    }
+```
+
+```diff
+    contract SpectrumHub (0x7fe71D0Dde2f6Bbc8474c41dc39bDFd6bCd9Eca5) {
+    +++ description: None
+      sourceHashes:
++        ["0x452d0da14e8093b03552229d64244a198eadf6e81731f2c5755cf5c4efae5df6","0x7c08ca7f13985a63106aa5f6dc1ea45a6706252a7c4e9578523365d6d77ca826"]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x827962404D7104202C5aaa6b929115C8211d9596) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0xe4eddca14af777a8abcb70781c5881acfaec17ce822a4231242061a4032ace9a"]
+    }
+```
+
+```diff
+    contract SpectrumCore (0x88b6bBb148748C18B377A57c9d4E6c714AF28078) {
+    +++ description: None
+      sourceHashes:
++        ["0x452d0da14e8093b03552229d64244a198eadf6e81731f2c5755cf5c4efae5df6","0x4e05028ce6debb60bfcfc5262ccc5afbc807b98fca7b0e0afbe849724f16e5ed"]
+    }
+```
+
+```diff
+    contract SH_ProxyAdmin (0x9841bC06C8284095824e9397AC818aD1114C444C) {
+    +++ description: None
+      sourceHashes:
++        ["0xeb2472cd0f50272a33698b0eea38767d493d4d4f25ef378a981cde4ed201c258","0x1ec7e35ec363a1c5133b29101701dabc1f1cf8774648944bfb44ee8684ddb9d3"]
+    }
+```
+
+```diff
+    contract spETH_ProxyAdmin (0xa50f2b3d55fb311c81f6FB75998B48A67505c6F4) {
+    +++ description: None
+      sourceHashes:
++        ["0xeb2472cd0f50272a33698b0eea38767d493d4d4f25ef378a981cde4ed201c258","0x1ec7e35ec363a1c5133b29101701dabc1f1cf8774648944bfb44ee8684ddb9d3"]
+    }
+```
+
+```diff
+    contract UpgradeGovernor (0xb3c415c2Aad428D5570208e1772cb68e7D06a537) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0x83b27c2e32131de05d6b3676aea653f8a46267dd75c421acd51b2c53fa145604"]
+    }
+```
+
+```diff
+    contract SC_ProxyAdmin (0xd26F4195B147b988E7497779f7DED22ba130204d) {
+    +++ description: None
+      sourceHashes:
++        ["0xeb2472cd0f50272a33698b0eea38767d493d4d4f25ef378a981cde4ed201c258","0x1ec7e35ec363a1c5133b29101701dabc1f1cf8774648944bfb44ee8684ddb9d3"]
+    }
+```
+
+```diff
+    contract SecurityCouncilToken (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0x5143e277c3037f518a48916fbdf29d6ab69cb265fedb2d68e4e2ba404b42a453"]
+    }
+```
+
+```diff
+    contract spETH (0xf96d4B1e0a0B129e1471e88dF6f1281b933Bc474) {
+    +++ description: None
+      sourceHashes:
++        ["0x452d0da14e8093b03552229d64244a198eadf6e81731f2c5755cf5c4efae5df6","0xd221fde741d3a22b1b97b9996ba58d404be2eb771c22e87a783d59d6fa5f01f9"]
+    }
+```
+
+```diff
+    contract ValidatorPool (0xFdFF462845953D90719A78Fd12a2d103541d2103) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0x22ee68d5248870b98295dbc19fb66375ddbb2b23f040c2c6d8cc43a946f9940f"]
+    }
+```
+
+Generated with discovered.json: 0x192ec46727290d3f2d3b8213fa58f007f2fd1280
 
 # Diff at Mon, 07 Oct 2024 09:02:03 GMT:
 

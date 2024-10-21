@@ -4,6 +4,8 @@ import {
   AggLayerNativeEtherWrapped,
   CoingeckoId,
   CoingeckoPriceConfigEntry,
+  ElasticChainEther,
+  ElasticChainL2Token,
   EscrowEntry,
   EthereumAddress,
   TotalSupplyEntry,
@@ -21,6 +23,8 @@ export type MultiIndexerEntry =
   | AggLayerL2Token
   | AggLayerNativeEtherPreminted
   | AggLayerNativeEtherWrapped
+  | ElasticChainL2Token
+  | ElasticChainEther
 
 export function createIndexerId(name: string, tag: string | undefined) {
   return tag === undefined ? name : `${name}::${tag}`
@@ -63,6 +67,9 @@ export function toIndexerId(config: MultiIndexerEntry) {
     case 'aggLayerNativeEtherPreminted':
     case 'aggLayerNativeEtherWrapped':
       return getAggLayerIndexerId(config.chain)
+    case 'elasticChainL2Token':
+    case 'elasticChainEther':
+      return getElasticChainIndexerId(config.chain)
   }
 }
 
@@ -76,6 +83,10 @@ export function getChainAmountIndexerId(chain: string) {
 
 export function getAggLayerIndexerId(chain: string) {
   return createIndexerId(INDEXER_NAMES.AGGLAYER, chain)
+}
+
+export function getElasticChainIndexerId(chain: string) {
+  return createIndexerId(INDEXER_NAMES.ELASTIC_CHAIN, chain)
 }
 
 export function getCirculatingSupplyIndexerId(coingeckoId: CoingeckoId) {

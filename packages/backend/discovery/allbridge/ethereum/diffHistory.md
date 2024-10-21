@@ -1,4 +1,94 @@
-Generated with discovered.json: 0x48f6a883d56eadcd38908b70587c0deb286d7bd0
+Generated with discovered.json: 0xdd6b3727b1ecc90688fdfb773acae42914192577
+
+# Diff at Mon, 14 Oct 2024 10:49:06 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20785156
+- current block number: 20785156
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20785156 (main branch discovery), not current.
+
+```diff
+    contract GasOracle (0x0BdF6139F2841A7856Ca154D851182C52F5b96e0) {
+    +++ description: None
+      sourceHashes:
++        ["0x61437d07b213292a6639ca58a2549f8fec70a7497940aba88e8d137a2b23e5a1"]
+    }
+```
+
+```diff
+    contract AllbridgeMessenger (0x203e8785b4d4312c4152D0c42Ba3FA8BD79086dA) {
+    +++ description: None
+      sourceHashes:
++        ["0xb232ad1147747fd0ac80fb67952fcf5297e1a534c2009196849b29ac950afdcf"]
+    }
+```
+
+```diff
+    contract LPBridge (0x609c690e8F7D68a59885c9132e812eEbDaAf0c9e) {
+    +++ description: None
+      sourceHashes:
++        ["0x814861bc3f9f100efbeb6a574409097f4080e9c4765d678fca86ffa46e453d7f"]
+    }
+```
+
+```diff
+    contract Pool (0x7DBF07Ad92Ed4e26D5511b4F285508eBF174135D) {
+    +++ description: None
+      sourceHashes:
++        ["0xb2eff5db97a89eb54072562067b928bf496762048db22261130e67145170d1b5"]
+    }
+```
+
+```diff
+    contract WormholeMessenger (0x7f02294f065A605C8D21D9812b8d1De7E5E1da74) {
+    +++ description: None
+      sourceHashes:
++        ["0xd907a740abab7d5003a704cad4c8273b66cd185386078939c9c8abccec6ec131"]
+    }
+```
+
+```diff
+    contract OldLPBridge (0xA314330482f325D38A83B492EF6B006224a3bea9) {
+    +++ description: None
+      sourceHashes:
++        ["0x227ed0f9173e33afccdd9e79a6d7d760104d62875552f49b4ef2a9c7c7431ba6"]
+    }
+```
+
+```diff
+    contract Pool (0xa7062bbA94c91d565Ae33B893Ab5dFAF1Fc57C4d) {
+    +++ description: None
+      sourceHashes:
++        ["0xb2eff5db97a89eb54072562067b928bf496762048db22261130e67145170d1b5"]
+    }
+```
+
+```diff
+    contract TokenBridge (0xBBbD1BbB4f9b936C3604906D7592A644071dE884) {
+    +++ description: None
+      sourceHashes:
++        ["0x130012988c91475c96e6c32d27893406b8a1837f48f56d47571e53852d863a6d"]
+    }
+```
+
+```diff
+    contract CctpBridge (0xC51397b75B783E31469bFaADE79913F3f82210d6) {
+    +++ description: None
+      sourceHashes:
++        ["0x2953fb7cbb1c9e0950eac2b3e6206de8087063655779e90a024f7aaf8f31d55c"]
+    }
+```
+
+Generated with discovered.json: 0x83981df772a4f7cd30366f491f9e3b73ac356007
 
 # Diff at Thu, 19 Sep 2024 14:12:14 GMT:
 

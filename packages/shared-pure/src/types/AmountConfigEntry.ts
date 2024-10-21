@@ -19,6 +19,8 @@ export type AmountConfigEntry =
   | AggLayerL2Token
   | AggLayerNativeEtherPreminted
   | AggLayerNativeEtherWrapped
+  | ElasticChainL2Token
+  | ElasticChainEther
 
 export interface PremintedEntry extends AmountConfigBase {
   type: 'preminted'
@@ -51,7 +53,7 @@ export interface AmountConfigBase {
   source: Token['source']
   dataSource: string
   sinceTimestamp: UnixTime
-  untilTimestamp?: UnixTime
+  untilTimestamp: UnixTime | undefined
   includeInTotal: boolean
   decimals: number
   symbol: string
@@ -83,5 +85,12 @@ export interface AggLayerNativeEtherWrapped extends AmountConfigBase {
 export interface ElasticChainL2Token extends AmountConfigBase {
   type: 'elasticChainL2Token'
   l1Address: EthereumAddress
+  escrowAddress: EthereumAddress
+  l2BridgeAddress: EthereumAddress
+}
+
+export interface ElasticChainEther extends AmountConfigBase {
+  type: 'elasticChainEther'
+  address: EthereumAddress
   escrowAddress: EthereumAddress
 }

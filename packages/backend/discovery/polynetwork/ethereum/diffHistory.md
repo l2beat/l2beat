@@ -1,4 +1,102 @@
-Generated with discovered.json: 0xf39ecbd92f91722476a47abdb40f30da3b1d3391
+Generated with discovered.json: 0x4b3a04870aef5f52d2f16cbb234f123bfb3e4069
+
+# Diff at Mon, 14 Oct 2024 10:54:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20675914
+- current block number: 20675914
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20675914 (main branch discovery), not current.
+
+```diff
+    contract EthCrossChainManager (0x14413419452Aaf089762A0c5e95eD2A13bBC488C) {
+    +++ description: Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs.
+      sourceHashes:
++        ["0x221889e435e2f64e82619837d394394a6179db1932bfbbdedc0782fe358dffda"]
+    }
+```
+
+```diff
+    contract Lock Proxy 1 (0x250e76987d838a75310c34bf422ea9f1AC4Cc906) {
+    +++ description: None
+      sourceHashes:
++        ["0x2d120f7fb68dde6641e58f5786c8afcdb63926871f15f20ea7f9da917c31e255"]
+    }
+```
+
+```diff
+    contract Lock Proxy 7 (0x51ba447DaD1de30b91286471BcB570F69ECE968D) {
+    +++ description: None
+      sourceHashes:
++        ["0xed38088fe5df0eccdb8a218a37c99e8a09d2a807286624e96a1d50b4f6e57620"]
+    }
+```
+
+```diff
+    contract Lock Proxy 4 (0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868) {
+    +++ description: None
+      sourceHashes:
++        ["0xed38088fe5df0eccdb8a218a37c99e8a09d2a807286624e96a1d50b4f6e57620"]
+    }
+```
+
+```diff
+    contract EthCrossChainManagerProxy (0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb) {
+    +++ description: Used to proxy requests from LockProxy to EthCrossChainManager and to pause/unpause it.
+      sourceHashes:
++        ["0x59a4969b8c2f837444e679b13cbaec4730cc5ffe789f3e3e7b038b7e8d4a79d5"]
+    }
+```
+
+```diff
+    contract Lock Proxy 2 (0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54) {
+    +++ description: None
+      sourceHashes:
++        ["0x51007159d79f6f899952b6b5996a46b210e9b041665c5da2408c4f528b000bc3"]
+    }
+```
+
+```diff
+    contract PolyWrapper (0x81910675DbaF69deE0fD77570BFD07f8E436386A) {
+    +++ description: None
+      sourceHashes:
++        ["0xfbfc2095ce2f12ed5539dc7b6b1ee656eaf477f144685f6bb185c9aa8d6b4d42"]
+    }
+```
+
+```diff
+    contract EthCrossChainData (0xcF2afe102057bA5c16f899271045a0A37fCb10f2) {
+    +++ description: Used to store Keepers’ signatures and other parameters used by EthCrossChainManager.
+      sourceHashes:
++        ["0xd8a7f029fa8e1dabfbc9c64632f1959334147be1d784e585f99ad1e307ba11f7"]
+    }
+```
+
+```diff
+    contract Lock Proxy 8 (0xead16Ae2c301C48Ea011A36Eef9337507673DFc0) {
+    +++ description: None
+      sourceHashes:
++        ["0xba13e21f4e7ec8692a18d58c1a21540ef7c2bcfd9a72466af608976c7bc65081"]
+    }
+```
+
+```diff
+    contract Lock Proxy 5 (0xf6378141BC900020a438F3914e4C3ceA29907b27) {
+    +++ description: None
+      sourceHashes:
++        ["0xed38088fe5df0eccdb8a218a37c99e8a09d2a807286624e96a1d50b4f6e57620"]
+    }
+```
+
+Generated with discovered.json: 0xcfa6483322dedf93564648f119e500d2ff23dea2
 
 # Diff at Wed, 04 Sep 2024 08:07:09 GMT:
 

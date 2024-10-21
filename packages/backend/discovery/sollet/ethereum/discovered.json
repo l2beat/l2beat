@@ -3,11 +3,13 @@
   "chain": "ethereum",
   "blockNumber": 16154924,
   "configHash": "0x55cbc16ba9446d3735b73865468a11d4f0fb92404912bf08048aae525a8029aa",
-  "version": 15,
   "contracts": [
     {
       "name": "SplTokenSwap",
       "address": "0xeae57ce9cc1984F202e15e038B964bb8bdF7229a",
+      "sourceHashes": [
+        "0xa9306a9cf233bd50fb86a2e4aa8e1346513fe1efc80a25bf5706100e2f75b972"
+      ],
       "sinceTimestamp": 1599794859,
       "values": {
         "$immutable": true,
@@ -39,6 +41,5 @@
       "function withdrawEth(address recipient, uint256 amount, uint256 nonce, bytes signature)"
     ]
   },
-  "usedTemplates": {},
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "usedTemplates": {}
 }

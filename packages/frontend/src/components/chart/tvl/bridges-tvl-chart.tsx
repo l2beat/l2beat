@@ -6,14 +6,16 @@ import { useCookieState } from '~/hooks/use-cookie-state'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { api } from '~/trpc/react'
-import { formatCurrency } from '~/utils/format'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 import { Skeleton } from '../../core/skeleton'
 import { PercentChange } from '../../percent-change'
+import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
 import { useChartLoading } from '../core/chart-loading-context'
+import { ChartTimeRange } from '../core/chart-time-range'
 import { type ChartUnit } from '../types'
 import { TvlChartHover } from './tvl-chart-hover'
 import { TvlChartTimeRangeControls } from './tvl-chart-time-range-controls'
-import { TvlChartUnitControls } from './tvl-chart-unit-and-scale-controls'
+import { TvlChartUnitControls } from './tvl-chart-unit-controls'
 import { tvlRangeToReadable } from './tvl-range-to-readable'
 import { useTvlChartRenderParams } from './use-tvl-chart-render-params'
 
@@ -52,14 +54,16 @@ export function BridgesTvlChart() {
           value={total?.[unit]}
           change={change}
           range={timeRange}
-        />
-        <TvlChartTimeRangeControls
-          timeRange={timeRange}
-          setTimeRange={setTimeRange}
-          range={chartRange}
+          timeRange={chartRange}
         />
         <Chart />
-        <TvlChartUnitControls unit={unit} setUnit={setUnit} />
+        <ChartControlsWrapper>
+          <TvlChartUnitControls unit={unit} setUnit={setUnit} />
+          <TvlChartTimeRangeControls
+            timeRange={timeRange}
+            setTimeRange={setTimeRange}
+          />
+        </ChartControlsWrapper>
       </section>
     </ChartProvider>
   )
@@ -70,11 +74,13 @@ function BridgesChartHeader({
   value,
   change,
   range,
+  timeRange,
 }: {
   unit: string
   value?: number
   change?: number
   range: TvlChartRange
+  timeRange: [number, number] | undefined
 }) {
   const loading = useChartLoading()
 
@@ -82,36 +88,31 @@ function BridgesChartHeader({
     range === 'max' ? (
       INFINITY
     ) : change ? (
-      <PercentChange value={change} />
+      <PercentChange value={change} textClassName="lg:w-[63px] lg:text-base" />
     ) : null
 
   return (
-    <header className="flex flex-col justify-between text-base md:flex-row">
+    <header className="flex justify-between">
       <div>
-        <h1 className="mb-1 text-3xl font-bold">Value Locked</h1>
-        <p className="hidden text-gray-500 dark:text-gray-600 md:block">
-          Sum of all funds locked on Ethereum converted to {unit.toUpperCase()}
-        </p>
+        <h1 className="text-xl font-bold md:text-2xl">Value Locked</h1>
+        <ChartTimeRange range={timeRange} />
       </div>
-      <div className="flex flex-row items-baseline gap-2 md:flex-col md:items-end md:gap-1">
-        <div className="whitespace-nowrap text-right text-lg font-bold md:text-3xl">
+      <div className="flex flex-col items-end">
+        <div className="whitespace-nowrap text-right text-xl font-bold md:text-2xl">
           {!value || loading ? (
-            <Skeleton className="h-6 w-32" />
+            <Skeleton className="my-0.5 h-[26px] w-32 md:h-8" />
           ) : (
-            formatCurrency(value, unit, {
-              showLessThanMinimum: false,
-            })
+            formatCurrency(value, unit)
           )}
         </div>
         {loading ? (
-          <Skeleton className="h-6 w-40" />
+          <Skeleton className="h-5 w-32 lg:h-6" />
         ) : (
-          <p className="whitespace-nowrap text-right text-xs font-bold md:text-base">
+          <p className="whitespace-nowrap text-right text-xs font-medium text-secondary lg:text-base">
             {changeOverTime} / {tvlRangeToReadable(range)}
           </p>
         )}
       </div>
-      <hr className="mt-2 w-full border-gray-200 dark:border-zinc-700 md:hidden md:border-t" />
     </header>
   )
 }

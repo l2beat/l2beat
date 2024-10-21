@@ -3,11 +3,13 @@
   "chain": "ethereum",
   "blockNumber": 17065004,
   "configHash": "0x523883645f84f25ed4efcd89b3a2a5cb9454f294cf39b250d65a6d05f6f1793d",
-  "version": 15,
   "contracts": [
     {
       "name": "Gravity",
       "address": "0xa4108aA1Ec4967F8b52220a4f7e94A8201F2D906",
+      "sourceHashes": [
+        "0x73614d88ab67bc498a05ec1978414a688122d352f1d0cb7d58e2e2bb2cce483b"
+      ],
       "ignoreInWatchMode": [
         "state_gravityId",
         "state_lastEventNonce",
@@ -65,6 +67,5 @@
       "function updateValset(tuple(address[] validators, uint256[] powers, uint256 valsetNonce, uint256 rewardAmount, address rewardToken) _newValset, tuple(address[] validators, uint256[] powers, uint256 valsetNonce, uint256 rewardAmount, address rewardToken) _currentValset, tuple(uint8 v, bytes32 r, bytes32 s)[] _sigs)"
     ]
   },
-  "usedTemplates": {},
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "usedTemplates": {}
 }

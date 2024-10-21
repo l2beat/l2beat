@@ -10,12 +10,12 @@ const discovery = new ProjectDiscovery('real')
 export const real: Layer2 = orbitStackL2({
   discovery,
   badges: [Badge.DA.DAC, Badge.RaaS.Gelato],
+  additionalPurposes: ['RWA'],
   display: {
     name: 'Re.al',
     slug: 'real',
     description:
       'Re.al is an Arbitrum Orbit stack L2 with AnyTrust data availability, focusing on Real World Assets.',
-    purposes: ['RWA', 'Universal'],
     links: {
       websites: ['https://re.al'],
       apps: ['https://re.al/bridge/', 'https://re.al/app/bridge/'],
