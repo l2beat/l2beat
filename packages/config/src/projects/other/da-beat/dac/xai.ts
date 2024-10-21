@@ -1,7 +1,7 @@
 import { ChainId } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { xai } from '../../../layer3s/xai'
-import { DAC } from '../templates/dac-template'
+import { AnytrustDAC } from '../templates/anytrust-template'
 import { DaEconomicSecurityRisk } from '../types'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
@@ -13,7 +13,7 @@ const dac = discovery.getContractValue<{
 }>('SequencerInbox', 'dacKeyset')
 const { membersCount, requiredSignatures } = dac
 
-export const xaiDac = DAC({
+export const xaiDac = AnytrustDAC({
   project: xai,
   risks: { economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable },
   bridge: {

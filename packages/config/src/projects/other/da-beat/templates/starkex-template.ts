@@ -65,7 +65,7 @@ type TemplateVars = Optionals & TemplateSpecific
  * creating DA-LAYER and DA-BRIDGE without the need to manually
  * duplicate code and files.
  */
-export function starkexDAC(template: TemplateVars): DacDaLayer {
+export function StarkexDAC(template: TemplateVars): DacDaLayer {
   // Common
   const name = `${template.project.display.name} DAC`
   const usedIn = toUsedInProject([template.project])
