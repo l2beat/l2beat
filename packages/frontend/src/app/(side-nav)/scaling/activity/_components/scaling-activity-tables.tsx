@@ -67,7 +67,7 @@ export function ScalingActivityTables(props: Props) {
 
   return (
     <MainPageCard className="space-y-3 md:mt-6 md:space-y-6">
-      <ScalingFilters items={props.entries} />
+      <ScalingFilters items={props.entries} showRollupsOnly />
       <ScalingActivityTable entries={props.entries} />
     </MainPageCard>
   )

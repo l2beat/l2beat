@@ -58,7 +58,7 @@ export function ScalingTvlTables(props: Props) {
 
   return (
     <MainPageCard className="space-y-3 md:mt-6 md:space-y-6">
-      <ScalingTvlFilters items={props.entries} />
+      <ScalingTvlFilters items={props.entries} showRollupsOnly />
       <ScalingTvlTable entries={props.entries} />
     </MainPageCard>
   )

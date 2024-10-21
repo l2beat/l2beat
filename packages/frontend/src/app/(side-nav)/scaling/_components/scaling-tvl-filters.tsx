@@ -12,9 +12,14 @@ import { useScalingFilterValues } from './scaling-filter-context'
 interface Props {
   items: CommonScalingEntry[]
   className?: string
+  showRollupsOnly?: boolean
 }
 
-export function ScalingTvlFilters({ items, className }: Props) {
+export function ScalingTvlFilters({
+  items,
+  className,
+  showRollupsOnly,
+}: Props) {
   const { excludeAssociatedTokens, setExcludeAssociatedTokens } =
     useScalingAssociatedTokensContext()
   const state = useScalingFilterValues()
@@ -44,7 +49,11 @@ export function ScalingTvlFilters({ items, className }: Props) {
         className,
       )}
     >
-      <BaseScalingFilters items={items} additionalFilters={hostChainFilter} />
+      <BaseScalingFilters
+        items={items}
+        additionalFilters={hostChainFilter}
+        showRollupsOnly={showRollupsOnly}
+      />
       <Checkbox
         id="exclude-associated-tokens"
         checked={excludeAssociatedTokens}
