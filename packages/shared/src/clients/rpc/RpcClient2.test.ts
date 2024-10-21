@@ -15,7 +15,7 @@ describe(RpcClient2.name, () => {
       const result = await rpc.getBlock(100)
 
       expect(result).toEqual({
-        transactions: ['0x0', '0x1'],
+        transactions: [mockTx('0'), mockTx('1')],
         timestamp: 100,
         hash: '0xabcdef',
         number: 100,
@@ -26,7 +26,7 @@ describe(RpcClient2.name, () => {
       )
       //@ts-expect-error
       expect(http.fetch.calls[0].args[1]?.body).toMatchRegex(
-        /"params":\["0x64",false\]/,
+        /"params":\["0x64",true\]/,
       )
     })
   })
@@ -43,7 +43,7 @@ describe(RpcClient2.name, () => {
       expect(result).toEqual(100)
       //@ts-expect-error
       expect(http.fetch.calls[0].args[1]?.body).toMatchRegex(
-        /"params":\["latest",false\]/,
+        /"params":\["latest",true\]/,
       )
     })
   })
@@ -61,12 +61,16 @@ describe(RpcClient2.name, () => {
       const result = await rpc.query('rpc_method', ['a', 1, true])
 
       expect(result).toEqual('data-returned-from-api')
-      expect(http.fetch).toHaveBeenCalledWith('API_URL', {
-        body: expect.anything(),
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        redirect: 'follow',
-      })
+      expect(http.fetch).toHaveBeenOnlyCalledWith(
+        'API_URL',
+        {
+          body: expect.anything(),
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          redirect: 'follow',
+        },
+        5000,
+      )
 
       //@ts-expect-error
       expect(http.fetch.calls[0].args[1]?.body).toMatchRegex(
@@ -151,9 +155,14 @@ function mockClient(deps: {
 
 const mockResponse = (blockNumber: number) => ({
   result: {
-    transactions: ['0x0', '0x1'],
+    transactions: [mockTx('0'), mockTx('1')],
     timestamp: `0x${blockNumber.toString(16)}`,
     hash: '0xabcdef',
     number: `0x${blockNumber.toString(16)}`,
   },
+})
+
+const mockTx = (data: string) => ({
+  to: `0x${data}`,
+  data: `0x${data}`,
 })

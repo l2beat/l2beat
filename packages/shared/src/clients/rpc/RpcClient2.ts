@@ -19,12 +19,14 @@ export class RpcClient2 {
     this.$.logger = this.$.logger.for(this)
   }
 
-  // TODO: add support for including txs body
-  async getBlock(blockNumber: number | 'latest') {
+  /** Calls eth_getBlockByNumber on RPC, includes full transactions bodies.
+   * The query is wrapped with rate limiting and retry handling.
+   */
+  async getBlock(blockNumber: number | 'latest'): Promise<Block> {
     const method = 'eth_getBlockByNumber'
     const encodedNumber =
       blockNumber === 'latest' ? 'latest' : Quantity.encode(BigInt(blockNumber))
-    const blockResponse = await this.query(method, [encodedNumber, false])
+    const blockResponse = await this.query(method, [encodedNumber, true])
 
     const block = Block.safeParse(blockResponse)
     if (!block.success) {
