@@ -6,11 +6,17 @@ export const RpcResponse = z.object({
 })
 
 export type EVMTransaction = z.infer<typeof EVMTransaction>
-export const EVMTransaction = z.object({
-  hash: z.string(),
-  to: z.string(),
-  data: z.string(),
-})
+export const EVMTransaction = z
+  .object({
+    hash: z.string(),
+    to: z.string(),
+    input: z.string().transform((input) => ({ data: input })),
+  })
+  .transform(({ hash, to, input }) => ({
+    hash,
+    to,
+    data: input.data,
+  }))
 
 export const Quantity = {
   decode: z.preprocess((s) => {
