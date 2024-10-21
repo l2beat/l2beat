@@ -20,6 +20,10 @@ const Response = z.object({
 const API_URL = 'https://api.openchain.xyz/signature-database/v1/lookup'
 
 export class OpenChainClient implements SignatureClient {
+  getName(): string {
+    return 'OpenChain'
+  }
+
   async getSignature(selector: string): Promise<string> {
     const results = await this.getSignatures([selector])
     return results[selector][0] ?? ''
