@@ -20,10 +20,11 @@ export const world: Layer2 = opStackL2({
         'https://worldchain-mainnet.bridge.alchemy.com/',
         'https://worldcoin.org/download-app',
       ],
-      documentation: [
-        'https://world-id-docs-git-world-chain-docs-main-worldcoin.vercel.app/world-chain/quick-start',
-      ], // non-prod
-      explorers: ['https://worldchain-mainnet.explorer.alchemy.com/'],
+      documentation: ['https://docs.world.org/world-chain/'],
+      explorers: [
+        'https://worldscan.org',
+        'https://worldchain-mainnet.explorer.alchemy.com/',
+      ],
       repositories: ['https://github.com/worldcoin'],
       socialMedia: [
         'https://x.com/worldcoin',
