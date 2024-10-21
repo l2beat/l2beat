@@ -29,7 +29,7 @@ export default async function RootLayout({
     .sort(
       (a, b) => (b.createdAt?.toNumber() ?? 0) - (a.createdAt?.toNumber() ?? 0),
     )
-    .slice(0, 5)
+    .slice(0, 15)
     .map(toSearchBarProject)
 
   const allProjects = [
@@ -48,6 +48,11 @@ export default async function RootLayout({
       <head>
         {/* The rest of the icons are handled by the App Router */}
         <link rel="mask-icon" href="/mask-icon.svg" />
+        {/* Prevent zooming on input click on iOS by adding maximum-scale=1 */}
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1"
+        />
       </head>
       <body className={roboto.variable}>
         <PlausibleProvider

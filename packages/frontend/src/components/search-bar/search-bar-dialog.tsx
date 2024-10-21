@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   Command,
   CommandDialog,
@@ -11,6 +11,7 @@ import {
   CommandItem,
   CommandList,
 } from '~/components/core/command'
+import { useOnClickOutside } from '~/hooks/use-on-click-outside'
 import { useRouterWithProgressBar } from '../progress-bar'
 import {
   type SearchBarProject,
@@ -23,6 +24,7 @@ interface Props {
 }
 
 export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
+  const inputRef = useRef<HTMLInputElement>(null)
   const [value, setValue] = useState('')
   const { open, setOpen } = useSearchBarContext()
   const router = useRouterWithProgressBar()
@@ -58,14 +60,17 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
     [value, allProjects, recentlyAdded],
   )
 
-  const onEscapeKeyDown = (e: KeyboardEvent) => {
-    e.preventDefault()
+  const onEscapeKeyDown = (e?: KeyboardEvent) => {
+    e?.preventDefault()
     if (value !== '') {
       setValue('')
       return
     }
     setOpen(false)
   }
+
+  // Hide virtual keyboard on touch start
+  useOnClickOutside(inputRef, () => inputRef.current?.blur(), 'touchstart')
 
   return (
     <CommandDialog
@@ -75,11 +80,13 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
     >
       <Command shouldFilter={false} sidebar>
         <CommandInput
+          ref={inputRef}
           placeholder="Search for projects"
           value={value}
           onValueChange={setValue}
+          reset={() => onEscapeKeyDown()}
         />
-        <CommandList className="h-[270px]">
+        <CommandList className="max-h-dvh md:h-[270px]">
           <CommandEmpty>No results found.</CommandEmpty>
           {filteredProjects.length > 0 && (
             <CommandGroup

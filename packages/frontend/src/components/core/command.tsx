@@ -1,7 +1,7 @@
 'use client'
 
 import { type DialogProps } from '@radix-ui/react-dialog'
-import { Command as CommandPrimitive } from 'cmdk'
+import { Command as CommandPrimitive, useCommandState } from 'cmdk'
 import * as React from 'react'
 import { SearchIcon } from '~/icons/search'
 import { cn } from '~/utils/cn'
@@ -36,7 +36,8 @@ const CommandDialog = ({
   return (
     <Dialog {...props}>
       <DialogContent
-        className="top-1/4 overflow-hidden p-0 shadow-lg"
+        className="top-1/2 overflow-hidden p-0 shadow-lg max-md:h-dvh md:top-1/4"
+        overlayClassName="max-md:hidden"
         onEscapeKeyDown={onEscapeKeyDown}
       >
         <Command className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-secondary [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:size-5">
@@ -53,6 +54,7 @@ const CommandInput = React.forwardRef<
     reset?: () => void
   }
 >(({ className, reset, ...props }, ref) => {
+  const search = useCommandState((state) => state.search)
   return (
     <div
       className="flex items-center border-b border-gray-400 px-3 sidebar:!border-surface-tertiary dark:border-gray-650"
@@ -72,7 +74,7 @@ const CommandInput = React.forwardRef<
           className={linkVariants({ underline: false, className: 'text-xs' })}
           onClick={reset}
         >
-          Clear
+          {search !== '' ? 'Clear' : 'Close'}
         </button>
       )}
     </div>
