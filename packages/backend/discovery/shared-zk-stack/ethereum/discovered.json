@@ -1,8 +1,8 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 20998125,
-  "configHash": "0x43f1a2fc754c375d28166fa477c2c5a18364a7d82999782611e96a8c2f14d983",
+  "blockNumber": 21013457,
+  "configHash": "0xc2d869d7866ba5fdf516cc57c66c0b72cc5e85e14fe1fb91e68e1497018a7cc9",
   "contracts": [
     {
       "name": "GnosisSafe",
@@ -196,6 +196,10 @@
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "sharedBridge": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+        "SophonDiamond": "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
+        "SophonSTM": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+        "ZeroNetworkDiamond": "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9",
+        "ZeroNetworkSTM": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
         "zksyncEraDiamond": "0x32400084C286CF3E17e7B677ea9583e60a000324",
         "zksyncEraSTM": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
       },
@@ -357,12 +361,34 @@
         "owner": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "revertedBlocks": [],
+        "sophonFirstBatchTS": 0,
+        "sophonValidatorsAdded": [
+          "0x4cc87B0A504047967CeD9A955431B3229237e7de",
+          "0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f"
+        ],
+        "sophonValidatorsRemoved": [],
         "stateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+        "zeronetworkFirstBatchTS": 0,
+        "zeronetworkValidatorsAdded": [
+          "0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F",
+          "0x479B7c95b9509E1A834C994fc94e3581aA8A73B9"
+        ],
+        "zeronetworkValidatorsRemoved": [],
         "zksyncValidatorsAdded": [
           "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99",
           "0x3527439923a63F8C13CF72b8Fe80a77f6e572092"
         ],
         "zksyncValidatorsRemoved": []
+      },
+      "fieldMeta": {
+        "zeronetworkFirstBatchTS": {
+          "severity": "MEDIUM",
+          "description": "If non-zero, the first batch has been posted."
+        },
+        "sophonFirstBatchTS": {
+          "severity": "MEDIUM",
+          "description": "If non-zero, the first batch has been posted."
+        }
       },
       "derivedName": "ValidatorTimelock"
     },
@@ -840,6 +866,7 @@
     { "address": "0x0B2E7ffbcD1E3e6f5034555Fb638889FE7564709" },
     { "address": "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99" },
     { "address": "0x0e621b0A275A207211e161Ee997aA80661Bc1bcf" },
+    { "address": "0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F" },
     { "address": "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137" },
     { "address": "0x14574dfC6B7aF658c5033BA95673864947956521" },
     { "address": "0x160669864cDe95c190364ad01eDfbAA32E9DA430" },
@@ -855,6 +882,8 @@
     { "address": "0x3Ec90fA056A39e7281a5b4c8c044B86667D770e1" },
     { "address": "0x3F0009D00cc78979d00Eb635490F23E8d6aCc481" },
     { "address": "0x441e5c8910Ef39996B2D01499509861228cbc2d1" },
+    { "address": "0x479B7c95b9509E1A834C994fc94e3581aA8A73B9" },
+    { "address": "0x4cc87B0A504047967CeD9A955431B3229237e7de" },
     { "address": "0x56B3120c32AE9C3188fafc5Cc542F9c53B0b2222" },
     { "address": "0x610e45F112e0c8a9aA7137677C83E7A198A1b991" },
     { "address": "0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df" },
@@ -879,6 +908,7 @@
     { "address": "0xe79af29d618141Ffef951B240b250d47030D56d7" },
     { "address": "0xf2BFa7c00aDDF7765B40e83Fc4207b16EBD6db89" },
     { "address": "0xF322467cec88d3CDFa9376B19bD5AD40da665277" },
+    { "address": "0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f" },
     { "address": "0xFAdb20191Ab38362C50f52909817B74214CA79AE" },
     { "address": "0xfd03dA3aeb6807a98db96C1704Ea4CFf031BaEd2" }
   ],
