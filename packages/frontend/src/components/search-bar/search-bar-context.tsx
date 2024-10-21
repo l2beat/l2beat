@@ -21,6 +21,7 @@ export interface SearchBarProject {
   name: string
   iconUrl: string
   href: string
+  matchers: string[]
 }
 
 export function SearchBarContextProvider({

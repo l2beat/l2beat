@@ -13,6 +13,7 @@ export function toSearchBarProject(
     name: project.display.name,
     iconUrl: `/icons/${project.display.slug}.png`,
     href: getHref(project),
+    matchers: [project.display.slug],
   }
 }
 

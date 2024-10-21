@@ -46,7 +46,12 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
       value === ''
         ? recentlyAdded
         : allProjects
-            .filter((p) => p.name.toLowerCase().includes(value.toLowerCase()))
+            .filter((p) => {
+              return (
+                p.name.toLowerCase().includes(value.toLowerCase()) ||
+                p.matchers.some((m) => m.includes(value.toLowerCase()))
+              )
+            })
             .sort((a, b) => {
               // Sort filtered pages: exact matches first, then partial matches
               const searchTerm = value.toLowerCase()
@@ -99,6 +104,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                     className="gap-2"
                     onSelect={() => {
                       setOpen(false)
+                      setValue('')
                       router.push(project.href)
                     }}
                   >
