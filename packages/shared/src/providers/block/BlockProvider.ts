@@ -1,5 +1,5 @@
-import { RpcClient2 } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
+import { RpcClient2 } from '../../clients'
 
 export class BlockProvider {
   constructor(private readonly clients: RpcClient2[]) {

@@ -5,7 +5,6 @@ import { BlockProvider } from './BlockProvider'
 describe(BlockProvider.name, () => {
   it('returns block', async () => {
     const rpc = mockObject<RpcClient2>({ getBlock: async () => block(1) })
-    // @ts-expect-error
     const provider = new BlockProvider([rpc])
 
     const result = await provider.getBlock(1)
@@ -23,7 +22,6 @@ describe(BlockProvider.name, () => {
     })
     const rpc_three = mockObject<RpcClient2>({ getBlock: async () => block(1) })
 
-    // @ts-expect-error
     const provider = new BlockProvider([rpc_one, rpc_two, rpc_three])
 
     const result = await provider.getBlock(1)
@@ -51,7 +49,6 @@ describe(BlockProvider.name, () => {
       getBlock: mockFn().rejectsWith(new Error('ERROR')),
     })
 
-    // @ts-expect-error
     const provider = new BlockProvider([rpc_one, rpc_two, rpc_three])
 
     await expect(() => provider.getBlock(1)).toBeRejectedWith('ERROR')

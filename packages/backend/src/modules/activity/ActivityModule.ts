@@ -5,6 +5,7 @@ import {
   RetryHandler,
   RpcClient2,
 } from '@l2beat/shared'
+import { BlockProvider } from '@l2beat/shared'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { Config } from '../../config'
 import {
@@ -18,7 +19,6 @@ import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { StarkexClient } from '../../peripherals/starkex/StarkexClient'
 import { StarknetClient } from '../../peripherals/starknet/StarknetClient'
 import { ZksyncLiteClient } from '../../peripherals/zksynclite/ZksyncLiteClient'
-import { BlockProvider } from '../../providers/BlockProvider'
 import { Clock } from '../../tools/Clock'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import { ApplicationModule } from '../ApplicationModule'
