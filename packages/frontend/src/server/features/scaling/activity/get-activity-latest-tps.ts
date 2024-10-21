@@ -9,7 +9,7 @@ import { env } from '~/env'
 import { db } from '~/server/database'
 import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
-import { getLastDayTps } from './utils/get-last-day-tps'
+import { getLastDayUops } from './utils/get-last-day-uops'
 
 export async function getActivityLatestTps(projects: (Layer2 | Layer3)[]) {
   if (env.MOCK) {
@@ -31,8 +31,8 @@ const getCachedActivityLatestTps = cache(
 
     return Object.fromEntries(
       Object.entries(grouped).map(([projectId, records]) => {
-        const pastDayTps = getLastDayTps(records)
-        const previousDayTps = getLastDayTps(records, 1)
+        const pastDayTps = getLastDayUops(records)
+        const previousDayTps = getLastDayUops(records, 1)
         return [
           projectId,
           {

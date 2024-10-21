@@ -1,7 +1,7 @@
-import { countToTps } from '~/server/features/scaling/activity/utils/count-to-tps'
+import { countToUops } from '~/server/features/scaling/activity/utils/count-to-uops'
 import { formatTimestamp } from '~/utils/dates'
 import { formatInteger } from '~/utils/number-format/format-integer'
-import { formatTps } from '~/utils/number-format/format-tps'
+import { formatUops } from '~/utils/number-format/format-tps'
 
 interface Props {
   timestamp: number
@@ -31,7 +31,7 @@ export function ActivityChartHover(props: Props) {
           <span>{props.singleProject ? 'Project' : 'Projects'}</span>
         </div>
         <span className="whitespace-nowrap font-bold tabular-nums">
-          {formatTps(countToTps(props.count), {
+          {formatUops(countToUops(props.count), {
             morePrecision: !!props.singleProject,
           })}
         </span>
@@ -44,7 +44,7 @@ export function ActivityChartHover(props: Props) {
             <span>Ethereum</span>
           </div>
           <span className="whitespace-nowrap font-bold tabular-nums">
-            {formatTps(countToTps(props.ethereumCount), {
+            {formatUops(countToUops(props.ethereumCount), {
               morePrecision: !!props.singleProject,
             })}
           </span>

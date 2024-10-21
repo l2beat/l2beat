@@ -1,8 +1,8 @@
 import { type Milestone } from '@l2beat/config'
 import { useCallback, useMemo } from 'react'
 import { type ActivityChartData } from '~/server/features/scaling/activity/get-activity-chart'
-import { countToTps } from '~/server/features/scaling/activity/utils/count-to-tps'
-import { formatTps } from '~/utils/number-format/format-tps'
+import { countToUops } from '~/server/features/scaling/activity/utils/count-to-uops'
+import { formatUops } from '~/utils/number-format/format-tps'
 import { type SeriesStyle } from '../core/styles'
 import { getChartRange } from '../core/utils/get-chart-range-from-columns'
 import { mapMilestones } from '../core/utils/map-milestones'
@@ -24,7 +24,7 @@ export function useActivityChartRenderParams({
   )
 
   const formatYAxisLabel = useCallback(
-    (value: number) => `${formatTps(value, { morePrecision: true })} TPS`,
+    (value: number) => `${formatUops(value, { morePrecision: true })} TPS`,
     [],
   )
 
@@ -33,8 +33,8 @@ export function useActivityChartRenderParams({
       data?.map((dataPoint) => {
         const [timestamp, count, ethereumCount] = dataPoint
         const milestone = mappedMilestones[timestamp]
-        const tps = countToTps(count)
-        const ethereumTps = countToTps(ethereumCount)
+        const tps = countToUops(count)
+        const ethereumTps = countToUops(ethereumCount)
 
         return {
           values: showMainnet

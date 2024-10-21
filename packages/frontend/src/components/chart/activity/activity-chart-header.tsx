@@ -1,8 +1,8 @@
 import { InfoIcon } from '~/icons/info'
 import { type ActivityChartStats } from '~/server/features/scaling/activity/get-activity-chart-stats'
-import { countToTps } from '~/server/features/scaling/activity/utils/count-to-tps'
+import { countToUops } from '~/server/features/scaling/activity/utils/count-to-uops'
 import { cn } from '~/utils/cn'
-import { formatTps } from '~/utils/number-format/format-tps'
+import { formatUops } from '~/utils/number-format/format-tps'
 import { Skeleton } from '../../core/skeleton'
 import {
   Tooltip,
@@ -27,7 +27,7 @@ export function ActivityChartHeader({ stats, range }: Props) {
         {stats !== undefined ? (
           <p className="text-right font-bold group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0">
             <span className="text-xl md:text-2xl">
-              {formatTps(countToTps(stats.latestProjectsTxCount))} TPS
+              {formatUops(countToUops(stats.latestProjectsTxCount))} TPS
             </span>
           </p>
         ) : (

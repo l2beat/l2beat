@@ -5,10 +5,10 @@ import { Skeleton } from '~/components/core/skeleton'
 import { CustomLink } from '~/components/link/custom-link'
 import { ChevronIcon } from '~/icons/chevron'
 import { type ActivityChartStats } from '~/server/features/scaling/activity/get-activity-chart-stats'
-import { countToTps } from '~/server/features/scaling/activity/utils/count-to-tps'
+import { countToUops } from '~/server/features/scaling/activity/utils/count-to-uops'
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/react'
-import { formatTps } from '~/utils/number-format/format-tps'
+import { formatUops } from '~/utils/number-format/format-tps'
 import { Chart } from '../core/chart'
 import { ChartProvider } from '../core/chart-provider'
 import { ScalingFactorTooltip } from './activity-chart-header'
@@ -83,7 +83,7 @@ function Header({ stats }: { stats: ActivityChartStats | undefined }) {
         {stats !== undefined ? (
           <>
             <div className="whitespace-nowrap text-right text-xl font-bold">
-              {formatTps(countToTps(stats.latestProjectsTxCount))} TPS
+              {formatUops(countToUops(stats.latestProjectsTxCount))} TPS
             </div>
             <div className="flex items-center gap-1">
               <span className="whitespace-nowrap text-right text-xs text-secondary">

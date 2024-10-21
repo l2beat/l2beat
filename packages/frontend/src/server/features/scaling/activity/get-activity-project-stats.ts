@@ -6,8 +6,8 @@ import {
 import { env } from '~/env'
 import { db } from '~/server/database'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
-import { getLastDayTps } from './utils/get-last-day-tps'
-import { getTpsWeeklyChange } from './utils/get-tps-weekly-change'
+import { getLastDayUops } from './utils/get-last-day-uops'
+import { getUopsWeeklyChange } from './utils/get-uops-weekly-change'
 import { sumActivityCount } from './utils/sum-activity-count'
 
 export async function getActivityProjectStats(projectId: ProjectId) {
@@ -32,8 +32,8 @@ const getCachedActivityProjectStats = cache(
 
     return {
       txCount: summed,
-      lastDayTps: getLastDayTps(counts),
-      tpsWeeklyChange: getTpsWeeklyChange(counts),
+      lastDayTps: getLastDayUops(counts),
+      tpsWeeklyChange: getUopsWeeklyChange(counts),
     }
   },
   ['activityProjectStats'],
