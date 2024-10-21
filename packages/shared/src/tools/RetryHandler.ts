@@ -24,8 +24,9 @@ export class RetryHandler {
         this.$.initialRetryDelayMs * Math.pow(2, attempt),
         this.$.maxRetryDelayMs,
       )
+      attempt++
       this.$.logger.warn('Scheduling retry', {
-        attempt: attempt + 1,
+        attempt: attempt,
         delay,
       })
       await new Promise((resolve) => setTimeout(resolve, delay))
@@ -33,8 +34,7 @@ export class RetryHandler {
       try {
         return await fn()
       } catch (error) {
-        attempt++
-        if (attempt > this.$.maxRetries) {
+        if (attempt >= this.$.maxRetries) {
           throw error
         }
       }
