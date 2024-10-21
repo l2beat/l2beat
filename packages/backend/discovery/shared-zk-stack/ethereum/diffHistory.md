@@ -1,3 +1,97 @@
+Generated with discovered.json: 0x0e6c70c0ef9c01d3fdef20ceb46ed231ce43f024
+
+# Diff at Mon, 21 Oct 2024 12:48:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e660599f23a07618fe949a07be1f516ce44f1914 block: 21013457
+- current block number: 21013457
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21013457 (main branch discovery), not current.
+
+```diff
+    contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: Can instantly upgrade all contracts and roles in the zksync Era contracts
+      descriptions:
+-        ["Can instantly upgrade all contracts and roles in the zksync Era contracts"]
+      description:
++        "Can instantly upgrade all contracts and roles in the zksync Era contracts"
+    }
+```
+
+Generated with discovered.json: 0x4c413eb9e9afd24611089408ad364cabe7a1703c
+
+# Diff at Mon, 21 Oct 2024 11:30:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@89bb82544503b2bb7544ceb7dedf56a03e0c5339 block: 21013457
+- current block number: 21013457
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21013457 (main branch discovery), not current.
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x509dA1BE24432F8804C4A9FF4a3c3f80284CDd13"]
+      values.$pastUpgrades.1.1:
+-        ["0x509dA1BE24432F8804C4A9FF4a3c3f80284CDd13"]
++        "0x21aec24a9df97ce4886d699314be627b0818da4d1987349421fb3df102c43f2b"
+      values.$pastUpgrades.0.2:
++        ["0x12f893689f9603991a8c22C249FFd0509Be95661"]
+      values.$pastUpgrades.0.1:
+-        ["0x12f893689f9603991a8c22C249FFd0509Be95661"]
++        "0xdbb03a14ea223de3db4ac0916e78123bd0a1dde68e98952326d8382d29ac4d61"
+    }
+```
+
+```diff
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xed1Dc7F0Be2B19cb02a2476150C8ea24A37c5274"]
+      values.$pastUpgrades.1.1:
+-        ["0xed1Dc7F0Be2B19cb02a2476150C8ea24A37c5274"]
++        "0xc1e73b06359759201b76ab7654e0bd49011f33c0230dfc24423985fbf36ea817"
+      values.$pastUpgrades.0.2:
++        ["0x8279B7E48fA074f966385d87AEf29Bd031e54fD5"]
+      values.$pastUpgrades.0.1:
+-        ["0x8279B7E48fA074f966385d87AEf29Bd031e54fD5"]
++        "0x514bbf46d227eee8567825bf5c8ee1855aa8a1916f7fee7b191e2e3d5ecba849"
+    }
+```
+
+```diff
+    contract L1SharedBridge (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xb56A8225A745756DD215faf22E4796f373561AcD"]
+      values.$pastUpgrades.1.1:
+-        ["0xb56A8225A745756DD215faf22E4796f373561AcD"]
++        "0xaec33529b74f8f9d56d7aa568c6358be299228a85e49ea85cb106eca5af7367c"
+      values.$pastUpgrades.0.2:
++        ["0xCba1aF8f0bB223b2544F8eB8f69d1c7960f788dB"]
+      values.$pastUpgrades.0.1:
+-        ["0xCba1aF8f0bB223b2544F8eB8f69d1c7960f788dB"]
++        "0xce3d72f23297a281cb58502dcc6a6c029489316a2faf9c4ef83141b1b254017c"
+    }
+```
+
 Generated with discovered.json: 0x03f189e9a43739247b980d79767b1d27ad6069b3
 
 # Diff at Mon, 21 Oct 2024 10:48:51 GMT:

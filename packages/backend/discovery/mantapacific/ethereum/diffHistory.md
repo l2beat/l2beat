@@ -1,3 +1,148 @@
+Generated with discovered.json: 0x3d2eb00846cbdf675ac00e789a2678a69c1ad20f
+
+# Diff at Mon, 21 Oct 2024 12:45:49 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e660599f23a07618fe949a07be1f516ce44f1914 block: 20927642
+- current block number: 20927642
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20927642 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x30c789674ad3B458886BBC9abf42EEe19EA05C1D) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      descriptions:
+-        ["Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."]
+      description:
++        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
+    }
+```
+
+```diff
+    contract AddressManager (0x3Ad319BB4872F8cB75a26Ac30CC4bD2d56b67b05) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      descriptions:
+-        ["Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."]
+      description:
++        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x3B95bC951EE0f553ba487327278cAc44f29715E5) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      descriptions:
+-        ["The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."]
+      description:
++        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x635ba609680c55C3bDd0B3627b4c5dB21b13c310) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      descriptions:
+-        ["Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."]
+      description:
++        "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
+    }
+```
+
+```diff
+    contract SystemConfig (0x895E00269A05848F3c9889EfA677D02fF7351a5D) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      descriptions:
+-        ["Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."]
+      description:
++        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
+    }
+```
+
+```diff
+    contract OptimismPortal (0x9168765EE952de7C6f8fC6FaD5Ec209B960b7622) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      descriptions:
+-        ["The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."]
+      description:
++        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
+    }
+```
+
+Generated with discovered.json: 0x9414ee402b7d721e01628754b404ca182a371bee
+
+# Diff at Mon, 21 Oct 2024 11:07:33 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20927642
+- current block number: 20927642
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20927642 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x30c789674ad3B458886BBC9abf42EEe19EA05C1D) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      values.$pastUpgrades.0.2:
++        ["0x1E5e634981564fc645dcbC6546aE618d7870B30a"]
+      values.$pastUpgrades.0.1:
+-        ["0x1E5e634981564fc645dcbC6546aE618d7870B30a"]
++        "0x1a87e499b70152ea3a2a6efdd564f52ca0feafea4b5ebf3bec1dea1744ce26bd"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x635ba609680c55C3bDd0B3627b4c5dB21b13c310) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$pastUpgrades.1.2:
++        ["0x9cDDc6F65eD67Ef19743fFDFD53501457ce8B51f"]
+      values.$pastUpgrades.1.1:
+-        ["0x9cDDc6F65eD67Ef19743fFDFD53501457ce8B51f"]
++        "0xc778764049cb9f0cd852c1361f73a39b1e6aeb4b368a4456f2f77c34369eb6df"
+      values.$pastUpgrades.0.2:
++        ["0x635ba609680c55C3bDd0B3627b4c5dB21b13c310"]
+      values.$pastUpgrades.0.1:
+-        ["0x635ba609680c55C3bDd0B3627b4c5dB21b13c310"]
++        "0xa9f1d5a75b77547488322b8de82f0c63c27cdab4e58ffb59ac181c606cfbf460"
+    }
+```
+
+```diff
+    contract SystemConfig (0x895E00269A05848F3c9889EfA677D02fF7351a5D) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.$pastUpgrades.0.2:
++        ["0xeF01a6aE995791FfFcA3d70bDA7B91E5Fa1aD0aE"]
+      values.$pastUpgrades.0.1:
+-        ["0xeF01a6aE995791FfFcA3d70bDA7B91E5Fa1aD0aE"]
++        "0x3fc415e1bb3f7da0c3242d8f9e94155fa39724cbbac34b0846b9a2249eaae22f"
+    }
+```
+
+```diff
+    contract OptimismPortal (0x9168765EE952de7C6f8fC6FaD5Ec209B960b7622) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.$pastUpgrades.0.2:
++        ["0x445c62F4948f3B08a6bB1DbC51Ef985b3Eb199F1"]
+      values.$pastUpgrades.0.1:
+-        ["0x445c62F4948f3B08a6bB1DbC51Ef985b3Eb199F1"]
++        "0x3ba5fd8ebd0374b77f27332c31ddfdac6e67d7317ab4668043a2e26cb0bb5996"
+    }
+```
+
 Generated with discovered.json: 0xb56ac8f459504f2a56aadc0eea9dd8549ce35921
 
 # Diff at Wed, 16 Oct 2024 11:37:44 GMT:

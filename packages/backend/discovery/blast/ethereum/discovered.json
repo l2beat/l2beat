@@ -10,9 +10,7 @@
       "sourceHashes": [
         "0xb4bd2b8453fbde4b776b6b9653139c16e0c673e589025d3d3fe553933fdab859"
       ],
-      "descriptions": [
-        "Yield Provider for DAI investing DAI into the MakerDAO DSR."
-      ],
+      "description": "Yield Provider for DAI investing DAI into the MakerDAO DSR.",
       "sinceTimestamp": 1708813619,
       "values": {
         "$immutable": true,
@@ -35,9 +33,7 @@
         "0xd40fa201f3d213c5e7a8e44bcd59d3f28c198741c50a733c20af045c60a2914d"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
-      ],
+      "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
       "issuedPermissions": [
         {
           "permission": "guard",
@@ -58,10 +54,12 @@
         "$pastUpgrades": [
           [
             "2024-02-24T22:26:11.000Z",
+            "0xf82923e94578148fd33c7e506f9e5db98ca060c911b41c5b6697d167738dd6a0",
             ["0xd7bfDa9B3b014b16bada89F206607a8Ac7c6FB32"]
           ],
           [
             "2024-03-27T01:00:59.000Z",
+            "0xb813416a1e599fbebc813b4e9a8c29e5d94d45e8da6e10e86935768caed38e98",
             ["0xA280aEBF81c917DbD2aA1b39f979dfECEc9e4391"]
           ]
         ],
@@ -149,9 +147,7 @@
         "0x9b25fea33ece84240133b9633d6edebfa268b929644604f9ec3ef4fbcd97ac60"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Custom bridge gateway for Blast that allows the Operators to reinvest L1 tokens while they are bridged to the L2."
-      ],
+      "description": "Custom bridge gateway for Blast that allows the Operators to reinvest L1 tokens while they are bridged to the L2.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -184,7 +180,7 @@
       "sourceHashes": [
         "0x085a7e18c46eb9d391f5ffaf3469ac7fcb4a361abf098f4aee3e6f4c03670368"
       ],
-      "descriptions": ["Yield Provider for ETH investing ETH into stETH."],
+      "description": "Yield Provider for ETH investing ETH into stETH.",
       "sinceTimestamp": 1708813595,
       "values": {
         "$immutable": true,
@@ -254,9 +250,7 @@
         "0x5287b087cec2244d57a3cea230c0c70a9b5fd8d4fdca71f7d85d34a8a22792b1"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
-      ],
+      "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -282,6 +276,7 @@
         "$pastUpgrades": [
           [
             "2024-02-24T22:20:35.000Z",
+            "0xbe85666f88251637a983ac9ef301efcaa2fb56f8303b769b634404955be5dabf",
             ["0xA150f19B681a06E1a0B7E03934299a9bf9238cb7"]
           ]
         ],
@@ -341,9 +336,7 @@
         "0x62b0361291c40e624393723bdac21e4ecdb590904474346417c941734984bb25"
       ],
       "proxyType": "resolved delegate proxy",
-      "descriptions": [
-        "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
-      ],
+      "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "categories": ["Core"],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1708812983,
@@ -353,14 +346,17 @@
         "$pastUpgrades": [
           [
             "2024-02-24T22:16:35.000Z",
+            "0xb9df50a5931e96f2c6f8055055cf2943009705a369b845fbb3e0202a7b897223",
             ["0x5D4472f31Bd9385709ec61305AFc749F0fA8e9d0"]
           ],
           [
             "2024-02-24T22:25:11.000Z",
+            "0x718f17591631857e26554f08b52874c1826d990a5c53d8496b12c860509615ed",
             ["0xe7406f6d89a14aC3Fc28530479327948ea500659"]
           ],
           [
             "2024-02-27T01:32:47.000Z",
+            "0xcd5f72853d01d93a1fbf3d219a77c7f0243b0fd537d14737c3b0691f0897d67c",
             ["0x84efcFCE2dEe08072d5D57BF232D379b6E92A836"]
           ]
         ],
@@ -410,14 +406,17 @@
         "$pastUpgrades": [
           [
             "2023-11-19T01:59:47.000Z",
+            "0xb7f9a32a4d0d38440243d90730e7048ab1eea8c5301da80805131205a7759b4e",
             ["0xa01Def05A37850b2e13C8c839AA268845Df14276"]
           ],
           [
             "2023-12-11T19:01:59.000Z",
+            "0xb325f82fb0bd7454471789a44740a7bd3a81690a4e9c411e5c53e9412de149ca",
             ["0x829e8Bf84569A0B2da7B27f975F026fDb6e0a774"]
           ],
           [
             "2024-02-19T01:12:23.000Z",
+            "0x57c1c448e2afa4910ac0637260bcca28a4f0cd0b32abb001b261338962d38052",
             ["0x0bD88b59D580549285f0A207Db5F06bf24a8e561"]
           ]
         ],
@@ -488,9 +487,7 @@
         "0xf5e9d1b6ac4bf84529eacc8e29c0731ef1524f2a84cbd91fb9840cf631cfff7c"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
-      ],
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.",
       "categories": ["Gateways&Escrows"],
       "issuedPermissions": [
         {
@@ -522,9 +519,7 @@
         "0x3199ce561d915dec4e96a05f056d262ab4af7342a28a8c1b65b73aad49850d0e"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."
-      ],
+      "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -539,6 +534,7 @@
         "$pastUpgrades": [
           [
             "2024-02-24T22:24:35.000Z",
+            "0x56b371e38c6925d31d80525dc061b211c4c5070dfea14e6e34036f731443c516",
             ["0xBF21bc9AFaF817145B3886caDAF0860A2A0D782F"]
           ]
         ],
@@ -557,9 +553,7 @@
         "0x373b0cddb16922a75ab98dfce0c4913a0970c018bfa1d55d123d4ff6511179a6"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
-      ],
+      "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
       "issuedPermissions": [
         {
           "permission": "challenge",
@@ -590,14 +584,17 @@
         "$pastUpgrades": [
           [
             "2024-02-24T22:25:35.000Z",
+            "0x6294e04e136d66468e369543e2789863e2f036ab8e80d473d6808e414c3e233a",
             ["0x1c952514f0353d84d9ad35BcfB8E9Ea979289031"]
           ],
           [
             "2024-02-29T09:56:59.000Z",
+            "0x4e7b5b82e00b92a5b0380e3a47801760a35f00462793f28926184e984cddc478",
             ["0xaEbA6c3042B463DfAA6A2DFA96486D5A92186cFF"]
           ],
           [
             "2024-07-16T03:45:47.000Z",
+            "0xf9716c8e311c27decc5858f10b2a2c83ef3d8ce3958cfb242df5415a75b1e6eb",
             ["0x1C90963D451316E3DBFdD5A30354EE56C29016EB"]
           ]
         ],
@@ -630,7 +627,7 @@
         "0x5d1416fc2e9565203ff83a5f989b55c635a3c9c11d7655a7d7f8e4a2e63ede7d"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": ["Contract managing Yield Providers for ETH."],
+      "description": "Contract managing Yield Providers for ETH.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -676,9 +673,7 @@
         "0xf99e492f3d76fa74e24ea285b4e7de6199ab1f71a8de99f523785133dac44581"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Contract escrowing stablecoins and managing Yield Providers for stablecoins (like for example DAI)."
-      ],
+      "description": "Contract escrowing stablecoins and managing Yield Providers for stablecoins (like for example DAI).",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -725,9 +720,7 @@
         "0x17f0c97db13062aa8299e78c5d1a68b5152ce948b2fe10e5283857bd6a15ce4f"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Used to bridge ERC-721 tokens from host chain to this chain."
-      ],
+      "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -742,6 +735,7 @@
         "$pastUpgrades": [
           [
             "2024-02-24T22:24:23.000Z",
+            "0x90946309f20c1cbbf4e4204b8f1aebb438908064a941cbd0882028dbe04dab22",
             ["0x3B01aDF2f199144233A536b08244d63e5eb691B8"]
           ]
         ],
@@ -760,9 +754,7 @@
       "sourceHashes": [
         "0xdc86a850f11dc2b5c0472a05d0e3c14f239baf2c3b1ab19631591b0827985380"
       ],
-      "descriptions": [
-        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
-      ],
+      "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
           "permission": "configure",

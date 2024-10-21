@@ -38,10 +38,12 @@
         "$pastUpgrades": [
           [
             "2024-01-26T22:27:23.000Z",
+            "0x5df683475486093be4a4f92d6f7c47548d3bf38e1a39e25bf0028353f83d4a2b",
             ["0x1E45F27F0e96e9757cff938F2c9d697AA8279C85"]
           ],
           [
             "2024-07-04T23:54:35.000Z",
+            "0x22c22ee402c4be83ef7c851992c3125008be9ee0a39c0d83cf6be91a0506f7c4",
             ["0xDaC2d26317C42ae3CB21357B73404120E1dA4232"]
           ]
         ],
@@ -55,9 +57,7 @@
       "sourceHashes": [
         "0x399160e7d36a21fca31097d7875daed8f421f788b77f2a71974d51938c3ea520"
       ],
-      "descriptions": [
-        "Its configuration and MessageLib to use is set for each OApp and destination by the OApp owner."
-      ],
+      "description": "Its configuration and MessageLib to use is set for each OApp and destination by the OApp owner.",
       "sinceTimestamp": 1706307671,
       "values": {
         "$immutable": true,
@@ -256,9 +256,7 @@
       "sourceHashes": [
         "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
       ],
-      "descriptions": [
-        "This is a Layer Zero OApp. It also handles the batching logic: bus, taxi, quotes"
-      ],
+      "description": "This is a Layer Zero OApp. It also handles the batching logic: bus, taxi, quotes",
       "sinceTimestamp": 1716837371,
       "values": {
         "$immutable": true,
@@ -441,9 +439,7 @@
       "sourceHashes": [
         "0x159d8f84a5100285a7401e1ccb3d40a64fe944d9beb951c81749de40279a5876"
       ],
-      "descriptions": [
-        "Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to."
-      ],
+      "description": "Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.",
       "sinceTimestamp": 1706307839,
       "values": {
         "$immutable": true,
@@ -513,9 +509,7 @@
       "sourceHashes": [
         "0x3904c78c7b0abf91f9544ebb9f08f2d2bc83028df65c912a7f7a6ca1ca109dde"
       ],
-      "descriptions": [
-        "Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to."
-      ],
+      "description": "Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.",
       "sinceTimestamp": 1706307863,
       "values": {
         "$immutable": true,
@@ -560,14 +554,17 @@
         "$pastUpgrades": [
           [
             "2023-06-26T19:44:35.000Z",
+            "0xd7e8b45283a17ffe10a55914b49e6114acd56dedba1a154159a9b71e9f9205df",
             ["0xF641db6860FD5f6643D05bD75405a2586a63a141"]
           ],
           [
             "2024-03-11T19:13:11.000Z",
+            "0xb0be4d7a78cc69d7a3609a84216cbf0bae5b0ade84c45b35c05dafda6c84faec",
             ["0x13dff8847EA170eBb8439ce732c0A14Bb49fDd92"]
           ],
           [
             "2024-07-04T23:54:11.000Z",
+            "0x35c84fce2bd551b2e80f13f545f49c65ed2a20c3c2d46eecc10c825112a86ccc",
             ["0x319AE539b5BA554b09A46791cdb88b10E4d8F627"]
           ]
         ],

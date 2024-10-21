@@ -26,7 +26,7 @@ export function diffDiscovery(
       modifiedOrDeleted.push({
         name: previousContract.name,
         address: previousContract.address,
-        description: previousContract.descriptions?.join(' '),
+        description: previousContract.description,
         type: 'deleted',
       })
       continue
@@ -54,7 +54,7 @@ export function diffDiscovery(
       modifiedOrDeleted.push({
         name: currentContract.name,
         address: currentContract.address,
-        description: currentContract.descriptions?.join(' '),
+        description: currentContract.description,
         diff,
       })
     }
@@ -70,7 +70,7 @@ export function diffDiscovery(
       created.push({
         name: currentContract.name,
         address: currentContract.address,
-        description: currentContract.descriptions?.join(' '),
+        description: currentContract.description,
         type: 'created',
       })
     }

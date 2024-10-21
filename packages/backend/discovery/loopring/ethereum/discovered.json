@@ -34,30 +34,37 @@
         "$pastUpgrades": [
           [
             "2020-10-29T11:12:20.000Z",
+            "0xed8a952216607c164559f01d5f90066a7de65fdcc72146e71956865685a8eeab",
             ["0xa01d4d1FE18A34902Ac2e4045a5e8f553dDe9685"]
           ],
           [
             "2020-12-14T06:16:14.000Z",
+            "0xcfbaf71a511297fd7bc1452e5b274c056ba5a3ddf271b59012eff877dd4351b9",
             ["0x2fefbeF4d1445F523941c56349C2414cd5e9675d"]
           ],
           [
             "2021-01-18T03:06:54.000Z",
+            "0xce34e9483ec139aa6628ed29279b80f163ba9094ce1a848cbe640e438ad2eb20",
             ["0x8c63D8E608fF702a92D5908730C91457b0447Ad7"]
           ],
           [
             "2021-03-25T03:26:10.000Z",
+            "0x155d094b0d053837b4e252b69cb10c8157795274da1a9f4325519791c27bd294",
             ["0xCFba78aecfBcc0B4B748fA58c530D4675BB5D32F"]
           ],
           [
             "2021-03-29T03:54:19.000Z",
+            "0xb54c93da349065cc82e2ef150f07319b2522709e8fe7acbcb5a5edfdcf46f2d6",
             ["0x4fb117dcd6D09abF1a99B502d488A99F5a17e7eC"]
           ],
           [
             "2021-09-01T04:24:19.000Z",
+            "0x2ccbfd61faf2015457ec43fab0324dca7d75091aba7423fe2990307bbfe32e22",
             ["0x3c294fCF74129d649325F8995afC2f9CfaFAB9dA"]
           ],
           [
             "2021-12-14T02:21:21.000Z",
+            "0x0fa3763c4bd69cf9e77636b37b5b12c29f3b260d8e822ebe215b14c4602a716d",
             ["0x26d8Ba776a067C5928841985bCe342f75BAE7E82"]
           ]
         ],
@@ -323,9 +330,7 @@
       "sourceHashes": [
         "0xa8b1d474b6c7b4007833dea307178402243d15952eb22c992be9b107651cbc2f"
       ],
-      "descriptions": [
-        "Auxiliary contract able to force withdrawals from L1 on behalf of users."
-      ],
+      "description": "Auxiliary contract able to force withdrawals from L1 on behalf of users.",
       "sinceTimestamp": 1615357743,
       "values": {
         "$immutable": true,

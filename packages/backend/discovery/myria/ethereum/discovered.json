@@ -73,6 +73,7 @@
         "$pastUpgrades": [
           [
             "2022-08-03T16:03:31.000Z",
+            "0x2e4c35995431d1de222814e766a3eb776fa77066848149094160572235bcba55",
             [
               "0xe6785C3AfF4292C9d7c6b039f649672C45CAfFee",
               "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
@@ -85,6 +86,7 @@
           ],
           [
             "2022-09-01T12:47:25.000Z",
+            "0xe47b5e4556898d3425bf25bde5aed3073ed121e3d3fb5f0deb6a8924e2ad2845",
             [
               "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
               "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
@@ -97,6 +99,7 @@
           ],
           [
             "2023-03-21T09:58:35.000Z",
+            "0xef968f08903be797a0aca5d870844606dcbeccdfc6dc2048760a3d2893df109b",
             [
               "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
               "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",

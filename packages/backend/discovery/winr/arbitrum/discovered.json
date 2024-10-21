@@ -26,6 +26,7 @@
         "$pastUpgrades": [
           [
             "2024-05-15T18:56:14.000Z",
+            "0x42fc27511b05dc35424565463d5dd348283c330d05c963396ee1a68526ac56a5",
             ["0x5cA988F213EfbCB86ED7e2AACB0C15c91e648f8d"]
           ]
         ],
@@ -48,9 +49,7 @@
         "0xef94a66bd5339efd18fb9ca1f8031482e7ef7bbe6c5a0a10fae254ab83712406"
       ],
       "proxyType": "Arbitrum proxy",
-      "descriptions": [
-        "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
-      ],
+      "description": "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -78,6 +77,7 @@
         "$pastUpgrades": [
           [
             "2024-05-15T18:56:14.000Z",
+            "0x42fc27511b05dc35424565463d5dd348283c330d05c963396ee1a68526ac56a5",
             [
               "0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754",
               "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A"
@@ -194,6 +194,7 @@
         "$pastUpgrades": [
           [
             "2024-05-15T18:56:14.000Z",
+            "0x42fc27511b05dc35424565463d5dd348283c330d05c963396ee1a68526ac56a5",
             ["0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab"]
           ]
         ],
@@ -325,7 +326,7 @@
         "0x50cf57b01499408fa99da27cf0fee96ec30f0d40667d1aa090c442bc80f0636b"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": ["State batches / commitments get posted here."],
+      "description": "State batches / commitments get posted here.",
       "issuedPermissions": [
         {
           "permission": "sequence",
@@ -346,6 +347,7 @@
         "$pastUpgrades": [
           [
             "2024-05-15T18:56:14.000Z",
+            "0x42fc27511b05dc35424565463d5dd348283c330d05c963396ee1a68526ac56a5",
             ["0x7a299aD29499736994Aa3a9aFa3f476445FAEB2c"]
           ]
         ],
@@ -422,6 +424,7 @@
         "$pastUpgrades": [
           [
             "2024-05-15T18:56:14.000Z",
+            "0x42fc27511b05dc35424565463d5dd348283c330d05c963396ee1a68526ac56a5",
             ["0x302275067251F5FcdB9359Bda735fD8f7A4A54c0"]
           ]
         ],
@@ -476,6 +479,7 @@
         "$pastUpgrades": [
           [
             "2024-05-15T18:56:14.000Z",
+            "0x42fc27511b05dc35424565463d5dd348283c330d05c963396ee1a68526ac56a5",
             ["0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"]
           ]
         ],
@@ -531,6 +535,7 @@
         "$pastUpgrades": [
           [
             "2024-05-15T18:56:14.000Z",
+            "0x42fc27511b05dc35424565463d5dd348283c330d05c963396ee1a68526ac56a5",
             ["0x18FD37A4FB9E1F06d9383958aFd236771F15A8cb"]
           ]
         ],
@@ -566,6 +571,7 @@
         "$pastUpgrades": [
           [
             "2024-05-15T18:56:14.000Z",
+            "0x42fc27511b05dc35424565463d5dd348283c330d05c963396ee1a68526ac56a5",
             ["0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC"]
           ]
         ],

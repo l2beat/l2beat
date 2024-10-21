@@ -29,6 +29,7 @@
         "$pastUpgrades": [
           [
             "2024-06-16T17:25:35.000Z",
+            "0x059ddb2af7337bacc9f85aed058936b67c1c439d56744b05336952c1792d811d",
             ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"]
           ]
         ],
@@ -114,6 +115,7 @@
         "$pastUpgrades": [
           [
             "2024-06-17T13:16:47.000Z",
+            "0x189f2f8a9bf53ece3537b3b9a10ec0a98d7e6b506c2fa368cf818e2344f7b9ad",
             ["0xD26B535AD58715C4c2ffFAC32908b13674533DAe"]
           ]
         ],

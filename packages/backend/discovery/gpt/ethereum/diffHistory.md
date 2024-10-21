@@ -1,3 +1,43 @@
+Generated with discovered.json: 0xc95e2ee9b64a05feae5e290a7c42226c54d55ae2
+
+# Diff at Mon, 21 Oct 2024 11:06:16 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20676773
+- current block number: 20676773
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20676773 (main branch discovery), not current.
+
+```diff
+    contract GptProtocolDAC (0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xA36aFB6b79A3d164a3d12C141c916BECc6e012D8"]
+      values.$pastUpgrades.0.1:
+-        ["0xA36aFB6b79A3d164a3d12C141c916BECc6e012D8"]
++        "0x0a7c7231ed11b5452e24014b44c25286a58b4048cb401623b23a77ff1ee67fe7"
+    }
+```
+
+```diff
+    contract GptProtocolValidium (0xC4E903D3Af4c3d2e437492d602adcC9d9b536858) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"]
+      values.$pastUpgrades.0.1:
+-        ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"]
++        "0x3dc530423d40c84109b6c3c014ee3182ae576375dc5888187e4a33380930d54a"
+    }
+```
+
 Generated with discovered.json: 0xd5475b6e2ea44681e3418c1c98714c3b59dee9c5
 
 # Diff at Mon, 14 Oct 2024 10:51:22 GMT:
