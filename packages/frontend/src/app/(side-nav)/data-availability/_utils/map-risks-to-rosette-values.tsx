@@ -6,9 +6,38 @@ import {
 } from '@l2beat/shared-pure'
 import { type RosetteValue } from '~/components/rosette/types'
 
-export function mapRisksToGrisiniItems(
+export function mapDaLayerRisksToGrisiniItems(
   risks: Record<
-    keyof (DaLayerRisks & DaBridgeRisks),
+    keyof DaLayerRisks,
+    ValueWithSentiment<string, Sentiment> & {
+      description?: string
+      warning?: WarningValueWithSentiment
+    }
+  >,
+): RosetteValue[] {
+  const values: RosetteValue[] = [
+    {
+      name: 'Economic security',
+      value: risks.economicSecurity.value,
+      sentiment: risks.economicSecurity.sentiment,
+      description: risks.economicSecurity.description,
+      warning: risks.economicSecurity.warning,
+    },
+    {
+      name: 'Fraud detection',
+      value: risks.fraudDetection.value,
+      sentiment: risks.fraudDetection.sentiment,
+      description: risks.fraudDetection.description,
+      warning: risks.fraudDetection.warning,
+    },
+  ]
+
+  return values
+}
+
+export function mapDaBridgeRisksToGrisiniItems(
+  risks: Record<
+    keyof DaBridgeRisks,
     ValueWithSentiment<string, Sentiment> & {
       description?: string
       warning?: WarningValueWithSentiment
@@ -24,25 +53,11 @@ export function mapRisksToGrisiniItems(
       warning: risks.upgradeability.warning,
     },
     {
-      name: 'Economic security',
-      value: risks.economicSecurity.value,
-      sentiment: risks.economicSecurity.sentiment,
-      description: risks.economicSecurity.description,
-      warning: risks.economicSecurity.warning,
-    },
-    {
       name: 'Relayer failure',
       value: risks.relayerFailure.value,
       sentiment: risks.relayerFailure.sentiment,
       description: risks.relayerFailure.description,
       warning: risks.relayerFailure.warning,
-    },
-    {
-      name: 'Fraud detection',
-      value: risks.fraudDetection.value,
-      sentiment: risks.fraudDetection.sentiment,
-      description: risks.fraudDetection.description,
-      warning: risks.fraudDetection.warning,
     },
     {
       name: 'Committee security',

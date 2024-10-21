@@ -34,7 +34,7 @@ export function DaProjectSummary({ project }: Props) {
           </div>
           <DaProjectStats project={project} />
         </div>
-        <GrisiniDetails items={project.header.grisiniValues} />
+        <GrisiniDetails items={project.header.daLayerGrisiniValues} />
       </div>
 
       <HorizontalSeparator className="mt-6 max-md:-mx-4 max-md:w-screen md:mb-6" />

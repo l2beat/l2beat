@@ -12,7 +12,7 @@ import {
   getDaProjectEconomicSecurity,
 } from './utils/get-da-project-economic-security'
 import { getDaProjectTvl } from './utils/get-da-project-tvl'
-import { mapRisksToGrisiniItems } from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
+import { mapDaBridgeRisksToGrisiniItems, mapDaLayerRisksToGrisiniItems } from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
 import { GrisiniValue } from '~/components/grisini/types'
 
 export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
@@ -38,7 +38,7 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
 
   const isVerified =
     !!projectsVerificationStatuses[getDaProjectKey(daLayer, daBridge)]
-  const grisiniValues = mapRisksToGrisiniItems(
+  const grisiniValues = mapDaLayerRisksToGrisiniItems(
     getDaRisks(daLayer, daBridge, tvs, economicSecurity),
   )
 
@@ -65,14 +65,17 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
       name: daBridge.display.name,
       slug: daBridge.display.slug,
       type: daBridge.type,
+      grisiniValues: mapDaBridgeRisksToGrisiniItems(daBridge.risks),
     },
     bridges: daLayer.bridges.map((bridge) => ({
       id: bridge.id,
       name: bridge.display.name,
       slug: bridge.display.slug,
+      grisiniValues: mapDaBridgeRisksToGrisiniItems(bridge.risks),
     })),
     header: getHeader({
-      grisiniValues,
+      daLayerGrisiniValues: grisiniValues,
+      daBridgeGrisiniValues: mapDaBridgeRisksToGrisiniItems(daBridge.risks),
       daLayer,
       daBridge,
       tvs,
@@ -83,7 +86,8 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
 }
 
 interface HeaderParams {
-  grisiniValues: GrisiniValue[]
+  daLayerGrisiniValues: GrisiniValue[]
+  daBridgeGrisiniValues: GrisiniValue[]
   daLayer: DaLayer
   daBridge: DaBridge
   tvs: number
@@ -91,14 +95,16 @@ interface HeaderParams {
 }
 
 function getHeader({
-  grisiniValues,
+  daLayerGrisiniValues,
+  daBridgeGrisiniValues,
   daLayer,
   daBridge,
   tvs,
   economicSecurity,
 }: HeaderParams) {
   return {
-    grisiniValues,
+    daLayerGrisiniValues,
+    daBridgeGrisiniValues,
     links: getDataAvailabilityProjectLinks(
       daLayer.display.links,
       daBridge.display.links,
