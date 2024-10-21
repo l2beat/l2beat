@@ -1,7 +1,7 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 20878362,
+  "blockNumber": 20997898,
   "configHash": "0x5943efe0a05ae0ecfd3ac11cd0516f29678b9935af12c82b1488fc8272b45d0d",
   "contracts": [
     {
@@ -68,7 +68,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 47,
+        "nonce": 50,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -101,10 +101,12 @@
         "$pastUpgrades": [
           [
             "2023-03-24T10:18:47.000Z",
+            "0x28f93532243dd8a8cc92ce630ef1920f40de15af7db2903efbf42f21fdf8152c",
             ["0x5ac4182A1dd41AeEf465E40B82fd326BF66AB82C"]
           ],
           [
             "2024-02-13T11:00:59.000Z",
+            "0xb83824c7eb1e87bd12222d98cf1cbff317b0853ba1e5beda1e3e3d8a4cfd1b24",
             ["0x0FeB850B183C57534b56b7d56520133C8f9BDB65"]
           ]
         ],
@@ -113,7 +115,7 @@
         "gasTokenAddress": "0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
-        "getRoot": "0x728bc17acdd18c10301b56329028db90ef4a757ee3d2fb05705cfaca4eb997c2",
+        "getRoot": "0xd2f0b948ab29b47436437609e4c29cc54d5210e943ba1f152fcf709161c8be07",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
@@ -180,14 +182,14 @@
           "extensions": []
         },
         "EMISSION_ROLE": "0x573321b8a13c75b2702bc4b0ad9afaae98bf6985285411964a564e68bf6da1c9",
-        "lastMint": 1727161487,
+        "lastMint": 1728881423,
         "mintPerSecondCap": "13370000000000000000",
         "name": "Polygon Ecosystem Token",
         "PERMIT2": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
         "PERMIT2_REVOKER_ROLE": "0xbd4c1461ef59750b24719a44d7e2a7948c57fd12c98e333541b7ea7b61f07cb7",
         "permit2Enabled": true,
         "symbol": "POL",
-        "totalSupply": "10264044459817536867877549070",
+        "totalSupply": "10277876419468462719180634010",
         "version": "1.1.0"
       },
       "derivedName": "PolygonEcosystemToken"
@@ -226,18 +228,22 @@
         "$pastUpgrades": [
           [
             "2023-03-24T10:19:23.000Z",
+            "0xe34243804e1f7257acb09c97d0d6f023663200c39ee85a1e6927b0b391710bbb",
             ["0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF"]
           ],
           [
             "2023-09-20T08:30:35.000Z",
+            "0x25c342d7c5b4137b5439c16fd5fa1577c116277859202b2c68fcd9f73b3fc2ac",
             ["0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F"]
           ],
           [
             "2023-11-09T09:22:59.000Z",
+            "0x1db1400138d6778d303b9a13e816432d11f8dfca00ef6ec6ffcb6698cb447a31",
             ["0xb1585916487AcEdD99952086f2950763D253b923"]
           ],
           [
             "2024-02-13T11:00:59.000Z",
+            "0xb83824c7eb1e87bd12222d98cf1cbff317b0853ba1e5beda1e3e3d8a4cfd1b24",
             ["0x3b82Da772c825283d85d5d6717A77C6Ff582053b"]
           ]
         ],
@@ -309,7 +315,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0xd6e3ff168bb556ee7297e4834cb0edf2dcc89f8d2d0364dbf7f8130ec58fb47e",
+        "getRollupExitRoot": "0xf1b9c59dad4afd2c67a0db9fe7a9901b47c0a26ca0d796c0d4e792bdf85d8e5d",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "isVerifyingBatches": [
@@ -325,7 +331,7 @@
           [true],
           [true]
         ],
-        "lastAggregationTimestamp": 1727878679,
+        "lastAggregationTimestamp": 1729319147,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "nondeterministicPendingState": [],
         "pendingStateTimeout": 432000,
@@ -422,8 +428,8 @@
             "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883"
           ]
         ],
-        "totalSequencedBatches": 381157,
-        "totalVerifiedBatches": 379830,
+        "totalSequencedBatches": 403321,
+        "totalVerifiedBatches": 402004,
         "trustedAggregatorTimeout": 432000,
         "verifyBatchTimeTarget": 1800
       },
@@ -470,17 +476,19 @@
         "$pastUpgrades": [
           [
             "2023-03-24T10:19:11.000Z",
+            "0x9946be78d6c6d19dd1c6c7134a8fac27e76d32cad36dae2398d28fe6ff838f10",
             ["0xbc1ea504fC54D078514eFCCA1F6860B5219B6BC3"]
           ],
           [
             "2024-02-13T11:00:59.000Z",
+            "0xb83824c7eb1e87bd12222d98cf1cbff317b0853ba1e5beda1e3e3d8a4cfd1b24",
             ["0x2E38cD55163137483E30580Cb468C2dFf1d85077"]
           ]
         ],
         "$upgradeCount": 2,
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 46304,
-        "getRoot": "0x1212f04cbd439dd1769dd74bac5218cff3ee9542b0950cd9b5d2b61f867f9641",
+        "depositCount": 47394,
+        "getRoot": "0xd2fed79128871ea8dbec012b3f7ef2af155298b15a212ec67a21a6bb12fb0757",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "derivedName": "PolygonZkEVMGlobalExitRootV2"
@@ -773,6 +781,59 @@
               "rollupCompatibilityID": 0,
               "genesis": "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272",
               "description": "Type: zkEVM, Version: eggfruit N=25 , genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "864000"
+          },
+          {
+            "target": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "value": "0",
+            "function": "upgradeAndCall",
+            "inputs": {
+              "proxy": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+              "implementation": "0x9Bdda421219900454E94e01d641fE64c60D8f4C8",
+              "data": {}
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "864000"
+          },
+          {
+            "target": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "value": "0",
+            "function": "upgrade",
+            "inputs": {
+              "proxy": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+              "implementation": "0x103388f5661d224F4aFb555C7E4a8FB52d0b752d"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "864000"
+          },
+          {
+            "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "value": "0",
+            "function": "addNewRollupType",
+            "inputs": {
+              "consensusImplementation": "0x7253F329302b1b5E774Ac641EA3743E9E3244f2E",
+              "verifier": "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+              "forkID": 12,
+              "rollupCompatibilityID": 0,
+              "genesis": "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272",
+              "description": "Type: zkEVM, Version: Banana , genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "864000"
+          },
+          {
+            "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "value": "0",
+            "function": "addNewRollupType",
+            "inputs": {
+              "consensusImplementation": "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
+              "verifier": "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+              "forkID": 12,
+              "rollupCompatibilityID": 0,
+              "genesis": "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272",
+              "description": "Type: Validium, Version: Banana , genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
             },
             "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
             "delay": "864000"

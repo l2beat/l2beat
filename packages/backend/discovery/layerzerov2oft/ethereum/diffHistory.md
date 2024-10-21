@@ -1,3 +1,53 @@
+Generated with discovered.json: 0xd7465e1528846b3a3991dade354c65420c16f019
+
+# Diff at Mon, 21 Oct 2024 11:07:08 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20240831
+- current block number: 20240831
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20240831 (main branch discovery), not current.
+
+```diff
+    contract  (0x173272739Bd7Aa6e4e214714048a9fE699453059) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xDaC2d26317C42ae3CB21357B73404120E1dA4232"]
+      values.$pastUpgrades.1.1:
+-        ["0xDaC2d26317C42ae3CB21357B73404120E1dA4232"]
++        "0x22c22ee402c4be83ef7c851992c3125008be9ee0a39c0d83cf6be91a0506f7c4"
+      values.$pastUpgrades.0.2:
++        ["0x1E45F27F0e96e9757cff938F2c9d697AA8279C85"]
+      values.$pastUpgrades.0.1:
+-        ["0x1E45F27F0e96e9757cff938F2c9d697AA8279C85"]
++        "0x5df683475486093be4a4f92d6f7c47548d3bf38e1a39e25bf0028353f83d4a2b"
+    }
+```
+
+```diff
+    contract PolyhedraDVN (0x8ddF05F9A5c488b4973897E278B58895bF87Cb24) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xcb75F0dFFf5c5046CAA9dB1DE56645a962FeFFc2"]
+      values.$pastUpgrades.1.1:
+-        ["0xcb75F0dFFf5c5046CAA9dB1DE56645a962FeFFc2"]
++        "0xb44d10c422927d170b63ff39214aec136115e4fb60ac93abd4c8c9598f06a115"
+      values.$pastUpgrades.0.2:
++        ["0x156C3E0384459E07Dca7849b79196FbC5877dc3A"]
+      values.$pastUpgrades.0.1:
+-        ["0x156C3E0384459E07Dca7849b79196FbC5877dc3A"]
++        "0xa4e1836bf1b83f9b018b33923bd8df6152b08b6ab94860e3cf51c563711ca18c"
+    }
+```
+
 Generated with discovered.json: 0xaea213a98e3dcd72a1f40e74546d57deebfb1b83
 
 # Diff at Mon, 14 Oct 2024 10:52:22 GMT:

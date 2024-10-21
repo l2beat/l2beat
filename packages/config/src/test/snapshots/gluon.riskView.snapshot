@@ -1,0 +1,43 @@
+// gluon riskView didn't change 1
+
+{
+  dataAvailability: {
+    description: "Proof construction and state derivation rely fully on data that is NOT published onchain."
+    sentiment: "bad"
+    value: "External"
+  }
+  destinationToken: {
+    description: "Tokens transferred are considered canonical on the destination chain."
+    sentiment: "good"
+    value: "Canonical"
+  }
+  exitWindow: {
+    definingMetric: 0
+    description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
+    secondLine: undefined
+    sentiment: "bad"
+    value: "None"
+  }
+  proposerFailure: {
+    definingMetric: Infinity
+    description: "Users are able to trustlessly exit by submitting a Merkle proof of funds."
+    sentiment: "good"
+    value: "Use escape hatch"
+  }
+  sequencerFailure: {
+    definingMetric: undefined
+    description: "Users can force the sequencer to include a withdrawal transaction by submitting a request through L1. If the sequencer censors or is down for , users can use the exit hatch to withdraw their funds."
+    sentiment: "good"
+    value: "Force via L1"
+  }
+  stateValidation: {
+    description: "Fraud proofs allow actors watching the chain to prove that the state is incorrect. Because the data is not present on chain the security of fraud proofs is severely weakened."
+    sentiment: "warning"
+    value: "Fraud proofs (!)"
+  }
+  validatedBy: {
+    description: "Smart contracts on Ethereum validate all bridge transfers."
+    sentiment: "good"
+    value: "Ethereum"
+  }
+}

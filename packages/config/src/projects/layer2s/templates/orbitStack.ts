@@ -98,6 +98,7 @@ export interface OrbitStackConfigCommon {
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
   nonTemplateEscrows?: ScalingProjectEscrow[]
+  overrideEscrows?: ScalingProjectEscrow[]
   upgradeability?: {
     upgradableBy: string[] | undefined
     upgradeDelay: string | undefined
@@ -687,23 +688,25 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     riskView,
     config: {
       associatedTokens: templateVars.associatedTokens,
-      escrows: unionBy(
-        [
-          ...(templateVars.nonTemplateEscrows ?? []),
-          templateVars.discovery.getEscrowDetails({
-            includeInTotal: false,
-            address: templateVars.bridge.address,
-            tokens: templateVars.nativeToken
-              ? [templateVars.nativeToken]
-              : ['ETH'],
-            description: templateVars.nativeToken
-              ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.nativeToken} sent to L2.`
-              : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
-            ...upgradeability,
-          }),
-        ],
-        'address',
-      ),
+      escrows:
+        templateVars.overrideEscrows ??
+        unionBy(
+          [
+            ...(templateVars.nonTemplateEscrows ?? []),
+            templateVars.discovery.getEscrowDetails({
+              includeInTotal: false,
+              address: templateVars.bridge.address,
+              tokens: templateVars.nativeToken
+                ? [templateVars.nativeToken]
+                : ['ETH'],
+              description: templateVars.nativeToken
+                ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.nativeToken} sent to L2.`
+                : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
+              ...upgradeability,
+            }),
+          ],
+          'address',
+        ),
       transactionApi:
         templateVars.transactionApi ??
         (templateVars.rpcUrl !== undefined
@@ -889,7 +892,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     },
     config: {
       associatedTokens: templateVars.associatedTokens,
-      escrows: [
+      escrows: templateVars.overrideEscrows ?? [
         templateVars.discovery.getEscrowDetails({
           address: templateVars.bridge.address,
           tokens: templateVars.nativeToken

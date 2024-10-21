@@ -71,7 +71,7 @@ export interface Meta {
   directlyReceivedPermissions?: ResolvedPermission[]
   categories?: StackCategory[]
   types?: ContractValueType[]
-  descriptions?: string[]
+  description?: string
   severity?: ContractFieldSeverity
 }
 
@@ -82,7 +82,7 @@ export type EoaParameters = {
 export type ContractParameters = {
   name: string
   displayName?: string
-  descriptions?: string[]
+  description?: string
   derivedName?: string
   template?: string
   sourceHashes?: string[]

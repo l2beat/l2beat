@@ -26,7 +26,7 @@ export const winr: Layer3 = orbitStackL3({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  rpcUrl: 'https://rpc.winr.games ',
+  rpcUrl: 'https://rpc.winr.games',
   associatedTokens: ['WINR'],
   nativeToken: 'WINR',
   nonTemplatePermissions: [

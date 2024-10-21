@@ -1,0 +1,53 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "arbitrum",
+  "name": "apechain",
+  "initialAddresses": [
+    "0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8" // Bridge
+  ],
+  "names": {
+    "0x374de579AE15aD59eD0519aeAf1A23F348Df259c": "RollupProxy",
+    "0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8": "Bridge",
+    "0xAB2182C8c9a9d853Cf06A77967D2b3971A453ee1": "ChallengeManager",
+    "0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C": "SequencerInbox",
+    "0x4F405BA65291063d8A524c2bDf55d4e67405c2aF": "Outbox",
+    "0x1B98e4ED82Ee1a91A65a38C690e2266364064D15": "Inbox",
+    "0xe032d15909e90f9A36901abB08944653e9E87d72": "UpgradeExecutor",
+    "0x7f9FBf9bDd3F4105C478b996B648FE6e828a1e98": "APE token",
+    "0x2B1FbeE3c7D278bFD9E179893FF304fE49FA7DDF": "ApeChainMultisig"
+  },
+  "overrides": {
+    "APE token": {
+      "ignoreDiscovery": true
+    },
+    "ChallengeManager": {
+      "ignoreMethods": ["challenges"]
+    },
+    "RollupProxy": {
+      "extends": "orbitstack/RollupProxy"
+    },
+    "Outbox": {
+      "ignoreMethods": ["spent", "isSpent"]
+    },
+    "Bridge": {
+      "ignoreMethods": ["sequencerInboxAccs", "delayedInboxAccs"],
+      "ignoreInWatchMode": [
+        "delayedMessageCount",
+        "sequencerMessageCount",
+        "sequencerReportedSubMessageCount"
+      ]
+    },
+    "SequencerInbox": {
+      "extends": "orbitstack/SequencerInbox"
+    },
+    "UpgradeExecutor": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
+    }
+  }
+}
