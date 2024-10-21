@@ -242,9 +242,7 @@
         "0x9cc000b5f37484491701d9b554b9a01ea89a6a59f918d1d53c8e173b5b14a0fe"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time."
-      ],
+      "description": "Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time.",
       "issuedPermissions": [
         {
           "permission": "upgrade",

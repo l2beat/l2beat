@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x0e6c70c0ef9c01d3fdef20ceb46ed231ce43f024
+
+# Diff at Mon, 21 Oct 2024 12:48:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e660599f23a07618fe949a07be1f516ce44f1914 block: 21013457
+- current block number: 21013457
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21013457 (main branch discovery), not current.
+
+```diff
+    contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: Can instantly upgrade all contracts and roles in the zksync Era contracts
+      descriptions:
+-        ["Can instantly upgrade all contracts and roles in the zksync Era contracts"]
+      description:
++        "Can instantly upgrade all contracts and roles in the zksync Era contracts"
+    }
+```
+
 Generated with discovered.json: 0x4c413eb9e9afd24611089408ad364cabe7a1703c
 
 # Diff at Mon, 21 Oct 2024 11:30:46 GMT:

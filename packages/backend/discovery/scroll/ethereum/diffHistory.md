@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x0a534c8201190e15b7498a40fa071db310731c59
+
+# Diff at Mon, 21 Oct 2024 12:48:09 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e660599f23a07618fe949a07be1f516ce44f1914 block: 20891049
+- current block number: 20891049
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20891049 (main branch discovery), not current.
+
+```diff
+    contract MultipleVersionRollupVerifier (0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F) {
+    +++ description: Used to update the verifier and keep track of current and old versions.
+      descriptions:
+-        ["Used to update the verifier and keep track of current and old versions."]
+      description:
++        "Used to update the verifier and keep track of current and old versions."
+    }
+```
+
+```diff
+    contract ScrollOwner (0x798576400F7D662961BA15C6b3F3d813447a26a6) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      descriptions:
+-        ["Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role."]
+      description:
++        "Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role."
+    }
+```
+
 Generated with discovered.json: 0x9a42cb161d5a63ef5379e507db48f193259f9917
 
 # Diff at Mon, 21 Oct 2024 11:09:54 GMT:

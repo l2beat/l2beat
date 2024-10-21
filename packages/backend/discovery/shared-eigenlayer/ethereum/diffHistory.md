@@ -1,3 +1,81 @@
+Generated with discovered.json: 0xfdb811d5e6f2119b5d04bc582fd01e163fbd85c3
+
+# Diff at Mon, 21 Oct 2024 12:48:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e660599f23a07618fe949a07be1f516ce44f1914 block: 20985707
+- current block number: 20985707
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20985707 (main branch discovery), not current.
+
+```diff
+    contract StrategiesBeacon (0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9) {
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+      descriptions:
+-        ["UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory."]
+      description:
++        "UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory."
+    }
+```
+
+```diff
+    contract TokenHopper (0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563) {
+    +++ description: Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner).
+      descriptions:
+-        ["Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner)."]
+      description:
++        "Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner)."
+    }
+```
+
+```diff
+    contract StrategyFactory (0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647) {
+    +++ description: Factory contract for permissionless strategy creation via beacon proxies.
+      descriptions:
+-        ["Factory contract for permissionless strategy creation via beacon proxies."]
+      description:
++        "Factory contract for permissionless strategy creation via beacon proxies."
+    }
+```
+
+```diff
+    contract RewardsCoordinator (0x7750d328b314EfFa365A0402CcfD489B80B0adda) {
+    +++ description: Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.
+      descriptions:
+-        ["Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators."]
+      description:
++        "Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators."
+    }
+```
+
+```diff
+    contract RewardAllStakersActionGenerator (0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE) {
+    +++ description: Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers.
+      descriptions:
+-        ["Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers."]
+      description:
++        "Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers."
+    }
+```
+
+```diff
+    contract EIGENProxyAdmin (0xB8915E195121f2B5D989Ec5727fd47a5259F1CEC) {
+    +++ description: ProxyAdmin owner of the timelock contract owning the EIGEN token contract.
+      descriptions:
+-        ["ProxyAdmin owner of the timelock contract owning the EIGEN token contract."]
+      description:
++        "ProxyAdmin owner of the timelock contract owning the EIGEN token contract."
+    }
+```
+
 Generated with discovered.json: 0xd25bf51ffa281417d2a32b1baa27156176b03877
 
 # Diff at Mon, 21 Oct 2024 11:10:00 GMT:

@@ -43,9 +43,7 @@
       "sourceHashes": [
         "0x8ccc6002eb6665381c95bfbb12e2ef5edee25f5e9d381c1938e9e96ac89c0313"
       ],
-      "descriptions": [
-        "UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory."
-      ],
+      "description": "UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.",
       "sinceTimestamp": 1723232219,
       "values": {
         "$immutable": true,
@@ -60,9 +58,7 @@
       "sourceHashes": [
         "0x7a33b4c0c58212ece91ddbb1006f31ba22a346c26b7b89555d88d72b195aec84"
       ],
-      "descriptions": [
-        "Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner)."
-      ],
+      "description": "Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner).",
       "ignoreInWatchMode": ["latestPress", "canPress"],
       "sinceTimestamp": 1727895695,
       "values": {
@@ -442,9 +438,7 @@
         "0xeac0eb693fee0b97ae0ce2176c60bd57f93b6f1264e6844e4bec7e4e4efdfeca"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Factory contract for permissionless strategy creation via beacon proxies."
-      ],
+      "description": "Factory contract for permissionless strategy creation via beacon proxies.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -533,9 +527,7 @@
         "0xe548a802866b09c90c208e0f77018c9cdafa34ab07c071eac1e68c0a46d384b9"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators."
-      ],
+      "description": "Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -881,9 +873,7 @@
       "sourceHashes": [
         "0x519834dae9f17d3adac32cfef3f2d1e84185152157b8e20a0ff5837d33eb423a"
       ],
-      "descriptions": [
-        "Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers."
-      ],
+      "description": "Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers.",
       "sinceTimestamp": 1727895359,
       "values": {
         "$immutable": true,
@@ -923,9 +913,7 @@
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
       "displayName": "ProxyAdmin",
-      "descriptions": [
-        "ProxyAdmin owner of the timelock contract owning the EIGEN token contract."
-      ],
+      "description": "ProxyAdmin owner of the timelock contract owning the EIGEN token contract.",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",

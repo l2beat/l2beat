@@ -230,9 +230,7 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "descriptions": [
-        "Can instantly upgrade all contracts and roles in the zksync Era contracts"
-      ],
+      "description": "Can instantly upgrade all contracts and roles in the zksync Era contracts",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1666872275,
       "values": {
