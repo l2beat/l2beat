@@ -5,14 +5,14 @@ import { HttpClient2 } from '../http/HttpClient2'
 import { RpcClient2 } from './RpcClient2'
 
 describe(RpcClient2.name, () => {
-  describe(RpcClient2.prototype.getBlock.name, () => {
+  describe(RpcClient2.prototype.getBlockWithTransactions.name, () => {
     it('fetches block from rpc are parsers response', async () => {
       const http = mockObject<HttpClient2>({
         fetch: async () => mockResponse(100),
       })
       const rpc = mockClient({ http })
 
-      const result = await rpc.getBlock(100)
+      const result = await rpc.getBlockWithTransactions(100)
 
       expect(result).toEqual({
         transactions: [mockTx('0'), mockTx('1')],

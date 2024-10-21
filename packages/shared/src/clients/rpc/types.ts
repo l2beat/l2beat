@@ -5,8 +5,8 @@ export const RpcResponse = z.object({
   result: z.union([z.string(), z.number(), z.record(z.string(), z.any())]),
 })
 
-export type Transaction = z.infer<typeof Transaction>
-export const Transaction = z.object({
+export type EVMTransaction = z.infer<typeof EVMTransaction>
+export const EVMTransaction = z.object({
   to: z.string(),
   data: z.string(),
 })
@@ -25,10 +25,10 @@ export const Quantity = {
   encode: (n: bigint) => `0x${n.toString(16)}`,
 }
 
-export type Block = z.infer<typeof Block>
-export const Block = z.object({
+export type EVMBlock = z.infer<typeof EVMBlock>
+export const EVMBlock = z.object({
   // TODO: add support for including txs body
-  transactions: z.array(Transaction),
+  transactions: z.array(EVMTransaction),
   timestamp: Quantity.decode.transform((n) => Number(n)),
   hash: z.string(),
   number: Quantity.decode.transform((n) => Number(n)),

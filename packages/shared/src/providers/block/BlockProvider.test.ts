@@ -7,7 +7,7 @@ describe(BlockProvider.name, () => {
     const rpc = mockObject<RpcClient2>({ getBlock: async () => block(1) })
     const provider = new BlockProvider([rpc])
 
-    const result = await provider.getBlock(1)
+    const result = await provider.getBlockWithTransactions(1)
 
     expect(rpc.getBlock).toHaveBeenOnlyCalledWith(1)
     expect(result).toEqual(block(1))
@@ -24,7 +24,7 @@ describe(BlockProvider.name, () => {
 
     const provider = new BlockProvider([rpc_one, rpc_two, rpc_three])
 
-    const result = await provider.getBlock(1)
+    const result = await provider.getBlockWithTransactions(1)
 
     expect(rpc_one.getBlock).toHaveBeenOnlyCalledWith(1)
     expect(rpc_two.getBlock).toHaveBeenOnlyCalledWith(1)
@@ -51,7 +51,9 @@ describe(BlockProvider.name, () => {
 
     const provider = new BlockProvider([rpc_one, rpc_two, rpc_three])
 
-    await expect(() => provider.getBlock(1)).toBeRejectedWith('ERROR')
+    await expect(() => provider.getBlockWithTransactions(1)).toBeRejectedWith(
+      'ERROR',
+    )
 
     expect(rpc_one.getBlock).toHaveBeenOnlyCalledWith(1)
     expect(rpc_two.getBlock).toHaveBeenOnlyCalledWith(1)

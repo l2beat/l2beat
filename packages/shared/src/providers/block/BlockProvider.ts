@@ -1,20 +1,15 @@
 import { assert } from '@l2beat/shared-pure'
-import { RpcClient2 } from '../../clients'
+import { EVMBlock, RpcClient2 } from '../../clients'
 
 export class BlockProvider {
   constructor(private readonly clients: RpcClient2[]) {
     assert(clients.length > 0, 'Clients cannot be empty')
   }
 
-  async getBlock(x: number): Promise<{
-    transactions: unknown[]
-    timestamp: number
-    number: number
-    hash: string
-  }> {
+  async getBlockWithTransactions(x: number): Promise<EVMBlock> {
     for (const [index, client] of this.clients.entries()) {
       try {
-        return await client.getBlock(x)
+        return await client.getBlockWithTransactions(x)
       } catch (error) {
         if (index === this.clients.length - 1) throw error
       }

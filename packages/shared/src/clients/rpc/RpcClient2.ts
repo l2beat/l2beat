@@ -4,7 +4,7 @@ import { RetryHandler } from '../../tools/RetryHandler'
 import { generateId } from '../../tools/generateId'
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 import { HttpClient2 } from '../http/HttpClient2'
-import { Block, Quantity, RpcResponse } from './types'
+import { EVMBlock, Quantity, RpcResponse } from './types'
 
 interface RpcClient2Deps {
   url: string
@@ -22,13 +22,15 @@ export class RpcClient2 {
   /** Calls eth_getBlockByNumber on RPC, includes full transactions bodies.
    * The query is wrapped with rate limiting and retry handling.
    */
-  async getBlock(blockNumber: number | 'latest'): Promise<Block> {
+  async getBlockWithTransactions(
+    blockNumber: number | 'latest',
+  ): Promise<EVMBlock> {
     const method = 'eth_getBlockByNumber'
     const encodedNumber =
       blockNumber === 'latest' ? 'latest' : Quantity.encode(BigInt(blockNumber))
     const blockResponse = await this.query(method, [encodedNumber, true])
 
-    const block = Block.safeParse(blockResponse)
+    const block = EVMBlock.safeParse(blockResponse)
     if (!block.success) {
       this.$.logger.error(JSON.stringify(blockResponse))
       throw new Error('Error during parsing of eth_getBlockByNumber response')
@@ -37,7 +39,7 @@ export class RpcClient2 {
   }
 
   async getLatestBlockNumber() {
-    const block = await this.getBlock('latest')
+    const block = await this.getBlockWithTransactions('latest')
     return Number(block.number)
   }
 
@@ -48,7 +50,7 @@ export class RpcClient2 {
       timestamp,
       start,
       end,
-      this.getBlock.bind(this),
+      this.getBlockWithTransactions.bind(this),
     )
   }
 
