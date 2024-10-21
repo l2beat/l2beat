@@ -25,7 +25,10 @@ export function SingleGrisiniDetails({ name, sentiment, value }: GrisiniValue) {
       <div className="flex flex-col justify-center gap-1 flex-1 p-4">
         <div className="text-2xs font-semibold uppercase">{name}</div>
         <div
-          className={cn('text-lg font-bold', sentimentToTextColor(sentiment))}
+          className={cn(
+            'text-lg leading-none font-bold',
+            sentimentToTextColor(sentiment),
+          )}
         >
           {value}
         </div>
