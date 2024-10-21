@@ -3,6 +3,7 @@ import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { rari } from '../../../layer3s/rari'
 import { DAC } from '../templates/dac-template'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
+import { AnytrustDAC } from '../templates/anytrust-template'
 
 const discovery = new ProjectDiscovery('rari', 'arbitrum')
 
@@ -12,7 +13,7 @@ const dac = discovery.getContractValue<{
 }>('SequencerInbox', 'dacKeyset')
 const { membersCount, requiredSignatures } = dac
 
-export const rariDac = DAC({
+export const rariDac = AnytrustDAC({
   project: rari,
   bridge: {
     contracts: {

@@ -3,6 +3,7 @@ import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { l3x } from '../../../layer3s/l3x'
 import { DAC } from '../templates/dac-template'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
+import { AnytrustDAC } from '../templates/anytrust-template'
 
 const discovery = new ProjectDiscovery('l3x', 'arbitrum')
 
@@ -12,7 +13,7 @@ const dac = discovery.getContractValue<{
 }>('SequencerInbox', 'dacKeyset')
 const { membersCount, requiredSignatures } = dac
 
-export const l3xDac = DAC({
+export const l3xDac = AnytrustDAC({
   project: l3x,
   bridge: {
     contracts: {

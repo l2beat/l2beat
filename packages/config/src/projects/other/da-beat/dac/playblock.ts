@@ -3,6 +3,7 @@ import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { playblock } from '../../../layer3s/playblock'
 import { DAC } from '../templates/dac-template'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
+import { AnytrustDAC } from '../templates/anytrust-template'
 
 const discovery = new ProjectDiscovery('playblock', 'nova')
 
@@ -12,7 +13,7 @@ const dac = discovery.getContractValue<{
 }>('SequencerInbox', 'dacKeyset')
 const { membersCount, requiredSignatures } = dac
 
-export const playblockDac = DAC({
+export const playblockDac = AnytrustDAC({
   project: playblock,
   bridge: {
     contracts: {

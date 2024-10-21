@@ -3,6 +3,7 @@ import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { molten } from '../../../layer3s/molten'
 import { DAC } from '../templates/dac-template'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
+import { AnytrustDAC } from '../templates/anytrust-template'
 
 const discovery = new ProjectDiscovery('molten', 'arbitrum')
 
@@ -12,7 +13,7 @@ const dac = discovery.getContractValue<{
 }>('SequencerInbox', 'dacKeyset')
 const { membersCount, requiredSignatures } = dac
 
-export const moltenDac = DAC({
+export const moltenDac = AnytrustDAC({
   project: molten,
   bridge: {
     contracts: {

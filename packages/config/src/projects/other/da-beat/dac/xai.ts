@@ -72,11 +72,6 @@ export const xaiDac = DAC({
       },
       {
         external: true,
-        name: 'Laguna Games',
-        href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
-      },
-      {
-        external: true,
         name: 'Team Secret',
         href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
       },
