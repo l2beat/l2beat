@@ -54,7 +54,6 @@ export function LegacyNavbar({
           })}
         </ul>
         <div className="flex h-full items-center gap-5">
-          <SmallSearchBarButton />
           <ul className="hidden items-center gap-4 xl:flex">
             <SocialLinks />
           </ul>
@@ -71,7 +70,10 @@ export function LegacyNavbar({
             <LegacyNavLink title="FAQ" href="/faq" />
           </ul>
           <div className="h-8 w-px bg-gray-300 dark:bg-gray-700" />
-          <DarkThemeToggle />
+          <div className="flex gap-2">
+            <DarkThemeToggle />
+            <SmallSearchBarButton />
+          </div>
         </div>
       </nav>
     </div>
