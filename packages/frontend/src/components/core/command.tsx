@@ -6,7 +6,7 @@ import * as React from 'react'
 import { SearchIcon } from '~/icons/search'
 import { cn } from '~/utils/cn'
 import { linkVariants } from '../link/custom-link'
-import { Dialog, DialogContent } from './dialog'
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from './dialog'
 
 const Command = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive>,
@@ -28,13 +28,19 @@ Command.displayName = CommandPrimitive.displayName
 
 const CommandDialog = ({
   children,
+  title,
+  description,
   onEscapeKeyDown,
   ...props
 }: DialogProps & {
+  title: string
+  description: string
   onEscapeKeyDown?: (event: KeyboardEvent) => void
 }) => {
   return (
     <Dialog {...props}>
+      <DialogTitle className="sr-only">{title}</DialogTitle>
+      <DialogDescription className="sr-only">{description}</DialogDescription>
       <DialogContent
         className="top-1/2 overflow-hidden p-0 shadow-lg max-md:h-screen max-md:border-none md:top-1/4 max-md:[@supports(height:100dvh)]:h-dvh"
         overlayClassName="max-md:hidden"

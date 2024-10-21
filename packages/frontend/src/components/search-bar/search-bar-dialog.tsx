@@ -79,6 +79,8 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
 
   return (
     <CommandDialog
+      title="Search"
+      description="Search for projects by name"
       open={open}
       onOpenChange={setOpen}
       onEscapeKeyDown={onEscapeKeyDown}
