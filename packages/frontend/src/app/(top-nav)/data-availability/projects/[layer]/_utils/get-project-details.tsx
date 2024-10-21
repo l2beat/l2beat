@@ -89,7 +89,7 @@ export function getProjectDetails({
     })
   }
 
-  items.push({
+  /* items.push({
     type: 'RiskAnalysisSection',
     props: {
       id: 'risk-analysis',
@@ -102,7 +102,7 @@ export function getProjectDetails({
       redWarning: daBridge.display.redWarning,
       isVerified,
     },
-  })
+  })*/
 
   items.push({
     type: 'MarkdownSection',

@@ -8,6 +8,10 @@ import { DaProjectStats } from './da-project-stats'
 import { ProjectHeader } from '~/components/projects/project-header'
 import { GrisiniDetails } from '~/components/grisini/grisini-details'
 import { InfoIcon } from '~/icons/info'
+import { Grisini } from '~/components/grisini/grisini'
+import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
+import { cn } from '~/utils/cn'
+import Link from 'next/link'
 
 interface Props {
   project: DaProjectEntry
@@ -51,7 +55,7 @@ export function DaProjectSummary({ project }: Props) {
               </div>
             </div>
             <div className="flex flex-row gap-10">
-              <div className="flex-1">
+              <div className="flex-1 flex flex-col gap-4">
                 <div className="whitespace-pre uppercase text-xs text-gray-500 dark:text-gray-600">
                   Select a bridge
                 </div>
@@ -60,8 +64,53 @@ export function DaProjectSummary({ project }: Props) {
                   Please select DA bridge to view detailed risks &
                   characteristics. Bridge selection will define total DA risks.
                 </div>
+                <div className="rounded-lg bg-zinc-100">
+                  <div className="flex flex-row gap-4 px-4 py-2 uppercase text-secondary font-semibold text-xs bg-surface-secondary">
+                    <div className="w-12"></div>
+                    <div className="flex-1">DA Bridge</div>
+                    <div className="flex-1 text-center">DA Risks</div>
+                    <div className="flex-1 text-right pr-12">TVS</div>
+                    <div className="flex-1">Used by</div>
+                  </div>
+                  <div className="overflow-y-auto h-[224px]">
+                    {project.bridges.map((bridge) => (
+                      <div key={bridge.id}>
+                        <div className="flex flex-row gap-4 px-4 py-2 min-h-[56px] border-b border-surface-tertiary">
+                          <div className="w-12 flex items-center justify-center">
+                            <Link
+                              href={`/data-availability/projects/${project.slug}/${bridge.slug}`}
+                            >
+                              <div
+                                className={cn(
+                                  'flex items-center justify-center size-5 bg-pure-white border-2 rounded-full',
+                                  bridge.id === project.selectedBridge.id
+                                    ? 'border-brand'
+                                    : 'border-gray-400',
+                                )}
+                              >
+                                {bridge.id === project.selectedBridge.id ? (
+                                  <div className="size-3 bg-brand rounded-full"></div>
+                                ) : null}
+                              </div>
+                            </Link>
+                          </div>
+                          <div className="flex-1 flex items-center text-primary text-sm font-bold">
+                            {bridge.name}
+                          </div>
+                          <div className="flex-1 flex items-center justify-center">
+                            <Grisini items={bridge.grisiniValues} />
+                          </div>
+                          <div className="flex-1 flex items-center text-primary text-sm font-bold justify-end pr-12">
+                            TODO
+                          </div>
+                          <div className="flex-1 flex items-center">TODO</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
-              <div className="pt-3 flex flex-col space-y-4 w-full max-w-[264px]">
+              <div className="pt-3 flex-col space-y-4 w-full max-w-[264px] hidden lg:flex">
                 <div className="whitespace-pre text-xs text-gray-500 dark:text-gray-600">
                   {project.selectedBridge.name} risks
                 </div>
