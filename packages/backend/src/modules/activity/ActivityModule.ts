@@ -253,11 +253,14 @@ function createProviderForRpc(
     chain: project.id,
   })
 
+  const rpcUopsAnalyzer = new RpcUopsAnalyzer()
   const txsCountProvider = new RpcTxsCountProvider(
     rpcClient,
     project.id,
+    rpcUopsAnalyzer,
     project.config.assessCount,
   )
+
   return { rpcClient, txsCountProvider }
 }
 
@@ -289,9 +292,11 @@ function createProviderForZkFair(
 
   const blockProvider = new BlockProvider([rpcClient])
 
+  const rpcUopsAnalyzer = new RpcUopsAnalyzer()
   const txsCountProvider = new RpcTxsCountProvider(
     blockProvider,
     project.id,
+    rpcUopsAnalyzer,
     project.config.assessCount,
   )
 
