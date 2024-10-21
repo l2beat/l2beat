@@ -13,7 +13,7 @@ export const apechain: Layer3 = orbitStackL3({
     name: 'ApeChain',
     slug: 'apechain',
     description:
-      'ApeChain is an upcoming Layer 3 on Arbitrum, built on the Orbit stack. It scales $APE and supports the growth of the ApeCoin ecosystem. Powered by the $APE token and the home of assets and games in the ApeCoin ecosystem with development and growth led by Horizen Labs.',
+      'ApeChain is an Optimium on Arbitrum, built on the Orbit stack. It is built to support the ApeCoin ecosystem. Powered by $APE as gas token it aims to host assets and games of the ApeCoin ecosystem with development and growth led by Horizen Labs.',
     links: {
       websites: ['https://apechain.com/'],
       apps: ['https://apechain.com/portal'],
@@ -41,4 +41,5 @@ export const apechain: Layer3 = orbitStackL3({
       'Can upgrade any system contract and potentially steal all funds.',
     ),
   ],
+  overrideEscrows: [],
 })
