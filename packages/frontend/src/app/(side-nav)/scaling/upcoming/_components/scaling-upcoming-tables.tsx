@@ -32,7 +32,7 @@ export function ScalingUpcomingTables({
           items={[...filteredRollups, ...filteredValidiumsAndOptimiums]}
         />
         <Suspense>
-          <DirectoryTabs defaultValue="rollups" className="mt-6">
+          <DirectoryTabs defaultValue="rollups">
             <DirectoryTabsList>
               <DirectoryTabsTrigger value="rollups">
                 Rollups <CountBadge>{filteredRollups.length}</CountBadge>

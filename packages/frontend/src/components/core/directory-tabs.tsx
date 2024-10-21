@@ -41,7 +41,7 @@ const DirectoryTabsList = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.List>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
 >(({ className, ...props }, ref) => (
-  <OverflowWrapper className="max-md:pr-4 md:mr-4">
+  <OverflowWrapper className="sticky top-0 z-10 bg-background pr-4 pt-2 max-md:mt-2 md:pt-4">
     <TabsPrimitive.List
       ref={ref}
       className={cn('flex space-x-1 max-md:pl-4 md:space-x-2', className)}

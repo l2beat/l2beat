@@ -42,7 +42,7 @@ export function ScalingDaTables(props: Props) {
             ...filteredEntries.validiumsAndOptimiums,
           ]}
         />
-        <DirectoryTabs className="mt-6" defaultValue="rollups">
+        <DirectoryTabs defaultValue="rollups">
           <DirectoryTabsList>
             <DirectoryTabsTrigger value="rollups">
               Rollups <CountBadge>{filteredEntries.rollups.length}</CountBadge>

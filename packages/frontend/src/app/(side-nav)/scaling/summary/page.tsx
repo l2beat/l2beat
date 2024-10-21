@@ -53,7 +53,6 @@ export default async function Page() {
         </MainPageCard>
       </div>
       <ChartTabs className="lg:hidden" unit={UNIT} timeRange={TIME_RANGE} />
-      <HorizontalSeparator className="mb-3 mt-6" />
       <ScalingAssociatedTokensContextProvider>
         <ScalingFilterContextProvider>
           <ScalingSummaryTables {...entries} />

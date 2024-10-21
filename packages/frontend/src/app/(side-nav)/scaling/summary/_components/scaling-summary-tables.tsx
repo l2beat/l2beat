@@ -6,6 +6,7 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { MainPageCard } from '~/components/main-page-card'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { type groupByMainCategories } from '~/utils/group-by-main-categories'
@@ -39,13 +40,14 @@ export function ScalingSummaryTables(props: Props) {
     }
     return (
       <>
+        <HorizontalSeparator className="my-4 !border-divider" />
         <ScalingTvlFilters
           items={[
             ...filteredEntries.rollups,
             ...filteredEntries.validiumsAndOptimiums,
           ]}
         />
-        <DirectoryTabs className="mt-6" defaultValue="rollups">
+        <DirectoryTabs defaultValue="rollups">
           <DirectoryTabsList>
             <DirectoryTabsTrigger value="rollups">
               Rollups <CountBadge>{filteredEntries.rollups.length}</CountBadge>

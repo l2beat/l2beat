@@ -43,9 +43,9 @@ export function ScalingCostsTables(props: Props) {
             ...filteredEntries.rollups,
             ...filteredEntries.validiumsAndOptimiums,
           ]}
-          className="mt-6"
+          className="mt-4"
         />
-        <DirectoryTabs className="mt-6" defaultValue="rollups">
+        <DirectoryTabs defaultValue="rollups">
           <DirectoryTabsList>
             <DirectoryTabsTrigger value="rollups">
               Rollups <CountBadge>{filteredEntries.rollups.length}</CountBadge>
