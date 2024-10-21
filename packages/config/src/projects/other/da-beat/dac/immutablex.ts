@@ -2,9 +2,8 @@ import { ChainId } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { getCommittee } from '../../../../discovery/starkware'
 import { immutablex } from '../../../layer2s/immutablex'
-import { DAC } from '../templates/dac-template'
-import { DacTransactionDataType } from '../types/DacTransactionDataType'
 import { starkexDAC } from '../templates/starkex-template'
+import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('immutablex')
 const committee = getCommittee(discovery)

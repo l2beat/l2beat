@@ -1,9 +1,8 @@
 import { ChainId } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { reya } from '../../../layer2s/reya'
-import { DAC } from '../templates/dac-template'
-import { DacTransactionDataType } from '../types/DacTransactionDataType'
 import { AnytrustDAC } from '../templates/anytrust-template'
+import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('reya')
 

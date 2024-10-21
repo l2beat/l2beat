@@ -1,9 +1,8 @@
 import { ChainId } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
-import { rari } from '../../../layer3s/rari'
-import { DacTransactionDataType } from '../types/DacTransactionDataType'
-import { AnytrustDAC } from '../templates/anytrust-template'
 import { xchain } from '../../../layer2s/xchain'
+import { AnytrustDAC } from '../templates/anytrust-template'
+import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('xchain', 'ethereum')
 

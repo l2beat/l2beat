@@ -1,10 +1,8 @@
 import { ChainId } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
-import { sanko } from '../../../layer3s/sanko'
-import { DAC } from '../templates/dac-template'
-import { DacTransactionDataType } from '../types/DacTransactionDataType'
-import { AnytrustDAC } from '../templates/anytrust-template'
 import { apechain } from '../../../layer3s/apechain'
+import { AnytrustDAC } from '../templates/anytrust-template'
+import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('apechain', 'arbitrum')
 

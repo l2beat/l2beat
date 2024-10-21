@@ -2,13 +2,13 @@ import { ChainId } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { getCommittee } from '../../../../discovery/starkware'
 import { myria } from '../../../layer2s/myria'
-import { DAC } from '../templates/dac-template'
+import { starkexDAC } from '../templates/starkex-template'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('myria')
 const committee = getCommittee(discovery)
 
-export const myriaDac = DAC({
+export const myriaDac = starkexDAC({
   project: myria,
   bridge: {
     contracts: {

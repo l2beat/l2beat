@@ -77,9 +77,9 @@ export function AnytrustDAC(template: TemplateVars): DacDaLayer {
     `${template.project.display.name} DAC on Ethereum.`
 
   const bridgeTechnology =
-    template.bridge.technology?.description ?? (
-      template.bridge.chain === 1
-        ? `
+    template.bridge.technology?.description ??
+    (template.bridge.chain === 1
+      ? `
     ## DA Bridge Architecture
     ![Anytrust bridge architecture](/images/da-bridge-technology/anytrust/architectureL2.png#center)
 
@@ -87,8 +87,8 @@ export function AnytrustDAC(template: TemplateVars): DacDaLayer {
     The DA commitments are posted to the L1 through the sequencer inbox, using the inbox as a DA bridge.
     The DA commitment consists of Data Availability Certificate (DACert), including a hash of the data block, an expiration time, and a proof that the required threshold of Committee members have signed off on the data.
     The sequencer distributes the data and collects signatures from Committee members offchain. Only the DACert is posted by the sequencer to the L1 chain inbox (the DA bridge), achieving L2 transaction ordering finality in a single onchain transaction.
-    ` : 
     `
+      : `
     ## DA Bridge Architecture
     ![Anytrust bridge architecture](/images/da-bridge-technology/anytrust/architectureL3.png#center)
 
@@ -134,7 +134,7 @@ export function AnytrustDAC(template: TemplateVars): DacDaLayer {
     'Set of parties responsible for signing and attesting to the availability of data.'
 
   const layerTechnology =
-    template.layer?.technology?.description ?? 
+    template.layer?.technology?.description ??
     `
     ## Architecture
     ![Anytrust architecture](/images/da-layer-technology/anytrust/architecture${template.bridge.membersCount}.png#center)
