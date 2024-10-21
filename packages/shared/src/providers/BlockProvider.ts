@@ -10,6 +10,7 @@ export class BlockProvider {
     transactions: unknown[]
     timestamp: number
     number: number
+    hash: string
   }> {
     for (const [index, client] of this.clients.entries()) {
       try {
