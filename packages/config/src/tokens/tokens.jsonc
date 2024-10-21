@@ -1,6 +1,10 @@
 {
   "ethereum": [
     {
+      "symbol": "SolvBTC",
+      "address": "0x7a56e1c57c7475ccf742a1832b028f0456652f97"
+    },
+    {
       "symbol": "TRESTLE",
       "address": "0xde8cd13b812bcd82218754a740b27e76ec1e86ad"
     },

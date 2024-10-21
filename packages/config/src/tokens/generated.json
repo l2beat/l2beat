@@ -3769,6 +3769,20 @@
       "supply": "zero"
     },
     {
+      "name": "Solv BTC",
+      "coingeckoId": "solv-btc",
+      "address": "0x7A56E1C57C7475CCf742a1832B028F0456652F97",
+      "symbol": "SolvBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1719475619,
+      "coingeckoListingTimestamp": 1712448000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Spectrum Staked ETH",
       "coingeckoId": "wrapped-eeth",
       "address": "0xf96d4B1e0a0B129e1471e88dF6f1281b933Bc474",
