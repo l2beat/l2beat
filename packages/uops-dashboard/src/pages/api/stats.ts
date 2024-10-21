@@ -1,8 +1,8 @@
 import { SUPPORTED_CHAINS } from '@/chains'
+import { ChainService } from '@/server/services/ChainService'
 import type { ApiError, Stats, StatsApiRequest } from '@/types'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { loadDb } from '../../server/db/db'
-import { ChainService } from '@/server/services/ChainService'
 
 // biome-ignore lint/style/noDefaultExport: api handler
 export default async function handler(

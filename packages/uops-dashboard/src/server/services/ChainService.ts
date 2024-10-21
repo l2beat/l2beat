@@ -1,17 +1,17 @@
 import type { Chain } from '@/chains'
 import type { CountedBlock, StatResults } from '@/types'
-import { RpcCounter } from '../counters/RpcCounter'
-import type { Counter } from '../counters/counter'
 import { BlockClient } from '../clients/block/BlockClient'
 import { RpcClient } from '../clients/block/RpcClient'
 import { StarknetClient } from '../clients/block/StarknetClient'
-import { StarknetCounter } from '../counters/StarknetCounter'
-import { DB } from '../db/db'
-import { NameService } from './NameService'
+import { ScanClient } from '../clients/contract/ScanClient'
 import { EtherfaceClient } from '../clients/signature/EtherfaceClient'
 import { FourByteClient } from '../clients/signature/FourByteClient'
 import { OpenChainClient } from '../clients/signature/OpenChainClient'
-import { ScanClient } from '../clients/contract/ScanClient'
+import { RpcCounter } from '../counters/RpcCounter'
+import { StarknetCounter } from '../counters/StarknetCounter'
+import type { Counter } from '../counters/counter'
+import { DB } from '../db/db'
+import { NameService } from './NameService'
 
 export class ChainService {
   private readonly client: BlockClient

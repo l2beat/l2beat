@@ -1,8 +1,8 @@
 import { CountedBlock, CountedOperation } from '@/types'
-import { DB } from '../db/db'
 import { traverseOperationTree } from '@/utils/traverseOperationTree'
-import { SignatureClient } from '../clients/signature/SignatureClient'
 import { ContractClient } from '../clients/contract/ContractClient'
+import { SignatureClient } from '../clients/signature/SignatureClient'
+import { DB } from '../db/db'
 
 export class NameService {
   constructor(

@@ -1,7 +1,7 @@
-import { z } from 'zod'
-import type { ContractClient } from './ContractClient'
 import { Chain } from '@/chains'
+import { z } from 'zod'
 import { getApiKey, getScanUrl } from '../apiUrls'
+import type { ContractClient } from './ContractClient'
 
 const Response = z.object({
   message: z.string(),

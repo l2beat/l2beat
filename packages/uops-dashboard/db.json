@@ -1,29 +1,11 @@
 {
   "CONTRACTS": [
-    [
-      "0x5ff137d4b0fdcd49dca30c7cf57e578a026d2789",
-      "EntryPoint6.0"
-    ],
-    [
-      "0x0000000071727de22e5e9d8baf0edac6f37da032",
-      "EntryPoint7.0"
-    ],
-    [
-      "0xa5eae9b57ce5f22785263223eee03fcad2e4cd76",
-      "HouseNFT"
-    ],
-    [
-      "0x0982b3a5b24b2bd8ef74126e15fca2decfd75a28",
-      "HeroNFT"
-    ],
-    [
-      "0x00000066c6c6fca286f48a7f4e989b7198c26caf",
-      "OspRouterImmutable"
-    ],
-    [
-      "0xb82e2c50d2aed2f2aab16a0b3cb0321adbb9da83",
-      "Clock"
-    ],
+    ["0x5ff137d4b0fdcd49dca30c7cf57e578a026d2789", "EntryPoint6.0"],
+    ["0x0000000071727de22e5e9d8baf0edac6f37da032", "EntryPoint7.0"],
+    ["0xa5eae9b57ce5f22785263223eee03fcad2e4cd76", "HouseNFT"],
+    ["0x0982b3a5b24b2bd8ef74126e15fca2decfd75a28", "HeroNFT"],
+    ["0x00000066c6c6fca286f48a7f4e989b7198c26caf", "OspRouterImmutable"],
+    ["0xb82e2c50d2aed2f2aab16a0b3cb0321adbb9da83", "Clock"],
     [
       "0x3c5c3b31f84b3caefc145801bbd59f3db694006d",
       "TransparentUpgradeableProxy"
@@ -36,443 +18,122 @@
       "0x4855caafed917e5129237711be1adb4a4dc7272d",
       "TransparentUpgradeableProxy"
     ],
-    [
-      "0x80625310db240631a91f61659ccc550ea9761742",
-      "Duel"
-    ],
-    [
-      "0x017405a2de0613e12cd3d7b67e691bfefc46debf",
-      "Missions"
-    ],
-    [
-      "0x831c653440fbc393c78b9f6e5dcae54c4cba80c5",
-      "BadgeSignatureMint"
-    ],
-    [
-      "0x40468be13c4388d2ab68a09f56973fa95db5bca0",
-      "Pizza"
-    ],
-    [
-      "0x1231deb6f5749ef6ce6943a275a1d3e7486f4eae",
-      "LI.FI"
-    ],
-    [
-      "0xaa20f900e24ca7ed897c44d92012158f436ef791",
-      "ArtAI"
-    ],
-    [
-      "0xdac17f958d2ee523a2206206994597c13d831ec7",
-      "TetherToken"
-    ],
-    [
-      "0x7ddc52c4de30e94be3a6a0a2b259b2850f421989",
-      "GoMiningToken"
-    ],
-    [
-      "0x3c11f6265ddec22f4d049dde480615735f451646",
-      "Swapper"
-    ],
-    [
-      "0xb685760ebd368a891f27ae547391f4e2a289895b",
-      "Bridgers"
-    ],
-    [
-      "0xa0c16e36c0c1ef12362a25c6fcc8991fb8e762cb",
-      "SafeProxy"
-    ],
-    [
-      "0x0000000000000068f116a894984e2db1123eb395",
-      "Seaport"
-    ],
-    [
-      "0x40a2accbd92bca938b02010e17a5b8929b49130d",
-      "MultiSendCallOnly"
-    ],
-    [
-      "0xd9db270c1b5e3bd161e8c8503c55ceabee709552",
-      "GnosisSafeSingleton1.3.0"
-    ],
-    [
-      "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
-      "FiatTokenProxy"
-    ],
-    [
-      "0x3217b819ea2d25f1982bae5dd9c8fe4c6d546bfc",
-      "Proxy"
-    ],
-    [
-      "0x2e59a20f205bb85a89c53f1936454680651e618e",
-      "AppProxyUpgradeable"
-    ],
-    [
-      "0x469788fe6e9e9681c6ebf3bf78e7fd26fc015446",
-      "DelegateRegistry"
-    ],
-    [
-      "0xee4e4bb2bf8ce4a2e339b8bd482942775a9f2c12",
-      "Proxy"
-    ],
-    [
-      "0x854d05fb618fe81c8aeb0d6b03bc957ce409d5bc",
-      "NFTImportHub"
-    ],
-    [
-      "0x4c073b3bab6d8826b8c5b229f3cfdc1ec6e47e74",
-      "UUPSProxy"
-    ],
-    [
-      "0x6a60c76247e89256bf8bb32b39b92deb7bd3ebb4",
-      "ArtCertificate"
-    ],
+    ["0x80625310db240631a91f61659ccc550ea9761742", "Duel"],
+    ["0x017405a2de0613e12cd3d7b67e691bfefc46debf", "Missions"],
+    ["0x831c653440fbc393c78b9f6e5dcae54c4cba80c5", "BadgeSignatureMint"],
+    ["0x40468be13c4388d2ab68a09f56973fa95db5bca0", "Pizza"],
+    ["0x1231deb6f5749ef6ce6943a275a1d3e7486f4eae", "LI.FI"],
+    ["0xaa20f900e24ca7ed897c44d92012158f436ef791", "ArtAI"],
+    ["0xdac17f958d2ee523a2206206994597c13d831ec7", "TetherToken"],
+    ["0x7ddc52c4de30e94be3a6a0a2b259b2850f421989", "GoMiningToken"],
+    ["0x3c11f6265ddec22f4d049dde480615735f451646", "Swapper"],
+    ["0xb685760ebd368a891f27ae547391f4e2a289895b", "Bridgers"],
+    ["0xa0c16e36c0c1ef12362a25c6fcc8991fb8e762cb", "SafeProxy"],
+    ["0x0000000000000068f116a894984e2db1123eb395", "Seaport"],
+    ["0x40a2accbd92bca938b02010e17a5b8929b49130d", "MultiSendCallOnly"],
+    ["0xd9db270c1b5e3bd161e8c8503c55ceabee709552", "GnosisSafeSingleton1.3.0"],
+    ["0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48", "FiatTokenProxy"],
+    ["0x3217b819ea2d25f1982bae5dd9c8fe4c6d546bfc", "Proxy"],
+    ["0x2e59a20f205bb85a89c53f1936454680651e618e", "AppProxyUpgradeable"],
+    ["0x469788fe6e9e9681c6ebf3bf78e7fd26fc015446", "DelegateRegistry"],
+    ["0xee4e4bb2bf8ce4a2e339b8bd482942775a9f2c12", "Proxy"],
+    ["0x854d05fb618fe81c8aeb0d6b03bc957ce409d5bc", "NFTImportHub"],
+    ["0x4c073b3bab6d8826b8c5b229f3cfdc1ec6e47e74", "UUPSProxy"],
+    ["0x6a60c76247e89256bf8bb32b39b92deb7bd3ebb4", "ArtCertificate"],
     [
       "0xe01cc077f4e477e8f9a69bbb282ad5cc5267e013",
       "TransparentUpgradeableProxy"
     ],
-    [
-      "0x0b622a2061eaccae1c664ebc3e868b8438e03f61",
-      "Governance"
-    ],
-    [
-      "0x2cf3bd6a9056b39999f3883955e183f655345063",
-      "ChainAdmin"
-    ],
-    [
-      "0x9008d19f58aabd9ed0d60971565aa8510560ab41",
-      "GPv2Settlement"
-    ],
-    [
-      "0xa8dfb37ba1f98171ede39ac5c48ecb5bf23f78a4",
-      "MixinSafeGuard"
-    ],
-    [
-      "0xdff7f56115568bcdd0e1f9dfdb73dd14ec83f6f7",
-      "OpenEdition721Mint"
-    ],
-    [
-      "0xedadeb5faa413e6c8623461849dfd0b7c3790c32",
-      "ObortechToken"
-    ],
-    [
-      "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-      "WETH9"
-    ],
-    [
-      "0x744030ad4e6c10faf5483b62473d88a254d62261",
-      "NuLinkToken"
-    ],
-    [
-      "0x8ae01fcf7c655655ff2c6ef907b8b4718ab4e17c",
-      "MultiSend"
-    ],
-    [
-      "0xa105c3abedbaf4295ac6149bf24d5311f629934c",
-      "SignedDistributor"
-    ],
-    [
-      "0xb81530592c2ad62f95cfb7c79f7bd0c0cbc64d0a",
-      "SafeProxy"
-    ],
-    [
-      "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
-      "WBTC"
-    ],
-    [
-      "0xb8e6d31e7b212b2b7250ee9c26c56cebbfbe6b23",
-      "ERC1967Proxy"
-    ],
-    [
-      "0x4095f064b8d3c3548a3bebfd0bbfd04750e30077",
-      "EthereumBundlerV2"
-    ],
-    [
-      "0x1111111254eeb25477b68fb85ed929f73a960582",
-      "AggregationRouterV5"
-    ],
-    [
-      "0xf59efd3f4bfb2b604512f5b54032276b4bf2c8bd",
-      "TokenERC721"
-    ],
-    [
-      "0x011a61c07dbf256a68256b1cb51a5e246730ab92",
-      "MagicSpend"
-    ],
-    [
-      "0x4200000000000000000000000000000000000006",
-      "WETH9"
-    ],
-    [
-      "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
-      "FiatTokenProxy"
-    ],
-    [
-      "0xe3f9591d26d58829f317367d5f547d5ac6313c9c",
-      "BaseRewardPool"
-    ],
-    [
-      "0xed35af169af46a02ee13b9d79eb57d6d68c1749e",
-      "ERC1967Proxy"
-    ],
-    [
-      "0xa5f565650890fba1824ee0f21ebbbf660a179934",
-      "RelayReceiver"
-    ],
+    ["0x0b622a2061eaccae1c664ebc3e868b8438e03f61", "Governance"],
+    ["0x2cf3bd6a9056b39999f3883955e183f655345063", "ChainAdmin"],
+    ["0x9008d19f58aabd9ed0d60971565aa8510560ab41", "GPv2Settlement"],
+    ["0xa8dfb37ba1f98171ede39ac5c48ecb5bf23f78a4", "MixinSafeGuard"],
+    ["0xdff7f56115568bcdd0e1f9dfdb73dd14ec83f6f7", "OpenEdition721Mint"],
+    ["0xedadeb5faa413e6c8623461849dfd0b7c3790c32", "ObortechToken"],
+    ["0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "WETH9"],
+    ["0x744030ad4e6c10faf5483b62473d88a254d62261", "NuLinkToken"],
+    ["0x8ae01fcf7c655655ff2c6ef907b8b4718ab4e17c", "MultiSend"],
+    ["0xa105c3abedbaf4295ac6149bf24d5311f629934c", "SignedDistributor"],
+    ["0xb81530592c2ad62f95cfb7c79f7bd0c0cbc64d0a", "SafeProxy"],
+    ["0x2260fac5e5542a773aa44fbcfedf7c193bc2c599", "WBTC"],
+    ["0xb8e6d31e7b212b2b7250ee9c26c56cebbfbe6b23", "ERC1967Proxy"],
+    ["0x4095f064b8d3c3548a3bebfd0bbfd04750e30077", "EthereumBundlerV2"],
+    ["0x1111111254eeb25477b68fb85ed929f73a960582", "AggregationRouterV5"],
+    ["0xf59efd3f4bfb2b604512f5b54032276b4bf2c8bd", "TokenERC721"],
+    ["0x011a61c07dbf256a68256b1cb51a5e246730ab92", "MagicSpend"],
+    ["0x4200000000000000000000000000000000000006", "WETH9"],
+    ["0x833589fcd6edb6e08f4c7c32d4f71b54bda02913", "FiatTokenProxy"],
+    ["0xe3f9591d26d58829f317367d5f547d5ac6313c9c", "BaseRewardPool"],
+    ["0xed35af169af46a02ee13b9d79eb57d6d68c1749e", "ERC1967Proxy"],
+    ["0xa5f565650890fba1824ee0f21ebbbf660a179934", "RelayReceiver"],
     [
       "0x77edae6a5f332605720688c7fda7476476e8f83f",
       "TransparentUpgradeableProxy"
     ],
-    [
-      "0xd692f41fd540abb39aff27d7914ad7f1831f785b",
-      "Login"
-    ],
-    [
-      "0x974474c8bcb36302be93858466728271fb36544e",
-      "SCVirtualAssetEvents"
-    ],
-    [
-      "0x4af334f9ae78edd787750063b22a2eaefdbcd3ee",
-      "SCVirtualAssetEvents"
-    ],
-    [
-      "0x91ff962f7de9865d3ca8ca151bac28969f52f34b",
-      "Smart"
-    ]
+    ["0xd692f41fd540abb39aff27d7914ad7f1831f785b", "Login"],
+    ["0x974474c8bcb36302be93858466728271fb36544e", "SCVirtualAssetEvents"],
+    ["0x4af334f9ae78edd787750063b22a2eaefdbcd3ee", "SCVirtualAssetEvents"],
+    ["0x91ff962f7de9865d3ca8ca151bac28969f52f34b", "Smart"]
   ],
   "METHODS": [
-    [
-      "0xfec93e49",
-      "follow"
-    ],
-    [
-      "0x196e5c5b",
-      "join"
-    ],
-    [
-      "0x8ec552dc",
-      "createProfile"
-    ],
-    [
-      "0x87c3129d",
-      "clockIn"
-    ],
-    [
-      "0x4666fc80",
-      "swapTokensSingleV3ERC20ToERC20"
-    ],
-    [
-      "0x29c911c9",
-      "startDuel"
-    ],
-    [
-      "0xebefad06",
-      "finishMissions"
-    ],
-    [
-      "0xa9059cbb",
-      "transfer"
-    ],
-    [
-      "0x095ea7b3",
-      "approve"
-    ],
-    [
-      "0xf3912026",
-      "startMissions"
-    ],
-    [
-      "0xd2395dcd",
-      "buyTokens"
-    ],
-    [
-      "0xc464fe65",
-      "sellTokens"
-    ],
-    [
-      "0x3a6bf43a",
-      "safeMint"
-    ],
-    [
-      "0x38eff67f",
-      "safeMint"
-    ],
-    [
-      "0x0471c456",
-      "finishDuel"
-    ],
-    [
-      "0x",
-      "cancelTransactionAndTransfer"
-    ],
-    [
-      "0x049639fb",
-      "call"
-    ],
-    [
-      "0x9ddf93bb",
-      "swap"
-    ],
-    [
-      "0x541d63c8",
-      "executeUserOpWithErrorString"
-    ],
-    [
-      "0x00000000",
-      "ROOT4146650865"
-    ],
-    [
-      "0x23b872dd",
-      "transferFrom"
-    ],
-    [
-      "0x6a761202",
-      "execTransaction"
-    ],
-    [
-      "0x0a107d3e",
-      "assignDelegate"
-    ],
-    [
-      "0xbd86e508",
-      "setDelegate"
-    ],
-    [
-      "0xfd5d357a",
-      "approveRolloverAuction"
-    ],
-    [
-      "0x811b86cd",
-      "pairRolloverManager"
-    ],
-    [
-      "0xa22cb465",
-      "setApprovalForAll"
-    ],
-    [
-      "0xc2a672e0",
-      "unstake"
-    ],
-    [
-      "0x39255d5b",
-      "callAgreement"
-    ],
-    [
-      "0xf9a807dd",
-      "importHeroNft"
-    ],
-    [
-      "0xd85d3d27",
-      "mint"
-    ],
-    [
-      "0xc8154b80",
-      "mintNFT"
-    ],
-    [
-      "0x69340beb",
-      "multicall"
-    ],
-    [
-      "0xe19a9dd9",
-      "setGuard"
-    ],
-    [
-      "0xec6cb13f",
-      "setPreSignature"
-    ],
-    [
-      "0x9871efa4",
-      "unxswapByOrderId"
-    ],
-    [
-      "0xaf7060fd",
-      "swapTokensSingleV3NativeToERC20"
-    ],
-    [
-      "0x643dc105",
-      "setBilling"
-    ],
-    [
-      "0x940d3c60",
-      "executeAndRevert"
-    ],
-    [
-      "0x8d80ff0a",
-      "multiSend"
-    ],
-    [
-      "0x9a15bf92",
-      "claim"
-    ],
-    [
-      "0x7bb37428",
-      "executeUserOp"
-    ],
-    [
-      "0x02cba741",
-      "transferErc20"
-    ],
-    [
-      "0xac9650d8",
-      "multicall"
-    ],
-    [
-      "0x12aa3caf",
-      "swap"
-    ],
-    [
-      "0x0075a317",
-      "mintTo"
-    ],
-    [
-      "0xd0e30db0",
-      "deposit"
-    ],
-    [
-      "0x238d6579",
-      "supplyCollateral"
-    ],
-    [
-      "0x50d8cd4b",
-      "borrow"
-    ],
-    [
-      "0x51945447",
-      "execute"
-    ],
-    [
-      "0x7050ccd9",
-      "getReward"
-    ],
-    [
-      "0xb91d544e",
-      "u"
-    ],
-    [
-      "0x2f2ff15d",
-      "grantRole"
-    ],
-    [
-      "0x98a6e993",
-      "mintWithSignature"
-    ],
-    [
-      "0x3dbfd97c",
-      "login"
-    ],
-    [
-      "0x82ad56cb",
-      "aggregate3"
-    ],
-    [
-      "0x8c7a3e2c",
-      "EmitGameUserActivityWithSign"
-    ],
-    [
-      "0x54d62dc7",
-      "prepapreClaim"
-    ],
-    [
-      "0x4e71d92d",
-      "claim"
-    ]
+    ["0xfec93e49", "follow"],
+    ["0x196e5c5b", "join"],
+    ["0x8ec552dc", "createProfile"],
+    ["0x87c3129d", "clockIn"],
+    ["0x4666fc80", "swapTokensSingleV3ERC20ToERC20"],
+    ["0x29c911c9", "startDuel"],
+    ["0xebefad06", "finishMissions"],
+    ["0xa9059cbb", "transfer"],
+    ["0x095ea7b3", "approve"],
+    ["0xf3912026", "startMissions"],
+    ["0xd2395dcd", "buyTokens"],
+    ["0xc464fe65", "sellTokens"],
+    ["0x3a6bf43a", "safeMint"],
+    ["0x38eff67f", "safeMint"],
+    ["0x0471c456", "finishDuel"],
+    ["0x", "cancelTransactionAndTransfer"],
+    ["0x049639fb", "call"],
+    ["0x9ddf93bb", "swap"],
+    ["0x541d63c8", "executeUserOpWithErrorString"],
+    ["0x00000000", "ROOT4146650865"],
+    ["0x23b872dd", "transferFrom"],
+    ["0x6a761202", "execTransaction"],
+    ["0x0a107d3e", "assignDelegate"],
+    ["0xbd86e508", "setDelegate"],
+    ["0xfd5d357a", "approveRolloverAuction"],
+    ["0x811b86cd", "pairRolloverManager"],
+    ["0xa22cb465", "setApprovalForAll"],
+    ["0xc2a672e0", "unstake"],
+    ["0x39255d5b", "callAgreement"],
+    ["0xf9a807dd", "importHeroNft"],
+    ["0xd85d3d27", "mint"],
+    ["0xc8154b80", "mintNFT"],
+    ["0x69340beb", "multicall"],
+    ["0xe19a9dd9", "setGuard"],
+    ["0xec6cb13f", "setPreSignature"],
+    ["0x9871efa4", "unxswapByOrderId"],
+    ["0xaf7060fd", "swapTokensSingleV3NativeToERC20"],
+    ["0x643dc105", "setBilling"],
+    ["0x940d3c60", "executeAndRevert"],
+    ["0x8d80ff0a", "multiSend"],
+    ["0x9a15bf92", "claim"],
+    ["0x7bb37428", "executeUserOp"],
+    ["0x02cba741", "transferErc20"],
+    ["0xac9650d8", "multicall"],
+    ["0x12aa3caf", "swap"],
+    ["0x0075a317", "mintTo"],
+    ["0xd0e30db0", "deposit"],
+    ["0x238d6579", "supplyCollateral"],
+    ["0x50d8cd4b", "borrow"],
+    ["0x51945447", "execute"],
+    ["0x7050ccd9", "getReward"],
+    ["0xb91d544e", "u"],
+    ["0x2f2ff15d", "grantRole"],
+    ["0x98a6e993", "mintWithSignature"],
+    ["0x3dbfd97c", "login"],
+    ["0x82ad56cb", "aggregate3"],
+    ["0x8c7a3e2c", "EmitGameUserActivityWithSign"],
+    ["0x54d62dc7", "prepapreClaim"],
+    ["0x4e71d92d", "claim"]
   ]
 }
