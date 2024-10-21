@@ -6,7 +6,7 @@ import {
 } from '~/components/core/directory-tabs'
 import { getDaRiskEntries } from '~/server/features/data-availability/risks/get-da-risk-entries'
 import { groupBySystem } from '../_utils/group-by-system'
-import { DaRiskTable } from './_components/table/da-risk-table'
+import { DaRiskTableNew } from './_components/table/da-risk-table-new'
 
 export default async function Page() {
   const items = await getDaRiskEntries()
@@ -24,10 +24,10 @@ export default async function Page() {
             <DirectoryTabsTrigger value="custom">Custom</DirectoryTabsTrigger>
           </DirectoryTabsList>
           <DirectoryTabsContent value="public">
-            <DaRiskTable items={publicSystems} />
+            <DaRiskTableNew items={publicSystems} />
           </DirectoryTabsContent>
           <DirectoryTabsContent value="custom">
-            <DaRiskTable items={customSystems} />
+            <DaRiskTableNew items={customSystems} />
           </DirectoryTabsContent>
         </DirectoryTabs>
       </div>
