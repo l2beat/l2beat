@@ -1,4 +1,8 @@
-import { ContractParameters, DiscoveryOutput, EoaParameters } from '@l2beat/discovery-types'
+import {
+  ContractParameters,
+  DiscoveryOutput,
+  EoaParameters,
+} from '@l2beat/discovery-types'
 import { Hash256 } from '@l2beat/shared-pure'
 
 import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
