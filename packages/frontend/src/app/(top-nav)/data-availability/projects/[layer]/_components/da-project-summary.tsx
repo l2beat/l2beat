@@ -5,19 +5,22 @@ import { AboutSection } from '~/components/projects/sections/about-section'
 import { BigPentagonRosette } from '~/components/rosette/pentagon/big-pentagon-rosette'
 import { type DaProjectEntry } from '~/server/features/data-availability/project/get-da-project-entry'
 import { DaProjectStats } from './da-project-stats'
+import { ProjectHeader } from '~/components/projects/project-header'
+import { GrisiniDetails } from '~/components/grisini/grisini-details'
 
 interface Props {
   project: DaProjectEntry
-  header: React.ReactNode
 }
 
-export function DaProjectSummary({ project, header }: Props) {
+export function DaProjectSummary({ project }: Props) {
   return (
     <section
       id="summary"
       className="max-md:bg-gray-100 max-md:px-4 max-md:dark:bg-zinc-900"
     >
-      {header}
+      <header className="space-y-4 pt-6 max-md:bg-gray-100 max-md:pb-4 md:space-y-3 max-md:dark:bg-zinc-900">
+        <ProjectHeader title={project.name} slug={project.slug} />
+      </header>
       <div className="flex gap-10">
         <div className="w-full space-y-4">
           {project.description && (
@@ -31,12 +34,7 @@ export function DaProjectSummary({ project, header }: Props) {
           </div>
           <DaProjectStats project={project} />
         </div>
-        <BigPentagonRosette
-          className="mt-auto max-lg:hidden"
-          values={project.header.rosetteValues}
-          isUnderReview={project.isUnderReview}
-          hasNoBridge={project.selectedBridge.type === 'NoBridge'}
-        />
+        <GrisiniDetails items={project.header.grisiniValues} />
       </div>
 
       <HorizontalSeparator className="mt-6 max-md:-mx-4 max-md:w-screen md:mb-6" />

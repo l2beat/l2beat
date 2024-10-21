@@ -5,6 +5,7 @@ import {
   sentimentToTransparentBgColor,
 } from '~/utils/sentiment'
 import { cn } from '~/utils/cn'
+import { GrisiniValue } from './types'
 
 export interface SingleGrisiniDetailsProps {
   name: string
@@ -12,11 +13,7 @@ export interface SingleGrisiniDetailsProps {
   value: string
 }
 
-export function SingleGrisiniDetails({
-  name,
-  sentiment,
-  value,
-}: SingleGrisiniDetailsProps) {
+export function SingleGrisiniDetails({ name, sentiment, value }: GrisiniValue) {
   return (
     <div
       className={cn(

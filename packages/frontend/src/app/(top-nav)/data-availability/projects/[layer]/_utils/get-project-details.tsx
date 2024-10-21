@@ -12,6 +12,7 @@ import { toTechnologyRisk } from '~/utils/project/risk-summary/to-technology-ris
 import { getDaOtherConsiderationsSection } from './get-da-other-considerations-section'
 import { getDaProjectRiskSummarySection } from './get-da-project-risk-summary-section'
 import { getPermissionedEntities } from './get-permissioned-entities'
+import { GrisiniValue } from '~/components/grisini/types'
 interface Params {
   daLayer: DaLayer
   daBridge: DaBridge
@@ -19,7 +20,7 @@ interface Params {
   contractsVerificationStatuses: ContractsVerificationStatuses
   manuallyVerifiedContracts: ManuallyVerifiedContracts
   implementationChangeReport: ImplementationChangeReportApiResponse
-  rosetteValues: RosetteValue[]
+  grisiniValues: GrisiniValue[]
 }
 
 export function getProjectDetails({
@@ -29,7 +30,7 @@ export function getProjectDetails({
   contractsVerificationStatuses,
   manuallyVerifiedContracts,
   implementationChangeReport,
-  rosetteValues,
+  grisiniValues,
 }: Params) {
   const permissionsSection =
     daBridge.type !== 'NoBridge' && daBridge.type !== 'Enshrined'
@@ -94,7 +95,7 @@ export function getProjectDetails({
       id: 'risk-analysis',
       title: 'Risk analysis',
       rosetteType: 'pentagon',
-      rosetteValues: rosetteValues,
+      rosetteValues: grisiniValues,
       isUnderReview: !!daLayer.isUnderReview || daBridge.isUnderReview,
       shouldHideRosette: daBridge.type === 'NoBridge',
       warning: daBridge.display.warning,

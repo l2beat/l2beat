@@ -1,7 +1,5 @@
 import { type DaBridge, type DaLayer, getDaProjectKey } from '@l2beat/config'
-import { mapRisksToRosetteValues } from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
 import { getProjectDetails } from '~/app/(top-nav)/data-availability/projects/[layer]/_utils/get-project-details'
-import { type RosetteValue } from '~/components/rosette/types'
 import { getDataAvailabilityProjectLinks } from '~/utils/project/get-project-links'
 import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { getContractsVerificationStatuses } from '../../verification-status/get-contracts-verification-statuses'
@@ -14,6 +12,8 @@ import {
   getDaProjectEconomicSecurity,
 } from './utils/get-da-project-economic-security'
 import { getDaProjectTvl } from './utils/get-da-project-tvl'
+import { mapRisksToGrisiniItems } from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
+import { GrisiniValue } from '~/components/grisini/types'
 
 export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
   // TODO: Remove it to re-enable per-combination TVL
@@ -38,7 +38,7 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
 
   const isVerified =
     !!projectsVerificationStatuses[getDaProjectKey(daLayer, daBridge)]
-  const rosetteValues = mapRisksToRosetteValues(
+  const grisiniValues = mapRisksToGrisiniItems(
     getDaRisks(daLayer, daBridge, tvs, economicSecurity),
   )
 
@@ -49,7 +49,7 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
     contractsVerificationStatuses,
     manuallyVerifiedContracts,
     implementationChangeReport,
-    rosetteValues,
+    grisiniValues,
   })
 
   return {
@@ -72,7 +72,7 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
       slug: bridge.display.slug,
     })),
     header: getHeader({
-      rosetteValues,
+      grisiniValues,
       daLayer,
       daBridge,
       tvs,
@@ -83,7 +83,7 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
 }
 
 interface HeaderParams {
-  rosetteValues: RosetteValue[]
+  grisiniValues: GrisiniValue[]
   daLayer: DaLayer
   daBridge: DaBridge
   tvs: number
@@ -91,14 +91,14 @@ interface HeaderParams {
 }
 
 function getHeader({
-  rosetteValues,
+  grisiniValues,
   daLayer,
   daBridge,
   tvs,
   economicSecurity,
 }: HeaderParams) {
   return {
-    rosetteValues,
+    grisiniValues,
     links: getDataAvailabilityProjectLinks(
       daLayer.display.links,
       daBridge.display.links,

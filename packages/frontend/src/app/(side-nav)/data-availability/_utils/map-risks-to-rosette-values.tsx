@@ -6,7 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import { type RosetteValue } from '~/components/rosette/types'
 
-export function mapRisksToRosetteValues(
+export function mapRisksToGrisiniItems(
   risks: Record<
     keyof (DaLayerRisks & DaBridgeRisks),
     ValueWithSentiment<string, Sentiment> & {
