@@ -36,7 +36,7 @@ const CommandDialog = ({
   return (
     <Dialog {...props}>
       <DialogContent
-        className="top-1/2 overflow-hidden p-0 shadow-lg max-md:h-dvh md:top-1/4"
+        className="top-1/2 overflow-hidden p-0 shadow-lg max-md:h-screen md:top-1/4 max-md:[@supports(height:100dvh)]:h-dvh"
         overlayClassName="max-md:hidden"
         onEscapeKeyDown={onEscapeKeyDown}
       >
