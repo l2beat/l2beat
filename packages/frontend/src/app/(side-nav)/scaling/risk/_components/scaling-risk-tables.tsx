@@ -8,20 +8,12 @@ import {
 } from '~/components/core/directory-tabs'
 import { MainPageCard } from '~/components/main-page-card'
 import { type ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
-import { type groupByMainCategories } from '~/utils/group-by-main-categories'
+import { type RecategorisedScalingEntry } from '~/utils/group-by-main-categories'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingFilters } from '../../_components/scaling-filters'
 import { ScalingRiskTable } from './table/scaling-risk-table'
 
-type Props =
-  | {
-      type?: never
-      entries: ScalingRiskEntry[]
-    }
-  | {
-      type: 'recategorised'
-      entries: ReturnType<typeof groupByMainCategories<ScalingRiskEntry>>
-    }
+type Props = RecategorisedScalingEntry<ScalingRiskEntry>
 
 export function ScalingRiskTables(props: Props) {
   const includeFilters = useScalingFilter()

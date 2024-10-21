@@ -9,7 +9,7 @@ import {
 import { MainPageCard } from '~/components/main-page-card'
 import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { cn } from '~/utils/cn'
-import { type groupByMainCategories } from '~/utils/group-by-main-categories'
+import { type RecategorisedScalingEntry } from '~/utils/group-by-main-categories'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingFilters } from '../../_components/scaling-filters'
 import { type CostsMetric, useCostsMetricContext } from './costs-metric-context'
@@ -17,15 +17,7 @@ import { useCostsTimeRangeContext } from './costs-time-range-context'
 import { CostsMetricControls } from './costs-type-controls'
 import { ScalingCostsTable } from './table/scaling-costs-table'
 
-type Props =
-  | {
-      type?: never
-      entries: ScalingCostsEntry[]
-    }
-  | {
-      type: 'recategorised'
-      entries: ReturnType<typeof groupByMainCategories<ScalingCostsEntry>>
-    }
+type Props = RecategorisedScalingEntry<ScalingCostsEntry>
 
 export function ScalingCostsTables(props: Props) {
   const includeFilters = useScalingFilter()

@@ -8,20 +8,12 @@ import {
 } from '~/components/core/directory-tabs'
 import { MainPageCard } from '~/components/main-page-card'
 import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
-import { type groupByMainCategories } from '~/utils/group-by-main-categories'
+import { type RecategorisedScalingEntry as RecategorisedScalingEntries } from '~/utils/group-by-main-categories'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingTvlFilters } from '../../_components/scaling-tvl-filters'
 import { ScalingTvlTable } from './table/scaling-tvl-table'
 
-type Props =
-  | {
-      type?: never
-      entries: ScalingTvlEntry[]
-    }
-  | {
-      type: 'recategorised'
-      entries: ReturnType<typeof groupByMainCategories<ScalingTvlEntry>>
-    }
+type Props = RecategorisedScalingEntries<ScalingTvlEntry>
 
 export function ScalingTvlTables(props: Props) {
   const includeFilters = useScalingFilter()

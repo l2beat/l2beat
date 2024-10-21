@@ -9,7 +9,7 @@ import {
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { MainPageCard } from '~/components/main-page-card'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
-import { type groupByMainCategories } from '~/utils/group-by-main-categories'
+import { type RecategorisedScalingEntry } from '~/utils/group-by-main-categories'
 import {
   ScalingFilterContextProvider,
   useScalingFilter,
@@ -20,15 +20,7 @@ import { ScalingSummaryRollupsTable } from './table/scaling-summary-rollups-tabl
 import { ScalingSummaryTable } from './table/scaling-summary-table'
 import { ScalingSummaryValidiumsAndOptimiumsTable } from './table/scaling-summary-validiums-and-optimiums-table'
 
-type Props =
-  | {
-      type?: never
-      entries: ScalingSummaryEntry[]
-    }
-  | {
-      type: 'recategorised'
-      entries: ReturnType<typeof groupByMainCategories<ScalingSummaryEntry>>
-    }
+type Props = RecategorisedScalingEntry<ScalingSummaryEntry>
 export function ScalingSummaryTables(props: Props) {
   const includeFilters = useScalingFilter()
 

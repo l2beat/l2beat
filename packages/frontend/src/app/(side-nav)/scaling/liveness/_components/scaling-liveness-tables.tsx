@@ -9,22 +9,14 @@ import {
 } from '~/components/core/directory-tabs'
 import { MainPageCard } from '~/components/main-page-card'
 import { type ScalingLivenessEntry } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
-import { type groupByMainCategories } from '~/utils/group-by-main-categories'
+import { type RecategorisedScalingEntry } from '~/utils/group-by-main-categories'
 import { BaseScalingFilters } from '../../_components/base-scaling-filters'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { useLivenessTimeRangeContext } from './liveness-time-range-context'
 import { LivenessTimeRangeControls } from './liveness-time-range-controls'
 import { ScalingLivenessTable } from './table/scaling-liveness-table'
 
-type Props =
-  | {
-      type?: never
-      entries: ScalingLivenessEntry[]
-    }
-  | {
-      type: 'recategorised'
-      entries: ReturnType<typeof groupByMainCategories<ScalingLivenessEntry>>
-    }
+type Props = RecategorisedScalingEntry<ScalingLivenessEntry>
 
 export function ScalingLivenessTables(props: Props) {
   const includeFilters = useScalingFilter()

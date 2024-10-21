@@ -1,6 +1,5 @@
 import { ScalingSummaryActivityChart } from '~/components/chart/activity/scaling-summary-activity-chart'
 import { ScalingSummaryTvlChart } from '~/components/chart/tvl/scaling-summary-tvl-chart'
-import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { MainPageCard } from '~/components/main-page-card'
 import { MainPageHeader } from '~/components/main-page-header'
 import { getScalingSummaryEntries } from '~/server/features/scaling/summary/get-scaling-summary-entries'

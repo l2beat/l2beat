@@ -9,20 +9,12 @@ import {
 import { MainPageCard } from '~/components/main-page-card'
 import { getStageSortedRowModel } from '~/components/table/sorting/get-stage-sorting-row-model'
 import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling-activity-entries'
-import { type groupByMainCategories } from '~/utils/group-by-main-categories'
+import { type RecategorisedScalingEntry } from '~/utils/group-by-main-categories'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingFilters } from '../../_components/scaling-filters'
 import { ScalingActivityTable } from './table/scaling-activity-table'
 
-type Props =
-  | {
-      type?: never
-      entries: ScalingActivityEntry[]
-    }
-  | {
-      type: 'recategorised'
-      entries: ReturnType<typeof groupByMainCategories<ScalingActivityEntry>>
-    }
+type Props = RecategorisedScalingEntry<ScalingActivityEntry>
 
 export function ScalingActivityTables(props: Props) {
   const includeFilters = useScalingFilter()
