@@ -70,9 +70,9 @@ const getCachedActivityChart = cache(
         }
 
         if (isEthereum) {
-          acc[timestamp].ethereumCount += entry.count
+          acc[timestamp].ethereumCount += entry.uopsCount ?? entry.count
         } else {
-          acc[timestamp].count += entry.count
+          acc[timestamp].count += entry.uopsCount ?? entry.count
         }
 
         return acc
