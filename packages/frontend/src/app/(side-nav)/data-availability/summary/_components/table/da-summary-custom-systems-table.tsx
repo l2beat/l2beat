@@ -19,7 +19,6 @@ import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { DaTableLastSubRowCell } from '../../../_components/da-table-last-sub-row-cell'
 import { DaTableSubRowCell } from '../../../_components/da-table-sub-row-cell'
-import { mapRisksToRosetteValues } from '../../../_utils/map-risks-to-rosette-values'
 import { customSystemsColumns } from './columns'
 
 interface Props {
@@ -101,12 +100,7 @@ export function DaSummaryCustomSystemsTable({ items }: Props) {
                       </Link>
                     </td>
                     <DaTableSubRowCell href={href} lastRow={lastRow}>
-                      <PentagonRosetteCell
-                        className="justify-start"
-                        values={mapRisksToRosetteValues(subRow.risks)}
-                        isUnderReview={subRow.isUnderReview}
-                        hasNoBridge={subRow.daBridge.type === 'NoBridge'}
-                      />
+                      TODO
                     </DaTableSubRowCell>
                     <DaTableLastSubRowCell
                       href={href}
