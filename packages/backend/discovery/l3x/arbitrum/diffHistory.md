@@ -1,3 +1,131 @@
+Generated with discovered.json: 0x60875b2ed0902a71d76c620d794ec305ea0c0994
+
+# Diff at Mon, 21 Oct 2024 11:13:09 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 258882110
+- current block number: 258882110
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 258882110 (main branch discovery), not current.
+
+```diff
+    contract Outbox (0x1526DAacDAf3EE81E5ae087E0DA8677E8c677CE5) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"]
+      values.$pastUpgrades.0.1:
+-        ["0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"]
++        "0xf00fc951c098a8288fe0ee80973a1391153e3c6b1c9a61b9a7e2a1b5cd31cfdb"
+    }
+```
+
+```diff
+    contract ChallengeManager (0x211C9893653Aea2088E34765e7039617E95fD8fD) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x5cA988F213EfbCB86ED7e2AACB0C15c91e648f8d"]
+      values.$pastUpgrades.0.1:
+-        ["0x5cA988F213EfbCB86ED7e2AACB0C15c91e648f8d"]
++        "0xf00fc951c098a8288fe0ee80973a1391153e3c6b1c9a61b9a7e2a1b5cd31cfdb"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"]
+      values.$pastUpgrades.0.1:
+-        ["0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"]
++        "0xf00fc951c098a8288fe0ee80973a1391153e3c6b1c9a61b9a7e2a1b5cd31cfdb"
+    }
+```
+
+```diff
+    contract L1ERC20Gateway (0x4fF3E70f30f0394Ad62428751Fe3858740595908) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x1d720642e63cB0f50be637e16E0f78B2D1b93f16"]
+      values.$pastUpgrades.0.1:
+-        ["0x1d720642e63cB0f50be637e16E0f78B2D1b93f16"]
++        "0x325e5d768bde71c89bb5e9ef015901fc78ba3302cabfbb21296bc6cf26b96b6e"
+    }
+```
+
+```diff
+    contract Bridge (0x59E088d827CB7983Cd0CC64312E472D7cc8a4F44) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xB23214f241bdEb275f7dCBfbb1EA79349101d4B0"]
+      values.$pastUpgrades.0.1:
+-        ["0xB23214f241bdEb275f7dCBfbb1EA79349101d4B0"]
++        "0xf00fc951c098a8288fe0ee80973a1391153e3c6b1c9a61b9a7e2a1b5cd31cfdb"
+    }
+```
+
+```diff
+    contract Inbox (0x80de5c4ccDfb7b6a250A9588C2d80F62a2B7d13F) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x8f6406781cC955398C45a48DcEfeEBDb2c8e2CaA"]
+      values.$pastUpgrades.0.1:
+-        ["0x8f6406781cC955398C45a48DcEfeEBDb2c8e2CaA"]
++        "0xf00fc951c098a8288fe0ee80973a1391153e3c6b1c9a61b9a7e2a1b5cd31cfdb"
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0x817C8Da480bC6b42a5FA88A26e9eD8c0c03968Cf) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x9c84a387930853D963892D299153B0d5840dc1F5"]
+      values.$pastUpgrades.0.1:
+-        ["0x9c84a387930853D963892D299153B0d5840dc1F5"]
++        "0x325e5d768bde71c89bb5e9ef015901fc78ba3302cabfbb21296bc6cf26b96b6e"
+    }
+```
+
+```diff
+    contract RollupProxy (0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      values.$pastUpgrades.0.2:
++        ["0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754","0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A"]
+      values.$pastUpgrades.0.1:
+-        ["0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754","0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A"]
++        "0xf00fc951c098a8288fe0ee80973a1391153e3c6b1c9a61b9a7e2a1b5cd31cfdb"
+    }
+```
+
+```diff
+    contract SequencerInbox (0xB9450b512Fd3454e9C1a2593C5DF9E71344b5653) {
+    +++ description: State batches / commitments get posted here.
+      values.$pastUpgrades.0.2:
++        ["0x18ed2d5bF7c5943bFd20a2995b9879E30c9E8dDa"]
+      values.$pastUpgrades.0.1:
+-        ["0x18ed2d5bF7c5943bFd20a2995b9879E30c9E8dDa"]
++        "0xf00fc951c098a8288fe0ee80973a1391153e3c6b1c9a61b9a7e2a1b5cd31cfdb"
+    }
+```
+
+```diff
+    contract RollupEventInbox (0xc40e1DdDDc4837e63Bfb21EF34d3Ca4A6c78fD15) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xF40C24bA346aA459ED28e196D4A46Cf17174bD6C"]
+      values.$pastUpgrades.0.1:
+-        ["0xF40C24bA346aA459ED28e196D4A46Cf17174bD6C"]
++        "0xf00fc951c098a8288fe0ee80973a1391153e3c6b1c9a61b9a7e2a1b5cd31cfdb"
+    }
+```
+
 Generated with discovered.json: 0xc103b184e1e91b033286f3e915ad79251b003621
 
 # Diff at Wed, 16 Oct 2024 11:44:01 GMT:

@@ -1,3 +1,58 @@
+Generated with discovered.json: 0x87c879b1ba3960898824c2e627deb29372885e75
+
+# Diff at Mon, 21 Oct 2024 11:10:47 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20340229
+- current block number: 20340229
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20340229 (main branch discovery), not current.
+
+```diff
+    contract LayerZero Executor (0x173272739Bd7Aa6e4e214714048a9fE699453059) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xDaC2d26317C42ae3CB21357B73404120E1dA4232"]
+      values.$pastUpgrades.1.1:
+-        ["0xDaC2d26317C42ae3CB21357B73404120E1dA4232"]
++        "0x22c22ee402c4be83ef7c851992c3125008be9ee0a39c0d83cf6be91a0506f7c4"
+      values.$pastUpgrades.0.2:
++        ["0x1E45F27F0e96e9757cff938F2c9d697AA8279C85"]
+      values.$pastUpgrades.0.1:
+-        ["0x1E45F27F0e96e9757cff938F2c9d697AA8279C85"]
++        "0x5df683475486093be4a4f92d6f7c47548d3bf38e1a39e25bf0028353f83d4a2b"
+    }
+```
+
+```diff
+    contract  (0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0x319AE539b5BA554b09A46791cdb88b10E4d8F627"]
+      values.$pastUpgrades.2.1:
+-        ["0x319AE539b5BA554b09A46791cdb88b10E4d8F627"]
++        "0x35c84fce2bd551b2e80f13f545f49c65ed2a20c3c2d46eecc10c825112a86ccc"
+      values.$pastUpgrades.1.2:
++        ["0x13dff8847EA170eBb8439ce732c0A14Bb49fDd92"]
+      values.$pastUpgrades.1.1:
+-        ["0x13dff8847EA170eBb8439ce732c0A14Bb49fDd92"]
++        "0xb0be4d7a78cc69d7a3609a84216cbf0bae5b0ade84c45b35c05dafda6c84faec"
+      values.$pastUpgrades.0.2:
++        ["0xF641db6860FD5f6643D05bD75405a2586a63a141"]
+      values.$pastUpgrades.0.1:
+-        ["0xF641db6860FD5f6643D05bD75405a2586a63a141"]
++        "0xd7e8b45283a17ffe10a55914b49e6114acd56dedba1a154159a9b71e9f9205df"
+    }
+```
+
 Generated with discovered.json: 0x4815715b5451877d64fdbff7933f942e74d40816
 
 # Diff at Fri, 18 Oct 2024 11:01:04 GMT:

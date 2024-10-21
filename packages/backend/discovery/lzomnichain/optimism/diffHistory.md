@@ -1,3 +1,73 @@
+Generated with discovered.json: 0x5ecad5a21bfb2ca0ed4832f057e64a58194ea095
+
+# Diff at Mon, 21 Oct 2024 11:14:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 122295641
+- current block number: 122295641
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 122295641 (main branch discovery), not current.
+
+```diff
+    contract  (0x81E792e5a9003CC1C8BF5569A00f34b65d75b017) {
+    +++ description: None
+      values.$pastUpgrades.5.2:
++        ["0x9A4DF6D81309c8a583C28eD8e449E320043e7A97"]
+      values.$pastUpgrades.5.1:
+-        ["0x9A4DF6D81309c8a583C28eD8e449E320043e7A97"]
++        "0xb3790e04ed9da797f538fbd2d794b4d616b133cd920e6ee9914c5095e961d30e"
+      values.$pastUpgrades.4.2:
++        ["0x626058B401DF808fE231566B3D2DE1A64A6bf764"]
+      values.$pastUpgrades.4.1:
+-        ["0x626058B401DF808fE231566B3D2DE1A64A6bf764"]
++        "0x8558f51a0c8067e7c9b5a3cbad2eed9f59de3b7128bb26ed57260109b61719d9"
+      values.$pastUpgrades.3.2:
++        ["0x8042425b53DC6a475cb4e62778A5E17F55f2188d"]
+      values.$pastUpgrades.3.1:
+-        ["0x8042425b53DC6a475cb4e62778A5E17F55f2188d"]
++        "0xa12b03758caa824266ed6fc25d578c44c0630b4e1a56532ca98c0251fa5dd671"
+      values.$pastUpgrades.2.2:
++        ["0xFc358F532d474b3f47c98f2Af5654a813DB1a1cc"]
+      values.$pastUpgrades.2.1:
+-        ["0xFc358F532d474b3f47c98f2Af5654a813DB1a1cc"]
++        "0xcda161a7ce08c559e8cb55466ef29a06420e02a98635da6888dc3d8cc5be4ddf"
+      values.$pastUpgrades.1.2:
++        ["0x00e7306e591c04E72867644dF141e250aCAF175B"]
+      values.$pastUpgrades.1.1:
+-        ["0x00e7306e591c04E72867644dF141e250aCAF175B"]
++        "0x3cd6a1ad5ed99d753b07906145badcc806c94ae4f280825c3059acad40649b7c"
+      values.$pastUpgrades.0.2:
++        ["0xc1b85974F7c2F0Ccb01d763F4a34BFB41a33D612"]
+      values.$pastUpgrades.0.1:
+-        ["0xc1b85974F7c2F0Ccb01d763F4a34BFB41a33D612"]
++        "0xde233077c17b13a17cf1510f91fa86f1b920af52a59bbdeb446cf7a8f2aac032"
+    }
+```
+
+```diff
+    contract  (0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x81855cd82374C3700ee579Ad1fF0760ae039a19B"]
+      values.$pastUpgrades.1.1:
+-        ["0x81855cd82374C3700ee579Ad1fF0760ae039a19B"]
++        "0xab301fb805f0c6b20738c7a5f907d38ca14b25d928ea97c0d8548fd24517ccdd"
+      values.$pastUpgrades.0.2:
++        ["0x154c7B3Eee18ABCFaede98fae00e58e7737d96dE"]
+      values.$pastUpgrades.0.1:
+-        ["0x154c7B3Eee18ABCFaede98fae00e58e7737d96dE"]
++        "0x4724fa253d8eee8a19833f27f1f97893839941055ee134be64a9071554e14f1f"
+    }
+```
+
 Generated with discovered.json: 0xe7b0ddc1b9a8b64291f5a4eb5927d344ab3ff3c7
 
 # Diff at Mon, 14 Oct 2024 10:59:59 GMT:

@@ -1,3 +1,125 @@
+Generated with discovered.json: 0xa34b1ace6ad3dda701d8aaecaeb24a3e61a5abe6
+
+# Diff at Mon, 21 Oct 2024 11:03:45 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20920177
+- current block number: 20920177
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20920177 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x11dd2d9B5ec142dbAFBEFEA82a75985Eae4e12b0) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$pastUpgrades.5.2:
++        ["0x8CfF5bDb1B428B979E3D87087dA8549A28065DDB"]
+      values.$pastUpgrades.5.1:
+-        ["0x8CfF5bDb1B428B979E3D87087dA8549A28065DDB"]
++        "0x60f1457bbf8e61f25203769ade47092100fb0d0f105d1b0a4734dbb052b0910d"
+      values.$pastUpgrades.4.2:
++        ["0x8ea8000814b14884317dF94D2fD26553C3fFd976"]
+      values.$pastUpgrades.4.1:
+-        ["0x8ea8000814b14884317dF94D2fD26553C3fFd976"]
++        "0xd19ed55de296e03d3a00afdf5272d8ef73404602966de1682de751bc91e0f8e6"
+      values.$pastUpgrades.3.2:
++        ["0x8ea8000814b14884317dF94D2fD26553C3fFd976"]
+      values.$pastUpgrades.3.1:
+-        ["0x8ea8000814b14884317dF94D2fD26553C3fFd976"]
++        "0x45f84133cdae2a8b259ab309ca0d499a0b175986c08a4e313ac25109b1dd858c"
+      values.$pastUpgrades.2.2:
++        ["0x8ea8000814b14884317dF94D2fD26553C3fFd976"]
+      values.$pastUpgrades.2.1:
+-        ["0x8ea8000814b14884317dF94D2fD26553C3fFd976"]
++        "0x2967e7dde9e9a7b2e1535c014117e73b29d0a5f486b533bbf2461c34c36a3ff6"
+      values.$pastUpgrades.1.2:
++        ["0xfA6aCD3c452ADE8910505cc61352274b4C6d526c"]
+      values.$pastUpgrades.1.1:
+-        ["0xfA6aCD3c452ADE8910505cc61352274b4C6d526c"]
++        "0x081ad9f0592ee5da39dceb73ea43b57f1442749d480a756e4938bf4999f0ee22"
+      values.$pastUpgrades.0.2:
++        ["0x0000000000000000000000000000000000000000"]
+      values.$pastUpgrades.0.1:
+-        ["0x0000000000000000000000000000000000000000"]
++        "0x7abed0916f03770749ed56034cabc49ae8e403a7940bc4137493e439e431d609"
+    }
+```
+
+```diff
+    contract OptimismPortal (0x787A0ACaB02437c60Aafb1a29167A3609801e320) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.$pastUpgrades.2.2:
++        ["0x098927F692C86fA1722115652b9d2d7BE8cBa6D3"]
+      values.$pastUpgrades.2.1:
+-        ["0x098927F692C86fA1722115652b9d2d7BE8cBa6D3"]
++        "0x60f1457bbf8e61f25203769ade47092100fb0d0f105d1b0a4734dbb052b0910d"
+      values.$pastUpgrades.1.2:
++        ["0xD45C7A59fca1b435ae805E8F6eF27418d92877AD"]
+      values.$pastUpgrades.1.1:
+-        ["0xD45C7A59fca1b435ae805E8F6eF27418d92877AD"]
++        "0x67627d33be7254318cea66122094bf3260d8dba551983dee907390414090503b"
+      values.$pastUpgrades.0.2:
++        ["0x9Cb22AF811cFF79b89d25570FAC31586af7b4a97"]
+      values.$pastUpgrades.0.1:
+-        ["0x9Cb22AF811cFF79b89d25570FAC31586af7b4a97"]
++        "0x081ad9f0592ee5da39dceb73ea43b57f1442749d480a756e4938bf4999f0ee22"
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x909E51211e959339EFb14b36f5A50955a8ae3770) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      values.$pastUpgrades.3.2:
++        ["0x0af92E6944900abA4B9BAC1417bA13ED6F45c27f"]
+      values.$pastUpgrades.3.1:
+-        ["0x0af92E6944900abA4B9BAC1417bA13ED6F45c27f"]
++        "0x60f1457bbf8e61f25203769ade47092100fb0d0f105d1b0a4734dbb052b0910d"
+      values.$pastUpgrades.2.2:
++        ["0xb717dF06e095Bc7438721964DD43a2532963E885"]
+      values.$pastUpgrades.2.1:
+-        ["0xb717dF06e095Bc7438721964DD43a2532963E885"]
++        "0x919f18f60fdf6f2a0caba6d91002f7124eed9ff6f795eb0b283b8d6d94ec58ca"
+      values.$pastUpgrades.1.2:
++        ["0xfbc5b862CE0007AfD9fc58cf07D8A00Cf494fAAA"]
+      values.$pastUpgrades.1.1:
+-        ["0xfbc5b862CE0007AfD9fc58cf07D8A00Cf494fAAA"]
++        "0x52bf2ebf9e73d5b6c5119b9fb5cb5346c2784dbb9bb7ab4de28cc289e5ffcafd"
+      values.$pastUpgrades.0.2:
++        ["0x2EFA0d1CBd36Aa0db7C0b59d32F6dA68cA83A722"]
+      values.$pastUpgrades.0.1:
+-        ["0x2EFA0d1CBd36Aa0db7C0b59d32F6dA68cA83A722"]
++        "0x081ad9f0592ee5da39dceb73ea43b57f1442749d480a756e4938bf4999f0ee22"
+    }
+```
+
+```diff
+    contract SystemConfig (0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.$pastUpgrades.2.2:
++        ["0xA872bca05c9F8A97CC36D879e43B33dB8ed7b69E"]
+      values.$pastUpgrades.2.1:
+-        ["0xA872bca05c9F8A97CC36D879e43B33dB8ed7b69E"]
++        "0x60f1457bbf8e61f25203769ade47092100fb0d0f105d1b0a4734dbb052b0910d"
+      values.$pastUpgrades.1.2:
++        ["0x98F5f3455B71C297e4f7D7Cd1FAA80b5CDf4A542"]
+      values.$pastUpgrades.1.1:
+-        ["0x98F5f3455B71C297e4f7D7Cd1FAA80b5CDf4A542"]
++        "0xdd0f719c148c6de4894f667a50f2b580ee92fbe7cd673e918aebe05c7b49266b"
+      values.$pastUpgrades.0.2:
++        ["0x552FFBdDFB01B6F7f3A3C39E9d3D0A5Fa8436394"]
+      values.$pastUpgrades.0.1:
+-        ["0x552FFBdDFB01B6F7f3A3C39E9d3D0A5Fa8436394"]
++        "0xbef016225c40c0d75131bc4e8a5f6ce6f7a5c872e2449f267413c5bbc6afbf25"
+    }
+```
+
 Generated with discovered.json: 0x95334861e4b89e2c74a101448825fb2c397a2437
 
 # Diff at Wed, 16 Oct 2024 11:34:23 GMT:

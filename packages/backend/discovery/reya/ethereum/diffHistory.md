@@ -1,3 +1,109 @@
+Generated with discovered.json: 0x004c4c2467be821f02f42a2195bc1233a12ad654
+
+# Diff at Mon, 21 Oct 2024 11:09:36 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20941807
+- current block number: 20941807
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20941807 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (0x07390626b8Bc2C04b1D93c7D246A0629198D7868) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x6c21303F5986180B1394d2C89f3e883890E2867b"]
+      values.$pastUpgrades.0.1:
+-        ["0x6c21303F5986180B1394d2C89f3e883890E2867b"]
++        "0x63267f7748e36c730d68d06c10ca1a4c32b3177069f6e13fe1a7466486577c09"
+    }
+```
+
+```diff
+    contract Bridge (0x383c03c4EfF819E73409DbC690755a9992393814) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"]
+      values.$pastUpgrades.0.1:
+-        ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"]
++        "0x63267f7748e36c730d68d06c10ca1a4c32b3177069f6e13fe1a7466486577c09"
+    }
+```
+
+```diff
+    contract Outbox (0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC"]
+      values.$pastUpgrades.0.1:
+-        ["0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC"]
++        "0x63267f7748e36c730d68d06c10ca1a4c32b3177069f6e13fe1a7466486577c09"
+    }
+```
+
+```diff
+    contract RollupProxy (0x448Bbd134dE1B23976073aB4F2915849b2dcD73A) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      values.$pastUpgrades.0.2:
++        ["0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A","0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"]
+      values.$pastUpgrades.0.1:
+-        ["0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A","0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"]
++        "0x63267f7748e36c730d68d06c10ca1a4c32b3177069f6e13fe1a7466486577c09"
+    }
+```
+
+```diff
+    contract Inbox (0x672109752635177ebcb17F2C7e04575A709014BD) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x1162084C3C6575121146582Db5BE43189e8CEe6b"]
+      values.$pastUpgrades.0.1:
+-        ["0x1162084C3C6575121146582Db5BE43189e8CEe6b"]
++        "0x63267f7748e36c730d68d06c10ca1a4c32b3177069f6e13fe1a7466486577c09"
+    }
+```
+
+```diff
+    contract SequencerInbox (0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x873484Ba63353C8b71210ce123B465512d408B27"]
+      values.$pastUpgrades.0.1:
+-        ["0x873484Ba63353C8b71210ce123B465512d408B27"]
++        "0x63267f7748e36c730d68d06c10ca1a4c32b3177069f6e13fe1a7466486577c09"
+    }
+```
+
+```diff
+    contract ChallengeManager (0x728B406A4809118533D96bB3b5C50712C99d8Fa5) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754"]
+      values.$pastUpgrades.0.1:
+-        ["0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754"]
++        "0x63267f7748e36c730d68d06c10ca1a4c32b3177069f6e13fe1a7466486577c09"
+    }
+```
+
+```diff
+    contract RollupEventInbox (0xFd9f59554351122b231F832a0e0A1aBb0604D7fd) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"]
+      values.$pastUpgrades.0.1:
+-        ["0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"]
++        "0x63267f7748e36c730d68d06c10ca1a4c32b3177069f6e13fe1a7466486577c09"
+    }
+```
+
 Generated with discovered.json: 0xf2c3cbb35baee92157e78a75e7e82e10b15dfa50
 
 # Diff at Wed, 16 Oct 2024 11:39:42 GMT:

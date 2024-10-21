@@ -189,7 +189,7 @@ export class AddressAnalyzer {
     const relatives = getRelativesWithSuggestedTemplates(
       results.concat(proxyResults),
       overrides?.ignoreRelatives,
-      implementations.concat(pastUpgrades.flatMap((e) => e[1])),
+      implementations.concat(pastUpgrades.flatMap((e) => e[2])),
       overrides?.fields,
     )
 

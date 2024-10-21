@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x2b8632604e7d35a2da4a5e94f58b96b40b5c5c51
+
+# Diff at Mon, 21 Oct 2024 11:10:16 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20783770
+- current block number: 20783770
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20783770 (main branch discovery), not current.
+
+```diff
+    contract SiliconDAC (0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xa2F7e6Dfd6f43976ee1E2e8A122984ECa8e38608"]
+      values.$pastUpgrades.0.1:
+-        ["0xa2F7e6Dfd6f43976ee1E2e8A122984ECa8e38608"]
++        "0xee62b099c28e601917f60c0abff8441d48a2e7aee41711ff89a9ae0cc2fc647c"
+    }
+```
+
+```diff
+    contract SiliconValidium (0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"]
+      values.$pastUpgrades.0.1:
+-        ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"]
++        "0xc47c5c6b0ea1740437487c101b78895a761501a35bfa97a77d79e803151ccf41"
+    }
+```
+
 Generated with discovered.json: 0xb1b4c87ab571797807e79aed98859f9e281950c7
 
 # Diff at Mon, 14 Oct 2024 10:55:51 GMT:

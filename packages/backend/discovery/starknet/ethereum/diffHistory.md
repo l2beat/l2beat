@@ -1,3 +1,477 @@
+Generated with discovered.json: 0x045665a3f88db9383b9cf2444efd1ef61f6348ca
+
+# Diff at Mon, 21 Oct 2024 11:10:52 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20964358
+- current block number: 20964358
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20964358 (main branch discovery), not current.
+
+```diff
+    contract StarkgateManager (0x0c5aE94f8939182F2D06097025324D1E537d5B60) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x64608BDF1867110f622391196989bF4cE37BBb33"]
+      values.$pastUpgrades.0.1:
+-        ["0x64608BDF1867110f622391196989bF4cE37BBb33"]
++        "0xfdb16d2b1cb55969801447ea8bc0cb00c4825ed75dcb1266a0d94c03699e7a28"
+    }
+```
+
+```diff
+    contract StarkgateRegistry (0x1268cc171c54F2000402DfF20E93E60DF4c96812) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x642F04899B6cA155c2a5eAdD4e4ed634f1B07Dd7"]
+      values.$pastUpgrades.0.1:
+-        ["0x642F04899B6cA155c2a5eAdD4e4ed634f1B07Dd7"]
++        "0x54e1021653aaca692f4ead2a85e5bd32648919d01953e88693a833d45c583fab"
+    }
+```
+
+```diff
+    contract WBTCBridge (0x283751A21eafBFcD52297820D27C1f1963D9b5b4) {
+    +++ description: None
+      values.$pastUpgrades.7.2:
++        ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
+      values.$pastUpgrades.7.1:
+-        ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
++        "0xcd8680d72a4b8e347cd5036a1f2ac89b3e106f7c82d705d3cfc35bb6e849d026"
+      values.$pastUpgrades.6.2:
++        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+      values.$pastUpgrades.6.1:
+-        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
++        "0xd25ca910a4b7d0bab41828bce014a70f75642449f7c0426a3849ad46a6e60364"
+      values.$pastUpgrades.5.2:
++        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+      values.$pastUpgrades.5.1:
+-        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
++        "0x426174e7e63465569d28b3ca3e807e69859f9a2650702487260b9a45646d5f32"
+      values.$pastUpgrades.4.2:
++        ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
+      values.$pastUpgrades.4.1:
+-        ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
++        "0x64910ea21a212ae671687842ec3c4fcd187e935ddf2d6cc90f41b6d99b592964"
+      values.$pastUpgrades.3.2:
++        ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
+      values.$pastUpgrades.3.1:
+-        ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
++        "0xb638d945b6a6feba94d6219f1618a6e279720e105d4476db19063abd4164117f"
+      values.$pastUpgrades.2.2:
++        ["0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"]
+      values.$pastUpgrades.2.1:
+-        ["0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"]
++        "0x5bc722c79d5a4303b76638f6fc75d26c5dbfba39202c2a7ced89b96d3ead97e7"
+      values.$pastUpgrades.1.2:
++        ["0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"]
+      values.$pastUpgrades.1.1:
+-        ["0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"]
++        "0xc450cc918a45c46057f13a072c41a646e78f52af5e36f82b7061b478e44b7fb3"
+      values.$pastUpgrades.0.2:
++        ["0xaec1fB35875a3816a5d09D61F086FeB6c252e096"]
+      values.$pastUpgrades.0.1:
+-        ["0xaec1fB35875a3816a5d09D61F086FeB6c252e096"]
++        "0xeedccfe88453ea74a342ca57926a88b6033057eb15b43291332f0fa19c197eee"
+    }
+```
+
+```diff
+    contract FXSBridge (0x66ba83ba3D3AD296424a2258145d9910E9E40B7C) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
+      values.$pastUpgrades.2.1:
+-        ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
++        "0xcd8680d72a4b8e347cd5036a1f2ac89b3e106f7c82d705d3cfc35bb6e849d026"
+      values.$pastUpgrades.1.2:
++        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+      values.$pastUpgrades.1.1:
+-        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
++        "0x083f442a6f6154d565fca76e15e4b7ff09a9ca6fc8efec588139a52896e67d4c"
+      values.$pastUpgrades.0.2:
++        ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
+      values.$pastUpgrades.0.1:
+-        ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
++        "0x8a85416efb74a9a7b95f6596bbcf947bdea2e1664c1401fee191dbc35ed63b9e"
+    }
+```
+
+```diff
+    contract ETHBridge (0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419) {
+    +++ description: None
+      values.$pastUpgrades.6.2:
++        ["0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95"]
+      values.$pastUpgrades.6.1:
+-        ["0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95"]
++        "0xd25ca910a4b7d0bab41828bce014a70f75642449f7c0426a3849ad46a6e60364"
+      values.$pastUpgrades.5.2:
++        ["0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95"]
+      values.$pastUpgrades.5.1:
+-        ["0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95"]
++        "0x1f56cc90fd40bcc00a27f94c989e93cb414a884e2fe971323426f40d58c71306"
+      values.$pastUpgrades.4.2:
++        ["0x455603AD9ae671F6c1f0f746F24d7904cA603581"]
+      values.$pastUpgrades.4.1:
+-        ["0x455603AD9ae671F6c1f0f746F24d7904cA603581"]
++        "0x64910ea21a212ae671687842ec3c4fcd187e935ddf2d6cc90f41b6d99b592964"
+      values.$pastUpgrades.3.2:
++        ["0x455603AD9ae671F6c1f0f746F24d7904cA603581"]
+      values.$pastUpgrades.3.1:
+-        ["0x455603AD9ae671F6c1f0f746F24d7904cA603581"]
++        "0x826f7e63249e192040d6b9301a68a0c7fc1130d06339ab0c758ff14799f9adfb"
+      values.$pastUpgrades.2.2:
++        ["0x5e70F3301bbBBB1DFA2c8d20D75b162aFa6Dbe37"]
+      values.$pastUpgrades.2.1:
+-        ["0x5e70F3301bbBBB1DFA2c8d20D75b162aFa6Dbe37"]
++        "0xa31315fda290a9ee1abf459ba81a8c5986c5c9da58cda4c20a144ab16e3a9ba1"
+      values.$pastUpgrades.1.2:
++        ["0x5e70F3301bbBBB1DFA2c8d20D75b162aFa6Dbe37"]
+      values.$pastUpgrades.1.1:
+-        ["0x5e70F3301bbBBB1DFA2c8d20D75b162aFa6Dbe37"]
++        "0x9b76ede78b75c332ea2ae855b62a2363c197ee521522ab1a14aa5517f2610dd5"
+      values.$pastUpgrades.0.2:
++        ["0x0205172F25e791975edB4dEF203f3789B01f43bb"]
+      values.$pastUpgrades.0.1:
+-        ["0x0205172F25e791975edB4dEF203f3789B01f43bb"]
++        "0x4c7952f4056367ec557d94b41d0784b7eb247d1f9de7378bdff7a5218c85314d"
+    }
+```
+
+```diff
+    contract USDTBridge (0xbb3400F107804DFB482565FF1Ec8D8aE66747605) {
+    +++ description: None
+      values.$pastUpgrades.7.2:
++        ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
+      values.$pastUpgrades.7.1:
+-        ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
++        "0xcd8680d72a4b8e347cd5036a1f2ac89b3e106f7c82d705d3cfc35bb6e849d026"
+      values.$pastUpgrades.6.2:
++        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+      values.$pastUpgrades.6.1:
+-        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
++        "0xd25ca910a4b7d0bab41828bce014a70f75642449f7c0426a3849ad46a6e60364"
+      values.$pastUpgrades.5.2:
++        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+      values.$pastUpgrades.5.1:
+-        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
++        "0xe594bd2581f3da0e554ad8664aecc1441280850cc7827a9e42d172bbf54cac5d"
+      values.$pastUpgrades.4.2:
++        ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
+      values.$pastUpgrades.4.1:
+-        ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
++        "0x64910ea21a212ae671687842ec3c4fcd187e935ddf2d6cc90f41b6d99b592964"
+      values.$pastUpgrades.3.2:
++        ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
+      values.$pastUpgrades.3.1:
+-        ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
++        "0xac209ae933b3ae24348f926df5f8978093617c711baaceefa21b90c08c82a0af"
+      values.$pastUpgrades.2.2:
++        ["0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"]
+      values.$pastUpgrades.2.1:
+-        ["0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"]
++        "0x33fdbe5a0d1ba784eb5e2f0f34b42d57c5c2b6b0bd3562746c7ee0447f7767aa"
+      values.$pastUpgrades.1.2:
++        ["0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"]
+      values.$pastUpgrades.1.1:
+-        ["0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"]
++        "0x55d370d26d45d7aee7f06e7f741d5f0d37154889faa1fa4e393370cae31a0f0f"
+      values.$pastUpgrades.0.2:
++        ["0xaec1fB35875a3816a5d09D61F086FeB6c252e096"]
+      values.$pastUpgrades.0.1:
+-        ["0xaec1fB35875a3816a5d09D61F086FeB6c252e096"]
++        "0x3e25166c11d40ded7d1ae272a9e4eb416b2d35a8f4919ca0a07c55f0065de787"
+    }
+```
+
+```diff
+    contract wstETHBridge (0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B) {
+    +++ description: None
+      values.$pastUpgrades.3.2:
++        ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
+      values.$pastUpgrades.3.1:
+-        ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
++        "0xcd8680d72a4b8e347cd5036a1f2ac89b3e106f7c82d705d3cfc35bb6e849d026"
+      values.$pastUpgrades.2.2:
++        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+      values.$pastUpgrades.2.1:
+-        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
++        "0xd25ca910a4b7d0bab41828bce014a70f75642449f7c0426a3849ad46a6e60364"
+      values.$pastUpgrades.1.2:
++        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+      values.$pastUpgrades.1.1:
+-        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
++        "0x4eb13c68776e5aa840ab59c3c4ff369372fd461bab760eee12d1ae7ccf7baa6e"
+      values.$pastUpgrades.0.2:
++        ["0xEf3525a1081a4cf6f76E0B202a575195cEE083a2"]
+      values.$pastUpgrades.0.1:
+-        ["0xEf3525a1081a4cf6f76E0B202a575195cEE083a2"]
++        "0xb4de1aa42c3ade894dd66e06e6125549e8004d2d6857cf456ef5bde3f583ea7c"
+    }
+```
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: None
+      values.$pastUpgrades.8.2:
++        ["0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC"]
+      values.$pastUpgrades.8.1:
+-        ["0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC"]
++        "0x4186d705e39a8e7cb19069c9426e4b211fad28f97cb7f641e4bd240971318e8d"
+      values.$pastUpgrades.7.2:
++        ["0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24"]
+      values.$pastUpgrades.7.1:
+-        ["0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24"]
++        "0xb9cd560bbc6f0478eeb5bed042a06d988ef6ebfd1cc9bfb509b4d8202b517ecc"
+      values.$pastUpgrades.6.2:
++        ["0x16938E4b59297060484Fa56a12594d8D6F4177e8"]
+      values.$pastUpgrades.6.1:
+-        ["0x16938E4b59297060484Fa56a12594d8D6F4177e8"]
++        "0x640cb38b6ffa91068da7cc15730268402661ec3f62f084b2a58522f600d89277"
+      values.$pastUpgrades.5.2:
++        ["0x739A654271c565839F0408546706bBea2F1FfE42"]
+      values.$pastUpgrades.5.1:
+-        ["0x739A654271c565839F0408546706bBea2F1FfE42"]
++        "0x861257880dfe325f603d4371a10888daa8fb0a16c205bb43647e8c5547298e36"
+      values.$pastUpgrades.4.2:
++        ["0xE267213B0749Bb94c575F6170812c887330d9cE3"]
+      values.$pastUpgrades.4.1:
+-        ["0xE267213B0749Bb94c575F6170812c887330d9cE3"]
++        "0x6f7ff0be4f155165290702052683f0a87b5e660812949c6e10eac6602c6aa5e7"
+      values.$pastUpgrades.3.2:
++        ["0x2B3B750f1f10c85c8A6D476Fc209A8DC7E4Ca3F8"]
+      values.$pastUpgrades.3.1:
+-        ["0x2B3B750f1f10c85c8A6D476Fc209A8DC7E4Ca3F8"]
++        "0x65e31a14e45c3f909c1f90e67b3bb9a54e256d28cb8a27432f73268a19ebab84"
+      values.$pastUpgrades.2.2:
++        ["0xDC109C4a1A3084Ed15A97692FBEF3e1FB32A6955"]
+      values.$pastUpgrades.2.1:
+-        ["0xDC109C4a1A3084Ed15A97692FBEF3e1FB32A6955"]
++        "0x4e551f471810ea806502b1e24f9ef6793f0a0b68f24c3cdec44df444921d7689"
+      values.$pastUpgrades.1.2:
++        ["0x944960b90381d76368aecE61F269bD99FFfd627e"]
+      values.$pastUpgrades.1.1:
+-        ["0x944960b90381d76368aecE61F269bD99FFfd627e"]
++        "0xf928abd9eb81afac14d1e8f76a52de80f9c38cbe0e72d2f1ec922caf7bf1cad0"
+      values.$pastUpgrades.0.2:
++        ["0xD8Cd77206fCb239BdDaaDDdA8C87CBFe7d67Ca2b"]
+      values.$pastUpgrades.0.1:
+-        ["0xD8Cd77206fCb239BdDaaDDdA8C87CBFe7d67Ca2b"]
++        "0xccde4b2c417c0361ca34b8896ff8ee8a471aeab423613db8175463d903d4c2fe"
+    }
+```
+
+```diff
+    contract STRKBridge (0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) {
+    +++ description: None
+      values.$pastUpgrades.5.2:
++        ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
+      values.$pastUpgrades.5.1:
+-        ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
++        "0xcd8680d72a4b8e347cd5036a1f2ac89b3e106f7c82d705d3cfc35bb6e849d026"
+      values.$pastUpgrades.4.2:
++        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+      values.$pastUpgrades.4.1:
+-        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
++        "0xd25ca910a4b7d0bab41828bce014a70f75642449f7c0426a3849ad46a6e60364"
+      values.$pastUpgrades.3.2:
++        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+      values.$pastUpgrades.3.1:
+-        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
++        "0x7c5561efa149f2be36fac917f47b0b107218b43de1eac56ceb97d008257bd850"
+      values.$pastUpgrades.2.2:
++        ["0x7f2a18900A978D4390a3640e34739BB697777A71"]
+      values.$pastUpgrades.2.1:
+-        ["0x7f2a18900A978D4390a3640e34739BB697777A71"]
++        "0xe8154cce45dafa5cfcb95d134f3da8a13c80c6546da07ca92c88d5c54286cdc3"
+      values.$pastUpgrades.1.2:
++        ["0x052C81F05595B5DeF4fdFEdbD7CA7b4A8a7B50C1"]
+      values.$pastUpgrades.1.1:
+-        ["0x052C81F05595B5DeF4fdFEdbD7CA7b4A8a7B50C1"]
++        "0x42056631084f574f2ed5f49bef3d1aabab22008266ac97afea3e5f42649bd7c3"
+      values.$pastUpgrades.0.2:
++        ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
+      values.$pastUpgrades.0.1:
+-        ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
++        "0x4ea20358347292f048a26277477a9f145add434e50e3f64c85f494469768c876"
+    }
+```
+
+```diff
+    contract rETHBridge (0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2) {
+    +++ description: None
+      values.$pastUpgrades.3.2:
++        ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
+      values.$pastUpgrades.3.1:
+-        ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
++        "0xcd8680d72a4b8e347cd5036a1f2ac89b3e106f7c82d705d3cfc35bb6e849d026"
+      values.$pastUpgrades.2.2:
++        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+      values.$pastUpgrades.2.1:
+-        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
++        "0xd25ca910a4b7d0bab41828bce014a70f75642449f7c0426a3849ad46a6e60364"
+      values.$pastUpgrades.1.2:
++        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+      values.$pastUpgrades.1.1:
+-        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
++        "0x5420188e3cc869219076d140de7359aa4b930c51263c00728bb81e3a68c1ba8c"
+      values.$pastUpgrades.0.2:
++        ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
+      values.$pastUpgrades.0.1:
+-        ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
++        "0x90d66157a3812393338739b0ee7a84d0d310b72a8282946e5874824c60d30c51"
+    }
+```
+
+```diff
+    contract sfrxETHBridge (0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
+      values.$pastUpgrades.2.1:
+-        ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
++        "0xcd8680d72a4b8e347cd5036a1f2ac89b3e106f7c82d705d3cfc35bb6e849d026"
+      values.$pastUpgrades.1.2:
++        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+      values.$pastUpgrades.1.1:
+-        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
++        "0x083f442a6f6154d565fca76e15e4b7ff09a9ca6fc8efec588139a52896e67d4c"
+      values.$pastUpgrades.0.2:
++        ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
+      values.$pastUpgrades.0.1:
+-        ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
++        "0x368efd40dcf16ad376c8f38adf1e68361874e2b5b2de52d7088cd7de6b38f02a"
+    }
+```
+
+```diff
+    contract FRAXBridge (0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
+      values.$pastUpgrades.2.1:
+-        ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
++        "0xcd8680d72a4b8e347cd5036a1f2ac89b3e106f7c82d705d3cfc35bb6e849d026"
+      values.$pastUpgrades.1.2:
++        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+      values.$pastUpgrades.1.1:
+-        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
++        "0x083f442a6f6154d565fca76e15e4b7ff09a9ca6fc8efec588139a52896e67d4c"
+      values.$pastUpgrades.0.2:
++        ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
+      values.$pastUpgrades.0.1:
+-        ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
++        "0x591030492947a546e11122e42c12975237d800d3d509d284b9c8aaf541dbdc79"
+    }
+```
+
+```diff
+    contract LUSDBridge (0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
+      values.$pastUpgrades.2.1:
+-        ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
++        "0x4a1c60505d4d6d22f51b164696b7eadba1955278a577c7e712b2cd0347bee330"
+      values.$pastUpgrades.1.2:
++        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+      values.$pastUpgrades.1.1:
+-        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
++        "0x1157d4bd2b7d00a0f9833ef0832822bc331d5f904c0c3f9f14fa7942678fbf58"
+      values.$pastUpgrades.0.2:
++        ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
+      values.$pastUpgrades.0.1:
+-        ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
++        "0xa67fa2a98e3b92d67fe9ea402dd53955fc2d74f6af3ee0183e20afad68ac5621"
+    }
+```
+
+```diff
+    contract MultiBridge (0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x594cCaDF93F860dc42Cf9fd7bCea47Ff4d135D7A"]
+      values.$pastUpgrades.0.1:
+-        ["0x594cCaDF93F860dc42Cf9fd7bCea47Ff4d135D7A"]
++        "0x52b4a75a83546e4e463a919cf778cb9a4882d536c4bf7b80a62098698c741fd8"
+    }
+```
+
+```diff
+    contract USDCBridge (0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816) {
+    +++ description: None
+      values.$pastUpgrades.7.2:
++        ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
+      values.$pastUpgrades.7.1:
+-        ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
++        "0xcd8680d72a4b8e347cd5036a1f2ac89b3e106f7c82d705d3cfc35bb6e849d026"
+      values.$pastUpgrades.6.2:
++        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+      values.$pastUpgrades.6.1:
+-        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
++        "0xd25ca910a4b7d0bab41828bce014a70f75642449f7c0426a3849ad46a6e60364"
+      values.$pastUpgrades.5.2:
++        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+      values.$pastUpgrades.5.1:
+-        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
++        "0x147393fe2175d3bd2a267730c8066afd475199c52a1895b5524100c3b2ca2c07"
+      values.$pastUpgrades.4.2:
++        ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
+      values.$pastUpgrades.4.1:
+-        ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
++        "0x64910ea21a212ae671687842ec3c4fcd187e935ddf2d6cc90f41b6d99b592964"
+      values.$pastUpgrades.3.2:
++        ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
+      values.$pastUpgrades.3.1:
+-        ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
++        "0x1c54434b6dab2c13187d16161d7da8b6286b4f71d3ff3ab580ffcc90ac387d31"
+      values.$pastUpgrades.2.2:
++        ["0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"]
+      values.$pastUpgrades.2.1:
+-        ["0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"]
++        "0x100be562b99e029f2419718dfa5e722c6d27cd99e9e5fbbd61dbda223d8872c2"
+      values.$pastUpgrades.1.2:
++        ["0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"]
+      values.$pastUpgrades.1.1:
+-        ["0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"]
++        "0x8c5f529b4aea40150673a24be2daf67b98dfea900848e2e4bfe863b29397cb16"
+      values.$pastUpgrades.0.2:
++        ["0xaec1fB35875a3816a5d09D61F086FeB6c252e096"]
+      values.$pastUpgrades.0.1:
+-        ["0xaec1fB35875a3816a5d09D61F086FeB6c252e096"]
++        "0x7fee1d4145372b9f1a39594bc71c9074f5982c5c546135c1aba6810c5c33cd15"
+    }
+```
+
+```diff
+    contract UNIBridge (0xf76e6bF9e2df09D0f854F045A3B724074dA1236B) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
+      values.$pastUpgrades.2.1:
+-        ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
++        "0x80c2489d99e1aa4593e1749d905120a22bc688a8c62343edce82130c4566de72"
+      values.$pastUpgrades.1.2:
++        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+      values.$pastUpgrades.1.1:
+-        ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
++        "0x2513dff6fab1fe6b7f95d9e436c18c8dd79965a3c7217f79c69787b2f42abc4a"
+      values.$pastUpgrades.0.2:
++        ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
+      values.$pastUpgrades.0.1:
+-        ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
++        "0x9e8cd16d463bff3aaa9aca2f741819ccdba2148450f935446facdb498a424a1e"
+    }
+```
+
 Generated with discovered.json: 0x9d5839003aae453217ec5dfedc4fb6dfdce30703
 
 # Diff at Mon, 14 Oct 2024 14:20:39 GMT:

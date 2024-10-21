@@ -1,3 +1,122 @@
+Generated with discovered.json: 0x61b0e61d8c773f7bdf5cd2f5500c2475b9533ec2
+
+# Diff at Mon, 21 Oct 2024 11:15:23 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 77458757
+- current block number: 77458757
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 77458757 (main branch discovery), not current.
+
+```diff
+    contract L2GatewayRouter (0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x8f377770289863DF73Fe665B74460579F82321fb"]
+      values.$pastUpgrades.1.1:
+-        ["0x8f377770289863DF73Fe665B74460579F82321fb"]
++        "0x9549dff9595eda9d452479b4ccc2092d2dd01a12f3c2db8165bec365d54128f1"
+      values.$pastUpgrades.0.2:
++        ["0x09854610F48462a7029fF192FA0AfB7F00133F54"]
+      values.$pastUpgrades.0.1:
+-        ["0x09854610F48462a7029fF192FA0AfB7F00133F54"]
++        "0xf3cdbd24cf85ce120e1846c278011da74771b6063423bf0cdccf8d9ab497dc88"
+    }
+```
+
+```diff
+    contract L2WethGateway (0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD) {
+    +++ description: None
+      values.$pastUpgrades.3.2:
++        ["0xbe04Ab2728c924D678f9FC833E379688c6eFA317"]
+      values.$pastUpgrades.3.1:
+-        ["0xbe04Ab2728c924D678f9FC833E379688c6eFA317"]
++        "0x66547238f43682dabc33c021b70f02ffdb62510399f42a174b43498c8065cff6"
+      values.$pastUpgrades.2.2:
++        ["0x190C993Db842097df8b8d71c910f1802df0724C3"]
+      values.$pastUpgrades.2.1:
+-        ["0x190C993Db842097df8b8d71c910f1802df0724C3"]
++        "0x9ce025df640cca593a80fdad6d1f9e6f4ba8b226f9b296cc83c247f50407bea3"
+      values.$pastUpgrades.1.2:
++        ["0x190C993Db842097df8b8d71c910f1802df0724C3"]
+      values.$pastUpgrades.1.1:
+-        ["0x190C993Db842097df8b8d71c910f1802df0724C3"]
++        "0x20a549a861bb33f3fe522e14752416f2aebdb31747987b8bcc0ae81ecb36b3d5"
+      values.$pastUpgrades.0.2:
++        ["0x3525f734fcE1a26a6CEffFca43538290DC239771"]
+      values.$pastUpgrades.0.1:
+-        ["0x3525f734fcE1a26a6CEffFca43538290DC239771"]
++        "0x33df4b772bad38d87a6d0d5a9af01ff0c98ea3296c40e03d9aa02b381a17cc0a"
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x3096EAEdcb3A3B665552660F4d921E565D0073cB"]
+      values.$pastUpgrades.0.1:
+-        ["0x3096EAEdcb3A3B665552660F4d921E565D0073cB"]
++        "0xdf073ab55f4ee86b52d0a511575cc76e5abb5e65e36c23a9fe4f685bb620d807"
+    }
+```
+
+```diff
+    contract L2ARBGateway (0xbf544970E6BD77b21C6492C281AB60d0770451F4) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0x554e12DBAa0fBeB8A35583a6Fd9D04BaA4ff597f"]
+      values.$pastUpgrades.2.1:
+-        ["0x554e12DBAa0fBeB8A35583a6Fd9D04BaA4ff597f"]
++        "0x9403cf26146890250477d83eb73c08632c9af62a1e0f315a4b9b7c63425fc0e9"
+      values.$pastUpgrades.1.2:
++        ["0x6e04b9dd87CF2cD3b7D81C50D2DF72d24BC0Cc4C"]
+      values.$pastUpgrades.1.1:
+-        ["0x6e04b9dd87CF2cD3b7D81C50D2DF72d24BC0Cc4C"]
++        "0x4dcb9401328656bb4021741be0324b07a940682e28fd1b8ee45086c446f8ed13"
+      values.$pastUpgrades.0.2:
++        ["0xb1d943d67b793D61F08b5F536AC591a057306fe5"]
+      values.$pastUpgrades.0.1:
+-        ["0xb1d943d67b793D61F08b5F536AC591a057306fe5"]
++        "0xe0b217581754ec4ddf4385d876eedc76afcc5d70c4a394f1ea8515f3026cb43b"
+    }
+```
+
+```diff
+    contract L2ERC20Gateway (0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x466155FD6d8BbF1c0d5ca32818814cB28b6884d8"]
+      values.$pastUpgrades.1.1:
+-        ["0x466155FD6d8BbF1c0d5ca32818814cB28b6884d8"]
++        "0xe2ffd6f2c673a1b13f5f1614220aaeb30a62b15bab84197be67798ed00d68a1c"
+      values.$pastUpgrades.0.2:
++        ["0xEa2562667c98Bfe329995616454BeA9ea3290D1C"]
+      values.$pastUpgrades.0.1:
+-        ["0xEa2562667c98Bfe329995616454BeA9ea3290D1C"]
++        "0x46c2f44cccae09860a903d1d11fa5ccff5694b7999f804ba089a1e020b8a95cc"
+    }
+```
+
+```diff
+    contract L2ArbitrumToken (0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x099bC495EA4Fd828FEe7C636F0Ab84d0f501B96d"]
+      values.$pastUpgrades.0.1:
+-        ["0x099bC495EA4Fd828FEe7C636F0Ab84d0f501B96d"]
++        "0xad05f83f9215726a10ae715f735d274f9f7bee5de714f924f450c55c111dfa40"
+    }
+```
+
 Generated with discovered.json: 0xd496408ec01a087822664bb77d492c1f7662979a
 
 # Diff at Fri, 18 Oct 2024 11:05:16 GMT:
