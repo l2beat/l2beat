@@ -1,3 +1,109 @@
+Generated with discovered.json: 0xb55529676a8458eebf5392f28d643e18d00777e3
+
+# Diff at Mon, 21 Oct 2024 11:11:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20842812
+- current block number: 20842812
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20842812 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      values.$pastUpgrades.0.2:
++        ["0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A","0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"]
+      values.$pastUpgrades.0.1:
+-        ["0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A","0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"]
++        "0xe93b7e232ca2ff32a44ecb683683d9553409ab46eb90efa21a7bcfc111835074"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x6c21303F5986180B1394d2C89f3e883890E2867b"]
+      values.$pastUpgrades.0.1:
+-        ["0x6c21303F5986180B1394d2C89f3e883890E2867b"]
++        "0xe93b7e232ca2ff32a44ecb683683d9553409ab46eb90efa21a7bcfc111835074"
+    }
+```
+
+```diff
+    contract ChallengeManager (0x73cfa0F6ae141212115657ad91Ad918E5d34d882) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x1D901DD7A5eFE421C3C437B147040E5AF22E6A43"]
+      values.$pastUpgrades.0.1:
+-        ["0x1D901DD7A5eFE421C3C437B147040E5AF22E6A43"]
++        "0xe93b7e232ca2ff32a44ecb683683d9553409ab46eb90efa21a7bcfc111835074"
+    }
+```
+
+```diff
+    contract ERC20RollupEventInbox (0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x302275067251F5FcdB9359Bda735fD8f7A4A54c0"]
+      values.$pastUpgrades.0.1:
+-        ["0x302275067251F5FcdB9359Bda735fD8f7A4A54c0"]
++        "0xe93b7e232ca2ff32a44ecb683683d9553409ab46eb90efa21a7bcfc111835074"
+    }
+```
+
+```diff
+    contract Bridge (0xa104C0426e95a5538e89131DbB4163d230C35f86) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab"]
+      values.$pastUpgrades.0.1:
+-        ["0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab"]
++        "0xe93b7e232ca2ff32a44ecb683683d9553409ab46eb90efa21a7bcfc111835074"
+    }
+```
+
+```diff
+    contract Outbox (0xB360b2f57c645E847148d7C479b7468AbF6F707d) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x19431dc37098877486532250FB3158140717C00C"]
+      values.$pastUpgrades.0.1:
+-        ["0x19431dc37098877486532250FB3158140717C00C"]
++        "0xe93b7e232ca2ff32a44ecb683683d9553409ab46eb90efa21a7bcfc111835074"
+    }
+```
+
+```diff
+    contract SequencerInbox (0xD80a805c86C14c879420eC6acb366D04D318fC0C) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x383f16fB2809a56fC639c1eE2c93Ad2aa7Ee130A"]
+      values.$pastUpgrades.0.1:
+-        ["0x383f16fB2809a56fC639c1eE2c93Ad2aa7Ee130A"]
++        "0xe93b7e232ca2ff32a44ecb683683d9553409ab46eb90efa21a7bcfc111835074"
+    }
+```
+
+```diff
+    contract Inbox (0xEa83E8907C89Bc0D9517632f0ba081972E328631) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x31fAAAB44e74eB408d1FC69A14806B4b9cA09da2"]
+      values.$pastUpgrades.0.1:
+-        ["0x31fAAAB44e74eB408d1FC69A14806B4b9cA09da2"]
++        "0xe93b7e232ca2ff32a44ecb683683d9553409ab46eb90efa21a7bcfc111835074"
+    }
+```
+
 Generated with discovered.json: 0xbb284a0db2f303ddc8d8fb9dc8f14f0b7ce7a48e
 
 # Diff at Wed, 16 Oct 2024 11:41:05 GMT:

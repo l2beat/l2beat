@@ -1,3 +1,64 @@
+Generated with discovered.json: 0x3aecf356f21722538eccbb22982470f6d770547f
+
+# Diff at Mon, 21 Oct 2024 11:07:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20211335
+- current block number: 20211335
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20211335 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x081D1101855bD523bA69A9794e0217F0DB6323ff) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x8bF439ef7167023F009E24b21719Ca5f768Ecb36"]
+      values.$pastUpgrades.0.1:
+-        ["0x8bF439ef7167023F009E24b21719Ca5f768Ecb36"]
++        "0xa752a872bee0f5d9be41b00f85e4d0b5e958f5644f5609dd0907dd74263ff7f4"
+    }
+```
+
+```diff
+    contract LockingInfo (0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x0D30F0d7934f53aaF6a1630A4c109AF4513a65cC"]
+      values.$pastUpgrades.1.1:
+-        ["0x0D30F0d7934f53aaF6a1630A4c109AF4513a65cC"]
++        "0x356768c4abdb1df76773881dc3c4d8ad7af36ac2154baaec83c3f878aedb6b57"
+      values.$pastUpgrades.0.2:
++        ["0x8db636418F10d514c4c68235ee3d640dDBCC7a8a"]
+      values.$pastUpgrades.0.1:
+-        ["0x8db636418F10d514c4c68235ee3d640dDBCC7a8a"]
++        "0x37356e30602c7e4e6b05129e3a0375c3fbeb08856eb198ef7ec2a6c75fd3ee78"
+    }
+```
+
+```diff
+    contract LockingPool (0xD54c868362C2098E0E46F12E7D924C6A332952Dd) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xD8f38c831E5032d23065Eaaee8c0620e17c04D60"]
+      values.$pastUpgrades.1.1:
+-        ["0xD8f38c831E5032d23065Eaaee8c0620e17c04D60"]
++        "0x356768c4abdb1df76773881dc3c4d8ad7af36ac2154baaec83c3f878aedb6b57"
+      values.$pastUpgrades.0.2:
++        ["0xd87Da73F82abe83915d61342199A4690cfdf4718"]
+      values.$pastUpgrades.0.1:
+-        ["0xd87Da73F82abe83915d61342199A4690cfdf4718"]
++        "0x5a9766b27606f1c41f132a4a900131f39ab49a27607d27db667ecc1de2f9f0d1"
+    }
+```
+
 Generated with discovered.json: 0xc823b4ffab0465686326f926227fda7a063de0b5
 
 # Diff at Mon, 14 Oct 2024 10:53:01 GMT:

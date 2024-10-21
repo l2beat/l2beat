@@ -1,3 +1,81 @@
+Generated with discovered.json: 0x05e1810bbb23d863943574e0d76b7e2000a5455f
+
+# Diff at Mon, 21 Oct 2024 11:08:44 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20920069
+- current block number: 20920069
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20920069 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x5e76821C3c1AbB9fD6E310224804556C61D860e0) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      values.$pastUpgrades.0.2:
++        ["0x334251f91a3795c043663172CB59a963a9029aed"]
+      values.$pastUpgrades.0.1:
+-        ["0x334251f91a3795c043663172CB59a963a9029aed"]
++        "0xca444e38e6211cc12586b9e29fe3e5612c2571e945baf37bb82f7dd892409292"
+    }
+```
+
+```diff
+    contract SystemConfig (0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.$pastUpgrades.0.2:
++        ["0x240B3bd6b95cE40497Aafd71aD4705d0345A33CD"]
+      values.$pastUpgrades.0.1:
+-        ["0x240B3bd6b95cE40497Aafd71aD4705d0345A33CD"]
++        "0x92a61db152c2af8b75d8189eb9248997deaa06614e070a29476867af140f5562"
+    }
+```
+
+```diff
+    contract OptimismPortal (0x91493a61ab83b62943E6dCAa5475Dd330704Cc84) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.$pastUpgrades.0.2:
++        ["0x7A163eb6Df3EEBbf817A7A9769F53FB2a441D47E"]
+      values.$pastUpgrades.0.1:
+-        ["0x7A163eb6Df3EEBbf817A7A9769F53FB2a441D47E"]
++        "0xe67534a97b70fa009f2193161a0bc01c5ab1e858d26eb90ee81ee9b279a31d3b"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x934Ab59Ef14b638653b1C0FEf7aB9a72186393DC) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.$pastUpgrades.0.2:
++        ["0x701E95156dfD378d1985C6CC405D0Ee3d2af8503"]
+      values.$pastUpgrades.0.1:
+-        ["0x701E95156dfD378d1985C6CC405D0Ee3d2af8503"]
++        "0xdf70e83fd16bf306ecd7497a9f24817d028e8e7bd267ead870360777b9e1a0a8"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0xc76543A64666d9a073FaEF4e75F651c88e7DBC08) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$pastUpgrades.1.2:
++        ["0xB6767fA038e8fbe3B60d42866dbeF0fca3B1a7d6"]
+      values.$pastUpgrades.1.1:
+-        ["0xB6767fA038e8fbe3B60d42866dbeF0fca3B1a7d6"]
++        "0xe8bb9753ef91830bd4bae629e76232efcfb35cd39d6b2e2e5bf5384e08e82bbe"
+      values.$pastUpgrades.0.2:
++        ["0xc76543A64666d9a073FaEF4e75F651c88e7DBC08"]
+      values.$pastUpgrades.0.1:
+-        ["0xc76543A64666d9a073FaEF4e75F651c88e7DBC08"]
++        "0x690ab35045db8f46db127951b24b5241e3848503c9e5d6dd6888e34e9373f283"
+    }
+```
+
 Generated with discovered.json: 0x3fd16b7fc418840f81b6724d1409c7e91b890917
 
 # Diff at Wed, 16 Oct 2024 11:38:51 GMT:

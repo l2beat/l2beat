@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x7e6442db55ead0c5549d6a7ce89ac9e53bde5f8b
+
+# Diff at Mon, 21 Oct 2024 11:06:40 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20977341
+- current block number: 20977341
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20977341 (main branch discovery), not current.
+
+```diff
+    contract RootAxelarBridgeAdaptor (0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xE2E91C1Ae2873720C3b975a8034e887A35323345"]
+      values.$pastUpgrades.0.1:
+-        ["0xE2E91C1Ae2873720C3b975a8034e887A35323345"]
++        "0x39c068494cbb3daa564a918bda53218f86d781976e6a8235c1c89a03dc9ec182"
+    }
+```
+
+```diff
+    contract Bridge (0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x177EaFe0f1F3359375B1728dae0530a75C83E154"]
+      values.$pastUpgrades.0.1:
+-        ["0x177EaFe0f1F3359375B1728dae0530a75C83E154"]
++        "0x2e14d2e7f495b17f93c4c839315cfedfd5ee28df540e6433ccc6abb0206b0775"
+    }
+```
+
 Generated with discovered.json: 0x0a567d5c5a277adb982d59344253adcf0d7c0405
 
 # Diff at Wed, 16 Oct 2024 09:51:44 GMT:

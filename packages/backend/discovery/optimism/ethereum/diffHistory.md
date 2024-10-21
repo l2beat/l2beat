@@ -1,3 +1,317 @@
+Generated with discovered.json: 0x8f30c613bf975159a852710a7d29fe563c1b8b00
+
+# Diff at Mon, 21 Oct 2024 11:08:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20948093
+- current block number: 20948093
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20948093 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (0x18DAc71c228D1C32c99489B7323d441E1175e443) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+      values.$pastUpgrades.2.2:
++        ["0x1B5CC028A4276597C607907F24E1AC05d3852cFC"]
+      values.$pastUpgrades.2.1:
+-        ["0x1B5CC028A4276597C607907F24E1AC05d3852cFC"]
++        "0x3bd2d811d0298313e6fb75f0e69fb54280c9b4f2e60f8f04472aaa166c285641"
+      values.$pastUpgrades.1.2:
++        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+      values.$pastUpgrades.1.1:
+-        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
++        "0x3bd2d811d0298313e6fb75f0e69fb54280c9b4f2e60f8f04472aaa166c285641"
+      values.$pastUpgrades.0.2:
++        ["0x6B7da1647Aa9684F54B2BEeB699F91F31cd35Fb9"]
+      values.$pastUpgrades.0.1:
+-        ["0x6B7da1647Aa9684F54B2BEeB699F91F31cd35Fb9"]
++        "0xa3a31ec801f08783b49b1e45953090616e7cadd3b85950983823c49a428665ac"
+    }
+```
+
+```diff
+    contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
+    +++ description: None
+      values.$pastUpgrades.6.2:
++        ["0xF56D96B2535B932656d3c04Ebf51baBff241D886"]
+      values.$pastUpgrades.6.1:
+-        ["0xF56D96B2535B932656d3c04Ebf51baBff241D886"]
++        "0xbe810ed6e1e827930bd46cde42c4883662ddb6d244a26af2f0409cc2782bee61"
+      values.$pastUpgrades.5.2:
++        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+      values.$pastUpgrades.5.1:
+-        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
++        "0xbe810ed6e1e827930bd46cde42c4883662ddb6d244a26af2f0409cc2782bee61"
+      values.$pastUpgrades.4.2:
++        ["0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1"]
+      values.$pastUpgrades.4.1:
+-        ["0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1"]
++        "0x4758bd62359bc69d7e8a0faaf5308d826379c23258d689a7430d5c0ad0361ad2"
+      values.$pastUpgrades.3.2:
++        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+      values.$pastUpgrades.3.1:
+-        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
++        "0x4758bd62359bc69d7e8a0faaf5308d826379c23258d689a7430d5c0ad0361ad2"
+      values.$pastUpgrades.2.2:
++        ["0x33A032ec93Ec0C492Ec4BF0B30D5f51986E5a314"]
+      values.$pastUpgrades.2.1:
+-        ["0x33A032ec93Ec0C492Ec4BF0B30D5f51986E5a314"]
++        "0x3f7c36a1d636cdb23bf4f9171c27ebe58b73f4c0e6a33dbaac2c2f3c142faf50"
+      values.$pastUpgrades.1.2:
++        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+      values.$pastUpgrades.1.1:
+-        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
++        "0x3f7c36a1d636cdb23bf4f9171c27ebe58b73f4c0e6a33dbaac2c2f3c142faf50"
+      values.$pastUpgrades.0.2:
++        ["0x5efa852e92800D1C982711761e45c3FE39a2b6D8"]
+      values.$pastUpgrades.0.1:
+-        ["0x5efa852e92800D1C982711761e45c3FE39a2b6D8"]
++        "0x76bceccd7d44656f5a129a600a6120091570b897c1d45c18cd7134cfe67c2537"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$pastUpgrades.9.2:
++        ["0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"]
+      values.$pastUpgrades.9.1:
+-        ["0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"]
++        "0x4758bd62359bc69d7e8a0faaf5308d826379c23258d689a7430d5c0ad0361ad2"
+      values.$pastUpgrades.8.2:
++        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+      values.$pastUpgrades.8.1:
+-        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
++        "0x4758bd62359bc69d7e8a0faaf5308d826379c23258d689a7430d5c0ad0361ad2"
+      values.$pastUpgrades.7.2:
++        ["0xa95B24af19f8907390eD15f8348A1a5e6Ccbc5C6"]
+      values.$pastUpgrades.7.1:
+-        ["0xa95B24af19f8907390eD15f8348A1a5e6Ccbc5C6"]
++        "0x3f7c36a1d636cdb23bf4f9171c27ebe58b73f4c0e6a33dbaac2c2f3c142faf50"
+      values.$pastUpgrades.6.2:
++        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+      values.$pastUpgrades.6.1:
+-        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
++        "0x3f7c36a1d636cdb23bf4f9171c27ebe58b73f4c0e6a33dbaac2c2f3c142faf50"
+      values.$pastUpgrades.5.2:
++        ["0x2150Bc3c64cbfDDbaC9815EF615D6AB8671bfe43"]
+      values.$pastUpgrades.5.1:
+-        ["0x2150Bc3c64cbfDDbaC9815EF615D6AB8671bfe43"]
++        "0xe2ff41f9bdf03d5455f55539b8b9c350276a179ca7f79322e2077d7c1ffb1268"
+      values.$pastUpgrades.4.2:
++        ["0x0000000000000000000000000000000000000000"]
+      values.$pastUpgrades.4.1:
+-        ["0x0000000000000000000000000000000000000000"]
++        "0x76bceccd7d44656f5a129a600a6120091570b897c1d45c18cd7134cfe67c2537"
+      values.$pastUpgrades.3.2:
++        ["0xd9166833FF12A5F900ccfBf2c8B62a90F1Ca1FD5"]
+      values.$pastUpgrades.3.1:
+-        ["0xd9166833FF12A5F900ccfBf2c8B62a90F1Ca1FD5"]
++        "0xbabb37235bd38ae5a29717590eedfd9b02f84a12b890b2126feac68f223d7448"
+      values.$pastUpgrades.2.2:
++        ["0x0000000000000000000000000000000000000000"]
+      values.$pastUpgrades.2.1:
+-        ["0x0000000000000000000000000000000000000000"]
++        "0x2625aa2013fd1a650fb0264d2746be597e12f846baa48a68fe14539c200ed6dc"
+      values.$pastUpgrades.1.2:
++        ["0xbfba066b5cA610Fe70AdCE45FcB622F945891bb0"]
+      values.$pastUpgrades.1.1:
+-        ["0xbfba066b5cA610Fe70AdCE45FcB622F945891bb0"]
++        "0x98a05fb521b3349dd92cff2e104d78c6c318add003bb501c0d416b2b4d75df8a"
+      values.$pastUpgrades.0.2:
++        ["0x16393737D09d2722AD13DcA3cA8C3DB957699F1D"]
+      values.$pastUpgrades.0.1:
+-        ["0x16393737D09d2722AD13DcA3cA8C3DB957699F1D"]
++        "0xd19d40f11c375feeea5fe47576ce98a3a08caac68b2a8a52fb95dd1a76dd205a"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x5a7749f83b81B301cAb5f48EB8516B986DAef23D) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.$pastUpgrades.5.2:
++        ["0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d"]
+      values.$pastUpgrades.5.1:
+-        ["0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d"]
++        "0x4758bd62359bc69d7e8a0faaf5308d826379c23258d689a7430d5c0ad0361ad2"
+      values.$pastUpgrades.4.2:
++        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+      values.$pastUpgrades.4.1:
+-        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
++        "0x4758bd62359bc69d7e8a0faaf5308d826379c23258d689a7430d5c0ad0361ad2"
+      values.$pastUpgrades.3.2:
++        ["0xc599Fa757c2bCaA5aE3753Ab129237F38C10da0b"]
+      values.$pastUpgrades.3.1:
+-        ["0xc599Fa757c2bCaA5aE3753Ab129237F38C10da0b"]
++        "0x3f7c36a1d636cdb23bf4f9171c27ebe58b73f4c0e6a33dbaac2c2f3c142faf50"
+      values.$pastUpgrades.2.2:
++        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+      values.$pastUpgrades.2.1:
+-        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
++        "0x3f7c36a1d636cdb23bf4f9171c27ebe58b73f4c0e6a33dbaac2c2f3c142faf50"
+      values.$pastUpgrades.1.2:
++        ["0x3268Ed09f76e619331528270B6267D4d2C5Ab5C2"]
+      values.$pastUpgrades.1.1:
+-        ["0x3268Ed09f76e619331528270B6267D4d2C5Ab5C2"]
++        "0xe2ff41f9bdf03d5455f55539b8b9c350276a179ca7f79322e2077d7c1ffb1268"
+      values.$pastUpgrades.0.2:
++        ["0x3268Ed09f76e619331528270B6267D4d2C5Ab5C2"]
+      values.$pastUpgrades.0.1:
+-        ["0x3268Ed09f76e619331528270B6267D4d2C5Ab5C2"]
++        "0xe8f632050cdf538eebcc5ab4a0ecb426966acfd14118e4fb8b181948449ae70d"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x75505a97BD334E7BD3C476893285569C4136Fa0F) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      values.$pastUpgrades.4.2:
++        ["0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846"]
+      values.$pastUpgrades.4.1:
+-        ["0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846"]
++        "0x4758bd62359bc69d7e8a0faaf5308d826379c23258d689a7430d5c0ad0361ad2"
+      values.$pastUpgrades.3.2:
++        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+      values.$pastUpgrades.3.1:
+-        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
++        "0x4758bd62359bc69d7e8a0faaf5308d826379c23258d689a7430d5c0ad0361ad2"
+      values.$pastUpgrades.2.2:
++        ["0x74e273220Fa1cB62Fd756FE6CbDA8BBb89404deD"]
+      values.$pastUpgrades.2.1:
+-        ["0x74e273220Fa1cB62Fd756FE6CbDA8BBb89404deD"]
++        "0x3f7c36a1d636cdb23bf4f9171c27ebe58b73f4c0e6a33dbaac2c2f3c142faf50"
+      values.$pastUpgrades.1.2:
++        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+      values.$pastUpgrades.1.1:
+-        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
++        "0x3f7c36a1d636cdb23bf4f9171c27ebe58b73f4c0e6a33dbaac2c2f3c142faf50"
+      values.$pastUpgrades.0.2:
++        ["0xaE849EFA4BcFc419593420e14707996936E365E2"]
+      values.$pastUpgrades.0.1:
+-        ["0xaE849EFA4BcFc419593420e14707996936E365E2"]
++        "0xe2ff41f9bdf03d5455f55539b8b9c350276a179ca7f79322e2077d7c1ffb1268"
+    }
+```
+
+```diff
+    contract wstETHEscrow (0x76943C0D61395d8F2edF9060e1533529cAe05dE6) {
+    +++ description: Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally.
+      values.$pastUpgrades.1.2:
++        ["0x168Cfea1Ad879d7032B3936eF3b0E90790b6B6D4"]
+      values.$pastUpgrades.1.1:
+-        ["0x168Cfea1Ad879d7032B3936eF3b0E90790b6B6D4"]
++        "0xc7bc3019721ecf320698f2897b329d1930f64661100a5fa159181146088e03c2"
+      values.$pastUpgrades.0.2:
++        ["0x29C5c51A031165CE62F964966A6399b81165EFA4"]
+      values.$pastUpgrades.0.1:
+-        ["0x29C5c51A031165CE62F964966A6399b81165EFA4"]
++        "0x1bc90e7c6fe12e03691f7eccf025f3a244ea5a4888c7fb274f45f5e1004110ca"
+    }
+```
+
+```diff
+    contract DelayedWETH_PermissionlessGames (0x82511d494B5C942BE57498a70Fdd7184Ee33B975) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      values.$pastUpgrades.0.2:
++        ["0x71e966Ae981d1ce531a7b6d23DC0f27B38409087"]
+      values.$pastUpgrades.0.1:
+-        ["0x71e966Ae981d1ce531a7b6d23DC0f27B38409087"]
++        "0xb5cf8f61fadb175bde0f7df2b7fe5f6837534f5d76d46c22b4bd5d0873c0deaa"
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      values.$pastUpgrades.2.2:
++        ["0x53c165169401764778F780a69701385eb0FF19B7"]
+      values.$pastUpgrades.2.1:
+-        ["0x53c165169401764778F780a69701385eb0FF19B7"]
++        "0xe361c0d4ae3aebc94b3f281ee372fbb1cbdb0c33ca8b1b35e7f3b009b2fcbdb0"
+      values.$pastUpgrades.1.2:
++        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+      values.$pastUpgrades.1.1:
+-        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
++        "0xe361c0d4ae3aebc94b3f281ee372fbb1cbdb0c33ca8b1b35e7f3b009b2fcbdb0"
+      values.$pastUpgrades.0.2:
++        ["0x53c165169401764778F780a69701385eb0FF19B7"]
+      values.$pastUpgrades.0.1:
+-        ["0x53c165169401764778F780a69701385eb0FF19B7"]
++        "0x8ba0e42b89cde22310b644ed30fd44e4a348619a165a54c908e7dc341e9bbd0c"
+    }
+```
+
+```diff
+    contract DelayedWETH_PermissionedGames (0x9F9b897e37de5052cD70Db6D08474550DDb07f39) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      values.$pastUpgrades.0.2:
++        ["0x71e966Ae981d1ce531a7b6d23DC0f27B38409087"]
+      values.$pastUpgrades.0.1:
+-        ["0x71e966Ae981d1ce531a7b6d23DC0f27B38409087"]
++        "0x25ff142069370a51e79a6c20e066cb5f976667fcd0d31203afed8cccfb864c09"
+    }
+```
+
+```diff
+    contract OptimismPortal (0xbEb5Fc579115071764c7423A4f12eDde41f106Ed) {
+    +++ description: None
+      values.$pastUpgrades.6.2:
++        ["0xe2F826324b2faf99E513D16D266c3F80aE87832B"]
+      values.$pastUpgrades.6.1:
+-        ["0xe2F826324b2faf99E513D16D266c3F80aE87832B"]
++        "0xbe810ed6e1e827930bd46cde42c4883662ddb6d244a26af2f0409cc2782bee61"
+      values.$pastUpgrades.5.2:
++        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+      values.$pastUpgrades.5.1:
+-        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
++        "0xbe810ed6e1e827930bd46cde42c4883662ddb6d244a26af2f0409cc2782bee61"
+      values.$pastUpgrades.4.2:
++        ["0x2D778797049FE9259d947D1ED8e5442226dFB589"]
+      values.$pastUpgrades.4.1:
+-        ["0x2D778797049FE9259d947D1ED8e5442226dFB589"]
++        "0x4758bd62359bc69d7e8a0faaf5308d826379c23258d689a7430d5c0ad0361ad2"
+      values.$pastUpgrades.3.2:
++        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+      values.$pastUpgrades.3.1:
+-        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
++        "0x4758bd62359bc69d7e8a0faaf5308d826379c23258d689a7430d5c0ad0361ad2"
+      values.$pastUpgrades.2.2:
++        ["0xaBAbe63514dDd6277356F8cc3d6518aA8BDEB4de"]
+      values.$pastUpgrades.2.1:
+-        ["0xaBAbe63514dDd6277356F8cc3d6518aA8BDEB4de"]
++        "0x3f7c36a1d636cdb23bf4f9171c27ebe58b73f4c0e6a33dbaac2c2f3c142faf50"
+      values.$pastUpgrades.1.2:
++        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+      values.$pastUpgrades.1.1:
+-        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
++        "0x3f7c36a1d636cdb23bf4f9171c27ebe58b73f4c0e6a33dbaac2c2f3c142faf50"
+      values.$pastUpgrades.0.2:
++        ["0x28a55488fef40005309e2DA0040DbE9D300a64AB"]
+      values.$pastUpgrades.0.1:
+-        ["0x28a55488fef40005309e2DA0040DbE9D300a64AB"]
++        "0xe2ff41f9bdf03d5455f55539b8b9c350276a179ca7f79322e2077d7c1ffb1268"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0xe5965Ab5962eDc7477C8520243A95517CD252fA9) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.$pastUpgrades.0.2:
++        ["0xc641A33cab81C559F2bd4b21EA34C290E2440C2B"]
+      values.$pastUpgrades.0.1:
+-        ["0xc641A33cab81C559F2bd4b21EA34C290E2440C2B"]
++        "0x2c16c813ff50e9e09a3c58508a9b90293c896f1f91534d09a5002f50bc8760ff"
+    }
+```
+
 Generated with discovered.json: 0xd14bd5e0a026b840d5341e0dd64e9b5a8c5f6bc8
 
 # Diff at Fri, 18 Oct 2024 11:35:24 GMT:

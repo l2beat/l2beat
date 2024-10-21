@@ -49,10 +49,12 @@
         "$pastUpgrades": [
           [
             "2024-02-22T20:00:59.000Z",
+            "0xd68a284c1d748ff541d3339f650f5b90e2faf2744db5fdfc27edfffc702e2dbd",
             ["0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30"]
           ],
           [
             "2024-04-08T18:10:59.000Z",
+            "0xf735ab474ff2e48c6231cc834828e35736c6fc9fec9759b74e5cf58a88075a36",
             ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"]
           ]
         ],
@@ -147,6 +149,7 @@
         "$pastUpgrades": [
           [
             "2024-02-22T17:55:59.000Z",
+            "0x72856ab866229053e930b1e4ec2c8505ed4b72feffdf13db4a218eced4364fa2",
             ["0xF4e87685e323818E0aE35dCdFc3B65106002E456"]
           ]
         ],

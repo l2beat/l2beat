@@ -29,6 +29,7 @@
         "$pastUpgrades": [
           [
             "2024-08-23T15:39:35.000Z",
+            "0xbcd8e7e264c743a567f2f034945e8c9d1e4d5583f9efd0dbf2d89bbefe6cfd60",
             ["0x62d45660505D7457e3ce9Cd87C0a0cf890fB38ff"]
           ]
         ],
@@ -101,6 +102,7 @@
         "$pastUpgrades": [
           [
             "2024-06-26T20:22:47.000Z",
+            "0xa3292232e0fcebd4b2054cc04323de93e1a7b681d5ff5824df81c396ec24f38c",
             ["0x714d763CB676b97fA878d452dB70d81CBCb7D228"]
           ]
         ],
@@ -156,6 +158,7 @@
         "$pastUpgrades": [
           [
             "2024-06-26T20:21:11.000Z",
+            "0x537a94f0aa146c63d9a65519e85b55f8c276349e9b6f2457fd0eb66331214e87",
             ["0x3c5bC88Fad9D35072213cD1FB5e83f9D150B3144"]
           ]
         ],
@@ -282,6 +285,7 @@
         "$pastUpgrades": [
           [
             "2024-06-26T20:20:35.000Z",
+            "0x64c1939afb2e6f113ac5b917c740569ebb33001a3aa63eb912c97b1decd90f10",
             ["0x18fffcb31850795D919B6aDD4b16bEB3a5f5ECFB"]
           ]
         ],
@@ -364,6 +368,7 @@
         "$pastUpgrades": [
           [
             "2024-06-26T20:21:23.000Z",
+            "0x5acb4bebe868d4883d26a6417436d21d856a1d3bd807b6c7eb02668390208a54",
             ["0x73A793CdcF6F0f20e14e1835Eb1462b0376727cF"]
           ]
         ],
@@ -410,6 +415,7 @@
         "$pastUpgrades": [
           [
             "2024-06-26T20:14:47.000Z",
+            "0x1eac23e43252871e1fb140ce86cb1bd375f38aa4f38183f07b20a24cba51e26d",
             ["0x76072B79Efc11E5C6c74A56560F8CE0B89D2966c"]
           ]
         ],
@@ -540,6 +546,7 @@
         "$pastUpgrades": [
           [
             "2024-06-26T20:24:23.000Z",
+            "0x9a74ce3bc48c7eeee3d5f36f4ebc628ca02aa9f392351bb4e98e06d6cf2b6044",
             ["0xB4BA75C87A48a233BC22678EfDa7d49CfD89ea5F"]
           ]
         ],
@@ -630,6 +637,7 @@
         "$pastUpgrades": [
           [
             "2024-06-26T20:22:11.000Z",
+            "0xe6ded05b39b296df87dfd33578f9dd897082d080120302622ba8ca158ad6bd38",
             ["0xE187FEF3AAe13137e6062B2634cCE43B599156F6"]
           ]
         ],

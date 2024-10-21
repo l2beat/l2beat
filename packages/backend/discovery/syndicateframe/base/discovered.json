@@ -25,10 +25,12 @@
         "$pastUpgrades": [
           [
             "2024-02-08T05:15:41.000Z",
+            "0x2eea12a1949fd31d0b78093777274d93d22abbfe7f8c3a146336baf9d413037d",
             ["0x0ED44be59Ea62a9960CB97f8aC54088304D05791"]
           ],
           [
             "2024-02-08T05:17:55.000Z",
+            "0x64273f6d08fd5de9b9d3480c7d387e64b13c3364e227601a6af78c5a49057427",
             ["0x06DDDA853506cECa671a06136f955f7f042FD667"]
           ]
         ],
@@ -96,6 +98,7 @@
         "$pastUpgrades": [
           [
             "2024-02-08T05:18:07.000Z",
+            "0xaf623829a347e0ac10b6be166c1c32a64bb61fc9866d9bc1fcbfad71e6803107",
             ["0x6042DE5a64709d8d4bBb227891AD886ECff49c6d"]
           ]
         ],
@@ -152,6 +155,7 @@
         "$pastUpgrades": [
           [
             "2024-02-08T05:18:21.000Z",
+            "0x7365eb094277a0147c55d12fe495f56b4c4297ea9aa6672b3e3c7845b4b0d88d",
             ["0x44Ce95273E69246fe258b02a68E3a6FfCA66fdf2"]
           ]
         ],
@@ -305,6 +309,7 @@
         "$pastUpgrades": [
           [
             "2024-02-08T05:17:07.000Z",
+            "0x31c3e3a0a7efc91fa8eec9137a7d19fe4ab6ed13e92c9cd4cbf28f5ea10a6154",
             ["0x5581A42BAF9bd77e1c56aFB2c74dEF20dfe26f9A"]
           ]
         ],

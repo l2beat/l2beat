@@ -1,3 +1,138 @@
+Generated with discovered.json: 0xc59f1430d53994bcea353173264b6d8d200aaf96
+
+# Diff at Mon, 21 Oct 2024 11:04:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20919938
+- current block number: 20919938
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20919938 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.$pastUpgrades.0.2:
++        ["0xfaE274B77BA59f001196689f93E9e73693866f4a"]
+      values.$pastUpgrades.0.1:
+-        ["0xfaE274B77BA59f001196689f93E9e73693866f4a"]
++        "0x41b524b2ed6de3f6ec58d8e6508f9f6055ca3cb28a80b98af3213eb285a9fdce"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x4d898F66327Fa050131A17ed17a39EBeCC81f0c3) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      values.$pastUpgrades.0.2:
++        ["0xd080A33E651780cD6f52F16020E1FFA04F0f15B2"]
+      values.$pastUpgrades.0.1:
+-        ["0xd080A33E651780cD6f52F16020E1FFA04F0f15B2"]
++        "0x1361f48fea8fbc08ffbc0877f540635a35dffe6560829923443c70702232197d"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x6D4528d192dB72E282265D6092F4B872f9Dff69e) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$pastUpgrades.4.2:
++        ["0x3b48597212f2622511585914CC4D4152c9B1B077"]
+      values.$pastUpgrades.4.1:
+-        ["0x3b48597212f2622511585914CC4D4152c9B1B077"]
++        "0x1361f48fea8fbc08ffbc0877f540635a35dffe6560829923443c70702232197d"
+      values.$pastUpgrades.3.2:
++        ["0x0000000000000000000000000000000000000000"]
+      values.$pastUpgrades.3.1:
+-        ["0x0000000000000000000000000000000000000000"]
++        "0x41b524b2ed6de3f6ec58d8e6508f9f6055ca3cb28a80b98af3213eb285a9fdce"
+      values.$pastUpgrades.2.2:
++        ["0x12Acf6E3ca96A60fBa0BBFd14D2Fe0EB6ae47820"]
+      values.$pastUpgrades.2.1:
+-        ["0x12Acf6E3ca96A60fBa0BBFd14D2Fe0EB6ae47820"]
++        "0xa7c1696ee1da04699ec29609eb9c645e327a590ad21ff4a8cf16a9671719bec9"
+      values.$pastUpgrades.1.2:
++        ["0xae6b041f0550EDeF61a70F76f89c77B2b1Ef38Fd"]
+      values.$pastUpgrades.1.1:
+-        ["0xae6b041f0550EDeF61a70F76f89c77B2b1Ef38Fd"]
++        "0x9ba695c4025241f04617877232a4cf86d9ccc1783a693cfe661784c7f89c8050"
+      values.$pastUpgrades.0.2:
++        ["0x25109139f8C4F9f7b4E4d5452A067feaE3a537F3"]
+      values.$pastUpgrades.0.1:
+-        ["0x25109139f8C4F9f7b4E4d5452A067feaE3a537F3"]
++        "0xabf5ff59333cfb575404834e68633fd81c77ff85d6d6f9983e29140ebdf805f4"
+    }
+```
+
+```diff
+    contract OptimismPortal (0x7B02D13904D8e6E0f0Efaf756aB14Cb0FF21eE7e) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.$pastUpgrades.0.2:
++        ["0xD8056243180C4b56a7d2ccd5df9c2696E1261826"]
+      values.$pastUpgrades.0.1:
+-        ["0xD8056243180C4b56a7d2ccd5df9c2696E1261826"]
++        "0x1361f48fea8fbc08ffbc0877f540635a35dffe6560829923443c70702232197d"
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x996ffD627901f10C80A7d4B72A12316D2e77c076) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      values.$pastUpgrades.2.2:
++        ["0xe4e0f760409EB1661db76a4365c0803C3630270f"]
+      values.$pastUpgrades.2.1:
+-        ["0xe4e0f760409EB1661db76a4365c0803C3630270f"]
++        "0x4279b4a359b1d5abd672f9e7ee1923b9de372cce4077c2e673f3967b092e64cc"
+      values.$pastUpgrades.1.2:
++        ["0x862E8e466ac49c1B076322AabCd4156326C47890"]
+      values.$pastUpgrades.1.1:
+-        ["0x862E8e466ac49c1B076322AabCd4156326C47890"]
++        "0x4279b4a359b1d5abd672f9e7ee1923b9de372cce4077c2e673f3967b092e64cc"
+      values.$pastUpgrades.0.2:
++        ["0xe4e0f760409EB1661db76a4365c0803C3630270f"]
+      values.$pastUpgrades.0.1:
+-        ["0xe4e0f760409EB1661db76a4365c0803C3630270f"]
++        "0x1361f48fea8fbc08ffbc0877f540635a35dffe6560829923443c70702232197d"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0xA6Ad22bb0E73DEF40a24E510cFbc93807d8bf87e) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.$pastUpgrades.0.2:
++        ["0x99948157F4702B3EE9De4290C3dCDF2622Db9318"]
+      values.$pastUpgrades.0.1:
+-        ["0x99948157F4702B3EE9De4290C3dCDF2622Db9318"]
++        "0x1361f48fea8fbc08ffbc0877f540635a35dffe6560829923443c70702232197d"
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xbB7aD3f9CCbC94085b7F7B1D5258e59F5F068741) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      values.$pastUpgrades.2.2:
++        ["0x31f395dd26430a8CBFa530e31B46aaf7ad517017"]
+      values.$pastUpgrades.2.1:
+-        ["0x31f395dd26430a8CBFa530e31B46aaf7ad517017"]
++        "0xf3e10d3de1b8d45a84bba5858cdc402584b2bc6d51ec993dad5db5ffea92250b"
+      values.$pastUpgrades.1.2:
++        ["0xfeE76239E3ac25A05c5CdDC106E4B39B2C088029"]
+      values.$pastUpgrades.1.1:
+-        ["0xfeE76239E3ac25A05c5CdDC106E4B39B2C088029"]
++        "0xf3e10d3de1b8d45a84bba5858cdc402584b2bc6d51ec993dad5db5ffea92250b"
+      values.$pastUpgrades.0.2:
++        ["0x31f395dd26430a8CBFa530e31B46aaf7ad517017"]
+      values.$pastUpgrades.0.1:
+-        ["0x31f395dd26430a8CBFa530e31B46aaf7ad517017"]
++        "0x1361f48fea8fbc08ffbc0877f540635a35dffe6560829923443c70702232197d"
+    }
+```
+
 Generated with discovered.json: 0xe98adb0789bde32d3ed8a7819047bc393063dc4f
 
 # Diff at Wed, 16 Oct 2024 11:35:19 GMT:

@@ -1,3 +1,109 @@
+Generated with discovered.json: 0x04d9d10919e61dceebb61c9965947ee23ebe6e14
+
+# Diff at Mon, 21 Oct 2024 11:13:25 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 264379217
+- current block number: 264379217
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 264379217 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (0x246bAB4F36095ABc74052Cc122c318298a9ef876) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"]
+      values.$pastUpgrades.0.1:
+-        ["0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"]
++        "0x028f0fec788f169305337acd60998cfebebbc5cfcffacf4f12e7ddfc6a7e488d"
+    }
+```
+
+```diff
+    contract RollupProxy (0x330F8fEB25f3427cABA32446728C36ae67f2135b) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      values.$pastUpgrades.0.2:
++        ["0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754","0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A"]
+      values.$pastUpgrades.0.1:
+-        ["0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754","0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A"]
++        "0x028f0fec788f169305337acd60998cfebebbc5cfcffacf4f12e7ddfc6a7e488d"
+    }
+```
+
+```diff
+    contract Bridge (0x53D82686BC9827fEc03bcEe661B37b855A18EcA9) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xB23214f241bdEb275f7dCBfbb1EA79349101d4B0"]
+      values.$pastUpgrades.0.1:
+-        ["0xB23214f241bdEb275f7dCBfbb1EA79349101d4B0"]
++        "0x028f0fec788f169305337acd60998cfebebbc5cfcffacf4f12e7ddfc6a7e488d"
+    }
+```
+
+```diff
+    contract RollupEventInbox (0x6e988B94C12194A925D7802FE75891364C312477) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xF40C24bA346aA459ED28e196D4A46Cf17174bD6C"]
+      values.$pastUpgrades.0.1:
+-        ["0xF40C24bA346aA459ED28e196D4A46Cf17174bD6C"]
++        "0x028f0fec788f169305337acd60998cfebebbc5cfcffacf4f12e7ddfc6a7e488d"
+    }
+```
+
+```diff
+    contract SequencerInbox (0x6eE94AD8057Fd7Ba4d47bb6278a261c8a9FD4E3f) {
+    +++ description: State batches / commitments get posted here.
+      values.$pastUpgrades.0.2:
++        ["0x18ed2d5bF7c5943bFd20a2995b9879E30c9E8dDa"]
+      values.$pastUpgrades.0.1:
+-        ["0x18ed2d5bF7c5943bFd20a2995b9879E30c9E8dDa"]
++        "0x028f0fec788f169305337acd60998cfebebbc5cfcffacf4f12e7ddfc6a7e488d"
+    }
+```
+
+```diff
+    contract Outbox (0xa4270256B160C3Ebec2d6914a906c7EC38D8d072) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"]
+      values.$pastUpgrades.0.1:
+-        ["0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"]
++        "0x028f0fec788f169305337acd60998cfebebbc5cfcffacf4f12e7ddfc6a7e488d"
+    }
+```
+
+```diff
+    contract Inbox (0xEe30EfcaF812d10e1EFE25E9458f76a39DAD3239) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x8f6406781cC955398C45a48DcEfeEBDb2c8e2CaA"]
+      values.$pastUpgrades.0.1:
+-        ["0x8f6406781cC955398C45a48DcEfeEBDb2c8e2CaA"]
++        "0x028f0fec788f169305337acd60998cfebebbc5cfcffacf4f12e7ddfc6a7e488d"
+    }
+```
+
+```diff
+    contract ChallengeManager (0xf3224F90c0A6138209a9EbaFd1971AD1E04eEb0D) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x5cA988F213EfbCB86ED7e2AACB0C15c91e648f8d"]
+      values.$pastUpgrades.0.1:
+-        ["0x5cA988F213EfbCB86ED7e2AACB0C15c91e648f8d"]
++        "0x028f0fec788f169305337acd60998cfebebbc5cfcffacf4f12e7ddfc6a7e488d"
+    }
+```
+
 Generated with discovered.json: 0x08ba9b6e26af49a8c018739daa9c92890ea5ae33
 
 # Diff at Wed, 16 Oct 2024 11:44:24 GMT:

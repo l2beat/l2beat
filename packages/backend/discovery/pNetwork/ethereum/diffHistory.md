@@ -1,3 +1,73 @@
+Generated with discovered.json: 0xf933d119c99ac49dd3d24c878123b8826a163877
+
+# Diff at Mon, 21 Oct 2024 11:08:48 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20420398
+- current block number: 20420398
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20420398 (main branch discovery), not current.
+
+```diff
+    contract ERC20 Vault V2 (0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8) {
+    +++ description: None
+      values.$pastUpgrades.5.2:
++        ["0x34D085516f9D7794192aDB10C995d9c532E335aF"]
+      values.$pastUpgrades.5.1:
+-        ["0x34D085516f9D7794192aDB10C995d9c532E335aF"]
++        "0x1fbe09abf45a526f20340810373ed6cd7e2164896fffbcc71f2c2c3e5a99d426"
+      values.$pastUpgrades.4.2:
++        ["0xD331E3EB139D1433D1c988D5DC1cd6eCB971233b"]
+      values.$pastUpgrades.4.1:
+-        ["0xD331E3EB139D1433D1c988D5DC1cd6eCB971233b"]
++        "0x94c984ee79b11d3ae894661b8ebf74003d5d88eef395a415972c79fc90dba646"
+      values.$pastUpgrades.3.2:
++        ["0x1cfE92176eefc0C53aF05a298F271C319b73E0aB"]
+      values.$pastUpgrades.3.1:
+-        ["0x1cfE92176eefc0C53aF05a298F271C319b73E0aB"]
++        "0x1b0b229497173a9c2fc64ad92edb803d26abd46845228c45814c6e7fe96f2b3a"
+      values.$pastUpgrades.2.2:
++        ["0xD331E3EB139D1433D1c988D5DC1cd6eCB971233b"]
+      values.$pastUpgrades.2.1:
+-        ["0xD331E3EB139D1433D1c988D5DC1cd6eCB971233b"]
++        "0x4b3118460f80112e26efd24b4a68cfcb29a7b388d595c59c122e766195fb3457"
+      values.$pastUpgrades.1.2:
++        ["0xfbc347975C48578F4A25ECeEB61BC16356abE8a2"]
+      values.$pastUpgrades.1.1:
+-        ["0xfbc347975C48578F4A25ECeEB61BC16356abE8a2"]
++        "0x17f3b852ac3efe8b775235a7135ace8aa5c3caee425972ae38baa999ac46ac6f"
+      values.$pastUpgrades.0.2:
++        ["0xE01a9c36170b8Fa163C6a54D7aB3015C85e0186c"]
+      values.$pastUpgrades.0.1:
+-        ["0xE01a9c36170b8Fa163C6a54D7aB3015C85e0186c"]
++        "0x1bf57708290758992fb44d97c991339a7d0efd25414a46585603bbc055e27373"
+    }
+```
+
+```diff
+    contract EthPntv2 (0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xd88a13c72443D069Fc0d44A4989AC8dd132Ac38b"]
+      values.$pastUpgrades.1.1:
+-        ["0xd88a13c72443D069Fc0d44A4989AC8dd132Ac38b"]
++        "0x665f94ba355ee0c98d66968706bc8bde017bf6bff2fcca1552d598e2c1671a99"
+      values.$pastUpgrades.0.2:
++        ["0x8474a898677C3bc97f35A86c387aE34Bf272C860"]
+      values.$pastUpgrades.0.1:
+-        ["0x8474a898677C3bc97f35A86c387aE34Bf272C860"]
++        "0x7d9c485f937f4f9e3cd8b28cb8fa4c5ef34d3c9e4c3ad94182ecaf719c70db9d"
+    }
+```
+
 Generated with discovered.json: 0x819d76b4f8acf20b7d12c107d1f05c58adc56bd2
 
 # Diff at Mon, 14 Oct 2024 10:54:10 GMT:

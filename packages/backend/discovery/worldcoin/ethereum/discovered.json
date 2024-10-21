@@ -124,14 +124,17 @@
         "$pastUpgrades": [
           [
             "2023-07-06T19:19:11.000Z",
+            "0x0af02107fe8622db5d846e8d391b550adba8fd06dd3382b7296f5168b6308be3",
             ["0xa3cD15EBed6075E33a54483C59818bC43D57c556"]
           ],
           [
             "2023-08-18T17:12:23.000Z",
+            "0xaa68dea1046df37d3b0f21db95cfaa44fc4e1d01dcc523379270251989283dcb",
             ["0x2Ad412A1dF96434Eed0779D2dB4A8694a06132f8"]
           ],
           [
             "2024-01-12T00:00:23.000Z",
+            "0xda23d7a260d4bee338a99c4c9c1cd82f329f2ac151286487c66681ea4a0ae5e6",
             ["0x521e8FB3A32Ea44237DC8b1E506dd78accFDf8Bd"]
           ]
         ],

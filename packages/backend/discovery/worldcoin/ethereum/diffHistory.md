@@ -1,3 +1,42 @@
+Generated with discovered.json: 0x5f2e4f8fabff5372f3bcb234859ea159a0784373
+
+# Diff at Mon, 21 Oct 2024 11:12:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20922333
+- current block number: 20922333
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20922333 (main branch discovery), not current.
+
+```diff
+    contract WorldIdIdentityManager2 (0xf7134CE138832c1456F2a91D64621eE90c2bddEa) {
+    +++ description: Does what it says: Manages identities for Worldcoin. The identityOperator can register or delete identities by submitting zk proofs.
+      values.$pastUpgrades.2.2:
++        ["0x521e8FB3A32Ea44237DC8b1E506dd78accFDf8Bd"]
+      values.$pastUpgrades.2.1:
+-        ["0x521e8FB3A32Ea44237DC8b1E506dd78accFDf8Bd"]
++        "0xda23d7a260d4bee338a99c4c9c1cd82f329f2ac151286487c66681ea4a0ae5e6"
+      values.$pastUpgrades.1.2:
++        ["0x2Ad412A1dF96434Eed0779D2dB4A8694a06132f8"]
+      values.$pastUpgrades.1.1:
+-        ["0x2Ad412A1dF96434Eed0779D2dB4A8694a06132f8"]
++        "0xaa68dea1046df37d3b0f21db95cfaa44fc4e1d01dcc523379270251989283dcb"
+      values.$pastUpgrades.0.2:
++        ["0xa3cD15EBed6075E33a54483C59818bC43D57c556"]
+      values.$pastUpgrades.0.1:
+-        ["0xa3cD15EBed6075E33a54483C59818bC43D57c556"]
++        "0x0af02107fe8622db5d846e8d391b550adba8fd06dd3382b7296f5168b6308be3"
+    }
+```
+
 Generated with discovered.json: 0x5bbd3c94b69fded49e2906cf815436af4c48c01a
 
 # Diff at Mon, 14 Oct 2024 10:57:53 GMT:
