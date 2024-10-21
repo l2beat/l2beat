@@ -155,11 +155,17 @@ function mockClient(deps: {
 
 const mockResponse = (blockNumber: number) => ({
   result: {
-    transactions: [mockTx('0'), mockTx('1')],
+    transactions: [mockRawTx('0'), mockRawTx('1')],
     timestamp: `0x${blockNumber.toString(16)}`,
     hash: '0xabcdef',
     number: `0x${blockNumber.toString(16)}`,
   },
+})
+
+const mockRawTx = (data: string) => ({
+  hash: `0x${data}`,
+  to: `0x${data}`,
+  input: `0x${data}`,
 })
 
 const mockTx = (data: string) => ({
