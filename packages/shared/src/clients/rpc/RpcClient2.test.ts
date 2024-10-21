@@ -163,6 +163,7 @@ const mockResponse = (blockNumber: number) => ({
 })
 
 const mockTx = (data: string) => ({
+  hash: `0x${data}`,
   to: `0x${data}`,
   data: `0x${data}`,
 })
