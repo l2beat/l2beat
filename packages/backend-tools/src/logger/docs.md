@@ -160,7 +160,7 @@ Below is an example log output:
 
 Type: `LogFormarretJson`
 
-In this format every message is logged on a single line as a single JSON object. The object contains the timestamp, log level, service, tag, message, error and parameters. This format is best suited for deploment environments.
+In this format every message is logged on a single line as a single JSON object. The object contains the timestamp, log level, service, tag, message, error and parameters. This format is best suited for deployment environments.
 
 Below is an example log output:
 
@@ -173,7 +173,7 @@ Below is an example log output:
 
 Type: `LogFormarretEcs`
 
-In this format every message is logged on a single line as a single JSON object compatible with [ECS standard](https://www.elastic.co/guide/en/ecs/current/ecs-reference.html). This format is best suited for deploment environments with ElastiSearch enabled
+In this format every message is logged on a single line as a single JSON object compatible with [ECS standard](https://www.elastic.co/guide/en/ecs/current/ecs-reference.html). This format is best suited for deployment environments with ElastiSearch enabled
 
 Below is an example log output:
 
