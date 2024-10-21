@@ -111,6 +111,29 @@ describeDatabase(ActivityRepository.name, (db) => {
         [ProjectId('b')]: { uopsCount: 8, timestamp: START.add(2, 'days') },
       })
     })
+
+    it('should return max UOPS count when uops is null', async () => {
+      await repository.upsertMany([
+        // uopsCount is null
+        record('a', START, 1),
+        record('a', START.add(1, 'days'), 5),
+        record('a', START.add(2, 'days'), 4),
+        // normal count bigger then uopsCount
+        record('b', START.add(1, 'days'), 2, 6),
+        record('b', START.add(2, 'days'), 8),
+        // uopsCount was null in the past
+        record('c', START.add(1, 'days'), 4),
+        record('c', START.add(2, 'days'), 5, 9),
+      ])
+
+      const result = await repository.getMaxUopsCountForProjects()
+
+      expect(result).toEqual({
+        [ProjectId('a')]: { uopsCount: 5, timestamp: START.add(1, 'days') },
+        [ProjectId('b')]: { uopsCount: 8, timestamp: START.add(2, 'days') },
+        [ProjectId('c')]: { uopsCount: 9, timestamp: START.add(2, 'days') },
+      })
+    })
   })
 
   describe(ActivityRepository.prototype.getSummedCountForProjectsAndTimeRange

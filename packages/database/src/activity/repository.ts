@@ -95,7 +95,10 @@ export class ActivityRepository extends BaseRepository {
       .selectFrom('Activity')
       .select([
         'projectId',
-        (eb) => eb.fn.max('Activity.uopsCount').as('max_uops_count'),
+        (eb) =>
+          eb.fn
+            .max(eb.fn.coalesce('Activity.uopsCount', 'Activity.count'))
+            .as('max_uops_count'),
       ])
       .groupBy('projectId')
       .as('t2')
@@ -105,11 +108,15 @@ export class ActivityRepository extends BaseRepository {
       .innerJoin(subquery, (join) =>
         join
           .onRef('t1.projectId', '=', 't2.projectId')
-          .onRef('t1.uopsCount', '=', 't2.max_uops_count'),
+          .onRef(
+            (eb) => eb.fn.coalesce('t1.uopsCount', 't1.count'),
+            '=',
+            't2.max_uops_count',
+          ),
       )
       .select([
         't1.projectId',
-        't1.uopsCount as max_uops_count',
+        (eb) => eb.fn.coalesce('t1.uopsCount', 't1.count').as('max_uops_count'),
         't1.timestamp',
       ])
       .execute()
