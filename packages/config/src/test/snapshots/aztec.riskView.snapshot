@@ -1,0 +1,83 @@
+// aztec riskView didn't change 1
+
+{
+  dataAvailability: {
+    definingMetric: Infinity
+    description: "All of the data needed for proof construction is published on Ethereum L1."
+    sentiment: "good"
+    sources: [
+      {
+        contract: "RollupProcessor"
+        references: [
+          "https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L359"
+        ]
+      }
+    ]
+    value: "Onchain"
+  }
+  destinationToken: {
+    description: "ETH transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain."
+    sentiment: "good"
+    value: "Native & Canonical"
+  }
+  exitWindow: {
+    definingMetric: Infinity
+    description: "Users can exit funds at any time because contracts are not upgradeable."
+    sentiment: "good"
+    value: "∞"
+  }
+  proposerFailure: {
+    description: "If the Proposer fails, users can leverage the source available prover to submit proofs to the L1 bridge."
+    sentiment: "good"
+    sources: [
+      {
+        contract: "RollupProcessor"
+        references: [
+          "https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L347"
+          "https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L168"
+        ]
+      }
+    ]
+    value: "Self propose"
+  }
+  sequencerFailure: {
+    definingMetric: undefined
+    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. Proposing new blocks requires creating ZK proofs."
+    sentiment: "good"
+    sources: [
+      {
+        contract: "RollupProcessor"
+        references: [
+          "https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L347"
+          "https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L168"
+        ]
+      }
+    ]
+    value: "Self sequence"
+  }
+  stateValidation: {
+    definingMetric: Infinity
+    description: "SNARKs are zero knowledge proofs that ensure state correctness, but require trusted setup."
+    sentiment: "good"
+    sources: [
+      {
+        contract: "RollupProcessor"
+        references: [
+          "https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L395"
+        ]
+      }
+      {
+        contract: "TurboVerifier"
+        references: [
+          "https://etherscan.io/address/0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8#code#F1#L37"
+        ]
+      }
+    ]
+    value: "ZK proofs (SN)"
+  }
+  validatedBy: {
+    description: "Smart contracts on Ethereum validate all bridge transfers."
+    sentiment: "good"
+    value: "Ethereum"
+  }
+}
