@@ -15,13 +15,13 @@ import { ScalingTvlTable } from './table/scaling-tvl-table'
 
 type Props =
   | {
-    type?: never
-    entries: ScalingTvlEntry[]
-  }
+      type?: never
+      entries: ScalingTvlEntry[]
+    }
   | {
-    type: 'recategorised'
-    entries: ReturnType<typeof groupByMainCategories<ScalingTvlEntry>>
-  }
+      type: 'recategorised'
+      entries: ReturnType<typeof groupByMainCategories<ScalingTvlEntry>>
+    }
 
 export function ScalingTvlTables(props: Props) {
   const includeFilters = useScalingFilter()
