@@ -1,147 +1,198 @@
 'use client'
-import {
-  getCoreRowModel,
-  getExpandedRowModel,
-  getFacetedRowModel,
-  getFacetedUniqueValues,
-  getFilteredRowModel,
-  getSortedRowModel,
-} from '@tanstack/react-table'
-import Link from 'next/link'
-import { BasicTable } from '~/components/table/basic-table'
-import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
+import Image from 'next/image'
+import { type ReactNode } from 'react'
+import { IndexCell } from '~/components/table/cells/index-cell'
 import { RiskCell } from '~/components/table/cells/risk-cell'
-import { useBreakpoint } from '~/hooks/use-is-mobile'
-import { useTable } from '~/hooks/use-table'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableHeaderRow,
+  TableRow,
+} from '~/components/table/table'
 import { type DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
 import { cn } from '~/utils/cn'
-import { DaTableLastSubRowCell } from '../../../_components/da-table-last-sub-row-cell'
-import { DaTableSubRowCell } from '../../../_components/da-table-sub-row-cell'
-import { columns } from './columns'
 
 interface Props {
   items: DaRiskEntry[]
+  excludeBridge?: boolean // Control to exclude the bridge name column
 }
 
-export function DaRiskTable({ items }: Props) {
-  const breakpoint = useBreakpoint()
-
-  const table = useTable({
-    data: items,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getFacetedRowModel: getFacetedRowModel(),
-    getFacetedUniqueValues: getFacetedUniqueValues(),
-    getExpandedRowModel: getExpandedRowModel(),
-    initialState: {
-      expanded: breakpoint !== 'mobile' ? true : undefined,
-      columnPinning: {
-        left: ['#', 'logo'],
-      },
-    },
-  })
-
-  /**
-   * NOTE: This table uses a custom sub-component to render the sub-rows. This is done mainly
-   * because of some specific requirements for the layout of the sub-rows. Always keep this layout
-   * in sync with columns.tsx.
-   */
-
+export function DaRiskTable({ items, excludeBridge = false }: Props) {
   return (
-    <div className="space-y-3 md:space-y-6">
-      <BasicTable
-        table={table}
-        rowColoringMode="ethereum-only"
-        rawSubComponent
-        renderSubComponent={({ row }) => {
-          if (row.original.subRows.length < 1) {
-            return (
-              <tr className="border-b border-b-gray-200 dark:border-b-zinc-700">
-                <td colSpan={9}></td>
-              </tr>
-            )
-          }
-          return (
-            <>
-              <tr>
-                <td className="h-2" />
-              </tr>
-              {row.original.subRows.map((subRow, i) => {
-                const firstRow = i === 0
-                const lastRow = i === row.original.subRows.length - 1
-                const { href } = subRow
+    <Table>
+      <TableHeader className="border-b border-surface-tertiary">
+        <TableHeaderRow>
+          <AutoHead colSpan={3} className="px-4 md:px-4" />
+          <AutoHead
+            colSpan={2}
+            className="rounded-t-lg bg-n-gray-200 px-4 py-0 font-bold text-black dark:bg-zinc-700 dark:text-white md:pt-4"
+          >
+            DA LAYER RISKS
+          </AutoHead>
+          {excludeBridge ? <AutoHead className="w-[40px]" /> : <AutoHead />}{' '}
+          {/* Spacer Column */}
+          <AutoHead
+            colSpan={3}
+            className="rounded-t-lg bg-n-gray-200 px-4 pb-0 font-bold text-black dark:bg-zinc-700 dark:text-white md:pt-4"
+          >
+            BRIDGE RISKS
+          </AutoHead>
+        </TableHeaderRow>
+        <TableHeaderRow>
+          <AutoHead>#</AutoHead>
+          <AutoHead></AutoHead>
+          <AutoHead>DA LAYER</AutoHead>
+          <AutoHead className="bg-n-gray-200 px-4 dark:bg-zinc-700">
+            ECONOMIC SECURITY
+          </AutoHead>
+          <AutoHead className="bg-n-gray-200 px-4 dark:bg-zinc-700">
+            FRAUD DETECTION
+          </AutoHead>
+          {excludeBridge ? (
+            <AutoHead className="w-[40px]" />
+          ) : (
+            <AutoHead className="px-4">BRIDGE</AutoHead>
+          )}{' '}
+          {/* Spacer or Bridge */}
+          <AutoHead className="bg-n-gray-200 px-4 dark:bg-zinc-700">
+            COMMITTEE SECURITY
+          </AutoHead>
+          <AutoHead className="bg-n-gray-200 px-4 dark:bg-zinc-700">
+            UPGRADEABILITY
+          </AutoHead>
+          <AutoHead className="bg-n-gray-200 px-4 dark:bg-zinc-700">
+            RELAYER FAILURE
+          </AutoHead>
+        </TableHeaderRow>
+      </TableHeader>
+      <TableBody>
+        {items.map((layer, layerIdx) => (
+          <>
+            <TableRow
+              key={`layer-${layerIdx}`}
+              className="border-b border-surface-tertiary dark:border-surface-tertiary"
+            >
+              <TableCell rowSpan={layer.bridges.length}>
+                <IndexCell>{layerIdx + 1}</IndexCell>
+              </TableCell>
+              <TableCell
+                rowSpan={layer.bridges.length}
+                className="pr-2 md:pr-2"
+              >
+                <Image
+                  className="min-h-[20px] min-w-[20px]"
+                  src={`/icons/${layer.slug}.png`}
+                  width={20}
+                  height={20}
+                  alt={`${layer.name} logo`}
+                />
+              </TableCell>
+              <TableCell rowSpan={layer.bridges.length}>
+                <div className="flex flex-col gap-0">
+                  <span className="text-base font-bold leading-5">
+                    {layer.name}
+                  </span>
+                  <span className="text-[13px] font-medium leading-none text-gray-500">
+                    {toDisplayName(layer)}
+                  </span>
+                </div>
+              </TableCell>
+              <TableCell
+                rowSpan={layer.bridges.length}
+                className="bg-n-gray-200 px-4 dark:bg-zinc-700"
+              >
+                <RiskCell risk={layer.risks.economicSecurity} />
+              </TableCell>
+              <TableCell
+                rowSpan={layer.bridges.length}
+                className="bg-n-gray-200 px-4 dark:bg-zinc-700"
+              >
+                <RiskCell risk={layer.risks.fraudDetection} />
+              </TableCell>
 
-                return (
-                  <tr key={subRow.slug} className="group">
-                    <td colSpan={3} className="pointer-events-none"></td>
-                    <td
-                      className={cn(
-                        'group whitespace-pre bg-n-gray-200 pr-3 align-middle group-hover:bg-black/[0.1] dark:bg-white/[0.1] dark:group-hover:bg-white/[0.2]',
-                        !lastRow &&
-                          'border-b border-b-gray-200 dark:border-b-zinc-700',
-                        firstRow && 'rounded-tl-xl',
-                        lastRow && 'rounded-bl-xl',
-                      )}
-                    >
-                      <Link href={href}>
-                        <div className="flex size-full items-center">
-                          <ProjectNameCell
-                            className={cn('size-full p-2 !pl-8')}
-                            project={{
-                              ...subRow,
-                              name: subRow.daBridge.name,
-                              shortName: undefined,
-                            }}
-                          />
-                        </div>
-                      </Link>
-                    </td>
-                    <DaTableSubRowCell href={href} lastRow={lastRow}>
-                      <RiskCell
-                        risk={subRow.risks.economicSecurity}
-                        emptyMode="em-dash"
-                      />
-                    </DaTableSubRowCell>
-                    <DaTableSubRowCell href={href} lastRow={lastRow}>
-                      <RiskCell
-                        risk={subRow.risks.fraudDetection}
-                        emptyMode="em-dash"
-                      />
-                    </DaTableSubRowCell>
-                    <DaTableSubRowCell href={href} lastRow={lastRow}>
-                      <RiskCell
-                        risk={subRow.risks.committeeSecurity}
-                        emptyMode="em-dash"
-                      />
-                    </DaTableSubRowCell>
-                    <DaTableSubRowCell href={href} lastRow={lastRow}>
-                      <RiskCell
-                        risk={subRow.risks.upgradeability}
-                        emptyMode="em-dash"
-                      />
-                    </DaTableSubRowCell>
-                    <DaTableLastSubRowCell
-                      href={href}
-                      firstRow={firstRow}
-                      lastRow={lastRow}
-                    >
-                      <RiskCell
-                        risk={subRow.risks.relayerFailure}
-                        emptyMode="em-dash"
-                      />
-                    </DaTableLastSubRowCell>
-                  </tr>
-                )
-              })}
-              <tr className="border-b border-b-gray-200 dark:border-b-zinc-700">
-                <td colSpan={9} className="h-2" />
-              </tr>
-            </>
-          )
-        }}
-      />
-    </div>
+              {excludeBridge ? (
+                <TableCell className="w-[40px]" /> // Spacer Column
+              ) : (
+                <TableCell className="px-4 text-sm font-bold first:px-4">
+                  {layer.bridges[0]!.name}
+                </TableCell>
+              )}
+              <TableCell className="bg-n-gray-200 px-4 dark:bg-zinc-700">
+                <RiskCell risk={layer.bridges[0]!.risks.committeeSecurity} />
+              </TableCell>
+              <TableCell className="bg-n-gray-200 px-4 dark:bg-zinc-700">
+                <RiskCell risk={layer.bridges[0]!.risks.upgradeability} />
+              </TableCell>
+              <TableCell className="bg-n-gray-200 px-4 dark:bg-zinc-700">
+                <RiskCell risk={layer.bridges[0]!.risks.relayerFailure} />
+              </TableCell>
+            </TableRow>
+
+            {layer.bridges.slice(1).map((bridge, bridgeIdx) => (
+              <TableRow
+                key={`bridge-${layerIdx}-${bridgeIdx}`}
+                className="border-b border-surface-tertiary dark:border-surface-tertiary"
+              >
+                {excludeBridge ? (
+                  <TableCell className="w-[40px]" /> // Spacer Column
+                ) : (
+                  <TableCell className="px-4 text-sm font-bold first:px-4">
+                    {bridge.name}
+                  </TableCell>
+                )}
+                <TableCell className="bg-n-gray-200 px-4 dark:bg-zinc-700">
+                  <RiskCell risk={bridge.risks.committeeSecurity} />
+                </TableCell>
+                <TableCell className="bg-n-gray-200 px-4 dark:bg-zinc-700">
+                  <RiskCell risk={bridge.risks.upgradeability} />
+                </TableCell>
+                <TableCell className="bg-n-gray-200 px-4 dark:bg-zinc-700">
+                  <RiskCell risk={bridge.risks.relayerFailure} />
+                </TableCell>
+              </TableRow>
+            ))}
+          </>
+        ))}
+        <TableRow className="border-b border-surface-tertiary dark:border-surface-tertiary">
+          <TableCell colSpan={3} className="h-4 md:h-4" />
+          <TableCell
+            colSpan={2}
+            className="h-4 rounded-b-lg bg-n-gray-200 px-4 text-black dark:bg-zinc-700 md:h-4"
+          />
+          {excludeBridge ? (
+            <TableCell className="h-4 w-[40px]" />
+          ) : (
+            <TableCell className="h-4 md:h-4" />
+          )}{' '}
+          {/* Spacer or Bridge */}
+          <TableCell
+            colSpan={3}
+            className="h-4 rounded-b-lg bg-n-gray-200 px-4 text-black dark:bg-zinc-700 md:h-4"
+          />
+        </TableRow>
+      </TableBody>
+    </Table>
+  )
+}
+
+function toDisplayName(entry: DaRiskEntry) {
+  return entry.kind === 'PublicBlockchain' ? 'Public Blockchain' : 'DA Service'
+}
+
+function AutoHead({
+  children,
+  className,
+  ...rest
+}: { children?: ReactNode } & React.ThHTMLAttributes<HTMLTableCellElement> & {
+    href?: string
+    align?: 'right' | 'center'
+  }) {
+  return (
+    <TableHead {...rest} className={cn('h-auto md:h-auto', className)}>
+      {children}
+    </TableHead>
   )
 }
