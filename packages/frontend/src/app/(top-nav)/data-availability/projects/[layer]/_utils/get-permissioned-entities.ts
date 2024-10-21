@@ -5,9 +5,5 @@ export function getPermissionedEntities(bridge: DaBridge) {
     return
   }
 
-  if (bridge.members.type !== 'public') {
-    return
-  }
-
-  return bridge.members.list
+  return bridge.knownMembers
 }

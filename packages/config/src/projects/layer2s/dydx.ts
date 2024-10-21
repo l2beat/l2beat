@@ -205,11 +205,9 @@ export const dydx: Layer2 = {
       ],
     },
     exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(
-        maxPriorityDelay,
-        freezeGracePeriod,
-        minPriorityDelay,
-      ),
+      ...RISK_VIEW.EXIT_WINDOW(maxPriorityDelay, freezeGracePeriod, {
+        upgradeDelay2: minPriorityDelay,
+      }),
       description: `There is no exit window. Upgrades have a ${formatSeconds(
         maxPriorityDelay,
       )} delay, (or ${formatSeconds(

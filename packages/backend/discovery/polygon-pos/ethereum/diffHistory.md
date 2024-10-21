@@ -1,4 +1,27 @@
-Generated with discovered.json: 0xbcd319fd7390579801128356d2ce62b2830bf551
+Generated with discovered.json: 0xcb681ca4317de943ca4f068767a49e573b4b070d
+
+# Diff at Sat, 19 Oct 2024 06:33:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@493c96785a6a32c6417182bb9548d3a990297dbe block: 20862639
+- current block number: 20997846
+
+## Description
+
+CHECKPOINT_REWARD (the base from which PoS validator reward is calculated) decreased by 25%.
+
+## Watched changes
+
+```diff
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.CHECKPOINT_REWARD:
+-        "71795000000000000000000"
++        "53870967741900000000000"
+    }
+```
+
+Generated with discovered.json: 0xd2ee1543eab281682ade13334c5bb0f3a6773e32
 
 # Diff at Mon, 14 Oct 2024 10:54:21 GMT:
 

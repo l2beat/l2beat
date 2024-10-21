@@ -1,4 +1,106 @@
-Generated with discovered.json: 0x26d61a94edbac9d6661db7a3d96c449bda3da0d7
+Generated with discovered.json: 0x32eed5a1b6eaf7441ca6eafe6f85ee2e932531ab
+
+# Diff at Sat, 19 Oct 2024 07:29:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@493c96785a6a32c6417182bb9548d3a990297dbe block: 20777100
+- current block number: 20998125
+
+## Description
+
+Two new ZK stack Validiums are added that share the zksync/cronos implementation, verifier and STM.
+* ['Sophon', Validium](https://sophon.xyz/) with chainID 50104, diamond 0x05ede6ad1f39b7a16c949d5c33a0658c9c7241e3, baseToken SOPH
+* [Zerion(?), ZK Rollup](https://docs.zero.network/build-on-zero/network-information) with chainID 543210, diamond 0xdbd849acc6ba61f461cb8a41bbaee2d673ca02d9, baseToken ETH
+
+Will add them underreview/full on monday ;)
+
+## Watched changes
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
++++ description: All new chains created go thorugh the central bridgehub and are thus stored here with their respective STMs.
+      values.chainsCreated.3:
++        {"chainId":543210,"stateTransitionManager":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","chainGovernance":"0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3"}
++++ description: All new chains created go thorugh the central bridgehub and are thus stored here with their respective STMs.
+      values.chainsCreated.2:
++        {"chainId":50104,"stateTransitionManager":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","chainGovernance":"0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"}
+    }
+```
+
+```diff
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: None
+      values.getAllHyperchainChainIDs.3:
++        543210
+      values.getAllHyperchainChainIDs.2:
++        50104
+      values.getAllHyperchains.3:
++        "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"
+      values.getAllHyperchains.2:
++        "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x5e6C5551C1b0626e9061fD4Daca6DA866Fd405aC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ChainAdmin (0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ChainAdmin (0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0xe4644b6d106A18062344c0A853666bc0B8f052d1)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...-0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3.sol |  222 ++++
+ ...-0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3.sol |  222 ++++
+ .../Safe.sol                                       | 1088 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ .../Safe.sol                                       | 1088 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ .../Safe.sol                                       | 1088 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ 8 files changed, 3819 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20777100 (main branch discovery), not current.
+
+```diff
+    contract EraChainAdminProxy (0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
+      template:
++        "shared-zk-stack/ChainAdmin"
+    }
+```
+
+Generated with discovered.json: 0x4919b628b23d822b85c121a07aa57e64591cfdb8
 
 # Diff at Mon, 14 Oct 2024 10:55:49 GMT:
 

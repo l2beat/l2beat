@@ -511,6 +511,128 @@ describe(resolvePermissions.name, () => {
     ])
   })
 
+  it('two actors, three contracts', () => {
+    const graph: Node<string>[] = [
+      node('vault', [edge('upgrade', 'timelock')]),
+      node('timelock', [edge('act', 'proxy')]),
+      node('proxy', [edge('act', 'actorA'), edge('act', 'actorB')], {
+        canActIndependently: true,
+      }),
+      node('actorA'),
+      node('actorB'),
+    ]
+
+    expect(resolvePermissions(graph)).toEqualUnsorted([
+      {
+        permission: 'upgrade',
+        path: [
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'timelock', delay: 0, description: undefined },
+          { address: 'proxy', delay: 0, description: undefined },
+        ],
+      },
+      {
+        permission: 'upgrade',
+        path: [
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'timelock', delay: 0, description: undefined },
+          { address: 'proxy', delay: 0, description: undefined },
+          { address: 'actorA', delay: 0, description: undefined },
+        ],
+      },
+      {
+        permission: 'upgrade',
+        path: [
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'timelock', delay: 0, description: undefined },
+          { address: 'proxy', delay: 0, description: undefined },
+          { address: 'actorB', delay: 0, description: undefined },
+        ],
+      },
+    ])
+  })
+
+  it('two actors, one contract, one multisig with members and module, threshold is one', () => {
+    const graph: Node<string>[] = [
+      node('vault', [edge('configure', 'msig')]),
+      node(
+        'msig',
+        [
+          edge('member', 'actorA'),
+          edge('member', 'actorB'),
+          edge('act', 'module'),
+        ],
+        { threshold: 1 },
+      ),
+      node('module'),
+      node('actorA'),
+      node('actorB'),
+    ]
+
+    expect(resolvePermissions(graph)).toEqualUnsorted([
+      {
+        permission: 'configure',
+        path: [
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'msig', delay: 0, description: undefined },
+          { address: 'actorA', delay: 0, description: undefined },
+        ],
+      },
+      {
+        permission: 'configure',
+        path: [
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'msig', delay: 0, description: undefined },
+          { address: 'actorB', delay: 0, description: undefined },
+        ],
+      },
+      {
+        permission: 'configure',
+        path: [
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'msig', delay: 0, description: undefined },
+          { address: 'module', delay: 0, description: undefined },
+        ],
+      },
+    ])
+  })
+
+  it('two actors, one contract, one multisig with members and module, threshold greater than one', () => {
+    const graph: Node<string>[] = [
+      node('vault', [edge('configure', 'msig')]),
+      node(
+        'msig',
+        [
+          edge('member', 'actorA'),
+          edge('member', 'actorB'),
+          edge('act', 'module'),
+        ],
+        { threshold: 2 },
+      ),
+      node('module'),
+      node('actorA'),
+      node('actorB'),
+    ]
+
+    expect(resolvePermissions(graph)).toEqualUnsorted([
+      {
+        permission: 'configure',
+        path: [
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'msig', delay: 0, description: undefined },
+        ],
+      },
+      {
+        permission: 'configure',
+        path: [
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'msig', delay: 0, description: undefined },
+          { address: 'module', delay: 0, description: undefined },
+        ],
+      },
+    ])
+  })
+
   it('three actors, two contracts, one multisig with members, threshold greater than one with delay', () => {
     const graph: Node<string>[] = [
       node('vault', [edge('configure', 'msig')]),
@@ -1025,6 +1147,7 @@ function node(
     delay: 0,
     threshold: 1,
     edges: edges ?? [],
+    canActIndependently: false,
     ...options,
   }
 }

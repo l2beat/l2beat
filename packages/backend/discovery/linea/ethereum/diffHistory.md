@@ -1,3 +1,56 @@
+Generated with discovered.json: 0xe090f9a24a0d1e75044c61472210a93dbe843519
+
+# Diff at Sat, 19 Oct 2024 06:28:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@493c96785a6a32c6417182bb9548d3a990297dbe block: 20934247
+- current block number: 20997821
+
+## Description
+
+The two operator addresses are changed, which will be reflected in the permissions section.
+Context: Team also helpfully notified us in advance on telegram.
+
+## Watched changes
+
+```diff
+    contract zkEVM (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: None
+      values.accessControl.OPERATOR_ROLE.members.1:
+-        "0xa9268341831eFa4937537bc3e9EB36DbecE83C7e"
++        "0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754"
+      values.accessControl.OPERATOR_ROLE.members.0:
+-        "0x9228624C3185FCBcf24c1c9dB76D8Bef5f5DAd64"
++        "0x46d2F319fd42165D4318F099E143dEA8124E9E3e"
+    }
+```
+
+Generated with discovered.json: 0x5f40de8e0cb83216d42503be0c8d068da862a1db
+
+# Diff at Fri, 18 Oct 2024 10:56:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@0295165a89d86b7450439f24f100d1baa74381fc block: 20934247
+- current block number: 20934247
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20934247 (main branch discovery), not current.
+
+```diff
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]
+    }
+```
+
 Generated with discovered.json: 0x88c0a18d920ef566720eea6c23276ed64b5884f5
 
 # Diff at Mon, 14 Oct 2024 10:52:28 GMT:
