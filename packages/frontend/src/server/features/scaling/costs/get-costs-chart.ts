@@ -1,4 +1,4 @@
-import { type AggregatedL2CostRecord } from '@l2beat/database'
+import type { AggregatedL2CostRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import {
   unstable_cache as cache,
@@ -46,10 +46,17 @@ const getCachedCostsChart = cache(
     }
     const resolution = rangeToResolution(timeRange)
     const targetTimestamp = getCostsTargetTimestamp()
-    const range = getRange(timeRange, resolution, { now: targetTimestamp })
+    const [from, to] = getRange(timeRange, resolution, { now: targetTimestamp })
+
+    // one-off
+    const fromToQuery = from.add(-1, resolution === 'daily' ? 'days' : 'hours')
+
+    // to is exclusive
+    const rangeForQuery: [UnixTime, UnixTime] = [fromToQuery, to]
+
     const data = await db.aggregatedL2Cost.getByProjectsAndTimeRange(
       projects.map((p) => p.id),
-      range,
+      rangeForQuery,
     )
 
     if (data.length === 0) {
@@ -57,9 +64,8 @@ const getCachedCostsChart = cache(
     }
 
     const summedByTimestamp = sumByTimestamp(data, resolution)
-    const [from, to] = range
     const timestamps = generateTimestamps(
-      [from, to.add(-1, resolution === 'daily' ? 'days' : 'hours')],
+      [fromToQuery, to.add(-1, resolution === 'daily' ? 'days' : 'hours')],
       resolution,
     )
     const result = timestamps.map(

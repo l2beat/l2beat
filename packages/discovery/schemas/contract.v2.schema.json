@@ -9,6 +9,7 @@
       "type": "string"
     },
     "extends": { "type": "string" },
+    "canActIndependently": { "type": "boolean" },
     "ignoreDiscovery": { "type": "boolean" },
     "proxyType": { "type": "string" },
     "ignoreInWatchMode": {

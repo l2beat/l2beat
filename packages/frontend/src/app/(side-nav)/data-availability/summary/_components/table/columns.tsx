@@ -79,7 +79,7 @@ const risksColumn = columnHelper.accessor('risks', {
       ctx.row.original.daBridge !== 'multiple' &&
       ctx.row.original.daBridge.type === 'NoBridge'
 
-    if ('accessibility' in value) {
+    if ('relayerFailure' in value) {
       return (
         <PentagonRosetteCell
           className="justify-start"
@@ -96,15 +96,15 @@ const risksColumn = columnHelper.accessor('risks', {
         values={mapRisksToRosetteValues({
           economicSecurity: value.economicSecurity,
           fraudDetection: value.fraudDetection,
-          attestations: {
+          relayerFailure: {
             value: 'Depends on the DA Bridge',
             sentiment: 'neutral',
           },
-          exitWindow: {
+          upgradeability: {
             value: 'Depends on the DA Bridge',
             sentiment: 'neutral',
           },
-          accessibility: {
+          committeeSecurity: {
             value: 'Depends on the DA Bridge',
             sentiment: 'neutral',
           },

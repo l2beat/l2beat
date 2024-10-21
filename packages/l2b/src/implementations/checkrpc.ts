@@ -47,7 +47,7 @@ async function callRpc(
       body: JSON.stringify({
         jsonrpc: '2.0',
         method: method,
-        params: [blockNumber.toString(16), false],
+        params: ['0x' + blockNumber.toString(16), false],
         id: blockNumber,
       }),
       signal: controller.signal,

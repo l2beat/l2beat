@@ -1529,6 +1529,31 @@
   ],
   "arbitrum": [
     {
+      "symbol": "STAR",
+      "address": "0xB299751B088336E165dA313c33e3195B8c6663A6",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "CATCH",
+      "address": "0xbC4c97Fb9befaa8B41448e1dFcC5236dA543217F",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+
+    {
+      "symbol": "NRN",
+      "address": "0xdadeca1167fe47499e53Eb50F261103630974905",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "G3",
+      "address": "0xc24A365A870821EB83Fd216c9596eDD89479d8d7",
+      "source": "native", // native on arb, ITS type 0 on other chains
+      "supply": "circulatingSupply"
+    },
+    {
       "symbol": "EGP",
       "address": "0x7E7a7C916c19a45769f6BDAF91087f93c6C12F78",
       "source": "native",
@@ -2981,6 +3006,19 @@
     }
   ],
   "linea": [
+    {
+      "symbol": "inETH",
+      "address": "0x5A7a183B6B44Dc4EC2E3d2eF43F98C5152b1d76d",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Inception Bridge (xERC-20)"
+          }
+        ]
+      }
+    },
     {
       "symbol": "M-BTC",
       "address": "0xe4D584ae9b753e549cAE66200A6475d2f00705f7",

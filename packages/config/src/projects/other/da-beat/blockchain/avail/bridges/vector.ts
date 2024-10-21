@@ -1,10 +1,10 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../../../../../discovery/ProjectDiscovery'
-import { DaAccessibilityRisk } from '../../../types/DaAccessibilityRisk'
-import { DaAttestationSecurityRisk } from '../../../types/DaAttestationSecurityRisk'
+import { DaCommitteeSecurityRisk } from '../../../types'
 import { DaBridge } from '../../../types/DaBridge'
-import { DaExitWindowRisk } from '../../../types/DaExitWindowRisk'
+import { DaRelayerFailureRisk } from '../../../types/DaRelayerFailureRisk'
+import { DaUpgradeabilityRisk } from '../../../types/DaUpgradeabilityRisk'
 
 const discovery = new ProjectDiscovery('vector')
 
@@ -63,6 +63,10 @@ export const vector = {
         category: 'Funds can be lost if',
         text: 'the bridge contract or its dependencies receive a malicious code upgrade. There is no delay on code upgrades.',
       },
+      {
+        category: 'Funds can be frozen if',
+        text: 'the bridge contract is frozen by the Guardian (AvailMultisig).',
+      },
     ],
   },
   technology: {
@@ -82,7 +86,7 @@ export const vector = {
     risks: [
       {
         category: 'Funds can be lost if',
-        text: 'a dishonest majority of Avail validators post incorrect or malicious data commitments to the DA bridge.',
+        text: 'the DA bridge accepts an incorrect or malicious data commitment provided by a dishonest majority of Avail validators.',
       },
       {
         category: 'Funds can be frozen if',
@@ -106,8 +110,9 @@ export const vector = {
   ],
   usedIn: [],
   risks: {
-    attestations: DaAttestationSecurityRisk.SigVerifiedZK(true),
-    accessibility: DaAccessibilityRisk.NotEnshrined,
-    exitWindow: DaExitWindowRisk.LowOrNoDelay(), // no delay
+    committeeSecurity:
+      DaCommitteeSecurityRisk.RobustAndDiverseCommittee('Avail Validators'),
+    upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay
+    relayerFailure: DaRelayerFailureRisk.NoMechanism,
   },
 } satisfies DaBridge

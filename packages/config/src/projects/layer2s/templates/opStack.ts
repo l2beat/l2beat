@@ -111,19 +111,13 @@ export interface OpStackConfigCommon {
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
-  display: Omit<
-    Layer2Display,
-    'provider' | 'category' | 'dataAvailabilityMode' | 'purposes'
-  > & {
+  display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'> & {
     category?: Layer2Display['category']
   }
 }
 
 export interface OpStackConfigL3 extends OpStackConfigCommon {
-  display: Omit<
-    Layer3Display,
-    'provider' | 'category' | 'dataAvailabilityMode' | 'purposes'
-  > & {
+  display: Omit<Layer3Display, 'provider' | 'category' | 'purposes'> & {
     category?: Layer3Display['category']
   }
   stackedRiskView?: ScalingProjectRiskView
@@ -183,9 +177,9 @@ export function opStackCommon(
     technology: {
       stateCorrectness: templateVars.nonTemplateTechnology
         ?.stateCorrectness ?? {
-        name: 'Fraud proofs are in development',
+        name: 'Fraud proofs are not enabled',
         description:
-          'Ultimately, OP stack chains will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the system permits invalid state roots.',
+          'OP Stack projects can use the OP fault proof system, already being deployed on some. This project though is not using fault proofs yet and is relying on the honesty of the permissioned Proposer and Challengers to ensure state correctness. The smart contract system permits invalid state roots.',
         risks: [
           {
             category: 'Funds can be stolen if',
@@ -430,10 +424,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
       category:
         templateVars.display.category ??
         (daProvider !== undefined ? 'Optimium' : 'Optimistic Rollup'),
-      warning:
-        templateVars.display.warning === undefined
-          ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
-          : templateVars.display.warning,
+      warning: templateVars.display.warning,
       liveness:
         daProvider !== undefined
           ? undefined

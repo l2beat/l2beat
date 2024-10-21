@@ -218,6 +218,10 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
+          "target": "0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3"
+        },
+        {
+          "permission": "act",
           "target": "0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"
         }
       ],
@@ -988,6 +992,6 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
   }
 }

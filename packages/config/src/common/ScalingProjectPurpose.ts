@@ -6,6 +6,7 @@ export type ScalingProjectPurpose =
   | 'Bug bounty'
   | 'Exchange'
   | 'Gaming'
+  | 'Identity'
   | 'Information'
   | 'Interoperability'
   | 'Launchpad'

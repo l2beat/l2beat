@@ -14,6 +14,7 @@ import {
 } from '../../common'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -51,17 +52,23 @@ export const fuel: Layer2 = {
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://fuel.network/'],
-      apps: ['https://alpha.fuel.network/ecosystem/'],
+      apps: [
+        'https://app.fuel.network/ecosystem',
+        'https://app.fuel.network/bridge',
+      ],
       documentation: ['https://docs.fuel.network/'],
-      explorers: ['https://fuellabs.github.io/block-explorer-v2/beta-4/#/'],
+      explorers: ['https://app.fuel.network/'],
       repositories: ['https://github.com/FuelLabs/'],
       socialMedia: [
         'https://twitter.com/fuel_network',
         'https://discord.com/invite/fuelnetwork',
         'https://forum.fuel.network/',
+        'https://t.me/fuelcommunity',
+        'https://youtube.com/channel/UCam2Sj3SvFSAIfDbP-4jWZQ',
       ],
     },
   },
+  badges: [Badge.VM.FuelVM, Badge.DA.EthereumBlobs],
   type: 'layer2',
   config: {
     escrows: [

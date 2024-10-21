@@ -113,6 +113,7 @@ function RosetteTooltipContent() {
           icon={RoundedWarningIcon}
           text={content.risk.warning.value}
           color={content.risk.warning.sentiment === 'bad' ? 'red' : 'yellow'}
+          ignoreMarkdown
         />
       )}
       <span className="text-xs">{content.risk.description}</span>

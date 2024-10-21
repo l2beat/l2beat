@@ -30,7 +30,7 @@ import { type ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/ge
 export type ScalingFilterContextValue = {
   rollupsOnly: boolean
   category?: ScalingProjectCategory
-  stack?: Layer2Provider | Layer3Provider
+  stack?: Layer2Provider | Layer3Provider | 'No stack'
   stage?: StageConfig['stage']
   purpose?: ScalingProjectPurpose
   hostChain?: string
@@ -102,7 +102,10 @@ export function useScalingFilter() {
           ? entry.category === scalingFilters.category
           : undefined,
         scalingFilters.stack !== undefined
-          ? entry.provider === scalingFilters.stack
+          ? entry.provider ===
+            (scalingFilters.stack === 'No stack'
+              ? undefined
+              : scalingFilters.stack)
           : undefined,
         scalingFilters.stage !== undefined
           ? entry.stage?.stage === scalingFilters.stage
