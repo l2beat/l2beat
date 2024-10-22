@@ -10,6 +10,17 @@ import { InfoIcon } from '~/icons/info'
 import { type DaProjectEntry } from '~/server/features/data-availability/project/get-da-project-entry'
 import { cn } from '~/utils/cn'
 import { DaProjectStats } from './da-project-stats'
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '~/components/core/drawer'
+import { Button, buttonVariants } from '~/components/core/button'
 
 interface Props {
   project: DaProjectEntry
@@ -94,22 +105,11 @@ export function DaProjectSummary({ project }: Props) {
                             )}
                           >
                             <div className="flex items-center px-1 md:px-3">
-                              <Link
-                                href={`/data-availability/projects/${project.slug}/${bridge.slug}`}
-                              >
-                                <div
-                                  className={cn(
-                                    'flex size-5 items-center justify-center rounded-full border-2 bg-pure-white',
-                                    bridge.id === project.selectedBridge.id
-                                      ? 'border-brand'
-                                      : 'border-gray-400',
-                                  )}
-                                >
-                                  {bridge.id === project.selectedBridge.id ? (
-                                    <div className="size-3 rounded-full bg-brand"></div>
-                                  ) : null}
-                                </div>
-                              </Link>
+                              <RadioButtonLikeIcon
+                                selected={
+                                  bridge.id === project.selectedBridge.id
+                                }
+                              />
                             </div>
                             <div className="flex flex-1 items-center text-sm font-bold text-primary">
                               {bridge.name}
@@ -126,6 +126,57 @@ export function DaProjectSummary({ project }: Props) {
                           </div>
                         </Link>
                       ))}
+                      <div
+                        className={cn(
+                          'md:hidden',
+                          // project.bridges.length < 3 && 'hidden',
+                        )}
+                      >
+                        <Drawer>
+                          <DrawerTrigger
+                            className={cn(
+                              buttonVariants({ variant: 'outline' }),
+                              'w-full py-3.5',
+                            )}
+                          >
+                            View all bridges
+                          </DrawerTrigger>
+                          <DrawerContent className="bg-pure-white dark:bg-pure-black">
+                            <div className="mb-2 text-lg font-semibold text-zinc-800 dark:text-zinc-300">
+                              Select bridge
+                            </div>
+                            <div>
+                              {project.bridges.map((bridge) => (
+                                <div
+                                  key={bridge.id}
+                                  className="flex flex-row items-center gap-2 border-b border-gray-200 py-3 dark:border-zinc-700"
+                                >
+                                  <div>
+                                    <RadioButtonLikeIcon
+                                      selected={
+                                        bridge.id === project.selectedBridge.id
+                                      }
+                                    />
+                                  </div>
+                                  <div className="flex-1 text-sm font-semibold text-zinc-800 dark:text-zinc-300">
+                                    {bridge.name}
+                                  </div>
+                                  <div>
+                                    <Grisini items={bridge.grisiniValues} />
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                            <DrawerFooter className="flex flex-row justify-center pt-6">
+                              <DrawerClose asChild>
+                                <Button className="bg-transparent text-sm text-zinc-500 underline dark:bg-transparent">
+                                  Close
+                                </Button>
+                              </DrawerClose>
+                            </DrawerFooter>
+                          </DrawerContent>
+                        </Drawer>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -157,5 +208,18 @@ export function DaProjectSummary({ project }: Props) {
         </div>
       ) : null}
     </section>
+  )
+}
+
+function RadioButtonLikeIcon({ selected }: { selected: boolean }) {
+  return (
+    <div
+      className={cn(
+        'flex size-5 items-center justify-center rounded-full border-2 bg-pure-white',
+        selected ? 'border-brand' : 'border-gray-400',
+      )}
+    >
+      {selected ? <div className="size-3 rounded-full bg-brand"></div> : null}
+    </div>
   )
 }
