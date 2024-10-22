@@ -72,12 +72,15 @@ export function MultiApp() {
     function onMouseMove(e: MouseEvent) {
       mouseMove(e.clientX, e.clientY)
 
+      const container = panelContainerRef.current
+      if (!container) {
+        return
+      }
+
       const { hover } = useStore.getState()
+      container.classList.toggle('select-none', !!hover)
+
       if (hover) {
-        const container = panelContainerRef.current
-        if (!container) {
-          return
-        }
         const panels = [...container.children]
         for (const panel of panels) {
           const box = panel.getBoundingClientRect()
