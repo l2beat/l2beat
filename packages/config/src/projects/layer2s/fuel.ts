@@ -38,7 +38,7 @@ const challengePeriod = discovery.getContractValue<number>(
 
 export const fuel: Layer2 = {
   id: ProjectId('fuel'),
-  createdAt: new UnixTime(1700571075), // 2023-11-21T12:51:15Z
+  createdAt: new UnixTime(1729589660), // 2024-10-22T09:34:20Z
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (blobs)'],
     bridge: { type: 'Enshrined' },
