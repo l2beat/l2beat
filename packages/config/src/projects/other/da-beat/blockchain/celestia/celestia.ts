@@ -120,7 +120,6 @@ export const celestia: DaLayer = {
     blockTime: 15, // goal block time, seconds
     consensusFinality: 1, // 1 second for tendermint, time_iota_ms
     unbondingPeriod: UnixTime.DAY * 21, // staking.UnbondingTime
-    activeOperatorsLimit: 100,
   },
   dataAvailabilitySampling: {
     erasureCodingScheme: DasErasureCodingScheme.TwoDReedSolomon,
