@@ -2,8 +2,6 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { useScalingAssociatedTokensContext } from '~/app/(side-nav)/scaling/_components/scaling-associated-tokens-context'
-import { useScalingFilter } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
-import { ScalingTvlFilters } from '~/app/(side-nav)/scaling/_components/scaling-tvl-filters'
 import { BasicTable } from '~/components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
@@ -16,20 +14,14 @@ interface Props {
 
 export function ScalingSummaryTable({ entries }: Props) {
   const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
-  const includeFilters = useScalingFilter()
-
-  const filteredEntries = useMemo(
-    () => entries.filter(includeFilters),
-    [entries, includeFilters],
-  )
 
   const tableEntries = useMemo(
     () =>
       toTableRows({
-        projects: filteredEntries,
+        projects: entries,
         excludeAssociatedTokens,
       }),
-    [filteredEntries, excludeAssociatedTokens],
+    [entries, excludeAssociatedTokens],
   )
 
   const table = useTable({
@@ -51,10 +43,5 @@ export function ScalingSummaryTable({ entries }: Props) {
     },
   })
 
-  return (
-    <div className="space-y-3 md:space-y-6">
-      <ScalingTvlFilters items={filteredEntries} />
-      <BasicTable table={table} />
-    </div>
-  )
+  return <BasicTable table={table} />
 }

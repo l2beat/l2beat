@@ -10,5 +10,9 @@
   "names": {
     "0x8AC80fa0993D95C9d6B8Cb494E561E6731038941": "RSS3Multisig"
   },
-  "overrides": {}
+  "overrides": {
+    "0x3e5FaB39eD4eFB4fc29A5201059AE819f2f0418A": {
+      "extends": "opstack/SuperchainConfigFake"
+    }
+  }
 }

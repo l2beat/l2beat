@@ -88,6 +88,7 @@ const maxTimeVariation = discovery.getContractValue<number[]>(
 const selfSequencingDelay = maxTimeVariation[2]
 
 export const arbitrum: Layer2 = orbitStackL2({
+  createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
     Badge.VM.WasmVM,
     Badge.Stack.Nitro,
@@ -446,6 +447,7 @@ export const arbitrum: Layer2 = orbitStackL2({
       // ERC20 Gateway
       address: EthereumAddress('0xa3A7B6F88361F48403514059F1F16C8E78d60EeC'),
       tokens: '*',
+      excludedTokens: ['SolvBTC', 'SolvBTC.BBN'],
       description:
         'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
       ...upgradeExecutorUpgradeability,

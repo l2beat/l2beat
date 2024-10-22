@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -10,6 +10,7 @@ const discovery = new ProjectDiscovery('socket')
 export const socket: Bridge = {
   type: 'bridge',
   id: ProjectId('socket'),
+  createdAt: new UnixTime(1706204584), // 2024-01-25T17:43:04Z
   display: {
     name: 'Socket',
     slug: 'socket',

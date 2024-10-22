@@ -155,14 +155,18 @@ function toTechnologyContract(
   const addresses: TechnologyContractAddress[] = permission.accounts.map(
     (account) => {
       const address = account.address.toString()
+      const name = resolvePermissionedName(
+        permission.name,
+        account,
+        projectParams.permissions,
+      )
       return {
-        name: resolvePermissionedName(
-          permission.name,
-          account,
-          projectParams.permissions,
-        ),
+        name,
         address,
-        href: `${etherscanUrl}/address/${address}#code`,
+        href:
+          permission.fromRole === true
+            ? `#${name}`
+            : `${etherscanUrl}/address/${address}#code`,
         isAdmin: false,
         verificationStatus: toVerificationStatus(
           verificationStatusForChain[address],

@@ -1,3 +1,42 @@
+Generated with discovered.json: 0x1f792e6a4a7bdeb8d78e2da95b143a25b0d6353c
+
+# Diff at Mon, 21 Oct 2024 11:13:00 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 259634526
+- current block number: 259634526
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 259634526 (main branch discovery), not current.
+
+```diff
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0x47fd660D5252Bd6F9D2c71507E46aa1d6e957c23"]
+      values.$pastUpgrades.2.1:
+-        ["0x47fd660D5252Bd6F9D2c71507E46aa1d6e957c23"]
++        "0x746e21628ccec4d5b4da96595f852a6398defcc360cb9f13aa2d84ebe4e7403f"
+      values.$pastUpgrades.1.2:
++        ["0xfb19439fBa9f16aA720be6bE0e53465a9733C964"]
+      values.$pastUpgrades.1.1:
+-        ["0xfb19439fBa9f16aA720be6bE0e53465a9733C964"]
++        "0xf45e346ddbedef1ea3f828954c979adcb205b4b1c0ca72e49e7e2ef5b1c43192"
+      values.$pastUpgrades.0.2:
++        ["0x7C3A9b466FF5c02582fa32d4aD1b2Cb431fB7c9b"]
+      values.$pastUpgrades.0.1:
+-        ["0x7C3A9b466FF5c02582fa32d4aD1b2Cb431fB7c9b"]
++        "0x58059198a17ae1d8dd73b4d0f0ce7169f4e55d901a8fea59b4ef12d005a41f0a"
+    }
+```
+
 Generated with discovered.json: 0x59c2f6bb3798716fe1d3280176a3368a0ed60606
 
 # Diff at Mon, 14 Oct 2024 10:58:34 GMT:

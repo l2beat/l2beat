@@ -2,8 +2,9 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { useScalingFilter } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
-import { ScalingFilters } from '~/app/(side-nav)/scaling/_components/scaling-filters'
 import { BasicTable } from '~/components/table/basic-table'
+import { RollupsTable } from '~/components/table/rollups-table'
+import { getStageSortedRowModel } from '~/components/table/sorting/get-stage-sorting-row-model'
 import { useTable } from '~/hooks/use-table'
 import { type CostsTableData } from '~/server/features/scaling/costs/get-costs-table-data'
 import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
@@ -14,18 +15,18 @@ import {
   useCostsMetricContext,
 } from '../costs-metric-context'
 import { useCostsTimeRangeContext } from '../costs-time-range-context'
-import { CostsMetricControls } from '../costs-type-controls'
 import { useCostsUnitContext } from '../costs-unit-context'
 import { type ScalingCostsTableEntry, scalingCostsColumns } from './columns'
 
 interface Props {
   entries: ScalingCostsEntry[]
+  rollups?: boolean
 }
 
 export function ScalingCostsTable(props: Props) {
-  const { range, setRange } = useCostsTimeRangeContext()
+  const { range } = useCostsTimeRangeContext()
   const { unit } = useCostsUnitContext()
-  const { metric, setMetric } = useCostsMetricContext()
+  const { metric } = useCostsMetricContext()
   const includeFilters = useScalingFilter()
 
   const { data } = api.costs.table.useQuery({ range })
@@ -46,7 +47,9 @@ export function ScalingCostsTable(props: Props) {
     data: tableEntries,
     columns: scalingCostsColumns,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
+    getSortedRowModel: props.rollups
+      ? getStageSortedRowModel()
+      : getSortedRowModel(),
     manualFiltering: true,
     initialState: {
       sorting: [
@@ -61,21 +64,10 @@ export function ScalingCostsTable(props: Props) {
     },
   })
 
-  const onMetricChange = (metric: CostsMetric) => {
-    setMetric(metric)
-    if (metric === 'per-l2-tx' && (range === '1d' || range === '7d')) {
-      setRange('30d')
-    }
-  }
-
-  return (
-    <div className="space-y-3 md:space-y-6">
-      <div className="flex flex-col gap-2 lg:flex-row lg:justify-between">
-        <ScalingFilters items={filteredEntries} />
-        <CostsMetricControls value={metric} onValueChange={onMetricChange} />
-      </div>
-      <BasicTable table={table} className="mt-3 md:mt-6" />
-    </div>
+  return props.rollups ? (
+    <RollupsTable table={table} />
+  ) : (
+    <BasicTable table={table} />
   )
 }
 

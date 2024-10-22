@@ -42,10 +42,12 @@
         "$pastUpgrades": [
           [
             "2022-11-16T07:56:23.000Z",
+            "0x125c8e37bbbbca4ccc6887fb27a1c02e05b56012a3d98ea3adac46531bf045c9",
             ["0xbc7B0223Dd16cbc679c0D04bA3F4530D76DFbA87"]
           ],
           [
             "2022-11-22T04:01:35.000Z",
+            "0xf34b28d5a18930bf121d3c62c5c9bb273d166ae4c692337a6861dc1ab2f7af08",
             ["0x479ec366ae4EC016cE25B918BdEa8f78d4fa5dd8"]
           ]
         ],
@@ -244,9 +246,7 @@
         "0x03c52122def17f5a3403dd9a188a1e30bee36b86dc98fb8c07a5157ccc7da286"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "The Sentinel is itself a Governor and Pauser in the bridge contracts. It allows additional Sentinel-Governors to make changes in its name that can be restricted by Guards changing the Sentinel's relaxed state."
-      ],
+      "description": "The Sentinel is itself a Governor and Pauser in the bridge contracts. It allows additional Sentinel-Governors to make changes in its name that can be restricted by Guards changing the Sentinel's relaxed state.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -261,6 +261,7 @@
         "$pastUpgrades": [
           [
             "2023-08-07T05:02:59.000Z",
+            "0xdaa48a4a1a1b06b48e57b92c77cec6be8f872247c070d2bc68e859ba723f2dc9",
             ["0xaE41e6a597f4c65646e94E330D8BAd218Bec7896"]
           ]
         ],

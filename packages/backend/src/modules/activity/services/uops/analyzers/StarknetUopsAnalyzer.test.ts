@@ -57,7 +57,7 @@ describe(StarknetUopsAnalyzer.name, () => {
         type: 'abc',
       })
       const result = analyzer.getOperationsCount(tx, 3001)
-      expect(result).toEqual(0)
+      expect(result).toEqual(1)
     })
 
     it('should handle tx INVOKE without calldata', () => {
@@ -66,16 +66,7 @@ describe(StarknetUopsAnalyzer.name, () => {
         calldata: undefined,
       })
       const result = analyzer.getOperationsCount(tx, 3001)
-      expect(result).toEqual(0)
-    })
-
-    it('should handle tx INVOKE without calldata', () => {
-      const tx = mockObject<StarknetTransaction>({
-        type: 'INVOKE',
-        calldata: undefined,
-      })
-      const result = analyzer.getOperationsCount(tx, 3001)
-      expect(result).toEqual(0)
+      expect(result).toEqual(1)
     })
 
     it('should handle tx INVOKE with calldata', () => {

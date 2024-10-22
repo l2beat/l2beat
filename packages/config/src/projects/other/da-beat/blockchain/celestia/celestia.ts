@@ -93,6 +93,7 @@ export const celestia: DaLayer = {
   },
   bridges: [
     NO_BRIDGE({
+      createdAt: new UnixTime(1721138888), // 2024-07-16T14:08:08Z
       layer: 'Celestia',
       description:
         'The risk profile in this page refers to scaling solutions that do not integrate with a data availability bridge.',

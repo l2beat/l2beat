@@ -1,3 +1,70 @@
+Generated with discovered.json: 0x88101b779989b0aafdd3017e1dc13134d74485d2
+
+# Diff at Mon, 21 Oct 2024 11:08:26 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20878317
+- current block number: 20878317
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20878317 (main branch discovery), not current.
+
+```diff
+    contract ReplicaBeaconProxy (0x27658c5556A9a57f96E69Bbf6d3B8016f001a785) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x8F6b6aDB49cDCa3b9F6947F61a1201242C3d827F"]
+      values.$pastUpgrades.1.1:
+-        ["0x8F6b6aDB49cDCa3b9F6947F61a1201242C3d827F"]
++        "0x5fe6682f80c14c3a3d5475428af5100ac95e11c060a155c2fb588cff1da4ebe7"
+      values.$pastUpgrades.0.2:
++        ["0xCBe8b8C4Fe6590BB59d1507dE7f252AF3E621E58"]
+      values.$pastUpgrades.0.1:
+-        ["0xCBe8b8C4Fe6590BB59d1507dE7f252AF3E621E58"]
++        "0xdd7c4c8cd11347c5801a27705f6fe9e6327d4604aa420ac82411d682529494bc"
+    }
+```
+
+```diff
+    contract BridgeRouterBeaconProxy (0x4fc16De11deAc71E8b2Db539d82d93BE4b486892) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x688A54c4b1C5b917154Ea2f61B8A4A4CbDfF4738"]
+      values.$pastUpgrades.0.1:
+-        ["0x688A54c4b1C5b917154Ea2f61B8A4A4CbDfF4738"]
++        "0xa5c19932611d4fe9d7a7e54261c31a089b922c0dfbe4f484b9f9628ad55b4f66"
+    }
+```
+
+```diff
+    contract HomeBeaconProxy (0xa73a3a74C7044B5411bD61E1990618A1400DA379) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xfc6E146384b5c65f372d5b20537F3e8727aD3723"]
+      values.$pastUpgrades.0.1:
+-        ["0xfc6E146384b5c65f372d5b20537F3e8727aD3723"]
++        "0x7a32e92f8a9a755261c146eebf6ce93a371e4fbb7290b0c3bebf88fd6e6a2b64"
+    }
+```
+
+```diff
+    contract GovernanceRouterBeaconProxy (0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xe552861e90a42ddDC66b508A18a85bCEAbFcB835"]
+      values.$pastUpgrades.0.1:
+-        ["0xe552861e90a42ddDC66b508A18a85bCEAbFcB835"]
++        "0x47acb921f524b315e263bf26feaa0b8b2241f1bfaca4d0a01a52ab444ca21c5d"
+    }
+```
+
 Generated with discovered.json: 0x42520886def9b6e1fe4aa2117a56a7cbfacf52d0
 
 # Diff at Mon, 14 Oct 2024 10:53:36 GMT:

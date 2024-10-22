@@ -113,10 +113,12 @@
         "$pastUpgrades": [
           [
             "2020-05-26T11:16:50.000Z",
+            "0x717f978da7127c0340327351275f626c281515e116e0e9d8d62236cf651f4653",
             ["0xab4cB335Bc7eE587Ebc07c2445Dc2807bEBE973e"]
           ],
           [
             "2020-12-02T07:18:47.000Z",
+            "0xaa2d2b00a0c72056946b6c0e7e656602ded829fda99e4506c78bb6569ac55eba",
             [
               "0x63A995cfB3Badabe007263917024369529BaF26f",
               "0x3Ba4D737e64b50d26dd594a7c5BcC0131E4C5d11",
@@ -126,6 +128,7 @@
           ],
           [
             "2021-01-04T07:16:37.000Z",
+            "0x28e50d1e59f0a7dfa9fe177195bdc47eed90db11773d2ce4c34beaf277db8c5f",
             [
               "0x18a5452117714ccE0d8FaECeFDFdB4783140AF74",
               "0x3Ba4D737e64b50d26dd594a7c5BcC0131E4C5d11",
@@ -135,6 +138,7 @@
           ],
           [
             "2021-01-21T07:40:38.000Z",
+            "0xdf3ea6ba0901e47d804e717046e1b1b9861e6082930c682aa0e300293c71b571",
             [
               "0x7D2375a873CF858f02F97F40CbBBc03293f9A055",
               "0x3Ba4D737e64b50d26dd594a7c5BcC0131E4C5d11",
@@ -144,6 +148,7 @@
           ],
           [
             "2021-08-18T07:47:40.000Z",
+            "0xd7add75484f4ae4c369be403c7c94a1b9589266fd3f44ecfa5f4522dd41dc727",
             [
               "0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC",
               "0xF65C115efd24102315Af53f84aD65aD240bc9D57",
@@ -156,6 +161,7 @@
           ],
           [
             "2021-09-09T13:16:44.000Z",
+            "0x0512cdb0c725a846ab22ecc1a19a023b62444816a860ecdcbd26afed1421dadd",
             [
               "0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC",
               "0xF65C115efd24102315Af53f84aD65aD240bc9D57",
@@ -168,6 +174,7 @@
           ],
           [
             "2021-12-15T08:08:11.000Z",
+            "0x679e92bfb784e59895fd71b8803906ed7adb74cec288d66d41050ef4c0aaa3c4",
             [
               "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
               "0x62BCA4DB742A99c834e2c24b609656A70EA25379",
@@ -180,6 +187,7 @@
           ],
           [
             "2022-01-04T12:03:18.000Z",
+            "0x4e66dd5619e7acc4e878c68ab25350d41c38d4d2339a34a19dbdb5a40377dff8",
             [
               "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
               "0x62BCA4DB742A99c834e2c24b609656A70EA25379",
@@ -192,6 +200,7 @@
           ],
           [
             "2022-02-02T15:39:33.000Z",
+            "0x575752cbf39cd864a43bb8496414cf52cf265670d0de8af26b8b6d0470a8afec",
             [
               "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
               "0x62BCA4DB742A99c834e2c24b609656A70EA25379",
@@ -204,6 +213,7 @@
           ],
           [
             "2023-07-26T15:11:11.000Z",
+            "0x044173077b541f16085d2e55e145bdf4a0a7159ded50ae346d931c380e79e64d",
             [
               "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
               "0x62BCA4DB742A99c834e2c24b609656A70EA25379",
@@ -216,6 +226,7 @@
           ],
           [
             "2023-08-08T08:32:11.000Z",
+            "0x35440a57c7d3ff276dddadfb339dd5cf14353c95f8a68203e4fc128a09b8773d",
             [
               "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
               "0x62BCA4DB742A99c834e2c24b609656A70EA25379",
@@ -228,6 +239,7 @@
           ],
           [
             "2023-08-08T08:32:11.000Z",
+            "0x35440a57c7d3ff276dddadfb339dd5cf14353c95f8a68203e4fc128a09b8773d",
             [
               "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
               "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
@@ -240,6 +252,7 @@
           ],
           [
             "2023-08-10T07:28:59.000Z",
+            "0x202f69895d6438cdc5d2816418e9e57291a5d45446b54304bfcda28464e60887",
             [
               "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
               "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
@@ -252,6 +265,7 @@
           ],
           [
             "2023-08-13T15:01:59.000Z",
+            "0x2581316c7e3de05782eb37313851dd4d61395c832bf4a4e24f3298c6161047d3",
             [
               "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
               "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
@@ -264,6 +278,7 @@
           ],
           [
             "2024-03-25T15:35:47.000Z",
+            "0x7c39229a92109c6dea7b9d16b8e0128d4316cede0fca1d7300cf5e49a508043d",
             [
               "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
               "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
@@ -276,6 +291,7 @@
           ],
           [
             "2024-03-28T20:37:47.000Z",
+            "0x7a7d7077267911d53481a49e72985aac941d7f1fde534926da902666729ce24d",
             [
               "0xc392DD8edAd534266cbf2817ee01dC68193DE23d",
               "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
@@ -288,6 +304,7 @@
           ],
           [
             "2024-08-26T15:52:35.000Z",
+            "0x4ed46e53b7228bbd7a377396a6dbb032beeb1296affd055462911dd323afa3f8",
             [
               "0x29Db022dbc824b78A0dA699a77E3d177f08A1191",
               "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
@@ -346,9 +363,7 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "descriptions": [
-        "This Multisig itself is one of the two Governors, the other being an EOA, both equally permissioned to upgrade the bridge."
-      ],
+      "description": "This Multisig itself is one of the two Governors, the other being an EOA, both equally permissioned to upgrade the bridge.",
       "receivedPermissions": [
         {
           "permission": "upgrade",

@@ -7,6 +7,7 @@ import { Layer3 } from './types'
 
 export const donatuz: Layer3 = underReviewL3({
   id: 'donatuz',
+  createdAt: new UnixTime(1726497628), // 2024-09-16T14:40:28Z
   hostChain: ProjectId('base'),
   badges: [
     Badge.L3ParentChain.Base,
@@ -14,6 +15,7 @@ export const donatuz: Layer3 = underReviewL3({
     Badge.Stack.OPStack,
     Badge.VM.EVM,
     Badge.RaaS.Conduit,
+    Badge.Infra.Superchain,
   ],
   display: {
     name: 'Donatuz',
