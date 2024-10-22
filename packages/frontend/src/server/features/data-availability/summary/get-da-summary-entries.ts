@@ -33,7 +33,6 @@ export async function getDaSummaryEntries() {
             slug: daBridge.display.slug,
             name: daBridge.display.name,
             href: `/data-availability/projects/${daLayer.display.slug}/${daBridge.display.slug}`,
-            type: daBridge.type,
             risks: getDaBridgeRisks(daBridge),
             isUnderReview: !!daLayer.isUnderReview || daBridge.isUnderReview,
             isVerified:
@@ -51,13 +50,14 @@ export async function getDaSummaryEntries() {
           if (daBridge.type === 'DAC') {
             return {
               ...base,
+              type: 'DAC' as const,
               membersCount: daBridge.membersCount,
               requiredMembers: daBridge.requiredMembers,
               knownMembers: daBridge.knownMembers,
             }
           }
 
-          return base
+          return { ...base, type: daBridge.type }
         })
         .sort((a, b) => b.tvs - a.tvs)
 

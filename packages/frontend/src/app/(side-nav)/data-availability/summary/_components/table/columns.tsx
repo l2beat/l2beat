@@ -9,6 +9,7 @@ import { EM_DASH } from '~/consts/characters'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { DaLayerCell } from '../../../_components/da-layer-cell'
+import { DacMembersCell } from '../../../_components/dac-members-cell'
 import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
@@ -103,7 +104,19 @@ const slashableStakeColumn = columnHelper.accessor('economicSecurity', {
 
 const membersColumn = columnHelper.display({
   header: 'Members',
-  cell: () => 'TBD',
+  cell: (ctx) => {
+    const [firstBridge] = ctx.row.original.bridges
+
+    if (!firstBridge) {
+      return EM_DASH
+    }
+
+    if (firstBridge.type !== 'DAC') {
+      return EM_DASH
+    }
+
+    return <DacMembersCell {...firstBridge} />
+  },
 })
 
 const challengeMechanismColumn = columnHelper.accessor(
