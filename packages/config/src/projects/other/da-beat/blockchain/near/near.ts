@@ -105,6 +105,9 @@ export const near: DaLayer = {
   bridges: [
     NO_BRIDGE({
       layer: 'NearDA',
+      technology: {
+        description: `There is no DA bridge on Ethereum allowing to verify blob inclusion in the NEAR blockchain.`,
+      },
     }),
   ],
   usedIn: linkByDA({

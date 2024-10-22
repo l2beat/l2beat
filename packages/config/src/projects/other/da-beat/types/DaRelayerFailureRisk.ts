@@ -27,7 +27,7 @@ export const DaRelayerFailureRisk = {
     type: 'NoBridge',
     value: 'N/A',
     sentiment: 'bad',
-    description: "The relayer does not contribute to the system liveness since data availability attestations are not integrated in the scaling solution proof system."
+    description: "The relayer does not contribute to the DA bridge liveness since data availability attestations are not integrated in the scaling solution's proof system."
   },
 } as const satisfies DaRiskViewOptions
 
