@@ -66,9 +66,8 @@ export function ScalingSummaryTables(props: Props) {
   }
 
   const filteredEntries = props.entries.filter(includeFilters)
-  console.log(filteredEntries)
   return (
-    <MainPageCard className="md:mt-6 space-y-3 md:space-y-6">
+    <MainPageCard className="space-y-3 md:mt-6 md:space-y-6">
       <ScalingTvlFilters items={filteredEntries} showRollupsOnly />
       <ScalingSummaryTable entries={filteredEntries} />
     </MainPageCard>
