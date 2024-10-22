@@ -302,14 +302,14 @@ export const fuel: Layer2 = {
         text: 'the limit of tokens that can be withdrawn is set too low.',
       },
     ],
-    milestones: [
-      {
-        name: 'Fuel Ignition Mainnet is Live',
-        date: '2024-10-16T00:00:00Z',
-        link: 'https://x.com/fuel_network/status/1846536888003313786',
-        description: 'Fuel Ignition announces its official launch.',
-        type: 'general',
-      },
-    ],
   },
+  milestones: [
+    {
+      name: 'Fuel Ignition Mainnet is Live',
+      date: '2024-10-16T00:00:00Z',
+      link: 'https://x.com/fuel_network/status/1846536888003313786',
+      description: 'Fuel Ignition announces its official launch.',
+      type: 'general',
+    },
+  ],
 }
