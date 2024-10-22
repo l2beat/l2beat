@@ -50,7 +50,7 @@ export function onMouseDown(
 
         let selectedNodeIds: readonly string[]
         let mouseUpAction: State['mouseUpAction']
-        if (event.metaKey) {
+        if (event.metaKey || event.altKey) {
           selectedNodeIds = []
 
           const field = node.fields.find((f) => boxContains(f.box, x, y))
