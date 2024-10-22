@@ -108,6 +108,7 @@ export interface OpStackConfigCommon {
   badges?: BadgeId[]
   discoveryDrivenData?: boolean
   additionalPurposes?: ScalingProjectPurpose[]
+  exitWindowSecondLine?: string
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -413,6 +414,50 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     ? 'bedrock-superchain'
     : 'opstack'
 
+  // NOTE(donnoh): [assumption] if you can upgrade escrow you're the upgrader
+  const upgraderDescription =
+    templateVars.exitWindowSecondLine ??
+    (() => {
+      const upgradersPortal = templateVars.discovery.getUpgraders(
+        portal.address,
+      )
+      assert(
+        upgradersPortal.length === 1,
+        'Portal must have exactly one upgrader',
+      )
+      const upgraderPortal = upgradersPortal[0]
+      const upgradersL1StandardBridge = templateVars.discovery.getUpgraders(
+        l1StandardBridgeEscrow,
+      )
+      assert(
+        upgradersL1StandardBridge.length === 1,
+        'L1StandardBridge must have exactly one upgrader',
+      )
+      const upgraderL1StandardBridge = upgradersL1StandardBridge[0]
+      assert(
+        upgraderPortal.address === upgraderL1StandardBridge.address,
+        'Portal and L1StandardBridge must have the same upgrader',
+      )
+
+      assert(
+        upgraderPortal.type !== 'Contract',
+        'Upgrader must either be EOA or Multisig',
+      )
+      return upgraderPortal.type === 'EOA'
+        ? '1/1 EOA'
+        : (() => {
+            const upgraderAsContract =
+              templateVars.discovery.getContractByAddress(
+                upgraderPortal.address,
+              )
+            assert(
+              upgraderAsContract !== undefined,
+              'Upgrader must be a contract',
+            )
+            return `${templateVars.discovery.getMultisigStats(upgraderAsContract.name)} multisig`
+          })()
+    })()
+
   return {
     type: 'layer2',
     ...opStackCommon(templateVars),
@@ -565,6 +610,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
             'FINALIZATION_PERIOD_SECONDS',
           ),
         ),
+        secondLine: upgraderDescription,
         sources: [
           {
             contract: portal.name,

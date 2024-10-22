@@ -5,6 +5,7 @@ import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zircuit')
+const upgraderStats = discovery.getMultisigStats('ZircuitMultiSig')
 
 const ZIRCUIT_FINALIZATION_PERIOD_SECONDS: number =
   discovery.getContractValue<number>(
@@ -61,6 +62,7 @@ export const zircuit: Layer2 = opStackL2({
     warning:
       'Proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
   },
+  exitWindowSecondLine: `${upgraderStats} multisig`,
   genesisTimestamp: new UnixTime(1719936217),
   rpcUrl: 'https://zircuit1-mainnet.p2pify.com/', // other: https://zircuit1-mainnet.liquify.com, https://zircuit-mainnet.drpc.org/
   // Chain ID: 48900
