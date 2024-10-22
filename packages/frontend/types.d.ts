@@ -1,4 +1,5 @@
 import '@tanstack/react-table'
+import { type CellContext } from '@tanstack/react-table'
 import { type ReactNode } from 'react'
 
 declare module '@tanstack/react-table' {
@@ -9,5 +10,8 @@ declare module '@tanstack/react-table' {
     headClassName?: string
     align?: 'right' | 'center'
     tooltip?: ReactNode
+    rowSpan?: (cell: CellContext<TData, unknown>) => number
+    virtual?: boolean
+    renderSpanFill?: (cell: CellContext<TData, unknown>) => ReactNode
   }
 }
