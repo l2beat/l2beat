@@ -85,9 +85,9 @@ export const daLayers: DaLayer[] = applyProcessor([
   rariDac,
   xaiDac,
   // DA Layers
+  // ethereum, 
   avail,
   celestia,
-  ethereum,
   near,
   memo,
   fraxtalDA,
