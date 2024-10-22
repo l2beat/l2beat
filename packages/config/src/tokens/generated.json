@@ -3783,6 +3783,20 @@
       "supply": "zero"
     },
     {
+      "name": "SolvBTC Babylon",
+      "coingeckoId": "solv-protocol-solvbtc-bbn",
+      "address": "0xd9D920AA40f578ab794426F5C90F6C731D159DEf",
+      "symbol": "SolvBTC.BBN",
+      "decimals": 18,
+      "deploymentTimestamp": 1719483839,
+      "coingeckoListingTimestamp": 1722556800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39384/large/unnamed.png?1721961640",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Spectrum Staked ETH",
       "coingeckoId": "wrapped-eeth",
       "address": "0xf96d4B1e0a0B129e1471e88dF6f1281b933Bc474",
