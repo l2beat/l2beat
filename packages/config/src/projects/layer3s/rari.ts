@@ -8,6 +8,7 @@ import { Layer3 } from './types'
 const discovery = new ProjectDiscovery('rari', 'arbitrum')
 
 export const rari: Layer3 = orbitStackL3({
+  createdAt: new UnixTime(1706285474), // 2024-01-26T16:11:14Z
   badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum, Badge.RaaS.Caldera],
   additionalPurposes: ['NFT'],
   discovery,

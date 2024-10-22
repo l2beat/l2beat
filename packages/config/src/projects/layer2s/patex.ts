@@ -4,6 +4,7 @@ import { Layer2 } from './types'
 
 export const patex: Layer2 = underReviewL2({
   id: ProjectId('patex'),
+  createdAt: new UnixTime(1722264698), // 2024-07-29T14:51:38Z
   display: {
     category: 'Optimistic Rollup',
     name: 'Patex Network',

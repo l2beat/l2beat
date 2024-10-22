@@ -7,6 +7,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('worldchain')
 
 export const world: Layer2 = opStackL2({
+  createdAt: new UnixTime(1713441528), // 2024-04-18T11:58:48Z
   badges: [Badge.RaaS.Alchemy], // not superchain
   additionalPurposes: ['Identity'],
   display: {

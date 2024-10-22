@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, formatSeconds } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -51,6 +56,7 @@ export const reddioex: Layer2 = {
   isArchived: true,
   type: 'layer2',
   id: ProjectId('reddioex'),
+  createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
     Badge.VM.AppChain,
     Badge.DA.DAC,

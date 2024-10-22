@@ -2,7 +2,7 @@ import {
   ContractParameters,
   get$Implementations,
 } from '@l2beat/discovery-types'
-import { assert, ProjectId, formatSeconds } from '@l2beat/shared-pure'
+import { assert, ProjectId, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { unionBy } from 'lodash'
@@ -92,6 +92,7 @@ export const WASMVM_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
 ]
 
 export interface OrbitStackConfigCommon {
+  createdAt: UnixTime
   discovery: ProjectDiscovery
   stateValidationImage?: string
   associatedTokens?: string[]
@@ -337,6 +338,7 @@ export function orbitStackCommon(
 
   return {
     id: ProjectId(templateVars.discovery.projectName),
+    createdAt: templateVars.createdAt,
     contracts: {
       addresses: unionBy(
         [
