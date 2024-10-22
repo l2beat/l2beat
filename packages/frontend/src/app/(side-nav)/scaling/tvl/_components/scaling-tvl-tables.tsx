@@ -67,10 +67,12 @@ export function ScalingTvlTables(props: Props) {
     )
   }
 
+  const filteredEntries = props.entries.filter(includeFilters)
+
   return (
     <MainPageCard className="space-y-3 md:mt-6 md:space-y-6">
-      <ScalingTvlFilters items={props.entries} />
-      <ScalingTvlTable entries={props.entries} />
+      <ScalingTvlFilters items={filteredEntries} showRollupsOnly />
+      <ScalingTvlTable entries={filteredEntries} />
     </MainPageCard>
   )
 }
