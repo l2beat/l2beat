@@ -3,19 +3,17 @@ import { SvgIcon, type SvgIconProps } from './svg-icon'
 export function SearchIcon(props: SvgIconProps) {
   return (
     <SvgIcon
-      width="20"
-      height="20"
-      viewBox="0 0 20 20"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
       aria-label="Search icon"
-      stroke="currentColor"
       {...props}
     >
       <path
-        d="M12.48 12.48L17.8 17.8"
-        strokeWidth="2.88"
-        strokeMiterlimit="10"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M1.91895 9.59976C1.91895 5.08776 5.56695 1.43976 10.0789 1.43976C14.5909 1.43976 18.2389 5.08776 18.2389 9.59976C18.2389 11.4584 17.6199 13.1704 16.5765 14.5413L22.3769 20.3417L20.3404 22.3782L14.454 16.4918C13.1902 17.2949 11.6896 17.7598 10.0789 17.7598C5.56695 17.7598 1.91895 14.1118 1.91895 9.59976ZM3.83895 9.59976C3.83895 13.0558 6.62295 15.8398 10.0789 15.8398C13.5349 15.8398 16.3189 13.0558 16.3189 9.59976C16.3189 6.14376 13.5349 3.35976 10.0789 3.35976C6.62295 3.35976 3.83895 6.14376 3.83895 9.59976Z"
       />
-      <circle cx="8" cy="8" r="5.8" strokeWidth="2.4" fill="none" />
     </SvgIcon>
   )
 }

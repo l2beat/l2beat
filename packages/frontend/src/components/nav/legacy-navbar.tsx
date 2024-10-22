@@ -70,7 +70,7 @@ export function LegacyNavbar({
             <LegacyNavLink title="FAQ" href="/faq" />
           </ul>
           <div className="h-8 w-px bg-gray-300 dark:bg-gray-700" />
-          <div className="flex gap-2">
+          <div className="flex gap-4">
             <DarkThemeToggle />
             <SmallSearchBarButton />
           </div>
