@@ -1,4 +1,4 @@
-import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
 import { mantle } from '../../../../layer2s/mantle'
 import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../../types'
@@ -37,6 +37,7 @@ const registerOperatorPermissionList = discovery.getContractValue<string[]>(
 
 export const mantleDABridge = {
   id: 'mantleDABridge',
+  createdAt: new UnixTime(1723022143), // 2024-08-07T09:15:43Z
   type: 'DAC',
   display: {
     name: 'Mantle DAC',

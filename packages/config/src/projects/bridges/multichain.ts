@@ -8,6 +8,7 @@ import { Bridge } from './types'
 export const multichain: Bridge = {
   type: 'bridge',
   id: ProjectId('multichain'),
+  createdAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Multichain',
     slug: 'multichain',

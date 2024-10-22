@@ -93,6 +93,7 @@ const upgradeDelaySeconds = lineaDiscovery.getContractValue<number>(
 export const zklinknova: Layer3 = {
   type: 'layer3',
   id: ProjectId('zklinknova'),
+  createdAt: new UnixTime(1705330478), // 2024-01-15T14:54:38Z
   hostChain: ProjectId('linea'),
   badges: [Badge.VM.EVM, Badge.DA.DAC, Badge.L3ParentChain.Linea],
   display: {

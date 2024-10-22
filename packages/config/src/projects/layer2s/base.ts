@@ -8,6 +8,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('base')
 
 export const base: Layer2 = opStackL2({
+  createdAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
   discovery,
   display: {
     name: 'Base',

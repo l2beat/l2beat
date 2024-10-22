@@ -14,6 +14,7 @@ const upgradeability = {
 }
 
 export const ancient: Layer2 = opStackL2({
+  createdAt: new UnixTime(1695904849), // 2023-09-28T12:40:49Z
   daProvider: CELESTIA_DA_PROVIDER,
   badges: [Badge.DA.Celestia, Badge.RaaS.Conduit],
   additionalPurposes: ['Gaming'],

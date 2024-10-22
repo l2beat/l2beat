@@ -7,6 +7,7 @@ import { Layer3 } from './types'
 // inbox on arbitrum: https://arbiscan.io/address/0xb0a00d053160e297324b7689b5e3f3af9a6fa4fb
 export const hook: Layer3 = underReviewL3({
   id: 'hook',
+  createdAt: new UnixTime(1719928126), // 2024-07-02T13:48:46Z
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Hook',

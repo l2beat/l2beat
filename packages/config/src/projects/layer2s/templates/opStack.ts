@@ -69,6 +69,7 @@ export interface DAProvider {
 }
 
 export interface OpStackConfigCommon {
+  createdAt: UnixTime
   daProvider?: DAProvider
   discovery: ProjectDiscovery
   upgradeability?: {
@@ -174,6 +175,7 @@ export function opStackCommon(
 
   return {
     id: ProjectId(templateVars.discovery.projectName),
+    createdAt: templateVars.createdAt,
     isUnderReview: templateVars.isUnderReview ?? false,
     technology: {
       stateCorrectness: templateVars.nonTemplateTechnology

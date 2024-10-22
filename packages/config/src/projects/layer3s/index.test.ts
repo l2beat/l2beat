@@ -150,16 +150,6 @@ describe('layer3s', () => {
     }
   })
 
-  describe('upcoming project have createdAt', () => {
-    for (const layer3 of layer3s) {
-      if (layer3.isUpcoming) {
-        it(layer3.display.name, () => {
-          expect(layer3.createdAt).not.toEqual(undefined)
-        })
-      }
-    }
-  })
-
   describe('other category projects have proposer and challenger', () => {
     for (const layer3 of layer3s) {
       if (layer3.display.isOther) {

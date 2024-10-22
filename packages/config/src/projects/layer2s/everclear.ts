@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL2 } from './templates/orbitStack'
@@ -6,6 +7,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('everclear')
 
 export const everclear: Layer2 = orbitStackL2({
+  createdAt: new UnixTime(1717512064), // 2024-06-04T14:41:04Z
   badges: [Badge.RaaS.Gelato, Badge.DA.DAC],
   additionalPurposes: ['Interoperability'],
   display: {

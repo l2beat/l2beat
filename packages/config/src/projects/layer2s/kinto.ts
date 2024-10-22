@@ -9,6 +9,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('kinto')
 
 export const kinto: Layer2 = orbitStackL2({
+  createdAt: new UnixTime(1695735468), // 2023-09-26T13:37:48Z
   discovery,
   badges: [Badge.RaaS.Caldera],
   additionalPurposes: ['RWA'],

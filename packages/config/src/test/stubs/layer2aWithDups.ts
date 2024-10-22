@@ -12,6 +12,7 @@ import { Layer2 } from '../../projects'
 export const layer2aWithDups: Layer2 = {
   type: 'layer2',
   id: ProjectId('layer2a'),
+  createdAt: new UnixTime(1723722996), // 2024-08-15T11:56:36Z
   display: {
     name: 'Layer2a',
     slug: 'layer2a',
