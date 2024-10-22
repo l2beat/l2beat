@@ -79,8 +79,8 @@ export const scalingSummaryColumns = [
       },
     },
   ),
-  columnHelper.accessor('activity.pastDayTps', {
-    header: 'Past day TPS',
+  columnHelper.accessor('activity.pastDayUops', {
+    header: 'Past day UOPS',
     cell: (ctx) => {
       const data = ctx.row.original.activity
       if (!data) {
@@ -96,7 +96,7 @@ export const scalingSummaryColumns = [
     sortUndefined: 'last',
     meta: {
       align: 'right',
-      tooltip: 'Transactions per second averaged over the past day.',
+      tooltip: 'User operations per second averaged over the past day.',
     },
   }),
 ]

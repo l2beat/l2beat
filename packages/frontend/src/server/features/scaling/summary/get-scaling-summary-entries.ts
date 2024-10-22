@@ -7,8 +7,8 @@ import { groupByMainCategories } from '~/utils/group-by-main-categories'
 import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import {
-  type ActivityLatestTpsData,
-  getActivityLatestTps,
+  type ActivityLatestUopsData,
+  getActivityLatestUops,
 } from '../activity/get-activity-latest-tps'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import {
@@ -35,7 +35,7 @@ export async function getScalingSummaryEntries() {
     getImplementationChangeReport(),
     getProjectsVerificationStatuses(),
     get7dTokenBreakdown({ type: 'layer2' }),
-    getActivityLatestTps(projects),
+    getActivityLatestUops(projects),
   ])
 
   const entries = projects.map((project) => {
@@ -79,7 +79,7 @@ function getScalingSummaryEntry(
   isVerified: boolean,
   hasImplementationChanged: boolean,
   latestTvl: LatestTvl['projects'][string] | undefined,
-  activity: ActivityLatestTpsData[string] | undefined,
+  activity: ActivityLatestUopsData[string] | undefined,
 ) {
   const associatedTokenWarning =
     latestTvl && latestTvl.breakdown.total > 0
@@ -112,7 +112,7 @@ function getScalingSummaryEntry(
     },
     activity: activity
       ? {
-          pastDayTps: activity.pastDayTps,
+          pastDayUops: activity.pastDayUops,
           change: activity.change,
         }
       : undefined,

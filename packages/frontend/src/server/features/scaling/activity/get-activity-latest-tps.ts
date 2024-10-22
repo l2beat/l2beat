@@ -11,18 +11,18 @@ import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import { getLastDayUops } from './utils/get-last-day-uops'
 
-export async function getActivityLatestTps(projects: (Layer2 | Layer3)[]) {
+export async function getActivityLatestUops(projects: (Layer2 | Layer3)[]) {
   if (env.MOCK) {
-    return getMockActivityLatestTps(projects)
+    return getMockActivityLatestUops(projects)
   }
   noStore()
-  return getCachedActivityLatestTps(projects)
+  return getCachedActivityLatestUops(projects)
 }
 
-export type ActivityLatestTpsData = Awaited<
-  ReturnType<typeof getCachedActivityLatestTps>
+export type ActivityLatestUopsData = Awaited<
+  ReturnType<typeof getCachedActivityLatestUops>
 >
-const getCachedActivityLatestTps = cache(
+const getCachedActivityLatestUops = cache(
   async (projects: (Layer2 | Layer3)[]) => {
     const range = getFullySyncedActivityRange('2d')
     const records = await db.activity.getByProjectsAndTimeRange(
@@ -34,26 +34,28 @@ const getCachedActivityLatestTps = cache(
 
     return Object.fromEntries(
       Object.entries(grouped).map(([projectId, records]) => {
-        const pastDayTps = getLastDayUops(records)
-        const previousDayTps = getLastDayUops(records, 1)
+        const pastDayUops = getLastDayUops(records)
+        const previousDayUops = getLastDayUops(records, 1)
         return [
           projectId,
           {
-            pastDayTps,
-            change: calculatePercentageChange(pastDayTps, previousDayTps),
+            pastDayUops,
+            change: calculatePercentageChange(pastDayUops, previousDayUops),
           },
         ]
       }),
     )
   },
-  ['activityLatestTps'],
+  ['activityLatestUops'],
   {
     revalidate: UnixTime.HOUR,
   },
 )
 
-function getMockActivityLatestTps(projects: (Layer2 | Layer3)[]) {
+function getMockActivityLatestUops(
+  projects: (Layer2 | Layer3)[],
+): ActivityLatestUopsData {
   return Object.fromEntries(
-    projects.map((p) => [p.id, { pastDayTps: 5, change: 0.1 }]),
+    projects.map((p) => [p.id, { pastDayUops: 5, change: 0.1 }]),
   )
 }
