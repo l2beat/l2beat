@@ -18,7 +18,7 @@ export default async function Page() {
     <div>
       <MainPageHeader>Summary</MainPageHeader>
       <div className="flex flex-col gap-6">
-        <DirectoryTabs defaultValue="custom">
+        <DirectoryTabs defaultValue="public">
           <DirectoryTabsList>
             <DirectoryTabsTrigger value="public">Public</DirectoryTabsTrigger>
             <DirectoryTabsTrigger value="custom">Custom</DirectoryTabsTrigger>
