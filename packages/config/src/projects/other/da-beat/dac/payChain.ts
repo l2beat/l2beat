@@ -1,10 +1,10 @@
 import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
-import { astarzkevm } from '../../../layer2s/astarzkevm'
+import { wirex } from '../../../layer2s/wirex'
 import { PolygoncdkDAC } from '../templates/polygoncdk-template'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
-const discovery = new ProjectDiscovery('astarzkevm')
+const discovery = new ProjectDiscovery('wirex')
 
 const upgradeability = {
   upgradableBy: ['LocalAdmin'],
@@ -12,22 +12,22 @@ const upgradeability = {
 }
 
 const membersCountDAC = discovery.getContractValue<number>(
-  'AstarValidiumDAC',
+  'WirexPayChainDAC',
   'getAmountOfMembers',
 )
 
 const requiredSignaturesDAC = discovery.getContractValue<number>(
-  'AstarValidiumDAC',
+  'WirexPayChainDAC',
   'requiredAmountOfSignatures',
 )
 
 const members = discovery.getContractValue<string[]>(
-  'AstarValidiumDAC',
+  'WirexPayChainDAC',
   'members',
 )
 
-export const astarZkEvmDac = PolygoncdkDAC({
-  project: astarzkevm,
+export const paychainDac = PolygoncdkDAC({
+  project: wirex,
   bridge: {
     permissions: [
       {
@@ -38,10 +38,16 @@ export const astarZkEvmDac = PolygoncdkDAC({
           type: 'EOA',
         })),
       },
-      ...discovery.getMultisigPermission(
-        'LocalAdmin',
-        'Admin of the AstarValidiumDAC contract, can set core system parameters like timeouts, sequencer, activate forced transactions, update the DA mode and upgrade the AstarValidiumDAC contract',
-      ),
+      {
+        name: 'LocalAdmin',
+        accounts: [
+          discovery.formatPermissionedAccount(
+            discovery.getContractValue('WirexPayChainValidium', 'admin'),
+          ),
+        ],
+        description:
+          'Admin and ForceBatcher of the WirexPayChainValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions, and set the DA committee members in the WirexPayChainDAC contract.',
+      },
     ],
     chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignaturesDAC,
@@ -49,10 +55,10 @@ export const astarZkEvmDac = PolygoncdkDAC({
     transactionDataType: DacTransactionDataType.TransactionData,
     contracts: {
       addresses: [
-        discovery.getContractDetails('AstarValidium', {
-          description: `The main contract of the Astar zkEVM. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
+        discovery.getContractDetails('WirexPayChainValidium', {
+          description: `The main contract of the WirexPayChain zkEVM. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
         }),
-        discovery.getContractDetails('AstarValidiumDAC', {
+        discovery.getContractDetails('WirexPayChainDAC', {
           description:
             'Validium committee contract that allows the admin to setup the members of the committee and stores the required amount of signatures threshold.',
           ...upgradeability,

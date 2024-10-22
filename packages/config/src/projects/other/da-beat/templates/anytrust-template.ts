@@ -65,7 +65,7 @@ type TemplateVars = Optionals & TemplateSpecific
  * creating DA-LAYER and DA-BRIDGE without the need to manually
  * duplicate code and files.
  */
-export function DAC(template: TemplateVars): DacDaLayer {
+export function AnytrustDAC(template: TemplateVars): DacDaLayer {
   // Common
   const name = `${template.project.display.name} DAC`
   const usedIn = toUsedInProject([template.project])
@@ -78,11 +78,25 @@ export function DAC(template: TemplateVars): DacDaLayer {
 
   const bridgeTechnology =
     template.bridge.technology?.description ??
-    `## Simple DA Bridge
-    The DA bridge is a smart contract verifying a data availability claim from DAC Members via signature verification.
-    The bridge requires a ${template.bridge.requiredMembers}/${template.bridge.membersCount} threshold of signatures to be met before the data commitment is accepted.
-  `
+    (template.bridge.chain === 1
+      ? `
+    ## DA Bridge Architecture
+    ![Anytrust bridge architecture](/images/da-bridge-technology/anytrust/architectureL2.png#center)
 
+
+    The DA commitments are posted to the L1 through the sequencer inbox, using the inbox as a DA bridge.
+    The DA commitment consists of Data Availability Certificate (DACert), including a hash of the data block, an expiration time, and a proof that the required threshold of Committee members have signed off on the data.
+    The sequencer distributes the data and collects signatures from Committee members offchain. Only the DACert is posted by the sequencer to the L1 chain inbox (the DA bridge), achieving L2 transaction ordering finality in a single onchain transaction.
+    `
+      : `
+    ## DA Bridge Architecture
+    ![Anytrust bridge architecture](/images/da-bridge-technology/anytrust/architectureL3.png#center)
+
+
+    The DA commitments are posted to the L2 through the sequencer inbox, using the inbox as a DA bridge.
+    The DA commitment consists of Data Availability Certificate (DACert), including a hash of the data block, an expiration time, and a proof that the required threshold of Committee members have signed off on the data.
+    The sequencer distributes the data and collects signatures from Committee members offchain. Only the DACert is posted by the sequencer to the L2 chain inbox (the DA bridge), achieving L3 transaction ordering finality in a single onchain transaction.
+    `)
   const bridgeDisplay: DacBridge['display'] = {
     name,
     slug: 'dac',
@@ -121,11 +135,28 @@ export function DAC(template: TemplateVars): DacDaLayer {
 
   const layerTechnology =
     template.layer?.technology?.description ??
-    `## Simple Committee
-  The Data Availability Committee (DAC) is a set of trusted parties responsible for storing data off-chain and serving it upon demand. 
-  The security guarantees of DACs depend on the specific setup and can vary significantly based on the criteria for selecting committee members, 
-  their operational transparency, and the mechanisms in place to handle disputes and failures.
-  `
+    `
+    ## Architecture
+    ![Anytrust architecture](/images/da-layer-technology/anytrust/architecture${template.bridge.membersCount}.png#center)
+
+    The DAC uses a data availability solution built on the AnyTrust protocol. It is composed of the following components:
+    - **Sequencer Inbox**: Main entry point for the Sequencer submitting transaction batches.
+    - **Data Availability Committee (DAC)**: A group of members responsible for storing and providing data on demand.
+    - **Data Availability Certificate (DACert)**: A commitment ensuring that data blobs are available without needing full data posting on the L1 chain. 
+
+    
+    Committee members run servers that support APIs for storing and retrieving data blobs. 
+    The Sequencer API allows the rollup Sequencer to submit data blobs for storage, while the REST API enables anyone to fetch data by hash. 
+    When the Sequencer produces a data batch, it sends the batch along with an expiration time to Committee members, who store it and sign it. 
+    Once enough signatures are collected, the Sequencer aggregates them into a valid DACert and posts it to the L1 chain inbox. 
+    If the Sequencer fails to collect enough signatures, it falls back to posting the full data to the L1 chain. \n
+
+    A DACert includes a hash of the data block, an expiration time, and proof that the required threshold of Committee members have signed off on the data. 
+    The proof consists of a hash of the Keyset used in signing, a bitmap indicating which members signed, and a BLS aggregated signature. 
+    L2 nodes reading from the sequencer inbox verify the certificate’s validity by checking the number of signers, the aggregated signature, and that the expiration time is at least two weeks ahead of the L2 timestamp. 
+    If the DACert is valid, it provides a proof that the corresponding data is available from honest committee members.
+
+    `
 
   const layerDisplay: DacDaLayer['display'] = {
     name,

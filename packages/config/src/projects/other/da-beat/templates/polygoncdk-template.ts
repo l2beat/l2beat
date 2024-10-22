@@ -65,7 +65,7 @@ type TemplateVars = Optionals & TemplateSpecific
  * creating DA-LAYER and DA-BRIDGE without the need to manually
  * duplicate code and files.
  */
-export function DAC(template: TemplateVars): DacDaLayer {
+export function PolygoncdkDAC(template: TemplateVars): DacDaLayer {
   // Common
   const name = `${template.project.display.name} DAC`
   const usedIn = toUsedInProject([template.project])
@@ -78,11 +78,23 @@ export function DAC(template: TemplateVars): DacDaLayer {
 
   const bridgeTechnology =
     template.bridge.technology?.description ??
-    `## Simple DA Bridge
-    The DA bridge is a smart contract verifying a data availability claim from DAC Members via signature verification.
-    The bridge requires a ${template.bridge.requiredMembers}/${template.bridge.membersCount} threshold of signatures to be met before the data commitment is accepted.
-  `
-
+    (template.bridge.chain === 1
+      ? `
+    ## DA Bridge Architecture
+    ![polygoncdk bridge architecture](/images/da-bridge-technology/polygoncdk/architectureL2.png#center)
+    The DA commitments are posted to the L1 through the sequencer inbox, using the inbox as a DA bridge.
+    The DA commitment consists of a data availability message provided as transaction input, made up of a byte array containing the signatures and all the addresses of the committee in ascending order.
+    The sequencer distributes the data and collects signatures from Committee members offchain. Only the DA message is posted by the sequencer to the L1 chain inbox (the DA bridge).
+    A separate contract, the PolygonCommittee contract, is used to manage the committee members list and verify the signatures before accepting the DA commitment.
+    `
+      : `
+    ## DA Bridge Architecture
+    ![polygoncdk bridge architecture](/images/da-bridge-technology/polygoncdk/architectureL3.png#center)
+    The DA commitments are posted to the L1 through the sequencer inbox, using the inbox as a DA bridge.
+    The DA commitment consists of a data availability message provided as transaction input, made up of a byte array containing the signatures and all the addresses of the committee in ascending order.
+    The sequencer distributes the data and collects signatures from Committee members offchain. Only the DA message is posted by the sequencer to the L2 chain inbox (the DA bridge).
+    A separate contract, the PolygonCommittee contract, is used to manage the committee members list and verify the signatures before accepting the DA commitment.
+   `)
   const bridgeDisplay: DacBridge['display'] = {
     name,
     slug: 'dac',
@@ -121,11 +133,20 @@ export function DAC(template: TemplateVars): DacDaLayer {
 
   const layerTechnology =
     template.layer?.technology?.description ??
-    `## Simple Committee
-  The Data Availability Committee (DAC) is a set of trusted parties responsible for storing data off-chain and serving it upon demand. 
-  The security guarantees of DACs depend on the specific setup and can vary significantly based on the criteria for selecting committee members, 
-  their operational transparency, and the mechanisms in place to handle disputes and failures.
-  `
+    `
+    ## Architecture
+    ![polygoncdk architecture](/images/da-layer-technology/polygoncdk/architecture${template.bridge.membersCount}.png#center)
+
+    Polygon CDK validiums utilize a data availability solution that relies on a Data Availability Committee (DAC) to ensure data integrity and manage off-chain transaction data. 
+    This architecture comprises the following components:
+    - **Operator**: A trusted entity that collects transactions, computes hash values for the transaction batch, and then requests and collects signatures from Committee members.
+    - **Data Availability Committee (DAC)**: A group of nodes responsible for validating batch data against the hash values provided by the operator (sequencer), ensuring the data accurately represents the transactions.
+    - **PolygonCommittee Contract**: Contract responsible for managing the data committee members list.
+    Each DAC node independently validates the batch data, ensuring it matches the received hash values. 
+    Upon successful validation, DAC members store the hash values locally and generate signatures endorsing the batch's integrity. 
+    The sequencer collects these signatures and submits the transactions batch hash together with the aggregated signature on Ethereum.
+    The PolygonCommittee contract is used during batch sequencing to verify that the signature posted by the sequencer was signed off by the DAC members stored in the contract.
+    `
 
   const layerDisplay: DacDaLayer['display'] = {
     name,

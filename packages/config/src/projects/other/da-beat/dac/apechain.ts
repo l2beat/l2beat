@@ -1,10 +1,10 @@
 import { ChainId } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
-import { playblock } from '../../../layer3s/playblock'
+import { apechain } from '../../../layer3s/apechain'
 import { AnytrustDAC } from '../templates/anytrust-template'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
-const discovery = new ProjectDiscovery('playblock', 'nova')
+const discovery = new ProjectDiscovery('apechain', 'arbitrum')
 
 const dac = discovery.getContractValue<{
   membersCount: number
@@ -12,8 +12,8 @@ const dac = discovery.getContractValue<{
 }>('SequencerInbox', 'dacKeyset')
 const { membersCount, requiredSignatures } = dac
 
-export const playblockDac = AnytrustDAC({
-  project: playblock,
+export const apechainDac = AnytrustDAC({
+  project: apechain,
   bridge: {
     contracts: {
       addresses: [
@@ -25,25 +25,9 @@ export const playblockDac = AnytrustDAC({
       risks: [],
     },
     permissions: [
-      // Members: DAC uses BLS sigs, not EOAs
-      {
-        name: 'Sequencers',
-        accounts: discovery.getPermissionsByRole('sequence'),
-        description:
-          'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
-        chain: discovery.chain,
-      },
-      {
-        name: 'RollupOwner',
-        accounts: discovery.getAccessControlRolePermission(
-          'UpgradeExecutor',
-          'EXECUTOR_ROLE',
-        ),
-        description:
-          'Multisig that can upgrade authorized batch posters via the UpgradeExecutor contract.',
-      },
+      // BLS sigs, not EOAs
     ],
-    chain: ChainId.NOVA,
+    chain: ChainId.ARBITRUM,
     requiredMembers: requiredSignatures,
     membersCount: membersCount,
     transactionDataType: DacTransactionDataType.TransactionDataCompressed,

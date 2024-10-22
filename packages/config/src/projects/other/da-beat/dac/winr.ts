@@ -1,10 +1,10 @@
 import { ChainId } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
-import { playblock } from '../../../layer3s/playblock'
+import { winr } from '../../../layer3s/winr'
 import { AnytrustDAC } from '../templates/anytrust-template'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
-const discovery = new ProjectDiscovery('playblock', 'nova')
+const discovery = new ProjectDiscovery('winr', 'arbitrum')
 
 const dac = discovery.getContractValue<{
   membersCount: number
@@ -12,8 +12,8 @@ const dac = discovery.getContractValue<{
 }>('SequencerInbox', 'dacKeyset')
 const { membersCount, requiredSignatures } = dac
 
-export const playblockDac = AnytrustDAC({
-  project: playblock,
+export const winrDac = AnytrustDAC({
+  project: winr,
   bridge: {
     contracts: {
       addresses: [
@@ -43,7 +43,7 @@ export const playblockDac = AnytrustDAC({
           'Multisig that can upgrade authorized batch posters via the UpgradeExecutor contract.',
       },
     ],
-    chain: ChainId.NOVA,
+    chain: ChainId.ARBITRUM,
     requiredMembers: requiredSignatures,
     membersCount: membersCount,
     transactionDataType: DacTransactionDataType.TransactionDataCompressed,

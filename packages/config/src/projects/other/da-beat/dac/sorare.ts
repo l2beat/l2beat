@@ -2,13 +2,13 @@ import { ChainId } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { getCommittee } from '../../../../discovery/starkware'
 import { sorare } from '../../../layer2s/sorare'
-import { DAC } from '../templates/dac-template'
+import { StarkexDAC } from '../templates/starkex-template'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('sorare')
 const committee = getCommittee(discovery)
 
-export const sorareDac = DAC({
+export const sorareDac = StarkexDAC({
   project: sorare,
   bridge: {
     contracts: {
