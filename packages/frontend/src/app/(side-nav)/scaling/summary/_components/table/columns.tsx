@@ -11,7 +11,7 @@ import {
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { sortStages } from '~/components/table/sorting/functions/stage-sorting'
-import { formatUops } from '~/utils/number-format/format-tps'
+import { formatUops } from '~/utils/number-format/format-uops'
 import { type ScalingSummaryTableRow } from '../../_utils/to-table-rows'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()

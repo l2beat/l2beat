@@ -8,7 +8,7 @@ import { type ActivityChartStats } from '~/server/features/scaling/activity/get-
 import { countToUops } from '~/server/features/scaling/activity/utils/count-to-uops'
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/react'
-import { formatUops } from '~/utils/number-format/format-tps'
+import { formatUops } from '~/utils/number-format/format-uops'
 import { Chart } from '../core/chart'
 import { ChartProvider } from '../core/chart-provider'
 import { ScalingFactorTooltip } from './activity-chart-header'

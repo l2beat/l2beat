@@ -1,7 +1,7 @@
 import { NumberCell } from '~/components/table/cells/number-cell'
 import { TwoRowCell } from '~/components/table/cells/two-row-cell'
 import { formatTimestamp } from '~/utils/dates'
-import { formatUops } from '~/utils/number-format/format-tps'
+import { formatUops } from '~/utils/number-format/format-uops'
 
 interface Props {
   maxUops: number

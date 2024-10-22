@@ -1,7 +1,7 @@
 import { countToUops } from '~/server/features/scaling/activity/utils/count-to-uops'
 import { formatTimestamp } from '~/utils/dates'
 import { formatInteger } from '~/utils/number-format/format-integer'
-import { formatUops } from '~/utils/number-format/format-tps'
+import { formatUops } from '~/utils/number-format/format-uops'
 
 interface Props {
   timestamp: number

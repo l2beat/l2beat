@@ -2,7 +2,7 @@ import { InfoIcon } from '~/icons/info'
 import { type ActivityChartStats } from '~/server/features/scaling/activity/get-activity-chart-stats'
 import { countToUops } from '~/server/features/scaling/activity/utils/count-to-uops'
 import { cn } from '~/utils/cn'
-import { formatUops } from '~/utils/number-format/format-tps'
+import { formatUops } from '~/utils/number-format/format-uops'
 import { Skeleton } from '../../core/skeleton'
 import {
   Tooltip,

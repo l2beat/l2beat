@@ -6,7 +6,8 @@ import { ValueWithPercentageChange } from '~/components/table/cells/value-with-p
 import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling-activity-entries'
 import { formatInteger } from '~/utils/number-format/format-integer'
-import { formatUops } from '~/utils/number-format/format-tps'
+import { formatUops } from '~/utils/number-format/format-uops'
+import { formatUopsRatio } from '~/utils/number-format/format-uops-ratio'
 import { SyncStatusWrapper } from '../../../finality/_components/table/sync-status-wrapper'
 import { MaxUopsCell } from './max-uops-cell'
 
@@ -85,10 +86,24 @@ export const scalingActivityColumns = [
       align: 'right',
     },
   }),
-  columnHelper.accessor('dataSource', {
-    header: 'Data source',
+  columnHelper.accessor('data.ratio', {
+    header: 'UOPS/TPS RATIO',
+    sortUndefined: 'last',
+    cell: (ctx) => {
+      const data = ctx.row.original.data
+      if (!data) {
+        return <NoDataBadge />
+      }
+      return (
+        <SyncStatusWrapper syncStatus={data.syncStatus}>
+          <PrimaryValueCell>{formatUopsRatio(data.ratio)}</PrimaryValueCell>
+        </SyncStatusWrapper>
+      )
+    },
     meta: {
-      headClassName: 'w-0',
+      align: 'right',
+      tooltip:
+        'The ratio of user operations to transactions over the past day.',
     },
   }),
 ]

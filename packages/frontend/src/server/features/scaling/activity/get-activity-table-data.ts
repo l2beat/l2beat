@@ -9,6 +9,7 @@ import { env } from '~/env'
 import { db } from '~/server/database'
 import { countToUops } from './utils/count-to-uops'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
+import { getLastDayRatio } from './utils/get-last-day-ratio'
 import { getLastDayUops } from './utils/get-last-day-uops'
 import { getUopsWeeklyChange } from './utils/get-uops-weekly-change'
 import { sumActivityCount } from './utils/sum-activity-count'
@@ -59,6 +60,7 @@ const getCachedActivityTableData = cache(
               timestamp: maxUopsCount.timestamp.toNumber(),
             },
             summedCount: sumActivityCount(records),
+            ratio: getLastDayRatio(records),
             syncStatus: getSyncStatus(lastRecord.timestamp),
           },
         ]
@@ -69,7 +71,7 @@ const getCachedActivityTableData = cache(
       Object.entries(data).filter(([_, value]) => value),
     )
   },
-  ['activityChart'],
+  ['activityTable'],
   {
     revalidate: 10 * UnixTime.MINUTE,
   },
@@ -97,6 +99,7 @@ function getMockActivityTableData(): ActivityTableData {
           value: 30,
           timestamp: UnixTime.now().toNumber(),
         },
+        ratio: 1.1,
         summedCount: 1500,
         syncStatus: getSyncStatus(UnixTime.now()),
       },
