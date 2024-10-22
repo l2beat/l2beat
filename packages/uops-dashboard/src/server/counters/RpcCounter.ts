@@ -7,16 +7,16 @@ import type {
 } from '@/types'
 
 import {
-  Block,
   ENTRY_POINT_ADDRESS_0_6_0,
   ENTRY_POINT_ADDRESS_0_7_0,
   ERC4337_methods,
+  EVMBlock,
+  EVMTransaction,
   Method,
   Operation,
   SAFE_EXEC_TRANSACTION_SELECTOR,
   SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
   SAFE_methods,
-  Transaction,
   isErc4337,
   isGnosisSafe,
 } from '@l2beat/shared'
@@ -26,17 +26,17 @@ import { traverseOperationTree } from '../../utils/traverseOperationTree'
 import type { Counter } from './counter'
 
 export class RpcCounter implements Counter {
-  countForBlock(block: Block): CountedBlock {
+  countForBlock(block: EVMBlock): CountedBlock {
     return {
       ...block,
       status: '<unknown>',
-      transactions: block.transactions.map((tx: Transaction) =>
+      transactions: block.transactions.map((tx: EVMTransaction) =>
         this.mapTransaction(tx),
       ),
     }
   }
 
-  countForBlocks(blocks: Block[]): StatResults {
+  countForBlocks(blocks: EVMBlock[]): StatResults {
     let dateStart = new Date()
     let dateEnd = new Date()
     let numberOfTransactions = 0
@@ -87,7 +87,7 @@ export class RpcCounter implements Counter {
     }
   }
 
-  mapTransaction(tx: Transaction): CountedTransaction {
+  mapTransaction(tx: EVMTransaction): CountedTransaction {
     const methods = ERC4337_methods.concat(SAFE_methods)
 
     if (isErc4337(tx) || isGnosisSafe(tx)) {

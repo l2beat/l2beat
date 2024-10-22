@@ -363,9 +363,7 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "descriptions": [
-        "This Multisig itself is one of the two Governors, the other being an EOA, both equally permissioned to upgrade the bridge."
-      ],
+      "description": "This Multisig itself is one of the two Governors, the other being an EOA, both equally permissioned to upgrade the bridge.",
       "receivedPermissions": [
         {
           "permission": "upgrade",

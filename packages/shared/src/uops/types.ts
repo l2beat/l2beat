@@ -1,3 +1,5 @@
+import { EVMTransaction } from '../clients'
+
 export type Operation = StaticOperation | RecursiveOperation
 
 export interface StaticOperation {
@@ -28,13 +30,7 @@ export type Block = {
   transactions: Transaction[]
 }
 
-export type Transaction = GenericTransaction | StarknetTransaction
-
-export type GenericTransaction = {
-  hash: string
-  data: string
-  to?: string
-}
+export type Transaction = EVMTransaction | StarknetTransaction
 
 export type StarknetTransaction = {
   hash: string

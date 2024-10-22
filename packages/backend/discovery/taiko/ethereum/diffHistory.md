@@ -1,3 +1,71 @@
+Generated with discovered.json: 0x05326545ba0ebc85d3645002b6070b86e4600617
+
+# Diff at Mon, 21 Oct 2024 12:49:33 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e660599f23a07618fe949a07be1f516ce44f1914 block: 20977175
+- current block number: 20977175
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20977175 (main branch discovery), not current.
+
+```diff
+    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
+      descriptions:
+-        ["This contract provides functionalities for proposing, proving, and verifying blocks."]
+      description:
++        "This contract provides functionalities for proposing, proving, and verifying blocks."
+    }
+```
+
+```diff
+    contract GuardianMinorityProver (0x579A8d63a2Db646284CBFE31FE5082c9989E985c) {
+    +++ description: Verifier contract for blocks proven by Guardian minority.
+      descriptions:
+-        ["Verifier contract for blocks proven by Guardian minority."]
+      description:
++        "Verifier contract for blocks proven by Guardian minority."
+    }
+```
+
+```diff
+    contract ProverSetProxy (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9) {
+    +++ description: A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO.
+      descriptions:
+-        ["A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO."]
+      description:
++        "A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO."
+    }
+```
+
+```diff
+    contract SgxVerifier (0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81) {
+    +++ description: Verifier contract for SGX proven blocks.
+      descriptions:
+-        ["Verifier contract for SGX proven blocks."]
+      description:
++        "Verifier contract for SGX proven blocks."
+    }
+```
+
+```diff
+    contract GuardianProver (0xE3D777143Ea25A6E031d1e921F396750885f43aC) {
+    +++ description: Verifier contract for Guardian proven blocks.
+      descriptions:
+-        ["Verifier contract for Guardian proven blocks."]
+      description:
++        "Verifier contract for Guardian proven blocks."
+    }
+```
+
 Generated with discovered.json: 0x90c9d21da8c146e239bf6a9321d203849e53c916
 
 # Diff at Mon, 21 Oct 2024 11:11:21 GMT:

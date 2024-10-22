@@ -2,19 +2,21 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/basic-table'
+import { RollupsTable } from '~/components/table/rollups-table'
+import { getStageSortedRowModel } from '~/components/table/sorting/get-stage-sorting-row-model'
 import { useTable } from '~/hooks/use-table'
 import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
 import { useScalingAssociatedTokensContext } from '../../../_components/scaling-associated-tokens-context'
 import { useScalingFilter } from '../../../_components/scaling-filter-context'
-import { ScalingTvlFilters } from '../../../_components/scaling-tvl-filters'
 import { toTableRows } from '../../_utils/to-table-rows'
 import { scalingTvlColumns } from './columns'
 
 interface Props {
   entries: ScalingTvlEntry[]
+  rollups?: boolean
 }
 
-export function ScalingTvlTable({ entries }: Props) {
+export function ScalingTvlTable({ entries, rollups }: Props) {
   const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
   const includeFilters = useScalingFilter()
 
@@ -31,7 +33,7 @@ export function ScalingTvlTable({ entries }: Props) {
     data: allProjects,
     columns: scalingTvlColumns,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
+    getSortedRowModel: rollups ? getStageSortedRowModel() : getSortedRowModel(),
     manualFiltering: true,
     initialState: {
       sorting: [
@@ -46,10 +48,9 @@ export function ScalingTvlTable({ entries }: Props) {
     },
   })
 
-  return (
-    <div className="space-y-3 md:space-y-6">
-      <ScalingTvlFilters items={allProjects} />
-      <BasicTable table={table} insideMainPageCard />
-    </div>
+  return rollups ? (
+    <RollupsTable table={table} />
+  ) : (
+    <BasicTable table={table} insideMainPageCard />
   )
 }

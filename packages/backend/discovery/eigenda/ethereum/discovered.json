@@ -120,9 +120,7 @@
         "0x223309c7d816ce318a9371a50683d99b1ace4ccb775c4a4b3e6ec1238f0a5c68"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum"
-      ],
+      "description": "Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -449,9 +447,7 @@
         "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "A strategy implementation allowing to deposit a specific token as a restakable asset."
-      ],
+      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
       "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1701791243,
       "values": {
@@ -502,9 +498,7 @@
         "0xe0842698f9d2aadda65d129ee9797efd5820d2c146dc3f368826b9815f5b8c9f"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Contract used for ejection of operators from the RegistryCoordinator."
-      ],
+      "description": "Contract used for ejection of operators from the RegistryCoordinator.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -560,9 +554,7 @@
         "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "A strategy implementation allowing to deposit a specific token as a restakable asset."
-      ],
+      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
       "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1701791243,
       "values": {
@@ -643,9 +635,7 @@
         "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "A strategy implementation allowing to deposit a specific token as a restakable asset."
-      ],
+      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
       "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1686349019,
       "values": {
@@ -696,9 +686,7 @@
         "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "A strategy implementation allowing to deposit a specific token as a restakable asset."
-      ],
+      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
       "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1704485723,
       "values": {
@@ -749,9 +737,7 @@
         "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "A strategy implementation allowing to deposit a specific token as a restakable asset."
-      ],
+      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
       "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1686349019,
       "values": {
@@ -802,9 +788,7 @@
         "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "A strategy implementation allowing to deposit a specific token as a restakable asset."
-      ],
+      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
       "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1701791243,
       "values": {
@@ -862,9 +846,7 @@
         "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "A strategy implementation allowing to deposit a specific token as a restakable asset."
-      ],
+      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
       "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1701791243,
       "values": {
@@ -1069,9 +1051,7 @@
         "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "A strategy implementation allowing to deposit a specific token as a restakable asset."
-      ],
+      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
       "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1704485723,
       "values": {
@@ -1122,9 +1102,7 @@
         "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "A strategy implementation allowing to deposit a specific token as a restakable asset."
-      ],
+      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
       "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1686349019,
       "values": {
@@ -1175,9 +1153,7 @@
         "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "A strategy implementation allowing to deposit a specific token as a restakable asset."
-      ],
+      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
       "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1701791243,
       "values": {
@@ -1228,9 +1204,7 @@
         "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "A strategy implementation allowing to deposit a specific token as a restakable asset."
-      ],
+      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
       "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1701791243,
       "values": {
@@ -1281,9 +1255,7 @@
         "0x4c5ff062896caf72eb8999dc0f839adca5dbec7dd71c1aa6d0b1defce8ee6046"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "A strategy implementation allowing to deposit a specific token as a restakable asset."
-      ],
+      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
       "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1713414611,
       "values": {
@@ -1328,9 +1300,7 @@
         "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "A strategy implementation allowing to deposit a specific token as a restakable asset."
-      ],
+      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
       "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1704485723,
       "values": {

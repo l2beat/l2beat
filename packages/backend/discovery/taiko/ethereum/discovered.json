@@ -21,9 +21,7 @@
         "0xa2bfa567075799db54daaa89afafea79e42c73c36c23112c79926407116d0765"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "This contract provides functionalities for proposing, proving, and verifying blocks."
-      ],
+      "description": "This contract provides functionalities for proposing, proving, and verifying blocks.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -375,9 +373,7 @@
         "0xb6ed017b0bf49c547dbaa4b24efcbcd5218c26aafd94f8cf06850d009e538347"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Verifier contract for blocks proven by Guardian minority."
-      ],
+      "description": "Verifier contract for blocks proven by Guardian minority.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -518,9 +514,7 @@
         "0x020f0e8ece4630d3f7e6458ef5f1d86c5408ed344c580633e3f32e53393ceab5"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO."
-      ],
+      "description": "A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -875,7 +869,7 @@
         "0xdb8e8268242e52348760b0b2d154955236307b3ef1bc9cb0234fc6c0d01aa70f"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": ["Verifier contract for SGX proven blocks."],
+      "description": "Verifier contract for SGX proven blocks.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1152,7 +1146,7 @@
         "0xb6ed017b0bf49c547dbaa4b24efcbcd5218c26aafd94f8cf06850d009e538347"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": ["Verifier contract for Guardian proven blocks."],
+      "description": "Verifier contract for Guardian proven blocks.",
       "issuedPermissions": [
         {
           "permission": "upgrade",

@@ -254,9 +254,7 @@
       "sourceHashes": [
         "0x6e45af76d6f6e2d8cc55ec530468293a0af33a8ab5e385883527a3330ff21ed6"
       ],
-      "descriptions": [
-        "Used to update the verifier and keep track of current and old versions."
-      ],
+      "description": "Used to update the verifier and keep track of current and old versions.",
       "sinceTimestamp": 1722833675,
       "values": {
         "$immutable": true,
@@ -668,9 +666,7 @@
       "sourceHashes": [
         "0x92fd37cca83c3ecf2b4b1343a3287484d39591016bdd853e572e12c286c0d952"
       ],
-      "descriptions": [
-        "Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role."
-      ],
+      "description": "Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.",
       "receivedPermissions": [
         {
           "permission": "upgrade",

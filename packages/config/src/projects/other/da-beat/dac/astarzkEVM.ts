@@ -1,7 +1,7 @@
 import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { astarzkevm } from '../../../layer2s/astarzkevm'
-import { DAC } from '../templates/dac-template'
+import { PolygoncdkDAC } from '../templates/polygoncdk-template'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('astarzkevm')
@@ -26,7 +26,7 @@ const members = discovery.getContractValue<string[]>(
   'members',
 )
 
-export const astarZkEvmDac = DAC({
+export const astarZkEvmDac = PolygoncdkDAC({
   project: astarzkevm,
   bridge: {
     permissions: [

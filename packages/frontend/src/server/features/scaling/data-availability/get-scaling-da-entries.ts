@@ -1,10 +1,13 @@
 import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
+import { env } from '~/env'
+import { groupByMainCategories } from '~/utils/group-by-main-categories'
 import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
 import { orderByTvl } from '../tvl/utils/order-by-tvl'
+import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
 
 export async function getScalingDaEntries() {
   const activeProjects = [...layer2s, ...layer3s].filter(
@@ -30,7 +33,14 @@ export async function getScalingDaEntries() {
     })
     .filter(notUndefined)
 
-  return orderByTvl(entries, tvl)
+  if (env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION) {
+    return {
+      type: 'recategorised' as const,
+      entries: groupByMainCategories(orderByStageAndTvl(entries, tvl)),
+    }
+  }
+
+  return { entries: orderByTvl(entries, tvl) }
 }
 
 function getScalingDataAvailabilityEntry(

@@ -13,7 +13,6 @@ import {
   notUndefined,
 } from '@l2beat/shared-pure'
 import { concat } from 'lodash'
-import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 import { type PermissionsSectionProps } from '~/components/projects/sections/permissions/permissions-section'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'

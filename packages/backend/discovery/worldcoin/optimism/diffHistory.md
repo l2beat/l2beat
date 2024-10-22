@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x156f7a10d88f3de0393119244319511fafb4fb06
+
+# Diff at Mon, 21 Oct 2024 12:52:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e660599f23a07618fe949a07be1f516ce44f1914 block: 123584561
+- current block number: 123584561
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 123584561 (main branch discovery), not current.
+
+```diff
+    contract OpWorldID_One (0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d) {
+    +++ description: A contract that manages the root history of the Semaphore identity merkle tree on Optimism.
+      descriptions:
+-        ["A contract that manages the root history of the Semaphore identity merkle tree on Optimism."]
+      description:
++        "A contract that manages the root history of the Semaphore identity merkle tree on Optimism."
+    }
+```
+
 Generated with discovered.json: 0xb5df7083477290722f14ea7e4fe94a2fbb8e1ef3
 
 # Diff at Mon, 21 Oct 2024 11:14:32 GMT:
