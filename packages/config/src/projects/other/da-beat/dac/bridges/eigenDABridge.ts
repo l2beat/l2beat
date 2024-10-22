@@ -56,7 +56,7 @@ const ejectableStakePercentParam = discovery.getContractValue<string>(
   'EjectionManager',
   'ejectableStakePercent',
 )
-const ejectableStakePercent = parseFloat(ejectableStakePercentParam) / 100;
+const ejectableStakePercent = parseFloat(ejectableStakePercentParam) / 100
 
 const operatorSetParamsQuorum1 = discovery.getContractValue<number[]>(
   'RegistryCoordinator',
