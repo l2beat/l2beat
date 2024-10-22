@@ -176,6 +176,7 @@ const config: Config = {
       'surface-primary': 'var(--surface-primary)',
       'surface-secondary': 'var(--surface-secondary)',
       'surface-tertiary': 'var(--surface-tertiary)',
+      overlay: 'var(--overlay)',
     },
     screens: {
       xs: '400px',

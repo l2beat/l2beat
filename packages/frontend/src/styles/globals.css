@@ -15,6 +15,7 @@
     --surface-primary: #fafafa;
     --surface-secondary: #e6e7ec;
     --surface-tertiary: #ccd0da;
+    --overlay: #181b2d99;
   }
 
   .dark {
@@ -26,6 +27,7 @@
     --surface-primary: #1f2025;
     --surface-secondary: #393c43;
     --surface-tertiary: #464a52;
+    --overlay: #00000099;
   }
 }
 
