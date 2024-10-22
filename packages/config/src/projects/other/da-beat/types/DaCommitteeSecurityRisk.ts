@@ -8,12 +8,13 @@ export type DaCommitteeSecurityRisk =
   | typeof NoBridge
   | ReturnType<typeof Auto>
 
-const RobustAndDiverseCommittee = (value?: string) =>
+  const RobustAndDiverseCommittee = (value?: string) =>
   ({
     type: 'RobustAndDiverseCommittee',
     value: value ?? 'Robust and Diverse Committee',
     sentiment: 'good',
-    description: `The committee is robust and diverse.`,
+    description: `The committee requires an honest minority (1/3 or less) of members (or the network stake) for the DA bridge to accept a data availability commitment. 
+    Participation in the committee is permissionless, based only on stake requirements and an honest majority of validators to prevent censorship.`,
   }) as const
 
 const LimitedCommitteeSecurity = (value?: string) =>
@@ -21,7 +22,8 @@ const LimitedCommitteeSecurity = (value?: string) =>
     type: 'LimitedCommitteeSecurity',
     value: value ?? 'Limited Committee Security',
     sentiment: 'warning',
-    description: `The committee is limited and does not have the necessary diversity.`,
+    description: `The committee requires an honest minority (1/3 or less) of members (or the network stake) for the DA bridge to accept a data availability commitment.
+    There are at least 5 external actors in the committee, but entry or exit of members is partially controlled by a centralized entity.`,
   }) as const
 
 const NoCommiteeSecurity = (value?: string) =>
@@ -29,8 +31,10 @@ const NoCommiteeSecurity = (value?: string) =>
     type: 'NoCommiteeSecurity',
     value: value ?? 'No Committee Security',
     sentiment: 'bad',
-    description: `The committee is not secure and does not have the necessary diversity.`,
+    description: `The committee does not meet basic security standards, either due to insufficient size, lack of member diversity, or poorly defined threshold parameters. 
+    The system lacks an effective DA bridge and it is reliant on the assumption of an honest sequencer, creating significant risks to data integrity and availability.`,
   }) as const
+
 
 const NoBridge = {
   type: 'NoBridge',

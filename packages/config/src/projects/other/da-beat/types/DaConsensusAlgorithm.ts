@@ -9,4 +9,6 @@ export type DaConsensusAlgorithm = {
   consensusFinality: number
   /** Duration of time for unbonding in seconds. Intended to capture the weak subjectivity period. @unit seconds. */
   unbondingPeriod: number
+  /** The maximum number of active operators participanting in consensus */
+  activeOperatorsCount: number
 }
