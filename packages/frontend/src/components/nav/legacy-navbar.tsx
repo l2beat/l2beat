@@ -4,6 +4,7 @@ import { env } from '~/env'
 import { HiringBadge } from '../badge/hiring-badge'
 import { DarkThemeToggle } from '../dark-theme-toggle'
 import { HalloweenLogo } from '../halloween-logo'
+import { SmallSearchBarButton } from '../search-bar/search-bar-button'
 import { SocialLinks } from '../social-links'
 import { LegacyNavLink } from './legacy-nav-link'
 import { type NavGroup } from './types'
@@ -69,7 +70,10 @@ export function LegacyNavbar({
             <LegacyNavLink title="FAQ" href="/faq" />
           </ul>
           <div className="h-8 w-px bg-gray-300 dark:bg-gray-700" />
-          <DarkThemeToggle />
+          <div className="flex gap-4">
+            <DarkThemeToggle />
+            <SmallSearchBarButton />
+          </div>
         </div>
       </nav>
     </div>

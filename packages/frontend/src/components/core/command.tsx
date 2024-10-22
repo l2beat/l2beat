@@ -1,19 +1,24 @@
 'use client'
 
-import { Command as CommandPrimitive } from 'cmdk'
+import { type DialogProps } from '@radix-ui/react-dialog'
+import { Command as CommandPrimitive, useCommandState } from 'cmdk'
 import * as React from 'react'
 import { SearchIcon } from '~/icons/search'
 import { cn } from '~/utils/cn'
 import { linkVariants } from '../link/custom-link'
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from './dialog'
 
 const Command = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive>,
-  React.ComponentPropsWithoutRef<typeof CommandPrimitive>
->(({ className, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive> & {
+    sidebar?: boolean
+  }
+>(({ className, sidebar, ...props }, ref) => (
   <CommandPrimitive
     ref={ref}
     className={cn(
-      'custom-scrollbar flex size-full flex-col overflow-hidden rounded-md bg-gray-200 dark:bg-zinc-700',
+      'custom-scrollbar flex size-full flex-col overflow-hidden rounded-md',
+      sidebar ? 'sidebar bg-surface-secondary' : 'bg-gray-200 dark:bg-zinc-700',
       className,
     )}
     {...props}
@@ -21,22 +26,51 @@ const Command = React.forwardRef<
 ))
 Command.displayName = CommandPrimitive.displayName
 
+const CommandDialog = ({
+  children,
+  title,
+  description,
+  onEscapeKeyDown,
+  ...props
+}: DialogProps & {
+  title: string
+  description: string
+  onEscapeKeyDown?: (event: KeyboardEvent) => void
+}) => {
+  return (
+    <Dialog {...props}>
+      <DialogTitle className="sr-only">{title}</DialogTitle>
+      <DialogDescription className="sr-only">{description}</DialogDescription>
+      <DialogContent
+        className="top-1/2 overflow-hidden p-0 shadow-lg max-md:h-screen max-md:border-none md:top-1/4 max-md:[@supports(height:100dvh)]:h-dvh"
+        overlayClassName="max-md:hidden"
+        onEscapeKeyDown={onEscapeKeyDown}
+      >
+        <Command className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-secondary [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:size-5">
+          {children}
+        </Command>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
 const CommandInput = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Input>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input> & {
     reset?: () => void
   }
 >(({ className, reset, ...props }, ref) => {
+  const search = useCommandState((state) => state.search)
   return (
     <div
-      className="flex items-center border-b border-gray-400 px-3 dark:border-gray-650"
+      className="flex items-center border-b border-gray-400 px-3 sidebar:!border-surface-tertiary dark:border-gray-650"
       cmdk-input-wrapper=""
     >
-      <SearchIcon className="mr-2 size-4 shrink-0 stroke-gray-500 opacity-50 dark:stroke-gray-50" />
+      <SearchIcon className="mr-2 size-4 shrink-0 fill-gray-500 sidebar:!fill-secondary dark:fill-gray-50" />
       <CommandPrimitive.Input
         ref={ref}
         className={cn(
-          'flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-gray-500 disabled:cursor-not-allowed disabled:opacity-50 dark:placeholder:text-gray-50',
+          'flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-gray-500 disabled:cursor-not-allowed disabled:opacity-50 sidebar:placeholder:!text-secondary dark:placeholder:text-gray-50',
           className,
         )}
         {...props}
@@ -46,7 +80,7 @@ const CommandInput = React.forwardRef<
           className={linkVariants({ underline: false, className: 'text-xs' })}
           onClick={reset}
         >
-          Clear
+          {search !== '' ? 'Clear' : 'Close'}
         </button>
       )}
     </div>
@@ -106,7 +140,10 @@ const CommandSeparator = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.Separator
     ref={ref}
-    className={cn('-mx-1 h-px bg-gray-400 dark:bg-gray-650', className)}
+    className={cn(
+      '-mx-1 h-px bg-gray-400 sidebar:!bg-surface-tertiary dark:bg-gray-650',
+      className,
+    )}
     {...props}
   />
 ))
@@ -119,7 +156,7 @@ const CommandItem = React.forwardRef<
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected='true']:bg-gray-400 data-[disabled=true]:opacity-50 dark:data-[selected='true']:bg-zinc-800",
+      "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected='true']:bg-gray-400 data-[disabled=true]:opacity-50 sidebar:data-[selected='true']:!bg-surface-tertiary dark:data-[selected='true']:bg-zinc-800",
       className,
     )}
     {...props}
@@ -130,6 +167,7 @@ CommandItem.displayName = CommandPrimitive.Item.displayName
 
 export {
   Command,
+  CommandDialog,
   CommandInput,
   CommandList,
   CommandEmpty,

@@ -8,6 +8,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('bob')
 
 export const bob: Layer2 = opStackL2({
+  createdAt: new UnixTime(1704267653), // 2024-01-03T07:40:53Z
   discovery,
   badges: [Badge.RaaS.Conduit],
   additionalPurposes: ['Bitcoin DApps'],
@@ -39,6 +40,7 @@ export const bob: Layer2 = opStackL2({
   ],
   usesBlobs: true,
   genesisTimestamp: new UnixTime(1712861989),
+  nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN'],
   isNodeAvailable: 'UnderReview',
   discoveryDrivenData: true,
   milestones: [

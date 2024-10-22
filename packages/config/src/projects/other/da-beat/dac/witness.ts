@@ -1,7 +1,7 @@
-import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { witness } from '../../../layer2s/witness'
-import { DAC } from '../templates/dac-template'
+import { PolygoncdkDAC } from '../templates/polygoncdk-template'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('witness')
@@ -26,9 +26,10 @@ const members = discovery.getContractValue<string[]>(
   'members',
 )
 
-export const witnessDac = DAC({
+export const witnessDac = PolygoncdkDAC({
   project: witness,
   bridge: {
+    createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     contracts: {
       addresses: [
         discovery.getContractDetails('WitnessValidium', {

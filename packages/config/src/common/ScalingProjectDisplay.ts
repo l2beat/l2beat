@@ -12,6 +12,7 @@ export type ScalingProjectDisplay = {
   slug: string
   /** Name of the category the scaling project belongs to */
   category: ScalingProjectCategory
+  isOther?: boolean
   proposer?: {
     value: string
     secondLine?: string

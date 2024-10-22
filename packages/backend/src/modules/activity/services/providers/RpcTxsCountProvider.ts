@@ -1,14 +1,16 @@
 import { AssessCount } from '@l2beat/config'
 import { ActivityRecord } from '@l2beat/database'
+import { EVMBlock } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
-import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
 import { aggregatePerDay } from '../../utils/aggregatePerDay'
 import { RpcUopsAnalyzer } from '../uops/analyzers/RpcUopsAnalyzer'
 
 export class RpcTxsCountProvider {
   constructor(
-    private readonly rpcClient: RpcClient,
+    private readonly rpcClient: {
+      getBlockWithTransactions: (x: number) => Promise<EVMBlock>
+    },
     private readonly projectId: ProjectId,
     private readonly uopsAnalyzer: RpcUopsAnalyzer,
     private readonly assessCount?: AssessCount,

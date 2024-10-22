@@ -1,3 +1,90 @@
+Generated with discovered.json: 0xdf369d3bcbc7e1fe1597b0265fab2173955de017
+
+# Diff at Mon, 21 Oct 2024 12:45:38 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e660599f23a07618fe949a07be1f516ce44f1914 block: 20059608
+- current block number: 20059608
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20059608 (main branch discovery), not current.
+
+```diff
+    contract ForcedWithdrawalAgent (0x52ea1971C05B0169c02a0bBeC05Fe8b5E3A24470) {
+    +++ description: Auxiliary contract able to force withdrawals from L1 on behalf of users.
+      descriptions:
+-        ["Auxiliary contract able to force withdrawals from L1 on behalf of users."]
+      description:
++        "Auxiliary contract able to force withdrawals from L1 on behalf of users."
+    }
+```
+
+Generated with discovered.json: 0x7507918b819333a739f10230310aaf849c17cc74
+
+# Diff at Mon, 21 Oct 2024 11:07:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20059608
+- current block number: 20059608
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20059608 (main branch discovery), not current.
+
+```diff
+    contract ExchangeV3 (0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4) {
+    +++ description: None
+      values.$pastUpgrades.6.2:
++        ["0x26d8Ba776a067C5928841985bCe342f75BAE7E82"]
+      values.$pastUpgrades.6.1:
+-        ["0x26d8Ba776a067C5928841985bCe342f75BAE7E82"]
++        "0x0fa3763c4bd69cf9e77636b37b5b12c29f3b260d8e822ebe215b14c4602a716d"
+      values.$pastUpgrades.5.2:
++        ["0x3c294fCF74129d649325F8995afC2f9CfaFAB9dA"]
+      values.$pastUpgrades.5.1:
+-        ["0x3c294fCF74129d649325F8995afC2f9CfaFAB9dA"]
++        "0x2ccbfd61faf2015457ec43fab0324dca7d75091aba7423fe2990307bbfe32e22"
+      values.$pastUpgrades.4.2:
++        ["0x4fb117dcd6D09abF1a99B502d488A99F5a17e7eC"]
+      values.$pastUpgrades.4.1:
+-        ["0x4fb117dcd6D09abF1a99B502d488A99F5a17e7eC"]
++        "0xb54c93da349065cc82e2ef150f07319b2522709e8fe7acbcb5a5edfdcf46f2d6"
+      values.$pastUpgrades.3.2:
++        ["0xCFba78aecfBcc0B4B748fA58c530D4675BB5D32F"]
+      values.$pastUpgrades.3.1:
+-        ["0xCFba78aecfBcc0B4B748fA58c530D4675BB5D32F"]
++        "0x155d094b0d053837b4e252b69cb10c8157795274da1a9f4325519791c27bd294"
+      values.$pastUpgrades.2.2:
++        ["0x8c63D8E608fF702a92D5908730C91457b0447Ad7"]
+      values.$pastUpgrades.2.1:
+-        ["0x8c63D8E608fF702a92D5908730C91457b0447Ad7"]
++        "0xce34e9483ec139aa6628ed29279b80f163ba9094ce1a848cbe640e438ad2eb20"
+      values.$pastUpgrades.1.2:
++        ["0x2fefbeF4d1445F523941c56349C2414cd5e9675d"]
+      values.$pastUpgrades.1.1:
+-        ["0x2fefbeF4d1445F523941c56349C2414cd5e9675d"]
++        "0xcfbaf71a511297fd7bc1452e5b274c056ba5a3ddf271b59012eff877dd4351b9"
+      values.$pastUpgrades.0.2:
++        ["0xa01d4d1FE18A34902Ac2e4045a5e8f553dDe9685"]
+      values.$pastUpgrades.0.1:
+-        ["0xa01d4d1FE18A34902Ac2e4045a5e8f553dDe9685"]
++        "0xed8a952216607c164559f01d5f90066a7de65fdcc72146e71956865685a8eeab"
+    }
+```
+
 Generated with discovered.json: 0xf51b4b07999bb9f2a5e573a6a35edf7fafccbb26
 
 # Diff at Mon, 14 Oct 2024 10:52:39 GMT:

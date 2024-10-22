@@ -8,6 +8,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('reya')
 
 export const reya: Layer2 = orbitStackL2({
+  createdAt: new UnixTime(1715019483), // 2024-05-06T18:18:03Z
   discovery,
   badges: [Badge.DA.DAC, Badge.RaaS.Gelato],
   display: {

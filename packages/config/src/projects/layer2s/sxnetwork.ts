@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -7,6 +8,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('sxnetwork', 'ethereum')
 
 export const sxnetwork: Layer2 = orbitStackL2({
+  createdAt: new UnixTime(1722430544), // 2024-07-31T12:55:44Z
   discovery,
   nativeToken: 'SX',
   badges: [Badge.DA.DAC, Badge.RaaS.Gelato],

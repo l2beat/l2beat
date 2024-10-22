@@ -8,7 +8,7 @@ import {
   type ScalingProjectPurpose,
   type StageConfig,
 } from '@l2beat/config'
-import { notUndefined } from '@l2beat/shared-pure'
+import { ProjectId, notUndefined } from '@l2beat/shared-pure'
 import {
   createContext,
   useCallback,
@@ -19,7 +19,7 @@ import {
 import { type ScalingArchivedEntry } from '~/server/features/scaling/archived/get-scaling-archived-entries'
 import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
-import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/types'
+import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/get-scaling-finality-entries'
 import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling-activity-entries'
 import { type ScalingLivenessEntry } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
 import { type ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
@@ -91,6 +91,9 @@ export function useScalingFilter() {
 
   const filter = useCallback(
     (entry: ScalingEntry) => {
+      if (entry.id === ProjectId.ETHEREUM) {
+        return true
+      }
       const checks = [
         scalingFilters.rollupsOnly !== false
           ? entry.category?.includes('Rollup')

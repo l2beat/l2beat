@@ -1,6 +1,14 @@
 {
   "ethereum": [
     {
+      "symbol": "SolvBTC",
+      "address": "0x7a56e1c57c7475ccf742a1832b028f0456652f97"
+    },
+    {
+      "symbol": "SolvBTC.BBN",
+      "address": "0xd9D920AA40f578ab794426F5C90F6C731D159DEf"
+    },
+    {
       "symbol": "TRESTLE",
       "address": "0xde8cd13b812bcd82218754a740b27e76ec1e86ad"
     },
@@ -499,6 +507,12 @@
       "coingeckoId": "renzo-restaked-eth"
     },
     {
+      "symbol": "pzETH",
+      "category": "ether",
+      "address": "0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811",
+      "coingeckoId": "renzo-restaked-lst"
+    },
+    {
       "symbol": "FEG",
       "address": "0x389999216860AB8E0175387A0c90E5c52522C945"
     },
@@ -790,7 +804,24 @@
       "address": "0x333000333b26eE30214B4af6419D9ab07a450400"
     },
     {
-      "symbol": "mETH",
+      "symbol": "mETH", // manta eth, needed for fuel tvl (OFT)
+      "category": "ether",
+      "coingeckoId": "manta-meth",
+      "address": "0x8CdF550C04Bc9B9F10938368349C9c8051A772b6"
+    },
+    {
+      "symbol": "mBTC", // manta btc, needed for fuel tvl (OFT)
+      "coingeckoId": "manta-mbtc",
+      "address": "0x4041381e947CFD3D483d67a25C6aa9Dc924250c5"
+    },
+    {
+      "symbol": "mUSD", // manta btc, needed for fuel tvl (OFT)
+      "coingeckoId": "manta-musd",
+      "category": "stablecoin",
+      "address": "0x3f24E1d7a973867fC2A03fE199E5502514E0e11E"
+    },
+    {
+      "symbol": "mETH", // mantle
       "category": "ether",
       "address": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa"
     },

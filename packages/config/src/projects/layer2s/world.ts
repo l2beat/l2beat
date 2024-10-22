@@ -7,6 +7,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('worldchain')
 
 export const world: Layer2 = opStackL2({
+  createdAt: new UnixTime(1729586060), // 2024-10-22T08:34:20Z
   badges: [Badge.RaaS.Alchemy], // not superchain
   additionalPurposes: ['Identity'],
   display: {
@@ -20,10 +21,11 @@ export const world: Layer2 = opStackL2({
         'https://worldchain-mainnet.bridge.alchemy.com/',
         'https://worldcoin.org/download-app',
       ],
-      documentation: [
-        'https://world-id-docs-git-world-chain-docs-main-worldcoin.vercel.app/world-chain/quick-start',
-      ], // non-prod
-      explorers: ['https://worldchain-mainnet.explorer.alchemy.com/'],
+      documentation: ['https://docs.world.org/world-chain/'],
+      explorers: [
+        'https://worldscan.org',
+        'https://worldchain-mainnet.explorer.alchemy.com/',
+      ],
       repositories: ['https://github.com/worldcoin'],
       socialMedia: [
         'https://x.com/worldcoin',

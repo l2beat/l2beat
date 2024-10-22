@@ -4,6 +4,7 @@ import {
   CLICKED_LEFT_MOUSE_BUTTON,
   CLICKED_MIDDLE_MOUSE_BUTTON,
 } from '../utils/constants'
+import { boxContains } from '../utils/containment'
 import { toViewCoordinates } from '../utils/coordinates'
 import { reverseIter } from '../utils/reverseIter'
 import { updateNodePositions } from '../utils/updateNodePositions'
@@ -44,17 +45,19 @@ export function onMouseDown(
     const { x, y } = toViewCoordinates(event, container, state.transform)
 
     for (const node of reverseIter(state.nodes)) {
-      if (
-        x >= node.box.x &&
-        x < node.box.x + node.box.width &&
-        y >= node.box.y &&
-        y < node.box.y + node.box.height
-      ) {
+      if (boxContains(node.box, x, y)) {
         const includes = state.selectedNodeIds.includes(node.simpleNode.id)
 
         let selectedNodeIds: readonly string[]
         let mouseUpAction: State['mouseUpAction']
-        if (!event.shiftKey && !includes) {
+        if (event.metaKey || event.altKey) {
+          selectedNodeIds = []
+
+          const field = node.fields.find((f) => boxContains(f.box, x, y))
+          if (field !== undefined && field.connection !== undefined) {
+            selectedNodeIds = [field.connection.nodeId]
+          }
+        } else if (!event.shiftKey && !includes) {
           selectedNodeIds = [node.simpleNode.id]
         } else if (!event.shiftKey && includes) {
           selectedNodeIds = state.selectedNodeIds

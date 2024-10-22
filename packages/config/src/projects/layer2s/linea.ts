@@ -76,6 +76,7 @@ const withdrawalLimitString = `Currently, there is a general limit of ${utils.fo
 export const linea: Layer2 = {
   type: 'layer2',
   id: ProjectId('linea'),
+  createdAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
   display: {
     name: 'Linea',
     slug: 'linea',

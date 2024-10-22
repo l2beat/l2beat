@@ -6,26 +6,29 @@ import {
   SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
 } from '@l2beat/shared'
 import { EthereumAddress } from '@l2beat/shared-pure'
+import {
+  EVMBlock,
+  EVMTransaction,
+} from '@l2beat/shared/build/clients/rpc/types'
 import { expect, mockFn, mockObject } from 'earl'
-import { providers } from 'ethers'
 import { RpcUopsAnalyzer } from './RpcUopsAnalyzer'
 
 describe(RpcUopsAnalyzer.name, () => {
   describe(RpcUopsAnalyzer.prototype.analyzeBlock.name, () => {
     it('should correctly sum the number of txs and uops', async () => {
       const analyzer = new RpcUopsAnalyzer()
-      const tx1 = mockObject<providers.TransactionResponse>()
-      const tx2 = mockObject<providers.TransactionResponse>()
-      const tx3 = mockObject<providers.TransactionResponse>()
+      const tx1 = mockObject<EVMTransaction>()
+      const tx2 = mockObject<EVMTransaction>()
+      const tx3 = mockObject<EVMTransaction>()
 
       analyzer.mapTransaction = mockFn()
         .returnsOnce(1)
         .returnsOnce(2)
         .returnsOnce(4)
 
-      const block = {
+      const block = mockObject<EVMBlock>({
         transactions: [tx1, tx2, tx3],
-      }
+      })
 
       const result = await analyzer.analyzeBlock(block)
       expect(result.transactionsLength).toEqual(3)
@@ -36,7 +39,7 @@ describe(RpcUopsAnalyzer.name, () => {
   describe(RpcUopsAnalyzer.prototype.mapTransaction.name, () => {
     it('should handle ERC-4337:EntryPoint0.6.0', async () => {
       const analyzer = new RpcUopsAnalyzer()
-      const tx = mockObject<providers.TransactionResponse>({
+      const tx = mockObject<EVMTransaction>({
         to: ENTRY_POINT_ADDRESS_0_6_0,
         data: '0x1234abcd',
       })
@@ -49,7 +52,7 @@ describe(RpcUopsAnalyzer.name, () => {
 
     it('should handle ERC-4337:EntryPoint0.7.0', async () => {
       const analyzer = new RpcUopsAnalyzer()
-      const tx = mockObject<providers.TransactionResponse>({
+      const tx = mockObject<EVMTransaction>({
         to: ENTRY_POINT_ADDRESS_0_7_0,
         data: '0x1234abcd',
       })
@@ -62,7 +65,7 @@ describe(RpcUopsAnalyzer.name, () => {
 
     it('should handle Safe:MultiSendCallOnly1.3.0', async () => {
       const analyzer = new RpcUopsAnalyzer()
-      const tx = mockObject<providers.TransactionResponse>({
+      const tx = mockObject<EVMTransaction>({
         to: SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
         data: '0x1234abcd',
       })
@@ -75,7 +78,7 @@ describe(RpcUopsAnalyzer.name, () => {
 
     it('should handle Safe:Singleton1.3.0', async () => {
       const analyzer = new RpcUopsAnalyzer()
-      const tx = mockObject<providers.TransactionResponse>({
+      const tx = mockObject<EVMTransaction>({
         to: EthereumAddress.random(),
         data: `${SAFE_EXEC_TRANSACTION_SELECTOR}1234abcd`,
       })
@@ -88,7 +91,7 @@ describe(RpcUopsAnalyzer.name, () => {
 
     it('should handle unrecognized tx', async () => {
       const analyzer = new RpcUopsAnalyzer()
-      const tx = mockObject<providers.TransactionResponse>({
+      const tx = mockObject<EVMTransaction>({
         to: EthereumAddress.random(),
         data: '0x1234abcd',
       })

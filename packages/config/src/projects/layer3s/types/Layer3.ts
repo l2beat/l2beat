@@ -23,8 +23,8 @@ export interface Layer3 {
   type: 'layer3'
   /** Unique, readable id, will be used in DB. DO NOT EDIT THIS PROPERTY */
   id: ProjectId
-  /** Date of creation of the file (not the project), required by test for upcoming projects */
-  createdAt?: UnixTime
+  /** Date of creation of the file (not the project) */
+  createdAt: UnixTime
   /** Is this layer3 an upcoming rollup? */
   isUpcoming?: boolean
   /** Is this layer3 archived? */

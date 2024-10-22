@@ -53,6 +53,12 @@ export function updateNodePositions(state: State): State {
           }
           return {
             ...field,
+            box: {
+              x: box.x,
+              y: box.y + HEADER_HEIGHT + BORDER_WIDTH + index * FIELD_HEIGHT,
+              width: box.width,
+              height: FIELD_HEIGHT,
+            },
             connection: {
               nodeId: field.connection.nodeId,
               highlighted: state.selectedNodeIds.includes(

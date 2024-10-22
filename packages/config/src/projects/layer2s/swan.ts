@@ -6,6 +6,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('swan')
 
 export const swan: Layer2 = opStackL2({
+  createdAt: new UnixTime(1722275591), // 2024-07-29T17:53:11Z
   discovery,
   additionalPurposes: ['AI', 'Storage'],
   display: {

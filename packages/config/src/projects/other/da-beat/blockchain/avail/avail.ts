@@ -87,6 +87,7 @@ export const avail: DaLayer = {
   },
   bridges: [
     NO_BRIDGE({
+      createdAt: new UnixTime(1725372159), // 2024-09-03T14:02:39Z
       layer: 'Avail',
       description:
         'The risk profile in this page refers to scaling solutions that do not integrate with a data availability bridge.',
