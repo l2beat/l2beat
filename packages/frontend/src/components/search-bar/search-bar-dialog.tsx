@@ -104,7 +104,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                 return (
                   <CommandItem
                     key={project.id}
-                    className="gap-2 rounded-lg"
+                    className="gap-2 rounded-lg cursor-pointer"
                     onSelect={() => {
                       setOpen(false)
                       setValue('')
