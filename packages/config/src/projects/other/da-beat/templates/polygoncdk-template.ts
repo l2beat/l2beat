@@ -37,6 +37,7 @@ type Optionals = {
     description?: DacBridge['display']['description']
   } & Pick<
     DacBridge,
+    | 'createdAt'
     | 'chain'
     | 'membersCount'
     | 'knownMembers'

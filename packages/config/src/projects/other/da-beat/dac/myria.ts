@@ -1,4 +1,4 @@
-import { ChainId } from '@l2beat/shared-pure'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { getCommittee } from '../../../../discovery/starkware'
 import { myria } from '../../../layer2s/myria'
@@ -11,6 +11,7 @@ const committee = getCommittee(discovery)
 export const myriaDac = StarkexDAC({
   project: myria,
   bridge: {
+    createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     contracts: {
       addresses: [
         discovery.getContractDetails(

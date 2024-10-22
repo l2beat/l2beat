@@ -27,18 +27,11 @@ export function ScalingActivityTable({
   rollups,
   customSortedRowModel,
 }: Props) {
-  const filter = useScalingFilter()
-
-  const filteredEntries = useMemo(
-    () => entries.filter(filter),
-    [entries, filter],
-  )
-
   const table = useTable({
     columns: getScalingActivityColumns({
       customActivityIndexing: !!customSortedRowModel,
     }),
-    data: filteredEntries,
+    data: entries,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: customSortedRowModel ?? getSortedRowModel(),
     initialState: {

@@ -38,6 +38,7 @@ const challengePeriod = discovery.getContractValue<number>(
 
 export const fuel: Layer2 = {
   id: ProjectId('fuel'),
+  createdAt: new UnixTime(1700571075), // 2023-11-21T12:51:15Z
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (blobs)'],
     bridge: { type: 'Enshrined' },
@@ -47,7 +48,7 @@ export const fuel: Layer2 = {
     name: 'Fuel Ignition',
     slug: 'fuel',
     description:
-      'Fuel plans to build the fastest execution layer for the modular blockchain stack.',
+      'Fuel Ignition is a high-performance Ethereum L2 built on FuelVM and the Sway language.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
     links: {
@@ -303,4 +304,13 @@ export const fuel: Layer2 = {
       },
     ],
   },
+  milestones: [
+    {
+      name: 'Fuel Ignition Mainnet is Live',
+      date: '2024-10-16T00:00:00Z',
+      link: 'https://x.com/fuel_network/status/1846536888003313786',
+      description: 'Fuel Ignition announces its official launch.',
+      type: 'general',
+    },
+  ],
 }

@@ -73,6 +73,7 @@ const CHALLENGE_FEE = utils.formatEther(
 export const lightlink: Bridge = {
   type: 'bridge',
   id: ProjectId('lightlink'),
+  createdAt: new UnixTime(1718443080), // 2024-06-15T09:18:00Z
   display: {
     name: 'LightLink',
     slug: 'lightlink',
