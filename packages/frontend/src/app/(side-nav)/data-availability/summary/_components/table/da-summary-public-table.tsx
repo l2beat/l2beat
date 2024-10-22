@@ -1,5 +1,9 @@
 'use client'
-import { type Row, getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import {
+  type Row,
+  getCoreRowModel,
+  getSortedRowModel,
+} from '@tanstack/react-table'
 import { TableCell, TableRow } from '~/components/table/table'
 import { EM_DASH } from '~/consts/characters'
 import { useTable } from '~/hooks/use-table'
