@@ -1,8 +1,8 @@
 {
   "name": "optimism",
   "chain": "ethereum",
-  "blockNumber": 20948093,
-  "configHash": "0x3c6748f4154b3403666ecc1a409d2ec7f2022a49b905a7e173a0e7e665295c30",
+  "blockNumber": 21019672,
+  "configHash": "0x86147f5081c2dfd587718e6ad33be12fb88346c749dee8b704ea91030022f217",
   "contracts": [
     {
       "name": "LivenessModule",
@@ -402,7 +402,7 @@
         ],
         "$upgradeCount": 10,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292758516",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292760073",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -887,13 +887,13 @@
         "name": "Wrapped Ether",
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "symbol": "WETH",
-        "totalSupply": "20502782000000000000",
+        "totalSupply": "20167594000000000000",
         "version": "1.1.0"
       },
       "derivedName": "DelayedWETH"
     },
     {
-      "name": "FoundationMultisig_1",
+      "name": "OPFMultisig_1",
       "address": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -1061,7 +1061,7 @@
       ]
     },
     {
-      "name": "FoundationMultisig_2",
+      "name": "OPFMultisig_2",
       "address": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -1311,7 +1311,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 20948084
+          "prevBlockNum": 21019648
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1463,7 +1463,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 2989,
+        "gameCount": 3227,
         "gameImpls": [
           "0xA6f3DFdbf4855a43c529bc42EDE96797252879af",
           "0x050ed6F6273c7D836a111E42153BC00D0380b87d",

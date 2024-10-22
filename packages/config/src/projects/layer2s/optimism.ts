@@ -140,6 +140,11 @@ const permissionlessGameMaxClockExtension =
   oracleChallengePeriod + // at MAX_GAME_DEPTH - 1
   permissionlessGameClockExtension * (permissionlessGameMaxDepth - 3) // the rest, excluding also the last depth
 
+const securityCouncilStats = discovery.getMultisigStats(
+  'SecurityCouncilMultisig',
+)
+const OPFStats = discovery.getMultisigStats('OPFMultisig_1')
+
 export const optimism: Layer2 = {
   type: 'layer2',
   id: ProjectId('optimism'),
@@ -356,6 +361,7 @@ export const optimism: Layer2 = {
         'There is no exit window for users to exit in case of unwanted regular upgrades as they are initiated by the Security Council with instant upgrade power and without proper notice.',
       sentiment: 'bad',
       definingMetric: -FINALIZATION_PERIOD_SECONDS, // 0-7 days
+      secondLine: `${securityCouncilStats} Security Council + ${OPFStats} (OPF) msig`,
     },
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
@@ -568,7 +574,7 @@ export const optimism: Layer2 = {
       'Address allowed to pause withdrawals or blacklist dispute games in case of an emergency. It is controlled by the Security Council multisig, but a module allows the Foundation to act through it. The Security Council can disable the module if the Foundation acts maliciously.',
     ),
     ...discovery.getMultisigPermission(
-      'FoundationMultisig_1',
+      'OPFMultisig_1',
       'Member of the SuperchainProxyAdminOwner.',
     ),
     ...discovery.getMultisigPermission(
@@ -582,7 +588,7 @@ export const optimism: Layer2 = {
       ],
     ),
     ...discovery.getMultisigPermission(
-      'FoundationMultisig_2',
+      'OPFMultisig_2',
       'This address is the owner of the following contracts: SystemConfig.',
     ),
     discovery.contractAsPermissioned(

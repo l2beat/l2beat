@@ -765,6 +765,15 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     templateVars.display.category ??
     (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup')
 
+  const upgraderDescription = (()=>{
+    const upgradersProxy = templateVars.discovery.getUpgraders(templateVars.rollupProxy.address)
+    assert(upgradersProxy.length === 1, 'Expected exactly one upgrader for the RollupProxy')
+    const upgrader
+    const upgradersBridge = templateVars.discovery.getUpgraders(templateVars.bridge.address)
+    assert(upgradersBridge.length === 1, 'Expected exactly one upgrader for the Bridge')
+    return ""
+  })()
+
   return {
     type: 'layer2',
     ...orbitStackCommon(templateVars, ETHEREUM_EXPLORER_URL, 12),
@@ -874,7 +883,10 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           : RISK_VIEW.DATA_ON_CHAIN,
       exitWindow:
         templateVars.nonTemplateRiskView?.exitWindow ??
-        RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+        {
+          ...RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+          secondLine: upgraderDescription
+        }
       sequencerFailure:
         templateVars.nonTemplateRiskView?.sequencerFailure ??
         RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),

@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x44334edef97827faf4ff59a189c466c3fe125b89
+Generated with discovered.json: 0x843371d9e4ae712d8d276a9a7b262c9576132dd3
 
-# Diff at Tue, 22 Oct 2024 07:16:07 GMT:
+# Diff at Tue, 22 Oct 2024 07:37:36 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@6a7866608333e54b0b2ab51f05e30bac1278f96a block: 20948093
-- current block number: 20948093
+- current block number: 21019672
 
 ## Description
 
@@ -22,6 +22,24 @@ discovery. Values are for block 20948093 (main branch discovery), not current.
       description:
 -        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."
 +        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa."
+    }
+```
+
+```diff
+    contract OPFMultisig_1 (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      name:
+-        "FoundationMultisig_1"
++        "OPFMultisig_1"
+    }
+```
+
+```diff
+    contract OPFMultisig_2 (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      name:
+-        "FoundationMultisig_2"
++        "OPFMultisig_2"
     }
 ```
 
