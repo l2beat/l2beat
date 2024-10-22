@@ -38,68 +38,44 @@ describe(StarknetCounter.name, () => {
 
   describe(StarknetCounter.prototype.countForBlocks.name, () => {
     it('should return correct stats', () => {
-      //   const end = UnixTime.now()
-      //   const start = end.add(-1, 'hours')
-      //   const mockBlocks: EVMBlock[] = [
-      //     createBlock(1, start),
-      //     createBlock(2),
-      //     createBlock(3, end),
-      //   ]
-      //   const counter = new RpcCounter()
-      //   const mockSmartAccountUsageForBlock1 = new Map([
-      //     ['execute(address,uint256,bytes)', 2],
-      //   ])
-      //   const mockSmartAccountUsageForBlock2 = new Map([
-      //     ['execute(address,uint256,bytes)', 1],
-      //     ['executeBatch(address[],bytes[])', 1],
-      //   ])
-      //   const mockSmartAccountUsageForBlock3 = new Map([
-      //     ['execute(address,uint256,bytes)', 1],
-      //     ['unknown', 1],
-      //   ])
-      //   counter.generateSmartAccountUsageForBlock = mockFn()
-      //     .returnsOnce(mockSmartAccountUsageForBlock1)
-      //     .returnsOnce(mockSmartAccountUsageForBlock2)
-      //     .returnsOnce(mockSmartAccountUsageForBlock3)
-      //   counter.mapTransaction = mockFn()
-      //     .returnsOnce(createCountedTransaction(2, false))
-      //     .returnsOnce(createCountedTransaction(1, false))
-      //     .returnsOnce(createCountedTransaction(3, true))
-      //     .returnsOnce(createCountedTransaction(3, false))
-      //     .returnsOnce(createCountedTransaction(1, true))
-      //     .returnsOnce(createCountedTransaction(1, false))
-      //   const result = counter.countForBlocks(mockBlocks)
-      //   expect(result).toEqual({
-      //     dateStart: start.toDate(),
-      //     dateEnd: end.toDate(),
-      //     numberOfTransactions: 6,
-      //     numberOfOperations: 11,
-      //     topBlocks: [
-      //       {
-      //         number: 3,
-      //         ratio: 1,
-      //         includesBatch: true,
-      //         includesUnknown: true,
-      //       },
-      //       {
-      //         number: 2,
-      //         ratio: 3,
-      //         includesBatch: true,
-      //         includesUnknown: false,
-      //       },
-      //       {
-      //         number: 1,
-      //         ratio: 1.5,
-      //         includesBatch: false,
-      //         includesUnknown: false,
-      //       },
-      //     ],
-      //     smartAccountUsage: [
-      //       { signature: 'execute(address,uint256,bytes)', count: 4 },
-      //       { signature: 'executeBatch(address[],bytes[])', count: 1 },
-      //       { signature: 'unknown', count: 1 },
-      //     ],
-      //   })
+      const end = UnixTime.now()
+      const start = end.add(-1, 'hours')
+      const mockBlocks: Block[] = [
+        createBlock(1, start),
+        createBlock(2),
+        createBlock(3, end),
+      ]
+      const counter = new StarknetCounter()
+
+      counter.getOperationsCount = mockFn()
+        .returnsOnce(1)
+        .returnsOnce(2)
+        .returnsOnce(2)
+        .returnsOnce(3)
+        .returnsOnce(3)
+        .returnsOnce(4)
+
+      const result = counter.countForBlocks(mockBlocks)
+      expect(result).toEqual({
+        dateStart: start.toDate(),
+        dateEnd: end.toDate(),
+        numberOfTransactions: 6,
+        numberOfOperations: 15,
+        topBlocks: [
+          {
+            number: 3,
+            ratio: 3.5,
+          },
+          {
+            number: 2,
+            ratio: 2.5,
+          },
+          {
+            number: 1,
+            ratio: 1.5,
+          },
+        ],
+      })
     })
   })
 
