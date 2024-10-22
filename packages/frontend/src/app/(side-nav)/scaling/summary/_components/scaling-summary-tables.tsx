@@ -10,10 +10,7 @@ import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { MainPageCard } from '~/components/main-page-card'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { type RecategorisedScalingEntry } from '~/utils/group-by-main-categories'
-import {
-  ScalingFilterContextProvider,
-  useScalingFilter,
-} from '../../_components/scaling-filter-context'
+import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingTvlFilters } from '../../_components/scaling-tvl-filters'
 import { OthersComingSoonNotice } from './table/others-coming-soon-notice'
 import { ScalingSummaryRollupsTable } from './table/scaling-summary-rollups-table'
@@ -68,11 +65,12 @@ export function ScalingSummaryTables(props: Props) {
     )
   }
 
+  const filteredEntries = props.entries.filter(includeFilters)
+  console.log(filteredEntries)
   return (
-    <ScalingFilterContextProvider>
-      <MainPageCard className="md:mt-6">
-        <ScalingSummaryTable entries={props.entries} />
-      </MainPageCard>
-    </ScalingFilterContextProvider>
+    <MainPageCard className="md:mt-6 space-y-3 md:space-y-6">
+      <ScalingTvlFilters items={filteredEntries} showRollupsOnly />
+      <ScalingSummaryTable entries={filteredEntries} />
+    </MainPageCard>
   )
 }
