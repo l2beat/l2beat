@@ -11,7 +11,7 @@ import { GlossaryContextProvider } from '../components/markdown/glossary-context
 import { ProgressBar } from '../components/progress-bar'
 import { roboto } from '../fonts'
 import '../styles/globals.css'
-import HalloweenGhost from '~/components/halloween-ghost'
+import HalloweenCursor from '~/components/halloween-cursor'
 
 export const metadata: Metadata = getDefaultMetadata()
 
@@ -51,7 +51,7 @@ export default async function RootLayout({
                     matches: [term.data.term, ...(term.data.match ?? [])],
                   }))}
                 >
-                  <HalloweenGhost />
+                  <HalloweenCursor />
                   {children}
                   <ProgressBar />
                 </GlossaryContextProvider>
