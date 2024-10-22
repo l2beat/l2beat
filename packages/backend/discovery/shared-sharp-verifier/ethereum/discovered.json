@@ -497,34 +497,42 @@
         "$pastUpgrades": [
           [
             "2021-10-24T13:06:25.000Z",
+            "0x80ebb7a22a207d00e26464db2f8a719d43eb3b836740a693aad13d5ef922f5e4",
             ["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
           ],
           [
             "2022-05-02T16:49:21.000Z",
+            "0x604e235c6207b7909f6fc8dc0bd86b410e935dcf2f6f6bd37a5567a89379353a",
             ["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
           ],
           [
             "2022-08-07T10:50:09.000Z",
+            "0xc31b74237a0c68aa1b95fe2ed28ad54cf6d7df42a8beab1ea947532c95dda20a",
             ["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
           ],
           [
             "2023-03-06T12:34:23.000Z",
+            "0xbaa8ffb1b7e5177dbf75de753b9b2ff2fc313b244ff910cfd6d7f1f6254b6e1a",
             ["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
           ],
           [
             "2024-02-26T09:25:23.000Z",
+            "0x31e3caf3940dde662a1e98580259f79963dc5e098793b6519311e201d4e19312",
             ["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
           ],
           [
             "2024-02-26T09:25:23.000Z",
+            "0x31e3caf3940dde662a1e98580259f79963dc5e098793b6519311e201d4e19312",
             ["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
           ],
           [
             "2024-07-28T10:07:47.000Z",
+            "0x7c71592ea4c455371365d843f1a21bbf647aad7d6fae12f7187650ce24805f00",
             ["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
           ],
           [
             "2024-07-28T20:08:35.000Z",
+            "0x4b25445a8e86b4620b9a19f747122b518d8973975ea73aa474b210395e277b66",
             ["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
           ]
         ],

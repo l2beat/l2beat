@@ -15,6 +15,7 @@
     --surface-primary: #fafafa;
     --surface-secondary: #e6e7ec;
     --surface-tertiary: #ccd0da;
+    --divider: #ccd0da;
   }
 
   .dark {
@@ -26,6 +27,7 @@
     --surface-primary: #1f2025;
     --surface-secondary: #393c43;
     --surface-tertiary: #464a52;
+    --divider: #333333;
   }
 }
 
@@ -56,7 +58,7 @@
   }
 
   body:has(.sidebar) {
-    @apply bg-surface-primary md:bg-background;
+    @apply bg-background;
   }
 
   /* 
@@ -69,6 +71,14 @@
   }
   body:has(.sidebar) [data-role="select-content"] [role="option"] {
     @apply focus:bg-surface-tertiary;
+  }
+  body:has(.sidebar.main-page-card) [data-role="select-content"] {
+    @apply bg-surface-primary;
+  }
+  body:has(.sidebar.main-page-card)
+    [data-role="select-content"]
+    [role="option"] {
+    @apply focus:bg-surface-secondary;
   }
 }
 

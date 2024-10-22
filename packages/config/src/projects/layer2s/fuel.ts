@@ -44,7 +44,7 @@ export const fuel: Layer2 = {
     mode: 'Transaction data (compressed)',
   }),
   display: {
-    name: 'Fuel',
+    name: 'Fuel Ignition',
     slug: 'fuel',
     description:
       'Fuel plans to build the fastest execution layer for the modular blockchain stack.',

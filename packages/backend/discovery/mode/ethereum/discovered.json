@@ -11,9 +11,7 @@
       "sourceHashes": [
         "0x998654cb64c7fc216505bdb3322b20e7d7c95704005228ad1f878bc631c4af8d"
       ],
-      "descriptions": [
-        "used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig"
-      ],
+      "description": "used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig",
       "receivedPermissions": [
         {
           "permission": "guard",
@@ -108,9 +106,7 @@
         "0x482ec6e91304ac39a3fb4505634427bddfddee23b8e93a4f7f995ca5083ae3c3"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Used to bridge ERC-721 tokens from host chain to this chain."
-      ],
+      "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -130,14 +126,17 @@
         "$pastUpgrades": [
           [
             "2023-11-16T20:47:11.000Z",
+            "0xb29209e447dc6b3a0e8b8980a5412f3f964d63e500b75ec78773454d948e2b31",
             ["0x8b91Af069928bA6591c950354d1EA29e08192Bf8"]
           ],
           [
             "2024-04-19T18:22:11.000Z",
+            "0xfd62d0d284c8655e916a5cdd2472b461ed5686ab1414b834a1ffdb06a44f63b4",
             ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
           ],
           [
             "2024-04-19T18:22:11.000Z",
+            "0xfd62d0d284c8655e916a5cdd2472b461ed5686ab1414b834a1ffdb06a44f63b4",
             ["0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d"]
           ]
         ],
@@ -225,9 +224,7 @@
         "0x025c187b0231be4785898f25f98d749f953f5d06781772aef242812e2ecf52e3"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
-      ],
+      "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
       "issuedPermissions": [
         {
           "permission": "challenge",
@@ -263,14 +260,17 @@
         "$pastUpgrades": [
           [
             "2023-11-16T20:47:11.000Z",
+            "0x735c6ee808c97d94ef495d8c16bf5c7bbdbec39a99be006ab5e623b0027fb376",
             ["0x6093023a4A7E6873EDFb02B4bCE48c53FD310EEc"]
           ],
           [
             "2024-04-19T18:22:11.000Z",
+            "0xfd62d0d284c8655e916a5cdd2472b461ed5686ab1414b834a1ffdb06a44f63b4",
             ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
           ],
           [
             "2024-04-19T18:22:11.000Z",
+            "0xfd62d0d284c8655e916a5cdd2472b461ed5686ab1414b834a1ffdb06a44f63b4",
             ["0xF243BEd163251380e78068d317ae10f26042B292"]
           ]
         ],
@@ -389,9 +389,7 @@
       "sourceHashes": [
         "0xdc86a850f11dc2b5c0472a05d0e3c14f239baf2c3b1ab19631591b0827985380"
       ],
-      "descriptions": [
-        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
-      ],
+      "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -535,9 +533,7 @@
         "0xdf9a11b46747139bfe0135df8a65a2728a2dbd60a689e2398c45627915cdd752"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
-      ],
+      "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -568,14 +564,17 @@
         "$pastUpgrades": [
           [
             "2023-11-16T20:47:11.000Z",
+            "0x8473b263561fb96ae9e89d6254e2bdda4bcb7b3d75442c49b4528defab1bf382",
             ["0x951754B08C52b2aC5d5a2aF1D52C2D12aED5Bcaf"]
           ],
           [
             "2024-04-19T18:22:11.000Z",
+            "0xfd62d0d284c8655e916a5cdd2472b461ed5686ab1414b834a1ffdb06a44f63b4",
             ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
           ],
           [
             "2024-04-19T18:22:11.000Z",
+            "0xfd62d0d284c8655e916a5cdd2472b461ed5686ab1414b834a1ffdb06a44f63b4",
             ["0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1"]
           ]
         ],
@@ -636,9 +635,7 @@
         "0x4c5ac4e53576924cabbd2a471f368a541bc3f4b1f53fa41a389692fcc62f6176"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."
-      ],
+      "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -658,14 +655,17 @@
         "$pastUpgrades": [
           [
             "2023-11-16T20:47:11.000Z",
+            "0x8a428a8fcd89e1f7bd5dcbe87d31ba8f81a0d857bbcf1a7bf9a1a030b37dbe7c",
             ["0xc0c6A811BBf07FA01b946F1C46a9A94c2eE8C73E"]
           ],
           [
             "2024-04-19T18:22:11.000Z",
+            "0xfd62d0d284c8655e916a5cdd2472b461ed5686ab1414b834a1ffdb06a44f63b4",
             ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
           ],
           [
             "2024-04-19T18:22:11.000Z",
+            "0xfd62d0d284c8655e916a5cdd2472b461ed5686ab1414b834a1ffdb06a44f63b4",
             ["0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846"]
           ]
         ],
@@ -684,9 +684,7 @@
         "0x1010ff7f40ab4d53e6d9996aefa04423dabe9d0e22fac2d02b330ed3aa2c5740"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
-      ],
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.",
       "categories": ["Gateways&Escrows"],
       "issuedPermissions": [
         {
@@ -759,9 +757,7 @@
         "0xe35fb7bc0433439337b3eadda3d6fb7991918162f62a337a695e8c7f948cdd35"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
-      ],
+      "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
       "issuedPermissions": [
         {
           "permission": "guard",
@@ -820,30 +816,37 @@
         "$pastUpgrades": [
           [
             "2023-11-16T20:47:11.000Z",
+            "0x1143694680c231c1cae10bbffc56cdd0643ab0efb3e433a4aced170af72fc37e",
             ["0xad3DC277d3242938F8Be18f0560e3d9B9988C46A"]
           ],
           [
             "2024-04-19T18:22:11.000Z",
+            "0xfd62d0d284c8655e916a5cdd2472b461ed5686ab1414b834a1ffdb06a44f63b4",
             ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
           ],
           [
             "2024-04-19T18:22:11.000Z",
+            "0xfd62d0d284c8655e916a5cdd2472b461ed5686ab1414b834a1ffdb06a44f63b4",
             ["0x2D778797049FE9259d947D1ED8e5442226dFB589"]
           ],
           [
             "2024-08-01T21:20:59.000Z",
+            "0xa313efb0fa16910e1b0b17dc5ad9890de6d45a95f12c78b2d3ae312daf212785",
             ["0x57e5AB742DDa19b60Fa2A43275722296B05A661A"]
           ],
           [
             "2024-08-01T21:20:59.000Z",
+            "0xa313efb0fa16910e1b0b17dc5ad9890de6d45a95f12c78b2d3ae312daf212785",
             ["0x2D778797049FE9259d947D1ED8e5442226dFB589"]
           ],
           [
             "2024-08-01T21:25:23.000Z",
+            "0x9154d2b581e84b15615b4a857476af9fa6b682622d6e30e7c28bae6331a5fe39",
             ["0x57e5AB742DDa19b60Fa2A43275722296B05A661A"]
           ],
           [
             "2024-08-01T21:25:23.000Z",
+            "0x9154d2b581e84b15615b4a857476af9fa6b682622d6e30e7c28bae6331a5fe39",
             ["0x2D778797049FE9259d947D1ED8e5442226dFB589"]
           ]
         ],
@@ -874,9 +877,7 @@
         "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
-      ],
+      "description": "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
       "categories": ["Upgrades&Governance"],
       "issuedPermissions": [
         {
@@ -935,14 +936,17 @@
         "$pastUpgrades": [
           [
             "2024-01-22T20:19:59.000Z",
+            "0x8ba0e42b89cde22310b644ed30fd44e4a348619a165a54c908e7dc341e9bbd0c",
             ["0x53c165169401764778F780a69701385eb0FF19B7"]
           ],
           [
             "2024-06-10T18:29:23.000Z",
+            "0xe361c0d4ae3aebc94b3f281ee372fbb1cbdb0c33ca8b1b35e7f3b009b2fcbdb0",
             ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
           ],
           [
             "2024-06-10T18:29:23.000Z",
+            "0xe361c0d4ae3aebc94b3f281ee372fbb1cbdb0c33ca8b1b35e7f3b009b2fcbdb0",
             ["0x53c165169401764778F780a69701385eb0FF19B7"]
           ]
         ],
@@ -963,9 +967,7 @@
         "0x1cc8a3b7de3d2c54c4706bb3f3015714d3b56647fc9fbfd6f8b068f5f63c1c25"
       ],
       "proxyType": "resolved delegate proxy",
-      "descriptions": [
-        "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
-      ],
+      "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "categories": ["Core"],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1700167631,
@@ -975,18 +977,22 @@
         "$pastUpgrades": [
           [
             "2023-11-16T20:47:11.000Z",
+            "0x58e9f85e8dff61e2d9b22bf79fc2052bc497cc5dd18a8e72e99d436fe229acb6",
             ["0x95bDCA6c8EdEB69C98Bd5bd17660BaCef1298A6f"]
           ],
           [
             "2023-11-16T20:47:11.000Z",
+            "0xad662056dcd7390e217500699f06939418ccd55cf0ee8c5839cc5f5e90b84292",
             ["0x14DdD08c0e28764FC89a266eC95A93619b0EE835"]
           ],
           [
             "2024-04-19T18:22:11.000Z",
+            "0xfd62d0d284c8655e916a5cdd2472b461ed5686ab1414b834a1ffdb06a44f63b4",
             ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
           ],
           [
             "2024-04-19T18:22:11.000Z",
+            "0xfd62d0d284c8655e916a5cdd2472b461ed5686ab1414b834a1ffdb06a44f63b4",
             ["0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"]
           ]
         ],
@@ -1127,9 +1133,7 @@
       "sourceHashes": [
         "0x9624d67fb3738cf1ce1e1f48e2cf433e9373345386943d12f1d751d6b8475cd6"
       ],
-      "descriptions": [
-        "allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe."
-      ],
+      "description": "allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe.",
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -1153,9 +1157,7 @@
         "0xe5211497d15a7ea75577cf992ab6093dd0f6083f45c955f0136737810e44c205"
       ],
       "displayName": "AddressManager",
-      "descriptions": [
-        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
-      ],
+      "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
           "permission": "configure",

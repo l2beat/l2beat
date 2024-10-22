@@ -13,9 +13,7 @@
         "0x373b0cddb16922a75ab98dfce0c4913a0970c018bfa1d55d123d4ff6511179a6"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
-      ],
+      "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
       "issuedPermissions": [
         {
           "permission": "challenge",
@@ -51,6 +49,7 @@
         "$pastUpgrades": [
           [
             "2023-12-21T07:31:23.000Z",
+            "0x0c0f24dc018c3729da70c02c63d573dfac8fe99a9937b31da75b64d3ec98c88e",
             ["0x394317B191f5c7A371e74594776B1EfDc33d10D6"]
           ]
         ],
@@ -220,9 +219,7 @@
         "0x8c104e5ac734cb73cbe75544fcd4f1f7f3bfefd5b61947c5d716d02c89866d64"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
-      ],
+      "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -253,6 +250,7 @@
         "$pastUpgrades": [
           [
             "2023-12-21T03:15:11.000Z",
+            "0xf5b7950924dfea5813bc7b14b1e0d19c87cd862ee9717f7d24806b92e57c5ada",
             ["0x01D5303F326B992845eef2782D4c9a7c6DdE4470"]
           ]
         ],
@@ -312,9 +310,7 @@
         "0xf43d12b96b6c43853b7001daea5e33f38797c6847d565052a0edb0b191a665da"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Used to bridge ERC-721 tokens from host chain to this chain."
-      ],
+      "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -334,6 +330,7 @@
         "$pastUpgrades": [
           [
             "2023-12-21T07:23:35.000Z",
+            "0x47bceb663a46c76e798b58969b6d6154ea215e03822c2a76faf0caeb34fb2216",
             ["0xc4550911Df26E604aA560dee6a9b66D0CA933482"]
           ]
         ],
@@ -354,9 +351,7 @@
         "0xcec1afd157e4ccd04657ae8c428d6fc2aef84d29e92d58582dc06dcb4f0f2074"
       ],
       "proxyType": "resolved delegate proxy",
-      "descriptions": [
-        "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
-      ],
+      "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "categories": ["Core"],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1703048687,
@@ -366,10 +361,12 @@
         "$pastUpgrades": [
           [
             "2023-12-20T05:04:47.000Z",
+            "0x2fcb412e58cba3af863cd4a0397c65bf6347a726aae1d698b79aa30cdaf877fa",
             ["0x9BFfA66a8FcAAd7AC9ea7c7d4b9a6fc46777022d"]
           ],
           [
             "2023-12-21T07:29:11.000Z",
+            "0x99fc5a58e224a9b519ed673d54b977070cb7093fe0aeb7ac5b2a93b1a541727b",
             ["0xc5c3DF92714aAf510F8dD9a4c9C67D35f7d7376b"]
           ]
         ],
@@ -400,9 +397,7 @@
         "0x97db8b5a9741ddac67a8c6409fa1e545a9db896a6118f08c76f866f1ff767024"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
-      ],
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.",
       "categories": ["Gateways&Escrows"],
       "issuedPermissions": [
         {
@@ -440,9 +435,7 @@
         "0x77dff740c401aa2b4cdb05f0661e7578cdb0cd0aebfd642fb728b3c6a389253c"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
-      ],
+      "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
       "issuedPermissions": [
         {
           "permission": "guard",
@@ -468,6 +461,7 @@
         "$pastUpgrades": [
           [
             "2023-12-21T07:32:47.000Z",
+            "0x8a473670c3340bb6aa707beddf92664cf6d4ac8c79b785a6a0963531ba0e066d",
             ["0x3fe449Ef47228F03f979F9D955196494243cdf7E"]
           ]
         ],
@@ -497,9 +491,7 @@
         "0x00d8fbe998d6c51cacd085e73a9c76bea61e6cafe5ec4e669d62cf085374ccff"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."
-      ],
+      "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -519,6 +511,7 @@
         "$pastUpgrades": [
           [
             "2023-12-21T07:25:47.000Z",
+            "0xabefa8137a3edd703261a62514df2180cfe8251dea6867ab87386a0eb2f94281",
             ["0xe1863A873f61fDD16560cAa7692a2A994b51E76A"]
           ]
         ],
@@ -535,9 +528,7 @@
       "sourceHashes": [
         "0xdc86a850f11dc2b5c0472a05d0e3c14f239baf2c3b1ab19631591b0827985380"
       ],
-      "descriptions": [
-        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
-      ],
+      "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
           "permission": "configure",

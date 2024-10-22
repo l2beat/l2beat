@@ -29,7 +29,12 @@
     },
     "FuelMessagePortal": {
       "ignoreMethods": ["proxiableUUID", "messageSender"],
-      "ignoreInWatchMode": ["getNextOutgoingMessageNonce", "totalDeposited"],
+      "ignoreInWatchMode": [
+        "getNextOutgoingMessageNonce",
+        "totalDeposited",
+        "currentPeriodEnd",
+        "currentPeriodAmount"
+      ],
       "fields": {
         "accessControl": {
           "handler": {

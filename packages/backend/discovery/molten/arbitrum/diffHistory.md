@@ -1,3 +1,159 @@
+Generated with discovered.json: 0x152dacefa0470df3dadc4f0ae734f427352885ea
+
+# Diff at Mon, 21 Oct 2024 12:51:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e660599f23a07618fe949a07be1f516ce44f1914 block: 262309561
+- current block number: 262309561
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 262309561 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      descriptions:
+-        ["Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."]
+      description:
++        "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
+    }
+```
+
+Generated with discovered.json: 0x623569fe9cf9c6f94be98c28b65427859f5334f5
+
+# Diff at Mon, 21 Oct 2024 11:13:17 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 262309561
+- current block number: 262309561
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 262309561 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      values.$pastUpgrades.0.2:
++        ["0xc326D023758d7D212d529D1E58D7f271CAe49fcf","0xD92D49e8A2230E2C7a73c3ff4Df1AED09dA32a07"]
+      values.$pastUpgrades.0.1:
+-        ["0xc326D023758d7D212d529D1E58D7f271CAe49fcf","0xD92D49e8A2230E2C7a73c3ff4Df1AED09dA32a07"]
++        "0x95b91b77f8acfeba7f9d6fdb02826847e1a437c49ba88d2c32cd42ec716850da"
+    }
+```
+
+```diff
+    contract SequencerInbox (0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x1d182075d07744D71E37f77f1654165f6DAFad08"]
+      values.$pastUpgrades.0.1:
+-        ["0x1d182075d07744D71E37f77f1654165f6DAFad08"]
++        "0x95b91b77f8acfeba7f9d6fdb02826847e1a437c49ba88d2c32cd42ec716850da"
+    }
+```
+
+```diff
+    contract Inbox (0x235000876bd58336C802B3546Fc0250f285fCc79) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x2675b9DEb473ECaC13ddd71dF8A0Ef13FeF6a75D"]
+      values.$pastUpgrades.0.1:
+-        ["0x2675b9DEb473ECaC13ddd71dF8A0Ef13FeF6a75D"]
++        "0x95b91b77f8acfeba7f9d6fdb02826847e1a437c49ba88d2c32cd42ec716850da"
+    }
+```
+
+```diff
+    contract L1OrbitERC20Gateway (0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x652F65f950b71d7aD04AffB1725F43786ed5f6Cc"]
+      values.$pastUpgrades.0.1:
+-        ["0x652F65f950b71d7aD04AffB1725F43786ed5f6Cc"]
++        "0x23ef7ccf294b19a7ece9a717b1f66c067825a5c354b3ada4c8e323742e562d64"
+    }
+```
+
+```diff
+    contract ChallengeManager (0x7BB97862CA342B5fbe2AE2cF2E954F6327f587b1) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x935239e066F4F449D87D600e6d7c1a4F24c50f97"]
+      values.$pastUpgrades.0.1:
+-        ["0x935239e066F4F449D87D600e6d7c1a4F24c50f97"]
++        "0x95b91b77f8acfeba7f9d6fdb02826847e1a437c49ba88d2c32cd42ec716850da"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x92ff91308F5f1036435f23c2F4F136Bb7475425d) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x20C6be2A0429A82a7bF113905a29d36CF6753B10"]
+      values.$pastUpgrades.0.1:
+-        ["0x20C6be2A0429A82a7bF113905a29d36CF6753B10"]
++        "0x95b91b77f8acfeba7f9d6fdb02826847e1a437c49ba88d2c32cd42ec716850da"
+    }
+```
+
+```diff
+    contract ERC20RollupEventInbox (0x9676D55Ccd46ce72235b16bA645008D1D3350B14) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xf2bCB26dbb571EBC82CFAe6453AeF0DE90d93421"]
+      values.$pastUpgrades.0.1:
+-        ["0xf2bCB26dbb571EBC82CFAe6453AeF0DE90d93421"]
++        "0x95b91b77f8acfeba7f9d6fdb02826847e1a437c49ba88d2c32cd42ec716850da"
+    }
+```
+
+```diff
+    contract L1OrbitGatewayRouter (0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x922db00d292477AD99Ef8A0c41101a664Ee79D2b"]
+      values.$pastUpgrades.0.1:
+-        ["0x922db00d292477AD99Ef8A0c41101a664Ee79D2b"]
++        "0x23ef7ccf294b19a7ece9a717b1f66c067825a5c354b3ada4c8e323742e562d64"
+    }
+```
+
+```diff
+    contract Outbox (0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xCa2F31F3C6553c2FD9897f7AA464406a431959A9"]
+      values.$pastUpgrades.0.1:
+-        ["0xCa2F31F3C6553c2FD9897f7AA464406a431959A9"]
++        "0x95b91b77f8acfeba7f9d6fdb02826847e1a437c49ba88d2c32cd42ec716850da"
+    }
+```
+
+```diff
+    contract Bridge (0xE1d32C985825562edAa906fAC39295370Db72195) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xC5Db571093C4600559e239497d147476F7543b15"]
+      values.$pastUpgrades.0.1:
+-        ["0xC5Db571093C4600559e239497d147476F7543b15"]
++        "0x95b91b77f8acfeba7f9d6fdb02826847e1a437c49ba88d2c32cd42ec716850da"
+    }
+```
+
 Generated with discovered.json: 0x6a3c02ed3121ef9a9ed98883e1073024e45baf77
 
 # Diff at Wed, 16 Oct 2024 11:44:09 GMT:

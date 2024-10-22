@@ -1,3 +1,81 @@
+Generated with discovered.json: 0xebfa1d5ba77fb39d275f5e59944a2143e86b16b6
+
+# Diff at Mon, 21 Oct 2024 11:14:25 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 122593187
+- current block number: 122593187
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 122593187 (main branch discovery), not current.
+
+```diff
+    contract GasPriceOracle (0x420000000000000000000000000000000000000F) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xa919894851548179A0750865e7974DA599C0Fac7"]
+      values.$pastUpgrades.1.1:
+-        ["0xa919894851548179A0750865e7974DA599C0Fac7"]
++        "0x2f63bbe08a66796dde569281a58a53e0b0f64b7aa067297e9c70455fb8e375bc"
+      values.$pastUpgrades.0.2:
++        ["0xb528D11cC114E026F138fE568744c6D45ce6Da7A"]
+      values.$pastUpgrades.0.1:
+-        ["0xb528D11cC114E026F138fE568744c6D45ce6Da7A"]
++        "0xedbfdad1f44ea830b863eac45eca4408398351b30511826012882059625963d2"
+    }
+```
+
+```diff
+    contract L2ERC721Bridge (0x4200000000000000000000000000000000000014) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x5a7749f83b81B301cAb5f48EB8516B986DAef23D"]
+      values.$pastUpgrades.0.1:
+-        ["0x5a7749f83b81B301cAb5f48EB8516B986DAef23D"]
++        "0x02985bade8b066202067f455d11aa0996a23c022fcd923e113af5d9997ddb5ce"
+    }
+```
+
+```diff
+    contract L1Block (0x4200000000000000000000000000000000000015) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x07dbe8500fc591d1852B76feE44d5a05e13097Ff"]
+      values.$pastUpgrades.0.1:
+-        ["0x07dbe8500fc591d1852B76feE44d5a05e13097Ff"]
++        "0x9f2b2d34dfa2cb55cceb9860cade0cb03cfbd7ff1dd07d48b4708b29a46b4a24"
+    }
+```
+
+```diff
+    contract SchemaRegistry (0x4200000000000000000000000000000000000020) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x6232208d66bAc2305b46b4Cb6BCB3857B298DF13"]
+      values.$pastUpgrades.0.1:
+-        ["0x6232208d66bAc2305b46b4Cb6BCB3857B298DF13"]
++        "0xe09a2d85965656572055111f1968491e9bb6b174bfaa5b3e38dbbb82ef94e6fb"
+    }
+```
+
+```diff
+    contract EAS (0x4200000000000000000000000000000000000021) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x4E0275Ea5a89e7a3c1B58411379D1a0eDdc5b088"]
+      values.$pastUpgrades.0.1:
+-        ["0x4E0275Ea5a89e7a3c1B58411379D1a0eDdc5b088"]
++        "0xe09a2d85965656572055111f1968491e9bb6b174bfaa5b3e38dbbb82ef94e6fb"
+    }
+```
+
 Generated with discovered.json: 0x85e07267569ada99b58fe175959a05fe0bd134c1
 
 # Diff at Mon, 14 Oct 2024 11:00:03 GMT:

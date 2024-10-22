@@ -143,7 +143,7 @@ describe(diffDiscovery.name, () => {
         address: ADDRESS_A,
         proxyType: 'EIP1967 proxy',
         ignoreInWatchMode: ['B'],
-        descriptions: ['hello', 'world'],
+        description: 'hello world',
         values: {},
       },
     ]
@@ -169,7 +169,7 @@ describe(diffDiscovery.name, () => {
         address: ADDRESS_A,
         proxyType: 'EIP1967 proxy',
         ignoreInWatchMode: ['B'],
-        descriptions: ['hello', 'world'],
+        description: 'hello world',
         values: {},
       },
     ]
@@ -193,7 +193,7 @@ describe(diffDiscovery.name, () => {
         address: ADDRESS_A,
         proxyType: 'EIP1967 proxy',
         ignoreInWatchMode: ['B'],
-        descriptions: ['hello', 'world'],
+        description: 'hello world',
         values: { v: 1 },
       },
     ]
@@ -203,7 +203,7 @@ describe(diffDiscovery.name, () => {
         address: ADDRESS_A,
         proxyType: 'EIP1967 proxy',
         ignoreInWatchMode: ['B'],
-        descriptions: ['hello', 'sailor'],
+        description: 'hello sailor',
         values: { v: 2 },
       },
     ]
@@ -216,10 +216,10 @@ describe(diffDiscovery.name, () => {
         address: ADDRESS_A,
         diff: [
           {
-            after: '"sailor"',
-            before: '"world"',
+            after: '"hello sailor"',
+            before: '"hello world"',
             description: undefined,
-            key: 'descriptions.1',
+            key: 'description',
             severity: undefined,
           },
           {

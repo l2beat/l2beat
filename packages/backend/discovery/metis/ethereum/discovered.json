@@ -19,6 +19,7 @@
         "$pastUpgrades": [
           [
             "2021-11-16T15:26:15.000Z",
+            "0xa752a872bee0f5d9be41b00f85e4d0b5e958f5644f5609dd0907dd74263ff7f4",
             ["0x8bF439ef7167023F009E24b21719Ca5f768Ecb36"]
           ]
         ],
@@ -53,10 +54,12 @@
         "$pastUpgrades": [
           [
             "2024-03-13T07:27:47.000Z",
+            "0x37356e30602c7e4e6b05129e3a0375c3fbeb08856eb198ef7ec2a6c75fd3ee78",
             ["0x8db636418F10d514c4c68235ee3d640dDBCC7a8a"]
           ],
           [
             "2024-06-29T01:46:35.000Z",
+            "0x356768c4abdb1df76773881dc3c4d8ad7af36ac2154baaec83c3f878aedb6b57",
             ["0x0D30F0d7934f53aaF6a1630A4c109AF4513a65cC"]
           ]
         ],
@@ -151,9 +154,7 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "descriptions": [
-        "Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system."
-      ],
+      "description": "Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.",
       "receivedPermissions": [
         {
           "permission": "configure",
@@ -382,9 +383,7 @@
         "0x763c5728a19538783edf38c17731f9cf79ff6f38bfa4bce61333cef0aac5452e"
       ],
       "displayName": "AddressManager",
-      "descriptions": [
-        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
-      ],
+      "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -529,10 +528,12 @@
         "$pastUpgrades": [
           [
             "2024-03-13T07:28:59.000Z",
+            "0x5a9766b27606f1c41f132a4a900131f39ab49a27607d27db667ecc1de2f9f0d1",
             ["0xd87Da73F82abe83915d61342199A4690cfdf4718"]
           ],
           [
             "2024-06-29T01:46:35.000Z",
+            "0x356768c4abdb1df76773881dc3c4d8ad7af36ac2154baaec83c3f878aedb6b57",
             ["0xD8f38c831E5032d23065Eaaee8c0620e17c04D60"]
           ]
         ],

@@ -1,9 +1,11 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { PrimaryValueCell } from '~/components/table/cells/primary-value-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
-import { getCommonProjectColumns } from '~/components/table/common-project-columns'
+import {
+  type CommonProjectColumnsOptions,
+  getCommonProjectColumns,
+} from '~/components/table/utils/common-project-columns'
 import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling-activity-entries'
 import { formatInteger } from '~/utils/number-format/format-integer'
 import { formatUops } from '~/utils/number-format/format-uops'
@@ -13,8 +15,10 @@ import { MaxUopsCell } from './max-uops-cell'
 
 const columnHelper = createColumnHelper<ScalingActivityEntry>()
 
-export const scalingActivityColumns = [
-  ...getCommonProjectColumns(columnHelper),
+export const getScalingActivityColumns = (
+  opts?: CommonProjectColumnsOptions,
+) => [
+  ...getCommonProjectColumns(columnHelper, opts),
   columnHelper.accessor('name', {
     cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
     meta: {
@@ -25,9 +29,6 @@ export const scalingActivityColumns = [
     header: 'Past day UOPS',
     cell: (ctx) => {
       const data = ctx.row.original.data
-      if (!data) {
-        return <NoDataBadge />
-      }
       return (
         <SyncStatusWrapper syncStatus={data.syncStatus}>
           <PrimaryValueCell>{formatUops(data.pastDayUops)}</PrimaryValueCell>
@@ -46,9 +47,6 @@ export const scalingActivityColumns = [
     sortUndefined: 'last',
     cell: (ctx) => {
       const data = ctx.row.original.data
-      if (!data) {
-        return <NoDataBadge />
-      }
       return (
         <SyncStatusWrapper syncStatus={data.syncStatus}>
           <MaxUopsCell
@@ -66,9 +64,6 @@ export const scalingActivityColumns = [
     header: '30D Count',
     cell: (ctx) => {
       const data = ctx.row.original.data
-      if (!data) {
-        return <NoDataBadge />
-      }
       return (
         <SyncStatusWrapper syncStatus={data.syncStatus}>
           <ValueWithPercentageChange

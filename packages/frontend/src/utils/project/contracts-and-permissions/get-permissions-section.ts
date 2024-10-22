@@ -13,7 +13,6 @@ import {
   notUndefined,
 } from '@l2beat/shared-pure'
 import { concat } from 'lodash'
-import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 import { type PermissionsSectionProps } from '~/components/projects/sections/permissions/permissions-section'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
@@ -156,14 +155,18 @@ function toTechnologyContract(
   const addresses: TechnologyContractAddress[] = permission.accounts.map(
     (account) => {
       const address = account.address.toString()
+      const name = resolvePermissionedName(
+        permission.name,
+        account,
+        projectParams.permissions,
+      )
       return {
-        name: resolvePermissionedName(
-          permission.name,
-          account,
-          projectParams.permissions,
-        ),
+        name,
         address,
-        href: `${etherscanUrl}/address/${address}#code`,
+        href:
+          permission.fromRole === true
+            ? `#${name}`
+            : `${etherscanUrl}/address/${address}#code`,
         isAdmin: false,
         verificationStatus: toVerificationStatus(
           verificationStatusForChain[address],

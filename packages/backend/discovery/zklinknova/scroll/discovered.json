@@ -35,6 +35,7 @@
         "$pastUpgrades": [
           [
             "2024-06-10T07:26:01.000Z",
+            "0x9d2ffc640100c25deacf7308dafb540b000bfc8a3d6fa8dab19ec9150ce38434",
             ["0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D"]
           ]
         ],
@@ -88,6 +89,7 @@
         "$pastUpgrades": [
           [
             "2024-06-10T13:41:17.000Z",
+            "0xd2775129688587d97fff37813acd0581f68fdfe7f1a52b36a779e4ef9021c3fe",
             ["0x067c7126a83560Ed2Fc345d25799F696B7Ea47Ca"]
           ]
         ],
@@ -141,6 +143,7 @@
         "$pastUpgrades": [
           [
             "2024-06-10T07:30:34.000Z",
+            "0xa45f6d61d7c5c041f10950e9448a39a9fbf490d2fcb3155ff9add77b43cfc0c6",
             ["0xe469c1330cEEcC375fE17E7D649eA270186D344F"]
           ]
         ],

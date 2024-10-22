@@ -1,19 +1,32 @@
 'use client'
 
-import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import {
+  type RowModel,
+  type Table,
+  getCoreRowModel,
+  getSortedRowModel,
+} from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { useScalingFilter } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
-import { ScalingFilters } from '~/app/(side-nav)/scaling/_components/scaling-filters'
 import { BasicTable } from '~/components/table/basic-table'
+import { RollupsTable } from '~/components/table/rollups-table'
 import { useTable } from '~/hooks/use-table'
 import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling-activity-entries'
-import { scalingActivityColumns } from './columns'
+import { getScalingActivityColumns } from './columns'
 
 interface Props {
   entries: ScalingActivityEntry[]
+  rollups?: boolean
+  customSortedRowModel?: (
+    table: Table<ScalingActivityEntry>,
+  ) => () => RowModel<ScalingActivityEntry>
 }
 
-export function ScalingActivityTable({ entries }: Props) {
+export function ScalingActivityTable({
+  entries,
+  rollups,
+  customSortedRowModel,
+}: Props) {
   const filter = useScalingFilter()
 
   const filteredEntries = useMemo(
@@ -22,10 +35,12 @@ export function ScalingActivityTable({ entries }: Props) {
   )
 
   const table = useTable({
-    columns: scalingActivityColumns,
+    columns: getScalingActivityColumns({
+      customActivityIndexing: !!customSortedRowModel,
+    }),
     data: filteredEntries,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
+    getSortedRowModel: customSortedRowModel ?? getSortedRowModel(),
     initialState: {
       sorting: [{ id: 'data_pastDayUops', desc: true }],
       columnPinning: {
@@ -33,10 +48,5 @@ export function ScalingActivityTable({ entries }: Props) {
       },
     },
   })
-  return (
-    <div className="space-y-3 md:space-y-6">
-      <ScalingFilters showRollupsOnly items={filteredEntries} />
-      <BasicTable table={table} />
-    </div>
-  )
+  return rollups ? <RollupsTable table={table} /> : <BasicTable table={table} />
 }

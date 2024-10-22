@@ -80,7 +80,7 @@ export function DAC(template: TemplateVars): DacDaLayer {
     template.bridge.technology?.description ??
     `## Simple DA Bridge
     The DA bridge is a smart contract verifying a data availability claim from DAC Members via signature verification.
-    The bridge requires a ${template.bridge.requiredMembers}/${template.bridge.knownMembers} threshold of signatures to be met before the data commitment is accepted.
+    The bridge requires a ${template.bridge.requiredMembers}/${template.bridge.membersCount} threshold of signatures to be met before the data commitment is accepted.
   `
 
   const bridgeDisplay: DacBridge['display'] = {

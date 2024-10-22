@@ -1,3 +1,216 @@
+Generated with discovered.json: 0xe77d39e6da487a7fc885467c35c7575f0ef68027
+
+# Diff at Mon, 21 Oct 2024 12:46:51 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e660599f23a07618fe949a07be1f516ce44f1914 block: 20427351
+- current block number: 20427351
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20427351 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (0x039A3B4AF85A91626f428b8B881603b6DD1f6C4C) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      descriptions:
+-        ["Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."]
+      description:
++        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x03D5bc58E7b7E13ba785F67AFA2d2fC49cB2BdF3) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      descriptions:
+-        ["Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."]
+      description:
++        "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x1adE86B9cc8a50Db747b7aaC32E8527d42c71fC1) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      descriptions:
+-        ["The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."]
+      description:
++        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
+    }
+```
+
+```diff
+    contract OptimismPortal (0x39A90926306E11497EC5FE1C459910258B620edD) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      descriptions:
+-        ["The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."]
+      description:
++        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x5e8d351FD046Aa0b3DDA24096751996C0c397C61) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      descriptions:
+-        ["Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."]
+      description:
++        "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
+    }
+```
+
+```diff
+    contract SystemConfig (0x94118F86eE37Fa4Fdb266CDab1e55B8F0D6959D9) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      descriptions:
+-        ["Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."]
+      description:
++        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0xAFc9946b25e3e93208b7E2D477680C5B6e2952be) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      descriptions:
+-        ["Used to bridge ERC-721 tokens from host chain to this chain."]
+      description:
++        "Used to bridge ERC-721 tokens from host chain to this chain."
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xdd80E05004f40815EaEf12ffeE69c2a8A5112aA5) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      descriptions:
+-        ["Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."]
+      description:
++        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
+    }
+```
+
+Generated with discovered.json: 0x854504dbffae7e87e4bf1024325a8cd55176c483
+
+# Diff at Mon, 21 Oct 2024 11:08:36 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20427351
+- current block number: 20427351
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20427351 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x03D5bc58E7b7E13ba785F67AFA2d2fC49cB2BdF3) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$pastUpgrades.0.2:
++        ["0xD09C8E2C6D124bCE71235046B95ab676bE1d5601"]
+      values.$pastUpgrades.0.1:
+-        ["0xD09C8E2C6D124bCE71235046B95ab676bE1d5601"]
++        "0xf3b204596e40214b046c7cebacfb0be751ab67df24f25ce689a7422367ba9793"
+    }
+```
+
+```diff
+    contract OptimismPortal (0x39A90926306E11497EC5FE1C459910258B620edD) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.$pastUpgrades.4.2:
++        ["0xFe9B3d40DB0ec8f97D9ea638e926b3aEED8cF29B"]
+      values.$pastUpgrades.4.1:
+-        ["0xFe9B3d40DB0ec8f97D9ea638e926b3aEED8cF29B"]
++        "0x9070b165958b48b3eabe3dac62a836e942ad8ec64273ce5f9d4627deb427974e"
+      values.$pastUpgrades.3.2:
++        ["0x9b29299b791a36DA8Dd7dDeBe55038576995145b"]
+      values.$pastUpgrades.3.1:
+-        ["0x9b29299b791a36DA8Dd7dDeBe55038576995145b"]
++        "0x04b31173f0fd9c8ab794ad926a7f96b867974dd952c91423910d17f5c702e8af"
+      values.$pastUpgrades.2.2:
++        ["0x63dD9FB4b0Af7a158E819cDfE781082bCb60e21D"]
+      values.$pastUpgrades.2.1:
+-        ["0x63dD9FB4b0Af7a158E819cDfE781082bCb60e21D"]
++        "0xfd1c496fe0c25e3f59bfafb68e47aa9bc0fee4c77220290e398676ee63a6b68f"
+      values.$pastUpgrades.1.2:
++        ["0xFe9B3d40DB0ec8f97D9ea638e926b3aEED8cF29B"]
+      values.$pastUpgrades.1.1:
+-        ["0xFe9B3d40DB0ec8f97D9ea638e926b3aEED8cF29B"]
++        "0x07498c42d2879512867123618dc2fa47869d97a111c091722f489e05ebedce96"
+      values.$pastUpgrades.0.2:
++        ["0x63dD9FB4b0Af7a158E819cDfE781082bCb60e21D"]
+      values.$pastUpgrades.0.1:
+-        ["0x63dD9FB4b0Af7a158E819cDfE781082bCb60e21D"]
++        "0x47e3348f1a815baed93634d82c6eec4839f21c6f2cc949b589bf7c9912adadfa"
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x5e8d351FD046Aa0b3DDA24096751996C0c397C61) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      values.$pastUpgrades.0.2:
++        ["0xF3E372Ec07a9Bf0C94ff21ceBe02952F2164996F"]
+      values.$pastUpgrades.0.1:
+-        ["0xF3E372Ec07a9Bf0C94ff21ceBe02952F2164996F"]
++        "0x8ceff1123470899bafdc1e6b187d546752254d5a05ab2ac78ed21396ee1528f8"
+    }
+```
+
+```diff
+    contract SystemConfig (0x94118F86eE37Fa4Fdb266CDab1e55B8F0D6959D9) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.$pastUpgrades.0.2:
++        ["0xa65DE544846795C7eeAd60790197B0EB755547ee"]
+      values.$pastUpgrades.0.1:
+-        ["0xa65DE544846795C7eeAd60790197B0EB755547ee"]
++        "0x24ca235a5fe65c9dde1db0054a48b85133ac9524cb2416a70c9458d9a3340790"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0xAFc9946b25e3e93208b7E2D477680C5B6e2952be) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.$pastUpgrades.0.2:
++        ["0xe04D088840aE793afd0970fE97FEC6Ac7BaF4AAC"]
+      values.$pastUpgrades.0.1:
+-        ["0xe04D088840aE793afd0970fE97FEC6Ac7BaF4AAC"]
++        "0xdaefb6ed2c511dbaa99b5a0d6b38ee6dfb6cf267872509b3f72f93d8d482dcf5"
+    }
+```
+
+```diff
+    contract  (0xB77d3ea899ef38c464e19F5A6CBc5a37187DC43c) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xAd8890C1DF1f29f6a26B6eCcc73c299599c40F3d"]
+      values.$pastUpgrades.0.1:
+-        ["0xAd8890C1DF1f29f6a26B6eCcc73c299599c40F3d"]
++        "0x2fdeb4652fc3616644be2358c6410407c7e04b5e8dd205ceb5bf5ee6fc27484f"
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xdd80E05004f40815EaEf12ffeE69c2a8A5112aA5) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      values.$pastUpgrades.0.2:
++        ["0x38f2D861b23866b92188155C4876F0879cA706Ec"]
+      values.$pastUpgrades.0.1:
+-        ["0x38f2D861b23866b92188155C4876F0879cA706Ec"]
++        "0x180139009c00eb38a40976d4c9203252b2c5ecfdd00af1678827f1dd32ba29ba"
+    }
+```
+
 Generated with discovered.json: 0x6a12f03a1decc9e08f06d5865545ce32634fb283
 
 # Diff at Wed, 16 Oct 2024 11:38:43 GMT:

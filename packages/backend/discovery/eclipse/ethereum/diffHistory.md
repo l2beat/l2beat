@@ -1,3 +1,54 @@
+Generated with discovered.json: 0xc8d8f321c1c5b2dde2d7092a08ebb40586ef5d7c
+
+# Diff at Mon, 21 Oct 2024 11:05:44 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20997772
+- current block number: 20997772
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20997772 (main branch discovery), not current.
+
+```diff
+    contract EtherBridge (0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9"]
+      values.$pastUpgrades.0.1:
+-        ["0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9"]
++        "0x4eed278fc63245a4b2a57a1e1c6dd876c9f18857b515b55a82c2235746c68486"
+    }
+```
+
+```diff
+    contract Mailbox (0xb23B2492f7A9631104A5877F7FFA00633660968d) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B"]
+      values.$pastUpgrades.0.1:
+-        ["0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B"]
++        "0xd86c84f78d28d7df3ec285544aea3abab536407f88d5e01ca5b7cc1edd1b6c17"
+    }
+```
+
+```diff
+    contract Treasury (0xD7E4b67E735733aC98a88F13d087D8aac670E644) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xa8E15d2B1bf6B0Fd3Bc9Ead06323c0730b67f8d4"]
+      values.$pastUpgrades.0.1:
+-        ["0xa8E15d2B1bf6B0Fd3Bc9Ead06323c0730b67f8d4"]
++        "0xa34790c0635f1f739540bf7e2998085e6426d1f17cd58617e26be884f625a0dc"
+    }
+```
+
 Generated with discovered.json: 0xf6bf5966c73218d06e07d411dec3c09220a1b4b8
 
 # Diff at Sat, 19 Oct 2024 06:18:22 GMT:

@@ -1,7 +1,7 @@
 import { ChainId } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { xai } from '../../../layer3s/xai'
-import { DAC } from '../templates/dac-template'
+import { AnytrustDAC } from '../templates/anytrust-template'
 import { DaEconomicSecurityRisk } from '../types'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
@@ -13,7 +13,7 @@ const dac = discovery.getContractValue<{
 }>('SequencerInbox', 'dacKeyset')
 const { membersCount, requiredSignatures } = dac
 
-export const xaiDac = DAC({
+export const xaiDac = AnytrustDAC({
   project: xai,
   risks: { economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable },
   bridge: {
@@ -45,7 +45,7 @@ export const xaiDac = DAC({
           'Multisig that can upgrade authorized batch posters via the UpgradeExecutor contract.',
       },
     ],
-    chain: ChainId.ETHEREUM,
+    chain: ChainId.ARBITRUM,
     requiredMembers: requiredSignatures,
     membersCount: membersCount,
     transactionDataType: DacTransactionDataType.TransactionDataCompressed,
@@ -68,11 +68,6 @@ export const xaiDac = DAC({
       {
         external: true,
         name: 'LayerZero',
-        href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
-      },
-      {
-        external: true,
-        name: 'Laguna Games',
         href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
       },
       {

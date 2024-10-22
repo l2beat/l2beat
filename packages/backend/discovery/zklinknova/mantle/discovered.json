@@ -70,10 +70,12 @@
         "$pastUpgrades": [
           [
             "2024-03-01T12:41:47.000Z",
+            "0xaf05aafd35db4063ec7549aeed61f0a2ced59a80c34aefe1a2f7e0de6a1ac7c8",
             ["0xbfa352a683D82a04233Cc45AC1308621BA63283f"]
           ],
           [
             "2024-04-04T06:27:28.000Z",
+            "0xed9f3f5842ead3da2348d8edfbcacf5bf0572cc53ec3443c5229c23845d63f9c",
             ["0x7769C18828569692Dfb65affa0856533613ea458"]
           ]
         ],
@@ -115,18 +117,22 @@
         "$pastUpgrades": [
           [
             "2024-03-01T07:48:29.000Z",
+            "0x6a00d05f32d4cad32533eacc6bfe09f424002d60b1474ec6d9615d7ad7f86abe",
             ["0x5715Dec4cd747675E47b969D3a15aab909b8ce05"]
           ],
           [
             "2024-03-09T10:15:53.000Z",
+            "0x0f8754436aa05997946fd34f1a0573cb22a6c27181af505cb4d4121723bdd1cd",
             ["0x85079cb83B6cadba34e64bc0f24493F49D8b1F4e"]
           ],
           [
             "2024-04-22T02:31:22.000Z",
+            "0xecf1785a348ae45261abf6f4bc82163701840e4740a5c104f036305677d800e8",
             ["0xa8486096C719024D4eB2262A45AAc5cA8A256Cd6"]
           ],
           [
             "2024-05-03T09:09:50.000Z",
+            "0x10bb5a3d57fc38cfc2e56d9046c00aba1a47fe4ad38162ba0a5ec19c6b2cc6e7",
             ["0x0C04046546C46652969Aa9eB4BFB758cFDf1e821"]
           ]
         ],
@@ -181,14 +187,17 @@
         "$pastUpgrades": [
           [
             "2024-03-01T07:49:58.000Z",
+            "0xdb5d3920a2bbd9c5a3d97b54c227aa56d0f555060a03d7212a0d05b4239ec0f9",
             ["0x55fa5276c44c1B465196898b144524C9c852235E"]
           ],
           [
             "2024-03-09T10:51:51.000Z",
+            "0xd264b50869bc4bd7d2c3ad80541399bc5a1963aa4ef010ea40e699ab0a56a9a7",
             ["0x09CB6C5A235939258e3F6Ae2989cf6f26EeE1c72"]
           ],
           [
             "2024-05-03T09:09:50.000Z",
+            "0x10bb5a3d57fc38cfc2e56d9046c00aba1a47fe4ad38162ba0a5ec19c6b2cc6e7",
             ["0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D"]
           ]
         ],

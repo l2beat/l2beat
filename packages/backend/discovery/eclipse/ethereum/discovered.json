@@ -120,6 +120,7 @@
         "$pastUpgrades": [
           [
             "2024-07-28T04:33:47.000Z",
+            "0x4eed278fc63245a4b2a57a1e1c6dd876c9f18857b515b55a82c2235746c68486",
             ["0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9"]
           ]
         ],
@@ -162,6 +163,7 @@
         "$pastUpgrades": [
           [
             "2024-07-28T04:37:47.000Z",
+            "0xd86c84f78d28d7df3ec285544aea3abab536407f88d5e01ca5b7cc1edd1b6c17",
             ["0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B"]
           ]
         ],
@@ -211,6 +213,7 @@
         "$pastUpgrades": [
           [
             "2024-07-28T04:29:47.000Z",
+            "0xa34790c0635f1f739540bf7e2998085e6426d1f17cd58617e26be884f625a0dc",
             ["0xa8E15d2B1bf6B0Fd3Bc9Ead06323c0730b67f8d4"]
           ]
         ],
