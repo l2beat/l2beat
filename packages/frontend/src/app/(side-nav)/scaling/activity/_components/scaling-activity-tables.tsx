@@ -79,10 +79,11 @@ export function ScalingActivityTables(props: Props) {
     )
   }
 
+  const filteredEntries = props.entries.filter(includeFilters)
   return (
     <MainPageCard className="space-y-3 md:mt-6 md:space-y-6">
-      <ScalingFilters items={props.entries} />
-      <ScalingActivityTable entries={props.entries} />
+      <ScalingFilters items={filteredEntries} />
+      <ScalingActivityTable entries={filteredEntries} />
     </MainPageCard>
   )
 }
