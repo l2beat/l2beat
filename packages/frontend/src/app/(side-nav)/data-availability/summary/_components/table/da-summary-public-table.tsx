@@ -4,14 +4,18 @@ import {
   getCoreRowModel,
   getSortedRowModel,
 } from '@tanstack/react-table'
+import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
 import { TableCell, TableRow } from '~/components/table/table'
 import { EM_DASH } from '~/consts/characters'
 import { useTable } from '~/hooks/use-table'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { formatCurrency } from '~/utils/number-format/format-currency'
-import { RiskGrissini } from '../../../_components/risk-grissini'
+import {
+  BasicDaTable,
+  getRowTypeClassNames,
+} from '../../../_components/basic-da-table'
+import { mapBridgeRisksToRosetteValues } from '../../../_utils/map-risks-to-rosette-values'
 import { publicSystemsColumns } from './columns'
-import { BasicDaTable, getRowTypeClassNames } from './da/basic-da-table'
 import { ProjectsUsedIn } from './projects-used-in'
 
 export function DaSummaryPublicTable({ items }: { items: DaSummaryEntry[] }) {
@@ -60,11 +64,7 @@ function BridgeCells({
   bridge: DaSummaryEntry['bridges'][number]
   excludeBridge?: boolean
 }) {
-  const bridgeRisks = [
-    bridge.risks.committeeSecurity,
-    bridge.risks.upgradeability,
-    bridge.risks.relayerFailure,
-  ]
+  const bridgeRisks = mapBridgeRisksToRosetteValues(bridge.risks)
 
   return (
     <>
@@ -75,12 +75,12 @@ function BridgeCells({
         href={bridge.href}
         className="flex items-center justify-center pl-6 font-bold"
       >
-        <RiskGrissini values={bridgeRisks} />
+        <GrissiniCell values={bridgeRisks} />
       </TableCell>
-      <TableCell className="font-bold">
+      <TableCell className="text-right text-sm font-bold">
         {formatCurrency(bridge.tvs, 'usd')}
       </TableCell>
-      <TableCell href={bridge.href} className="text-sm font-bold">
+      <TableCell className="text-sm font-bold">
         {bridge.usedIn.length > 0 ? (
           <ProjectsUsedIn usedIn={bridge.usedIn} />
         ) : (

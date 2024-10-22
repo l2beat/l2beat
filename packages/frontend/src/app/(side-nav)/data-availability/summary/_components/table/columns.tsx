@@ -1,14 +1,17 @@
 import { type CellContext, createColumnHelper } from '@tanstack/react-table'
 import Image from 'next/image'
+import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
 import { IndexCell } from '~/components/table/cells/index-cell'
-import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { RiskCell } from '~/components/table/cells/risk-cell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { EM_DASH } from '~/consts/characters'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { DaLayerCell } from '../../../_components/da-layer-cell'
-import { RiskGrissini } from '../../../_components/risk-grissini'
+import {
+  mapBridgeRisksToRosetteValues,
+  mapLayerRisksToRosetteValues,
+} from '../../../_utils/map-risks-to-rosette-values'
 import { DaEconomicSecurityCell } from './da-economic-security-cell'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
@@ -19,24 +22,15 @@ const nameColumn = columnHelper.accessor('name', {
     tooltip:
       'The data availability layer where the data (transaction data or state diffs) is posted.',
   },
-  cell: (ctx) => (
-    <ProjectNameCell
-      project={{
-        name: ctx.getValue(),
-      }}
-    />
-  ),
+  cell: (ctx) => <DaLayerCell entry={ctx.row.original} />,
 })
 
 const daRisksColumn = columnHelper.accessor('risks', {
   header: 'DA Risks',
   cell: (ctx) => {
-    const risks = [
-      ctx.row.original.risks.economicSecurity,
-      ctx.row.original.risks.fraudDetection,
-    ]
+    const risks = mapLayerRisksToRosetteValues(ctx.row.original.risks)
 
-    return <RiskGrissini values={risks} />
+    return <GrissiniCell values={risks} />
   },
   enableSorting: false,
   meta: {
@@ -47,13 +41,15 @@ const daRisksColumn = columnHelper.accessor('risks', {
 const daBridgeRisksColumn = columnHelper.accessor('risks', {
   header: 'Bridge Risks',
   cell: (ctx) => {
-    const risks = [
-      ctx.row.original.bridges[0]!.risks.committeeSecurity,
-      ctx.row.original.bridges[0]!.risks.upgradeability,
-      ctx.row.original.bridges[0]!.risks.relayerFailure,
-    ]
+    const [firstBridge] = ctx.row.original.bridges
 
-    return <RiskGrissini values={risks} />
+    if (!firstBridge) {
+      return EM_DASH
+    }
+
+    const risks = mapBridgeRisksToRosetteValues(firstBridge.risks)
+
+    return <GrissiniCell values={risks.slice(0, 3)} />
   },
   enableSorting: false,
   meta: {
@@ -64,9 +60,14 @@ const daBridgeRisksColumn = columnHelper.accessor('risks', {
 const tvsColumn = columnHelper.accessor('tvs', {
   header: 'TVS',
   cell: (ctx) =>
-    ctx.row.original.usedIn.length > 0
-      ? formatCurrency(ctx.row.original.tvs, 'usd')
-      : EM_DASH,
+    ctx.row.original.usedIn.length > 0 ? (
+      <div className="w-full pl-4 text-right text-sm font-bold">
+        {formatCurrency(ctx.row.original.tvs, 'usd')}
+      </div>
+    ) : (
+      EM_DASH
+    ),
+  enableSorting: false,
   meta: {
     tooltip: 'The total value locked of all L2s using this layer.',
     align: 'right',
@@ -74,20 +75,29 @@ const tvsColumn = columnHelper.accessor('tvs', {
 })
 
 const slashableStakeColumn = columnHelper.accessor('economicSecurity', {
-  header: 'Slashable\nstake',
+  header: () => <span className="text-right">{'Slashable\nstake'}</span>,
   cell: (ctx) => {
     const value = ctx.getValue()
     if (ctx.row.original.risks.economicSecurity.type === 'Unknown') {
-      return formatCurrency(0, 'usd')
+      return (
+        <div className="w-full pl-4 text-right text-sm font-bold">
+          {formatCurrency(0, 'usd')}
+        </div>
+      )
     }
 
-    return <DaEconomicSecurityCell value={value} />
+    return (
+      <div className="w-full pl-4 text-right text-sm font-bold">
+        <DaEconomicSecurityCell value={value} />
+      </div>
+    )
   },
   meta: {
     align: 'right',
     tooltip:
       'The assets that are slashable in case of a data withholding attack (the amount of funds a committee would need to burn to successfully deceive the DA bridge). It’s equal to 2/3 of the total validating stake, if any.',
   },
+  enableSorting: false,
 })
 
 const membersColumn = columnHelper.display({
@@ -108,12 +118,14 @@ const challengeMechanismColumn = columnHelper.accessor(
         emptyMode="em-dash"
       />
     ),
+    enableSorting: false,
   },
 )
 
 const fallbackColumn = columnHelper.accessor('fallback', {
   header: 'Fallback',
   cell: (ctx) => ctx.getValue() ?? 'None',
+  enableSorting: false,
 })
 
 export const customColumns = [
