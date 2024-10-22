@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xcccd51fbb01c8fd230c5f00ddbeb7a651eae76f6
+
+# Diff at Tue, 22 Oct 2024 18:27:40 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@c4e420ffba204be049626040a9ea287e023948f8 block: 20985031
+- current block number: 21022907
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20985031 (main branch discovery), not current.
+
+```diff
+    contract Vector (0x02993cdC11213985b9B13224f3aF289F03bf298d) {
+    +++ description: None
+      name:
+-        "SP1Vector"
++        "Vector"
+    }
+```
+
 Generated with discovered.json: 0xd280477a38c797769d7570dcd82e85f5e334b2f7
 
 # Diff at Mon, 21 Oct 2024 11:11:53 GMT:

@@ -194,6 +194,14 @@ export const SP1Blobstream = CELESTIA_BLOBSTREAM({
         type: 'EOA',
       })),
     },
+    {
+      name: 'Guardians',
+      description: `The Blobstream guardians hold the power to freeze the bridge contract, update the SuccinctGateway contract and update the list of authorized relayers.`,
+      accounts: ethereumDiscovery.getAccessControlRolePermission(
+        'Blobstream',
+        'GUARDIAN_ROLE',
+      ),
+    }
   ],
   nativePermissions: {
     arbitrum: [

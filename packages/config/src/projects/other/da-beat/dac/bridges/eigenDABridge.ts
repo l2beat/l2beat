@@ -323,7 +323,7 @@ export const eigenDAbridge = {
   ],
   chain: ChainId.ETHEREUM,
   requiredMembers: 0, // currently 0 since threshold is not enforced
-  membersCount: 400,
+  membersCount: 400, // max allowed operators (quorum 1 + quorum 2)
   transactionDataType: DacTransactionDataType.TransactionData,
   usedIn: toUsedInProject([]),
   risks: {

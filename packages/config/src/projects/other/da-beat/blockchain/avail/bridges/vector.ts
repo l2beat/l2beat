@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('vector')
 
 const chainName = 'Ethereum'
 const updateInterval = 1.5 // hours
-const relayers = discovery.getContractValue<string[]>('SP1Vector', 'relayers')
+const relayers = discovery.getContractValue<string[]>('Vector', 'relayers')
 
 const SP1Verifier = discovery.getContractValue<string>(
   'SuccinctGatewaySP1',
@@ -97,6 +97,10 @@ export const vector = {
   },
   permissions: [
     ...discovery.getMultisigPermission(
+      'AvailMultisig',
+      'This multisig is the admin and guardian of the Vector contract. It holds the power to change the contract state and upgrade the bridge.',
+    ),
+    ...discovery.getMultisigPermission(
       'SuccinctGatewaySP1Multisig',
       'This multisig is the admin of the SuccinctGatewaySP1 contract. As the manager of router for proof verification, it holds the power to affect the liveness and safety of the bridge.',
     ),
@@ -108,12 +112,20 @@ export const vector = {
         type: 'EOA',
       })),
     },
+    {
+      name: 'Guardians',
+      description: `The Vector guardians hold the power to freeze the bridge contract, update the SuccinctGateway contract and update the list of authorized relayers.`,
+      accounts: discovery.getAccessControlRolePermission(
+        'Vector',
+        'GUARDIAN_ROLE',
+      ),
+    }
   ],
   usedIn: [],
   risks: {
     committeeSecurity:
-      DaCommitteeSecurityRisk.RobustAndDiverseCommittee('Avail Validators'),
-    upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay
+      DaCommitteeSecurityRisk.RobustAndDiverseCommittee('Validators set'),
+    upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // 4/7 multisig w/ no delay
     relayerFailure: DaRelayerFailureRisk.NoMechanism,
   },
 } satisfies DaBridge
