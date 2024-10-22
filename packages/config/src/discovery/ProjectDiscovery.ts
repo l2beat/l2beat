@@ -60,6 +60,7 @@ import { findRoleMatchingTemplate } from './values/templateUtils'
 
 export class ProjectDiscovery {
   private readonly discoveries: DiscoveryOutput[]
+  private eoaIDMap: Record<string, string> = {}
   constructor(
     public readonly projectName: string,
     public readonly chain: string = 'ethereum',
@@ -72,6 +73,14 @@ export class ProjectDiscovery {
         configReader.readDiscovery(module, chain),
       ),
     ]
+  }
+
+  getEOAName(address: EthereumAddress): string {
+    if (!(address in this.eoaIDMap)) {
+      this.eoaIDMap[address] = `EOA ${Object.keys(this.eoaIDMap).length + 1}`
+    }
+
+    return this.eoaIDMap[address]
   }
 
   getContractDetails(
@@ -645,6 +654,17 @@ export class ProjectDiscovery {
     )
   }
 
+  getEntryByAddress(
+    address: string | EthereumAddress,
+  ): EoaParameters | ContractParameters | undefined {
+    const entries = this.discoveries.flatMap((discovery) => {
+      return [...discovery.contracts, ...discovery.eoas]
+    })
+    return entries.find(
+      (entry) => entry.address === EthereumAddress(address.toString()),
+    )
+  }
+
   getOpStackContractDetails(
     upgradesProxy: Partial<ScalingProjectContractSingleAddress>,
     overrides?: Partial<Record<OpStackContractName, string>>,
@@ -922,7 +942,7 @@ export class ProjectDiscovery {
         this.describeContractOrEoa(eoa, false),
       )
       result.push({
-        name: 'EOA',
+        name: eoa.name ?? this.getEOAName(eoa.address),
         accounts: [this.formatPermissionedAccount(eoa.address)],
         chain: this.chain,
         description,
@@ -953,8 +973,12 @@ export class ProjectDiscovery {
           contract.issuedPermissions
             ?.filter((p) => p.permission === 'upgrade')
             .map((p) => {
+              const entry = this.getEntryByAddress(p.target)
               const address =
-                this.getContractByAddress(p.target)?.name ?? p.target.toString()
+                entry?.name ??
+                (this.isEOA(p.target)
+                  ? this.getEOAName(p.target)
+                  : p.target.toString())
               const delay =
                 (p.delay ?? 0) + sum(p.via?.map((v) => v.delay ?? 0) ?? [])
               return [address, delay]
