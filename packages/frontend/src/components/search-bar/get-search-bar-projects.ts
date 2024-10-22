@@ -22,7 +22,6 @@ export interface SearchBarProject {
 }
 
 export function getSearchBarProjects() {
-  console.log('getSearchBarProjects')
   return toSearchBarProjects([
     ...layer2s,
     ...layer3s,
