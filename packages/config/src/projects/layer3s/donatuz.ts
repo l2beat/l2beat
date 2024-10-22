@@ -15,6 +15,7 @@ export const donatuz: Layer3 = underReviewL3({
     Badge.Stack.OPStack,
     Badge.VM.EVM,
     Badge.RaaS.Conduit,
+    Badge.Infra.Superchain,
   ],
   display: {
     name: 'Donatuz',
