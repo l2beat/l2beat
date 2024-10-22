@@ -1,4 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
+import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { PrimaryValueCell } from '~/components/table/cells/primary-value-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
