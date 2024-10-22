@@ -3,7 +3,7 @@ import { externalLinks } from '~/consts/external-links'
 import { env } from '~/env'
 import { HiringBadge } from '../badge/hiring-badge'
 import { DarkThemeToggle } from '../dark-theme-toggle'
-import { Logo } from '../logo'
+import { HalloweenLogo } from '../halloween-logo'
 import { SocialLinks } from '../social-links'
 import { LegacyNavLink } from './legacy-nav-link'
 import { type NavGroup } from './types'
@@ -24,7 +24,7 @@ export function LegacyNavbar({
         <ul className="flex items-center py-4">
           <li className="mr-8">
             <Link href={logoLink}>
-              <Logo className="h-8 w-auto" />
+              <HalloweenLogo className="h-[41px] w-auto" />
             </Link>
           </li>
           {groups.map((group) => {

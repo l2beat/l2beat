@@ -1,6 +1,6 @@
 'use client'
+import { HalloweenLogo } from '~/components/halloween-logo'
 import { cn } from '~/utils/cn'
-import { Logo } from '../../logo'
 import { ChartHover } from './chart-hover'
 import { ChartInteractionZone } from './chart-interaction-zone'
 import { ChartLabels } from './chart-labels'
@@ -33,9 +33,9 @@ export function Chart({ className, disableHovers, disableMilestones }: Props) {
       {!disableHovers && <ChartHover />}
       {!disableMilestones && <ChartMilestones />}
       <ChartNoDataState />
-      <Logo
+      <HalloweenLogo
         animated={false}
-        className="absolute bottom-3 right-3 z-30 h-8 w-20 opacity-50"
+        className="absolute bottom-2 right-3 z-30 h-[41px] w-20 opacity-50"
       />
       <ChartTimeline />
     </div>
