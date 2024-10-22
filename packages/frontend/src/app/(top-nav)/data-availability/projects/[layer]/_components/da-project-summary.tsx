@@ -31,10 +31,14 @@ export function DaProjectSummary({ project }: Props) {
               <AboutSection description={project.description} />
             </div>
           )}
+          {/* Separators */}
+          <div className="flex flex-row gap-10">
+            <HorizontalSeparator className="!my-6 flex-1 max-md:-mx-4 max-md:w-screen" />
+            <HorizontalSeparator className="!my-6 hidden w-[264px] lg:block" />
+          </div>
           <div className="flex flex-col gap-10">
-            <div className="flex flex-row gap-10">
+            <div className="flex flex-row items-end gap-10">
               <div className="flex-1">
-                <HorizontalSeparator className="!my-6 max-md:-mx-4 max-md:w-screen" />
                 <div className="space-y-4">
                   <div className="max-md:hidden">
                     <DesktopProjectLinks projectLinks={project.header.links} />
@@ -43,7 +47,6 @@ export function DaProjectSummary({ project }: Props) {
                 </div>
               </div>
               <div className="hidden lg:block">
-                <HorizontalSeparator className="!my-6 max-md:-mx-4 max-md:w-screen" />
                 <div className="flex flex-col space-y-4 pt-3">
                   <div className="whitespace-pre text-xs text-gray-500 dark:text-gray-600">
                     {project.name} risks
