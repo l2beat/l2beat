@@ -11,18 +11,18 @@ export type DaCommitteeSecurityRisk =
   const RobustAndDiverseCommittee = (value?: string) =>
   ({
     type: 'RobustAndDiverseCommittee',
-    value: value ?? 'Robust and Diverse Committee',
+    value: value ?? 'Permissionless',
     sentiment: 'good',
-    description: `The committee requires an honest minority (1/3 or less) of members (or the network stake) for the DA bridge to accept a data availability commitment. 
+    description: `The committee requires an honest minority (1/3 or less) of members (or the network stake) to prevent the DA bridge from accepting an unavailable data commitment. 
     Participation in the committee is permissionless, based only on stake requirements and an honest majority of validators processing the new operator's request to join the active set.`,
   }) as const
 
 const LimitedCommitteeSecurity = (value?: string) =>
   ({
     type: 'LimitedCommitteeSecurity',
-    value: value ?? 'Limited Committee Security',
+    value: value ?? 'Permissioned',
     sentiment: 'warning',
-    description: `The committee requires an honest minority (1/3 or less) of members (or the network stake) for the DA bridge to accept a data availability commitment.
+    description: `The committee requires an honest minority (1/3 or less) of members (or the network stake) to prevent the DA bridge from accepting an unavailable data commitment.
     There are at least 5 external actors in the committee, but entry or exit of members is partially controlled by a centralized entity.`,
   }) as const
 
