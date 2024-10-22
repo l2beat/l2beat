@@ -19,6 +19,7 @@ const upgradeability = {
 export const immutablezkevm: Bridge = {
   type: 'bridge',
   id: ProjectId('immutablezkevm'),
+  createdAt: new UnixTime(1707318380), // 2024-02-07T15:06:20Z
   display: {
     name: 'Immutable zkEVM',
     slug: 'immutablezkevm',
