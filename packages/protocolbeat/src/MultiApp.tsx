@@ -36,7 +36,11 @@ const useStore = create<State & Action>((set) => ({
       }
       return {
         panels: state.panels.map((panel) =>
-          panel.id === from ? toPanel : panel.id === to ? fromPanel : panel,
+          panel.id === from
+            ? { ...toPanel, size: fromPanel.size }
+            : panel.id === to
+              ? { ...fromPanel, size: toPanel.size }
+              : panel,
         ),
         fullScreen: state.fullScreen === from ? to : state.fullScreen,
       }
