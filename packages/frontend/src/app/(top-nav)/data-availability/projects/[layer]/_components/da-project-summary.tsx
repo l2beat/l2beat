@@ -129,7 +129,7 @@ export function DaProjectSummary({ project }: Props) {
                       <div
                         className={cn(
                           'md:hidden',
-                          // project.bridges.length < 3 && 'hidden',
+                          project.bridges.length < 3 && 'hidden',
                         )}
                       >
                         <Drawer>
