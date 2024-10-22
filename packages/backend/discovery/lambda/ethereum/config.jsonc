@@ -4,5 +4,9 @@
   "name": "lambda",
   "initialAddresses": ["0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054"], //OptimismPortal
   "names": {},
-  "overrides": {}
+  "overrides": {
+    "0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c": {
+      "extends": "opstack/SuperchainConfigFake"
+    }
+  }
 }
