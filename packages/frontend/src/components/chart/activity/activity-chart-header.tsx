@@ -21,13 +21,13 @@ export function ActivityChartHeader({ stats, range }: Props) {
     <header data-role="chart-header">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold max-md:hidden">
-          Daily average transactions per second
+          Daily average user ops per second
         </h1>
-        <h1 className="text-xl font-bold md:hidden">Daily average TPS</h1>
+        <h1 className="text-xl font-bold md:hidden">Daily average UOPS</h1>
         {stats !== undefined ? (
           <p className="text-right font-bold group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0">
             <span className="text-xl md:text-2xl">
-              {formatUops(countToUops(stats.latestProjectsTxCount))} TPS
+              {formatUops(countToUops(stats.latestProjectsTxCount))} UOPS
             </span>
           </p>
         ) : (
@@ -64,13 +64,13 @@ export function ScalingFactorTooltip({ className }: { className?: string }) {
           <div className="font-bold">What is scaling factor?</div>
 
           <div>
-            How many more transactions are settled by Ethereum if we take into
+            How many more operations are settled by Ethereum if we take into
             account projects listed below.
           </div>
           <div className="flex flex-col gap-1">
             <div className="text-xs font-bold">Exact formula:</div>
             <div className="text-xs">
-              (project txs/7d + ETH txs/7d) / ETH txs/7d
+              (project uops/7d + ETH uops/7d) / ETH uops/7d
             </div>
           </div>
         </div>

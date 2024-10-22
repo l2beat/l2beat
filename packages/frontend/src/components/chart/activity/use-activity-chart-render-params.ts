@@ -24,7 +24,7 @@ export function useActivityChartRenderParams({
   )
 
   const formatYAxisLabel = useCallback(
-    (value: number) => `${formatUops(value, { morePrecision: true })} TPS`,
+    (value: number) => `${formatUops(value, { morePrecision: true })} UOPS`,
     [],
   )
 
