@@ -91,7 +91,7 @@ export function DaProjectSummary({ project }: Props) {
                       <div className="flex-1 pr-12 text-right">TVS</div>
                       <div className="flex-1">Used by</div>
                     </div>
-                    <div className="flex flex-1 flex-col gap-2 overflow-y-auto rounded-t-lg bg-zinc-100 dark:bg-zinc-900 md:gap-0 md:rounded-none md:bg-none dark:md:bg-none">
+                    <div className="flex flex-1 flex-col gap-2 overflow-y-auto rounded-lg bg-zinc-100 dark:bg-zinc-900 md:gap-0 md:bg-none dark:md:bg-none">
                       {project.bridges.map((bridge, index) => (
                         <Link
                           key={bridge.id}
