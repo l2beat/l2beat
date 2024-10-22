@@ -88,7 +88,6 @@ export const rss3: Layer2 = opStackL2({
       url: 'https://scan.rss3.io/api',
       type: 'blockscout',
     },
-    minTimestampForTvl: UnixTime.fromDate(new Date('2024-03-08T00:41:59Z')),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
