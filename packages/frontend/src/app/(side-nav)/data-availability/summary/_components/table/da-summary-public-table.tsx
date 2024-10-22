@@ -37,7 +37,6 @@ export function DaSummaryPublicTable({ items }: { items: DaSummaryEntry[] }) {
       <>
         {remainingBridges.map((bridge) => (
           <TableRow key={bridge.href} className={getRowTypeClassNames()}>
-            <TableCell href={bridge.href} />
             <BridgeCells bridge={bridge} />
           </TableRow>
         ))}
@@ -68,12 +67,15 @@ function BridgeCells({
 
   return (
     <>
-      <TableCell href={bridge.href} className="text-sm font-bold">
-        {bridge.name}
+      <TableCell
+        href={bridge.href}
+        className="text-sm font-bold group-first:pl-0"
+      >
+        <div className="pl-4">{bridge.name}</div>
       </TableCell>
       <TableCell
         href={bridge.href}
-        className="flex items-center justify-center pl-6 font-bold"
+        className="flex items-center justify-center pl-4 font-bold"
       >
         <GrissiniCell values={bridgeRisks} />
       </TableCell>

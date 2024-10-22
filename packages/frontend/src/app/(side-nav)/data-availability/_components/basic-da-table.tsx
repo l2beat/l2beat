@@ -116,7 +116,6 @@ export function BasicDaTable<T extends BasicEntry>({
                           header.getContext(),
                         )}
                     </th>
-                    {!header.isPlaceholder && <ColumnFiller as="th" />}
                   </React.Fragment>
                 )
               })}
@@ -166,7 +165,6 @@ export function BasicDaTable<T extends BasicEntry>({
                     )
                   )}
                 </TableHead>
-                {groupParams?.isLastInGroup && <ColumnFiller as="th" />}
               </React.Fragment>
             )
           })}
@@ -224,10 +222,6 @@ export function BasicDaTable<T extends BasicEntry>({
                           cell.getContext(),
                         )}
                       </TableCell>
-
-                      {groupParams?.isLastInGroup && (
-                        <ColumnFiller as="td" href={href} />
-                      )}
                     </React.Fragment>
                   )
                 })}
@@ -254,7 +248,6 @@ function ColGroup<T, V>(props: { headers: Header<T, V>[] }) {
             <col key={`${header.id}-${i}`} />
           ))}
         </colgroup>
-        {!header.isPlaceholder && <ColumnFiller as="colgroup" />}
       </React.Fragment>
     )
   })
@@ -276,7 +269,6 @@ function RowFiller<T, V>(props: { headers: Header<T, V>[] }) {
             )}
             style={getCommonPinningStyles(header.column)}
           />
-          {header.colSpan > 1 && <td />}
         </>
       ))}
     </tr>

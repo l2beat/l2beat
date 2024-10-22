@@ -37,7 +37,6 @@ export function DaRiskTable({
       <>
         {remainingBridges.map((bridge) => (
           <TableRow key={bridge.href} className={getRowTypeClassNames()}>
-            <TableCell href={bridge.href} />
             <BridgeCells excludeBridge={excludeBridge} bridge={bridge} />
           </TableRow>
         ))}

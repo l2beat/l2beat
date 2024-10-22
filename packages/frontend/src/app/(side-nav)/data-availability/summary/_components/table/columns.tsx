@@ -202,7 +202,10 @@ export const publicSystemsColumns = [
   columnHelper.display({
     id: 'bridge',
     header: 'Bridge',
-    ...virtual,
+    meta: {
+      virtual: true,
+      headClassName: 'px-4',
+    },
   }),
   columnHelper.group({
     header: 'DA Bridge',
