@@ -18,6 +18,7 @@
     --icon-secondary: #5f6470;
     --overlay: #181b2d99;
     --divider: #ccd0da;
+    --divider: #ccd0da;
   }
 
   .dark {
@@ -31,6 +32,7 @@
     --surface-tertiary: #464a52;
     --icon-secondary: #5f6470;
     --overlay: #00000099;
+    --divider: #333333;
     --divider: #333333;
   }
 }
@@ -62,7 +64,7 @@
   }
 
   body:has(.sidebar) {
-    @apply bg-surface-primary md:bg-background;
+    @apply bg-background;
   }
 
   /* 
@@ -75,6 +77,14 @@
   }
   body:has(.sidebar) [data-role="select-content"] [role="option"] {
     @apply focus:bg-surface-tertiary;
+  }
+  body:has(.sidebar.main-page-card) [data-role="select-content"] {
+    @apply bg-surface-primary;
+  }
+  body:has(.sidebar.main-page-card)
+    [data-role="select-content"]
+    [role="option"] {
+    @apply focus:bg-surface-secondary;
   }
 }
 

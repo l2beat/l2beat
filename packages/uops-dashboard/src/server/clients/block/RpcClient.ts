@@ -1,4 +1,4 @@
-import { Block } from '@l2beat/shared'
+import { Block, EVMBlock, EVMTransaction } from '@l2beat/shared'
 import { providers } from 'ethers'
 import { Chain } from '../../../chains'
 import { getApiKey, getApiUrl } from '../apiUrls'
@@ -25,20 +25,20 @@ export class RpcClient implements BlockClient {
 
   async getBlock(blockNumber: number): Promise<Block> {
     // eth_getBlockByNumber
-    const rpcBlock = await this.provider.getBlockWithTransactions(blockNumber)
+    const rpcBlock = (await this.provider.getBlockWithTransactions(
+      blockNumber,
+    )) as EVMBlock
 
     return {
       number: rpcBlock.number,
       timestamp: rpcBlock.timestamp,
       hash: rpcBlock.hash,
       status: '<unknown>',
-      transactions: rpcBlock.transactions.map(
-        (tx: providers.TransactionResponse) => ({
-          hash: tx.hash,
-          data: tx.data,
-          to: tx.to,
-        }),
-      ),
+      transactions: rpcBlock.transactions.map((tx: EVMTransaction) => ({
+        hash: tx.hash,
+        data: tx.data,
+        to: tx.to,
+      })),
     }
   }
 }

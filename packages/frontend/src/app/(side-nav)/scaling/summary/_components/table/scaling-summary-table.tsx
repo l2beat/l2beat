@@ -53,7 +53,7 @@ export function ScalingSummaryTable({ entries }: Props) {
 
   return (
     <div className="space-y-3 md:space-y-6">
-      <ScalingTvlFilters items={filteredEntries} />
+      <ScalingTvlFilters items={filteredEntries} showRollupsOnly />
       <BasicTable table={table} />
     </div>
   )

@@ -313,9 +313,7 @@
       "sourceHashes": [
         "0xf3dd037dddfc31db7402a4f10bf7c4e6ef8a682fceaf2a57fc131f05c8f4dc47"
       ],
-      "descriptions": [
-        "A contract that manages the root history of the Semaphore identity merkle tree on Optimism."
-      ],
+      "description": "A contract that manages the root history of the Semaphore identity merkle tree on Optimism.",
       "sinceTimestamp": 1695411619,
       "values": {
         "$immutable": true,

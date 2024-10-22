@@ -246,9 +246,7 @@
         "0x03c52122def17f5a3403dd9a188a1e30bee36b86dc98fb8c07a5157ccc7da286"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "The Sentinel is itself a Governor and Pauser in the bridge contracts. It allows additional Sentinel-Governors to make changes in its name that can be restricted by Guards changing the Sentinel's relaxed state."
-      ],
+      "description": "The Sentinel is itself a Governor and Pauser in the bridge contracts. It allows additional Sentinel-Governors to make changes in its name that can be restricted by Guards changing the Sentinel's relaxed state.",
       "issuedPermissions": [
         {
           "permission": "upgrade",

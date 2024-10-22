@@ -10,9 +10,7 @@
       "sourceHashes": [
         "0xb4bd2b8453fbde4b776b6b9653139c16e0c673e589025d3d3fe553933fdab859"
       ],
-      "descriptions": [
-        "Yield Provider for DAI investing DAI into the MakerDAO DSR."
-      ],
+      "description": "Yield Provider for DAI investing DAI into the MakerDAO DSR.",
       "sinceTimestamp": 1708813619,
       "values": {
         "$immutable": true,
@@ -35,9 +33,7 @@
         "0xd40fa201f3d213c5e7a8e44bcd59d3f28c198741c50a733c20af045c60a2914d"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
-      ],
+      "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
       "issuedPermissions": [
         {
           "permission": "guard",
@@ -151,9 +147,7 @@
         "0x9b25fea33ece84240133b9633d6edebfa268b929644604f9ec3ef4fbcd97ac60"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Custom bridge gateway for Blast that allows the Operators to reinvest L1 tokens while they are bridged to the L2."
-      ],
+      "description": "Custom bridge gateway for Blast that allows the Operators to reinvest L1 tokens while they are bridged to the L2.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -186,7 +180,7 @@
       "sourceHashes": [
         "0x085a7e18c46eb9d391f5ffaf3469ac7fcb4a361abf098f4aee3e6f4c03670368"
       ],
-      "descriptions": ["Yield Provider for ETH investing ETH into stETH."],
+      "description": "Yield Provider for ETH investing ETH into stETH.",
       "sinceTimestamp": 1708813595,
       "values": {
         "$immutable": true,
@@ -256,9 +250,7 @@
         "0x5287b087cec2244d57a3cea230c0c70a9b5fd8d4fdca71f7d85d34a8a22792b1"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
-      ],
+      "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -344,9 +336,7 @@
         "0x62b0361291c40e624393723bdac21e4ecdb590904474346417c941734984bb25"
       ],
       "proxyType": "resolved delegate proxy",
-      "descriptions": [
-        "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
-      ],
+      "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "categories": ["Core"],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1708812983,
@@ -497,9 +487,7 @@
         "0xf5e9d1b6ac4bf84529eacc8e29c0731ef1524f2a84cbd91fb9840cf631cfff7c"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
-      ],
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.",
       "categories": ["Gateways&Escrows"],
       "issuedPermissions": [
         {
@@ -531,9 +519,7 @@
         "0x3199ce561d915dec4e96a05f056d262ab4af7342a28a8c1b65b73aad49850d0e"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."
-      ],
+      "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -567,9 +553,7 @@
         "0x373b0cddb16922a75ab98dfce0c4913a0970c018bfa1d55d123d4ff6511179a6"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
-      ],
+      "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
       "issuedPermissions": [
         {
           "permission": "challenge",
@@ -643,7 +627,7 @@
         "0x5d1416fc2e9565203ff83a5f989b55c635a3c9c11d7655a7d7f8e4a2e63ede7d"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": ["Contract managing Yield Providers for ETH."],
+      "description": "Contract managing Yield Providers for ETH.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -689,9 +673,7 @@
         "0xf99e492f3d76fa74e24ea285b4e7de6199ab1f71a8de99f523785133dac44581"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Contract escrowing stablecoins and managing Yield Providers for stablecoins (like for example DAI)."
-      ],
+      "description": "Contract escrowing stablecoins and managing Yield Providers for stablecoins (like for example DAI).",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -738,9 +720,7 @@
         "0x17f0c97db13062aa8299e78c5d1a68b5152ce948b2fe10e5283857bd6a15ce4f"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Used to bridge ERC-721 tokens from host chain to this chain."
-      ],
+      "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -774,9 +754,7 @@
       "sourceHashes": [
         "0xdc86a850f11dc2b5c0472a05d0e3c14f239baf2c3b1ab19631591b0827985380"
       ],
-      "descriptions": [
-        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
-      ],
+      "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
           "permission": "configure",

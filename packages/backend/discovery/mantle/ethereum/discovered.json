@@ -46,9 +46,7 @@
         "0x25c9049ce3c6e3d0fb455a5ceecf01cc2d9a92f415e869786ef2f2221e85b803"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "This contract stores the number of Mantle DA operators and their public keys. It also store the quorum threshold and the minimum stake required to be part of the quorum."
-      ],
+      "description": "This contract stores the number of Mantle DA operators and their public keys. It also store the quorum threshold and the minimum stake required to be part of the quorum.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -115,9 +113,7 @@
         "0x943049d488a42420a15934ca27ae2fc159c395727536ee64c38afdde4215c561"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Contract managing different investment strategies, forked from EigenLayer StrategyManager."
-      ],
+      "description": "Contract managing different investment strategies, forked from EigenLayer StrategyManager.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -245,9 +241,7 @@
         "0x45368d302fba850124115aa8ee67238f47d47d89c2b1b8c5dfd39818369e6cea"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
-      ],
+      "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
       "issuedPermissions": [
         {
           "permission": "challenge",
@@ -311,9 +305,7 @@
         "0x13e07c3c64aef03cfd7f5c01b2b1b443fd1dfb19c4128447fe316bb5fcd128cd"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT."
-      ],
+      "description": "MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -362,9 +354,7 @@
         "0xb2a3bda11c08328ecb46ec5789f3264be5d816bc218a5024a4cafd1c59017160"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
-      ],
+      "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -689,9 +679,7 @@
         "0xf52658c0dbe857c858ac93c9c3dad449fff36d7e6454b67ac61a5bf3dcecca30"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "This contract is the main entry point for data availability. It is responsible for storing transaction data headers and confirming the data store by verifying operators signatures."
-      ],
+      "description": "This contract is the main entry point for data availability. It is responsible for storing transaction data headers and confirming the data store by verifying operators signatures.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -768,9 +756,7 @@
         "0x430d270834512dafe98bf268d6912f12a10c5a6287e7463830a22e4616dd63a0"
       ],
       "proxyType": "resolved delegate proxy",
-      "descriptions": [
-        "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
-      ],
+      "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "categories": ["Core"],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1687953527,
@@ -822,9 +808,7 @@
         "0x763c5728a19538783edf38c17731f9cf79ff6f38bfa4bce61333cef0aac5452e"
       ],
       "displayName": "AddressManager",
-      "descriptions": [
-        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
-      ],
+      "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -922,9 +906,7 @@
         "0x1cd5cb2fa146b2a5dfb07279a52cd93855b268115912df60292b18394cc532e8"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
-      ],
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -960,7 +942,7 @@
         "0x20018f70ed5942c8b643f26e7f19c6d30f27dead8e6eb6f1127d87a2f2a04589"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": ["Basic do-nothing investment strategy."],
+      "description": "Basic do-nothing investment strategy.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1064,9 +1046,7 @@
         "0x3a064711ad01291b3644b5f657fd8317cd07f19222c9f216e25557d4d69ea295"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
-      ],
+      "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
       "issuedPermissions": [
         {
           "permission": "guard",
@@ -1201,7 +1181,7 @@
         "0x20018f70ed5942c8b643f26e7f19c6d30f27dead8e6eb6f1127d87a2f2a04589"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": ["Basic do-nothing investment strategy."],
+      "description": "Basic do-nothing investment strategy.",
       "issuedPermissions": [
         {
           "permission": "upgrade",

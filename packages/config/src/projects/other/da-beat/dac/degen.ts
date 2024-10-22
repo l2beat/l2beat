@@ -1,7 +1,7 @@
 import { ChainId } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { degen } from '../../../layer3s/degen'
-import { DAC } from '../templates/dac-template'
+import { AnytrustDAC } from '../templates/anytrust-template'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('degen', 'base')
@@ -12,7 +12,7 @@ const dac = discovery.getContractValue<{
 }>('SequencerInbox', 'dacKeyset')
 const { membersCount, requiredSignatures } = dac
 
-export const degenDac = DAC({
+export const degenDac = AnytrustDAC({
   project: degen,
   bridge: {
     contracts: {
@@ -38,7 +38,7 @@ export const degenDac = DAC({
         'It can update whether an address is authorized to be a batch poster at the sequencer inbox. The UpgradeExecutor retains the ability to update the batch poster manager (along with any batch posters).',
       ),
     ],
-    chain: ChainId.ETHEREUM,
+    chain: ChainId.BASE,
     requiredMembers: requiredSignatures,
     membersCount: membersCount,
     transactionDataType: DacTransactionDataType.TransactionDataCompressed,

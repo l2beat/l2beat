@@ -1,12 +1,13 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
+import { Meta } from '@l2beat/discovery-types'
 import { AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
 import { processAnalysis, sortByKeys } from './toDiscoveryOutput'
 
-const emptyOutputMeta = {
-  descriptions: undefined,
+const emptyOutputMeta: Meta = {
+  description: undefined,
   issuedPermissions: undefined,
   receivedPermissions: undefined,
   directlyReceivedPermissions: undefined,

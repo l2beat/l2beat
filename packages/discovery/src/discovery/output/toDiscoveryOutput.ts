@@ -1,4 +1,8 @@
-import { ContractParameters, DiscoveryOutput } from '@l2beat/discovery-types'
+import {
+  ContractParameters,
+  DiscoveryOutput,
+  EoaParameters,
+} from '@l2beat/discovery-types'
 import { Hash256 } from '@l2beat/shared-pure'
 
 import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
@@ -68,7 +72,7 @@ export function processAnalysis(
           proxyType: x.proxyType,
           displayName:
             displayName && displayName !== x.name ? displayName : undefined,
-          descriptions: x.combinedMeta?.descriptions,
+          description: x.combinedMeta?.description,
           categories: setToSortedArray(x.combinedMeta?.categories),
           types: setToSortedArray(x.combinedMeta?.types),
           severity: x.combinedMeta?.severity,
@@ -103,14 +107,14 @@ export function processAnalysis(
           )
         return {
           address: x.address,
-          descriptions: x.combinedMeta?.descriptions,
+          description: x.combinedMeta?.description,
           categories: setToSortedArray(x.combinedMeta?.categories),
           types: setToSortedArray(x.combinedMeta?.types),
           severity: x.combinedMeta?.severity,
           issuedPermissions: transformToIssued(x.address, resolvedPermissions),
           receivedPermissions,
           directlyReceivedPermissions,
-        }
+        } satisfies EoaParameters
       }),
     abis,
   }

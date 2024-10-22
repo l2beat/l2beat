@@ -344,7 +344,7 @@ export class ProjectDiscovery {
       .filter(notUndefined)
       .map((contract) => ({
         name: contract.name,
-        description: trimTrailingDots(contract.descriptions?.join(' ') ?? ''),
+        description: trimTrailingDots(contract.description ?? ''),
       }))
       .map(
         ({ name, description }) =>
@@ -851,7 +851,7 @@ export class ProjectDiscovery {
         ? this.describeDirectlyReceivedPermissions(contractOrEoa)
         : []),
       ...this.describeUltimatelyReceivedPermissions(contractOrEoa),
-      contractOrEoa.descriptions?.join(' '),
+      contractOrEoa.description,
     ].filter(notUndefined)
   }
 

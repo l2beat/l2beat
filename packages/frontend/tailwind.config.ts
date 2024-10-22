@@ -278,6 +278,9 @@ const config: Config = {
     plugin(function ({ addVariant }) {
       addVariant('sidebar', '.sidebar &')
     }),
+    plugin(function ({ addVariant }) {
+      addVariant('main-page-card', '.main-page-card &')
+    }),
     require('tailwindcss-animate'),
     require('@tailwindcss/container-queries'),
   ],

@@ -56,5 +56,8 @@ export function activityRecord(
 }
 
 export function transactions(count: number) {
-  return range(count).map((i) => `0x${i.toString()}`)
+  return range(count).map((i) => ({
+    to: `0x${i.toString()}`,
+    data: `0x${i.toString()}`,
+  }))
 }
