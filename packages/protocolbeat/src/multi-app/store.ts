@@ -118,20 +118,9 @@ export const useStore = create<State & Action>((set) => ({
       if (state.panels.length === 1) {
         return state
       }
-      const toRemove = state.panels.find((panel) => panel.id === id)
-      if (!toRemove) {
-        return state
-      }
-      const isLast = toRemove === state.panels[state.panels.length - 1]
       return {
         fullScreen: state.fullScreen === id ? undefined : state.fullScreen,
-        panels: state.panels
-          .map((panel, i) =>
-            state.panels[isLast ? i + 1 : i - 1] === toRemove
-              ? { ...panel, size: panel.size + toRemove.size }
-              : panel,
-          )
-          .filter((panel) => panel.id !== id),
+        panels: state.panels.filter((panel) => panel.id !== id),
       }
     }),
   toggleFullScren: (id) =>
