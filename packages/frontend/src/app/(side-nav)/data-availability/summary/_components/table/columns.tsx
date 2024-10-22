@@ -10,7 +10,6 @@ import { formatCurrency } from '~/utils/number-format/format-currency'
 import { DaLayerCell } from '../../../_components/da-layer-cell'
 import { RiskGrissini } from '../../../_components/risk-grissini'
 import { DaEconomicSecurityCell } from './da-economic-security-cell'
-import { ProjectsUsedIn } from './projects-used-in'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
 
@@ -96,15 +95,6 @@ const membersColumn = columnHelper.display({
   cell: () => 'TBD',
 })
 
-const usedInColumn = columnHelper.accessor('usedIn', {
-  header: 'Used in',
-  cell: (ctx) => {
-    const value = ctx.getValue()
-    return value.length > 0 ? <ProjectsUsedIn usedIn={value} /> : EM_DASH
-  },
-  enableSorting: false,
-})
-
 const challengeMechanismColumn = columnHelper.accessor(
   'hasChallengeMechanism',
   {
@@ -185,9 +175,12 @@ export const publicSystemsColumns = [
   columnHelper.group({
     header: 'DA Layer',
     columns: [
-      { ...daRisksColumn, meta: { rowSpan: spanByBridges } },
-      { ...tvsColumn, meta: { rowSpan: spanByBridges } },
-      { ...slashableStakeColumn, meta: { rowSpan: spanByBridges } },
+      { ...daRisksColumn, meta: { rowSpan: spanByBridges, align: 'center' } },
+      { ...tvsColumn, meta: { rowSpan: spanByBridges, align: 'right' } },
+      {
+        ...slashableStakeColumn,
+        meta: { rowSpan: spanByBridges, align: 'center' },
+      },
     ],
     meta: {
       rowSpan: spanByBridges,

@@ -1,15 +1,18 @@
 'use client'
-import { Row, getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import { type Row, getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { TableCell, TableRow } from '~/components/table/table'
+import { EM_DASH } from '~/consts/characters'
 import { useTable } from '~/hooks/use-table'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 import { RiskGrissini } from '../../../_components/risk-grissini'
-import { customColumns } from './columns'
+import { publicSystemsColumns } from './columns'
 import { BasicDaTable, getRowTypeClassNames } from './da/basic-da-table'
+import { ProjectsUsedIn } from './projects-used-in'
 
 export function DaSummaryPublicTable({ items }: { items: DaSummaryEntry[] }) {
   const table = useTable({
-    columns: customColumns,
+    columns: publicSystemsColumns,
     data: items,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -49,7 +52,6 @@ export function DaSummaryPublicTable({ items }: { items: DaSummaryEntry[] }) {
 
 function BridgeCells({
   bridge,
-  excludeBridge = false,
 }: {
   bridge: DaSummaryEntry['bridges'][number]
   excludeBridge?: boolean
@@ -65,17 +67,21 @@ function BridgeCells({
       <TableCell href={bridge.href} className="text-sm font-bold">
         {bridge.name}
       </TableCell>
-      <TableCell href={bridge.href} className="text-sm font-bold">
-        {bridge.name}
-      </TableCell>
-      <TableCell href={bridge.href} className="text-sm font-bold">
-        {bridge.name}
-      </TableCell>
       <TableCell
         href={bridge.href}
-        className="pl-6 flex items-center justify-center"
+        className="flex items-center justify-center pl-6 font-bold"
       >
         <RiskGrissini values={bridgeRisks} />
+      </TableCell>
+      <TableCell className="font-bold">
+        {formatCurrency(bridge.tvs, 'usd')}
+      </TableCell>
+      <TableCell href={bridge.href} className="text-sm font-bold">
+        {bridge.usedIn.length > 0 ? (
+          <ProjectsUsedIn usedIn={bridge.usedIn} />
+        ) : (
+          EM_DASH
+        )}
       </TableCell>
     </>
   )
