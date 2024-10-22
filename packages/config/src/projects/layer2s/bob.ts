@@ -39,6 +39,7 @@ export const bob: Layer2 = opStackL2({
   ],
   usesBlobs: true,
   genesisTimestamp: new UnixTime(1712861989),
+  nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN'],
   isNodeAvailable: 'UnderReview',
   discoveryDrivenData: true,
   milestones: [

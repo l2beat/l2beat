@@ -2579,6 +2579,20 @@
       "supply": "zero"
     },
     {
+      "name": "mBTC",
+      "coingeckoId": "manta-mbtc",
+      "address": "0x4041381e947CFD3D483d67a25C6aa9Dc924250c5",
+      "symbol": "mBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1720421459,
+      "coingeckoListingTimestamp": 1717113600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38338/large/token_m_btc.png?1717126408",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Meld",
       "coingeckoId": "meld-2",
       "address": "0x333000333b26eE30214B4af6419D9ab07a450400",
@@ -2649,6 +2663,20 @@
       "supply": "zero"
     },
     {
+      "name": "mETH",
+      "coingeckoId": "manta-meth",
+      "address": "0x8CdF550C04Bc9B9F10938368349C9c8051A772b6",
+      "symbol": "mETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1720421291,
+      "coingeckoListingTimestamp": 1717113600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38337/large/token_m_eth.png?1717126380",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Metis Token",
       "coingeckoId": "metis-token",
       "address": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
@@ -2686,6 +2714,20 @@
       "coingeckoListingTimestamp": 1713484800,
       "category": "ether",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/37167/large/mswETH.png?1713507053",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "mUSD",
+      "coingeckoId": "manta-musd",
+      "address": "0x3f24E1d7a973867fC2A03fE199E5502514E0e11E",
+      "symbol": "mUSD",
+      "decimals": 18,
+      "deploymentTimestamp": 1720421171,
+      "coingeckoListingTimestamp": 1717113600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38336/large/token_m_usd.png?1717126272",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -3531,6 +3573,20 @@
       "supply": "zero"
     },
     {
+      "name": "Renzo Restaked LST ",
+      "coingeckoId": "renzo-restaked-lst",
+      "address": "0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811",
+      "symbol": "pzETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1719403475,
+      "coingeckoListingTimestamp": 1720569600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39124/large/200x200.png?1720629607",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Republic Token",
       "coingeckoId": "republic-protocol",
       "address": "0x408e41876cCCDC0F92210600ef50372656052a38",
@@ -3764,6 +3820,34 @@
       "coingeckoListingTimestamp": 1578700800,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/10366/large/SLP.png?1696510368",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Solv BTC",
+      "coingeckoId": "solv-btc",
+      "address": "0x7A56E1C57C7475CCf742a1832B028F0456652F97",
+      "symbol": "SolvBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1719475619,
+      "coingeckoListingTimestamp": 1712448000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "SolvBTC Babylon",
+      "coingeckoId": "solv-protocol-solvbtc-bbn",
+      "address": "0xd9D920AA40f578ab794426F5C90F6C731D159DEf",
+      "symbol": "SolvBTC.BBN",
+      "decimals": 18,
+      "deploymentTimestamp": 1719483839,
+      "coingeckoListingTimestamp": 1722556800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39384/large/unnamed.png?1721961640",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"

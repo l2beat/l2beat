@@ -93,6 +93,7 @@ export interface OpStackConfigCommon {
   nonTemplateContracts?: ScalingProjectContract[]
   nonTemplateNativeContracts?: Record<string, ScalingProjectContract[]>
   nonTemplateEscrows?: ScalingProjectEscrow[]
+  nonTemplateExcludedTokens?: string[]
   nonTemplateOptimismPortalEscrowTokens?: string[]
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
@@ -470,6 +471,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
           address: l1StandardBridgeEscrow,
           tokens: templateVars.l1StandardBridgeTokens ?? '*',
           premintedTokens: templateVars.l1StandardBridgePremintedTokens,
+          excludedTokens: templateVars.nonTemplateExcludedTokens,
           description:
             'Main entry point for users depositing ERC20 token that do not require custom gateway.',
           ...upgradeability,
@@ -862,6 +864,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
           includeInTotal: false,
           address: l1StandardBridgeEscrow,
           tokens: templateVars.l1StandardBridgeTokens ?? '*',
+          excludedTokens: templateVars.nonTemplateExcludedTokens,
           description:
             'Main entry point for users depositing ERC20 token that do not require custom gateway.',
           ...upgradeability,
