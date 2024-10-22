@@ -35,13 +35,15 @@ const DEFAULT_LAYOUT: Panel[] = [
   { id: 'nodes', size: 1 },
 ]
 
+const MAX_LAYOUTS = 6
+
 function readStoredLayouts() {
   const zPanel = z.object({
     id: z.enum(PANEL_IDS),
     size: z.number().gt(0),
   })
 
-  const layouts: Panel[][] = new Array(10).fill(DEFAULT_LAYOUT)
+  const layouts: Panel[][] = new Array(MAX_LAYOUTS).fill(DEFAULT_LAYOUT)
   const json = localStorage.getItem('multi-app/layouts') ?? '[]'
   try {
     const object = JSON.parse(json)
@@ -63,7 +65,7 @@ function readSelectedLayout() {
       typeof value === 'number' &&
       Number.isInteger(value) &&
       value >= 0 &&
-      value < 10
+      value < MAX_LAYOUTS
     ) {
       return value
     }

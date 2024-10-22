@@ -72,15 +72,14 @@ export function MultiApp() {
     function onMouseMove(e: MouseEvent) {
       mouseMove(e.clientX, e.clientY)
 
-      const container = panelContainerRef.current
-      if (!container) {
-        return
-      }
-
       const { hover } = useStore.getState()
-      container.classList.toggle('select-none', !!hover)
+      document.body.classList.toggle('select-none', !!hover)
 
       if (hover) {
+        const container = panelContainerRef.current
+        if (!container) {
+          return
+        }
         const panels = [...container.children]
         for (const panel of panels) {
           const box = panel.getBoundingClientRect()
@@ -151,26 +150,22 @@ function TopBar() {
   const saveLayout = useStore((state) => state.saveLayout)
   const addPanel = useStore((state) => state.addPanel)
   return (
-    <div className="flex h-10 items-center justify-between">
+    <div className="flex h-10 items-center justify-between px-2">
       <div>DISCOVERY</div>
       <div className="flex gap-2">
-        <div className="grid grid-cols-5">
+        <div className="grid grid-cols-6">
           {layouts.map((_, i) => (
             <button
               key={i}
-              className={clsx(selectedLayout === i && 'bg-fuchsia-300')}
+              className={clsx('w-4', selectedLayout === i && 'bg-fuchsia-300')}
               onClick={() => loadLayout(i)}
             >
               {i + 1}
             </button>
           ))}
         </div>
-        <div className="flex flex-col">
-          <button onClick={() => saveLayout(selectedLayout)}>
-            Save Layout
-          </button>
-          <button onClick={() => addPanel()}>Add Panel</button>
-        </div>
+        <button onClick={() => saveLayout(selectedLayout)}>Save Layout</button>
+        <button onClick={() => addPanel()}>Add Panel</button>
       </div>
     </div>
   )
@@ -192,14 +187,12 @@ function Panel(props: { id: PanelId }) {
       <HeaderWrapper>
         <PanelHeader id={props.id} />
       </HeaderWrapper>
-      {!isHover && (
-        <div
-          className="flex-1 px-2 py-1"
-          style={{ backgroundColor: info.color }}
-        >
-          {info.name} body
-        </div>
-      )}
+      <div
+        className={clsx('flex-1 px-2 py-1', isHover && 'hidden')}
+        style={{ backgroundColor: info.color }}
+      >
+        {info.name} body
+      </div>
       {isHover && <div className="flex-1 bg-slate-100" />}
     </div>
   )
