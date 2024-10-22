@@ -15,7 +15,9 @@
     --surface-primary: #fafafa;
     --surface-secondary: #e6e7ec;
     --surface-tertiary: #ccd0da;
+    --icon-secondary: #5f6470;
     --overlay: #181b2d99;
+    --divider: #ccd0da;
   }
 
   .dark {
@@ -27,7 +29,9 @@
     --surface-primary: #1f2025;
     --surface-secondary: #393c43;
     --surface-tertiary: #464a52;
+    --icon-secondary: #5f6470;
     --overlay: #00000099;
+    --divider: #333333;
   }
 }
 
