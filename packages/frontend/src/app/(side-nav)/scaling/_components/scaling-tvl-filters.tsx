@@ -11,14 +11,14 @@ import { useScalingFilterValues } from './scaling-filter-context'
 
 interface Props {
   items: CommonScalingEntry[]
-  showRollupsOnly?: boolean
   className?: string
+  showRollupsOnly?: boolean
 }
 
 export function ScalingTvlFilters({
   items,
-  showRollupsOnly,
   className,
+  showRollupsOnly,
 }: Props) {
   const { excludeAssociatedTokens, setExcludeAssociatedTokens } =
     useScalingAssociatedTokensContext()

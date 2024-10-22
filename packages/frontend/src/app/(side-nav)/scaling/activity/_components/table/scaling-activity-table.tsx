@@ -12,7 +12,7 @@ import { BasicTable } from '~/components/table/basic-table'
 import { RollupsTable } from '~/components/table/rollups-table'
 import { useTable } from '~/hooks/use-table'
 import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling-activity-entries'
-import { scalingActivityColumns } from './columns'
+import { getScalingActivityColumns } from './columns'
 
 interface Props {
   entries: ScalingActivityEntry[]
@@ -35,7 +35,9 @@ export function ScalingActivityTable({
   )
 
   const table = useTable({
-    columns: scalingActivityColumns,
+    columns: getScalingActivityColumns({
+      customActivityIndexing: !!customSortedRowModel,
+    }),
     data: filteredEntries,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: customSortedRowModel ?? getSortedRowModel(),

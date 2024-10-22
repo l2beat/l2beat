@@ -1,3 +1,4 @@
+import { ProjectId } from '@l2beat/shared-pure'
 import { type BasicTableEntry, type BasicTableProps } from '../basic-table'
 
 export type RowType = ReturnType<typeof getRowType>
@@ -5,7 +6,7 @@ export function getRowType(
   entry: BasicTableEntry,
   rowColoringMode: BasicTableProps<BasicTableEntry>['rowColoringMode'],
 ) {
-  if (entry.slug === 'ethereum') {
+  if (entry.id === ProjectId.ETHEREUM) {
     return 'ethereum'
   }
   if (rowColoringMode === 'ethereum-only') {
