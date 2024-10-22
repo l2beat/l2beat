@@ -1,9 +1,9 @@
 import { CountedBlock, CountedOperation, CountedTransaction } from '@/types'
 import {
-  Block,
   ENTRY_POINT_ADDRESS_0_6_0,
   ENTRY_POINT_ADDRESS_0_7_0,
   ERC4337_methods,
+  EVMBlock,
   SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
   SAFE_methods,
 } from '@l2beat/shared'
@@ -14,7 +14,7 @@ import { RpcCounter } from './RpcCounter'
 describe(RpcCounter.name, () => {
   describe(RpcCounter.prototype.countForBlock.name, () => {
     it('should return block with counted operations', () => {
-      const mockBlock: Block = createBlock(1)
+      const mockBlock: EVMBlock = createBlock(1)
 
       const expectedResult: CountedBlock = {
         ...mockBlock,
@@ -49,7 +49,7 @@ describe(RpcCounter.name, () => {
       const end = UnixTime.now()
       const start = end.add(-1, 'hours')
 
-      const mockBlocks: Block[] = [
+      const mockBlocks: EVMBlock[] = [
         createBlock(1, start),
         createBlock(2),
         createBlock(3, end),
@@ -525,17 +525,19 @@ describe(RpcCounter.name, () => {
   })
 })
 
-function createBlock(number: number, timestamp?: UnixTime): Block {
+function createBlock(number: number, timestamp?: UnixTime): EVMBlock {
   return {
     number,
     timestamp: timestamp?.toNumber() ?? UnixTime.now().toNumber(),
     hash: `${number}.hash`,
     transactions: [
       {
+        to: 'tx1.to',
         hash: 'tx1.hash',
         data: 'tx1.data',
       },
       {
+        to: 'tx2.to',
         hash: 'tx2.hash',
         data: 'tx2.data',
       },
