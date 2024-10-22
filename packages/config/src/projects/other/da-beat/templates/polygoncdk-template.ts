@@ -161,7 +161,8 @@ export function PolygoncdkDAC(template: TemplateVars): DacDaLayer {
     kind: 'DAC',
     type: 'DaLayer',
     systemCategory: 'custom',
-    fallback: template.fallback,
+    fallback: template.fallback, // Currently none?
+    // https://github.com/0xPolygon/cdk-validium-node/blame/0a1743e0009a3225858c24328459d44ddb44a3ae/docs/diff/diff.md#L101
     hasChallengeMechanism: template.hasChallengeMechanism,
     display: layerDisplay,
     technology: {

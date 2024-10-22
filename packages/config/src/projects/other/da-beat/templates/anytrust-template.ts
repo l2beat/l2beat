@@ -171,7 +171,7 @@ export function AnytrustDAC(template: TemplateVars): DacDaLayer {
     kind: 'DAC',
     type: 'DaLayer',
     systemCategory: 'custom',
-    fallback: template.fallback,
+    fallback: template.fallback ?? 'Ethereum (blobs)',
     hasChallengeMechanism: template.hasChallengeMechanism,
     display: layerDisplay,
     technology: {
