@@ -9300,6 +9300,20 @@
       }
     },
     {
+      "name": "Scroll",
+      "coingeckoId": "scroll",
+      "address": "0xd29687c813D741E2F938F4aC377128810E217b1b",
+      "symbol": "SCR",
+      "decimals": 18,
+      "deploymentTimestamp": 1725336741,
+      "coingeckoListingTimestamp": 1729641600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50571/large/scroll.jpg?1728376125",
+      "chainId": 534352,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Staked USDe",
       "coingeckoId": "ethena-staked-usde",
       "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
