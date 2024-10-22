@@ -124,7 +124,7 @@ export function MultiApp() {
 
   return (
     <div className="flex h-full w-full flex-col">
-      <div className="h-10">TOP BAR</div>
+      <TopBar />
       <div
         ref={panelContainerRef}
         className="grid flex-1"
@@ -139,6 +139,38 @@ export function MultiApp() {
         {panels.map((panel) => {
           return <Panel key={panel.id} id={panel.id} />
         })}
+      </div>
+    </div>
+  )
+}
+
+function TopBar() {
+  const layouts = useStore((state) => state.layouts)
+  const selectedLayout = useStore((state) => state.selectedLayout)
+  const loadLayout = useStore((state) => state.loadLayout)
+  const saveLayout = useStore((state) => state.saveLayout)
+  const addPanel = useStore((state) => state.addPanel)
+  return (
+    <div className="flex h-10 items-center justify-between">
+      <div>DISCOVERY</div>
+      <div className="flex gap-2">
+        <div className="grid grid-cols-5">
+          {layouts.map((_, i) => (
+            <button
+              key={i}
+              className={clsx(selectedLayout === i && 'bg-fuchsia-300')}
+              onClick={() => loadLayout(i)}
+            >
+              {i + 1}
+            </button>
+          ))}
+        </div>
+        <div className="flex flex-col">
+          <button onClick={() => saveLayout(selectedLayout)}>
+            Save Layout
+          </button>
+          <button onClick={() => addPanel()}>Add Panel</button>
+        </div>
       </div>
     </div>
   )
@@ -191,7 +223,6 @@ function PanelHeader(props: { id: PanelId }) {
   const changePanel = useStore((state) => state.changePanel)
   const pickUp = useStore((state) => state.pickUp)
   const toggleFullScren = useStore((state) => state.toggleFullScren)
-  const splitPanel = useStore((state) => state.splitPanel)
   const removePanel = useStore((state) => state.removePanel)
 
   return (
@@ -216,16 +247,9 @@ function PanelHeader(props: { id: PanelId }) {
         <button className="w-4" onClick={() => toggleFullScren(props.id)}>
           F
         </button>
-        {!isFullScreen && (
-          <button className="w-4" onClick={() => splitPanel(props.id)}>
-            S
-          </button>
-        )}
-        {!isFullScreen && (
-          <button className="w-4" onClick={() => removePanel(props.id)}>
-            X
-          </button>
-        )}
+        <button className="w-4" onClick={() => removePanel(props.id)}>
+          X
+        </button>
       </div>
     </div>
   )

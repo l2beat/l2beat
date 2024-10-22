@@ -1,18 +1,23 @@
+import { z } from 'zod'
 import { create } from 'zustand'
 
 export const PANEL_IDS = ['list', 'values', 'nodes', 'code', 'preview'] as const
 export type PanelId = (typeof PANEL_IDS)[number]
 
+export type Panel = { id: PanelId; size: number }
+
 export type State = {
   mouse: { x: number; y: number }
-  panels: { id: PanelId; size: number }[]
+  panels: Panel[]
+  layouts: Panel[][]
+  selectedLayout: number
   fullScreen: PanelId | undefined
   hover: PanelId | undefined
 }
 
 export type Action = {
   changePanel: (from: PanelId, to: PanelId) => void
-  splitPanel: (id: PanelId) => void
+  addPanel: () => void
   removePanel: (id: PanelId) => void
   toggleFullScren: (id: PanelId) => void
   resize: (id: PanelId, fraction: number) => void
@@ -20,15 +25,60 @@ export type Action = {
   pickUp: (id: PanelId) => void
   order: (id: PanelId, before: boolean) => void
   drop: () => void
+  loadLayout: (n: number) => void
+  saveLayout: (n: number) => void
 }
 
+const DEFAULT_LAYOUT: Panel[] = [
+  { id: 'list', size: 0.5 },
+  { id: 'values', size: 1 },
+  { id: 'nodes', size: 1 },
+]
+
+function readStoredLayouts() {
+  const zPanel = z.object({
+    id: z.enum(PANEL_IDS),
+    size: z.number().gt(0),
+  })
+
+  const layouts: Panel[][] = new Array(10).fill(DEFAULT_LAYOUT)
+  const json = localStorage.getItem('multi-app/layouts') ?? '[]'
+  try {
+    const object = JSON.parse(json)
+    const items = z.array(z.array(zPanel)).parse(object)
+    for (let i = 0; i < layouts.length; i++) {
+      layouts[i] = items[i] ?? DEFAULT_LAYOUT
+    }
+  } catch (e) {
+    console.error(e)
+  }
+  return layouts
+}
+
+function readSelectedLayout() {
+  const json = localStorage.getItem('multi-app/selectedLayout') ?? '0'
+  try {
+    const value = JSON.parse(json)
+    if (
+      typeof value === 'number' &&
+      Number.isInteger(value) &&
+      value >= 0 &&
+      value < 10
+    ) {
+      return value
+    }
+  } catch {}
+  return 0
+}
+
+const storedLayouts = readStoredLayouts()
+const selectedLayout = readSelectedLayout()
 export const useStore = create<State & Action>((set) => ({
   mouse: { x: 0, y: 0 },
-  panels: [
-    { id: 'list', size: 1 },
-    { id: 'values', size: 2 },
-    { id: 'nodes', size: 2 },
-  ],
+  // biome-ignore lint/style/noNonNullAssertion: We know it's there
+  panels: storedLayouts[selectedLayout]!,
+  layouts: storedLayouts,
+  selectedLayout: selectedLayout,
   fullScreen: undefined,
   hover: undefined,
   changePanel: (from, to) =>
@@ -53,24 +103,16 @@ export const useStore = create<State & Action>((set) => ({
         fullScreen: state.fullScreen === from ? to : state.fullScreen,
       }
     }),
-  splitPanel: (id) =>
-    set((state) => ({
-      panels: state.panels.flatMap((panel) => {
-        if (panel.id !== id) {
-          return [panel]
-        }
-        const nextPanelId = PANEL_IDS.find(
-          (id) => !state.panels.find((p) => p.id === id),
-        )
-        if (!nextPanelId) {
-          return [panel]
-        }
-        return [
-          { ...panel, size: panel.size / 2 },
-          { id: nextPanelId, size: panel.size / 2 },
-        ]
-      }),
-    })),
+  addPanel: () =>
+    set((state) => {
+      const nextPanelId = PANEL_IDS.find(
+        (id) => !state.panels.find((p) => p.id === id),
+      )
+      if (!nextPanelId) {
+        return state
+      }
+      return { panels: state.panels.concat([{ id: nextPanelId, size: 1 }]) }
+    }),
   removePanel: (id) =>
     set((state) => {
       if (state.panels.length === 1) {
@@ -82,6 +124,7 @@ export const useStore = create<State & Action>((set) => ({
       }
       const isLast = toRemove === state.panels[state.panels.length - 1]
       return {
+        fullScreen: state.fullScreen === id ? undefined : state.fullScreen,
         panels: state.panels
           .map((panel, i) =>
             state.panels[isLast ? i + 1 : i - 1] === toRemove
@@ -142,4 +185,23 @@ export const useStore = create<State & Action>((set) => ({
       return { panels }
     }),
   drop: () => set(() => ({ hover: undefined })),
+  loadLayout: (n) =>
+    set((state) => {
+      const layout = state.layouts[n]
+      if (!layout) {
+        return state
+      }
+      // SIDE EFFECT!
+      localStorage.setItem('multi-app/selectedLayout', JSON.stringify(n))
+      return { panels: layout, selectedLayout: n }
+    }),
+  saveLayout: (n) =>
+    set((state) => {
+      const layouts = state.layouts.map((layout, i) =>
+        i === n ? state.panels : layout,
+      )
+      // SIDE EFFECT!
+      localStorage.setItem('multi-app/layouts', JSON.stringify(layouts))
+      return { layouts }
+    }),
 }))
