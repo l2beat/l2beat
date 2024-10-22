@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { create } from 'zustand'
 
 const PANEL_IDS = ['list', 'values', 'nodes', 'code', 'preview'] as const
@@ -13,6 +14,7 @@ type Action = {
   splitPanel: (id: PanelId) => void
   removePanel: (id: PanelId) => void
   toggleFullScren: (id: PanelId) => void
+  resize: (id: PanelId, fraction: number) => void
 }
 
 const useStore = create<State & Action>((set) => ({
@@ -81,7 +83,33 @@ const useStore = create<State & Action>((set) => ({
     set((state) => ({
       fullScreen: state.fullScreen === id ? undefined : id,
     })),
+  resize: (id, fraction) =>
+    set((state) => {
+      const index = state.panels.findIndex((panel) => panel.id === id)
+      const panel = state.panels[index]
+      const next = state.panels[index + 1]
+      if (!panel || !next) {
+        return state
+      }
+
+      const totalSize = panel.size + next.size
+      const panelSize = totalSize * fraction
+      const nextSize = totalSize * (1 - fraction)
+
+      return {
+        panels: state.panels.map((p) =>
+          p === panel
+            ? { ...p, size: panelSize }
+            : p === next
+              ? { ...p, size: nextSize }
+              : p,
+        ),
+      }
+    }),
 }))
+
+const RESIZE_AREA = 20
+const MIN_PANEL_WIDTH = 160
 
 const PANEL_INFO = {
   list: { color: '#ff003b', name: 'List' },
@@ -94,16 +122,99 @@ const PANEL_INFO = {
 export function MultiApp() {
   const panels = useStore((state) => state.panels)
   const fullScreen = useStore((state) => state.fullScreen)
+  const resize = useStore((state) => state.resize)
+  const panelContainerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    let left = 0
+    let right = 0
+    let panelId: PanelId | undefined = undefined
+
+    function getSelectedPanel(e: MouseEvent) {
+      const container = panelContainerRef.current
+      if (!container) {
+        return
+      }
+
+      for (let i = 0; i < container.children.length - 1; i++) {
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        const panel = container.children[i]!
+        const box = panel.getBoundingClientRect()
+        if (
+          e.clientY > box.top &&
+          e.clientX >= box.right - RESIZE_AREA / 2 &&
+          e.clientX < box.right + RESIZE_AREA / 2
+        ) {
+          return {
+            panelId: panel.id.slice('panel-'.length) as PanelId,
+            left: box.left,
+            right:
+              container.children[i + 1]?.getBoundingClientRect().right ?? 0,
+          }
+        }
+      }
+    }
+
+    function onMouseDown(e: MouseEvent) {
+      const selection = getSelectedPanel(e)
+      if (selection) {
+        left = selection.left
+        right = selection.right
+        panelId = selection.panelId
+      } else {
+        panelId = undefined
+      }
+    }
+
+    function onMouseUp() {
+      panelId = undefined
+    }
+
+    function onMouseMove(e: MouseEvent) {
+      if (!panelId) {
+        const selection = getSelectedPanel(e)
+        const container = panelContainerRef.current
+        container?.classList.toggle('cursor-col-resize', !!selection)
+        container?.classList.toggle('select-none', !!selection)
+      } else {
+        const midpoint = (right + left) / 2
+        const leftMin =
+          midpoint - left > MIN_PANEL_WIDTH
+            ? left + MIN_PANEL_WIDTH
+            : midpoint - left
+        const leftMax =
+          right - midpoint > MIN_PANEL_WIDTH
+            ? right - MIN_PANEL_WIDTH
+            : right - midpoint
+
+        const x = Math.min(leftMax, Math.max(leftMin, e.clientX))
+        resize(panelId, (x - left) / (right - left))
+      }
+    }
+
+    window.addEventListener('mousedown', onMouseDown)
+    window.addEventListener('mouseup', onMouseUp)
+    window.addEventListener('mousemove', onMouseMove)
+
+    return () => {
+      window.removeEventListener('mousedown', onMouseDown)
+      window.removeEventListener('mouseup', onMouseUp)
+      window.removeEventListener('mousemove', onMouseMove)
+    }
+  }, [])
 
   return (
     <div className="flex h-full w-full flex-col">
       <div className="h-10">TOP BAR</div>
       <div
+        ref={panelContainerRef}
         className="grid flex-1"
         style={{
           gridTemplateColumns: fullScreen
             ? '1fr'
-            : panels.map((x) => x.size + 'fr').join(' '),
+            : panels
+                .map((x) => `minmax(${MIN_PANEL_WIDTH}px, ${x.size}fr)`)
+                .join(' '),
         }}
       >
         {panels
@@ -135,7 +246,9 @@ function Panel(props: { id: PanelId }) {
           onChange={(e) => changePanel(props.id, e.target.value as PanelId)}
         >
           {Object.entries(PANEL_INFO).map(([key, value]) => (
-            <option value={key}>{value.name}</option>
+            <option key={key} value={key}>
+              {value.name}
+            </option>
           ))}
         </select>
         <div className="flex gap-2">
