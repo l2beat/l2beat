@@ -46,9 +46,7 @@
         "0xef94a66bd5339efd18fb9ca1f8031482e7ef7bbe6c5a0a10fae254ab83712406"
       ],
       "proxyType": "Arbitrum proxy",
-      "descriptions": [
-        "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
-      ],
+      "description": "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -76,6 +74,7 @@
         "$pastUpgrades": [
           [
             "2024-07-05T09:57:59.000Z",
+            "0xe93b7e232ca2ff32a44ecb683683d9553409ab46eb90efa21a7bcfc111835074",
             [
               "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A",
               "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"
@@ -185,6 +184,7 @@
         "$pastUpgrades": [
           [
             "2024-07-05T09:57:59.000Z",
+            "0xe93b7e232ca2ff32a44ecb683683d9553409ab46eb90efa21a7bcfc111835074",
             ["0x6c21303F5986180B1394d2C89f3e883890E2867b"]
           ]
         ],
@@ -255,6 +255,7 @@
         "$pastUpgrades": [
           [
             "2024-07-05T09:57:59.000Z",
+            "0xe93b7e232ca2ff32a44ecb683683d9553409ab46eb90efa21a7bcfc111835074",
             ["0x1D901DD7A5eFE421C3C437B147040E5AF22E6A43"]
           ]
         ],
@@ -327,6 +328,7 @@
         "$pastUpgrades": [
           [
             "2024-07-05T09:57:59.000Z",
+            "0xe93b7e232ca2ff32a44ecb683683d9553409ab46eb90efa21a7bcfc111835074",
             ["0x302275067251F5FcdB9359Bda735fD8f7A4A54c0"]
           ]
         ],
@@ -362,6 +364,7 @@
         "$pastUpgrades": [
           [
             "2024-07-05T09:57:59.000Z",
+            "0xe93b7e232ca2ff32a44ecb683683d9553409ab46eb90efa21a7bcfc111835074",
             ["0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab"]
           ]
         ],
@@ -403,6 +406,7 @@
         "$pastUpgrades": [
           [
             "2024-07-05T09:57:59.000Z",
+            "0xe93b7e232ca2ff32a44ecb683683d9553409ab46eb90efa21a7bcfc111835074",
             ["0x19431dc37098877486532250FB3158140717C00C"]
           ]
         ],
@@ -467,6 +471,7 @@
         "$pastUpgrades": [
           [
             "2024-07-05T09:57:59.000Z",
+            "0xe93b7e232ca2ff32a44ecb683683d9553409ab46eb90efa21a7bcfc111835074",
             ["0x383f16fB2809a56fC639c1eE2c93Ad2aa7Ee130A"]
           ]
         ],
@@ -567,6 +572,7 @@
         "$pastUpgrades": [
           [
             "2024-07-05T09:57:59.000Z",
+            "0xe93b7e232ca2ff32a44ecb683683d9553409ab46eb90efa21a7bcfc111835074",
             ["0x31fAAAB44e74eB408d1FC69A14806B4b9cA09da2"]
           ]
         ],

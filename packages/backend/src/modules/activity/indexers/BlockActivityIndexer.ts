@@ -34,9 +34,10 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
       }) => {
         const currentRecord = currentMap.get(timestamp.toNumber())
         const count = (currentRecord?.count ?? 0) + countValue
-        const uopsCount = uopsCountValue
-          ? (currentRecord?.uopsCount ?? 0) + uopsCountValue
-          : uopsCountValue
+        const uopsCount =
+          uopsCountValue !== null
+            ? (currentRecord?.uopsCount ?? 0) + uopsCountValue
+            : (currentRecord?.uopsCount ?? null)
 
         return {
           projectId,

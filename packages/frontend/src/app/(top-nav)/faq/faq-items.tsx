@@ -13,7 +13,7 @@ export const faqItems: FaqItem[] = [
   {
     question: 'Why do you need L2BEAT if you have DeFi Pulse, DefiLlama, etc.?',
     answer:
-      'While the above-mentioned sites are great, they focus primarily at tracking TVL (Total Value Locked) in DeFi projects on various chain. In comparison L2BEAT will track only L2 projects (at first on Ethereum only) and will eventually report not just TVL but various metrics related to the liveness and security of these projects.',
+      'While the above-mentioned sites are great, they focus primarily at tracking TVL (Total Value Locked) in DeFi projects on various chains. In comparison L2BEAT will track only L2 projects (at first on Ethereum only) and will eventually report not just TVL but various metrics related to the liveness and security of these projects.',
   },
   {
     question:
@@ -45,7 +45,7 @@ export const faqItems: FaqItem[] = [
     question: 'How do L2s derive their security from L1?',
     answer: [
       'There are two primary (and somewhat independent) mechanisms that L2 chains use.',
-      'First, the L2 state can be verified by L1 through either **Validity Proof** or **Fraud Proof** . This mechanism is most important as it ensures that L2 proposers cannot cheat and include invalid transactions in an L2 block, e.g. mint coins out of thin air or steal your coins.',
+      'First, the L2 state can be verified by L1 through either **Validity Proof** or **Fraud Proof**. This mechanism is most important as it ensures that L2 proposers cannot cheat and include invalid transactions in an L2 block, e.g. mint coins out of thin air or steal your coins.',
       'The second use of L1 is as a **Data Availability** layer for L2 transactions so that users can independently re-create the L2 state and ensure continued and safe system operation or trustlessly exit to L1. If the data is published on another chain, then the security of the L2 is dependent on the security of that chain as well.',
     ],
   },
@@ -106,7 +106,7 @@ export const faqItems: FaqItem[] = [
   {
     question: 'What do the values in the TVL breakdown mean?',
     answer: [
-      '- **Canonically Bridged Value (CBV)** is the value of assets that useL1 Ethereum as their main ledger and are bridged to L2 via a canonical bridge locking tokens in L1 escrow and minting on L2 an IOU representation of that token.',
+      '- **Canonically Bridged Value (CBV)** is the value of assets that use L1 Ethereum as their main ledger and are bridged to L2 via a canonical bridge locking tokens in L1 escrow and minting on L2 an IOU representation of that token.',
       '- **Externally Bridged Value (EBV)** is the value of assets that use some external blockchain as their main ledger and are bridged to L2 via a non-canonical bridge. Tokens are locked on their native ledger and the bridge is minting on L2 an IOU representation of that token.',
       '- **Natively Minted Value (NMV)** is the value of assets that use an L2 as their ledger and are minted directly on the L2. Note that for some tokens (omnichain tokens) their ledger is distributed across many blockchains and they can be moved to L2 via a burn-mint bridge.',
       'For more information read the [L2 Assets blog post](https://medium.com/l2beat/redefining-total-value-locked-for-l2s-756160602747).',

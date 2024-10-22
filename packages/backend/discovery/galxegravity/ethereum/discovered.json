@@ -26,6 +26,7 @@
         "$pastUpgrades": [
           [
             "2024-05-18T17:37:23.000Z",
+            "0x8cc45e895fa944fdd15443047c58bd3633eb5cf885d54d46d081010615022312",
             ["0x19431dc37098877486532250FB3158140717C00C"]
           ]
         ],
@@ -145,6 +146,7 @@
         "$pastUpgrades": [
           [
             "2024-05-18T17:37:23.000Z",
+            "0x8cc45e895fa944fdd15443047c58bd3633eb5cf885d54d46d081010615022312",
             ["0x1D901DD7A5eFE421C3C437B147040E5AF22E6A43"]
           ]
         ],
@@ -193,6 +195,7 @@
         "$pastUpgrades": [
           [
             "2024-05-18T17:37:23.000Z",
+            "0x8cc45e895fa944fdd15443047c58bd3633eb5cf885d54d46d081010615022312",
             ["0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab"]
           ]
         ],
@@ -234,6 +237,7 @@
         "$pastUpgrades": [
           [
             "2024-05-18T17:37:23.000Z",
+            "0x8cc45e895fa944fdd15443047c58bd3633eb5cf885d54d46d081010615022312",
             ["0x31fAAAB44e74eB408d1FC69A14806B4b9cA09da2"]
           ]
         ],
@@ -291,6 +295,7 @@
         "$pastUpgrades": [
           [
             "2024-05-18T17:37:23.000Z",
+            "0x8cc45e895fa944fdd15443047c58bd3633eb5cf885d54d46d081010615022312",
             ["0x383f16fB2809a56fC639c1eE2c93Ad2aa7Ee130A"]
           ]
         ],
@@ -400,6 +405,7 @@
         "$pastUpgrades": [
           [
             "2024-05-18T17:37:23.000Z",
+            "0x8cc45e895fa944fdd15443047c58bd3633eb5cf885d54d46d081010615022312",
             ["0x302275067251F5FcdB9359Bda735fD8f7A4A54c0"]
           ]
         ],
@@ -436,6 +442,7 @@
         "$pastUpgrades": [
           [
             "2024-05-18T17:37:23.000Z",
+            "0x8cc45e895fa944fdd15443047c58bd3633eb5cf885d54d46d081010615022312",
             ["0x6c21303F5986180B1394d2C89f3e883890E2867b"]
           ]
         ],
@@ -512,9 +519,7 @@
         "0xef94a66bd5339efd18fb9ca1f8031482e7ef7bbe6c5a0a10fae254ab83712406"
       ],
       "proxyType": "Arbitrum proxy",
-      "descriptions": [
-        "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
-      ],
+      "description": "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -542,6 +547,7 @@
         "$pastUpgrades": [
           [
             "2024-05-18T17:37:23.000Z",
+            "0x8cc45e895fa944fdd15443047c58bd3633eb5cf885d54d46d081010615022312",
             [
               "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A",
               "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"
@@ -1339,7 +1345,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "orbitstack/RollupProxy": "0x8c92364349ca720f3e801d028dc260fdbc1a9cca4651ed19af6f16a250949729"
   }
 }

@@ -1,12 +1,9 @@
-import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
 import { mantle } from '../../../../layer2s/mantle'
-import {
-  DaAccessibilityRisk,
-  DaAttestationSecurityRisk,
-  DaExitWindowRisk,
-} from '../../types'
+import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../../types'
 import { DaBridge } from '../../types/DaBridge'
+import { DaRelayerFailureRisk } from '../../types/DaRelayerFailureRisk'
 import { DacTransactionDataType } from '../../types/DacTransactionDataType'
 import { toUsedInProject } from '../../utils/to-used-in-project'
 
@@ -40,6 +37,7 @@ const registerOperatorPermissionList = discovery.getContractValue<string[]>(
 
 export const mantleDABridge = {
   id: 'mantleDABridge',
+  createdAt: new UnixTime(1723022143), // 2024-08-07T09:15:43Z
   type: 'DAC',
   display: {
     name: 'Mantle DAC',
@@ -121,15 +119,12 @@ export const mantleDABridge = {
   ],
   chain: ChainId.ETHEREUM,
   transactionDataType: DacTransactionDataType.TransactionData,
-  members: {
-    type: 'unknown',
-  },
   requiredMembers: threshold,
-  totalMembers: committeeMembers,
+  membersCount: committeeMembers,
   usedIn: toUsedInProject([mantle]),
   risks: {
-    attestations: DaAttestationSecurityRisk.SigVerified(true),
-    accessibility: DaAccessibilityRisk.NotEnshrined,
-    exitWindow: DaExitWindowRisk.LowOrNoDelay(), // no delay
+    committeeSecurity: DaCommitteeSecurityRisk.NoCommiteeSecurity(),
+    upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay
+    relayerFailure: DaRelayerFailureRisk.NoMechanism,
   },
 } satisfies DaBridge

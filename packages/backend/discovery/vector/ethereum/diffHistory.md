@@ -1,3 +1,64 @@
+Generated with discovered.json: 0xd280477a38c797769d7570dcd82e85f5e334b2f7
+
+# Diff at Mon, 21 Oct 2024 11:11:53 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20985031
+- current block number: 20985031
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20985031 (main branch discovery), not current.
+
+```diff
+    contract SP1Vector (0x02993cdC11213985b9B13224f3aF289F03bf298d) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xc6217f1549Cab6f22ac4AC56d42e6C248731a33D"]
+      values.$pastUpgrades.1.1:
+-        ["0xc6217f1549Cab6f22ac4AC56d42e6C248731a33D"]
++        "0x13d7977b9fca12882ea6ba47ce1b20a87de540c358b5e260584e0d921e786f5e"
+      values.$pastUpgrades.0.2:
++        ["0x2434564f3524b44258B11643729343Ef57D60989"]
+      values.$pastUpgrades.0.1:
+-        ["0x2434564f3524b44258B11643729343Ef57D60989"]
++        "0x6c2c609d7a13fbdad53b1530d34d740ffa36653f29b5f14220429d7c0d6a3ffc"
+    }
+```
+
+Generated with discovered.json: 0x406b9eecd2307e8fc04062b629a3c8c3d9458e09
+
+# Diff at Thu, 17 Oct 2024 11:37:36 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@fe31a2a15a0974a7184aa64dcbcb48891916f4f9 block: 20878383
+- current block number: 20985031
+
+## Description
+
+Gave name to Avail multisig.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20878383 (main branch discovery), not current.
+
+```diff
+    contract AvailMultisig (0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) {
+    +++ description: None
+      name:
+-        "GnosisSafe"
++        "AvailMultisig"
+    }
+```
+
 Generated with discovered.json: 0x0651314515f38c5fb0ead4c76f7c53e53bc1f243
 
 # Diff at Mon, 14 Oct 2024 10:57:46 GMT:

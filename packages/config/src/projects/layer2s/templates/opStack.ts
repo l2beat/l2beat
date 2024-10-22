@@ -69,6 +69,7 @@ export interface DAProvider {
 }
 
 export interface OpStackConfigCommon {
+  createdAt: UnixTime
   daProvider?: DAProvider
   discovery: ProjectDiscovery
   upgradeability?: {
@@ -93,6 +94,7 @@ export interface OpStackConfigCommon {
   nonTemplateContracts?: ScalingProjectContract[]
   nonTemplateNativeContracts?: Record<string, ScalingProjectContract[]>
   nonTemplateEscrows?: ScalingProjectEscrow[]
+  nonTemplateExcludedTokens?: string[]
   nonTemplateOptimismPortalEscrowTokens?: string[]
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
@@ -111,19 +113,13 @@ export interface OpStackConfigCommon {
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
-  display: Omit<
-    Layer2Display,
-    'provider' | 'category' | 'dataAvailabilityMode' | 'purposes'
-  > & {
+  display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'> & {
     category?: Layer2Display['category']
   }
 }
 
 export interface OpStackConfigL3 extends OpStackConfigCommon {
-  display: Omit<
-    Layer3Display,
-    'provider' | 'category' | 'dataAvailabilityMode' | 'purposes'
-  > & {
+  display: Omit<Layer3Display, 'provider' | 'category' | 'purposes'> & {
     category?: Layer3Display['category']
   }
   stackedRiskView?: ScalingProjectRiskView
@@ -179,13 +175,14 @@ export function opStackCommon(
 
   return {
     id: ProjectId(templateVars.discovery.projectName),
+    createdAt: templateVars.createdAt,
     isUnderReview: templateVars.isUnderReview ?? false,
     technology: {
       stateCorrectness: templateVars.nonTemplateTechnology
         ?.stateCorrectness ?? {
-        name: 'Fraud proofs are in development',
+        name: 'Fraud proofs are not enabled',
         description:
-          'Ultimately, OP stack chains will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the system permits invalid state roots.',
+          'OP Stack projects can use the OP fault proof system, already being deployed on some. This project though is not using fault proofs yet and is relying on the honesty of the permissioned Proposer and Challengers to ensure state correctness. The smart contract system permits invalid state roots.',
         risks: [
           {
             category: 'Funds can be stolen if',
@@ -476,6 +473,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
           address: l1StandardBridgeEscrow,
           tokens: templateVars.l1StandardBridgeTokens ?? '*',
           premintedTokens: templateVars.l1StandardBridgePremintedTokens,
+          excludedTokens: templateVars.nonTemplateExcludedTokens,
           description:
             'Main entry point for users depositing ERC20 token that do not require custom gateway.',
           ...upgradeability,
@@ -868,6 +866,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
           includeInTotal: false,
           address: l1StandardBridgeEscrow,
           tokens: templateVars.l1StandardBridgeTokens ?? '*',
+          excludedTokens: templateVars.nonTemplateExcludedTokens,
           description:
             'Main entry point for users depositing ERC20 token that do not require custom gateway.',
           ...upgradeability,

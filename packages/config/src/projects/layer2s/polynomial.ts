@@ -7,8 +7,9 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('polynomial')
 
 export const polynomial: Layer2 = opStackL2({
+  createdAt: new UnixTime(1726570826), // 2024-09-17T11:00:26Z
   discovery,
-  badges: [Badge.RaaS.Conduit],
+  badges: [Badge.RaaS.Conduit, Badge.Infra.Superchain],
   additionalPurposes: ['Exchange'],
   display: {
     name: 'Polynomial',

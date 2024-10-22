@@ -1,0 +1,45 @@
+// layer2financezk riskView didn't change 1
+
+{
+  dataAvailability: {
+    definingMetric: -Infinity
+    description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) that is tasked with protecting and supplying the data."
+    sentiment: "bad"
+    value: "External (DAC)"
+  }
+  destinationToken: {
+    description: "Tokens transferred are considered canonical on the destination chain."
+    sentiment: "good"
+    value: "Canonical"
+  }
+  exitWindow: {
+    definingMetric: 0
+    description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
+    secondLine: undefined
+    sentiment: "bad"
+    value: "None"
+  }
+  proposerFailure: {
+    definingMetric: Infinity
+    description: "Users are able to trustlessly exit by submitting a Merkle proof of funds."
+    sentiment: "good"
+    value: "Use escape hatch"
+  }
+  sequencerFailure: {
+    definingMetric: undefined
+    description: "Users can force the sequencer to include a withdrawal transaction by submitting a request through L1. If the sequencer censors or is down for , users can use the exit hatch to withdraw their funds."
+    sentiment: "good"
+    value: "Force via L1"
+  }
+  stateValidation: {
+    definingMetric: Infinity
+    description: "STARKs are zero knowledge proofs that ensure state correctness."
+    sentiment: "good"
+    value: "ZK proofs (ST)"
+  }
+  validatedBy: {
+    description: "Smart contracts on Ethereum validate all bridge transfers."
+    sentiment: "good"
+    value: "Ethereum"
+  }
+}

@@ -111,6 +111,7 @@
         "$pastUpgrades": [
           [
             "2024-01-03T19:16:11.000Z",
+            "0xcefe7ebaac7f573d70560f840c228fd589c04b9f6fbcfc85a9bf28b8d96d89e5",
             ["0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"]
           ]
         ],
@@ -177,6 +178,7 @@
         "$pastUpgrades": [
           [
             "2024-01-03T19:16:11.000Z",
+            "0xcefe7ebaac7f573d70560f840c228fd589c04b9f6fbcfc85a9bf28b8d96d89e5",
             ["0x302275067251F5FcdB9359Bda735fD8f7A4A54c0"]
           ]
         ],
@@ -216,6 +218,7 @@
         "$pastUpgrades": [
           [
             "2024-01-05T17:33:40.000Z",
+            "0x95b16bf92d7d8be9f95d0b1c9080f1b7ced6fe028b8db3aef5d5ebfadd330ea4",
             ["0xd106EC93D2c1adaA65C4B17ffc7bB166Ce30DDAe"]
           ]
         ],
@@ -264,6 +267,7 @@
         "$pastUpgrades": [
           [
             "2024-01-03T19:16:11.000Z",
+            "0xcefe7ebaac7f573d70560f840c228fd589c04b9f6fbcfc85a9bf28b8d96d89e5",
             ["0x18FD37A4FB9E1F06d9383958aFd236771F15A8cb"]
           ]
         ],
@@ -294,10 +298,12 @@
         "$pastUpgrades": [
           [
             "2024-01-03T19:16:11.000Z",
+            "0xcefe7ebaac7f573d70560f840c228fd589c04b9f6fbcfc85a9bf28b8d96d89e5",
             ["0x09824fe72BFF474d16D9c2774432E381BBD60662"]
           ],
           [
             "2024-08-20T17:31:00.000Z",
+            "0x6c1bbf992f2fe7d5bb565a16a55f85bda8e565c4b26cb742a6f841ca8a5d9f80",
             ["0x5cA988F213EfbCB86ED7e2AACB0C15c91e648f8d"]
           ]
         ],
@@ -422,6 +428,7 @@
         "$pastUpgrades": [
           [
             "2024-04-11T20:05:43.000Z",
+            "0x1d33f114f23d1a440e30f20492a1db93ff86ae4f2962fb63880ceeb8286aaa4d",
             ["0xb6773d5bF5b908B58ff5B7Bd36A7F06Da2EeeEc7"]
           ]
         ],
@@ -481,6 +488,7 @@
         "$pastUpgrades": [
           [
             "2024-01-03T19:16:11.000Z",
+            "0xcefe7ebaac7f573d70560f840c228fd589c04b9f6fbcfc85a9bf28b8d96d89e5",
             ["0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC"]
           ]
         ],
@@ -543,6 +551,7 @@
         "$pastUpgrades": [
           [
             "2023-12-05T18:33:39.000Z",
+            "0x27bfccd3c53bc633ff2c6a39fcb5fbf16af67dc64f9d0d52ede0b3e560c569aa",
             ["0xF208798482F0b12c8767Bc03cC0F145D18BeCe6A"]
           ]
         ],
@@ -560,7 +569,7 @@
         "0x50cf57b01499408fa99da27cf0fee96ec30f0d40667d1aa090c442bc80f0636b"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": ["State batches / commitments get posted here."],
+      "description": "State batches / commitments get posted here.",
       "issuedPermissions": [
         {
           "permission": "sequence",
@@ -581,10 +590,12 @@
         "$pastUpgrades": [
           [
             "2024-01-03T19:16:11.000Z",
+            "0xcefe7ebaac7f573d70560f840c228fd589c04b9f6fbcfc85a9bf28b8d96d89e5",
             ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"]
           ],
           [
             "2024-08-20T17:31:00.000Z",
+            "0x6c1bbf992f2fe7d5bb565a16a55f85bda8e565c4b26cb742a6f841ca8a5d9f80",
             ["0x7a299aD29499736994Aa3a9aFa3f476445FAEB2c"]
           ]
         ],
@@ -672,6 +683,7 @@
         "$pastUpgrades": [
           [
             "2024-01-03T19:16:11.000Z",
+            "0xcefe7ebaac7f573d70560f840c228fd589c04b9f6fbcfc85a9bf28b8d96d89e5",
             ["0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab"]
           ]
         ],
@@ -722,6 +734,7 @@
         "$pastUpgrades": [
           [
             "2024-01-05T17:33:40.000Z",
+            "0x95b16bf92d7d8be9f95d0b1c9080f1b7ced6fe028b8db3aef5d5ebfadd330ea4",
             ["0x8b73Ef238ADaB31EBC7c05423d243c345241a22f"]
           ]
         ],
@@ -763,34 +776,42 @@
         "$pastUpgrades": [
           [
             "2023-12-05T18:34:03.000Z",
+            "0x1e84fa92f23fbccf9cf1643c17925016357a95e123d7d14cc9a77d029d8dbac2",
             ["0xf765452e587Ad0AE785Dc984963897c05d4c8c71"]
           ],
           [
             "2023-12-06T04:00:01.000Z",
+            "0x9ae9ee043ee573f154f2492f6c27d5ca0cc9d1f47782d4b24e80cd39bb0ae378",
             ["0x471f1a92a8099f7011Aa3f2E011569618bD754EC"]
           ],
           [
             "2023-12-11T19:39:24.000Z",
+            "0xd725096169b7a13791098567acf188d77352be120daefb359dad64e29f6bfa9b",
             ["0x471f1a92a8099f7011Aa3f2E011569618bD754EC"]
           ],
           [
             "2023-12-11T20:19:48.000Z",
+            "0x2b66dc25759528967307ed0312d2e93df71090403ce9e8fd5bbac911422832e8",
             ["0xC2b691250fD85bF7eC91Dd4f13eF1e76678395B2"]
           ],
           [
             "2023-12-19T21:11:23.000Z",
+            "0x89f6075f97adb62d17be41a8999871a4bb5c1cdeb6e401a1576778cd20349374",
             ["0xAED4aF101d3e64114051E63F12265403d6Cb9B10"]
           ],
           [
             "2023-12-22T18:33:23.000Z",
+            "0x905ed5655eb2c04a8da6680ec35d9d7c1ab3aaa090535303cc102d9780fa845c",
             ["0xfD6Bb931D2Ee134E70568ca36584c043cB278734"]
           ],
           [
             "2023-12-22T22:21:26.000Z",
+            "0xc51ad222fec5ee76441a0324273ecc4ded2d9dd605fa57523c7f6dc61ef8d8f1",
             ["0xa2815b0F4A99799aeb9d5cb73501E43f5197dDD1"]
           ],
           [
             "2023-12-22T23:54:26.000Z",
+            "0xf68ea634ab9dcdd7613e3037be47fbf0daf5e6814a95b3fe32c8f2d077d01444",
             ["0xfD6Bb931D2Ee134E70568ca36584c043cB278734"]
           ]
         ],
@@ -818,9 +839,7 @@
         "0xef94a66bd5339efd18fb9ca1f8031482e7ef7bbe6c5a0a10fae254ab83712406"
       ],
       "proxyType": "Arbitrum proxy",
-      "descriptions": [
-        "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
-      ],
+      "description": "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -848,6 +867,7 @@
         "$pastUpgrades": [
           [
             "2024-01-03T19:16:11.000Z",
+            "0xcefe7ebaac7f573d70560f840c228fd589c04b9f6fbcfc85a9bf28b8d96d89e5",
             [
               "0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754",
               "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A"
@@ -1011,6 +1031,7 @@
         "$pastUpgrades": [
           [
             "2024-04-11T20:05:40.000Z",
+            "0x36bec95cbfc75ccbf4d52c9bb080ebbbc2a9ecebffe7134574a4ea3bfdab8260",
             ["0x21EEC6626f15d02A8896ebB7EDD68ff3CB61e89E"]
           ]
         ],
@@ -1052,9 +1073,7 @@
         "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
       ],
       "proxyType": "gnosis safe",
-      "descriptions": [
-        "The designated fundsReceiver in the NodeLicenseRegistry. Receives all ETH from 'Sentry Node License' mints."
-      ],
+      "description": "The designated fundsReceiver in the NodeLicenseRegistry. Receives all ETH from 'Sentry Node License' mints.",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1701577782,
       "values": {
@@ -1111,34 +1130,42 @@
         "$pastUpgrades": [
           [
             "2023-12-05T18:33:46.000Z",
+            "0xd22a7b97d2044a20b20a8105857d435ba98254e2a147c0890140ffe3fc55ebdf",
             ["0x29A7b907FdF4a9235F46d891b7Aa1e7d3D35A3b6"]
           ],
           [
             "2024-02-27T20:49:59.000Z",
+            "0x3bb7393b7a848ccd4e966dce1cbbf23673975e226ec96131851fb88daf8b3625",
             ["0x4110251275f1b1f8e6Ce7114139D69597fdAd474"]
           ],
           [
             "2024-03-01T18:50:49.000Z",
+            "0xe2508a91718906def7b9c9454e03328ee73ae67606aa32092c762b040007ad55",
             ["0x10edA49fA8C6594cC6783CA5d7a6677d9e3236c1"]
           ],
           [
             "2024-03-01T19:37:28.000Z",
+            "0x2c90459e0d4cc3d399dc71cee133be9c5cecf13d92d036e73a004cfa9798a5c0",
             ["0x254954e3F6BD7443444036BeA2d8fE88fdf496c1"]
           ],
           [
             "2024-04-11T20:05:47.000Z",
+            "0xa0be7103c9cb256cddfce11ea243bc9b9db3c96bc4be86603939805841cc84fa",
             ["0x5538622Ad2F14bf781Af032542F7f00f080EB4CD"]
           ],
           [
             "2024-04-16T14:51:04.000Z",
+            "0xa614a91d07acd9279e9676411ba9cf79c16ba271d28e537fed96f909da45dc8b",
             ["0x680F4a9f47E4Cfea124a5654E759cB3b0a0C837c"]
           ],
           [
             "2024-05-16T18:01:22.000Z",
+            "0x6abdf6ba925c03704c581f1b0ad7de9da84cbb70945bdd2da22c8b0eb7e98a8b",
             ["0xFf38Aa9D553bE47eee329F968ADF0C74A01D021c"]
           ],
           [
             "2024-06-07T17:57:03.000Z",
+            "0xb9e3b5041f4683bafc0939b4a657467a6f545194ef17d3ba6980093138e3a6e5",
             ["0x609152cb742916E0F7FBC4391Be750C458b049fe"]
           ]
         ],
@@ -2387,7 +2414,7 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "orbitstack/RollupProxy": "0x8c92364349ca720f3e801d028dc260fdbc1a9cca4651ed19af6f16a250949729",
     "orbitstack/SequencerInbox": "0x914a19d66f742b381e9ac6579e688ae6a07cddcf5b144eb7528c121bc81eca28"
   }

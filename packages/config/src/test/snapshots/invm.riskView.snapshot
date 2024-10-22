@@ -1,0 +1,79 @@
+// invm riskView didn't change 1
+
+{
+  dataAvailability: {
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
+  }
+  destinationToken: {
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
+  }
+  exitWindow: {
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
+  }
+  proposerFailure: {
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
+  }
+  sequencerFailure: {
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
+  }
+  stateValidation: {
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
+  }
+  validatedBy: {
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
+  }
+}
+
+// invm stackedRiskView didn't change 1
+
+{
+  dataAvailability: {
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
+  }
+  destinationToken: {
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
+  }
+  exitWindow: {
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
+  }
+  proposerFailure: {
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
+  }
+  sequencerFailure: {
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
+  }
+  stateValidation: {
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
+  }
+  validatedBy: {
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
+  }
+}

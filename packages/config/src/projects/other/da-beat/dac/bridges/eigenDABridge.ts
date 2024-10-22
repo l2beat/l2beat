@@ -1,11 +1,13 @@
-import { ChainId, EthereumAddress, formatSeconds } from '@l2beat/shared-pure'
-import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
 import {
-  DaAccessibilityRisk,
-  DaAttestationSecurityRisk,
-  DaExitWindowRisk,
-} from '../../types'
+  ChainId,
+  EthereumAddress,
+  UnixTime,
+  formatSeconds,
+} from '@l2beat/shared-pure'
+import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
+import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../../types'
 import { DaBridge } from '../../types/DaBridge'
+import { DaRelayerFailureRisk } from '../../types/DaRelayerFailureRisk'
 import { DacTransactionDataType } from '../../types/DacTransactionDataType'
 import { toUsedInProject } from '../../utils/to-used-in-project'
 
@@ -17,9 +19,14 @@ const upgrades = {
   upgradeDelay: 'No delay',
 }
 
+const EigenTimelockUpgradeDelay = eigenDiscovery.getContractValue<number>(
+  'EigenLayer Timelock',
+  'delay',
+)
+
 const eigenLayerUpgrades = {
-  upgradableBy: ['EigenLayerProxyAdmin'],
-  upgradeDelay: 'No delay',
+  upgradableBy: ['EigenLayerCommunityMultisig', 'EigenLayerOperationsMultisig'],
+  upgradeDelay: `${formatSeconds(EigenTimelockUpgradeDelay)} delay via EigenLayerOperationsMultisig, no delay via EigenLayerCommunityMultisig.`,
 }
 
 const EIGENUpgradeDelay = eigenDiscovery.getContractValue<number>(
@@ -39,6 +46,22 @@ const quorumThresholds = discovery.getContractValue<string>(
 
 const quorum1Threshold = parseInt(quorumThresholds.substring(2, 4), 16)
 const quorum2Threshold = parseInt(quorumThresholds.substring(4, 6), 16)
+
+const ejectionCooldown = discovery.getContractValue<number>(
+  'RegistryCoordinator',
+  'ejectionCooldown',
+)
+
+const ejectionRateLimitWindow = discovery.getContractValue<number[]>(
+  'EjectionManager',
+  'ejectionRateLimitWindow',
+) // [0] for quorum 1. [1] for quorum 2.
+
+const ejectableStakePercentParam = discovery.getContractValue<string>(
+  'EjectionManager',
+  'ejectableStakePercent',
+)
+const ejectableStakePercent = parseFloat(ejectableStakePercentParam) / 100
 
 const operatorSetParamsQuorum1 = discovery.getContractValue<number[]>(
   'RegistryCoordinator',
@@ -72,6 +95,7 @@ const ejectors = discovery.getContractValue<string[]>(
 
 export const eigenDAbridge = {
   id: 'eigenda-bridge',
+  createdAt: new UnixTime(1724426960), // 2024-08-23T15:29:20Z
   type: 'DAC',
   display: {
     name: 'EigenDAServiceManager',
@@ -173,14 +197,6 @@ export const eigenDAbridge = {
         category: 'Funds can be lost if',
         text: 'the churn approver or ejectors act maliciously and eject EigenDA operators from a quorum without cause.',
       },
-      {
-        category: 'Funds can be lost if',
-        text: 'the disperser posts an invalid commitment and EigenDA operators do not make the data available for verification.',
-      },
-      {
-        category: 'Users can be censored if',
-        text: 'the disperser does not distribute data to EigenDA operators.',
-      },
     ],
   },
   technology: {
@@ -198,8 +214,21 @@ export const eigenDAbridge = {
     ![EigenDA bridge architecture](/images/da-bridge-technology/eigenda/architecture2.png#center)
 
     Although thresholds are not enforced by the confirmBatch method, current quorum thresholds are set to ${quorum1Threshold}% of registered stake for the ETH quorum and ${quorum2Threshold}% for the EIGEN token quorum. The quorum thresholds are set on the EigenDAServiceManager contract and can be changed by the contract owner.
-    There is a maximum of ${operatorSetParamsQuorum1[0]} operators that can register for the ETH quorum and ${operatorSetParamsQuorum2[0]} for the EIGEN token quorum. Once the cap is reached, new operators must have 10% more weight than the lowest-weighted operator to join the active set. Entering the quorum is subject to the approval of the churn approver. Operators can be ejected from a quorum by the ejectors without delay should they violate the Service Legal Agreement (SLA).
+    There is a maximum of ${operatorSetParamsQuorum1[0]} operators that can register for the ETH quorum and ${operatorSetParamsQuorum2[0]} for the EIGEN token quorum. Once the cap is reached, new operators must have 10% more weight than the lowest-weighted operator to join the active set. Entering the quorum is subject to the approval of the churn approver. Operators can be ejected from a quorum by the ejectors without delay should they violate the Service Legal Agreement (SLA). \n
+
+    Ejectors can eject maximum ${ejectableStakePercent}% of the total stake in a ${formatSeconds(ejectionRateLimitWindow[0])} window for the ETH quorum, and the same stake percentage over a ${formatSeconds(ejectionRateLimitWindow[1])} window for the EIGEN quorum.
+    An ejected operator can rejoin the quorum after ${formatSeconds(ejectionCooldown)}. 
   `,
+    risks: [
+      {
+        category: 'Funds can be frozen if',
+        text: 'the permissioned relayers are unable to submit DA commitments to the Vector contract.',
+      },
+      {
+        category: 'Funds can be frozen if',
+        text: 'the bridge (EigenDAServiceManager) contract is paused by the pausers.',
+      },
+    ],
   },
   permissions: [
     {
@@ -283,18 +312,23 @@ export const eigenDAbridge = {
       'EigenLayerOperationsMultisig',
       'This multisig is the owner of the EigenDAServiceManager contract. It holds the power to change the contract state and upgrade the bridge.',
     ),
+    ...eigenDiscovery.getMultisigPermission(
+      'EigenLayerCommunityMultisig',
+      'This multisig is one of the owners of EigenLayerExecutorMultisig and can upgrade EigenLayer core contracts without delay.',
+    ),
+    eigenDiscovery.contractAsPermissioned(
+      eigenDiscovery.getContract('EigenLayer Timelock'),
+      'The timelock contract for upgrading EigenLayer core contracts via EigenLayerOperationsMultisig.',
+    ),
   ],
   chain: ChainId.ETHEREUM,
   requiredMembers: 0, // currently 0 since threshold is not enforced
-  totalMembers: 400,
+  membersCount: 400,
   transactionDataType: DacTransactionDataType.TransactionData,
-  members: {
-    type: 'unknown',
-  },
   usedIn: toUsedInProject([]),
   risks: {
-    attestations: DaAttestationSecurityRisk.SigVerified(true),
-    accessibility: DaAccessibilityRisk.NotEnshrined,
-    exitWindow: DaExitWindowRisk.LowOrNoDelay(0),
+    committeeSecurity: DaCommitteeSecurityRisk.LimitedCommitteeSecurity(),
+    upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(0),
+    relayerFailure: DaRelayerFailureRisk.NoMechanism,
   },
 } satisfies DaBridge

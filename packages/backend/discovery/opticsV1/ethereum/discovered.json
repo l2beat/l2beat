@@ -94,6 +94,7 @@
         "$pastUpgrades": [
           [
             "2021-09-08T21:56:48.000Z",
+            "0x7481d9583144189235ba84c60cbcd5b7f45084ab6d35140f3dc484549353af1d",
             ["0xDFb2A95900d6b7c8AA95F2E46563a5FCFb5505A1"]
           ]
         ],
@@ -178,6 +179,7 @@
         "$pastUpgrades": [
           [
             "2021-09-08T23:13:15.000Z",
+            "0x55d651c1e931a865762f216a22d1a0044f342f79ab800716a4660d2cb7b59d1f",
             ["0x67364232A8f8dA6f22dF3bE3408ef9872132F2A6"]
           ]
         ],
@@ -214,6 +216,7 @@
         "$pastUpgrades": [
           [
             "2021-09-08T22:00:31.000Z",
+            "0x0ee477885168cd26a6748549a929aec63af1a405a872c8a694755ab37b8d0c39",
             ["0xFC4060e4Fd5979f848b8EDc8505d2f89D83b9E04"]
           ]
         ],
@@ -339,6 +342,7 @@
         "$pastUpgrades": [
           [
             "2021-09-08T21:55:49.000Z",
+            "0xc582bae90e011209dd89c61a2b2080afdcab952023b0122376eca38113a5eab1",
             ["0xfAc41463ef1E01546F2130F92184a053A0E3Fa14"]
           ]
         ],
@@ -635,6 +639,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
   }
 }

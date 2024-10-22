@@ -1,4 +1,5 @@
-import { providers } from 'ethers'
+import { EVMTransaction } from '@l2beat/shared/build/clients/rpc/types'
+import { StarknetGetBlockWithTxsResponseBodySchema } from '../../../../peripherals/starknet/schemas'
 
 export interface AnalyzedBlock {
   transactionsLength: number
@@ -6,10 +7,9 @@ export interface AnalyzedBlock {
 }
 
 export interface Analyzer {
-  analyzeBlock(rpcBlock: {
-    number: number
-    timestamp: number
-    hash: string
-    transactions: providers.TransactionResponse[]
+  analyzeBlock(block: {
+    transactions:
+      | EVMTransaction[]
+      | StarknetGetBlockWithTxsResponseBodySchema['result']['transactions']
   }): AnalyzedBlock
 }

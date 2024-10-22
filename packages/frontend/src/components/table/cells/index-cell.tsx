@@ -1,7 +1,8 @@
+import { type ReactNode } from 'react'
 import { cn } from '~/utils/cn'
 
 interface IndexCellProps {
-  children: number
+  children: ReactNode
   className?: string
 }
 

@@ -1,3 +1,180 @@
+Generated with discovered.json: 0x5e100b8388d2136485b63eae4fbb04c5448d649a
+
+# Diff at Mon, 21 Oct 2024 12:49:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e660599f23a07618fe949a07be1f516ce44f1914 block: 20340229
+- current block number: 20340229
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20340229 (main branch discovery), not current.
+
+```diff
+    contract EndpointV2 (0x1a44076050125825900e736c501f859c50fE728c) {
+    +++ description: Its configuration and MessageLib to use is set for each OApp and destination by the OApp owner.
+      descriptions:
+-        ["Its configuration and MessageLib to use is set for each OApp and destination by the OApp owner."]
+      description:
++        "Its configuration and MessageLib to use is set for each OApp and destination by the OApp owner."
+    }
+```
+
+```diff
+    contract TokenMessaging (0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980) {
+    +++ description: This is a Layer Zero OApp. It also handles the batching logic: bus, taxi, quotes
+      descriptions:
+-        ["This is a Layer Zero OApp. It also handles the batching logic: bus, taxi, quotes"]
+      description:
++        "This is a Layer Zero OApp. It also handles the batching logic: bus, taxi, quotes"
+    }
+```
+
+```diff
+    contract SendUln302 (0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1) {
+    +++ description: Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.
+      descriptions:
+-        ["Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to."]
+      description:
++        "Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to."
+    }
+```
+
+```diff
+    contract ReceiveUln302 (0xc02Ab410f0734EFa3F14628780e6e695156024C2) {
+    +++ description: Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.
+      descriptions:
+-        ["Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to."]
+      description:
++        "Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to."
+    }
+```
+
+Generated with discovered.json: 0x87c879b1ba3960898824c2e627deb29372885e75
+
+# Diff at Mon, 21 Oct 2024 11:10:47 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20340229
+- current block number: 20340229
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20340229 (main branch discovery), not current.
+
+```diff
+    contract LayerZero Executor (0x173272739Bd7Aa6e4e214714048a9fE699453059) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xDaC2d26317C42ae3CB21357B73404120E1dA4232"]
+      values.$pastUpgrades.1.1:
+-        ["0xDaC2d26317C42ae3CB21357B73404120E1dA4232"]
++        "0x22c22ee402c4be83ef7c851992c3125008be9ee0a39c0d83cf6be91a0506f7c4"
+      values.$pastUpgrades.0.2:
++        ["0x1E45F27F0e96e9757cff938F2c9d697AA8279C85"]
+      values.$pastUpgrades.0.1:
+-        ["0x1E45F27F0e96e9757cff938F2c9d697AA8279C85"]
++        "0x5df683475486093be4a4f92d6f7c47548d3bf38e1a39e25bf0028353f83d4a2b"
+    }
+```
+
+```diff
+    contract  (0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0x319AE539b5BA554b09A46791cdb88b10E4d8F627"]
+      values.$pastUpgrades.2.1:
+-        ["0x319AE539b5BA554b09A46791cdb88b10E4d8F627"]
++        "0x35c84fce2bd551b2e80f13f545f49c65ed2a20c3c2d46eecc10c825112a86ccc"
+      values.$pastUpgrades.1.2:
++        ["0x13dff8847EA170eBb8439ce732c0A14Bb49fDd92"]
+      values.$pastUpgrades.1.1:
+-        ["0x13dff8847EA170eBb8439ce732c0A14Bb49fDd92"]
++        "0xb0be4d7a78cc69d7a3609a84216cbf0bae5b0ade84c45b35c05dafda6c84faec"
+      values.$pastUpgrades.0.2:
++        ["0xF641db6860FD5f6643D05bD75405a2586a63a141"]
+      values.$pastUpgrades.0.1:
+-        ["0xF641db6860FD5f6643D05bD75405a2586a63a141"]
++        "0xd7e8b45283a17ffe10a55914b49e6114acd56dedba1a154159a9b71e9f9205df"
+    }
+```
+
+Generated with discovered.json: 0x4815715b5451877d64fdbff7933f942e74d40816
+
+# Diff at Fri, 18 Oct 2024 11:01:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@0295165a89d86b7450439f24f100d1baa74381fc block: 20340229
+- current block number: 20340229
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20340229 (main branch discovery), not current.
+
+```diff
+    contract Stargate Verifier (0x8FafAE7Dd957044088b3d0F67359C327c6200d18) {
+    +++ description: None
+      unverified:
+-        true
+      values.allowlistSize:
++        0
+      values.DEFAULT_ADMIN_ROLE:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.defaultMultiplierBps:
++        12000
+      values.paused:
++        false
+      values.priceFeed:
++        "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113"
+      values.quorum:
++        1
+      values.signerSize:
++        1
+      values.vid:
++        101
+      values.workerFeeLib:
++        "0xd0ab8512CF4907bD94CDb5fE7d0C324E666c4006"
+      sourceHashes:
++        ["0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract  (0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xd0ab8512CF4907bD94CDb5fE7d0C324E666c4006)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x814d12129d0fc192efca6b68d1d0490e105b370b
 
 # Diff at Mon, 14 Oct 2024 10:56:18 GMT:

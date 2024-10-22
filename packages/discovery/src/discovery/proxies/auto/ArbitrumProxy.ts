@@ -1,5 +1,11 @@
 import { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
-import { assert, Bytes, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  Bytes,
+  EthereumAddress,
+  Hash256,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { providers, utils } from 'ethers'
 import { IProvider } from '../../provider/IProvider'
@@ -40,6 +46,7 @@ function mergeLogs(
       rhi += 1
       result.push([
         dateMap[leftLog.blockNumber] ?? 'ERROR',
+        Hash256(leftLog.transactionHash),
         [
           lastLeftImpl ?? EthereumAddress.ZERO,
           lastRightImpl ?? EthereumAddress.ZERO,
@@ -49,6 +56,7 @@ function mergeLogs(
       lhi += 1
       result.push([
         dateMap[leftLog.blockNumber] ?? 'ERROR',
+        Hash256(leftLog.transactionHash),
         [
           lastLeftImpl ?? EthereumAddress.ZERO,
           lastRightImpl ?? EthereumAddress.ZERO,
@@ -58,6 +66,7 @@ function mergeLogs(
       rhi += 1
       result.push([
         dateMap[rightLog.blockNumber] ?? 'ERROR',
+        Hash256(rightLog.transactionHash),
         [
           lastLeftImpl ?? EthereumAddress.ZERO,
           lastRightImpl ?? EthereumAddress.ZERO,
@@ -73,6 +82,7 @@ function mergeLogs(
     lastLeftImpl = abi.parseLog(leftLog).args.implementation
     result.push([
       dateMap[leftLog.blockNumber] ?? 'ERROR',
+      Hash256(leftLog.transactionHash),
       [
         lastLeftImpl ?? EthereumAddress.ZERO,
         lastRightImpl ?? EthereumAddress.ZERO,
@@ -87,6 +97,7 @@ function mergeLogs(
     lastRightImpl = abi.parseLog(rightLog).args.implementation
     result.push([
       dateMap[rightLog.blockNumber] ?? 'ERROR',
+      Hash256(rightLog.transactionHash),
       [
         lastLeftImpl ?? EthereumAddress.ZERO,
         lastRightImpl ?? EthereumAddress.ZERO,

@@ -8,6 +8,7 @@ const discovery = new ProjectDiscovery('eclipse')
 export const eclipse: Bridge = {
   type: 'bridge',
   id: ProjectId('eclipse'),
+  createdAt: new UnixTime(1725359142), // 2024-09-03T10:25:42Z
   display: {
     name: 'Eclipse',
     slug: 'eclipse',

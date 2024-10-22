@@ -51,12 +51,10 @@ export interface DAProvider {
 }
 
 export interface PolygonCDKStackConfig {
+  createdAt: UnixTime
   daProvider?: DAProvider
   discovery: ProjectDiscovery
-  display: Omit<
-    Layer2Display,
-    'provider' | 'category' | 'dataAvailabilityMode' | 'purposes'
-  >
+  display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'>
   rpcUrl?: string
   transactionApi?: ScalingProjectTransactionApi
   chainConfig?: ChainConfig
@@ -121,7 +119,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     ...RISK_VIEW.EXIT_WINDOW(
       upgradeDelay,
       trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
-      0,
+      { upgradeDelay2: 0 },
     ),
     description: `Even though there is a ${upgradeDelayString} Timelock for upgrades, forced transactions are disabled. Even if they were to be enabled, user withdrawals can be censored up to ${formatSeconds(
       trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
@@ -147,6 +145,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
 
   return {
     type: 'layer2',
+    createdAt: templateVars.createdAt,
     id: ProjectId(templateVars.discovery.projectName),
     display: {
       ...templateVars.display,

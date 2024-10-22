@@ -53,7 +53,9 @@ const exitWindowRisk = {
   ...RISK_VIEW.EXIT_WINDOW(
     upgradeDelay,
     trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
-    0,
+    {
+      upgradeDelay2: 0,
+    },
   ),
   description: `Even though there is a ${upgradeDelayString} Timelock for upgrades, forced transactions are disabled. Even if they were to be enabled, user withdrawals can be censored up to ${formatSeconds(
     trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
@@ -87,8 +89,9 @@ const requiredSignatures = discovery.getContractValue<number>(
 
 export const zkfair: Layer2 = {
   type: 'layer2',
-  badges: [Badge.VM.EVM, Badge.DA.DAC, Badge.Stack.PolygonCDK],
   id: ProjectId('zkfair'),
+  createdAt: new UnixTime(1690815262), // 2023-07-31T14:54:22Z
+  badges: [Badge.VM.EVM, Badge.DA.DAC, Badge.Stack.PolygonCDK],
   display: {
     name: 'ZKFair',
     slug: 'zkfair',

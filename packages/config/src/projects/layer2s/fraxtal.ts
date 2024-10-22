@@ -8,7 +8,8 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('fraxtal')
 
 export const fraxtal: Layer2 = opStackL2({
-  badges: [Badge.DA.CustomDA],
+  createdAt: new UnixTime(1708511622), // 2024-02-21T10:33:42Z
+  badges: [Badge.DA.CustomDA, Badge.Infra.Superchain],
   daProvider: {
     name: 'FraxtalDA',
     riskView: {

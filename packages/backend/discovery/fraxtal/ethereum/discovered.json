@@ -14,9 +14,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "displayName": "OptimismMintableERC20Factory",
-      "descriptions": [
-        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."
-      ],
+      "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -36,10 +34,12 @@
         "$pastUpgrades": [
           [
             "2024-02-01T18:20:11.000Z",
+            "0x71e0cfe8fa79e241d5e216cd9956ad54c2952516293aec0b47b9a96d8ee2b061",
             ["0x1120ef11d4C3dc90Aa6BDfce16Ab049dd5d18aE0"]
           ],
           [
             "2024-02-19T16:52:35.000Z",
+            "0x105f432213e819e064f46a07b935289add9f1139c9c91db7fd45d0f6fe213b1f",
             ["0x6cA98f43719231d38F6426DB64C7F3D5C7CE7876"]
           ]
         ],
@@ -58,9 +58,7 @@
         "0x1cc8a3b7de3d2c54c4706bb3f3015714d3b56647fc9fbfd6f8b068f5f63c1c25"
       ],
       "proxyType": "resolved delegate proxy",
-      "descriptions": [
-        "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
-      ],
+      "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "categories": ["Core"],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1706811599,
@@ -70,14 +68,17 @@
         "$pastUpgrades": [
           [
             "2024-02-01T18:20:11.000Z",
+            "0xc7e0611b207fc226dc0412ebae0cd464b62b341c49a10a83315d916cdf527753",
             ["0x31c25985E6b10CF335FC01cf9790aF4890d0505c"]
           ],
           [
             "2024-05-14T20:13:47.000Z",
+            "0x25f146ab6043f07c95e3b314e0200d2b5a8a0cb590cbcd9f094f753efef7d669",
             ["0x7a6b7F35D032c9b122C69F01EA4523e028f6ef4A"]
           ],
           [
             "2024-05-14T20:13:47.000Z",
+            "0x25f146ab6043f07c95e3b314e0200d2b5a8a0cb590cbcd9f094f753efef7d669",
             ["0xC6e4ECE5576dC96846bb11eD8910f3dF3CE516b8"]
           ]
         ],
@@ -162,9 +163,7 @@
         "0xdf9a11b46747139bfe0135df8a65a2728a2dbd60a689e2398c45627915cdd752"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
-      ],
+      "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -195,14 +194,17 @@
         "$pastUpgrades": [
           [
             "2024-02-01T18:20:11.000Z",
+            "0xe7aacfcc1d50443042842246a38e54581e9dba154a9831660415e0fce5503e4d",
             ["0x22052c592f763CA14a090D9974c5Bf9Fd3a44b8c"]
           ],
           [
             "2024-05-14T20:13:47.000Z",
+            "0x25f146ab6043f07c95e3b314e0200d2b5a8a0cb590cbcd9f094f753efef7d669",
             ["0x7a6b7F35D032c9b122C69F01EA4523e028f6ef4A"]
           ],
           [
             "2024-05-14T20:13:47.000Z",
+            "0x25f146ab6043f07c95e3b314e0200d2b5a8a0cb590cbcd9f094f753efef7d669",
             ["0x4D7A1a16d0DA89B50FBd8b524508FC393A6Dc367"]
           ]
         ],
@@ -263,9 +265,7 @@
         "0x1010ff7f40ab4d53e6d9996aefa04423dabe9d0e22fac2d02b330ed3aa2c5740"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
-      ],
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.",
       "categories": ["Gateways&Escrows"],
       "issuedPermissions": [
         {
@@ -305,9 +305,7 @@
         "0xddf64101e7b6f558921307e9d122e69bbb712db51cff893729c03c588865838f"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
-      ],
+      "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
       "issuedPermissions": [
         {
           "permission": "guard",
@@ -333,14 +331,17 @@
         "$pastUpgrades": [
           [
             "2024-02-01T18:20:23.000Z",
+            "0xe7e33bcdd2dd085bcd43e933aefa52eeffb6a4656facdfae956eba8bfe2f537b",
             ["0x59B6903044Fa9439a5D621D3605789A6E654b1D6"]
           ],
           [
             "2024-05-14T20:13:47.000Z",
+            "0x25f146ab6043f07c95e3b314e0200d2b5a8a0cb590cbcd9f094f753efef7d669",
             ["0x7a6b7F35D032c9b122C69F01EA4523e028f6ef4A"]
           ],
           [
             "2024-05-14T20:13:47.000Z",
+            "0x25f146ab6043f07c95e3b314e0200d2b5a8a0cb590cbcd9f094f753efef7d669",
             ["0x47Ec03B67ba4f3C71a4320D2947f2173E0B45a23"]
           ]
         ],
@@ -373,9 +374,7 @@
         "0x35d2793b796cde40be8f1ddaa988ae1c8fd2ad9f55b4b4d74946d35832703efa"
       ],
       "displayName": "frxETH Token",
-      "descriptions": [
-        "frxETH token contract. Fraxtal uses Frax Ether as the designated gas token, allowing users to pay for blockspace with frxETH."
-      ],
+      "description": "frxETH token contract. Fraxtal uses Frax Ether as the designated gas token, allowing users to pay for blockspace with frxETH.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -426,9 +425,7 @@
         "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "This is NOT the shared SuperchainConfig of the OP stack Superchain. This SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
-      ],
+      "description": "This is NOT the shared SuperchainConfig of the OP stack Superchain. This SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
       "categories": ["Upgrades&Governance"],
       "issuedPermissions": [
         {
@@ -454,14 +451,17 @@
         "$pastUpgrades": [
           [
             "2024-02-01T18:19:59.000Z",
+            "0x4f8242b2a2b3b4bfda92b93111cb848902636f44a632d232cdd39509074009fa",
             ["0x0d9C39c64CF8eDA1EdFeBD78AFa895bAA797eFc4"]
           ],
           [
             "2024-02-02T23:44:11.000Z",
+            "0xedefc1fc192d3c59892b11660cf6dc47d120a7e895adc2cd4dba0d97efec9644",
             ["0xb851fc304fCa88EDC89C287687AF4F6d7810bc14"]
           ],
           [
             "2024-02-02T23:44:11.000Z",
+            "0xedefc1fc192d3c59892b11660cf6dc47d120a7e895adc2cd4dba0d97efec9644",
             ["0x0d9C39c64CF8eDA1EdFeBD78AFa895bAA797eFc4"]
           ]
         ],
@@ -482,9 +482,7 @@
         "0x025c187b0231be4785898f25f98d749f953f5d06781772aef242812e2ecf52e3"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
-      ],
+      "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
       "issuedPermissions": [
         {
           "permission": "challenge",
@@ -520,18 +518,22 @@
         "$pastUpgrades": [
           [
             "2024-02-01T18:20:23.000Z",
+            "0xda02c330c54f6dc923beb0d9f720a4caaae75238f52d24902d56624b0410a65b",
             ["0xA30ADd78D5be6B2B55C934666bb4fF2C4429d800"]
           ],
           [
             "2024-02-02T23:44:11.000Z",
+            "0x3b6b6b8395ca0242ffaf46aba40335b8dce65cab470d7a188a3afe13723ee3db",
             ["0x84c2f365733c6560bd49D8768d9c23B07A9DD630"]
           ],
           [
             "2024-05-14T20:13:47.000Z",
+            "0x25f146ab6043f07c95e3b314e0200d2b5a8a0cb590cbcd9f094f753efef7d669",
             ["0x7a6b7F35D032c9b122C69F01EA4523e028f6ef4A"]
           ],
           [
             "2024-05-14T20:13:47.000Z",
+            "0x25f146ab6043f07c95e3b314e0200d2b5a8a0cb590cbcd9f094f753efef7d669",
             ["0x6f3CcC8C9DAf8B9b39aDe481213Ff7A626a42B65"]
           ]
         ],
@@ -597,9 +599,7 @@
         "0xf74d5abe93255d485a607a353bb85161caf16d07541125865eb5fd9220bce6c7"
       ],
       "displayName": "FrxEthTimelock",
-      "descriptions": [
-        "Allows for time-delayed execution of transactions. Current delay is 2d."
-      ],
+      "description": "Allows for time-delayed execution of transactions. Current delay is 2d.",
       "directlyReceivedPermissions": [
         {
           "permission": "configure",
@@ -631,9 +631,7 @@
       "sourceHashes": [
         "0xdc86a850f11dc2b5c0472a05d0e3c14f239baf2c3b1ab19631591b0827985380"
       ],
-      "descriptions": [
-        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
-      ],
+      "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -662,9 +660,7 @@
         "0x482ec6e91304ac39a3fb4505634427bddfddee23b8e93a4f7f995ca5083ae3c3"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Used to bridge ERC-721 tokens from host chain to this chain."
-      ],
+      "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -684,14 +680,17 @@
         "$pastUpgrades": [
           [
             "2024-02-01T18:20:11.000Z",
+            "0x16fa9302027443ca036c06c75668cfa2bbe1d3466d67e3cf566c8227ae489bf9",
             ["0x23A0478996241F9f966b7054c06FdeB96Ddf3475"]
           ],
           [
             "2024-05-14T20:13:47.000Z",
+            "0x25f146ab6043f07c95e3b314e0200d2b5a8a0cb590cbcd9f094f753efef7d669",
             ["0x7a6b7F35D032c9b122C69F01EA4523e028f6ef4A"]
           ],
           [
             "2024-05-14T20:13:47.000Z",
+            "0x25f146ab6043f07c95e3b314e0200d2b5a8a0cb590cbcd9f094f753efef7d669",
             ["0x7eE1637C33Ed0DFEE6403f3301B6d404106018e4"]
           ]
         ],
@@ -711,9 +710,7 @@
       "sourceHashes": [
         "0xfe65651a8179606cdf20c60070a93224cb7b8fd4e89fb0d668b795503e8da33c"
       ],
-      "descriptions": [
-        "Vault token contract (ERC-4626) for staked frxETH. The smart contract receives frxETH tokens and mints sfrxETH tokens."
-      ],
+      "description": "Vault token contract (ERC-4626) for staked frxETH. The smart contract receives frxETH tokens and mints sfrxETH tokens.",
       "ignoreInWatchMode": [
         "lastRewardAmount",
         "lastSync",
@@ -810,7 +807,7 @@
         "0xeb2d3e06200c7350a7bcb0c3b1b64c466c15459f1119fb068ae8a69483c30d55"
       ],
       "displayName": "frxETH Minter",
-      "descriptions": ["Accepts user-supplied ETH and converts it to frxETH."],
+      "description": "Accepts user-supplied ETH and converts it to frxETH.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -1534,7 +1531,7 @@
     "fraxtal/FrxEthMinter": "0xb3496e9ff1bb9694e50fc29dd6bddc7340da994d9679cc0e51dd2e3dad9a74fd",
     "fraxtal/Timelock": "0xfb84a150b2dede291d087c46dac44d27f03fb609f506a60ed3ffe2b92651ea35",
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",

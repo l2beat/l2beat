@@ -44,6 +44,7 @@ const vaultWeight =
 
 export const termstructure: Layer2 = {
   id: ProjectId('termstructure'),
+  createdAt: new UnixTime(1709724246), // 2024-03-06T11:24:06Z
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (calldata)'],
     bridge: { type: 'Enshrined' },
