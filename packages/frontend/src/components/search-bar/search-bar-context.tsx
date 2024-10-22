@@ -1,6 +1,7 @@
 'use client'
 
 import { createContext, useContext, useState } from 'react'
+import { useBreakpoint } from '~/hooks/use-is-mobile'
 import { SearchBarDialog } from './search-bar-dialog'
 
 type SearchBarContextValue = {
@@ -12,31 +13,33 @@ const SearchBarContext = createContext<SearchBarContextValue | null>(null)
 
 interface Props {
   children: React.ReactNode
-  recentlyAdded: SearchBarProject[]
-  allProjects: SearchBarProject[]
+  projects: SearchBarProject[]
 }
 
 export interface SearchBarProject {
   id: string
+  isUpcoming: boolean
   name: string
   iconUrl: string
   href: string
   matchers: string[]
+  createdAt: number
+  type: 'layer2' | 'layer3' | 'bridge' | 'da'
 }
 
-export function SearchBarContextProvider({
-  children,
-  recentlyAdded,
-  allProjects,
-}: Props) {
+export function SearchBarContextProvider({ children, projects }: Props) {
   const [open, setOpen] = useState(false)
+  const breakpoint = useBreakpoint()
+  const isMobile = breakpoint === 'mobile'
+
+  const recentlyAdded = [...projects]
+    .filter((p) => !p.isUpcoming)
+    .sort((a, b) => b.createdAt - a.createdAt)
+    .slice(0, isMobile ? 15 : 5)
 
   return (
     <SearchBarContext.Provider value={{ open, setOpen }}>
-      <SearchBarDialog
-        recentlyAdded={recentlyAdded}
-        allProjects={allProjects}
-      />
+      <SearchBarDialog recentlyAdded={recentlyAdded} allProjects={projects} />
       {children}
     </SearchBarContext.Provider>
   )

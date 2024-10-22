@@ -11,9 +11,8 @@ import { GlossaryContextProvider } from '../components/markdown/glossary-context
 import { ProgressBar } from '../components/progress-bar'
 import { roboto } from '../fonts'
 import '../styles/globals.css'
-import { bridges, daLayers, layer2s, layer3s } from '@l2beat/config'
+import { getSearchBarProjects } from '~/components/search-bar/get-search-bar-projects'
 import { SearchBarContextProvider } from '~/components/search-bar/search-bar-context'
-import { toSearchBarProject } from '~/components/search-bar/to-search-bar-project'
 
 export const metadata: Metadata = getDefaultMetadata()
 
@@ -24,20 +23,7 @@ export default async function RootLayout({
 }>) {
   const terms = getCollection('glossary')
 
-  const recentlyAdded = [...layer2s, ...layer3s]
-    .filter((p) => p.isUpcoming)
-    .sort(
-      (a, b) => (b.createdAt?.toNumber() ?? 0) - (a.createdAt?.toNumber() ?? 0),
-    )
-    .slice(0, 15)
-    .map(toSearchBarProject)
-
-  const allProjects = [
-    ...layer2s,
-    ...layer3s,
-    ...bridges,
-    ...(env.NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT ? daLayers : []),
-  ].map(toSearchBarProject)
+  const searchBarProjects = getSearchBarProjects()
   return (
     // We suppress the hydration warning here because we're using:
     // - next-themes's ThemeProvider
@@ -72,10 +58,7 @@ export default async function RootLayout({
                     matches: [term.data.term, ...(term.data.match ?? [])],
                   }))}
                 >
-                  <SearchBarContextProvider
-                    recentlyAdded={recentlyAdded}
-                    allProjects={allProjects}
-                  >
+                  <SearchBarContextProvider projects={searchBarProjects}>
                     {children}
                   </SearchBarContextProvider>
                   <ProgressBar />

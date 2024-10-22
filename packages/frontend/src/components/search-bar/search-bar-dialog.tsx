@@ -1,5 +1,6 @@
 'use client'
 
+import { assertUnreachable } from '@l2beat/shared-pure'
 import Image from 'next/image'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import {
@@ -103,7 +104,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                 return (
                   <CommandItem
                     key={project.id}
-                    className="gap-2"
+                    className="gap-2 rounded-lg"
                     onSelect={() => {
                       setOpen(false)
                       setValue('')
@@ -113,10 +114,14 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                     <Image
                       src={project.iconUrl}
                       alt={`${project.name} logo`}
+                      className="rounded-sm"
                       width={20}
                       height={20}
                     />
                     {project.name}
+                    <div className="ml-auto text-xs text-secondary">
+                      {typeToLabel(project.type)}
+                    </div>
                   </CommandItem>
                 )
               })}
@@ -126,4 +131,19 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
       </Command>
     </CommandDialog>
   )
+}
+
+function typeToLabel(type: SearchBarProject['type']) {
+  switch (type) {
+    case 'layer2':
+      return 'Layer 2'
+    case 'layer3':
+      return 'Layer 3'
+    case 'bridge':
+      return 'Bridge'
+    case 'da':
+      return 'DA'
+    default:
+      assertUnreachable(type)
+  }
 }
