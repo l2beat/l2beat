@@ -11,6 +11,7 @@ export type State = {
   panels: Panel[]
   layouts: Panel[][]
   selectedLayout: number
+  active: PanelId | undefined
   fullScreen: PanelId | undefined
   hover: PanelId | undefined
 }
@@ -18,6 +19,7 @@ export type State = {
 export type Action = {
   changePanel: (from: PanelId, to: PanelId) => void
   addPanel: () => void
+  setActivePanel: (id: PanelId | undefined) => void
   removePanel: (id: PanelId) => void
   toggleFullScren: (id: PanelId) => void
   resize: (id: PanelId, fraction: number) => void
@@ -81,6 +83,7 @@ export const useStore = create<State & Action>((set) => ({
   panels: storedLayouts[selectedLayout]!,
   layouts: storedLayouts,
   selectedLayout: selectedLayout,
+  active: undefined,
   fullScreen: undefined,
   hover: undefined,
   changePanel: (from, to) =>
@@ -125,6 +128,7 @@ export const useStore = create<State & Action>((set) => ({
         panels: state.panels.filter((panel) => panel.id !== id),
       }
     }),
+  setActivePanel: (id) => set(() => ({ active: id })),
   toggleFullScren: (id) =>
     set((state) => ({
       fullScreen: state.fullScreen === id ? undefined : id,

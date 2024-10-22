@@ -22,46 +22,62 @@ export function MultiApp() {
   const mouseMove = useStore((state) => state.mouseMove)
   const drop = useStore((state) => state.drop)
   const order = useStore((state) => state.order)
+  const setActivePanel = useStore((state) => state.setActivePanel)
 
   useEffect(() => {
     let left = 0
     let right = 0
     let resized: PanelId | undefined = undefined
 
-    function getSelectedPanel(e: MouseEvent) {
+    function getPanel(e: MouseEvent) {
       const container = panelContainerRef.current
       if (!container) {
-        return
+        return {}
       }
-
-      for (let i = 0; i < container.children.length - 1; i++) {
+      let toResize:
+        | { panelId: PanelId; left: number; right: number }
+        | undefined = undefined
+      let hovered: PanelId | undefined
+      for (let i = 0; i < container.children.length; i++) {
         // biome-ignore lint/style/noNonNullAssertion: It's there
         const panel = container.children[i]!
         const box = panel.getBoundingClientRect()
         if (
+          i !== container.children.length - 1 &&
           e.clientY > box.top &&
+          e.clientY < box.bottom &&
           e.clientX >= box.right - RESIZE_AREA / 2 &&
           e.clientX < box.right + RESIZE_AREA / 2
         ) {
-          return {
+          toResize = {
             panelId: panel.id.slice('panel-'.length) as PanelId,
             left: box.left,
             right:
               container.children[i + 1]?.getBoundingClientRect().right ?? 0,
           }
         }
+        if (
+          e.clientY > box.top &&
+          e.clientY < box.bottom &&
+          e.clientX >= box.left &&
+          e.clientX < box.right
+        ) {
+          hovered = panel.id.slice('panel-'.length) as PanelId
+        }
       }
+      return { toResize, hovered }
     }
 
     function onMouseDown(e: MouseEvent) {
-      const selection = getSelectedPanel(e)
-      if (selection && e.button === 0) {
-        left = selection.left
-        right = selection.right
-        resized = selection.panelId
-      } else if (!selection) {
+      const { toResize, hovered } = getPanel(e)
+      if (toResize && e.button === 0) {
+        left = toResize.left
+        right = toResize.right
+        resized = toResize.panelId
+      } else if (!toResize) {
         resized = undefined
       }
+      setActivePanel(hovered)
     }
 
     function onMouseUp() {
@@ -92,10 +108,10 @@ export function MultiApp() {
           }
         }
       } else if (!resized) {
-        const selection = getSelectedPanel(e)
+        const { toResize } = getPanel(e)
         const container = panelContainerRef.current
-        container?.classList.toggle('cursor-col-resize', !!selection)
-        container?.classList.toggle('select-none', !!selection)
+        container?.classList.toggle('cursor-col-resize', !!toResize)
+        container?.classList.toggle('select-none', !!toResize)
       } else {
         const midpoint = (right + left) / 2
         const leftMin =
@@ -139,6 +155,7 @@ export function MultiApp() {
           return <Panel key={panel.id} id={panel.id} />
         })}
       </div>
+      <BottomBar />
     </div>
   )
 }
@@ -166,6 +183,17 @@ function TopBar() {
         </div>
         <button onClick={() => saveLayout(selectedLayout)}>Save Layout</button>
         <button onClick={() => addPanel()}>Add Panel</button>
+      </div>
+    </div>
+  )
+}
+
+function BottomBar() {
+  return (
+    <div className="flex h-6 items-center justify-between px-2">
+      <div>Bottom Bar</div>
+      <div className="flex gap-2">
+        <button>Help (F1)</button>
       </div>
     </div>
   )
@@ -213,13 +241,19 @@ function HoverHeader(props: { children: ReactNode }) {
 
 function PanelHeader(props: { id: PanelId }) {
   const isFullScreen = useStore((state) => state.fullScreen === props.id)
+  const isActive = useStore((state) => state.active === props.id)
   const changePanel = useStore((state) => state.changePanel)
   const pickUp = useStore((state) => state.pickUp)
   const toggleFullScren = useStore((state) => state.toggleFullScren)
   const removePanel = useStore((state) => state.removePanel)
 
   return (
-    <div className="flex h-[36px] select-none border border-black border-y-2 bg-slate-100 px-[7px] py-1">
+    <div
+      className={clsx(
+        'flex h-[36px] select-none border border-black border-y-2 px-[7px] py-1',
+        isActive ? 'bg-blue-200' : 'bg-slate-100',
+      )}
+    >
       <select
         value={props.id}
         onChange={(e) => changePanel(props.id, e.target.value as PanelId)}
