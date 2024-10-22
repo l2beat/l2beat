@@ -83,10 +83,7 @@ export function BaseScalingFilters({
     }))
 
   return (
-    <OverflowWrapper
-      childrenClassName="-m-1 [&>*]:m-1 max-md:mx-4"
-      className={className}
-    >
+    <OverflowWrapper childrenClassName="-m-1 [&>*]:m-1" className={className}>
       <div className="flex flex-row space-x-1">
         {showRollupsOnly && (
           <Checkbox
