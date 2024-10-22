@@ -86,7 +86,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
       onOpenChange={setOpen}
       onEscapeKeyDown={onEscapeKeyDown}
     >
-      <Command shouldFilter={false} sidebar>
+      <Command shouldFilter={false} sidebar className="rounded-none">
         <CommandInput
           ref={inputRef}
           placeholder="Search for projects"
@@ -104,7 +104,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                 return (
                   <CommandItem
                     key={project.id}
-                    className="gap-2 rounded-lg cursor-pointer"
+                    className="cursor-pointer gap-2 rounded-lg"
                     onSelect={() => {
                       setOpen(false)
                       setValue('')
