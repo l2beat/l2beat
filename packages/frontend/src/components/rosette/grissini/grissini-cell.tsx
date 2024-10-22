@@ -27,7 +27,7 @@ export function GrissiniCell(props: GrissiniCellProps) {
           props.className,
         )}
       >
-        <GrissiniIcon values={props.values} className="size-6 md:size-8" />
+        <GrissiniIcon values={props.values} className="size-8 md:size-8" />
       </TooltipTrigger>
       <TooltipContent fitContent>
         <GrissiniTooltip values={props.values} isUnderReview={isUnderReview} />
