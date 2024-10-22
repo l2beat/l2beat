@@ -489,7 +489,7 @@ export const arbitrum: Layer2 = orbitStackL2({
         validatorAfkTime,
         l1TimelockDelay,
       ),
-      secondLine: `${securityCouncilStats} Security Council, DAO`,
+      secondLine: `${securityCouncilStats} Security Council or DAO`,
       sources: [
         {
           contract: 'RollupProxy',
