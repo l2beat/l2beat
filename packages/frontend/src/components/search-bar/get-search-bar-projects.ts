@@ -8,7 +8,7 @@ import {
   layer2s,
   layer3s,
 } from '@l2beat/config'
-import { env } from 'process'
+import { env } from '~/env'
 
 export interface SearchBarProject {
   id: string
@@ -22,6 +22,7 @@ export interface SearchBarProject {
 }
 
 export function getSearchBarProjects() {
+  console.log('getSearchBarProjects')
   return toSearchBarProjects([
     ...layer2s,
     ...layer3s,
