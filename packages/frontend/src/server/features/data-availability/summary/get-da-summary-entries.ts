@@ -27,7 +27,7 @@ export async function getDaSummaryEntries() {
           const tvs = getSumFor(daBridge.usedIn.map((project) => project.id))
           const projectEconomicSecurity = economicSecurity[daLayer.id]
 
-          return {
+          const base = {
             slug: daBridge.display.slug,
             name: daBridge.display.name,
             href: `/data-availability/projects/${daLayer.display.slug}/${daBridge.display.slug}`,
@@ -45,6 +45,17 @@ export async function getDaSummaryEntries() {
               (a, b) => getSumFor([b.id]) - getSumFor([a.id]),
             ),
           }
+
+          if (daBridge.type === 'DAC') {
+            return {
+              ...base,
+              membersCount: daBridge.membersCount,
+              requiredMembers: daBridge.requiredMembers,
+              knownMembers: daBridge.knownMembers,
+            }
+          }
+
+          return base
         })
         .sort((a, b) => b.tvs - a.tvs)
 

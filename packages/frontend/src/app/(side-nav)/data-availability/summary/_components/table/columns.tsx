@@ -1,13 +1,14 @@
-import { createColumnHelper } from '@tanstack/react-table'
-import { PentagonRosetteCell } from '~/components/rosette/pentagon/pentagon-rosette-cell'
+import { type CellContext, createColumnHelper } from '@tanstack/react-table'
+import Image from 'next/image'
+import { IndexCell } from '~/components/table/cells/index-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
+import { RiskCell } from '~/components/table/cells/risk-cell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { EM_DASH } from '~/consts/characters'
-import { ChevronIcon } from '~/icons/chevron'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
-import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/format-currency'
-import { mapRisksToRosetteValues } from '../../../_utils/map-risks-to-rosette-values'
+import { DaLayerCell } from '../../../_components/da-layer-cell'
+import { RiskGrissini } from '../../../_components/risk-grissini'
 import { DaEconomicSecurityCell } from './da-economic-security-cell'
 import { ProjectsUsedIn } from './projects-used-in'
 
@@ -28,137 +29,72 @@ const nameColumn = columnHelper.accessor('name', {
   ),
 })
 
-const daBridgeColumn = columnHelper.accessor('daBridge', {
-  header: 'DA Bridge',
+const daRisksColumn = columnHelper.accessor('risks', {
+  header: 'DA Risks',
   cell: (ctx) => {
-    const value = ctx.getValue()
-    if (value === 'multiple') {
-      return (
-        <button
-          className="flex flex-row items-center gap-4 italic text-gray-500 dark:text-gray-400"
-          onClick={(e) => {
-            e.preventDefault()
-            ctx.row.toggleExpanded()
-          }}
-        >
-          Multiple bridges
-          <ChevronIcon
-            className={cn(
-              'fill-black transition-transform dark:fill-white',
-              ctx.row.getIsExpanded() && 'rotate-180',
-            )}
-          />
-        </button>
-      )
-    }
-    return (
-      <ProjectNameCell
-        className="!pl-0"
-        project={{
-          ...ctx.row.original,
-          name: value.name,
-          shortName: undefined,
-        }}
-      />
-    )
-  },
-  meta: {
-    cellClassName: 'pl-8',
-    headClassName: 'pl-8',
-    tooltip:
-      'The DA bridge through which Ethereum is informed that data has been made available. ',
-  },
-})
+    const risks = [
+      ctx.row.original.risks.economicSecurity,
+      ctx.row.original.risks.fraudDetection,
+    ]
 
-const risksColumn = columnHelper.accessor('risks', {
-  header: 'Risks',
-  cell: (ctx) => {
-    const value = ctx.getValue()
-
-    const hasNoBridge =
-      ctx.row.original.daBridge !== 'multiple' &&
-      ctx.row.original.daBridge.type === 'NoBridge'
-
-    if ('relayerFailure' in value) {
-      return (
-        <PentagonRosetteCell
-          className="justify-start"
-          values={mapRisksToRosetteValues(value)}
-          isUnderReview={ctx.row.original.isUnderReview}
-          hasNoBridge={hasNoBridge}
-        />
-      )
-    }
-
-    return (
-      <PentagonRosetteCell
-        className="justify-start"
-        values={mapRisksToRosetteValues({
-          economicSecurity: value.economicSecurity,
-          fraudDetection: value.fraudDetection,
-          relayerFailure: {
-            value: 'Depends on the DA Bridge',
-            sentiment: 'neutral',
-          },
-          upgradeability: {
-            value: 'Depends on the DA Bridge',
-            sentiment: 'neutral',
-          },
-          committeeSecurity: {
-            value: 'Depends on the DA Bridge',
-            sentiment: 'neutral',
-          },
-        })}
-        isUnderReview={ctx.row.original.isUnderReview}
-        hasNoBridge={hasNoBridge}
-      />
-    )
+    return <RiskGrissini values={risks} />
   },
   enableSorting: false,
   meta: {
-    hash: 'risk-analysis',
+    align: 'center',
+  },
+})
+
+const daBridgeRisksColumn = columnHelper.accessor('risks', {
+  header: 'Bridge Risks',
+  cell: (ctx) => {
+    const risks = [
+      ctx.row.original.bridges[0]!.risks.committeeSecurity,
+      ctx.row.original.bridges[0]!.risks.upgradeability,
+      ctx.row.original.bridges[0]!.risks.relayerFailure,
+    ]
+
+    return <RiskGrissini values={risks} />
+  },
+  enableSorting: false,
+  meta: {
+    align: 'center',
   },
 })
 
 const tvsColumn = columnHelper.accessor('tvs', {
-  header: 'Total value secured',
+  header: 'TVS',
   cell: (ctx) =>
     ctx.row.original.usedIn.length > 0
       ? formatCurrency(ctx.row.original.tvs, 'usd')
       : EM_DASH,
   meta: {
     tooltip: 'The total value locked of all L2s using this layer.',
+    align: 'right',
   },
 })
 
 const slashableStakeColumn = columnHelper.accessor('economicSecurity', {
-  header: 'Slashable stake',
-  cell: (ctx) => <DaEconomicSecurityCell value={ctx.getValue()} />,
+  header: 'Slashable\nstake',
+  cell: (ctx) => {
+    const value = ctx.getValue()
+    if (ctx.row.original.risks.economicSecurity.type === 'Unknown') {
+      return formatCurrency(0, 'usd')
+    }
+
+    return <DaEconomicSecurityCell value={value} />
+  },
   meta: {
+    align: 'right',
     tooltip:
       'The assets that are slashable in case of a data withholding attack (the amount of funds a committee would need to burn to successfully deceive the DA bridge). It’s equal to 2/3 of the total validating stake, if any.',
   },
 })
 
-const slashableStakeForCustomSystem = columnHelper.accessor(
-  'economicSecurity',
-  {
-    header: 'Slashable stake',
-    cell: (ctx) => {
-      const value = ctx.getValue()
-      if (ctx.row.original.risks.economicSecurity.type === 'Unknown') {
-        return formatCurrency(0, 'usd')
-      }
-
-      return <DaEconomicSecurityCell value={value} />
-    },
-    meta: {
-      align: 'right',
-      tooltip:
-        'The assets that are slashable in case of a data withholding attack (the amount of funds a committee would need to burn to successfully deceive the DA bridge). It’s equal to 2/3 of the total validating stake, if any.',
-    },
-  },
-)
+const membersColumn = columnHelper.display({
+  header: 'Members',
+  cell: () => 'TBD',
+})
 
 const usedInColumn = columnHelper.accessor('usedIn', {
   header: 'Used in',
@@ -173,7 +109,15 @@ const challengeMechanismColumn = columnHelper.accessor(
   'hasChallengeMechanism',
   {
     header: 'Challenge\nmechanism',
-    cell: (ctx) => (ctx.getValue() ? 'Yes' : 'None'),
+    cell: (ctx) => (
+      <RiskCell
+        risk={{
+          value: ctx.getValue() ? 'Yes' : 'None',
+          sentiment: ctx.getValue() ? 'good' : 'bad',
+        }}
+        emptyMode="em-dash"
+      />
+    ),
   },
 )
 
@@ -182,23 +126,84 @@ const fallbackColumn = columnHelper.accessor('fallback', {
   cell: (ctx) => ctx.getValue() ?? 'None',
 })
 
-export const columns = [
+export const customColumns = [
   ...getCommonProjectColumns(columnHelper),
   nameColumn,
-  daBridgeColumn,
-  risksColumn,
+  daRisksColumn,
+  daBridgeRisksColumn,
   tvsColumn,
-  slashableStakeColumn,
-  usedInColumn,
-]
-
-export const customSystemsColumns = [
-  ...getCommonProjectColumns(columnHelper),
-  nameColumn,
-  daBridgeColumn,
-  risksColumn,
-  tvsColumn,
+  membersColumn,
   fallbackColumn,
   challengeMechanismColumn,
-  slashableStakeForCustomSystem,
+  slashableStakeColumn,
+]
+
+const spanByBridges = (ctx: CellContext<DaSummaryEntry, unknown>) =>
+  ctx.row.original.bridges.length
+
+const virtual = {
+  meta: {
+    virtual: true,
+  },
+}
+
+export const publicSystemsColumns = [
+  columnHelper.accessor((_, index) => index + 1, {
+    header: '#',
+    cell: (ctx) => <IndexCell>{ctx.row.index + 1}</IndexCell>,
+    meta: {
+      headClassName: 'w-0',
+      rowSpan: spanByBridges,
+    },
+    size: 44,
+  }),
+  columnHelper.display({
+    id: 'logo',
+    cell: (ctx) => (
+      <Image
+        className="min-h-[20px] min-w-[20px]"
+        src={`/icons/${ctx.row.original.slug}.png`}
+        width={20}
+        height={20}
+        alt={`${ctx.row.original.name} logo`}
+      />
+    ),
+    meta: {
+      headClassName: 'w-0',
+      cellClassName: 'lg:!pr-1.5',
+      rowSpan: spanByBridges,
+    },
+    size: 28,
+  }),
+  columnHelper.accessor('name', {
+    header: 'DA Layer',
+    cell: (info) => <DaLayerCell entry={info.row.original} />,
+    meta: {
+      rowSpan: spanByBridges,
+    },
+  }),
+  columnHelper.group({
+    header: 'DA Layer',
+    columns: [
+      { ...daRisksColumn, meta: { rowSpan: spanByBridges } },
+      { ...tvsColumn, meta: { rowSpan: spanByBridges } },
+      { ...slashableStakeColumn, meta: { rowSpan: spanByBridges } },
+    ],
+    meta: {
+      rowSpan: spanByBridges,
+    },
+  }),
+  columnHelper.display({
+    id: 'bridge',
+    header: 'Bridge',
+    ...virtual,
+  }),
+  columnHelper.group({
+    header: 'DA Bridge',
+    columns: [
+      { id: 'bridge-risks', header: 'Bridge Risks', ...virtual },
+      { id: 'bridge-tvs', header: 'Value Secured', ...virtual },
+      { id: 'bridge-used-by', header: 'Used By', ...virtual },
+    ],
+  }),
 ]
