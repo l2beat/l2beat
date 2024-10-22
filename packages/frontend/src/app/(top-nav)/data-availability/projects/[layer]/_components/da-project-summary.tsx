@@ -60,54 +60,64 @@ export function DaProjectSummary({ project }: Props) {
                 <div className="whitespace-pre text-xs uppercase text-gray-500 dark:text-gray-600">
                   Select a bridge
                 </div>
-                <div className="flex flex-row items-center gap-2 rounded-md border border-blue-500 bg-blue-400 px-6 py-2 text-xs font-semibold text-blue-700 dark:text-blue-700">
-                  <InfoIcon className="size-4 fill-current dark:fill-current" />
+                <div className="hidden flex-row items-center gap-2 rounded-md border border-blue-500 bg-blue-400 px-3 py-2 text-xs font-semibold text-blue-700 dark:text-blue-700 md:flex lg:px-6">
+                  <InfoIcon className="size-4 shrink-0 fill-current dark:fill-current" />
                   Please select DA bridge to view detailed risks &
                   characteristics. Bridge selection will define total DA risks.
                 </div>
-                <div className="flex h-[278px] flex-col">
-                  <div className="flex flex-row gap-4 rounded-t-lg bg-surface-secondary px-4 py-2 text-xs font-semibold uppercase text-secondary dark:bg-zinc-800">
+                <div className="flex flex-col md:h-[278px]">
+                  <div className="hidden flex-row gap-4 rounded-t-lg bg-surface-secondary px-4 py-2 text-xs font-semibold uppercase text-secondary dark:bg-zinc-800 md:flex">
                     <div className="w-12"></div>
                     <div className="flex-1">DA Bridge</div>
                     <div className="flex-1 text-center">DA Risks</div>
                     <div className="flex-1 pr-12 text-right">TVS</div>
                     <div className="flex-1">Used by</div>
                   </div>
-                  <div className="flex-1 overflow-y-auto rounded-b-lg bg-zinc-100 dark:bg-zinc-900">
-                    {project.bridges.map((bridge) => (
-                      <div
+                  <div className="flex flex-1 flex-col gap-2 overflow-y-auto rounded-t-lg bg-zinc-100 dark:bg-zinc-900 md:gap-0 md:rounded-none md:bg-none dark:md:bg-none">
+                    {project.bridges.map((bridge, index) => (
+                      <Link
                         key={bridge.id}
-                        className="flex min-h-[56px] flex-row gap-4 border-b border-surface-tertiary px-4 py-2"
+                        href={`/data-availability/projects/${project.slug}/${bridge.slug}`}
                       >
-                        <div className="flex w-12 items-center justify-center">
-                          <Link
-                            href={`/data-availability/projects/${project.slug}/${bridge.slug}`}
-                          >
-                            <div
-                              className={cn(
-                                'flex size-5 items-center justify-center rounded-full border-2 bg-pure-white',
-                                bridge.id === project.selectedBridge.id
-                                  ? 'border-brand'
-                                  : 'border-gray-400',
-                              )}
+                        <div
+                          className={cn(
+                            'flex min-h-[56px] flex-row gap-4 rounded-lg border-surface-tertiary bg-surface-secondary px-4 py-2 md:rounded-none md:border-b',
+                            // Hide 3rd and further bridges on mobile (will be shown in a drawer)
+                            index > 2 && 'md:hidden',
+                          )}
+                        >
+                          <div className="flex items-center px-1 md:px-3">
+                            <Link
+                              href={`/data-availability/projects/${project.slug}/${bridge.slug}`}
                             >
-                              {bridge.id === project.selectedBridge.id ? (
-                                <div className="size-3 rounded-full bg-brand"></div>
-                              ) : null}
-                            </div>
-                          </Link>
+                              <div
+                                className={cn(
+                                  'flex size-5 items-center justify-center rounded-full border-2 bg-pure-white',
+                                  bridge.id === project.selectedBridge.id
+                                    ? 'border-brand'
+                                    : 'border-gray-400',
+                                )}
+                              >
+                                {bridge.id === project.selectedBridge.id ? (
+                                  <div className="size-3 rounded-full bg-brand"></div>
+                                ) : null}
+                              </div>
+                            </Link>
+                          </div>
+                          <div className="flex flex-1 items-center text-sm font-bold text-primary">
+                            {bridge.name}
+                          </div>
+                          <div className="flex flex-1 items-center justify-center">
+                            <Grisini items={bridge.grisiniValues} />
+                          </div>
+                          <div className="flex flex-1 items-center justify-end pr-1 text-sm font-bold text-primary md:pr-12">
+                            TODO
+                          </div>
+                          <div className="hidden flex-1 items-center md:flex">
+                            TODO
+                          </div>
                         </div>
-                        <div className="flex flex-1 items-center text-sm font-bold text-primary">
-                          {bridge.name}
-                        </div>
-                        <div className="flex flex-1 items-center justify-center">
-                          <Grisini items={bridge.grisiniValues} />
-                        </div>
-                        <div className="flex flex-1 items-center justify-end pr-12 text-sm font-bold text-primary">
-                          TODO
-                        </div>
-                        <div className="flex flex-1 items-center">TODO</div>
-                      </div>
+                      </Link>
                     ))}
                   </div>
                 </div>
