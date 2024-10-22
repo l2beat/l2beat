@@ -83,12 +83,8 @@ export const scalingSummaryColumns = [
     header: 'Past day UOPS',
     cell: (ctx) => {
       const data = ctx.row.original.activity
-      if (!data) {
-        return <NoDataBadge />
-      }
-
       return (
-        <ValueWithPercentageChange change={data.change}>
+        <ValueWithPercentageChange change={data?.change}>
           {formatUops(ctx.getValue())}
         </ValueWithPercentageChange>
       )
