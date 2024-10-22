@@ -19,7 +19,7 @@ export function DaProjectSummary({ project }: Props) {
   return (
     <section
       id="summary"
-      className="max-md:bg-gray-100 max-md:px-4 max-md:dark:bg-zinc-900"
+      className="border-gray-200 dark:border-zinc-700 max-md:border-b max-md:bg-gray-100 max-md:px-4 max-md:dark:bg-zinc-900"
     >
       <header className="space-y-4 pt-6 max-md:bg-gray-100 max-md:pb-4 max-md:dark:bg-zinc-900 md:space-y-3">
         <ProjectHeader title={project.name} slug={project.slug} />
@@ -36,7 +36,9 @@ export function DaProjectSummary({ project }: Props) {
             <HorizontalSeparator className="!my-6 flex-1 max-md:-mx-4 max-md:w-screen" />
             <HorizontalSeparator className="!my-6 hidden w-[264px] lg:block" />
           </div>
+          {/* Details row */}
           <div className="flex flex-col gap-10">
+            {/* Left side (links and stats) */}
             <div className="flex flex-row items-end gap-10">
               <div className="flex-1">
                 <div className="space-y-4">
@@ -46,6 +48,7 @@ export function DaProjectSummary({ project }: Props) {
                   <DaProjectStats project={project} />
                 </div>
               </div>
+              {/* Right side (DA Layer grisini details) */}
               <div className="hidden lg:block">
                 <div className="flex flex-col space-y-4 pt-3">
                   <div className="whitespace-pre text-xs text-gray-500 dark:text-gray-600">
@@ -55,90 +58,100 @@ export function DaProjectSummary({ project }: Props) {
                 </div>
               </div>
             </div>
-            <div className="flex flex-row items-end gap-10">
-              <div className="flex flex-1 flex-col gap-4">
-                <div className="whitespace-pre text-xs uppercase text-gray-500 dark:text-gray-600">
-                  Select a bridge
-                </div>
-                <div className="hidden flex-row items-center gap-2 rounded-md border border-blue-500 bg-blue-400 px-3 py-2 text-xs font-semibold text-blue-700 dark:text-blue-700 md:flex lg:px-6">
-                  <InfoIcon className="size-4 shrink-0 fill-current dark:fill-current" />
-                  Please select DA bridge to view detailed risks &
-                  characteristics. Bridge selection will define total DA risks.
-                </div>
-                <div className="flex flex-col md:h-[278px]">
-                  <div className="hidden flex-row gap-4 rounded-t-lg bg-surface-secondary px-4 py-2 text-xs font-semibold uppercase text-secondary dark:bg-zinc-800 md:flex">
-                    <div className="w-12"></div>
-                    <div className="flex-1">DA Bridge</div>
-                    <div className="flex-1 text-center">DA Risks</div>
-                    <div className="flex-1 pr-12 text-right">TVS</div>
-                    <div className="flex-1">Used by</div>
+            <div className="flex flex-col-reverse md:flex-col">
+              {/* Table row */}
+              <div className="flex flex-row items-end gap-10 py-8 md:py-0">
+                {/* Left side (table with title and banner) */}
+                <div className="flex flex-1 flex-col gap-4">
+                  <div className="whitespace-pre text-xs uppercase text-gray-500 dark:text-gray-600">
+                    Select a bridge
                   </div>
-                  <div className="flex flex-1 flex-col gap-2 overflow-y-auto rounded-t-lg bg-zinc-100 dark:bg-zinc-900 md:gap-0 md:rounded-none md:bg-none dark:md:bg-none">
-                    {project.bridges.map((bridge, index) => (
-                      <Link
-                        key={bridge.id}
-                        href={`/data-availability/projects/${project.slug}/${bridge.slug}`}
-                      >
-                        <div
-                          className={cn(
-                            'flex min-h-[56px] flex-row gap-4 rounded-lg border-surface-tertiary bg-surface-secondary px-4 py-2 md:rounded-none md:border-b',
-                            // Hide 3rd and further bridges on mobile (will be shown in a drawer)
-                            index > 2 && 'md:hidden',
-                          )}
+                  <div className="hidden flex-row items-center gap-2 rounded-md border border-blue-500 bg-blue-400 px-3 py-2 text-xs font-semibold text-blue-700 dark:text-blue-700 md:flex lg:px-6">
+                    <InfoIcon className="size-4 shrink-0 fill-current dark:fill-current" />
+                    Please select DA bridge to view detailed risks &
+                    characteristics. Bridge selection will define total DA
+                    risks.
+                  </div>
+                  <div className="flex flex-col md:h-[278px]">
+                    <div className="hidden flex-row gap-4 rounded-t-lg border-surface-tertiary bg-surface-secondary px-4 py-2 text-xs font-semibold uppercase text-secondary dark:bg-zinc-800 md:flex md:border-b">
+                      <div className="w-12"></div>
+                      <div className="flex-1">DA Bridge</div>
+                      <div className="flex-1 text-center">DA Risks</div>
+                      <div className="flex-1 pr-12 text-right">TVS</div>
+                      <div className="flex-1">Used by</div>
+                    </div>
+                    <div className="flex flex-1 flex-col gap-2 overflow-y-auto rounded-t-lg bg-zinc-100 dark:bg-zinc-900 md:gap-0 md:rounded-none md:bg-none dark:md:bg-none">
+                      {project.bridges.map((bridge, index) => (
+                        <Link
+                          key={bridge.id}
+                          href={`/data-availability/projects/${project.slug}/${bridge.slug}`}
                         >
-                          <div className="flex items-center px-1 md:px-3">
-                            <Link
-                              href={`/data-availability/projects/${project.slug}/${bridge.slug}`}
-                            >
-                              <div
-                                className={cn(
-                                  'flex size-5 items-center justify-center rounded-full border-2 bg-pure-white',
-                                  bridge.id === project.selectedBridge.id
-                                    ? 'border-brand'
-                                    : 'border-gray-400',
-                                )}
+                          <div
+                            className={cn(
+                              'flex min-h-[56px] flex-row gap-4 rounded-lg border-surface-tertiary bg-surface-secondary px-4 py-2 md:rounded-none md:border-b md:bg-transparent',
+                              // Hide 3rd and further bridges on mobile (will be shown in a drawer)
+                              index > 2 && 'md:hidden',
+                            )}
+                          >
+                            <div className="flex items-center px-1 md:px-3">
+                              <Link
+                                href={`/data-availability/projects/${project.slug}/${bridge.slug}`}
                               >
-                                {bridge.id === project.selectedBridge.id ? (
-                                  <div className="size-3 rounded-full bg-brand"></div>
-                                ) : null}
-                              </div>
-                            </Link>
+                                <div
+                                  className={cn(
+                                    'flex size-5 items-center justify-center rounded-full border-2 bg-pure-white',
+                                    bridge.id === project.selectedBridge.id
+                                      ? 'border-brand'
+                                      : 'border-gray-400',
+                                  )}
+                                >
+                                  {bridge.id === project.selectedBridge.id ? (
+                                    <div className="size-3 rounded-full bg-brand"></div>
+                                  ) : null}
+                                </div>
+                              </Link>
+                            </div>
+                            <div className="flex flex-1 items-center text-sm font-bold text-primary">
+                              {bridge.name}
+                            </div>
+                            <div className="flex flex-1 items-center justify-center">
+                              <Grisini items={bridge.grisiniValues} />
+                            </div>
+                            <div className="flex flex-1 items-center justify-end pr-1 text-sm font-bold text-primary md:pr-12">
+                              TODO
+                            </div>
+                            <div className="hidden flex-1 items-center md:flex">
+                              TODO
+                            </div>
                           </div>
-                          <div className="flex flex-1 items-center text-sm font-bold text-primary">
-                            {bridge.name}
-                          </div>
-                          <div className="flex flex-1 items-center justify-center">
-                            <Grisini items={bridge.grisiniValues} />
-                          </div>
-                          <div className="flex flex-1 items-center justify-end pr-1 text-sm font-bold text-primary md:pr-12">
-                            TODO
-                          </div>
-                          <div className="hidden flex-1 items-center md:flex">
-                            TODO
-                          </div>
-                        </div>
-                      </Link>
-                    ))}
+                        </Link>
+                      ))}
+                    </div>
                   </div>
+                </div>
+                {/* Right side (grisini details) */}
+                <div className="hidden w-full max-w-[264px] flex-col space-y-4 pt-3 lg:flex">
+                  <div className="whitespace-pre text-xs text-gray-500 dark:text-gray-600">
+                    {project.selectedBridge.name} risks
+                  </div>
+                  <GrisiniDetails
+                    items={project.header.daBridgeGrisiniValues}
+                  />
                 </div>
               </div>
-              <div className="hidden w-full max-w-[264px] flex-col space-y-4 pt-3 lg:flex">
-                <div className="whitespace-pre text-xs text-gray-500 dark:text-gray-600">
-                  {project.selectedBridge.name} risks
+              <div>
+                <div className="-mx-4 border-y border-gray-200 px-4 dark:border-zinc-700 md:hidden">
+                  <MobileProjectLinks projectLinks={project.header.links} />
                 </div>
-                <GrisiniDetails items={project.header.daBridgeGrisiniValues} />
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <HorizontalSeparator className="mt-6 max-md:-mx-4 max-md:w-screen md:mb-6" />
-      <div className="md:hidden">
-        <MobileProjectLinks projectLinks={project.header.links} />
-      </div>
       {project.description ? (
         <div className="max-md:hidden">
+          <HorizontalSeparator className="!my-6 flex-1 max-md:-mx-4 max-md:w-screen" />
           <AboutSection description={project.description} />
           <HorizontalSeparator className="my-6" />
         </div>
