@@ -24,7 +24,7 @@ export async function NavSidebar({ groups, logoLink, legacyNav }: Props) {
     <NavSideBarWrapper legacyNav={legacyNav}>
       <div className="flex h-[38px] flex-row items-center justify-between">
         <Link href={logoLink}>
-          <HalloweenLogo className="block h-[41px] w-auto" />
+          <HalloweenLogo className="block h-[41px] w-auto" animated />
         </Link>
         <div className="flex flex-row items-center gap-4">
           <DarkThemeToggle />
