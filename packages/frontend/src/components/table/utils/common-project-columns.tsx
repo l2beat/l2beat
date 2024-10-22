@@ -8,20 +8,20 @@ interface BaseProject {
   name: string
 }
 
-export interface CommonProjectColumnsOptions {
-  customActivityIndexing?: boolean
+interface Options {
+  activity?: boolean
 }
 
 export function getCommonProjectColumns<T extends BaseProject>(
   columnHelper: ColumnHelper<T>,
-  opts?: CommonProjectColumnsOptions,
+  opts?: Options,
 ) {
   return [
     columnHelper.accessor((_, index) => index + 1, {
       header: '#',
       cell: (ctx) => (
         <IndexCell>
-          {opts?.customActivityIndexing
+          {opts?.activity
             ? ctx.row.index === 0
               ? EM_DASH
               : ctx.row.index

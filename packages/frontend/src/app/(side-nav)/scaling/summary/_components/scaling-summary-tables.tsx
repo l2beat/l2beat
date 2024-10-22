@@ -29,7 +29,9 @@ export function ScalingSummaryTables(props: Props) {
       rollups: props.entries.rollups.filter(includeFilters),
       validiumsAndOptimiums:
         props.entries.validiumsAndOptimiums.filter(includeFilters),
+      others: props.entries.others?.filter(includeFilters),
     }
+
     return (
       <>
         <HorizontalSeparator className="my-4 !border-divider" />
@@ -37,6 +39,7 @@ export function ScalingSummaryTables(props: Props) {
           items={[
             ...filteredEntries.rollups,
             ...filteredEntries.validiumsAndOptimiums,
+            ...(filteredEntries.others ?? []),
           ]}
         />
         <DirectoryTabs defaultValue="rollups">
@@ -45,12 +48,17 @@ export function ScalingSummaryTables(props: Props) {
               Rollups <CountBadge>{filteredEntries.rollups.length}</CountBadge>
             </DirectoryTabsTrigger>
             <DirectoryTabsTrigger value="validiums-and-optimiums">
-              Validiums & Optimiums{' '}
+              Validiums & Optimiums
               <CountBadge>
                 {filteredEntries.validiumsAndOptimiums.length}
               </CountBadge>
             </DirectoryTabsTrigger>
-            <DirectoryTabsTrigger value="others">Others</DirectoryTabsTrigger>
+            <DirectoryTabsTrigger value="others">
+              Others
+              {filteredEntries.others && filteredEntries.others.length > 0 && (
+                <CountBadge>{filteredEntries.others.length}</CountBadge>
+              )}
+            </DirectoryTabsTrigger>
           </DirectoryTabsList>
           <DirectoryTabsContent value="rollups">
             <ScalingSummaryRollupsTable entries={filteredEntries.rollups} />
@@ -61,17 +69,23 @@ export function ScalingSummaryTables(props: Props) {
             />
           </DirectoryTabsContent>
           <DirectoryTabsContent value="others">
-            <OthersComingSoonNotice />
+            {filteredEntries.others && filteredEntries.others.length > 0 ? (
+              <ScalingSummaryTable entries={filteredEntries.others} />
+            ) : (
+              <OthersComingSoonNotice />
+            )}
           </DirectoryTabsContent>
         </DirectoryTabs>
       </>
     )
   }
 
+  const filteredEntries = props.entries.filter(includeFilters)
   return (
     <ScalingFilterContextProvider>
-      <MainPageCard className="md:mt-6">
-        <ScalingSummaryTable entries={props.entries} />
+      <MainPageCard className="space-y-3 md:mt-6 md:space-y-6">
+        <ScalingTvlFilters items={filteredEntries} />
+        <ScalingSummaryTable entries={filteredEntries} />
       </MainPageCard>
     </ScalingFilterContextProvider>
   )

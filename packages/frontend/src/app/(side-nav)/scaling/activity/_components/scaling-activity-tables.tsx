@@ -24,6 +24,7 @@ export function ScalingActivityTables(props: Props) {
       rollups: props.entries.rollups.filter(includeFilters),
       validiumsAndOptimiums:
         props.entries.validiumsAndOptimiums.filter(includeFilters),
+      others: props.entries.others?.filter(includeFilters),
     }
     return (
       <>
@@ -46,6 +47,11 @@ export function ScalingActivityTables(props: Props) {
                 {filteredEntries.validiumsAndOptimiums.length - 1}
               </CountBadge>
             </DirectoryTabsTrigger>
+            {filteredEntries.others && filteredEntries.others.length > 0 && (
+              <DirectoryTabsTrigger value="others">
+                Others <CountBadge>{filteredEntries.others.length}</CountBadge>
+              </DirectoryTabsTrigger>
+            )}
           </DirectoryTabsList>
           <DirectoryTabsContent value="rollups">
             <ScalingActivityTable
@@ -60,6 +66,14 @@ export function ScalingActivityTables(props: Props) {
               customSortedRowModel={getStageSortedRowModel()}
             />
           </DirectoryTabsContent>
+          {filteredEntries.others && filteredEntries.others.length > 0 && (
+            <DirectoryTabsContent value="others">
+              <ScalingActivityTable
+                entries={filteredEntries.others}
+                customSortedRowModel={getStageSortedRowModel()}
+              />
+            </DirectoryTabsContent>
+          )}
         </DirectoryTabs>
       </>
     )
@@ -67,7 +81,7 @@ export function ScalingActivityTables(props: Props) {
 
   return (
     <MainPageCard className="space-y-3 md:mt-6 md:space-y-6">
-      <ScalingFilters items={props.entries} showRollupsOnly />
+      <ScalingFilters items={props.entries} />
       <ScalingActivityTable entries={props.entries} />
     </MainPageCard>
   )
