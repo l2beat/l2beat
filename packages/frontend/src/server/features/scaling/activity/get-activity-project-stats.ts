@@ -32,8 +32,8 @@ const getCachedActivityProjectStats = cache(
 
     return {
       txCount: summed,
-      lastDayTps: getLastDayUops(counts),
-      tpsWeeklyChange: getUopsWeeklyChange(counts),
+      lastDayUops: getLastDayUops(counts),
+      uopsWeeklyChange: getUopsWeeklyChange(counts),
     }
   },
   ['activityProjectStats'],
@@ -44,8 +44,8 @@ const getCachedActivityProjectStats = cache(
 
 function getMockActivityProjectStats(): ActivityProjectStats {
   return {
-    lastDayTps: 15,
+    lastDayUops: 15,
     txCount: 1500,
-    tpsWeeklyChange: 0.1,
+    uopsWeeklyChange: 0.1,
   }
 }
