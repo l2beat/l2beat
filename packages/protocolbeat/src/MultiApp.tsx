@@ -126,10 +126,6 @@ export function MultiApp() {
   const panelContainerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    console.log(panels.map((x) => x.size))
-  }, [panels])
-
-  useEffect(() => {
     let left = 0
     let right = 0
     let panelId: PanelId | undefined = undefined
@@ -253,13 +249,19 @@ function Panel(props: { id: PanelId }) {
             </option>
           ))}
         </select>
-        <div className="flex gap-2">
-          <button onClick={() => toggleFullScren(props.id)}>F</button>
+        <div className="flex gap-1">
+          <button className="w-4" onClick={() => toggleFullScren(props.id)}>
+            F
+          </button>
           {!isFullScreen && (
-            <button onClick={() => splitPanel(props.id)}>S</button>
+            <button className="w-4" onClick={() => splitPanel(props.id)}>
+              S
+            </button>
           )}
           {!isFullScreen && (
-            <button onClick={() => removePanel(props.id)}>X</button>
+            <button className="w-4" onClick={() => removePanel(props.id)}>
+              X
+            </button>
           )}
         </div>
       </div>
