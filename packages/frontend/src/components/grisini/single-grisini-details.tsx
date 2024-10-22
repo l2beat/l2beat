@@ -1,11 +1,11 @@
-import { Sentiment } from '@l2beat/shared-pure'
-import { SingleGrisini } from './single-grisini'
+import { type Sentiment } from '@l2beat/shared-pure'
+import { cn } from '~/utils/cn'
 import {
   sentimentToTextColor,
   sentimentToTransparentBgColor,
 } from '~/utils/sentiment'
-import { cn } from '~/utils/cn'
-import { GrisiniValue } from './types'
+import { SingleGrisini } from './single-grisini'
+import { type GrisiniValue } from './types'
 
 export interface SingleGrisiniDetailsProps {
   name: string
@@ -17,16 +17,16 @@ export function SingleGrisiniDetails({ name, sentiment, value }: GrisiniValue) {
   return (
     <div
       className={cn(
-        'flex flex-row items-stretch h-[5.125rem] rounded-[4px]',
+        'flex h-[5.125rem] flex-row items-stretch rounded-[4px]',
         sentimentToTransparentBgColor(sentiment),
       )}
     >
       <SingleGrisini sentiment={sentiment} className="h-full" />
-      <div className="flex flex-col justify-center gap-1 flex-1 p-4">
+      <div className="flex flex-1 flex-col justify-center gap-1 p-4">
         <div className="text-2xs font-semibold uppercase">{name}</div>
         <div
           className={cn(
-            'text-lg leading-none font-bold',
+            'text-lg font-bold leading-none',
             sentimentToTextColor(sentiment),
           )}
         >

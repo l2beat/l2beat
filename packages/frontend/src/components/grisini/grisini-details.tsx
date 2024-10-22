@@ -1,9 +1,9 @@
 import { SingleGrisiniDetails } from './single-grisini-details'
-import { GrisiniValue } from './types'
+import { type GrisiniValue } from './types'
 
 export function GrisiniDetails({ items }: { items: GrisiniValue[] }) {
   return (
-    <div className="flex flex-col gap-4 w-full max-w-[264px]">
+    <div className="flex w-[264px] flex-col gap-4">
       {items.map((item) => (
         <SingleGrisiniDetails {...item} />
       ))}

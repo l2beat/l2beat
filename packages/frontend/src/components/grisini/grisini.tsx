@@ -1,4 +1,4 @@
-import { Sentiment } from '@l2beat/shared-pure'
+import { type Sentiment } from '@l2beat/shared-pure'
 import { SingleGrisini } from './single-grisini'
 
 export function Grisini<T extends { sentiment: Sentiment }[]>({

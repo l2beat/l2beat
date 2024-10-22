@@ -4,6 +4,7 @@ import {
   type ImplementationChangeReportApiResponse,
   type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
+import { type GrisiniValue } from '~/components/grisini/types'
 import { type ProjectDetailsSection } from '~/components/projects/sections/types'
 import { type RosetteValue } from '~/components/rosette/types'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
@@ -12,7 +13,6 @@ import { toTechnologyRisk } from '~/utils/project/risk-summary/to-technology-ris
 import { getDaOtherConsiderationsSection } from './get-da-other-considerations-section'
 import { getDaProjectRiskSummarySection } from './get-da-project-risk-summary-section'
 import { getPermissionedEntities } from './get-permissioned-entities'
-import { GrisiniValue } from '~/components/grisini/types'
 interface Params {
   daLayer: DaLayer
   daBridge: DaBridge

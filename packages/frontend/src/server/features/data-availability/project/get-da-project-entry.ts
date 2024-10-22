@@ -1,5 +1,10 @@
 import { type DaBridge, type DaLayer, getDaProjectKey } from '@l2beat/config'
+import {
+  mapDaBridgeRisksToGrisiniItems,
+  mapDaLayerRisksToGrisiniItems,
+} from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
 import { getProjectDetails } from '~/app/(top-nav)/data-availability/projects/[layer]/_utils/get-project-details'
+import { type GrisiniValue } from '~/components/grisini/types'
 import { getDataAvailabilityProjectLinks } from '~/utils/project/get-project-links'
 import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { getContractsVerificationStatuses } from '../../verification-status/get-contracts-verification-statuses'
@@ -12,8 +17,6 @@ import {
   getDaProjectEconomicSecurity,
 } from './utils/get-da-project-economic-security'
 import { getDaProjectTvl } from './utils/get-da-project-tvl'
-import { mapDaBridgeRisksToGrisiniItems, mapDaLayerRisksToGrisiniItems } from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
-import { GrisiniValue } from '~/components/grisini/types'
 
 export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
   // TODO: Remove it to re-enable per-combination TVL

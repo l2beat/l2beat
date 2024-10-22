@@ -1,4 +1,4 @@
-import { Sentiment } from '@l2beat/shared-pure'
+import { type Sentiment } from '@l2beat/shared-pure'
 import { cn } from '~/utils/cn'
 import { sentimentToOpaqueBgColor } from '~/utils/sentiment'
 
@@ -9,7 +9,7 @@ export function SingleGrisini({
   return (
     <div
       className={cn(
-        'w-2 h-8 rounded-full',
+        'h-8 w-2 rounded-full',
         sentimentToOpaqueBgColor(sentiment),
         className,
       )}
