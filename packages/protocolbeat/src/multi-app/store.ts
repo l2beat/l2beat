@@ -20,8 +20,8 @@ export type Action = {
   changePanel: (from: PanelId, to: PanelId) => void
   addPanel: () => void
   setActivePanel: (id: PanelId | undefined) => void
-  removePanel: (id: PanelId) => void
-  toggleFullScren: (id: PanelId) => void
+  removePanel: (id?: PanelId) => void
+  toggleFullScren: (id?: PanelId) => void
   resize: (id: PanelId, fraction: number) => void
   mouseMove: (x: number, y: number) => void
   pickUp: (id: PanelId) => void
@@ -116,23 +116,41 @@ export const useStore = create<State & Action>((set) => ({
       if (!nextPanelId) {
         return state
       }
-      return { panels: state.panels.concat([{ id: nextPanelId, size: 1 }]) }
+      return {
+        panels: state.panels.concat([{ id: nextPanelId, size: 1 }]),
+        active: nextPanelId,
+      }
     }),
   removePanel: (id) =>
     set((state) => {
+      const targetId = id ?? state.active
       if (state.panels.length === 1) {
         return state
       }
+      const filtered = state.panels.filter((panel) => panel.id !== targetId)
+      const minSize = Math.min(...filtered.map((x) => x.size))
+      const panels = filtered.map((panel) => ({
+        ...panel,
+        size: panel.size / minSize,
+      }))
       return {
-        fullScreen: state.fullScreen === id ? undefined : state.fullScreen,
-        panels: state.panels.filter((panel) => panel.id !== id),
+        fullScreen:
+          state.fullScreen === targetId ? undefined : state.fullScreen,
+        panels: panels,
+        active:
+          state.active === targetId
+            ? panels[panels.length - 1]?.id
+            : state.active,
       }
     }),
   setActivePanel: (id) => set(() => ({ active: id })),
   toggleFullScren: (id) =>
-    set((state) => ({
-      fullScreen: state.fullScreen === id ? undefined : id,
-    })),
+    set((state) => {
+      const targetId = id ?? state.active
+      return {
+        fullScreen: state.fullScreen === targetId ? undefined : targetId,
+      }
+    }),
   resize: (id, fraction) =>
     set((state) => {
       const index = state.panels.findIndex((panel) => panel.id === id)
