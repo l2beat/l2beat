@@ -21,6 +21,8 @@ import {
   DrawerTrigger,
 } from '~/components/core/drawer'
 import { Button, buttonVariants } from '~/components/core/button'
+import { formatCurrency } from '~/utils/number-format/format-currency'
+import { ProjectsUsedIn } from '~/app/(side-nav)/data-availability/summary/_components/table/projects-used-in'
 
 interface Props {
   project: DaProjectEntry
@@ -118,10 +120,14 @@ export function DaProjectSummary({ project }: Props) {
                               <Grisini items={bridge.grisiniValues} />
                             </div>
                             <div className="flex flex-1 items-center justify-end pr-1 text-sm font-bold text-primary md:pr-12">
-                              TODO
+                              {formatCurrency(bridge.tvs, 'usd')}
                             </div>
-                            <div className="hidden flex-1 items-center md:flex">
-                              TODO
+                            <div className="hidden flex-1 flex flex-row items-center md:flex">
+                              <ProjectsUsedIn
+                                className="flex-wrap justify-start h-5"
+                                usedIn={bridge.usedIn}
+                                maxProjects={4}
+                              />
                             </div>
                           </div>
                         </Link>
