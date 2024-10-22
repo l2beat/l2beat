@@ -204,7 +204,7 @@ function PanelHeader(props: { id: PanelId }) {
         ))}
       </select>
       <div
-        className={clsx('flex-1', isFullScreen && 'cursor-move')}
+        className={clsx('flex-1', !isFullScreen && 'cursor-move')}
         onMouseDown={
           !isFullScreen ? (e) => e.button === 0 && pickUp(props.id) : undefined
         }
