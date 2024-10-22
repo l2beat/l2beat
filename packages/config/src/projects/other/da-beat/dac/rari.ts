@@ -1,7 +1,7 @@
 import { ChainId } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { rari } from '../../../layer3s/rari'
-import { DAC } from '../templates/dac-template'
+import { AnytrustDAC } from '../templates/anytrust-template'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('rari', 'arbitrum')
@@ -12,7 +12,7 @@ const dac = discovery.getContractValue<{
 }>('SequencerInbox', 'dacKeyset')
 const { membersCount, requiredSignatures } = dac
 
-export const rariDac = DAC({
+export const rariDac = AnytrustDAC({
   project: rari,
   bridge: {
     contracts: {
@@ -43,7 +43,7 @@ export const rariDac = DAC({
           'Multisig that can upgrade authorized batch posters via the UpgradeExecutor contract.',
       },
     ],
-    chain: ChainId.ETHEREUM,
+    chain: ChainId.ARBITRUM,
     requiredMembers: requiredSignatures,
     membersCount: membersCount,
     transactionDataType: DacTransactionDataType.TransactionDataCompressed,

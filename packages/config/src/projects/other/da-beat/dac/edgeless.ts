@@ -1,7 +1,7 @@
 import { ChainId } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { edgeless } from '../../../layer2s/edgeless'
-import { DAC } from '../templates/dac-template'
+import { AnytrustDAC } from '../templates/anytrust-template'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('edgeless')
@@ -12,7 +12,7 @@ const dac = discovery.getContractValue<{
 }>('SequencerInbox', 'dacKeyset')
 const { membersCount, requiredSignatures } = dac
 
-export const edgelessDac = DAC({
+export const edgelessDac = AnytrustDAC({
   project: edgeless,
   bridge: {
     contracts: {

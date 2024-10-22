@@ -1,9 +1,8 @@
 import { SUPPORTED_CHAINS } from '@/chains'
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { ChainService } from '@/server/services/ChainService'
 import type { ApiError, Stats, StatsApiRequest } from '@/types'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { loadDb } from './db/db'
-import { ChainService } from './services/ChainService'
+import { loadDb } from '../../server/db/db'
 
 // biome-ignore lint/style/noDefaultExport: api handler
 export default async function handler(

@@ -1,3 +1,170 @@
+Generated with discovered.json: 0xd10198b330811844be689732610ad051e36114a0
+
+# Diff at Mon, 21 Oct 2024 12:51:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e660599f23a07618fe949a07be1f516ce44f1914 block: 257931565
+- current block number: 257931565
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 257931565 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x846387C3D6001F74170455B1074D01f05eB3067a) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      descriptions:
+-        ["Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."]
+      description:
++        "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
+    }
+```
+
+Generated with discovered.json: 0x74e5cfa9044df3e695d0c398ba196451fe0e2e81
+
+# Diff at Mon, 21 Oct 2024 11:13:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 257931565
+- current block number: 257931565
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 257931565 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"]
+      values.$pastUpgrades.0.1:
+-        ["0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"]
++        "0xc8d7afcb2f7f7dc0883a938db4352813e17b7629850cdc54d8cc2eba7e10b095"
+    }
+```
+
+```diff
+    contract RollupEventInbox (0x0fF7A97caAb356c5507e5355b6819CB8b93d5591) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xF40C24bA346aA459ED28e196D4A46Cf17174bD6C"]
+      values.$pastUpgrades.0.1:
+-        ["0xF40C24bA346aA459ED28e196D4A46Cf17174bD6C"]
++        "0xc8d7afcb2f7f7dc0883a938db4352813e17b7629850cdc54d8cc2eba7e10b095"
+    }
+```
+
+```diff
+    contract ChallengeManager (0x383eFE8D410285c5CbE1B4F296022640759aA834) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x09824fe72BFF474d16D9c2774432E381BBD60662"]
+      values.$pastUpgrades.0.1:
+-        ["0x09824fe72BFF474d16D9c2774432E381BBD60662"]
++        "0xc8d7afcb2f7f7dc0883a938db4352813e17b7629850cdc54d8cc2eba7e10b095"
+    }
+```
+
+```diff
+    contract RollupProxy (0x846387C3D6001F74170455B1074D01f05eB3067a) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      values.$pastUpgrades.0.2:
++        ["0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754","0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A"]
+      values.$pastUpgrades.0.1:
+-        ["0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754","0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A"]
++        "0xc8d7afcb2f7f7dc0883a938db4352813e17b7629850cdc54d8cc2eba7e10b095"
+    }
+```
+
+```diff
+    contract Outbox (0xA597e0212971e65f53f288Ff1fFd26A6C8201f83) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"]
+      values.$pastUpgrades.0.1:
+-        ["0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"]
++        "0xc8d7afcb2f7f7dc0883a938db4352813e17b7629850cdc54d8cc2eba7e10b095"
+    }
+```
+
+```diff
+    contract L1CustomGateway (0xa8f6bB820eaD521cf834B7b371cFe025bdacEE99) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x7785047A920B43d23D181C6E68fa9405c874997c"]
+      values.$pastUpgrades.0.1:
+-        ["0x7785047A920B43d23D181C6E68fa9405c874997c"]
++        "0x49196afe9792981c6f4b014481dba1633a2bd3ab8246a1cd4f0518856ecf829b"
+    }
+```
+
+```diff
+    contract L1ERC20Gateway (0xB155C77a440DA7c282993a89FeA609598293017A) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xA8531c989b2f8531e123F1daf2edAe83bf4aa190"]
+      values.$pastUpgrades.0.1:
+-        ["0xA8531c989b2f8531e123F1daf2edAe83bf4aa190"]
++        "0x49196afe9792981c6f4b014481dba1633a2bd3ab8246a1cd4f0518856ecf829b"
+    }
+```
+
+```diff
+    contract Bridge (0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xB23214f241bdEb275f7dCBfbb1EA79349101d4B0"]
+      values.$pastUpgrades.0.1:
+-        ["0xB23214f241bdEb275f7dCBfbb1EA79349101d4B0"]
++        "0xc8d7afcb2f7f7dc0883a938db4352813e17b7629850cdc54d8cc2eba7e10b095"
+    }
+```
+
+```diff
+    contract SequencerInbox (0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"]
+      values.$pastUpgrades.0.1:
+-        ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"]
++        "0xc8d7afcb2f7f7dc0883a938db4352813e17b7629850cdc54d8cc2eba7e10b095"
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0xe507b9EF563DB6CcFDcE270160C50b2005BeED20) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x2fB33D8e4a8E989E7814D914973096736ed718b5"]
+      values.$pastUpgrades.0.1:
+-        ["0x2fB33D8e4a8E989E7814D914973096736ed718b5"]
++        "0x49196afe9792981c6f4b014481dba1633a2bd3ab8246a1cd4f0518856ecf829b"
+    }
+```
+
+```diff
+    contract Inbox (0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x8f6406781cC955398C45a48DcEfeEBDb2c8e2CaA"]
+      values.$pastUpgrades.0.1:
+-        ["0x8f6406781cC955398C45a48DcEfeEBDb2c8e2CaA"]
++        "0xc8d7afcb2f7f7dc0883a938db4352813e17b7629850cdc54d8cc2eba7e10b095"
+    }
+```
+
 Generated with discovered.json: 0x6c9bd654098233de2b4f61326ff157fe8e2d525a
 
 # Diff at Wed, 16 Oct 2024 11:43:57 GMT:

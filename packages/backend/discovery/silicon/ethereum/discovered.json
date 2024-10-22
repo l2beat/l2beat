@@ -41,6 +41,7 @@
         "$pastUpgrades": [
           [
             "2024-08-21T16:55:59.000Z",
+            "0xee62b099c28e601917f60c0abff8441d48a2e7aee41711ff89a9ae0cc2fc647c",
             ["0xa2F7e6Dfd6f43976ee1E2e8A122984ECa8e38608"]
           ]
         ],
@@ -103,6 +104,7 @@
         "$pastUpgrades": [
           [
             "2024-08-20T19:52:11.000Z",
+            "0xc47c5c6b0ea1740437487c101b78895a761501a35bfa97a77d79e803151ccf41",
             ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"]
           ]
         ],
