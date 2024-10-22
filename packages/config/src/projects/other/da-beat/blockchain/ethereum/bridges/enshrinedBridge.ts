@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../../../types'
 import { DaBridge, EnshrinedBridge } from '../../../types/DaBridge'
 import { DaRelayerFailureRisk } from '../../../types/DaRelayerFailureRisk'
@@ -5,6 +6,7 @@ import { linkByDA } from '../../../utils/link-by-da'
 
 export const enshrinedBridge: EnshrinedBridge = {
   id: 'enshrined-bridge',
+  createdAt: new UnixTime(1721236013), // 2024-07-17T17:06:53Z
   type: 'Enshrined',
   display: {
     name: 'Enshrined Bridge',

@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, formatSeconds } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
@@ -21,6 +26,7 @@ const tokenPools = [...new Set(allTokenPools)]
 export const transporter: Bridge = {
   type: 'bridge',
   id: ProjectId('transporter'),
+  createdAt: new UnixTime(1718781548), // 2024-06-19T07:19:08Z
   display: {
     name: 'Transporter',
     slug: 'transporter',

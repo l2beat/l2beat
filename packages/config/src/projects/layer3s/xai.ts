@@ -1,4 +1,9 @@
-import { assert, EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import {
+  assert,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -28,6 +33,7 @@ assert(
 )
 
 export const xai: Layer3 = orbitStackL3({
+  createdAt: new UnixTime(1701958025), // 2023-12-07T14:07:05Z
   discovery,
   hostChain: ProjectId('arbitrum'),
   badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum],

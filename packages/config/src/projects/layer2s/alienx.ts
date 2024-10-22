@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL2 } from './templates/orbitStack'
@@ -7,6 +7,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('alienx')
 
 export const alienx: Layer2 = orbitStackL2({
+  createdAt: new UnixTime(1719847684), // 2024-07-01T15:28:04Z
   additionalPurposes: ['Gaming', 'AI', 'NFT'],
   badges: [Badge.RaaS.Caldera, Badge.DA.DAC],
   display: {

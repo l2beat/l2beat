@@ -1,10 +1,11 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { underReviewL3 } from '../layer2s/templates/underReview'
 import { Layer3 } from './types'
 
 export const dodochain: Layer3 = underReviewL3({
   id: 'dodochain',
+  createdAt: new UnixTime(1719224565), // 2024-06-24T10:22:45Z
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'DODOchain',

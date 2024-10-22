@@ -7,6 +7,7 @@ import { Layer3 } from './types'
 const discovery = new ProjectDiscovery('sanko', 'arbitrum')
 
 export const sanko: Layer3 = orbitStackL3({
+  createdAt: new UnixTime(1716893370), // 2024-05-28T10:49:30Z
   discovery,
   badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum, Badge.RaaS.Caldera],
   additionalPurposes: ['Gaming', 'Social'],

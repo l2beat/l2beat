@@ -31,8 +31,8 @@ export interface Layer2 {
   type: 'layer2'
   /** Unique, readable id, will be used in DB. DO NOT EDIT THIS PROPERTY */
   id: ProjectId
-  /** Date of creation of the file (not the project), required by test for upcoming projects */
-  createdAt?: UnixTime
+  /** Date of creation of the file (not the project) */
+  createdAt: UnixTime
   /** Is this layer2 archived? */
   isArchived?: boolean
   /** Is this layer2 an upcoming rollup? */

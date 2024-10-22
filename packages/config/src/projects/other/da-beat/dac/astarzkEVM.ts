@@ -1,4 +1,4 @@
-import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { astarzkevm } from '../../../layer2s/astarzkevm'
 import { PolygoncdkDAC } from '../templates/polygoncdk-template'
@@ -29,6 +29,7 @@ const members = discovery.getContractValue<string[]>(
 export const astarZkEvmDac = PolygoncdkDAC({
   project: astarzkevm,
   bridge: {
+    createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     permissions: [
       {
         name: 'Committee Members',

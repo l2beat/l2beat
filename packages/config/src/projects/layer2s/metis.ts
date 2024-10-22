@@ -27,9 +27,9 @@ const CHALLENGE_PERIOD_SECONDS = discovery.getContractValue<number>(
 )
 
 export const metis: Layer2 = {
-  isUnderReview: false,
   type: 'layer2',
   id: ProjectId('metis'),
+  createdAt: new UnixTime(1637945259), // 2021-11-26T16:47:39Z
   badges: [Badge.VM.EVM, Badge.DA.CustomDA, Badge.Fork.OVM],
   display: {
     name: 'Metis Andromeda',

@@ -12,6 +12,7 @@ const upgradeability = {
 }
 
 export const l3x: Layer3 = orbitStackL3({
+  createdAt: new UnixTime(1718370384), // 2024-06-14T13:06:24Z
   hostChain: ProjectId('arbitrum'),
   discovery,
   badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum],
