@@ -23,6 +23,49 @@ export class TokenMetaRepository extends BaseRepository {
       .execute()
   }
 
+  async getByTokenIdAndSource(
+    tokenId: string,
+    source: string,
+  ): Promise<TokenMetaRecord | undefined> {
+    return await this.db
+      .selectFrom('TokenMeta')
+      .select(selectTokenMeta)
+      .where('tokenId', '=', tokenId)
+      .where('source', '=', source)
+      .executeTakeFirst()
+  }
+
+  async getByTokenIdsAndSource(
+    tokenIds: string[],
+    source: string,
+  ): Promise<TokenMetaRecord[]> {
+    return await this.db
+      .selectFrom('TokenMeta')
+      .select(selectTokenMeta)
+      .where('tokenId', 'in', tokenIds)
+      .where('source', '=', source)
+      .execute()
+  }
+
+  async getBySource(source: string): Promise<TokenMetaRecord[]> {
+    return await this.db
+      .selectFrom('TokenMeta')
+      .select(selectTokenMeta)
+      .where('source', '=', source)
+      .execute()
+  }
+
+  async getBasicAggregatedMeta(): Promise<
+    { tokenId: string; name: string | null }[]
+  > {
+    return await this.db
+      .selectFrom('TokenMeta')
+      .select(['tokenId', 'name'])
+      .where('source', '=', 'Aggregate')
+      .orderBy('name', 'asc')
+      .execute()
+  }
+
   async upsert(record: UpsertableTokenMetaRecord): Promise<{ id: string }> {
     const row = upsertableToRow(record)
 

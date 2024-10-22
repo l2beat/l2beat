@@ -1,0 +1,16 @@
+import { ExternalBridgeType } from '@l2beat/database/dist/kysely/generated/enums'
+import { z } from 'zod'
+
+export const insertBridgeSchema = z.object({
+  name: z.string().min(3).max(191),
+  managedBy: z.string().nullable(),
+  type: z.nativeEnum(ExternalBridgeType).nullable(),
+})
+
+export const bridgeIdSchema = z.object({
+  id: z.string().length(21),
+})
+
+export const updateBridgeSchema = insertBridgeSchema.extend(
+  bridgeIdSchema.shape,
+)

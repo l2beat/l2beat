@@ -3,6 +3,8 @@ import { NetworkRecord } from './entity'
 export const selectNetwork = [
   'id',
   'name',
+  'logoUrl',
+  'type',
   'chainId',
   'orbitId',
   'axelarId',
@@ -12,5 +14,4 @@ export const selectNetwork = [
   'coingeckoId',
   'axelarGatewayAddress',
   'layerZeroV1EndpointAddress',
-  'logoUrl',
 ] as const satisfies (keyof NetworkRecord)[]

@@ -41,7 +41,7 @@ export async function getNetworksConfig({
     .map((network) => {
       const chain = chains.find((c) => c.id === network.chainId)
 
-      if (!chain) {
+      if (!chain || !network.chainId) {
         return
       }
 

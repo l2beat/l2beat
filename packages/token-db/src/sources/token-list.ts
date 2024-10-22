@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Database } from '@l2beat/database'
+import { assert } from '@l2beat/shared-pure'
 import { getAddress } from 'viem'
 import { z } from 'zod'
 import { upsertManyTokensWithMeta } from '../db/helpers.js'
@@ -37,6 +38,8 @@ function buildTokenListSource({ db, url, tag, logger, queue }: Dependencies) {
         })
         return []
       }
+
+      assert(chain.chainId, 'chainId is required')
 
       return {
         networkId: chain.id,
