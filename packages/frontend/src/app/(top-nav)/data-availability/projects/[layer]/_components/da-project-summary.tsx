@@ -129,6 +129,7 @@ export function DaProjectSummary({ project }: Props) {
                       <div
                         className={cn(
                           'md:hidden',
+                          // Show "View all bridges" button if there are more than 3 bridges
                           project.bridges.length < 3 && 'hidden',
                         )}
                       >
