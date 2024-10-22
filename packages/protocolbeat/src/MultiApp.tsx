@@ -126,6 +126,10 @@ export function MultiApp() {
   const panelContainerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    console.log(panels.map((x) => x.size))
+  }, [panels])
+
+  useEffect(() => {
     let left = 0
     let right = 0
     let panelId: PanelId | undefined = undefined
@@ -179,13 +183,11 @@ export function MultiApp() {
       } else {
         const midpoint = (right + left) / 2
         const leftMin =
-          midpoint - left > MIN_PANEL_WIDTH
-            ? left + MIN_PANEL_WIDTH
-            : midpoint - left
+          midpoint - left > MIN_PANEL_WIDTH ? left + MIN_PANEL_WIDTH : midpoint
         const leftMax =
           right - midpoint > MIN_PANEL_WIDTH
             ? right - MIN_PANEL_WIDTH
-            : right - midpoint
+            : midpoint
 
         const x = Math.min(leftMax, Math.max(leftMin, e.clientX))
         resize(panelId, (x - left) / (right - left))
