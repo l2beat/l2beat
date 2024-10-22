@@ -103,6 +103,7 @@ function simpleNodeToNode(
     box: { x, y, width: width, height: 0 },
     fields: node.fields.map((field) => ({
       name: field.name,
+      box: { x, y, width: width, height: 0 },
       connection: toConnection(field.connection),
     })),
   }
