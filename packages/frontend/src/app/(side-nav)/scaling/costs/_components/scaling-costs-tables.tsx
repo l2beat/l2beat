@@ -27,6 +27,7 @@ export function ScalingCostsTables(props: Props) {
       rollups: props.entries.rollups.filter(includeFilters),
       validiumsAndOptimiums:
         props.entries.validiumsAndOptimiums.filter(includeFilters),
+      others: props.entries.others?.filter(includeFilters),
     }
     return (
       <>
@@ -42,19 +43,31 @@ export function ScalingCostsTables(props: Props) {
             <DirectoryTabsTrigger value="rollups">
               Rollups <CountBadge>{filteredEntries.rollups.length}</CountBadge>
             </DirectoryTabsTrigger>
+            {filteredEntries.others && filteredEntries.others.length > 0 && (
+              <DirectoryTabsTrigger value="others">
+                Others <CountBadge>{filteredEntries.others.length}</CountBadge>
+              </DirectoryTabsTrigger>
+            )}
           </DirectoryTabsList>
           <DirectoryTabsContent value="rollups">
             <ScalingCostsTable entries={filteredEntries.rollups} rollups />
           </DirectoryTabsContent>
+          {filteredEntries.others && filteredEntries.others.length > 0 && (
+            <DirectoryTabsContent value="others">
+              <ScalingCostsTable entries={filteredEntries.others} />
+            </DirectoryTabsContent>
+          )}
         </DirectoryTabs>
       </>
     )
   }
 
+  const filteredEntries = props.entries.filter(includeFilters)
+
   return (
     <MainPageCard className="space-y-3 md:mt-6 md:space-y-6">
-      <Controls entries={props.entries} />
-      <ScalingCostsTables entries={props.entries} />
+      <Controls entries={filteredEntries} />
+      <ScalingCostsTable entries={filteredEntries} />
     </MainPageCard>
   )
 }

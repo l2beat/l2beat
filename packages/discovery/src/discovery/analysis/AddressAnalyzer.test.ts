@@ -40,6 +40,7 @@ describe(AddressAnalyzer.name, () => {
 
       expect(result).toEqual({
         type: 'EOA',
+        name: undefined,
         address,
       })
     })

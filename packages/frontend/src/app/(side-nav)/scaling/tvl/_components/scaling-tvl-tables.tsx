@@ -23,6 +23,7 @@ export function ScalingTvlTables(props: Props) {
       rollups: props.entries.rollups.filter(includeFilters),
       validiumsAndOptimiums:
         props.entries.validiumsAndOptimiums.filter(includeFilters),
+      others: props.entries.others?.filter(includeFilters),
     }
     return (
       <>
@@ -44,6 +45,11 @@ export function ScalingTvlTables(props: Props) {
                 {filteredEntries.validiumsAndOptimiums.length}
               </CountBadge>
             </DirectoryTabsTrigger>
+            {filteredEntries.others && filteredEntries.others.length > 0 && (
+              <DirectoryTabsTrigger value="others">
+                Others <CountBadge>{filteredEntries.others.length}</CountBadge>
+              </DirectoryTabsTrigger>
+            )}
           </DirectoryTabsList>
           <DirectoryTabsContent value="rollups">
             <ScalingTvlTable entries={filteredEntries.rollups} rollups />
@@ -51,15 +57,22 @@ export function ScalingTvlTables(props: Props) {
           <DirectoryTabsContent value="validiums-and-optimiums">
             <ScalingTvlTable entries={filteredEntries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
+          {filteredEntries.others && filteredEntries.others.length > 0 && (
+            <DirectoryTabsContent value="others">
+              <ScalingTvlTable entries={filteredEntries.others} />
+            </DirectoryTabsContent>
+          )}
         </DirectoryTabs>
       </>
     )
   }
 
+  const filteredEntries = props.entries.filter(includeFilters)
+
   return (
     <MainPageCard className="space-y-3 md:mt-6 md:space-y-6">
-      <ScalingTvlFilters items={props.entries} showRollupsOnly />
-      <ScalingTvlTable entries={props.entries} />
+      <ScalingTvlFilters items={filteredEntries} showRollupsOnly />
+      <ScalingTvlTable entries={filteredEntries} />
     </MainPageCard>
   )
 }

@@ -7,7 +7,6 @@ import { getStageSortedRowModel } from '~/components/table/sorting/get-stage-sor
 import { useTable } from '~/hooks/use-table'
 import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
 import { useScalingAssociatedTokensContext } from '../../../_components/scaling-associated-tokens-context'
-import { useScalingFilter } from '../../../_components/scaling-filter-context'
 import { toTableRows } from '../../_utils/to-table-rows'
 import { scalingTvlColumns } from './columns'
 
@@ -18,15 +17,14 @@ interface Props {
 
 export function ScalingTvlTable({ entries, rollups }: Props) {
   const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
-  const includeFilters = useScalingFilter()
 
   const allProjects = useMemo(
     () =>
       toTableRows({
-        projects: entries.filter(includeFilters),
+        projects: entries,
         excludeAssociatedTokens,
       }),
-    [entries, includeFilters, excludeAssociatedTokens],
+    [entries, excludeAssociatedTokens],
   )
 
   const table = useTable({

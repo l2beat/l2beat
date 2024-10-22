@@ -23,6 +23,7 @@ export function ScalingRiskTables(props: Props) {
       rollups: props.entries.rollups.filter(includeFilters),
       validiumsAndOptimiums:
         props.entries.validiumsAndOptimiums.filter(includeFilters),
+      others: props.entries.others?.filter(includeFilters),
     }
     return (
       <>
@@ -38,11 +39,16 @@ export function ScalingRiskTables(props: Props) {
               Rollups <CountBadge>{filteredEntries.rollups.length}</CountBadge>
             </DirectoryTabsTrigger>
             <DirectoryTabsTrigger value="validiums-and-optimiums">
-              Validiums & Optimiums{' '}
+              Validiums & Optimiums
               <CountBadge>
                 {filteredEntries.validiumsAndOptimiums.length}
               </CountBadge>
             </DirectoryTabsTrigger>
+            {filteredEntries.others && filteredEntries.others.length > 0 && (
+              <DirectoryTabsTrigger value="others">
+                Others <CountBadge>{filteredEntries.others.length}</CountBadge>
+              </DirectoryTabsTrigger>
+            )}
           </DirectoryTabsList>
           <DirectoryTabsContent value="rollups">
             <ScalingRiskTable entries={filteredEntries.rollups} rollups />
@@ -50,6 +56,11 @@ export function ScalingRiskTables(props: Props) {
           <DirectoryTabsContent value="validiums-and-optimiums">
             <ScalingRiskTable entries={filteredEntries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
+          {filteredEntries.others && filteredEntries.others.length > 0 && (
+            <DirectoryTabsContent value="others">
+              <ScalingRiskTable entries={filteredEntries.others} />
+            </DirectoryTabsContent>
+          )}
         </DirectoryTabs>
       </>
     )

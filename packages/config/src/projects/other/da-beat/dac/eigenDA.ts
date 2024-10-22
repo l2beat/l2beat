@@ -9,7 +9,7 @@ import { eigenDAbridge } from './bridges/eigenDABridge'
 export const eigenDA: DaLayer = {
   id: 'eigen-da',
   type: 'DaLayer',
-  kind: 'DAC',
+  kind: 'DA Service',
   systemCategory: 'public',
   display: {
     name: 'EigenDA',

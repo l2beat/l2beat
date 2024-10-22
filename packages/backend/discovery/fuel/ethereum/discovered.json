@@ -1,8 +1,8 @@
 {
   "name": "fuel",
   "chain": "ethereum",
-  "blockNumber": 20984946,
-  "configHash": "0x60ea42eac56c9fd435415a2bc9a407bfa0023017304900b095707afd8cde92f0",
+  "blockNumber": 21018722,
+  "configHash": "0x806b6e12987328e4566d178ecc15cff1171dd77d8a81e748ea34b478960b3f10",
   "contracts": [
     {
       "name": "FuelMultisig",
@@ -33,12 +33,12 @@
           "0x81ACA96D4Ae0932d2F3463a043392efcCB1F05b6",
           "0x796C3f536C6bf5CB7661C9A0570da0e1ECD303Dd"
         ],
-        "$threshold": 9,
+        "$threshold": 10,
         "domainSeparator": "0x28903eeea49a6c98614f0cf994eddf5eb5b63ffc10fb7f4277c1b7859b6f877a",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "9 of 13 (69%)",
-        "nonce": 36,
+        "multisigThreshold": "10 of 13 (77%)",
+        "nonce": 37,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -65,12 +65,10 @@
         "$pastUpgrades": [
           [
             "2024-09-04T15:44:23.000Z",
-            "0x57fd18a56dc2962a59b2404aedf837e4168c2487750d1f670563ec70066a62f8",
             ["0xB3109036813ff48E523Cef3818438e64ee04069d"]
           ],
           [
             "2024-10-02T14:54:23.000Z",
-            "0x03ab218eccdc5ead9a29b416f9279a9c70f24a34191a949d3448856e0b570a79",
             ["0xdE2D792ca3C4d02DE3CE1cD1456d8D0990cC3fab"]
           ]
         ],
@@ -125,7 +123,12 @@
           "via": []
         }
       ],
-      "ignoreInWatchMode": ["getNextOutgoingMessageNonce", "totalDeposited"],
+      "ignoreInWatchMode": [
+        "getNextOutgoingMessageNonce",
+        "totalDeposited",
+        "currentPeriodEnd",
+        "currentPeriodAmount"
+      ],
       "sinceTimestamp": 1724767871,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
@@ -133,17 +136,14 @@
         "$pastUpgrades": [
           [
             "2024-08-27T14:11:11.000Z",
-            "0xa06594153f87c4313fe3c5dd702cb063072dd438bac45b89b439ed7447b6ea9f",
             ["0x5A725F508659F9846E5877E8625F9ea32B57d577"]
           ],
           [
             "2024-08-27T16:02:23.000Z",
-            "0xe79d42f297676dabd168e8f151e59c4d9d6a25f364cb098eb01273d173a8dd19",
             ["0x6d67857224F66d7A677f063B861B6BACafB10639"]
           ],
           [
             "2024-10-02T14:54:23.000Z",
-            "0x03ab218eccdc5ead9a29b416f9279a9c70f24a34191a949d3448856e0b570a79",
             ["0x05f886DDeE0FE07496f6e38b0e140F8eF4655B16"]
           ]
         ],
@@ -173,15 +173,15 @@
             "members": ["0x32da601374b38154f05904B16F44A1911Aa6f314"]
           }
         },
-        "currentPeriodAmount": 1010000000000000,
-        "currentPeriodEnd": 1727225579,
+        "currentPeriodAmount": 2000000000000000,
+        "currentPeriodEnd": 1730129231,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "depositLimitGlobal": "19572000000000000000000",
         "ETH_DECIMALS": 18,
         "FUEL_BASE_ASSET_DECIMALS": 9,
         "fuelBaseAssetDecimals": 9,
         "fuelChainStateContract": "0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130",
-        "getNextOutgoingMessageNonce": 14879,
+        "getNextOutgoingMessageNonce": 121271,
         "limitAmount": "10000000000000000000",
         "MAX_MESSAGE_DATA_SIZE": 65536,
         "paused": false,
@@ -190,7 +190,7 @@
         "RATE_LIMIT_DURATION": 604800,
         "rateLimitEnabled": true,
         "SET_RATE_LIMITER_ROLE": "0x7e5b1c957d4df4bad29cdaceffe50f28f282a0d5096601b958917550d4b2e016",
-        "totalDeposited": "2758381348498000000000",
+        "totalDeposited": "9709426847291000000000",
         "withdrawalsPaused": false
       },
       "derivedName": "FuelMessagePortalV3"
@@ -217,7 +217,6 @@
         "$pastUpgrades": [
           [
             "2024-08-27T14:10:47.000Z",
-            "0x01e63713a7ddee90866f272b7afb1d49aea17ed314edc7a80d00af36fd9b640a",
             ["0x725B2b1a15D818E1f25c68be77816802e6036559"]
           ]
         ],

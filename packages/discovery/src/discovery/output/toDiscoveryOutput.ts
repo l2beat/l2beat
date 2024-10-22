@@ -106,6 +106,7 @@ export function processAnalysis(
             x.combinedMeta?.permissions,
           )
         return {
+          name: x.name,
           address: x.address,
           description: x.combinedMeta?.description,
           categories: setToSortedArray(x.combinedMeta?.categories),

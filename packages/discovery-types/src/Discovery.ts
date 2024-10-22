@@ -76,6 +76,7 @@ export interface Meta {
 }
 
 export type EoaParameters = {
+  name?: string
   address: EthereumAddress
 } & Meta
 
