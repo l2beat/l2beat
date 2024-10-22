@@ -16,7 +16,7 @@ const virtual = {
   },
 }
 
-export const columns = [
+const baseColumns = [
   columnHelper.accessor((_, index) => index + 1, {
     header: '#',
     cell: (ctx) => <IndexCell>{ctx.row.index + 1}</IndexCell>,
@@ -51,6 +51,8 @@ export const columns = [
       rowSpan: spanByBridges,
     },
   }),
+]
+const daLayerRisksColumns = [
   columnHelper.group({
     header: 'Da Layer Risks',
     columns: [
@@ -74,11 +76,15 @@ export const columns = [
       }),
     ],
   }),
-  columnHelper.display({
-    id: 'bridge',
-    header: 'Bridge',
-    ...virtual,
-  }),
+]
+
+const bridgeColumn = columnHelper.display({
+  id: 'bridge',
+  header: 'Bridge',
+  ...virtual,
+})
+
+const bridgeRisksColumns = [
   columnHelper.group({
     header: 'Bridge Risks',
     columns: [
@@ -99,4 +105,17 @@ export const columns = [
       }),
     ],
   }),
+]
+
+export const publicColumns = [
+  ...baseColumns,
+  ...daLayerRisksColumns,
+  bridgeColumn,
+  ...bridgeRisksColumns,
+]
+
+export const customColumns = [
+  ...baseColumns,
+  ...daLayerRisksColumns,
+  ...bridgeRisksColumns,
 ]

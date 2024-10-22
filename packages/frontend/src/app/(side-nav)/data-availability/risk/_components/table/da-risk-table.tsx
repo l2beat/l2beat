@@ -13,6 +13,7 @@ import {
   TableRow,
 } from '~/components/table/table'
 import { type DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
+import { kindToType } from '~/server/features/data-availability/utils/kind-to-layer-type'
 import { cn } from '~/utils/cn'
 
 interface Props {
@@ -89,7 +90,7 @@ function LayerRows({
           <div className="flex flex-col gap-0">
             <span className="text-base font-bold leading-5">{layer.name}</span>
             <span className="text-[13px] font-medium leading-none text-gray-500">
-              {toDisplayName(layer)}
+              {kindToType(layer.kind)}
             </span>
           </div>
         </TableCell>
@@ -213,10 +214,6 @@ function RiskDataCell({
       {children}
     </TableCell>
   )
-}
-
-function toDisplayName(entry: DaRiskEntry) {
-  return entry.kind === 'PublicBlockchain' ? 'Public Blockchain' : 'DA Service'
 }
 
 function FlexHead({

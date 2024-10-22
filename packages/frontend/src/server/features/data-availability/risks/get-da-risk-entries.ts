@@ -52,6 +52,7 @@ export async function getDaRiskEntries() {
         name: daLayer.display.name,
         slug: daLayer.display.slug,
         kind: daLayer.kind,
+        href: `/data-availability/projects/${daLayer.display.slug}`,
         systemCategory: daLayer.systemCategory,
         layerType: kindToType(daLayer.kind),
         risks: {

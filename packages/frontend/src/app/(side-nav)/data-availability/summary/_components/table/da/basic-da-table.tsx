@@ -37,15 +37,6 @@ interface Props<T> {
   className?: string
   renderSpanFill?: (props: { row: Row<T> }) => React.ReactElement | null
   renderInlineSpanFill?: (props: { row: Row<T> }) => React.ReactElement | null
-  /**
-   * If the sub component is a raw component (e.g. renders a tr element), false by default
-   */
-  rawSubComponent?: boolean
-  /**
-   * If the table is inside a main page card - bypass right margin by adding classes
-   */
-  insideMainPageCard?: boolean
-  rowColoringMode?: 'default' | 'ethereum-only'
 }
 
 function getCommonPinningStyles<T>(

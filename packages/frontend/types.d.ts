@@ -10,8 +10,15 @@ declare module '@tanstack/react-table' {
     headClassName?: string
     align?: 'right' | 'center'
     tooltip?: ReactNode
+    /**
+     * @see DaTable
+     * How many rows a cell should span across
+     */
     rowSpan?: (cell: CellContext<TData, unknown>) => number
+    /**
+     * @see DaTable
+     * Columns marked as virtual will not be rendered in the table and must be
+     */
     virtual?: boolean
-    renderSpanFill?: (cell: CellContext<TData, unknown>) => ReactNode
   }
 }
