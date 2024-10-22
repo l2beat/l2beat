@@ -119,7 +119,7 @@ export const vector = {
         'Vector',
         'GUARDIAN_ROLE',
       ),
-    }
+    },
   ],
   usedIn: [],
   risks: {

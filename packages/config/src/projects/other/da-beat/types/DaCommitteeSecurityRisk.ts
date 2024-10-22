@@ -8,7 +8,7 @@ export type DaCommitteeSecurityRisk =
   | typeof NoBridge
   | ReturnType<typeof Auto>
 
-  const RobustAndDiverseCommittee = (value?: string) =>
+const RobustAndDiverseCommittee = (value?: string) =>
   ({
     type: 'RobustAndDiverseCommittee',
     value: value ?? 'Permissionless',
@@ -35,12 +35,12 @@ const NoCommiteeSecurity = (value?: string) =>
     The system lacks an effective DA bridge and it is reliant on the assumption of an honest sequencer, creating significant risks to data integrity and availability.`,
   }) as const
 
-
 const NoBridge = {
   type: 'NoBridge',
   value: 'N/A',
   sentiment: 'bad',
-  description: "Without a DA bridge, there is no committee attesting to the availability of data. The scaling solution using this DA layer relies only on the honesty of the sequencer.",
+  description:
+    'Without a DA bridge, there is no committee attesting to the availability of data. The scaling solution using this DA layer relies only on the honesty of the sequencer.',
 } as const
 
 const Auto = (params?: {

@@ -1,6 +1,5 @@
 import { avail } from './blockchain/avail/avail'
 import { celestia } from './blockchain/celestia/celestia'
-import { ethereum } from './blockchain/ethereum/ethereum'
 import { memo } from './blockchain/memo/memo'
 import { near } from './blockchain/near/near'
 import { alephzeroDac } from './dac/alephzero'
@@ -85,7 +84,7 @@ export const daLayers: DaLayer[] = applyProcessor([
   rariDac,
   xaiDac,
   // DA Layers
-  // ethereum, 
+  // ethereum,
   avail,
   celestia,
   near,
