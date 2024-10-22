@@ -33,6 +33,7 @@ export function ScalingDaTables(props: Props) {
       rollups: props.entries.rollups.filter(includeFilters),
       validiumsAndOptimiums:
         props.entries.validiumsAndOptimiums.filter(includeFilters),
+      others: props.entries.others?.filter(includeFilters),
     }
     return (
       <>
@@ -53,6 +54,11 @@ export function ScalingDaTables(props: Props) {
                 {filteredEntries.validiumsAndOptimiums.length}
               </CountBadge>
             </DirectoryTabsTrigger>
+            {filteredEntries.others && filteredEntries.others.length > 0 && (
+              <DirectoryTabsTrigger value="others">
+                Others <CountBadge>{filteredEntries.others.length}</CountBadge>
+              </DirectoryTabsTrigger>
+            )}
           </DirectoryTabsList>
           <DirectoryTabsContent value="rollups">
             <ScalingDataAvailabilityTable
@@ -65,6 +71,11 @@ export function ScalingDaTables(props: Props) {
               entries={filteredEntries.validiumsAndOptimiums}
             />
           </DirectoryTabsContent>
+          {filteredEntries.others && filteredEntries.others.length > 0 && (
+            <DirectoryTabsContent value="others">
+              <ScalingDataAvailabilityTable entries={filteredEntries.others} />
+            </DirectoryTabsContent>
+          )}
         </DirectoryTabs>
       </>
     )

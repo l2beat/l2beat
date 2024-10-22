@@ -1,4 +1,4 @@
-import { ChainId } from '@l2beat/shared-pure'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { alephzero } from '../../../layer2s/alephzero'
 import { AnytrustDAC } from '../templates/anytrust-template'
@@ -15,6 +15,7 @@ const { membersCount, requiredSignatures } = dac
 export const alephzeroDac = AnytrustDAC({
   project: alephzero,
   bridge: {
+    createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     contracts: {
       addresses: [
         discovery.getContractDetails(

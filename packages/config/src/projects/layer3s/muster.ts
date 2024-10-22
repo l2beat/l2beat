@@ -1,10 +1,11 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { underReviewL3 } from '../layer2s/templates/underReview'
 import { Layer3 } from './types'
 
 export const muster: Layer3 = underReviewL3({
   id: 'muster',
+  createdAt: new UnixTime(1718609683), // 2024-06-17T07:34:43Z
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Muster',

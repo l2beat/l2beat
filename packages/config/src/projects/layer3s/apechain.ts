@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
@@ -7,6 +7,7 @@ import { Layer3 } from './types'
 const discovery = new ProjectDiscovery('apechain', 'arbitrum')
 
 export const apechain: Layer3 = orbitStackL3({
+  createdAt: new UnixTime(1719939717), // 2024-07-02T17:01:57Z
   hostChain: ProjectId('arbitrum'),
   badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum, Badge.RaaS.Caldera],
   display: {

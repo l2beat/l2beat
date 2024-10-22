@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../../../../discovery/ProjectDiscovery'
 import { DaCommitteeSecurityRisk } from '../../../../../types'
 import { DaRelayerFailureRisk } from '../../../../../types/DaRelayerFailureRisk'
@@ -34,6 +34,7 @@ const nextHeaderProvers = discovery.getContractValue<string[]>(
 
 export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
   chain: 'ethereum',
+  createdAt: new UnixTime(1719930680), // 2024-07-02T14:31:20Z
   usedIn: [
     // no project integrates it for state validation
   ],

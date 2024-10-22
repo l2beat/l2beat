@@ -1,4 +1,4 @@
-import { ChainId } from '@l2beat/shared-pure'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { xai } from '../../../layer3s/xai'
 import { AnytrustDAC } from '../templates/anytrust-template'
@@ -17,6 +17,7 @@ export const xaiDac = AnytrustDAC({
   project: xai,
   risks: { economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable },
   bridge: {
+    createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     contracts: {
       addresses: [
         discovery.getContractDetails(

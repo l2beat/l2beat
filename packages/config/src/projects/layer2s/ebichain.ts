@@ -6,6 +6,7 @@ import { Layer2 } from './types'
 
 export const ebichain: Layer2 = underReviewL2({
   id: 'ebichain',
+  createdAt: new UnixTime(1726563843), // 2024-09-17T09:04:03Z
   badges: [Badge.Stack.Orbit, Badge.VM.EVM, Badge.DA.DAC, Badge.RaaS.Conduit],
   display: {
     name: 'Ebi Chain',

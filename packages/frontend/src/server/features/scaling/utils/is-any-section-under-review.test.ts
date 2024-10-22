@@ -8,7 +8,7 @@ import {
   type ScalingProjectTechnology,
   type StageConfig,
 } from '@l2beat/config'
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { isAnySectionUnderReview } from './is-any-section-under-review'
@@ -16,6 +16,7 @@ import { isAnySectionUnderReview } from './is-any-section-under-review'
 describe(isAnySectionUnderReview.name, () => {
   const mockProject: Layer2 = {
     type: 'layer2',
+    createdAt: new UnixTime(1234567890),
     id: ProjectId('project-id'),
     display: mockObject<Layer2Display>(),
     technology: mockObject<ScalingProjectTechnology>({

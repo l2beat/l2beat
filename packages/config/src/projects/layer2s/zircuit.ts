@@ -38,6 +38,7 @@ const upgradeability = {
 }
 
 export const zircuit: Layer2 = opStackL2({
+  createdAt: new UnixTime(1712559704), // 2024-04-08T07:01:44Z
   discovery,
   display: {
     name: 'Zircuit',

@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, formatSeconds } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -14,6 +19,7 @@ const challengeWindowSeconds = discovery.getContractValue<number>(
 export const opticsV1: Bridge = {
   type: 'bridge',
   id: ProjectId('opticsV1'),
+  createdAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Optics V1',
     slug: 'opticsv1',

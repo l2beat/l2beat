@@ -6,6 +6,7 @@ import { Bridge } from './types'
 export const xdai: Bridge = {
   type: 'bridge',
   id: ProjectId('xdai'),
+  createdAt: new UnixTime(1665411755), // 2022-10-10T14:22:35Z
   display: {
     name: 'xDai Bridge',
     slug: 'xdai',
