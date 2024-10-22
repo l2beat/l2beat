@@ -88,7 +88,7 @@ type ScalingEntry =
   | ScalingArchivedEntry
 export function useScalingFilter() {
   const scalingFilters = useScalingFilterValues()
-
+  console.log(scalingFilters)
   const filter = useCallback(
     (entry: ScalingEntry) => {
       if (entry.id === ProjectId.ETHEREUM) {

@@ -51,10 +51,12 @@ export function ScalingCostsTables(props: Props) {
     )
   }
 
+  const filteredEntries = props.entries.filter(includeFilters)
+
   return (
     <MainPageCard className="space-y-3 md:mt-6 md:space-y-6">
-      <Controls entries={props.entries} />
-      <ScalingCostsTables entries={props.entries} />
+      <Controls entries={filteredEntries} />
+      <ScalingCostsTable entries={filteredEntries} />
     </MainPageCard>
   )
 }
