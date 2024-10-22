@@ -8,6 +8,7 @@ import { getCommonProjectColumns } from '~/components/table/utils/common-project
 import { EM_DASH } from '~/consts/characters'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { formatCurrency } from '~/utils/number-format/format-currency'
+import { DaFallbackCell } from '../../../_components/da-fallback-cell'
 import { DaLayerCell } from '../../../_components/da-layer-cell'
 import { DacMembersCell } from '../../../_components/dac-members-cell'
 import {
@@ -138,7 +139,7 @@ const challengeMechanismColumn = columnHelper.accessor(
 
 const fallbackColumn = columnHelper.accessor('fallback', {
   header: 'Fallback',
-  cell: (ctx) => ctx.getValue() ?? 'None',
+  cell: (ctx) => <DaFallbackCell entry={ctx.row.original} />,
   enableSorting: false,
 })
 
