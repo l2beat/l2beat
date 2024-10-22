@@ -914,6 +914,7 @@ export class ProjectDiscovery {
       }
     }
 
+    let eoaID: number = 1
     for (const eoa of eoas) {
       if (eoa.receivedPermissions === undefined) {
         continue
@@ -922,7 +923,7 @@ export class ProjectDiscovery {
         this.describeContractOrEoa(eoa, false),
       )
       result.push({
-        name: 'EOA',
+        name: eoa.name ?? `EOA ${eoaID++}`,
         accounts: [this.formatPermissionedAccount(eoa.address)],
         chain: this.chain,
         description,
