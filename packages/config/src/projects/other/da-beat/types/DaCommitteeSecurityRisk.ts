@@ -14,7 +14,7 @@ export type DaCommitteeSecurityRisk =
     value: value ?? 'Robust and Diverse Committee',
     sentiment: 'good',
     description: `The committee requires an honest minority (1/3 or less) of members (or the network stake) for the DA bridge to accept a data availability commitment. 
-    Participation in the committee is permissionless, based only on stake requirements and an honest majority of validators to prevent censorship.`,
+    Participation in the committee is permissionless, based only on stake requirements and an honest majority of validators processing the new operator's request to join the active set.`,
   }) as const
 
 const LimitedCommitteeSecurity = (value?: string) =>
@@ -38,9 +38,9 @@ const NoCommiteeSecurity = (value?: string) =>
 
 const NoBridge = {
   type: 'NoBridge',
-  value: 'None',
+  value: 'N/A',
   sentiment: 'bad',
-  description: 'No data availability attestations are posted to Ethereum.',
+  description: "Without a DA bridge, there is no committee attesting to the availability of data. The system relies only on the honesty of the sequencer.",
 } as const
 
 const Auto = (params?: {

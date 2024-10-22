@@ -20,11 +20,14 @@ export const DaRelayerFailureRisk = {
     type: 'NoMechanism',
     value: 'No mechanism',
     sentiment: 'bad',
+    description: `The DA bridge does not have a Security Council or a governance mechanism to propose new relayers.
+    In case of relayer failure, the DA bridge will halt and be unable to recover without the intervention of a centralized entity.`
   },
   NoBridge: {
     type: 'NoBridge',
-    value: 'No bridge',
+    value: 'N/A',
     sentiment: 'bad',
+    description: "The relayer does not contribute to the system liveness since data availability attestations are not integrated in the scaling solution proof system."
   },
 } as const satisfies DaRiskViewOptions
 

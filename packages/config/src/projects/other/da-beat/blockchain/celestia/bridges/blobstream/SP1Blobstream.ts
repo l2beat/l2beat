@@ -236,7 +236,7 @@ export const SP1Blobstream = CELESTIA_BLOBSTREAM({
   },
   risks: {
     committeeSecurity: DaCommitteeSecurityRisk.RobustAndDiverseCommittee(
-      'Celestia Validators',
+      'Validators set',
     ),
     upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(0), // TIMELOCK_ROLE is 4/6 multisig
     relayerFailure: DaRelayerFailureRisk.NoMechanism,
