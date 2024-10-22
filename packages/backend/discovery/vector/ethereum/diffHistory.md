@@ -8,7 +8,7 @@ Generated with discovered.json: 0xcccd51fbb01c8fd230c5f00ddbeb7a651eae76f6
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Changed Vector name for consistency with blobstream.
 
 ## Config/verification related changes
 
