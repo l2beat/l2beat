@@ -69,20 +69,20 @@ function BridgeCells({
     <>
       <TableCell
         href={bridge.href}
-        className="text-sm font-bold group-first:pl-0"
+        className="text-sm font-medium group-first:pl-0"
       >
         <div className="pl-4">{bridge.name}</div>
       </TableCell>
       <TableCell
         href={bridge.href}
-        className="flex items-center justify-center pl-4 font-bold"
+        className="flex items-center justify-center pl-4"
       >
         <GrissiniCell values={bridgeRisks} />
       </TableCell>
-      <TableCell className="text-right text-sm font-bold">
+      <TableCell className="text-right text-sm font-medium">
         {formatCurrency(bridge.tvs, 'usd')}
       </TableCell>
-      <TableCell className="text-sm font-bold">
+      <TableCell className="text-sm">
         {bridge.usedIn.length > 0 ? (
           <ProjectsUsedIn usedIn={bridge.usedIn} />
         ) : (

@@ -81,7 +81,19 @@ const daLayerRisksColumns = [
 const bridgeColumn = columnHelper.display({
   id: 'bridge',
   header: 'Bridge',
-  ...virtual,
+  meta: {
+    virtual: true,
+    headClassName: 'px-4',
+  },
+})
+
+const spacerColumn = columnHelper.display({
+  id: 'spacer',
+  header: '',
+  meta: {
+    virtual: true,
+    headClassName: 'px-4',
+  },
 })
 
 const bridgeRisksColumns = [
@@ -117,5 +129,6 @@ export const publicColumns = [
 export const customColumns = [
   ...baseColumns,
   ...daLayerRisksColumns,
+  spacerColumn,
   ...bridgeRisksColumns,
 ]

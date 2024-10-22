@@ -75,9 +75,14 @@ function BridgeCells({
 }) {
   return (
     <>
-      {!excludeBridge && (
-        <TableCell href={bridge.href} className="text-sm font-bold">
-          {bridge.name}
+      {excludeBridge ? (
+        <TableCell href={bridge.href} />
+      ) : (
+        <TableCell
+          href={bridge.href}
+          className="text-sm font-medium group-first:pl-0"
+        >
+          <div className="pl-4">{bridge.name}</div>
         </TableCell>
       )}
       <TableCell href={bridge.href} className="pl-6">
@@ -86,7 +91,7 @@ function BridgeCells({
       <TableCell href={bridge.href}>
         <RiskCell risk={bridge.risks.upgradeability} />
       </TableCell>
-      <TableCell href={bridge.href} className="pr-6">
+      <TableCell href={bridge.href}>
         <RiskCell risk={bridge.risks.relayerFailure} />
       </TableCell>
     </>
