@@ -2,16 +2,18 @@
   "name": "popboss",
   "chain": "arbitrum",
   "blockNumber": 264379217,
-  "configHash": "0xe55c2318d28f7abab0867c16726a23f5a10725bae64773d4adb3abbf84c62bc2",
+  "configHash": "0x0ea05bc267a7697c34e88eb6a5e3363819bc02a3fecff9d896abc39f9b7b7e7f",
   "contracts": [
     {
       "name": "UpgradeExecutor",
       "address": "0x246bAB4F36095ABc74052Cc122c318298a9ef876",
+      "template": "orbitstack/UpgradeExecutor",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0xa7ff878cfd433a428d567d3b90fe1df400a048a1af5298f22cd4cd4fc25bdecd"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Central contract defining the access control for upgrading the system contract implementations.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -82,16 +84,21 @@
         "0xef94a66bd5339efd18fb9ca1f8031482e7ef7bbe6c5a0a10fae254ab83712406"
       ],
       "proxyType": "Arbitrum proxy",
-      "description": "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.",
+      "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
       "issuedPermissions": [
         {
-          "permission": "upgrade",
-          "target": "0x246bAB4F36095ABc74052Cc122c318298a9ef876",
+          "permission": "challenge",
+          "target": "0xd77c50bcc246B9E067A54Ead0B63300A71882c29",
           "via": []
         },
         {
-          "permission": "validate",
+          "permission": "propose",
           "target": "0xd77c50bcc246B9E067A54Ead0B63300A71882c29",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x246bAB4F36095ABc74052Cc122c318298a9ef876",
           "via": []
         }
       ],
@@ -118,6 +125,7 @@
           ]
         ],
         "$upgradeCount": 1,
+        "arbOsFromWmRoot": "ArbOS v20 wasmModuleRoot",
         "baseStake": "100000000000000000",
         "bridge": "0x53D82686BC9827fEc03bcEe661B37b855A18EcA9",
         "chainId": 70701,
@@ -149,7 +157,7 @@
         "validatorUtils": "0x6c21303F5986180B1394d2C89f3e883890E2867b",
         "validatorWalletCreator": "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
         "validatorWhitelistDisabled": false,
-        "wasmModuleRoot": "ArbOS v20 wasmModuleRoot",
+        "wasmModuleRoot": "0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4",
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
@@ -160,6 +168,15 @@
         },
         "wasmModuleRoot": {
           "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."
+        },
+        "arbOsFromWmRoot": {
+          "description": "ArbOS version derived from known wasmModuleRoots."
+        },
+        "setValidatorCount": {
+          "description": "Increments on each Validator change."
+        },
+        "challenges": {
+          "description": "Emitted on createChallenge() in RollupUserLogic."
         }
       },
       "derivedName": "RollupProxy",
@@ -338,7 +355,7 @@
         "0x50cf57b01499408fa99da27cf0fee96ec30f0d40667d1aa090c442bc80f0636b"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "State batches / commitments get posted here.",
+      "description": "A sequencer (registered in this contract) can submit transaction batches or commitments here.",
       "issuedPermissions": [
         {
           "permission": "sequence",
@@ -559,11 +576,13 @@
     {
       "name": "ChallengeManager",
       "address": "0xf3224F90c0A6138209a9EbaFd1971AD1E04eEb0D",
+      "template": "orbitstack/ChallengeManager",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0x58a6261c83c2766f749641902ad6fdb695ea189d2747f073b57a8f35b9a547e5"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -601,7 +620,8 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "target": "0x6eE94AD8057Fd7Ba4d47bb6278a261c8a9FD4E3f"
+          "target": "0x6eE94AD8057Fd7Ba4d47bb6278a261c8a9FD4E3f",
+          "description": "can submit transaction batches or commitments to the SequencerInbox contract on the hostchain."
         }
       ]
     },
@@ -612,8 +632,14 @@
       "address": "0xd77c50bcc246B9E067A54Ead0B63300A71882c29",
       "receivedPermissions": [
         {
-          "permission": "validate",
-          "target": "0x330F8fEB25f3427cABA32446728C36ae67f2135b"
+          "permission": "challenge",
+          "target": "0x330F8fEB25f3427cABA32446728C36ae67f2135b",
+          "description": "can challenge state roots on the host chain."
+        },
+        {
+          "permission": "propose",
+          "target": "0x330F8fEB25f3427cABA32446728C36ae67f2135b",
+          "description": "can submit state roots to the RollupProxy contract on the host chain."
         }
       ]
     },
@@ -1244,7 +1270,9 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "orbitstack/RollupProxy": "0x8c92364349ca720f3e801d028dc260fdbc1a9cca4651ed19af6f16a250949729",
-    "orbitstack/SequencerInbox": "0x914a19d66f742b381e9ac6579e688ae6a07cddcf5b144eb7528c121bc81eca28"
+    "orbitstack/ChallengeManager": "0xc4fbc82c5001579bb1f880d92a3510cda3dc4a65e284fc300363ce048c2fb6d7",
+    "orbitstack/RollupProxy": "0x329494c897421d49fd8b6041c5444fb2af7508c8b81f134e703e7d11cbd9be1b",
+    "orbitstack/SequencerInbox": "0xb77ec24fa3e136cb22bb61f301b04f7060d8305763c022dff72423ce7483ca3d",
+    "orbitstack/UpgradeExecutor": "0x603e9f3f0d76cb0bbc6fbf2ac64cce35b00905689e35c7535a2c5fec00147370"
   }
 }

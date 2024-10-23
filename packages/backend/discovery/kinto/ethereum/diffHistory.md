@@ -1,3 +1,119 @@
+Generated with discovered.json: 0xcef57248efac008a7a8a536a4556196d6010030b
+
+# Diff at Wed, 23 Oct 2024 12:47:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9cc37d16a5f0b172bb41f98d8a970963e5ca4afb block: 20948097
+- current block number: 20948097
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20948097 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      description:
+-        "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
++        "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators)."
+      issuedPermissions.10:
++        {"permission":"upgrade","target":"0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a","via":[]}
+      issuedPermissions.9:
++        {"permission":"propose","target":"0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f","via":[]}
+      issuedPermissions.8:
++        {"permission":"propose","target":"0x9A6a3354Ea78572EDB7df8458911e1ceD733c224","via":[]}
+      issuedPermissions.7:
++        {"permission":"propose","target":"0x944eB0a2829A859959586b10D54229278534a696","via":[]}
+      issuedPermissions.6:
++        {"permission":"propose","target":"0x64Cf65036a76E3827e448cadbc53D31EefDCE04a","via":[]}
+      issuedPermissions.5.permission:
+-        "validate"
++        "propose"
+      issuedPermissions.5.target:
+-        "0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f"
++        "0x2bfDA59220413DEd39dD0E443620b5277EcE6348"
+      issuedPermissions.4.permission:
+-        "validate"
++        "challenge"
+      issuedPermissions.4.target:
+-        "0x9A6a3354Ea78572EDB7df8458911e1ceD733c224"
++        "0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f"
+      issuedPermissions.3.permission:
+-        "validate"
++        "challenge"
+      issuedPermissions.3.target:
+-        "0x944eB0a2829A859959586b10D54229278534a696"
++        "0x9A6a3354Ea78572EDB7df8458911e1ceD733c224"
+      issuedPermissions.2.permission:
+-        "validate"
++        "challenge"
+      issuedPermissions.2.target:
+-        "0x64Cf65036a76E3827e448cadbc53D31EefDCE04a"
++        "0x944eB0a2829A859959586b10D54229278534a696"
+      issuedPermissions.1.permission:
+-        "validate"
++        "challenge"
+      issuedPermissions.1.target:
+-        "0x2bfDA59220413DEd39dD0E443620b5277EcE6348"
++        "0x64Cf65036a76E3827e448cadbc53D31EefDCE04a"
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "challenge"
+      issuedPermissions.0.target:
+-        "0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a"
++        "0x2bfDA59220413DEd39dD0E443620b5277EcE6348"
++++ description: ArbOS version derived from known wasmModuleRoots.
+      values.arbOsFromWmRoot:
++        "0x2ca63ffd73f314d60f8d672954389881918100435f27fd4193becb12310d7faa"
+      fieldMeta.arbOsFromWmRoot:
++        {"description":"ArbOS version derived from known wasmModuleRoots."}
+      fieldMeta.setValidatorCount:
++        {"description":"Increments on each Validator change."}
+      fieldMeta.challenges:
++        {"description":"Emitted on createChallenge() in RollupUserLogic."}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a) {
+    +++ description: Central contract defining the access control for upgrading the system contract implementations.
+      template:
++        "orbitstack/UpgradeExecutor"
+      description:
++        "Central contract defining the access control for upgrading the system contract implementations."
+    }
+```
+
+```diff
+    contract ChallengeManager (0x6228e2FB8C561f1a5A963039Bc38Eb6D539A1A7F) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      template:
++        "orbitstack/ChallengeManager"
+      description:
++        "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor."
+    }
+```
+
+```diff
+    contract SequencerInbox (0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.dacKeyset:
++        {"requiredSignatures":0,"membersCount":0,"blsSignatures":[]}
+      template:
++        "orbitstack/SequencerInbox"
+      description:
++        "A sequencer (registered in this contract) can submit transaction batches or commitments here."
+      fieldMeta:
++        {"maxTimeVariation":{"description":"Struct: delayBlocks, futureBlocks, delaySeconds, futureSeconds. onlyRollupOwner settable. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."}}
+    }
+```
+
 Generated with discovered.json: 0xd38da817903eba7857f27e7dba72621771ae1d41
 
 # Diff at Mon, 21 Oct 2024 12:45:07 GMT:

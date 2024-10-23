@@ -2,16 +2,18 @@
   "name": "deri",
   "chain": "arbitrum",
   "blockNumber": 257931565,
-  "configHash": "0xa35f98a9881254eeb903feabcec20086f917cd1da6fde5f592ac7d6d10db369d",
+  "configHash": "0x3c329b64d634fcf8d647f662083d53652ddb9b428088d9cc73b312b3ce8e464c",
   "contracts": [
     {
       "name": "UpgradeExecutor",
       "address": "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9",
+      "template": "orbitstack/UpgradeExecutor",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0xa7ff878cfd433a428d567d3b90fe1df400a048a1af5298f22cd4cd4fc25bdecd"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Central contract defining the access control for upgrading the system contract implementations.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -234,16 +236,21 @@
         "0xef94a66bd5339efd18fb9ca1f8031482e7ef7bbe6c5a0a10fae254ab83712406"
       ],
       "proxyType": "Arbitrum proxy",
-      "description": "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.",
+      "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
       "issuedPermissions": [
         {
-          "permission": "upgrade",
-          "target": "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9",
+          "permission": "challenge",
+          "target": "0xD217853C6A59e51dC1a48CEF21d9E53FCaA8a3f0",
           "via": []
         },
         {
-          "permission": "validate",
+          "permission": "propose",
           "target": "0xD217853C6A59e51dC1a48CEF21d9E53FCaA8a3f0",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9",
           "via": []
         }
       ],
@@ -270,6 +277,7 @@
           ]
         ],
         "$upgradeCount": 1,
+        "arbOsFromWmRoot": "ArbOS v10.2 wasmModuleRoot",
         "baseStake": "100000000000000000",
         "bridge": "0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0",
         "chainId": 20231119,
@@ -301,7 +309,7 @@
         "validatorUtils": "0x6c21303F5986180B1394d2C89f3e883890E2867b",
         "validatorWalletCreator": "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
         "validatorWhitelistDisabled": false,
-        "wasmModuleRoot": "ArbOS v10.2 wasmModuleRoot",
+        "wasmModuleRoot": "0x0754e09320c381566cc0449904c377a52bd34a6b9404432e80afd573b67f7b17",
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
@@ -312,6 +320,15 @@
         },
         "wasmModuleRoot": {
           "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."
+        },
+        "arbOsFromWmRoot": {
+          "description": "ArbOS version derived from known wasmModuleRoots."
+        },
+        "setValidatorCount": {
+          "description": "Increments on each Validator change."
+        },
+        "challenges": {
+          "description": "Emitted on createChallenge() in RollupUserLogic."
         }
       },
       "derivedName": "RollupProxy",
@@ -678,8 +695,14 @@
       "address": "0xD217853C6A59e51dC1a48CEF21d9E53FCaA8a3f0",
       "receivedPermissions": [
         {
-          "permission": "validate",
-          "target": "0x846387C3D6001F74170455B1074D01f05eB3067a"
+          "permission": "challenge",
+          "target": "0x846387C3D6001F74170455B1074D01f05eB3067a",
+          "description": "can challenge state roots on the host chain."
+        },
+        {
+          "permission": "propose",
+          "target": "0x846387C3D6001F74170455B1074D01f05eB3067a",
+          "description": "can submit state roots to the RollupProxy contract on the host chain."
         }
       ]
     },
@@ -1333,6 +1356,7 @@
     ]
   },
   "usedTemplates": {
-    "orbitstack/RollupProxy": "0x8c92364349ca720f3e801d028dc260fdbc1a9cca4651ed19af6f16a250949729"
+    "orbitstack/RollupProxy": "0x329494c897421d49fd8b6041c5444fb2af7508c8b81f134e703e7d11cbd9be1b",
+    "orbitstack/UpgradeExecutor": "0x603e9f3f0d76cb0bbc6fbf2ac64cce35b00905689e35c7535a2c5fec00147370"
   }
 }

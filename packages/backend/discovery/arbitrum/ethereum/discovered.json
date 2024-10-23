@@ -2,7 +2,7 @@
   "name": "arbitrum",
   "chain": "ethereum",
   "blockNumber": 21027338,
-  "configHash": "0x0824f0717d33b7436861956de2d0c6f3cad71e0f713dde27a18188f636fa7ce6",
+  "configHash": "0xfb8f8374357a3e5a4a821db5603f9cfa93b70ecd25891da4bfaf8edf82bafc4f",
   "contracts": [
     {
       "name": "Outbox",
@@ -532,8 +532,14 @@
       ],
       "receivedPermissions": [
         {
-          "permission": "validate",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
+          "permission": "challenge",
+          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "description": "can challenge state roots on the host chain."
+        },
+        {
+          "permission": "propose",
+          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "description": "can submit state roots to the RollupProxy contract on the host chain."
         }
       ],
       "sinceTimestamp": 1662368855,
@@ -613,81 +619,151 @@
         "0x714cd478f69088c5274871f1be4e27736aedacf59858caeb9dbea9e47d23d213"
       ],
       "proxyType": "Arbitrum proxy",
-      "description": "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.",
+      "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
       "issuedPermissions": [
         {
-          "permission": "upgrade",
-          "target": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
-          "via": []
-        },
-        {
-          "permission": "validate",
+          "permission": "challenge",
           "target": "0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4",
           "via": []
         },
         {
-          "permission": "validate",
+          "permission": "challenge",
           "target": "0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c",
           "via": []
         },
         {
-          "permission": "validate",
+          "permission": "challenge",
           "target": "0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78",
           "via": []
         },
         {
-          "permission": "validate",
+          "permission": "challenge",
           "target": "0x610Aa279989F440820e14248BD3879B148717974",
           "via": []
         },
         {
-          "permission": "validate",
+          "permission": "challenge",
           "target": "0x6Fb914de4653eC5592B7c15F4d9466Cbd03F2104",
           "via": []
         },
         {
-          "permission": "validate",
+          "permission": "challenge",
           "target": "0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398",
           "via": []
         },
         {
-          "permission": "validate",
+          "permission": "challenge",
           "target": "0x7CF3d537733F6Ba4183A833c9B021265716cE9d0",
           "via": []
         },
         {
-          "permission": "validate",
+          "permission": "challenge",
           "target": "0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5",
           "via": []
         },
         {
-          "permission": "validate",
+          "permission": "challenge",
           "target": "0xAB1A39332e934300eBCc57B5f95cA90631a347FF",
           "via": []
         },
         {
-          "permission": "validate",
+          "permission": "challenge",
           "target": "0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0",
           "via": []
         },
         {
-          "permission": "validate",
+          "permission": "challenge",
           "target": "0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d",
           "via": []
         },
         {
-          "permission": "validate",
+          "permission": "challenge",
           "target": "0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E",
           "via": []
         },
         {
-          "permission": "validate",
+          "permission": "challenge",
           "target": "0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b",
           "via": []
         },
         {
-          "permission": "validate",
+          "permission": "challenge",
           "target": "0xF8D3E1cF58386c92B27710C6a0D8A54c76BC6ab5",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "target": "0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "target": "0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "target": "0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "target": "0x610Aa279989F440820e14248BD3879B148717974",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "target": "0x6Fb914de4653eC5592B7c15F4d9466Cbd03F2104",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "target": "0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "target": "0x7CF3d537733F6Ba4183A833c9B021265716cE9d0",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "target": "0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "target": "0xAB1A39332e934300eBCc57B5f95cA90631a347FF",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "target": "0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "target": "0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "target": "0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "target": "0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "target": "0xF8D3E1cF58386c92B27710C6a0D8A54c76BC6ab5",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
           "via": []
         }
       ],
@@ -730,6 +806,7 @@
           ]
         ],
         "$upgradeCount": 3,
+        "arbOsFromWmRoot": "ArbOS v32 wasmModuleRoot",
         "baseStake": "1000000000000000000",
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "chainId": 42161,
@@ -776,7 +853,7 @@
         "validatorUtils": "0x9E40625F52829Cf04bC4839F186D621ee33b0E67",
         "validatorWalletCreator": "0x960953f7c69cd2BC2322Db9223A815C680ccc7ea",
         "validatorWhitelistDisabled": false,
-        "wasmModuleRoot": "ArbOS v32 wasmModuleRoot",
+        "wasmModuleRoot": "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39",
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
@@ -787,6 +864,15 @@
         },
         "wasmModuleRoot": {
           "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."
+        },
+        "arbOsFromWmRoot": {
+          "description": "ArbOS version derived from known wasmModuleRoots."
+        },
+        "setValidatorCount": {
+          "description": "Increments on each Validator change."
+        },
+        "challenges": {
+          "description": "Emitted on createChallenge() in RollupUserLogic."
         }
       },
       "derivedName": "RollupProxy",
@@ -965,8 +1051,14 @@
       ],
       "receivedPermissions": [
         {
-          "permission": "validate",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
+          "permission": "challenge",
+          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "description": "can challenge state roots on the host chain."
+        },
+        {
+          "permission": "propose",
+          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "description": "can submit state roots to the RollupProxy contract on the host chain."
         }
       ],
       "sinceTimestamp": 1659013011,
@@ -1037,8 +1129,14 @@
       ],
       "receivedPermissions": [
         {
-          "permission": "validate",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
+          "permission": "challenge",
+          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "description": "can challenge state roots on the host chain."
+        },
+        {
+          "permission": "propose",
+          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "description": "can submit state roots to the RollupProxy contract on the host chain."
         }
       ],
       "sinceTimestamp": 1661964258,
@@ -1128,8 +1226,14 @@
       ],
       "receivedPermissions": [
         {
-          "permission": "validate",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
+          "permission": "challenge",
+          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "description": "can challenge state roots on the host chain."
+        },
+        {
+          "permission": "propose",
+          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "description": "can submit state roots to the RollupProxy contract on the host chain."
         }
       ],
       "sinceTimestamp": 1661962059,
@@ -1340,8 +1444,14 @@
       ],
       "receivedPermissions": [
         {
-          "permission": "validate",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
+          "permission": "challenge",
+          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "description": "can challenge state roots on the host chain."
+        },
+        {
+          "permission": "propose",
+          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "description": "can submit state roots to the RollupProxy contract on the host chain."
         }
       ],
       "sinceTimestamp": 1665084515,
@@ -2784,8 +2894,14 @@
       ],
       "receivedPermissions": [
         {
-          "permission": "validate",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
+          "permission": "challenge",
+          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "description": "can challenge state roots on the host chain."
+        },
+        {
+          "permission": "propose",
+          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "description": "can submit state roots to the RollupProxy contract on the host chain."
         }
       ],
       "sinceTimestamp": 1664352371,
@@ -2821,8 +2937,14 @@
       "address": "0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4",
       "receivedPermissions": [
         {
-          "permission": "validate",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
+          "permission": "challenge",
+          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "description": "can challenge state roots on the host chain."
+        },
+        {
+          "permission": "propose",
+          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "description": "can submit state roots to the RollupProxy contract on the host chain."
         }
       ]
     },
@@ -2838,8 +2960,14 @@
       "address": "0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c",
       "receivedPermissions": [
         {
-          "permission": "validate",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
+          "permission": "challenge",
+          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "description": "can challenge state roots on the host chain."
+        },
+        {
+          "permission": "propose",
+          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "description": "can submit state roots to the RollupProxy contract on the host chain."
         }
       ]
     },
@@ -2850,8 +2978,14 @@
       "address": "0x610Aa279989F440820e14248BD3879B148717974",
       "receivedPermissions": [
         {
-          "permission": "validate",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
+          "permission": "challenge",
+          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "description": "can challenge state roots on the host chain."
+        },
+        {
+          "permission": "propose",
+          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "description": "can submit state roots to the RollupProxy contract on the host chain."
         }
       ]
     },
@@ -2860,8 +2994,14 @@
       "address": "0x6Fb914de4653eC5592B7c15F4d9466Cbd03F2104",
       "receivedPermissions": [
         {
-          "permission": "validate",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
+          "permission": "challenge",
+          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "description": "can challenge state roots on the host chain."
+        },
+        {
+          "permission": "propose",
+          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "description": "can submit state roots to the RollupProxy contract on the host chain."
         }
       ]
     },
@@ -2874,8 +3014,14 @@
       "address": "0xAB1A39332e934300eBCc57B5f95cA90631a347FF",
       "receivedPermissions": [
         {
-          "permission": "validate",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
+          "permission": "challenge",
+          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "description": "can challenge state roots on the host chain."
+        },
+        {
+          "permission": "propose",
+          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "description": "can submit state roots to the RollupProxy contract on the host chain."
         }
       ]
     },
@@ -2884,8 +3030,14 @@
       "address": "0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d",
       "receivedPermissions": [
         {
-          "permission": "validate",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
+          "permission": "challenge",
+          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "description": "can challenge state roots on the host chain."
+        },
+        {
+          "permission": "propose",
+          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "description": "can submit state roots to the RollupProxy contract on the host chain."
         }
       ]
     },
@@ -2905,8 +3057,14 @@
       "address": "0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E",
       "receivedPermissions": [
         {
-          "permission": "validate",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
+          "permission": "challenge",
+          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "description": "can challenge state roots on the host chain."
+        },
+        {
+          "permission": "propose",
+          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "description": "can submit state roots to the RollupProxy contract on the host chain."
         }
       ]
     },
@@ -2915,8 +3073,14 @@
       "address": "0xF8D3E1cF58386c92B27710C6a0D8A54c76BC6ab5",
       "receivedPermissions": [
         {
-          "permission": "validate",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
+          "permission": "challenge",
+          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "description": "can challenge state roots on the host chain."
+        },
+        {
+          "permission": "propose",
+          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "description": "can submit state roots to the RollupProxy contract on the host chain."
         }
       ]
     },
@@ -4113,6 +4277,6 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "orbitstack/RollupProxy": "0x8c92364349ca720f3e801d028dc260fdbc1a9cca4651ed19af6f16a250949729"
+    "orbitstack/RollupProxy": "0x329494c897421d49fd8b6041c5444fb2af7508c8b81f134e703e7d11cbd9be1b"
   }
 }

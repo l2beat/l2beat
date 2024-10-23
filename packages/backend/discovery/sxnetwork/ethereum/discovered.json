@@ -2,7 +2,7 @@
   "name": "sxnetwork",
   "chain": "ethereum",
   "blockNumber": 20842812,
-  "configHash": "0xf305487c9ad650a335a0acd9d5ff81f6290b4bea2d85fdcdd8fcd515d3c4d4fa",
+  "configHash": "0x1b8617d8a7176adbe3e899d2745f6d280ef6ba4539cf35c0e28c08367e1483a4",
   "contracts": [
     {
       "name": "OneStepProverHostIo",
@@ -46,16 +46,21 @@
         "0xef94a66bd5339efd18fb9ca1f8031482e7ef7bbe6c5a0a10fae254ab83712406"
       ],
       "proxyType": "Arbitrum proxy",
-      "description": "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.",
+      "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
       "issuedPermissions": [
         {
-          "permission": "upgrade",
-          "target": "0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a",
+          "permission": "challenge",
+          "target": "0x9C56265ef2989138d264b30fBbA2043902daBdf8",
           "via": []
         },
         {
-          "permission": "validate",
+          "permission": "propose",
           "target": "0x9C56265ef2989138d264b30fBbA2043902daBdf8",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a",
           "via": []
         }
       ],
@@ -82,6 +87,7 @@
           ]
         ],
         "$upgradeCount": 1,
+        "arbOsFromWmRoot": "ArbOS v20 wasmModuleRoot",
         "baseStake": "100000000000000000",
         "bridge": "0xa104C0426e95a5538e89131DbB4163d230C35f86",
         "chainId": 4162,
@@ -113,7 +119,7 @@
         "validatorUtils": "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
         "validatorWalletCreator": "0x9CAd81628aB7D8e239F1A5B497313341578c5F71",
         "validatorWhitelistDisabled": false,
-        "wasmModuleRoot": "ArbOS v20 wasmModuleRoot",
+        "wasmModuleRoot": "0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4",
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
@@ -124,6 +130,15 @@
         },
         "wasmModuleRoot": {
           "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."
+        },
+        "arbOsFromWmRoot": {
+          "description": "ArbOS version derived from known wasmModuleRoots."
+        },
+        "setValidatorCount": {
+          "description": "Increments on each Validator change."
+        },
+        "challenges": {
+          "description": "Emitted on createChallenge() in RollupUserLogic."
         }
       },
       "derivedName": "RollupProxy",
@@ -159,11 +174,13 @@
     {
       "name": "UpgradeExecutor",
       "address": "0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a",
+      "template": "orbitstack/UpgradeExecutor",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0xa7ff878cfd433a428d567d3b90fe1df400a048a1af5298f22cd4cd4fc25bdecd"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Central contract defining the access control for upgrading the system contract implementations.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -236,11 +253,13 @@
     {
       "name": "ChallengeManager",
       "address": "0x73cfa0F6ae141212115657ad91Ad918E5d34d882",
+      "template": "orbitstack/ChallengeManager",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0x58a6261c83c2766f749641902ad6fdb695ea189d2747f073b57a8f35b9a547e5"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -340,11 +359,13 @@
     {
       "name": "Bridge",
       "address": "0xa104C0426e95a5538e89131DbB4163d230C35f86",
+      "template": "orbitstack/Bridge",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0x057de68a7007d55f4394ba6eafb2c802efcaf13583ff9342ea4d0ee3924d9be1"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for bridge messaging.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -387,11 +408,13 @@
     {
       "name": "Outbox",
       "address": "0xB360b2f57c645E847148d7C479b7468AbF6F707d",
+      "template": "orbitstack/Outbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0x3073f29910dee50069a001fb20e58cca3dcc1b3c8da4b91809af2dd356ef0c8c"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) which eventually resolve in execution on L1.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -425,32 +448,15 @@
       "derivedName": "ERC20Outbox"
     },
     {
-      "name": "SXNetwork",
-      "address": "0xbe9F61555F50DD6167f2772e9CF7519790d96624",
-      "sourceHashes": [
-        "0xf0c4746faa53f945ab6c15c9630e1b188aa435746b6884440517abe9ee182100"
-      ],
-      "sinceTimestamp": 1706125739,
-      "values": {
-        "$immutable": true,
-        "decimals": 18,
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
-        "name": "SX Network",
-        "symbol": "SX",
-        "tokenName": "SX Network",
-        "tokenSymbol": "SX"
-      },
-      "derivedName": "SXNetwork"
-    },
-    {
       "name": "SequencerInbox",
       "address": "0xD80a805c86C14c879420eC6acb366D04D318fC0C",
+      "template": "orbitstack/SequencerInbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0x50cf57b01499408fa99da27cf0fee96ec30f0d40667d1aa090c442bc80f0636b"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "A sequencer (registered in this contract) can submit transaction batches or commitments here.",
       "issuedPermissions": [
         {
           "permission": "sequence",
@@ -506,6 +512,11 @@
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
+      "fieldMeta": {
+        "maxTimeVariation": {
+          "description": "Struct: delayBlocks, futureBlocks, delaySeconds, futureSeconds. onlyRollupOwner settable. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
+        }
+      },
       "derivedName": "SequencerInbox"
     },
     {
@@ -553,11 +564,13 @@
     {
       "name": "Inbox",
       "address": "0xEa83E8907C89Bc0D9517632f0ba081972E328631",
+      "template": "orbitstack/Inbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0xcb390b491549387c8fcc09fb22fbea7adf54cc74b7247a0c738369ddd7049b92"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -595,7 +608,8 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "target": "0xD80a805c86C14c879420eC6acb366D04D318fC0C"
+          "target": "0xD80a805c86C14c879420eC6acb366D04D318fC0C",
+          "description": "can submit transaction batches or commitments to the SequencerInbox contract on the hostchain."
         }
       ]
     },
@@ -603,8 +617,14 @@
       "address": "0x9C56265ef2989138d264b30fBbA2043902daBdf8",
       "receivedPermissions": [
         {
-          "permission": "validate",
-          "target": "0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F"
+          "permission": "challenge",
+          "target": "0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
+          "description": "can challenge state roots on the host chain."
+        },
+        {
+          "permission": "propose",
+          "target": "0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
+          "description": "can submit state roots to the RollupProxy contract on the host chain."
         }
       ]
     },
@@ -1139,40 +1159,6 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xbe9F61555F50DD6167f2772e9CF7519790d96624": [
-      "constructor()",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function MINTER_ROLE() view returns (bytes32)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function burn(uint256 amount)",
-      "function burnFrom(address account, uint256 amount)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function grantMinterRole(address account)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function mint(address to, uint256 amount)",
-      "function name() view returns (string)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeMinterRole(address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function symbol() view returns (string)",
-      "function tokenName() view returns (string)",
-      "function tokenSymbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 amount) returns (bool)",
-      "function transferFrom(address from, address to, uint256 amount) returns (bool)"
-    ],
     "0xD80a805c86C14c879420eC6acb366D04D318fC0C": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1208,6 +1194,12 @@
     ]
   },
   "usedTemplates": {
-    "orbitstack/RollupProxy": "0x8c92364349ca720f3e801d028dc260fdbc1a9cca4651ed19af6f16a250949729"
+    "orbitstack/Bridge": "0xe6d023f6c725ce1ccf0ca453ab25787255f946d6561dcd83975ec33a9720caf6",
+    "orbitstack/ChallengeManager": "0xc4fbc82c5001579bb1f880d92a3510cda3dc4a65e284fc300363ce048c2fb6d7",
+    "orbitstack/Inbox": "0x1938bb9de2d7f328ae3e83f2dd9f5d3c5575b599fc097cf9308bac4d5bb3e89e",
+    "orbitstack/Outbox": "0xac65b89cf03d50afb81ade4d5623f1815977ae46d92280d53ca828df34424488",
+    "orbitstack/RollupProxy": "0x329494c897421d49fd8b6041c5444fb2af7508c8b81f134e703e7d11cbd9be1b",
+    "orbitstack/SequencerInbox": "0xb77ec24fa3e136cb22bb61f301b04f7060d8305763c022dff72423ce7483ca3d",
+    "orbitstack/UpgradeExecutor": "0x603e9f3f0d76cb0bbc6fbf2ac64cce35b00905689e35c7535a2c5fec00147370"
   }
 }
