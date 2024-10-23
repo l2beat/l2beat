@@ -6,6 +6,7 @@ export type DaCommitteeSecurityRisk =
   | ReturnType<typeof LimitedCommitteeSecurity>
   | ReturnType<typeof NoCommiteeSecurity>
   | ReturnType<typeof NoDiversityCommiteeSecurity>
+  | ReturnType<typeof NoHonestMinimumCommiteeSecurity>
   | typeof NoBridge
   | ReturnType<typeof Auto>
 
@@ -45,6 +46,15 @@ const NoDiversityCommiteeSecurity = (value?: string) =>
     `,
   }) as const
 
+  const NoHonestMinimumCommiteeSecurity = (value?: string, honestMembersPercentage?: string) =>
+  ({
+    type: 'NoHonestMinimumCommiteeSecurity',
+    value: value ?? 'No Committee Security',
+    sentiment: 'bad',
+    description: `The committee should require an honest minority (33% or less) of members to prevent the DA bridge from accepting an unavailable data commitment.
+   Currently, this committee requires ${honestMembersPercentage}% of members to be honest. `,
+  }) as const
+
 const NoBridge = {
   type: 'NoBridge',
   value: 'N/A',
@@ -77,6 +87,7 @@ export const DaCommitteeSecurityRisk = {
   LimitedCommitteeSecurity,
   NoCommiteeSecurity,
   NoDiversityCommiteeSecurity,
+  NoHonestMinimumCommiteeSecurity,
   NoBridge,
   Auto,
 } as const satisfies DaRiskViewOptions

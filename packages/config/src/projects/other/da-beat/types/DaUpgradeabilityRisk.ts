@@ -10,7 +10,7 @@ export type DaUpgradeabilityRisk =
 
 const Immutable = {
   type: 'Immutable',
-  value: '∞',
+  value: 'Immutable',
   sentiment: 'good',
   description: 'The bridge smart contract is immutable and cannot be updated.',
 } as const

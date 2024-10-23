@@ -4,9 +4,13 @@ import { getCommittee } from '../../../../discovery/starkware'
 import { immutablex } from '../../../layer2s/immutablex'
 import { StarkexDAC } from '../templates/starkex-template'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
+import { DaCommitteeSecurityRisk, DaEconomicSecurityRisk } from '../types'
+import { committeeSecurityRisk } from '../processors/committee-security-risk'
 
 const discovery = new ProjectDiscovery('immutablex')
 const committee = getCommittee(discovery)
+const requiredHonestMembersPercentage = (((committee.accounts.length - committee.minSigners + 1) / committee.accounts.length) * 100).toFixed(0);
+
 
 export const immutableXDac = StarkexDAC({
   project: immutablex,
@@ -85,4 +89,8 @@ export const immutableXDac = StarkexDAC({
       },
     ],
   },
+  risks: {
+    economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,
+    committeeSecurity: DaCommitteeSecurityRisk.NoHonestMinimumCommiteeSecurity(`${committee.minSigners}/${committee.accounts.length}`, requiredHonestMembersPercentage),
+  }
 })

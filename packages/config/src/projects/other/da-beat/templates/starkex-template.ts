@@ -125,7 +125,7 @@ export function StarkexDAC(template: TemplateVars): DacDaLayer {
       upgradeability:
         template.risks?.upgradeability ?? DaUpgradeabilityRisk.Immutable,
       relayerFailure:
-        template.risks?.relayerFailure ?? DaRelayerFailureRisk.NoMechanism,
+        template.risks?.relayerFailure ?? DaRelayerFailureRisk.SelfPropose,
     },
     otherConsiderations: template.bridge.otherConsiderations,
   }

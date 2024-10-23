@@ -6,6 +6,7 @@ export const DaRelayerFailureRisk = {
     type: 'SelfPropose' as const,
     value: 'Self propose',
     sentiment: 'good' as const,
+    description: `Anyone can relay data availability commitments to the DA bridge. In case of current relayer failure, users can collect attestations from committee members and propose new data availability commitments to the DA bridge.`,
   },
   Whitelist: {
     type: 'Whitelist' as const,
