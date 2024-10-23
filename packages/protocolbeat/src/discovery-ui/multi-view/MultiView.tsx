@@ -1,5 +1,12 @@
 import clsx from 'clsx'
-import { Fragment, ReactNode, useEffect, useRef, useState } from 'react'
+import {
+  ComponentType,
+  Fragment,
+  ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import { PanelId, useStore } from './store'
 
 const RESIZE_AREA = 20
@@ -13,7 +20,12 @@ const PANEL_INFO = {
   preview: { color: '#ff019c', name: 'Preview' },
 }
 
-export function MultiApp() {
+export interface MultiViewProps {
+  project: string
+  panelBodyElement: ComponentType<{ kind: PanelId }>
+}
+
+export function MultiView(props: MultiViewProps) {
   const panelContainerRef = useRef<HTMLDivElement>(null)
 
   const panels = useStore((state) => state.panels)
@@ -139,7 +151,7 @@ export function MultiApp() {
 
   return (
     <div className="flex h-full w-full flex-col">
-      <TopBar />
+      <TopBar project={props.project} />
       <div
         ref={panelContainerRef}
         className="grid flex-1"
@@ -152,7 +164,9 @@ export function MultiApp() {
         }}
       >
         {panels.map((panel) => {
-          return <Panel key={panel.id} id={panel.id} />
+          return (
+            <Panel key={panel.id} id={panel.id} body={props.panelBodyElement} />
+          )
         })}
       </div>
       <BottomBar />
@@ -160,7 +174,7 @@ export function MultiApp() {
   )
 }
 
-function TopBar() {
+function TopBar(props: { project: string }) {
   const layouts = useStore((state) => state.layouts)
   const selectedLayout = useStore((state) => state.selectedLayout)
   const loadLayout = useStore((state) => state.loadLayout)
@@ -168,7 +182,7 @@ function TopBar() {
   const addPanel = useStore((state) => state.addPanel)
   return (
     <div className="flex h-10 items-center justify-between px-2">
-      <div>DISCOVERY</div>
+      <div>DISCOVERY {props.project}</div>
       <div className="flex gap-2">
         <div className="grid grid-cols-6">
           {layouts.map((_, i) => (
@@ -271,12 +285,11 @@ function BottomBar() {
   )
 }
 
-function Panel(props: { id: PanelId }) {
+function Panel(props: { id: PanelId; body: ComponentType<{ kind: PanelId }> }) {
   const hidden = useStore(
     (state) => state.fullScreen !== undefined && state.fullScreen !== props.id,
   )
   const isHover = useStore((state) => state.hover === props.id)
-  const info = PANEL_INFO[props.id]
 
   const HeaderWrapper = isHover ? HoverHeader : Fragment
   return (
@@ -287,11 +300,8 @@ function Panel(props: { id: PanelId }) {
       <HeaderWrapper>
         <PanelHeader id={props.id} />
       </HeaderWrapper>
-      <div
-        className={clsx('flex-1 px-2 py-1', isHover && 'hidden')}
-        style={{ backgroundColor: info.color }}
-      >
-        {info.name} body
+      <div className={clsx('flex-1', isHover && 'hidden')}>
+        <props.body kind={props.id} />
       </div>
       {isHover && <div className="flex-1 bg-slate-100" />}
     </div>

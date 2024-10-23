@@ -1,6 +1,7 @@
 import { join } from 'path'
 import { ConfigReader } from '@l2beat/discovery'
 import express from 'express'
+import { ApiProjectResponse, ApiProjectsResponse } from './types'
 
 export function runDiscoveryUi() {
   const app = express()
@@ -21,10 +22,10 @@ export function runDiscoveryUi() {
         projectToChain.set(project, projectChains)
       }
     }
-    const projects = [...projectToChain.entries()]
+    const response: ApiProjectsResponse = [...projectToChain.entries()]
       .map(([name, chains]) => ({ name, chains }))
       .sort((a, b) => a.name.localeCompare(b.name))
-    res.json(projects)
+    res.json(response)
   })
 
   app.get('/api/projects/:project', (req, res) => {
@@ -35,7 +36,38 @@ export function runDiscoveryUi() {
       config: configReader.readConfig(project, chain),
       discovery: configReader.readDiscovery(project, chain),
     }))
-    res.json(data)
+
+    const response: ApiProjectResponse = { chains: [] }
+    for (const { chain, config, discovery } of data) {
+      response.chains.push({
+        chain,
+        initialContracts: config.initialAddresses.map((x) => ({
+          chain,
+          // TODO: implement
+          name: undefined,
+          address: x,
+          // TODO: implement
+          values: {},
+        })),
+        discoveredContracts: discovery.contracts
+          .filter((x) => !config.initialAddresses.includes(x.address))
+          .map((x) => ({
+            chain,
+            name: x.name,
+            address: x.address,
+            // TODO: implement
+            values: {},
+          })),
+        // TODO: implement
+        ignoredContracts: [],
+        eoas: discovery.eoas.map((x) => ({
+          chain,
+          name: x.name,
+          address: x.address,
+        })),
+      })
+    }
+    res.json(response)
   })
 
   app.get('/', (_req, res) => {
