@@ -7,10 +7,9 @@ import {
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { nova } from '../../../layer2s/nova'
 import { DAC } from '../templates/dac-template'
-import { DacTransactionDataType } from '../types/DacTransactionDataType'
-import { DaCommitteeSecurityRisk } from '../types/DaCommitteeSecurityRisk'
 import { DaEconomicSecurityRisk, DaUpgradeabilityRisk } from '../types'
 import { DaRelayerFailureRisk } from '../types/DaRelayerFailureRisk'
+import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('nova')
 
@@ -166,10 +165,9 @@ export const arbitrumNovaDac = DAC({
     ],
     contracts: {
       addresses: [
-        discovery.getContractDetails(
-          'SequencerInbox',{
-            description:
-          'The DA bridge of the DAC, the main entry point for the Sequencer submitting transaction batches commitments.',
+        discovery.getContractDetails('SequencerInbox', {
+          description:
+            'The DA bridge of the DAC, the main entry point for the Sequencer submitting transaction batches commitments.',
           ...upgradeExecutorUpgradeability,
         }),
         discovery.getContractDetails('UpgradeExecutor', {

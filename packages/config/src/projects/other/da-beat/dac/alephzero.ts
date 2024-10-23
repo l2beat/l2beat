@@ -63,7 +63,7 @@ export const alephzeroDac = AnytrustDAC({
           'EXECUTOR_ROLE',
         ),
         description: 'EOA that can execute upgrades via the UpgradeExecutor.',
-      }
+      },
     ],
     chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignatures,

@@ -1,5 +1,5 @@
-import { formatSeconds } from '@l2beat/shared-pure';
-import { DaRiskViewOptions } from './DaRiskView';
+import { formatSeconds } from '@l2beat/shared-pure'
+import { DaRiskViewOptions } from './DaRiskView'
 
 export const DaRelayerFailureRisk = {
   SelfPropose: {
@@ -32,11 +32,11 @@ export const DaRelayerFailureRisk = {
     description:
       "The relayer does not contribute to the DA bridge liveness since data availability attestations are not integrated in the scaling solution's proof system.",
   },
-} as const satisfies DaRiskViewOptions;
+} as const satisfies DaRiskViewOptions
 
 export type DaRelayerFailureRisk =
   | (typeof DaRelayerFailureRisk)['SelfPropose']
   | (typeof DaRelayerFailureRisk)['Whitelist']
   | ReturnType<(typeof DaRelayerFailureRisk)['Governance']>
   | (typeof DaRelayerFailureRisk)['NoMechanism']
-  | (typeof DaRelayerFailureRisk)['NoBridge'];
+  | (typeof DaRelayerFailureRisk)['NoBridge']

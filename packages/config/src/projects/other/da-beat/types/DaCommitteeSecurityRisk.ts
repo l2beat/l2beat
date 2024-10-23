@@ -46,7 +46,10 @@ const NoDiversityCommiteeSecurity = (value?: string) =>
     `,
   }) as const
 
-  const NoHonestMinimumCommiteeSecurity = (value?: string, honestMembersPercentage?: string) =>
+const NoHonestMinimumCommiteeSecurity = (
+  value?: string,
+  honestMembersPercentage?: string,
+) =>
   ({
     type: 'NoHonestMinimumCommiteeSecurity',
     value: value ?? 'No Committee Security',
