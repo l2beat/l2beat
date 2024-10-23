@@ -146,9 +146,11 @@ export const arbitrumNovaDac = DAC({
     contracts: {
       addresses: [
         discovery.getContractDetails(
-          'SequencerInbox',
-          'Main entry point for the Sequencer submitting transaction batches.',
-        ),
+          'SequencerInbox',{
+            description:
+          'The DA bridge of the DAC, the main entry point for the Sequencer submitting transaction batches commitments.',
+          ...upgradeExecutorUpgradeability,
+        }),
         discovery.getContractDetails('UpgradeExecutor', {
           description:
             "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1Timelock.",

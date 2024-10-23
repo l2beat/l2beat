@@ -20,8 +20,7 @@ export const DaRelayerFailureRisk = {
     type: 'NoMechanism',
     value: 'No mechanism',
     sentiment: 'bad',
-    description: `The DA bridge does not have a Security Council or a governance mechanism to propose new relayers.
-    In case of relayer failure, the DA bridge will halt and be unable to recover without the intervention of a centralized entity.`,
+    description: `The DA bridge does not have a Security Council or a governance mechanism to propose new relayers. In case of relayer failure, the DA bridge will halt and be unable to recover without the intervention of a centralized entity.`,
   },
   NoBridge: {
     type: 'NoBridge',

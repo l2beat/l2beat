@@ -122,7 +122,7 @@ export function AnytrustDAC(template: TemplateVars): DacDaLayer {
         template.risks?.committeeSecurity ?? DaCommitteeSecurityRisk.Auto(),
       // TODO: make it required and remove the default
       upgradeability:
-        template.risks?.upgradeability ?? DaUpgradeabilityRisk.Immutable,
+        template.risks?.upgradeability ?? DaUpgradeabilityRisk.LowOrNoDelay(),
       relayerFailure:
         template.risks?.relayerFailure ?? DaRelayerFailureRisk.NoMechanism,
     },

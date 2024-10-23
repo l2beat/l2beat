@@ -32,8 +32,7 @@ const NoCommiteeSecurity = (value?: string) =>
     type: 'NoCommiteeSecurity',
     value: value ?? 'No Committee Security',
     sentiment: 'bad',
-    description: `The committee does not meet basic security standards, either due to insufficient size, lack of member diversity, or poorly defined threshold parameters. 
-    The system lacks an effective DA bridge and it is reliant on the assumption of an honest sequencer, creating significant risks to data integrity and availability.`,
+    description: `The committee does not meet basic security standards, either due to insufficient size, lack of member diversity, or poorly defined threshold parameters. The system lacks an effective DA bridge and it is reliant on the assumption of an honest sequencer, creating significant risks to data integrity and availability.`,
   }) as const
 
 const NoDiversityCommiteeSecurity = (value?: string) =>
