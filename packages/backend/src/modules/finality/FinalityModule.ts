@@ -18,10 +18,11 @@ import { ScrollFinalityAnalyzer } from './analyzers/ScrollFinalityAnalyzer'
 import { StarknetFinalityAnalyzer } from './analyzers/StarknetFinalityAnalyzer'
 import { ZkSyncLiteFinalityAnalyzer } from './analyzers/ZkSyncLiteFinalityAnalyzer'
 import { ArbitrumFinalityAnalyzer } from './analyzers/arbitrum/ArbitrumFinalityAnalyzer'
+import { OpStackStateUpdateAnalyzer } from './analyzers/opStack/OpStackStateUpdateAnalyzer'
+import { OpStackTimeToInclusionAnalyzer } from './analyzers/opStack/OpStackTimeToInclusionAnalyzer'
 import { PolygonZkEvmFinalityAnalyzer } from './analyzers/polygon-zkevm/PolygonZkevmFinalityAnalyzer'
 import { zkSyncEraFinalityAnalyzer } from './analyzers/zkSyncEraFinalityAnalyzer'
 import { FinalityConfig } from './types/FinalityConfig'
-import { OpStackTimeToInclusionAnalyzer } from './analyzers/opStack/OpStackTimeToInclusionAnalyzer'
 
 export function createFinalityModule(
   config: Config,
@@ -135,6 +136,13 @@ function initializeConfigurations(
                   l2BlockTimeSeconds: configuration.l2BlockTimeSeconds,
                   genesisTimestamp: configuration.genesisTimestamp,
                 },
+              ),
+              stateUpdate: new OpStackStateUpdateAnalyzer(
+                logger,
+                ethereumRPC,
+                peripherals.database,
+                configuration.projectId,
+                getL2Rpc(configuration, peripherals, RpcClient),
               ),
             },
             minTimestamp: configuration.minTimestamp,

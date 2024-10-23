@@ -42,7 +42,7 @@ export const zora: Layer2 = opStackL2({
     minTimestamp: new UnixTime(1710386579),
     l2BlockTimeSeconds: 2,
     lag: 0,
-    stateUpdate: 'disabled',
+    stateUpdate: 'analyze',
   },
   genesisTimestamp: new UnixTime(1686695915),
   stateDerivation: DERIVATION.OPSTACK('ZORA'),
