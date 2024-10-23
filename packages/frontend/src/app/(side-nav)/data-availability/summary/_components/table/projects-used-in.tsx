@@ -15,6 +15,10 @@ interface Props {
 }
 
 export function ProjectsUsedIn({ usedIn, className, maxProjects = 5 }: Props) {
+  if (usedIn.length === 0) {
+    return <div className="text-sm font-medium">Nobody 😔</div>
+  }
+
   const cappedProjects = usedIn.slice(0, maxProjects)
 
   const restCount = usedIn.slice(maxProjects).length

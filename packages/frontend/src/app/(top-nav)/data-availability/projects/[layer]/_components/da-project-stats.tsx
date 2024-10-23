@@ -60,17 +60,13 @@ export function DaProjectStats({ project }: Props) {
       <ProjectStat title="Duration of storage" {...durationStorage} />
       <ProjectStat
         className="md:col-span-2"
-        title="Used in"
+        title="Used by"
         value={
-          project.header.usedIn.length !== 0 ? (
-            <ProjectsUsedIn
-              usedIn={project.header.usedIn}
-              className="flex-wrap justify-start"
-              maxProjects={Infinity}
-            />
-          ) : (
-            'None'
-          )
+          <ProjectsUsedIn
+            usedIn={project.header.usedIn}
+            className="flex-wrap justify-start"
+            maxProjects={Infinity}
+          />
         }
       />
     </div>

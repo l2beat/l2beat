@@ -6,7 +6,6 @@ import {
 } from '@tanstack/react-table'
 import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
 import { TableCell, TableRow } from '~/components/table/table'
-import { EM_DASH } from '~/consts/characters'
 import { useTable } from '~/hooks/use-table'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { formatCurrency } from '~/utils/number-format/format-currency'
@@ -83,11 +82,7 @@ function BridgeCells({
         {formatCurrency(bridge.tvs, 'usd')}
       </TableCell>
       <TableCell className="text-sm">
-        {bridge.usedIn.length > 0 ? (
-          <ProjectsUsedIn usedIn={bridge.usedIn} />
-        ) : (
-          EM_DASH
-        )}
+        <ProjectsUsedIn usedIn={bridge.usedIn} />
       </TableCell>
     </>
   )
