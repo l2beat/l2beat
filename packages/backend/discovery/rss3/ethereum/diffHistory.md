@@ -8,7 +8,7 @@ Generated with discovered.json: 0xb96a6f6354ef4f3a4167d998bf12ffa82449c437
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+OptimismPortal upgrade: An 'operator' address is introduced that can call a new `finalizeWithdrawalTransaction()` with additional arbitrary calldata that then replaces the calldata of the transaction being finalized. This allows arbitrary rerouting of funds or using legitimate withdrawals to make arbitrary (malicious) calls.
 
 ## Watched changes
 
