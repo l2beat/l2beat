@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x9eb2d05d3472d7651e9c0dd368e51ead6e18c373
+
+# Diff at Wed, 23 Oct 2024 09:21:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2734bfe28641dfdb3277a5800faf0a057c08a58f block: 20948093
+- current block number: 21027355
+
+## Description
+
+Gas limit doubled to 60M.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
+    +++ description: None
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        30000000
++        60000000
+    }
+```
+
 Generated with discovered.json: 0x43f1b811871a06a7c23f2a51e441f250da0fa1db
 
 # Diff at Mon, 21 Oct 2024 12:46:47 GMT:

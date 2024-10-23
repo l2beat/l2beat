@@ -62,7 +62,7 @@ export const fuel: Layer2 = {
       repositories: ['https://github.com/FuelLabs/'],
       socialMedia: [
         'https://twitter.com/fuel_network',
-        'https://discord.com/invite/fuelnetwork',
+        'https://discord.gg/fuel-network',
         'https://forum.fuel.network/',
         'https://t.me/fuelcommunity',
         'https://youtube.com/channel/UCam2Sj3SvFSAIfDbP-4jWZQ',
