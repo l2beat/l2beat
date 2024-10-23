@@ -8,6 +8,7 @@
     "latestConfirmed",
     "latestNodeCreated"
   ],
+  "ignoreRelatives": ["validatorWalletCreator", "rollupEventInbox"],
   "fields": {
     "validators": {
       "target": {

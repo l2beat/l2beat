@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x09d5ecc874524e9d6dc807f4854bf91a702ca76b
+Generated with discovered.json: 0xba3b22dabb99b5a6b49819dd48b8379a4f8ac149
 
-# Diff at Wed, 23 Oct 2024 13:26:55 GMT:
+# Diff at Wed, 23 Oct 2024 14:34:59 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@9cc37d16a5f0b172bb41f98d8a970963e5ca4afb block: 20842779
-- current block number: 21028577
+- current block number: 21028917
 
 ## Description
 
@@ -27,12 +27,48 @@ discovery. Values are for block 20842779 (main branch discovery), not current.
 ```
 
 ```diff
+    contract OneStepProverHostIo (0x17e7F68ce50A77e55C7834ddF31AEf86403B8010) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverHostIo"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91)
+    +++ description: None
+```
+
+```diff
+    contract OneStepProofEntry (0x57EA090Ac0554d174AE0e2855B460e84A1A7C221) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProofEntry"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
     contract ChallengeManager (0x68466622Aae5a9Ffd02530247d75Dd107f06B333) {
     +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
       template:
 +        "orbitstack/ChallengeManager"
       description:
 +        "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor."
+    }
+```
+
+```diff
+    contract OneStepProver0 (0x72B166070781a552D7b95a907eF59ca05d3D5a62) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProver0"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
     }
 ```
 
@@ -63,6 +99,16 @@ discovery. Values are for block 20842779 (main branch discovery), not current.
 ```
 
 ```diff
+    contract OneStepProverMemory (0x8b73Ef238ADaB31EBC7c05423d243c345241a22f) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverMemory"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
     contract SequencerInbox (0x8D99372612e8cFE7163B1a453831Bc40eAeb3cF3) {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
       values.IS_HARDCODED_SEQUENCER_BATCH_POSTER:
@@ -77,8 +123,24 @@ discovery. Values are for block 20842779 (main branch discovery), not current.
 ```
 
 ```diff
+    contract OneStepProverMath (0x90eC62De2EB7C7512a22bD2D55926AD6bA609F38) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverMath"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
 -   Status: DELETED
     contract G (0x9C7BEBa8F6eF6643aBd725e45a4E8387eF260649)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorWalletCreator (0x9CAd81628aB7D8e239F1A5B497313341578c5F71)
     +++ description: None
 ```
 
