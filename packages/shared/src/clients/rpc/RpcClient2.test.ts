@@ -15,7 +15,7 @@ describe(RpcClient2.name, () => {
       const result = await rpc.getBlockWithTransactions(100)
 
       expect(result).toEqual({
-        transactions: [mockTx('0'), mockTx('1')],
+        transactions: [mockTx('0'), mockTx(null)],
         timestamp: 100,
         hash: '0xabcdef',
         number: 100,
@@ -155,21 +155,21 @@ function mockClient(deps: {
 
 const mockResponse = (blockNumber: number) => ({
   result: {
-    transactions: [mockRawTx('0'), mockRawTx('1')],
+    transactions: [mockRawTx('0'), mockRawTx(null)],
     timestamp: `0x${blockNumber.toString(16)}`,
     hash: '0xabcdef',
     number: `0x${blockNumber.toString(16)}`,
   },
 })
 
-const mockRawTx = (data: string) => ({
-  hash: `0x${data}`,
-  to: `0x${data}`,
-  input: `0x${data}`,
+const mockRawTx = (to: string | null) => ({
+  hash: `0x1`,
+  to,
+  input: `0x1`,
 })
 
-const mockTx = (data: string) => ({
-  hash: `0x${data}`,
-  to: `0x${data}`,
-  data: `0x${data}`,
+const mockTx = (to: string | null) => ({
+  hash: `0x1`,
+  to,
+  data: `0x1`,
 })
