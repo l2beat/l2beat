@@ -44,11 +44,13 @@ export function initBlockTimestampModule(
               apiKey: chainConfig.config.blockExplorerConfig.etherscanApiKey,
               url: chainConfig.config.blockExplorerConfig.etherscanApiUrl,
               maximumCallsForBlockTimestamp: 3,
+              chain: chainConfig.chain,
             }
           : {
               type: 'Blockscout' as const,
               url: chainConfig.config.blockExplorerConfig.blockscoutApiUrl,
               maximumCallsForBlockTimestamp: 10,
+              chain: chainConfig.chain,
             }
 
     const blockExplorerClient = options

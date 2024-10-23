@@ -8,15 +8,19 @@ interface EtherscanOptions {
   maximumCallsForBlockTimestamp: number
   url: string
   apiKey: string
+  chain: string
 }
 
 interface BlockscoutOptions {
   type: 'Blockscout'
   maximumCallsForBlockTimestamp: number
   url: string
+  chain: string
 }
 
 export class BlockExplorerClient {
+  chain: string
+
   private readonly rateLimiter = new RateLimiter({
     callsPerMinute: 60,
   })
@@ -31,6 +35,7 @@ export class BlockExplorerClient {
   ) {
     this.call = this.rateLimiter.wrap(this.call.bind(this))
     this.binTimeWidth = options.type === 'Etherscan' ? 10 : 1
+    this.chain = options.chain
   }
 
   static create(
