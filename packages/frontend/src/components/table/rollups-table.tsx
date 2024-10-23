@@ -61,7 +61,7 @@ function RowDivider({
   return (
     <tr className="group">
       <td
-        colSpan={4}
+        colSpan={3}
         className={cn('sticky left-0 z-1 px-0 group-first:pt-1', className)}
       >
         <div className="h-5 rounded-l bg-surface-tertiary px-2 py-1 text-2xs font-medium leading-none text-zinc-500 dark:text-n-zinc-300">
