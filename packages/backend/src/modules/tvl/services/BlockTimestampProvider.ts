@@ -1,14 +1,14 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 
-import { BlockExplorerClient } from '@l2beat/shared'
+import { BlockIndexerClient } from '@l2beat/shared'
 
 export type BaseClient = {
   getBlockNumberAtOrBefore(timestamp: UnixTime, start?: number): Promise<number>
 }
 
 interface Dependencies {
-  readonly blockExplorerClient?: BlockExplorerClient
+  readonly blockExplorerClient?: BlockIndexerClient
   readonly client: BaseClient
   logger: Logger
 }

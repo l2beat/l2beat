@@ -1,4 +1,4 @@
-import { BlockExplorerClient, RpcClient2 } from '@l2beat/shared'
+import { BlockIndexerClient, RpcClient2 } from '@l2beat/shared'
 import { ActivityConfig } from '../../config/Config'
 import { DegateClient } from '../../peripherals/degate'
 import { LoopringClient } from '../../peripherals/loopring/LoopringClient'
@@ -9,7 +9,7 @@ import { ZksyncLiteClient } from '../../peripherals/zksynclite/ZksyncLiteClient'
 export class BlockClients {
   constructor(
     readonly rpc: RpcClient2[],
-    readonly blockExplorerClients: BlockExplorerClient[],
+    readonly blockExplorerClients: BlockIndexerClient[],
     readonly config: ActivityConfig,
     readonly zksyncLiteClient: ZksyncLiteClient,
     readonly starknetClient: StarknetClient,

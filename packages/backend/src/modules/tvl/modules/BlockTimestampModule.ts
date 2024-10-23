@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { BlockExplorerClient } from '@l2beat/shared'
+import { BlockIndexerClient } from '@l2beat/shared'
 import { TvlConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
@@ -54,7 +54,7 @@ export function initBlockTimestampModule(
             }
 
     const blockExplorerClient = options
-      ? peripherals.getClient(BlockExplorerClient, options)
+      ? peripherals.getClient(BlockIndexerClient, options)
       : undefined
 
     const blockTimestampProvider = new BlockTimestampProvider({
