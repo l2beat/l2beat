@@ -9,7 +9,7 @@ export const t1: Layer2 = upcomingL2({
     name: 't1',
     slug: 't1',
     description:
-      'T1 is an upcoming Layer 2 focused on low latency and cross-chain interoperability while maintaining composable scalability with Ethereum.',
+      'T1 is an upcoming Layer 2 focused on low latency proving and cross-chain interoperability to create composable scalability on Ethereum.',
     purposes: ['Universal', 'Interoperability'],
     category: 'ZK Rollup',
     links: {
