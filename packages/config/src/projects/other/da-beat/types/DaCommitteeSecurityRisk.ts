@@ -47,7 +47,6 @@ const Auto = (params?: {
   resolved: {
     value: string
     sentiment: Sentiment
-    description: string
   }
 }) =>
   ({
@@ -55,7 +54,11 @@ const Auto = (params?: {
     // Will be overwritten by a processor
     value: params?.resolved.value ?? '',
     sentiment: params?.resolved.sentiment ?? 'bad',
-    description: params?.resolved.description ?? '',
+    description: params?.resolved.sentiment === 'bad'
+      ? NoCommiteeSecurity().description
+      : params?.resolved.sentiment === 'warning'
+      ? LimitedCommitteeSecurity().description
+      : '',
   }) as const
 
 export const DaCommitteeSecurityRisk = {
