@@ -618,6 +618,7 @@
         "$pastUpgrades": [
           [
             "2023-11-20T13:04:23.000Z",
+            "0x311ad16a59e2d62bc8c610bd8c2d47d3f26e552c5bab68838b7486698f9a137b",
             ["0x8d0051943D4c72aF12D638c6b7253C71929A910A"]
           ]
         ],
@@ -675,10 +676,12 @@
         "$pastUpgrades": [
           [
             "2021-08-03T08:06:30.000Z",
+            "0xbca63ca6821699890dc34d4ff8b9831dd6bd20f41eedb70bfefec31ad9b7f013",
             ["0xD249aD8fA4646C303028a8d29cf8568A38897C55"]
           ],
           [
             "2021-11-20T04:36:32.000Z",
+            "0xfd332147899fd3ef1db62f262ffae92bbd7d18a5ed4e142eb0407a173dbf0453",
             ["0x31D76F5Db8F40D28886Bf00F3be5F157472Bf77A"]
           ]
         ],
@@ -1069,6 +1072,7 @@
         "$pastUpgrades": [
           [
             "2021-02-11T08:54:42.000Z",
+            "0xc477cce8447884f1eb5a9bef79b5dd898fffbc81475b07a7d0fa82d2c1d91e4c",
             [
               "0x0a5a7A738528af22B4f5cfE70E5A1e07A2cfE643",
               "0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5",
@@ -1079,6 +1083,7 @@
           ],
           [
             "2021-02-11T15:51:49.000Z",
+            "0xaff60291482d6cc8ed96ed1357406e2871c5ca6df04df4185e2657a60c7a24b5",
             [
               "0x0a5a7A738528af22B4f5cfE70E5A1e07A2cfE643",
               "0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5",
@@ -1089,6 +1094,7 @@
           ],
           [
             "2021-03-16T13:44:41.000Z",
+            "0x8a86108de24d120fd24b1636b3d23354261ab90ee7061af8b52ba4aca9aa56fd",
             [
               "0x0a5a7A738528af22B4f5cfE70E5A1e07A2cfE643",
               "0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5",
@@ -1099,6 +1105,7 @@
           ],
           [
             "2021-05-13T08:12:15.000Z",
+            "0x924fbc366dc7cfee30d285cdd1f5c085a817f423bc0b6f50107f7c8eaf87cd42",
             [
               "0x2C0df87E073755139101b35c0A51e065291cc2d3",
               "0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5",
@@ -1109,6 +1116,7 @@
           ],
           [
             "2023-04-30T05:12:23.000Z",
+            "0x54001ec3a6332a404afa3e6b70de80d8469f3142c4a7b6b0baeaa851ca56064c",
             [
               "0x2C0df87E073755139101b35c0A51e065291cc2d3",
               "0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5",

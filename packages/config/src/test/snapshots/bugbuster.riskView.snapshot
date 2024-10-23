@@ -1,0 +1,99 @@
+// bugbuster riskView didn't change 1
+
+{
+  dataAvailability: {
+    definingMetric: Infinity
+    description: "All of the data needed for proof construction is published on Ethereum L1."
+    sentiment: "good"
+    sources: [
+      {
+        contract: "InputBox"
+        references: [
+          "https://optimistic.etherscan.io/address/0x59b22D57D4f067708AB0c00552767405926dc768#code#F1#L30"
+        ]
+      }
+    ]
+    value: "Onchain"
+  }
+  destinationToken: {
+    description: "Tokens transferred are considered canonical on the destination chain."
+    sentiment: "good"
+    value: "Canonical"
+  }
+  exitWindow: {
+    definingMetric: 0
+    description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
+    secondLine: undefined
+    sentiment: "bad"
+    value: "None"
+  }
+  proposerFailure: {
+    definingMetric: -Infinity
+    description: "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen."
+    sentiment: "bad"
+    value: "Cannot withdraw"
+  }
+  sequencerFailure: {
+    definingMetric: 0
+    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There is no delay on this operation."
+    sentiment: "good"
+    value: "Self sequence"
+  }
+  stateValidation: {
+    definingMetric: -Infinity
+    description: "Currently the system permits invalid state roots. More details in project overview."
+    sentiment: "bad"
+    value: "None"
+  }
+  validatedBy: {
+    description: "Smart contracts on Ethereum validate all bridge transfers."
+    sentiment: "good"
+    value: "Ethereum"
+  }
+}
+
+// bugbuster stackedRiskView didn't change 1
+
+{
+  dataAvailability: {
+    definingMetric: Infinity
+    description: "All of the data needed for proof construction is published on the base chain, which ultimately gets published on Ethereum."
+    sentiment: "good"
+    value: "Onchain"
+  }
+  destinationToken: {
+    description: "Tokens transferred are considered canonical on the destination chain."
+    sentiment: "good"
+    value: "Canonical"
+  }
+  exitWindow: {
+    definingMetric: 0
+    description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
+    secondLine: undefined
+    sentiment: "bad"
+    value: "None"
+  }
+  proposerFailure: {
+    definingMetric: -Infinity
+    description: "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen."
+    sentiment: "bad"
+    value: "Cannot withdraw"
+  }
+  sequencerFailure: {
+    definingMetric: 43200
+    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There is a 12h delay on this operation."
+    sentiment: "good"
+    value: "Self sequence"
+  }
+  stateValidation: {
+    definingMetric: -Infinity
+    description: "Currently the system permits invalid state roots. More details in project overview."
+    sentiment: "bad"
+    value: "None"
+  }
+  validatedBy: {
+    description: "Smart contracts on Ethereum validate all bridge transfers."
+    sentiment: "good"
+    value: "Ethereum"
+  }
+}

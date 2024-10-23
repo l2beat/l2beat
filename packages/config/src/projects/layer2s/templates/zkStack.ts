@@ -3,6 +3,7 @@ import {
   ChainId,
   EthereumAddress,
   ProjectId,
+  UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
 
@@ -50,16 +51,14 @@ export interface DAProvider {
 }
 
 export interface ZkStackConfigCommon {
+  createdAt: UnixTime
   discovery: ProjectDiscovery
   discovery_ZKstackGovL2: ProjectDiscovery
   validatorsEvents: {
     added: string
     removed: string
   }
-  display: Omit<
-    Layer2Display,
-    'provider' | 'category' | 'dataAvailabilityMode' | 'purposes'
-  >
+  display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'>
   daProvider?: DAProvider
   upgradeability?: {
     upgradableBy: string[] | undefined
@@ -268,6 +267,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
   return {
     type: 'layer2',
     id: ProjectId(templateVars.discovery.projectName),
+    createdAt: templateVars.createdAt,
     badges: templateVars.badges ?? [],
     display: {
       purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],

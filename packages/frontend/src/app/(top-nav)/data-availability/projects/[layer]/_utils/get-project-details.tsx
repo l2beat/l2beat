@@ -9,7 +9,9 @@ import { type RosetteValue } from '~/components/rosette/types'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/to-technology-risk'
+import { getDaOtherConsiderationsSection } from './get-da-other-considerations-section'
 import { getDaProjectRiskSummarySection } from './get-da-project-risk-summary-section'
+import { getPermissionedEntities } from './get-permissioned-entities'
 interface Params {
   daLayer: DaLayer
   daBridge: DaBridge
@@ -66,6 +68,11 @@ export function getProjectDetails({
     daLayer,
     daBridge,
     isVerified,
+  )
+
+  const otherConsiderationsSection = getDaOtherConsiderationsSection(
+    daLayer,
+    daBridge,
   )
 
   const items: ProjectDetailsSection[] = []
@@ -129,6 +136,7 @@ export function getProjectDetails({
       type: 'PermissionsSection',
       props: {
         ...permissionsSection,
+        permissionedEntities: getPermissionedEntities(daBridge),
         id: 'permissions',
         title: 'DA Bridge permissions',
       },
@@ -142,6 +150,17 @@ export function getProjectDetails({
         ...contractsSection,
         id: 'contracts',
         title: 'DA Bridge contracts',
+      },
+    })
+  }
+
+  if (otherConsiderationsSection.items.length > 0) {
+    items.push({
+      type: 'TechnologySection',
+      props: {
+        id: 'other-considerations',
+        title: 'Other considerations',
+        ...otherConsiderationsSection,
       },
     })
   }

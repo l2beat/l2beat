@@ -1,4 +1,94 @@
-Generated with discovered.json: 0xa0c4ce65cf181235fbd1149e5548c3369202f00c
+Generated with discovered.json: 0x30b1d000eea9b02da87a03cf07edc7fed1f6ac40
+
+# Diff at Mon, 21 Oct 2024 12:50:32 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e660599f23a07618fe949a07be1f516ce44f1914 block: 20711816
+- current block number: 20711816
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20711816 (main branch discovery), not current.
+
+```diff
+    contract ZKFairValidiumDAC (0x997CfB0838544f68E59f877EDc905001456F125b) {
+    +++ description: Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time.
+      descriptions:
+-        ["Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time."]
+      description:
++        "Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time."
+    }
+```
+
+Generated with discovered.json: 0x70c327cfd320506ab6d734eb788df5a798dae8d0
+
+# Diff at Mon, 21 Oct 2024 11:12:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20711816
+- current block number: 20711816
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20711816 (main branch discovery), not current.
+
+```diff
+    contract ZKFairValidium (0x1CbC08bf0D48b18F9f97796c61352b192d1850A5) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x668965757127549f8755D2eEd10494B06420213b"]
+      values.$pastUpgrades.0.1:
+-        ["0x668965757127549f8755D2eEd10494B06420213b"]
++        "0xf231cd4ea460fef7127452f1f2e380080338d99b581b1fbdb69c02b3eb43c396"
+    }
+```
+
+```diff
+    contract GlobalExitRoot (0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xC4CD3D0b31904969a397A98AcE8bDF2A94ba8615"]
+      values.$pastUpgrades.0.1:
+-        ["0xC4CD3D0b31904969a397A98AcE8bDF2A94ba8615"]
++        "0x4e28f8a72e2c30b692920184f37ffd953bfdcc89b907a1284fbb986aad9bc686"
+    }
+```
+
+```diff
+    contract ZKFairValidiumDAC (0x997CfB0838544f68E59f877EDc905001456F125b) {
+    +++ description: Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time.
+      values.$pastUpgrades.0.2:
++        ["0x63150fA72c1c9fF8Fe4438f8355927D3415b0FDc"]
+      values.$pastUpgrades.0.1:
+-        ["0x63150fA72c1c9fF8Fe4438f8355927D3415b0FDc"]
++        "0xc32e3c87473e1564ad91461787c42867d6793e330617ca806ea1357c40fc4cba"
+    }
+```
+
+```diff
+    contract Bridge (0x9cb4706e20A18E59a48ffa7616d700A3891e1861) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xEb80283EBc508CF6AaC5E054118954a2BD7fA006"]
+      values.$pastUpgrades.0.1:
+-        ["0xEb80283EBc508CF6AaC5E054118954a2BD7fA006"]
++        "0x22ef364422913d82a57f2fb0b440655ced0178c3549491490edff4663389f511"
+    }
+```
+
+Generated with discovered.json: 0x0c3039250e4fa5407428285a25b2b50b1b63b689
 
 # Diff at Mon, 14 Oct 2024 10:58:04 GMT:
 

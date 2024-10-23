@@ -1,4 +1,5 @@
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { Permission } from '../config/RawDiscoveryConfig'
 
 // NOTE(radomski): The entire permission network is modeled as a graph. The
 // graph contains nodes and edges. Nodes are contracts and edges are "actions"
@@ -23,13 +24,12 @@ import { assert, EthereumAddress } from '@l2beat/shared-pure'
 // what to do in a scenario when one members has a smaller delay than others
 // and such a case should be discussed.
 
-export type Permission = 'member' | 'act' | 'configure' | 'upgrade'
-
 export interface Node<T = EthereumAddress> {
   address: T
   threshold: number
   delay: number
   edges: Edge<T>[]
+  canActIndependently: boolean
 }
 
 export interface Edge<T = EthereumAddress> {
@@ -56,7 +56,7 @@ export function resolvePermissions<T>(
   const result: ResolvedPermission<T>[] = []
   for (const node of graph) {
     const seedingEdges = node.edges.filter(
-      (e) => e.permission === 'configure' || e.permission === 'upgrade',
+      (e) => e.permission !== 'member' && e.permission !== 'act',
     )
     for (const edge of seedingEdges) {
       const toNode = getNode(edge.toNode, graph)
@@ -79,6 +79,25 @@ export function resolvePermissions<T>(
     }
   }
   return result
+}
+
+// NOTE(radomski): Multisig that has a threshold that's higher than one will
+// not follow through into his members. This means that the permission path
+// "ends" on the multisig. But if the multisig has a module we want to give
+// that module an act permission. An undesirable effect of it is removing the
+// path which ends at the multisig. It's still there because now we have two
+// entry points into the chain. Either the participants sign over the threshold
+// and the permission is executed or the module under the right conditions will
+// act in place of the members through the multisig.
+//
+// If the multisig has a threshold higher than one and it gives an act
+// permission to somebody copy the route to it.
+function isMultisigAndActsIndependently<T>(node: Node<T>): boolean {
+  return (
+    node.threshold > 1 &&
+    node.edges.find((e) => e.permission === 'member') !== undefined &&
+    node.edges.find((e) => e.permission === 'act') !== undefined
+  )
 }
 
 function followThrough<T>(
@@ -122,9 +141,17 @@ function followThrough<T>(
     }
   }
 
+  const canActIndependently: boolean = [
+    node.canActIndependently ?? false,
+    isMultisigAndActsIndependently(node),
+  ].some((z) => z)
+
   if (!followed) {
     result.push(resolved)
+  } else if (canActIndependently) {
+    result.push(structuredClone(resolved))
   }
+
   return result
 }
 

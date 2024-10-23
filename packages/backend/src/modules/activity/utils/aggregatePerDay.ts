@@ -1,5 +1,5 @@
+import { ActivityRecord } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { ActivityRecordWithoutRatio } from '../types'
 
 type Block = {
   txsCount: number
@@ -11,8 +11,8 @@ type Block = {
 export function aggregatePerDay(
   projectId: ProjectId,
   blocks: Block[],
-): ActivityRecordWithoutRatio[] {
-  const result = new Map<number, ActivityRecordWithoutRatio>()
+): ActivityRecord[] {
+  const result = new Map<number, ActivityRecord>()
 
   for (const block of blocks) {
     const timestamp = block.timestamp.toStartOf('day')

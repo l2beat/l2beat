@@ -1,7 +1,7 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { PentagonRosetteCell } from '~/components/rosette/pentagon/pentagon-rosette-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
-import { getCommonProjectColumns } from '~/components/table/common-project-columns'
+import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
 import { EM_DASH } from '~/consts/characters'
 import { ChevronIcon } from '~/icons/chevron'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
@@ -79,7 +79,7 @@ const risksColumn = columnHelper.accessor('risks', {
       ctx.row.original.daBridge !== 'multiple' &&
       ctx.row.original.daBridge.type === 'NoBridge'
 
-    if ('accessibility' in value) {
+    if ('relayerFailure' in value) {
       return (
         <PentagonRosetteCell
           className="justify-start"
@@ -96,15 +96,15 @@ const risksColumn = columnHelper.accessor('risks', {
         values={mapRisksToRosetteValues({
           economicSecurity: value.economicSecurity,
           fraudDetection: value.fraudDetection,
-          attestations: {
+          relayerFailure: {
             value: 'Depends on the DA Bridge',
             sentiment: 'neutral',
           },
-          exitWindow: {
+          upgradeability: {
             value: 'Depends on the DA Bridge',
             sentiment: 'neutral',
           },
-          accessibility: {
+          committeeSecurity: {
             value: 'Depends on the DA Bridge',
             sentiment: 'neutral',
           },
@@ -136,7 +136,7 @@ const slashableStakeColumn = columnHelper.accessor('economicSecurity', {
   cell: (ctx) => <DaEconomicSecurityCell value={ctx.getValue()} />,
   meta: {
     tooltip:
-      'The assets that are slashable in case of a data withholding attack (the amount of funds a committee would need to burn to successfully deceive the DA bridge). It’s equal to 2/3 of the total validating stake, if any.',
+      'The assets that are slashable in case of a data withholding attack. For public blockchains, it is equal to 2/3 of the total validating stake.',
   },
 })
 
@@ -155,7 +155,7 @@ const slashableStakeForCustomSystem = columnHelper.accessor(
     meta: {
       align: 'right',
       tooltip:
-        'The assets that are slashable in case of a data withholding attack (the amount of funds a committee would need to burn to successfully deceive the DA bridge). It’s equal to 2/3 of the total validating stake, if any.',
+        'The assets that are slashable in case of a data withholding attack. For public blockchains, it is equal to 2/3 of the total validating stake.',
     },
   },
 )

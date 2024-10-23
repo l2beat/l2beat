@@ -1,9 +1,9 @@
-import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { assert, EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { LogDescription } from 'ethers/lib/utils'
 import { IProvider } from '../provider/IProvider'
 
-export type DateAddresses = [string, EthereumAddress[]]
+export type DateAddresses = [string, Hash256, EthereumAddress[]]
 
 export async function getPastUpgradesSingleEvent(
   provider: IProvider,
@@ -52,6 +52,10 @@ export async function getPastUpgradesSingleEvent(
     })
     assert(implementation !== undefined)
 
-    return [dateMap[l.blockNumber] ?? 'ERROR', [implementation]]
+    return [
+      dateMap[l.blockNumber] ?? 'ERROR',
+      Hash256(l.transactionHash),
+      [implementation],
+    ]
   })
 }

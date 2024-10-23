@@ -1,7 +1,7 @@
-import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { xlayer } from '../../../layer2s/xlayer'
-import { DAC } from '../templates/dac-template'
+import { PolygoncdkDAC } from '../templates/polygoncdk-template'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('xlayer')
@@ -26,9 +26,10 @@ const members = discovery.getContractValue<string[]>(
   'members',
 )
 
-export const xlayerDac = DAC({
+export const xlayerDac = PolygoncdkDAC({
   project: xlayer,
   bridge: {
+    createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     contracts: {
       addresses: [
         discovery.getContractDetails('XLayerValidium', {
@@ -74,10 +75,7 @@ export const xlayerDac = DAC({
     ],
     chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignaturesDAC,
-    totalMembers: membersCountDAC,
+    membersCount: membersCountDAC,
     transactionDataType: DacTransactionDataType.TransactionData,
-    members: {
-      type: 'unknown',
-    },
   },
 })

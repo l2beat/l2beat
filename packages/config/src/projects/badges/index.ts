@@ -151,7 +151,7 @@ export const badges = {
     display: {
       name: 'Data Availability Committee',
       description:
-        'There is a Data Availability Commitee that provides/attests to data availability',
+        'There is a Data Availability Committee that provides/attests to data availability',
     },
     type: BadgeType.DA,
   },

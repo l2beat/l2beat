@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { donatuz } from '../../../layer3s/donatuz'
 import { NO_BRIDGE } from '../templates/no-bridge-template'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
@@ -9,7 +10,7 @@ import { eigenDAbridge } from './bridges/eigenDABridge'
 export const eigenDA: DaLayer = {
   id: 'eigen-da',
   type: 'DaLayer',
-  kind: 'DAC',
+  kind: 'DA Service',
   systemCategory: 'public',
   display: {
     name: 'EigenDA',
@@ -62,9 +63,20 @@ export const eigenDA: DaLayer = {
     The EigenDARollupUtils.sol library's verifyBlob() function can then used by scaling solutions to verify that a data blob is included within a confirmed batch in the EigenDAServiceManager. 
 
   `,
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: 'the disperser posts an invalid commitment and EigenDA operators do not make the data available for verification.',
+      },
+      {
+        category: 'Users can be censored if',
+        text: 'the disperser does not distribute data to EigenDA operators.',
+      },
+    ],
   },
   bridges: [
     NO_BRIDGE({
+      createdAt: new UnixTime(1724426960), // 2024-08-23T15:29:20Z
       layer: 'EigenDA',
       description:
         'The risk profile in this page refers to scaling solutions that do not integrate with a data availability bridge.',
@@ -79,7 +91,7 @@ export const eigenDA: DaLayer = {
     layer: (layer) => layer === 'EigenDA',
   }),
   risks: {
-    economicSecurity: DaEconomicSecurityRisk.Unknown,
+    economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('EIGEN'),
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
   },
 }

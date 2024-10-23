@@ -1,8 +1,8 @@
-import { ChainId } from '@l2beat/shared-pure'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { getCommittee } from '../../../../discovery/starkware'
 import { apex } from '../../../layer2s/apex'
-import { DAC } from '../templates/dac-template'
+import { StarkexDAC } from '../templates/starkex-template'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('apex')
@@ -34,16 +34,14 @@ const dacConfig =
         membersCount: usdtCommittee.accounts.length,
       }
 
-export const apexDac = DAC({
+export const apexDac = StarkexDAC({
   project: apex,
   bridge: {
+    createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     chain: ChainId.ETHEREUM,
     requiredMembers: dacConfig.requiredSignatures,
-    totalMembers: dacConfig.membersCount,
+    membersCount: dacConfig.membersCount,
     transactionDataType: DacTransactionDataType.StateDiffs,
-    members: {
-      type: 'unknown',
-    },
     contracts: {
       addresses: [
         discovery.getContractDetails(

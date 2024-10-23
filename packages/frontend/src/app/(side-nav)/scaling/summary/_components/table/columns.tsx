@@ -9,9 +9,9 @@ import {
   TypeExplanationTooltip,
 } from '~/components/table/cells/type-cell'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
-import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { sortStages } from '~/components/table/sorting/functions/stage-sorting'
-import { formatNumber } from '~/utils/number-format/format-number'
+import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
+import { formatTps } from '~/utils/number-format/format-tps'
 import { type ScalingSummaryTableRow } from '../../_utils/to-table-rows'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
@@ -89,7 +89,7 @@ export const scalingSummaryColumns = [
 
       return (
         <ValueWithPercentageChange change={data.change}>
-          {formatNumber(ctx.getValue())}
+          {formatTps(ctx.getValue())}
         </ValueWithPercentageChange>
       )
     },
@@ -99,4 +99,9 @@ export const scalingSummaryColumns = [
       tooltip: 'Transactions per second averaged over the past day.',
     },
   }),
+]
+
+export const scalingSummaryValidiumAndOptimiumsColumns = [
+  ...scalingSummaryColumns.slice(0, 4),
+  ...scalingSummaryColumns.slice(6),
 ]

@@ -1,13 +1,13 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
+import { Meta } from '@l2beat/discovery-types'
 import { AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
 import { processAnalysis, sortByKeys } from './toDiscoveryOutput'
 
-const emptyOutputMeta = {
-  descriptions: undefined,
-  roles: undefined,
+const emptyOutputMeta: Meta = {
+  description: undefined,
   issuedPermissions: undefined,
   receivedPermissions: undefined,
   directlyReceivedPermissions: undefined,
@@ -97,9 +97,9 @@ describe(processAnalysis.name, () => {
     expect(result).toEqual({
       contracts: [],
       eoas: [
-        { ...emptyOutputMeta, address: ADDRESS_A },
-        { ...emptyOutputMeta, address: ADDRESS_B },
-        { ...emptyOutputMeta, address: ADDRESS_C },
+        { ...emptyOutputMeta, address: ADDRESS_A, name: undefined },
+        { ...emptyOutputMeta, address: ADDRESS_B, name: undefined },
+        { ...emptyOutputMeta, address: ADDRESS_C, name: undefined },
       ],
       abis: {},
     })
@@ -161,7 +161,7 @@ describe(processAnalysis.name, () => {
           sourceHashes: [],
         },
       ],
-      eoas: [{ ...emptyOutputMeta, address: ADDRESS_D }],
+      eoas: [{ ...emptyOutputMeta, address: ADDRESS_D, name: undefined }],
       abis: CONTRACT_C.abis,
     })
   })
@@ -205,7 +205,7 @@ describe(processAnalysis.name, () => {
           sourceHashes: [],
         },
       ],
-      eoas: [{ ...emptyOutputMeta, address: ADDRESS_D }],
+      eoas: [{ ...emptyOutputMeta, address: ADDRESS_D, name: undefined }],
       abis: {
         ...CONTRACT_A.abis,
         ...CONTRACT_B.abis,

@@ -1,3 +1,62 @@
+Generated with discovered.json: 0x3bbfe0fb4fecc0858ec4b3d36797099ba3b01a60
+
+# Diff at Mon, 21 Oct 2024 12:49:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e660599f23a07618fe949a07be1f516ce44f1914 block: 20985756
+- current block number: 20985756
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20985756 (main branch discovery), not current.
+
+```diff
+    contract SwellMultisig (0x20fDF47509C5eFC0e1101e3CE443691781C17F90) {
+    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem
+      descriptions:
+-        ["Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem"]
+      description:
++        "Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem"
+    }
+```
+
+Generated with discovered.json: 0x3548a172928f0df4e9b68a8a9ed5bc2ac911e55e
+
+# Diff at Thu, 17 Oct 2024 14:02:51 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b22da46ad96e1d0cb3e7d83e3293eb7b76990953 block: 20964349
+- current block number: 20985756
+
+## Description
+
+1 signer removed from SwellMultisig.
+
+## Watched changes
+
+```diff
+    contract SwellMultisig (0x20fDF47509C5eFC0e1101e3CE443691781C17F90) {
+    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem
+      values.$members.6:
+-        "0x5b27b9279251904AaF2127463eeFf91E0037F725"
+      values.$members.5:
+-        "0x66Ed79Ee4865c1cb4574b42d467C7Fee28bB4D59"
++        "0x5b27b9279251904AaF2127463eeFf91E0037F725"
+      values.$members.4:
+-        "0x042d200e5375204F022570361f3913b245488091"
++        "0x66Ed79Ee4865c1cb4574b42d467C7Fee28bB4D59"
+      values.multisigThreshold:
+-        "4 of 7 (57%)"
++        "4 of 6 (67%)"
+    }
+```
+
 Generated with discovered.json: 0x9fd2289066719a81108d257277c08f5a7d8d0f18
 
 # Diff at Mon, 14 Oct 2024 14:18:25 GMT:

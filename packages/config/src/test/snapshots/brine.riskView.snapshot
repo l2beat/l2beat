@@ -1,0 +1,53 @@
+// brine riskView didn't change 1
+
+{
+  dataAvailability: {
+    definingMetric: 0.5
+    description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 2/4 that is tasked with protecting and supplying the data."
+    sentiment: "bad"
+    sources: [
+      {
+        contract: "Committee"
+        references: [
+          "https://etherscan.io/address/0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446#code#F1#L60"
+        ]
+      }
+    ]
+    value: "External (DAC)"
+  }
+  destinationToken: {
+    description: "Tokens transferred are considered canonical on the destination chain."
+    sentiment: "good"
+    value: "Canonical"
+  }
+  exitWindow: {
+    definingMetric: -604800
+    description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
+    secondLine: undefined
+    sentiment: "bad"
+    value: "None"
+  }
+  proposerFailure: {
+    definingMetric: Infinity
+    description: "Users are able to trustlessly exit by submitting a Merkle proof of funds."
+    sentiment: "good"
+    value: "Use escape hatch"
+  }
+  sequencerFailure: {
+    definingMetric: 604800
+    description: "Users can force the sequencer to include a withdrawal transaction by submitting a request through L1. If the sequencer censors or is down for  for more than 7d, users can use the exit hatch to withdraw their funds."
+    sentiment: "good"
+    value: "Force via L1"
+  }
+  stateValidation: {
+    definingMetric: Infinity
+    description: "STARKs are zero knowledge proofs that ensure state correctness."
+    sentiment: "good"
+    value: "ZK proofs (ST)"
+  }
+  validatedBy: {
+    description: "Smart contracts on Ethereum validate all bridge transfers."
+    sentiment: "good"
+    value: "Ethereum"
+  }
+}

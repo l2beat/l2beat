@@ -5,7 +5,6 @@ export const selectActivity = [
   'timestamp',
   'count',
   'uopsCount',
-  'ratio',
   'start',
   'end',
 ] as const satisfies (keyof Activity)[]

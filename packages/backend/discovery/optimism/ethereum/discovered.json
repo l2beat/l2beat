@@ -11,8 +11,22 @@
       "sourceHashes": [
         "0x998654cb64c7fc216505bdb3322b20e7d7c95704005228ad1f878bc631c4af8d"
       ],
-      "descriptions": [
-        "used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig"
+      "description": "used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig",
+      "receivedPermissions": [
+        {
+          "permission": "guard",
+          "target": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "via": [
+            { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
+            { "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"
+        }
       ],
       "sinceTimestamp": 1717149791,
       "values": {
@@ -89,7 +103,12 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "roles": ["Guardian"],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "guard",
+          "target": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1716902219,
       "values": {
@@ -131,9 +150,7 @@
       "sourceHashes": [
         "0x8144cb5736a5296d5afc2433b58a1fcb99f995c2836fd16aeca18eda86fb2f91"
       ],
-      "descriptions": [
-        "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute."
-      ],
+      "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
       "sinceTimestamp": 1724975099,
       "values": {
         "$immutable": true,
@@ -150,9 +167,7 @@
         "0x6ceb1548721dae770e84e1c1059e5415381a07285cd687fdb032aa2d320e1f20"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Contains the latest confirmed state root that can be used as a starting point in a dispute game."
-      ],
+      "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -172,14 +187,17 @@
         "$pastUpgrades": [
           [
             "2024-05-16T19:17:35.000Z",
+            "0xa3a31ec801f08783b49b1e45953090616e7cadd3b85950983823c49a428665ac",
             ["0x6B7da1647Aa9684F54B2BEeB699F91F31cd35Fb9"]
           ],
           [
             "2024-09-11T00:54:59.000Z",
+            "0x3bd2d811d0298313e6fb75f0e69fb54280c9b4f2e60f8f04472aaa166c285641",
             ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
           ],
           [
             "2024-09-11T00:54:59.000Z",
+            "0x3bd2d811d0298313e6fb75f0e69fb54280c9b4f2e60f8f04472aaa166c285641",
             ["0x1B5CC028A4276597C607907F24E1AC05d3852cFC"]
           ]
         ],
@@ -217,30 +235,37 @@
         "$pastUpgrades": [
           [
             "2023-06-06T15:58:47.000Z",
+            "0x76bceccd7d44656f5a129a600a6120091570b897c1d45c18cd7134cfe67c2537",
             ["0x5efa852e92800D1C982711761e45c3FE39a2b6D8"]
           ],
           [
             "2024-02-26T21:44:11.000Z",
+            "0x3f7c36a1d636cdb23bf4f9171c27ebe58b73f4c0e6a33dbaac2c2f3c142faf50",
             ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
           ],
           [
             "2024-02-26T21:44:11.000Z",
+            "0x3f7c36a1d636cdb23bf4f9171c27ebe58b73f4c0e6a33dbaac2c2f3c142faf50",
             ["0x33A032ec93Ec0C492Ec4BF0B30D5f51986E5a314"]
           ],
           [
             "2024-04-11T20:49:59.000Z",
+            "0x4758bd62359bc69d7e8a0faaf5308d826379c23258d689a7430d5c0ad0361ad2",
             ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
           ],
           [
             "2024-04-11T20:49:59.000Z",
+            "0x4758bd62359bc69d7e8a0faaf5308d826379c23258d689a7430d5c0ad0361ad2",
             ["0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1"]
           ],
           [
             "2024-06-10T16:42:59.000Z",
+            "0xbe810ed6e1e827930bd46cde42c4883662ddb6d244a26af2f0409cc2782bee61",
             ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
           ],
           [
             "2024-06-10T16:42:59.000Z",
+            "0xbe810ed6e1e827930bd46cde42c4883662ddb6d244a26af2f0409cc2782bee61",
             ["0xF56D96B2535B932656d3c04Ebf51baBff241D886"]
           ]
         ],
@@ -316,9 +341,7 @@
         "0x1cc8a3b7de3d2c54c4706bb3f3015714d3b56647fc9fbfd6f8b068f5f63c1c25"
       ],
       "proxyType": "resolved delegate proxy",
-      "descriptions": [
-        "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
-      ],
+      "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "categories": ["Core"],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1624400997,
@@ -328,42 +351,52 @@
         "$pastUpgrades": [
           [
             "2021-06-22T22:29:27.000Z",
+            "0xd19d40f11c375feeea5fe47576ce98a3a08caac68b2a8a52fb95dd1a76dd205a",
             ["0x16393737D09d2722AD13DcA3cA8C3DB957699F1D"]
           ],
           [
             "2021-06-26T00:52:47.000Z",
+            "0x98a05fb521b3349dd92cff2e104d78c6c318add003bb501c0d416b2b4d75df8a",
             ["0xbfba066b5cA610Fe70AdCE45FcB622F945891bb0"]
           ],
           [
             "2021-11-11T17:37:56.000Z",
+            "0x2625aa2013fd1a650fb0264d2746be597e12f846baa48a68fe14539c200ed6dc",
             ["0x0000000000000000000000000000000000000000"]
           ],
           [
             "2021-11-11T19:29:14.000Z",
+            "0xbabb37235bd38ae5a29717590eedfd9b02f84a12b890b2126feac68f223d7448",
             ["0xd9166833FF12A5F900ccfBf2c8B62a90F1Ca1FD5"]
           ],
           [
             "2023-06-06T15:58:47.000Z",
+            "0x76bceccd7d44656f5a129a600a6120091570b897c1d45c18cd7134cfe67c2537",
             ["0x0000000000000000000000000000000000000000"]
           ],
           [
             "2023-06-06T18:24:11.000Z",
+            "0xe2ff41f9bdf03d5455f55539b8b9c350276a179ca7f79322e2077d7c1ffb1268",
             ["0x2150Bc3c64cbfDDbaC9815EF615D6AB8671bfe43"]
           ],
           [
             "2024-02-26T21:44:11.000Z",
+            "0x3f7c36a1d636cdb23bf4f9171c27ebe58b73f4c0e6a33dbaac2c2f3c142faf50",
             ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
           ],
           [
             "2024-02-26T21:44:11.000Z",
+            "0x3f7c36a1d636cdb23bf4f9171c27ebe58b73f4c0e6a33dbaac2c2f3c142faf50",
             ["0xa95B24af19f8907390eD15f8348A1a5e6Ccbc5C6"]
           ],
           [
             "2024-04-11T20:49:59.000Z",
+            "0x4758bd62359bc69d7e8a0faaf5308d826379c23258d689a7430d5c0ad0361ad2",
             ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
           ],
           [
             "2024-04-11T20:49:59.000Z",
+            "0x4758bd62359bc69d7e8a0faaf5308d826379c23258d689a7430d5c0ad0361ad2",
             ["0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"]
           ]
         ],
@@ -594,9 +627,7 @@
         "0x482ec6e91304ac39a3fb4505634427bddfddee23b8e93a4f7f995ca5083ae3c3"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Used to bridge ERC-721 tokens from host chain to this chain."
-      ],
+      "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -616,26 +647,32 @@
         "$pastUpgrades": [
           [
             "2022-10-04T22:08:59.000Z",
+            "0xe8f632050cdf538eebcc5ab4a0ecb426966acfd14118e4fb8b181948449ae70d",
             ["0x3268Ed09f76e619331528270B6267D4d2C5Ab5C2"]
           ],
           [
             "2023-06-06T18:24:11.000Z",
+            "0xe2ff41f9bdf03d5455f55539b8b9c350276a179ca7f79322e2077d7c1ffb1268",
             ["0x3268Ed09f76e619331528270B6267D4d2C5Ab5C2"]
           ],
           [
             "2024-02-26T21:44:11.000Z",
+            "0x3f7c36a1d636cdb23bf4f9171c27ebe58b73f4c0e6a33dbaac2c2f3c142faf50",
             ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
           ],
           [
             "2024-02-26T21:44:11.000Z",
+            "0x3f7c36a1d636cdb23bf4f9171c27ebe58b73f4c0e6a33dbaac2c2f3c142faf50",
             ["0xc599Fa757c2bCaA5aE3753Ab129237F38C10da0b"]
           ],
           [
             "2024-04-11T20:49:59.000Z",
+            "0x4758bd62359bc69d7e8a0faaf5308d826379c23258d689a7430d5c0ad0361ad2",
             ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
           ],
           [
             "2024-04-11T20:49:59.000Z",
+            "0x4758bd62359bc69d7e8a0faaf5308d826379c23258d689a7430d5c0ad0361ad2",
             ["0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d"]
           ]
         ],
@@ -676,9 +713,7 @@
         "0x4c5ac4e53576924cabbd2a471f368a541bc3f4b1f53fa41a389692fcc62f6176"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."
-      ],
+      "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -698,22 +733,27 @@
         "$pastUpgrades": [
           [
             "2023-06-06T18:24:11.000Z",
+            "0xe2ff41f9bdf03d5455f55539b8b9c350276a179ca7f79322e2077d7c1ffb1268",
             ["0xaE849EFA4BcFc419593420e14707996936E365E2"]
           ],
           [
             "2024-02-26T21:44:11.000Z",
+            "0x3f7c36a1d636cdb23bf4f9171c27ebe58b73f4c0e6a33dbaac2c2f3c142faf50",
             ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
           ],
           [
             "2024-02-26T21:44:11.000Z",
+            "0x3f7c36a1d636cdb23bf4f9171c27ebe58b73f4c0e6a33dbaac2c2f3c142faf50",
             ["0x74e273220Fa1cB62Fd756FE6CbDA8BBb89404deD"]
           ],
           [
             "2024-04-11T20:49:59.000Z",
+            "0x4758bd62359bc69d7e8a0faaf5308d826379c23258d689a7430d5c0ad0361ad2",
             ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
           ],
           [
             "2024-04-11T20:49:59.000Z",
+            "0x4758bd62359bc69d7e8a0faaf5308d826379c23258d689a7430d5c0ad0361ad2",
             ["0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846"]
           ]
         ],
@@ -733,9 +773,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "displayName": "L1ERC20TokenBridge",
-      "descriptions": [
-        "Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally."
-      ],
+      "description": "Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally.",
       "sinceTimestamp": 1659687799,
       "values": {
         "$admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
@@ -743,10 +781,12 @@
         "$pastUpgrades": [
           [
             "2022-08-05T08:23:19.000Z",
+            "0x1bc90e7c6fe12e03691f7eccf025f3a244ea5a4888c7fb274f45f5e1004110ca",
             ["0x29C5c51A031165CE62F964966A6399b81165EFA4"]
           ],
           [
             "2024-10-11T16:21:11.000Z",
+            "0xc7bc3019721ecf320698f2897b329d1930f64661100a5fa159181146088e03c2",
             ["0x168Cfea1Ad879d7032B3936eF3b0E90790b6B6D4"]
           ]
         ],
@@ -815,9 +855,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "displayName": "DelayedWETH",
-      "descriptions": [
-        "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds."
-      ],
+      "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -838,6 +876,7 @@
         "$pastUpgrades": [
           [
             "2024-08-29T23:45:23.000Z",
+            "0xb5cf8f61fadb175bde0f7df2b7fe5f6837534f5d76d46c22b4bd5d0873c0deaa",
             ["0x71e966Ae981d1ce531a7b6d23DC0f27B38409087"]
           ]
         ],
@@ -895,11 +934,47 @@
         "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
-      ],
+      "description": "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
       "categories": ["Upgrades&Governance"],
       "issuedPermissions": [
+        {
+          "permission": "guard",
+          "target": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+          "via": [
+            {
+              "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
+              "delay": 0
+            },
+            {
+              "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "permission": "guard",
+          "target": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
+          "via": [
+            {
+              "address": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
+              "delay": 0
+            },
+            {
+              "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "permission": "guard",
+          "target": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
+          "via": [
+            {
+              "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
+              "delay": 0
+            }
+          ]
+        },
         {
           "permission": "upgrade",
           "target": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
@@ -918,14 +993,17 @@
         "$pastUpgrades": [
           [
             "2024-01-22T20:19:59.000Z",
+            "0x8ba0e42b89cde22310b644ed30fd44e4a348619a165a54c908e7dc341e9bbd0c",
             ["0x53c165169401764778F780a69701385eb0FF19B7"]
           ],
           [
             "2024-06-10T18:29:23.000Z",
+            "0xe361c0d4ae3aebc94b3f281ee372fbb1cbdb0c33ca8b1b35e7f3b009b2fcbdb0",
             ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
           ],
           [
             "2024-06-10T18:29:23.000Z",
+            "0xe361c0d4ae3aebc94b3f281ee372fbb1cbdb0c33ca8b1b35e7f3b009b2fcbdb0",
             ["0x53c165169401764778F780a69701385eb0FF19B7"]
           ]
         ],
@@ -947,9 +1025,7 @@
         "0x1010ff7f40ab4d53e6d9996aefa04423dabe9d0e22fac2d02b330ed3aa2c5740"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
-      ],
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.",
       "categories": ["Gateways&Escrows"],
       "issuedPermissions": [
         {
@@ -993,6 +1069,22 @@
         "0x263aadde480629cd3ca5704cc7d4e7df809d437e68f8d9864039801ddf820367"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "guard",
+          "target": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "via": [
+            { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
+            { "address": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1610850364,
       "values": {
@@ -1049,9 +1141,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "displayName": "DelayedWETH",
-      "descriptions": [
-        "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds."
-      ],
+      "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1072,6 +1162,7 @@
         "$pastUpgrades": [
           [
             "2024-08-29T23:45:35.000Z",
+            "0x25ff142069370a51e79a6c20e066cb5f976667fcd0d31203afed8cccfb864c09",
             ["0x71e966Ae981d1ce531a7b6d23DC0f27B38409087"]
           ]
         ],
@@ -1178,30 +1269,37 @@
         "$pastUpgrades": [
           [
             "2023-06-06T18:24:11.000Z",
+            "0xe2ff41f9bdf03d5455f55539b8b9c350276a179ca7f79322e2077d7c1ffb1268",
             ["0x28a55488fef40005309e2DA0040DbE9D300a64AB"]
           ],
           [
             "2024-02-26T21:44:11.000Z",
+            "0x3f7c36a1d636cdb23bf4f9171c27ebe58b73f4c0e6a33dbaac2c2f3c142faf50",
             ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
           ],
           [
             "2024-02-26T21:44:11.000Z",
+            "0x3f7c36a1d636cdb23bf4f9171c27ebe58b73f4c0e6a33dbaac2c2f3c142faf50",
             ["0xaBAbe63514dDd6277356F8cc3d6518aA8BDEB4de"]
           ],
           [
             "2024-04-11T20:49:59.000Z",
+            "0x4758bd62359bc69d7e8a0faaf5308d826379c23258d689a7430d5c0ad0361ad2",
             ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
           ],
           [
             "2024-04-11T20:49:59.000Z",
+            "0x4758bd62359bc69d7e8a0faaf5308d826379c23258d689a7430d5c0ad0361ad2",
             ["0x2D778797049FE9259d947D1ED8e5442226dFB589"]
           ],
           [
             "2024-06-10T16:42:59.000Z",
+            "0xbe810ed6e1e827930bd46cde42c4883662ddb6d244a26af2f0409cc2782bee61",
             ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
           ],
           [
             "2024-06-10T16:42:59.000Z",
+            "0xbe810ed6e1e827930bd46cde42c4883662ddb6d244a26af2f0409cc2782bee61",
             ["0xe2F826324b2faf99E513D16D266c3F80aE87832B"]
           ]
         ],
@@ -1240,6 +1338,13 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "guard",
+          "target": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "via": [{ "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }]
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1707420419,
       "values": {
@@ -1277,8 +1382,12 @@
       "sourceHashes": [
         "0x9624d67fb3738cf1ce1e1f48e2cf433e9373345386943d12f1d751d6b8475cd6"
       ],
-      "descriptions": [
-        "allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe."
+      "description": "allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
+        }
       ],
       "sinceTimestamp": 1724111315,
       "values": {
@@ -1296,9 +1405,7 @@
       "sourceHashes": [
         "0xe5211497d15a7ea75577cf992ab6093dd0f6083f45c955f0136737810e44c205"
       ],
-      "descriptions": [
-        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
-      ],
+      "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -1330,9 +1437,7 @@
         "0x7f307d6191215a72b6c24c01b3c2fc87c84f7fb346790132e58736caa2d1dd14"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them."
-      ],
+      "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1353,6 +1458,7 @@
         "$pastUpgrades": [
           [
             "2024-05-16T19:17:35.000Z",
+            "0x2c16c813ff50e9e09a3c58508a9b90293c896f1f91534d09a5002f50bc8760ff",
             ["0xc641A33cab81C559F2bd4b21EA34C290E2440C2B"]
           ]
         ],
@@ -2347,8 +2453,8 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
-    "gnosisSafeModules/DeputyGuardianModule": "0xd3930cda89001876a722ed430ea8ed07e4823c83ed910e621744eccab9becba1",
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
+    "gnosisSafeModules/DeputyGuardianModule": "0x0cc34179bb0493633cd2618454587cf0cced70e01678f49c9633c6ffcf5af9e9",
     "gnosisSafeModules/LivenessModule": "0x93a18dea68cf1d0abddfc33adec077c82356344dd7b49ae5542b16ca9319bb91",
     "lido/L1LidoTokensBridge": "0x866030d4f677c30fdec28900c3b26212997d0271bdb90eb1f37b9b4db45241aa",
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
@@ -2360,6 +2466,6 @@
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
     "opstack/MIPS": "0x2c304ef99a23cb31331231c111188b04a54bacddeaac088b13abd2c81ff74217",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
-    "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837"
+    "opstack/SuperchainConfig": "0x76190197170f60e32f3e466ca757cb0bde1055ea134384678dd0911e7a5338ef"
   }
 }

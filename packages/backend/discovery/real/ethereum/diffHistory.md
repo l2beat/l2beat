@@ -1,3 +1,220 @@
+Generated with discovered.json: 0x3e022d3a7109d1a1efadcbab9be9d416a7ea6ba8
+
+# Diff at Mon, 21 Oct 2024 12:47:42 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e660599f23a07618fe949a07be1f516ce44f1914 block: 20941805
+- current block number: 20941805
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20941805 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0) {
+    +++ description: State batches / commitments get posted here.
+      descriptions:
+-        ["State batches / commitments get posted here."]
+      description:
++        "State batches / commitments get posted here."
+    }
+```
+
+```diff
+    contract RollupProxy (0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      descriptions:
+-        ["Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."]
+      description:
++        "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
+    }
+```
+
+Generated with discovered.json: 0x8f82bc93903bfee84f9dd779c5efb202554a3ca5
+
+# Diff at Mon, 21 Oct 2024 11:09:25 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20941805
+- current block number: 20941805
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20941805 (main branch discovery), not current.
+
+```diff
+    contract ChallengeManager (0x369001149fe80892665a7b0c17fe8Db6BeFC7F5d) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754"]
+      values.$pastUpgrades.0.1:
+-        ["0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754"]
++        "0xba3fd77d6025e002501d3e0e0a2bb7326be1d2b9d45a15a0a8f51d412783180d"
+    }
+```
+
+```diff
+    contract Bridge (0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab"]
+      values.$pastUpgrades.0.1:
+-        ["0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab"]
++        "0xba3fd77d6025e002501d3e0e0a2bb7326be1d2b9d45a15a0a8f51d412783180d"
+    }
+```
+
+```diff
+    contract L1OrbitGatewayRouter (0x490f337Ac108b2a555183f5b5fd2ee84a7F45a18) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x5Ff3feD7aad041ACe66E4ecDd7AfbCC43b6446b0"]
+      values.$pastUpgrades.0.1:
+-        ["0x5Ff3feD7aad041ACe66E4ecDd7AfbCC43b6446b0"]
++        "0x816e110bc6a5c398f160b13e96856e756ea11282881dcb718e95efe00bd1fb7e"
+    }
+```
+
+```diff
+    contract ERC20RollupEventInbox (0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x302275067251F5FcdB9359Bda735fD8f7A4A54c0"]
+      values.$pastUpgrades.0.1:
+-        ["0x302275067251F5FcdB9359Bda735fD8f7A4A54c0"]
++        "0xba3fd77d6025e002501d3e0e0a2bb7326be1d2b9d45a15a0a8f51d412783180d"
+    }
+```
+
+```diff
+    contract SequencerInbox (0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0) {
+    +++ description: State batches / commitments get posted here.
+      values.$pastUpgrades.0.2:
++        ["0x873484Ba63353C8b71210ce123B465512d408B27"]
+      values.$pastUpgrades.0.1:
+-        ["0x873484Ba63353C8b71210ce123B465512d408B27"]
++        "0xba3fd77d6025e002501d3e0e0a2bb7326be1d2b9d45a15a0a8f51d412783180d"
+    }
+```
+
+```diff
+    contract Outbox (0x8592Ca44dE1D354A20F75160F5602E5933D33761) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x19431dc37098877486532250FB3158140717C00C"]
+      values.$pastUpgrades.0.1:
+-        ["0x19431dc37098877486532250FB3158140717C00C"]
++        "0xba3fd77d6025e002501d3e0e0a2bb7326be1d2b9d45a15a0a8f51d412783180d"
+    }
+```
+
+```diff
+    contract Bridger (0xbf2F26cadbC10C4d61ac7e424D514d79a12126f8) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x977cA9732E618D32552BA16a52f258cEFadf970a"]
+      values.$pastUpgrades.0.1:
+-        ["0x977cA9732E618D32552BA16a52f258cEFadf970a"]
++        "0xff78834db538bd6b5be8abf30e32fd3861100c0fbde76f7c11b1cd1a3a2d6c0f"
+    }
+```
+
+```diff
+    contract RollupProxy (0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      values.$pastUpgrades.0.2:
++        ["0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A","0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"]
+      values.$pastUpgrades.0.1:
+-        ["0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A","0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"]
++        "0xba3fd77d6025e002501d3e0e0a2bb7326be1d2b9d45a15a0a8f51d412783180d"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x6c21303F5986180B1394d2C89f3e883890E2867b"]
+      values.$pastUpgrades.0.1:
+-        ["0x6c21303F5986180B1394d2C89f3e883890E2867b"]
++        "0xba3fd77d6025e002501d3e0e0a2bb7326be1d2b9d45a15a0a8f51d412783180d"
+    }
+```
+
+```diff
+    contract Inbox (0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x31fAAAB44e74eB408d1FC69A14806B4b9cA09da2"]
+      values.$pastUpgrades.0.1:
+-        ["0x31fAAAB44e74eB408d1FC69A14806B4b9cA09da2"]
++        "0xba3fd77d6025e002501d3e0e0a2bb7326be1d2b9d45a15a0a8f51d412783180d"
+    }
+```
+
+```diff
+    contract L1OrbitERC20Gateway (0xfC89B875970122E24C6C5ADd4Dea139443943ea7) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xe80b4E0ed5e92d865F4708eeE0E1564287a7D848"]
+      values.$pastUpgrades.0.1:
+-        ["0xe80b4E0ed5e92d865F4708eeE0E1564287a7D848"]
++        "0x816e110bc6a5c398f160b13e96856e756ea11282881dcb718e95efe00bd1fb7e"
+    }
+```
+
+Generated with discovered.json: 0xf55d6fcfc19e4943a8ebdad9c3c6847efdd03f9a
+
+# Diff at Wed, 16 Oct 2024 11:39:32 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a3d139b799cc0b28e5e912febb17464d4e5aef5d block: 20941805
+- current block number: 20941805
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20941805 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0) {
+    +++ description: State batches / commitments get posted here.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0xB032ff02cd6425e4b816137207AA8560932180f1","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "sequence"
+      issuedPermissions.0.target:
+-        "0xB032ff02cd6425e4b816137207AA8560932180f1"
++        "0x0e00df1afC8574762Ac4C4D8E5D1a19bD6A8Fa2E"
+    }
+```
+
+```diff
+    contract RollupProxy (0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      issuedPermissions.1:
++        {"permission":"validate","target":"0x4b8Fbc3006F256dd470B070d6c70fAb413Fceb62","via":[]}
+    }
+```
+
 Generated with discovered.json: 0xb085b6a914c777e4a67d0bafce9fe842720533bd
 
 # Diff at Mon, 14 Oct 2024 10:54:46 GMT:

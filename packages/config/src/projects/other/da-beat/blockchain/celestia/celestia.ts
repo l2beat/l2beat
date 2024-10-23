@@ -76,9 +76,24 @@ export const celestia: DaLayer = {
     Applications can then retrieve the data by querying the Celestia blockchain for the data root of the blob and the namespace of the application. The data can be reconstructed by querying the Celestia network for the shares of the data matrix and reconstructing the data using the erasure coding scheme.
 
     `,
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: `a dishonest majority of Celestia validators finalize an unavailable block, and there aren't light nodes on the network verifying data availability, or they fail at social signaling unavailable data.`,
+      },
+      {
+        category: 'Funds can be lost if',
+        text: 'a dishonest majority of Celestia validators finalize an unavailable block, and the number of light nodes on the network is not enough to ensure block reconstruction.',
+      },
+      {
+        category: 'Funds can be lost if',
+        text: 'a dishonest majority of Celestia validators finalize an unavailable block, and full nodes block reconstruction time is longer than the erasure-coding fraud proof window.',
+      },
+    ],
   },
   bridges: [
     NO_BRIDGE({
+      createdAt: new UnixTime(1721138888), // 2024-07-16T14:08:08Z
       layer: 'Celestia',
       description:
         'The risk profile in this page refers to scaling solutions that do not integrate with a data availability bridge.',

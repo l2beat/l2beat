@@ -1,3 +1,447 @@
+Generated with discovered.json: 0xfdb811d5e6f2119b5d04bc582fd01e163fbd85c3
+
+# Diff at Mon, 21 Oct 2024 12:48:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e660599f23a07618fe949a07be1f516ce44f1914 block: 20985707
+- current block number: 20985707
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20985707 (main branch discovery), not current.
+
+```diff
+    contract StrategiesBeacon (0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9) {
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+      descriptions:
+-        ["UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory."]
+      description:
++        "UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory."
+    }
+```
+
+```diff
+    contract TokenHopper (0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563) {
+    +++ description: Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner).
+      descriptions:
+-        ["Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner)."]
+      description:
++        "Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner)."
+    }
+```
+
+```diff
+    contract StrategyFactory (0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647) {
+    +++ description: Factory contract for permissionless strategy creation via beacon proxies.
+      descriptions:
+-        ["Factory contract for permissionless strategy creation via beacon proxies."]
+      description:
++        "Factory contract for permissionless strategy creation via beacon proxies."
+    }
+```
+
+```diff
+    contract RewardsCoordinator (0x7750d328b314EfFa365A0402CcfD489B80B0adda) {
+    +++ description: Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.
+      descriptions:
+-        ["Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators."]
+      description:
++        "Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators."
+    }
+```
+
+```diff
+    contract RewardAllStakersActionGenerator (0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE) {
+    +++ description: Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers.
+      descriptions:
+-        ["Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers."]
+      description:
++        "Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers."
+    }
+```
+
+```diff
+    contract EIGENProxyAdmin (0xB8915E195121f2B5D989Ec5727fd47a5259F1CEC) {
+    +++ description: ProxyAdmin owner of the timelock contract owning the EIGEN token contract.
+      descriptions:
+-        ["ProxyAdmin owner of the timelock contract owning the EIGEN token contract."]
+      description:
++        "ProxyAdmin owner of the timelock contract owning the EIGEN token contract."
+    }
+```
+
+Generated with discovered.json: 0xd25bf51ffa281417d2a32b1baa27156176b03877
+
+# Diff at Mon, 21 Oct 2024 11:10:00 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20985707
+- current block number: 20985707
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20985707 (main branch discovery), not current.
+
+```diff
+    contract AVSDirectory (0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xdAbdB3Cd346B7D5F5779b0B614EdE1CC9DcBA5b7"]
+      values.$pastUpgrades.0.1:
+-        ["0xdAbdB3Cd346B7D5F5779b0B614EdE1CC9DcBA5b7"]
++        "0x40573c645ceaa15139d3fe9a736ff5cc230ccb1c11961dcd9a3152d990c1fb71"
+    }
+```
+
+```diff
+    contract DelegationManager (0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0x1784BE6401339Fc0Fedf7E9379409f5c1BfE9dda"]
+      values.$pastUpgrades.2.1:
+-        ["0x1784BE6401339Fc0Fedf7E9379409f5c1BfE9dda"]
++        "0x39a8f50ef3a5e0cba11b2556bcf3f95ece0797de15b2fdde2f5820361da19b13"
+      values.$pastUpgrades.1.2:
++        ["0xf97E97649Da958d290e84E6D571c32F4b7F475e4"]
+      values.$pastUpgrades.1.1:
+-        ["0xf97E97649Da958d290e84E6D571c32F4b7F475e4"]
++        "0x7748101d59e54a345c328c4ec60713a378445cb1a35da6042bcab6ee22fcfd8b"
+      values.$pastUpgrades.0.2:
++        ["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]
+      values.$pastUpgrades.0.1:
+-        ["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]
++        "0x0445e4e9a7cab1da004f9c1dda8f56d27bdd14f18c3a4640ed44e0a2b60f84e7"
+    }
+```
+
+```diff
+    contract StrategyFactory (0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647) {
+    +++ description: Factory contract for permissionless strategy creation via beacon proxies.
+      values.$pastUpgrades.0.2:
++        ["0x3e07cc2D34C8E0965f5BA45Ac1E960e535155c74"]
+      values.$pastUpgrades.0.1:
+-        ["0x3e07cc2D34C8E0965f5BA45Ac1E960e535155c74"]
++        "0x5902550cb862b59ffcde620f813c350e6b860d4e518ce22987345337e055cf55"
+    }
+```
+
+```diff
+    contract RewardsCoordinator (0x7750d328b314EfFa365A0402CcfD489B80B0adda) {
+    +++ description: Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.
+      values.$pastUpgrades.1.2:
++        ["0xb6738A8E7793D44c5895B6A6F2a62F6bF86Ba8d2"]
+      values.$pastUpgrades.1.1:
+-        ["0xb6738A8E7793D44c5895B6A6F2a62F6bF86Ba8d2"]
++        "0x1d48a09a7b2985e2714c87e0d98a68eb51da3938b5e0c663b633bcf985b535a5"
+      values.$pastUpgrades.0.2:
++        ["0x5bf7c13D5FAdba224ECB3D5C0a67A231D1628785"]
+      values.$pastUpgrades.0.1:
+-        ["0x5bf7c13D5FAdba224ECB3D5C0a67A231D1628785"]
++        "0x4bbe87b7d5fe27023599c6801806ca7bc875a1247dbc5d083608906cccaf910a"
+    }
+```
+
+```diff
+    contract bEIGEN token (0x83E9115d334D248Ce39a6f36144aEaB5b3456e75) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xF2b225815F70c9b327DC9db758A36c92A4279b17"]
+      values.$pastUpgrades.1.1:
+-        ["0xF2b225815F70c9b327DC9db758A36c92A4279b17"]
++        "0x7872b53468133d1b46178a3bceb24fb05be5bda619b0d9cf90283f31c633498c"
+      values.$pastUpgrades.0.2:
++        ["0xB91c69Af3eE022bd0a59Da082945914BFDcEFFE3"]
+      values.$pastUpgrades.0.1:
+-        ["0xB91c69Af3eE022bd0a59Da082945914BFDcEFFE3"]
++        "0xd2601d188881524bbdfdb54765d58370650ffbb316488fd5fd3cbd319eff6e58"
+    }
+```
+
+```diff
+    contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0x70f44C13944d49a236E3cD7a94f48f5daB6C619b"]
+      values.$pastUpgrades.2.1:
+-        ["0x70f44C13944d49a236E3cD7a94f48f5daB6C619b"]
++        "0x39a8f50ef3a5e0cba11b2556bcf3f95ece0797de15b2fdde2f5820361da19b13"
+      values.$pastUpgrades.1.2:
++        ["0x5d25EEf8CfEdaA47d31fE2346726dE1c21e342Fb"]
+      values.$pastUpgrades.1.1:
+-        ["0x5d25EEf8CfEdaA47d31fE2346726dE1c21e342Fb"]
++        "0x81b4b8a4240e0ffeb65a97334f9c09c674c1e6f983ad78fd49695e4e7c1d5115"
+      values.$pastUpgrades.0.2:
++        ["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]
+      values.$pastUpgrades.0.1:
+-        ["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]
++        "0x1a21d3f2c0010ef91f57e2be2f5a85cddacc6c882d1868b89cbf1bb43c552e39"
+    }
+```
+
+```diff
+    contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
+    +++ description: None
+      values.$pastUpgrades.3.2:
++        ["0x731A0aD160e407393Ff662231Add6Dd145AD3FEa"]
+      values.$pastUpgrades.3.1:
+-        ["0x731A0aD160e407393Ff662231Add6Dd145AD3FEa"]
++        "0x7c4214538630d20d915cd9871694ba7a2eece833dccabc7e43a8a9d2c73bc267"
+      values.$pastUpgrades.2.2:
++        ["0xe4297e3DaDBc7D99e26a2954820f514CB50C5762"]
+      values.$pastUpgrades.2.1:
+-        ["0xe4297e3DaDBc7D99e26a2954820f514CB50C5762"]
++        "0x39a8f50ef3a5e0cba11b2556bcf3f95ece0797de15b2fdde2f5820361da19b13"
+      values.$pastUpgrades.1.2:
++        ["0xEB86a5c40FdE917E6feC440aBbCDc80E3862e111"]
+      values.$pastUpgrades.1.1:
+-        ["0xEB86a5c40FdE917E6feC440aBbCDc80E3862e111"]
++        "0x080396d23f4e4b23c8c5dc9491368b3c9ea0eaa96627b60d66259fe35322054e"
+      values.$pastUpgrades.0.2:
++        ["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]
+      values.$pastUpgrades.0.1:
+-        ["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]
++        "0x91d2c5fe26523df0e735f27df02925f42f66843eba7a414acc6bbdcc10bd6785"
+    }
+```
+
+```diff
+    contract Slasher (0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0xF3234220163a757edf1E11a8a085638D9B236614"]
+      values.$pastUpgrades.2.1:
+-        ["0xF3234220163a757edf1E11a8a085638D9B236614"]
++        "0x39a8f50ef3a5e0cba11b2556bcf3f95ece0797de15b2fdde2f5820361da19b13"
+      values.$pastUpgrades.1.2:
++        ["0xef31c292801f24f16479DD83197F1E6AeBb8d6d8"]
+      values.$pastUpgrades.1.1:
+-        ["0xef31c292801f24f16479DD83197F1E6AeBb8d6d8"]
++        "0x286a5077d3215898af9a939b9e2929d411c75317092ca3564543e8c152512293"
+      values.$pastUpgrades.0.2:
++        ["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]
+      values.$pastUpgrades.0.1:
+-        ["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]
++        "0x41b40b2c78742f68f888ea35b58b97a58f3589c1f3de213a38dcd2ee952a2f3d"
+    }
+```
+
+```diff
+    contract EIGEN token (0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83) {
+    +++ description: None
+      values.$pastUpgrades.3.2:
++        ["0x17f56E911C279bad67eDC08acbC9cf3DC4eF26A0"]
+      values.$pastUpgrades.3.1:
+-        ["0x17f56E911C279bad67eDC08acbC9cf3DC4eF26A0"]
++        "0x7872b53468133d1b46178a3bceb24fb05be5bda619b0d9cf90283f31c633498c"
+      values.$pastUpgrades.2.2:
++        ["0x7EC354C84680112d3cfF1544ec1Eb19ca583700b"]
+      values.$pastUpgrades.2.1:
+-        ["0x7EC354C84680112d3cfF1544ec1Eb19ca583700b"]
++        "0x1eb1b7a3310abbe835214ff252cb5551699ba4f17e58afd294babb812215751e"
+      values.$pastUpgrades.1.2:
++        ["0xfe288960BEb8b189303f49B070CB0bA52e44cF32"]
+      values.$pastUpgrades.1.1:
+-        ["0xfe288960BEb8b189303f49B070CB0bA52e44cF32"]
++        "0xfcff4a62e4ebf275073172f537ba6628ae9b426b50d74b3ffd4974763fe1082f"
+      values.$pastUpgrades.0.2:
++        ["0xB0e9a10f09ED4304df238624d014205B0786572F"]
+      values.$pastUpgrades.0.1:
+-        ["0xB0e9a10f09ED4304df238624d014205B0786572F"]
++        "0x0ba1c010d668a69e16ec93f5554e6bae75b2213b76dd29f9667a549cd6bac675"
+    }
+```
+
+Generated with discovered.json: 0xad00a9cff2bba247ac1f22b3ccd9ceeaf88c4135
+
+# Diff at Thu, 17 Oct 2024 13:53:55 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@b22da46ad96e1d0cb3e7d83e3293eb7b76990953 block: 20972929
+- current block number: 20985707
+
+## Description
+
+Added target permission to eigen timelock.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20972929 (main branch discovery), not current.
+
+```diff
+    contract AVSDirectory (0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xA6Db1A8C5a981d1536266D2a393c5F8dDb210EAF"
++        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
+      issuedPermissions.0.via.2:
++        {"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444","delay":0}
+      issuedPermissions.0.via.1.address:
+-        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
++        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      issuedPermissions.0.via.0.address:
+-        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
++        "0xA6Db1A8C5a981d1536266D2a393c5F8dDb210EAF"
+      issuedPermissions.0.via.0.delay:
+-        0
++        864000
+    }
+```
+
+```diff
+    contract DelegationManager (0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xA6Db1A8C5a981d1536266D2a393c5F8dDb210EAF"
++        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
+      issuedPermissions.0.via.2:
++        {"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444","delay":0}
+      issuedPermissions.0.via.1.address:
+-        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
++        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      issuedPermissions.0.via.0.address:
+-        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
++        "0xA6Db1A8C5a981d1536266D2a393c5F8dDb210EAF"
+      issuedPermissions.0.via.0.delay:
+-        0
++        864000
+    }
+```
+
+```diff
+    contract StrategyFactory (0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647) {
+    +++ description: Factory contract for permissionless strategy creation via beacon proxies.
+      issuedPermissions.0.target:
+-        "0xA6Db1A8C5a981d1536266D2a393c5F8dDb210EAF"
++        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
+      issuedPermissions.0.via.2:
++        {"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444","delay":0}
+      issuedPermissions.0.via.1.address:
+-        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
++        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      issuedPermissions.0.via.0.address:
+-        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
++        "0xA6Db1A8C5a981d1536266D2a393c5F8dDb210EAF"
+      issuedPermissions.0.via.0.delay:
+-        0
++        864000
+    }
+```
+
+```diff
+    contract RewardsCoordinator (0x7750d328b314EfFa365A0402CcfD489B80B0adda) {
+    +++ description: Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.
+      issuedPermissions.0.target:
+-        "0xA6Db1A8C5a981d1536266D2a393c5F8dDb210EAF"
++        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
+      issuedPermissions.0.via.2:
++        {"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444","delay":0}
+      issuedPermissions.0.via.1.address:
+-        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
++        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      issuedPermissions.0.via.0.address:
+-        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
++        "0xA6Db1A8C5a981d1536266D2a393c5F8dDb210EAF"
+      issuedPermissions.0.via.0.delay:
+-        0
++        864000
+    }
+```
+
+```diff
+    contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xA6Db1A8C5a981d1536266D2a393c5F8dDb210EAF"
++        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
+      issuedPermissions.0.via.2:
++        {"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444","delay":0}
+      issuedPermissions.0.via.1.address:
+-        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
++        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      issuedPermissions.0.via.0.address:
+-        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
++        "0xA6Db1A8C5a981d1536266D2a393c5F8dDb210EAF"
+      issuedPermissions.0.via.0.delay:
+-        0
++        864000
+    }
+```
+
+```diff
+    contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xA6Db1A8C5a981d1536266D2a393c5F8dDb210EAF"
++        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
+      issuedPermissions.0.via.2:
++        {"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444","delay":0}
+      issuedPermissions.0.via.1.address:
+-        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
++        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      issuedPermissions.0.via.0.address:
+-        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
++        "0xA6Db1A8C5a981d1536266D2a393c5F8dDb210EAF"
+      issuedPermissions.0.via.0.delay:
+-        0
++        864000
+    }
+```
+
+```diff
+    contract EigenLayer Timelock (0xA6Db1A8C5a981d1536266D2a393c5F8dDb210EAF) {
+    +++ description: None
+      name:
+-        "Timelock"
++        "EigenLayer Timelock"
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF","via":[{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","target":"0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A","via":[{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","target":"0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647","via":[{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","target":"0x7750d328b314EfFa365A0402CcfD489B80B0adda","via":[{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","target":"0x858646372CC42E1A627fcE94aa7A7033e7CF075A","via":[{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","target":"0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338","via":[{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]},{"permission":"upgrade","target":"0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd","via":[{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]}]
+    }
+```
+
+```diff
+    contract EigenLayerOperationsMultisig (0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF","via":[{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0xA6Db1A8C5a981d1536266D2a393c5F8dDb210EAF","delay":864000}]},{"permission":"upgrade","target":"0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A","via":[{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0xA6Db1A8C5a981d1536266D2a393c5F8dDb210EAF","delay":864000}]},{"permission":"upgrade","target":"0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647","via":[{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0xA6Db1A8C5a981d1536266D2a393c5F8dDb210EAF","delay":864000}]},{"permission":"upgrade","target":"0x7750d328b314EfFa365A0402CcfD489B80B0adda","via":[{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0xA6Db1A8C5a981d1536266D2a393c5F8dDb210EAF","delay":864000}]},{"permission":"upgrade","target":"0x858646372CC42E1A627fcE94aa7A7033e7CF075A","via":[{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0xA6Db1A8C5a981d1536266D2a393c5F8dDb210EAF","delay":864000}]},{"permission":"upgrade","target":"0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338","via":[{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0xA6Db1A8C5a981d1536266D2a393c5F8dDb210EAF","delay":864000}]},{"permission":"upgrade","target":"0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd","via":[{"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0xA6Db1A8C5a981d1536266D2a393c5F8dDb210EAF","delay":864000}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0xA6Db1A8C5a981d1536266D2a393c5F8dDb210EAF","delay":864000}]
+    }
+```
+
+```diff
+    contract Slasher (0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xA6Db1A8C5a981d1536266D2a393c5F8dDb210EAF"
++        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
+      issuedPermissions.0.via.2:
++        {"address":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444","delay":0}
+      issuedPermissions.0.via.1.address:
+-        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
++        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      issuedPermissions.0.via.0.address:
+-        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
++        "0xA6Db1A8C5a981d1536266D2a393c5F8dDb210EAF"
+      issuedPermissions.0.via.0.delay:
+-        0
++        864000
+    }
+```
+
 Generated with discovered.json: 0xa1d2c9aeb745c143a3b314098a6a398c6368092c
 
 # Diff at Tue, 15 Oct 2024 19:04:47 GMT:

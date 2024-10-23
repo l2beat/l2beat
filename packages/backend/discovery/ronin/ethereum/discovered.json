@@ -32,14 +32,17 @@
         "$pastUpgrades": [
           [
             "2024-07-31T08:25:35.000Z",
+            "0xc27c133224cfdedc302afcc3ee36878f6cd706edd2d84d7933911ca5703e6f3c",
             ["0x0ac26945032143f6196d4bb5Ae03592BfAf822FD"]
           ],
           [
             "2024-08-06T09:05:11.000Z",
+            "0xb87845e4e3a93dd8add11bc2d20a94056f3a034277717f90f127b782f9bd1f21",
             ["0x3BA040BC32352E2dC21f9A85C5573E84696a74Dd"]
           ],
           [
             "2024-08-06T09:14:59.000Z",
+            "0xa88f4f7faf165a2053d9b4d818f0066d5962357ee4ee87b63f000e3082bd6456",
             ["0x0ac26945032143f6196d4bb5Ae03592BfAf822FD"]
           ]
         ],
@@ -198,26 +201,32 @@
         "$pastUpgrades": [
           [
             "2022-06-22T07:40:30.000Z",
+            "0x8f2924a52e63564c9cb0b119d72dc8290daa39c59cbe02e7f1ab6b2160ac9aa4",
             ["0x2DBA725f0a3485382a7F125a31cBF4361539aF73"]
           ],
           [
             "2022-06-28T11:16:22.000Z",
+            "0xbb60c9f020bd6f9c6737b28290f75272d2090f529d8450deafdf5d675fa8bcc0",
             ["0x71356E37e0368Bd10bFDbF41dC052fE5FA24cD05"]
           ],
           [
             "2023-04-12T07:14:23.000Z",
+            "0xa090f035d1895ab7b69fc72303e122d0c565becf9c6c684ecf7257c0311233af",
             ["0xa67BA5315AF4961Eb937158032AF9300C657dAcD"]
           ],
           [
             "2023-10-24T03:52:23.000Z",
+            "0xbbbeadcbf7df225dfef18cb3add0f29cbd2e90921acb7a3851b3a250832d12fe",
             ["0x72E28A9009Ad12dE019BFF418CD210D4bbc3D403"]
           ],
           [
             "2024-08-06T08:48:47.000Z",
+            "0x855dd3b1194e3b889f4667b6a0996220e350e034d35d3eab29b4f23bc205767e",
             ["0xfc274EC92bBb1A1472884558d1B5CaaC6F8220Ee"]
           ],
           [
             "2024-08-30T03:41:35.000Z",
+            "0x167c741a87278fa0a50f0ed15e89edd1d05ed43a5808476e564347f1d34f784d",
             ["0xD6c4986bbe09f2dDb262B4611b0BA06891be605e"]
           ]
         ],
@@ -715,6 +724,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
   }
 }

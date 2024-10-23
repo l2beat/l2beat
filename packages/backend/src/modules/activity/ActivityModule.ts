@@ -1,5 +1,11 @@
-import { Logger } from '@l2beat/backend-tools'
-import { BlockExplorerClient } from '@l2beat/shared'
+import { Logger, RateLimiter } from '@l2beat/backend-tools'
+import {
+  BlockExplorerClient,
+  HttpClient2,
+  RetryHandler,
+  RpcClient2,
+} from '@l2beat/shared'
+import { BlockProvider } from '@l2beat/shared'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { Config } from '../../config'
 import {
@@ -32,6 +38,8 @@ import { RpcTxsCountProvider } from './services/providers/RpcTxsCountProvider'
 import { StarkexTxsCountProvider } from './services/providers/StarkexTxsCountProvider'
 import { StarknetTxsCountProvider } from './services/providers/StarknetTxsCountProvider'
 import { ZKsyncLiteTxsCountProvider } from './services/providers/ZKsyncLiteTxsCountProvider'
+import { RpcUopsAnalyzer } from './services/uops/analyzers/RpcUopsAnalyzer'
+import { StarknetUopsAnalyzer } from './services/uops/analyzers/StarknetUopsAnalyzer'
 import { getBatchSizeFromCallsPerMinute } from './utils/getBatchSizeFromCallsPerMinute'
 
 export function createActivityModule(
@@ -87,16 +95,10 @@ function createActivityIndexers(
   activityConfig.projects.forEach((project) => {
     switch (project.config.type) {
       case 'rpc': {
-        const rpcClient = peripherals.getClient(RpcClient, {
-          url: project.config.url,
-          callsPerMinute: project.config.callsPerMinute,
-          chain: project.id,
-        })
-        const txsCountProvider = new RpcTxsCountProvider(
-          rpcClient,
-          project.id,
-          project.config.assessCount,
-        )
+        const { rpcClient, txsCountProvider } =
+          project.id !== ProjectId('zkfair')
+            ? createProviderForRpc(peripherals, project)
+            : createProviderForZkFair(project, logger)
 
         const [blockTargetIndexer, activityIndexer] = createBlockBasedIndexers(
           clock,
@@ -139,9 +141,11 @@ function createActivityIndexers(
           url: project.config.url,
           callsPerMinute: project.config.callsPerMinute,
         })
+        const starknetUopsAnalyzer = new StarknetUopsAnalyzer()
         const txsCountProvider = new StarknetTxsCountProvider(
           starknetClient,
           project.id,
+          starknetUopsAnalyzer,
         )
 
         const [blockTargetIndexer, activityIndexer] = createBlockBasedIndexers(
@@ -228,6 +232,75 @@ function createActivityIndexers(
     }
   })
   return indexers
+}
+
+function createProviderForRpc(
+  peripherals: Peripherals,
+  project: {
+    id: ProjectId
+    config: ActivityTransactionConfig
+    blockExplorerConfig:
+      | EtherscanChainConfig
+      | BlockscoutChainConfig
+      | undefined
+  },
+) {
+  assert(project.config.type === 'rpc')
+
+  const rpcClient = peripherals.getClient(RpcClient, {
+    url: project.config.url,
+    callsPerMinute: project.config.callsPerMinute,
+    chain: project.id,
+  })
+
+  const rpcUopsAnalyzer = new RpcUopsAnalyzer()
+  const txsCountProvider = new RpcTxsCountProvider(
+    rpcClient,
+    project.id,
+    rpcUopsAnalyzer,
+    project.config.assessCount,
+  )
+
+  return { rpcClient, txsCountProvider }
+}
+
+function createProviderForZkFair(
+  project: {
+    id: ProjectId
+    config: ActivityTransactionConfig
+    blockExplorerConfig:
+      | EtherscanChainConfig
+      | BlockscoutChainConfig
+      | undefined
+  },
+  _logger: Logger,
+) {
+  assert(project.config.type === 'rpc')
+  assert(project.id === ProjectId('zkfair'))
+
+  const logger = _logger.tag(project.id)
+
+  const rpcClient = new RpcClient2({
+    logger,
+    http: new HttpClient2(),
+    rateLimiter: new RateLimiter({
+      callsPerMinute: project.config.callsPerMinute,
+    }),
+    retryHandler: RetryHandler.UNRELIABLE_API(logger),
+    url: project.config.url,
+  })
+
+  const blockProvider = new BlockProvider([rpcClient])
+
+  const rpcUopsAnalyzer = new RpcUopsAnalyzer()
+  const txsCountProvider = new RpcTxsCountProvider(
+    blockProvider,
+    project.id,
+    rpcUopsAnalyzer,
+    project.config.assessCount,
+  )
+
+  return { rpcClient, txsCountProvider }
 }
 
 function createBlockBasedIndexers(

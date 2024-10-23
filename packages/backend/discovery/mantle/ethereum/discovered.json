@@ -46,9 +46,7 @@
         "0x25c9049ce3c6e3d0fb455a5ceecf01cc2d9a92f415e869786ef2f2221e85b803"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "This contract stores the number of Mantle DA operators and their public keys. It also store the quorum threshold and the minimum stake required to be part of the quorum."
-      ],
+      "description": "This contract stores the number of Mantle DA operators and their public keys. It also store the quorum threshold and the minimum stake required to be part of the quorum.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -68,10 +66,12 @@
         "$pastUpgrades": [
           [
             "2023-06-28T06:00:47.000Z",
+            "0x9d5d1ea782248f506d764d83e7cbf9f5f3b612481d064348e55e2b9192b6202b",
             ["0x4b64d1Fd7cf1230468AEdF3a401cFe74cA9B366f"]
           ],
           [
             "2023-06-28T06:05:35.000Z",
+            "0x43792ca3e5547575169e63a6c3d65cb80aea4d078f8b74c67e0db11a14d64012",
             ["0x64F4244eEA17a361bb919A28F614C3ad1aC565ad"]
           ]
         ],
@@ -113,9 +113,7 @@
         "0x943049d488a42420a15934ca27ae2fc159c395727536ee64c38afdde4215c561"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Contract managing different investment strategies, forked from EigenLayer StrategyManager."
-      ],
+      "description": "Contract managing different investment strategies, forked from EigenLayer StrategyManager.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -135,10 +133,12 @@
         "$pastUpgrades": [
           [
             "2023-06-28T05:42:35.000Z",
+            "0xeb7dc422709447d9ec652639cd04c817fe931d17a444f63c347c26b76aa64720",
             ["0xa288E750401E6d15A62e3400C87d3ee331650a0C"]
           ],
           [
             "2023-06-28T05:46:11.000Z",
+            "0xdbf4832652157cf7ac7025536a4ea46c98eb9ea0fd8aea5d9806ae0a88ec037f",
             ["0x7C4813A9AF2FEA4ca765a26b05d128926E94e72E"]
           ]
         ],
@@ -198,7 +198,16 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "roles": ["Challenger", "Guardian"],
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"
+        },
+        {
+          "permission": "guard",
+          "target": "0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1686902471,
       "values": {
@@ -232,10 +241,18 @@
         "0x45368d302fba850124115aa8ee67238f47d47d89c2b1b8c5dfd39818369e6cea"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
-      ],
+      "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
       "issuedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "target": "0x6667961f5e9C98A76a48767522150889703Ed77D",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
@@ -260,6 +277,7 @@
         "$pastUpgrades": [
           [
             "2024-03-15T08:19:35.000Z",
+            "0xa5fff128e999954c7dfe8e3360d0844e439425124922e85cd32fdcf2e3582247",
             ["0xD1230865641561653406906Fb08873F011c19080"]
           ]
         ],
@@ -287,9 +305,7 @@
         "0x13e07c3c64aef03cfd7f5c01b2b1b443fd1dfb19c4128447fe316bb5fcd128cd"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT."
-      ],
+      "description": "MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -310,6 +326,7 @@
         "$pastUpgrades": [
           [
             "2023-06-20T06:16:35.000Z",
+            "0x8f7867724cfba4b9b1b19ca140711809b40dda9ae245caf7bcff9473a5a7e45e",
             ["0xCd368c1d80120b0Dd92447c87eB570154f8e685c"]
           ]
         ],
@@ -337,13 +354,16 @@
         "0xb2a3bda11c08328ecb46ec5789f3264be5d816bc218a5024a4cafd1c59017160"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
-      ],
+      "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "issuedPermissions": [
         {
           "permission": "configure",
           "target": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
+          "via": []
+        },
+        {
+          "permission": "sequence",
+          "target": "0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749",
           "via": []
         },
         {
@@ -365,6 +385,7 @@
         "$pastUpgrades": [
           [
             "2024-03-15T01:47:47.000Z",
+            "0x667a55493b70812eedb69586be570fa87bb305ff046ebd1419cdc71163f770ac",
             ["0x6Dbb7D9C5dC60844B8CF442ddC6Be081c060B2E3"]
           ]
         ],
@@ -629,6 +650,7 @@
         "$pastUpgrades": [
           [
             "2023-07-02T07:18:23.000Z",
+            "0x2b2bda7f01a3baec5d0e7b369e36172365d35b9eb9137c074d3260308c838ce8",
             ["0xDF401d4229Fc6cA52238f7e55A04FA8EBc24C55a"]
           ]
         ],
@@ -657,9 +679,7 @@
         "0xf52658c0dbe857c858ac93c9c3dad449fff36d7e6454b67ac61a5bf3dcecca30"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "This contract is the main entry point for data availability. It is responsible for storing transaction data headers and confirming the data store by verifying operators signatures."
-      ],
+      "description": "This contract is the main entry point for data availability. It is responsible for storing transaction data headers and confirming the data store by verifying operators signatures.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -680,10 +700,12 @@
         "$pastUpgrades": [
           [
             "2023-06-28T05:59:35.000Z",
+            "0x09367d337ef0395ea117d413b4a06a2dca0e5e7e1f4e40270716e26dfe750a35",
             ["0x4b64d1Fd7cf1230468AEdF3a401cFe74cA9B366f"]
           ],
           [
             "2023-06-28T06:04:23.000Z",
+            "0x8c0b0f089bb73496f62f5676329337f1c6df8c9678fced830fb8ae25573c04e0",
             ["0xAB42127980a3bff124E6465e097a5fC97228827e"]
           ]
         ],
@@ -734,9 +756,7 @@
         "0x430d270834512dafe98bf268d6912f12a10c5a6287e7463830a22e4616dd63a0"
       ],
       "proxyType": "resolved delegate proxy",
-      "descriptions": [
-        "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
-      ],
+      "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "categories": ["Core"],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1687953527,
@@ -746,14 +766,17 @@
         "$pastUpgrades": [
           [
             "2023-06-28T13:13:59.000Z",
+            "0x3ef2116cdd9366a646b6625affcf0cbe96bb3c59c3ffc629432d3f79ff1f886c",
             ["0x4692363048d0F32a2dE7816860D48fff0c61B24B"]
           ],
           [
             "2024-03-15T01:47:47.000Z",
+            "0x667a55493b70812eedb69586be570fa87bb305ff046ebd1419cdc71163f770ac",
             ["0x0000000000000000000000000000000000000000"]
           ],
           [
             "2024-03-15T08:19:35.000Z",
+            "0xa5fff128e999954c7dfe8e3360d0844e439425124922e85cd32fdcf2e3582247",
             ["0xb8DE82551fA4BA3bE4B3d9097763EDBeED541308"]
           ]
         ],
@@ -785,9 +808,7 @@
         "0x763c5728a19538783edf38c17731f9cf79ff6f38bfa4bce61333cef0aac5452e"
       ],
       "displayName": "AddressManager",
-      "descriptions": [
-        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
-      ],
+      "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -861,10 +882,12 @@
         "$pastUpgrades": [
           [
             "2023-06-28T05:59:59.000Z",
+            "0x09d04d4b63ad6b712ebdfb04212905e21e2c64b5ba19cf01bfcc07d66dd652fb",
             ["0x4b64d1Fd7cf1230468AEdF3a401cFe74cA9B366f"]
           ],
           [
             "2023-06-28T06:04:47.000Z",
+            "0x50bd8f78f61dc27f5c2359db587111c67e23cc9de4703a0c8e1657b351461e53",
             ["0x18Dd3cBE484f955217165FEaC6fe928D04a56a72"]
           ]
         ],
@@ -883,9 +906,7 @@
         "0x1cd5cb2fa146b2a5dfb07279a52cd93855b268115912df60292b18394cc532e8"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
-      ],
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -921,7 +942,7 @@
         "0x20018f70ed5942c8b643f26e7f19c6d30f27dead8e6eb6f1127d87a2f2a04589"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": ["Basic do-nothing investment strategy."],
+      "description": "Basic do-nothing investment strategy.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -941,6 +962,7 @@
         "$pastUpgrades": [
           [
             "2023-06-28T05:48:11.000Z",
+            "0xfbe66fac37b117b0700dd1c6711a91362ebf626904438f6f6c336b28db471d76",
             ["0x9FEcF38689349a5CFf97526610CdB27618edc6b9"]
           ]
         ],
@@ -983,10 +1005,12 @@
         "$pastUpgrades": [
           [
             "2023-06-28T05:42:59.000Z",
+            "0x2cd887c0e49e302ecc909ae1ef5987405940228e4cae643f191801919e08a235",
             ["0xa288E750401E6d15A62e3400C87d3ee331650a0C"]
           ],
           [
             "2023-06-28T05:46:35.000Z",
+            "0x199dbe55b2c0f54e8fa60a1eebcac985184a17b405e277c1abde3e8bd9524436",
             ["0xAb00B934DE01c1b4931047125C2ba5B3d6186b85"]
           ]
         ],
@@ -1022,10 +1046,13 @@
         "0x3a064711ad01291b3644b5f657fd8317cd07f19222c9f216e25557d4d69ea295"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
-      ],
+      "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
       "issuedPermissions": [
+        {
+          "permission": "guard",
+          "target": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
@@ -1045,6 +1072,7 @@
         "$pastUpgrades": [
           [
             "2024-03-15T08:19:35.000Z",
+            "0xa5fff128e999954c7dfe8e3360d0844e439425124922e85cd32fdcf2e3582247",
             ["0xe1399f54ba2597b4EaDA9E3450c34D393fb131A7"]
           ]
         ],
@@ -1090,10 +1118,12 @@
         "$pastUpgrades": [
           [
             "2023-06-28T06:00:23.000Z",
+            "0xb95bdea06d55863c8b2e41ca71ab8dbe459408d0017f2bbdfaef7e1bf30fbad1",
             ["0x4b64d1Fd7cf1230468AEdF3a401cFe74cA9B366f"]
           ],
           [
             "2023-06-28T06:05:11.000Z",
+            "0x957f5ec20d401a1a74111cb01b0f840afea478a31759b127b37ab8b7faaebb2d",
             ["0x6EE53D3d6e622Ac0296369445AFB3CBBDc57C066"]
           ]
         ],
@@ -1151,7 +1181,7 @@
         "0x20018f70ed5942c8b643f26e7f19c6d30f27dead8e6eb6f1127d87a2f2a04589"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": ["Basic do-nothing investment strategy."],
+      "description": "Basic do-nothing investment strategy.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1171,6 +1201,7 @@
         "$pastUpgrades": [
           [
             "2023-06-28T05:47:23.000Z",
+            "0x4a9c5808169c5a6fabfae05048c44c24dfb04d48815357a215a5af3809123f4f",
             ["0x9FEcF38689349a5CFf97526610CdB27618edc6b9"]
           ]
         ],
@@ -1213,10 +1244,12 @@
         "$pastUpgrades": [
           [
             "2023-06-28T05:59:11.000Z",
+            "0xfa65c0cef1bde23cdca16d9863bf43a83579f73cb40199ed18bda7e4853033df",
             ["0x4b64d1Fd7cf1230468AEdF3a401cFe74cA9B366f"]
           ],
           [
             "2023-06-28T06:03:47.000Z",
+            "0xdde13172352499d10a1ff109d22d19980be5b84634ac36b003b0fb25eaf54508",
             ["0xd8d731624d97a66e012E62208cFc921d7033c564"]
           ]
         ],
@@ -1257,10 +1290,12 @@
         "$pastUpgrades": [
           [
             "2023-06-28T05:41:47.000Z",
+            "0xccf37452298ddc5f50e741118a64f4ee4b8ff9d1ea7c60bda84bf22a3c11a719",
             ["0xa288E750401E6d15A62e3400C87d3ee331650a0C"]
           ],
           [
             "2023-06-28T05:45:11.000Z",
+            "0x609574ecb43797c58ee51ad0c87bdf5dc9f1b6a21f72406c1679f579bb865e5d",
             ["0xAdA69A18B30B3B9235AB2748116bB9195e16aDba"]
           ]
         ],
@@ -1287,7 +1322,12 @@
     { "address": "0x2288226d687c01B7332c2A99A0C5A4a112c63f1e" },
     {
       "address": "0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749",
-      "roles": ["Sequencer"]
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
+        }
+      ]
     },
     { "address": "0x3000BE80ad204D327990eB403654aCd1Eaa8eCeb" },
     { "address": "0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8" },
@@ -1299,7 +1339,12 @@
     { "address": "0x630E93130809c4acE55249229Ee6B043b929A9Ad" },
     {
       "address": "0x6667961f5e9C98A76a48767522150889703Ed77D",
-      "roles": ["Proposer"]
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "target": "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"
+        }
+      ]
     },
     { "address": "0x6cc5A6F5a9E4757790e4068Aa9757226Cb854B64" },
     { "address": "0x717c3DC6Df69c316d6Ac593077BC84Cc86f214A4" },
@@ -2210,12 +2255,12 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
-    "opstack/L2OutputOracle": "0x3115dc811ed6d817de9e32e09c4d7eb9434085e53936b3a2b3733e2041ca263a",
-    "opstack/OptimismPortal": "0x2a32f6874a8c0e85e685fa944143e7968d675fed43b46e7385411ad11f8a1a43",
-    "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
+    "opstack/L2OutputOracle": "0xfc8737561d85bab2fe5e39a7a02436a0cb0e7f96d7a7adc2ee3ea486b391c2fc",
+    "opstack/OptimismPortal": "0x5fb419891d613086f39879ae360e765fdb6d154ef5ea5b2f5f98a4443a1b4839",
+    "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3"
   }
 }

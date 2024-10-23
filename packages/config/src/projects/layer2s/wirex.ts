@@ -32,6 +32,7 @@ const upgradeability = {
 }
 
 export const wirex: Layer2 = polygonCDKStack({
+  createdAt: new UnixTime(1720180654), // 2024-07-05T11:57:34Z
   badges: [Badge.DA.DAC, Badge.RaaS.Gateway],
   additionalPurposes: ['Payments'],
   display: {

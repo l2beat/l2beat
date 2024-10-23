@@ -97,7 +97,7 @@ function Header({ total, unit, change, timeRange }: Props) {
         {loading ? (
           <Skeleton className="my-px h-3.5 w-40" />
         ) : (
-          <p className="whitespace-nowrap text-right text-xs leading-[1.15]">
+          <p className="whitespace-nowrap text-right text-xs">
             <PercentChange value={change} />
             <span className="text-secondary"> / {timeRange}</span>
           </p>

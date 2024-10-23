@@ -1,4 +1,557 @@
-Generated with discovered.json: 0x96a6e137def38b018295d2ec5058b8baf62203bf
+Generated with discovered.json: 0x05326545ba0ebc85d3645002b6070b86e4600617
+
+# Diff at Mon, 21 Oct 2024 12:49:33 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e660599f23a07618fe949a07be1f516ce44f1914 block: 20977175
+- current block number: 20977175
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20977175 (main branch discovery), not current.
+
+```diff
+    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
+      descriptions:
+-        ["This contract provides functionalities for proposing, proving, and verifying blocks."]
+      description:
++        "This contract provides functionalities for proposing, proving, and verifying blocks."
+    }
+```
+
+```diff
+    contract GuardianMinorityProver (0x579A8d63a2Db646284CBFE31FE5082c9989E985c) {
+    +++ description: Verifier contract for blocks proven by Guardian minority.
+      descriptions:
+-        ["Verifier contract for blocks proven by Guardian minority."]
+      description:
++        "Verifier contract for blocks proven by Guardian minority."
+    }
+```
+
+```diff
+    contract ProverSetProxy (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9) {
+    +++ description: A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO.
+      descriptions:
+-        ["A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO."]
+      description:
++        "A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO."
+    }
+```
+
+```diff
+    contract SgxVerifier (0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81) {
+    +++ description: Verifier contract for SGX proven blocks.
+      descriptions:
+-        ["Verifier contract for SGX proven blocks."]
+      description:
++        "Verifier contract for SGX proven blocks."
+    }
+```
+
+```diff
+    contract GuardianProver (0xE3D777143Ea25A6E031d1e921F396750885f43aC) {
+    +++ description: Verifier contract for Guardian proven blocks.
+      descriptions:
+-        ["Verifier contract for Guardian proven blocks."]
+      description:
++        "Verifier contract for Guardian proven blocks."
+    }
+```
+
+Generated with discovered.json: 0x90c9d21da8c146e239bf6a9321d203849e53c916
+
+# Diff at Mon, 21 Oct 2024 11:11:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20977175
+- current block number: 20977175
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20977175 (main branch discovery), not current.
+
+```diff
+    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
+      values.$pastUpgrades.12.2:
++        ["0xf0E6d34937701622cA887a75c150cC23d4FFDf2F"]
+      values.$pastUpgrades.12.1:
+-        ["0xf0E6d34937701622cA887a75c150cC23d4FFDf2F"]
++        "0x8778064404816273804d74c97b051f3865bc03062cfa4b0e9567f4556ad31981"
+      values.$pastUpgrades.11.2:
++        ["0xBA1d90BCfA74163bFE09e8eF609b346507D83231"]
+      values.$pastUpgrades.11.1:
+-        ["0xBA1d90BCfA74163bFE09e8eF609b346507D83231"]
++        "0x7d584f0a645cad61e634f64ffaf7e1bbfb92749878eb25b39ce0e5cf698897c7"
+      values.$pastUpgrades.10.2:
++        ["0xcEe590fACd976B9BDE87BC1B7620B284c5edD2C3"]
+      values.$pastUpgrades.10.1:
+-        ["0xcEe590fACd976B9BDE87BC1B7620B284c5edD2C3"]
++        "0xdf3f0cb2eaca00484c30a5c63fafe8036a9e0f71bd4bab216504bee0f5bfb83f"
+      values.$pastUpgrades.9.2:
++        ["0x5fc54737ECC1de49D58AE1195d4A296257F1E31b"]
+      values.$pastUpgrades.9.1:
+-        ["0x5fc54737ECC1de49D58AE1195d4A296257F1E31b"]
++        "0x13f54109cb7f7507ad03562b06ea8d8b472043186e44252302583bc64acfb20b"
+      values.$pastUpgrades.8.2:
++        ["0xB9E1E58bcF33B79CcfF99c298963546a6c334388"]
+      values.$pastUpgrades.8.1:
+-        ["0xB9E1E58bcF33B79CcfF99c298963546a6c334388"]
++        "0xdb5e926c96d112ce1389da77a927fba6c7d04a711839b9e14777530ebcf83914"
+      values.$pastUpgrades.7.2:
++        ["0x0468745A07de44A9a3138adAc35875ecaf7a20D5"]
+      values.$pastUpgrades.7.1:
+-        ["0x0468745A07de44A9a3138adAc35875ecaf7a20D5"]
++        "0x0bbf7d1258c646f41a02a92a55825b1ebfd3659577d0f2b57b462f8895e23a04"
+      values.$pastUpgrades.6.2:
++        ["0x4b2743B869b85d5F7D8020566f92664995E4f3c5"]
+      values.$pastUpgrades.6.1:
+-        ["0x4b2743B869b85d5F7D8020566f92664995E4f3c5"]
++        "0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131"
+      values.$pastUpgrades.5.2:
++        ["0xE84DC8E2a21e59426542Ab040D77f81d6dB881eE"]
+      values.$pastUpgrades.5.1:
+-        ["0xE84DC8E2a21e59426542Ab040D77f81d6dB881eE"]
++        "0x2c455ae888a23c232bb5c7603657eda010ffadc602a74e626332bc06eaaa3b78"
+      values.$pastUpgrades.4.2:
++        ["0x3505a0700DB72dEc7AbFF1aF231BB5D87aBF2944"]
+      values.$pastUpgrades.4.1:
+-        ["0x3505a0700DB72dEc7AbFF1aF231BB5D87aBF2944"]
++        "0xa603b6d55457e64e18ddae684bfd14948452cdd7b927dd22bf0b83045e8fd028"
+      values.$pastUpgrades.3.2:
++        ["0xa200c2268d77737a8Fd2CA1698dA6eeab2a85CEb"]
+      values.$pastUpgrades.3.1:
+-        ["0xa200c2268d77737a8Fd2CA1698dA6eeab2a85CEb"]
++        "0x187cc99e9bcf2a94f723cf52d85b74b79bdb3872681e2a3808cadbbc3ba301e2"
+      values.$pastUpgrades.2.2:
++        ["0xe0A5D394878723CEAEC8B993e04756DF1f4B44eF"]
+      values.$pastUpgrades.2.1:
+-        ["0xe0A5D394878723CEAEC8B993e04756DF1f4B44eF"]
++        "0xaed098ad0c93113e401f61358f963501f40a046c5b5b659a1610f10120a9a86b"
+      values.$pastUpgrades.1.2:
++        ["0x9fBBedBBcBb753E7214BE08381efE10d89D712fE"]
+      values.$pastUpgrades.1.1:
+-        ["0x9fBBedBBcBb753E7214BE08381efE10d89D712fE"]
++        "0x416560cd96dc75ccffebe889e8d1ab3e08b33f814dc4a2bf7c6f9555071d1f6f"
+      values.$pastUpgrades.0.2:
++        ["0x99Ba70E62cab0cB983e66F72330fBDDC11d85501"]
+      values.$pastUpgrades.0.1:
+-        ["0x99Ba70E62cab0cB983e66F72330fBDDC11d85501"]
++        "0x675a0b8283bd222e1df42a0a4df4b781a1a7c5575729e2e91f89dda879933702"
+    }
+```
+
+```diff
+    contract TaikoToken (0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800) {
+    +++ description: None
+      values.$pastUpgrades.4.2:
++        ["0xcfe803378D79d1180EbF030455040EA6513869dF"]
+      values.$pastUpgrades.4.1:
+-        ["0xcfe803378D79d1180EbF030455040EA6513869dF"]
++        "0xc9f468d33d8d55911e4e5b5c301ed244a5f81ab0f389d2b4f398eb5b89d417ef"
+      values.$pastUpgrades.3.2:
++        ["0x55833dA2962c2330ccCF043ff8037e6D2939bCF6"]
+      values.$pastUpgrades.3.1:
+-        ["0x55833dA2962c2330ccCF043ff8037e6D2939bCF6"]
++        "0x0bbf7d1258c646f41a02a92a55825b1ebfd3659577d0f2b57b462f8895e23a04"
+      values.$pastUpgrades.2.2:
++        ["0x7dF8bfBf0f09e94200b6a158b421e2CCaCc4830F"]
+      values.$pastUpgrades.2.1:
+-        ["0x7dF8bfBf0f09e94200b6a158b421e2CCaCc4830F"]
++        "0x56402f9fd928be890fbd29829b817faffc0780b85e83300a29962c969808cae2"
+      values.$pastUpgrades.1.2:
++        ["0xea53c0f4b129Cf3f3FBA896F9f23ca18246e9B3c"]
+      values.$pastUpgrades.1.1:
+-        ["0xea53c0f4b129Cf3f3FBA896F9f23ca18246e9B3c"]
++        "0x7d82794932540ed9edd259e58f6ef8ae21a49beada7f0224638f888f7149c01c"
+      values.$pastUpgrades.0.2:
++        ["0x9ae1a067F9655DD0511390e3d70Bb25933AE61eb"]
+      values.$pastUpgrades.0.1:
+-        ["0x9ae1a067F9655DD0511390e3d70Bb25933AE61eb"]
++        "0x4f7a1c6ad21fbfeaecab40ea36a3845bf67e22d7770d8a259d62b995cb93cb34"
+    }
+```
+
+```diff
+    contract GuardianMinorityProver (0x579A8d63a2Db646284CBFE31FE5082c9989E985c) {
+    +++ description: Verifier contract for blocks proven by Guardian minority.
+      values.$pastUpgrades.5.2:
++        ["0x3c40CC51e78B4a622622F9A4Df1b40068bc8Df98"]
+      values.$pastUpgrades.5.1:
+-        ["0x3c40CC51e78B4a622622F9A4Df1b40068bc8Df98"]
++        "0x170617251f2345eda4bcbd29e316caa0b014602a44244c60b963382ac7da7748"
+      values.$pastUpgrades.4.2:
++        ["0x7E717FFD6f7dD1008192bDC7193904FaB25BC8A4"]
+      values.$pastUpgrades.4.1:
+-        ["0x7E717FFD6f7dD1008192bDC7193904FaB25BC8A4"]
++        "0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131"
+      values.$pastUpgrades.3.2:
++        ["0x468F6A9C0ad2e9C8370687D2844A9e70fE942d5c"]
+      values.$pastUpgrades.3.1:
+-        ["0x468F6A9C0ad2e9C8370687D2844A9e70fE942d5c"]
++        "0x5a60c5815947a199cc84e1bc75539e01a202597b20c1f87bd9d02f8be6453abd"
+      values.$pastUpgrades.2.2:
++        ["0x253E47F2b1e91F2001d3578aeB24C0ccF464b65e"]
+      values.$pastUpgrades.2.1:
+-        ["0x253E47F2b1e91F2001d3578aeB24C0ccF464b65e"]
++        "0x8030569e293baddbc4e8b26688a1ecf14a231d86c90e9d02dad1e919ea2f3964"
+      values.$pastUpgrades.1.2:
++        ["0x750221E951b77a2Cb4046De41Ec5F6d1aa7942D2"]
+      values.$pastUpgrades.1.1:
+-        ["0x750221E951b77a2Cb4046De41Ec5F6d1aa7942D2"]
++        "0x416560cd96dc75ccffebe889e8d1ab3e08b33f814dc4a2bf7c6f9555071d1f6f"
+      values.$pastUpgrades.0.2:
++        ["0x717DC5E3814591790BcB1fD9259eEdA7c14ce9CF"]
+      values.$pastUpgrades.0.1:
+-        ["0x717DC5E3814591790BcB1fD9259eEdA7c14ce9CF"]
++        "0x77bb98950cca2b6e6640b4b35cecfb40fb302dfd17a0fdd9c1d5f95e91d2b031"
+    }
+```
+
+```diff
+    contract L1RollupAddressManager (0x579f40D0BE111b823962043702cabe6Aaa290780) {
+    +++ description: None
+      values.$pastUpgrades.5.2:
++        ["0x4f6D5D3109C07E77035B410602996e445b18E8E9"]
+      values.$pastUpgrades.5.1:
+-        ["0x4f6D5D3109C07E77035B410602996e445b18E8E9"]
++        "0x7d584f0a645cad61e634f64ffaf7e1bbfb92749878eb25b39ce0e5cf698897c7"
+      values.$pastUpgrades.4.2:
++        ["0x29a88d60246C76E4F28806b9C8a42d2183154900"]
+      values.$pastUpgrades.4.1:
+-        ["0x29a88d60246C76E4F28806b9C8a42d2183154900"]
++        "0x9f787086b4c5e6887eb1d27c286069bcbbcabb1d7ed9f69ab3121c4681cf4b2c"
+      values.$pastUpgrades.3.2:
++        ["0x8EEf314878A7E56314E8DF285d0B0D649C903aF6"]
+      values.$pastUpgrades.3.1:
+-        ["0x8EEf314878A7E56314E8DF285d0B0D649C903aF6"]
++        "0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131"
+      values.$pastUpgrades.2.2:
++        ["0x8Af4669E3068Bae96b92cD73603f5D86beD07a9a"]
+      values.$pastUpgrades.2.1:
+-        ["0x8Af4669E3068Bae96b92cD73603f5D86beD07a9a"]
++        "0xe1ef58455de0b0331228e487d54720290ed8a73f709d2146bd43330d4a360bd3"
+      values.$pastUpgrades.1.2:
++        ["0xF1cA1F1A068468E1dcF90dA6add185467de80943"]
+      values.$pastUpgrades.1.1:
+-        ["0xF1cA1F1A068468E1dcF90dA6add185467de80943"]
++        "0x416560cd96dc75ccffebe889e8d1ab3e08b33f814dc4a2bf7c6f9555071d1f6f"
+      values.$pastUpgrades.0.2:
++        ["0xd912aB787624c9eb96a37e658e9596e114360440"]
+      values.$pastUpgrades.0.1:
+-        ["0xd912aB787624c9eb96a37e658e9596e114360440"]
++        "0xbc9dfeb1062e7fdf8f918368964a41cc07b3edf3f8497a0abd9f426d1c9444bc"
+    }
+```
+
+```diff
+    contract ProverSetProxy (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9) {
+    +++ description: A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO.
+      values.$pastUpgrades.7.2:
++        ["0xCE5a119479337a153CA3bd1b2bF9755c78F2B15A"]
+      values.$pastUpgrades.7.1:
+-        ["0xCE5a119479337a153CA3bd1b2bF9755c78F2B15A"]
++        "0x170617251f2345eda4bcbd29e316caa0b014602a44244c60b963382ac7da7748"
+      values.$pastUpgrades.6.2:
++        ["0x74828E5fe803072AF9Df512B3911B4223572D652"]
+      values.$pastUpgrades.6.1:
+-        ["0x74828E5fe803072AF9Df512B3911B4223572D652"]
++        "0x7d584f0a645cad61e634f64ffaf7e1bbfb92749878eb25b39ce0e5cf698897c7"
+      values.$pastUpgrades.5.2:
++        ["0x518845daA8870bE2C59E49620Fc262AD48953C9a"]
+      values.$pastUpgrades.5.1:
+-        ["0x518845daA8870bE2C59E49620Fc262AD48953C9a"]
++        "0xdf3f0cb2eaca00484c30a5c63fafe8036a9e0f71bd4bab216504bee0f5bfb83f"
+      values.$pastUpgrades.4.2:
++        ["0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1"]
+      values.$pastUpgrades.4.1:
+-        ["0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1"]
++        "0xb4c23d57a1f0916180d0752c57726b634e7707bb7377c93d9e95d19e3695887a"
+      values.$pastUpgrades.3.2:
++        ["0x5D528253fA14cd7F637937de847BE8D5BE0Bf5fd"]
+      values.$pastUpgrades.3.1:
+-        ["0x5D528253fA14cd7F637937de847BE8D5BE0Bf5fd"]
++        "0x0bbf7d1258c646f41a02a92a55825b1ebfd3659577d0f2b57b462f8895e23a04"
+      values.$pastUpgrades.2.2:
++        ["0xd0AEe97712a4a88B75C31E3C61DD2Ce6E514D85F"]
+      values.$pastUpgrades.2.1:
+-        ["0xd0AEe97712a4a88B75C31E3C61DD2Ce6E514D85F"]
++        "0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131"
+      values.$pastUpgrades.1.2:
++        ["0x500735343372Dd6c9B84dBc7a75babf4479742B9"]
+      values.$pastUpgrades.1.1:
+-        ["0x500735343372Dd6c9B84dBc7a75babf4479742B9"]
++        "0x02ed558762eae5f0a930ba4a1047a02d4a793ea48890268c32df04e882f138ff"
+      values.$pastUpgrades.0.2:
++        ["0x34f2B21107AfE3584949c184A1E6236FFDAC4f6F"]
+      values.$pastUpgrades.0.1:
+-        ["0x34f2B21107AfE3584949c184A1E6236FFDAC4f6F"]
++        "0xf3b6af477112d0a8209506c8f310f4eb0713beebb1911ef5d11162d36d93c0ff"
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0x5f73f0AdC7dAA6134Fe751C4a78d524f9384e0B5"]
+      values.$pastUpgrades.2.1:
+-        ["0x5f73f0AdC7dAA6134Fe751C4a78d524f9384e0B5"]
++        "0x46a6d47c15505a1259c64d1e09353680e525b2706dd9e095e15019dda7c1b295"
+      values.$pastUpgrades.1.2:
++        ["0xde1b1FBe7D721af4A56651272ef91A59B7303323"]
+      values.$pastUpgrades.1.1:
+-        ["0xde1b1FBe7D721af4A56651272ef91A59B7303323"]
++        "0x416560cd96dc75ccffebe889e8d1ab3e08b33f814dc4a2bf7c6f9555071d1f6f"
+      values.$pastUpgrades.0.2:
++        ["0xEE8FC1dbb8D345f5bF35dFb939C6f9EdC5fCDAFc"]
+      values.$pastUpgrades.0.1:
+-        ["0xEE8FC1dbb8D345f5bF35dFb939C6f9EdC5fCDAFc"]
++        "0x207dec76298211a2d988b0de3e9a3f8da0edb4524a011e72f28200be08edd4c6"
+    }
+```
+
+```diff
+    contract SharedERC20Vault (0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab) {
+    +++ description: None
+      values.$pastUpgrades.6.2:
++        ["0x7ACFBb369a552C45d402448A4d64b9da54C3FF30"]
+      values.$pastUpgrades.6.1:
+-        ["0x7ACFBb369a552C45d402448A4d64b9da54C3FF30"]
++        "0xee632b50626beb2f7db84c9c7f303f29366f86dfaccd24ddd831ceac714c20e5"
+      values.$pastUpgrades.5.2:
++        ["0xa303784B0557BF1F1FB8b8abEF2B18a005722689"]
+      values.$pastUpgrades.5.1:
+-        ["0xa303784B0557BF1F1FB8b8abEF2B18a005722689"]
++        "0x13f54109cb7f7507ad03562b06ea8d8b472043186e44252302583bc64acfb20b"
+      values.$pastUpgrades.4.2:
++        ["0x75b5E276c5C1e9378E899cb3A87977421980Eb22"]
+      values.$pastUpgrades.4.1:
+-        ["0x75b5E276c5C1e9378E899cb3A87977421980Eb22"]
++        "0x42a1dacf03a4032209ca4a6b922ffe2ebb34925c16a6632d8590cf3374ae59d8"
+      values.$pastUpgrades.3.2:
++        ["0xF8bdaC4E68bA2595Be8381aaa5456917e374E737"]
+      values.$pastUpgrades.3.1:
+-        ["0xF8bdaC4E68bA2595Be8381aaa5456917e374E737"]
++        "0xdb5e926c96d112ce1389da77a927fba6c7d04a711839b9e14777530ebcf83914"
+      values.$pastUpgrades.2.2:
++        ["0x4F750D13005444407D44dAA30922128db0374ca1"]
+      values.$pastUpgrades.2.1:
+-        ["0x4F750D13005444407D44dAA30922128db0374ca1"]
++        "0x02ed558762eae5f0a930ba4a1047a02d4a793ea48890268c32df04e882f138ff"
+      values.$pastUpgrades.1.2:
++        ["0xC722d9f3f8D60288589F7f67a9CFAd34d3B9bf8E"]
+      values.$pastUpgrades.1.1:
+-        ["0xC722d9f3f8D60288589F7f67a9CFAd34d3B9bf8E"]
++        "0x416560cd96dc75ccffebe889e8d1ab3e08b33f814dc4a2bf7c6f9555071d1f6f"
+      values.$pastUpgrades.0.2:
++        ["0x15D9F7e12aEa18DAEF5c651fBf97567CAd4a4BEc"]
+      values.$pastUpgrades.0.1:
+-        ["0x15D9F7e12aEa18DAEF5c651fBf97567CAd4a4BEc"]
++        "0x109f0a0ff2b3b57f3a94bc1dd39159a7e3af9ec0141be56d49d7bb1db94279c2"
+    }
+```
+
+```diff
+    contract SignalService (0x9e0a24964e5397B566c1ed39258e21aB5E35C77C) {
+    +++ description: None
+      values.$pastUpgrades.4.2:
++        ["0xDF8642a1FBFc2014de27E8E87283D6f3eEF315DF"]
+      values.$pastUpgrades.4.1:
+-        ["0xDF8642a1FBFc2014de27E8E87283D6f3eEF315DF"]
++        "0x7d584f0a645cad61e634f64ffaf7e1bbfb92749878eb25b39ce0e5cf698897c7"
+      values.$pastUpgrades.3.2:
++        ["0xB11Cd7bA46a12F238b4Ad831f6F296262C1e652d"]
+      values.$pastUpgrades.3.1:
+-        ["0xB11Cd7bA46a12F238b4Ad831f6F296262C1e652d"]
++        "0xdb5e926c96d112ce1389da77a927fba6c7d04a711839b9e14777530ebcf83914"
+      values.$pastUpgrades.2.2:
++        ["0x3d59c18b31A7D950EF9bd15eD285b6c182E0f0bb"]
+      values.$pastUpgrades.2.1:
+-        ["0x3d59c18b31A7D950EF9bd15eD285b6c182E0f0bb"]
++        "0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131"
+      values.$pastUpgrades.1.2:
++        ["0xB11Cd7bA46a12F238b4Ad831f6F296262C1e652d"]
+      values.$pastUpgrades.1.1:
+-        ["0xB11Cd7bA46a12F238b4Ad831f6F296262C1e652d"]
++        "0x416560cd96dc75ccffebe889e8d1ab3e08b33f814dc4a2bf7c6f9555071d1f6f"
+      values.$pastUpgrades.0.2:
++        ["0xE1d91bAE44B70bD66e8b688B8421fD62dcC33c72"]
+      values.$pastUpgrades.0.1:
+-        ["0xE1d91bAE44B70bD66e8b688B8421fD62dcC33c72"]
++        "0x0898d14da2f38d677085073d2decfb7ca32902406df2e7a84f6615d9c92d4516"
+    }
+```
+
+```diff
+    contract SgxVerifier (0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81) {
+    +++ description: Verifier contract for SGX proven blocks.
+      values.$pastUpgrades.4.2:
++        ["0x7EE4CEF8a945639e09DDf3032e9d95c8d90f07f3"]
+      values.$pastUpgrades.4.1:
+-        ["0x7EE4CEF8a945639e09DDf3032e9d95c8d90f07f3"]
++        "0x2e246e4b4637c4bf13dccea873a30e35e704bafa7f02e30c877ecec7d786e662"
+      values.$pastUpgrades.3.2:
++        ["0xEE5F6648307319263FFBaE91f68ac700b188fF24"]
+      values.$pastUpgrades.3.1:
+-        ["0xEE5F6648307319263FFBaE91f68ac700b188fF24"]
++        "0x170617251f2345eda4bcbd29e316caa0b014602a44244c60b963382ac7da7748"
+      values.$pastUpgrades.2.2:
++        ["0xB0b782cf0fCEce896E0C041F8e54f86cA4cC8e9F"]
+      values.$pastUpgrades.2.1:
+-        ["0xB0b782cf0fCEce896E0C041F8e54f86cA4cC8e9F"]
++        "0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131"
+      values.$pastUpgrades.1.2:
++        ["0xf381868DD6B2aC8cca468D63B42F9040DE2257E9"]
+      values.$pastUpgrades.1.1:
+-        ["0xf381868DD6B2aC8cca468D63B42F9040DE2257E9"]
++        "0x416560cd96dc75ccffebe889e8d1ab3e08b33f814dc4a2bf7c6f9555071d1f6f"
+      values.$pastUpgrades.0.2:
++        ["0x3f54067EF5d8B414Bdb1945cdF482BD158Aad175"]
+      values.$pastUpgrades.0.1:
+-        ["0x3f54067EF5d8B414Bdb1945cdF482BD158Aad175"]
++        "0xb395374994ed9013749c8967babaa7cb5ad73699c1ae14794615bf4ffdd462e1"
+    }
+```
+
+```diff
+    contract TaikoBridge (0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC) {
+    +++ description: None
+      values.$pastUpgrades.10.2:
++        ["0xAc96FF285158bceBB8573D20d853e86BB2915aF3"]
+      values.$pastUpgrades.10.1:
+-        ["0xAc96FF285158bceBB8573D20d853e86BB2915aF3"]
++        "0x7d584f0a645cad61e634f64ffaf7e1bbfb92749878eb25b39ce0e5cf698897c7"
+      values.$pastUpgrades.9.2:
++        ["0x01E7D369a619eF1B0E92563d8737F42C09789986"]
+      values.$pastUpgrades.9.1:
+-        ["0x01E7D369a619eF1B0E92563d8737F42C09789986"]
++        "0x13f54109cb7f7507ad03562b06ea8d8b472043186e44252302583bc64acfb20b"
+      values.$pastUpgrades.8.2:
++        ["0x40f8Be2969D0D5717768F6799c8840e5D5D603F7"]
+      values.$pastUpgrades.8.1:
+-        ["0x40f8Be2969D0D5717768F6799c8840e5D5D603F7"]
++        "0x2f14829c3da1a755a74948d5716a625256ae7e2481e538b0660a8da11c84dc2e"
+      values.$pastUpgrades.7.2:
++        ["0xD28f2c26aD8bA88b0691F6BB41Ff021878052561"]
+      values.$pastUpgrades.7.1:
+-        ["0xD28f2c26aD8bA88b0691F6BB41Ff021878052561"]
++        "0x0bbf7d1258c646f41a02a92a55825b1ebfd3659577d0f2b57b462f8895e23a04"
+      values.$pastUpgrades.6.2:
++        ["0x3c326483EBFabCf3252205f26dF632FE83d11108"]
+      values.$pastUpgrades.6.1:
+-        ["0x3c326483EBFabCf3252205f26dF632FE83d11108"]
++        "0xc0ba6558642b93ee892bee0705dbcfb5130c53637e6266bfa5e3a6501167d6f2"
+      values.$pastUpgrades.5.2:
++        ["0x951B7Ae1bB26d12dB37f01748e8fB62FEf45A8B5"]
+      values.$pastUpgrades.5.1:
+-        ["0x951B7Ae1bB26d12dB37f01748e8fB62FEf45A8B5"]
++        "0xf21f6bf720767db3bc9b63ef69cacb20340bdedfb6589e6a4d11fe082dfa7bd6"
+      values.$pastUpgrades.4.2:
++        ["0x71c2f41AEDe913AAEf2c62596E03702E348D6Cd0"]
+      values.$pastUpgrades.4.1:
+-        ["0x71c2f41AEDe913AAEf2c62596E03702E348D6Cd0"]
++        "0x8a380a25d03a740d9535dfc3e2fc4f6960e22d49ad88b8d85f59af4013aedf87"
+      values.$pastUpgrades.3.2:
++        ["0x02F21B4C3d4dbfF70cE851741175a727c8D782Be"]
+      values.$pastUpgrades.3.1:
+-        ["0x02F21B4C3d4dbfF70cE851741175a727c8D782Be"]
++        "0x02ed558762eae5f0a930ba4a1047a02d4a793ea48890268c32df04e882f138ff"
+      values.$pastUpgrades.2.2:
++        ["0xc71CC3B0a47149878fad337fb2ca54E546A645ba"]
+      values.$pastUpgrades.2.1:
+-        ["0xc71CC3B0a47149878fad337fb2ca54E546A645ba"]
++        "0x5a60c5815947a199cc84e1bc75539e01a202597b20c1f87bd9d02f8be6453abd"
+      values.$pastUpgrades.1.2:
++        ["0x4A1091c2fb37D9C4a661c2384Ff539d94CCF853D"]
+      values.$pastUpgrades.1.1:
+-        ["0x4A1091c2fb37D9C4a661c2384Ff539d94CCF853D"]
++        "0x416560cd96dc75ccffebe889e8d1ab3e08b33f814dc4a2bf7c6f9555071d1f6f"
+      values.$pastUpgrades.0.2:
++        ["0x91d593d34f2E1904cDCe3D5290a74563F87bCF6f"]
+      values.$pastUpgrades.0.1:
+-        ["0x91d593d34f2E1904cDCe3D5290a74563F87bCF6f"]
++        "0x99673a767d36f5f3bc4af415072f97f344b6a5ec39e0d85eb799691787b1b98b"
+    }
+```
+
+```diff
+    contract GuardianProver (0xE3D777143Ea25A6E031d1e921F396750885f43aC) {
+    +++ description: Verifier contract for Guardian proven blocks.
+      values.$pastUpgrades.5.2:
++        ["0x3c40CC51e78B4a622622F9A4Df1b40068bc8Df98"]
+      values.$pastUpgrades.5.1:
+-        ["0x3c40CC51e78B4a622622F9A4Df1b40068bc8Df98"]
++        "0x170617251f2345eda4bcbd29e316caa0b014602a44244c60b963382ac7da7748"
+      values.$pastUpgrades.4.2:
++        ["0x7E717FFD6f7dD1008192bDC7193904FaB25BC8A4"]
+      values.$pastUpgrades.4.1:
+-        ["0x7E717FFD6f7dD1008192bDC7193904FaB25BC8A4"]
++        "0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131"
+      values.$pastUpgrades.3.2:
++        ["0x468F6A9C0ad2e9C8370687D2844A9e70fE942d5c"]
+      values.$pastUpgrades.3.1:
+-        ["0x468F6A9C0ad2e9C8370687D2844A9e70fE942d5c"]
++        "0x5a60c5815947a199cc84e1bc75539e01a202597b20c1f87bd9d02f8be6453abd"
+      values.$pastUpgrades.2.2:
++        ["0x253E47F2b1e91F2001d3578aeB24C0ccF464b65e"]
+      values.$pastUpgrades.2.1:
+-        ["0x253E47F2b1e91F2001d3578aeB24C0ccF464b65e"]
++        "0x8030569e293baddbc4e8b26688a1ecf14a231d86c90e9d02dad1e919ea2f3964"
+      values.$pastUpgrades.1.2:
++        ["0x750221E951b77a2Cb4046De41Ec5F6d1aa7942D2"]
+      values.$pastUpgrades.1.1:
+-        ["0x750221E951b77a2Cb4046De41Ec5F6d1aa7942D2"]
++        "0x416560cd96dc75ccffebe889e8d1ab3e08b33f814dc4a2bf7c6f9555071d1f6f"
+      values.$pastUpgrades.0.2:
++        ["0x717DC5E3814591790BcB1fD9259eEdA7c14ce9CF"]
+      values.$pastUpgrades.0.1:
+-        ["0x717DC5E3814591790BcB1fD9259eEdA7c14ce9CF"]
++        "0x76bb4346eb067a443f2069793a10f547893102d91dfebd011909c0fdeefb1e94"
+    }
+```
+
+```diff
+    contract L1SharedAddressManager (0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa) {
+    +++ description: None
+      values.$pastUpgrades.3.2:
++        ["0x2f7126f78365AD54EAB26fD7faEc60435008E2fD"]
+      values.$pastUpgrades.3.1:
+-        ["0x2f7126f78365AD54EAB26fD7faEc60435008E2fD"]
++        "0x7d584f0a645cad61e634f64ffaf7e1bbfb92749878eb25b39ce0e5cf698897c7"
+      values.$pastUpgrades.2.2:
++        ["0x9496502d7D121B3D5eF25cA6c58d4f7593398a17"]
+      values.$pastUpgrades.2.1:
+-        ["0x9496502d7D121B3D5eF25cA6c58d4f7593398a17"]
++        "0xe1ef58455de0b0331228e487d54720290ed8a73f709d2146bd43330d4a360bd3"
+      values.$pastUpgrades.1.2:
++        ["0xF1cA1F1A068468E1dcF90dA6add185467de80943"]
+      values.$pastUpgrades.1.1:
+-        ["0xF1cA1F1A068468E1dcF90dA6add185467de80943"]
++        "0x416560cd96dc75ccffebe889e8d1ab3e08b33f814dc4a2bf7c6f9555071d1f6f"
+      values.$pastUpgrades.0.2:
++        ["0x9cA1Ab10c9fAc5153F8b78E67f03aAa69C9c6A15"]
+      values.$pastUpgrades.0.1:
+-        ["0x9cA1Ab10c9fAc5153F8b78E67f03aAa69C9c6A15"]
++        "0xf83131446154db1fb4013c20e9468c36f71085dbdf4304f8e2ef5ac13f2e3670"
+    }
+```
+
+Generated with discovered.json: 0x4b43cc2a7f3a15e72a8d81383920862dccbbfc29
 
 # Diff at Wed, 16 Oct 2024 09:19:09 GMT:
 

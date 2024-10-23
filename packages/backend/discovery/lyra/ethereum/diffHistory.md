@@ -1,3 +1,268 @@
+Generated with discovered.json: 0x396a8d8c8afdee0de75cab211d1e15f3670a943b
+
+# Diff at Mon, 21 Oct 2024 12:45:42 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e660599f23a07618fe949a07be1f516ce44f1914 block: 20920202
+- current block number: 20920202
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20920202 (main branch discovery), not current.
+
+```diff
+    contract OptimismMintableERC20Factory (0x08Dea366F26C25a08C8D1C3568ad07d1e587136d) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      descriptions:
+-        ["A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."]
+      description:
++        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."
+    }
+```
+
+```diff
+    contract SystemConfig (0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      descriptions:
+-        ["Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."]
+      description:
++        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      descriptions:
+-        ["Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."]
+      description:
++        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x5456f02c08e9A018E42C39b351328E5AA864174A) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      descriptions:
+-        ["Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."]
+      description:
++        "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x61E44dC0dae6888B5a301887732217d5725B0bFf) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      descriptions:
+-        ["The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."]
+      description:
++        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x6CC3268794c5d3E3d9d52adEfC748B59d536cb22) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      descriptions:
+-        ["Used to bridge ERC-721 tokens from host chain to this chain."]
+      description:
++        "Used to bridge ERC-721 tokens from host chain to this chain."
+    }
+```
+
+```diff
+    contract OptimismPortal (0x85eA9c11cf3D4786027F7FD08F4406b15777e5f8) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      descriptions:
+-        ["The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."]
+      description:
++        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
+    }
+```
+
+```diff
+    contract AddressManager (0xC845F9C4004EB35a8bde8ad89C4760a9c0e65CAB) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      descriptions:
+-        ["Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."]
+      description:
++        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
+    }
+```
+
+Generated with discovered.json: 0xd3066dfc6fdb35ec634310c7062e39e6e8af9d55
+
+# Diff at Mon, 21 Oct 2024 11:07:25 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20920202
+- current block number: 20920202
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20920202 (main branch discovery), not current.
+
+```diff
+    contract OptimismMintableERC20Factory (0x08Dea366F26C25a08C8D1C3568ad07d1e587136d) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      values.$pastUpgrades.0.2:
++        ["0x81C2645D347a67c089169a4Da074aF7788650955"]
+      values.$pastUpgrades.0.1:
+-        ["0x81C2645D347a67c089169a4Da074aF7788650955"]
++        "0x862edb6ab42445b7c63a416197cc4b660bc10eef56a6a1698de23a06e18ccd12"
+    }
+```
+
+```diff
+    contract SystemConfig (0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.$pastUpgrades.0.2:
++        ["0x81CCFC10CB55B58449A3FEE870D63C4D61941DaC"]
+      values.$pastUpgrades.0.1:
+-        ["0x81CCFC10CB55B58449A3FEE870D63C4D61941DaC"]
++        "0xc79cfab290a401347ecdb45319667db2187d95846fbe0afa45ebe533b9e58309"
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      values.$pastUpgrades.0.2:
++        ["0xad206309916Fe08A27221133dde05a8F30f75e29"]
+      values.$pastUpgrades.0.1:
+-        ["0xad206309916Fe08A27221133dde05a8F30f75e29"]
++        "0xeae3cb376d1d8a00946fd6477d78dff305b53d0d1eabd263642c1e16e49b6348"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x5456f02c08e9A018E42C39b351328E5AA864174A) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$pastUpgrades.1.2:
++        ["0x93f5d9CD5BE592F1DC602E0CF4A38148b880cd13"]
+      values.$pastUpgrades.1.1:
+-        ["0x93f5d9CD5BE592F1DC602E0CF4A38148b880cd13"]
++        "0xc2ca4d4e11fa334c6d9108f324117ef7600256c1f8041a266033b225903267b9"
+      values.$pastUpgrades.0.2:
++        ["0x5456f02c08e9A018E42C39b351328E5AA864174A"]
+      values.$pastUpgrades.0.1:
+-        ["0x5456f02c08e9A018E42C39b351328E5AA864174A"]
++        "0x96cbc2591b826790a8ef721a895889cf4cef735a8b41577acddf1fc3889b3655"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x6CC3268794c5d3E3d9d52adEfC748B59d536cb22) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.$pastUpgrades.0.2:
++        ["0x4f993d43f697Cb4c63D719Bb8Dc762dcbbB11476"]
+      values.$pastUpgrades.0.1:
+-        ["0x4f993d43f697Cb4c63D719Bb8Dc762dcbbB11476"]
++        "0x0b7b3fc23c744f9ba1d9be819afbf1ec831949217f72fcea2fb9ccf0b073e62f"
+    }
+```
+
+```diff
+    contract OptimismPortal (0x85eA9c11cf3D4786027F7FD08F4406b15777e5f8) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.$pastUpgrades.0.2:
++        ["0x4Ec5C80Fa12d04DB3A208DD0Fa5C01178FF5a16e"]
+      values.$pastUpgrades.0.1:
+-        ["0x4Ec5C80Fa12d04DB3A208DD0Fa5C01178FF5a16e"]
++        "0xa2425b071316f9bcd7b56f603bfb90ebb94833ab24bfdb0318278ce69615d86b"
+    }
+```
+
+Generated with discovered.json: 0x73c83e7aabe62f9ede83a3992d7c6842862fe955
+
+# Diff at Wed, 16 Oct 2024 11:37:33 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a3d139b799cc0b28e5e912febb17464d4e5aef5d block: 20920202
+- current block number: 20920202
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20920202 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0x35d5D43271548c984662d4879FBc8e041Bc1Ff93","delay":0}]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "sequence"
+      issuedPermissions.1.target:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x14e4E97bDc195d399Ad8E7FC14451C279FE04c8e"
+      issuedPermissions.1.via.0:
+-        {"address":"0x35d5D43271548c984662d4879FBc8e041Bc1Ff93","delay":0}
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0x35d5D43271548c984662d4879FBc8e041Bc1Ff93","delay":0}]}
+      issuedPermissions.1:
++        {"permission":"propose","target":"0x03e820562ffd2e0390787caD706EaF1FF98C2608","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "challenge"
+      issuedPermissions.0.target:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x91F4be0C264FAFA1fEd75c4440910Cba2cAd98e8"
+      issuedPermissions.0.via.0:
+-        {"address":"0x35d5D43271548c984662d4879FBc8e041Bc1Ff93","delay":0}
+    }
+```
+
+```diff
+    contract OptimismPortal (0x85eA9c11cf3D4786027F7FD08F4406b15777e5f8) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0x35d5D43271548c984662d4879FBc8e041Bc1Ff93","delay":0}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "guard"
+      issuedPermissions.0.target:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x91F4be0C264FAFA1fEd75c4440910Cba2cAd98e8"
+      issuedPermissions.0.via.0:
+-        {"address":"0x35d5D43271548c984662d4879FBc8e041Bc1Ff93","delay":0}
+    }
+```
+
+```diff
+    contract LyraMultisig (0x91F4be0C264FAFA1fEd75c4440910Cba2cAd98e8) {
+    +++ description: None
+      roles:
+-        ["Challenger","Guardian"]
+      receivedPermissions:
++        [{"permission":"challenge","target":"0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba"},{"permission":"guard","target":"0x85eA9c11cf3D4786027F7FD08F4406b15777e5f8"}]
+    }
+```
+
 Generated with discovered.json: 0x808c87c1e37dcaef6e40e45747254ddaca7a840b
 
 # Diff at Mon, 14 Oct 2024 10:52:42 GMT:

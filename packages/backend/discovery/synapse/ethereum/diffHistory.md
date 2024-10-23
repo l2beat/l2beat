@@ -1,3 +1,108 @@
+Generated with discovered.json: 0xe589659878092c72ae95852604998e068961f7cf
+
+# Diff at Mon, 21 Oct 2024 11:11:16 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 19876012
+- current block number: 19876012
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19876012 (main branch discovery), not current.
+
+```diff
+    contract SynapseBridge (0x2796317b0fF8538F253012862c06787Adfb8cEb6) {
+    +++ description: None
+      values.$pastUpgrades.10.2:
++        ["0x31fe393815822edacBd81C2262467402199EFD0D"]
+      values.$pastUpgrades.10.1:
+-        ["0x31fe393815822edacBd81C2262467402199EFD0D"]
++        "0x18789557d2706535171fc5e5083def545c9728b4427b6110ebb1476c597cc979"
+      values.$pastUpgrades.9.2:
++        ["0x472822517a019e1eEd4533De2d800719057716F1"]
+      values.$pastUpgrades.9.1:
+-        ["0x472822517a019e1eEd4533De2d800719057716F1"]
++        "0x2a8561645a9afa147fef47215d41b40b4fb7a3e1dff18cdd8a7431dd0006e57c"
+      values.$pastUpgrades.8.2:
++        ["0x4cF1471B56D18c7D5a16D48ff5B761BdAEBd2f0b"]
+      values.$pastUpgrades.8.1:
+-        ["0x4cF1471B56D18c7D5a16D48ff5B761BdAEBd2f0b"]
++        "0x685c294cb7313495cefbce2d17e06f5590788bd34326e2490018aa6004dc03a3"
+      values.$pastUpgrades.7.2:
++        ["0x9007A80247D23Cc5C213A6DAcB385c632c4e19F2"]
+      values.$pastUpgrades.7.1:
+-        ["0x9007A80247D23Cc5C213A6DAcB385c632c4e19F2"]
++        "0x22a8ee90c8add53b09b8df08310fc9c683218265ea07613479c63b2f94207801"
+      values.$pastUpgrades.6.2:
++        ["0x64f80a3B1ac0d394d652DF0beCfBeA9DB2320782"]
+      values.$pastUpgrades.6.1:
+-        ["0x64f80a3B1ac0d394d652DF0beCfBeA9DB2320782"]
++        "0xacba2f9c94fa7d3c1ee39ed72d22b694cde721578bf4f06280d78bcba6a21d02"
+      values.$pastUpgrades.5.2:
++        ["0xFb4a5F07427C4de0051c5FCe5b6f9E8cBf8A544C"]
+      values.$pastUpgrades.5.1:
+-        ["0xFb4a5F07427C4de0051c5FCe5b6f9E8cBf8A544C"]
++        "0x66385af6901af24ec47e8e749eae6d1fba76b22283985e8f142440d922f882e1"
+      values.$pastUpgrades.4.2:
++        ["0x7D971Ffc482d70831075fCf07c50EDED782aA9Fd"]
+      values.$pastUpgrades.4.1:
+-        ["0x7D971Ffc482d70831075fCf07c50EDED782aA9Fd"]
++        "0xa557f92319df5c9aec27f0b1ce3afb80a927b02414a1c126c100a21e603de40c"
+      values.$pastUpgrades.3.2:
++        ["0xEfD2F730c9D92E53d0B402ACA05FE597F1A47001"]
+      values.$pastUpgrades.3.1:
+-        ["0xEfD2F730c9D92E53d0B402ACA05FE597F1A47001"]
++        "0xccf0ecdff27457425d6773ec52a0b17bcfbb93fdb77525872e403bc0efbf6cc9"
+      values.$pastUpgrades.2.2:
++        ["0x36829ba54e6A0f11fB6e5A45aC5aD2742ec86a0B"]
+      values.$pastUpgrades.2.1:
+-        ["0x36829ba54e6A0f11fB6e5A45aC5aD2742ec86a0B"]
++        "0xfc4ec72e51cd01fa4978d2a69158283a8c2278ce2c7d505bc50b0e76b048c4e6"
+      values.$pastUpgrades.1.2:
++        ["0x346B928D29827a02bC06A4A66D7FF37D250bcEE8"]
+      values.$pastUpgrades.1.1:
+-        ["0x346B928D29827a02bC06A4A66D7FF37D250bcEE8"]
++        "0x24867a819247c16b6440e0fe4bb15d829486af9d30fd709cfe41d3376399330d"
+      values.$pastUpgrades.0.2:
++        ["0x1622B32113bd2dFE1d92B30dA7FB68b7E5FA81b2"]
+      values.$pastUpgrades.0.1:
+-        ["0x1622B32113bd2dFE1d92B30dA7FB68b7E5FA81b2"]
++        "0x8847102cd287f156f6bea7ef8b0d8a1a769b217a31f31271e1772fa03360f5b2"
+    }
+```
+
+Generated with discovered.json: 0xa3c9210350bfff6bf6c31c9ef9771341c9cfc3e9
+
+# Diff at Fri, 18 Oct 2024 11:01:37 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@0295165a89d86b7450439f24f100d1baa74381fc block: 19876012
+- current block number: 19876012
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19876012 (main branch discovery), not current.
+
+```diff
+    contract AllowanceModule (0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"}]
+    }
+```
+
 Generated with discovered.json: 0x8b9c835749969ad3363171ca13c07976f3ac669a
 
 # Diff at Mon, 14 Oct 2024 10:56:44 GMT:

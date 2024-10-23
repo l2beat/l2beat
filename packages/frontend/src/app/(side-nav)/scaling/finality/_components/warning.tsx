@@ -3,7 +3,7 @@ import { OutLink } from '~/components/out-link'
 
 export function FinalityWarning() {
   return (
-    <MainPageWarning className="md:mb-3">
+    <MainPageWarning className="mb-4">
       Please note, the values on the page reflect the time required to achieve
       ordering finality, at which point transactions cannot be reverted or
       reordered. For simplicity, they do not include the overhead time to reach

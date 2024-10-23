@@ -2,7 +2,7 @@
   "name": "sxnetwork",
   "chain": "ethereum",
   "blockNumber": 20842812,
-  "configHash": "0x76cdd7de74389c1b47b7748556d1a712fc3e3306f0c234aa9ddd7816a730d22d",
+  "configHash": "0xf305487c9ad650a335a0acd9d5ff81f6290b4bea2d85fdcdd8fcd515d3c4d4fa",
   "contracts": [
     {
       "name": "OneStepProverHostIo",
@@ -46,13 +46,16 @@
         "0xef94a66bd5339efd18fb9ca1f8031482e7ef7bbe6c5a0a10fae254ab83712406"
       ],
       "proxyType": "Arbitrum proxy",
-      "descriptions": [
-        "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
-      ],
+      "description": "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
           "target": "0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a",
+          "via": []
+        },
+        {
+          "permission": "validate",
+          "target": "0x9C56265ef2989138d264b30fBbA2043902daBdf8",
           "via": []
         }
       ],
@@ -71,6 +74,7 @@
         "$pastUpgrades": [
           [
             "2024-07-05T09:57:59.000Z",
+            "0xe93b7e232ca2ff32a44ecb683683d9553409ab46eb90efa21a7bcfc111835074",
             [
               "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A",
               "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"
@@ -180,6 +184,7 @@
         "$pastUpgrades": [
           [
             "2024-07-05T09:57:59.000Z",
+            "0xe93b7e232ca2ff32a44ecb683683d9553409ab46eb90efa21a7bcfc111835074",
             ["0x6c21303F5986180B1394d2C89f3e883890E2867b"]
           ]
         ],
@@ -250,6 +255,7 @@
         "$pastUpgrades": [
           [
             "2024-07-05T09:57:59.000Z",
+            "0xe93b7e232ca2ff32a44ecb683683d9553409ab46eb90efa21a7bcfc111835074",
             ["0x1D901DD7A5eFE421C3C437B147040E5AF22E6A43"]
           ]
         ],
@@ -322,6 +328,7 @@
         "$pastUpgrades": [
           [
             "2024-07-05T09:57:59.000Z",
+            "0xe93b7e232ca2ff32a44ecb683683d9553409ab46eb90efa21a7bcfc111835074",
             ["0x302275067251F5FcdB9359Bda735fD8f7A4A54c0"]
           ]
         ],
@@ -357,6 +364,7 @@
         "$pastUpgrades": [
           [
             "2024-07-05T09:57:59.000Z",
+            "0xe93b7e232ca2ff32a44ecb683683d9553409ab46eb90efa21a7bcfc111835074",
             ["0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab"]
           ]
         ],
@@ -398,6 +406,7 @@
         "$pastUpgrades": [
           [
             "2024-07-05T09:57:59.000Z",
+            "0xe93b7e232ca2ff32a44ecb683683d9553409ab46eb90efa21a7bcfc111835074",
             ["0x19431dc37098877486532250FB3158140717C00C"]
           ]
         ],
@@ -444,6 +453,11 @@
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
+          "permission": "sequence",
+          "target": "0x90906eA9eb38B6afC104bB761F493b2a78c85024",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0xe8606A55d105EF857F187C32Ae0E9a168aF8F497",
           "via": []
@@ -457,6 +471,7 @@
         "$pastUpgrades": [
           [
             "2024-07-05T09:57:59.000Z",
+            "0xe93b7e232ca2ff32a44ecb683683d9553409ab46eb90efa21a7bcfc111835074",
             ["0x383f16fB2809a56fC639c1eE2c93Ad2aa7Ee130A"]
           ]
         ],
@@ -557,6 +572,7 @@
         "$pastUpgrades": [
           [
             "2024-07-05T09:57:59.000Z",
+            "0xe93b7e232ca2ff32a44ecb683683d9553409ab46eb90efa21a7bcfc111835074",
             ["0x31fAAAB44e74eB408d1FC69A14806B4b9cA09da2"]
           ]
         ],
@@ -576,11 +592,21 @@
     { "address": "0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341" },
     {
       "address": "0x90906eA9eb38B6afC104bB761F493b2a78c85024",
-      "roles": ["Sequencer"]
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0xD80a805c86C14c879420eC6acb366D04D318fC0C"
+        }
+      ]
     },
     {
       "address": "0x9C56265ef2989138d264b30fBbA2043902daBdf8",
-      "roles": ["Validator"]
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "target": "0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F"
+        }
+      ]
     },
     { "address": "0xa9d1C9D877F235C21d803e4a0b81F8ca6C4c83AC" }
   ],
@@ -1182,6 +1208,6 @@
     ]
   },
   "usedTemplates": {
-    "orbitstack/RollupProxy": "0xdd22b1785ae5df34e829d0b04131559e112131325c3f223825d0fe61e675fb1a"
+    "orbitstack/RollupProxy": "0x8c92364349ca720f3e801d028dc260fdbc1a9cca4651ed19af6f16a250949729"
   }
 }

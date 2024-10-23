@@ -1,8 +1,7 @@
-import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { zkfair } from '../../../layer2s/zkfair'
-import { DAC } from '../templates/dac-template'
-import { DaAttestationSecurityRisk } from '../types'
+import { PolygoncdkDAC } from '../templates/polygoncdk-template'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('zkfair')
@@ -27,12 +26,10 @@ const members = discovery.getContractValue<string[]>(
   'members',
 )
 
-export const zkfairDac = DAC({
+export const zkfairDac = PolygoncdkDAC({
   project: zkfair,
-  risks: {
-    attestations: DaAttestationSecurityRisk.SigVerified(true),
-  },
   bridge: {
+    createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     contracts: {
       addresses: [
         discovery.getContractDetails('ZKFairValidium', {
@@ -62,10 +59,7 @@ export const zkfairDac = DAC({
     ],
     chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignaturesDAC,
-    totalMembers: membersCountDAC,
+    membersCount: membersCountDAC,
     transactionDataType: DacTransactionDataType.StateDiffs,
-    members: {
-      type: 'unknown',
-    },
   },
 })

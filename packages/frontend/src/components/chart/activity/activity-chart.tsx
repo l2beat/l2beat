@@ -40,32 +40,25 @@ export function ActivityChart({ milestones, entries }: Props) {
     true,
   )
 
-  const { data: scalingFactor } = api.activity.scalingFactor.useQuery({
-    filter: filters.isEmpty
-      ? { type: 'all' }
-      : {
-          type: 'projects',
-          projectIds: entries
-            .filter(includeFilter)
-            .map((project) => project.id),
-        },
+  const filter = filters.isEmpty
+    ? { type: 'all' as const }
+    : {
+        type: 'projects' as const,
+        projectIds: entries.filter(includeFilter).map((project) => project.id),
+      }
+
+  const { data: stats } = api.activity.chartStats.useQuery({
+    filter,
   })
   const { data, isLoading } = api.activity.chart.useQuery({
     range: timeRange,
-    filter: filters.isEmpty
-      ? { type: 'all' }
-      : {
-          type: 'projects',
-          projectIds: entries
-            .filter(includeFilter)
-            .map((project) => project.id),
-        },
+    filter,
   })
 
   const { columns, valuesStyle, chartRange, formatYAxisLabel } =
     useActivityChartRenderParams({
       milestones,
-      data: data,
+      data,
       showMainnet,
     })
 
@@ -77,12 +70,16 @@ export function ActivityChart({ milestones, entries }: Props) {
       range={timeRange}
       isLoading={isLoading}
       renderHoverContents={(data) => (
-        <ActivityChartHover {...data} showEthereum={showMainnet} />
+        <ActivityChartHover
+          {...data}
+          showEthereum={showMainnet}
+          singleProject={filter.projectIds?.length === 1}
+        />
       )}
       useLogScale={scale === 'log'}
     >
       <section className="flex flex-col gap-4">
-        <ActivityChartHeader scalingFactor={scalingFactor} range={chartRange} />
+        <ActivityChartHeader stats={stats} range={chartRange} />
         <Chart />
         <ChartControlsWrapper>
           <div className="flex gap-2 md:gap-4">
