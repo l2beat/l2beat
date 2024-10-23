@@ -11,7 +11,6 @@ import {
 import { StageTooltip } from '~/components/table/cells/stage/stage-tooltip'
 import { TypeCell } from '~/components/table/cells/type-cell'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
-import { env } from '~/env'
 import { InfoIcon } from '~/icons/info'
 import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { cn } from '~/utils/cn'
@@ -24,6 +23,7 @@ interface Props {
 }
 
 export function ScalingProjectStats({ project, className }: Props) {
+  const isOther = true
   return (
     <div
       className={cn(
@@ -64,7 +64,7 @@ export function ScalingProjectStats({ project, className }: Props) {
         }
       />
       <HorizontalSeparator className="col-span-full max-md:hidden" />
-      {project.stageConfig.stage !== 'NotApplicable' ? (
+      {project.stageConfig.stage !== 'NotApplicable' && !isOther ? (
         <ProjectStat
           title="Stage"
           value={
@@ -87,12 +87,7 @@ export function ScalingProjectStats({ project, className }: Props) {
       <ProjectStat
         title="Type"
         value={
-          <TypeCell>
-            {env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS &&
-            project.header.isOther
-              ? 'Other'
-              : project.header.category}
-          </TypeCell>
+          <TypeCell>{isOther ? 'Other' : project.header.category}</TypeCell>
         }
       />
       <ProjectStat
