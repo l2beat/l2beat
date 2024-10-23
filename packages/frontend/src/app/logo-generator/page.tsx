@@ -1,12 +1,15 @@
-import { layer2s } from '@l2beat/config'
+import { bridges, layer2s, layer3s } from '@l2beat/config'
 import { LogoGenerator } from './components/logo-generator'
 
 export default function Page() {
+  const projects = [...layer2s, ...layer3s, ...bridges]
+
   return (
     <div className="bg-pure-white p-4">
       <LogoGenerator
-        projects={layer2s.map((l2) => ({
+        projects={projects.map((l2) => ({
           name: l2.display.name,
+          type: l2.type,
           slug: l2.display.slug,
           isUpcoming: l2.isUpcoming,
           isArchived: l2.isArchived,
