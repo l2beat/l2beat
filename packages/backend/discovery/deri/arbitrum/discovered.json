@@ -2,7 +2,7 @@
   "name": "deri",
   "chain": "arbitrum",
   "blockNumber": 257931565,
-  "configHash": "0x3c329b64d634fcf8d647f662083d53652ddb9b428088d9cc73b312b3ce8e464c",
+  "configHash": "0xffeaf9e7c88d86d7f9def6e4df670e01108fb2c8a018f56885f63c3cc18e7d11",
   "contracts": [
     {
       "name": "UpgradeExecutor",
@@ -93,9 +93,11 @@
     {
       "name": "OneStepProver0",
       "address": "0x1135265fE014D3FA32B3507E325642B92aFFeAEb",
+      "template": "orbitstack/OneStepProver0",
       "sourceHashes": [
         "0x20330713abbbcf0219ef7d1c0aa3a6ede1b421f14c9d21b25c973e54fb75f5df"
       ],
+      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1700037168,
       "values": { "$immutable": true }
     },
@@ -154,19 +156,6 @@
       }
     },
     {
-      "name": "ValidatorWalletCreator",
-      "address": "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
-      "sourceHashes": [
-        "0x4ef3473c840bed3b4c6258271a494794c1545f0d0f13c6a386d1e39e6180d67c"
-      ],
-      "sinceTimestamp": 1700037517,
-      "values": {
-        "$immutable": true,
-        "owner": "0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341",
-        "template": "0x82709E8564ce17707a7C8420c9e48e9a8A88bfc1"
-      }
-    },
-    {
       "name": "ChallengeManager",
       "address": "0x383eFE8D410285c5CbE1B4F296022640759aA834",
       "sourceHashes": [
@@ -204,9 +193,11 @@
     {
       "name": "OneStepProverMath",
       "address": "0x4811500e0d376Fa8d2EA3CCb7c61E0afB4F5A7f1",
+      "template": "orbitstack/OneStepProverMath",
       "sourceHashes": [
         "0xb2555ede3dfe7d6df28bd96d12a0113b658c213c7ce4e34fa539df7497bc51a1"
       ],
+      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1700037242,
       "values": { "$immutable": true }
     },
@@ -217,13 +208,6 @@
         "0xd9b36ec321be937cc727b5bdb0afa0e1a0a28448ef1a202d4f181a01ce57bdc8"
       ],
       "sinceTimestamp": 1700037477,
-      "values": { "$immutable": true }
-    },
-    {
-      "name": "",
-      "address": "0x82709E8564ce17707a7C8420c9e48e9a8A88bfc1",
-      "unverified": true,
-      "sinceTimestamp": 1700037517,
       "values": { "$immutable": true }
     },
     {
@@ -373,9 +357,11 @@
     {
       "name": "OneStepProofEntry",
       "address": "0x99a2A31300816C1FA3f40818AC9280fe7271F878",
+      "template": "orbitstack/OneStepProofEntry",
       "sourceHashes": [
         "0xf3479c667d20b1c17ea2573dc7fe09e4315a3e20bc09d31bc92603520cc962cc"
       ],
+      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1700037315,
       "values": {
         "$immutable": true,
@@ -544,9 +530,11 @@
     {
       "name": "OneStepProverMemory",
       "address": "0xDf94F0474F205D086dbc2e66D69a856FCf520622",
+      "template": "orbitstack/OneStepProverMemory",
       "sourceHashes": [
         "0x731b4466319a83c95ce227d1a6c85aa03864f5d2bed03bda186843033a8b8d61"
       ],
+      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1700037203,
       "values": { "$immutable": true }
     },
@@ -688,7 +676,6 @@
     },
     { "address": "0x46A78349aBA0369D18292a285DE6d5FC5CC2de5c" },
     { "address": "0x56A37e21FdA325CD8bf9F04253a036763a9aB6f9" },
-    { "address": "0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341" },
     { "address": "0x97e3Dc113709a3F1492cf440feC369929a7Ef525" },
     { "address": "0xa634397c4E5F12C5312c535a1DaBBaae34Ee166e" },
     {
@@ -941,18 +928,6 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
-    "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF": [
-      "constructor()",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event TemplateUpdated()",
-      "event WalletCreated(address indexed walletAddress, address indexed executorAddress, address indexed ownerAddress, address adminProxy)",
-      "function createWallet(address[] initialExecutorAllowedDests) returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function setTemplate(address _template)",
-      "function template() view returns (address)",
-      "function transferOwnership(address newOwner)"
     ],
     "0x2fB33D8e4a8E989E7814D914973096736ed718b5": [
       "event DefaultGatewayUpdated(address newDefaultGateway)",
@@ -1356,7 +1331,11 @@
     ]
   },
   "usedTemplates": {
-    "orbitstack/RollupProxy": "0x329494c897421d49fd8b6041c5444fb2af7508c8b81f134e703e7d11cbd9be1b",
+    "orbitstack/OneStepProofEntry": "0xf3bff5da86f9bbb5f9ac93a0f2239f0769d051b67a44be2e52c322799e3b8d4f",
+    "orbitstack/OneStepProver0": "0x80f18705038deef096683a89d16549bf343ada57cac1f2750df2f06fbbaed5ca",
+    "orbitstack/OneStepProverMath": "0x8dd8aebb517eb6eaf15437ddbb90dff66f2b14d9d6b5390dd87fbdab15168188",
+    "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
+    "orbitstack/RollupProxy": "0x0bdbca452bd7b5e2036a979dd61b8581a0bf7bad54f04ef69e70b97ee375f8f2",
     "orbitstack/UpgradeExecutor": "0x603e9f3f0d76cb0bbc6fbf2ac64cce35b00905689e35c7535a2c5fec00147370"
   }
 }

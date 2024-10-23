@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x648e5d4ade970a759a73a731f9e49b0751e4ef0b
+Generated with discovered.json: 0x5ef6344a2b777d058867d9cb1de5c700c08f0cdb
 
-# Diff at Wed, 23 Oct 2024 12:47:35 GMT:
+# Diff at Wed, 23 Oct 2024 14:36:09 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@9cc37d16a5f0b172bb41f98d8a970963e5ca4afb block: 20912894
@@ -79,6 +79,18 @@ discovery. Values are for block 20912894 (main branch discovery), not current.
       receivedPermissions.0.description:
 +        "can challenge state roots on the host chain."
     }
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorWallet (0x6Ab7A2f1a4febCD40A58b0205bFDA9CAf614b779)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorWalletCreator (0xe05465Aab36ba1277dAE36aa27a7B74830e74DE4)
+    +++ description: None
 ```
 
 ```diff

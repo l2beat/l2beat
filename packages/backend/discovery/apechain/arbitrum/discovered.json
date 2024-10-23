@@ -2,7 +2,7 @@
   "name": "apechain",
   "chain": "arbitrum",
   "blockNumber": 266079510,
-  "configHash": "0x66911376a77e1bbc1e6bd38dbc16f57f9dd4afab668963bfa11b7c5ad7ccdf26",
+  "configHash": "0xbf591fa6133490c05f83717250730014082b8a66ef58b3c69b3a405b7c2a80f9",
   "contracts": [
     {
       "name": "Inbox",
@@ -312,19 +312,6 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "ValidatorWalletCreator",
-      "address": "0x5a6C98F6A60BDC02cE4d8AD43b4Fc88Fe5b38856",
-      "sourceHashes": [
-        "0x4ef3473c840bed3b4c6258271a494794c1545f0d0f13c6a386d1e39e6180d67c"
-      ],
-      "sinceTimestamp": 1723189888,
-      "values": {
-        "$immutable": true,
-        "owner": "0x02867114B27d686f3565E2060424e985a1E565f5",
-        "template": "0x91f0A93A188d1516193032A687533C97D634f9F4"
-      }
-    },
-    {
       "name": "Bridge",
       "address": "0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8",
       "sourceHashes": [
@@ -379,13 +366,6 @@
         "0x3de1ddc210fe283d7298c5f06879df577c6a475329a206b1928c74d10db656d5"
       ],
       "sinceTimestamp": 1723189261,
-      "values": { "$immutable": true }
-    },
-    {
-      "name": "",
-      "address": "0x91f0A93A188d1516193032A687533C97D634f9F4",
-      "unverified": true,
-      "sinceTimestamp": 1723189888,
       "values": { "$immutable": true }
     },
     {
@@ -621,7 +601,6 @@
   ],
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x02867114B27d686f3565E2060424e985a1E565f5" },
     { "address": "0x5737CDBb3a67001441C0DA8b86e6b1826705601c" },
     { "address": "0x651cF50272Ffa8f6D954080DF743410Bb0aa7AFa" },
     { "address": "0x65c10dD3d50B10D0E1Bb459675b03367B1b52eD1" },
@@ -1082,18 +1061,6 @@
     "0x550B7B23Ed78BA25B3aBCBb290ADf1190aC28E19": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
     ],
-    "0x5a6C98F6A60BDC02cE4d8AD43b4Fc88Fe5b38856": [
-      "constructor()",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event TemplateUpdated()",
-      "event WalletCreated(address indexed walletAddress, address indexed executorAddress, address indexed ownerAddress, address adminProxy)",
-      "function createWallet(address[] initialExecutorAllowedDests) returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function setTemplate(address _template)",
-      "function template() view returns (address)",
-      "function transferOwnership(address newOwner)"
-    ],
     "0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1281,7 +1248,7 @@
     ]
   },
   "usedTemplates": {
-    "orbitstack/RollupProxy": "0x329494c897421d49fd8b6041c5444fb2af7508c8b81f134e703e7d11cbd9be1b",
+    "orbitstack/RollupProxy": "0x0bdbca452bd7b5e2036a979dd61b8581a0bf7bad54f04ef69e70b97ee375f8f2",
     "orbitstack/SequencerInbox": "0x80eed651d83fd6cd84047260bf02ec5e3a5f21b36049e1e45f34bd0a452e02f9",
     "orbitstack/UpgradeExecutor": "0x603e9f3f0d76cb0bbc6fbf2ac64cce35b00905689e35c7535a2c5fec00147370"
   }

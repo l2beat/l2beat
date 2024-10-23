@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xfa021e55a86024f584f6b8d434e42e014fd447ee
+Generated with discovered.json: 0x25542af5901e6cfa980ffc3ee92ce45007150d8d
 
-# Diff at Wed, 23 Oct 2024 13:27:45 GMT:
+# Diff at Wed, 23 Oct 2024 14:36:20 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@9cc37d16a5f0b172bb41f98d8a970963e5ca4afb block: 20941805
@@ -17,12 +17,38 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 20941805 (main branch discovery), not current.
 
 ```diff
+    contract OneStepProofEntry (0x09824fe72BFF474d16D9c2774432E381BBD60662) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProofEntry"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91)
+    +++ description: None
+```
+
+```diff
     contract Bridge (0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03) {
     +++ description: Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for bridge messaging.
       template:
 +        "orbitstack/Bridge"
       description:
 +        "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for bridge messaging."
+    }
+```
+
+```diff
+    contract OneStepProverMemory (0x4811500e0d376Fa8d2EA3CCb7c61E0afB4F5A7f1) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverMemory"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
     }
 ```
 
@@ -43,6 +69,22 @@ discovery. Values are for block 20941805 (main branch discovery), not current.
       description:
 +        "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) which eventually resolve in execution on L1."
     }
+```
+
+```diff
+    contract OneStepProverMath (0x89AF7C4C2198c426cFe6E86de0680A0850503e06) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverMath"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorWalletCreator (0x9CAd81628aB7D8e239F1A5B497313341578c5F71)
+    +++ description: None
 ```
 
 ```diff
@@ -85,6 +127,16 @@ discovery. Values are for block 20941805 (main branch discovery), not current.
 +        "orbitstack/UpgradeExecutor"
       description:
 +        "Central contract defining the access control for upgrading the system contract implementations."
+    }
+```
+
+```diff
+    contract OneStepProver0 (0xDf94F0474F205D086dbc2e66D69a856FCf520622) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProver0"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
     }
 ```
 

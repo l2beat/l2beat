@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x229796acb47ab6b4f96c8ac2b2de3c324cef1914
+Generated with discovered.json: 0xf02ca9d95fc7496d2f8756fd2f0b38e4abffa1f7
 
-# Diff at Wed, 23 Oct 2024 13:27:54 GMT:
+# Diff at Wed, 23 Oct 2024 14:36:32 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@9cc37d16a5f0b172bb41f98d8a970963e5ca4afb block: 20977673
@@ -17,6 +17,16 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 20977673 (main branch discovery), not current.
 
 ```diff
+    contract OneStepProverHostIo (0x17e7F68ce50A77e55C7834ddF31AEf86403B8010) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverHostIo"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
     contract UpgradeExecutor (0x20195677a6De5f0f7dF4e21cE48F0D24e5477110) {
     +++ description: Central contract defining the access control for upgrading the system contract implementations.
       template:
@@ -24,6 +34,12 @@ discovery. Values are for block 20977673 (main branch discovery), not current.
       description:
 +        "Central contract defining the access control for upgrading the system contract implementations."
     }
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91)
+    +++ description: None
 ```
 
 ```diff
@@ -36,8 +52,54 @@ discovery. Values are for block 20977673 (main branch discovery), not current.
 ```
 
 ```diff
+    contract OneStepProofEntry (0x57EA090Ac0554d174AE0e2855B460e84A1A7C221) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProofEntry"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
+    contract OneStepProver0 (0x72B166070781a552D7b95a907eF59ca05d3D5a62) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProver0"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
 -   Status: DELETED
     contract  (0x7Deda2425eC2d4EA0DF689A78de2fBF002075576)
+    +++ description: None
+```
+
+```diff
+    contract OneStepProverMemory (0x8b73Ef238ADaB31EBC7c05423d243c345241a22f) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverMemory"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
+    contract OneStepProverMath (0x90eC62De2EB7C7512a22bD2D55926AD6bA609F38) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverMath"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorWalletCreator (0x9CAd81628aB7D8e239F1A5B497313341578c5F71)
     +++ description: None
 ```
 

@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xe4c098a9c48d3ec90994dfb99d1f5f5d7a511221
+Generated with discovered.json: 0x066b93c300c70edbc22ce8b12816274c368849ed
 
-# Diff at Wed, 23 Oct 2024 12:50:19 GMT:
+# Diff at Wed, 23 Oct 2024 14:36:40 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@9cc37d16a5f0b172bb41f98d8a970963e5ca4afb block: 257931565
@@ -24,6 +24,38 @@ discovery. Values are for block 257931565 (main branch discovery), not current.
       description:
 +        "Central contract defining the access control for upgrading the system contract implementations."
     }
+```
+
+```diff
+    contract OneStepProver0 (0x1135265fE014D3FA32B3507E325642B92aFFeAEb) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProver0"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorWalletCreator (0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF)
+    +++ description: None
+```
+
+```diff
+    contract OneStepProverMath (0x4811500e0d376Fa8d2EA3CCb7c61E0afB4F5A7f1) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverMath"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x82709E8564ce17707a7C8420c9e48e9a8A88bfc1)
+    +++ description: None
 ```
 
 ```diff
@@ -56,6 +88,26 @@ discovery. Values are for block 257931565 (main branch discovery), not current.
 +        {"description":"Increments on each Validator change."}
       fieldMeta.challenges:
 +        {"description":"Emitted on createChallenge() in RollupUserLogic."}
+    }
+```
+
+```diff
+    contract OneStepProofEntry (0x99a2A31300816C1FA3f40818AC9280fe7271F878) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProofEntry"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
+    contract OneStepProverMemory (0xDf94F0474F205D086dbc2e66D69a856FCf520622) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverMemory"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
     }
 ```
 

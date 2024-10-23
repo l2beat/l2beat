@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x22e6531b2f91191d719fa8d91aeb2fa8423d1cd3
+Generated with discovered.json: 0xc140122f6b4e53c6f7636034411904ecd847ca68
 
-# Diff at Wed, 23 Oct 2024 13:27:59 GMT:
+# Diff at Wed, 23 Oct 2024 14:36:36 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@9cc37d16a5f0b172bb41f98d8a970963e5ca4afb block: 266079510
@@ -43,6 +43,18 @@ discovery. Values are for block 266079510 (main branch discovery), not current.
       fieldMeta.challenges:
 +        {"description":"Emitted on createChallenge() in RollupUserLogic."}
     }
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorWalletCreator (0x5a6C98F6A60BDC02cE4d8AD43b4Fc88Fe5b38856)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x91f0A93A188d1516193032A687533C97D634f9F4)
+    +++ description: None
 ```
 
 ```diff

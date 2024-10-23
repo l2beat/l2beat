@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x42048ebd7feb55ab6767a5e4388d47f6be7d9ede
+Generated with discovered.json: 0x54b337c00b230ec43c4fe2127373698a0e65251c
 
-# Diff at Wed, 23 Oct 2024 13:28:57 GMT:
+# Diff at Wed, 23 Oct 2024 14:37:21 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@9cc37d16a5f0b172bb41f98d8a970963e5ca4afb block: 20331015
@@ -27,6 +27,16 @@ discovery. Values are for block 20331015 (main branch discovery), not current.
 ```
 
 ```diff
+    contract OneStepProverMemory (0x2Bb71AE6f5Bb52de5F535efD804e156ed2a35a8f) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverMemory"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
     contract SequencerInbox (0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221) {
     +++ description: State batches / commitments get posted here.
       fieldMeta.maxTimeVariation.description:
@@ -48,6 +58,16 @@ discovery. Values are for block 20331015 (main branch discovery), not current.
 ```
 
 ```diff
+    contract OneStepProverMath (0x764cDAAc715ef3e29B3c8D28A1261AD9B7eD206D) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverMath"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
     contract UpgradeExecutor (0xaA3A7A2ec2477A61082E1C41a2c6710587917028) {
     +++ description: Central contract defining the access control for upgrading the system contract implementations.
       template:
@@ -60,6 +80,38 @@ discovery. Values are for block 20331015 (main branch discovery), not current.
 ```diff
 -   Status: DELETED
     contract  (0xB48E4A4B8EC04c9F1819302FD370f5B3797c638C)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorWalletCreator (0xB546310EA2De84220811a03BCD5CeE96D251fA7D)
+    +++ description: None
+```
+
+```diff
+    contract OneStepProver0 (0xBa04bD4aDa714b0cb3B87784dc9F20620aF37428) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProver0"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
+    contract OneStepProofEntry (0xC17A41629Cd100c74B1Bed7b49D2E0517EfDeaeb) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProofEntry"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract  (0xd063bb4EB74f813b1A0D9208Da100E3c08D9d4C9)
     +++ description: None
 ```
 
@@ -113,6 +165,16 @@ discovery. Values are for block 20331015 (main branch discovery), not current.
 +        "orbitstack/Bridge"
       description:
 +        "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for bridge messaging."
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (0xF4AA217a96c205df7B0D081DC95385B701eFE9b0) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverHostIo"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
     }
 ```
 

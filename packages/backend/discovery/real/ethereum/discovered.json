@@ -2,14 +2,16 @@
   "name": "real",
   "chain": "ethereum",
   "blockNumber": 20941805,
-  "configHash": "0x07d45262ce92eda35a2c650bc28bda022de772d6ba3177aca6939ff55f670f94",
+  "configHash": "0xc11a7bd8a1cb6f23788560e8b94fe3dd3ab010bdd534241c01464cec170cb25a",
   "contracts": [
     {
       "name": "OneStepProofEntry",
       "address": "0x09824fe72BFF474d16D9c2774432E381BBD60662",
+      "template": "orbitstack/OneStepProofEntry",
       "sourceHashes": [
         "0xf3479c667d20b1c17ea2573dc7fe09e4315a3e20bc09d31bc92603520cc962cc"
       ],
+      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1701972923,
       "values": {
         "$immutable": true,
@@ -18,13 +20,6 @@
         "proverMath": "0x89AF7C4C2198c426cFe6E86de0680A0850503e06",
         "proverMem": "0x4811500e0d376Fa8d2EA3CCb7c61E0afB4F5A7f1"
       }
-    },
-    {
-      "name": "",
-      "address": "0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91",
-      "unverified": true,
-      "sinceTimestamp": 1701973211,
-      "values": { "$immutable": true }
     },
     {
       "name": "ValidatorUtils",
@@ -122,9 +117,11 @@
     {
       "name": "OneStepProverMemory",
       "address": "0x4811500e0d376Fa8d2EA3CCb7c61E0afB4F5A7f1",
+      "template": "orbitstack/OneStepProverMemory",
       "sourceHashes": [
         "0x731b4466319a83c95ce227d1a6c85aa03864f5d2bed03bda186843033a8b8d61"
       ],
+      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1701972755,
       "values": { "$immutable": true }
     },
@@ -401,9 +398,11 @@
     {
       "name": "OneStepProverMath",
       "address": "0x89AF7C4C2198c426cFe6E86de0680A0850503e06",
+      "template": "orbitstack/OneStepProverMath",
       "sourceHashes": [
         "0xb2555ede3dfe7d6df28bd96d12a0113b658c213c7ce4e34fa539df7497bc51a1"
       ],
+      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1701972815,
       "values": { "$immutable": true }
     },
@@ -415,19 +414,6 @@
       ],
       "sinceTimestamp": 1701972863,
       "values": { "$immutable": true }
-    },
-    {
-      "name": "ValidatorWalletCreator",
-      "address": "0x9CAd81628aB7D8e239F1A5B497313341578c5F71",
-      "sourceHashes": [
-        "0x4ef3473c840bed3b4c6258271a494794c1545f0d0f13c6a386d1e39e6180d67c"
-      ],
-      "sinceTimestamp": 1701973211,
-      "values": {
-        "$immutable": true,
-        "owner": "0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341",
-        "template": "0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"
-      }
     },
     {
       "name": "ProxyAdmin",
@@ -790,9 +776,11 @@
     {
       "name": "OneStepProver0",
       "address": "0xDf94F0474F205D086dbc2e66D69a856FCf520622",
+      "template": "orbitstack/OneStepProver0",
       "sourceHashes": [
         "0x20330713abbbcf0219ef7d1c0aa3a6ede1b421f14c9d21b25c973e54fb75f5df"
       ],
+      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1701972707,
       "values": { "$immutable": true }
     },
@@ -956,7 +944,6 @@
     { "address": "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d" },
     { "address": "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2" },
     { "address": "0x6bD40C6f7849160FE217D07a73E15f4ef8222283" },
-    { "address": "0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341" },
     { "address": "0x7cFaD85633CD000c83Fcf99a678044dDC14125bD" },
     { "address": "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621" },
     { "address": "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d" },
@@ -1646,18 +1633,6 @@
     "0x99a2A31300816C1FA3f40818AC9280fe7271F878": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge) execCtx, tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) view returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, uint32 internalsOffset) mod)"
     ],
-    "0x9CAd81628aB7D8e239F1A5B497313341578c5F71": [
-      "constructor()",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event TemplateUpdated()",
-      "event WalletCreated(address indexed walletAddress, address indexed executorAddress, address indexed ownerAddress, address adminProxy)",
-      "function createWallet(address[] initialExecutorAllowedDests) returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function setTemplate(address _template)",
-      "function template() view returns (address)",
-      "function transferOwnership(address newOwner)"
-    ],
     "0xB032ff02cd6425e4b816137207AA8560932180f1": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
@@ -1947,8 +1922,12 @@
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "orbitstack/Bridge": "0xe6d023f6c725ce1ccf0ca453ab25787255f946d6561dcd83975ec33a9720caf6",
     "orbitstack/Inbox": "0x1938bb9de2d7f328ae3e83f2dd9f5d3c5575b599fc097cf9308bac4d5bb3e89e",
+    "orbitstack/OneStepProofEntry": "0xf3bff5da86f9bbb5f9ac93a0f2239f0769d051b67a44be2e52c322799e3b8d4f",
+    "orbitstack/OneStepProver0": "0x80f18705038deef096683a89d16549bf343ada57cac1f2750df2f06fbbaed5ca",
+    "orbitstack/OneStepProverMath": "0x8dd8aebb517eb6eaf15437ddbb90dff66f2b14d9d6b5390dd87fbdab15168188",
+    "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
     "orbitstack/Outbox": "0xac65b89cf03d50afb81ade4d5623f1815977ae46d92280d53ca828df34424488",
-    "orbitstack/RollupProxy": "0x329494c897421d49fd8b6041c5444fb2af7508c8b81f134e703e7d11cbd9be1b",
+    "orbitstack/RollupProxy": "0x0bdbca452bd7b5e2036a979dd61b8581a0bf7bad54f04ef69e70b97ee375f8f2",
     "orbitstack/SequencerInbox": "0x80eed651d83fd6cd84047260bf02ec5e3a5f21b36049e1e45f34bd0a452e02f9",
     "orbitstack/UpgradeExecutor": "0x603e9f3f0d76cb0bbc6fbf2ac64cce35b00905689e35c7535a2c5fec00147370"
   }

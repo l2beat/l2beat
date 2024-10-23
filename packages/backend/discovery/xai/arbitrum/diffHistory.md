@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x455fe8d0573b159051cc0af846813e59c09def3a
+Generated with discovered.json: 0x1b1d882b71a41fc8e5b7c5f0bc2a7fa69662ca21
 
-# Diff at Wed, 23 Oct 2024 13:28:29 GMT:
+# Diff at Wed, 23 Oct 2024 14:37:16 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@9cc37d16a5f0b172bb41f98d8a970963e5ca4afb block: 264372912
@@ -37,12 +37,28 @@ discovery. Values are for block 264372912 (main branch discovery), not current.
 ```
 
 ```diff
+-   Status: DELETED
+    contract ValidatorWalletCreator (0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF)
+    +++ description: None
+```
+
+```diff
     contract ChallengeManager (0x3a3f62034a42a35eA1686B199bB73006aa525eE4) {
     +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
       template:
 +        "orbitstack/ChallengeManager"
       description:
 +        "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor."
+    }
+```
+
+```diff
+    contract OneStepProverMemory (0x526a6E634aD36bB0007c4422586c135F1F9B525a) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverMemory"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
     }
 ```
 
@@ -54,6 +70,22 @@ discovery. Values are for block 264372912 (main branch discovery), not current.
       description:
 +        "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for bridge messaging."
     }
+```
+
+```diff
+    contract OneStepProver0 (0x800dA62bE6626127F71B34E795286C34C04D6712) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProver0"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x82709E8564ce17707a7C8420c9e48e9a8A88bfc1)
+    +++ description: None
 ```
 
 ```diff
@@ -72,6 +104,16 @@ discovery. Values are for block 264372912 (main branch discovery), not current.
 +        "orbitstack/Inbox"
       description:
 +        "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds."
+    }
+```
+
+```diff
+    contract OneStepProofEntry (0xb20107bfB36D3B5AcA534aCAfbd8857b10b402a8) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProofEntry"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
     }
 ```
 
@@ -105,6 +147,26 @@ discovery. Values are for block 264372912 (main branch discovery), not current.
 +        {"description":"Increments on each Validator change."}
       fieldMeta.challenges:
 +        {"description":"Emitted on createChallenge() in RollupUserLogic."}
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (0xc555b2F1D559Fbb854569b33640990D178F94747) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverHostIo"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
+    contract OneStepProverMath (0xe8709022B9C9D7347856c75910fe07e10C904446) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverMath"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
     }
 ```
 

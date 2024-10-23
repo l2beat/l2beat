@@ -2,7 +2,7 @@
   "name": "nova",
   "chain": "ethereum",
   "blockNumber": 20912894,
-  "configHash": "0x9a0f26ea896fe7e291075ec35377e9934329a17228de89696c29802cb3393d83",
+  "configHash": "0x327caeed3c5caea348b97b283f626f321545bb68c09e3b05c832ec4f6493b2b4",
   "contracts": [
     {
       "name": "ValidatorWallet",
@@ -518,18 +518,6 @@
         ],
         "$upgradeCount": 1,
         "owner": "0xDfB23DFE9De7dcC974467195C8B7D5cd21C9d7cB"
-      }
-    },
-    {
-      "name": "ValidatorWallet",
-      "address": "0x6Ab7A2f1a4febCD40A58b0205bFDA9CAf614b779",
-      "sourceHashes": [
-        "0xdb71d504c2071bc4b28756ad1f12fb3faf0537767b5019cfa7912d4fc078e8a9"
-      ],
-      "sinceTimestamp": 1656050166,
-      "values": {
-        "$immutable": true,
-        "owner": "0x0000000000000000000000000000000000000000"
       }
     },
     {
@@ -1071,19 +1059,6 @@
         "l2ToL1Timestamp": 0,
         "OUTBOX_VERSION": 2,
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88"
-      }
-    },
-    {
-      "name": "ValidatorWalletCreator",
-      "address": "0xe05465Aab36ba1277dAE36aa27a7B74830e74DE4",
-      "sourceHashes": [
-        "0x4ef3473c840bed3b4c6258271a494794c1545f0d0f13c6a386d1e39e6180d67c"
-      ],
-      "sinceTimestamp": 1656050166,
-      "values": {
-        "$immutable": true,
-        "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
-        "template": "0x6Ab7A2f1a4febCD40A58b0205bFDA9CAf614b779"
       }
     },
     {
@@ -2644,18 +2619,6 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xe05465Aab36ba1277dAE36aa27a7B74830e74DE4": [
-      "constructor()",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event TemplateUpdated()",
-      "event WalletCreated(address indexed walletAddress, address indexed executorAddress, address indexed ownerAddress, address adminProxy)",
-      "function createWallet(address[] initialExecutorAllowedDests) returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function setTemplate(address _template)",
-      "function template() view returns (address)",
-      "function transferOwnership(address newOwner)"
-    ],
     "0xE27d4Ed355e5273A3D4855c8e11BC4a8d3e39b87": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2714,6 +2677,6 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "orbitstack/RollupProxy": "0x329494c897421d49fd8b6041c5444fb2af7508c8b81f134e703e7d11cbd9be1b"
+    "orbitstack/RollupProxy": "0x0bdbca452bd7b5e2036a979dd61b8581a0bf7bad54f04ef69e70b97ee375f8f2"
   }
 }

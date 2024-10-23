@@ -2,7 +2,7 @@
   "name": "arbitrum",
   "chain": "ethereum",
   "blockNumber": 21027338,
-  "configHash": "0xfb8f8374357a3e5a4a821db5603f9cfa93b70ecd25891da4bfaf8edf82bafc4f",
+  "configHash": "0x3220f15111ab981947cc70641fc5377350c7cf46abede82dad4cc47ab08dcdac",
   "contracts": [
     {
       "name": "Outbox",
@@ -586,18 +586,6 @@
         "$upgradeCount": 1,
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
-      }
-    },
-    {
-      "name": "ValidatorWallet",
-      "address": "0x5Bc5FB83950bBbF156E433c5c098bFe533Db4021",
-      "sourceHashes": [
-        "0xdb71d504c2071bc4b28756ad1f12fb3faf0537767b5019cfa7912d4fc078e8a9"
-      ],
-      "sinceTimestamp": 1661456194,
-      "values": {
-        "$immutable": true,
-        "owner": "0x0000000000000000000000000000000000000000"
       }
     },
     {
@@ -1259,19 +1247,6 @@
       ],
       "sinceTimestamp": 1720675487,
       "values": { "$immutable": true }
-    },
-    {
-      "name": "ValidatorWalletCreator",
-      "address": "0x960953f7c69cd2BC2322Db9223A815C680ccc7ea",
-      "sourceHashes": [
-        "0x4ef3473c840bed3b4c6258271a494794c1545f0d0f13c6a386d1e39e6180d67c"
-      ],
-      "sinceTimestamp": 1661456194,
-      "values": {
-        "$immutable": true,
-        "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
-        "template": "0x5Bc5FB83950bBbF156E433c5c098bFe533Db4021"
-      }
     },
     {
       "name": "GatewaysAdmin",
@@ -3835,18 +3810,6 @@
       "function timeout(uint64 challengeIndex)",
       "function totalChallengesCreated() view returns (uint64)"
     ],
-    "0x960953f7c69cd2BC2322Db9223A815C680ccc7ea": [
-      "constructor()",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event TemplateUpdated()",
-      "event WalletCreated(address indexed walletAddress, address indexed executorAddress, address indexed ownerAddress, address adminProxy)",
-      "function createWallet(address[] initialExecutorAllowedDests) returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function setTemplate(address _template)",
-      "function template() view returns (address)",
-      "function transferOwnership(address newOwner)"
-    ],
     "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
@@ -4277,6 +4240,6 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "orbitstack/RollupProxy": "0x329494c897421d49fd8b6041c5444fb2af7508c8b81f134e703e7d11cbd9be1b"
+    "orbitstack/RollupProxy": "0x0bdbca452bd7b5e2036a979dd61b8581a0bf7bad54f04ef69e70b97ee375f8f2"
   }
 }
