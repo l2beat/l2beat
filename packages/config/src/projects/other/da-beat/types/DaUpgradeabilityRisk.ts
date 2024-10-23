@@ -45,11 +45,11 @@ function SecurityCouncil(delaySeconds: number) {
   if (delaySeconds >= SEVEN_DAYS_SECONDS) {
     return {
       ...common,
-      value: `SC ${formatSeconds(delaySeconds)}`,
+      value: `${formatSeconds(delaySeconds)}`,
       sentiment: 'warning',
-      description: `User have more than ${formatSeconds(
+      description: `For regular updates, there is a ${formatSeconds(
         delaySeconds,
-      )} days to exit the system before the bridge implementation update is completed.`,
+      )} delay before the bridge implementation update is completed. The Security Council can upgrade the DA bridge without delay.`,
     } as const
   }
 

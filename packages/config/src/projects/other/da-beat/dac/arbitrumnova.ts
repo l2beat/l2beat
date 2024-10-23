@@ -8,6 +8,9 @@ import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { nova } from '../../../layer2s/nova'
 import { DAC } from '../templates/dac-template'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
+import { DaCommitteeSecurityRisk } from '../types/DaCommitteeSecurityRisk'
+import { DaEconomicSecurityRisk, DaUpgradeabilityRisk } from '../types'
+import { DaRelayerFailureRisk } from '../types/DaRelayerFailureRisk'
 
 const discovery = new ProjectDiscovery('nova')
 
@@ -107,14 +110,22 @@ export const arbitrumNovaDac = DAC({
     ],
     technology: {
       description: `
-    ## DA Bridge Architecture
-    ![Nova bridge architecture](/images/da-bridge-technology/nova/architecture.png#center)
+      ## DA Bridge Architecture
+      ![Nova bridge architecture](/images/da-bridge-technology/nova/architecture.png#center)
 
+      In Nova architecture, the DA commitments are posted to the L1 through the sequencer inbox, using the inbox as a DA bridge.
+      The DA commitment consists of Data Availability Certificate (DACert), including a hash of the data block, an expiration time, and a proof that the required threshold of Committee members have signed off on the data.
+      The sequencer distributes the data and collects signatures from Committee members offchain. Only the DACert is posted by the sequencer to the L1 chain inbox (the DA bridge), achieving L2 transaction ordering finality in a single onchain transaction.
 
-    In Nova architecture, the DA commitments are posted to the L1 through the sequencer inbox, using the inbox as a DA bridge.
-    The DA commitment consists of Data Availability Certificate (DACert), including a hash of the data block, an expiration time, and a proof that the required threshold of Committee members have signed off on the data.
-    The sequencer distributes the data and collects signatures from Committee members offchain. Only the DACert is posted by the sequencer to the L1 chain inbox (the DA bridge), achieving L2 transaction ordering finality in a single onchain transaction.
-    `,
+      ## DA Bridge Upgradeability
+      ![Nova bridge architecture](/images/upgrades-and-governance/nova.png#center)
+      The Arbitrum DAO controls Arbitrum Nova through upgrades and modifications to their smart contracts on Layer 1 Ethereum and the Layer 2s. 
+      Regular upgrades, Admin- and Owner actions originate from either the Arbitrum DAO or the non-emergency (proposer-) Security Council on Arbitrum One and pass through multiple delays and timelocks before being executed at their destination. Contrarily, the three Emergency Security Council multisigs (one on each chain: Arbitrum One, Ethereum, Arbitrum Nova) can skip delays and directly access all admin- and upgrade functions of all smart contracts. These two general paths have the same destination: the respective UpgradeExecutor smart contract.  
+
+      Regular upgrades are scheduled in the L2 Timelock. The proposer Security Council can do this directly and the Arbitrum DAO (ARB token holders and delegates) must meet a CoreGovernor-enforced 5% threshold of the votable tokens. The L2 Timelock queues the transaction for a 3d delay and then sends it to the Outbox contract on Ethereum. This incurs another delay (the challenge period) of 6d 8h. When that has passed, the L1 Timelock delays for additional 3d. Both timelocks serve as delays during which the transparent transaction contents can be audited, and even cancelled by the Emergency Security Council. Finally, the transaction can be executed, calling Admin- or Owner functions of the respective destination smart contracts through the UpgradeExecutor on Ethereum. If the predefined transaction destination is Arbitrum One or -Nova, this last call is executed on L2 through the canonical bridge and the aliased address of the L1 Timelock.
+
+      Operator roles like the Sequencers and Validators are managed using the same paths. Sequencer changes can be delegated to a Batch Poster Manager.
+      `,
     },
     permissions: [
       // Members: DAC uses BLS sigs, not EOAs
@@ -128,6 +139,16 @@ export const arbitrumNovaDac = DAC({
       ...discovery.getMultisigPermission(
         'BatchPosterManagerMultisig',
         'It can update whether an address is authorized to be a batch poster at the sequencer inbox. The UpgradeExecutor retains the ability to update the batch poster manager (along with any batch posters).',
+      ),
+      ...discovery.getMultisigPermission(
+        'SecurityCouncil',
+        'The admin of all contracts in the system, capable of issuing upgrades without notice and delay. This allows it to censor transactions, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer or any other system component (unlimited upgrade power). It is also the admin of the special purpose smart contracts used by validators.',
+        [
+          {
+            text: 'Security Council members - Arbitrum DAO Governance Docs',
+            href: 'https://docs.arbitrum.foundation/foundational-documents/transparency-report-initial-foundation-setup',
+          },
+        ],
       ),
       {
         name: 'UpgradeExecutor',
@@ -164,5 +185,10 @@ export const arbitrumNovaDac = DAC({
       ],
       risks: [],
     },
+  },
+  risks: {
+    upgradeability: DaUpgradeabilityRisk.SecurityCouncil(totalDelay),
+    economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,
+    relayerFailure: DaRelayerFailureRisk.Governance(totalDelay),
   },
 })
