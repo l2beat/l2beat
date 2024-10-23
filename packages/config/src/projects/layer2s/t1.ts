@@ -18,7 +18,10 @@ export const t1: Layer2 = upcomingL2({
       documentation: [],
       explorers: [],
       repositories: ['https://github.com/t1protocol'],
-      socialMedia: ['https://x.com/t1protocol', 'https://t.co/zh2zkETXLb'],
+      socialMedia: [
+        'https://x.com/t1protocol',
+        'https://discord.com/invite/nbvyXZHgke',
+      ],
     },
   },
 })
