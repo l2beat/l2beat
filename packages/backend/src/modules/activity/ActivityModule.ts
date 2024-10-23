@@ -2,10 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { Database } from '@l2beat/database'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { Config } from '../../config'
-import {
-  BlockscoutChainConfig,
-  EtherscanChainConfig,
-} from '../../config/Config'
+import { ActivityConfig } from '../../config/Config'
 import { Clock } from '../../tools/Clock'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import { ApplicationModule } from '../ApplicationModule'
@@ -38,33 +35,28 @@ export function createActivityModule(
     database,
   )
 
-  const start = async () => {
-    await Promise.all(
-      indexers.map(async (indexer) => {
-        await indexer.start()
-      }),
-    )
-  }
-
   return {
-    start,
+    start: async () => {
+      await Promise.all(
+        indexers.map(async (indexer) => {
+          await indexer.start()
+        }),
+      )
+    },
   }
 }
 
 function createActivityIndexers(
-  activityConfig: Config['activity'],
+  activityConfig: ActivityConfig,
   logger: Logger,
   clock: Clock,
   providers: Providers,
   database: Database,
 ): ActivityIndexer[] {
-  assert(activityConfig, 'Config should be defined there')
+  const dayTargetIndexer = new DayTargetIndexer(logger, clock)
+  const indexers: ActivityIndexer[] = [dayTargetIndexer]
 
   const indexerService = new IndexerService(database)
-
-  const dayTargetIndexer = new DayTargetIndexer(logger, clock)
-
-  const indexers: ActivityIndexer[] = [dayTargetIndexer]
 
   activityConfig.projects.forEach((project) => {
     switch (project.config.type) {
@@ -73,13 +65,13 @@ function createActivityIndexers(
       case 'starknet':
       case 'loopring':
       case 'degate': {
-        const [blockTargetIndexer, activityIndexer] = createBlockBasedIndexers(
+        const [blockTargetIndexer, activityIndexer] = createBlockBasedIndexer(
           clock,
-          logger,
           project,
-          indexerService,
           providers,
+          indexerService,
           database,
+          logger,
         )
 
         indexers.push(blockTargetIndexer, activityIndexer)
@@ -87,20 +79,14 @@ function createActivityIndexers(
       }
 
       case 'starkex': {
-        const txsCountProvider = providers.getTxsCountProvider(project.id)
-
-        const activityIndexer = new DayActivityIndexer({
-          logger,
-          projectId: project.id,
-          batchSize: 10,
-          minHeight:
-            project.config.sinceTimestamp.toStartOf('day').toDays() ?? 0,
-          uncertaintyBuffer: project.config.resyncLastDays,
-          parents: [dayTargetIndexer],
-          txsCountProvider,
+        const activityIndexer = createStarkexIndexer(
+          dayTargetIndexer,
+          project,
+          providers,
           indexerService,
-          db: database,
-        })
+          database,
+          logger,
+        )
 
         indexers.push(activityIndexer)
         break
@@ -110,20 +96,13 @@ function createActivityIndexers(
   return indexers
 }
 
-function createBlockBasedIndexers(
+function createBlockBasedIndexer(
   clock: Clock,
-  logger: Logger,
-  project: {
-    id: ProjectId
-    config: ActivityTransactionConfig
-    blockExplorerConfig:
-      | EtherscanChainConfig
-      | BlockscoutChainConfig
-      | undefined
-  },
-  indexerService: IndexerService,
+  project: { id: ProjectId; config: ActivityTransactionConfig },
   providers: Providers,
+  indexerService: IndexerService,
   database: Database,
+  logger: Logger,
 ): [BlockTargetIndexer, BlockActivityIndexer] {
   assert(project.config.type !== 'starkex')
 
@@ -148,4 +127,30 @@ function createBlockBasedIndexers(
     db: database,
   })
   return [blockTargetIndexer, activityIndexer]
+}
+
+function createStarkexIndexer(
+  dayTargetIndexer: DayTargetIndexer,
+  project: { id: ProjectId; config: ActivityTransactionConfig },
+  providers: Providers,
+  indexerService: IndexerService,
+  database: Database,
+  logger: Logger,
+) {
+  assert(project.config.type === 'starkex')
+
+  const txsCountProvider = providers.getTxsCountProvider(project.id)
+
+  const activityIndexer = new DayActivityIndexer({
+    logger,
+    projectId: project.id,
+    batchSize: 10,
+    minHeight: project.config.sinceTimestamp.toStartOf('day').toDays() ?? 0,
+    uncertaintyBuffer: project.config.resyncLastDays,
+    parents: [dayTargetIndexer],
+    txsCountProvider,
+    indexerService,
+    db: database,
+  })
+  return activityIndexer
 }
