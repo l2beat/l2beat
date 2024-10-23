@@ -15,6 +15,7 @@ interface RpcClient2Deps {
   chain: string
 }
 
+// TODO: create EVMBlockClient
 export class RpcClient2 {
   chain: string
 

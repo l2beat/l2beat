@@ -2,6 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
 
 import { createDatabase } from '@l2beat/database'
+import { mockObject } from 'earl'
 import { ApiServer } from './api/ApiServer'
 import { Config } from './config'
 import { ApplicationModule } from './modules/ApplicationModule'
@@ -11,6 +12,7 @@ import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
 import { createLzOAppsModule } from './modules/lz-oapps/createLzOAppsModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
+import { Providers } from './modules/providers/Providers'
 import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
 import { initTvlModule } from './modules/tvl/modules/TvlModule'
 import { createUpdateMonitorModule } from './modules/update-monitor/UpdateMonitorModule'
@@ -45,9 +47,18 @@ export class Application {
       clock,
     )
 
+    // TODO: initProvidersModule
+    const providers = mockObject<Providers>()
+
     const modules: (ApplicationModule | undefined)[] = [
       createMetricsModule(config),
-      createActivityModule(config, logger, peripherals, clock),
+      createActivityModule(
+        config,
+        logger,
+        clock,
+        providers,
+        peripherals.database,
+      ),
       createUpdateMonitorModule(config, logger, peripherals, clock),
       createFlatSourcesModule(config, logger, peripherals),
       trackedTxsModule,

@@ -29,12 +29,7 @@ export class ActivityProviders {
 
     switch (project.config.type) {
       case 'rpc': {
-        const clients = this.clients.rpc.filter((r) => r.chain === chain)
-        assert(
-          clients.length > 0,
-          `There should be clients defined for ${chain}`,
-        )
-
+        const clients = this.clients.getEvmClients(chain)
         const provider = new BlockProvider(clients)
 
         return new RpcTxsCountProvider(
@@ -85,19 +80,14 @@ export class ActivityProviders {
 
     assert(project.config.type !== 'starkex')
 
-    const blockExplorerClient = this.clients.blockExplorerClients.find(
-      (b) => b.chain,
-    )
+    const indexerClients = this.clients.getIndexerClients(chain)
 
-    const clients = this.clients.rpc.filter((r) => r.chain === chain)
-    assert(clients.length > 0, `There should be clients defined for ${chain}`)
-
-    const provider = new BlockProvider(clients)
+    const clients = this.clients.getEvmClients(chain)
 
     return new BlockTimestampProvider({
-      client: provider,
+      indexerClients: indexerClients,
+      blockClients: clients,
       logger: this.logger.tag(`activity_${project.id}`),
-      blockExplorerClient,
     })
   }
 }

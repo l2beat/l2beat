@@ -15,8 +15,8 @@ describe(BlockTimestampProvider.name, () => {
       })
 
       const service = new BlockTimestampProvider({
-        blockExplorerClient: explorerClient,
-        client: mockObject<RpcClient>({}),
+        indexerClients: [explorerClient],
+        blockClients: [mockObject<RpcClient>({})],
         logger: Logger.SILENT,
       })
 
@@ -35,8 +35,8 @@ describe(BlockTimestampProvider.name, () => {
         getBlockNumberAtOrBefore: async () => BLOCK_NUMBER,
       })
       const service = new BlockTimestampProvider({
-        blockExplorerClient: undefined,
-        client: rpc,
+        indexerClients: [],
+        blockClients: [rpc],
         logger: Logger.SILENT,
       })
 
@@ -58,8 +58,8 @@ describe(BlockTimestampProvider.name, () => {
         getBlockNumberAtOrBefore: async () => BLOCK_NUMBER,
       })
       const service = new BlockTimestampProvider({
-        blockExplorerClient: explorerClient,
-        client: rpc,
+        indexerClients: [explorerClient],
+        blockClients: [rpc],
         logger: Logger.SILENT,
       })
 

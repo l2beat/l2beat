@@ -18,6 +18,7 @@ interface BlockscoutOptions {
   chain: string
 }
 
+// TODO: add retries, use HttpClient2
 export class BlockIndexerClient {
   chain: string
 

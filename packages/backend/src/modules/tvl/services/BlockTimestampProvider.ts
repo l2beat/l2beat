@@ -3,20 +3,20 @@ import { UnixTime } from '@l2beat/shared-pure'
 
 import { BlockIndexerClient } from '@l2beat/shared'
 
-export type BaseClient = {
+type BaseClient = {
   getBlockNumberAtOrBefore(timestamp: UnixTime, start?: number): Promise<number>
 }
 
 interface Dependencies {
-  readonly blockExplorerClient?: BlockIndexerClient
-  readonly client: BaseClient
+  readonly indexerClients: BlockIndexerClient[]
+  readonly blockClients: BaseClient[]
   logger: Logger
 }
 
 export class BlockTimestampProvider {
   constructor(private readonly $: Dependencies) {
     this.$.logger = $.logger.for(this)
-    if (!$.blockExplorerClient) {
+    if ($.indexerClients.length === 0) {
       this.$.logger.warn(
         'No blockExplorerClient configured. Fetching blocks will take longer.',
       )
@@ -24,19 +24,24 @@ export class BlockTimestampProvider {
   }
 
   async getBlockNumberAtOrBefore(_timestamp: UnixTime): Promise<number> {
-    if (this.$.blockExplorerClient) {
+    for (const client of this.$.indexerClients) {
       try {
-        return await this.$.blockExplorerClient.getBlockNumberAtOrBefore(
-          _timestamp,
-        )
+        return await client.getBlockNumberAtOrBefore(_timestamp)
+      } catch (_) {}
+    }
+
+    this.$.logger.warn(
+      'Failed to fetch block number via blockExplorerClient. Trying to fetch using RPC.',
+    )
+
+    for (const [index, client] of this.$.blockClients.entries()) {
+      try {
+        return await client.getBlockNumberAtOrBefore(_timestamp)
       } catch (error) {
-        this.$.logger.warn(
-          'Failed to fetch block number via blockExplorerClient. Trying to fetch using RPC.',
-          error,
-        )
+        if (index === this.$.blockClients.length - 1) throw error
       }
     }
 
-    return await this.$.client.getBlockNumberAtOrBefore(_timestamp)
+    throw new Error('Programmer error: Clients should not be empty')
   }
 }
