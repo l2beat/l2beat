@@ -1,3 +1,147 @@
+Generated with discovered.json: 0xd2a3b998732812ae4b169116d1e878b0136cc29e
+
+# Diff at Mon, 21 Oct 2024 11:07:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20997821
+- current block number: 20997821
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20997821 (main branch discovery), not current.
+
+```diff
+    contract ERC20Bridge (0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xd52c09E67aF3BE0977B52b4817366e9BaB5dCFA2"]
+      values.$pastUpgrades.1.1:
+-        ["0xd52c09E67aF3BE0977B52b4817366e9BaB5dCFA2"]
++        "0x497bdab1d3fb97eed72a55fc6e3672694195b08f949c2e0e84ea4b36428ee9c6"
+      values.$pastUpgrades.0.2:
++        ["0x6ccfD65b0b14F67259C77Ca6267104e058dDB292"]
+      values.$pastUpgrades.0.1:
+-        ["0x6ccfD65b0b14F67259C77Ca6267104e058dDB292"]
++        "0xbc08c4596eeee0a2e2527f03c0f2e85ec9e76e062b5f86eb435a67bca8f21122"
+    }
+```
+
+```diff
+    contract USDCBridge (0x504A330327A089d8364C4ab3811Ee26976d388ce) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x0eC393209674090368C592A591B25811e490BF36"]
+      values.$pastUpgrades.1.1:
+-        ["0x0eC393209674090368C592A591B25811e490BF36"]
++        "0xe752ce539119fc11af6239e8b26a79d80c9e84cec19ac6aca060f466853f5b7d"
+      values.$pastUpgrades.0.2:
++        ["0x16Db542C30fB3519D11CF8F632077c62c1a944fd"]
+      values.$pastUpgrades.0.1:
+-        ["0x16Db542C30fB3519D11CF8F632077c62c1a944fd"]
++        "0xa93648a8d01d65bea363bc2f6e19897e42f9af999370c07cb2a0ea6a5401b6b0"
+    }
+```
+
+```diff
+    contract zkEVM (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: None
+      values.$pastUpgrades.6.2:
++        ["0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562"]
+      values.$pastUpgrades.6.1:
+-        ["0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562"]
++        "0x497bdab1d3fb97eed72a55fc6e3672694195b08f949c2e0e84ea4b36428ee9c6"
+      values.$pastUpgrades.5.2:
++        ["0x934Dd4C63E285551CEceF8459103554D0096c179"]
+      values.$pastUpgrades.5.1:
+-        ["0x934Dd4C63E285551CEceF8459103554D0096c179"]
++        "0x565c77e109aac4df41d81457bdfbdd17782d8bca9a1330c68a271c64f35d05e5"
+      values.$pastUpgrades.4.2:
++        ["0xAA4b3a9515c921996Abe7930bF75Eff7466a4457"]
+      values.$pastUpgrades.4.1:
+-        ["0xAA4b3a9515c921996Abe7930bF75Eff7466a4457"]
++        "0xb4ed5b2646e45744945a4fc51da0e5e687ffe26f570b7aa3abb7b1fd4a460ea4"
+      values.$pastUpgrades.3.2:
++        ["0xb32c3D0dDb0063FfB15E8a50b40cC62230D820B3"]
+      values.$pastUpgrades.3.1:
+-        ["0xb32c3D0dDb0063FfB15E8a50b40cC62230D820B3"]
++        "0xdff29a7f65b6bec4e8288673a5ca55e12081b4d55879e600817484f28c5a80b1"
+      values.$pastUpgrades.2.2:
++        ["0x4c8d4Ce72afAA417d1F7E833725FdB4E793cd6b3"]
+      values.$pastUpgrades.2.1:
+-        ["0x4c8d4Ce72afAA417d1F7E833725FdB4E793cd6b3"]
++        "0x628efc29f5b2267f23cf613720003fafe671ee47db60b4f6610f5ae1ab838555"
+      values.$pastUpgrades.1.2:
++        ["0xE8f627df6Cb02e415b2e6d6e112323BD269b4706"]
+      values.$pastUpgrades.1.1:
+-        ["0xE8f627df6Cb02e415b2e6d6e112323BD269b4706"]
++        "0x8ee4253600d68665e8d52a522d8ba7136639187b87f8079b881de9e6d1f20d2a"
+      values.$pastUpgrades.0.2:
++        ["0xE8f627df6Cb02e415b2e6d6e112323BD269b4706"]
+      values.$pastUpgrades.0.1:
+-        ["0xE8f627df6Cb02e415b2e6d6e112323BD269b4706"]
++        "0x3564f15a274bdc49a6ad8af161113d20a678d87efbd3d708540a9b4d026f1122"
+    }
+```
+
+Generated with discovered.json: 0xe090f9a24a0d1e75044c61472210a93dbe843519
+
+# Diff at Sat, 19 Oct 2024 06:28:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@493c96785a6a32c6417182bb9548d3a990297dbe block: 20934247
+- current block number: 20997821
+
+## Description
+
+The two operator addresses are changed, which will be reflected in the permissions section.
+Context: Team also helpfully notified us in advance on telegram.
+
+## Watched changes
+
+```diff
+    contract zkEVM (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: None
+      values.accessControl.OPERATOR_ROLE.members.1:
+-        "0xa9268341831eFa4937537bc3e9EB36DbecE83C7e"
++        "0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754"
+      values.accessControl.OPERATOR_ROLE.members.0:
+-        "0x9228624C3185FCBcf24c1c9dB76D8Bef5f5DAd64"
++        "0x46d2F319fd42165D4318F099E143dEA8124E9E3e"
+    }
+```
+
+Generated with discovered.json: 0x5f40de8e0cb83216d42503be0c8d068da862a1db
+
+# Diff at Fri, 18 Oct 2024 10:56:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@0295165a89d86b7450439f24f100d1baa74381fc block: 20934247
+- current block number: 20934247
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20934247 (main branch discovery), not current.
+
+```diff
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]
+    }
+```
+
 Generated with discovered.json: 0x88c0a18d920ef566720eea6c23276ed64b5884f5
 
 # Diff at Mon, 14 Oct 2024 10:52:28 GMT:

@@ -8,7 +8,8 @@ import { ShieldIcon } from '~/icons/shield'
 import { UnderReviewIcon } from '~/icons/under-review'
 import { UnverifiedIcon } from '~/icons/unverified'
 import { type SyncStatus } from '~/types/sync-status'
-import { NotSyncedBadge } from '../../badge/not-synced-badge'
+import { NotSyncedIcon } from '../../badge/not-synced-badge'
+import { PrimaryValueCell } from './primary-value-cell'
 
 export interface ProjectCellProps {
   project: {
@@ -29,9 +30,9 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
   return (
     <div className={className}>
       <div className="flex items-center gap-1.5">
-        <span className="text-xs font-bold !leading-none md:text-base">
+        <PrimaryValueCell className="font-bold !leading-none">
           {project.shortName ?? project.name}
-        </span>
+        </PrimaryValueCell>
         {project.isVerified === false && (
           <Tooltip>
             <TooltipTrigger>
@@ -77,7 +78,7 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
           </Tooltip>
         )}
         {project.data?.syncStatus?.isSynced === false && (
-          <NotSyncedBadge syncedUntil={project.data?.syncStatus.syncedUntil} />
+          <NotSyncedIcon syncedUntil={project.data?.syncStatus.syncedUntil} />
         )}
       </div>
       {project.hostChain && (

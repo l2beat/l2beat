@@ -27,9 +27,9 @@ const CHALLENGE_PERIOD_SECONDS = discovery.getContractValue<number>(
 )
 
 export const metis: Layer2 = {
-  isUnderReview: false,
   type: 'layer2',
   id: ProjectId('metis'),
+  createdAt: new UnixTime(1637945259), // 2021-11-26T16:47:39Z
   badges: [Badge.VM.EVM, Badge.DA.CustomDA, Badge.Fork.OVM],
   display: {
     name: 'Metis Andromeda',
@@ -37,8 +37,6 @@ export const metis: Layer2 = {
     slug: 'metis',
     description:
       'Metis Andromeda is an EVM-equivalent solution originally forked from Optimism OVM. Since April 2024 hashes of data blobs are posted to EOA similarly to OPStack chains. It uses a decentralized Sequencer pool running Tendermint consensus and MPC module to sign transaction batches.',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     purposes: ['Universal'],
     provider: 'OVM',
     category: 'Optimium',

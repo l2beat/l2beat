@@ -1,3 +1,402 @@
+Generated with discovered.json: 0x094786dfa596db327c89b23dfe756529f00898f8
+
+# Diff at Mon, 21 Oct 2024 12:51:58 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e660599f23a07618fe949a07be1f516ce44f1914 block: 264372912
+- current block number: 264372912
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 264372912 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1) {
+    +++ description: State batches / commitments get posted here.
+      descriptions:
+-        ["State batches / commitments get posted here."]
+      description:
++        "State batches / commitments get posted here."
+    }
+```
+
+```diff
+    contract RollupProxy (0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      descriptions:
+-        ["Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."]
+      description:
++        "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
+    }
+```
+
+```diff
+    contract FundsReiceiverMultisig (0xFCF7248C495d6fd3641eE43F861c48Ebe402c878) {
+    +++ description: The designated fundsReceiver in the NodeLicenseRegistry. Receives all ETH from 'Sentry Node License' mints.
+      descriptions:
+-        ["The designated fundsReceiver in the NodeLicenseRegistry. Receives all ETH from 'Sentry Node License' mints."]
+      description:
++        "The designated fundsReceiver in the NodeLicenseRegistry. Receives all ETH from 'Sentry Node License' mints."
+    }
+```
+
+Generated with discovered.json: 0x9e25fb70ef2abe1f78253d59f383dbe128acfabd
+
+# Diff at Mon, 21 Oct 2024 11:13:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 264372912
+- current block number: 264372912
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 264372912 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"]
+      values.$pastUpgrades.0.1:
+-        ["0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"]
++        "0xcefe7ebaac7f573d70560f840c228fd589c04b9f6fbcfc85a9bf28b8d96d89e5"
+    }
+```
+
+```diff
+    contract Outbox (0x1E400568AD4840dbE50FB32f306B842e9ddeF726) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x302275067251F5FcdB9359Bda735fD8f7A4A54c0"]
+      values.$pastUpgrades.0.1:
+-        ["0x302275067251F5FcdB9359Bda735fD8f7A4A54c0"]
++        "0xcefe7ebaac7f573d70560f840c228fd589c04b9f6fbcfc85a9bf28b8d96d89e5"
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xd106EC93D2c1adaA65C4B17ffc7bB166Ce30DDAe"]
+      values.$pastUpgrades.0.1:
+-        ["0xd106EC93D2c1adaA65C4B17ffc7bB166Ce30DDAe"]
++        "0x95b16bf92d7d8be9f95d0b1c9080f1b7ced6fe028b8db3aef5d5ebfadd330ea4"
+    }
+```
+
+```diff
+    contract ERC20RollupEventInbox (0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x18FD37A4FB9E1F06d9383958aFd236771F15A8cb"]
+      values.$pastUpgrades.0.1:
+-        ["0x18FD37A4FB9E1F06d9383958aFd236771F15A8cb"]
++        "0xcefe7ebaac7f573d70560f840c228fd589c04b9f6fbcfc85a9bf28b8d96d89e5"
+    }
+```
+
+```diff
+    contract ChallengeManager (0x3a3f62034a42a35eA1686B199bB73006aa525eE4) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x5cA988F213EfbCB86ED7e2AACB0C15c91e648f8d"]
+      values.$pastUpgrades.1.1:
+-        ["0x5cA988F213EfbCB86ED7e2AACB0C15c91e648f8d"]
++        "0x6c1bbf992f2fe7d5bb565a16a55f85bda8e565c4b26cb742a6f841ca8a5d9f80"
+      values.$pastUpgrades.0.2:
++        ["0x09824fe72BFF474d16D9c2774432E381BBD60662"]
+      values.$pastUpgrades.0.1:
+-        ["0x09824fe72BFF474d16D9c2774432E381BBD60662"]
++        "0xcefe7ebaac7f573d70560f840c228fd589c04b9f6fbcfc85a9bf28b8d96d89e5"
+    }
+```
+
+```diff
+    contract PoolProxyDeployer (0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xb6773d5bF5b908B58ff5B7Bd36A7F06Da2EeeEc7"]
+      values.$pastUpgrades.0.1:
+-        ["0xb6773d5bF5b908B58ff5B7Bd36A7F06Da2EeeEc7"]
++        "0x1d33f114f23d1a440e30f20492a1db93ff86ae4f2962fb63880ceeb8286aaa4d"
+    }
+```
+
+```diff
+    contract Bridge (0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC"]
+      values.$pastUpgrades.0.1:
+-        ["0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC"]
++        "0xcefe7ebaac7f573d70560f840c228fd589c04b9f6fbcfc85a9bf28b8d96d89e5"
+    }
+```
+
+```diff
+    contract GasSubsidy (0x94F4aBC83eae00b693286B6eDCa09e1D76183C97) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xF208798482F0b12c8767Bc03cC0F145D18BeCe6A"]
+      values.$pastUpgrades.0.1:
+-        ["0xF208798482F0b12c8767Bc03cC0F145D18BeCe6A"]
++        "0x27bfccd3c53bc633ff2c6a39fcb5fbf16af67dc64f9d0d52ede0b3e560c569aa"
+    }
+```
+
+```diff
+    contract SequencerInbox (0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1) {
+    +++ description: State batches / commitments get posted here.
+      values.$pastUpgrades.1.2:
++        ["0x7a299aD29499736994Aa3a9aFa3f476445FAEB2c"]
+      values.$pastUpgrades.1.1:
+-        ["0x7a299aD29499736994Aa3a9aFa3f476445FAEB2c"]
++        "0x6c1bbf992f2fe7d5bb565a16a55f85bda8e565c4b26cb742a6f841ca8a5d9f80"
+      values.$pastUpgrades.0.2:
++        ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"]
+      values.$pastUpgrades.0.1:
+-        ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"]
++        "0xcefe7ebaac7f573d70560f840c228fd589c04b9f6fbcfc85a9bf28b8d96d89e5"
+    }
+```
+
+```diff
+    contract Inbox (0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab"]
+      values.$pastUpgrades.0.1:
+-        ["0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab"]
++        "0xcefe7ebaac7f573d70560f840c228fd589c04b9f6fbcfc85a9bf28b8d96d89e5"
+    }
+```
+
+```diff
+    contract L1ERC20Gateway (0xb591cE747CF19cF30e11d656EB94134F523A9e77) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x8b73Ef238ADaB31EBC7c05423d243c345241a22f"]
+      values.$pastUpgrades.0.1:
+-        ["0x8b73Ef238ADaB31EBC7c05423d243c345241a22f"]
++        "0x95b16bf92d7d8be9f95d0b1c9080f1b7ced6fe028b8db3aef5d5ebfadd330ea4"
+    }
+```
+
+```diff
+    contract NodeLicenseRegistry (0xbc14d8563b248B79689ECbc43bBa53290e0b6b66) {
+    +++ description: None
+      values.$pastUpgrades.7.2:
++        ["0xfD6Bb931D2Ee134E70568ca36584c043cB278734"]
+      values.$pastUpgrades.7.1:
+-        ["0xfD6Bb931D2Ee134E70568ca36584c043cB278734"]
++        "0xf68ea634ab9dcdd7613e3037be47fbf0daf5e6814a95b3fe32c8f2d077d01444"
+      values.$pastUpgrades.6.2:
++        ["0xa2815b0F4A99799aeb9d5cb73501E43f5197dDD1"]
+      values.$pastUpgrades.6.1:
+-        ["0xa2815b0F4A99799aeb9d5cb73501E43f5197dDD1"]
++        "0xc51ad222fec5ee76441a0324273ecc4ded2d9dd605fa57523c7f6dc61ef8d8f1"
+      values.$pastUpgrades.5.2:
++        ["0xfD6Bb931D2Ee134E70568ca36584c043cB278734"]
+      values.$pastUpgrades.5.1:
+-        ["0xfD6Bb931D2Ee134E70568ca36584c043cB278734"]
++        "0x905ed5655eb2c04a8da6680ec35d9d7c1ab3aaa090535303cc102d9780fa845c"
+      values.$pastUpgrades.4.2:
++        ["0xAED4aF101d3e64114051E63F12265403d6Cb9B10"]
+      values.$pastUpgrades.4.1:
+-        ["0xAED4aF101d3e64114051E63F12265403d6Cb9B10"]
++        "0x89f6075f97adb62d17be41a8999871a4bb5c1cdeb6e401a1576778cd20349374"
+      values.$pastUpgrades.3.2:
++        ["0xC2b691250fD85bF7eC91Dd4f13eF1e76678395B2"]
+      values.$pastUpgrades.3.1:
+-        ["0xC2b691250fD85bF7eC91Dd4f13eF1e76678395B2"]
++        "0x2b66dc25759528967307ed0312d2e93df71090403ce9e8fd5bbac911422832e8"
+      values.$pastUpgrades.2.2:
++        ["0x471f1a92a8099f7011Aa3f2E011569618bD754EC"]
+      values.$pastUpgrades.2.1:
+-        ["0x471f1a92a8099f7011Aa3f2E011569618bD754EC"]
++        "0xd725096169b7a13791098567acf188d77352be120daefb359dad64e29f6bfa9b"
+      values.$pastUpgrades.1.2:
++        ["0x471f1a92a8099f7011Aa3f2E011569618bD754EC"]
+      values.$pastUpgrades.1.1:
+-        ["0x471f1a92a8099f7011Aa3f2E011569618bD754EC"]
++        "0x9ae9ee043ee573f154f2492f6c27d5ca0cc9d1f47782d4b24e80cd39bb0ae378"
+      values.$pastUpgrades.0.2:
++        ["0xf765452e587Ad0AE785Dc984963897c05d4c8c71"]
+      values.$pastUpgrades.0.1:
+-        ["0xf765452e587Ad0AE785Dc984963897c05d4c8c71"]
++        "0x1e84fa92f23fbccf9cf1643c17925016357a95e123d7d14cc9a77d029d8dbac2"
+    }
+```
+
+```diff
+    contract RollupProxy (0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      values.$pastUpgrades.0.2:
++        ["0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754","0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A"]
+      values.$pastUpgrades.0.1:
+-        ["0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754","0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A"]
++        "0xcefe7ebaac7f573d70560f840c228fd589c04b9f6fbcfc85a9bf28b8d96d89e5"
+    }
+```
+
+```diff
+    contract PoolFactory (0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x21EEC6626f15d02A8896ebB7EDD68ff3CB61e89E"]
+      values.$pastUpgrades.0.1:
+-        ["0x21EEC6626f15d02A8896ebB7EDD68ff3CB61e89E"]
++        "0x36bec95cbfc75ccbf4d52c9bb080ebbbc2a9ecebffe7134574a4ea3bfdab8260"
+    }
+```
+
+```diff
+    contract SentryReferee (0xfD41041180571C5D371BEA3D9550E55653671198) {
+    +++ description: None
+      values.$pastUpgrades.7.2:
++        ["0x609152cb742916E0F7FBC4391Be750C458b049fe"]
+      values.$pastUpgrades.7.1:
+-        ["0x609152cb742916E0F7FBC4391Be750C458b049fe"]
++        "0xb9e3b5041f4683bafc0939b4a657467a6f545194ef17d3ba6980093138e3a6e5"
+      values.$pastUpgrades.6.2:
++        ["0xFf38Aa9D553bE47eee329F968ADF0C74A01D021c"]
+      values.$pastUpgrades.6.1:
+-        ["0xFf38Aa9D553bE47eee329F968ADF0C74A01D021c"]
++        "0x6abdf6ba925c03704c581f1b0ad7de9da84cbb70945bdd2da22c8b0eb7e98a8b"
+      values.$pastUpgrades.5.2:
++        ["0x680F4a9f47E4Cfea124a5654E759cB3b0a0C837c"]
+      values.$pastUpgrades.5.1:
+-        ["0x680F4a9f47E4Cfea124a5654E759cB3b0a0C837c"]
++        "0xa614a91d07acd9279e9676411ba9cf79c16ba271d28e537fed96f909da45dc8b"
+      values.$pastUpgrades.4.2:
++        ["0x5538622Ad2F14bf781Af032542F7f00f080EB4CD"]
+      values.$pastUpgrades.4.1:
+-        ["0x5538622Ad2F14bf781Af032542F7f00f080EB4CD"]
++        "0xa0be7103c9cb256cddfce11ea243bc9b9db3c96bc4be86603939805841cc84fa"
+      values.$pastUpgrades.3.2:
++        ["0x254954e3F6BD7443444036BeA2d8fE88fdf496c1"]
+      values.$pastUpgrades.3.1:
+-        ["0x254954e3F6BD7443444036BeA2d8fE88fdf496c1"]
++        "0x2c90459e0d4cc3d399dc71cee133be9c5cecf13d92d036e73a004cfa9798a5c0"
+      values.$pastUpgrades.2.2:
++        ["0x10edA49fA8C6594cC6783CA5d7a6677d9e3236c1"]
+      values.$pastUpgrades.2.1:
+-        ["0x10edA49fA8C6594cC6783CA5d7a6677d9e3236c1"]
++        "0xe2508a91718906def7b9c9454e03328ee73ae67606aa32092c762b040007ad55"
+      values.$pastUpgrades.1.2:
++        ["0x4110251275f1b1f8e6Ce7114139D69597fdAd474"]
+      values.$pastUpgrades.1.1:
+-        ["0x4110251275f1b1f8e6Ce7114139D69597fdAd474"]
++        "0x3bb7393b7a848ccd4e966dce1cbbf23673975e226ec96131851fb88daf8b3625"
+      values.$pastUpgrades.0.2:
++        ["0x29A7b907FdF4a9235F46d891b7Aa1e7d3D35A3b6"]
+      values.$pastUpgrades.0.1:
+-        ["0x29A7b907FdF4a9235F46d891b7Aa1e7d3D35A3b6"]
++        "0xd22a7b97d2044a20b20a8105857d435ba98254e2a147c0890140ffe3fc55ebdf"
+    }
+```
+
+Generated with discovered.json: 0xa79e28eafe7aa00c6a20abe4e9dd5913aa6098fd
+
+# Diff at Wed, 16 Oct 2024 11:44:52 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a3d139b799cc0b28e5e912febb17464d4e5aef5d block: 264372912
+- current block number: 264372912
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 264372912 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1) {
+    +++ description: State batches / commitments get posted here.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0x041F85dD87c46B941dc9b15c6628B19ee5358485","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "sequence"
+      issuedPermissions.0.target:
+-        "0x041F85dD87c46B941dc9b15c6628B19ee5358485"
++        "0x7F68dba68E72a250004812fe04F1123Fca89aBa9"
+    }
+```
+
+```diff
+    contract RollupProxy (0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      issuedPermissions.1:
++        {"permission":"validate","target":"0x25EA41f0bDa921a0eBf48291961B1F10b59BC6b8","via":[]}
+    }
+```
+
+Generated with discovered.json: 0xe49dfcc5b5c247e9cc66efda2d2ea8197628013f
+
+# Diff at Wed, 16 Oct 2024 09:53:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b6ff61526cf3d704839d0155008ae72cc9070de8 block: 257934975
+- current block number: 264372912
+
+## Description
+
+DAC keys changed to 5/7.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1) {
+    +++ description: State batches / commitments get posted here.
+      values.dacKeyset.requiredSignatures:
+-        8
++        5
+      values.dacKeyset.membersCount:
+-        9
++        7
+      values.dacKeyset.blsSignatures.8:
+-        "YBHz50DGYvPi02ynzcvcJS9K2nhXWKKSIZdDtXqxxoD3a1s2Fh2he79bMUWZ6M6qEhHM52HZr3l5jLoU4kOTBN+Q87yo0ljgZJYaphdYrHb+jabsPUcR+xdauJKAoKSkjQz8BWC9b2QZ3F7LK+Ro3cpWgkHR9SQlt86mk+eM71AWRl3ybwlRaxwAzYwOd9TRkQYARTY8fjvRmhChCY5lz7FtY0ttPrbJ3Mc2VXy5r0yyIoNFAQjg/jMNoablUOOIZRn+4KGLBQSPKcnl/Nv/0ZNdT563sLPj6mP3qLPlvwAhFpI5vIhSpGdpgJ8n8Ns3uxJyYsPD8qaHQciNLNTzYWGEze40CPMkxEeGRqi8yRoK8iuK5kse/+kqhBOyR3NVJg=="
+      values.dacKeyset.blsSignatures.7:
+-        "YA+ljLY01rxIncmXWl8bIZduwLObm0LKJIjzdyXjzH5FLN4Y+sUF2zjvF07aUPHOyADiV0y/+ztNO/iTpKLCVUzPzRHTtsukZaE3SUY+IIYU6NvUYdMXfhcKnHH3VU+iVRaSfiK2hw7OCfsge8AQcucdNlgaHSrdvlDmzAIx7jsemsLh8ov5dpywIVkWWZGY6wIwVh2/zUWBMZ4O3V3OYWppRttXZr2ukmwIDU5hQ4qtKRKemHaHSgb18QTuUsowMhkLwx2eW5hMOIYyzLV+NyUTyaQhkD0EtYISRBhHM7RinbP9LQWbLm0dnueZ9O3AkwnbH8w6/h3jkshPZx8hqJ6QH33SwbML1KIvOTEFvgBs7dnj9gbcfMq+17Bu3/YkWw=="
+      values.dacKeyset.blsSignatures.6:
+-        "YBWhdxIOTQsrGcRQF8bHAEauHwl6F64farjSibsWDNPgplumU8MFRPn6X0jtBBMR1hH/aXso0ftQEI0edQVEB5dJkB4gymdhxq6hFCbYZpxsb8Ipr4lJe05WNmJRX1VeTRIu9WaeVLZlm+RMtvSuzbXXKJyNUnSZ420JaMKyR8Wt9M05nFZ832+eqer4eOtKDBX6gPBzdbUG+WRYdQlvFMkH/Nwo7LyKlHx231VIXKEIeuYXBmMxdtd0++QT7wi7PRN1XLjxGC8osyHYh3rksjBjG6urtgt4b/tVWyNevNaHT5YuO5MBPMMoQFgUqeV6dQiU3v2aXCwnnInTCjEvNbI5PUdwOosJi8JcdY7N1Vpm9jn8Gm89pCdwc8avTGWU5A=="
++        "YBHz50DGYvPi02ynzcvcJS9K2nhXWKKSIZdDtXqxxoD3a1s2Fh2he79bMUWZ6M6qEhHM52HZr3l5jLoU4kOTBN+Q87yo0ljgZJYaphdYrHb+jabsPUcR+xdauJKAoKSkjQz8BWC9b2QZ3F7LK+Ro3cpWgkHR9SQlt86mk+eM71AWRl3ybwlRaxwAzYwOd9TRkQYARTY8fjvRmhChCY5lz7FtY0ttPrbJ3Mc2VXy5r0yyIoNFAQjg/jMNoablUOOIZRn+4KGLBQSPKcnl/Nv/0ZNdT563sLPj6mP3qLPlvwAhFpI5vIhSpGdpgJ8n8Ns3uxJyYsPD8qaHQciNLNTzYWGEze40CPMkxEeGRqi8yRoK8iuK5kse/+kqhBOyR3NVJg=="
+      values.dacKeyset.blsSignatures.5:
+-        "YAX5RGkb2ssH+fb3F+MTg0p+7jF3Le5BT8W/hIR7iSsgHvN2l435zpiSVuqOZNaIaQ/wyuGPur4m2hoiJ1d0J+r/VvbEYQGFCxPe6oi5JzIuAb/QlRA9lT+B1Rup8HKhcAAnSGaIowju3bSosv0LG04H0NlZOSRdJSFOIBA3WyfiK1867Nju+ZqfWF/TLUvR4AnIz2uNkZ7TzuIiA6mQnDHvpKSKsAUvhhAovG8Y8TI0iC1W/LSX1G9VVqFBeI2k1gDX3vzit2yN2PjskBfh5+N6bsIRSECZPRXBqskekNytvRlFveesFOwpXOmiyRPmFAwaYLtsQtSVjz94Ev5rabPQim7x1y9s6AEtV/Q/ggRU7/lTha1SVmMCRdYWWu3Igg=="
++        "YA+ljLY01rxIncmXWl8bIZduwLObm0LKJIjzdyXjzH5FLN4Y+sUF2zjvF07aUPHOyADiV0y/+ztNO/iTpKLCVUzPzRHTtsukZaE3SUY+IIYU6NvUYdMXfhcKnHH3VU+iVRaSfiK2hw7OCfsge8AQcucdNlgaHSrdvlDmzAIx7jsemsLh8ov5dpywIVkWWZGY6wIwVh2/zUWBMZ4O3V3OYWppRttXZr2ukmwIDU5hQ4qtKRKemHaHSgb18QTuUsowMhkLwx2eW5hMOIYyzLV+NyUTyaQhkD0EtYISRBhHM7RinbP9LQWbLm0dnueZ9O3AkwnbH8w6/h3jkshPZx8hqJ6QH33SwbML1KIvOTEFvgBs7dnj9gbcfMq+17Bu3/YkWw=="
+      values.dacKeyset.blsSignatures.4:
+-        "YAuqwKcqcyPp5E3tp9vVoeBVx6gURQyV0XhwNaooWS2k/2VWHtrUuZdDdBiBRMq62Qf6cKtlqn5aGTqIq0jZJRbEcd0dkmlHLcrFJ96+/8FHu4jGabROamNoQxG5xcDpiwHi3WmI1pUaZVumUUXo+P+av0gKxemR2OSyKIOM8ERfQAWzZkDUw+dvo7Ga4PIsIwcyJ9rTjeq4S7fyD6qym9tEK2vOyhAAab7s9qC9TFnGbFkeSI/NY3tOrmhEqee0qwRz7eCR5Uf2sZBpYEGHAHadBFhoGPJCpQyBFu673o4kEWgMMKE7t9S4KR/Dgji2RAsI+xUaz3Wdvwfeoa/SAPdCd4j6PoqTuD/b74KiL9TqHtEQgk//j25bZK2778n5yA=="
++        "YBWhdxIOTQsrGcRQF8bHAEauHwl6F64farjSibsWDNPgplumU8MFRPn6X0jtBBMR1hH/aXso0ftQEI0edQVEB5dJkB4gymdhxq6hFCbYZpxsb8Ipr4lJe05WNmJRX1VeTRIu9WaeVLZlm+RMtvSuzbXXKJyNUnSZ420JaMKyR8Wt9M05nFZ832+eqer4eOtKDBX6gPBzdbUG+WRYdQlvFMkH/Nwo7LyKlHx231VIXKEIeuYXBmMxdtd0++QT7wi7PRN1XLjxGC8osyHYh3rksjBjG6urtgt4b/tVWyNevNaHT5YuO5MBPMMoQFgUqeV6dQiU3v2aXCwnnInTCjEvNbI5PUdwOosJi8JcdY7N1Vpm9jn8Gm89pCdwc8avTGWU5A=="
+      values.dacKeyset.blsSignatures.3:
+-        "YAKvb8hRiZPIAext4QCk7ngBMmDVkAcQoAqc/BSXtU7/gUDohCF6RI29uc5OlOXIIhifqDOAe+RIDnUrkMJuXKM3f+21bngw9rgjuSoGfaXfqLffFlR3eIQs0QY0XQeG0RKYArEpJ/D/hOt7YPOddAXGn62x4ryWuyqt5mkyyWzfGrncElFsqT6Ni+hAjwjDOABlbMG6rvSrm6uyznjdL233pYO0DTe8S95wgYOcGLP8xSDHlN341schNnHTQyJAcxddkM3BEocKI7ymH9PNp12Ax5Y5SVZEXKkLFAECOwihaMjjH0brzYxdGbaPEEAgDQQbx8bvW09h5AnTEXPrz6oYWFRep/drK92rK9LtDM8NgnjzMLv+AeSd93X1DmZPpA=="
++        "YAX5RGkb2ssH+fb3F+MTg0p+7jF3Le5BT8W/hIR7iSsgHvN2l435zpiSVuqOZNaIaQ/wyuGPur4m2hoiJ1d0J+r/VvbEYQGFCxPe6oi5JzIuAb/QlRA9lT+B1Rup8HKhcAAnSGaIowju3bSosv0LG04H0NlZOSRdJSFOIBA3WyfiK1867Nju+ZqfWF/TLUvR4AnIz2uNkZ7TzuIiA6mQnDHvpKSKsAUvhhAovG8Y8TI0iC1W/LSX1G9VVqFBeI2k1gDX3vzit2yN2PjskBfh5+N6bsIRSECZPRXBqskekNytvRlFveesFOwpXOmiyRPmFAwaYLtsQtSVjz94Ev5rabPQim7x1y9s6AEtV/Q/ggRU7/lTha1SVmMCRdYWWu3Igg=="
+      values.dacKeyset.blsSignatures.2:
+-        "YA1wn7+Q7YfmWm4B63iIDrEzquUCqvuQAXCeq+e5pzVb4AQp2pOUkboz4+GIhKB4rQ77pOEK7RQVDl52V7CYEMtO5koML9h9OOU9o8rQzKCZlN0uuh97hLmn3uClp9i9BBgu5d9ptNNVjuX6CGWNw23GfyxIhx/uYKO+Lngpekmnc/gvNQ7iZmFT3pOd7cnkDwKVYCO0K4AdCiK/n92I4J2ZLN/dPU9cb56BorMRCQ9LWIy4069ZXcZsU+z1RR/KkAb74lp6FvZsqImmkQjoKv03XiuGU6syNkO5lOmX5vLX/+ttSjvWYo5yuNOBEams/A+6Aaqr8AaiVoytLAYidWkn9c4JkPTXh3Vhj//1fiuUD93NfpvZVFxOmNphqqHLaQ=="
++        "YAKvb8hRiZPIAext4QCk7ngBMmDVkAcQoAqc/BSXtU7/gUDohCF6RI29uc5OlOXIIhifqDOAe+RIDnUrkMJuXKM3f+21bngw9rgjuSoGfaXfqLffFlR3eIQs0QY0XQeG0RKYArEpJ/D/hOt7YPOddAXGn62x4ryWuyqt5mkyyWzfGrncElFsqT6Ni+hAjwjDOABlbMG6rvSrm6uyznjdL233pYO0DTe8S95wgYOcGLP8xSDHlN341schNnHTQyJAcxddkM3BEocKI7ymH9PNp12Ax5Y5SVZEXKkLFAECOwihaMjjH0brzYxdGbaPEEAgDQQbx8bvW09h5AnTEXPrz6oYWFRep/drK92rK9LtDM8NgnjzMLv+AeSd93X1DmZPpA=="
+      values.keySetUpdates:
+-        5
++        6
+    }
+```
+
 Generated with discovered.json: 0x1f7fa40b4f66805ff97fdef9d48c20dbe9daa37c
 
 # Diff at Mon, 14 Oct 2024 10:59:27 GMT:

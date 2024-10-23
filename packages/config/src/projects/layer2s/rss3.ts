@@ -8,6 +8,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('rss3')
 
 export const rss3: Layer2 = opStackL2({
+  createdAt: new UnixTime(1705391231), // 2024-01-16T07:47:11Z
   badges: [Badge.DA.NearDA],
   daProvider: {
     name: 'NearDA',
@@ -52,13 +53,13 @@ export const rss3: Layer2 = opStackL2({
   },
   associatedTokens: ['RSS3'],
   discovery,
+  additionalPurposes: ['AI', 'Information'],
   display: {
     shortName: 'RSS3 VSL',
     name: 'RSS3 Value Sublayer',
     slug: 'rss3',
     description:
       'The RSS3 Value Sublayer (VSL) as part of the RSS3 Network, is an Ethereum Layer2 built with OP Stack, handling the value and ownership of AI and Open Information.',
-    purposes: ['AI', 'Information'],
     links: {
       websites: ['https://rss3.io'],
       apps: [
@@ -87,7 +88,6 @@ export const rss3: Layer2 = opStackL2({
       url: 'https://scan.rss3.io/api',
       type: 'blockscout',
     },
-    minTimestampForTvl: UnixTime.fromDate(new Date('2024-03-08T00:41:59Z')),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -103,7 +103,6 @@ export const rss3: Layer2 = opStackL2({
     stateUpdate: 'disabled',
   },
   genesisTimestamp: new UnixTime(1709858519),
-  l1StandardBridgeTokens: ['RSS3'],
   isNodeAvailable: false,
   discoveryDrivenData: true,
   milestones: [

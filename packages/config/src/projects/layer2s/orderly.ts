@@ -1,5 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
+import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
@@ -8,19 +9,19 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('orderly')
 
 export const orderly: Layer2 = opStackL2({
+  createdAt: new UnixTime(1707309065), // 2024-02-07T12:31:05Z
   daProvider: CELESTIA_DA_PROVIDER,
   badges: [Badge.DA.Celestia, Badge.Infra.Superchain, Badge.RaaS.Conduit],
+  additionalPurposes: ['Exchange'],
   discovery,
   display: {
     name: 'Orderly Network',
+    shortName: 'Orderly',
     slug: 'orderly',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
       'Orderly is an OP stack Optimium on Ethereum using Celestia for data availability. It has a unified ledger for assets from multiple chains and an orderbook that can be used by apps that build on top of it.',
     detailedDescription:
       'While ETH deposited to Orderly is using an OP Stack canonical bridge, the multichain USDC escrows are sending / receiving their deposit / withdrawal messages through the external LayerZero v1 AMB.',
-    purposes: ['DeFi', 'Exchange'],
     links: {
       websites: ['https://orderly.network/'],
       apps: ['https://app.orderly.network/'],
@@ -126,6 +127,13 @@ export const orderly: Layer2 = opStackL2({
       date: '2024-01-22T00:00:00Z',
       description: 'Orderly Network is live on mainnet.',
       type: 'general',
+    },
+  ],
+  knowledgeNuggets: [
+    {
+      title: 'Blobstream and Celestia Architecture',
+      url: 'https://www.youtube.com/watch?v=cn_fN6pkakQ',
+      thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
     },
   ],
 })

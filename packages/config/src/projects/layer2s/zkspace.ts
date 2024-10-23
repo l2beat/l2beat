@@ -32,6 +32,7 @@ const upgradeability = {
 export const zkspace: Layer2 = {
   type: 'layer2',
   id: ProjectId('zkspace'),
+  createdAt: new UnixTime(1629199654), // 2021-08-17T11:27:34Z
   badges: [
     Badge.VM.AppChain,
     Badge.DA.EthereumCalldata,
@@ -42,7 +43,7 @@ export const zkspace: Layer2 = {
     slug: 'zkspace',
     description:
       'ZKSpace consists of three main parts: an AMM DEX utilizing ZK Rollups technology ZKSwap v3, a payment service called ZKSquare, and an NFT marketplace called ZKSea.',
-    purposes: ['NFT', 'AMM', 'Payments'],
+    purposes: ['NFT', 'Exchange', 'Payments'],
     provider: 'ZKsync Lite',
     category: 'ZK Rollup',
     links: {

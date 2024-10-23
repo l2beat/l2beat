@@ -27,6 +27,7 @@ export const mantleDA: DaLayer = {
   id: 'dac',
   type: 'DaLayer',
   kind: 'DAC',
+  systemCategory: 'custom',
   display: {
     name: 'Mantle DA',
     slug: 'mantle',
@@ -44,7 +45,8 @@ export const mantleDA: DaLayer = {
       ],
     },
   },
-  technology: `
+  technology: {
+    description: `
     ## Architecture
 
     Mantle DA is an independent DA module that is built on top of an early version of EigenDA smart contracts.
@@ -54,6 +56,7 @@ export const mantleDA: DaLayer = {
     The DA DataLayrServiceManager acts as a verifier smart contract,  verifying that the signatures provided by the sequencer are indeed from node operators who have agreed to be in the quorum.
     To become members of the DA network, node operators are required to stake ${requiredStakeFormatted} MNT tokens, and can only be registered by an authorized entity. There is no slashing mechanism in place for misbehaving nodes.
     `,
+  },
   bridges: [mantleDABridge],
   usedIn: [...mantleDABridge.usedIn],
   risks: {

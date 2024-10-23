@@ -9,6 +9,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('bobanetwork')
 
 export const bobanetwork: Layer2 = opStackL2({
+  createdAt: new UnixTime(1632469722), // 2021-09-24T07:48:42Z
   discovery,
   display: {
     name: 'Boba Network',
@@ -16,7 +17,6 @@ export const bobanetwork: Layer2 = opStackL2({
     slug: 'bobanetwork',
     description:
       'Boba is an OP stack Optimistic Rollup built by the Enya team as core contributors to the Boba Foundation.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://boba.network'],
       apps: [],

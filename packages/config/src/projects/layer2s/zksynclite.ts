@@ -54,13 +54,14 @@ const forcedWithdrawalDelay = HARDCODED.ZKSYNC.PRIORITY_EXPIRATION_PERIOD
 export const zksynclite: Layer2 = {
   type: 'layer2',
   id: ProjectId('zksync'),
+  createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [Badge.VM.AppChain, Badge.DA.EthereumCalldata],
   display: {
     name: 'ZKsync Lite',
     slug: 'zksync-lite',
     description:
       'ZKsync Lite (formerly ZKsync) is a ZK Rollup platform that supports payments, token swaps and NFT minting.',
-    purposes: ['Payments'],
+    purposes: ['Payments', 'Exchange', 'NFT'],
     provider: 'ZKsync Lite',
     category: 'ZK Rollup',
 
@@ -188,7 +189,9 @@ export const zksynclite: Layer2 = {
       ],
     },
     exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, forcedWithdrawalDelay, 0),
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, forcedWithdrawalDelay, {
+        upgradeDelay2: 0,
+      }),
       sentiment: 'warning',
       description: `Users have ${formatSeconds(
         upgradeDelay - forcedWithdrawalDelay,

@@ -7,6 +7,7 @@ import { Layer3 } from './types'
 // inbox on arbitrum: https://arbiscan.io/address/0xb0a00d053160e297324b7689b5e3f3af9a6fa4fb
 export const hook: Layer3 = underReviewL3({
   id: 'hook',
+  createdAt: new UnixTime(1719928126), // 2024-07-02T13:48:46Z
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Hook',
@@ -15,7 +16,7 @@ export const hook: Layer3 = underReviewL3({
     provider: 'Arbitrum',
     description:
       'Hook is an Orbit stack L3 Appchain on Arbitrum powering a perpetuals DEX for tokens and NFTs.',
-    purposes: ['DeFi', 'NFT', 'Exchange'],
+    purposes: ['Universal', 'NFT', 'Exchange'],
     links: {
       websites: ['https://hook.xyz/'],
       apps: ['https://hook.xyz/trade/'],

@@ -1,0 +1,5 @@
+{
+  "term": "Based sequencing",
+  "definition": "A sequencing strategy for L2s based on Ethereum's own block building pipeline, which gets reused to also build L2 blocks. This strategy is in contrast to centralized sequencing or decentralized sequencing mechanisms that use networks external to Ethereum.",
+  "isSpicy": false
+}

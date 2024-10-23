@@ -38,13 +38,13 @@ const upgradeability = {
 }
 
 export const zircuit: Layer2 = opStackL2({
+  createdAt: new UnixTime(1712559704), // 2024-04-08T07:01:44Z
   discovery,
   display: {
     name: 'Zircuit',
     slug: 'zircuit',
     description:
       'Zircuit is a universal Rollup that aims to use zk proofs in the future. It is based on the Optimism Bedrock architecture, employing AI to identify and stop malicious transactions at the sequencer level.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://zircuit.com/'],
       apps: ['https://bridge.zircuit.com/'],

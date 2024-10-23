@@ -1,0 +1,103 @@
+// zklinknova riskView didn't change 1
+
+{
+  dataAvailability: {
+    description: "Proof construction and state derivation rely fully on data that is NOT published onchain."
+    sentiment: "bad"
+    sources: [
+      {
+        contract: "zkLink"
+        references: [
+          "https://lineascan.build/address/0x9f2E11F287733c4EF5B9A6ED923b780c28062727#code"
+        ]
+      }
+    ]
+    value: "External"
+  }
+  destinationToken: {
+    description: "ETH transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain."
+    sentiment: "good"
+    value: "Native & Canonical"
+  }
+  exitWindow: {
+    definingMetric: 0
+    description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
+    secondLine: undefined
+    sentiment: "bad"
+    value: "None"
+  }
+  proposerFailure: {
+    definingMetric: -Infinity
+    description: "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen."
+    sentiment: "bad"
+    value: "Cannot withdraw"
+  }
+  sequencerFailure: {
+    description: "Users can submit transactions to an L2 queue, but can't force them. The sequencer cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencer censors or is down, it is so for everyone."
+    sentiment: "warning"
+    value: "Enqueue via L2"
+  }
+  stateValidation: {
+    definingMetric: Infinity
+    description: "STARKs and SNARKs are zero knowledge proofs that ensure state correctness. STARKs proofs are wrapped in SNARKs proofs for efficiency. SNARKs require a trusted setup."
+    sentiment: "good"
+    sources: [
+      {
+        contract: "zkLink"
+        references: [
+          "https://lineascan.build/address/0x9f2E11F287733c4EF5B9A6ED923b780c28062727#code"
+        ]
+      }
+    ]
+    value: "ZK proofs (ST, SN)"
+  }
+  validatedBy: {
+    description: "Smart contracts on linea validate all bridge transfers. Additionally, the security of the system depends on the security of the base layer."
+    sentiment: "warning"
+    value: "Linea"
+  }
+}
+
+// zklinknova stackedRiskView didn't change 1
+
+{
+  dataAvailability: {
+    description: "Proof construction and state derivation rely fully on data that is ultimately NOT published on Ethereum."
+    sentiment: "bad"
+    value: "External"
+  }
+  destinationToken: {
+    description: "ETH transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain."
+    sentiment: "good"
+    value: "Native & Canonical"
+  }
+  exitWindow: {
+    definingMetric: 0
+    description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
+    secondLine: undefined
+    sentiment: "bad"
+    value: "None"
+  }
+  proposerFailure: {
+    definingMetric: -Infinity
+    description: "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen."
+    sentiment: "bad"
+    value: "Cannot withdraw"
+  }
+  sequencerFailure: {
+    description: "There is no mechanism to have transactions be included if the sequencer is down or censoring."
+    sentiment: "bad"
+    value: "No mechanism"
+  }
+  stateValidation: {
+    definingMetric: Infinity
+    description: "Zero knowledge cryptography is used to ensure state correctness. Proofs are first verified on Linea and finally on Ethereum."
+    sentiment: "good"
+    value: "ZK proofs"
+  }
+  validatedBy: {
+    description: "Smart contracts on Ethereum validate all bridge transfers."
+    sentiment: "good"
+    value: "Ethereum"
+  }
+}

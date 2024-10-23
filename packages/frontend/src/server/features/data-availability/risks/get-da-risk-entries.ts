@@ -41,9 +41,11 @@ export async function getDaRiskEntries() {
           const economicSecurityData = economicSecurity[daLayer.id]
 
           return {
+            id: getDaProjectKey(daLayer, daBridge),
             name: daLayer.display.name,
             slug: daLayer.display.slug,
             kind: daLayer.kind,
+            systemCategory: daLayer.systemCategory,
             layerType: kindToType(daLayer.kind),
             href: `/data-availability/projects/${daLayer.display.slug}/${daBridge.display.slug}`,
             daBridge: toDaBridge(daBridge),
@@ -63,22 +65,25 @@ export async function getDaRiskEntries() {
         })
         .sort((a, b) => b.tvs - a.tvs)
 
+      const firstBridge = daBridges[0]
       if (daBridges.length === 0) {
         return []
-      } else if (daBridges.length === 1 && daBridges[0]) {
+      } else if (daBridges.length === 1 && firstBridge) {
         return daBridges
       }
 
-      assert(daBridges[0], 'Expected at least one bridge')
+      assert(firstBridge, 'Expected at least one bridge')
 
       return [
         {
+          id: firstBridge.id,
           name: daLayer.display.name,
           slug: daLayer.display.slug,
           kind: daLayer.kind,
+          systemCategory: daLayer.systemCategory,
           layerType: kindToType(daLayer.kind),
           daBridge: 'multiple' as const,
-          href: daBridges[0]?.href,
+          href: firstBridge.href,
           warning: undefined,
           redWarning: undefined,
           isVerified: true,

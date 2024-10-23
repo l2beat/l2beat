@@ -4,4 +4,3 @@ export type ScalingProjectCategory =
   | 'Plasma'
   | 'Validium'
   | 'Optimium'
-  | 'Other'

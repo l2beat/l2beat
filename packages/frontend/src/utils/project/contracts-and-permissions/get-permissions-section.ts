@@ -4,6 +4,7 @@ import {
   type Layer2,
   type Layer3,
   type ScalingProjectPermission,
+  type ScalingProjectPermissionedAccount,
   type ScalingProjectReference,
 } from '@l2beat/config'
 import {
@@ -107,6 +108,39 @@ export function getPermissionsSection(
   }
 }
 
+function resolvePermissionedName(
+  rootName: string,
+  account: ScalingProjectPermissionedAccount,
+  permissions: ProjectParams['permissions'],
+): string {
+  let name = `${account.address.slice(0, 6)}…${account.address.slice(38, 42)}`
+
+  if (permissions !== undefined && permissions !== 'UnderReview') {
+    const matchingPermissions = permissions.filter(
+      (p) =>
+        p.name !== rootName &&
+        p.fromRole !== true &&
+        p.accounts
+          .map((a) => a.address.toString())
+          .includes(account.address.toString()),
+    )
+    const firstMatchingPermission = matchingPermissions[0]
+    if (matchingPermissions.length === 1 && firstMatchingPermission) {
+      name = firstMatchingPermission.name
+    }
+
+    const multisigs = matchingPermissions.filter(
+      (p) => p.participants !== undefined,
+    )
+    const firstMultisig = multisigs[0]
+    if (multisigs.length === 1 && firstMultisig) {
+      name = firstMultisig.name
+    }
+  }
+
+  return name
+}
+
 function toTechnologyContract(
   projectParams: ProjectParams,
   permission: ScalingProjectPermission,
@@ -121,10 +155,18 @@ function toTechnologyContract(
   const addresses: TechnologyContractAddress[] = permission.accounts.map(
     (account) => {
       const address = account.address.toString()
+      const name = resolvePermissionedName(
+        permission.name,
+        account,
+        projectParams.permissions,
+      )
       return {
-        name: `${address.slice(0, 6)}…${address.slice(38, 42)}`,
+        name,
         address,
-        href: `${etherscanUrl}/address/${address}#code`,
+        href:
+          permission.fromRole === true
+            ? `#${name}`
+            : `${etherscanUrl}/address/${address}#code`,
         isAdmin: false,
         verificationStatus: toVerificationStatus(
           verificationStatusForChain[address],
@@ -182,34 +224,11 @@ function toTechnologyContract(
   if (permission.participants) {
     const addresses: TechnologyContractAddress[] = permission.participants.map(
       (account) => {
-        let name = `${account.address.slice(0, 6)}…${account.address.slice(
-          38,
-          42,
-        )}`
-
-        if (
-          projectParams.permissions !== undefined &&
-          projectParams.permissions !== 'UnderReview'
-        ) {
-          const matchingPermissions = projectParams.permissions.filter((p) =>
-            p.accounts
-              .map((a) => a.address.toString())
-              .includes(account.address.toString()),
-          )
-          const firstMatchingPermission = matchingPermissions[0]
-          if (matchingPermissions.length === 1 && firstMatchingPermission) {
-            name = firstMatchingPermission.name
-          }
-
-          const multisigs = matchingPermissions.filter(
-            (p) => p.participants !== undefined,
-          )
-          const firstMultisig = multisigs[0]
-          if (multisigs.length === 1 && firstMultisig) {
-            name = firstMultisig.name
-          }
-        }
-
+        const name = resolvePermissionedName(
+          permission.name,
+          account,
+          projectParams.permissions,
+        )
         const address = account.address.toString()
 
         return {

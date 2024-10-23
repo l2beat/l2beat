@@ -7,6 +7,7 @@ import {
 } from 'next/cache'
 import { env } from '~/env'
 import { db } from '~/server/database'
+import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import { getLastDayTps } from './utils/get-last-day-tps'
 
@@ -18,6 +19,9 @@ export async function getActivityLatestTps(projects: (Layer2 | Layer3)[]) {
   return getCachedActivityLatestTps(projects)
 }
 
+export type ActivityLatestTpsData = Awaited<
+  ReturnType<typeof getCachedActivityLatestTps>
+>
 const getCachedActivityLatestTps = cache(
   async (projects: (Layer2 | Layer3)[]) => {
     const range = getFullySyncedActivityRange('2d')
@@ -32,13 +36,11 @@ const getCachedActivityLatestTps = cache(
       Object.entries(grouped).map(([projectId, records]) => {
         const pastDayTps = getLastDayTps(records)
         const previousDayTps = getLastDayTps(records, 1)
-
-        const change = pastDayTps / previousDayTps - 1
         return [
           projectId,
           {
             pastDayTps,
-            change,
+            change: calculatePercentageChange(pastDayTps, previousDayTps),
           },
         ]
       }),

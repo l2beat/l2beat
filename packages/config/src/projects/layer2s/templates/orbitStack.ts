@@ -2,7 +2,7 @@ import {
   ContractParameters,
   get$Implementations,
 } from '@l2beat/discovery-types'
-import { assert, ProjectId, formatSeconds } from '@l2beat/shared-pure'
+import { assert, ProjectId, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { unionBy } from 'lodash'
@@ -18,6 +18,7 @@ import {
   ScalingProjectContract,
   ScalingProjectEscrow,
   ScalingProjectPermission,
+  ScalingProjectPurpose,
   ScalingProjectRisk,
   ScalingProjectRiskView,
   ScalingProjectStateDerivation,
@@ -91,12 +92,14 @@ export const WASMVM_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
 ]
 
 export interface OrbitStackConfigCommon {
+  createdAt: UnixTime
   discovery: ProjectDiscovery
   stateValidationImage?: string
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
   nonTemplateEscrows?: ScalingProjectEscrow[]
+  overrideEscrows?: ScalingProjectEscrow[]
   upgradeability?: {
     upgradableBy: string[] | undefined
     upgradeDelay: string | undefined
@@ -126,13 +129,11 @@ export interface OrbitStackConfigCommon {
   nonTemplateContractRisks?: ScalingProjectRisk[]
   nativeAddresses?: Record<string, ScalingProjectContract[]>
   nativePermissions?: Record<string, ScalingProjectPermission[]> | 'UnderReview'
+  additionalPurposes?: ScalingProjectPurpose[]
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
-  display: Omit<
-    Layer3Display,
-    'provider' | 'category' | 'dataAvailabilityMode'
-  > & {
+  display: Omit<Layer3Display, 'provider' | 'category' | 'purposes'> & {
     category?: Layer3Display['category']
   }
   stackedRiskView?: Partial<ScalingProjectRiskView>
@@ -141,10 +142,7 @@ export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
 }
 
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
-  display: Omit<
-    Layer2Display,
-    'provider' | 'category' | 'dataAvailabilityMode'
-  > & {
+  display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'> & {
     category?: Layer2Display['category']
   }
   nativeToken?: string
@@ -308,7 +306,7 @@ export function orbitStackCommon(
 
   const validators: ScalingProjectPermission = {
     name: 'Validators/Proposers',
-    accounts: templateVars.discovery.getPermissionsByRole('Validator'),
+    accounts: templateVars.discovery.getPermissionsByRole('validate'),
     description:
       'They can submit new state roots and challenge state roots. Some of the operators perform their duties through special purpose smart contracts.',
     chain: templateVars.discovery.chain,
@@ -321,7 +319,7 @@ export function orbitStackCommon(
 
   const sequencers: ScalingProjectPermission = {
     name: 'Sequencers',
-    accounts: templateVars.discovery.getPermissionsByRole('Sequencer'),
+    accounts: templateVars.discovery.getPermissionsByRole('sequence'),
     description: 'Central actors allowed to submit transaction batches to L1.',
     chain: templateVars.discovery.chain,
   }
@@ -340,6 +338,7 @@ export function orbitStackCommon(
 
   return {
     id: ProjectId(templateVars.discovery.projectName),
+    createdAt: templateVars.createdAt,
     contracts: {
       addresses: unionBy(
         [
@@ -623,6 +622,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     hostChain: templateVars.hostChain,
     display: {
       stateValidationImage: 'orbit',
+      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       ...templateVars.display,
       warning:
         'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
@@ -690,23 +690,25 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     riskView,
     config: {
       associatedTokens: templateVars.associatedTokens,
-      escrows: unionBy(
-        [
-          ...(templateVars.nonTemplateEscrows ?? []),
-          templateVars.discovery.getEscrowDetails({
-            includeInTotal: false,
-            address: templateVars.bridge.address,
-            tokens: templateVars.nativeToken
-              ? [templateVars.nativeToken]
-              : ['ETH'],
-            description: templateVars.nativeToken
-              ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.nativeToken} sent to L2.`
-              : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
-            ...upgradeability,
-          }),
-        ],
-        'address',
-      ),
+      escrows:
+        templateVars.overrideEscrows ??
+        unionBy(
+          [
+            ...(templateVars.nonTemplateEscrows ?? []),
+            templateVars.discovery.getEscrowDetails({
+              includeInTotal: false,
+              address: templateVars.bridge.address,
+              tokens: templateVars.nativeToken
+                ? [templateVars.nativeToken]
+                : ['ETH'],
+              description: templateVars.nativeToken
+                ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.nativeToken} sent to L2.`
+                : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
+              ...upgradeability,
+            }),
+          ],
+          'address',
+        ),
       transactionApi:
         templateVars.transactionApi ??
         (templateVars.rpcUrl !== undefined
@@ -770,6 +772,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     ...orbitStackCommon(templateVars, ETHEREUM_EXPLORER_URL, 12),
     display: {
       stateValidationImage: 'orbit',
+      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       warning:
         'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
       ...templateVars.display,
@@ -891,7 +894,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     },
     config: {
       associatedTokens: templateVars.associatedTokens,
-      escrows: [
+      escrows: templateVars.overrideEscrows ?? [
         templateVars.discovery.getEscrowDetails({
           address: templateVars.bridge.address,
           tokens: templateVars.nativeToken

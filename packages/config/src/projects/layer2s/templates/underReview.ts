@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -14,6 +14,7 @@ import { type Layer2, type Layer2Display } from '../types'
 
 export interface UnderReviewConfigCommon {
   id: string
+  createdAt: UnixTime
   rpcUrl?: string
   escrows?: ScalingProjectEscrow[]
   chainConfig?: ChainConfig
@@ -22,12 +23,12 @@ export interface UnderReviewConfigCommon {
 }
 
 export interface UnderReviewConfigL2 extends UnderReviewConfigCommon {
-  display: Omit<Layer2Display, 'dataAvailabilityMode'>
+  display: Layer2Display
   associatedTokens?: string[]
 }
 
 export interface UnderReviewConfigL3 extends UnderReviewConfigCommon {
-  display: Omit<Layer3Display, 'dataAvailabilityMode'>
+  display: Layer3Display
   hostChain: Layer3['hostChain']
   associatedTokens?: string[]
 }
@@ -37,9 +38,8 @@ export function underReviewL2(templateVars: UnderReviewConfigL2): Layer2 {
     isUnderReview: true,
     type: 'layer2',
     id: ProjectId(templateVars.id),
-    display: {
-      ...templateVars.display,
-    },
+    createdAt: templateVars.createdAt,
+    display: templateVars.display,
     stage: {
       stage:
         templateVars.display.category === 'Optimistic Rollup' ||
@@ -74,6 +74,7 @@ export function underReviewL3(templateVars: UnderReviewConfigL3): Layer3 {
     type: 'layer3',
     isUnderReview: true,
     id: ProjectId(templateVars.id),
+    createdAt: templateVars.createdAt,
     hostChain: templateVars.hostChain,
     display: {
       ...templateVars.display,
@@ -91,6 +92,13 @@ export function underReviewL3(templateVars: UnderReviewConfigL3): Layer3 {
               defaultCallsPerMinute: 1500,
             }
           : undefined),
+    },
+    stage: {
+      stage:
+        templateVars.display.category === 'Optimistic Rollup' ||
+        templateVars.display.category === 'ZK Rollup'
+          ? 'UnderReview'
+          : 'NotApplicable',
     },
     riskView: UNDER_REVIEW_RISK_VIEW,
     stackedRiskView: UNDER_REVIEW_RISK_VIEW,

@@ -8,7 +8,7 @@ import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingAssociatedTokensContextProvider } from '../_components/scaling-associated-tokens-context'
 import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
 import { ChartTabs } from './_components/chart-tabs'
-import { ScalingSummaryTable } from './_components/table/scaling-summary-table'
+import { ScalingSummaryTables } from './_components/scaling-summary-tables'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -22,35 +22,41 @@ const UNIT = 'usd'
 export default async function Page() {
   const entries = await getScalingSummaryEntries()
 
-  await api.tvl.chart.prefetch({
-    range: TIME_RANGE,
-    excludeAssociatedTokens: false,
-    filter: { type: 'layer2' },
-  })
-
-  await api.activity.chart.prefetch({
-    range: TIME_RANGE,
-    filter: { type: 'all' },
-  })
+  await Promise.all([
+    api.tvl.chart.prefetch({
+      range: TIME_RANGE,
+      excludeAssociatedTokens: false,
+      filter: { type: 'layer2' },
+    }),
+    api.tvl.total.prefetch({
+      excludeAssociatedTokens: false,
+      filter: { type: 'layer2' },
+    }),
+    api.activity.chart.prefetch({
+      range: TIME_RANGE,
+      filter: { type: 'all' },
+    }),
+    api.activity.chartStats.prefetch({
+      filter: { type: 'all' },
+    }),
+  ])
   return (
     <HydrateClient>
-      <ScalingFilterContextProvider>
-        <ScalingAssociatedTokensContextProvider>
-          <MainPageHeader>Summary</MainPageHeader>
-          <div className="grid grid-cols-2 gap-4 max-lg:hidden">
-            <MainPageCard>
-              <ScalingSummaryTvlChart unit={UNIT} timeRange={TIME_RANGE} />
-            </MainPageCard>
-            <MainPageCard>
-              <ScalingSummaryActivityChart timeRange={TIME_RANGE} />
-            </MainPageCard>
-          </div>
-          <ChartTabs className="lg:hidden" unit={UNIT} timeRange={TIME_RANGE} />
-          <MainPageCard className="md:mt-6">
-            <ScalingSummaryTable entries={entries} />
-          </MainPageCard>
-        </ScalingAssociatedTokensContextProvider>
-      </ScalingFilterContextProvider>
+      <MainPageHeader>Summary</MainPageHeader>
+      <div className="grid grid-cols-2 gap-4 max-lg:hidden">
+        <MainPageCard>
+          <ScalingSummaryTvlChart unit={UNIT} timeRange={TIME_RANGE} />
+        </MainPageCard>
+        <MainPageCard>
+          <ScalingSummaryActivityChart timeRange={TIME_RANGE} />
+        </MainPageCard>
+      </div>
+      <ChartTabs className="lg:hidden" unit={UNIT} timeRange={TIME_RANGE} />
+      <ScalingAssociatedTokensContextProvider>
+        <ScalingFilterContextProvider>
+          <ScalingSummaryTables {...entries} />
+        </ScalingFilterContextProvider>
+      </ScalingAssociatedTokensContextProvider>
     </HydrateClient>
   )
 }

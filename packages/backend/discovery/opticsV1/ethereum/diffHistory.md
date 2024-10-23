@@ -1,4 +1,66 @@
-Generated with discovered.json: 0x39c60a9fefdf6696c05abbef1d5777b2c04b370f
+Generated with discovered.json: 0x52d93b6e652fc0268ef514433154911ce4313167
+
+# Diff at Mon, 21 Oct 2024 11:08:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 19532023
+- current block number: 19532023
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19532023 (main branch discovery), not current.
+
+```diff
+    contract GovernanceRouterBeaconProxy (0x42303634F37956687fB7ff2c6146AC842481A052) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xDFb2A95900d6b7c8AA95F2E46563a5FCFb5505A1"]
+      values.$pastUpgrades.0.1:
+-        ["0xDFb2A95900d6b7c8AA95F2E46563a5FCFb5505A1"]
++        "0x7481d9583144189235ba84c60cbcd5b7f45084ab6d35140f3dc484549353af1d"
+    }
+```
+
+```diff
+    contract BridgeRouterBeaconProxy (0x6a39909e805A3eaDd2b61fFf61147796ca6aBB47) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x67364232A8f8dA6f22dF3bE3408ef9872132F2A6"]
+      values.$pastUpgrades.0.1:
+-        ["0x67364232A8f8dA6f22dF3bE3408ef9872132F2A6"]
++        "0x55d651c1e931a865762f216a22d1a0044f342f79ab800716a4660d2cb7b59d1f"
+    }
+```
+
+```diff
+    contract ReplicaBeaconProxy (0x7725EadaC5Ee986CAc8317a1d2fB16e59e079E8b) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xFC4060e4Fd5979f848b8EDc8505d2f89D83b9E04"]
+      values.$pastUpgrades.0.1:
+-        ["0xFC4060e4Fd5979f848b8EDc8505d2f89D83b9E04"]
++        "0x0ee477885168cd26a6748549a929aec63af1a405a872c8a694755ab37b8d0c39"
+    }
+```
+
+```diff
+    contract HomeBeaconProxy (0xf25C5932bb6EFc7afA4895D9916F2abD7151BF97) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xfAc41463ef1E01546F2130F92184a053A0E3Fa14"]
+      values.$pastUpgrades.0.1:
+-        ["0xfAc41463ef1E01546F2130F92184a053A0E3Fa14"]
++        "0xc582bae90e011209dd89c61a2b2080afdcab952023b0122376eca38113a5eab1"
+    }
+```
+
+Generated with discovered.json: 0x83ab8afd7b478a3f3645e7201730bce0f8a0f3d9
 
 # Diff at Mon, 14 Oct 2024 10:53:33 GMT:
 

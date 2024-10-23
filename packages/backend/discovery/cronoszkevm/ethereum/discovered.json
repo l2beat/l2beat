@@ -134,6 +134,7 @@
         "$pastUpgrades": [
           [
             "2024-07-30T16:30:35.000Z",
+            "0x98231507bfbba69996de5a8572d8f83ccf9756be6232d3f9431e2fc68c98d58b",
             [
               "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a",
               "0xE60E94fCCb18a81D501a38959E532C0A85A1be89",
@@ -143,6 +144,7 @@
           ],
           [
             "2024-07-30T16:30:35.000Z",
+            "0x98231507bfbba69996de5a8572d8f83ccf9756be6232d3f9431e2fc68c98d58b",
             [
               "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a",
               "0xE60E94fCCb18a81D501a38959E532C0A85A1be89",
@@ -152,6 +154,7 @@
           ],
           [
             "2024-10-02T06:36:11.000Z",
+            "0xe5711797fb601abc2d70e9265a897ba5a16a10125a9cadbd616f938592604fe7",
             [
               "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a",
               "0xE60E94fCCb18a81D501a38959E532C0A85A1be89",
@@ -583,6 +586,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
   }
 }

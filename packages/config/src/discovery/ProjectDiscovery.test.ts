@@ -255,7 +255,7 @@ describe(ProjectDiscovery.name, () => {
         'ethereum',
         configReader,
       )
-      const sequencers = discovery.getPermissionsByRole('Sequencer')
+      const sequencers = discovery.getPermissionsByRole('sequence')
       expect(sequencers).toEqual([
         {
           address: contractStub.address,

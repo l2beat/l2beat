@@ -5,7 +5,6 @@ import {
   ContractValue,
   ContractValueType,
   StackCategory,
-  StackRole,
   get$Admins,
 } from '@l2beat/discovery-types'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
@@ -23,9 +22,9 @@ type AddressToMetaMap = { [address: string]: ContractMeta }
 // using `| undefined` for strong type safety,
 // making sure ever field of meta is always processed.
 export interface ContractMeta {
+  canActIndependently?: boolean
   displayName?: string
-  descriptions?: string[]
-  roles?: Set<StackRole>
+  description?: string
   permissions?: PermissionConfiguration[]
   categories?: Set<StackCategory>
   types?: Set<ContractValueType>
@@ -38,12 +37,13 @@ export function mergeContractMeta(
 ): ContractMeta | undefined {
   const result: ContractMeta = {
     displayName: a?.displayName ?? b?.displayName,
-    descriptions: concatArrays(a?.descriptions, b?.descriptions),
-    roles: mergeSets(a?.roles, b?.roles),
+    description: a?.description ?? b?.description,
     permissions: mergePermissions(a?.permissions, b?.permissions),
     categories: mergeSets(a?.categories, b?.categories),
     types: mergeSets(a?.types, b?.types),
     severity: findHighestSeverity(a?.severity, b?.severity),
+    canActIndependently:
+      (a?.canActIndependently ?? false) || (b?.canActIndependently ?? false),
   }
   return isEmptyObject(result) ? undefined : result
 }
@@ -93,9 +93,9 @@ export function getSelfMeta(
   }
   const description = interpolateDescription(overrides?.description, analysis)
   return {
+    canActIndependently: overrides.canActIndependently,
     displayName: overrides.displayName ?? undefined,
-    descriptions: [description],
-    roles: undefined,
+    description,
     permissions: undefined,
     categories: undefined,
     severity: undefined,
@@ -140,8 +140,7 @@ export function getMetaFromUpgradeability(
       result[upgradeabilityAdmin.toString()] = {
         displayName: undefined,
         categories: undefined,
-        descriptions: undefined,
-        roles: undefined,
+        description: undefined,
         severity: undefined,
         types: undefined,
         permissions: [{ type: 'upgrade', target: self, delay: 0 }],
@@ -163,8 +162,7 @@ export function targetConfigToMeta(
 
   const result: ContractMeta = {
     displayName: undefined,
-    descriptions: undefined,
-    roles: toSet(target.role),
+    description: undefined,
     permissions: target.permissions?.map((p) =>
       linkPermission(p, self, analysis.values, analysis),
     ),
@@ -263,7 +261,7 @@ export function findHighestSeverity(
 function isEmptyObject(obj: object): boolean {
   return (
     Object.keys(obj).length === 0 ||
-    Object.values(obj).every((value) => value === undefined)
+    Object.values(obj).every((value) => value === undefined || value === false)
   )
 }
 

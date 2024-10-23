@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -7,6 +7,7 @@ import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 const discovery = new ProjectDiscovery('deri', 'arbitrum')
 
 export const deri = orbitStackL3({
+  createdAt: new UnixTime(1701958025), // 2023-12-07T14:07:05Z
   discovery,
   badges: [Badge.L3ParentChain.Arbitrum],
   hostChain: ProjectId('arbitrum'),
@@ -15,7 +16,6 @@ export const deri = orbitStackL3({
     slug: 'deri',
     description:
       'Deri is an Ethereum Layer-3 that leverages Arbitrum Nitro to enable efficient cross-chain futures, options, and derivatives.',
-    purposes: ['DeFi'],
     links: {
       websites: ['https://deri.io/'],
       apps: [],

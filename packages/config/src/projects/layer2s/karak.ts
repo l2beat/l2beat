@@ -9,16 +9,14 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('karak')
 
 export const karak: Layer2 = opStackL2({
+  createdAt: new UnixTime(1687459278), // 2023-06-22T18:41:18Z
   daProvider: CELESTIA_DA_PROVIDER,
   badges: [Badge.DA.Celestia, Badge.RaaS.Caldera],
   discovery,
   display: {
     name: 'Karak',
     slug: 'karak',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description: 'Karak is a general-purpose Optimium.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://karak.network/'],
       apps: ['https://karak.network/karak-xp/'],

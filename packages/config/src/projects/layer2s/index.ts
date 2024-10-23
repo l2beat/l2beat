@@ -109,6 +109,7 @@ import { polygonpos2 } from './polygonpos2'
 import { polygonzkevm } from './polygonzkevm'
 import { polynomial } from './polynomial'
 import { publicgoodsnetwork } from './publicgoodsnetwork'
+import { puffer } from './puffer'
 import { race } from './race'
 import { real } from './real'
 import { reddioex } from './reddioex'
@@ -134,6 +135,7 @@ import { swan } from './swan'
 import { swell } from './swell'
 import { sxnetwork } from './sxnetwork'
 import { sxt } from './sxt'
+import { t1 } from './t1'
 import { taiko } from './taiko'
 import { tanx } from './tanx'
 import { telos } from './telos'
@@ -145,6 +147,7 @@ import { thebinaryholdings } from './thebinaryholdings'
 import { treasure } from './treasure'
 import { turboprotocol } from './turboprotocol'
 import { Layer2 } from './types'
+import { unichain } from './unichain'
 import { wirex } from './wirex'
 import { witness } from './witness'
 import { world } from './world'
@@ -279,6 +282,7 @@ export const layer2s: Layer2[] = [
   polygonpos2,
   polynomial,
   publicgoodsnetwork,
+  puffer,
   reddioex,
   reddiozkvm,
   redstone,
@@ -302,6 +306,7 @@ export const layer2s: Layer2[] = [
   swan,
   swell,
   sxt,
+  t1,
   sxnetwork,
   taiko,
   tanx,
@@ -313,6 +318,7 @@ export const layer2s: Layer2[] = [
   thanos,
   treasure,
   turboprotocol,
+  unichain,
   wirex,
   witness,
   world,

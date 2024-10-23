@@ -1,4 +1,137 @@
-Generated with discovered.json: 0x038ed0c796a80592082c759749567fe7fae25f98
+Generated with discovered.json: 0x4bc1af707ed246aaf70dbe4829580fed0ef8212c
+
+# Diff at Mon, 21 Oct 2024 11:05:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 19531527
+- current block number: 19531527
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531527 (main branch discovery), not current.
+
+```diff
+    contract DeBridgeGate (0x43dE2d77BF8027e25dBD179B491e8d64f38398aA) {
+    +++ description: None
+      values.$pastUpgrades.5.2:
++        ["0x797161BCC625155D2302251404ccB93c2632658e"]
+      values.$pastUpgrades.5.1:
+-        ["0x797161BCC625155D2302251404ccB93c2632658e"]
++        "0x4c0887fede83ae4bb405125f1f08a3e6604ca712ae7c135de79e4595a9b408dd"
+      values.$pastUpgrades.4.2:
++        ["0x24455aa55DED7728783c9474bE8eA2f5C935f8EB"]
+      values.$pastUpgrades.4.1:
+-        ["0x24455aa55DED7728783c9474bE8eA2f5C935f8EB"]
++        "0xd71afcf98347af3e96dc8ba6a61c4c9cdbb213e82893639945a1b8d4ab51d9e2"
+      values.$pastUpgrades.3.2:
++        ["0xc8550d85759BAbE6851235212563Fa2Ff04961BF"]
+      values.$pastUpgrades.3.1:
+-        ["0xc8550d85759BAbE6851235212563Fa2Ff04961BF"]
++        "0x361b7193ffb8462e6ccb8a6237cbbf67f3367a08a9e8f781ac245f8b72c5783c"
+      values.$pastUpgrades.2.2:
++        ["0x51bFD427D06B2a5FC3588f9d023994A9f70e0Ce0"]
+      values.$pastUpgrades.2.1:
+-        ["0x51bFD427D06B2a5FC3588f9d023994A9f70e0Ce0"]
++        "0x7a4bc7d90aada3516e4fc057714f46e5b25dcaf4c2524e49148f5c317a04b149"
+      values.$pastUpgrades.1.2:
++        ["0xFCe0502293dCacbFc2d663f7814b2771dEcfd576"]
+      values.$pastUpgrades.1.1:
+-        ["0xFCe0502293dCacbFc2d663f7814b2771dEcfd576"]
++        "0x0cd2756ab739a46f966c013e709225d6e5e8a10f30bc0842b207205f6aa32670"
+      values.$pastUpgrades.0.2:
++        ["0xB1A20D1c885fd775df97396397d6f8F07Abdd20D"]
+      values.$pastUpgrades.0.1:
+-        ["0xB1A20D1c885fd775df97396397d6f8F07Abdd20D"]
++        "0x1f191abb3e293e615df529fef0c7f1f0a9c5a9dacd44154c47df269d2a68d8b8"
+    }
+```
+
+```diff
+    contract DeBridgeTokenDeployer (0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x4c7CA8fcFFE77281A8B81D4580CFf8257d785491"]
+      values.$pastUpgrades.0.1:
+-        ["0x4c7CA8fcFFE77281A8B81D4580CFf8257d785491"]
++        "0x291ee8bccd951b70182aee107393bc15fe0f12aa49d9759b196040f8c7ba219b"
+    }
+```
+
+```diff
+    contract CallProxy (0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824) {
+    +++ description: None
+      values.$pastUpgrades.5.2:
++        ["0xBd3d657AE87671eC6f8D6272A9f431a7c4a9B6f8"]
+      values.$pastUpgrades.5.1:
+-        ["0xBd3d657AE87671eC6f8D6272A9f431a7c4a9B6f8"]
++        "0xd5a418a542f27929f6bbf34f70ce62607626d83b8503bda49bcef3e5e0591ce9"
+      values.$pastUpgrades.4.2:
++        ["0xe5a04b307B31Af07F4DfCaA840952Ff7d3845c7e"]
+      values.$pastUpgrades.4.1:
+-        ["0xe5a04b307B31Af07F4DfCaA840952Ff7d3845c7e"]
++        "0x883ba2edf63b460976d0de98a7089f3ea4d0a26257cfeb94af96d557e8e02f25"
+      values.$pastUpgrades.3.2:
++        ["0x0C4B79205F6Cc20c0E0201b61b99e77F3CE3B67A"]
+      values.$pastUpgrades.3.1:
+-        ["0x0C4B79205F6Cc20c0E0201b61b99e77F3CE3B67A"]
++        "0x6d3f1f876d002a58b8c95bc7ebcbd107bae9d1474e9e92125d83b4bec578a2da"
+      values.$pastUpgrades.2.2:
++        ["0x752A9e96e8683400ae238270C97c1D0160861fEF"]
+      values.$pastUpgrades.2.1:
+-        ["0x752A9e96e8683400ae238270C97c1D0160861fEF"]
++        "0x580899ecfd63515c52fec86f09211a5c68fc6945256cd13ef45f5e4fc8aaba61"
+      values.$pastUpgrades.1.2:
++        ["0xd5317E82BFEFf70b4773f0fcab5e2ABFA3c7D63b"]
+      values.$pastUpgrades.1.1:
+-        ["0xd5317E82BFEFf70b4773f0fcab5e2ABFA3c7D63b"]
++        "0xc3bf11577e383e1292663bd254b218f4c4f4d9dd682a6d51f2a7149eb0991420"
+      values.$pastUpgrades.0.2:
++        ["0x4e446b6Cf4d127827c83Ca0c848Db0B43841c391"]
+      values.$pastUpgrades.0.1:
+-        ["0x4e446b6Cf4d127827c83Ca0c848Db0B43841c391"]
++        "0x36e5d0f595838f33403445a5570b731087b16f2d7cb133aeb584f1ac1d444e3d"
+    }
+```
+
+```diff
+    contract SignatureVerifier (0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xfE7De3c1e1BD252C67667B56347cABFC6df08dF4"]
+      values.$pastUpgrades.1.1:
+-        ["0xfE7De3c1e1BD252C67667B56347cABFC6df08dF4"]
++        "0x190291e3c01fd074908fb41309a0438c8458d7b7f0f659dcfc5d9dbb5ea3807f"
+      values.$pastUpgrades.0.2:
++        ["0x2a3e72eD893b5958690e16c3BBe1BD92137b6250"]
+      values.$pastUpgrades.0.1:
+-        ["0x2a3e72eD893b5958690e16c3BBe1BD92137b6250"]
++        "0xd8f65ce63f16eefd8816d0faa6c975cb1422ef4d6bbb58bd8e7507fb27b2dc5f"
+    }
+```
+
+```diff
+    contract SimpleFeeProxy (0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x37a52ddb753c924f8C914de65ef00b5210Caa83C"]
+      values.$pastUpgrades.1.1:
+-        ["0x37a52ddb753c924f8C914de65ef00b5210Caa83C"]
++        "0x67612f4676f3c141f8360be940caf971519f9bf1265465f94a6c13ed1e64adca"
+      values.$pastUpgrades.0.2:
++        ["0x27406EbF0b76923d93b4C6c6224bCaB7fFf11f87"]
+      values.$pastUpgrades.0.1:
+-        ["0x27406EbF0b76923d93b4C6c6224bCaB7fFf11f87"]
++        "0xd83a1e2513ffd001193b5d56264f9a3acce5eb31ccd7f122256afa5505c3213d"
+    }
+```
+
+Generated with discovered.json: 0x56312b08d1c137713e20f36913e328b2e18c72f8
 
 # Diff at Mon, 14 Oct 2024 10:50:22 GMT:
 

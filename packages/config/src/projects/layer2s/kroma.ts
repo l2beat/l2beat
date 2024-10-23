@@ -70,6 +70,7 @@ const SCThreshold = `${SCNumConfirmationsRequired} / ${SCMembersSize}`
 export const kroma: Layer2 = {
   type: 'layer2',
   id: ProjectId('kroma'),
+  createdAt: new UnixTime(1686820004), // 2023-06-15T09:06:44Z
   badges: [
     Badge.VM.EVM,
     Badge.DA.EthereumBlobs,
@@ -83,7 +84,6 @@ export const kroma: Layer2 = {
       'Kroma aims to develop an universal ZK Rollup based on the Optimism Bedrock architecture. Currently, Kroma operates as an Optimistic Rollup with ZK fault proofs, utilizing a zkEVM based on Scroll.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
-
     provider: 'OP Stack',
     links: {
       websites: ['https://kroma.network/'],

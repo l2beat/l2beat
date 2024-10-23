@@ -1,8 +1,8 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { RiskCell } from '~/components/table/cells/risk-cell'
-import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { sortSentiments } from '~/components/table/sorting/functions/sentiment-sorting'
+import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
 import { ChevronIcon } from '~/icons/chevron'
 import { type DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
 import { cn } from '~/utils/cn'
@@ -92,28 +92,40 @@ export const columns = [
         'Shows if there are any mechanism for users to protect themselves against a malicious majority of committee members, such as validators, and recover from data withholding attack.',
     },
   }),
-  columnHelper.accessor('risks.attestations', {
-    header: 'Attestation security',
-    cell: (ctx) => <RiskCell risk={ctx.getValue()} emptyMode="em-dash" />,
-    enableSorting: false,
+  columnHelper.display({
+    header: 'Committee security',
+    cell: (ctx) => (
+      <RiskCell
+        risk={ctx.row.original.risks.committeeSecurity}
+        emptyMode="em-dash"
+      />
+    ),
     meta: {
       tooltip:
         'Shows if the DA bridge can securely confirm that the data availability attestations are backed by the DA layer’s economic security, meaning that the signatures from the DA layer are accurately verified and tracked on-chain.',
     },
   }),
-  columnHelper.accessor('risks.exitWindow', {
-    header: 'Exit window',
-    cell: (ctx) => <RiskCell risk={ctx.getValue()} emptyMode="em-dash" />,
-    enableSorting: false,
+  columnHelper.display({
+    header: 'Upgradeability',
+    cell: (ctx) => (
+      <RiskCell
+        risk={ctx.row.original.risks.upgradeability}
+        emptyMode="em-dash"
+      />
+    ),
     meta: {
       tooltip:
         'Shows if the DA bridge can be upgraded, and if yes - if there’s a mechanism in place for withdrawals, and the time allowed for users to exit in case of an upgrade. ',
     },
   }),
-  columnHelper.accessor('risks.accessibility', {
-    header: 'Accessibility',
-    cell: (ctx) => <RiskCell risk={ctx.getValue()} emptyMode="em-dash" />,
-    enableSorting: false,
+  columnHelper.display({
+    header: 'Relayer failure',
+    cell: (ctx) => (
+      <RiskCell
+        risk={ctx.row.original.risks.relayerFailure}
+        emptyMode="em-dash"
+      />
+    ),
     meta: {
       tooltip:
         'Shows if there is an additional trust assumption on the majority of committee members. It distinguishes between DA solutions that are integrated into the Ethereum protocol (enshrined) and those that are external, thus requiring an additional trust assumption.',

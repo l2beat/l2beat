@@ -40,6 +40,7 @@ describe(AddressAnalyzer.name, () => {
 
       expect(result).toEqual({
         type: 'EOA',
+        name: undefined,
         address,
       })
     })
@@ -155,9 +156,8 @@ describe(AddressAnalyzer.name, () => {
           [admin.toString()]: {
             displayName: undefined,
             categories: undefined,
-            descriptions: undefined,
+            description: undefined,
             permissions: [{ type: 'upgrade', delay: 0, target: address }],
-            roles: undefined,
             severity: undefined,
             types: undefined,
           },
@@ -279,9 +279,8 @@ describe(AddressAnalyzer.name, () => {
           [admin.toString()]: {
             displayName: undefined,
             categories: undefined,
-            descriptions: undefined,
+            description: undefined,
             permissions: [{ type: 'upgrade', delay: 0, target: address }],
-            roles: undefined,
             severity: undefined,
             types: undefined,
           },
@@ -399,9 +398,8 @@ describe(AddressAnalyzer.name, () => {
           [admin.toString()]: {
             displayName: undefined,
             categories: undefined,
-            descriptions: undefined,
+            description: undefined,
             permissions: [{ type: 'upgrade', delay: 0, target: address }],
-            roles: undefined,
             severity: undefined,
             types: undefined,
           },

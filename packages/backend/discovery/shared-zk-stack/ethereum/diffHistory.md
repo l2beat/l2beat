@@ -1,4 +1,376 @@
-Generated with discovered.json: 0x26d61a94edbac9d6661db7a3d96c449bda3da0d7
+Generated with discovered.json: 0x579cb2d4a94299bd6e5baab4aadab66f01057f9e
+
+# Diff at Wed, 23 Oct 2024 09:31:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2734bfe28641dfdb3277a5800faf0a057c08a58f block: 21013457
+- current block number: 21027403
+
+## Description
+
+ChainAdmin change for Sophon and Zero network. Both produced first batches already, not officially launched yet though.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract Safe (0x5e6C5551C1b0626e9061fD4Daca6DA866Fd405aC)
+    +++ description: None
+```
+
+```diff
+    contract ChainAdmin (0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3) {
+    +++ description: None
+      values.owner:
+-        "0x5e6C5551C1b0626e9061fD4Daca6DA866Fd405aC"
++        "0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9"
+      values.pendingOwner:
+-        "0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract ChainAdmin (0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3) {
+    +++ description: None
+      values.owner:
+-        "0x5e6C5551C1b0626e9061fD4Daca6DA866Fd405aC"
++        "0xe4644b6d106A18062344c0A853666bc0B8f052d1"
+      values.pendingOwner:
+-        "0xe4644b6d106A18062344c0A853666bc0B8f052d1"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Safe.sol => /dev/null                          | 1088 --------------------
+ .../SafeProxy.p.sol => /dev/null                   |   37 -
+ 2 files changed, 1125 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21013457 (main branch discovery), not current.
+
+```diff
+    contract Safe (0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9) {
+    +++ description: None
+      values.getOwners:
+-        ["0xA167ca2984F7e08EFd4DDf9c5a4A21D66c07813E","0xc858a504d6c267fe2d462D240b68A7D939B1fEC9","0xF322467cec88d3CDFa9376B19bD5AD40da665277","0x3Bc72A56F9036B94ad14BF082bF93731e0545255","0x3Ec90fA056A39e7281a5b4c8c044B86667D770e1"]
+      values.getThreshold:
+-        3
+      template:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
+      values.sophonFirstBatchTS:
+-        0
+      values.zeronetworkFirstBatchTS:
+-        0
++++ description: If non-zero, the first batch has been posted.
++++ severity: MEDIUM
+      values.sophonTenthBatchTS:
++        0
++++ description: If non-zero, the first batch has been posted.
++++ severity: MEDIUM
+      values.zeronetworkTenthBatchTS:
++        0
+      fieldMeta.zeronetworkFirstBatchTS:
+-        {"severity":"MEDIUM","description":"If non-zero, the first batch has been posted."}
+      fieldMeta.sophonFirstBatchTS:
+-        {"severity":"MEDIUM","description":"If non-zero, the first batch has been posted."}
+      fieldMeta.zeronetworkTenthBatchTS:
++        {"severity":"MEDIUM","description":"If non-zero, the first batch has been posted."}
+      fieldMeta.sophonTenthBatchTS:
++        {"severity":"MEDIUM","description":"If non-zero, the first batch has been posted."}
+    }
+```
+
+```diff
+    contract Safe (0x5e6C5551C1b0626e9061fD4Daca6DA866Fd405aC) {
+    +++ description: None
+      values.getOwners:
+-        ["0xf2BFa7c00aDDF7765B40e83Fc4207b16EBD6db89","0xD767A6058c34E88Dc4Ce49114C362C8FAc265A76","0x2AF852529DDF5D3cF3130423b56DF8Db50A11b6B","0x090268B1b2170eB5964402321aDa988D7c75a90e"]
+      values.getThreshold:
+-        2
+      template:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract Safe (0xe4644b6d106A18062344c0A853666bc0B8f052d1) {
+    +++ description: None
+      values.getOwners:
+-        ["0x3b6036d410cA018661324766680674921a8b2d89","0x20719Abd2E63518e68D30a295388cAd6B542dCEf","0x14574dfC6B7aF658c5033BA95673864947956521","0x90E10C37d8d9e854e7775B0069728642A1F88610","0x7f413262Cb811B034d077d9184b5Efda6943f2c3","0xd89b0f620E0C72BD82e0447dE07FB0A0Abe01F69"]
+      values.getThreshold:
+-        3
+      template:
++        "GnosisSafe"
+    }
+```
+
+Generated with discovered.json: 0x0e6c70c0ef9c01d3fdef20ceb46ed231ce43f024
+
+# Diff at Mon, 21 Oct 2024 12:48:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e660599f23a07618fe949a07be1f516ce44f1914 block: 21013457
+- current block number: 21013457
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21013457 (main branch discovery), not current.
+
+```diff
+    contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: Can instantly upgrade all contracts and roles in the zksync Era contracts
+      descriptions:
+-        ["Can instantly upgrade all contracts and roles in the zksync Era contracts"]
+      description:
++        "Can instantly upgrade all contracts and roles in the zksync Era contracts"
+    }
+```
+
+Generated with discovered.json: 0x4c413eb9e9afd24611089408ad364cabe7a1703c
+
+# Diff at Mon, 21 Oct 2024 11:30:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@89bb82544503b2bb7544ceb7dedf56a03e0c5339 block: 21013457
+- current block number: 21013457
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21013457 (main branch discovery), not current.
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x509dA1BE24432F8804C4A9FF4a3c3f80284CDd13"]
+      values.$pastUpgrades.1.1:
+-        ["0x509dA1BE24432F8804C4A9FF4a3c3f80284CDd13"]
++        "0x21aec24a9df97ce4886d699314be627b0818da4d1987349421fb3df102c43f2b"
+      values.$pastUpgrades.0.2:
++        ["0x12f893689f9603991a8c22C249FFd0509Be95661"]
+      values.$pastUpgrades.0.1:
+-        ["0x12f893689f9603991a8c22C249FFd0509Be95661"]
++        "0xdbb03a14ea223de3db4ac0916e78123bd0a1dde68e98952326d8382d29ac4d61"
+    }
+```
+
+```diff
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xed1Dc7F0Be2B19cb02a2476150C8ea24A37c5274"]
+      values.$pastUpgrades.1.1:
+-        ["0xed1Dc7F0Be2B19cb02a2476150C8ea24A37c5274"]
++        "0xc1e73b06359759201b76ab7654e0bd49011f33c0230dfc24423985fbf36ea817"
+      values.$pastUpgrades.0.2:
++        ["0x8279B7E48fA074f966385d87AEf29Bd031e54fD5"]
+      values.$pastUpgrades.0.1:
+-        ["0x8279B7E48fA074f966385d87AEf29Bd031e54fD5"]
++        "0x514bbf46d227eee8567825bf5c8ee1855aa8a1916f7fee7b191e2e3d5ecba849"
+    }
+```
+
+```diff
+    contract L1SharedBridge (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xb56A8225A745756DD215faf22E4796f373561AcD"]
+      values.$pastUpgrades.1.1:
+-        ["0xb56A8225A745756DD215faf22E4796f373561AcD"]
++        "0xaec33529b74f8f9d56d7aa568c6358be299228a85e49ea85cb106eca5af7367c"
+      values.$pastUpgrades.0.2:
++        ["0xCba1aF8f0bB223b2544F8eB8f69d1c7960f788dB"]
+      values.$pastUpgrades.0.1:
+-        ["0xCba1aF8f0bB223b2544F8eB8f69d1c7960f788dB"]
++        "0xce3d72f23297a281cb58502dcc6a6c029489316a2faf9c4ef83141b1b254017c"
+    }
+```
+
+Generated with discovered.json: 0x03f189e9a43739247b980d79767b1d27ad6069b3
+
+# Diff at Mon, 21 Oct 2024 10:48:51 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20998125
+- current block number: 21013457
+
+## Description
+
+Add metadata and triggers for the two new ZK stack chains launching soon.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20998125 (main branch discovery), not current.
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
+      values.SophonDiamond:
++        "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3"
+      values.SophonSTM:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.ZeroNetworkDiamond:
++        "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"
+      values.ZeroNetworkSTM:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
++++ description: If non-zero, the first batch has been posted.
++++ severity: MEDIUM
+      values.sophonFirstBatchTS:
++        0
+      values.sophonValidatorsAdded:
++        ["0x4cc87B0A504047967CeD9A955431B3229237e7de","0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f"]
+      values.sophonValidatorsRemoved:
++        []
++++ description: If non-zero, the first batch has been posted.
++++ severity: MEDIUM
+      values.zeronetworkFirstBatchTS:
++        0
+      values.zeronetworkValidatorsAdded:
++        ["0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F","0x479B7c95b9509E1A834C994fc94e3581aA8A73B9"]
+      values.zeronetworkValidatorsRemoved:
++        []
+      fieldMeta:
++        {"zeronetworkFirstBatchTS":{"severity":"MEDIUM","description":"If non-zero, the first batch has been posted."},"sophonFirstBatchTS":{"severity":"MEDIUM","description":"If non-zero, the first batch has been posted."}}
+    }
+```
+
+Generated with discovered.json: 0x32eed5a1b6eaf7441ca6eafe6f85ee2e932531ab
+
+# Diff at Sat, 19 Oct 2024 07:29:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@493c96785a6a32c6417182bb9548d3a990297dbe block: 20777100
+- current block number: 20998125
+
+## Description
+
+Two new ZK stack Validiums are added that share the zksync/cronos implementation, verifier and STM.
+* ['Sophon', Validium](https://sophon.xyz/) with chainID 50104, diamond 0x05ede6ad1f39b7a16c949d5c33a0658c9c7241e3, baseToken SOPH
+* [Zerion(?), ZK Rollup](https://docs.zero.network/build-on-zero/network-information) with chainID 543210, diamond 0xdbd849acc6ba61f461cb8a41bbaee2d673ca02d9, baseToken ETH
+
+Will add them underreview/full on monday ;)
+
+## Watched changes
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
++++ description: All new chains created go thorugh the central bridgehub and are thus stored here with their respective STMs.
+      values.chainsCreated.3:
++        {"chainId":543210,"stateTransitionManager":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","chainGovernance":"0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3"}
++++ description: All new chains created go thorugh the central bridgehub and are thus stored here with their respective STMs.
+      values.chainsCreated.2:
++        {"chainId":50104,"stateTransitionManager":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","chainGovernance":"0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"}
+    }
+```
+
+```diff
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: None
+      values.getAllHyperchainChainIDs.3:
++        543210
+      values.getAllHyperchainChainIDs.2:
++        50104
+      values.getAllHyperchains.3:
++        "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"
+      values.getAllHyperchains.2:
++        "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x5e6C5551C1b0626e9061fD4Daca6DA866Fd405aC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ChainAdmin (0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ChainAdmin (0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0xe4644b6d106A18062344c0A853666bc0B8f052d1)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...-0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3.sol |  222 ++++
+ ...-0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3.sol |  222 ++++
+ .../Safe.sol                                       | 1088 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ .../Safe.sol                                       | 1088 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ .../Safe.sol                                       | 1088 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ 8 files changed, 3819 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20777100 (main branch discovery), not current.
+
+```diff
+    contract EraChainAdminProxy (0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
+      template:
++        "shared-zk-stack/ChainAdmin"
+    }
+```
+
+Generated with discovered.json: 0x4919b628b23d822b85c121a07aa57e64591cfdb8
 
 # Diff at Mon, 14 Oct 2024 10:55:49 GMT:
 

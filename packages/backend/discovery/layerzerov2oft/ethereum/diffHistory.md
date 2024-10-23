@@ -1,4 +1,88 @@
-Generated with discovered.json: 0x2f349bb6c9d823953c6783bc1888cdc16695bf08
+Generated with discovered.json: 0xfd72ec3cb3bb0bba544ff22a06ddb27c3f7c7e0e
+
+# Diff at Wed, 23 Oct 2024 10:15:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2734bfe28641dfdb3277a5800faf0a057c08a58f block: 20240831
+- current block number: 21027620
+
+## Description
+
+LayerZero Multisig: One signer removed.
+
+## Watched changes
+
+```diff
+    contract LayerZero Multisig (0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92) {
+    +++ description: None
+      values.$members.4:
+-        "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
+      values.$members.3:
+-        "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e"
++        "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
+      values.$members.2:
+-        "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936"
++        "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e"
+      values.$members.1:
+-        "0xe095F2590eF1Ab39601445025847Ed8E4B40D687"
++        "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936"
+      values.multisigThreshold:
+-        "2 of 5 (40%)"
++        "2 of 4 (50%)"
+    }
+```
+
+Generated with discovered.json: 0xd7465e1528846b3a3991dade354c65420c16f019
+
+# Diff at Mon, 21 Oct 2024 11:07:08 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20240831
+- current block number: 20240831
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20240831 (main branch discovery), not current.
+
+```diff
+    contract  (0x173272739Bd7Aa6e4e214714048a9fE699453059) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xDaC2d26317C42ae3CB21357B73404120E1dA4232"]
+      values.$pastUpgrades.1.1:
+-        ["0xDaC2d26317C42ae3CB21357B73404120E1dA4232"]
++        "0x22c22ee402c4be83ef7c851992c3125008be9ee0a39c0d83cf6be91a0506f7c4"
+      values.$pastUpgrades.0.2:
++        ["0x1E45F27F0e96e9757cff938F2c9d697AA8279C85"]
+      values.$pastUpgrades.0.1:
+-        ["0x1E45F27F0e96e9757cff938F2c9d697AA8279C85"]
++        "0x5df683475486093be4a4f92d6f7c47548d3bf38e1a39e25bf0028353f83d4a2b"
+    }
+```
+
+```diff
+    contract PolyhedraDVN (0x8ddF05F9A5c488b4973897E278B58895bF87Cb24) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xcb75F0dFFf5c5046CAA9dB1DE56645a962FeFFc2"]
+      values.$pastUpgrades.1.1:
+-        ["0xcb75F0dFFf5c5046CAA9dB1DE56645a962FeFFc2"]
++        "0xb44d10c422927d170b63ff39214aec136115e4fb60ac93abd4c8c9598f06a115"
+      values.$pastUpgrades.0.2:
++        ["0x156C3E0384459E07Dca7849b79196FbC5877dc3A"]
+      values.$pastUpgrades.0.1:
+-        ["0x156C3E0384459E07Dca7849b79196FbC5877dc3A"]
++        "0xa4e1836bf1b83f9b018b33923bd8df6152b08b6ab94860e3cf51c563711ca18c"
+    }
+```
+
+Generated with discovered.json: 0xaea213a98e3dcd72a1f40e74546d57deebfb1b83
 
 # Diff at Mon, 14 Oct 2024 10:52:22 GMT:
 

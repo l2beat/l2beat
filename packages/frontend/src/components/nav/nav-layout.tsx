@@ -41,14 +41,18 @@ export async function NavLayout({
           href: '/scaling/summary',
         },
         {
+          title: 'Risk Analysis',
+          shortTitle: 'Risks',
+          href: '/scaling/risk',
+        },
+        {
           title: 'Value Locked',
           shortTitle: 'Value',
           href: '/scaling/tvl',
         },
         {
-          title: 'Risk Analysis',
-          shortTitle: 'Risks',
-          href: '/scaling/risk',
+          title: 'Activity',
+          href: '/scaling/activity',
         },
         {
           title: 'Data Availability',
@@ -62,10 +66,6 @@ export async function NavLayout({
         {
           title: 'Finality',
           href: '/scaling/finality',
-        },
-        {
-          title: 'Activity',
-          href: '/scaling/activity',
         },
         {
           title: 'Costs',

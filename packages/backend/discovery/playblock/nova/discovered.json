@@ -2,7 +2,7 @@
   "name": "playblock",
   "chain": "nova",
   "blockNumber": 76950926,
-  "configHash": "0xd0801a4b600b2883eff9fa1e308e396fdf999a8d97efd41954be3ff8cf95c231",
+  "configHash": "0xd4bf34365e08040a7fc194fb3403e59afbc4836955faff1a2a7e8a9d85d6a525",
   "contracts": [
     {
       "name": "RollupProxy",
@@ -10,13 +10,16 @@
       "unverified": true,
       "template": "orbitstack/RollupProxy",
       "proxyType": "Arbitrum proxy",
-      "descriptions": [
-        "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
-      ],
+      "description": "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
           "target": "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9",
+          "via": []
+        },
+        {
+          "permission": "validate",
+          "target": "0x76a197539eF9670c75F36997b8f1DeA593A1b827",
           "via": []
         }
       ],
@@ -35,6 +38,7 @@
         "$pastUpgrades": [
           [
             "2024-03-08T13:20:18.000Z",
+            "0x37be7a29db10d18501dcf4d0243fa6aefeeba21cbc17832ef16ccf288ce58ef2",
             [
               "0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754",
               "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A"
@@ -144,6 +148,7 @@
         "$pastUpgrades": [
           [
             "2024-03-08T13:20:18.000Z",
+            "0x37be7a29db10d18501dcf4d0243fa6aefeeba21cbc17832ef16ccf288ce58ef2",
             ["0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"]
           ]
         ],
@@ -190,6 +195,7 @@
         "$pastUpgrades": [
           [
             "2024-03-08T13:20:18.000Z",
+            "0x37be7a29db10d18501dcf4d0243fa6aefeeba21cbc17832ef16ccf288ce58ef2",
             ["0x18FD37A4FB9E1F06d9383958aFd236771F15A8cb"]
           ]
         ],
@@ -280,6 +286,7 @@
         "$pastUpgrades": [
           [
             "2024-03-08T13:20:18.000Z",
+            "0x37be7a29db10d18501dcf4d0243fa6aefeeba21cbc17832ef16ccf288ce58ef2",
             ["0x09824fe72BFF474d16D9c2774432E381BBD60662"]
           ]
         ],
@@ -363,6 +370,7 @@
         "$pastUpgrades": [
           [
             "2024-03-08T13:20:18.000Z",
+            "0x37be7a29db10d18501dcf4d0243fa6aefeeba21cbc17832ef16ccf288ce58ef2",
             ["0x302275067251F5FcdB9359Bda735fD8f7A4A54c0"]
           ]
         ],
@@ -407,6 +415,7 @@
         "$pastUpgrades": [
           [
             "2024-03-08T13:20:18.000Z",
+            "0x37be7a29db10d18501dcf4d0243fa6aefeeba21cbc17832ef16ccf288ce58ef2",
             ["0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC"]
           ]
         ],
@@ -444,8 +453,13 @@
         "0x08792f333db7e8a060c38033f92e3fc10c30e2648c56fc49c7460ee1c94343a0"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": ["State batches / commitments get posted here."],
+      "description": "State batches / commitments get posted here.",
       "issuedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0xe603d3FcB75b0Af72F0e616d002091109d7ECc5b",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91",
@@ -460,6 +474,7 @@
         "$pastUpgrades": [
           [
             "2024-03-08T13:20:18.000Z",
+            "0x37be7a29db10d18501dcf4d0243fa6aefeeba21cbc17832ef16ccf288ce58ef2",
             ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"]
           ]
         ],
@@ -519,6 +534,7 @@
         "$pastUpgrades": [
           [
             "2024-03-08T13:20:18.000Z",
+            "0x37be7a29db10d18501dcf4d0243fa6aefeeba21cbc17832ef16ccf288ce58ef2",
             ["0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab"]
           ]
         ],
@@ -538,12 +554,22 @@
     { "address": "0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a" },
     {
       "address": "0x76a197539eF9670c75F36997b8f1DeA593A1b827",
-      "roles": ["Validator"]
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "target": "0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0"
+        }
+      ]
     },
     { "address": "0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341" },
     {
       "address": "0xe603d3FcB75b0Af72F0e616d002091109d7ECc5b",
-      "roles": ["Sequencer"]
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77"
+        }
+      ]
     }
   ],
   "abis": {
@@ -1071,7 +1097,7 @@
     ]
   },
   "usedTemplates": {
-    "orbitstack/RollupProxy": "0xdd22b1785ae5df34e829d0b04131559e112131325c3f223825d0fe61e675fb1a",
-    "orbitstack/SequencerInbox": "0x096f13a8297d3243cf02cbc39d065c1c6f37b23602fce0c63f3ff74d7d65b1ee"
+    "orbitstack/RollupProxy": "0x8c92364349ca720f3e801d028dc260fdbc1a9cca4651ed19af6f16a250949729",
+    "orbitstack/SequencerInbox": "0x914a19d66f742b381e9ac6579e688ae6a07cddcf5b144eb7528c121bc81eca28"
   }
 }

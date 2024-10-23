@@ -93,6 +93,7 @@ const upgradeDelaySeconds = lineaDiscovery.getContractValue<number>(
 export const zklinknova: Layer3 = {
   type: 'layer3',
   id: ProjectId('zklinknova'),
+  createdAt: new UnixTime(1705330478), // 2024-01-15T14:54:38Z
   hostChain: ProjectId('linea'),
   badges: [Badge.VM.EVM, Badge.DA.DAC, Badge.L3ParentChain.Linea],
   display: {
@@ -100,7 +101,7 @@ export const zklinknova: Layer3 = {
     slug: 'zklinknova',
     description:
       'zkLink Nova is a Layer 3 zkEVM Validium network leveraging ZK Stack that allows for scattered assets across Ethereum Layer 2s to be aggregated for interoperable trade and transactions.',
-    purposes: ['Universal'],
+    purposes: ['Universal', 'Interoperability'],
     category: 'Validium',
     provider: 'zkLink Nexus',
     links: {
@@ -400,10 +401,7 @@ export const zklinknova: Layer3 = {
     validatedBy: RISK_VIEW.VALIDATED_BY_L2(ProjectId('linea')),
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     stateValidation: {
-      value: 'ZK proofs',
-      description:
-        'Uses PLONK zero-knowledge proof system with KZG commitments. Proofs are verified on Linea.',
-      sentiment: 'good',
+      ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
       sources: [
         {
           contract: 'zkLink',

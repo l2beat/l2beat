@@ -22,14 +22,15 @@ const daResolveWindow = formatSeconds(
 )
 
 export const xterio: Layer2 = opStackL2({
+  createdAt: new UnixTime(1714996778), // 2024-05-06T11:59:38Z
   discovery,
   badges: [Badge.DA.CustomDA, Badge.RaaS.AltLayer],
+  additionalPurposes: ['Gaming'],
   display: {
     name: 'Xterio Chain',
     slug: 'xterio',
     description:
       'Xterio Chain is an OP stack Optimium on Ethereum. The chain focuses on gaming, high performance and low fees .',
-    purposes: ['Universal', 'Gaming'],
     links: {
       websites: ['https://xter.io/'],
       apps: ['https://xter.io/', 'https://eth-bridge.xter.io/'],

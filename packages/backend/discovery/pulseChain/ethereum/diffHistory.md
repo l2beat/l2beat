@@ -1,3 +1,54 @@
+Generated with discovered.json: 0x920aabcb8de6f7c5188d1d3dd1cb18be9d763b06
+
+# Diff at Mon, 21 Oct 2024 11:09:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 17968825
+- current block number: 17968825
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 17968825 (main branch discovery), not current.
+
+```diff
+    contract ForeignOmnibridge (0x1715a3E4A142d8b698131108995174F37aEBA10D) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xB7DF1E00ae030e966E635ede273625240546B873"]
+      values.$pastUpgrades.0.1:
+-        ["0xB7DF1E00ae030e966E635ede273625240546B873"]
++        "0x210fa683ddb0e587885dea0582bc328b80b7a87d700a10cc7a81f6fa1cf9612b"
+    }
+```
+
+```diff
+    contract BridgeValidators (0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x95B303987A60C71504D99Aa1b13B4DA07b0790ab"]
+      values.$pastUpgrades.0.1:
+-        ["0x95B303987A60C71504D99Aa1b13B4DA07b0790ab"]
++        "0x91a1946de8485c208882fb51238a8771821502849535a638f25651804f3ef0d4"
+    }
+```
+
+```diff
+    contract ForeignAMB (0xd0764FAe29E0a6a96fF685f71CfC685456D5636c) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xe98699957d3504aCD57ffF861E4b77b57eB02467"]
+      values.$pastUpgrades.0.1:
+-        ["0xe98699957d3504aCD57ffF861E4b77b57eB02467"]
++        "0x5d1c2bd55b6e6af2311067e52dd8a45a69550547c71593ad890f1d8e63caaf04"
+    }
+```
+
 Generated with discovered.json: 0xbc4c45ad8463cf6f70308707832accb0aaacde19
 
 # Diff at Mon, 14 Oct 2024 10:54:38 GMT:

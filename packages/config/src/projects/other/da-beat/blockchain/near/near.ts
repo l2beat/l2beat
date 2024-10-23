@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { NO_BRIDGE } from '../../templates/no-bridge-template'
 import { DaEconomicSecurityRisk } from '../../types/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
@@ -8,6 +9,7 @@ export const near: DaLayer = {
   id: 'near',
   type: 'DaLayer',
   kind: 'PublicBlockchain',
+  systemCategory: 'public',
   display: {
     name: 'NEAR DA',
     slug: 'near',
@@ -41,7 +43,11 @@ export const near: DaLayer = {
     consensusFinality: 2.4, // NFG (Nightshade finality gadget, after 2 consecutive blocks are built on the same fork we consider the t-2 block final, thus transactions belonging to t-2 are final )
     unbondingPeriod: 86400 * 2, // up to 48 hours
   },
-  technology: `
+  technology: {
+    description: `
+  ## Architecture
+
+  ![Near architecture](/images/da-layer-technology/near/architecture.png#center)
 
   ## Near Nightshade
 
@@ -96,9 +102,14 @@ export const near: DaLayer = {
   A rollup can utilize a dedicated Data Availability (DA) smart contract on a NEAR shard, known as a Blob Store contract, where it posts data as standard NEAR transactions. All transactions are converted into Receipts, and depending on their actions, some receipts may be processed over two blocks.
   Regarding data retrieval, full nodes prune Receipts after 3 epochs (approximately 36 hours). Once the pruning window expires, the data remains accessible only through archive nodes.
   `,
+  },
   bridges: [
     NO_BRIDGE({
+      createdAt: new UnixTime(1721664340), // 2024-07-22T16:05:40Z
       layer: 'NearDA',
+      technology: {
+        description: `There is no DA bridge on Ethereum allowing to verify blob inclusion in the NEAR blockchain.`,
+      },
     }),
   ],
   usedIn: linkByDA({

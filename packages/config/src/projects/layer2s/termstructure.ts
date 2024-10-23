@@ -44,6 +44,7 @@ const vaultWeight =
 
 export const termstructure: Layer2 = {
   id: ProjectId('termstructure'),
+  createdAt: new UnixTime(1709724246), // 2024-03-06T11:24:06Z
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (calldata)'],
     bridge: { type: 'Enshrined' },
@@ -59,7 +60,7 @@ export const termstructure: Layer2 = {
     slug: 'termstructure',
     description:
       'Term Structure introduces a distinct ZK Rollup solution democratizing fixed-rate and fixed-term borrowing and lending as well as fixed income trading by offering low transaction fees and enabling forced withdrawals.',
-    purposes: ['DeFi', 'Lending'],
+    purposes: ['Payments', 'Exchange', 'Lending'],
     category: 'ZK Rollup',
     provider: 'ZKsync Lite',
     links: {

@@ -24,12 +24,26 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
     const currentMap = await this.getDatabaseEntries(counts)
 
     const dataToSave = counts.map(
-      ({ timestamp, count, projectId, start, end }) => {
+      ({
+        timestamp,
+        projectId,
+        count: countValue,
+        uopsCount: uopsCountValue,
+        start,
+        end,
+      }) => {
         const currentRecord = currentMap.get(timestamp.toNumber())
+        const count = (currentRecord?.count ?? 0) + countValue
+        const uopsCount =
+          uopsCountValue !== null
+            ? (currentRecord?.uopsCount ?? 0) + uopsCountValue
+            : (currentRecord?.uopsCount ?? null)
+
         return {
           projectId,
           timestamp: timestamp,
-          count: currentRecord ? currentRecord.count + count : count,
+          count,
+          uopsCount,
           start: currentRecord ? Math.min(currentRecord.start, start) : start,
           end: currentRecord ? Math.max(currentRecord.end, end) : end,
         }

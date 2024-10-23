@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS, NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -18,6 +18,7 @@ const discovery = new ProjectDiscovery('lzomnichain')
 export const lzOmnichain: Bridge = {
   type: 'bridge',
   id: ProjectId('lzomnichain'),
+  createdAt: new UnixTime(1677513767), // 2023-02-27T16:02:47Z
   display: {
     name: 'Omnichain (LayerZero)',
     slug: 'omnichain',

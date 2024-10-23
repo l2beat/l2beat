@@ -7,15 +7,16 @@ import { Layer3 } from './types'
 const discovery = new ProjectDiscovery('sanko', 'arbitrum')
 
 export const sanko: Layer3 = orbitStackL3({
+  createdAt: new UnixTime(1716893370), // 2024-05-28T10:49:30Z
   discovery,
   badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum, Badge.RaaS.Caldera],
+  additionalPurposes: ['Gaming', 'Social'],
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Sanko',
     slug: 'sanko',
     description:
       'Sanko is an NFT and gaming-focused Orbit stack L3 on Arbitrum with AnyTrust DA and DMT as its native token, created by Sanko GameCorp.',
-    purposes: ['Gaming', 'NFT', 'Social'],
     links: {
       websites: ['https://sanko.xyz/'],
       apps: ['https://sanko.xyz/bridge', 'https://swap.sanko.xyz'],

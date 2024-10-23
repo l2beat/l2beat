@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { NO_BRIDGE } from '../../templates/no-bridge-template'
 import { DaEconomicSecurityRisk } from '../../types/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
@@ -8,6 +9,7 @@ export const memo: DaLayer = {
   id: 'memo',
   type: 'DaLayer',
   kind: 'PublicBlockchain',
+  systemCategory: 'public',
   display: {
     name: 'Meeda',
     slug: 'memo',
@@ -31,8 +33,12 @@ export const memo: DaLayer = {
     consensusFinality: 0,
     unbondingPeriod: 0,
   },
-  technology: `
+  technology: {
+    description: `
     ## Architecture
+
+    ![Meeda architecture](/images/da-layer-technology/meeda/architecture.png#center)
+
     Meeda's architecture consists of several components. 
     Storage Nodes store blob data and generate data availability commitments, with node deployment available to all users. 
     Light Nodes are responsible for challenging storage nodes through onchain verification, and their deployment is also open to all users. 
@@ -53,8 +59,10 @@ export const memo: DaLayer = {
     L2s can upload transaction data to Meeda through the MemoDA RPC, and the Meeda operator will generate an aggregated KZG polynomial commitment based on the transaction data. 
     Nodes can request transaction data on Meeda based on the commitment value of the transaction data.
   `,
+  },
   bridges: [
     NO_BRIDGE({
+      createdAt: new UnixTime(1725887947), // 2024-09-09T13:19:07Z
       layer: 'MEMO',
     }),
   ],

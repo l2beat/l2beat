@@ -1,8 +1,8 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { RiskCell } from '~/components/table/cells/risk-cell'
-import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { sortSentiments } from '~/components/table/sorting/functions/sentiment-sorting'
+import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
 import { type ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
 
 const columnHelper = createColumnHelper<ScalingRiskEntry>()

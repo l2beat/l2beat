@@ -12,7 +12,7 @@ import { EM_DASH } from '~/consts/characters'
 import { InfoIcon } from '~/icons/info'
 import { type DaProjectEntry } from '~/server/features/data-availability/project/get-da-project-entry'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/format'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 
 interface Props {
   project: DaProjectEntry
@@ -20,7 +20,7 @@ interface Props {
 
 export function DaProjectStats({ project }: Props) {
   const durationStorage =
-    project.kind === 'DAC'
+    project.kind === 'DAC' || project.kind === 'DA Service'
       ? {
           value: 'Flexible',
           tooltip:
@@ -37,14 +37,12 @@ export function DaProjectStats({ project }: Props) {
       <ProjectStat title="Type" value={project.type} />
       <ProjectStat
         title="Total value secured"
-        value={formatCurrency(project.header.tvs, 'usd', {
-          showLessThanMinimum: false,
-        })}
+        value={formatCurrency(project.header.tvs, 'usd')}
         tooltip="The total value locked of all L2s using this layer."
       />
       <ProjectStat
         title="Economic security"
-        tooltip="The assets that are slashable in case of a data withholding attack (the amount of funds a committee would need to burn to successfully deceive the DA bridge). It’s equal to 2/3 of the total validating stake, if any."
+        tooltip="The assets that are slashable in case of a data withholding attack. For public blockchains, it is equal to 2/3 of the total validating stake."
         value={
           // EC not set
           project.header.economicSecurity
@@ -53,9 +51,6 @@ export function DaProjectStats({ project }: Props) {
               ? formatCurrency(
                   project.header.economicSecurity.economicSecurity,
                   'usd',
-                  {
-                    showLessThanMinimum: false,
-                  },
                 )
               : 'Not synced'
             : EM_DASH
@@ -70,7 +65,8 @@ export function DaProjectStats({ project }: Props) {
           project.header.usedIn.length !== 0 ? (
             <ProjectsUsedIn
               usedIn={project.header.usedIn}
-              className="flex-wrap justify-end"
+              className="flex-wrap justify-start"
+              maxProjects={Infinity}
             />
           ) : (
             'None'

@@ -1,3 +1,122 @@
+Generated with discovered.json: 0xc8d8f321c1c5b2dde2d7092a08ebb40586ef5d7c
+
+# Diff at Mon, 21 Oct 2024 11:05:44 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20997772
+- current block number: 20997772
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20997772 (main branch discovery), not current.
+
+```diff
+    contract EtherBridge (0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9"]
+      values.$pastUpgrades.0.1:
+-        ["0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9"]
++        "0x4eed278fc63245a4b2a57a1e1c6dd876c9f18857b515b55a82c2235746c68486"
+    }
+```
+
+```diff
+    contract Mailbox (0xb23B2492f7A9631104A5877F7FFA00633660968d) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B"]
+      values.$pastUpgrades.0.1:
+-        ["0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B"]
++        "0xd86c84f78d28d7df3ec285544aea3abab536407f88d5e01ca5b7cc1edd1b6c17"
+    }
+```
+
+```diff
+    contract Treasury (0xD7E4b67E735733aC98a88F13d087D8aac670E644) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xa8E15d2B1bf6B0Fd3Bc9Ead06323c0730b67f8d4"]
+      values.$pastUpgrades.0.1:
+-        ["0xa8E15d2B1bf6B0Fd3Bc9Ead06323c0730b67f8d4"]
++        "0xa34790c0635f1f739540bf7e2998085e6426d1f17cd58617e26be884f625a0dc"
+    }
+```
+
+Generated with discovered.json: 0xf6bf5966c73218d06e07d411dec3c09220a1b4b8
+
+# Diff at Sat, 19 Oct 2024 06:18:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@493c96785a6a32c6417182bb9548d3a990297dbe block: 20985614
+- current block number: 20997772
+
+## Description
+
+Threshold of the AuthorityMultisig raised to 2. As long as there are no withdrawals, the AuthorityMultisig is essentially a pauser only since upgrades do not change the withdrawals and can only affect a 'virtual' state on the L2 (from ethereum persepective).
+
+## Watched changes
+
+```diff
+    contract AuthorityMultisig (0x4720342419C1D316B948690d12C86D5b485C64E0) {
+    +++ description: None
+      values.$members.3:
++        "0xAFa49B46301BaaD9152dD5aF0C05245B0FA58695"
+      values.$members.2:
+-        "0xAFa49B46301BaaD9152dD5aF0C05245B0FA58695"
++        "0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA"
+      values.$members.1:
+-        "0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA"
++        "0x757210F15AB48f0F8d328984fc321CfA6BB5BFc2"
+      values.$members.0:
+-        "0x757210F15AB48f0F8d328984fc321CfA6BB5BFc2"
++        "0x950815d0e585095B06111CD101440fb1E95AB2a5"
+      values.$threshold:
+-        1
++        2
+      values.multisigThreshold:
+-        "1 of 3 (33%)"
++        "2 of 4 (50%)"
+    }
+```
+
+Generated with discovered.json: 0xe3c8d8ce06ef1dfa7a4de366c021479d22d5de92
+
+# Diff at Thu, 17 Oct 2024 13:35:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b22da46ad96e1d0cb3e7d83e3293eb7b76990953 block: 20775895
+- current block number: 20985614
+
+## Description
+
+To harden security in the context of recent Multisig hacks, Eclipse chose to add another signer to their multisig. In a sudden clouding of their minds, they forgot to raise the threshold and ended up weakening security instead.
+
+## Watched changes
+
+```diff
+    contract AuthorityMultisig (0x4720342419C1D316B948690d12C86D5b485C64E0) {
+    +++ description: None
+      values.$members.2:
++        "0xAFa49B46301BaaD9152dD5aF0C05245B0FA58695"
+      values.$members.1:
+-        "0xAFa49B46301BaaD9152dD5aF0C05245B0FA58695"
++        "0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA"
+      values.$members.0:
+-        "0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA"
++        "0x757210F15AB48f0F8d328984fc321CfA6BB5BFc2"
+      values.multisigThreshold:
+-        "1 of 2 (50%)"
++        "1 of 3 (33%)"
+    }
+```
+
 Generated with discovered.json: 0xf0532b82c3340aba55c87da64f0eaec24fe4c45b
 
 # Diff at Mon, 14 Oct 2024 10:50:41 GMT:

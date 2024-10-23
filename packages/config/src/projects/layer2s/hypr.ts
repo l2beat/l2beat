@@ -8,6 +8,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('hypr')
 
 export const hypr: Layer2 = opStackL2({
+  createdAt: new UnixTime(1695904849), // 2023-09-28T12:40:49Z
   daProvider: CELESTIA_DA_PROVIDER,
   badges: [Badge.DA.Celestia],
   discovery,
@@ -15,7 +16,6 @@ export const hypr: Layer2 = opStackL2({
     name: 'Hypr',
     slug: 'hypr',
     description: 'Hypr is a blockchain focused on scaling ZK gaming.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://hypr.network/'],
       apps: ['https://bridge.hypr.network/'],

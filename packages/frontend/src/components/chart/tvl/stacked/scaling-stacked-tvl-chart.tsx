@@ -15,7 +15,7 @@ import { useLocalStorage } from '~/hooks/use-local-storage'
 import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
 import { type TvlProjectFilter } from '~/server/features/scaling/tvl/utils/project-filter-utils'
 import { api } from '~/trpc/react'
-import { formatCurrency } from '~/utils/format'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 import { ChartControlsWrapper } from '../../core/chart-controls-wrapper'
 import { type ChartUnit } from '../../types'
 import { TvlChartHeader } from '../tvl-chart-header'
@@ -70,9 +70,7 @@ export function ScalingStackedTvlChart({ milestones, entries }: Props) {
     <ChartProvider
       columns={columns}
       valuesStyle={valuesStyle}
-      formatYAxisLabel={(value: number) =>
-        formatCurrency(value, unit, { showLessThanMinimum: false })
-      }
+      formatYAxisLabel={(value: number) => formatCurrency(value, unit)}
       range={timeRange}
       isLoading={isLoading}
       renderHoverContents={(data) => (

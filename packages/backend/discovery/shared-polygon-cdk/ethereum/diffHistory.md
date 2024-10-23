@@ -1,4 +1,144 @@
-Generated with discovered.json: 0x38d7cb5f578f79ecb91b5524e09e42a2c145f188
+Generated with discovered.json: 0x870349753c078e6a60f92c893fa50e6e87f85ae8
+
+# Diff at Wed, 23 Oct 2024 09:22:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2734bfe28641dfdb3277a5800faf0a057c08a58f block: 20997898
+- current block number: 21027362
+
+## Description
+
+New haust.network associated chain deployed. (mainnet?) Not verifying batches yet.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1.
+      values.isVerifyingBatches.11:
++        [false]
+      values.rollupCount:
+-        11
++        12
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.11:
++        ["0x505ce1246F7e2Fd899dc5d3cfB17A47500Eb58bC",938,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4]
+    }
+```
+
+Generated with discovered.json: 0xdcc5c4dfc2847b00f0f100ee9eb97abee8fcf819
+
+# Diff at Mon, 21 Oct 2024 11:10:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20997898
+- current block number: 20997898
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20997898 (main branch discovery), not current.
+
+```diff
+    contract Bridge (0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x0FeB850B183C57534b56b7d56520133C8f9BDB65"]
+      values.$pastUpgrades.1.1:
+-        ["0x0FeB850B183C57534b56b7d56520133C8f9BDB65"]
++        "0xb83824c7eb1e87bd12222d98cf1cbff317b0853ba1e5beda1e3e3d8a4cfd1b24"
+      values.$pastUpgrades.0.2:
++        ["0x5ac4182A1dd41AeEf465E40B82fd326BF66AB82C"]
+      values.$pastUpgrades.0.1:
+-        ["0x5ac4182A1dd41AeEf465E40B82fd326BF66AB82C"]
++        "0x28f93532243dd8a8cc92ce630ef1920f40de15af7db2903efbf42f21fdf8152c"
+    }
+```
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      values.$pastUpgrades.3.2:
++        ["0x3b82Da772c825283d85d5d6717A77C6Ff582053b"]
+      values.$pastUpgrades.3.1:
+-        ["0x3b82Da772c825283d85d5d6717A77C6Ff582053b"]
++        "0xb83824c7eb1e87bd12222d98cf1cbff317b0853ba1e5beda1e3e3d8a4cfd1b24"
+      values.$pastUpgrades.2.2:
++        ["0xb1585916487AcEdD99952086f2950763D253b923"]
+      values.$pastUpgrades.2.1:
+-        ["0xb1585916487AcEdD99952086f2950763D253b923"]
++        "0x1db1400138d6778d303b9a13e816432d11f8dfca00ef6ec6ffcb6698cb447a31"
+      values.$pastUpgrades.1.2:
++        ["0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F"]
+      values.$pastUpgrades.1.1:
+-        ["0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F"]
++        "0x25c342d7c5b4137b5439c16fd5fa1577c116277859202b2c68fcd9f73b3fc2ac"
+      values.$pastUpgrades.0.2:
++        ["0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF"]
+      values.$pastUpgrades.0.1:
+-        ["0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF"]
++        "0xe34243804e1f7257acb09c97d0d6f023663200c39ee85a1e6927b0b391710bbb"
+    }
+```
+
+```diff
+    contract GlobalExitRootV2 (0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x2E38cD55163137483E30580Cb468C2dFf1d85077"]
+      values.$pastUpgrades.1.1:
+-        ["0x2E38cD55163137483E30580Cb468C2dFf1d85077"]
++        "0xb83824c7eb1e87bd12222d98cf1cbff317b0853ba1e5beda1e3e3d8a4cfd1b24"
+      values.$pastUpgrades.0.2:
++        ["0xbc1ea504fC54D078514eFCCA1F6860B5219B6BC3"]
+      values.$pastUpgrades.0.1:
+-        ["0xbc1ea504fC54D078514eFCCA1F6860B5219B6BC3"]
++        "0x9946be78d6c6d19dd1c6c7134a8fac27e76d32cad36dae2398d28fe6ff838f10"
+    }
+```
+
+Generated with discovered.json: 0x18eab5e0edbd82da09278ec51331826d7e85fac7
+
+# Diff at Sat, 19 Oct 2024 06:43:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@493c96785a6a32c6417182bb9548d3a990297dbe block: 20878362
+- current block number: 20997898
+
+## Description
+
+Expected Oct 28.
+
+Queued tx for new rollup types (targeting zkEVM and validiums) implementing the [Polygon zkEVM servicing upgrade](https://polygon.technology/blog/polygon-zkevm-servicing-update-coming-to-mainnet-beta). Also queued are the according upgrades to the PolygonRollupManager and GlobalExitRoot as described in the above post.
+
+TLDR of what this will change:
+* add rollback functionality to all managed chains
+* new local 'polygoncdkprojectcontract.admin' role for each project that can call `updateRollupByRollupAdmin(existing_rolluptype)` and `rollbackBatches()` for their respective project
+
+## Watched changes
+
+```diff
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: None
+      values.scheduledTransactionsDecoded.18:
++        {"target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":"0","function":"addNewRollupType","inputs":{"consensusImplementation":"0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F","verifier":"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D","forkID":12,"rollupCompatibilityID":0,"genesis":"0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272","description":"Type: Validium, Version: Banana , genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"864000"}
+      values.scheduledTransactionsDecoded.17:
++        {"target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":"0","function":"addNewRollupType","inputs":{"consensusImplementation":"0x7253F329302b1b5E774Ac641EA3743E9E3244f2E","verifier":"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D","forkID":12,"rollupCompatibilityID":0,"genesis":"0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272","description":"Type: zkEVM, Version: Banana , genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"864000"}
+      values.scheduledTransactionsDecoded.16:
++        {"target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":"0","function":"upgrade","inputs":{"proxy":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","implementation":"0x103388f5661d224F4aFb555C7E4a8FB52d0b752d"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"864000"}
+      values.scheduledTransactionsDecoded.15:
++        {"target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":"0","function":"upgradeAndCall","inputs":{"proxy":"0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb","implementation":"0x9Bdda421219900454E94e01d641fE64c60D8f4C8","data":{}},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"864000"}
+    }
+```
+
+Generated with discovered.json: 0x0803fbee8125f1ef849384fb04386a798a92cf21
 
 # Diff at Mon, 14 Oct 2024 10:55:40 GMT:
 

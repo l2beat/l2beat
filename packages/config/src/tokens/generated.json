@@ -549,6 +549,20 @@
       "supply": "zero"
     },
     {
+      "name": "Binary Token",
+      "coingeckoId": "binary-holdings",
+      "address": "0x04E9D7e336f79Cdab911b06133D3Ca2Cd0721ce3",
+      "symbol": "BNRY",
+      "decimals": 18,
+      "deploymentTimestamp": 1718764151,
+      "coingeckoListingTimestamp": 1714608000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37521/large/Vector-1.png?1714634222",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "BitDAO",
       "coingeckoId": "bitdao",
       "address": "0x1A4b46696b2bB4794Eb3D4c26f1c55F9170fa4C5",
@@ -794,7 +808,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1724165531,
       "coingeckoListingTimestamp": 1726099200,
-      "category": "ether",
+      "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/40143/large/cbbtc.webp?1726136727",
       "chainId": 1,
       "source": "canonical",
@@ -1940,7 +1954,7 @@
       "address": "0xCdb4A8742ed7D0259b51E3454C46C9D6C48d5e88",
       "symbol": "GPT",
       "decimals": 18,
-      "deploymentTimestamp": 1705478411,
+      "deploymentTimestamp": 1716807971,
       "coingeckoListingTimestamp": 1710201600,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/35929/large/gpt.png?1710225428",
@@ -2565,6 +2579,20 @@
       "supply": "zero"
     },
     {
+      "name": "mBTC",
+      "coingeckoId": "manta-mbtc",
+      "address": "0x4041381e947CFD3D483d67a25C6aa9Dc924250c5",
+      "symbol": "mBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1720421459,
+      "coingeckoListingTimestamp": 1717113600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38338/large/token_m_btc.png?1717126408",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Meld",
       "coingeckoId": "meld-2",
       "address": "0x333000333b26eE30214B4af6419D9ab07a450400",
@@ -2635,6 +2663,20 @@
       "supply": "zero"
     },
     {
+      "name": "mETH",
+      "coingeckoId": "manta-meth",
+      "address": "0x8CdF550C04Bc9B9F10938368349C9c8051A772b6",
+      "symbol": "mETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1720421291,
+      "coingeckoListingTimestamp": 1717113600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38337/large/token_m_eth.png?1717126380",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Metis Token",
       "coingeckoId": "metis-token",
       "address": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
@@ -2672,6 +2714,20 @@
       "coingeckoListingTimestamp": 1713484800,
       "category": "ether",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/37167/large/mswETH.png?1713507053",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "mUSD",
+      "coingeckoId": "manta-musd",
+      "address": "0x3f24E1d7a973867fC2A03fE199E5502514E0e11E",
+      "symbol": "mUSD",
+      "decimals": 18,
+      "deploymentTimestamp": 1720421171,
+      "coingeckoListingTimestamp": 1717113600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38336/large/token_m_usd.png?1717126272",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -3517,6 +3573,20 @@
       "supply": "zero"
     },
     {
+      "name": "Renzo Restaked LST ",
+      "coingeckoId": "renzo-restaked-lst",
+      "address": "0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811",
+      "symbol": "pzETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1719403475,
+      "coingeckoListingTimestamp": 1720569600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39124/large/200x200.png?1720629607",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Republic Token",
       "coingeckoId": "republic-protocol",
       "address": "0x408e41876cCCDC0F92210600ef50372656052a38",
@@ -3750,6 +3820,34 @@
       "coingeckoListingTimestamp": 1578700800,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/10366/large/SLP.png?1696510368",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Solv BTC",
+      "coingeckoId": "solv-btc",
+      "address": "0x7A56E1C57C7475CCf742a1832B028F0456652F97",
+      "symbol": "SolvBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1719475619,
+      "coingeckoListingTimestamp": 1712448000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "SolvBTC Babylon",
+      "coingeckoId": "solv-protocol-solvbtc-bbn",
+      "address": "0xd9D920AA40f578ab794426F5C90F6C731D159DEf",
+      "symbol": "SolvBTC.BBN",
+      "decimals": 18,
+      "deploymentTimestamp": 1719483839,
+      "coingeckoListingTimestamp": 1722556800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39384/large/unnamed.png?1721961640",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -4791,20 +4889,6 @@
       "supply": "zero"
     },
     {
-      "name": "Zipmex Token",
-      "coingeckoId": "zipmex-token",
-      "address": "0xaa602dE53347579f86b996D2Add74bb6F79462b2",
-      "symbol": "ZMT",
-      "decimals": 18,
-      "deploymentTimestamp": 1576744001,
-      "coingeckoListingTimestamp": 1612396800,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/13866/large/ZMT_Token.png?1696513611",
-      "chainId": 1,
-      "source": "canonical",
-      "supply": "zero"
-    },
-    {
       "name": "zkLend Token",
       "coingeckoId": "zklend-2",
       "address": "0xb2606492712D311be8f41d940AFE8CE742A52D44",
@@ -5757,7 +5841,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Free Bridge"
+            "name": "Free.tech Bridge (Meson)"
           }
         ]
       }
@@ -6744,6 +6828,20 @@
       "supply": "zero"
     },
     {
+      "name": "EURC",
+      "coingeckoId": "euro-coin",
+      "address": "0x60a3E35Cc302bFA44Cb288Bc5a4F316Fdb1adb42",
+      "symbol": "EURC",
+      "decimals": 6,
+      "deploymentTimestamp": 1717005065,
+      "coingeckoListingTimestamp": 1656547200,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/26045/large/euro.png?1696525125",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "FRIEND",
       "coingeckoId": "friend-tech",
       "address": "0x0bD4887f7D41B35CD75DFF9FfeE2856106f86670",
@@ -7055,7 +7153,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Free Bridge"
+            "name": "Free.tech Bridge (Meson)"
           }
         ]
       }
@@ -7314,6 +7412,20 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "CATCH",
+      "coingeckoId": "spacecatch",
+      "address": "0xbC4c97Fb9befaa8B41448e1dFcC5236dA543217F",
+      "symbol": "CATCH",
+      "decimals": 18,
+      "deploymentTimestamp": 1718880774,
+      "coingeckoListingTimestamp": 1712016000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36632/large/Logomark_colours.png?1712022405",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "CHEESE",
       "coingeckoId": "cheese-2",
       "address": "0x05AEa20947A9A376eF50218633BB0a5A05d40A0C",
@@ -7549,6 +7661,20 @@
       "chainId": 42161,
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      "name": "GAM3S.GG",
+      "coingeckoId": "gam3s-gg",
+      "address": "0xc24A365A870821EB83Fd216c9596eDD89479d8d7",
+      "symbol": "G3",
+      "decimals": 18,
+      "deploymentTimestamp": 1712151381,
+      "coingeckoListingTimestamp": 1712620800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35662/large/G3_logo.jpg?1709454143",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "Gho Token",
@@ -7823,6 +7949,20 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Neuron",
+      "coingeckoId": "neuron",
+      "address": "0xdadeca1167fe47499e53Eb50F261103630974905",
+      "symbol": "NRN",
+      "decimals": 18,
+      "deploymentTimestamp": 1717527783,
+      "coingeckoListingTimestamp": 1719187200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38838/large/Nrn_with_gradient_-NEW_TO_BE_UPDATED.png?1728551601",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Polkamon",
       "coingeckoId": "polychain-monsters",
       "address": "0xBC9B77acA82f6BE43927076D71cd453b625165B8",
@@ -8017,6 +8157,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "StarHeroes",
+      "coingeckoId": "starheroes",
+      "address": "0xB299751B088336E165dA313c33e3195B8c6663A6",
+      "symbol": "STAR",
+      "decimals": 18,
+      "deploymentTimestamp": 1709244341,
+      "coingeckoListingTimestamp": 1710201600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34147/large/Screenshot_2024-03-08_180444.png?1709892309",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "TapToken",
@@ -8321,6 +8475,90 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Free Bridged BBTC",
+      "coingeckoId": "bouncebit-btc",
+      "address": "0x93C12084dCFC08c759ad96B94234D9C39705689f",
+      "symbol": "BBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1718170153,
+      "coingeckoListingTimestamp": 1716249600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37985/large/bbtc_icon.png?1716215414",
+      "chainId": 59144,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Free Bridged SolvBTC",
+      "coingeckoId": "solv-btc",
+      "address": "0x5FFcE65A40f6d3de5332766ffF6A28BF491C868c",
+      "symbol": "SolvBTC.m",
+      "decimals": 18,
+      "deploymentTimestamp": 1715238002,
+      "coingeckoListingTimestamp": 1712448000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
+      "chainId": 59144,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Free Bridged SolvBTC.b",
+      "coingeckoId": "solv-btc",
+      "address": "0x96155858A02c410c3C814BB32Fdc413b3241b62E",
+      "symbol": "SolvBTC.b",
+      "decimals": 18,
+      "deploymentTimestamp": 1716875713,
+      "coingeckoListingTimestamp": 1712448000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
+      "chainId": 59144,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "InceptionLRT restaked ETH",
+      "coingeckoId": "genesislrt-restaked-eth",
+      "address": "0x5A7a183B6B44Dc4EC2E3d2eF43F98C5152b1d76d",
+      "symbol": "inETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1714467441,
+      "coingeckoListingTimestamp": 1713657600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34127/large/inETH.png?1715036464",
+      "chainId": 59144,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Inception Bridge (xERC-20)"
+          }
+        ]
+      }
+    },
+    {
       "name": "KelpDao Restaked ETH",
       "coingeckoId": "kelp-dao-restaked-eth",
       "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
@@ -8397,6 +8635,27 @@
       "chainId": 59144,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "Merlin BTC",
+      "coingeckoId": "merlin-s-seal-btc",
+      "address": "0xe4D584ae9b753e549cAE66200A6475d2f00705f7",
+      "symbol": "M-BTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1715526671,
+      "coingeckoListingTimestamp": 1711929600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36566/large/photo_2024-03-25_22-04-42.jpg?1711936162",
+      "chainId": 59144,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
     },
     {
       "name": "Nile Exchange",
@@ -9013,7 +9272,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Free Bridge"
+            "name": "Free.tech Bridge (Meson)"
           }
         ]
       }
@@ -9039,6 +9298,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "Scroll",
+      "coingeckoId": "scroll",
+      "address": "0xd29687c813D741E2F938F4aC377128810E217b1b",
+      "symbol": "SCR",
+      "decimals": 18,
+      "deploymentTimestamp": 1725336741,
+      "coingeckoListingTimestamp": 1729641600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50571/large/scroll.jpg?1728376125",
+      "chainId": 534352,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "Staked USDe",
@@ -9172,7 +9445,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Free Bridge"
+            "name": "Free.tech Bridge (Meson)"
           }
         ]
       }
@@ -9193,7 +9466,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Free Bridge"
+            "name": "Free.tech Bridge (Meson)"
           }
         ]
       }

@@ -1,8 +1,7 @@
-import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { astarzkevm } from '../../../layer2s/astarzkevm'
-import { DAC } from '../templates/dac-template'
-import { DaAttestationSecurityRisk } from '../types'
+import { PolygoncdkDAC } from '../templates/polygoncdk-template'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('astarzkevm')
@@ -27,9 +26,10 @@ const members = discovery.getContractValue<string[]>(
   'members',
 )
 
-export const astarZkEvmDac = DAC({
+export const astarZkEvmDac = PolygoncdkDAC({
   project: astarzkevm,
   bridge: {
+    createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     permissions: [
       {
         name: 'Committee Members',
@@ -46,11 +46,8 @@ export const astarZkEvmDac = DAC({
     ],
     chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignaturesDAC,
-    totalMembers: membersCountDAC,
+    membersCount: membersCountDAC,
     transactionDataType: DacTransactionDataType.TransactionData,
-    members: {
-      type: 'unknown',
-    },
     contracts: {
       addresses: [
         discovery.getContractDetails('AstarValidium', {
@@ -64,8 +61,5 @@ export const astarZkEvmDac = DAC({
       ],
       risks: [],
     },
-  },
-  risks: {
-    attestations: DaAttestationSecurityRisk.SigVerified(true),
   },
 })

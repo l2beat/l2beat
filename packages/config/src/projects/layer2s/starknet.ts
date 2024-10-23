@@ -236,6 +236,7 @@ const escrowEKUBOMaxTotalBalanceString = formatMaxTotalBalanceString(
 export const starknet: Layer2 = {
   type: 'layer2',
   id: ProjectId('starknet'),
+  createdAt: new UnixTime(1642687633), // 2022-01-20T14:07:13Z
   display: {
     name: 'Starknet',
     slug: 'starknet',

@@ -66,6 +66,7 @@ const timelockUpgrades2 = {
 export const degate3: Layer2 = {
   type: 'layer2',
   id: ProjectId('degate3'),
+  createdAt: new UnixTime(1684838286), // 2023-05-23T10:38:06Z
   badges: [
     Badge.VM.AppChain,
     Badge.DA.EthereumCalldata,
@@ -76,7 +77,7 @@ export const degate3: Layer2 = {
     slug: 'degate3',
     description:
       'DeGate is a ZK Rollup enabling a decentralized order book exchange. DeGate smart contracts are forked from Loopring V3.',
-    purposes: ['Exchange'],
+    purposes: ['Exchange', 'NFT'],
     provider: 'Loopring',
     category: 'ZK Rollup',
 

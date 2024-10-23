@@ -10,9 +10,11 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('lyra')
 
 export const lyra: Layer2 = opStackL2({
+  createdAt: new UnixTime(1702978961), // 2023-12-19T09:42:41Z
   daProvider: CELESTIA_DA_PROVIDER,
   badges: [Badge.DA.Celestia, Badge.Infra.Superchain, Badge.RaaS.Conduit],
   associatedTokens: ['LYRA'],
+  additionalPurposes: ['Exchange'],
   discovery,
   display: {
     name: 'Derive',
@@ -20,7 +22,6 @@ export const lyra: Layer2 = opStackL2({
     architectureImage: 'lyra',
     description:
       'Derive Chain is an L2 scaling solution built using OP Stack specially for the Derive protocol - a settlement protocol for spot, perpetuals, and options trading.',
-    purposes: ['Exchange'],
     links: {
       websites: ['https://derive.xyz/'],
       apps: ['https://derive.xyz/options/eth'],

@@ -7,17 +7,15 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('thebinaryholdings')
 
 export const thebinaryholdings: Layer2 = opStackL2({
+  createdAt: new UnixTime(1726668186), // 2024-09-18T14:03:06Z
   discovery,
   badges: [Badge.Infra.Superchain],
   display: {
     name: 'The Binary Holdings',
     slug: 'thebinaryholdings',
     shortName: 'Binary',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
       'The Binary Holdings is a web3 infrastructure that integrates into telecommunication and banking apps to increase user engagement, retention, and ARPU (Average Revenue Per User) - while rewarding users for their engagement. It uses its own token (BNRY) for gas.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://thebinaryholdings.com/'],
       apps: [],
@@ -46,5 +44,5 @@ export const thebinaryholdings: Layer2 = opStackL2({
   milestones: [],
   usesBlobs: true,
   discoveryDrivenData: true,
-  nonTemplateOptimismPortalEscrowTokens: [], // should add BNRY but the coingecko page doesn't report the ethereum address
+  nonTemplateOptimismPortalEscrowTokens: ['BNRY'],
 })

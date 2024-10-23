@@ -23,7 +23,11 @@ export class ValueIndexer extends ManagedChildIndexer {
       ...$,
       name: 'value_indexer',
       tag: `${$.project}_${$.dataSource}`,
-      configHash: getValuesConfigHash($.amountConfigs, $.priceConfigs),
+      configHash: getValuesConfigHash(
+        $.amountConfigs,
+        $.priceConfigs,
+        $.minHeight,
+      ),
     })
 
     this.amountConfigs = getAmountConfigs($.amountConfigs)

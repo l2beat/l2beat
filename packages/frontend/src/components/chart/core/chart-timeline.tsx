@@ -4,7 +4,6 @@ import { clamp } from 'lodash'
 import { type ReactNode, useMemo, useRef } from 'react'
 import { useIsClient } from '~/hooks/use-is-client'
 import { MONTHS, parseTimestamp } from '~/utils/dates'
-import { type TimeRange } from '~/utils/range/range'
 import { type ChartColumn, useChartContext } from './chart-context'
 import { useChartLoading } from './chart-loading-context'
 import { useChartRect } from './chart-rect-context'
@@ -13,7 +12,7 @@ export function ChartTimeline() {
   const isClient = useIsClient()
   const loading = useChartLoading()
   const { columns } = useChartContext()
-  if (columns.length === 0) {
+  if (loading || !isClient || columns.length === 0) {
     return null
   }
 
@@ -21,20 +20,18 @@ export function ChartTimeline() {
 
   return (
     <div className="mt-2 w-full">
-      {!loading && isClient
-        ? columns.map((column, i) => {
-            const label = getTimelineLabel(column.data.timestamp, range)
-            if (!label) return null
-            return (
-              <TimelineLabel
-                key={column.data.timestamp}
-                x={i / (columns.length - 1)}
-              >
-                {label}
-              </TimelineLabel>
-            )
-          })
-        : null}
+      {columns.map((column, i) => {
+        const label = getTimelineLabel(column.data.timestamp, range)
+        if (!label) return null
+        return (
+          <TimelineLabel
+            key={column.data.timestamp}
+            x={i / (columns.length - 1)}
+          >
+            {label}
+          </TimelineLabel>
+        )
+      })}
     </div>
   )
 }
@@ -61,61 +58,51 @@ function TimelineLabel({ x, children }: { x: number; children: ReactNode }) {
     <span
       ref={ref}
       style={style}
-      className="invisible absolute whitespace-nowrap text-3xs font-medium leading-none text-secondary md:text-[11px]"
+      className="invisible absolute whitespace-nowrap text-3xs font-medium leading-none text-secondary"
     >
       {children}
     </span>
   )
 }
 
-type ActualRange = Exclude<TimeRange, 'max'> | number
-function getActualRange(columns: ChartColumn[]): ActualRange {
+function getActualRange(columns: ChartColumn[]) {
   const timestamps = columns.map((column) => column.data.timestamp)
   const minTimestamp = Math.min(...timestamps)
   const maxTimestamp = Math.max(...timestamps)
 
   const actualRangeInDays = (maxTimestamp - minTimestamp) / UnixTime.DAY
-  if (actualRangeInDays <= 1) {
-    return '1d'
-  }
-  if (actualRangeInDays <= 7) {
-    return '7d'
-  }
-  if (actualRangeInDays <= 30) {
-    return '30d'
-  }
-  if (actualRangeInDays <= 90) {
-    return '90d'
-  }
-  if (actualRangeInDays <= 180) {
-    return '180d'
-  }
-  if (actualRangeInDays <= 365) {
-    return '1y'
-  }
   return actualRangeInDays
 }
 
 function getTimelineLabel(
   timestamp: number,
-  range: ActualRange,
+  range: number,
 ): string | undefined {
-  switch (range) {
-    case '1d':
-      return get1dTimelineLabel(timestamp)
-    case '7d':
-      return get7dTimelineLabel(timestamp)
-    case '30d':
-      return get30dTimelineLabel(timestamp)
-    case '90d':
-      return get90dTimelineLabel(timestamp)
-    case '180d':
-      return get180dTimelineLabel(timestamp)
-    case '1y':
-      return get1yTimelineLabel(timestamp)
-    default:
-      return getMaxTimelineLabel(timestamp, range)
+  if (range <= 1) {
+    return get1dTimelineLabel(timestamp)
   }
+  if (range <= 7) {
+    return get7dTimelineLabel(timestamp)
+  }
+  if (range <= 30) {
+    return get30dTimelineLabel(timestamp)
+  }
+  if (range <= 90) {
+    return get90dTimelineLabel(timestamp)
+  }
+  if (range <= 180) {
+    return get180dTimelineLabel(timestamp)
+  }
+  if (range <= 365) {
+    return get1yTimelineLabel(timestamp)
+  }
+  if (range <= 730) {
+    return get2yTimelineLabel(timestamp)
+  }
+  if (range <= 1095) {
+    return get3yTimelineLabel(timestamp)
+  }
+  return getOver3yTimelineLabel(timestamp)
 }
 
 function get1dTimelineLabel(timestamp: number) {
@@ -147,7 +134,7 @@ function get30dTimelineLabel(timestamp: number) {
 }
 
 function get90dTimelineLabel(timestamp: number) {
-  if (timestamp % (15 * UnixTime.DAY) !== 0) {
+  if ((timestamp + 3 * UnixTime.DAY) % (21 * UnixTime.DAY) !== 0) {
     return
   }
 
@@ -179,17 +166,7 @@ function get1yTimelineLabel(timestamp: number) {
   return `${MONTHS[month]?.shortName} ‘${year.slice(-2)}`
 }
 
-function getMaxTimelineLabel(timestamp: number, rangeInDays: number) {
-  if (rangeInDays <= 730) {
-    return getBelow2yTimelineLabel(timestamp)
-  }
-  if (rangeInDays <= 1095) {
-    return getBelow3yTimelineLabel(timestamp)
-  }
-  return getOver3yTimelineLabel(timestamp)
-}
-
-function getBelow2yTimelineLabel(timestamp: number) {
+function get2yTimelineLabel(timestamp: number) {
   const start = new UnixTime(timestamp)
   if (
     start.toNumber() % UnixTime.DAY !== 0 ||
@@ -202,7 +179,7 @@ function getBelow2yTimelineLabel(timestamp: number) {
   return `${MONTHS[month]?.shortName} ‘${year.slice(-2)}`
 }
 
-function getBelow3yTimelineLabel(timestamp: number) {
+function get3yTimelineLabel(timestamp: number) {
   const start = new UnixTime(timestamp)
   if (
     start.toNumber() % UnixTime.DAY !== 0 ||

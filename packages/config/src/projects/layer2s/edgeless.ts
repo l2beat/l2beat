@@ -12,13 +12,13 @@ const strategiesUpgrades = {
 }
 
 export const edgeless: Layer2 = orbitStackL2({
+  createdAt: new UnixTime(1712313901), // 2024-04-05T10:45:01Z
   display: {
     name: 'Edgeless',
     slug: 'edgeless',
     description:
       // edgeless is posting limited data hashes to ethereum (0x88 sequencerVersion), planning to use EigenDA. Currently there is no DA.
       'Edgeless is an Orbit stack general-purpose Optimium without application layer fees. It uses ewETH as the native token, which is a wrapped version of underlying investment strategies.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://edgeless.network/'],
       apps: ['https://bridge.edgeless.network/'],

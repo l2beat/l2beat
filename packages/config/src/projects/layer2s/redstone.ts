@@ -22,15 +22,16 @@ const daResolveWindow = formatSeconds(
 )
 
 export const redstone: Layer2 = opStackL2({
+  createdAt: new UnixTime(1714996778), // 2024-05-06T11:59:38Z
   discovery,
-  badges: [Badge.DA.CustomDA],
+  badges: [Badge.DA.CustomDA, Badge.Infra.Superchain],
+  additionalPurposes: ['Gaming'],
   display: {
     name: 'Redstone',
     slug: 'redstone',
     architectureImage: 'redstone',
     description:
       "Redstone is a chain built for onchain games and autonomous worlds running MUD. It's an implementation of OP Plasma with DA challenges.",
-    purposes: ['Universal', 'Gaming'],
     links: {
       websites: ['https://redstone.xyz/'],
       apps: ['https://redstone.xyz/deposit'],

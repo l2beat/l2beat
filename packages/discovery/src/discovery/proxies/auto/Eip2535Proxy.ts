@@ -3,7 +3,7 @@
 // every contract implementing this standard needs to have facetAddresses() view function
 
 import { ProxyDetails } from '@l2beat/discovery-types'
-import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { assert, EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 
 import { utils } from 'ethers'
 import { IProvider } from '../../provider/IProvider'
@@ -67,6 +67,7 @@ async function getPastUpgrades(provider: IProvider, address: EthereumAddress) {
     const implementations = [...new Set(selectorAddress.values())]
     return {
       date: dateMap[l.blockNumber] ?? 'ERROR',
+      hash: Hash256(l.transactionHash),
       addresses: implementations,
     }
   })
@@ -94,7 +95,7 @@ export async function detectEip2535proxy(
       // TODO: (sz-piotr) I'm not actually sure if this is correct. Diamonds actually have specific faucet that we should query for this.
       $immutable: false,
       $implementation: facets.map((f) => f.toString()),
-      $pastUpgrades: pastUpgrades.map((v) => [v.date, v.addresses]),
+      $pastUpgrades: pastUpgrades.map((v) => [v.date, v.hash, v.addresses]),
       $upgradeCount: Object.values(pastUpgrades).length,
     },
   }

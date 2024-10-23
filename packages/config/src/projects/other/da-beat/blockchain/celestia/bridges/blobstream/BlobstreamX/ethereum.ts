@@ -1,7 +1,8 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../../../../discovery/ProjectDiscovery'
-import { DaAttestationSecurityRisk } from '../../../../../types/DaAttestationSecurityRisk'
-import { DaExitWindowRisk } from '../../../../../types/DaExitWindowRisk'
+import { DaCommitteeSecurityRisk } from '../../../../../types'
+import { DaRelayerFailureRisk } from '../../../../../types/DaRelayerFailureRisk'
+import { DaUpgradeabilityRisk } from '../../../../../types/DaUpgradeabilityRisk'
 import { CELESTIA_BLOBSTREAM } from '../template'
 
 const discovery = new ProjectDiscovery('blobstream')
@@ -33,6 +34,7 @@ const nextHeaderProvers = discovery.getContractValue<string[]>(
 
 export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
   chain: 'ethereum',
+  createdAt: new UnixTime(1719930680), // 2024-07-02T14:31:20Z
   usedIn: [
     // no project integrates it for state validation
   ],
@@ -46,7 +48,8 @@ export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
       socialMedia: [],
     },
   },
-  technology: `
+  technology: {
+    description: `
      The BlobstreamX bridge is a data availability bridge that facilitates data availability commitments to be bridged between Celestia and Ethereum.
      The BlobstreamX bridge is composed of three main components: the **BlobstreamX** contract, the **Succinct Gateway** contract and the **Verifier** contracts.
      By default, BlobstreamX operates asynchronously, handling requests in a fulfillment-based manner. First, zero-knowledge proofs of Celestia block ranges are requested for proving. Requests can be submitted either off-chain through the Succinct API, or onchain through the requestDataHeader() method of the blobstreamX smart contract.
@@ -60,6 +63,13 @@ export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
     By default, BlobstreamX on Ethereum is updated by the Celestia operator at a regular cadence of 4 hours.
 
     `,
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: 'the DA bridge accepts an incorrect or malicious data commitment provided by a dishonest majority of Celestia validators.',
+      },
+    ],
+  },
   contracts: {
     addresses: [
       discovery.getContractDetails('Blobstream', {
@@ -86,11 +96,7 @@ export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
     risks: [
       {
         category: 'Funds can be lost if',
-        text: 'the bridge contract receives a malicious code upgrade. There is no delay on code upgrades.',
-      },
-      {
-        category: 'Funds can be lost if',
-        text: 'a dishonest majority of Celestia validators post incorrect or malicious data commitments.',
+        text: 'the bridge contract or its dependencies receive a malicious code upgrade. There is no delay on code upgrades.',
       },
     ],
   },
@@ -121,7 +127,10 @@ export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
     },
   ],
   risks: {
-    attestations: DaAttestationSecurityRisk.SigVerifiedZK(true),
-    exitWindow: DaExitWindowRisk.LowOrNoDelay(0), // TIMELOCK_ROLE is 4/6 multisig
+    committeeSecurity: DaCommitteeSecurityRisk.RobustAndDiverseCommittee(
+      'Celestia Validators',
+    ),
+    upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(0), // TIMELOCK_ROLE is 4/6 multisig
+    relayerFailure: DaRelayerFailureRisk.NoMechanism,
   },
 })

@@ -9,7 +9,11 @@ export { AddressAnalyzer } from './discovery/analysis/AddressAnalyzer'
 export { TemplateService } from './discovery/analysis/TemplateService'
 export { ConfigReader } from './discovery/config/ConfigReader'
 export { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
-export { RawDiscoveryConfig } from './discovery/config/RawDiscoveryConfig'
+export {
+  RawDiscoveryConfig,
+  BasePermissionEntries,
+  RolePermissionEntries,
+} from './discovery/config/RawDiscoveryConfig'
 export { DiscoveryLogger } from './discovery/DiscoveryLogger'
 export { getContractField } from './discovery/utils/metaGetters'
 export { DiscoveryEngine } from './discovery/engine/DiscoveryEngine'

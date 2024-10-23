@@ -1,3 +1,164 @@
+Generated with discovered.json: 0x6554f78511be3b9326eecbd80904fa96fd8bb1bd
+
+# Diff at Mon, 21 Oct 2024 11:08:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20985714
+- current block number: 20985714
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20985714 (main branch discovery), not current.
+
+```diff
+    contract ForeignAMB (0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e) {
+    +++ description: None
+      values.$pastUpgrades.5.2:
++        ["0x098f51bdfb5D6d319DD4FDf06b64773d25bD1316"]
+      values.$pastUpgrades.5.1:
+-        ["0x098f51bdfb5D6d319DD4FDf06b64773d25bD1316"]
++        "0x3ef23ae6e10cbe0bf6b08df489a829047fa8d1376f2aa2f079cdce9a9342d086"
+      values.$pastUpgrades.4.2:
++        ["0x82B67a43b69914E611710C62e629dAbB2f7AC6AB"]
+      values.$pastUpgrades.4.1:
+-        ["0x82B67a43b69914E611710C62e629dAbB2f7AC6AB"]
++        "0x41b432a66ed945c9d33c0e77de7e9523bb216e421b27b8f3e4e8dbef34b4f5cd"
+      values.$pastUpgrades.3.2:
++        ["0x872796bf7Fe754754d2BEE2c66D7de9B04a5C943"]
+      values.$pastUpgrades.3.1:
+-        ["0x872796bf7Fe754754d2BEE2c66D7de9B04a5C943"]
++        "0x0508a2fb3129be470493478041780a59632d56a5fb131ec1c11b23702a904d7e"
+      values.$pastUpgrades.2.2:
++        ["0x54c6dFBB807BE694841A0F1B84CbC49D8FC98ed7"]
+      values.$pastUpgrades.2.1:
+-        ["0x54c6dFBB807BE694841A0F1B84CbC49D8FC98ed7"]
++        "0xd0b4d072c9581c7cbbb900287a915e644d0d9c2f3fc8d19cf6ab1424037388b4"
+      values.$pastUpgrades.1.2:
++        ["0x2946f6D458F8Cf8723A1d9e95043831D3937461e"]
+      values.$pastUpgrades.1.1:
+-        ["0x2946f6D458F8Cf8723A1d9e95043831D3937461e"]
++        "0x4401dfe716f0d2cfa06849f179b07cc7783caaea862dc10839a331aa7ad10ab3"
+      values.$pastUpgrades.0.2:
++        ["0xe804Fe5Fb14B02aba636f37Fb6E1c7a08b2f4B16"]
+      values.$pastUpgrades.0.1:
+-        ["0xe804Fe5Fb14B02aba636f37Fb6E1c7a08b2f4B16"]
++        "0x16056cbaad7fb4412c05b045351e3c9f62215cd6ffc867a59ac1db8f7a5092cf"
+    }
+```
+
+```diff
+    contract MultiTokenMediator (0x88ad09518695c6c3712AC10a214bE5109a655671) {
+    +++ description: None
+      values.$pastUpgrades.5.2:
++        ["0x8eB3b7D8498a6716904577b2579e1c313d48E347"]
+      values.$pastUpgrades.5.1:
+-        ["0x8eB3b7D8498a6716904577b2579e1c313d48E347"]
++        "0x0fa2767b8bd06816aef104d1a04362f06aba8c814e1444c08838db0973ace594"
+      values.$pastUpgrades.4.2:
++        ["0x7bFF37bda2318125C6B895d4f2B50Bcd9E0cC40e"]
+      values.$pastUpgrades.4.1:
+-        ["0x7bFF37bda2318125C6B895d4f2B50Bcd9E0cC40e"]
++        "0x50ec5688352357ed3c2ad7f4913dbc005a04e44528ccc7101a4457d58610947d"
+      values.$pastUpgrades.3.2:
++        ["0xB0a18F960221c6D56871c29e5dD7b838E79c2E94"]
+      values.$pastUpgrades.3.1:
+-        ["0xB0a18F960221c6D56871c29e5dD7b838E79c2E94"]
++        "0xf8b984ed23d53276bcf228d3f114d5e2d982887d5d5941f900e066003eeeb361"
+      values.$pastUpgrades.2.2:
++        ["0x5275e7264AB0Bb75D970E7442De0Aadd0C0b85ae"]
+      values.$pastUpgrades.2.1:
+-        ["0x5275e7264AB0Bb75D970E7442De0Aadd0C0b85ae"]
++        "0xc54efc1f3d91454efd7957372f2fa4421f545b9a9e56eb4240000496b7a52177"
+      values.$pastUpgrades.1.2:
++        ["0x4B86181abcAeFc008B561E27C0aee64Bb5eB8dBe"]
+      values.$pastUpgrades.1.1:
+-        ["0x4B86181abcAeFc008B561E27C0aee64Bb5eB8dBe"]
++        "0x11417a1a4415db5eca2fadc6b2b5d0df882c7d731a1e7252ce10d98e0cfe6d9d"
+      values.$pastUpgrades.0.2:
++        ["0x280f04a988513610584057Bf3fDE1f56f4d22CA9"]
+      values.$pastUpgrades.0.1:
+-        ["0x280f04a988513610584057Bf3fDE1f56f4d22CA9"]
++        "0xb389acafc31832156fe9bca8d22b47ef91396dd7661d4c318b6de25bc11b4694"
+    }
+```
+
+```diff
+    contract HashiManager (0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x159B36Ed5BA327fd269Fb93c75918257DCfe686d"]
+      values.$pastUpgrades.0.1:
+-        ["0x159B36Ed5BA327fd269Fb93c75918257DCfe686d"]
++        "0x69c009512506e9271ad25755cb5b08957bfdae68032d37fb696ce69c89c70bc0"
+    }
+```
+
+```diff
+    contract BridgeValidators (0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xD83893F31AA1B6B9D97C9c70D3492fe38D24d218"]
+      values.$pastUpgrades.0.1:
+-        ["0xD83893F31AA1B6B9D97C9c70D3492fe38D24d218"]
++        "0x78da167ac224bb9190c7cddd1d294be2bce23d1120a4e20de50641f2c60f7870"
+    }
+```
+
+Generated with discovered.json: 0x8db36f8a28e4dfc08625523e162b7da728fe4be0
+
+# Diff at Thu, 17 Oct 2024 13:55:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b22da46ad96e1d0cb3e7d83e3293eb7b76990953 block: 20878347
+- current block number: 20985714
+
+## Description
+
+Optional Hashi module (see older diffs below) adds a new owner Multisig and a new target adapter on gnosischain.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract HashiOwnerMS (0x933d5CD392CDA19b481071a4aaf5Bc34324AB9a5)
+    +++ description: None
+```
+
+```diff
+    contract HashiManager (0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9) {
+    +++ description: None
+      values.adapters.0:
+-        "0x0000000000000000000000000000000000000000"
++        "0x3A259A51D200d902AC25BE2005d95EADA6a1bfc5"
+      values.expectedAdaptersHash:
+-        "0x290decd9548b62a8d60345a988386fc84ba6bc95484008f6362f93160ef3e563"
++        "0x6b603f4a7f51661e39122b2cc2745ffbc56eca92e59f655d365cd5170d930c0a"
+      values.owner:
+-        "0x933d5CD392CDA19b481071a4aaf5Bc34324AB9a5"
++        "0x670a3e447F4DE92C012777Ac5591D81E12aD0957"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x670a3e447F4DE92C012777Ac5591D81E12aD0957)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe.sol => .flat/Safe/Safe.sol}         | 685 ++++++++++++---------
+ .../Safe/SafeProxy.p.sol}                          |  10 +-
+ 2 files changed, 416 insertions(+), 279 deletions(-)
+```
+
 Generated with discovered.json: 0x868877ebf4194c312afb3c7cc6ea072a27f9b6d5
 
 # Diff at Mon, 14 Oct 2024 10:53:30 GMT:

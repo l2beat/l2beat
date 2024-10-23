@@ -174,14 +174,17 @@
         "$pastUpgrades": [
           [
             "2024-03-17T04:51:20.000Z",
+            "0x58059198a17ae1d8dd73b4d0f0ce7169f4e55d901a8fea59b4ef12d005a41f0a",
             ["0x7C3A9b466FF5c02582fa32d4aD1b2Cb431fB7c9b"]
           ],
           [
             "2024-03-18T01:19:36.000Z",
+            "0xf45e346ddbedef1ea3f828954c979adcb205b4b1c0ca72e49e7e2ef5b1c43192",
             ["0xfb19439fBa9f16aA720be6bE0e53465a9733C964"]
           ],
           [
             "2024-08-26T18:53:22.000Z",
+            "0x746e21628ccec4d5b4da96595f852a6398defcc360cb9f13aa2d84ebe4e7403f",
             ["0x47fd660D5252Bd6F9D2c71507E46aa1d6e957c23"]
           ]
         ],
@@ -636,7 +639,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "succinct/SP1Blobstream": "0xb0717b3e2a9ebc9678d934fa77de178537019305cf6fd12950b8f116da2a0e9c",
     "succinct/SP1SuccinctGateway": "0xe0ec8df0fec605a6cb059948b08432aee71379584a5fa43412fa24a07701c877"
   }

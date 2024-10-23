@@ -63,6 +63,7 @@ const escrowUSDCMaxTotalBalanceString = formatMaxTotalBalanceString(
 export const paradex: Layer2 = {
   type: 'layer2',
   id: ProjectId('paradex'),
+  createdAt: new UnixTime(1698756386), // 2023-10-31T12:46:26Z
   badges: [
     Badge.VM.CairoVM,
     Badge.DA.EthereumBlobs,
@@ -75,7 +76,7 @@ export const paradex: Layer2 = {
     provider: 'Starknet',
     description:
       'Paradex is a high-performance crypto-derivatives exchange built on a Starknet Appchain.',
-    purposes: ['Exchange'],
+    purposes: ['Universal', 'Exchange'],
     category: 'ZK Rollup',
 
     links: {

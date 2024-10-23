@@ -1,4 +1,411 @@
-Generated with discovered.json: 0xbcd319fd7390579801128356d2ce62b2830bf551
+Generated with discovered.json: 0x309a4e2bee30381821c09e8248ae6b71a78d1cb7
+
+# Diff at Mon, 21 Oct 2024 11:09:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20997846
+- current block number: 20997846
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20997846 (main branch discovery), not current.
+
+```diff
+    contract ERC1155Predicate (0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f) {
+    +++ description: None
+      values.$pastUpgrades.3.2:
++        ["0xCFA65db73cB45D458d0a98006d3d558b5e1F021d"]
+      values.$pastUpgrades.3.1:
+-        ["0xCFA65db73cB45D458d0a98006d3d558b5e1F021d"]
++        "0xf81d8f7db4694015fc14426465cc2936dc03e3a07da3a879dcea009ef2cf384a"
+      values.$pastUpgrades.2.2:
++        ["0xb86357daD9c3567dD70862a5b49fFFaFb0F094Ac"]
+      values.$pastUpgrades.2.1:
+-        ["0xb86357daD9c3567dD70862a5b49fFFaFb0F094Ac"]
++        "0x0524bb8a888d645cfd326c307cf4503d6fa859add7f36433aac7410e1a8727d0"
+      values.$pastUpgrades.1.2:
++        ["0x62D7e87677ac7e3bd02c198e3FABeFFdBc5eB2A3"]
+      values.$pastUpgrades.1.1:
+-        ["0x62D7e87677ac7e3bd02c198e3FABeFFdBc5eB2A3"]
++        "0xbacffdae190eb0d874ee203c3b9724675ba2ec9bd3e4718e3f10ddf6a3829750"
+      values.$pastUpgrades.0.2:
++        ["0x46cA157573005281774be9be9a4187cce4ec1871"]
+      values.$pastUpgrades.0.1:
+-        ["0x46cA157573005281774be9be9a4187cce4ec1871"]
++        "0x424a5ef265f26225861f6abb808c5663ee9f161d135511324c59975917f2fd97"
+    }
+```
+
+```diff
+    contract MintableERC1155Predicate (0x2d641867411650cd05dB93B59964536b1ED5b1B7) {
+    +++ description: None
+      values.$pastUpgrades.5.2:
++        ["0xFD47E7d657b07B071C3362bBCe908a70895EE747"]
+      values.$pastUpgrades.5.1:
+-        ["0xFD47E7d657b07B071C3362bBCe908a70895EE747"]
++        "0xf81d8f7db4694015fc14426465cc2936dc03e3a07da3a879dcea009ef2cf384a"
+      values.$pastUpgrades.4.2:
++        ["0x985Dbac75cf625dD6baB03Da784CF0D51B4bEcef"]
+      values.$pastUpgrades.4.1:
+-        ["0x985Dbac75cf625dD6baB03Da784CF0D51B4bEcef"]
++        "0x0524bb8a888d645cfd326c307cf4503d6fa859add7f36433aac7410e1a8727d0"
+      values.$pastUpgrades.3.2:
++        ["0xDb161A896Be50a020B636D6B60DA7c59817412a5"]
+      values.$pastUpgrades.3.1:
+-        ["0xDb161A896Be50a020B636D6B60DA7c59817412a5"]
++        "0xf4a819f461ffc47417d7518d9a1a5c669bf2ea4eb8b6b0d2ffd14b7a35098671"
+      values.$pastUpgrades.2.2:
++        ["0x4c2aA63BF1d867fbAD14f1d505481c16e4862201"]
+      values.$pastUpgrades.2.1:
+-        ["0x4c2aA63BF1d867fbAD14f1d505481c16e4862201"]
++        "0x8e3021aef9032d2bf227d7b767d066ba56b38426551091a8367249b152e548d0"
+      values.$pastUpgrades.1.2:
++        ["0x62414D03084EeB269E18C970a21f45D2967F0170"]
+      values.$pastUpgrades.1.1:
+-        ["0x62414D03084EeB269E18C970a21f45D2967F0170"]
++        "0x1c0ec24ac7547012063a49ad15a5c06fc66e57c43620cefa10c1627ebcaa60b5"
+      values.$pastUpgrades.0.2:
++        ["0xbf3d5d13b3Cb79A6173394046973C34A60Ac8A41"]
+      values.$pastUpgrades.0.1:
+-        ["0xbf3d5d13b3Cb79A6173394046973C34A60Ac8A41"]
++        "0x9f3a72e8679d06a77159d7689969c418b94569774d1d6ba1774f496ca2b15535"
+    }
+```
+
+```diff
+    contract ERC20Predicate (0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf) {
+    +++ description: None
+      values.$pastUpgrades.3.2:
++        ["0xB1fd4ae726c64A793588001EB465c46BD1BdF1cB"]
+      values.$pastUpgrades.3.1:
+-        ["0xB1fd4ae726c64A793588001EB465c46BD1BdF1cB"]
++        "0xf81d8f7db4694015fc14426465cc2936dc03e3a07da3a879dcea009ef2cf384a"
+      values.$pastUpgrades.2.2:
++        ["0xb774EBbeF817390483FEA5bEd0F0cB0EDEBE4065"]
+      values.$pastUpgrades.2.1:
+-        ["0xb774EBbeF817390483FEA5bEd0F0cB0EDEBE4065"]
++        "0x0524bb8a888d645cfd326c307cf4503d6fa859add7f36433aac7410e1a8727d0"
+      values.$pastUpgrades.1.2:
++        ["0x608669d4914Eec1E20408Bc4c9eFFf27BB8cBdE5"]
+      values.$pastUpgrades.1.1:
+-        ["0x608669d4914Eec1E20408Bc4c9eFFf27BB8cBdE5"]
++        "0xbacffdae190eb0d874ee203c3b9724675ba2ec9bd3e4718e3f10ddf6a3829750"
+      values.$pastUpgrades.0.2:
++        ["0xC760DefB87E5194E62b282c2a76CBCe4766d7345"]
+      values.$pastUpgrades.0.1:
+-        ["0xC760DefB87E5194E62b282c2a76CBCe4766d7345"]
++        "0xd7497c770cd4812ca146b91a14ba1bac4198ff8dc7b9e5c3444906d297f275a1"
+    }
+```
+
+```diff
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.$pastUpgrades.7.2:
++        ["0x97a3500083348A147F419b8a65717909762c389f"]
+      values.$pastUpgrades.7.1:
+-        ["0x97a3500083348A147F419b8a65717909762c389f"]
++        "0x74d19c35b5b4e6be7946db761b9365e3feb2c1914ae281ac7f6943c4d36e4bd5"
+      values.$pastUpgrades.6.2:
++        ["0xbA9Ac3C9983a3e967f0f387c75cCbD38Ad484963"]
+      values.$pastUpgrades.6.1:
+-        ["0xbA9Ac3C9983a3e967f0f387c75cCbD38Ad484963"]
++        "0xa60b52f74a37a43795e7e04abb7de4059e5f32e54e80d197128d0b3de5cd46b9"
+      values.$pastUpgrades.5.2:
++        ["0x644A0A4a4a9892f57Af7dFF1Db23cE2A235A255e"]
+      values.$pastUpgrades.5.1:
+-        ["0x644A0A4a4a9892f57Af7dFF1Db23cE2A235A255e"]
++        "0xed78a9b4198f37563e5ba20f2596eb04400dca7ec921b8de3cfa014cead6629f"
+      values.$pastUpgrades.4.2:
++        ["0xd6F5c46d4E1a02f9D145cEe41d2F8AF30D8d2d76"]
+      values.$pastUpgrades.4.1:
+-        ["0xd6F5c46d4E1a02f9D145cEe41d2F8AF30D8d2d76"]
++        "0xa939d22dafe9a2c271fc4a1cee1dadd3a79f5694b4ab9cf5341a8de0bc7b8373"
+      values.$pastUpgrades.3.2:
++        ["0xd8EeB76bf9FEc7Efe3772383d5f38fd02243E56C"]
+      values.$pastUpgrades.3.1:
+-        ["0xd8EeB76bf9FEc7Efe3772383d5f38fd02243E56C"]
++        "0xaf367e1e4e24042e20ce96416275d4224cdc5d92a2c9b56a61ac812f4213c3ab"
+      values.$pastUpgrades.2.2:
++        ["0xB955EE20A7F1D6F9bD68805e6EefE2cBc5d8220D"]
+      values.$pastUpgrades.2.1:
+-        ["0xB955EE20A7F1D6F9bD68805e6EefE2cBc5d8220D"]
++        "0x8f97d868f67d22169634a7033183b2cdaef15be181748a4e9d5e5a822b94384d"
+      values.$pastUpgrades.1.2:
++        ["0xf58Ec2F599EC32f2aE104984F41C1fB1377ECEBa"]
+      values.$pastUpgrades.1.1:
+-        ["0xf58Ec2F599EC32f2aE104984F41C1fB1377ECEBa"]
++        "0xa7c483e80f2b9cf86703aca7d2b6ee8251b10f7ecc271f954bb05d89abef0a1d"
+      values.$pastUpgrades.0.2:
++        ["0x9a6bC66Ce2E008D59654bc0053Ce2d01f09C8B90"]
+      values.$pastUpgrades.0.1:
+-        ["0x9a6bC66Ce2E008D59654bc0053Ce2d01f09C8B90"]
++        "0x8ea380d0c2c5c3ae9758aa459f6420eeb02aa25f38a5e1c4c471574780119f31"
+    }
+```
+
+```diff
+    contract EventsHub (0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x0672777617CAA1E778083a4f74eBC997262C9EdD"]
+      values.$pastUpgrades.1.1:
+-        ["0x0672777617CAA1E778083a4f74eBC997262C9EdD"]
++        "0x56107de4b0cfb9f1e22a05f4f4e3b6b18331288256f68001c2a90f0c4a43ce5f"
+      values.$pastUpgrades.0.2:
++        ["0x762540dB57aBdB6d32E5B5b8856986C0418A3b82"]
+      values.$pastUpgrades.0.1:
+-        ["0x762540dB57aBdB6d32E5B5b8856986C0418A3b82"]
++        "0xa059a7a9e6d3a970d4c560decf0a819ffb712d5b0042f65a4a1d7fa288bc2aea"
+    }
+```
+
+```diff
+    contract EtherPredicate (0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30) {
+    +++ description: None
+      values.$pastUpgrades.4.2:
++        ["0xeB185ED8f664D105903EF434E5becd214a8AC874"]
+      values.$pastUpgrades.4.1:
+-        ["0xeB185ED8f664D105903EF434E5becd214a8AC874"]
++        "0xf81d8f7db4694015fc14426465cc2936dc03e3a07da3a879dcea009ef2cf384a"
+      values.$pastUpgrades.3.2:
++        ["0x3129B90fB7bF58A0B36226f2e6547B89C0BbdE42"]
+      values.$pastUpgrades.3.1:
+-        ["0x3129B90fB7bF58A0B36226f2e6547B89C0BbdE42"]
++        "0x0524bb8a888d645cfd326c307cf4503d6fa859add7f36433aac7410e1a8727d0"
+      values.$pastUpgrades.2.2:
++        ["0x54006763154c764da4AF42a8c3cfc25Ea29765D5"]
+      values.$pastUpgrades.2.1:
+-        ["0x54006763154c764da4AF42a8c3cfc25Ea29765D5"]
++        "0x8e3021aef9032d2bf227d7b767d066ba56b38426551091a8367249b152e548d0"
+      values.$pastUpgrades.1.2:
++        ["0x499a865ac595e6167482d2bd5A224876baB85ab4"]
+      values.$pastUpgrades.1.1:
+-        ["0x499a865ac595e6167482d2bd5A224876baB85ab4"]
++        "0xbacffdae190eb0d874ee203c3b9724675ba2ec9bd3e4718e3f10ddf6a3829750"
+      values.$pastUpgrades.0.2:
++        ["0xb6a508B418d49080Ce4AE4F140e585A0f95C1326"]
+      values.$pastUpgrades.0.1:
+-        ["0xb6a508B418d49080Ce4AE4F140e585A0f95C1326"]
++        "0x9c64c32cd9c5ce9902b43fda233d5a9aa7a40659521c2a2e440831269b65758c"
+    }
+```
+
+```diff
+    contract MintableERC721Predicate (0x932532aA4c0174b8453839A6E44eE09Cc615F2b7) {
+    +++ description: None
+      values.$pastUpgrades.7.2:
++        ["0xba31389292f7EdfC7b60B937b97014b4C354689b"]
+      values.$pastUpgrades.7.1:
+-        ["0xba31389292f7EdfC7b60B937b97014b4C354689b"]
++        "0xf81d8f7db4694015fc14426465cc2936dc03e3a07da3a879dcea009ef2cf384a"
+      values.$pastUpgrades.6.2:
++        ["0x34AF15A166def1d89D38a70120Ea33CD8cc10C45"]
+      values.$pastUpgrades.6.1:
+-        ["0x34AF15A166def1d89D38a70120Ea33CD8cc10C45"]
++        "0x0524bb8a888d645cfd326c307cf4503d6fa859add7f36433aac7410e1a8727d0"
+      values.$pastUpgrades.5.2:
++        ["0x7FBd00c577cAA70318BCF1c6c11e23732823b387"]
+      values.$pastUpgrades.5.1:
+-        ["0x7FBd00c577cAA70318BCF1c6c11e23732823b387"]
++        "0x22aa641fbd0fc20230781b518e1fe62be838bbc986a871b24c2c0a3927d0663f"
+      values.$pastUpgrades.4.2:
++        ["0x58aDFa7960bf7Cf39965B46D796Fe66CD8f38283"]
+      values.$pastUpgrades.4.1:
+-        ["0x58aDFa7960bf7Cf39965B46D796Fe66CD8f38283"]
++        "0xc4e0c5300312a42a502b986a5fd38356e94ef487efde8a15ec2a7009dae3e11e"
+      values.$pastUpgrades.3.2:
++        ["0x71A1666727Ea5A9B32C23cB09ABa29954e7a4a78"]
+      values.$pastUpgrades.3.1:
+-        ["0x71A1666727Ea5A9B32C23cB09ABa29954e7a4a78"]
++        "0x3de47d3d49b1b06f2d2619fa3668781a1bea74ba06f30cf9c747a728510eea6a"
+      values.$pastUpgrades.2.2:
++        ["0xa0451a72f243A5173ea604B43B5F61EE76376551"]
+      values.$pastUpgrades.2.1:
+-        ["0xa0451a72f243A5173ea604B43B5F61EE76376551"]
++        "0x47d11331b2586042cab56fe36a6e49ef431e0f90a5f4f5ac446ce18ed8f328dc"
+      values.$pastUpgrades.1.2:
++        ["0x9b02a268fBb66Eb24AC9557DAEbA7aa6f04A89c2"]
+      values.$pastUpgrades.1.1:
+-        ["0x9b02a268fBb66Eb24AC9557DAEbA7aa6f04A89c2"]
++        "0xbacffdae190eb0d874ee203c3b9724675ba2ec9bd3e4718e3f10ddf6a3829750"
+      values.$pastUpgrades.0.2:
++        ["0x3Bf44AD2e36f39572175C72C1D0Fa85933c6E0b6"]
+      values.$pastUpgrades.0.1:
+-        ["0x3Bf44AD2e36f39572175C72C1D0Fa85933c6E0b6"]
++        "0xa2fda0fb21389302bd7944ebd376a6cf44f6d206a19ffae4354c025363a290a0"
+    }
+```
+
+```diff
+    contract MintableERC20Predicate (0x9923263fA127b3d1484cFD649df8f1831c2A74e4) {
+    +++ description: None
+      values.$pastUpgrades.3.2:
++        ["0x94D40724d6aA4AB313065006E4bA8CA448dcDfae"]
+      values.$pastUpgrades.3.1:
+-        ["0x94D40724d6aA4AB313065006E4bA8CA448dcDfae"]
++        "0xf81d8f7db4694015fc14426465cc2936dc03e3a07da3a879dcea009ef2cf384a"
+      values.$pastUpgrades.2.2:
++        ["0xab00328234bC22430c78847094A68a6836574fFB"]
+      values.$pastUpgrades.2.1:
+-        ["0xab00328234bC22430c78847094A68a6836574fFB"]
++        "0x0524bb8a888d645cfd326c307cf4503d6fa859add7f36433aac7410e1a8727d0"
+      values.$pastUpgrades.1.2:
++        ["0x0f92D459B20D21F6bf9E02056EA9165d3f78bA62"]
+      values.$pastUpgrades.1.1:
+-        ["0x0f92D459B20D21F6bf9E02056EA9165d3f78bA62"]
++        "0x8e3021aef9032d2bf227d7b767d066ba56b38426551091a8367249b152e548d0"
+      values.$pastUpgrades.0.2:
++        ["0xFdc26CDA2d2440d0E83CD1DeE8E8bE48405806DC"]
+      values.$pastUpgrades.0.1:
+-        ["0xFdc26CDA2d2440d0E83CD1DeE8E8bE48405806DC"]
++        "0x7e108d7b6c1a76278a8270dceaeff6ac65029a12cef33d12b6b83c848f5a8609"
+    }
+```
+
+```diff
+    contract RootChainManager (0xA0c68C638235ee32657e8f720a23ceC1bFc77C77) {
+    +++ description: None
+      values.$pastUpgrades.10.2:
++        ["0x8F372f5404514cec63A3F88BAac772Cc620F2281"]
+      values.$pastUpgrades.10.1:
+-        ["0x8F372f5404514cec63A3F88BAac772Cc620F2281"]
++        "0xf81d8f7db4694015fc14426465cc2936dc03e3a07da3a879dcea009ef2cf384a"
+      values.$pastUpgrades.9.2:
++        ["0x1633012a2cB27eFBC2944f2E43b9197Bc3964359"]
+      values.$pastUpgrades.9.1:
+-        ["0x1633012a2cB27eFBC2944f2E43b9197Bc3964359"]
++        "0x0524bb8a888d645cfd326c307cf4503d6fa859add7f36433aac7410e1a8727d0"
+      values.$pastUpgrades.8.2:
++        ["0x37D26DC2890b35924b40574BAc10552794771997"]
+      values.$pastUpgrades.8.1:
+-        ["0x37D26DC2890b35924b40574BAc10552794771997"]
++        "0x537afb3b705a7458e31ea0b4ec7e317dbad36645460676ff6171fac0516093a0"
+      values.$pastUpgrades.7.2:
++        ["0x6aBB753C1893194DE4a83c6e8B4EadFc105Fd5f5"]
+      values.$pastUpgrades.7.1:
+-        ["0x6aBB753C1893194DE4a83c6e8B4EadFc105Fd5f5"]
++        "0x8e3021aef9032d2bf227d7b767d066ba56b38426551091a8367249b152e548d0"
+      values.$pastUpgrades.6.2:
++        ["0x6866FE89723713282BF6aB2fb8f03b0ee1833ABE"]
+      values.$pastUpgrades.6.1:
+-        ["0x6866FE89723713282BF6aB2fb8f03b0ee1833ABE"]
++        "0x8e3021aef9032d2bf227d7b767d066ba56b38426551091a8367249b152e548d0"
+      values.$pastUpgrades.5.2:
++        ["0x7CfA0f105a4922E89666D7D63689d9C9b1eA7a19"]
+      values.$pastUpgrades.5.1:
+-        ["0x7CfA0f105a4922E89666D7D63689d9C9b1eA7a19"]
++        "0x481ab61601843d6186c15a98f078ab273cf654b476e62a96d25fbe5ab3fcdf08"
+      values.$pastUpgrades.4.2:
++        ["0x296AC8fb39279BbcFF6eDc9FddF1d2f4aEa1631b"]
+      values.$pastUpgrades.4.1:
+-        ["0x296AC8fb39279BbcFF6eDc9FddF1d2f4aEa1631b"]
++        "0x54f5399ff524598d12940be626bbfe5a407f288981f2ed7912f42a51da160516"
+      values.$pastUpgrades.3.2:
++        ["0xEcFdefe1D67f93d3C154B67FD9d4ba62aB820DeA"]
+      values.$pastUpgrades.3.1:
+-        ["0xEcFdefe1D67f93d3C154B67FD9d4ba62aB820DeA"]
++        "0x8d16d130b5625edf8f807ce8c02303fa7a09154c4127e38b5c7e612658e67272"
+      values.$pastUpgrades.2.2:
++        ["0x4015ccad9218b109d3339B356392C6EE8438e5d0"]
+      values.$pastUpgrades.2.1:
+-        ["0x4015ccad9218b109d3339B356392C6EE8438e5d0"]
++        "0x818eaf233a292714599882e5de3d254de791a15c5d5d2033d6f61e5ba1f76e18"
+      values.$pastUpgrades.1.2:
++        ["0x0BfF34272aF650632236703a3D6d8e3c133421Cb"]
+      values.$pastUpgrades.1.1:
+-        ["0x0BfF34272aF650632236703a3D6d8e3c133421Cb"]
++        "0xbacffdae190eb0d874ee203c3b9724675ba2ec9bd3e4718e3f10ddf6a3829750"
+      values.$pastUpgrades.0.2:
++        ["0xD4888faB8bd39A663B63161F5eE1Eae31a25B653"]
+      values.$pastUpgrades.0.1:
+-        ["0xD4888faB8bd39A663B63161F5eE1Eae31a25B653"]
++        "0x1457a23862a321795074e16b0e48a9a9d90bcdd480c35061a20b8ad977e55617"
+    }
+```
+
+```diff
+    contract ChainExitERC1155Predicate (0xDB2382413bCb9c2F1B6b62B52238558266361D68) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xf17461C73d32f7545ADfdd478a6eC5a382F5A58f"]
+      values.$pastUpgrades.0.1:
+-        ["0xf17461C73d32f7545ADfdd478a6eC5a382F5A58f"]
++        "0xa96acd8eab1fb85f8bd428f313baa2f35806157a6fe4629440ccee84c8089a98"
+    }
+```
+
+```diff
+    contract ERC721Predicate (0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD) {
+    +++ description: None
+      values.$pastUpgrades.6.2:
++        ["0x02Bc987f54B54bf18Ca6E20a13e57508ec561072"]
+      values.$pastUpgrades.6.1:
+-        ["0x02Bc987f54B54bf18Ca6E20a13e57508ec561072"]
++        "0xf81d8f7db4694015fc14426465cc2936dc03e3a07da3a879dcea009ef2cf384a"
+      values.$pastUpgrades.5.2:
++        ["0x9F5B43C0d6d57a76E5B24CE05E11b70C3C7eA8Ec"]
+      values.$pastUpgrades.5.1:
+-        ["0x9F5B43C0d6d57a76E5B24CE05E11b70C3C7eA8Ec"]
++        "0x0524bb8a888d645cfd326c307cf4503d6fa859add7f36433aac7410e1a8727d0"
+      values.$pastUpgrades.4.2:
++        ["0xd515C8fF03eC79e7d5B3410c036f738e7f396C90"]
+      values.$pastUpgrades.4.1:
+-        ["0xd515C8fF03eC79e7d5B3410c036f738e7f396C90"]
++        "0x79038ddbcd8e8bf815e8b8b924661952838ebc2a58707cd6867a18e7b1481b7f"
+      values.$pastUpgrades.3.2:
++        ["0xB272B6D99858B0EfB079946942006727fe105201"]
+      values.$pastUpgrades.3.1:
+-        ["0xB272B6D99858B0EfB079946942006727fe105201"]
++        "0xc4e0c5300312a42a502b986a5fd38356e94ef487efde8a15ec2a7009dae3e11e"
+      values.$pastUpgrades.2.2:
++        ["0x637315199D6dcB7190BbfAcFB1E1cCe7f9632714"]
+      values.$pastUpgrades.2.1:
+-        ["0x637315199D6dcB7190BbfAcFB1E1cCe7f9632714"]
++        "0x3de47d3d49b1b06f2d2619fa3668781a1bea74ba06f30cf9c747a728510eea6a"
+      values.$pastUpgrades.1.2:
++        ["0xf3f08b74B63d0C008Cea903ee59b346bF1d5e4Cd"]
+      values.$pastUpgrades.1.1:
+-        ["0xf3f08b74B63d0C008Cea903ee59b346bF1d5e4Cd"]
++        "0xbacffdae190eb0d874ee203c3b9724675ba2ec9bd3e4718e3f10ddf6a3829750"
+      values.$pastUpgrades.0.2:
++        ["0x9aaae29879c95eD732babaBEa4cAe20A6D931DbB"]
+      values.$pastUpgrades.0.1:
+-        ["0x9aaae29879c95eD732babaBEa4cAe20A6D931DbB"]
++        "0xba65388f71f83d9630a8d9c213fc40068a246f48cbfc4f2ded6b1088ba64cd11"
+    }
+```
+
+Generated with discovered.json: 0xcb681ca4317de943ca4f068767a49e573b4b070d
+
+# Diff at Sat, 19 Oct 2024 06:33:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@493c96785a6a32c6417182bb9548d3a990297dbe block: 20862639
+- current block number: 20997846
+
+## Description
+
+CHECKPOINT_REWARD (the base from which PoS validator reward is calculated) decreased by 25%.
+
+## Watched changes
+
+```diff
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.CHECKPOINT_REWARD:
+-        "71795000000000000000000"
++        "53870967741900000000000"
+    }
+```
+
+Generated with discovered.json: 0xd2ee1543eab281682ade13334c5bb0f3a6773e32
 
 # Diff at Mon, 14 Oct 2024 10:54:21 GMT:
 

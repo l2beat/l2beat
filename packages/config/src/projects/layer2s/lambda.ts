@@ -7,7 +7,9 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('lambda')
 
 export const lambda: Layer2 = opStackL2({
+  createdAt: new UnixTime(1718703383), // 2024-06-18T09:36:23Z
   discovery,
+  additionalPurposes: ['Storage'],
   display: {
     name: 'Lambda Chain',
     slug: 'lambda',
@@ -15,7 +17,6 @@ export const lambda: Layer2 = opStackL2({
       'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     description:
       'Lambda Chain is an OP Stack Rollup on Ethereum, focusing on long-term data storage and -availability.',
-    purposes: ['Universal', 'Storage'],
     links: {
       websites: ['https://lambda.im/'],
       apps: ['https://portal.lambda.im/bridge/'],

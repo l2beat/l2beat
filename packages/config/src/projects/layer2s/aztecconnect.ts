@@ -19,13 +19,14 @@ export const aztecconnect: Layer2 = {
   isArchived: true,
   type: 'layer2',
   id: ProjectId('aztecconnect'),
+  createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   display: {
     name: 'Zk.Money v2 (Aztec Connect)',
     slug: 'aztecconnect',
     warning: `EOL: Aztec team shut down their offchain rollup infrastructure on March 31st, 2024. Onchain deposits are disabled and ownership of the rollup contract is irrevocably renounced. Assets in the escrow can be manually withdrawn with the [Aztec Connect Ejector](https://github.com/AztecProtocol/aztec-connect-ejector).`,
     description:
       'Aztec Connect is an open source layer 2 network that aims to enable affordable, private crypto payments via zero-knowledge proofs.',
-    purposes: ['DeFi'],
+    purposes: ['Payments'],
     category: 'ZK Rollup',
     links: {
       websites: ['https://aztec.network/'],

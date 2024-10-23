@@ -10,9 +10,7 @@
       "sourceHashes": [
         "0x221889e435e2f64e82619837d394394a6179db1932bfbbdedc0782fe358dffda"
       ],
-      "descriptions": [
-        "Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs."
-      ],
+      "description": "Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs.",
       "sinceTimestamp": 1634543659,
       "values": {
         "$immutable": true,
@@ -88,9 +86,7 @@
       "sourceHashes": [
         "0x59a4969b8c2f837444e679b13cbaec4730cc5ffe789f3e3e7b038b7e8d4a79d5"
       ],
-      "descriptions": [
-        "Used to proxy requests from LockProxy to EthCrossChainManager and to pause/unpause it."
-      ],
+      "description": "Used to proxy requests from LockProxy to EthCrossChainManager and to pause/unpause it.",
       "sinceTimestamp": 1597302116,
       "values": {
         "$immutable": true,
@@ -169,9 +165,7 @@
       "sourceHashes": [
         "0xd8a7f029fa8e1dabfbc9c64632f1959334147be1d784e585f99ad1e307ba11f7"
       ],
-      "descriptions": [
-        "Used to store Keepers’ signatures and other parameters used by EthCrossChainManager."
-      ],
+      "description": "Used to store Keepers’ signatures and other parameters used by EthCrossChainManager.",
       "ignoreInWatchMode": ["getEthTxHashIndex", "EthToPolyTxHashIndex"],
       "sinceTimestamp": 1597287911,
       "values": {

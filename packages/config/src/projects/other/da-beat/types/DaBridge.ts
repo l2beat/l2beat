@@ -1,12 +1,14 @@
-import { ChainId } from '@l2beat/shared-pure'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import {
   ScalingProjectContracts,
   ScalingProjectPermission,
+  ScalingProjectTechnologyChoice,
 } from '../../../../common'
-import { DaAccessibilityRisk } from './DaAccessibilityRisk'
-import { DaAttestationSecurityRisk } from './DaAttestationSecurityRisk'
-import { DaExitWindowRisk } from './DaExitWindowRisk'
+import { DaCommitteeSecurityRisk } from './DaCommitteeSecurityRisk'
 import { DaLinks } from './DaLinks'
+import { DaRelayerFailureRisk } from './DaRelayerFailureRisk'
+import { DaTechnology } from './DaTechnology'
+import { DaUpgradeabilityRisk } from './DaUpgradeabilityRisk'
 import { DacTransactionDataType } from './DacTransactionDataType'
 import { UsedInProject } from './UsedInProject'
 
@@ -30,6 +32,8 @@ export type OnChainDaBridge = CommonDaBridge & {
   chain: string
   /** Data about related permissions - preferably from discovery. */
   permissions: ScalingProjectPermission[]
+  /** Data about related permissions on chains other than Ethereum - preferably from discovery. */
+  nativePermissions?: Record<string, ScalingProjectPermission[]> | 'UnderReview'
   /** Data about the validation type of the bridge */
   validation: {
     type: string
@@ -42,19 +46,14 @@ export type DacBridge = CommonDaBridge & {
   type: 'DAC'
   /** The chain the DAC attests data on. */
   chain: ChainId
-  /** Total number of members in the DAC. */
-  totalMembers: number
+  /**  Total members count.  */
+  membersCount: number
+  /** Data about the DAC members. */
+  knownMembers?: { external: boolean; name: string; href: string }[]
   /** Minimum number of members required to sign and attest the data. */
   requiredMembers: number
   /** The type of data. */
   transactionDataType: DacTransactionDataType
-  /** Data about the DAC members. */
-  members:
-    | {
-        type: 'public'
-        list: { name: string; href: string }[]
-      }
-    | { type: 'unknown' }
   /** Data about related permissions - preferably from discovery. */
   permissions: ScalingProjectPermission[]
   /** Data about the contracts used in the bridge - preferably from discovery. */
@@ -64,15 +63,19 @@ export type DacBridge = CommonDaBridge & {
 type CommonDaBridge = {
   /** Unique identifier of the data availability bridge. */
   id: string
+  /** Date of creation of the file (not the project) */
+  createdAt: UnixTime
   display: DaBridgeDisplay
   /** Is the DA bridge under review? */
   isUnderReview?: boolean
-  /** The technology used by the data availability bridge. [MARKDOWN] */
-  technology: string
+  /** Description of technology used by the data availability bridge. */
+  technology: DaTechnology
   /** List of projects given bridge is being used in. */
   usedIn: UsedInProject[]
   /** Risks related to given data availability bridge. */
   risks: DaBridgeRisks
+  /** Other considerations */
+  otherConsiderations?: ScalingProjectTechnologyChoice[]
 }
 
 interface DaBridgeDisplay {
@@ -92,9 +95,9 @@ interface DaBridgeDisplay {
 
 export type DaBridgeRisks = {
   /** Attestation - TBD. */
-  attestations: DaAttestationSecurityRisk
-  /** Exit window - TBD. @unit seconds. */
-  exitWindow: DaExitWindowRisk
-  /** Accessibility - TBD. */
-  accessibility: DaAccessibilityRisk
+  committeeSecurity: DaCommitteeSecurityRisk
+  /** Upgradeability - TBD. @unit seconds. */
+  upgradeability: DaUpgradeabilityRisk
+  /** Relayer failure - TBD. */
+  relayerFailure: DaRelayerFailureRisk
 }

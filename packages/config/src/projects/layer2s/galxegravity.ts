@@ -8,6 +8,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('galxegravity', 'ethereum')
 
 export const galxegravity: Layer2 = orbitStackL2({
+  createdAt: new UnixTime(1719415787), // 2024-06-26T15:29:47Z
   discovery,
   badges: [Badge.DA.DAC, Badge.RaaS.Conduit],
   associatedTokens: ['G'],
@@ -17,7 +18,6 @@ export const galxegravity: Layer2 = orbitStackL2({
     slug: 'galxegravity',
     description:
       'Gravity is an Optimium built on the Orbit stack. It features onchain questing and has its own gas token - G. Other Galxe products are aiming to integrate with the L2 and a future migration to an L1 of the same name is planned.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://gravity.xyz'],
       apps: ['https://bridge.gravity.xyz/'],

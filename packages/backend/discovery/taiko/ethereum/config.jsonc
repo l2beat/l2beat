@@ -478,7 +478,7 @@
       }
     },
     "SgxVerifier": {
-      "ignoreInWatchMode": ["instances", "nextInstanceId"],
+      "ignoreInWatchMode": ["nextInstanceId"],
       "description": "Verifier contract for SGX proven blocks.",
       "fields": {
         "proxiableUUID": {
@@ -488,17 +488,9 @@
             "args": [],
             "expectRevert": true
           }
-        },
-        "instances": {
-          "handler": {
-            "type": "array",
-            "method": "instances",
-            "length": "{{ nextInstanceId }}",
-            "pickFields": ["addr"]
-          }
         }
       },
-      "ignoreMethods": ["getPastTotalSupply"]
+      "ignoreMethods": ["getPastTotalSupply", "instances"]
     },
     "GuardianMinorityProver": {
       "description": "Verifier contract for blocks proven by Guardian minority.",

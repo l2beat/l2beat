@@ -28,6 +28,7 @@ const upgradeDelayString = formatSeconds(
 )
 
 export const polygonzkevm: Layer2 = polygonCDKStack({
+  createdAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
   rollupModuleContract: discovery.getContract('PolygonZkEVMEtrog'),
   rollupVerifierContract: discovery.getContract('PolygonzkEVMVerifier'),
   display: {
@@ -36,7 +37,6 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
     warning: 'The forced transaction mechanism is currently disabled.',
     description:
       'Polygon zkEVM is a EVM-compatible ZK Rollup built by Polygon Labs.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://polygon.technology/polygon-zkevm'],
       apps: ['https://bridge.zkevm-rpc.com'],

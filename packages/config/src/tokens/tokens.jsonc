@@ -1,6 +1,14 @@
 {
   "ethereum": [
     {
+      "symbol": "SolvBTC",
+      "address": "0x7a56e1c57c7475ccf742a1832b028f0456652f97"
+    },
+    {
+      "symbol": "SolvBTC.BBN",
+      "address": "0xd9D920AA40f578ab794426F5C90F6C731D159DEf"
+    },
+    {
       "symbol": "TRESTLE",
       "address": "0xde8cd13b812bcd82218754a740b27e76ec1e86ad"
     },
@@ -216,6 +224,11 @@
       "address": "0xF17e65822b568B3903685a7c9F496CF7656Cc6C2"
     },
     {
+      "symbol": "BNRY",
+      "address": "0x04E9D7e336f79Cdab911b06133D3Ca2Cd0721ce3",
+      "coingeckoId": "binary-holdings"
+    },
+    {
       "symbol": "BIT",
       "address": "0x1A4b46696b2bB4794Eb3D4c26f1c55F9170fa4C5"
     },
@@ -255,7 +268,6 @@
     },
     {
       "symbol": "cbBTC",
-      "category": "ether",
       "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
     },
     {
@@ -494,6 +506,12 @@
       "coingeckoId": "renzo-restaked-eth"
     },
     {
+      "symbol": "pzETH",
+      "category": "ether",
+      "address": "0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811",
+      "coingeckoId": "renzo-restaked-lst"
+    },
+    {
       "symbol": "FEG",
       "address": "0x389999216860AB8E0175387A0c90E5c52522C945"
     },
@@ -600,7 +618,8 @@
     },
     {
       "symbol": "GPT",
-      "address": "0xCdb4A8742ed7D0259b51E3454C46C9D6C48d5e88"
+      "address": "0xCdb4A8742ed7D0259b51E3454C46C9D6C48d5e88",
+      "deploymentTimestamp": 1716807971
     },
     {
       "symbol": "GRT",
@@ -784,7 +803,24 @@
       "address": "0x333000333b26eE30214B4af6419D9ab07a450400"
     },
     {
-      "symbol": "mETH",
+      "symbol": "mETH", // manta eth, needed for fuel tvl (OFT)
+      "category": "ether",
+      "coingeckoId": "manta-meth",
+      "address": "0x8CdF550C04Bc9B9F10938368349C9c8051A772b6"
+    },
+    {
+      "symbol": "mBTC", // manta btc, needed for fuel tvl (OFT)
+      "coingeckoId": "manta-mbtc",
+      "address": "0x4041381e947CFD3D483d67a25C6aa9Dc924250c5"
+    },
+    {
+      "symbol": "mUSD", // manta btc, needed for fuel tvl (OFT)
+      "coingeckoId": "manta-musd",
+      "category": "stablecoin",
+      "address": "0x3f24E1d7a973867fC2A03fE199E5502514E0e11E"
+    },
+    {
+      "symbol": "mETH", // mantle
       "category": "ether",
       "address": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa"
     },
@@ -1454,10 +1490,6 @@
       "coingeckoId": "zkspace"
     },
     {
-      "symbol": "ZMT",
-      "address": "0xaa602dE53347579f86b996D2Add74bb6F79462b2"
-    },
-    {
       "symbol": "zunETH",
       "category": "ether",
       "address": "0xc2e660C62F72c2ad35AcE6DB78a616215E2F2222"
@@ -1526,6 +1558,31 @@
     }
   ],
   "arbitrum": [
+    {
+      "symbol": "STAR",
+      "address": "0xB299751B088336E165dA313c33e3195B8c6663A6",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "CATCH",
+      "address": "0xbC4c97Fb9befaa8B41448e1dFcC5236dA543217F",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+
+    {
+      "symbol": "NRN",
+      "address": "0xdadeca1167fe47499e53Eb50F261103630974905",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "G3",
+      "address": "0xc24A365A870821EB83Fd216c9596eDD89479d8d7",
+      "source": "native", // native on arb, ITS type 0 on other chains
+      "supply": "circulatingSupply"
+    },
     {
       "symbol": "EGP",
       "address": "0x7E7a7C916c19a45769f6BDAF91087f93c6C12F78",
@@ -2485,6 +2542,13 @@
   ],
   "base": [
     {
+      "symbol": "EURC",
+      "address": "0x60a3E35Cc302bFA44Cb288Bc5a4F316Fdb1adb42",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "symbol": "cbBTC",
       "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
       "source": "native",
@@ -2973,6 +3037,75 @@
   ],
   "linea": [
     {
+      "symbol": "inETH",
+      "address": "0x5A7a183B6B44Dc4EC2E3d2eF43F98C5152b1d76d",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Inception Bridge (xERC-20)"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "M-BTC",
+      "address": "0xe4D584ae9b753e549cAE66200A6475d2f00705f7",
+      "coingeckoId": "merlin-s-seal-btc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "BBTC",
+      "address": "0x93C12084dCFC08c759ad96B94234D9C39705689f",
+      "coingeckoId": "bouncebit-btc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "SolvBTC.m",
+      "address": "0x5FFcE65A40f6d3de5332766ffF6A28BF491C868c",
+      "coingeckoId": "solv-btc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "SolvBTC.b",
+      "address": "0x96155858A02c410c3C814BB32Fdc413b3241b62E",
+      "coingeckoId": "solv-btc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "wBTC",
       "address": "0x3aAB2285ddcDdaD8edf438C1bAB47e1a9D05a9b4",
       "coingeckoId": "wrapped-bitcoin",
@@ -3161,7 +3294,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Free Bridge"
+            "name": "Free.tech Bridge (Meson)"
           }
         ]
       }
@@ -3460,7 +3593,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Free Bridge"
+            "name": "Free.tech Bridge (Meson)"
           }
         ]
       }
@@ -3544,6 +3677,12 @@
   ],
   "scroll": [
     {
+      "symbol": "SCR",
+      "address": "0xd29687c813D741E2F938F4aC377128810E217b1b",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "symbol": "SolvBTC",
       "address": "0x3Ba89d490AB1C0c9CC2313385b30710e838370a4",
       "supply": "totalSupply",
@@ -3551,7 +3690,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Free Bridge"
+            "name": "Free.tech Bridge (Meson)"
           }
         ]
       },
@@ -3996,7 +4135,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Free Bridge"
+            "name": "Free.tech Bridge (Meson)"
           }
         ]
       },
@@ -4010,7 +4149,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Free Bridge"
+            "name": "Free.tech Bridge (Meson)"
           }
         ]
       },

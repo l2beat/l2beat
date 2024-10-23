@@ -1,7 +1,7 @@
 {
   "name": "stargatev2",
   "chain": "ethereum",
-  "blockNumber": 20340229,
+  "blockNumber": 21027597,
   "configHash": "0xcfafca102a8fef0c60f0d35d20956b99c39d79582a1d98d1f869dddfa3a2538e",
   "contracts": [
     {
@@ -38,10 +38,12 @@
         "$pastUpgrades": [
           [
             "2024-01-26T22:27:23.000Z",
+            "0x5df683475486093be4a4f92d6f7c47548d3bf38e1a39e25bf0028353f83d4a2b",
             ["0x1E45F27F0e96e9757cff938F2c9d697AA8279C85"]
           ],
           [
             "2024-07-04T23:54:35.000Z",
+            "0x22c22ee402c4be83ef7c851992c3125008be9ee0a39c0d83cf6be91a0506f7c4",
             ["0xDaC2d26317C42ae3CB21357B73404120E1dA4232"]
           ]
         ],
@@ -55,9 +57,7 @@
       "sourceHashes": [
         "0x399160e7d36a21fca31097d7875daed8f421f788b77f2a71974d51938c3ea520"
       ],
-      "descriptions": [
-        "Its configuration and MessageLib to use is set for each OApp and destination by the OApp owner."
-      ],
+      "description": "Its configuration and MessageLib to use is set for each OApp and destination by the OApp owner.",
       "sinceTimestamp": 1706307671,
       "values": {
         "$immutable": true,
@@ -130,14 +130,14 @@
         "lpToken": "0xD646CD9Dff77097b454a5a148BeaE6615e3bC2e2",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "9136695368539670",
-        "poolBalance": "2866645605000000000000",
+        "plannerFee": "20058453802131951",
+        "poolBalance": "2079496344000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
-        "treasuryFee": 591711,
-        "tvl": "3000998996000000000000"
+        "treasuryFee": 845557,
+        "tvl": "6000203720000000000000"
       }
     },
     {
@@ -197,7 +197,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 777,
+        "nonce": 803,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -256,9 +256,7 @@
       "sourceHashes": [
         "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
       ],
-      "descriptions": [
-        "This is a Layer Zero OApp. It also handles the batching logic: bus, taxi, quotes"
-      ],
+      "description": "This is a Layer Zero OApp. It also handles the batching logic: bus, taxi, quotes",
       "sinceTimestamp": 1716837371,
       "values": {
         "$immutable": true,
@@ -308,23 +306,36 @@
         "lpToken": "0xfcb42A0e352a08AbD50b8EE68d01f581B6Dfd80A",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "512995358770808423",
-        "poolBalance": "5254554561000000000000",
+        "plannerFee": "135552300880623196",
+        "poolBalance": "8290644507000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x0000000000000000000000000000000000000000",
-        "treasuryFee": 1101973,
-        "tvl": "7366316067000000000000"
+        "treasuryFee": 1877576,
+        "tvl": "14251813505000000000000"
       }
     },
     {
       "name": "Stargate Verifier",
       "address": "0x8FafAE7Dd957044088b3d0F67359C327c6200d18",
-      "unverified": true,
+      "sourceHashes": [
+        "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"
+      ],
       "sinceTimestamp": 1716344279,
-      "values": { "$immutable": true },
-      "derivedName": ""
+      "values": {
+        "$immutable": true,
+        "allowlistSize": 0,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultMultiplierBps": 12000,
+        "paused": false,
+        "priceFeed": "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113",
+        "quorum": 1,
+        "signerSize": 1,
+        "vid": 101,
+        "workerFeeLib": "0xd0ab8512CF4907bD94CDb5fE7d0C324E666c4006"
+      },
+      "derivedName": "DVN"
     },
     {
       "name": "StargatePoolMigratable",
@@ -360,15 +371,28 @@
         "lpToken": "0x17BBC9BD51A52aAf4d2CC6652630DaF4fdB358F7",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "94580820775800349",
-        "poolBalance": 19479654144519,
+        "plannerFee": "226253645593603088",
+        "poolBalance": 1519861799859,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "treasuryFee": 5841257738,
-        "tvl": 18535846446499
+        "treasuryFee": 47631027191,
+        "tvl": 13817669527917
       }
+    },
+    {
+      "name": "",
+      "address": "0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5",
+      "unverified": true,
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113"
+        }
+      ],
+      "sinceTimestamp": 1687808651,
+      "values": { "$immutable": true }
     },
     {
       "name": "ProxyAdmin",
@@ -415,9 +439,7 @@
       "sourceHashes": [
         "0x159d8f84a5100285a7401e1ccb3d40a64fe944d9beb951c81749de40279a5876"
       ],
-      "descriptions": [
-        "Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to."
-      ],
+      "description": "Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.",
       "sinceTimestamp": 1706307839,
       "values": {
         "$immutable": true,
@@ -471,14 +493,14 @@
         "lpToken": "0x5DaAee9EF143faFF495B581e9863570e83F99d31",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "84285459057922341",
-        "poolBalance": 26533765144383,
+        "plannerFee": "178594625682294584",
+        "poolBalance": 28084322837586,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "treasuryFee": 4559506675,
-        "tvl": 25330645513194
+        "treasuryFee": 19530074377,
+        "tvl": 17988207141245
       }
     },
     {
@@ -487,9 +509,7 @@
       "sourceHashes": [
         "0x3904c78c7b0abf91f9544ebb9f08f2d2bc83028df65c912a7f7a6ca1ca109dde"
       ],
-      "descriptions": [
-        "Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to."
-      ],
+      "description": "Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.",
       "sinceTimestamp": 1706307863,
       "values": {
         "$immutable": true,
@@ -516,6 +536,42 @@
       "derivedName": "ReceiveUln302"
     },
     {
+      "name": "",
+      "address": "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1687808675,
+      "values": {
+        "$admin": "0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5",
+        "$implementation": "0x319AE539b5BA554b09A46791cdb88b10E4d8F627",
+        "$pastUpgrades": [
+          [
+            "2023-06-26T19:44:35.000Z",
+            "0xd7e8b45283a17ffe10a55914b49e6114acd56dedba1a154159a9b71e9f9205df",
+            ["0xF641db6860FD5f6643D05bD75405a2586a63a141"]
+          ],
+          [
+            "2024-03-11T19:13:11.000Z",
+            "0xb0be4d7a78cc69d7a3609a84216cbf0bae5b0ade84c45b35c05dafda6c84faec",
+            ["0x13dff8847EA170eBb8439ce732c0A14Bb49fDd92"]
+          ],
+          [
+            "2024-07-04T23:54:11.000Z",
+            "0x35c84fce2bd551b2e80f13f545f49c65ed2a20c3c2d46eecc10c825112a86ccc",
+            ["0x319AE539b5BA554b09A46791cdb88b10E4d8F627"]
+          ]
+        ],
+        "$upgradeCount": 3
+      }
+    },
+    {
       "name": "LayerZero Multisig",
       "address": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
       "template": "GnosisSafe",
@@ -531,7 +587,6 @@
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
           "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
-          "0xe095F2590eF1Ab39601445025847Ed8E4B40D687",
           "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936",
           "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
           "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
@@ -540,8 +595,8 @@
         "domainSeparator": "0x567922b7bf591eff89c84c8a0039bbda9499c5f39de9b1c4dde48a8c912f31b9",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 133,
+        "multisigThreshold": "2 of 4 (50%)",
+        "nonce": 172,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -587,6 +642,13 @@
         "treasuryFee": 5557,
         "tvl": 0
       }
+    },
+    {
+      "name": "",
+      "address": "0xd0ab8512CF4907bD94CDb5fE7d0C324E666c4006",
+      "unverified": true,
+      "sinceTimestamp": 1716344279,
+      "values": { "$immutable": true }
     }
   ],
   "eoas": [
@@ -600,7 +662,6 @@
     { "address": "0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523" },
     { "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327" },
     { "address": "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936" },
-    { "address": "0xe095F2590eF1Ab39601445025847Ed8E4B40D687" },
     { "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5" },
     { "address": "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0" },
     { "address": "0xF05F4211ad15A8e49b49C0436067CFFfEa783aA4" }
@@ -1121,6 +1182,82 @@
       "function withdrawPlannerFee()",
       "function withdrawTreasuryFee(address _to, uint64 _amountSD)"
     ],
+    "0x8FafAE7Dd957044088b3d0F67359C327c6200d18": [
+      "constructor(uint32 _vid, address[] _messageLibs, address _priceFeed, address[] _signers, uint64 _quorum, address[] _admins)",
+      "error DVN_DuplicatedHash(bytes32 executableHash)",
+      "error DVN_InstructionExpired()",
+      "error DVN_InvalidRole(bytes32 role)",
+      "error DVN_InvalidSignatures()",
+      "error DVN_InvalidTarget(address target)",
+      "error DVN_InvalidVid(uint32 vid)",
+      "error DVN_OnlySelf()",
+      "error MultiSig_OnlySigner()",
+      "error MultiSig_QuorumIsZero()",
+      "error MultiSig_SignersSizeIsLessThanQuorum(uint64 signersSize, uint64 quorum)",
+      "error MultiSig_StateAlreadySet(address signer, bool active)",
+      "error MultiSig_UnorderedSigners()",
+      "error Transfer_NativeFailed(address _to, uint256 _value)",
+      "error Transfer_ToAddressIsZero()",
+      "error Worker_NotAllowed()",
+      "error Worker_OnlyMessageLib()",
+      "error Worker_RoleRenouncingDisabled()",
+      "event ExecuteFailed(uint256 _index, bytes _data)",
+      "event HashAlreadyUsed(tuple(uint32 vid, address target, bytes callData, uint256 expiration, bytes signatures) param, bytes32 _hash)",
+      "event Paused(address account)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event SetDefaultMultiplierBps(uint16 multiplierBps)",
+      "event SetDstConfig(tuple(uint32 dstEid, uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD)[] params)",
+      "event SetPriceFeed(address priceFeed)",
+      "event SetSupportedOptionTypes(uint32 dstEid, uint8[] optionTypes)",
+      "event SetWorkerLib(address workerLib)",
+      "event Unpaused(address account)",
+      "event UpdateQuorum(uint64 _quorum)",
+      "event UpdateSigner(address _signer, bool _active)",
+      "event VerifierFeePaid(uint256 fee)",
+      "event VerifySignaturesFailed(uint256 idx)",
+      "event Withdraw(address lib, address to, uint256 amount)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function allowlistSize() view returns (uint64)",
+      "function assignJob(tuple(uint32 dstEid, bytes packetHeader, bytes32 payloadHash, uint64 confirmations, address sender) _param, bytes _options) payable returns (uint256 totalFee)",
+      "function assignJob(uint16 _dstEid, uint16, uint64 _confirmations, address _sender) returns (uint256 totalFee)",
+      "function defaultMultiplierBps() view returns (uint16)",
+      "function dstConfig(uint32 dstEid) view returns (uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD)",
+      "function execute(tuple(uint32 vid, address target, bytes callData, uint256 expiration, bytes signatures)[] _params)",
+      "function getFee(uint32 _dstEid, uint64 _confirmations, address _sender, bytes _options) view returns (uint256 fee)",
+      "function getFee(uint16 _dstEid, uint16, uint64 _confirmations, address _sender) view returns (uint256 fee)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getSupportedOptionTypes(uint32 _eid) view returns (uint8[])",
+      "function grantRole(bytes32 _role, address _account)",
+      "function hasAcl(address _sender) view returns (bool)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hashCallData(uint32 _vid, address _target, bytes _callData, uint256 _expiration) pure returns (bytes32)",
+      "function paused() view returns (bool)",
+      "function priceFeed() view returns (address)",
+      "function quorum() view returns (uint64)",
+      "function quorumChangeAdmin(tuple(uint32 vid, address target, bytes callData, uint256 expiration, bytes signatures) _param)",
+      "function renounceRole(bytes32, address) pure",
+      "function revokeRole(bytes32 _role, address _account)",
+      "function setDefaultMultiplierBps(uint16 _multiplierBps)",
+      "function setDstConfig(tuple(uint32 dstEid, uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD)[] _params)",
+      "function setPaused(bool _paused)",
+      "function setPriceFeed(address _priceFeed)",
+      "function setQuorum(uint64 _quorum)",
+      "function setSigner(address _signer, bool _active)",
+      "function setSupportedOptionTypes(uint32 _eid, uint8[] _optionTypes)",
+      "function setWorkerFeeLib(address _workerFeeLib)",
+      "function signerSize() view returns (uint64)",
+      "function signers(address signer) view returns (bool active)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function usedHashes(bytes32 executableHash) view returns (bool used)",
+      "function verifySignatures(bytes32 _hash, bytes _signatures) view returns (bool, uint8)",
+      "function vid() view returns (uint32)",
+      "function withdrawFee(address _lib, address _to, uint256 _amount)",
+      "function withdrawFeeFromUlnV2(address _lib, address _to, uint256 _amount)",
+      "function withdrawToken(address _token, address _to, uint256 _amount)",
+      "function workerFeeLib() view returns (address)"
+    ],
     "0x933597a323Eb81cAe705C5bC29985172fd5A3973": [
       "constructor(string _lpTokenName, string _lpTokenSymbol, address _token, uint8 _tokenDecimals, uint8 _sharedDecimals, address _endpoint, address _owner)",
       "error InvalidLocalDecimals()",
@@ -1484,6 +1621,16 @@
       "function verify(bytes _packetHeader, bytes32 _payloadHash, uint64 _confirmations)",
       "function version() pure returns (uint64 major, uint8 minor, uint8 endpointVersion)"
     ],
+    "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92": [
       "constructor(address _singleton)"
     ],
@@ -1619,6 +1766,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
   }
 }
