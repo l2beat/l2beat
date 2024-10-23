@@ -70,10 +70,10 @@ const daBridgeColumn = columnHelper.accessor('daBridge', {
   },
 })
 
-const risksColumn = columnHelper.accessor('risks', {
+const risksColumn = columnHelper.display({
   header: 'Risks',
   cell: (ctx) => {
-    const value = ctx.getValue()
+    const value = ctx.row.original.risks
 
     const hasNoBridge =
       ctx.row.original.daBridge !== 'multiple' &&
@@ -114,7 +114,6 @@ const risksColumn = columnHelper.accessor('risks', {
       />
     )
   },
-  enableSorting: false,
   meta: {
     hash: 'risk-analysis',
   },
@@ -160,13 +159,12 @@ const slashableStakeForCustomSystem = columnHelper.accessor(
   },
 )
 
-const usedInColumn = columnHelper.accessor('usedIn', {
+const usedInColumn = columnHelper.display({
   header: 'Used in',
   cell: (ctx) => {
-    const value = ctx.getValue()
+    const value = ctx.row.original.usedIn
     return value.length > 0 ? <ProjectsUsedIn usedIn={value} /> : EM_DASH
   },
-  enableSorting: false,
 })
 
 const challengeMechanismColumn = columnHelper.accessor(
