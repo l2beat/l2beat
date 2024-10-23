@@ -30,7 +30,7 @@ export function useActivityChartRenderParams({
 
   const columns = useMemo(
     () =>
-      data?.map((dataPoint) => {
+      data?.result.map((dataPoint) => {
         const [timestamp, count, ethereumCount] = dataPoint
         const milestone = mappedMilestones[timestamp]
         const tps = countToUops(count)
@@ -47,7 +47,7 @@ export function useActivityChartRenderParams({
     [data, mappedMilestones, showMainnet],
   )
 
-  const chartRange = useMemo(() => getChartRange(data), [data])
+  const chartRange = useMemo(() => getChartRange(data?.result), [data])
 
   const valuesStyle: SeriesStyle[] = useMemo(
     () =>
