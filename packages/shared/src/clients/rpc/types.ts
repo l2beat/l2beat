@@ -9,14 +9,11 @@ export type EVMTransaction = z.infer<typeof EVMTransaction>
 export const EVMTransaction = z
   .object({
     hash: z.string(),
-    to: z.string(),
-    input: z.string().transform((input) => ({ data: input })),
+    /** Address of the receiver, null when its a contract creation transaction. */
+    to: z.union([z.string(), z.null()]),
+    input: z.string(),
   })
-  .transform(({ hash, to, input }) => ({
-    hash,
-    to,
-    data: input.data,
-  }))
+  .transform(({ hash, to, input }) => ({ hash, to, data: input }))
 
 export const Quantity = {
   decode: z.preprocess((s) => {
@@ -34,7 +31,6 @@ export const Quantity = {
 
 export type EVMBlock = z.infer<typeof EVMBlock>
 export const EVMBlock = z.object({
-  // TODO: add support for including txs body
   transactions: z.array(EVMTransaction),
   timestamp: Quantity.decode.transform((n) => Number(n)),
   hash: z.string(),

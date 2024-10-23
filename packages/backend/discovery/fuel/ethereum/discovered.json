@@ -1,7 +1,7 @@
 {
   "name": "fuel",
   "chain": "ethereum",
-  "blockNumber": 21027350,
+  "blockNumber": 21027362,
   "configHash": "0x806b6e12987328e4566d178ecc15cff1171dd77d8a81e748ea34b478960b3f10",
   "contracts": [
     {
@@ -186,7 +186,7 @@
         "FUEL_BASE_ASSET_DECIMALS": 9,
         "fuelBaseAssetDecimals": 9,
         "fuelChainStateContract": "0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130",
-        "getNextOutgoingMessageNonce": 139531,
+        "getNextOutgoingMessageNonce": 139551,
         "limitAmount": "10000000000000000000",
         "MAX_MESSAGE_DATA_SIZE": 65536,
         "paused": false,
@@ -195,7 +195,7 @@
         "RATE_LIMIT_DURATION": 604800,
         "rateLimitEnabled": true,
         "SET_RATE_LIMITER_ROLE": "0x7e5b1c957d4df4bad29cdaceffe50f28f282a0d5096601b958917550d4b2e016",
-        "totalDeposited": "12302901898284000000000",
+        "totalDeposited": "12303657869610000000000",
         "withdrawalsPaused": false
       },
       "derivedName": "FuelMessagePortalV3"

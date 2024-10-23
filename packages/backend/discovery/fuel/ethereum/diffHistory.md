@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xc3bac20f02d0779a32688a3a68af5b8426733984
+Generated with discovered.json: 0x1f17ce4ea058b80f90b7ed862c7a76b29124680c
 
-# Diff at Wed, 23 Oct 2024 09:20:34 GMT:
+# Diff at Wed, 23 Oct 2024 09:22:40 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@2734bfe28641dfdb3277a5800faf0a057c08a58f block: 21018722
-- current block number: 21027350
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@bee92b0fa40ee8d5d78edc1795596573ca81f3da block: 21018722
+- current block number: 21027362
 
 ## Description
 
-Config related.
+Discovery changes, not project related.
 
 ## Config/verification related changes
 
