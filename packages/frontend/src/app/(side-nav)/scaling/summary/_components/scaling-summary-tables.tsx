@@ -13,6 +13,7 @@ import { type RecategorisedScalingEntry } from '~/utils/group-by-main-categories
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingTvlFilters } from '../../_components/scaling-tvl-filters'
 import { OthersComingSoonNotice } from './table/others-coming-soon-notice'
+import { ScalingSummaryOthersTable } from './table/scaling-summary-others-table'
 import { ScalingSummaryRollupsTable } from './table/scaling-summary-rollups-table'
 import { ScalingSummaryTable } from './table/scaling-summary-table'
 import { ScalingSummaryValidiumsAndOptimiumsTable } from './table/scaling-summary-validiums-and-optimiums-table'
@@ -67,7 +68,7 @@ export function ScalingSummaryTables(props: Props) {
           </DirectoryTabsContent>
           <DirectoryTabsContent value="others">
             {filteredEntries.others && filteredEntries.others.length > 0 ? (
-              <ScalingSummaryTable entries={filteredEntries.others} />
+              <ScalingSummaryOthersTable entries={filteredEntries.others} />
             ) : (
               <OthersComingSoonNotice />
             )}

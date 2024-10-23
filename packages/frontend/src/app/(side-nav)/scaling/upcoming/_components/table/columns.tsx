@@ -23,9 +23,8 @@ export const scalingUpcomingColumns = [
       tooltip: <TypeExplanationTooltip />,
     },
   }),
-  columnHelper.accessor('purposes', {
+  columnHelper.display({
     header: 'Purpose',
-    cell: (ctx) => ctx.getValue().join(', '),
-    enableSorting: false,
+    cell: (ctx) => ctx.row.original.purposes.join(', '),
   }),
 ]
