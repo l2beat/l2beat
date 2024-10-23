@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x81eac94cdac640481679f858e4f293d475e650f4
+Generated with discovered.json: 0xd4113d571b1a0e32afce93eb2c3b5a9386f31636
 
-# Diff at Wed, 23 Oct 2024 13:17:50 GMT:
+# Diff at Wed, 23 Oct 2024 13:27:08 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@9cc37d16a5f0b172bb41f98d8a970963e5ca4afb block: 20942700
@@ -77,6 +77,12 @@ discovery. Values are for block 20942700 (main branch discovery), not current.
       description:
 +        "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) which eventually resolve in execution on L1."
     }
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x7Deda2425eC2d4EA0DF689A78de2fBF002075576)
+    +++ description: None
 ```
 
 ```diff

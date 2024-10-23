@@ -328,13 +328,6 @@
       "derivedName": "UpgradeExecutor"
     },
     {
-      "name": "",
-      "address": "0xB48E4A4B8EC04c9F1819302FD370f5B3797c638C",
-      "unverified": true,
-      "sinceTimestamp": 1718304851,
-      "values": { "$immutable": true }
-    },
-    {
       "name": "ValidatorWalletCreator",
       "address": "0xB546310EA2De84220811a03BCD5CeE96D251fA7D",
       "sourceHashes": [
@@ -1349,7 +1342,7 @@
     "orbitstack/Inbox": "0x1938bb9de2d7f328ae3e83f2dd9f5d3c5575b599fc097cf9308bac4d5bb3e89e",
     "orbitstack/Outbox": "0xac65b89cf03d50afb81ade4d5623f1815977ae46d92280d53ca828df34424488",
     "orbitstack/RollupProxy": "0x329494c897421d49fd8b6041c5444fb2af7508c8b81f134e703e7d11cbd9be1b",
-    "orbitstack/SequencerInbox": "0x54c54e9ae22272a3f46f796dad091a0a8e89da6775455637250b55ecaa7272f8",
+    "orbitstack/SequencerInbox": "0x80eed651d83fd6cd84047260bf02ec5e3a5f21b36049e1e45f34bd0a452e02f9",
     "orbitstack/UpgradeExecutor": "0x603e9f3f0d76cb0bbc6fbf2ac64cce35b00905689e35c7535a2c5fec00147370"
   }
 }

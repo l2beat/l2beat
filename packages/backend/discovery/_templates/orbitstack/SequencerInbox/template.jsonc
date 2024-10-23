@@ -4,6 +4,7 @@
   "description": "A sequencer (registered in this contract) can submit transaction batches or commitments here.",
   "ignoreMethods": ["inboxAccs"],
   "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
+  "ignoreRelatives": ["reader4844"],
   "fields": {
     "maxTimeVariation": {
       "description": "Struct: delayBlocks, futureBlocks, delaySeconds, futureSeconds. onlyRollupOwner settable. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."

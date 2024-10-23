@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x2679da976e1a2944650cabdfd2091a3b3b1498de
+Generated with discovered.json: 0x42048ebd7feb55ab6767a5e4388d47f6be7d9ede
 
-# Diff at Wed, 23 Oct 2024 13:19:40 GMT:
+# Diff at Wed, 23 Oct 2024 13:28:57 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@9cc37d16a5f0b172bb41f98d8a970963e5ca4afb block: 20331015
@@ -55,6 +55,12 @@ discovery. Values are for block 20331015 (main branch discovery), not current.
       description:
 +        "Central contract defining the access control for upgrading the system contract implementations."
     }
+```
+
+```diff
+-   Status: DELETED
+    contract  (0xB48E4A4B8EC04c9F1819302FD370f5B3797c638C)
+    +++ description: None
 ```
 
 ```diff

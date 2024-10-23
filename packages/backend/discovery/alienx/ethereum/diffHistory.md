@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xfe17cb3e724ea096227e1cee6685e15b3379e252
+Generated with discovered.json: 0x1957a31033e395256adac6a1f61c94f9d4a47655
 
-# Diff at Wed, 23 Oct 2024 13:17:56 GMT:
+# Diff at Wed, 23 Oct 2024 13:27:12 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@9cc37d16a5f0b172bb41f98d8a970963e5ca4afb block: 20978034
@@ -57,6 +57,12 @@ discovery. Values are for block 20978034 (main branch discovery), not current.
       fieldMeta.challenges:
 +        {"description":"Emitted on createChallenge() in RollupUserLogic."}
     }
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x7Deda2425eC2d4EA0DF689A78de2fBF002075576)
+    +++ description: None
 ```
 
 ```diff

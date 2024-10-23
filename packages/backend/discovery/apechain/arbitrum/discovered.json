@@ -2,7 +2,7 @@
   "name": "apechain",
   "chain": "arbitrum",
   "blockNumber": 266079510,
-  "configHash": "0xfdce27bd75c66f81def230c28c6bfb004f8ea314829f305e76ae944e809283ca",
+  "configHash": "0x66911376a77e1bbc1e6bd38dbc16f57f9dd4afab668963bfa11b7c5ad7ccdf26",
   "contracts": [
     {
       "name": "Inbox",
@@ -1282,7 +1282,7 @@
   },
   "usedTemplates": {
     "orbitstack/RollupProxy": "0x329494c897421d49fd8b6041c5444fb2af7508c8b81f134e703e7d11cbd9be1b",
-    "orbitstack/SequencerInbox": "0x54c54e9ae22272a3f46f796dad091a0a8e89da6775455637250b55ecaa7272f8",
+    "orbitstack/SequencerInbox": "0x80eed651d83fd6cd84047260bf02ec5e3a5f21b36049e1e45f34bd0a452e02f9",
     "orbitstack/UpgradeExecutor": "0x603e9f3f0d76cb0bbc6fbf2ac64cce35b00905689e35c7535a2c5fec00147370"
   }
 }

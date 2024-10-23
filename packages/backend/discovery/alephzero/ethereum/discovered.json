@@ -2,7 +2,7 @@
   "name": "alephzero",
   "chain": "ethereum",
   "blockNumber": 20942700,
-  "configHash": "0x3d1c369cb5d6a656138e4f95801c7e806a2adf0b9d7eb55e2f8a262ded7f41fc",
+  "configHash": "0xac9c478a3144eba8bb143b920c8aea877e5b37924bc462c056264cdd36f6fa9d",
   "contracts": [
     {
       "name": "OneStepProverHostIo",
@@ -347,13 +347,6 @@
         "rollup": "0x1CA12290D954CFe022323b6A6Df92113ed6b1C98"
       },
       "derivedName": "ERC20Outbox"
-    },
-    {
-      "name": "",
-      "address": "0x7Deda2425eC2d4EA0DF689A78de2fBF002075576",
-      "unverified": true,
-      "sinceTimestamp": 1710413207,
-      "values": { "$immutable": true }
     },
     {
       "name": "ProxyAdmin",
@@ -1341,7 +1334,7 @@
     "orbitstack/Inbox": "0x1938bb9de2d7f328ae3e83f2dd9f5d3c5575b599fc097cf9308bac4d5bb3e89e",
     "orbitstack/Outbox": "0xac65b89cf03d50afb81ade4d5623f1815977ae46d92280d53ca828df34424488",
     "orbitstack/RollupProxy": "0x329494c897421d49fd8b6041c5444fb2af7508c8b81f134e703e7d11cbd9be1b",
-    "orbitstack/SequencerInbox": "0x54c54e9ae22272a3f46f796dad091a0a8e89da6775455637250b55ecaa7272f8",
+    "orbitstack/SequencerInbox": "0x80eed651d83fd6cd84047260bf02ec5e3a5f21b36049e1e45f34bd0a452e02f9",
     "orbitstack/UpgradeExecutor": "0x603e9f3f0d76cb0bbc6fbf2ac64cce35b00905689e35c7535a2c5fec00147370"
   }
 }

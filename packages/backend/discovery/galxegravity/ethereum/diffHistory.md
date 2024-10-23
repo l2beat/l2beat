@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x6b9f517c4d6ef6d25d9285770286d34e02bf6abb
+Generated with discovered.json: 0x09d5ecc874524e9d6dc807f4854bf91a702ca76b
 
-# Diff at Wed, 23 Oct 2024 13:18:16 GMT:
+# Diff at Wed, 23 Oct 2024 13:26:55 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@9cc37d16a5f0b172bb41f98d8a970963e5ca4afb block: 20842779
-- current block number: 21028358
+- current block number: 21028577
 
 ## Description
 
@@ -54,6 +54,12 @@ discovery. Values are for block 20842779 (main branch discovery), not current.
       description:
 +        "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds."
     }
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x7Deda2425eC2d4EA0DF689A78de2fBF002075576)
+    +++ description: None
 ```
 
 ```diff

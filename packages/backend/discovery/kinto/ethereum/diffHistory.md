@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x97624581ee6c80af973074f287b616c6e5409ea0
+Generated with discovered.json: 0xe32079733c5ec2837651e247b0ec4ccb319e372a
 
-# Diff at Wed, 23 Oct 2024 13:18:26 GMT:
+# Diff at Wed, 23 Oct 2024 13:27:33 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@9cc37d16a5f0b172bb41f98d8a970963e5ca4afb block: 20948097
@@ -15,6 +15,12 @@ Discovery rerun on the same block number with only config-related changes.
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 20948097 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract  (0x434345973Ebf8249398E1EeB03A62bE418B48a05)
+    +++ description: None
+```
 
 ```diff
     contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {

@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xf8ced223767164d4e930d908d2aee48d93b6542d
+Generated with discovered.json: 0x734d658fa69e57e435d315c19a774043c2f87ce3
 
-# Diff at Wed, 23 Oct 2024 13:18:42 GMT:
+# Diff at Wed, 23 Oct 2024 13:27:50 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@9cc37d16a5f0b172bb41f98d8a970963e5ca4afb block: 20842812
@@ -67,6 +67,12 @@ discovery. Values are for block 20842812 (main branch discovery), not current.
       description:
 +        "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor."
     }
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x7Deda2425eC2d4EA0DF689A78de2fBF002075576)
+    +++ description: None
 ```
 
 ```diff

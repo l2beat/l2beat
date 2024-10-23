@@ -2,7 +2,7 @@
   "name": "alienx",
   "chain": "ethereum",
   "blockNumber": 20978034,
-  "configHash": "0xf77f910f5c1c15a02e94c5f71e61ee3f2efd101c5795853e2dd09e3ff35f94a4",
+  "configHash": "0xf292332b26e469d452641b71967c7245712fade232bf137c31c3fa224382ffec",
   "contracts": [
     {
       "name": "RollupEventInbox",
@@ -455,13 +455,6 @@
         "sequencerInbox": "0xb7d188eb30e7984f93Bec34Ee8b45A148bd594C6"
       },
       "derivedName": "Inbox"
-    },
-    {
-      "name": "",
-      "address": "0x7Deda2425eC2d4EA0DF689A78de2fBF002075576",
-      "unverified": true,
-      "sinceTimestamp": 1710413207,
-      "values": { "$immutable": true }
     },
     {
       "name": "OneStepProverMemory",
@@ -1422,7 +1415,7 @@
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "orbitstack/ChallengeManager": "0xc4fbc82c5001579bb1f880d92a3510cda3dc4a65e284fc300363ce048c2fb6d7",
     "orbitstack/RollupProxy": "0x329494c897421d49fd8b6041c5444fb2af7508c8b81f134e703e7d11cbd9be1b",
-    "orbitstack/SequencerInbox": "0x54c54e9ae22272a3f46f796dad091a0a8e89da6775455637250b55ecaa7272f8",
+    "orbitstack/SequencerInbox": "0x80eed651d83fd6cd84047260bf02ec5e3a5f21b36049e1e45f34bd0a452e02f9",
     "orbitstack/UpgradeExecutor": "0x603e9f3f0d76cb0bbc6fbf2ac64cce35b00905689e35c7535a2c5fec00147370"
   }
 }

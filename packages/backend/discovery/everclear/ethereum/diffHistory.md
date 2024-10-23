@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x82c534295c26550dc36265a1be7ae43e69f1ddb0
+Generated with discovered.json: 0xbba6cd9a092fb1e01c950b8fc6f978f3e887742b
 
-# Diff at Wed, 23 Oct 2024 13:18:06 GMT:
+# Diff at Wed, 23 Oct 2024 13:27:23 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@9cc37d16a5f0b172bb41f98d8a970963e5ca4afb block: 20942187
@@ -23,6 +23,12 @@ discovery. Values are for block 20942187 (main branch discovery), not current.
 -        "State batches / commitments get posted here."
 +        "A sequencer (registered in this contract) can submit transaction batches or commitments here."
     }
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x7Deda2425eC2d4EA0DF689A78de2fBF002075576)
+    +++ description: None
 ```
 
 ```diff
