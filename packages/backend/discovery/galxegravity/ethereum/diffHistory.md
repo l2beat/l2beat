@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xba3b22dabb99b5a6b49819dd48b8379a4f8ac149
+Generated with discovered.json: 0x56536c1c0fdb00b919e70c9caae6c8b6629c46eb
 
-# Diff at Wed, 23 Oct 2024 14:34:59 GMT:
+# Diff at Wed, 23 Oct 2024 14:56:39 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@9cc37d16a5f0b172bb41f98d8a970963e5ca4afb block: 20842779
-- current block number: 21028917
+- current block number: 21029025
 
 ## Description
 
@@ -19,6 +19,11 @@ discovery. Values are for block 20842779 (main branch discovery), not current.
 ```diff
     contract Outbox (0x1153a1e4B1523DFf36f77d696bd6eBF2B0e7DAbF) {
     +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) which eventually resolve in execution on L1.
+      issuedPermissions.0.target:
+-        "0xBbc3872E30C91ef69336937838c2a283F79f7E68"
++        "0xa5D23c69894241825dAffB570c3c742C0F52df96"
+      issuedPermissions.0.via.0:
++        {"address":"0xBbc3872E30C91ef69336937838c2a283F79f7E68","delay":0}
       template:
 +        "orbitstack/Outbox"
       description:
@@ -55,6 +60,11 @@ discovery. Values are for block 20842779 (main branch discovery), not current.
 ```diff
     contract ChallengeManager (0x68466622Aae5a9Ffd02530247d75Dd107f06B333) {
     +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      issuedPermissions.0.target:
+-        "0xBbc3872E30C91ef69336937838c2a283F79f7E68"
++        "0xa5D23c69894241825dAffB570c3c742C0F52df96"
+      issuedPermissions.0.via.0:
++        {"address":"0xBbc3872E30C91ef69336937838c2a283F79f7E68","delay":0}
       template:
 +        "orbitstack/ChallengeManager"
       description:
@@ -75,6 +85,11 @@ discovery. Values are for block 20842779 (main branch discovery), not current.
 ```diff
     contract Bridge (0x7983403dDA368AA7d67145a9b81c5c517F364c42) {
     +++ description: Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for bridge messaging.
+      issuedPermissions.0.target:
+-        "0xBbc3872E30C91ef69336937838c2a283F79f7E68"
++        "0xa5D23c69894241825dAffB570c3c742C0F52df96"
+      issuedPermissions.0.via.0:
++        {"address":"0xBbc3872E30C91ef69336937838c2a283F79f7E68","delay":0}
       template:
 +        "orbitstack/Bridge"
       description:
@@ -85,6 +100,11 @@ discovery. Values are for block 20842779 (main branch discovery), not current.
 ```diff
     contract Inbox (0x7AD2a94BefF3294a31894cFb5ba4206957a53c19) {
     +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      issuedPermissions.0.target:
+-        "0xBbc3872E30C91ef69336937838c2a283F79f7E68"
++        "0xa5D23c69894241825dAffB570c3c742C0F52df96"
+      issuedPermissions.0.via.0:
++        {"address":"0xBbc3872E30C91ef69336937838c2a283F79f7E68","delay":0}
       template:
 +        "orbitstack/Inbox"
       description:
@@ -111,6 +131,11 @@ discovery. Values are for block 20842779 (main branch discovery), not current.
 ```diff
     contract SequencerInbox (0x8D99372612e8cFE7163B1a453831Bc40eAeb3cF3) {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      issuedPermissions.1.target:
+-        "0xBbc3872E30C91ef69336937838c2a283F79f7E68"
++        "0xa5D23c69894241825dAffB570c3c742C0F52df96"
+      issuedPermissions.1.via.0:
++        {"address":"0xBbc3872E30C91ef69336937838c2a283F79f7E68","delay":0}
       values.IS_HARDCODED_SEQUENCER_BATCH_POSTER:
 -        false
       template:
@@ -145,12 +170,61 @@ discovery. Values are for block 20842779 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ERC20RollupEventInbox (0xa24eDA32bb36171a6c34CBB4B56f89FF7B8fD49A) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xBbc3872E30C91ef69336937838c2a283F79f7E68"
++        "0xa5D23c69894241825dAffB570c3c742C0F52df96"
+      issuedPermissions.0.via.0:
++        {"address":"0xBbc3872E30C91ef69336937838c2a283F79f7E68","delay":0}
+    }
+```
+
+```diff
     contract UpgradeExecutor (0xa5D23c69894241825dAffB570c3c742C0F52df96) {
     +++ description: Central contract defining the access control for upgrading the system contract implementations.
+      issuedPermissions.0.target:
+-        "0xBbc3872E30C91ef69336937838c2a283F79f7E68"
++        "0xa5D23c69894241825dAffB570c3c742C0F52df96"
+      issuedPermissions.0.via.0:
++        {"address":"0xBbc3872E30C91ef69336937838c2a283F79f7E68","delay":0}
+      receivedPermissions.7:
++        {"permission":"upgrade","target":"0xf993AF239770932A0EDaB88B6A5ba3708Bd58239"}
+      receivedPermissions.6:
++        {"permission":"upgrade","target":"0xa5D23c69894241825dAffB570c3c742C0F52df96","via":[{"address":"0xBbc3872E30C91ef69336937838c2a283F79f7E68"}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","target":"0xa24eDA32bb36171a6c34CBB4B56f89FF7B8fD49A","via":[{"address":"0xBbc3872E30C91ef69336937838c2a283F79f7E68"}]}
+      receivedPermissions.4:
++        {"permission":"upgrade","target":"0x8D99372612e8cFE7163B1a453831Bc40eAeb3cF3","via":[{"address":"0xBbc3872E30C91ef69336937838c2a283F79f7E68"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","target":"0x7AD2a94BefF3294a31894cFb5ba4206957a53c19","via":[{"address":"0xBbc3872E30C91ef69336937838c2a283F79f7E68"}]}
+      receivedPermissions.2:
++        {"permission":"upgrade","target":"0x7983403dDA368AA7d67145a9b81c5c517F364c42","via":[{"address":"0xBbc3872E30C91ef69336937838c2a283F79f7E68"}]}
+      receivedPermissions.1:
++        {"permission":"upgrade","target":"0x68466622Aae5a9Ffd02530247d75Dd107f06B333","via":[{"address":"0xBbc3872E30C91ef69336937838c2a283F79f7E68"}]}
+      receivedPermissions.0.target:
+-        "0xf993AF239770932A0EDaB88B6A5ba3708Bd58239"
++        "0x1153a1e4B1523DFf36f77d696bd6eBF2B0e7DAbF"
+      receivedPermissions.0.via:
++        [{"address":"0xBbc3872E30C91ef69336937838c2a283F79f7E68"}]
       template:
 +        "orbitstack/UpgradeExecutor"
       description:
 +        "Central contract defining the access control for upgrading the system contract implementations."
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0xBbc3872E30C91ef69336937838c2a283F79f7E68"}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xBbc3872E30C91ef69336937838c2a283F79f7E68) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x1153a1e4B1523DFf36f77d696bd6eBF2B0e7DAbF"},{"permission":"upgrade","target":"0x68466622Aae5a9Ffd02530247d75Dd107f06B333"},{"permission":"upgrade","target":"0x7983403dDA368AA7d67145a9b81c5c517F364c42"},{"permission":"upgrade","target":"0x7AD2a94BefF3294a31894cFb5ba4206957a53c19"},{"permission":"upgrade","target":"0x8D99372612e8cFE7163B1a453831Bc40eAeb3cF3"},{"permission":"upgrade","target":"0xa24eDA32bb36171a6c34CBB4B56f89FF7B8fD49A"},{"permission":"upgrade","target":"0xa5D23c69894241825dAffB570c3c742C0F52df96"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x1153a1e4B1523DFf36f77d696bd6eBF2B0e7DAbF"},{"permission":"upgrade","target":"0x68466622Aae5a9Ffd02530247d75Dd107f06B333"},{"permission":"upgrade","target":"0x7983403dDA368AA7d67145a9b81c5c517F364c42"},{"permission":"upgrade","target":"0x7AD2a94BefF3294a31894cFb5ba4206957a53c19"},{"permission":"upgrade","target":"0x8D99372612e8cFE7163B1a453831Bc40eAeb3cF3"},{"permission":"upgrade","target":"0xa24eDA32bb36171a6c34CBB4B56f89FF7B8fD49A"},{"permission":"upgrade","target":"0xa5D23c69894241825dAffB570c3c742C0F52df96"}]
     }
 ```
 
