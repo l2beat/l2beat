@@ -9,19 +9,35 @@ interface Props {
     slug: string
   }[]
 }
+
 export function LogoGenerator({ projects }: Props) {
   const [size, setSize] = useState(32)
   const [borderRadius, setBorderRadius] = useState(0)
 
   const [include, setInclude] = useState('')
-  const includedProjectSlugs = include?.split(',').map((slug) => slug.trim())
+  const [exclude, setExclude] = useState('')
 
-  const toShow =
-    include !== ''
-      ? projects.filter((project) =>
-          includedProjectSlugs?.includes(project.slug),
-        )
-      : projects
+  const includedProjectSlugs = include
+    .split(',')
+    .map((slug) => slug.trim())
+    .filter(Boolean)
+  const excludedProjectSlugs = exclude
+    .split(',')
+    .map((slug) => slug.trim())
+    .filter(Boolean)
+  console.log(includedProjectSlugs, excludedProjectSlugs)
+  const toShow = projects.filter((project) => {
+    if (
+      includedProjectSlugs.length &&
+      !includedProjectSlugs.includes(project.slug)
+    ) {
+      return false
+    }
+    if (excludedProjectSlugs.includes(project.slug)) {
+      return false
+    }
+    return true
+  })
 
   return (
     <div>
@@ -54,6 +70,14 @@ export function LogoGenerator({ projects }: Props) {
           type="text"
           value={include}
           onChange={(e) => setInclude(e.target.value)}
+        />
+      </div>
+      <div className="flex flex-col">
+        <span>Exclude (Comma separated list of slugs to exclude)</span>
+        <input
+          type="text"
+          value={exclude}
+          onChange={(e) => setExclude(e.target.value)}
         />
       </div>
       <div className="mt-10 flex flex-wrap gap-1">
