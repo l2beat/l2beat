@@ -4,6 +4,7 @@ import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/pizza-rosette-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { StageCell } from '~/components/table/cells/stage/stage-cell'
+import { TwoRowCell } from '~/components/table/cells/two-row-cell'
 import {
   TypeCell,
   TypeExplanationTooltip,
@@ -103,5 +104,25 @@ export const scalingSummaryColumns = [
 
 export const scalingSummaryValidiumAndOptimiumsColumns = [
   ...scalingSummaryColumns.slice(0, 4),
+  columnHelper.accessor('dataAvailability.layer.value', {
+    header: 'DA Layer',
+    cell: (ctx) => {
+      const value = ctx.getValue()
+      if (!value) {
+        return <NoDataBadge />
+      }
+      return (
+        <TwoRowCell>
+          <TwoRowCell.First>{ctx.getValue()}</TwoRowCell.First>
+          {ctx.row.original.dataAvailability && (
+            <TwoRowCell.Second>
+              {ctx.row.original.dataAvailability.bridge.value}
+            </TwoRowCell.Second>
+          )}
+        </TwoRowCell>
+      )
+    },
+    enableSorting: false,
+  }),
   ...scalingSummaryColumns.slice(6),
 ]
