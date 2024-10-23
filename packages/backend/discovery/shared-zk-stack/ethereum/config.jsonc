@@ -261,22 +261,22 @@
             "argValue": "50104"
           }
         },
-        "zeronetworkFirstBatchTS": {
+        "zeronetworkTenthBatchTS": {
           "description": "If non-zero, the first batch has been posted.",
           "severity": "MEDIUM",
           "handler": {
             "type": "call",
             "method": "getCommittedBatchTimestamp",
-            "args": [543210, 1]
+            "args": [543210, 10]
           }
         },
-        "sophonFirstBatchTS": {
+        "sophonTenthBatchTS": {
           "description": "If non-zero, the first batch has been posted.",
           "severity": "MEDIUM",
           "handler": {
             "type": "call",
             "method": "getCommittedBatchTimestamp",
-            "args": [50104, 1]
+            "args": [50104, 10]
           }
         },
         "revertedBlocks": {

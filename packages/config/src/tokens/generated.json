@@ -808,7 +808,7 @@
       "decimals": 8,
       "deploymentTimestamp": 1724165531,
       "coingeckoListingTimestamp": 1726099200,
-      "category": "ether",
+      "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/40143/large/cbbtc.webp?1726136727",
       "chainId": 1,
       "source": "canonical",
@@ -9298,6 +9298,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "Scroll",
+      "coingeckoId": "scroll",
+      "address": "0xd29687c813D741E2F938F4aC377128810E217b1b",
+      "symbol": "SCR",
+      "decimals": 18,
+      "deploymentTimestamp": 1725336741,
+      "coingeckoListingTimestamp": 1729641600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50571/large/scroll.jpg?1728376125",
+      "chainId": 534352,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "Staked USDe",

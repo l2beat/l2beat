@@ -4,14 +4,14 @@
   "name": "vector",
   "initialAddresses": ["0x02993cdC11213985b9B13224f3aF289F03bf298d"],
   "names": {
-    "0x02993cdC11213985b9B13224f3aF289F03bf298d": "SP1Vector",
+    "0x02993cdC11213985b9B13224f3aF289F03bf298d": "Vector",
     "0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SuccinctGatewaySP1",
     "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB": "SP1Verifier_OLD",
     "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "SuccinctGatewaySP1Multisig",
     "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666": "AvailMultisig"
   },
   "overrides": {
-    "SP1Vector": {
+    "Vector": {
       "extends": "succinct/SP1Vector",
       "fields": {
         "relayers": {

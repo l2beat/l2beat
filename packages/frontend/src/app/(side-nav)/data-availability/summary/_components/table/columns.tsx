@@ -36,7 +36,6 @@ export const daRisksColumn = columnHelper.display({
 
     return <GrissiniCell values={risks} />
   },
-  enableSorting: false,
   meta: {
     align: 'center',
   },
@@ -100,7 +99,7 @@ const slashableStakeColumn = columnHelper.accessor('economicSecurity', {
   meta: {
     align: 'right',
     tooltip:
-      'The assets that are slashable in case of a data withholding attack (the amount of funds a committee would need to burn to successfully deceive the DA bridge). It’s equal to 2/3 of the total validating stake, if any.',
+      'The assets that are slashable in case of a data withholding attack. For public blockchains, it is equal to 2/3 of the total validating stake.',
   },
   enableSorting: false,
 })
