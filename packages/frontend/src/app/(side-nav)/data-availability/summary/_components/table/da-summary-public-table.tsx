@@ -81,7 +81,7 @@ function BridgeCells({
       <TableCell className="text-right text-sm font-medium">
         {formatCurrency(bridge.tvs, 'usd')}
       </TableCell>
-      <TableCell className="text-sm">
+      <TableCell className="text-sm font-medium">
         <ProjectsUsedIn usedIn={bridge.usedIn} />
       </TableCell>
     </>
