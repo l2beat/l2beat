@@ -4,7 +4,7 @@ import {
   ProjectId,
   UnixTime,
   formatSeconds,
-} from '@l2beat/shared-pure'
+} from '@l2beat/shared-pure'test
 
 import {
   EXITS,
