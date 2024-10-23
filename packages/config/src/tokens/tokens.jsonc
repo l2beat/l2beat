@@ -3678,6 +3678,12 @@
   ],
   "scroll": [
     {
+      "symbol": "SCR",
+      "address": "0xd29687c813D741E2F938F4aC377128810E217b1b",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "symbol": "SolvBTC",
       "address": "0x3Ba89d490AB1C0c9CC2313385b30710e838370a4",
       "supply": "totalSupply",
