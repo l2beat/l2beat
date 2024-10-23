@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client'
 import { App } from './App'
 import { MultiApp } from './multi-app/MultiApp'
 
-const MULTI_APP = true
+const MULTI_APP = location.pathname.startsWith('/ui')
 
 // biome-ignore lint/style/noNonNullAssertion: We are sure it exists
 ReactDOM.createRoot(document.getElementById('root')!).render(
