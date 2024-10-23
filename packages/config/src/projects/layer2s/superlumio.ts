@@ -37,7 +37,7 @@ export const superlumio: Layer2 = opStackL2({
     minTimestamp: new UnixTime(1708984751),
     l2BlockTimeSeconds: 2,
     lag: 0,
-    stateUpdate: 'disabled',
+    stateUpdate: 'analyze',
   },
   isNodeAvailable: 'UnderReview',
   milestones: [
