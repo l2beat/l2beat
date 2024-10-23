@@ -1,7 +1,7 @@
 {
   "name": "galxegravity",
   "chain": "ethereum",
-  "blockNumber": 21028291,
+  "blockNumber": 21028358,
   "configHash": "0x7b29329f23f6c785977fc5acd397e9b8eda6078ad31116790dd49cbcca4437f6",
   "contracts": [
     {
@@ -216,8 +216,8 @@
         "nativeToken": "0x9C7BEBa8F6eF6643aBd725e45a4E8387eF260649",
         "rollup": "0xf993AF239770932A0EDaB88B6A5ba3708Bd58239",
         "sequencerInbox": "0x8D99372612e8cFE7163B1a453831Bc40eAeb3cF3",
-        "sequencerMessageCount": 36453,
-        "sequencerReportedSubMessageCount": 12963451
+        "sequencerMessageCount": 36458,
+        "sequencerReportedSubMessageCount": 12966357
       },
       "derivedName": "ERC20Bridge"
     },
@@ -310,7 +310,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 36453,
+        "batchCount": 36458,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xBa369bd77a346babCd282cB1a015194E8ec54542"],
         "bridge": "0x7983403dDA368AA7d67145a9b81c5c517F364c42",
@@ -521,11 +521,6 @@
           "permission": "upgrade",
           "target": "0xa5D23c69894241825dAffB570c3c742C0F52df96",
           "via": []
-        },
-        {
-          "permission": "validate",
-          "target": "0x18c87d3DbF779E3F7793fc6c62ead9Ff15F0e634",
-          "via": []
         }
       ],
       "ignoreInWatchMode": [
@@ -648,11 +643,6 @@
         },
         {
           "permission": "propose",
-          "target": "0xf993AF239770932A0EDaB88B6A5ba3708Bd58239",
-          "description": "can submit state roots to the RollupProxy contract on the host chain."
-        },
-        {
-          "permission": "validate",
           "target": "0xf993AF239770932A0EDaB88B6A5ba3708Bd58239",
           "description": "can submit state roots to the RollupProxy contract on the host chain."
         }
@@ -1298,7 +1288,7 @@
     "orbitstack/ChallengeManager": "0xc4fbc82c5001579bb1f880d92a3510cda3dc4a65e284fc300363ce048c2fb6d7",
     "orbitstack/Inbox": "0x1938bb9de2d7f328ae3e83f2dd9f5d3c5575b599fc097cf9308bac4d5bb3e89e",
     "orbitstack/Outbox": "0xac65b89cf03d50afb81ade4d5623f1815977ae46d92280d53ca828df34424488",
-    "orbitstack/RollupProxy": "0xf7e8f0e6d44734d31ecc7e4b5d9d3c08884a07097cc7034fa48a2b109016dd1b",
+    "orbitstack/RollupProxy": "0x329494c897421d49fd8b6041c5444fb2af7508c8b81f134e703e7d11cbd9be1b",
     "orbitstack/SequencerInbox": "0xb77ec24fa3e136cb22bb61f301b04f7060d8305763c022dff72423ce7483ca3d",
     "orbitstack/UpgradeExecutor": "0x603e9f3f0d76cb0bbc6fbf2ac64cce35b00905689e35c7535a2c5fec00147370"
   }

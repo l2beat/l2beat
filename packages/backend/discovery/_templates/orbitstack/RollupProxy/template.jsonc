@@ -13,10 +13,6 @@
       "target": {
         "permissions": [
           {
-            "type": "validate",
-            "description": "can submit state roots to the RollupProxy contract on the host chain."
-          },
-          {
             "type": "propose",
             "description": "can submit state roots to the RollupProxy contract on the host chain."
           },

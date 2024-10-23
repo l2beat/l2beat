@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x1f0192d771c9e941240a8bdb6ca753ef665c8df7
+Generated with discovered.json: 0x728f1f037d4a325d0c823bb867baddf464468ba2
 
-# Diff at Wed, 23 Oct 2024 12:29:54 GMT:
+# Diff at Wed, 23 Oct 2024 12:42:59 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@9cc37d16a5f0b172bb41f98d8a970963e5ca4afb block: 20842779
-- current block number: 21028291
+- current block number: 21028358
 
 ## Description
 
-Switch do discoverydriven data.
+Switch to discoverydriven data.
 
 ## Config/verification related changes
 
@@ -92,8 +92,6 @@ discovery. Values are for block 20842779 (main branch discovery), not current.
       description:
 -        "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
 +        "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators)."
-      issuedPermissions.3:
-+        {"permission":"validate","target":"0x18c87d3DbF779E3F7793fc6c62ead9Ff15F0e634","via":[]}
       issuedPermissions.2:
 +        {"permission":"upgrade","target":"0xa5D23c69894241825dAffB570c3c742C0F52df96","via":[]}
       issuedPermissions.1.permission:
