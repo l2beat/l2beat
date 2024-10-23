@@ -1,4 +1,5 @@
 import { type DacBridge } from '@l2beat/config'
+import { TwoRowCell } from '~/components/table/cells/two-row-cell'
 
 type Props = Pick<
   DacBridge,
@@ -11,13 +12,13 @@ export function DacMembersCell({
   membersCount,
 }: Props) {
   return (
-    <div className="flex flex-col gap-0">
-      <span className="text-sm font-medium leading-5">
+    <TwoRowCell>
+      <TwoRowCell.First className="font-bold leading-5">
         {requiredMembers}/{membersCount}
-      </span>
-      <span className="text-xs leading-none text-gray-500">
+      </TwoRowCell.First>
+      <TwoRowCell.Second>
         {knownMembers ? 'Public' : 'Anonymous'}
-      </span>
-    </div>
+      </TwoRowCell.Second>
+    </TwoRowCell>
   )
 }
