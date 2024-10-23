@@ -138,7 +138,6 @@ function initializeConfigurations(
                 },
               ),
               stateUpdate: new OpStackStateUpdateAnalyzer(
-                logger,
                 ethereumRPC,
                 peripherals.database,
                 configuration.projectId,

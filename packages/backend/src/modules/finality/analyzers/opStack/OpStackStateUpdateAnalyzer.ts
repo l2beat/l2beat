@@ -17,14 +17,12 @@ export class OpStackStateUpdateAnalyzer extends BaseAnalyzer {
   private abi: utils.Interface
 
   constructor(
-    private readonly logger: Logger,
     provider: RpcClient,
     db: Database,
     projectId: ProjectId,
     private readonly l2Provider: RpcClient,
   ) {
     super(provider, db, projectId)
-    this.logger = logger.for(this).tag(projectId.toString())
     this.abi = new utils.Interface([PROPOSE_FUNCTION_SIGNATURE])
   }
 
