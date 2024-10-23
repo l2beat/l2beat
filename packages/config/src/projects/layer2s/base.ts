@@ -42,7 +42,7 @@ export const base: Layer2 = opStackL2({
     genesisTimestamp: new UnixTime(1686789347),
     l2BlockTimeSeconds: 2,
     lag: 0,
-    stateUpdate: 'disabled',
+    stateUpdate: 'analyze',
   },
   genesisTimestamp: new UnixTime(1686796655),
   stateDerivation: DERIVATION.OPSTACK('BASE'),
