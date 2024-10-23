@@ -1,4 +1,3 @@
-import { Logger } from '@l2beat/backend-tools'
 import {
   ProjectId,
   TrackedTxsConfigSubtype,
