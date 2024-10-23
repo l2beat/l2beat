@@ -1,4 +1,4 @@
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { alephzero } from '../../../layer2s/alephzero'
 import { AnytrustDAC } from '../templates/anytrust-template'
@@ -43,6 +43,27 @@ export const alephzeroDac = AnytrustDAC({
         description:
           'Multisig that can upgrade authorized batch posters via the UpgradeExecutor contract.',
       },
+      {
+        name: 'UpgradeExecutor',
+        accounts: [
+          {
+            address: EthereumAddress(
+              discovery.getContractValue<string>('RollupProxy', 'owner'),
+            ),
+            type: 'Contract',
+          },
+        ],
+        description:
+          'The UpgradeExecutor can change the Committee members by updating the valid keyset.',
+      },
+      {
+        name: 'ExecutorEOA',
+        accounts: discovery.getAccessControlRolePermission(
+          'UpgradeExecutor',
+          'EXECUTOR_ROLE',
+        ),
+        description: 'EOA that can execute upgrades via the UpgradeExecutor.',
+      }
     ],
     chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignatures,
