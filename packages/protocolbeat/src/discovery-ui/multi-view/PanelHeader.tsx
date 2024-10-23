@@ -1,0 +1,48 @@
+import clsx from 'clsx'
+import { IconClose } from '../icons/IconClose'
+import { IconFullscreen } from '../icons/IconFullscreen'
+import { IconFullscreenExit } from '../icons/IconFullscreenExit'
+import { PANEL_IDS, PanelId, useStore } from './store'
+
+export function PanelHeader(props: { id: PanelId }) {
+  const isFullScreen = useStore((state) => state.fullScreen === props.id)
+  const isActive = useStore((state) => state.active === props.id)
+  const changePanel = useStore((state) => state.changePanel)
+  const pickUp = useStore((state) => state.pickUp)
+  const toggleFullScren = useStore((state) => state.toggleFullScren)
+  const removePanel = useStore((state) => state.removePanel)
+
+  return (
+    <div
+      className={clsx(
+        'flex h-[36px] select-none border border-black border-y-2 px-[7px] py-1',
+        isActive ? 'bg-blue-200' : 'bg-slate-100',
+      )}
+    >
+      <select
+        value={props.id}
+        onChange={(e) => changePanel(props.id, e.target.value as PanelId)}
+      >
+        {PANEL_IDS.map((id) => (
+          <option key={id} value={id}>
+            {id.slice(0, 1).toUpperCase() + id.slice(1)}
+          </option>
+        ))}
+      </select>
+      <div
+        className={clsx('flex-1', !isFullScreen && 'cursor-move')}
+        onMouseDown={
+          !isFullScreen ? (e) => e.button === 0 && pickUp(props.id) : undefined
+        }
+      />
+      <div className="flex gap-1">
+        <button className="w-4" onClick={() => toggleFullScren(props.id)}>
+          {isFullScreen ? <IconFullscreenExit /> : <IconFullscreen />}
+        </button>
+        <button className="w-4" onClick={() => removePanel(props.id)}>
+          <IconClose />
+        </button>
+      </div>
+    </div>
+  )
+}

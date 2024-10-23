@@ -2,6 +2,9 @@ import { useState } from 'react'
 import { ApiAddressEntry, ApiProjectChain } from '../api/types'
 import { IconChevronDown } from '../icons/IconChevronDown'
 import { IconChevronRight } from '../icons/IconChevronRight'
+import { IconContract } from '../icons/IconContract'
+import { IconFolder } from '../icons/IconFolder'
+import { IconFolderOpened } from '../icons/IconFolderOpened'
 import { useApiProject } from './useApiProject'
 
 export function ListPanel() {
@@ -29,7 +32,7 @@ function ListItemChain(props: { chain: ApiProjectChain }) {
     <li>
       <button
         onClick={() => setOpen((open) => !open)}
-        className="flex h-5 w-full cursor-pointer select-none items-center gap-1 font-bold text-xs uppercase hover:bg-slate-400"
+        className="flex h-[22px] w-full cursor-pointer select-none items-center gap-1 font-bold text-xs uppercase hover:bg-slate-400"
       >
         {open && <IconChevronDown />}
         {!open && <IconChevronRight />}
@@ -75,20 +78,34 @@ function ListItemContracts(props: {
     <>
       <button
         onClick={() => setOpen((open) => !open)}
-        className="flex h-5 w-full cursor-pointer select-none items-center gap-1 pl-2 text-sm hover:bg-slate-400"
+        className="flex h-[22px] w-full cursor-pointer select-none items-center gap-1 pl-2 text-sm hover:bg-slate-400"
       >
-        {open && <IconChevronDown />}
-        {!open && <IconChevronRight />}
+        {open && (
+          <>
+            <IconChevronDown />
+            <IconFolderOpened />
+          </>
+        )}
+        {!open && (
+          <>
+            <IconChevronRight />
+            <IconFolder />
+          </>
+        )}
         {props.title}
       </button>
       {open && (
         <ol>
           {props.entries.map((entry) => (
             <li
-              className="h-5 cursor-pointer select-none pl-7 text-sm hover:bg-slate-400"
+              className="flex h-[22px] cursor-pointer select-none items-center gap-1 pl-4 text-sm hover:bg-slate-400"
               key={entry.address}
             >
-              {entry.name || entry.address}
+              <div className="mr-[7px] h-[22px] border-black border-l" />
+              <IconContract />
+              <span className="overflow-hidden text-ellipsis">
+                {entry.name || entry.address}
+              </span>
             </li>
           ))}
         </ol>

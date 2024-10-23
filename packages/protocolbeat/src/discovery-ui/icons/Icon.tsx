@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { ReactNode } from 'react'
 
 export function Icon(props: { children: ReactNode; className?: string }) {
@@ -9,7 +10,7 @@ export function Icon(props: { children: ReactNode; className?: string }) {
       viewBox="0 0 16 16"
       fill="none"
       role="img"
-      className={props.className}
+      className={clsx('min-h-4 min-w-4', props.className)}
     >
       {props.children}
     </svg>
