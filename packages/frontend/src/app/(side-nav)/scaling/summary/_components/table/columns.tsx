@@ -22,14 +22,14 @@ export const scalingSummaryColumns = [
   columnHelper.accessor('name', {
     cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
   }),
-  columnHelper.accessor('risks', {
+  columnHelper.display({
+    header: 'Risks',
     cell: (ctx) => (
       <PizzaRosetteCell
-        values={ctx.getValue()}
+        values={ctx.row.original.risks}
         isUnderReview={ctx.row.original.isUnderReview}
       />
     ),
-    enableSorting: false,
     meta: {
       align: 'center',
     },
