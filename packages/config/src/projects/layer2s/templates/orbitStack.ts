@@ -130,6 +130,7 @@ export interface OrbitStackConfigCommon {
   nativeAddresses?: Record<string, ScalingProjectContract[]>
   nativePermissions?: Record<string, ScalingProjectPermission[]> | 'UnderReview'
   additionalPurposes?: ScalingProjectPurpose[]
+  discoveryDrivenData?: boolean
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -340,13 +341,16 @@ export function orbitStackCommon(
     id: ProjectId(templateVars.discovery.projectName),
     createdAt: templateVars.createdAt,
     contracts: {
-      addresses: unionBy(
-        [
-          ...(templateVars.nonTemplateContracts ?? []),
-          ...resolvedTemplates.contracts,
-        ],
-        'address',
-      ),
+      addresses:
+        templateVars.discoveryDrivenData === true
+          ? templateVars.discovery.getDiscoveredContracts()
+          : unionBy(
+              [
+                ...(templateVars.nonTemplateContracts ?? []),
+                ...resolvedTemplates.contracts,
+              ],
+              'address',
+            ),
       nativeAddresses: templateVars.nativeAddresses,
       risks: templateVars.nonTemplateContractRisks ?? [
         CONTRACTS.UPGRADE_NO_DELAY_RISK,
@@ -454,12 +458,15 @@ export function orbitStackCommon(
         templateVars.nonTemplateTechnology?.otherConsiderations ??
         EVM_OTHER_CONSIDERATIONS,
     },
-    permissions: [
-      sequencers,
-      validators,
-      ...resolvedTemplates.permissions,
-      ...(templateVars.nonTemplatePermissions ?? []),
-    ],
+    permissions:
+      templateVars.discoveryDrivenData === true
+        ? templateVars.discovery.getDiscoveredPermissions()
+        : [
+            sequencers,
+            validators,
+            ...resolvedTemplates.permissions,
+            ...(templateVars.nonTemplatePermissions ?? []),
+          ],
     nativePermissions: templateVars.nativePermissions,
     stateDerivation: templateVars.stateDerivation,
     stateValidation:
@@ -723,6 +730,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     },
     milestones: [],
     knowledgeNuggets: [],
+    discoveryDrivenData: templateVars.discoveryDrivenData,
   }
 }
 
