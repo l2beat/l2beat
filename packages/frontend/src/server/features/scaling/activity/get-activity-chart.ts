@@ -49,7 +49,7 @@ const getCachedActivityChart = cache(
     )?.timestamp
 
     if (!startTimestamp) {
-      return []
+      return { result: [], syncedStatuses: {} }
     }
 
     const startIndex = entries.findIndex(
@@ -94,7 +94,18 @@ const getCachedActivityChart = cache(
       return [+timestamp, entry.count, entry.ethereumCount]
     })
 
-    return result
+    const reversedEntries = entries.slice().reverse()
+    const syncedStatuses: Record<string, number> = {}
+    for (const project of projects) {
+      const lastSynced = reversedEntries.find(
+        (e) => e.projectId === project,
+      )?.timestamp
+      if (lastSynced) {
+        syncedStatuses[project.toString()] = lastSynced.toNumber()
+      }
+    }
+
+    return { result, syncedStatuses }
   },
   ['activityChart'],
   { revalidate: UnixTime.HOUR },
@@ -111,5 +122,8 @@ function getMockActivityChart(
   ]
   const timestamps = generateTimestamps(adjustedRange, 'daily')
 
-  return timestamps.map((timestamp) => [+timestamp, 15, 11])
+  return {
+    result: timestamps.map((timestamp) => [+timestamp, 15, 11]),
+    syncedStatuses: {},
+  }
 }
