@@ -31,11 +31,11 @@ export function ProjectChartTimeRange({ range, syncStatus }: Props) {
   }
 
   return (
-    <p className="flex h-8 items-center gap-2 font-bold">
+    <div className="flex h-8 items-center gap-2 font-bold">
       {range ? formatRange(...range) : null}{' '}
       {syncStatus && !syncStatus.isSynced && (
         <NotSyncedIcon syncedUntil={syncStatus.syncedUntil} />
       )}
-    </p>
+    </div>
   )
 }
