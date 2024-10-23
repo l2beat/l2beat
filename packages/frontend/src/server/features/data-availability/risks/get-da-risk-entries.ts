@@ -52,7 +52,7 @@ export async function getDaRiskEntries() {
         name: daLayer.display.name,
         slug: daLayer.display.slug,
         kind: daLayer.kind,
-        href: `/data-availability/projects/${daLayer.display.slug}`,
+        href: bridges[0]?.href,
         systemCategory: daLayer.systemCategory,
         layerType: kindToType(daLayer.kind),
         risks: {
