@@ -1,12 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
-import { BlockExplorerClient, BlockProvider, RpcClient2 } from '@l2beat/shared'
+import { BlockProvider } from '@l2beat/shared'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
 import { ActivityConfig } from '../../config/Config'
-import { DegateClient } from '../../peripherals/degate'
-import { LoopringClient } from '../../peripherals/loopring/LoopringClient'
-import { StarkexClient } from '../../peripherals/starkex/StarkexClient'
-import { StarknetClient } from '../../peripherals/starknet/StarknetClient'
-import { ZksyncLiteClient } from '../../peripherals/zksynclite/ZksyncLiteClient'
 import { TxsCountProvider } from '../activity/indexers/types'
 import { DegateTxsCountProvider } from '../activity/services/providers/DegateTxsCountProvider'
 import { LoopringTxsCountProvider } from '../activity/services/providers/LoopringTxsCountProvider'
@@ -17,30 +12,24 @@ import { ZKsyncLiteTxsCountProvider } from '../activity/services/providers/ZKsyn
 import { RpcUopsAnalyzer } from '../activity/services/uops/analyzers/RpcUopsAnalyzer'
 import { StarknetUopsAnalyzer } from '../activity/services/uops/analyzers/StarknetUopsAnalyzer'
 import { BlockTimestampProvider } from '../tvl/services/BlockTimestampProvider'
+import { BlockClients } from './BlockClients'
 
 export class ActivityProviders {
   constructor(
-    private readonly logger: Logger,
+    private readonly config: ActivityConfig,
+    private readonly clients: BlockClients,
     private readonly rpcUopsAnalyzer: RpcUopsAnalyzer,
     private readonly starknetUopsAnalyzer: StarknetUopsAnalyzer,
-    private readonly rpcClients: RpcClient2[],
-    private readonly blockExplorerClients: BlockExplorerClient[],
-    private readonly config: ActivityConfig,
-    private readonly zksyncLiteClient: ZksyncLiteClient,
-    private readonly starknetClient: StarknetClient,
-    private readonly loopringClient: LoopringClient,
-    private readonly degateClient: DegateClient,
-    private readonly starkexClient: StarkexClient,
+    private readonly logger: Logger,
   ) {}
 
-  // TODO: are project and chain the same?
   getTxsCountProvider(chain: string): TxsCountProvider {
     const project = this.config.projects.find((p) => p.id === chain)
     assert(project, `Project ${chain} not found`)
 
     switch (project.config.type) {
       case 'rpc': {
-        const clients = this.rpcClients.filter((r) => r.chain === chain)
+        const clients = this.clients.rpc.filter((r) => r.chain === chain)
         assert(
           clients.length > 0,
           `There should be clients defined for ${chain}`,
@@ -56,24 +45,30 @@ export class ActivityProviders {
         )
       }
       case 'zksync': {
-        return new ZKsyncLiteTxsCountProvider(this.zksyncLiteClient, project.id)
+        return new ZKsyncLiteTxsCountProvider(
+          this.clients.zksyncLiteClient,
+          project.id,
+        )
       }
       case 'starknet': {
         return new StarknetTxsCountProvider(
-          this.starknetClient,
+          this.clients.starknetClient,
           project.id,
           this.starknetUopsAnalyzer,
         )
       }
       case 'loopring': {
-        return new LoopringTxsCountProvider(this.loopringClient, project.id)
+        return new LoopringTxsCountProvider(
+          this.clients.loopringClient,
+          project.id,
+        )
       }
       case 'degate': {
-        return new DegateTxsCountProvider(this.degateClient, project.id)
+        return new DegateTxsCountProvider(this.clients.degateClient, project.id)
       }
       case 'starkex': {
         return new StarkexTxsCountProvider(
-          this.starkexClient,
+          this.clients.starkexClient,
           project.id,
           project.config.product,
         )
@@ -90,9 +85,11 @@ export class ActivityProviders {
 
     assert(project.config.type !== 'starkex')
 
-    const blockExplorerClient = this.blockExplorerClients.find((b) => b.chain)
+    const blockExplorerClient = this.clients.blockExplorerClients.find(
+      (b) => b.chain,
+    )
 
-    const clients = this.rpcClients.filter((r) => r.chain === chain)
+    const clients = this.clients.rpc.filter((r) => r.chain === chain)
     assert(clients.length > 0, `There should be clients defined for ${chain}`)
 
     const provider = new BlockProvider(clients)
