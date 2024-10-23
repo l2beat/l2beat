@@ -56,7 +56,8 @@ const daLayerRisksColumns = [
   columnHelper.group({
     header: 'Da Layer Risks',
     columns: [
-      columnHelper.accessor('risks.economicSecurity', {
+      columnHelper.display({
+        id: 'economic-security',
         header: 'Economic security',
         cell: (ctx) => (
           <RiskCell risk={ctx.row.original.risks.economicSecurity} />
@@ -65,7 +66,8 @@ const daLayerRisksColumns = [
           rowSpan: spanByBridges,
         },
       }),
-      columnHelper.accessor('risks.fraudDetection', {
+      columnHelper.display({
+        id: 'fraud-detection',
         header: 'Fraud detection',
         cell: (ctx) => (
           <RiskCell risk={ctx.row.original.risks.fraudDetection} />
