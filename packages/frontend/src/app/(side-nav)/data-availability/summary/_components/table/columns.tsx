@@ -28,7 +28,8 @@ const nameColumn = columnHelper.accessor('name', {
   cell: (ctx) => <DaLayerCell entry={ctx.row.original} />,
 })
 
-const daRisksColumn = columnHelper.accessor('risks', {
+const daRisksColumn = columnHelper.display({
+  id: 'da-risks',
   header: 'DA Risks',
   cell: (ctx) => {
     const risks = mapLayerRisksToRosetteValues(ctx.row.original.risks)
@@ -41,7 +42,8 @@ const daRisksColumn = columnHelper.accessor('risks', {
   },
 })
 
-const daBridgeRisksColumn = columnHelper.accessor('risks', {
+const daBridgeRisksColumn = columnHelper.display({
+  id: 'bridge-risks',
   header: 'Bridge Risks',
   cell: (ctx) => {
     const [firstBridge] = ctx.row.original.bridges
@@ -52,7 +54,7 @@ const daBridgeRisksColumn = columnHelper.accessor('risks', {
 
     const risks = mapBridgeRisksToRosetteValues(firstBridge.risks)
 
-    return <GrissiniCell values={risks.slice(0, 3)} />
+    return <GrissiniCell values={risks} />
   },
   enableSorting: false,
   meta: {

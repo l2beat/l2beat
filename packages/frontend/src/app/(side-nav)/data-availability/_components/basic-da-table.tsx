@@ -9,6 +9,10 @@ import {
 import { range } from 'lodash'
 import { type CSSProperties } from 'react'
 import React from 'react'
+import {
+  getBasicTableGroupParams,
+  getBasicTableHref,
+} from '~/components/table/basic-table'
 import { SortingArrows } from '~/components/table/sorting/sorting-arrows'
 import {
   Table,
@@ -123,7 +127,7 @@ export function BasicDaTable<T extends BasicEntry>({
           )}
         <TableHeaderRow>
           {actualHeader.headers.map((header) => {
-            const groupParams = getGroupParams(header.column)
+            const groupParams = getBasicTableGroupParams(header.column)
             return (
               <React.Fragment key={`${actualHeader.id}-${header.id}`}>
                 <TableHead
@@ -183,8 +187,8 @@ export function BasicDaTable<T extends BasicEntry>({
               <TableRow className={cn(getRowTypeClassNames())}>
                 {row.getVisibleCells().map((cell) => {
                   const { meta } = cell.column.columnDef
-                  const groupParams = getGroupParams(cell.column)
-                  const href = getHref(row.original.href, meta?.hash)
+                  const groupParams = getBasicTableGroupParams(cell.column)
+                  const href = getBasicTableHref(row.original.href, meta?.hash)
 
                   const rowSpan = meta?.rowSpan
                     ? meta.rowSpan(cell.getContext())
@@ -197,32 +201,31 @@ export function BasicDaTable<T extends BasicEntry>({
                   }
 
                   return (
-                    <React.Fragment key={`${row.id}-${cell.id}`}>
-                      <TableCell
-                        href={href}
-                        align={meta?.align}
-                        className={cn(
-                          cell.column.getIsPinned() &&
-                            getRowTypeClassNamesWithoutOpacity(),
-                          groupParams?.isFirstInGroup && 'pl-6',
-                          groupParams?.isLastInGroup && '!pr-6',
-                          cell.column.getCanSort() && meta?.align === undefined
-                            ? groupParams?.isFirstInGroup
-                              ? 'pl-10'
-                              : 'pl-4'
-                            : undefined,
+                    <TableCell
+                      key={`${row.id}-${cell.id}`}
+                      href={href}
+                      align={meta?.align}
+                      className={cn(
+                        cell.column.getIsPinned() &&
+                          getRowTypeClassNamesWithoutOpacity(),
+                        groupParams?.isFirstInGroup && 'pl-6',
+                        groupParams?.isLastInGroup && '!pr-6',
+                        cell.column.getCanSort() && meta?.align === undefined
+                          ? groupParams?.isFirstInGroup
+                            ? 'pl-10'
+                            : 'pl-4'
+                          : undefined,
 
-                          meta?.cellClassName,
-                        )}
-                        style={getCommonPinningStyles(cell.column)}
-                        rowSpan={rowSpan}
-                      >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </TableCell>
-                    </React.Fragment>
+                        meta?.cellClassName,
+                      )}
+                      style={getCommonPinningStyles(cell.column)}
+                      rowSpan={rowSpan}
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </TableCell>
                   )
                 })}
                 {renderInlineSpanFill?.({ row })}
@@ -257,77 +260,28 @@ function RowFiller<T, V>(props: { headers: Header<T, V>[] }) {
   return (
     <tr>
       {props.headers.map((header) => (
-        <>
-          <td
-            key={header.id}
-            colSpan={header.colSpan}
-            className={cn(
-              'h-4',
-              !header.isPlaceholder && 'rounded-b-lg',
-              header.column.getIsPinned() &&
-                getRowTypeClassNamesWithoutOpacity(),
-            )}
-            style={getCommonPinningStyles(header.column)}
-          />
-        </>
+        <td
+          key={header.id}
+          colSpan={header.colSpan}
+          className={cn(
+            'h-4',
+            !header.isPlaceholder && 'rounded-b-lg',
+            header.column.getIsPinned() && getRowTypeClassNamesWithoutOpacity(),
+          )}
+          style={getCommonPinningStyles(header.column)}
+        />
       ))}
     </tr>
   )
-}
-
-type ColumnFillerProps =
-  | {
-      as: 'th' | 'colgroup'
-    }
-  | {
-      as: 'td'
-      href: string | undefined
-    }
-
-export function ColumnFiller(props: ColumnFillerProps) {
-  if (props.as === 'td') {
-    return (
-      <td>
-        <a href={props.href} className="flex h-full w-4 items-center" />
-      </td>
-    )
-  }
-
-  const Comp = props.as
-  return <Comp className="w-4" />
-}
-
-function getGroupParams<T>(column: Column<T>) {
-  if (!column.parent) return undefined
-
-  const leafColumns = column.parent.getLeafColumns()
-  const index = leafColumns.findIndex((c) => c.id === column.id)
-  const isFirstInGroup = index !== undefined ? index === 0 : undefined
-  const isLastInGroup = leafColumns
-    ? index === leafColumns.length - 1
-    : undefined
-  return {
-    headerTitle: column.parent.columnDef.header,
-    isFirstInGroup,
-    isLastInGroup,
-  }
-}
-
-function getHref(href: string | undefined, hash: string | undefined) {
-  if (!hash) {
-    return href
-  }
-
-  return `${href}#${hash}`
 }
 
 /*
   NOTICE: It is important that this functions return the same colors
 */
 export function getRowTypeClassNames() {
-  return 'hover:shadow-none border-b-surface-tertiary'
+  return 'dark:hover:bg-white/[0.1] hover:bg-black/[0.05]'
 }
 
 export function getRowTypeClassNamesWithoutOpacity() {
-  return 'bg-surface-primary group-hover/row:shadow-sm group-hover/row:bg-[#EEEEEE] dark:group-hover/row:bg-[#35363A]'
+  return 'bg-surface-primary group-hover/row:bg-[#EEEEEE] dark:group-hover/row:bg-[#35363A]'
 }
