@@ -2,7 +2,7 @@
   "name": "winr",
   "chain": "arbitrum",
   "blockNumber": 264379343,
-  "configHash": "0xf4a7f0e3bbfed163321b29cc1c98476952ce6d438decdd9465695089e56f9cee",
+  "configHash": "0x13d662f16ef9ba5c7d090fcfadb2520925a20add648a798eb5443cef32c7a19c",
   "contracts": [
     {
       "name": "ChallengeManager",
@@ -625,7 +625,7 @@
         {
           "permission": "sequence",
           "target": "0x8AeDdE55Cb361e73a0B0c0cF2A5bB35E97a20456",
-          "description": "can submit transaction batches or commitments to the SequencerInbox contract on the hostchain."
+          "description": "can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
         }
       ]
     },
@@ -1276,7 +1276,7 @@
     "orbitstack/Inbox": "0x1938bb9de2d7f328ae3e83f2dd9f5d3c5575b599fc097cf9308bac4d5bb3e89e",
     "orbitstack/Outbox": "0xac65b89cf03d50afb81ade4d5623f1815977ae46d92280d53ca828df34424488",
     "orbitstack/RollupProxy": "0x329494c897421d49fd8b6041c5444fb2af7508c8b81f134e703e7d11cbd9be1b",
-    "orbitstack/SequencerInbox": "0xb77ec24fa3e136cb22bb61f301b04f7060d8305763c022dff72423ce7483ca3d",
+    "orbitstack/SequencerInbox": "0x54c54e9ae22272a3f46f796dad091a0a8e89da6775455637250b55ecaa7272f8",
     "orbitstack/UpgradeExecutor": "0x603e9f3f0d76cb0bbc6fbf2ac64cce35b00905689e35c7535a2c5fec00147370"
   }
 }
