@@ -3122,6 +3122,7 @@
         "$pastUpgrades": [
           [
             "2024-06-22T17:51:35.000Z",
+            "0x7fae224458dbab0d61560c556fdc166ac0e7f32c43b338706e892ae35e89eefb",
             ["0x72427dA7EFBa1585E94F30C72221d8d394aE3Bb7"]
           ]
         ],
@@ -18436,7 +18437,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "transporter/CommitStoreV1": "0xd75293261783840120d33cf40ea7cb9a8391a9544614066e1b109391624facca",
     "transporter/ManyChainMultiSig": "0xd420005fec6c7ed116556a77ecb7d6b4eadeacd367e3bee473ca908e54a1a9b2",
     "transporter/OffRampV1": "0xe5666deffe02d58fdffb9ad4f6d3cfafb6040feaf3e5c43e439e1f209e104bcf",

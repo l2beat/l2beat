@@ -14,6 +14,7 @@ const shared = new ProjectDiscovery('shared-zk-stack')
 const bridge = shared.getContract('L1SharedBridge')
 
 export const cronoszkevm: Layer2 = zkStackL2({
+  createdAt: new UnixTime(1722430938), // 2024-07-31T13:02:18Z
   discovery,
   discovery_ZKstackGovL2,
   validatorsEvents: {

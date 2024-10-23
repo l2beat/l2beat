@@ -1,4 +1,4 @@
-import { ChainId } from '@l2beat/shared-pure'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import {
   ScalingProjectContracts,
   ScalingProjectPermission,
@@ -32,6 +32,8 @@ export type OnChainDaBridge = CommonDaBridge & {
   chain: string
   /** Data about related permissions - preferably from discovery. */
   permissions: ScalingProjectPermission[]
+  /** Data about related permissions on chains other than Ethereum - preferably from discovery. */
+  nativePermissions?: Record<string, ScalingProjectPermission[]> | 'UnderReview'
   /** Data about the validation type of the bridge */
   validation: {
     type: string
@@ -61,6 +63,8 @@ export type DacBridge = CommonDaBridge & {
 type CommonDaBridge = {
   /** Unique identifier of the data availability bridge. */
   id: string
+  /** Date of creation of the file (not the project) */
+  createdAt: UnixTime
   display: DaBridgeDisplay
   /** Is the DA bridge under review? */
   isUnderReview?: boolean

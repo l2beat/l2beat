@@ -53,6 +53,7 @@ const upgradeDelay = 0
 export const scroll: Layer2 = {
   type: 'layer2',
   id: ProjectId('scroll'),
+  createdAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
   badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs],
   display: {
     name: 'Scroll',
@@ -151,6 +152,7 @@ export const scroll: Layer2 = {
     coingeckoPlatform: 'scroll',
   },
   config: {
+    associatedTokens: ['SCR'],
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9'),

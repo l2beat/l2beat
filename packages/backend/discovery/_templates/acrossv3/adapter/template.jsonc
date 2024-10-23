@@ -32,7 +32,8 @@
     "L1_TOKEN_BRIDGE",
     "L1_USDC_BRIDGE",
     "l1StandardBridge",
-    "messenger"
+    "messenger",
+    "L1_OP_USDC_BRIDGE"
   ],
   "ignoreMethods": ["getL1CallValue"],
   "ignoreInWatchMode": [

@@ -189,6 +189,7 @@
         "$pastUpgrades": [
           [
             "2022-08-11T21:07:19.000Z",
+            "0x6c8b4e4fc51235fe438779e444c7f6b8332ad8e3ea371cee73974ca4c5b9de8f",
             [
               "0x67bC2461000cfbe67e9b623EC8B460168BdEC5F0",
               "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
@@ -199,6 +200,7 @@
           ],
           [
             "2022-08-23T13:51:05.000Z",
+            "0x4d944148289a3ce02380ec7819dcddd59c6c75bc53b98a4442a174d5a92ff14f",
             [
               "0x67bC2461000cfbe67e9b623EC8B460168BdEC5F0",
               "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
@@ -209,6 +211,7 @@
           ],
           [
             "2022-12-22T08:17:35.000Z",
+            "0x57d264627a2d18fbee29c402a3e48fe53c496ce51ea140adc194ab2cc9b235f4",
             [
               "0xdD813397b79f8df581eEb0c4B8aB72304c528396",
               "0x533a7f4bE5453513049EB94A2b115F2CcE161dce",
@@ -219,6 +222,7 @@
           ],
           [
             "2023-01-06T06:29:35.000Z",
+            "0x40b1d2a6419d7e69d4a0d7f779548c138795c3649099f68fc5b2d7e6dca9b28b",
             [
               "0xdD813397b79f8df581eEb0c4B8aB72304c528396",
               "0x533a7f4bE5453513049EB94A2b115F2CcE161dce",
@@ -376,6 +380,7 @@
         "$pastUpgrades": [
           [
             "2023-10-18T12:19:47.000Z",
+            "0x27741474cceaf88b1e1c14ae8b6f39e6f538352db3d214e3c74abbf812dcb8d9",
             [
               "0x3167617e913BF59afb90e5ec1A7B32D4Ea03eae4",
               "0x5a50e280883B1FB39Aa04Eb263BCA47630D17D8E",
@@ -386,6 +391,7 @@
           ],
           [
             "2023-11-28T15:26:47.000Z",
+            "0xa56eaf93de66cd491d4e4ca0997883d927848861429ba5b3ae64b6652d4cee52",
             [
               "0x3167617e913BF59afb90e5ec1A7B32D4Ea03eae4",
               "0x5a50e280883B1FB39Aa04Eb263BCA47630D17D8E",
@@ -1245,6 +1251,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
   }
 }

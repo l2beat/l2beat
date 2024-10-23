@@ -9,6 +9,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('mode')
 
 export const mode: Layer2 = opStackL2({
+  createdAt: new UnixTime(1695904849), // 2023-09-28T12:40:49Z
   discovery,
   badges: [Badge.Infra.Superchain, Badge.RaaS.Conduit],
   display: {

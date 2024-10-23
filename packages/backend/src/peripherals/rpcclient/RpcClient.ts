@@ -2,6 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { Bytes, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
+import { EVMBlock } from '@l2beat/shared'
 import { getBlockNumberAtOrBefore } from '../getBlockNumberAtOrBefore'
 import { RateLimitedProvider } from './RateLimitedProvider'
 import { BlockTag, CallParameters } from './types'
@@ -62,7 +63,9 @@ export class RpcClient {
 
   async getBlockWithTransactions(blockNumber: number) {
     // eth_getBlockByNumber with transactions
-    return await this.provider.getBlockWithTransactions(blockNumber)
+    return (await this.provider.getBlockWithTransactions(
+      blockNumber,
+    )) as EVMBlock
   }
 
   async getTransaction(txHash: string) {

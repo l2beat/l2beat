@@ -7,6 +7,7 @@ import { Layer3 } from '../layer3s'
 const discovery = new ProjectDiscovery('winr', 'arbitrum')
 
 export const winr: Layer3 = orbitStackL3({
+  createdAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
   discovery,
   badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum, Badge.RaaS.Conduit],
   additionalPurposes: ['Gaming'],
@@ -26,7 +27,7 @@ export const winr: Layer3 = orbitStackL3({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  rpcUrl: 'https://rpc.winr.games ',
+  rpcUrl: 'https://rpc.winr.games',
   associatedTokens: ['WINR'],
   nativeToken: 'WINR',
   nonTemplatePermissions: [

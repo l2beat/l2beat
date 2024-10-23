@@ -13,9 +13,7 @@
         "0xebfb36a18bcaa176678925149b43fdc5f9f943d98a6405ae1cbc26f4c168ff88"
       ],
       "proxyType": "resolved delegate proxy",
-      "descriptions": [
-        "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
-      ],
+      "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "categories": ["Core"],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1679193095,
@@ -25,26 +23,32 @@
         "$pastUpgrades": [
           [
             "2023-03-19T02:37:11.000Z",
+            "0x7abed0916f03770749ed56034cabc49ae8e403a7940bc4137493e439e431d609",
             ["0x0000000000000000000000000000000000000000"]
           ],
           [
             "2023-03-19T02:38:11.000Z",
+            "0x081ad9f0592ee5da39dceb73ea43b57f1442749d480a756e4938bf4999f0ee22",
             ["0xfA6aCD3c452ADE8910505cc61352274b4C6d526c"]
           ],
           [
             "2023-04-01T20:56:11.000Z",
+            "0x2967e7dde9e9a7b2e1535c014117e73b29d0a5f486b533bbf2461c34c36a3ff6",
             ["0x8ea8000814b14884317dF94D2fD26553C3fFd976"]
           ],
           [
             "2023-04-01T20:58:11.000Z",
+            "0x45f84133cdae2a8b259ab309ca0d499a0b175986c08a4e313ac25109b1dd858c",
             ["0x8ea8000814b14884317dF94D2fD26553C3fFd976"]
           ],
           [
             "2023-04-01T20:58:59.000Z",
+            "0xd19ed55de296e03d3a00afdf5272d8ef73404602966de1682de751bc91e0f8e6",
             ["0x8ea8000814b14884317dF94D2fD26553C3fFd976"]
           ],
           [
             "2023-08-30T22:08:35.000Z",
+            "0x60f1457bbf8e61f25203769ade47092100fb0d0f105d1b0a4734dbb052b0910d",
             ["0x8CfF5bDb1B428B979E3D87087dA8549A28065DDB"]
           ]
         ],
@@ -113,9 +117,7 @@
         "0x79abdbd90460fe2ac0535b5cb7b4c45284322b49a0a090d1c509cdaf35dbc87e"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
-      ],
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -232,9 +234,7 @@
         "0xd7fe53899c31d6d8e73b6724694736dc3c3c4ebc8f4ddbe989fe9d3dba26692d"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
-      ],
+      "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
       "issuedPermissions": [
         {
           "permission": "guard",
@@ -260,14 +260,17 @@
         "$pastUpgrades": [
           [
             "2023-03-19T02:38:11.000Z",
+            "0x081ad9f0592ee5da39dceb73ea43b57f1442749d480a756e4938bf4999f0ee22",
             ["0x9Cb22AF811cFF79b89d25570FAC31586af7b4a97"]
           ],
           [
             "2023-04-01T20:59:47.000Z",
+            "0x67627d33be7254318cea66122094bf3260d8dba551983dee907390414090503b",
             ["0xD45C7A59fca1b435ae805E8F6eF27418d92877AD"]
           ],
           [
             "2023-08-30T22:08:35.000Z",
+            "0x60f1457bbf8e61f25203769ade47092100fb0d0f105d1b0a4734dbb052b0910d",
             ["0x098927F692C86fA1722115652b9d2d7BE8cBa6D3"]
           ]
         ],
@@ -292,9 +295,7 @@
       "sourceHashes": [
         "0xdc86a850f11dc2b5c0472a05d0e3c14f239baf2c3b1ab19631591b0827985380"
       ],
-      "descriptions": [
-        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
-      ],
+      "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -323,9 +324,7 @@
         "0xcca8986d0789aa489ba57cd234e886bd92cb5a0d477e1f5ae5e6e030e15fb183"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
-      ],
+      "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
       "issuedPermissions": [
         {
           "permission": "challenge",
@@ -361,18 +360,22 @@
         "$pastUpgrades": [
           [
             "2023-03-19T02:38:11.000Z",
+            "0x081ad9f0592ee5da39dceb73ea43b57f1442749d480a756e4938bf4999f0ee22",
             ["0x2EFA0d1CBd36Aa0db7C0b59d32F6dA68cA83A722"]
           ],
           [
             "2023-03-27T23:14:35.000Z",
+            "0x52bf2ebf9e73d5b6c5119b9fb5cb5346c2784dbb9bb7ab4de28cc289e5ffcafd",
             ["0xfbc5b862CE0007AfD9fc58cf07D8A00Cf494fAAA"]
           ],
           [
             "2023-04-01T20:59:23.000Z",
+            "0x919f18f60fdf6f2a0caba6d91002f7124eed9ff6f795eb0b283b8d6d94ec58ca",
             ["0xb717dF06e095Bc7438721964DD43a2532963E885"]
           ],
           [
             "2023-08-30T22:08:35.000Z",
+            "0x60f1457bbf8e61f25203769ade47092100fb0d0f105d1b0a4734dbb052b0910d",
             ["0x0af92E6944900abA4B9BAC1417bA13ED6F45c27f"]
           ]
         ],
@@ -401,9 +404,7 @@
         "0x29908eb7685943ff431cd384af851ce36a30997bbad880f9b4385bfc3abb86a2"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
-      ],
+      "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -434,14 +435,17 @@
         "$pastUpgrades": [
           [
             "2023-03-19T02:36:59.000Z",
+            "0xbef016225c40c0d75131bc4e8a5f6ce6f7a5c872e2449f267413c5bbc6afbf25",
             ["0x552FFBdDFB01B6F7f3A3C39E9d3D0A5Fa8436394"]
           ],
           [
             "2023-04-01T20:59:59.000Z",
+            "0xdd0f719c148c6de4894f667a50f2b580ee92fbe7cd673e918aebe05c7b49266b",
             ["0x98F5f3455B71C297e4f7D7Cd1FAA80b5CDf4A542"]
           ],
           [
             "2023-08-30T22:08:35.000Z",
+            "0x60f1457bbf8e61f25203769ade47092100fb0d0f105d1b0a4734dbb052b0910d",
             ["0xA872bca05c9F8A97CC36D879e43B33dB8ed7b69E"]
           ]
         ],
@@ -768,7 +772,7 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",

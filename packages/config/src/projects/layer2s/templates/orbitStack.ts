@@ -2,7 +2,7 @@ import {
   ContractParameters,
   get$Implementations,
 } from '@l2beat/discovery-types'
-import { assert, ProjectId, formatSeconds } from '@l2beat/shared-pure'
+import { assert, ProjectId, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { unionBy } from 'lodash'
@@ -92,12 +92,14 @@ export const WASMVM_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
 ]
 
 export interface OrbitStackConfigCommon {
+  createdAt: UnixTime
   discovery: ProjectDiscovery
   stateValidationImage?: string
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
   nonTemplateEscrows?: ScalingProjectEscrow[]
+  overrideEscrows?: ScalingProjectEscrow[]
   upgradeability?: {
     upgradableBy: string[] | undefined
     upgradeDelay: string | undefined
@@ -336,6 +338,7 @@ export function orbitStackCommon(
 
   return {
     id: ProjectId(templateVars.discovery.projectName),
+    createdAt: templateVars.createdAt,
     contracts: {
       addresses: unionBy(
         [
@@ -687,23 +690,25 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     riskView,
     config: {
       associatedTokens: templateVars.associatedTokens,
-      escrows: unionBy(
-        [
-          ...(templateVars.nonTemplateEscrows ?? []),
-          templateVars.discovery.getEscrowDetails({
-            includeInTotal: false,
-            address: templateVars.bridge.address,
-            tokens: templateVars.nativeToken
-              ? [templateVars.nativeToken]
-              : ['ETH'],
-            description: templateVars.nativeToken
-              ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.nativeToken} sent to L2.`
-              : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
-            ...upgradeability,
-          }),
-        ],
-        'address',
-      ),
+      escrows:
+        templateVars.overrideEscrows ??
+        unionBy(
+          [
+            ...(templateVars.nonTemplateEscrows ?? []),
+            templateVars.discovery.getEscrowDetails({
+              includeInTotal: false,
+              address: templateVars.bridge.address,
+              tokens: templateVars.nativeToken
+                ? [templateVars.nativeToken]
+                : ['ETH'],
+              description: templateVars.nativeToken
+                ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.nativeToken} sent to L2.`
+                : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
+              ...upgradeability,
+            }),
+          ],
+          'address',
+        ),
       transactionApi:
         templateVars.transactionApi ??
         (templateVars.rpcUrl !== undefined
@@ -889,7 +894,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     },
     config: {
       associatedTokens: templateVars.associatedTokens,
-      escrows: [
+      escrows: templateVars.overrideEscrows ?? [
         templateVars.discovery.getEscrowDetails({
           address: templateVars.bridge.address,
           tokens: templateVars.nativeToken

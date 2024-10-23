@@ -1,4 +1,153 @@
-Generated with discovered.json: 0xf190cdf0690aff41c935a082d8c444f6fa8ffffa
+Generated with discovered.json: 0x3426cc0d9a5c9673e31fc40e1ffd585f6457ae14
+
+# Diff at Mon, 21 Oct 2024 12:50:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e660599f23a07618fe949a07be1f516ce44f1914 block: 20977673
+- current block number: 20977673
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20977673 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x47861E0419BE83d0175818a09221B6DF2EFD7793) {
+    +++ description: State batches / commitments get posted here.
+      descriptions:
+-        ["State batches / commitments get posted here."]
+      description:
++        "State batches / commitments get posted here."
+    }
+```
+
+```diff
+    contract RollupProxy (0xeb61c3FA03544021cf76412eFb9D0Ce7D8c0290d) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      descriptions:
+-        ["Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."]
+      description:
++        "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
+    }
+```
+
+Generated with discovered.json: 0xea9fb54d6ba3151f1ef04acbaba86e364d3ea4b9
+
+# Diff at Mon, 21 Oct 2024 11:12:09 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20977673
+- current block number: 20977673
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20977673 (main branch discovery), not current.
+
+```diff
+    contract Outbox (0x0b8071337dcB089478Ea740efC10904d9F359141) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC"]
+      values.$pastUpgrades.0.1:
+-        ["0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC"]
++        "0x07ff03aac60a3749cb5933d26f371a1d9956dcd6a045c719a91159c8b8d5e976"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x20195677a6De5f0f7dF4e21cE48F0D24e5477110) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x6c21303F5986180B1394d2C89f3e883890E2867b"]
+      values.$pastUpgrades.0.1:
+-        ["0x6c21303F5986180B1394d2C89f3e883890E2867b"]
++        "0x07ff03aac60a3749cb5933d26f371a1d9956dcd6a045c719a91159c8b8d5e976"
+    }
+```
+
+```diff
+    contract Bridge (0x2Be65c5b58F78B02AB5c0e798A9ffC181703D3C1) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"]
+      values.$pastUpgrades.0.1:
+-        ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"]
++        "0x07ff03aac60a3749cb5933d26f371a1d9956dcd6a045c719a91159c8b8d5e976"
+    }
+```
+
+```diff
+    contract SequencerInbox (0x47861E0419BE83d0175818a09221B6DF2EFD7793) {
+    +++ description: State batches / commitments get posted here.
+      values.$pastUpgrades.1.2:
++        ["0x383f16fB2809a56fC639c1eE2c93Ad2aa7Ee130A"]
+      values.$pastUpgrades.1.1:
+-        ["0x383f16fB2809a56fC639c1eE2c93Ad2aa7Ee130A"]
++        "0xc0e712054d68a04705baff16b7a9a90250799a1747911b98720cdb6c41d64b68"
+      values.$pastUpgrades.0.2:
++        ["0x958985cf2c54f99ba4a599221A8090C1F9Cee9A5"]
+      values.$pastUpgrades.0.1:
+-        ["0x958985cf2c54f99ba4a599221A8090C1F9Cee9A5"]
++        "0x07ff03aac60a3749cb5933d26f371a1d9956dcd6a045c719a91159c8b8d5e976"
+    }
+```
+
+```diff
+    contract RollupEventInbox (0x6c8faa6b06d4bDD5Af628ac28954736a0fC0BD6b) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"]
+      values.$pastUpgrades.0.1:
+-        ["0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"]
++        "0x07ff03aac60a3749cb5933d26f371a1d9956dcd6a045c719a91159c8b8d5e976"
+    }
+```
+
+```diff
+    contract ChallengeManager (0xC0880Eea7Ad1B28a39344D48B411bC96f3daf60D) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x1D901DD7A5eFE421C3C437B147040E5AF22E6A43"]
+      values.$pastUpgrades.0.1:
+-        ["0x1D901DD7A5eFE421C3C437B147040E5AF22E6A43"]
++        "0x07ff03aac60a3749cb5933d26f371a1d9956dcd6a045c719a91159c8b8d5e976"
+    }
+```
+
+```diff
+    contract Inbox (0xE961Ef06c26D0f032F0298c97C41e648d3bb715a) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x1162084C3C6575121146582Db5BE43189e8CEe6b"]
+      values.$pastUpgrades.0.1:
+-        ["0x1162084C3C6575121146582Db5BE43189e8CEe6b"]
++        "0x07ff03aac60a3749cb5933d26f371a1d9956dcd6a045c719a91159c8b8d5e976"
+    }
+```
+
+```diff
+    contract RollupProxy (0xeb61c3FA03544021cf76412eFb9D0Ce7D8c0290d) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      values.$pastUpgrades.0.2:
++        ["0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A","0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"]
+      values.$pastUpgrades.0.1:
+-        ["0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A","0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"]
++        "0x07ff03aac60a3749cb5933d26f371a1d9956dcd6a045c719a91159c8b8d5e976"
+    }
+```
+
+Generated with discovered.json: 0x120814a1099c68ac0d803b18fcb0c4876340cee7
 
 # Diff at Wed, 16 Oct 2024 11:43:04 GMT:
 

@@ -50,9 +50,7 @@
       "sourceHashes": [
         "0xdc86a850f11dc2b5c0472a05d0e3c14f239baf2c3b1ab19631591b0827985380"
       ],
-      "descriptions": [
-        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
-      ],
+      "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -81,9 +79,7 @@
         "0x5afa3e86b6524528383af0276ca7f40885c1eb2ae2e9932f65dabc6b58a99643"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
-      ],
+      "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -114,6 +110,7 @@
         "$pastUpgrades": [
           [
             "2024-03-05T23:11:37.000Z",
+            "0x4566594bfb88df599197022433abb97bca60e2440a8440befa2d6d4eeb5bf167",
             ["0x34E6305Fe21a0Ed945177dcD36D7E6084F9f1BcC"]
           ]
         ],
@@ -158,9 +155,7 @@
         "0x6d9fd2364c536d73c3e3064034991a037e4e43313e72fb130782bf63ca586437"
       ],
       "proxyType": "resolved delegate proxy",
-      "descriptions": [
-        "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
-      ],
+      "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "categories": ["Core"],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1709680209,
@@ -170,10 +165,12 @@
         "$pastUpgrades": [
           [
             "2024-03-05T23:10:15.000Z",
+            "0xc046607991072863d54134a45616c828b4e3773c03db24ac175061b7c8686971",
             ["0x727a91e8251A262A4ad5F2D5811c6cD862961759"]
           ],
           [
             "2024-03-05T23:12:19.000Z",
+            "0x96c9ee37516c6364471bcb425d12ab64dd1738936c45159e147828304afed9ff",
             ["0xb079375dDB17FaBae0F3Ed6B9950f6cD626cE2a3"]
           ]
         ],
@@ -203,9 +200,7 @@
         "0xd7fe53899c31d6d8e73b6724694736dc3c3c4ebc8f4ddbe989fe9d3dba26692d"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
-      ],
+      "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
       "issuedPermissions": [
         {
           "permission": "guard",
@@ -231,6 +226,7 @@
         "$pastUpgrades": [
           [
             "2024-03-05T23:12:45.000Z",
+            "0x356a647542cea792b4465f9e252049a0a338b054224787839dab296a67ef4589",
             ["0x1D9e8EcF1b3D0e773c2dE9f9B864d38322e5adb9"]
           ]
         ],
@@ -336,9 +332,7 @@
         "0x9acaa683f4e228c0e24b38c1b79cf896a311a7b85c6f036e915d0fb8593a3ca5"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
-      ],
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -374,9 +368,7 @@
         "0x66cdacb7ee63d044769108a364e635bea065ba30dc12d4e5ec83f8b90c228d3a"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
-      ],
+      "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
       "issuedPermissions": [
         {
           "permission": "challenge",
@@ -412,6 +404,7 @@
         "$pastUpgrades": [
           [
             "2024-03-05T23:12:33.000Z",
+            "0x38550f715e17517e66a485cef19071067b33a9907fad334e14e4f9b74ddf7fde",
             ["0xA39D53FCa52Efe9a034D1EC61E30151621F9b945"]
           ]
         ],
@@ -721,7 +714,7 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",

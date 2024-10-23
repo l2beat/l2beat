@@ -1,4 +1,81 @@
-Generated with discovered.json: 0x562e2023bf3fbf6c0a4e5c6bd2870affb1bcf8af
+Generated with discovered.json: 0x211f698e7103ca1f1041c810857bdada90077456
+
+# Diff at Mon, 21 Oct 2024 11:09:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20878349
+- current block number: 20878349
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20878349 (main branch discovery), not current.
+
+```diff
+    contract daiBridge (0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xF684f2CB299cCDaAB483ffc1573B82f40C6b775b"]
+      values.$pastUpgrades.0.1:
+-        ["0xF684f2CB299cCDaAB483ffc1573B82f40C6b775b"]
++        "0x2c7c12aeaf738701352017fc49f5268db9632b84bdc6f76474e6776371f53b7e"
+    }
+```
+
+```diff
+    contract PolygonZkEVMEtrog (0x519E42c24163192Dca44CD3fBDCEBF6be9130987) {
+    +++ description: None
+      values.$pastUpgrades.3.2:
++        ["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"]
+      values.$pastUpgrades.3.1:
+-        ["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"]
++        "0x069690e412d29d96bc94d6bf5c816e43bb401cbf948f3e3cad261e073e2d2afe"
+      values.$pastUpgrades.2.2:
++        ["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"]
+      values.$pastUpgrades.2.1:
+-        ["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"]
++        "0x67e892c44b9d14709693e74dd5e17fb40d98c8c2cc1c5330265e758e8958a01b"
+      values.$pastUpgrades.1.2:
++        ["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"]
+      values.$pastUpgrades.1.1:
+-        ["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"]
++        "0xeba0bc3b2674c961c5a998f22f789ea610a7c3e57e622a4dd951cca2702b8be3"
+      values.$pastUpgrades.0.2:
++        ["0x79BCB82B35A335cD8A8Ec433b304a0c91f67CDE0"]
+      values.$pastUpgrades.0.1:
+-        ["0x79BCB82B35A335cD8A8Ec433b304a0c91f67CDE0"]
++        "0x4e3fc80071c2d0852584cb59bfcd784519bfb3582aa3334098a4b32b5f6aaef4"
+    }
+```
+
+```diff
+    contract usdcBridge (0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xA4e6762eAAf259DA74696F46fAAF79bA9DdE14E6"]
+      values.$pastUpgrades.0.1:
+-        ["0xA4e6762eAAf259DA74696F46fAAF79bA9DdE14E6"]
++        "0x6402dc60bb9c4f704f126f4b11e40b33c287b4ac7f73ea60c50d7452d52ce735"
+    }
+```
+
+```diff
+    contract wstETHBridge (0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x18FED1E19dC564DC917D203be9d40790472D22e9"]
+      values.$pastUpgrades.0.1:
+-        ["0x18FED1E19dC564DC917D203be9d40790472D22e9"]
++        "0x12c54f4243dc8e3b41be87984b78248eecbf98b92e30ff10b487be2599d7e3a1"
+    }
+```
+
+Generated with discovered.json: 0xa52a6e95e97f6f81ea4e73f44b254a0cf5482586
 
 # Diff at Mon, 14 Oct 2024 10:54:24 GMT:
 

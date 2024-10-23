@@ -1,16 +1,17 @@
-import { ChainId } from '@l2beat/shared-pure'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { getCommittee } from '../../../../discovery/starkware'
 import { rhinofi } from '../../../layer2s/rhinofi'
-import { DAC } from '../templates/dac-template'
+import { StarkexDAC } from '../templates/starkex-template'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('deversifi')
 const committee = getCommittee(discovery)
 
-export const rhinofiDac = DAC({
+export const rhinofiDac = StarkexDAC({
   project: rhinofi,
   bridge: {
+    createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     contracts: {
       addresses: [
         discovery.getContractDetails(

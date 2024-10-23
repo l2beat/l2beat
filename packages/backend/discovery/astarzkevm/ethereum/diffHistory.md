@@ -1,4 +1,49 @@
-Generated with discovered.json: 0xc870a93a425ca6cc70ec0ed7aa3423c738febca7
+Generated with discovered.json: 0x1b524a34a4111aef11046d81df2527fb3fcf9089
+
+# Diff at Mon, 21 Oct 2024 11:04:26 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20325048
+- current block number: 20325048
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20325048 (main branch discovery), not current.
+
+```diff
+    contract AstarValidium (0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"]
+      values.$pastUpgrades.1.1:
+-        ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"]
++        "0xf735ab474ff2e48c6231cc834828e35736c6fc9fec9759b74e5cf58a88075a36"
+      values.$pastUpgrades.0.2:
++        ["0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30"]
+      values.$pastUpgrades.0.1:
+-        ["0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30"]
++        "0xd68a284c1d748ff541d3339f650f5b90e2faf2744db5fdfc27edfffc702e2dbd"
+    }
+```
+
+```diff
+    contract AstarValidiumDAC (0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xF4e87685e323818E0aE35dCdFc3B65106002E456"]
+      values.$pastUpgrades.0.1:
+-        ["0xF4e87685e323818E0aE35dCdFc3B65106002E456"]
++        "0x72856ab866229053e930b1e4ec2c8505ed4b72feffdf13db4a218eced4364fa2"
+    }
+```
+
+Generated with discovered.json: 0x60db18bbf616e56be12eb0232005fb4d9e473094
 
 # Diff at Mon, 14 Oct 2024 10:49:30 GMT:
 

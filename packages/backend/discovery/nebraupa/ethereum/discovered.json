@@ -33,6 +33,7 @@
         "$pastUpgrades": [
           [
             "2024-08-14T16:32:47.000Z",
+            "0xd84efac6fc5304747cf72def5bcb7bc2248bd43a6ea4fa7e00f6097269880077",
             ["0xB6cD7eD75c008d0033ED241872639a1D8a35020a"]
           ]
         ],
@@ -321,6 +322,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
   }
 }

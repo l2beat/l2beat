@@ -6,7 +6,14 @@ import { DaLinks } from '../../../../types/DaLinks'
 
 type TemplateVars = Pick<
   OnChainDaBridge,
-  'chain' | 'contracts' | 'permissions' | 'usedIn' | 'technology' | 'risks'
+  | 'createdAt'
+  | 'chain'
+  | 'contracts'
+  | 'permissions'
+  | 'nativePermissions'
+  | 'usedIn'
+  | 'technology'
+  | 'risks'
 > & {
   display: {
     links: DaLinks
@@ -21,9 +28,9 @@ export function CELESTIA_BLOBSTREAM(base: TemplateVars): OnChainDaBridge {
     `Cannot template CELESTIA_BLOBSTREAM - chain ${base.chain} not found among known chains`,
   )
 
-  const id = `blobstream-${chain.name}`
+  const id = `blobstream`
   const display = {
-    name: `Blobstream on ${capitalize(chain.name)}`,
+    name: `Blobstream`,
     slug: id,
     description: `The Blobstream bridge serves as a ZK light client, enabling the bridging of data availability commitments between Celestia and ${capitalize(
       chain.name,
@@ -40,6 +47,7 @@ export function CELESTIA_BLOBSTREAM(base: TemplateVars): OnChainDaBridge {
   return {
     type: 'OnChainBridge',
     id,
+    createdAt: base.createdAt,
     display,
     risks: base.risks,
     chain: chain.name,
@@ -47,6 +55,7 @@ export function CELESTIA_BLOBSTREAM(base: TemplateVars): OnChainDaBridge {
     contracts: base.contracts,
     technology: base.technology,
     permissions: base.permissions,
+    nativePermissions: base.nativePermissions,
     usedIn: base.usedIn,
   }
 }

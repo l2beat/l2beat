@@ -47,10 +47,12 @@
         "$pastUpgrades": [
           [
             "2024-01-26T22:27:23.000Z",
+            "0x5df683475486093be4a4f92d6f7c47548d3bf38e1a39e25bf0028353f83d4a2b",
             ["0x1E45F27F0e96e9757cff938F2c9d697AA8279C85"]
           ],
           [
             "2024-07-04T23:54:35.000Z",
+            "0x22c22ee402c4be83ef7c851992c3125008be9ee0a39c0d83cf6be91a0506f7c4",
             ["0xDaC2d26317C42ae3CB21357B73404120E1dA4232"]
           ]
         ],
@@ -502,10 +504,12 @@
         "$pastUpgrades": [
           [
             "2024-02-24T02:03:23.000Z",
+            "0xa4e1836bf1b83f9b018b33923bd8df6152b08b6ab94860e3cf51c563711ca18c",
             ["0x156C3E0384459E07Dca7849b79196FbC5877dc3A"]
           ],
           [
             "2024-02-24T03:05:35.000Z",
+            "0xb44d10c422927d170b63ff39214aec136115e4fb60ac93abd4c8c9598f06a115",
             ["0xcb75F0dFFf5c5046CAA9dB1DE56645a962FeFFc2"]
           ]
         ],
@@ -2744,6 +2748,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
   }
 }

@@ -1,4 +1,65 @@
-Generated with discovered.json: 0x26cb91e061010f3cae1cab764de11988dd1bfc88
+Generated with discovered.json: 0xcccd51fbb01c8fd230c5f00ddbeb7a651eae76f6
+
+# Diff at Tue, 22 Oct 2024 18:27:40 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@c4e420ffba204be049626040a9ea287e023948f8 block: 20985031
+- current block number: 21022907
+
+## Description
+
+Changed Vector name for consistency with blobstream.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20985031 (main branch discovery), not current.
+
+```diff
+    contract Vector (0x02993cdC11213985b9B13224f3aF289F03bf298d) {
+    +++ description: None
+      name:
+-        "SP1Vector"
++        "Vector"
+    }
+```
+
+Generated with discovered.json: 0xd280477a38c797769d7570dcd82e85f5e334b2f7
+
+# Diff at Mon, 21 Oct 2024 11:11:53 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20985031
+- current block number: 20985031
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20985031 (main branch discovery), not current.
+
+```diff
+    contract SP1Vector (0x02993cdC11213985b9B13224f3aF289F03bf298d) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xc6217f1549Cab6f22ac4AC56d42e6C248731a33D"]
+      values.$pastUpgrades.1.1:
+-        ["0xc6217f1549Cab6f22ac4AC56d42e6C248731a33D"]
++        "0x13d7977b9fca12882ea6ba47ce1b20a87de540c358b5e260584e0d921e786f5e"
+      values.$pastUpgrades.0.2:
++        ["0x2434564f3524b44258B11643729343Ef57D60989"]
+      values.$pastUpgrades.0.1:
+-        ["0x2434564f3524b44258B11643729343Ef57D60989"]
++        "0x6c2c609d7a13fbdad53b1530d34d740ffa36653f29b5f14220429d7c0d6a3ffc"
+    }
+```
+
+Generated with discovered.json: 0x406b9eecd2307e8fc04062b629a3c8c3d9458e09
 
 # Diff at Thu, 17 Oct 2024 11:37:36 GMT:
 

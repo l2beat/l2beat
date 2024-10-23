@@ -1,4 +1,282 @@
-Generated with discovered.json: 0x7787d9ad2ffa69e14bc342ce1e5dac187a0de81d
+Generated with discovered.json: 0xcae4dbacefc716968d5b6606979fe780b86fc417
+
+# Diff at Mon, 21 Oct 2024 12:43:06 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e660599f23a07618fe949a07be1f516ce44f1914 block: 20921743
+- current block number: 20921743
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20921743 (main branch discovery), not current.
+
+```diff
+    contract DSRYieldProvider (0x0733F618118bF420b6b604c969498ecf143681a8) {
+    +++ description: Yield Provider for DAI investing DAI into the MakerDAO DSR.
+      descriptions:
+-        ["Yield Provider for DAI investing DAI into the MakerDAO DSR."]
+      description:
++        "Yield Provider for DAI investing DAI into the MakerDAO DSR."
+    }
+```
+
+```diff
+    contract OptimismPortal (0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      descriptions:
+-        ["The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."]
+      description:
++        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
+    }
+```
+
+```diff
+    contract L1BlastBridge (0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115) {
+    +++ description: Custom bridge gateway for Blast that allows the Operators to reinvest L1 tokens while they are bridged to the L2.
+      descriptions:
+-        ["Custom bridge gateway for Blast that allows the Operators to reinvest L1 tokens while they are bridged to the L2."]
+      description:
++        "Custom bridge gateway for Blast that allows the Operators to reinvest L1 tokens while they are bridged to the L2."
+    }
+```
+
+```diff
+    contract LidoYieldProvider (0x4316A00D31da1313617DbB04fD92F9fF8D1aF7Db) {
+    +++ description: Yield Provider for ETH investing ETH into stETH.
+      descriptions:
+-        ["Yield Provider for ETH investing ETH into stETH."]
+      description:
++        "Yield Provider for ETH investing ETH into stETH."
+    }
+```
+
+```diff
+    contract SystemConfig (0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      descriptions:
+-        ["Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."]
+      description:
++        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x5D4472f31Bd9385709ec61305AFc749F0fA8e9d0) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      descriptions:
+-        ["Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."]
+      description:
++        "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x697402166Fbf2F22E970df8a6486Ef171dbfc524) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      descriptions:
+-        ["The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."]
+      description:
++        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x6B916DcCa661d23794e78509723A6f4348564847) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      descriptions:
+-        ["A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."]
+      description:
++        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      descriptions:
+-        ["Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."]
+      description:
++        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
+    }
+```
+
+```diff
+    contract ETHYieldManager (0x98078db053902644191f93988341E31289E1C8FE) {
+    +++ description: Contract managing Yield Providers for ETH.
+      descriptions:
+-        ["Contract managing Yield Providers for ETH."]
+      description:
++        "Contract managing Yield Providers for ETH."
+    }
+```
+
+```diff
+    contract USDYieldManager (0xa230285d5683C74935aD14c446e137c8c8828438) {
+    +++ description: Contract escrowing stablecoins and managing Yield Providers for stablecoins (like for example DAI).
+      descriptions:
+-        ["Contract escrowing stablecoins and managing Yield Providers for stablecoins (like for example DAI)."]
+      description:
++        "Contract escrowing stablecoins and managing Yield Providers for stablecoins (like for example DAI)."
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0xa45A0c7C47DB8C6e99b2d7C4939F7f7Cf69C8975) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      descriptions:
+-        ["Used to bridge ERC-721 tokens from host chain to this chain."]
+      description:
++        "Used to bridge ERC-721 tokens from host chain to this chain."
+    }
+```
+
+```diff
+    contract AddressManager (0xE064B565Cf2A312a3e66Fe4118890583727380C0) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      descriptions:
+-        ["Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."]
+      description:
++        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
+    }
+```
+
+Generated with discovered.json: 0xe6ec803978363407182b5b2c3b208cff240fa54d
+
+# Diff at Mon, 21 Oct 2024 11:04:43 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20921743
+- current block number: 20921743
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20921743 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.$pastUpgrades.1.2:
++        ["0xA280aEBF81c917DbD2aA1b39f979dfECEc9e4391"]
+      values.$pastUpgrades.1.1:
+-        ["0xA280aEBF81c917DbD2aA1b39f979dfECEc9e4391"]
++        "0xb813416a1e599fbebc813b4e9a8c29e5d94d45e8da6e10e86935768caed38e98"
+      values.$pastUpgrades.0.2:
++        ["0xd7bfDa9B3b014b16bada89F206607a8Ac7c6FB32"]
+      values.$pastUpgrades.0.1:
+-        ["0xd7bfDa9B3b014b16bada89F206607a8Ac7c6FB32"]
++        "0xf82923e94578148fd33c7e506f9e5db98ca060c911b41c5b6697d167738dd6a0"
+    }
+```
+
+```diff
+    contract SystemConfig (0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.$pastUpgrades.0.2:
++        ["0xA150f19B681a06E1a0B7E03934299a9bf9238cb7"]
+      values.$pastUpgrades.0.1:
+-        ["0xA150f19B681a06E1a0B7E03934299a9bf9238cb7"]
++        "0xbe85666f88251637a983ac9ef301efcaa2fb56f8303b769b634404955be5dabf"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x5D4472f31Bd9385709ec61305AFc749F0fA8e9d0) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$pastUpgrades.2.2:
++        ["0x84efcFCE2dEe08072d5D57BF232D379b6E92A836"]
+      values.$pastUpgrades.2.1:
+-        ["0x84efcFCE2dEe08072d5D57BF232D379b6E92A836"]
++        "0xcd5f72853d01d93a1fbf3d219a77c7f0243b0fd537d14737c3b0691f0897d67c"
+      values.$pastUpgrades.1.2:
++        ["0xe7406f6d89a14aC3Fc28530479327948ea500659"]
+      values.$pastUpgrades.1.1:
+-        ["0xe7406f6d89a14aC3Fc28530479327948ea500659"]
++        "0x718f17591631857e26554f08b52874c1826d990a5c53d8496b12c860509615ed"
+      values.$pastUpgrades.0.2:
++        ["0x5D4472f31Bd9385709ec61305AFc749F0fA8e9d0"]
+      values.$pastUpgrades.0.1:
+-        ["0x5D4472f31Bd9385709ec61305AFc749F0fA8e9d0"]
++        "0xb9df50a5931e96f2c6f8055055cf2943009705a369b845fbb3e0202a7b897223"
+    }
+```
+
+```diff
+    contract LaunchBridge (0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0x0bD88b59D580549285f0A207Db5F06bf24a8e561"]
+      values.$pastUpgrades.2.1:
+-        ["0x0bD88b59D580549285f0A207Db5F06bf24a8e561"]
++        "0x57c1c448e2afa4910ac0637260bcca28a4f0cd0b32abb001b261338962d38052"
+      values.$pastUpgrades.1.2:
++        ["0x829e8Bf84569A0B2da7B27f975F026fDb6e0a774"]
+      values.$pastUpgrades.1.1:
+-        ["0x829e8Bf84569A0B2da7B27f975F026fDb6e0a774"]
++        "0xb325f82fb0bd7454471789a44740a7bd3a81690a4e9c411e5c53e9412de149ca"
+      values.$pastUpgrades.0.2:
++        ["0xa01Def05A37850b2e13C8c839AA268845Df14276"]
+      values.$pastUpgrades.0.1:
+-        ["0xa01Def05A37850b2e13C8c839AA268845Df14276"]
++        "0xb7f9a32a4d0d38440243d90730e7048ab1eea8c5301da80805131205a7759b4e"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x6B916DcCa661d23794e78509723A6f4348564847) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      values.$pastUpgrades.0.2:
++        ["0xBF21bc9AFaF817145B3886caDAF0860A2A0D782F"]
+      values.$pastUpgrades.0.1:
+-        ["0xBF21bc9AFaF817145B3886caDAF0860A2A0D782F"]
++        "0x56b371e38c6925d31d80525dc061b211c4c5070dfea14e6e34036f731443c516"
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      values.$pastUpgrades.2.2:
++        ["0x1C90963D451316E3DBFdD5A30354EE56C29016EB"]
+      values.$pastUpgrades.2.1:
+-        ["0x1C90963D451316E3DBFdD5A30354EE56C29016EB"]
++        "0xf9716c8e311c27decc5858f10b2a2c83ef3d8ce3958cfb242df5415a75b1e6eb"
+      values.$pastUpgrades.1.2:
++        ["0xaEbA6c3042B463DfAA6A2DFA96486D5A92186cFF"]
+      values.$pastUpgrades.1.1:
+-        ["0xaEbA6c3042B463DfAA6A2DFA96486D5A92186cFF"]
++        "0x4e7b5b82e00b92a5b0380e3a47801760a35f00462793f28926184e984cddc478"
+      values.$pastUpgrades.0.2:
++        ["0x1c952514f0353d84d9ad35BcfB8E9Ea979289031"]
+      values.$pastUpgrades.0.1:
+-        ["0x1c952514f0353d84d9ad35BcfB8E9Ea979289031"]
++        "0x6294e04e136d66468e369543e2789863e2f036ab8e80d473d6808e414c3e233a"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0xa45A0c7C47DB8C6e99b2d7C4939F7f7Cf69C8975) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.$pastUpgrades.0.2:
++        ["0x3B01aDF2f199144233A536b08244d63e5eb691B8"]
+      values.$pastUpgrades.0.1:
+-        ["0x3B01aDF2f199144233A536b08244d63e5eb691B8"]
++        "0x90946309f20c1cbbf4e4204b8f1aebb438908064a941cbd0882028dbe04dab22"
+    }
+```
+
+Generated with discovered.json: 0x1950acbccf345dbf152e230d91647a664bec1c3b
 
 # Diff at Wed, 16 Oct 2024 11:35:10 GMT:
 

@@ -123,7 +123,11 @@ async function getPastProxyUpgrades(
 
   return logs.map((l) => {
     const implementation = abi.parseLog(l).args.implementation
-    return [dateMap[l.blockNumber] ?? 'ERROR', [implementation]]
+    return [
+      dateMap[l.blockNumber] ?? 'ERROR',
+      Hash256(l.transactionHash),
+      [implementation],
+    ]
   })
 }
 
@@ -216,6 +220,7 @@ async function getPastDiamondUpgrades(
 
       return [
         dateMap[l.blockNumber] ?? 'ERROR',
+        Hash256(l.transactionHash),
         [implementation, ...Object.values(facets)],
       ]
     }),

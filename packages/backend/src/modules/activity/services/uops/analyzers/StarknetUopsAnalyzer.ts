@@ -23,16 +23,8 @@ export class StarknetUopsAnalyzer implements Analyzer {
     //	- since block 3000 up to 299 999 it's a multi-call with signature  __execute__(call_array_len, call_array, calldata_len, calldata, nonce)
     //		so the first element can be interpreted as number of operations
     //	- since block 300 000 it's a different signature __execute__(calls) but still first argument reflects overall number of operations
-    if (tx.type === 'DEPLOY_ACCOUNT' || blockNumber < 3000) {
+    if (blockNumber < 3000 || tx.type !== 'INVOKE' || !tx.calldata) {
       return 1
-    }
-
-    if (tx.type !== 'INVOKE') {
-      return 0
-    }
-
-    if (!tx.calldata) {
-      return 0
     }
 
     return Number(tx.calldata[0])

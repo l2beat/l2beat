@@ -66,7 +66,7 @@ describe(BlockActivityIndexer.name, () => {
       expect(newSafeHeight).toEqual(10)
     })
 
-    it('it calculates ratio to 2 decimals', async () => {
+    it('handle cases with block with 0 txs', async () => {
       const activityRepository = mockObject<Database['activity']>({
         getByProjectAndTimeRange: mockFn().resolvesTo([
           activityRecord('a', START, 7, 10, 0, 8),
@@ -76,7 +76,7 @@ describe(BlockActivityIndexer.name, () => {
 
       const txsCountProvider = mockObject<TxsCountProvider>({
         getTxsCount: mockFn().resolvesTo([
-          activityRecord('a', START, 5, 12, 9, 10),
+          activityRecord('a', START, 0, 0, 9, 10),
         ]),
       })
 
@@ -93,8 +93,8 @@ describe(BlockActivityIndexer.name, () => {
         {
           projectId: ProjectId('a'),
           timestamp: START,
-          count: 12,
-          uopsCount: 22,
+          count: 7,
+          uopsCount: 10,
           start: 0,
           end: 10,
         },

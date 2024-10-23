@@ -1,11 +1,11 @@
 {
   "name": "vector",
   "chain": "ethereum",
-  "blockNumber": 20985031,
-  "configHash": "0x51baa52e2cf63c95f1dbc74c064fe4c2265d035ca1730aff1551f98ffd073b44",
+  "blockNumber": 21022907,
+  "configHash": "0x7ce2e39481e43ed9455cd836c95a3ac783862f136b592be4459ee4698611df5c",
   "contracts": [
     {
-      "name": "SP1Vector",
+      "name": "Vector",
       "address": "0x02993cdC11213985b9B13224f3aF289F03bf298d",
       "template": "succinct/SP1Vector",
       "sourceHashes": [
@@ -28,10 +28,12 @@
         "$pastUpgrades": [
           [
             "2024-07-04T21:23:47.000Z",
+            "0x6c2c609d7a13fbdad53b1530d34d740ffa36653f29b5f14220429d7c0d6a3ffc",
             ["0x2434564f3524b44258B11643729343Ef57D60989"]
           ],
           [
             "2024-07-20T01:29:35.000Z",
+            "0x13d7977b9fca12882ea6ba47ce1b20a87de540c358b5e260584e0d921e786f5e",
             ["0xc6217f1549Cab6f22ac4AC56d42e6C248731a33D"]
           ]
         ],
@@ -61,8 +63,8 @@
         "headerRangeCommitmentTreeSize": 2048,
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "isRelayerApproved": true,
-        "latestAuthoritySetId": 112,
-        "latestBlock": 453840,
+        "latestAuthoritySetId": 117,
+        "latestBlock": 476640,
         "relayers": ["0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"],
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
@@ -405,7 +407,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "succinct/SP1SuccinctGateway": "0xe0ec8df0fec605a6cb059948b08432aee71379584a5fa43412fa24a07701c877",
     "succinct/SP1Vector": "0xe1b6515d881fe5c6bf2819550b85bc508c9adf9df527c4be5cf4e0ed65cd4533"
   }

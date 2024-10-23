@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xcf3e778e85b0bbce6938806bdcff1180b6c74580
+
+# Diff at Fri, 18 Oct 2024 10:53:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@0295165a89d86b7450439f24f100d1baa74381fc block: 20640712
+- current block number: 20640712
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20640712 (main branch discovery), not current.
+
+```diff
+    contract OptimisticGovernor (0x172fB6b07D6aB708dd67392a09e1c40d16dA0460) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0x4d50a469fc788a3c0CdC8Fd67868877dCb246625"}]
+    }
+```
+
 Generated with discovered.json: 0x043a4fcdeb9603f1615fbe53788e59778a48b5c4
 
 # Diff at Mon, 14 Oct 2024 10:49:12 GMT:

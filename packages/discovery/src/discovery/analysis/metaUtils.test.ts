@@ -23,7 +23,7 @@ describe('metaUtils', () => {
     it('should merge two ContractMeta objects correctly', () => {
       const a: ContractMeta = {
         displayName: 'ContractA',
-        descriptions: ['description 1'],
+        description: 'description 1',
         permissions: [
           {
             type: 'configure',
@@ -42,7 +42,7 @@ describe('metaUtils', () => {
       }
       const b: ContractMeta = {
         displayName: undefined,
-        descriptions: ['description 2', 'description 3'],
+        description: 'description 2',
         permissions: [
           {
             type: 'configure',
@@ -65,7 +65,8 @@ describe('metaUtils', () => {
 
       expect(result).toEqual({
         displayName: 'ContractA',
-        descriptions: ['description 1', 'description 2', 'description 3'],
+        description: 'description 1',
+        canActIndependently: false,
         permissions: [
           {
             type: 'configure',
@@ -223,8 +224,9 @@ describe('metaUtils', () => {
 
       expect(result).toEqual({
         '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
+          canActIndependently: false,
           displayName: undefined,
-          descriptions: undefined,
+          description: undefined,
           permissions: [
             { type: 'upgrade', delay: 0, target: selfAddress },
             {
@@ -240,9 +242,10 @@ describe('metaUtils', () => {
           types: new Set(['CODE_CHANGE']),
         },
         '0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf': {
+          canActIndependently: false,
           displayName: undefined,
           categories: new Set(['Core', 'Gateways&Escrows']),
-          descriptions: undefined,
+          description: undefined,
           permissions: [
             {
               type: 'upgrade',
@@ -263,9 +266,10 @@ describe('metaUtils', () => {
           types: new Set(['EXTERNAL', 'L2']),
         },
         '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf': {
+          canActIndependently: false,
           displayName: undefined,
           categories: new Set(['Core', 'Gateways&Escrows']),
-          descriptions: undefined,
+          description: undefined,
           permissions: [
             {
               type: 'upgrade',
@@ -308,7 +312,7 @@ describe('metaUtils', () => {
           // for merge:
           '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
             displayName: undefined,
-            descriptions: ['Important contract'],
+            description: 'Important contract',
             permissions: [
               {
                 type: 'configure',
@@ -323,7 +327,7 @@ describe('metaUtils', () => {
           '0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf': {
             displayName: undefined,
             categories: new Set(['Core', 'Gateways&Escrows']),
-            descriptions: ['The resource config of the contract'],
+            description: 'The resource config of the contract',
             permissions: [
               {
                 type: 'configure',
@@ -344,7 +348,7 @@ describe('metaUtils', () => {
           // for merge:
           '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
             displayName: undefined,
-            descriptions: ['Very important contract'],
+            description: 'Very important contract',
             permissions: [
               {
                 type: 'configure',
@@ -359,7 +363,7 @@ describe('metaUtils', () => {
           '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf': {
             displayName: undefined,
             categories: new Set(['Core', 'Gateways&Escrows']),
-            descriptions: ['The resource config of the contract'],
+            description: 'The resource config of the contract',
             permissions: [
               {
                 type: 'configure',
@@ -383,8 +387,9 @@ describe('metaUtils', () => {
       expect(result).toEqual({
         // merged:
         '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
+          canActIndependently: false,
           displayName: undefined,
-          descriptions: ['Important contract', 'Very important contract'],
+          description: 'Important contract',
           permissions: [
             {
               type: 'configure',
@@ -402,8 +407,9 @@ describe('metaUtils', () => {
           severity: 'MEDIUM',
         },
         '0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf': {
+          canActIndependently: false,
           displayName: undefined,
-          descriptions: ['The resource config of the contract'],
+          description: 'The resource config of the contract',
           permissions: [
             {
               type: 'configure',
@@ -421,8 +427,9 @@ describe('metaUtils', () => {
           severity: 'HIGH',
         },
         '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf': {
+          canActIndependently: false,
           displayName: undefined,
-          descriptions: ['The resource config of the contract'],
+          description: 'The resource config of the contract',
           permissions: [
             {
               type: 'configure',
@@ -454,7 +461,7 @@ describe('metaUtils', () => {
         [admin.toString()]: {
           displayName: undefined,
           categories: undefined,
-          descriptions: undefined,
+          description: undefined,
           severity: undefined,
           types: undefined,
           permissions: [{ type: 'upgrade', delay: 0, target: selfAddress }],

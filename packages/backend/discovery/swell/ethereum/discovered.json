@@ -13,9 +13,7 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "descriptions": [
-        "Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem"
-      ],
+      "description": "Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1657096688,
       "values": {
@@ -225,6 +223,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
   }
 }

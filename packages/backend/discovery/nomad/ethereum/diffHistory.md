@@ -1,4 +1,106 @@
-Generated with discovered.json: 0x6d1963587d5da89d3fb848f51c75f288ff456d44
+Generated with discovered.json: 0x1339e3af2ed178b2c74dc9815dec85177c1e5847
+
+# Diff at Mon, 21 Oct 2024 11:08:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 19531994
+- current block number: 19531994
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531994 (main branch discovery), not current.
+
+```diff
+    contract ReplicaBeaconProxy (0x049b51e531Fd8f90da6d92EA83dC4125002F20EF) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0x7f221A1850c12b57fed1f0831dd25399a13b68c2"]
+      values.$pastUpgrades.2.1:
+-        ["0x7f221A1850c12b57fed1f0831dd25399a13b68c2"]
++        "0x6795e8b0dc56aa4f3c7f1cc549b7c95efd97cb381f0d3227cce61c1700e9db65"
+      values.$pastUpgrades.1.2:
++        ["0xB92336759618F55bd0F8313bd843604592E27bd8"]
+      values.$pastUpgrades.1.1:
+-        ["0xB92336759618F55bd0F8313bd843604592E27bd8"]
++        "0x7bccd64f4c4d5f6f545c2edf904857e6ddb460532fc0ac7eb5ac175cd21e56b1"
+      values.$pastUpgrades.0.2:
++        ["0x7F58bb8311DB968AB110889F2Dfa04ab7E8E831B"]
+      values.$pastUpgrades.0.1:
+-        ["0x7F58bb8311DB968AB110889F2Dfa04ab7E8E831B"]
++        "0xfa18f505b85ddcf628daace22a887b59d6a65005975d0abcf71d33398d9984a7"
+    }
+```
+
+```diff
+    contract GovernanceRouterBeaconProxy (0x3009C99D370B780304D2098196f1EBF779a4777a) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0xE9F0a0a787CEEA82f1c8fE7A783826eBD181e707"]
+      values.$pastUpgrades.2.1:
+-        ["0xE9F0a0a787CEEA82f1c8fE7A783826eBD181e707"]
++        "0x6795e8b0dc56aa4f3c7f1cc549b7c95efd97cb381f0d3227cce61c1700e9db65"
+      values.$pastUpgrades.1.2:
++        ["0xfBea6D67DDd90E1f726C2622c6C42b016fDad5a7"]
+      values.$pastUpgrades.1.1:
+-        ["0xfBea6D67DDd90E1f726C2622c6C42b016fDad5a7"]
++        "0x7bccd64f4c4d5f6f545c2edf904857e6ddb460532fc0ac7eb5ac175cd21e56b1"
+      values.$pastUpgrades.0.2:
++        ["0x569D80f7FC17316B4C83f072b92EF37B72819DE0"]
+      values.$pastUpgrades.0.1:
+-        ["0x569D80f7FC17316B4C83f072b92EF37B72819DE0"]
++        "0xa9005bc6bbfdb16ae648a796e15a1ebea3f62af29f617647bb1b3399dff1dfbe"
+    }
+```
+
+```diff
+    contract BridgeRouterBeaconProxy (0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0xe0db61ac718f502B485DEc66D013afbbE0B52F84"]
+      values.$pastUpgrades.2.1:
+-        ["0xe0db61ac718f502B485DEc66D013afbbE0B52F84"]
++        "0x6795e8b0dc56aa4f3c7f1cc549b7c95efd97cb381f0d3227cce61c1700e9db65"
+      values.$pastUpgrades.1.2:
++        ["0x15fdA9F60310d09FEA54E3c99d1197DfF5107248"]
+      values.$pastUpgrades.1.1:
+-        ["0x15fdA9F60310d09FEA54E3c99d1197DfF5107248"]
++        "0x7bccd64f4c4d5f6f545c2edf904857e6ddb460532fc0ac7eb5ac175cd21e56b1"
+      values.$pastUpgrades.0.2:
++        ["0xD3dfD3eDe74E0DCEBC1AA685e151332857efCe2d"]
+      values.$pastUpgrades.0.1:
+-        ["0xD3dfD3eDe74E0DCEBC1AA685e151332857efCe2d"]
++        "0xbeb76185575a5352f7b9c9c2d302883fd092525e741f33434faea86af8bbcc7b"
+    }
+```
+
+```diff
+    contract HomeBeaconProxy (0x92d3404a7E6c91455BbD81475Cd9fAd96ACFF4c8) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0xf3bb7e2d4B26ae2C3EAC41171840c227f457EA06"]
+      values.$pastUpgrades.2.1:
+-        ["0xf3bb7e2d4B26ae2C3EAC41171840c227f457EA06"]
++        "0x6795e8b0dc56aa4f3c7f1cc549b7c95efd97cb381f0d3227cce61c1700e9db65"
+      values.$pastUpgrades.1.2:
++        ["0x1f98FDc4D8d0806eB3902d57df7a2183b333B80C"]
+      values.$pastUpgrades.1.1:
+-        ["0x1f98FDc4D8d0806eB3902d57df7a2183b333B80C"]
++        "0x7bccd64f4c4d5f6f545c2edf904857e6ddb460532fc0ac7eb5ac175cd21e56b1"
+      values.$pastUpgrades.0.2:
++        ["0x8F184D6Aa1977fd2F9d9024317D0ea5cF5815b6f"]
+      values.$pastUpgrades.0.1:
+-        ["0x8F184D6Aa1977fd2F9d9024317D0ea5cF5815b6f"]
++        "0x04d115136ab73cee543d5ab5635aa11f085511306720cbd77c75f175b7713802"
+    }
+```
+
+Generated with discovered.json: 0xe2749a0c5636c4dabe9894a68bfd5b82062587c2
 
 # Diff at Mon, 14 Oct 2024 10:53:18 GMT:
 

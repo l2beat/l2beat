@@ -53,13 +53,14 @@ const committee = getCommittee(discovery)
 
 export const rhinofi: Layer2 = {
   type: 'layer2',
+  id: ProjectId('deversifi'),
+  createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
     Badge.VM.AppChain,
     Badge.DA.DAC,
     Badge.Stack.StarkEx,
     Badge.Infra.SHARP,
   ],
-  id: ProjectId('deversifi'),
   display: {
     name: 'rhino.fi',
     slug: 'rhinofi',
@@ -162,8 +163,7 @@ export const rhinofi: Layer2 = {
     exitWindow: RISK_VIEW.EXIT_WINDOW(
       includingSHARPUpgradeDelaySeconds,
       freezeGracePeriod,
-      undefined,
-      true,
+      { existsBlocklist: true },
     ),
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(freezeGracePeriod),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,

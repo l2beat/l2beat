@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   EXITS,
   FORCE_TRANSACTIONS,
@@ -18,6 +18,7 @@ const discovery = new ProjectDiscovery('bugbuster', 'optimism')
 export const bugbuster: Layer3 = {
   type: 'layer3',
   id: ProjectId('bugbuster'),
+  createdAt: new UnixTime(1723722996), // 2024-08-15T11:56:36Z
   hostChain: ProjectId('optimism'),
   badges: [
     Badge.Stack.Cartesi,
