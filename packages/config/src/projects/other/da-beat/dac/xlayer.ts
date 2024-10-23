@@ -33,7 +33,7 @@ export const xlayerDac = PolygoncdkDAC({
     contracts: {
       addresses: [
         discovery.getContractDetails('XLayerValidium', {
-          description: `The main contract of the XLayerValidium. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
+          description: `The DA bridge and main contract of the XLayerValidium. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
         }),
         discovery.getContractDetails('XLayerValidiumDAC', {
           description:
@@ -60,7 +60,7 @@ export const xlayerDac = PolygoncdkDAC({
           ),
         ],
         description:
-          'Admin of the XLayerValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions and update the DA mode.',
+          'Admin of the XLayerValidium contract, can set core system parameters like replacing the sequencer (relayer), activate forced transactions and update the DA mode.',
       },
       {
         name: 'DACProxyAdminOwner',
@@ -70,7 +70,7 @@ export const xlayerDac = PolygoncdkDAC({
           ),
         ],
         description:
-          "Owner of the XLayerValidiumDAC's ProxyAdmin. Can upgrade the contract.",
+          "Owner of the XLayerValidiumDAC's ProxyAdmin. Can upgrade the DA bridge contract.",
       },
     ],
     chain: ChainId.ETHEREUM,
