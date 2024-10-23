@@ -18,10 +18,10 @@ import { ScrollFinalityAnalyzer } from './analyzers/ScrollFinalityAnalyzer'
 import { StarknetFinalityAnalyzer } from './analyzers/StarknetFinalityAnalyzer'
 import { ZkSyncLiteFinalityAnalyzer } from './analyzers/ZkSyncLiteFinalityAnalyzer'
 import { ArbitrumFinalityAnalyzer } from './analyzers/arbitrum/ArbitrumFinalityAnalyzer'
-import { OpStackFinalityAnalyzer } from './analyzers/opStack/OpStackFinalityAnalyzer'
 import { PolygonZkEvmFinalityAnalyzer } from './analyzers/polygon-zkevm/PolygonZkevmFinalityAnalyzer'
 import { zkSyncEraFinalityAnalyzer } from './analyzers/zkSyncEraFinalityAnalyzer'
 import { FinalityConfig } from './types/FinalityConfig'
+import { OpStackTimeToInclusionAnalyzer } from './analyzers/opStack/OpStackTimeToInclusionAnalyzer'
 
 export function createFinalityModule(
   config: Config,
@@ -125,7 +125,7 @@ function initializeConfigurations(
           return {
             projectId: configuration.projectId,
             analyzers: {
-              timeToInclusion: new OpStackFinalityAnalyzer(
+              timeToInclusion: new OpStackTimeToInclusionAnalyzer(
                 blobClient,
                 logger,
                 ethereumRPC,
