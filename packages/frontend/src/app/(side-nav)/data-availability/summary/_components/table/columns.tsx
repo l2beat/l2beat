@@ -1,6 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
-import { RiskCell } from '~/components/table/cells/risk-cell'
+import { TwoRowCell } from '~/components/table/cells/two-row-cell'
 import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
 import { EM_DASH } from '~/consts/characters'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
@@ -85,14 +85,14 @@ const slashableStakeColumn = columnHelper.accessor('economicSecurity', {
     const value = ctx.getValue()
     if (ctx.row.original.risks.economicSecurity.type === 'Unknown') {
       return (
-        <div className="w-full pl-4 text-right text-sm font-medium">
+        <div className="w-full pl-4 text-right text-xs md:text-sm font-medium">
           {formatCurrency(0, 'usd')}
         </div>
       )
     }
 
     return (
-      <div className="w-full pl-4 text-right text-sm font-medium">
+      <div className="w-full pl-4 text-right text-xs md:text-sm font-medium">
         <DaEconomicSecurityCell value={value} />
       </div>
     )
@@ -127,13 +127,9 @@ const challengeMechanismColumn = columnHelper.accessor(
   {
     header: 'Challenge\nmechanism',
     cell: (ctx) => (
-      <RiskCell
-        risk={{
-          value: ctx.getValue() ? 'Yes' : 'None',
-          sentiment: 'good',
-        }}
-        emptyMode="em-dash"
-      />
+      <TwoRowCell>
+        <TwoRowCell.First>{ctx.getValue() ? 'Yes' : 'None'}</TwoRowCell.First>
+      </TwoRowCell>
     ),
     enableSorting: false,
   },

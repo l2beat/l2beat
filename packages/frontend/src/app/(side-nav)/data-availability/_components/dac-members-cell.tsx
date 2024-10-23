@@ -13,7 +13,7 @@ export function DacMembersCell({
 }: Props) {
   return (
     <TwoRowCell>
-      <TwoRowCell.First className="font-bold leading-5">
+      <TwoRowCell.First className="leading-5">
         {requiredMembers}/{membersCount}
       </TwoRowCell.First>
       <TwoRowCell.Second>

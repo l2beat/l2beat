@@ -13,9 +13,7 @@ export function DaFallbackCell({ entry }: { entry: DaSummaryEntry }) {
 
   return (
     <TwoRowCell>
-      <TwoRowCell.First className="font-bold leading-5">
-        {value}
-      </TwoRowCell.First>
+      <TwoRowCell.First className="leading-5">{value}</TwoRowCell.First>
       {display?.secondLine && (
         <TwoRowCell.Second>{display.secondLine}</TwoRowCell.Second>
       )}
