@@ -44,6 +44,10 @@ export function DaSummaryPublicTable({ items }: { items: DaSummaryEntry[] }) {
   }
 
   const renderInlineSpanFill = ({ row }: { row: Row<DaSummaryEntry> }) => {
+    if (row.original.bridges.length === 0) {
+      return null
+    }
+
     return <BridgeCells bridge={row.original.bridges[0]!} />
   }
 
