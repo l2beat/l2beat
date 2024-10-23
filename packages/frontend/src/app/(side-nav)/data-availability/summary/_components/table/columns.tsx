@@ -1,8 +1,5 @@
-import { type CellContext } from '@tanstack/react-table'
 import { createColumnHelper } from '@tanstack/react-table'
-import Image from 'next/image'
 import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
-import { IndexCell } from '~/components/table/cells/index-cell'
 import { RiskCell } from '~/components/table/cells/risk-cell'
 import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
 import { EM_DASH } from '~/consts/characters'
@@ -11,6 +8,7 @@ import { formatCurrency } from '~/utils/number-format/format-currency'
 import { DaFallbackCell } from '../../../_components/da-fallback-cell'
 import { DaLayerCell } from '../../../_components/da-layer-cell'
 import { DacMembersCell } from '../../../_components/dac-members-cell'
+import { virtual, withSpanByBridges } from '../../../_utils/col-utils'
 import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
@@ -19,16 +17,18 @@ import { DaEconomicSecurityCell } from './da-economic-security-cell'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
 
-const nameColumn = columnHelper.accessor('name', {
+export const [indexColumn, logoColumn] = getCommonProjectColumns(columnHelper)
+
+export const daLayerColumn = columnHelper.accessor('name', {
   header: 'DA Layer',
+  cell: (ctx) => <DaLayerCell entry={ctx.row.original} />,
   meta: {
     tooltip:
       'The data availability layer where the data (transaction data or state diffs) is posted.',
   },
-  cell: (ctx) => <DaLayerCell entry={ctx.row.original} />,
 })
 
-const daRisksColumn = columnHelper.display({
+export const daRisksColumn = columnHelper.display({
   id: 'da-risks',
   header: 'DA Risks',
   cell: (ctx) => {
@@ -74,7 +74,7 @@ const tvsColumn = columnHelper.accessor('tvs', {
     ),
   enableSorting: false,
   meta: {
-    tooltip: 'The total value locked of all L2s using this layer.',
+    tooltip: 'The total value locked of all projects using this layer.',
     align: 'right',
   },
 })
@@ -146,8 +146,9 @@ const fallbackColumn = columnHelper.accessor('fallback', {
 })
 
 export const customColumns = [
-  ...getCommonProjectColumns(columnHelper),
-  nameColumn,
+  indexColumn,
+  logoColumn,
+  daLayerColumn,
   daRisksColumn,
   daBridgeRisksColumn,
   tvsColumn,
@@ -157,78 +158,61 @@ export const customColumns = [
   slashableStakeColumn,
 ]
 
-const spanByBridges = (ctx: CellContext<DaSummaryEntry, unknown>) =>
-  ctx.row.original.bridges.length
+const daLayerGroup = columnHelper.group({
+  header: 'DA Layer',
+  columns: [
+    withSpanByBridges(daRisksColumn),
+    withSpanByBridges(tvsColumn),
+    withSpanByBridges(slashableStakeColumn),
+  ],
+})
 
-const virtual = {
-  meta: {
-    virtual: true,
-  },
-}
-
-export const publicSystemsColumns = [
-  columnHelper.accessor((_, index) => index + 1, {
-    header: '#',
-    cell: (ctx) => <IndexCell>{ctx.row.index + 1}</IndexCell>,
-    meta: {
-      headClassName: 'w-0',
-      rowSpan: spanByBridges,
-    },
-    size: 44,
-  }),
-  columnHelper.display({
-    id: 'logo',
-    cell: (ctx) => (
-      <Image
-        className="min-h-[20px] min-w-[20px]"
-        src={`/icons/${ctx.row.original.slug}.png`}
-        width={20}
-        height={20}
-        alt={`${ctx.row.original.name} logo`}
-      />
-    ),
-    meta: {
-      headClassName: 'w-0',
-      cellClassName: 'lg:!pr-1.5',
-      rowSpan: spanByBridges,
-    },
-    size: 28,
-  }),
-  columnHelper.accessor('name', {
-    header: 'DA Layer',
-    cell: (info) => <DaLayerCell entry={info.row.original} />,
-    meta: {
-      rowSpan: spanByBridges,
-    },
-  }),
-  columnHelper.group({
-    header: 'DA Layer',
-    columns: [
-      { ...daRisksColumn, meta: { rowSpan: spanByBridges, align: 'center' } },
-      { ...tvsColumn, meta: { rowSpan: spanByBridges, align: 'right' } },
-      {
-        ...slashableStakeColumn,
-        meta: { rowSpan: spanByBridges, align: 'center' },
-      },
-    ],
-    meta: {
-      rowSpan: spanByBridges,
-    },
-  }),
+export const bridgeColumn = virtual(
   columnHelper.display({
     id: 'bridge',
     header: 'Bridge',
     meta: {
-      virtual: true,
       headClassName: 'px-4',
+      tooltip:
+        'The DA bridge through which Ethereum is informed that data has been made available.',
     },
   }),
-  columnHelper.group({
-    header: 'DA Bridge',
-    columns: [
-      { id: 'bridge-risks', header: 'Bridge Risks', ...virtual },
-      { id: 'bridge-tvs', header: 'Value Secured', ...virtual },
-      { id: 'bridge-used-by', header: 'Used By', ...virtual },
-    ],
+)
+
+const bridgeRisksColumn = virtual(
+  columnHelper.display({
+    id: 'bridge-risks',
+    header: 'Bridge Risks',
   }),
+)
+
+const bridgeTvsColumn = virtual(
+  columnHelper.display({
+    id: 'bridge-tvs',
+    header: 'Value Secured',
+    meta: {
+      tooltip: 'The total value locked of all projects using this bridge.',
+    },
+  }),
+)
+
+const bridgeUsedByColumn = virtual(
+  columnHelper.display({
+    id: 'bridge-used-by',
+    header: 'Used By',
+  }),
+)
+
+const bridgeGroup = columnHelper.group({
+  header: 'DA Bridge',
+  columns: [bridgeRisksColumn, bridgeTvsColumn, bridgeUsedByColumn],
+})
+
+export const publicSystemsColumns = [
+  withSpanByBridges(indexColumn),
+  withSpanByBridges(logoColumn),
+  withSpanByBridges(daLayerColumn),
+  daLayerGroup,
+  bridgeColumn,
+  bridgeGroup,
 ]

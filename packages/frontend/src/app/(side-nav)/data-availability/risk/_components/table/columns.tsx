@@ -1,122 +1,121 @@
-import { type CellContext, createColumnHelper } from '@tanstack/react-table'
-import Image from 'next/image'
-import { DaLayerCell } from '~/app/(side-nav)/data-availability/_components/da-layer-cell'
-import { IndexCell } from '~/components/table/cells/index-cell'
+import { createColumnHelper } from '@tanstack/react-table'
 import { RiskCell } from '~/components/table/cells/risk-cell'
+import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
 import { type DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
+import { DaLayerCell } from '../../../_components/da-layer-cell'
+import { virtual, withSpanByBridges } from '../../../_utils/col-utils'
 
 const columnHelper = createColumnHelper<DaRiskEntry>()
 
-const spanByBridges = (ctx: CellContext<DaRiskEntry, unknown>) =>
-  ctx.row.original.bridges.length
+export const [indexColumn, logoColumn] = getCommonProjectColumns(columnHelper)
 
-const virtual = {
+export const daLayerColumn = columnHelper.accessor('name', {
+  header: 'DA Layer',
+  cell: (ctx) => <DaLayerCell entry={ctx.row.original} />,
   meta: {
-    virtual: true,
+    tooltip:
+      'The data availability layer where the data (transaction data or state diffs) is posted.',
   },
-}
+})
 
 const baseColumns = [
-  columnHelper.accessor((_, index) => index + 1, {
-    header: '#',
-    cell: (ctx) => <IndexCell>{ctx.row.index + 1}</IndexCell>,
-    meta: {
-      headClassName: 'w-0',
-      rowSpan: spanByBridges,
-    },
-    size: 44,
-  }),
-  columnHelper.display({
-    id: 'logo',
-    cell: (ctx) => (
-      <Image
-        className="min-h-[20px] min-w-[20px]"
-        src={`/icons/${ctx.row.original.slug}.png`}
-        width={20}
-        height={20}
-        alt={`${ctx.row.original.name} logo`}
-      />
-    ),
-    meta: {
-      headClassName: 'w-0',
-      cellClassName: 'lg:!pr-1.5',
-      rowSpan: spanByBridges,
-    },
-    size: 28,
-  }),
-  columnHelper.accessor('name', {
-    header: 'DA Layer',
-    cell: (info) => <DaLayerCell entry={info.row.original} />,
-    meta: {
-      rowSpan: spanByBridges,
-    },
-  }),
+  withSpanByBridges(indexColumn),
+  withSpanByBridges(logoColumn),
+  withSpanByBridges(daLayerColumn),
 ]
+
+const economicSecurityColumn = columnHelper.display({
+  id: 'economic-security',
+  header: 'Economic security',
+  cell: (ctx) => <RiskCell risk={ctx.row.original.risks.economicSecurity} />,
+  meta: {
+    tooltip:
+      'Shows if there are any onchain (staked assets) or offchain (reputation) guarantees that would prevent a committee from deceiving the DA bridge.',
+  },
+})
+
+const fraudDetectionColumn = columnHelper.display({
+  id: 'fraud-detection',
+  header: 'Fraud detection',
+  cell: (ctx) => <RiskCell risk={ctx.row.original.risks.fraudDetection} />,
+  meta: {
+    tooltip:
+      'Shows if there are any mechanism for users to protect themselves against a malicious majority of committee members, such as validators, and recover from data withholding attack.',
+  },
+})
+
 const daLayerRisksColumns = [
   columnHelper.group({
     header: 'Da Layer Risks',
     columns: [
-      columnHelper.display({
-        id: 'economic-security',
-        header: 'Economic security',
-        cell: (ctx) => (
-          <RiskCell risk={ctx.row.original.risks.economicSecurity} />
-        ),
-        meta: {
-          rowSpan: spanByBridges,
-        },
-      }),
-      columnHelper.display({
-        id: 'fraud-detection',
-        header: 'Fraud detection',
-        cell: (ctx) => (
-          <RiskCell risk={ctx.row.original.risks.fraudDetection} />
-        ),
-        meta: {
-          rowSpan: spanByBridges,
-        },
-      }),
+      withSpanByBridges(economicSecurityColumn),
+      withSpanByBridges(fraudDetectionColumn),
     ],
   }),
 ]
 
-const bridgeColumn = columnHelper.display({
-  id: 'bridge',
-  header: 'Bridge',
-  meta: {
-    virtual: true,
-    headClassName: 'px-4',
-  },
-})
+const spacerColumn = virtual(
+  columnHelper.display({
+    id: 'spacer',
+    header: '',
+    meta: {
+      headClassName: 'px-4',
+    },
+  }),
+)
 
-const spacerColumn = columnHelper.display({
-  id: 'spacer',
-  header: '',
-  meta: {
-    virtual: true,
-    headClassName: 'px-4',
-  },
-})
+const bridgeColumn = virtual(
+  columnHelper.display({
+    id: 'bridge',
+    header: 'Bridge',
+    meta: {
+      headClassName: 'px-4',
+      tooltip:
+        'The DA bridge through which Ethereum is informed that data has been made available.',
+    },
+  }),
+)
+
+const committeeSecurityColumn = virtual(
+  columnHelper.display({
+    id: 'committee-security',
+    header: 'Committee Security',
+    meta: {
+      tooltip:
+        'Shows if the DA bridge can securely confirm that the data availability attestations are backed by the DA layer’s economic security, meaning that the signatures from the DA layer are accurately verified and tracked on-chain.',
+    },
+  }),
+)
+
+const upgradeabilityColumn = virtual(
+  columnHelper.display({
+    id: 'upgradeability',
+    header: 'Upgradeability',
+    meta: {
+      tooltip:
+        'Shows if the DA bridge can be upgraded, and if yes - if there’s a mechanism in place for withdrawals, and the time allowed for users to exit in case of an upgrade. ',
+    },
+  }),
+)
+
+const relayerFailureColumn = virtual(
+  columnHelper.display({
+    id: 'relayer-failure',
+    header: 'Relayer Failure',
+    meta: {
+      tooltip:
+        'Shows if there is an additional trust assumption on the majority of committee members. It distinguishes between DA solutions that are integrated into the Ethereum protocol (enshrined) and those that are external, thus requiring an additional trust assumption.',
+    },
+  }),
+)
 
 const bridgeRisksColumns = [
   columnHelper.group({
     header: 'Bridge Risks',
     columns: [
-      columnHelper.display({
-        id: 'committee-security',
-        header: 'Committee Security',
-        ...virtual,
-      }),
-      columnHelper.display({
-        id: 'upgradeability',
-        header: 'Upgradeability',
-        ...virtual,
-      }),
-      columnHelper.display({
-        id: 'relayer-failure',
-        header: 'Relayer Failure',
-        ...virtual,
-      }),
+      committeeSecurityColumn,
+      upgradeabilityColumn,
+      relayerFailureColumn,
     ],
   }),
 ]

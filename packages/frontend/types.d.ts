@@ -14,7 +14,7 @@ declare module '@tanstack/react-table' {
      * @see DaTable
      * How many rows a cell should span across
      */
-    rowSpan?: (cell: CellContext<TData, unknown>) => number
+    rowSpan?: (cell: CellContext<TData, TValue>) => number
     /**
      * @see DaTable
      * Columns marked as virtual will not be rendered in the table and must be

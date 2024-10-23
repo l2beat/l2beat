@@ -38,7 +38,7 @@ export function DaProjectStats({ project }: Props) {
       <ProjectStat
         title="Total value secured"
         value={formatCurrency(project.header.tvs, 'usd')}
-        tooltip="The total value locked of all L2s using this layer."
+        tooltip="The total value locked of all projects using this layer."
       />
       <ProjectStat
         title="Economic security"
