@@ -128,7 +128,7 @@ const challengeMechanismColumn = columnHelper.accessor(
       <RiskCell
         risk={{
           value: ctx.getValue() ? 'Yes' : 'None',
-          sentiment: ctx.getValue() ? 'good' : 'bad',
+          sentiment: 'good',
         }}
         emptyMode="em-dash"
       />

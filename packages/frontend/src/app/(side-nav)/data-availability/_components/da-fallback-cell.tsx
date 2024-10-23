@@ -1,4 +1,3 @@
-import { EM_DASH } from '~/consts/characters'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 
 type FallbackDisplay = {
@@ -9,14 +8,12 @@ type FallbackDisplay = {
 export function DaFallbackCell({ entry }: { entry: DaSummaryEntry }) {
   const display = translateFallback(entry.fallback)
 
-  if (!display) {
-    return EM_DASH
-  }
+  const value = display ? display.firstLine : 'None'
 
   return (
     <div className="flex flex-col gap-0">
-      <span className="text-sm font-medium leading-5">{display.firstLine}</span>
-      {display.secondLine && (
+      <span className="text-sm font-medium leading-5">{value}</span>
+      {display?.secondLine && (
         <span className="text-xs leading-none text-gray-500">
           {display.secondLine}
         </span>
