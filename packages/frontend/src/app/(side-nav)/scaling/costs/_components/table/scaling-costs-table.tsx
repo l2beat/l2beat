@@ -1,7 +1,6 @@
 'use client'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
-import { useScalingFilter } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
 import { BasicTable } from '~/components/table/basic-table'
 import { RollupsTable } from '~/components/table/rollups-table'
 import { getStageSortedRowModel } from '~/components/table/sorting/get-stage-sorting-row-model'
@@ -27,21 +26,15 @@ export function ScalingCostsTable(props: Props) {
   const { range } = useCostsTimeRangeContext()
   const { unit } = useCostsUnitContext()
   const { metric } = useCostsMetricContext()
-  const includeFilters = useScalingFilter()
 
   const { data } = api.costs.table.useQuery({ range })
 
-  const filteredEntries = useMemo(
-    () => props.entries.filter((item) => includeFilters(item)),
-    [props.entries, includeFilters],
-  )
-
   const tableEntries = useMemo(() => {
-    const tableEntries = filteredEntries.map((e) =>
+    const tableEntries = props.entries.map((e) =>
       mapToTableEntry(e, data, unit),
     )
     return tableEntries ? calculateDataByType(tableEntries, metric) : []
-  }, [data, filteredEntries, metric, unit])
+  }, [data, props.entries, metric, unit])
 
   const table = useTable({
     data: tableEntries,
