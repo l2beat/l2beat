@@ -85,14 +85,14 @@ const slashableStakeColumn = columnHelper.accessor('economicSecurity', {
     const value = ctx.getValue()
     if (ctx.row.original.risks.economicSecurity.type === 'Unknown') {
       return (
-        <div className="w-full pl-4 text-right text-xs md:text-sm font-medium">
+        <div className="w-full pl-4 text-right text-xs font-medium md:text-sm">
           {formatCurrency(0, 'usd')}
         </div>
       )
     }
 
     return (
-      <div className="w-full pl-4 text-right text-xs md:text-sm font-medium">
+      <div className="w-full pl-4 text-right text-xs font-medium md:text-sm">
         <DaEconomicSecurityCell value={value} />
       </div>
     )
