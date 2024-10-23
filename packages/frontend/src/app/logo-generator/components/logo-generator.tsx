@@ -25,7 +25,7 @@ export function LogoGenerator({ projects }: Props) {
     .split(',')
     .map((slug) => slug.trim())
     .filter(Boolean)
-  console.log(includedProjectSlugs, excludedProjectSlugs)
+
   const toShow = projects.filter((project) => {
     if (
       includedProjectSlugs.length &&
