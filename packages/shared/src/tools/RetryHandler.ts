@@ -53,7 +53,7 @@ export class RetryHandler {
     new RetryHandler({
       logger,
       initialRetryDelayMs: 5000,
-      maxRetries: 4, // 5 10 20 40
+      maxRetries: 7, // 5 10 20 40 80 160 320
       maxRetryDelayMs: Infinity,
     })
 
