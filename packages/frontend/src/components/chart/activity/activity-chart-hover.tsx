@@ -9,6 +9,7 @@ interface Props {
   ethereumCount: number
   showEthereum: boolean
   singleProject?: boolean
+  syncedUntil?: number
 }
 
 export function ActivityChartHover(props: Props) {
@@ -31,9 +32,11 @@ export function ActivityChartHover(props: Props) {
           <span>{props.singleProject ? 'Project' : 'Projects'}</span>
         </div>
         <span className="whitespace-nowrap font-bold tabular-nums">
-          {formatUops(countToUops(props.count), {
-            morePrecision: !!props.singleProject,
-          })}
+          {props.syncedUntil && props.syncedUntil < props.timestamp
+            ? 'Not synced'
+            : formatUops(countToUops(props.count), {
+                morePrecision: !!props.singleProject,
+              })}
         </span>
       </div>
 
@@ -65,7 +68,9 @@ export function ActivityChartHover(props: Props) {
           <span>{props.singleProject ? 'Project' : 'Projects'}</span>
         </div>
         <span className="whitespace-nowrap font-bold tabular-nums">
-          {formatInteger(props.count)}
+          {props.syncedUntil && props.syncedUntil < props.timestamp
+            ? 'Not synced'
+            : formatInteger(props.count)}
         </span>
       </div>
 
