@@ -251,7 +251,7 @@ function BottomBar() {
   const altKey = navigator.platform.includes('Mac') ? 'Opt' : 'Alt'
 
   return (
-    <div className="flex h-6 items-center justify-between px-2">
+    <div className="flex h-8 items-center justify-between px-2">
       <div>Bottom Bar</div>
       <div className="flex gap-2">
         <button onClick={() => setHintOpen((open) => !open)}>
@@ -300,7 +300,13 @@ function Panel(props: { id: PanelId; body: ComponentType<{ kind: PanelId }> }) {
       <HeaderWrapper>
         <PanelHeader id={props.id} />
       </HeaderWrapper>
-      <div className={clsx('flex-1', isHover && 'hidden')}>
+      <div
+        className={clsx(
+          // This value has to be updated to account for other element sizes!
+          'max-h-[calc(100vh-108px)] flex-1 overflow-y-scroll',
+          isHover && 'hidden',
+        )}
+      >
         <props.body kind={props.id} />
       </div>
       {isHover && <div className="flex-1 bg-slate-100" />}
