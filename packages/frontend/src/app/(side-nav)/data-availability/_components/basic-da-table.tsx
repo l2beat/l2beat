@@ -275,9 +275,6 @@ function RowFiller<T, V>(props: { headers: Header<T, V>[] }) {
   )
 }
 
-/*
-  NOTICE: It is important that this functions return the same colors
-*/
 export function getRowTypeClassNames() {
   return 'dark:hover:bg-white/[0.1] hover:bg-black/[0.05]'
 }
