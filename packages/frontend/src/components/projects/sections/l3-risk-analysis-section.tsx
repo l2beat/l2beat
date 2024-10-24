@@ -9,7 +9,7 @@ import { EM_DASH } from '~/consts/characters'
 import { ShieldIcon } from '~/icons/shield'
 import { UnverifiedIcon } from '~/icons/unverified'
 import { cn } from '~/utils/cn'
-import { sentimentToBgColor } from '~/utils/sentiment'
+import { sentimentToTransparentBgColor } from '~/utils/sentiment'
 import { WarningBar } from '../../warning-bar'
 import { ProjectSection } from './project-section'
 import { SingleRisk } from './risk-analysis-section'
@@ -241,7 +241,7 @@ function RiskCell(props: {
   backgroundFill?: boolean
   className?: string
 }) {
-  const bg = sentimentToBgColor(props.sentiment)
+  const bg = sentimentToTransparentBgColor(props.sentiment)
 
   return (
     <td

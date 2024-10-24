@@ -56,7 +56,7 @@ export function DaProjectStats({ project }: Props) {
             : EM_DASH
         }
       />
-      <HorizontalSeparator className="col-span-full my-5 max-md:hidden" />
+      <HorizontalSeparator className="col-span-full my-1 max-md:hidden" />
       <ProjectStat title="Duration of storage" {...durationStorage} />
       <ProjectStat
         className="md:col-span-2"

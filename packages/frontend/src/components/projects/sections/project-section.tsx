@@ -7,7 +7,8 @@ import { type ProjectSectionId } from './types'
 export interface ExtendedProjectSectionProps {
   title: string
   id: ProjectSectionId
-  sectionOrder: number | undefined
+  nested?: boolean
+  sectionOrder: string | undefined
   className?: string
   children: ReactNode
   isUnderReview?: boolean
@@ -19,7 +20,7 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
     <section
       id={props.id}
       className={cn(
-        'mt-10 md:rounded-lg md:bg-gray-100 md:p-8 md:dark:bg-zinc-900',
+        !props.nested && 'mt-10 md:rounded-lg md:bg-gray-100 md:p-8 md:dark:bg-zinc-900',
         props.className,
       )}
     >
@@ -48,7 +49,7 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
 interface ProjectDetailsSectionHeaderProps {
   id: string
   title: string
-  sectionOrder: number | undefined
+  sectionOrder: string | undefined
   className?: string
 }
 

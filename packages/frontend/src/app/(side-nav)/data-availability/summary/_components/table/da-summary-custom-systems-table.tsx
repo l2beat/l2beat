@@ -8,7 +8,6 @@ import {
   getSortedRowModel,
 } from '@tanstack/react-table'
 import Link from 'next/link'
-import { PentagonRosetteCell } from '~/components/rosette/pentagon/pentagon-rosette-cell'
 import { BasicTable } from '~/components/table/basic-table'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { EM_DASH } from '~/consts/characters'
@@ -19,7 +18,6 @@ import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { DaTableLastSubRowCell } from '../../../_components/da-table-last-sub-row-cell'
 import { DaTableSubRowCell } from '../../../_components/da-table-sub-row-cell'
-import { mapRisksToRosetteValues } from '../../../_utils/map-risks-to-rosette-values'
 import { customSystemsColumns } from './columns'
 
 interface Props {
@@ -101,12 +99,7 @@ export function DaSummaryCustomSystemsTable({ items }: Props) {
                       </Link>
                     </td>
                     <DaTableSubRowCell href={href} lastRow={lastRow}>
-                      <PentagonRosetteCell
-                        className="justify-start"
-                        values={mapRisksToRosetteValues(subRow.risks)}
-                        isUnderReview={subRow.isUnderReview}
-                        hasNoBridge={subRow.daBridge.type === 'NoBridge'}
-                      />
+                      TODO
                     </DaTableSubRowCell>
                     <DaTableLastSubRowCell
                       href={href}

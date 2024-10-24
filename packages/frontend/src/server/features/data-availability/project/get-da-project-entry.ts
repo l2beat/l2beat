@@ -1,7 +1,10 @@
 import { type DaBridge, type DaLayer, getDaProjectKey } from '@l2beat/config'
-import { mapRisksToRosetteValues } from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
+import {
+  mapDaBridgeRisksToGrissiniItems,
+  mapDaLayerRisksToGrissiniItems,
+} from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
 import { getProjectDetails } from '~/app/(top-nav)/data-availability/projects/[layer]/_utils/get-project-details'
-import { type RosetteValue } from '~/components/rosette/types'
+import { type GrissiniValue } from '~/components/grissini/types'
 import { getDataAvailabilityProjectLinks } from '~/utils/project/get-project-links'
 import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { getContractsVerificationStatuses } from '../../verification-status/get-contracts-verification-statuses'
@@ -18,18 +21,21 @@ import { getDaProjectTvl } from './utils/get-da-project-tvl'
 export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
   // TODO: Remove it to re-enable per-combination TVL
   const tvlSource = daLayer.kind === 'DAC' ? daBridge : daLayer
-  const usedInIds = tvlSource.usedIn.map((p) => p.id)
 
   const [
     economicSecurity,
-    tvs,
+    tvsEntries,
     projectsVerificationStatuses,
     contractsVerificationStatuses,
     manuallyVerifiedContracts,
     implementationChangeReport,
   ] = await Promise.all([
     getDaProjectEconomicSecurity(daLayer),
-    getDaProjectTvl(usedInIds),
+    getDaProjectTvl(
+      Object.fromEntries(
+        daLayer.bridges.map((b) => [b.id, b.usedIn.map((u) => u.id)] as const),
+      ),
+    ),
     getProjectsVerificationStatuses(),
     getContractsVerificationStatuses(daLayer),
     getManuallyVerifiedContracts(daLayer),
@@ -38,8 +44,13 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
 
   const isVerified =
     !!projectsVerificationStatuses[getDaProjectKey(daLayer, daBridge)]
-  const rosetteValues = mapRisksToRosetteValues(
-    getDaRisks(daLayer, daBridge, tvs, economicSecurity),
+  const grissiniValues = mapDaLayerRisksToGrissiniItems(
+    getDaRisks(
+      daLayer,
+      daBridge,
+      tvsEntries[tvlSource.id] ?? 0,
+      economicSecurity,
+    ),
   )
 
   const projectDetails = getProjectDetails({
@@ -49,7 +60,7 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
     contractsVerificationStatuses,
     manuallyVerifiedContracts,
     implementationChangeReport,
-    rosetteValues,
+    grissiniValues,
   })
 
   return {
@@ -65,17 +76,22 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
       name: daBridge.display.name,
       slug: daBridge.display.slug,
       type: daBridge.type,
+      grissiniValues: mapDaBridgeRisksToGrissiniItems(daBridge.risks),
     },
     bridges: daLayer.bridges.map((bridge) => ({
       id: bridge.id,
       name: bridge.display.name,
       slug: bridge.display.slug,
+      GrissiniValues: mapDaBridgeRisksToGrissiniItems(bridge.risks),
+      tvs: tvsEntries[bridge.id] ?? 0,
+      usedIn: bridge.usedIn,
     })),
     header: getHeader({
-      rosetteValues,
+      daLayerGrissiniValues: grissiniValues,
+      daBridgeGrissiniValues: mapDaBridgeRisksToGrissiniItems(daBridge.risks),
       daLayer,
       daBridge,
-      tvs,
+      tvs: tvsEntries[tvlSource.id] ?? 0,
       economicSecurity,
     }),
     projectDetails,
@@ -83,7 +99,8 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
 }
 
 interface HeaderParams {
-  rosetteValues: RosetteValue[]
+  daLayerGrissiniValues: GrissiniValue[]
+  daBridgeGrissiniValues: GrissiniValue[]
   daLayer: DaLayer
   daBridge: DaBridge
   tvs: number
@@ -91,14 +108,16 @@ interface HeaderParams {
 }
 
 function getHeader({
-  rosetteValues,
+  daLayerGrissiniValues,
+  daBridgeGrissiniValues,
   daLayer,
   daBridge,
   tvs,
   economicSecurity,
 }: HeaderParams) {
   return {
-    rosetteValues,
+    daLayerGrissiniValues,
+    daBridgeGrissiniValues,
     links: getDataAvailabilityProjectLinks(
       daLayer.display.links,
       daBridge.display.links,

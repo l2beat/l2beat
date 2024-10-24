@@ -8,7 +8,7 @@ const meta = {
   args: {
     id: 'milestones-and-incidents',
     title: 'Milestones & Incidents',
-    sectionOrder: 1,
+    sectionOrder: '1',
     milestones: [
       {
         name: 'Nitro upgrade is activated',

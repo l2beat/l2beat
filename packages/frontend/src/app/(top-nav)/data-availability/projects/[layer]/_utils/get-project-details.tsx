@@ -1,11 +1,12 @@
 import { type DaBridge, type DaLayer } from '@l2beat/config'
 import {
+  notUndefined,
   type ContractsVerificationStatuses,
   type ImplementationChangeReportApiResponse,
   type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
+import { type GrissiniValue } from '~/components/grissini/types'
 import { type ProjectDetailsSection } from '~/components/projects/sections/types'
-import { type RosetteValue } from '~/components/rosette/types'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/to-technology-risk'
@@ -19,7 +20,7 @@ interface Params {
   contractsVerificationStatuses: ContractsVerificationStatuses
   manuallyVerifiedContracts: ManuallyVerifiedContracts
   implementationChangeReport: ImplementationChangeReportApiResponse
-  rosetteValues: RosetteValue[]
+  grissiniValues: GrissiniValue[]
 }
 
 export function getProjectDetails({
@@ -29,15 +30,16 @@ export function getProjectDetails({
   contractsVerificationStatuses,
   manuallyVerifiedContracts,
   implementationChangeReport,
-  rosetteValues,
+  grissiniValues,
 }: Params) {
+
   const permissionsSection =
     daBridge.type !== 'NoBridge' && daBridge.type !== 'Enshrined'
       ? getPermissionsSection(
           {
-            id: daLayer.id,
+            id: daBridge.id,
             type: daLayer.type,
-            isUnderReview: !!daLayer.isUnderReview,
+            isUnderReview: !!daBridge.isUnderReview,
             permissions: daBridge.permissions,
             nativePermissions: undefined,
           },
@@ -55,7 +57,7 @@ export function getProjectDetails({
             isVerified,
             slug: daBridge.display.slug,
             contracts: daBridge.contracts,
-            isUnderReview: daLayer.isUnderReview,
+            isUnderReview: daBridge.isUnderReview,
             escrows: undefined,
           },
           contractsVerificationStatuses,
@@ -75,7 +77,74 @@ export function getProjectDetails({
     daBridge,
   )
 
-  const items: ProjectDetailsSection[] = []
+  const daLayerItems: ProjectDetailsSection[] = [];
+
+  daLayerItems.push({
+    type: 'GrissiniRiskAnalysisSection',
+    props: {
+      id: 'risk-analysis',
+      title: 'Risk analysis',
+      isUnderReview: !!daLayer.isUnderReview,
+      isVerified,
+      grissiniValues,
+    },
+  });
+
+  daLayerItems.push({
+    type: 'MarkdownSection',
+    props: {
+      id: 'da-layer-technology',
+      title: 'Technology',
+      diagram: {
+        type: 'da-layer-technology',
+        slug: daLayer.display.slug,
+      },
+      content: daLayer.technology.description,
+      risks: daLayer.technology.risks?.map(toTechnologyRisk),
+    },
+  });
+
+
+  const daBridgeItems: ProjectDetailsSection[] = [];
+
+  daBridgeItems.push({
+    type: 'MarkdownSection',
+      props: {
+        id: 'da-bridge-technology',
+        title: 'Technology',
+        diagram: {
+          type: 'da-bridge-technology',
+          slug: `${daLayer.display.slug}-${daBridge.display.slug}`,
+        },
+        content: daBridge.technology.description,
+        risks: daBridge.technology.risks?.map(toTechnologyRisk),
+    },
+  });
+
+  if (permissionsSection) {
+    daBridgeItems.push({
+      type: 'PermissionsSection',
+      props: {
+        ...permissionsSection,
+        permissionedEntities: getPermissionedEntities(daBridge),
+        id: 'permissions',
+        title: 'Permissions',
+      },
+    })
+  }
+
+  if (contractsSection) {
+    daBridgeItems.push({
+      type: 'ContractsSection',
+      props: {
+        ...contractsSection,
+        id: 'contracts',
+        title: 'Contracts',
+      },
+    })
+  }
+
+  const items: ProjectDetailsSection[] = [];
 
   if (riskSummarySection.riskGroups.length > 0) {
     items.push({
@@ -85,73 +154,29 @@ export function getProjectDetails({
         title: 'Risk summary',
         ...riskSummarySection,
       },
-    })
+    });
   }
 
   items.push({
-    type: 'RiskAnalysisSection',
-    props: {
-      id: 'risk-analysis',
-      title: 'Risk analysis',
-      rosetteType: 'pentagon',
-      rosetteValues: rosetteValues,
-      isUnderReview: !!daLayer.isUnderReview || daBridge.isUnderReview,
-      shouldHideRosette: daBridge.type === 'NoBridge',
-      warning: daBridge.display.warning,
-      redWarning: daBridge.display.redWarning,
-      isVerified,
-    },
-  })
-
-  items.push({
-    type: 'MarkdownSection',
-    props: {
-      id: 'da-layer-technology',
-      title: 'DA Layer technology',
-      diagram: {
-        type: 'da-layer-technology',
-        slug: daLayer.display.slug,
-      },
-      content: daLayer.technology.description,
-      risks: daLayer.technology.risks?.map(toTechnologyRisk),
-    },
-  })
-
-  items.push({
-    type: 'MarkdownSection',
-    props: {
-      id: 'da-bridge-technology',
-      title: 'DA Bridge technology',
-      diagram: {
-        type: 'da-bridge-technology',
-        slug: `${daLayer.display.slug}-${daBridge.display.slug}`,
-      },
-      content: daBridge.technology.description,
-      risks: daBridge.technology.risks?.map(toTechnologyRisk),
-    },
-  })
-
-  if (permissionsSection) {
-    items.push({
-      type: 'PermissionsSection',
+    type: 'Group',
       props: {
-        ...permissionsSection,
-        permissionedEntities: getPermissionedEntities(daBridge),
-        id: 'permissions',
-        title: 'DA Bridge permissions',
+        id: 'da-layer',
+        title: daLayer.display.name,
+        description: daLayer.display.description,
+        items: daLayerItems,
       },
-    })
-  }
+    });
 
-  if (contractsSection) {
+  if (daBridgeItems.length > 0) {
     items.push({
-      type: 'ContractsSection',
+      type: 'Group',
       props: {
-        ...contractsSection,
-        id: 'contracts',
-        title: 'DA Bridge contracts',
+        id: 'da-bridge',
+        title: daBridge.display.name,
+        description: daBridge.display.description,
+        items: daBridgeItems,
       },
-    })
+    });
   }
 
   if (otherConsiderationsSection.items.length > 0) {
@@ -162,7 +187,7 @@ export function getProjectDetails({
         title: 'Other considerations',
         ...otherConsiderationsSection,
       },
-    })
+    });
   }
 
   return items

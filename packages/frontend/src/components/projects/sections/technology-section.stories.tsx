@@ -7,7 +7,7 @@ const meta = {
   args: {
     id: 'technology',
     title: 'Technology',
-    sectionOrder: 1,
+    sectionOrder: '1',
     items: [
       {
         id: 'foo',

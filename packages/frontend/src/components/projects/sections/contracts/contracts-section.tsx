@@ -13,7 +13,8 @@ import { TechnologyIncompleteNote } from './technology-incomplete-note'
 export interface ContractsSectionProps {
   id: ProjectSectionId
   title: string
-  sectionOrder: number
+  sectionOrder: string
+  nested?: boolean
   chainName: string
   contracts: TechnologyContract[]
   nativeContracts: Record<string, TechnologyContract[]>
@@ -62,7 +63,8 @@ export function ContractsSection(props: ContractsSectionProps) {
     <ProjectSection
       title={props.title}
       id={props.id}
-      sectionOrder={props.sectionOrder}
+      nested={props.nested}
+      sectionOrder={props.sectionOrder} 
       isUnderReview={props.isUnderReview}
       includeChildrenIfUnderReview
     >
@@ -76,7 +78,7 @@ export function ContractsSection(props: ContractsSectionProps) {
             src={props.diagram.src}
             alt={props.diagram.caption}
           />
-          <figcaption className="text-xs text-gray-500 dark:text-gray-600">
+          <figcaption className="te xt-xs text-gray-500 dark:text-gray-600">
             {props.diagram.caption}
           </figcaption>
         </figure>

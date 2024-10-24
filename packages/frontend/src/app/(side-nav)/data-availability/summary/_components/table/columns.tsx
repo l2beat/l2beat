@@ -1,5 +1,4 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { PentagonRosetteCell } from '~/components/rosette/pentagon/pentagon-rosette-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
 import { EM_DASH } from '~/consts/characters'
@@ -7,7 +6,6 @@ import { ChevronIcon } from '~/icons/chevron'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/format-currency'
-import { mapRisksToRosetteValues } from '../../../_utils/map-risks-to-rosette-values'
 import { DaEconomicSecurityCell } from './da-economic-security-cell'
 import { ProjectsUsedIn } from './projects-used-in'
 
@@ -72,47 +70,8 @@ const daBridgeColumn = columnHelper.accessor('daBridge', {
 
 const risksColumn = columnHelper.display({
   header: 'Risks',
-  cell: (ctx) => {
-    const value = ctx.row.original.risks
-
-    const hasNoBridge =
-      ctx.row.original.daBridge !== 'multiple' &&
-      ctx.row.original.daBridge.type === 'NoBridge'
-
-    if ('relayerFailure' in value) {
-      return (
-        <PentagonRosetteCell
-          className="justify-start"
-          values={mapRisksToRosetteValues(value)}
-          isUnderReview={ctx.row.original.isUnderReview}
-          hasNoBridge={hasNoBridge}
-        />
-      )
-    }
-
-    return (
-      <PentagonRosetteCell
-        className="justify-start"
-        values={mapRisksToRosetteValues({
-          economicSecurity: value.economicSecurity,
-          fraudDetection: value.fraudDetection,
-          relayerFailure: {
-            value: 'Depends on the DA Bridge',
-            sentiment: 'neutral',
-          },
-          upgradeability: {
-            value: 'Depends on the DA Bridge',
-            sentiment: 'neutral',
-          },
-          committeeSecurity: {
-            value: 'Depends on the DA Bridge',
-            sentiment: 'neutral',
-          },
-        })}
-        isUnderReview={ctx.row.original.isUnderReview}
-        hasNoBridge={hasNoBridge}
-      />
-    )
+  cell: () => {
+    return null
   },
   meta: {
     hash: 'risk-analysis',

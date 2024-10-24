@@ -7,7 +7,7 @@ const meta = {
   args: {
     title: 'Rollup stage',
     id: 'stage',
-    sectionOrder: 1,
+    sectionOrder: '1',
     icon: '/icons/arbitrum.png',
     name: 'Arbitrum One',
     type: 'Optimistic Rollup',

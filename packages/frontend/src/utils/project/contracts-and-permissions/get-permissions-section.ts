@@ -1,4 +1,5 @@
 import {
+  DaBridge,
   type Bridge,
   type DaLayer,
   type Layer2,
