@@ -1,7 +1,4 @@
 import clsx from 'clsx'
-import { useEffect, useState } from 'react'
-
-import type { SimpleNode } from './api/SimpleNode'
 import { merge } from './api/merge'
 import { encodeProjectId, parseDiscovery } from './api/paseDiscovery'
 import { transformContracts } from './api/transform'
@@ -13,25 +10,20 @@ import { Sidebar } from './view/Sidebar'
 import { Viewport } from './view/Viewport'
 
 export function App() {
-  // load the initial nodes from the store that gets rehydrated from local storage at startup
-  const initialNodes = useStore((state) => state.nodes)
+  const nodes = useStore((state) => state.nodes)
+  const simpleNodes = nodes.map(nodeToSimpleNode)
+
   const hiddenNodesIds = useStore((state) => state.hiddenNodesIds)
   const setHiddenNodes = useStore((state) => state.setHiddenNodes)
   const setProjectId = useStore((state) => state.setProjectId)
-  const [nodes, setNodes] = useState<SimpleNode[]>(
-    initialNodes.map(nodeToSimpleNode),
-  )
   const selectedIds = useStore((state) => state.selectedNodeIds)
-  const selectedNodes = nodes.filter((x) => selectedIds.includes(x.id))
+  const selectedNodes = simpleNodes.filter((x) => selectedIds.includes(x.id))
   const showSidebar = selectedNodes.length > 0
 
   const updateNodes = useStore((state) => state.updateNodes)
-  useEffect(() => {
-    updateNodes(nodes)
-  }, [updateNodes, nodes])
 
   function clear() {
-    setNodes([])
+    updateNodes([])
     setHiddenNodes(() => [])
   }
 
@@ -45,16 +37,16 @@ export function App() {
     const projectId = encodeProjectId(discovery)
     const result = transformContracts(projectId, discovery)
 
-    setNodes((nodes) => merge(nodes, result))
+    updateNodes(merge(simpleNodes, result))
     setProjectId(projectId)
   }
 
   function colorChangeAction(id: string[], color: OklchColor) {
-    const matching = nodes
+    const matching = simpleNodes
       .filter((n) => id.includes(n.id))
       .map((n) => ({ ...n, color }))
-    const old = nodes.filter((n) => !id.includes(n.id))
-    setNodes(old.concat(matching))
+    const old = simpleNodes.filter((n) => !id.includes(n.id))
+    updateNodes(old.concat(matching))
   }
 
   return (
@@ -89,7 +81,7 @@ export function App() {
 
           <div className="absolute top-0 w-full p-2">
             <div className="flex flex-row content-center items-center justify-between">
-              <div className="ml-2">Contracts loaded: {nodes.length}</div>
+              <div className="ml-2">Contracts loaded: {simpleNodes.length}</div>
 
               <div className="flex items-center gap-1">
                 <AutoLayoutButton />
