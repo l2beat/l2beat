@@ -31,8 +31,6 @@ export function getProjectDetails({
   implementationChangeReport,
   grisiniValues,
 }: Params) {
-  const daLayerGroup: ProjectDetailsSection[] = []
-  const daBridgeGroup: ProjectDetailsSection[] = []
 
   const permissionsSection =
     daBridge.type !== 'NoBridge' && daBridge.type !== 'Enshrined'
@@ -78,10 +76,11 @@ export function getProjectDetails({
     daBridge,
   )
 
-  const items: ProjectDetailsSection[] = []
+  const daLayerItems: ProjectDetailsSection[] = []
+  const daBridgeItems: ProjectDetailsSection[] = []
 
   if (riskSummarySection.riskGroups.length > 0) {
-    items.push({
+    daLayerItems.push({
       type: 'RiskSummarySection',
       props: {
         id: 'risk-summary',
@@ -91,7 +90,7 @@ export function getProjectDetails({
     })
   }
 
-  items.push({
+  daLayerItems.push({
     type: 'GrisiniRiskAnalysisSection',
     props: {
       id: 'risk-analysis',
@@ -102,7 +101,7 @@ export function getProjectDetails({
     },
   })
 
-  daLayerGroup.push({
+  daLayerItems.push({
     type: 'MarkdownSection',
     props: {
       id: 'da-layer-technology',
@@ -116,7 +115,7 @@ export function getProjectDetails({
     },
   })
 
-  items.push({
+    daBridgeItems.push({
     type: 'MarkdownSection',
     props: {
       id: 'da-bridge-technology',
@@ -131,7 +130,7 @@ export function getProjectDetails({
   })
 
   if (permissionsSection) {
-    items.push({
+    daBridgeItems.push({
       type: 'PermissionsSection',
       props: {
         ...permissionsSection,
@@ -143,7 +142,7 @@ export function getProjectDetails({
   }
 
   if (contractsSection) {
-    items.push({
+    daBridgeItems.push({
       type: 'ContractsSection',
       props: {
         ...contractsSection,
@@ -154,7 +153,7 @@ export function getProjectDetails({
   }
 
   if (otherConsiderationsSection.items.length > 0) {
-    items.push({
+    daBridgeItems.push({
       type: 'TechnologySection',
       props: {
         id: 'other-considerations',
@@ -163,6 +162,25 @@ export function getProjectDetails({
       },
     })
   }
+
+  const items: ProjectDetailsSection[] = [
+    {
+      type: 'Group',
+      props: {
+        id: 'da-layer',
+        title: daLayer.display.name,
+        items: daLayerItems,
+      },
+    },
+    {
+      type: 'Group',
+      props: {
+        id: 'da-bridge',
+        title: daBridge.display.name,
+        items: daBridgeItems,
+      },
+    },
+  ]
 
   return items
 }
