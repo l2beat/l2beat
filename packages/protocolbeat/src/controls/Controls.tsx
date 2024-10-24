@@ -14,6 +14,7 @@ export function Controls() {
       <ShowButton />
       <HideButton />
       <ColorButton />
+      <span className="opacity-20">|</span>
       <ClearButton />
     </div>
   )

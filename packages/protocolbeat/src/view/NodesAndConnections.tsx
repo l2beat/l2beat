@@ -6,14 +6,9 @@ export function NodesAndConnections() {
   const nodes = useStore((state) => state.nodes)
   const hiddenNodesIds = useStore((state) => state.hiddenNodesIds)
   const selectedNodeIds = useStore((state) => state.selectedNodeIds)
-  const setHiddenNodes = useStore((state) => state.setHiddenNodes)
   const visibleNodes = nodes.filter(
     (node) => !hiddenNodesIds.includes(node.simpleNode.id),
   )
-
-  function hideNode(nodeId: string) {
-    setHiddenNodes((nodes) => [...nodes, nodeId])
-  }
 
   return (
     <>
@@ -46,7 +41,6 @@ export function NodesAndConnections() {
           node={node}
           selected={selectedNodeIds.includes(node.simpleNode.id)}
           discovered={node.simpleNode.discovered}
-          onHideNode={hideNode}
         />
       ))}
     </>
