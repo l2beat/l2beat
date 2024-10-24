@@ -7,13 +7,13 @@ import { Providers } from '../../providers/Providers'
 import { Clock } from '../../tools/Clock'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import { ApplicationModule } from '../ApplicationModule'
-import { ActivityTransactionConfig } from '../activity/ActivityTransactionConfig'
+import { ActivityDependencies } from './ActivityDependencies'
+import { ActivityTransactionConfig } from './ActivityTransactionConfig'
 import { BlockActivityIndexer } from './indexers/BlockActivityIndexer'
 import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
 import { DayActivityIndexer } from './indexers/DayActivityIndexer'
 import { DayTargetIndexer } from './indexers/DayTargetIndexer'
 import { ActivityIndexer } from './indexers/types'
-import { ActivityServices } from './services/ActivityServices'
 import { getBatchSizeFromCallsPerMinute } from './utils/getBatchSizeFromCallsPerMinute'
 
 export function initActivityModule(
@@ -28,15 +28,17 @@ export function initActivityModule(
     return
   }
 
-  const services = new ActivityServices(config.activity, providers.block)
+  const dependencies = new ActivityDependencies(
+    config.activity,
+    database,
+    providers,
+  )
 
   const indexers = createActivityIndexers(
     config.activity,
     logger,
     clock,
-    providers,
-    services,
-    database,
+    dependencies,
   )
 
   return {
@@ -54,14 +56,12 @@ function createActivityIndexers(
   activityConfig: ActivityConfig,
   logger: Logger,
   clock: Clock,
-  providers: Providers,
-  services: ActivityServices,
-  database: Database,
+  dependencies: ActivityDependencies,
 ): ActivityIndexer[] {
   const dayTargetIndexer = new DayTargetIndexer(logger, clock)
   const indexers: ActivityIndexer[] = [dayTargetIndexer]
 
-  const indexerService = new IndexerService(database)
+  const indexerService = new IndexerService(dependencies.database)
 
   activityConfig.projects.forEach((project) => {
     switch (project.config.type) {
@@ -73,10 +73,8 @@ function createActivityIndexers(
         const [blockTargetIndexer, activityIndexer] = createBlockBasedIndexer(
           clock,
           project,
-          providers,
-          services,
+          dependencies,
           indexerService,
-          database,
           logger,
         )
 
@@ -88,9 +86,8 @@ function createActivityIndexers(
         const activityIndexer = createStarkexIndexer(
           dayTargetIndexer,
           project,
-          services,
+          dependencies,
           indexerService,
-          database,
           logger,
         )
 
@@ -105,15 +102,13 @@ function createActivityIndexers(
 function createBlockBasedIndexer(
   clock: Clock,
   project: { id: ProjectId; config: ActivityTransactionConfig },
-  providers: Providers,
-  services: ActivityServices,
+  dependencies: ActivityDependencies,
   indexerService: IndexerService,
-  database: Database,
   logger: Logger,
 ): [BlockTargetIndexer, BlockActivityIndexer] {
   assert(project.config.type !== 'starkex')
 
-  const blockTimestampProvider = providers.block.getBlockTimestampProvider(
+  const blockTimestampProvider = dependencies.getBlockTimestampProvider(
     project.id,
   )
   const blockTargetIndexer = new BlockTargetIndexer(
@@ -123,7 +118,7 @@ function createBlockBasedIndexer(
     project.id,
   )
 
-  const txsCountService = services.getTxsCountService(project.id)
+  const txsCountService = dependencies.getTxsCountService(project.id)
 
   const activityIndexer = new BlockActivityIndexer({
     logger,
@@ -133,7 +128,7 @@ function createBlockBasedIndexer(
     parents: [blockTargetIndexer],
     txsCountService,
     indexerService,
-    db: database,
+    db: dependencies.database,
   })
   return [blockTargetIndexer, activityIndexer]
 }
@@ -141,14 +136,13 @@ function createBlockBasedIndexer(
 function createStarkexIndexer(
   dayTargetIndexer: DayTargetIndexer,
   project: { id: ProjectId; config: ActivityTransactionConfig },
-  services: ActivityServices,
+  dependencies: ActivityDependencies,
   indexerService: IndexerService,
-  database: Database,
   logger: Logger,
 ) {
   assert(project.config.type === 'starkex')
 
-  const txsCountService = services.getTxsCountService(project.id)
+  const txsCountService = dependencies.getTxsCountService(project.id)
 
   const activityIndexer = new DayActivityIndexer({
     logger,
@@ -159,7 +153,7 @@ function createStarkexIndexer(
     parents: [dayTargetIndexer],
     txsCountService,
     indexerService,
-    db: database,
+    db: dependencies.database,
   })
   return activityIndexer
 }

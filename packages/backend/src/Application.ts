@@ -16,7 +16,7 @@ import { initTvlModule } from './modules/tvl/modules/TvlModule'
 import { createUpdateMonitorModule } from './modules/update-monitor/UpdateMonitorModule'
 import { createVerifiersModule } from './modules/verifiers/VerifiersModule'
 import { Peripherals } from './peripherals/Peripherals'
-import { initProviders } from './providers/initProviders'
+import { initBlockProviders } from './providers/init/initProviders'
 import { Clock } from './tools/Clock'
 import { getErrorReportingMiddleware } from './tools/ErrorReporter'
 
@@ -24,7 +24,7 @@ export class Application {
   start: () => Promise<void>
 
   constructor(config: Config, logger: Logger) {
-    const kyselyDatabase = createDatabase({
+    const database = createDatabase({
       ...config.database.connection,
       ...config.database.connectionPoolSize,
     })
@@ -37,7 +37,9 @@ export class Application {
     )
 
     const http = new HttpClient()
-    const peripherals = new Peripherals(kyselyDatabase, http, logger)
+    const peripherals = new Peripherals(database, http, logger)
+
+    const providers = initBlockProviders(config.activity, logger, http)
 
     const trackedTxsModule = createTrackedTxsModule(
       config,
@@ -46,17 +48,9 @@ export class Application {
       clock,
     )
 
-    const providers = initProviders(config.activity, logger, http)
-
     const modules: (ApplicationModule | undefined)[] = [
       createMetricsModule(config),
-      initActivityModule(
-        config,
-        logger,
-        clock,
-        providers,
-        peripherals.database,
-      ),
+      initActivityModule(config, logger, clock, providers, database),
       createUpdateMonitorModule(config, logger, peripherals, clock),
       createFlatSourcesModule(config, logger, peripherals),
       trackedTxsModule,
