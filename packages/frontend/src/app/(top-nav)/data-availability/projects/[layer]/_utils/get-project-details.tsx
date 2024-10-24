@@ -32,6 +32,9 @@ export function getProjectDetails({
   implementationChangeReport,
   grisiniValues,
 }: Params) {
+  const daLayerGroup: ProjectDetailsSection[] = []
+  const daBridgeGroup: ProjectDetailsSection[] = []
+
   const permissionsSection =
     daBridge.type !== 'NoBridge' && daBridge.type !== 'Enshrined'
       ? getPermissionsSection(
@@ -104,7 +107,7 @@ export function getProjectDetails({
     },
   })*/
 
-  items.push({
+  daLayerGroup.push({
     type: 'MarkdownSection',
     props: {
       id: 'da-layer-technology',
@@ -113,7 +116,7 @@ export function getProjectDetails({
         type: 'da-layer-technology',
         slug: daLayer.display.slug,
       },
-      content: daLayer.technology.description,
+      content: daLayer.technology,
       risks: daLayer.technology.risks?.map(toTechnologyRisk),
     },
   })

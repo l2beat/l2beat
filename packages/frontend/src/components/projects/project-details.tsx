@@ -16,6 +16,7 @@ import { StateValidationSection } from './sections/state-validation-section'
 import { TechnologySection } from './sections/technology-section'
 import { type ProjectDetailsSection } from './sections/types'
 import { UpcomingDisclaimer } from './sections/upcoming-disclaimer'
+import { GroupSection } from './sections/group-section'
 
 export interface ProjectDetailsProps {
   items: ProjectDetailsSection[]
@@ -144,6 +145,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             )
           case 'UpcomingDisclaimer':
             return <UpcomingDisclaimer key={`${item.type}${index}`} />
+          case 'Group':
+            return (
+              <GroupSection
+                key={item.props.id}
+                sectionOrder={sectionOrder}
+                {...item.props}
+              />
+            )
           default:
             assertUnreachable(item)
         }

@@ -1,6 +1,7 @@
 import { type ChartSectionProps } from "./chart-section";
 import { type ContractsSectionProps } from "./contracts/contracts-section";
 import { type DetailedDescriptionSectionProps } from "./detailed-description-section";
+import { GroupSectionProps } from "./group-section";
 import { type KnowledgeNuggetsSectionProps } from "./knowledge-nuggets-section";
 import { type L3RiskAnalysisSectionProps } from "./l3-risk-analysis-section";
 import { type MarkdownSectionProps } from "./markdown-section";
@@ -15,6 +16,8 @@ import { type StateValidationSectionProps } from "./state-validation-section";
 import { type TechnologySectionProps } from "./technology-section";
 
 export type ProjectSectionId =
+| "da-layer"
+| "da-bridge"
   | "tvl"
   | "activity"
   | "onchain-costs"
@@ -119,6 +122,11 @@ export interface ProjectDetailsUpcomingDisclaimer {
   excludeFromNavigation: true;
 }
 
+export interface ProjectDetailsGroup {
+  type: "Group";
+  props: ProjectDetailsProps<GroupSectionProps>;
+}
+
 export type ProjectDetailsSection = {
   excludeFromNavigation?: boolean;
 } & (
@@ -137,4 +145,5 @@ export type ProjectDetailsSection = {
   | ProjectDetailsContractsSection
   | ProjectDetailsKnowledgeNuggetsSection
   | ProjectDetailsUpcomingDisclaimer
+  | ProjectDetailsGroup
 );
