@@ -33,7 +33,7 @@ export function ScalingActivityTable({
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: customSortedRowModel ?? getSortedRowModel(),
     initialState: {
-      sorting: [{ id: 'data_pastDayTps', desc: true }],
+      sorting: [{ id: 'data_pastDayUops', desc: true }],
       columnPinning: {
         left: ['#', 'logo'],
       },

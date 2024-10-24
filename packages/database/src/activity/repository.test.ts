@@ -94,21 +94,44 @@ describeDatabase(ActivityRepository.name, (db) => {
     })
   })
 
-  describe(ActivityRepository.prototype.getMaxCountForProjects.name, () => {
-    it('should return max count for each project', async () => {
+  describe(ActivityRepository.prototype.getMaxUopsCountForProjects.name, () => {
+    it('should return max UOPS count for each project', async () => {
       await repository.upsertMany([
         record('a', START, 1),
-        record('a', START.add(1, 'days'), 3),
-        record('a', START.add(2, 'days'), 4),
-        record('b', START.add(1, 'days'), 2),
-        record('b', START.add(2, 'days'), 5),
+        record('a', START.add(1, 'days'), 3, 4),
+        record('a', START.add(2, 'days'), 4, 7),
+        record('b', START.add(1, 'days'), 2, 6),
+        record('b', START.add(2, 'days'), 5, 8),
       ])
 
-      const result = await repository.getMaxCountForProjects()
+      const result = await repository.getMaxUopsCountForProjects()
 
       expect(result).toEqual({
-        [ProjectId('a')]: { count: 4, timestamp: START.add(2, 'days') },
-        [ProjectId('b')]: { count: 5, timestamp: START.add(2, 'days') },
+        [ProjectId('a')]: { uopsCount: 7, timestamp: START.add(2, 'days') },
+        [ProjectId('b')]: { uopsCount: 8, timestamp: START.add(2, 'days') },
+      })
+    })
+
+    it('should return max UOPS count when uops is null', async () => {
+      await repository.upsertMany([
+        // uopsCount is null
+        record('a', START, 1),
+        record('a', START.add(1, 'days'), 5),
+        record('a', START.add(2, 'days'), 4),
+        // normal count bigger then uopsCount
+        record('b', START.add(1, 'days'), 2, 6),
+        record('b', START.add(2, 'days'), 8),
+        // uopsCount was null in the past
+        record('c', START.add(1, 'days'), 4),
+        record('c', START.add(2, 'days'), 5, 9),
+      ])
+
+      const result = await repository.getMaxUopsCountForProjects()
+
+      expect(result).toEqual({
+        [ProjectId('a')]: { uopsCount: 5, timestamp: START.add(1, 'days') },
+        [ProjectId('b')]: { uopsCount: 8, timestamp: START.add(2, 'days') },
+        [ProjectId('c')]: { uopsCount: 9, timestamp: START.add(2, 'days') },
       })
     })
   })

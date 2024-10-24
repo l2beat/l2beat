@@ -10,7 +10,7 @@ import {
 } from './activity/get-activity-table-data'
 import { getActivityProjects } from './activity/utils/get-activity-projects'
 import { getCommonScalingEntry } from './get-common-scaling-entry'
-import { orderByStageAndPastDayTps } from './utils/order-by-stage-and-past-day-tps'
+import { orderByStageAndPastDayUops } from './utils/order-by-stage-and-past-day-uops'
 
 type ActivityProject = Layer2 | Layer3
 
@@ -47,11 +47,11 @@ export async function getScalingActivityEntries() {
       )
     })
     .filter(notUndefined)
-    .sort((a, b) => b.data.pastDayTps - a.data.pastDayTps)
+    .sort((a, b) => b.data.pastDayUops - a.data.pastDayUops)
 
   if (env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION) {
     const recategorisedEntries = groupByMainCategories(
-      orderByStageAndPastDayTps(entries),
+      orderByStageAndPastDayUops(entries),
     )
     return {
       type: 'recategorised' as const,
@@ -67,7 +67,7 @@ export async function getScalingActivityEntries() {
 
   return {
     entries: [ethereumEntry, ...entries].sort(
-      (a, b) => b.data.pastDayTps - a.data.pastDayTps,
+      (a, b) => b.data.pastDayUops - a.data.pastDayUops,
     ),
   }
 }
