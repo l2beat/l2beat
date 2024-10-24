@@ -1,6 +1,9 @@
 import { useParams } from 'react-router-dom'
+import { EmptyPanel } from './EmptyPanel'
+import { ListPanel } from './list/ListPanel'
 import { MultiView } from './multi-view/MultiView'
-import { Panel } from './panels/Panel'
+import { PanelId } from './multi-view/store'
+import { ValuesPanel } from './values/ValuesPanel'
 
 export function ProjectPage() {
   const { project } = useParams()
@@ -9,4 +12,17 @@ export function ProjectPage() {
   }
 
   return <MultiView project={project} panelBodyElement={Panel} />
+}
+
+const PANELS = {
+  list: ListPanel,
+  values: ValuesPanel,
+  nodes: EmptyPanel,
+  code: EmptyPanel,
+  preview: EmptyPanel,
+}
+
+export function Panel(props: { kind: PanelId }) {
+  const Component = PANELS[props.kind]
+  return <Component />
 }
