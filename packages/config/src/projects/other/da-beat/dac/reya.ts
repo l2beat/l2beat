@@ -1,4 +1,4 @@
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { reya } from '../../../layer2s/reya'
 import { AnytrustDAC } from '../templates/anytrust-template'
@@ -42,6 +42,23 @@ export const reyaDac = AnytrustDAC({
         ),
         description:
           'Multisig that can upgrade authorized batch posters via the UpgradeExecutor contract.',
+      },
+      ...discovery.getMultisigPermission(
+        'GelatoMultisig',
+        'Multisig that can execute upgrades via the UpgradeExecutor.',
+      ),
+      {
+        name: 'UpgradeExecutor',
+        accounts: [
+          {
+            address: EthereumAddress(
+              discovery.getContractValue<string>('RollupProxy', 'owner'),
+            ),
+            type: 'Contract',
+          },
+        ],
+        description:
+          'The UpgradeExecutor can change the Committee members by updating the valid keyset.',
       },
     ],
     chain: ChainId.ETHEREUM,

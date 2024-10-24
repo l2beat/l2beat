@@ -1,3 +1,40 @@
+Generated with discovered.json: 0x18786e8322b124973d29861cb8ec3fb5f7d6a940
+
+# Diff at Wed, 23 Oct 2024 10:03:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2734bfe28641dfdb3277a5800faf0a057c08a58f block: 229043861
+- current block number: 266783049
+
+## Description
+
+LayerZero Multisig: One signer removed.
+
+## Watched changes
+
+```diff
+    contract LayerZero Multisig (0xFE22f5D2755b06b9149656C5793Cb15A08d09847) {
+    +++ description: None
+      values.$members.5:
+-        "0xf1f5E3777a3ADBe6f3289AD6b21eae6427dfb553"
+      values.$members.4:
+-        "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
++        "0xf1f5E3777a3ADBe6f3289AD6b21eae6427dfb553"
+      values.$members.3:
+-        "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e"
++        "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
+      values.$members.2:
+-        "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936"
++        "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e"
+      values.$members.1:
+-        "0xe095F2590eF1Ab39601445025847Ed8E4B40D687"
++        "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936"
+      values.multisigThreshold:
+-        "2 of 6 (33%)"
++        "2 of 5 (40%)"
+    }
+```
+
 Generated with discovered.json: 0x79508e1e3387b0d8540fac4638bb11435edae5bf
 
 # Diff at Mon, 21 Oct 2024 11:13:13 GMT:

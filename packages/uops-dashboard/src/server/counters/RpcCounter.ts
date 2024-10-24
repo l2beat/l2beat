@@ -227,7 +227,7 @@ export class RpcCounter implements Counter {
     }
   }
 
-  getTransactionType(to?: string): string {
+  getTransactionType(to: string | null): string {
     switch (to?.toLowerCase()) {
       case ENTRY_POINT_ADDRESS_0_6_0:
         return 'ERC-4337 Entry Point 0.6.0'

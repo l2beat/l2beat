@@ -78,9 +78,8 @@ export const columns = [
       tooltip: <TypeExplanationTooltip showOnlyRollupsDefinitions />,
     },
   }),
-  columnHelper.accessor('anomalies', {
+  columnHelper.display({
     header: '30-day\nanomalies',
-    enableSorting: false,
     cell: (ctx) => {
       const entry = ctx.row.original
       const showComingSoon =
@@ -89,7 +88,7 @@ export const columns = [
 
       return (
         <AnomalyIndicator
-          anomalyEntries={ctx.getValue()}
+          anomalyEntries={entry.anomalies}
           showComingSoon={showComingSoon}
         />
       )

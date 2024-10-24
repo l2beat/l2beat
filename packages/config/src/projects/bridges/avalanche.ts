@@ -116,22 +116,18 @@ export const avalanche: Bridge = {
         {
           category: 'Funds can be stolen if',
           text: 'wardens decide to maliciously takeover them or there is an external exploit which will result in signing malicious transaction.',
-          isCritical: true,
         },
         {
           category: 'Users can be censored if',
           text: 'wardens decide to censor certain transactions.',
-          isCritical: true,
         },
         {
           category: 'Funds can be lost if',
           text: 'wardens loose the private key.',
-          isCritical: true,
         },
         {
           category: 'Funds can be frozen if',
           text: 'wardens decide to stop processing transfers.',
-          isCritical: true,
         },
       ],
       isIncomplete: true,

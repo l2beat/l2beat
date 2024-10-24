@@ -123,7 +123,9 @@ export const mantleDABridge = {
   membersCount: committeeMembers,
   usedIn: toUsedInProject([mantle]),
   risks: {
-    committeeSecurity: DaCommitteeSecurityRisk.NoCommiteeSecurity(),
+    committeeSecurity: DaCommitteeSecurityRisk.NoDiversityCommiteeSecurity(
+      `${threshold}/${committeeMembers}`,
+    ),
     upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay
     relayerFailure: DaRelayerFailureRisk.NoMechanism,
   },
