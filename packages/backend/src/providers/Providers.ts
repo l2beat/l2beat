@@ -1,15 +1,5 @@
-import { TxsCountProvider } from '../modules/activity/indexers/types'
-import { BlockTimestampProvider } from '../modules/tvl/services/BlockTimestampProvider'
-import { ActivityProviders } from './ActivityProviders'
+import { BlockProviders } from './BlockProviders'
 
 export class Providers {
-  constructor(private readonly activity: ActivityProviders) {}
-
-  getTxsCountProvider(chain: string): TxsCountProvider {
-    return this.activity.getTxsCountProvider(chain)
-  }
-
-  getBlockTimestampProvider(chain: string): BlockTimestampProvider {
-    return this.activity.getBlockTimestampProvider(chain)
-  }
+  constructor(readonly block: BlockProviders) {}
 }

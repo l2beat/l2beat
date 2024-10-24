@@ -13,6 +13,7 @@ import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
 import { DayActivityIndexer } from './indexers/DayActivityIndexer'
 import { DayTargetIndexer } from './indexers/DayTargetIndexer'
 import { ActivityIndexer } from './indexers/types'
+import { ActivityServices } from './services/ActivityServices'
 import { getBatchSizeFromCallsPerMinute } from './utils/getBatchSizeFromCallsPerMinute'
 
 export function initActivityModule(
@@ -27,11 +28,14 @@ export function initActivityModule(
     return
   }
 
+  const services = new ActivityServices(config.activity, providers.block)
+
   const indexers = createActivityIndexers(
     config.activity,
     logger,
     clock,
     providers,
+    services,
     database,
   )
 
@@ -51,6 +55,7 @@ function createActivityIndexers(
   logger: Logger,
   clock: Clock,
   providers: Providers,
+  services: ActivityServices,
   database: Database,
 ): ActivityIndexer[] {
   const dayTargetIndexer = new DayTargetIndexer(logger, clock)
@@ -69,6 +74,7 @@ function createActivityIndexers(
           clock,
           project,
           providers,
+          services,
           indexerService,
           database,
           logger,
@@ -82,7 +88,7 @@ function createActivityIndexers(
         const activityIndexer = createStarkexIndexer(
           dayTargetIndexer,
           project,
-          providers,
+          services,
           indexerService,
           database,
           logger,
@@ -100,13 +106,16 @@ function createBlockBasedIndexer(
   clock: Clock,
   project: { id: ProjectId; config: ActivityTransactionConfig },
   providers: Providers,
+  services: ActivityServices,
   indexerService: IndexerService,
   database: Database,
   logger: Logger,
 ): [BlockTargetIndexer, BlockActivityIndexer] {
   assert(project.config.type !== 'starkex')
 
-  const blockTimestampProvider = providers.getBlockTimestampProvider(project.id)
+  const blockTimestampProvider = providers.block.getBlockTimestampProvider(
+    project.id,
+  )
   const blockTargetIndexer = new BlockTargetIndexer(
     logger,
     clock,
@@ -114,7 +123,7 @@ function createBlockBasedIndexer(
     project.id,
   )
 
-  const txsCountProvider = providers.getTxsCountProvider(project.id)
+  const txsCountService = services.getTxsCountService(project.id)
 
   const activityIndexer = new BlockActivityIndexer({
     logger,
@@ -122,7 +131,7 @@ function createBlockBasedIndexer(
     batchSize: getBatchSizeFromCallsPerMinute(project.config.callsPerMinute),
     minHeight: 1,
     parents: [blockTargetIndexer],
-    txsCountProvider,
+    txsCountService,
     indexerService,
     db: database,
   })
@@ -132,14 +141,14 @@ function createBlockBasedIndexer(
 function createStarkexIndexer(
   dayTargetIndexer: DayTargetIndexer,
   project: { id: ProjectId; config: ActivityTransactionConfig },
-  providers: Providers,
+  services: ActivityServices,
   indexerService: IndexerService,
   database: Database,
   logger: Logger,
 ) {
   assert(project.config.type === 'starkex')
 
-  const txsCountProvider = providers.getTxsCountProvider(project.id)
+  const txsCountService = services.getTxsCountService(project.id)
 
   const activityIndexer = new DayActivityIndexer({
     logger,
@@ -148,7 +157,7 @@ function createStarkexIndexer(
     minHeight: project.config.sinceTimestamp.toStartOf('day').toDays() ?? 0,
     uncertaintyBuffer: project.config.resyncLastDays,
     parents: [dayTargetIndexer],
-    txsCountProvider,
+    txsCountService,
     indexerService,
     db: database,
   })

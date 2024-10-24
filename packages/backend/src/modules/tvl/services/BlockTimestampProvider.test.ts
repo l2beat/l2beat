@@ -1,4 +1,3 @@
-import { Logger } from '@l2beat/backend-tools'
 import { BlockIndexerClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
@@ -17,7 +16,6 @@ describe(BlockTimestampProvider.name, () => {
       const service = new BlockTimestampProvider({
         indexerClients: [explorerClient],
         blockClients: [mockObject<RpcClient>({})],
-        logger: Logger.SILENT,
       })
 
       const blockNumber = await service.getBlockNumberAtOrBefore(UnixTime.ZERO)
@@ -37,7 +35,6 @@ describe(BlockTimestampProvider.name, () => {
       const service = new BlockTimestampProvider({
         indexerClients: [],
         blockClients: [rpc],
-        logger: Logger.SILENT,
       })
 
       const blockNumber = await service.getBlockNumberAtOrBefore(UnixTime.ZERO)
@@ -60,7 +57,6 @@ describe(BlockTimestampProvider.name, () => {
       const service = new BlockTimestampProvider({
         indexerClients: [explorerClient],
         blockClients: [rpc],
-        logger: Logger.SILENT,
       })
 
       const blockNumber = await service.getBlockNumberAtOrBefore(UnixTime.ZERO)

@@ -60,7 +60,6 @@ export function initBlockTimestampModule(
     const blockTimestampProvider = new BlockTimestampProvider({
       indexerClients: blockExplorerClient ? [blockExplorerClient] : [],
       blockClients: [rpcClient],
-      logger,
     })
 
     const indexer = new BlockTimestampIndexer({
