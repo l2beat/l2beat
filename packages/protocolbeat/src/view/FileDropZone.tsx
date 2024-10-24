@@ -1,25 +1,17 @@
 import { ReactNode } from 'react'
-import { merge } from '../api/merge'
 import { encodeProjectId, parseDiscovery } from '../api/paseDiscovery'
 import { transformContracts } from '../api/transform'
-import { nodeToSimpleNode } from '../store/actions/updateNodes'
 import { useStore } from '../store/store'
 
 export function FileDropZone(props: { children: ReactNode }) {
-  const nodes = useStore((state) => state.nodes)
-  const simpleNodes = nodes.map(nodeToSimpleNode)
-
-  const setProjectId = useStore((state) => state.setProjectId)
-  const updateNodes = useStore((state) => state.updateNodes)
+  const loadNodes = useStore((state) => state.loadNodes)
 
   async function loadFromFile(file: File) {
     const contents = await file.text()
     const discovery = parseDiscovery(JSON.parse(contents))
     const projectId = encodeProjectId(discovery)
     const result = transformContracts(projectId, discovery)
-
-    updateNodes(merge(simpleNodes, result))
-    setProjectId(projectId)
+    loadNodes(projectId, result)
   }
 
   return (
@@ -32,16 +24,12 @@ export function FileDropZone(props: { children: ReactNode }) {
           if (item.kind === 'file') {
             const file = item.getAsFile()
             if (file) {
-              loadFromFile(file).catch((e) => {
-                throw e
-              })
+              void loadFromFile(file)
             }
           }
         })
       }}
-      onDragOver={(event) => {
-        event.preventDefault()
-      }}
+      onDragOver={(event) => event.preventDefault()}
     >
       {props.children}
     </div>

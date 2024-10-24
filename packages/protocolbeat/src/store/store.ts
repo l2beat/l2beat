@@ -3,17 +3,18 @@ import { persist } from 'zustand/middleware'
 
 import type { State } from './State'
 import type { Actions } from './actions/Actions'
+import {
+  loadNodes,
+  updateNodeColors,
+  updateNodeLocations,
+  updateNodes,
+} from './actions/nodes'
 import { onKeyDown } from './actions/onKeyDown'
 import { onKeyUp } from './actions/onKeyUp'
 import { onMouseDown } from './actions/onMouseDown'
 import { onMouseMove } from './actions/onMouseMove'
 import { onMouseUp } from './actions/onMouseUp'
 import { onWheel } from './actions/onWheel'
-import {
-  updateNodeColors,
-  updateNodeLocations,
-  updateNodes,
-} from './actions/updateNodes'
 
 const INITIAL_STATE: State = {
   selectedNodeIds: [],
@@ -41,6 +42,8 @@ export const useStore = create<State & Actions>()(
   persist(
     (set) => ({
       ...INITIAL_STATE,
+
+      loadNodes: wrapAction(set, loadNodes),
 
       onKeyDown: wrapAction(set, onKeyDown),
       onKeyUp: wrapAction(set, onKeyUp),
