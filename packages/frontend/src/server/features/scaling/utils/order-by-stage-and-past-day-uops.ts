@@ -1,13 +1,13 @@
 import { type StageConfig } from '@l2beat/config'
 import { type ProjectId } from '@l2beat/shared-pure'
 
-export function orderByStageAndPastDayTps<
+export function orderByStageAndPastDayUops<
   T extends {
     id: ProjectId
     name: string
     stage: StageConfig
     data: {
-      pastDayTps: number
+      pastDayUops: number
     }
   },
 >(projects: T[]): T[] {
@@ -25,8 +25,8 @@ export function orderByStageAndPastDayTps<
       return 1
     }
 
-    const aTps = a.data.pastDayTps
-    const bTps = b.data.pastDayTps
+    const aTps = a.data.pastDayUops
+    const bTps = b.data.pastDayUops
     if (aTps !== bTps) {
       return bTps - aTps
     }

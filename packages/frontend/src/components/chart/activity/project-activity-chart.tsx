@@ -1,6 +1,7 @@
 'use client'
 
 import { type Milestone } from '@l2beat/config'
+import { UnixTime } from '@l2beat/shared-pure'
 import { useState } from 'react'
 import { ActivityTimeRangeControls } from '~/app/(side-nav)/scaling/activity/_components/activity-time-range-controls'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
@@ -41,6 +42,11 @@ export function ProjectActivityChart({ milestones, projectId }: Props) {
       showMainnet,
     })
 
+  const projectSyncedUntil = data?.syncedStatuses[projectId]
+  const isSynced = UnixTime.now()
+    .add(-2, 'days')
+    .lte(new UnixTime(projectSyncedUntil ?? 0))
+
   return (
     <ChartProvider
       columns={columns}
@@ -53,13 +59,20 @@ export function ProjectActivityChart({ milestones, projectId }: Props) {
         <ActivityChartHover
           {...data}
           showEthereum={showMainnet}
+          syncedUntil={projectSyncedUntil}
           singleProject
         />
       )}
     >
       <section className="flex flex-col gap-4">
         <ChartControlsWrapper>
-          <ProjectChartTimeRange range={chartRange} />
+          <ProjectChartTimeRange
+            range={chartRange}
+            syncStatus={{
+              isSynced,
+              syncedUntil: projectSyncedUntil,
+            }}
+          />
           <ActivityTimeRangeControls
             timeRange={timeRange}
             setTimeRange={setTimeRange}
@@ -75,8 +88,8 @@ export function ProjectActivityChart({ milestones, projectId }: Props) {
           >
             <div className="flex flex-row items-center gap-2">
               <EthereumLineIcon className="hidden h-1.5 w-2.5 sm:inline-block" />
-              <span className="max-lg:hidden">ETH Mainnet Transactions</span>
-              <span className="lg:hidden">ETH Txs</span>
+              <span className="max-lg:hidden">ETH Mainnet Operations</span>
+              <span className="lg:hidden">ETH UOPS</span>
             </div>
           </Checkbox>
           <RadioGroup

@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
-export function countToTps(count: number) {
+export function countToUops(count: number) {
   return count / UnixTime.DAY
 }

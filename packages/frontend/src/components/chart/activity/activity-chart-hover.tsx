@@ -1,7 +1,7 @@
-import { countToTps } from '~/server/features/scaling/activity/utils/count-to-tps'
+import { countToUops } from '~/server/features/scaling/activity/utils/count-to-uops'
 import { formatTimestamp } from '~/utils/dates'
 import { formatInteger } from '~/utils/number-format/format-integer'
-import { formatTps } from '~/utils/number-format/format-tps'
+import { formatUops } from '~/utils/number-format/format-uops'
 
 interface Props {
   timestamp: number
@@ -9,6 +9,7 @@ interface Props {
   ethereumCount: number
   showEthereum: boolean
   singleProject?: boolean
+  syncedUntil?: number
 }
 
 export function ActivityChartHover(props: Props) {
@@ -20,7 +21,7 @@ export function ActivityChartHover(props: Props) {
       <div className="flex w-full items-center justify-between gap-2">
         <div className="flex items-center gap-1">
           <span className="text-sm text-gray-700 dark:text-gray-50 ">
-            Average TPS
+            Average UOPS
           </span>
         </div>
       </div>
@@ -31,9 +32,11 @@ export function ActivityChartHover(props: Props) {
           <span>{props.singleProject ? 'Project' : 'Projects'}</span>
         </div>
         <span className="whitespace-nowrap font-bold tabular-nums">
-          {formatTps(countToTps(props.count), {
-            morePrecision: !!props.singleProject,
-          })}
+          {props.syncedUntil && props.syncedUntil < props.timestamp
+            ? 'Not synced'
+            : formatUops(countToUops(props.count), {
+                morePrecision: !!props.singleProject,
+              })}
         </span>
       </div>
 
@@ -44,7 +47,7 @@ export function ActivityChartHover(props: Props) {
             <span>Ethereum</span>
           </div>
           <span className="whitespace-nowrap font-bold tabular-nums">
-            {formatTps(countToTps(props.ethereumCount), {
+            {formatUops(countToUops(props.ethereumCount), {
               morePrecision: !!props.singleProject,
             })}
           </span>
@@ -54,7 +57,7 @@ export function ActivityChartHover(props: Props) {
       <div className="mt-2 flex w-full items-center justify-between gap-2">
         <div className="flex items-center gap-1">
           <span className="text-sm text-gray-700 dark:text-gray-50 ">
-            Transaction count
+            Operations count
           </span>
         </div>
       </div>
@@ -65,7 +68,9 @@ export function ActivityChartHover(props: Props) {
           <span>{props.singleProject ? 'Project' : 'Projects'}</span>
         </div>
         <span className="whitespace-nowrap font-bold tabular-nums">
-          {formatInteger(props.count)}
+          {props.syncedUntil && props.syncedUntil < props.timestamp
+            ? 'Not synced'
+            : formatInteger(props.count)}
         </span>
       </div>
 

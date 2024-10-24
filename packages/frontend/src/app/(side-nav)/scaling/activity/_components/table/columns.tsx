@@ -1,4 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
+import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { PrimaryValueCell } from '~/components/table/cells/primary-value-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
@@ -8,9 +9,10 @@ import {
 } from '~/components/table/utils/common-project-columns'
 import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling-activity-entries'
 import { formatInteger } from '~/utils/number-format/format-integer'
-import { formatTps } from '~/utils/number-format/format-tps'
+import { formatUops } from '~/utils/number-format/format-uops'
+import { formatUopsRatio } from '~/utils/number-format/format-uops-ratio'
 import { SyncStatusWrapper } from '../../../finality/_components/table/sync-status-wrapper'
-import { MaxTpsCell } from './max-tps-cell'
+import { MaxUopsCell } from './max-uops-cell'
 
 const columnHelper = createColumnHelper<ScalingActivityEntry>()
 
@@ -24,13 +26,13 @@ export const getScalingActivityColumns = (
       headClassName: 'w-0 min-w-[154px]',
     },
   }),
-  columnHelper.accessor('data.pastDayTps', {
-    header: 'Past day TPS',
+  columnHelper.accessor('data.pastDayUops', {
+    header: 'Past day UOPS',
     cell: (ctx) => {
       const data = ctx.row.original.data
       return (
         <SyncStatusWrapper syncStatus={data.syncStatus}>
-          <PrimaryValueCell>{formatTps(data.pastDayTps)}</PrimaryValueCell>
+          <PrimaryValueCell>{formatUops(data.pastDayUops)}</PrimaryValueCell>
         </SyncStatusWrapper>
       )
     },
@@ -38,19 +40,19 @@ export const getScalingActivityColumns = (
     meta: {
       align: 'right',
       headClassName: 'max-w-[60px]',
-      tooltip: 'Transactions per second averaged over the past day.',
+      tooltip: 'User operations per second averaged over the past day.',
     },
   }),
-  columnHelper.accessor('data.maxTps.value', {
-    header: 'Max TPS',
+  columnHelper.accessor('data.maxUops.value', {
+    header: 'Max UOPS',
     sortUndefined: 'last',
     cell: (ctx) => {
       const data = ctx.row.original.data
       return (
         <SyncStatusWrapper syncStatus={data.syncStatus}>
-          <MaxTpsCell
-            maxTps={data.maxTps.value}
-            timestamp={data.maxTps.timestamp}
+          <MaxUopsCell
+            maxUops={data.maxUops.value}
+            timestamp={data.maxUops.timestamp}
           />
         </SyncStatusWrapper>
       )
@@ -80,10 +82,24 @@ export const getScalingActivityColumns = (
       align: 'right',
     },
   }),
-  columnHelper.accessor('dataSource', {
-    header: 'Data source',
+  columnHelper.accessor('data.ratio', {
+    header: 'UOPS/TPS RATIO',
+    sortUndefined: 'last',
+    cell: (ctx) => {
+      const data = ctx.row.original.data
+      if (!data) {
+        return <NoDataBadge />
+      }
+      return (
+        <SyncStatusWrapper syncStatus={data.syncStatus}>
+          <PrimaryValueCell>{formatUopsRatio(data.ratio)}</PrimaryValueCell>
+        </SyncStatusWrapper>
+      )
+    },
     meta: {
-      headClassName: 'w-0',
+      align: 'right',
+      tooltip:
+        'The ratio of user operations to transactions over the past day.',
     },
   }),
 ]

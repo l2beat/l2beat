@@ -8,7 +8,7 @@ export async function getActivityChartStats(filter: ActivityProjectFilter) {
   // We should use the last 7 days but 30d is probably cached already so it's faster
   const chartData = await getActivityChart(filter, '30d')
 
-  const latestData = chartData.at(-1)
+  const latestData = chartData.result.at(-1)
   if (!latestData) {
     return {
       latestProjectsTxCount: 0,
@@ -16,7 +16,7 @@ export async function getActivityChartStats(filter: ActivityProjectFilter) {
     }
   }
 
-  const totalTxs = chartData.slice(-7)?.reduce(
+  const totalTxs = chartData.result.slice(-7)?.reduce(
     (acc, curr) => {
       acc.ethereum += curr[2]
       acc.rest += curr[1]
