@@ -5,7 +5,11 @@ import {
   TypeCell,
   TypeExplanationTooltip,
 } from '~/components/table/cells/type-cell'
-import { sortSentiments } from '~/components/table/sorting/functions/sentiment-sorting'
+import { sortByDacMembers } from '~/components/table/sorting/functions/sort-by-dac-members'
+import {
+  sortBySentiment,
+  sortBySentimentAndAlphabetically,
+} from '~/components/table/sorting/functions/sort-by-sentiment'
 import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
 import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
 
@@ -45,7 +49,7 @@ export const columns = [
       )
     },
     sortingFn: (a, b) =>
-      sortSentiments(
+      sortBySentimentAndAlphabetically(
         a.original.dataAvailability.layer,
         b.original.dataAvailability.layer,
       ),
@@ -64,11 +68,21 @@ export const columns = [
         {ctx.row.original.dataAvailability.bridge.value}
       </SentimentText>
     ),
-    sortingFn: (a, b) =>
-      sortSentiments(
-        a.original.dataAvailability.bridge,
-        b.original.dataAvailability.bridge,
-      ),
+    sortingFn: (a, b) => {
+      const bridgeA = a.original.dataAvailability.bridge
+      const bridgeB = b.original.dataAvailability.bridge
+      const sentimentResult = sortBySentiment(bridgeA, bridgeB)
+      if (sentimentResult !== 0) {
+        return sentimentResult
+      }
+
+      const dacMembersResult = sortByDacMembers(bridgeA, bridgeB)
+      if (dacMembersResult !== 0) {
+        return dacMembersResult
+      }
+
+      return (bridgeA?.value ?? '').localeCompare(bridgeB?.value ?? '')
+    },
   }),
   columnHelper.accessor('dataAvailability.mode', {
     header: 'Type of data',
