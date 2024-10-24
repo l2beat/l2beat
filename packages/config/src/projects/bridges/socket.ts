@@ -76,17 +76,14 @@ export const socket: Bridge = {
         {
           category: 'Users can be censored if',
           text: 'watchers fail to facilitate the transfer.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: 'watchers submit fraudulent block hash and relay fraudulent transfer.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: 'the Socket Vault owners change the Vault configuration.',
-          isCritical: true,
         },
       ],
       isIncomplete: true,
