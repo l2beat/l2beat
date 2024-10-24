@@ -1,26 +1,26 @@
-import { type DaBridge, type DaLayer, getDaProjectKey } from "@l2beat/config";
+import { type DaBridge, type DaLayer, getDaProjectKey } from '@l2beat/config'
 import {
   mapDaBridgeRisksToGrisiniItems,
   mapDaLayerRisksToGrisiniItems,
-} from "~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values";
-import { getProjectDetails } from "~/app/(top-nav)/data-availability/projects/[layer]/_utils/get-project-details";
-import { type GrisiniValue } from "~/components/grisini/types";
-import { getDataAvailabilityProjectLinks } from "~/utils/project/get-project-links";
-import { getImplementationChangeReport } from "../../implementation-change-report/get-implementation-change-report";
-import { getContractsVerificationStatuses } from "../../verification-status/get-contracts-verification-statuses";
-import { getManuallyVerifiedContracts } from "../../verification-status/get-manually-verified-contracts";
-import { getProjectsVerificationStatuses } from "../../verification-status/get-projects-verification-statuses";
-import { getDaRisks } from "../utils/get-da-risks";
-import { kindToType } from "../utils/kind-to-layer-type";
+} from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
+import { getProjectDetails } from '~/app/(top-nav)/data-availability/projects/[layer]/_utils/get-project-details'
+import { type GrisiniValue } from '~/components/grisini/types'
+import { getDataAvailabilityProjectLinks } from '~/utils/project/get-project-links'
+import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
+import { getContractsVerificationStatuses } from '../../verification-status/get-contracts-verification-statuses'
+import { getManuallyVerifiedContracts } from '../../verification-status/get-manually-verified-contracts'
+import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
+import { getDaRisks } from '../utils/get-da-risks'
+import { kindToType } from '../utils/kind-to-layer-type'
 import {
   type EconomicSecurityData,
   getDaProjectEconomicSecurity,
-} from "./utils/get-da-project-economic-security";
-import { getDaProjectTvl } from "./utils/get-da-project-tvl";
+} from './utils/get-da-project-economic-security'
+import { getDaProjectTvl } from './utils/get-da-project-tvl'
 
 export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
   // TODO: Remove it to re-enable per-combination TVL
-  const tvlSource = daLayer.kind === "DAC" ? daBridge : daLayer;
+  const tvlSource = daLayer.kind === 'DAC' ? daBridge : daLayer
 
   const [
     economicSecurity,
@@ -31,18 +31,27 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
     implementationChangeReport,
   ] = await Promise.all([
     getDaProjectEconomicSecurity(daLayer),
-    getDaProjectTvl(Object.fromEntries(daLayer.bridges.map((b) => [b.id, b.usedIn.map((u) => u.id)] as const))),
+    getDaProjectTvl(
+      Object.fromEntries(
+        daLayer.bridges.map((b) => [b.id, b.usedIn.map((u) => u.id)] as const),
+      ),
+    ),
     getProjectsVerificationStatuses(),
     getContractsVerificationStatuses(daLayer),
     getManuallyVerifiedContracts(daLayer),
     getImplementationChangeReport(),
-  ]);
+  ])
 
   const isVerified =
-    !!projectsVerificationStatuses[getDaProjectKey(daLayer, daBridge)];
+    !!projectsVerificationStatuses[getDaProjectKey(daLayer, daBridge)]
   const grisiniValues = mapDaLayerRisksToGrisiniItems(
-    getDaRisks(daLayer, daBridge, tvsEntries[tvlSource.id] ?? 0, economicSecurity)
-  );
+    getDaRisks(
+      daLayer,
+      daBridge,
+      tvsEntries[tvlSource.id] ?? 0,
+      economicSecurity,
+    ),
+  )
 
   const projectDetails = getProjectDetails({
     daLayer,
@@ -52,7 +61,7 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
     manuallyVerifiedContracts,
     implementationChangeReport,
     grisiniValues,
-  });
+  })
 
   return {
     name: daLayer.display.name,
@@ -86,16 +95,16 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
       economicSecurity,
     }),
     projectDetails,
-  };
+  }
 }
 
 interface HeaderParams {
-  daLayerGrisiniValues: GrisiniValue[];
-  daBridgeGrisiniValues: GrisiniValue[];
-  daLayer: DaLayer;
-  daBridge: DaBridge;
-  tvs: number;
-  economicSecurity: EconomicSecurityData | undefined;
+  daLayerGrisiniValues: GrisiniValue[]
+  daBridgeGrisiniValues: GrisiniValue[]
+  daLayer: DaLayer
+  daBridge: DaBridge
+  tvs: number
+  economicSecurity: EconomicSecurityData | undefined
 }
 
 function getHeader({
@@ -111,14 +120,14 @@ function getHeader({
     daBridgeGrisiniValues,
     links: getDataAvailabilityProjectLinks(
       daLayer.display.links,
-      daBridge.display.links
+      daBridge.display.links,
     ),
     tvs,
     economicSecurity,
     durationStorage:
-      daLayer.kind === "PublicBlockchain" ? daLayer.pruningWindow : undefined,
+      daLayer.kind === 'PublicBlockchain' ? daLayer.pruningWindow : undefined,
     usedIn: daBridge.usedIn,
-  };
+  }
 }
 
-export type DaProjectEntry = Awaited<ReturnType<typeof getDaProjectEntry>>;
+export type DaProjectEntry = Awaited<ReturnType<typeof getDaProjectEntry>>

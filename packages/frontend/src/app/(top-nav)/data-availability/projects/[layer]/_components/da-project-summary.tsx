@@ -1,15 +1,6 @@
 import Link from 'next/link'
-import { HorizontalSeparator } from '~/components/core/horizontal-separator'
-import { Grisini } from '~/components/grisini/grisini'
-import { GrisiniDetails } from '~/components/grisini/grisini-details'
-import { DesktopProjectLinks } from '~/components/projects/links/desktop-project-links'
-import { MobileProjectLinks } from '~/components/projects/links/mobile-project-links'
-import { ProjectHeader } from '~/components/projects/project-header'
-import { AboutSection } from '~/components/projects/sections/about-section'
-import { InfoIcon } from '~/icons/info'
-import { type DaProjectEntry } from '~/server/features/data-availability/project/get-da-project-entry'
-import { cn } from '~/utils/cn'
-import { DaProjectStats } from './da-project-stats'
+import { ProjectsUsedIn } from '~/app/(side-nav)/data-availability/summary/_components/table/projects-used-in'
+import { Button, buttonVariants } from '~/components/core/button'
 import {
   Drawer,
   DrawerClose,
@@ -20,9 +11,18 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '~/components/core/drawer'
-import { Button, buttonVariants } from '~/components/core/button'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { Grisini } from '~/components/grisini/grisini'
+import { GrisiniDetails } from '~/components/grisini/grisini-details'
+import { DesktopProjectLinks } from '~/components/projects/links/desktop-project-links'
+import { MobileProjectLinks } from '~/components/projects/links/mobile-project-links'
+import { ProjectHeader } from '~/components/projects/project-header'
+import { AboutSection } from '~/components/projects/sections/about-section'
+import { InfoIcon } from '~/icons/info'
+import { type DaProjectEntry } from '~/server/features/data-availability/project/get-da-project-entry'
+import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/format-currency'
-import { ProjectsUsedIn } from '~/app/(side-nav)/data-availability/summary/_components/table/projects-used-in'
+import { DaProjectStats } from './da-project-stats'
 
 interface Props {
   project: DaProjectEntry

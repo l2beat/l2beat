@@ -3,6 +3,7 @@ import { assertUnreachable } from '@l2beat/shared-pure'
 import { ChartSection } from './sections/chart-section'
 import { ContractsSection } from './sections/contracts/contracts-section'
 import { DetailedDescriptionSection } from './sections/detailed-description-section'
+import { GroupSection } from './sections/group-section'
 import { KnowledgeNuggetsSection } from './sections/knowledge-nuggets-section'
 import { L3RiskAnalysisSection } from './sections/l3-risk-analysis-section'
 import { MarkdownSection } from './sections/markdown-section'
@@ -16,7 +17,6 @@ import { StateValidationSection } from './sections/state-validation-section'
 import { TechnologySection } from './sections/technology-section'
 import { type ProjectDetailsSection } from './sections/types'
 import { UpcomingDisclaimer } from './sections/upcoming-disclaimer'
-import { GroupSection } from './sections/group-section'
 
 export interface ProjectDetailsProps {
   items: ProjectDetailsSection[]

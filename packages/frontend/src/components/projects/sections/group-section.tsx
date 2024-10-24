@@ -1,4 +1,4 @@
-import { ProjectDetailsSection } from "./types"
+import { ProjectDetailsSection } from './types'
 
 export interface GroupSectionProps {
   // This is a circular ref, but it's fine
