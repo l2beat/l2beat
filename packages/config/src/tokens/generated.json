@@ -7963,6 +7963,28 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Pepe",
+      "coingeckoId": "pepe",
+      "address": "0x25d887Ce7a35172C62FeBFD67a1856F20FaEbB00",
+      "symbol": "PEPE",
+      "decimals": 18,
+      "deploymentTimestamp": 1683328069,
+      "coingeckoListingTimestamp": 1681776000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29850/large/pepe-token.jpeg?1696528776",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero OFT",
+            "slug": "lzomnichain"
+          }
+        ]
+      }
+    },
+    {
       "name": "Polkamon",
       "coingeckoId": "polychain-monsters",
       "address": "0xBC9B77acA82f6BE43927076D71cd453b625165B8",

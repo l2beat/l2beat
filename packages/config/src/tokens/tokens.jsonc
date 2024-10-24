@@ -1559,6 +1559,20 @@
   ],
   "arbitrum": [
     {
+      "symbol": "PEPE",
+      "address": "0x25d887Ce7a35172C62FeBFD67a1856F20FaEbB00",
+      "source": "native",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero OFT",
+            "slug": "lzomnichain"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "STAR",
       "address": "0xB299751B088336E165dA313c33e3195B8c6663A6",
       "source": "native",
