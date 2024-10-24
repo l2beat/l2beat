@@ -135,6 +135,16 @@ export const silicon: Layer2 = polygonCDKStack({
       description:
         'Admin and ForceBatcher of the SiliconValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions, and set the DA committee members in the SiliconDAC contract.',
     },
+    {
+      name: 'SiliconDAC Upgrader',
+      accounts: [
+        discovery.formatPermissionedAccount(
+          discovery.getContractValue('DACProxyAdmin', 'owner'),
+        ),
+      ],
+      description:
+        'Can upgrade the SiliconDAC contract and thus change the data availability rules any time.',
+    },
   ],
   nonTemplateContracts: [
     discovery.getContractDetails('SiliconDAC', {
