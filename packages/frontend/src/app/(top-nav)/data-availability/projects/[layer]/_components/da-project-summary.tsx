@@ -198,6 +198,9 @@ export function DaProjectSummary({ project }: Props) {
           </div>
         </div>
       </div>
+      <div className="max-md:hidden">
+        <HorizontalSeparator className="!my-6 flex-1" />
+      </div>
     </section>
   )
 }
