@@ -12,7 +12,6 @@ export interface NodeViewProps {
   selected: boolean
   discovered: boolean
   onHideNode: (nodeId: string) => void
-  loading: boolean
 }
 
 export function NodeView(props: NodeViewProps) {
@@ -85,9 +84,7 @@ export function NodeView(props: NodeViewProps) {
       >
         <div className="truncate">{props.node.simpleNode.name}</div>
         <div className="flex items-center justify-center gap-2">
-          <button ref={hideRef} disabled={props.loading}>
-            👁️
-          </button>
+          <button ref={hideRef}>👁️</button>
         </div>
       </div>
       {props.node.fields.map(({ name, connection }, i) => (

@@ -4,16 +4,11 @@ import clsx from 'clsx'
 import { useState } from 'react'
 
 import type { SimpleNode } from './api/SimpleNode'
-import { deleteNode } from './api/delete'
 import { merge } from './api/merge'
 import { encodeProjectId, parseDiscovery } from './api/paseDiscovery'
 import { transformContracts } from './api/transform'
 import { nodeToSimpleNode } from './store/actions/updateNodes'
 import { useStore } from './store/store'
-import {
-  decodeNodeState,
-  getLayoutStorageKey,
-} from './store/utils/storageParsing'
 import { OklchColor } from './utils/color'
 import { AutoLayoutButton } from './view/AutoLayoutButton'
 import { Sidebar } from './view/Sidebar'
@@ -23,41 +18,18 @@ export function App() {
   // load the initial nodes from the store that gets rehydrated from local storage at startup
   const initialNodes = useStore((state) => state.nodes)
   const hiddenNodesIds = useStore((state) => state.hiddenNodesIds)
-  const projectId = useStore((state) => state.projectId)
-  const updateNodeLocations = useStore((state) => state.updateNodeLocations)
-  const updateNodeColors = useStore((state) => state.updateNodeColors)
   const setHiddenNodes = useStore((state) => state.setHiddenNodes)
   const setProjectId = useStore((state) => state.setProjectId)
   const [nodes, setNodes] = useState<SimpleNode[]>(
     initialNodes.map(nodeToSimpleNode),
   )
-  const [loading, setLoading] = useState<Record<string, boolean>>({})
   const selectedIds = useStore((state) => state.selectedNodeIds)
   const selectedNodes = nodes.filter((x) => selectedIds.includes(x.id))
   const showSidebar = selectedNodes.length > 0
 
-  function markLoading(id: string, value: boolean) {
-    setLoading((loading) => ({ ...loading, [id]: value }))
-  }
-
   function clear() {
     setNodes([])
     setHiddenNodes(() => [])
-  }
-
-  function save() {
-    const data = localStorage.getItem(getLayoutStorageKey(projectId))
-    if (data === null) {
-      return
-    }
-
-    const blob = new Blob([data], { type: 'application/json' })
-    const downloadLink = document.createElement('a')
-    downloadLink.href = URL.createObjectURL(blob)
-    downloadLink.download = `${projectId}-layout.json`
-    document.body.appendChild(downloadLink)
-    downloadLink.click()
-    document.body.removeChild(downloadLink)
   }
 
   function revealAllNodes() {
@@ -65,56 +37,21 @@ export function App() {
   }
 
   async function loadFromFile(file: File) {
-    console.log('LOADING')
-
-    markLoading(`${file.name} parse`, true)
-
     const contents = await file.text()
-    try {
-      const state = decodeNodeState(contents)
-      if (state === undefined) {
-        throw new Error('not node state')
-      }
-      if (state.projectId !== projectId) {
-        console.error(
-          `Location data is for ${state.projectId} but ${projectId} is loaded`,
-        )
-        return
-      }
+    const discovery = parseDiscovery(JSON.parse(contents))
+    const projectId = encodeProjectId(discovery)
+    const result = transformContracts(projectId, discovery)
 
-      updateNodeLocations(state.locations)
-      updateNodeColors(state.colors)
-    } catch (_) {
-      const discovery = parseDiscovery(JSON.parse(contents))
-      const projectId = encodeProjectId(discovery)
-      const result = transformContracts(projectId, discovery)
-
-      setNodes((nodes) => merge(nodes, result))
-      setProjectId(projectId)
-    }
-    markLoading(`${file.name} parse`, false)
-  }
-
-  function deleteNodeAction(id: string[]) {
-    try {
-      const newNodes = deleteNode(nodes, id)
-      setNodes(newNodes)
-    } catch (e: unknown) {
-      alert(e instanceof Error && e.message ? e.message : 'Unknown error')
-    }
+    setNodes((nodes) => merge(nodes, result))
+    setProjectId(projectId)
   }
 
   function colorChangeAction(id: string[], color: OklchColor) {
-    try {
-      const matching = nodes
-        .filter((n) => id.includes(n.id))
-        .map((n) => ({ ...n, color }))
-      const old = nodes.filter((n) => !id.includes(n.id))
-
-      setNodes(old.concat(matching))
-    } catch (e: unknown) {
-      alert(e instanceof Error && e.message ? e.message : 'Unknown error')
-    }
+    const matching = nodes
+      .filter((n) => id.includes(n.id))
+      .map((n) => ({ ...n, color }))
+    const old = nodes.filter((n) => !id.includes(n.id))
+    setNodes(old.concat(matching))
   }
 
   return (
@@ -145,7 +82,7 @@ export function App() {
         )}
       >
         <div className="relative flex h-full w-full items-center justify-center">
-          <Viewport nodes={nodes} loading={loading} />
+          <Viewport nodes={nodes} />
 
           <div className="absolute top-0 w-full p-2">
             <div className="flex flex-row content-center items-center justify-between">
@@ -162,20 +99,10 @@ export function App() {
                 <button
                   className="px-1 text-2xl hover:bg-gray-300"
                   type="button"
-                  disabled={loading.global}
                   onClick={clear}
                   title="Clear"
                 >
                   🚮
-                </button>
-                <button
-                  className="px-1 text-2xl hover:bg-gray-300"
-                  type="button"
-                  disabled={loading.global}
-                  onClick={save}
-                  title="save"
-                >
-                  💾
                 </button>
               </div>
             </div>
@@ -186,7 +113,6 @@ export function App() {
           <div className="row-span-2 overflow-y-auto bg-white p-2 drop-shadow-xl">
             <Sidebar
               selectedNodes={selectedNodes}
-              onDeleteNodes={deleteNodeAction}
               onHideNodes={(ids) => setHiddenNodes((c) => c.concat(ids))}
               onColorChange={colorChangeAction}
             />

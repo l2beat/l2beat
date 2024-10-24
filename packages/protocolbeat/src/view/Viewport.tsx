@@ -9,7 +9,6 @@ import { useViewport } from './useViewport'
 
 export interface ViewportProps {
   nodes: SimpleNode[]
-  loading: Record<string, boolean | undefined>
 }
 
 export function Viewport(props: ViewportProps) {
@@ -73,7 +72,6 @@ export function Viewport(props: ViewportProps) {
             selected={selectedNodeIds.includes(node.simpleNode.id)}
             discovered={node.simpleNode.discovered}
             onHideNode={hideNode}
-            loading={!!props.loading[node.simpleNode.id]}
           />
         ))}
       </ScalableView>
