@@ -5,6 +5,15 @@ module.exports = {
     extend: {
       fontFamily: {
         ui: ['system-ui', 'sans-serif'],
+        mono: [
+          'ui-monospace',
+          'Cascadia Code',
+          'Source Code Pro',
+          'Menlo',
+          'Consolas',
+          'DejaVu Sans Mono',
+          'monospace',
+        ],
       },
     },
   },

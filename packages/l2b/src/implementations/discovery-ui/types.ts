@@ -12,7 +12,7 @@ export interface ApiProjectResponse {
 }
 
 export interface ApiProjectChain {
-  chain: string
+  name: string
   initialContracts: ApiProjectContract[]
   discoveredContracts: ApiProjectContract[]
   ignoredContracts: ApiAddressEntry[]
@@ -21,13 +21,10 @@ export interface ApiProjectChain {
 
 export interface ApiAddressEntry {
   name?: string
-  chain: string
+  type: 'EOA' | 'Multisig' | 'Diamond' | 'Timelock' | 'Contract'
   address: string
 }
 
-export interface ApiProjectContract {
-  name?: string
-  chain: string
-  address: string
+export interface ApiProjectContract extends ApiAddressEntry {
   values: Record<string, string>
 }

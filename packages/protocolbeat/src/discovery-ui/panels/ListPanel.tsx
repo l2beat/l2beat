@@ -3,8 +3,12 @@ import { ApiAddressEntry, ApiProjectChain } from '../api/types'
 import { IconChevronDown } from '../icons/IconChevronDown'
 import { IconChevronRight } from '../icons/IconChevronRight'
 import { IconContract } from '../icons/IconContract'
+import { IconDiamond } from '../icons/IconDiamond'
+import { IconEoa } from '../icons/IconEoa'
 import { IconFolder } from '../icons/IconFolder'
 import { IconFolderOpened } from '../icons/IconFolderOpened'
+import { IconMultisig } from '../icons/IconMultisig'
+import { IconTimelock } from '../icons/IconTimelock'
 import { useApiProject } from './useApiProject'
 
 export function ListPanel() {
@@ -18,8 +22,8 @@ export function ListPanel() {
   return (
     <div className="h-full w-full overflow-x-hidden font-ui">
       <ol>
-        {response.data.chains.map((chain) => (
-          <ListItemChain key={chain.chain} chain={chain} />
+        {response.data.chains.map((chain, i) => (
+          <ListItemChain key={i} chain={chain} />
         ))}
       </ol>
     </div>
@@ -36,7 +40,7 @@ function ListItemChain(props: { chain: ApiProjectChain }) {
       >
         {open && <IconChevronDown />}
         {!open && <IconChevronRight />}
-        {props.chain.chain}
+        {props.chain.name}
       </button>
       {open && (
         <>
@@ -102,14 +106,37 @@ function ListItemContracts(props: {
               key={entry.address}
             >
               <div className="mr-[7px] h-[22px] border-black border-l" />
-              <IconContract />
-              <span className="overflow-hidden text-ellipsis">
-                {entry.name || entry.address}
-              </span>
+              <AddressIcon type={entry.type} />
+              {entry.name ? (
+                <span className="overflow-hidden text-ellipsis">
+                  {entry.name}
+                </span>
+              ) : (
+                <span className="overflow-hidden text-ellipsis font-mono text-xs">
+                  {toShortenedAddress(entry.address)}
+                </span>
+              )}
             </li>
           ))}
         </ol>
       )}
     </>
   )
+}
+
+function toShortenedAddress(input: string) {
+  const [chain, address] = input.split(':') as [string, string]
+  return `${chain}:${address.slice(0, 6)}…${address.slice(-4)}`
+}
+
+function AddressIcon(props: { type: ApiAddressEntry['type'] }) {
+  const Icon = {
+    EOA: IconEoa,
+    Multisig: IconMultisig,
+    Timelock: IconTimelock,
+    Diamond: IconDiamond,
+    Contract: IconContract,
+  }[props.type]
+
+  return <Icon />
 }
