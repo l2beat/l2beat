@@ -1,5 +1,5 @@
-import { TxsCountProvider } from '../activity/indexers/types'
-import { BlockTimestampProvider } from '../tvl/services/BlockTimestampProvider'
+import { TxsCountProvider } from '../modules/activity/indexers/types'
+import { BlockTimestampProvider } from '../modules/tvl/services/BlockTimestampProvider'
 import { ActivityProviders } from './ActivityProviders'
 
 export class Providers {
