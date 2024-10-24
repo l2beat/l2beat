@@ -7,7 +7,7 @@ import { utils } from 'ethers'
 
 import { Database } from '@l2beat/database'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
-import { BaseAnalyzer } from './types/BaseAnalyzer'
+import { BaseAnalyzer, Delay } from './types/BaseAnalyzer'
 
 const calldataFnName = 'submitData'
 const calldataFn =
@@ -35,7 +35,7 @@ export class LineaFinalityAnalyzer extends BaseAnalyzer {
   async analyze(transaction: {
     txHash: string
     timestamp: UnixTime
-  }): Promise<number[]> {
+  }): Promise<Delay[]> {
     const tx = await this.provider.getTransaction(transaction.txHash)
     const l1Timestamp = transaction.timestamp
 
@@ -49,7 +49,14 @@ export class LineaFinalityAnalyzer extends BaseAnalyzer {
       (await this.l2Provider.getBlock(lastBlockInData)).timestamp,
     ])
 
-    return timestamps.map((l2Timestamp) => l1Timestamp.toNumber() - l2Timestamp)
+    // TODO(radomski): Fill out the l2BlockNumber
+    return timestamps.map(
+      (l2Timestamp) =>
+        ({
+          l2BlockNumber: 0,
+          duration: l1Timestamp.toNumber() - l2Timestamp,
+        }) satisfies Delay,
+    )
   }
 
   private decodeInput(data: string): [bigint, bigint] {

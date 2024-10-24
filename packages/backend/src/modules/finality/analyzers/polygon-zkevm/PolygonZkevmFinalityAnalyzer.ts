@@ -11,7 +11,7 @@ import { z } from 'zod'
 import { Database } from '@l2beat/database'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
 import { byteArrFromHexStr } from '../opStack/utils'
-import { BaseAnalyzer } from '../types/BaseAnalyzer'
+import { BaseAnalyzer, Delay } from '../types/BaseAnalyzer'
 import { decodeBatch } from './batch'
 import { toTransactionHash } from './hash'
 
@@ -32,7 +32,7 @@ export class PolygonZkEvmFinalityAnalyzer extends BaseAnalyzer {
   async analyze(transaction: {
     txHash: string
     timestamp: UnixTime
-  }): Promise<number[]> {
+  }): Promise<Delay[]> {
     const tx = await this.provider.getTransaction(transaction.txHash)
     const l1Timestamp = transaction.timestamp
 
@@ -70,7 +70,8 @@ export class PolygonZkEvmFinalityAnalyzer extends BaseAnalyzer {
       this.l2Provider.getBlock(maxBlockNumber),
     ])
 
-    return blocks.map((block) => l1Timestamp.toNumber() - block.timestamp)
+    // TODO(radomski): Fill out the l2BlockNumber
+    return blocks.map((block) => ({ l2BlockNumber: 0, duration: l1Timestamp.toNumber() - block.timestamp }))
   }
 }
 

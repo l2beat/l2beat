@@ -9,7 +9,7 @@ import {
 import { Database } from '@l2beat/database'
 import { BlobClient } from '@l2beat/shared'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
-import { BaseAnalyzer } from '../types/BaseAnalyzer'
+import { BaseAnalyzer, Delay } from '../types/BaseAnalyzer'
 import { ChannelBank } from './ChannelBank'
 import { getRollupData } from './blobToData'
 import { SpanBatchDecoderOpts, decodeSpanBatch } from './decodeSpanBatch'
@@ -39,7 +39,7 @@ export class OpStackTimeToInclusionAnalyzer extends BaseAnalyzer {
   async analyze(transaction: {
     txHash: string
     timestamp: UnixTime
-  }): Promise<number[]> {
+  }): Promise<Delay[]> {
     try {
       this.logger.debug('Getting finality', { transaction })
       const l1Timestamp = transaction.timestamp
@@ -64,7 +64,11 @@ export class OpStackTimeToInclusionAnalyzer extends BaseAnalyzer {
         assert(blocksWithTimestamps.length > 0, 'No blocks in the batch')
 
         const delays = blocksWithTimestamps.map(
-          (block) => l1Timestamp.toNumber() - block.timestamp,
+          (block) =>
+            ({
+              duration: l1Timestamp.toNumber() - block.timestamp,
+              l2BlockNumber: block.blockNumber,
+            }) satisfies Delay,
         )
         result.push(...delays)
       }

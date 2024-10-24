@@ -102,13 +102,14 @@ export class FinalityIndexer extends ChildIndexer {
       return
     }
 
-    const averageTimeToInclusion = Math.round(mean(inclusionDelays))
+    const inclusionDelayDurations = inclusionDelays.map((t2i) => t2i.duration)
+    const averageTimeToInclusion = Math.round(mean(inclusionDelayDurations))
     const baseResult = {
       projectId: configuration.projectId,
       timestamp: to,
 
-      minimumTimeToInclusion: Math.min(...inclusionDelays),
-      maximumTimeToInclusion: Math.max(...inclusionDelays),
+      minimumTimeToInclusion: Math.min(...inclusionDelayDurations),
+      maximumTimeToInclusion: Math.max(...inclusionDelayDurations),
       averageTimeToInclusion,
     }
 
@@ -130,10 +131,11 @@ export class FinalityIndexer extends ChildIndexer {
       return
     }
 
+    const stateUpdateDelayDurations = stateUpdateDelays.map((su) => su.duration)
     return {
       ...baseResult,
       averageStateUpdate:
-        Math.round(mean(stateUpdateDelays)) - averageTimeToInclusion,
+        Math.round(mean(stateUpdateDelayDurations)) - averageTimeToInclusion,
     }
   }
 

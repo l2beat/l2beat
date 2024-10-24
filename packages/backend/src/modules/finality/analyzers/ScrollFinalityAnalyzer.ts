@@ -2,7 +2,7 @@ import { TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { z } from 'zod'
 
-import { BaseAnalyzer } from './types/BaseAnalyzer'
+import { BaseAnalyzer, Delay } from './types/BaseAnalyzer'
 
 const ScrollBatchCommit = z.object({
   version: z.number(),
@@ -19,7 +19,7 @@ export class ScrollFinalityAnalyzer extends BaseAnalyzer {
   async analyze(transaction: {
     txHash: string
     timestamp: UnixTime
-  }): Promise<number[]> {
+  }): Promise<Delay[]> {
     const tx = await this.provider.getTransaction(transaction.txHash)
     const l1Timestamp = transaction.timestamp
 
@@ -31,8 +31,9 @@ export class ScrollFinalityAnalyzer extends BaseAnalyzer {
 
     const l2Timestamps = rawBlockContexts.map(decodeBlockContext)
 
+    // TODO(radomski): Fill out the l2BlockNumber
     return l2Timestamps.map(
-      (l2Timestamp) => l1Timestamp.toNumber() - l2Timestamp,
+      (l2Timestamp) => ({ l2BlockNumber: 0, duration: l1Timestamp.toNumber() - l2Timestamp }),
     )
   }
 }

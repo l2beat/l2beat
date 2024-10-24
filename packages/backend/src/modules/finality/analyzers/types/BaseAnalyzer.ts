@@ -15,6 +15,11 @@ export type Transaction = {
   timestamp: UnixTime
 }
 
+export interface Delay {
+  duration: number
+  l2BlockNumber: number
+}
+
 export abstract class BaseAnalyzer {
   constructor(
     protected readonly provider: RpcClient,
@@ -25,7 +30,7 @@ export abstract class BaseAnalyzer {
   async analyzeInterval(
     from: UnixTime,
     to: UnixTime,
-  ): Promise<number[] | undefined> {
+  ): Promise<Delay[] | undefined> {
     const configs = await this.db.indexerConfiguration.getByIndexerId(
       'tracked_txs_indexer',
     )
@@ -88,5 +93,5 @@ export abstract class BaseAnalyzer {
    * @param transaction
    * @returns TTI/SUD delays in seconds for each transaction
    */
-  abstract analyze(transaction: Transaction): Promise<number[]>
+  abstract analyze(transaction: Transaction): Promise<Delay[]>
 }

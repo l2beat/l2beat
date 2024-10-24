@@ -10,7 +10,7 @@ import { Database } from '@l2beat/database'
 import { DegateClient } from '../../../peripherals/degate'
 import { LoopringClient } from '../../../peripherals/loopring/LoopringClient'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
-import { BaseAnalyzer } from './types/BaseAnalyzer'
+import { BaseAnalyzer, Delay } from './types/BaseAnalyzer'
 
 export class LoopringFinalityAnalyzer extends BaseAnalyzer {
   constructor(
@@ -32,7 +32,7 @@ export class LoopringFinalityAnalyzer extends BaseAnalyzer {
   }: {
     txHash: string
     timestamp: UnixTime
-  }) {
+  }): Promise<Delay[]> {
     const tx = await this.provider.getTransaction(txHash)
     const { logs } = await tx.wait()
 
@@ -47,10 +47,16 @@ export class LoopringFinalityAnalyzer extends BaseAnalyzer {
 
     assert(log, 'BlockSubmitted log not found')
 
-    const blockIdx = BigNumber.from(log.args.blockIdx)
-    const block = await this.l2Provider.getBlock(blockIdx.toNumber())
+    const blockIdx = BigNumber.from(log.args.blockIdx).toNumber()
+    const block = await this.l2Provider.getBlock(blockIdx)
 
-    return [l1Timestamp.toNumber() - block.createdAt.toNumber()]
+    // TODO(radomski): Fill out the l2BlockNumber
+    return [
+      {
+        l2BlockNumber: blockIdx,
+        duration: l1Timestamp.toNumber() - block.createdAt.toNumber(),
+      } satisfies Delay,
+    ]
   }
 
   private decodeLog(log: { topics: string[]; data: string }) {
