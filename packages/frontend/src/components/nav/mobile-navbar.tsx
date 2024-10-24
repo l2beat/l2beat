@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Logo } from '../logo'
+import { HalloweenLogo } from '../halloween-logo'
 import { SmallSearchBarButton } from '../search-bar/search-bar-button'
 import { MobileNavTabs } from './mobile-nav-tabs'
 import { MobileNavTriggerOpen } from './mobile-nav-trigger'
@@ -20,7 +20,7 @@ export function MobileNavbar({
         <div className="flex items-center gap-3">
           <div className="py-4">
             <Link href={logoLink}>
-              <Logo className="h-8 w-auto" />
+              <HalloweenLogo className="h-[41px] w-auto" />
             </Link>
           </div>
           <MobileSelectedLink groups={groups} />

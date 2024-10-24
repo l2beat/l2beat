@@ -11,6 +11,7 @@ import { GlossaryContextProvider } from '../components/markdown/glossary-context
 import { ProgressBar } from '../components/progress-bar'
 import { roboto } from '../fonts'
 import '../styles/globals.css'
+import HalloweenCursor from '~/components/halloween-cursor'
 import { getSearchBarProjects } from '~/components/search-bar/get-search-bar-projects'
 import { SearchBarContextProvider } from '~/components/search-bar/search-bar-context'
 
@@ -59,6 +60,7 @@ export default async function RootLayout({
                   }))}
                 >
                   <SearchBarContextProvider projects={searchBarProjects}>
+                    <HalloweenCursor />
                     {children}
                   </SearchBarContextProvider>
                   <ProgressBar />
