@@ -5,6 +5,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
+import { HttpClient2 } from '../../clients'
 import { HttpClient } from '../HttpClient'
 import {
   CoinListEntry,
@@ -25,7 +26,7 @@ export class CoingeckoClient {
   private readonly newIds = new Map<string, CoingeckoId>()
 
   constructor(
-    private readonly httpClient: HttpClient,
+    private readonly httpClient: HttpClient2,
     private readonly apiKey: string | undefined,
   ) {
     const rateLimiter = new RateLimiter({
@@ -167,13 +168,7 @@ export class CoingeckoClient {
       url += `?${query}`
     }
     const res = await this.httpClient.fetch(url, { timeout: this.timeoutMs })
-    if (!res.ok) {
-      const body = await res.text()
-      throw new Error(
-        `Server responded with non-2XX result: ${res.status} ${res.statusText} ${body}`,
-      )
-    }
-    return res.json() as unknown
+    return res
   }
 }
 
