@@ -20,7 +20,7 @@ export function ProjectsUsedIn({ usedIn, className, maxProjects = 5 }: Props) {
   const restCount = usedIn.slice(maxProjects).length
 
   return (
-    <div className={cn('flex items-center justify-center gap-1.5', className)}>
+    <div className={cn('flex items-center justify-center gap-1.5 h-5', className)}>
       {cappedProjects.map((project) => {
         return (
           <Tooltip key={project.slug}>
@@ -29,7 +29,6 @@ export function ProjectsUsedIn({ usedIn, className, maxProjects = 5 }: Props) {
                 <Image
                   width={20}
                   height={20}
-                  className="min-h-5 min-w-5"
                   src={`/icons/${project.slug}.png`}
                   alt={`${project.name} logo`}
                 />
