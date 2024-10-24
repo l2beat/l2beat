@@ -1,7 +1,7 @@
 import { TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { BaseAnalyzer, Delay } from './types/BaseAnalyzer'
+import { BaseAnalyzer, L2Block } from './types/BaseAnalyzer'
 
 type zkSyncEraDecoded = [
   number,
@@ -16,11 +16,9 @@ export class zkSyncEraFinalityAnalyzer extends BaseAnalyzer {
   }
 
   async analyze(transaction: { txHash: string; timestamp: UnixTime }): Promise<
-    Delay[]
+    L2Block[]
   > {
     const tx = await this.provider.getTransaction(transaction.txHash)
-    const l1Timestamp = transaction.timestamp
-
     const decodedInput = this.decodeInput(tx.data)
     const timestamps: number[] = []
 
@@ -30,13 +28,10 @@ export class zkSyncEraFinalityAnalyzer extends BaseAnalyzer {
     })
 
     // TODO(radomski): Fill out the l2BlockNumber
-    return timestamps.map(
-      (l2Timestamp) =>
-        ({
-          l2BlockNumber: 0,
-          duration: l1Timestamp.toNumber() - l2Timestamp,
-        }) satisfies Delay,
-    )
+    return timestamps.map((l2Timestamp) => ({
+      blockNumber: 0,
+      timestamp: l2Timestamp,
+    }))
   }
 
   private decodeInput(data: string) {

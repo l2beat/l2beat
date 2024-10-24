@@ -1,13 +1,9 @@
-import {
-  ProjectId,
-  TrackedTxsConfigSubtype,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { assert, ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 
 import { Database } from '@l2beat/database'
 import { utils } from 'ethers'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
-import { BaseAnalyzer, Delay } from '../types/BaseAnalyzer'
+import { BaseAnalyzer, L2Block, Transaction } from '../types/BaseAnalyzer'
 
 const PROPOSE_FUNCTION_SIGNATURE =
   'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)'
@@ -19,6 +15,7 @@ export class OpStackStateUpdateAnalyzer extends BaseAnalyzer {
     provider: RpcClient,
     db: Database,
     projectId: ProjectId,
+    private readonly l2BlockTime: number,
     private readonly l2Provider: RpcClient,
   ) {
     super(provider, db, projectId)
@@ -29,16 +26,45 @@ export class OpStackStateUpdateAnalyzer extends BaseAnalyzer {
     return 'stateUpdates'
   }
 
-  async analyze(transaction: {
-    txHash: string
-    timestamp: UnixTime
-  }): Promise<Delay[]> {
-    const entireTx = await this.provider.getTransaction(transaction.txHash)
-    const params = this.abi.decodeFunctionData('proposeL2Output', entireTx.data)
-    const l2BlockNumber = Number(params._l2BlockNumber)
-    const l2Block = await this.l2Provider.getBlock(l2BlockNumber)
-    const delay = transaction.timestamp.toNumber() - l2Block.timestamp
+  async analyze(
+    previousTransaction: Transaction,
+    transaction: Transaction,
+  ): Promise<L2Block[]> {
+    const [previousStateUpdateBlock, currentStateUpdateBlock] =
+      await Promise.all([
+        await this.getL2Block(previousTransaction.txHash),
+        await this.getL2Block(transaction.txHash),
+      ])
 
-    return [{ l2BlockNumber, duration: delay }]
+    const guessedBlockTime =
+      (currentStateUpdateBlock.timestamp - previousStateUpdateBlock.timestamp) /
+      (currentStateUpdateBlock.number - previousStateUpdateBlock.number)
+    assert(
+      guessedBlockTime === this.l2BlockTime,
+      'Block time computed from state updates is wrong',
+    )
+
+    const result: L2Block[] = []
+    let timestamp = currentStateUpdateBlock.timestamp
+    for (
+      let blockNumber = currentStateUpdateBlock.number;
+      blockNumber > previousStateUpdateBlock.number;
+      blockNumber -= 1
+    ) {
+      result.push({
+        blockNumber,
+        timestamp,
+      })
+
+      timestamp -= guessedBlockTime
+    }
+
+    return result
+  }
+
+  async getL2Block(txHash: string) {
+    const entireTx = await this.provider.getTransaction(txHash)
+    const params = this.abi.decodeFunctionData('proposeL2Output', entireTx.data)
+    return await this.l2Provider.getBlock(Number(params._l2BlockNumber))
   }
 }

@@ -141,6 +141,7 @@ function initializeConfigurations(
                 ethereumRPC,
                 peripherals.database,
                 configuration.projectId,
+                configuration.l2BlockTimeSeconds,
                 getL2Rpc(configuration, peripherals, RpcClient),
               ),
             },

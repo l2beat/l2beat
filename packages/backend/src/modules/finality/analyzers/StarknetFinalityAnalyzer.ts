@@ -10,7 +10,7 @@ import { z } from 'zod'
 import { Database } from '@l2beat/database'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { StarknetClient } from '../../../peripherals/starknet/StarknetClient'
-import { BaseAnalyzer, Delay } from './types/BaseAnalyzer'
+import { BaseAnalyzer, L2Block } from './types/BaseAnalyzer'
 
 const ZBigNumber = z.instanceof(BigNumber).transform((n) => n.toBigInt())
 
@@ -35,10 +35,8 @@ export class StarknetFinalityAnalyzer extends BaseAnalyzer {
   async analyze(transaction: {
     txHash: string
     timestamp: UnixTime
-  }): Promise<Delay[]> {
+  }): Promise<L2Block[]> {
     const tx = await this.provider.getTransaction(transaction.txHash)
-    const l1Timestamp = transaction.timestamp
-
     const decodedTransactionData = decodeTransaction(tx.data)
 
     const l2BlockNumber = extractBlockNumber(decodedTransactionData)
@@ -47,9 +45,7 @@ export class StarknetFinalityAnalyzer extends BaseAnalyzer {
       await this.l2Provider.getBlock(l2BlockNumber)
 
     // TODO(radomski): Fill out the l2BlockNumber
-    return [
-      { l2BlockNumber: 0, duration: l1Timestamp.toNumber() - l2Timestamp },
-    ]
+    return [{ blockNumber: 0, timestamp: l2Timestamp }]
   }
 }
 

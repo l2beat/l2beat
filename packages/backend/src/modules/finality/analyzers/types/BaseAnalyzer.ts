@@ -3,6 +3,7 @@ import {
   ProjectId,
   TrackedTxsConfigSubtype,
   UnixTime,
+  slidingWindow,
 } from '@l2beat/shared-pure'
 import { chunk } from 'lodash'
 
@@ -67,24 +68,45 @@ export abstract class BaseAnalyzer {
       this.db,
     )
 
-    const transactions = await livenessWithConfig.getWithinTimeRange(from, to)
-    if (!transactions.length) {
+    // NOTE(radomski): We only want the range to be for a single day, but to
+    // get ability to look back a single tx we need to query more. We're going
+    // to assume that we will find at least one entry before our interval at
+    // least one before.
+    const fromSafe = from.add(-1, 'days')
+    const safeTransactions = await livenessWithConfig.getWithinTimeRange(
+      fromSafe,
+      to,
+    )
+
+    if (!safeTransactions.length) {
       return undefined
     }
 
+    const sortedSafeTransactions = safeTransactions.sort(
+      (tx1, tx2) => tx1.timestamp.toNumber() - tx2.timestamp.toNumber(),
+    )
+    const firstInRange = sortedSafeTransactions.findIndex((t) =>
+      t.timestamp.gte(from),
+    )
+
+    assert(firstInRange !== 0, 'Assumption from above comment is not met')
+    const transactions =
+      firstInRange !== -1 ? sortedSafeTransactions.slice(firstInRange - 1) : []
+    const windowedTransactions = slidingWindow(transactions, 2, 1)
+
     const finalityDelays = []
-    const batchedTransactions = chunk(transactions, 10)
+    const batchedTransactions = chunk(windowedTransactions, 10)
 
     for (const batch of batchedTransactions) {
       const delays = await Promise.all(
         batch.map(
-          async (tx) =>
+          async ([prevTx, tx]) =>
             ({
               l1Timestamp: tx.timestamp.toNumber(),
-              l2Blocks: await this.analyze({
-                txHash: tx.txHash,
-                timestamp: tx.timestamp,
-              }),
+              l2Blocks: await this.analyze(
+                { txHash: prevTx.txHash, timestamp: tx.timestamp },
+                { txHash: tx.txHash, timestamp: tx.timestamp },
+              ),
             }) satisfies Batch,
         ),
       )
@@ -101,7 +123,10 @@ export abstract class BaseAnalyzer {
    * @param transaction
    * @returns TTI/SUD delays in seconds for each transaction
    */
-  abstract analyze(transaction: Transaction): Promise<L2Block[]>
+  abstract analyze(
+    previousTransaction: Transaction,
+    transaction: Transaction,
+  ): Promise<L2Block[]>
 }
 
 export function batchToTimeToInclusionDelays(batch: Batch): number[] {
@@ -112,5 +137,17 @@ export function batchesToStateUpdateDelays(
   t2iBatches: Batch[],
   suBatches: Batch[],
 ): number[] {
-  return []
+  const map: Map<number, number> = new Map()
+  for (const batch of t2iBatches) {
+    for (const l2Block of batch.l2Blocks) {
+      map.set(l2Block.blockNumber, batch.l1Timestamp)
+    }
+  }
+
+  return suBatches.flatMap((b) =>
+    b.l2Blocks.map(
+      // biome-ignore lint/style/noNonNullAssertion: <explanation>
+      (l2Block) => b.l1Timestamp - map.get(l2Block.blockNumber)!,
+    ),
+  )
 }

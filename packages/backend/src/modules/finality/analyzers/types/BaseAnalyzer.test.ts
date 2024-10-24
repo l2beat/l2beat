@@ -89,7 +89,7 @@ describe(BaseAnalyzer.name, () => {
   })
 })
 
-describe.only(batchesToStateUpdateDelays.name, () => {
+describe(batchesToStateUpdateDelays.name, () => {
   it('simple example', () => {
     const t2iBatches: Batch[] = [
       {

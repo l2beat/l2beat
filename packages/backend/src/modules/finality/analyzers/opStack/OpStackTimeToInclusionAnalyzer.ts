@@ -9,7 +9,7 @@ import {
 import { Database } from '@l2beat/database'
 import { BlobClient } from '@l2beat/shared'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
-import { BaseAnalyzer, Delay } from '../types/BaseAnalyzer'
+import { BaseAnalyzer, L2Block } from '../types/BaseAnalyzer'
 import { ChannelBank } from './ChannelBank'
 import { getRollupData } from './blobToData'
 import { SpanBatchDecoderOpts, decodeSpanBatch } from './decodeSpanBatch'
@@ -39,10 +39,9 @@ export class OpStackTimeToInclusionAnalyzer extends BaseAnalyzer {
   async analyze(transaction: {
     txHash: string
     timestamp: UnixTime
-  }): Promise<Delay[]> {
+  }): Promise<L2Block[]> {
     try {
       this.logger.debug('Getting finality', { transaction })
-      const l1Timestamp = transaction.timestamp
       // get blobs relevant to the transaction
       const { blobs, blockNumber } = await this.blobClient.getRelevantBlobs(
         transaction.txHash,
@@ -63,13 +62,10 @@ export class OpStackTimeToInclusionAnalyzer extends BaseAnalyzer {
         const blocksWithTimestamps = decodeSpanBatch(encodedBatch, this.opts)
         assert(blocksWithTimestamps.length > 0, 'No blocks in the batch')
 
-        const delays = blocksWithTimestamps.map(
-          (block) =>
-            ({
-              duration: l1Timestamp.toNumber() - block.timestamp,
-              l2BlockNumber: block.blockNumber,
-            }) satisfies Delay,
-        )
+        const delays = blocksWithTimestamps.map((block) => ({
+          blockNumber: block.blockNumber,
+          timestamp: block.timestamp,
+        }))
         result.push(...delays)
       }
 

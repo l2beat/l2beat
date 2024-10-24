@@ -11,7 +11,7 @@ import { z } from 'zod'
 import { Database } from '@l2beat/database'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
 import { byteArrFromHexStr } from '../opStack/utils'
-import { BaseAnalyzer, Delay } from '../types/BaseAnalyzer'
+import { BaseAnalyzer, L2Block } from '../types/BaseAnalyzer'
 import { decodeBatch } from './batch'
 import { toTransactionHash } from './hash'
 
@@ -32,10 +32,8 @@ export class PolygonZkEvmFinalityAnalyzer extends BaseAnalyzer {
   async analyze(transaction: {
     txHash: string
     timestamp: UnixTime
-  }): Promise<Delay[]> {
+  }): Promise<L2Block[]> {
     const tx = await this.provider.getTransaction(transaction.txHash)
-    const l1Timestamp = transaction.timestamp
-
     const hashes = extractTransactionData(tx.data)
       .map(byteArrFromHexStr)
       // Might be memory intensive - if so, consider batching/sequential processing
@@ -72,8 +70,8 @@ export class PolygonZkEvmFinalityAnalyzer extends BaseAnalyzer {
 
     // TODO(radomski): Fill out the l2BlockNumber
     return blocks.map((block) => ({
-      l2BlockNumber: 0,
-      duration: l1Timestamp.toNumber() - block.timestamp,
+      blockNumber: 0,
+      timestamp: block.timestamp,
     }))
   }
 }

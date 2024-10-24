@@ -10,7 +10,7 @@ import { Database } from '@l2beat/database'
 import { DegateClient } from '../../../peripherals/degate'
 import { LoopringClient } from '../../../peripherals/loopring/LoopringClient'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
-import { BaseAnalyzer, Delay } from './types/BaseAnalyzer'
+import { BaseAnalyzer, L2Block } from './types/BaseAnalyzer'
 
 export class LoopringFinalityAnalyzer extends BaseAnalyzer {
   constructor(
@@ -28,11 +28,7 @@ export class LoopringFinalityAnalyzer extends BaseAnalyzer {
 
   async analyze({
     txHash,
-    timestamp: l1Timestamp,
-  }: {
-    txHash: string
-    timestamp: UnixTime
-  }): Promise<Delay[]> {
+  }: { txHash: string; timestamp: UnixTime }): Promise<L2Block[]> {
     const tx = await this.provider.getTransaction(txHash)
     const { logs } = await tx.wait()
 
@@ -51,12 +47,7 @@ export class LoopringFinalityAnalyzer extends BaseAnalyzer {
     const block = await this.l2Provider.getBlock(blockIdx)
 
     // TODO(radomski): Fill out the l2BlockNumber
-    return [
-      {
-        l2BlockNumber: blockIdx,
-        duration: l1Timestamp.toNumber() - block.createdAt.toNumber(),
-      } satisfies Delay,
-    ]
+    return [{ blockNumber: blockIdx, timestamp: block.createdAt.toNumber() }]
   }
 
   private decodeLog(log: { topics: string[]; data: string }) {

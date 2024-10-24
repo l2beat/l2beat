@@ -8,7 +8,7 @@ import {
 import { Database } from '@l2beat/database'
 import { BlobClient } from '@l2beat/shared'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
-import { BaseAnalyzer, Delay } from '../types/BaseAnalyzer'
+import { BaseAnalyzer, L2Block } from '../types/BaseAnalyzer'
 import { calculateDelaysFromSegments } from './calculateDelaysFromSegments'
 import { getSegments } from './getSegments'
 
@@ -31,7 +31,7 @@ export class ArbitrumFinalityAnalyzer extends BaseAnalyzer {
   async analyze(transaction: {
     txHash: string
     timestamp: UnixTime
-  }): Promise<Delay[]> {
+  }): Promise<L2Block[]> {
     this.logger.debug('Getting finality', { transaction })
     const submissionTimestamp = transaction.timestamp
     // get blobs relevant to the transaction
@@ -48,9 +48,9 @@ export class ArbitrumFinalityAnalyzer extends BaseAnalyzer {
 
     // TODO(radomski): Fill out the l2BlockNumber
     return [
-      { l2BlockNumber: 0, duration: delays.minDelay } satisfies Delay,
-      { l2BlockNumber: 0, duration: delays.avgDelay } satisfies Delay,
-      { l2BlockNumber: 0, duration: delays.maxDelay } satisfies Delay,
+      { blockNumber: 0, timestamp: delays.minDelay },
+      { blockNumber: 0, timestamp: delays.avgDelay },
+      { blockNumber: 0, timestamp: delays.maxDelay },
     ]
   }
 }
