@@ -2,7 +2,7 @@ import { type Sentiment } from '@l2beat/shared-pure'
 import { cn } from '~/utils/cn'
 import { sentimentToOpaqueBgColor } from '~/utils/sentiment'
 
-export function SingleGrisini({
+export function SingleGrissini({
   sentiment,
   className,
 }: { sentiment: Sentiment; className?: string }) {

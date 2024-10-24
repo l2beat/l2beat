@@ -1,10 +1,10 @@
 import { type Meta, type StoryObj } from '@storybook/react'
-import { GrisiniDetails } from './grisini-details'
+import { GrissiniDetails } from './grissini-details'
 
 const meta = {
-  title: 'Components/GrisiniDetails',
-  component: GrisiniDetails,
-} satisfies Meta<typeof GrisiniDetails>
+  title: 'Components/GrissiniDetails',
+  component: GrissiniDetails,
+} satisfies Meta<typeof GrissiniDetails>
 export default meta
 
 type Story = StoryObj<typeof meta>

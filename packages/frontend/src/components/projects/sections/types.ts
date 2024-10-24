@@ -1,7 +1,7 @@
 import { type ChartSectionProps } from './chart-section'
 import { type ContractsSectionProps } from './contracts/contracts-section'
 import { type DetailedDescriptionSectionProps } from './detailed-description-section'
-import { type GrisiniRiskAnalysisSectionProps } from './grisini-risk-analysis-section'
+import { type GrissiniRiskAnalysisSectionProps } from './grissini-risk-analysis-section'
 import { type GroupSectionProps } from './group-section'
 import { type KnowledgeNuggetsSectionProps } from './knowledge-nuggets-section'
 import { type L3RiskAnalysisSectionProps } from './l3-risk-analysis-section'
@@ -44,8 +44,7 @@ export type ProjectSectionId =
 export type ProjectSectionProps = Omit<
   ExtendedProjectSectionProps,
   'className' | 'children'
-> & {
-}
+>
 
 type ProjectDetailsProps<T> = Omit<T, 'sectionOrder'>
 
@@ -129,9 +128,9 @@ export interface ProjectDetailsGroup {
   props: ProjectDetailsProps<GroupSectionProps>
 }
 
-export interface ProjectDetailsGrisiniRiskAnalysisSection {
-  type: 'GrisiniRiskAnalysisSection'
-  props: ProjectDetailsProps<GrisiniRiskAnalysisSectionProps>
+export interface ProjectDetailsGrissiniRiskAnalysisSection {
+  type: 'GrissiniRiskAnalysisSection'
+  props: ProjectDetailsProps<GrissiniRiskAnalysisSectionProps>
 }
 
 export type ProjectDetailsSection = {
@@ -153,5 +152,5 @@ export type ProjectDetailsSection = {
   | ProjectDetailsKnowledgeNuggetsSection
   | ProjectDetailsUpcomingDisclaimer
   | ProjectDetailsGroup
-  | ProjectDetailsGrisiniRiskAnalysisSection
+  | ProjectDetailsGrissiniRiskAnalysisSection
 )

@@ -1,7 +1,7 @@
 import { type Sentiment } from '@l2beat/shared-pure'
-import { SingleGrisini } from './single-grisini'
+import { SingleGrissini } from './single-grissini'
 
-export function Grisini<T extends { sentiment: Sentiment }[]>({
+export function Grissini<T extends { sentiment: Sentiment }[]>({
   items,
 }: {
   items: T
@@ -9,7 +9,7 @@ export function Grisini<T extends { sentiment: Sentiment }[]>({
   return (
     <div className="flex gap-x-1">
       {items.map((item, i) => (
-        <SingleGrisini key={i} sentiment={item.sentiment} />
+        <SingleGrissini key={i} sentiment={item.sentiment} />
       ))}
     </div>
   )

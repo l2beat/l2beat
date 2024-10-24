@@ -1,3 +1,3 @@
 import { type RosetteValue } from '../rosette/types'
 
-export type GrisiniValue = RosetteValue
+export type GrissiniValue = RosetteValue

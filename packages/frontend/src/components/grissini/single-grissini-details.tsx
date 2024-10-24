@@ -4,16 +4,16 @@ import {
   sentimentToTextColor,
   sentimentToTransparentBgColor,
 } from '~/utils/sentiment'
-import { SingleGrisini } from './single-grisini'
-import { type GrisiniValue } from './types'
+import { SingleGrissini } from './single-grissini'
+import { type GrissiniValue } from './types'
 
-export interface SingleGrisiniDetailsProps {
+export interface SingleGrissiniDetailsProps {
   name: string
   sentiment: Sentiment
   value: string
 }
 
-export function SingleGrisiniDetails({ name, sentiment, value }: GrisiniValue) {
+export function SingleGrissiniDetails({ name, sentiment, value }: GrissiniValue) {
   return (
     <div
       className={cn(
@@ -21,7 +21,7 @@ export function SingleGrisiniDetails({ name, sentiment, value }: GrisiniValue) {
         sentimentToTransparentBgColor(sentiment),
       )}
     >
-      <SingleGrisini sentiment={sentiment} className="h-full" />
+      <SingleGrissini sentiment={sentiment} className="h-full" />
       <div className="flex flex-1 flex-col justify-center gap-1 p-4">
         <div className="text-2xs font-semibold uppercase">{name}</div>
         <div

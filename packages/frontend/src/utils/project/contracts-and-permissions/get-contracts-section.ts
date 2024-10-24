@@ -45,7 +45,7 @@ type ProjectParams = {
   escrows: ScalingProjectEscrow[] | undefined
 } & (
   | {
-      type: (Layer2 | Bridge | DaBridge)['type']
+      type: (Layer2 | Bridge | DaLayer)['type']
     }
   | {
       type: Layer3['type']

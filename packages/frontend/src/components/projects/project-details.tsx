@@ -17,7 +17,7 @@ import { StateValidationSection } from './sections/state-validation-section'
 import { TechnologySection } from './sections/technology-section'
 import { type ProjectDetailsSection } from './sections/types'
 import { UpcomingDisclaimer } from './sections/upcoming-disclaimer'
-import { GrisiniRiskAnalysisSection } from './sections/grisini-risk-analysis-section'
+import { GrissiniRiskAnalysisSection } from './sections/grissini-risk-analysis-section'
 import { cn } from '~/utils/cn'
 
 export interface ProjectDetailsProps {
@@ -160,9 +160,9 @@ export function ProjectDetails(props: ProjectDetailsProps) {
                 {...item.props}
               />
             )
-          case 'GrisiniRiskAnalysisSection':
+          case 'GrissiniRiskAnalysisSection':
             return (
-              <GrisiniRiskAnalysisSection
+              <GrissiniRiskAnalysisSection
                 key={item.props.id}
                {...{nested, sectionOrder}}
                 {...item.props}

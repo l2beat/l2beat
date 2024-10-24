@@ -9,8 +9,8 @@ import {
   DrawerTrigger,
 } from '~/components/core/drawer'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
-import { Grisini } from '~/components/grisini/grisini'
-import { GrisiniDetails } from '~/components/grisini/grisini-details'
+import { Grissini } from '~/components/grissini/grissini'
+import { GrissiniDetails } from '~/components/grissini/grissini-details'
 import { DesktopProjectLinks } from '~/components/projects/links/desktop-project-links'
 import { MobileProjectLinks } from '~/components/projects/links/mobile-project-links'
 import { ProjectHeader } from '~/components/projects/project-header'
@@ -19,7 +19,7 @@ import { type DaProjectEntry } from '~/server/features/data-availability/project
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { DaProjectStats } from './da-project-stats'
-import { NoBridgeGrisiniDetailsPlaceholder } from '~/components/grisini/no-bridge-grisini-details-placeholder'
+import { NoBridgeGrissiniDetailsPlaceholder } from '~/components/grissini/no-bridge-grissini-details-placeholder'
 
 interface Props {
   project: DaProjectEntry
@@ -53,13 +53,13 @@ export function DaProjectSummary({ project }: Props) {
                   <DaProjectStats project={project} />
                 </div>
               </div>
-              {/* Right side (DA Layer grisini details) */}
+              {/* Right side (DA Layer Grissini details) */}
               <div className="hidden lg:block">
                 <div className="flex flex-col space-y-4 pt-3">
                   <div className="whitespace-pre text-xs text-gray-500 dark:text-gray-600">
                     {project.name} risks
                   </div>
-                  <GrisiniDetails items={project.header.daLayerGrisiniValues} />
+                  <GrissiniDetails items={project.header.daLayerGrissiniValues} />
                 </div>
               </div>
             </div>
@@ -109,7 +109,7 @@ export function DaProjectSummary({ project }: Props) {
                               {bridge.name}
                             </div>
                             <div className="flex flex-1 items-center justify-center">
-                              <Grisini items={bridge.grisiniValues} />
+                              <Grissini items={bridge.GrissiniValues} />
                             </div>
                             <div className="flex flex-1 items-center justify-end pr-1 text-sm font-bold text-primary md:pr-12">
                               {formatCurrency(bridge.tvs, 'usd')}
@@ -161,7 +161,7 @@ export function DaProjectSummary({ project }: Props) {
                                     {bridge.name}
                                   </div>
                                   <div>
-                                    <Grisini items={bridge.grisiniValues} />
+                                    <Grissini items={bridge.GrissiniValues} />
                                   </div>
                                 </div>
                               ))}
@@ -179,17 +179,17 @@ export function DaProjectSummary({ project }: Props) {
                     </div>
                   </div>
                 </div>
-                {/* Right side (grisini details) */}
+                {/* Right side (Grissini details) */}
                 <div className="hidden w-full max-w-[264px] flex-col space-y-4 pt-3 lg:flex">
                   <div className="whitespace-pre text-xs text-gray-500 dark:text-gray-600">
                     {project.selectedBridge.name} risks
                   </div>
 
                   {project.selectedBridge.type === 'NoBridge' ? (
-                    <NoBridgeGrisiniDetailsPlaceholder />
+                    <NoBridgeGrissiniDetailsPlaceholder />
                   ) : (
-                    <GrisiniDetails
-                      items={project.header.daBridgeGrisiniValues}
+                    <GrissiniDetails
+                      items={project.header.daBridgeGrissiniValues}
                     />
                   )}
                 </div>

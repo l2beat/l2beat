@@ -36,7 +36,7 @@ type ProjectParams = {
     | undefined
   isUnderReview: boolean
 } & (
-  | { type: (Layer2 | Bridge | DaBridge)['type'] }
+  | { type: (Layer2 | Bridge | DaLayer)['type'] }
   | { type: Layer3['type']; hostChain: string }
 )
 
