@@ -3,15 +3,15 @@ import { ApiAddressEntry, ApiProjectChain } from '../api/types'
 import { IconChevronDown } from '../icons/IconChevronDown'
 import { IconChevronRight } from '../icons/IconChevronRight'
 import { IconContract } from '../icons/IconContract'
+import { IconContractUnverified } from '../icons/IconContractUnverified'
 import { IconDiamond } from '../icons/IconDiamond'
 import { IconEoa } from '../icons/IconEoa'
 import { IconFolder } from '../icons/IconFolder'
 import { IconFolderOpened } from '../icons/IconFolderOpened'
 import { IconMultisig } from '../icons/IconMultisig'
 import { IconTimelock } from '../icons/IconTimelock'
-import { useApiProject } from './useApiProject'
-import { IconContractUnverified } from '../icons/IconContractUnverified'
 import { IconToken } from '../icons/IconToken'
+import { useApiProject } from './useApiProject'
 
 export function ListPanel() {
   const response = useApiProject()

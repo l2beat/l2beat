@@ -1,10 +1,11 @@
 import { PanelId } from '../multi-view/store'
 import { EmptyPanel } from './EmptyPanel'
 import { ListPanel } from './ListPanel'
+import { ValuesPanel } from './ValuesPanel'
 
 const PANELS = {
   list: ListPanel,
-  values: EmptyPanel,
+  values: ValuesPanel,
   nodes: EmptyPanel,
   code: EmptyPanel,
   preview: EmptyPanel,

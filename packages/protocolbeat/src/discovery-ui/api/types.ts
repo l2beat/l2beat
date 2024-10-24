@@ -32,6 +32,62 @@ export interface ApiAddressEntry {
   address: string
 }
 
+export interface Field {
+  name: string
+  value: FieldValue
+}
+
+export type FieldValue =
+  | AddressFieldValue
+  | HexFieldValue
+  | StringFieldValue
+  | NumberFieldValue
+  | BooleanFieldValue
+  | ArrayFieldValue
+  | ObjectFieldValue
+  | UnknownFieldValue
+
+export interface AddressFieldValue {
+  type: 'address'
+  name?: string
+  address: string
+}
+
+export interface HexFieldValue {
+  type: 'hex'
+  value: string
+}
+
+export interface StringFieldValue {
+  type: 'string'
+  value: string
+}
+
+export interface NumberFieldValue {
+  type: 'number'
+  value: string
+}
+
+export interface BooleanFieldValue {
+  type: 'boolean'
+  value: boolean
+}
+
+export interface ArrayFieldValue {
+  type: 'array'
+  values: FieldValue[]
+}
+
+export interface ObjectFieldValue {
+  type: 'object'
+  value: Record<string, FieldValue>
+}
+
+export interface UnknownFieldValue {
+  type: 'unknown'
+  value: string
+}
+
 export interface ApiProjectContract extends ApiAddressEntry {
-  values: Record<string, string>
+  fields: Field[]
 }

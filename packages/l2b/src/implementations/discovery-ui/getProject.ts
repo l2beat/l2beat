@@ -1,7 +1,13 @@
 import { ConfigReader } from '@l2beat/discovery'
-import { ContractParameters } from '@l2beat/discovery-types'
+import { ContractParameters, DiscoveryOutput } from '@l2beat/discovery-types'
+import { parseFieldValue } from './parseFieldValue'
 import { toAddress } from './toAddress'
-import { ApiProjectContract, ApiProjectResponse } from './types'
+import {
+  ApiAddressEntry,
+  ApiProjectContract,
+  ApiProjectResponse,
+  Field,
+} from './types'
 
 export function getProject(configReader: ConfigReader, project: string) {
   const chains = configReader.readAllChainsForProject(project)
@@ -13,6 +19,7 @@ export function getProject(configReader: ConfigReader, project: string) {
 
   const response: ApiProjectResponse = { chains: [] }
   for (const { chain, config, discovery } of data) {
+    const names = getNames(discovery)
     response.chains.push({
       name: chain,
       initialContracts: config.initialAddresses.map((x) => {
@@ -22,14 +29,14 @@ export function getProject(configReader: ConfigReader, project: string) {
             name: undefined,
             type: 'Contract',
             address: toAddress(chain, x),
-            values: {},
+            fields: [],
           }
         }
-        return contractFromDiscovery(chain, discovered)
+        return contractFromDiscovery(chain, names, discovered)
       }),
       discoveredContracts: discovery.contracts
         .filter((x) => !config.initialAddresses.includes(x.address))
-        .map((x) => contractFromDiscovery(chain, x)),
+        .map((x) => contractFromDiscovery(chain, names, x)),
       // TODO: implement
       ignoredContracts: [],
       eoas: discovery.eoas
@@ -48,33 +55,52 @@ export function getProject(configReader: ConfigReader, project: string) {
 
 function contractFromDiscovery(
   chain: string,
+  names: Record<string, string>,
   contract: ContractParameters,
 ): ApiProjectContract {
-  const isUnverified = !!contract.unverified
-  const isMultisig = !!contract.values?.['$members']
-  const isToken =
+  const fields: Field[] = Object.entries(contract.values ?? {}).map(
+    ([name, value]) => ({
+      name,
+      value: parseFieldValue(value, names),
+    }),
+  )
+  return {
+    name: contract.name !== '' ? contract.name : undefined,
+    type: getContractType(contract),
+    address: toAddress(chain, contract.address),
+    fields,
+  }
+}
+
+function getNames(discovery: DiscoveryOutput) {
+  const names: Record<string, string> = {}
+  for (const contract of discovery.contracts) {
+    names[contract.address.toString()] = contract.name
+  }
+  return names
+}
+
+function getContractType(
+  contract: ContractParameters,
+): ApiAddressEntry['type'] {
+  if (contract.unverified) {
+    return 'Unverified'
+  }
+  if (contract.values?.['$members']) {
+    return 'Multisig'
+  }
+  if (
     !!contract.values?.['name'] &&
     !!contract.values?.['symbol'] &&
     !!contract.values?.['decimals']
-  const isDiamond = Array.isArray(contract.values?.['$implementation'])
-  const isTimelock = !!contract.values?.['TIMELOCK_ADMIN_ROLE']
-
-  return {
-    name: contract.name !== '' ? contract.name : undefined,
-    // TODO: implement
-    type: isUnverified
-      ? 'Unverified'
-      : isMultisig
-        ? 'Multisig'
-        : isToken
-          ? 'Token'
-          : isTimelock
-            ? 'Timelock'
-            : isDiamond
-              ? 'Diamond'
-              : 'Contract',
-    address: toAddress(chain, contract.address),
-    // TODO: implement
-    values: {},
+  ) {
+    return 'Token'
   }
+  if (contract.values?.['TIMELOCK_ADMIN_ROLE']) {
+    return 'Timelock'
+  }
+  if (Array.isArray(contract.values?.['$implementation'])) {
+    return 'Diamond'
+  }
+  return 'Contract'
 }
