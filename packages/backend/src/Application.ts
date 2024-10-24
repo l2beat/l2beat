@@ -2,7 +2,6 @@ import { Logger } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
 
 import { createDatabase } from '@l2beat/database'
-import { mockObject } from 'earl'
 import { ApiServer } from './api/ApiServer'
 import { Config } from './config'
 import { ApplicationModule } from './modules/ApplicationModule'
@@ -17,7 +16,7 @@ import { initTvlModule } from './modules/tvl/modules/TvlModule'
 import { createUpdateMonitorModule } from './modules/update-monitor/UpdateMonitorModule'
 import { createVerifiersModule } from './modules/verifiers/VerifiersModule'
 import { Peripherals } from './peripherals/Peripherals'
-import { Providers } from './providers/Providers'
+import { initProviders } from './providers/initProviders'
 import { Clock } from './tools/Clock'
 import { getErrorReportingMiddleware } from './tools/ErrorReporter'
 
@@ -47,8 +46,7 @@ export class Application {
       clock,
     )
 
-    // TODO: initProvidersModule
-    const providers = mockObject<Providers>()
+    const providers = initProviders(config.activity, logger, http)
 
     const modules: (ApplicationModule | undefined)[] = [
       createMetricsModule(config),
