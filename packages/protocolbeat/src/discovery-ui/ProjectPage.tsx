@@ -3,6 +3,7 @@ import { EmptyPanel } from './EmptyPanel'
 import { ListPanel } from './list/ListPanel'
 import { MultiView } from './multi-view/MultiView'
 import { PanelId } from './multi-view/store'
+import { NodesPanel } from './nodes/NodesPanel'
 import { ValuesPanel } from './values/ValuesPanel'
 
 export function ProjectPage() {
@@ -17,7 +18,7 @@ export function ProjectPage() {
 const PANELS = {
   list: ListPanel,
   values: ValuesPanel,
-  nodes: EmptyPanel,
+  nodes: NodesPanel,
   code: EmptyPanel,
   preview: EmptyPanel,
 }
