@@ -40,8 +40,7 @@ export const everclearDac = AnytrustDAC({
           'UpgradeExecutor',
           'EXECUTOR_ROLE',
         ),
-        description:
-          `The address that can upgrade the DA bridge, upgrade authorized batch posters (relayers), and change the Committee members by updating the valid keyset (via UpgradeExecutor).`,
+        description: `The address that can upgrade the DA bridge, upgrade authorized batch posters (relayers), and change the Committee members by updating the valid keyset (via UpgradeExecutor).`,
       },
       {
         name: 'UpgradeExecutor',

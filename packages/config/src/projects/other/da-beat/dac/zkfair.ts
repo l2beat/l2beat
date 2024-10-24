@@ -1,9 +1,13 @@
-import { ChainId, EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  EthereumAddress,
+  UnixTime,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { zkfair } from '../../../layer2s/zkfair'
 import { PolygoncdkDAC } from '../templates/polygoncdk-template'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
-import { get } from 'lodash'
 
 const discovery = new ProjectDiscovery('zkfair')
 
@@ -65,14 +69,13 @@ export const zkfairDac = PolygoncdkDAC({
       ),
       {
         name: 'DACProxyAdminOwner',
-        accounts: 
-          discovery.getAccessControlRolePermission(
-            'Timelock',
-            'EXECUTOR_ROLE',
-          ),
+        accounts: discovery.getAccessControlRolePermission(
+          'Timelock',
+          'EXECUTOR_ROLE',
+        ),
         description:
-          "Controls the ZKFairValidiumDAC and ZKFairValidium contracts. Can upgrade the DA bridge contract implementation and committee members.",
-      }
+          'Controls the ZKFairValidiumDAC and ZKFairValidium contracts. Can upgrade the DA bridge contract implementation and committee members.',
+      },
     ],
     chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignaturesDAC,

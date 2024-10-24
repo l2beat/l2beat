@@ -54,7 +54,7 @@ export const hychainDac = AnytrustDAC({
           'EXECUTOR_ROLE',
         ),
         description:
-        'Multisig that can upgrade authorized batch posters (relayers) via the UpgradeExecutor contract.',
+          'Multisig that can upgrade authorized batch posters (relayers) via the UpgradeExecutor contract.',
       },
       {
         name: 'UpgradeExecutor',

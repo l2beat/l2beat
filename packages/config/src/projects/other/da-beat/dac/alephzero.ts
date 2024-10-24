@@ -62,7 +62,8 @@ export const alephzeroDac = AnytrustDAC({
           'UpgradeExecutor',
           'EXECUTOR_ROLE',
         ),
-        description: 'EOA that can upgrade the DA bridge, upgrade authorized batch posters (relayers), and change the Committee members by updating the valid keyset (via UpgradeExecutor).',
+        description:
+          'EOA that can upgrade the DA bridge, upgrade authorized batch posters (relayers), and change the Committee members by updating the valid keyset (via UpgradeExecutor).',
       },
     ],
     chain: ChainId.ETHEREUM,

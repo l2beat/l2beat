@@ -54,7 +54,7 @@ export const galxegravityDac = AnytrustDAC({
           },
         ],
         description:
-        'The contract used to manage the upgrade of the DA bridge and other contracts.',
+          'The contract used to manage the upgrade of the DA bridge and other contracts.',
       },
       ...discovery.getMultisigPermission(
         'ConduitMultisig',

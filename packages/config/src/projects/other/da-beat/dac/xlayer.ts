@@ -16,7 +16,6 @@ const bridgeUpgradeability = {
   upgradeDelay: 'No delay',
 }
 
-
 const membersCountDAC = discovery.getContractValue<number>(
   'XLayerValidiumDAC',
   'getAmountOfMembers',

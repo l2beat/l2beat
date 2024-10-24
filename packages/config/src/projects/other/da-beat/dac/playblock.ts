@@ -40,8 +40,7 @@ export const playblockDac = AnytrustDAC({
           'UpgradeExecutor',
           'EXECUTOR_ROLE',
         ),
-        description:
-        `Address that can upgrade the DA bridge, upgrade authorized batch posters (relayers), and change the Committee members by updating the valid keyset (via UpgradeExecutor).`,
+        description: `Address that can upgrade the DA bridge, upgrade authorized batch posters (relayers), and change the Committee members by updating the valid keyset (via UpgradeExecutor).`,
       },
       {
         name: 'UpgradeExecutor',

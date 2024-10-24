@@ -58,7 +58,10 @@ export const paychainDac = PolygoncdkDAC({
         name: 'RollupManager',
         accounts: [
           discovery.formatPermissionedAccount(
-            discovery.getContractValue('WirexPayChainValidium', 'rollupManager'),
+            discovery.getContractValue(
+              'WirexPayChainValidium',
+              'rollupManager',
+            ),
           ),
         ],
         description:
