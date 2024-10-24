@@ -63,10 +63,5 @@ export const galxegravity: Layer2 = orbitStackL2({
       },
     ],
   },
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'ConduitMultisig',
-      "MultiSig that can upgrade the rollup's smart contract system (via UpgradeExecutor) and gain access to all funds.",
-    ),
-  ],
+  discoveryDrivenData: true,
 })

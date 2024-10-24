@@ -70,6 +70,13 @@ export const zircuit: Layer2 = opStackL2({
   nonTemplateTechnology: {
     stateCorrectness: ZIRCUIT_STATE_CORRECTNESS,
   },
+  chainConfig: {
+    name: 'zircuit',
+    chainId: 48900,
+    coingeckoPlatform: 'zircuit',
+    minTimestampForTvl: new UnixTime(1719936217),
+  },
+  nonTemplateExcludedTokens: ['rswETH', 'rsETH'],
   nonTemplatePermissions: [
     {
       name: 'Admins of SuperchainConfig',

@@ -93,7 +93,6 @@ export const nomad: Bridge = {
         {
           category: 'Funds can be stolen if',
           text: 'destination token contract is maliciously upgraded.',
-          isCritical: true,
         },
       ],
       isIncomplete: true,

@@ -106,7 +106,7 @@ async function getProjectsFinality(
 
       const stateUpdateDelays = hasStateUpdateDelay
         ? {
-            averageInSeconds: averageStateUpdate - averageTimeToInclusion,
+            averageInSeconds: averageStateUpdate,
           }
         : null
 

@@ -24,7 +24,6 @@ export const committeeSecurityRisk: DaBeatProjectProcessor = (layer) => {
             resolved: {
               value: `${bridge.requiredMembers}/${bridge.membersCount}`,
               sentiment: getDacSentiment(bridge),
-              description: 'TODO',
             },
           }),
         },
