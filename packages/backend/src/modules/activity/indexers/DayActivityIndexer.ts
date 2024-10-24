@@ -29,7 +29,7 @@ export class DayActivityIndexer extends ManagedChildIndexer {
     const fromWithBatchSize = adjustedFrom + this.$.batchSize
     const adjustedTo = fromWithBatchSize < to ? fromWithBatchSize : to
 
-    const counts = await this.$.txsCountProvider.getTxsCount(
+    const counts = await this.$.txsCountService.getTxsCount(
       adjustedFrom,
       adjustedTo,
     )

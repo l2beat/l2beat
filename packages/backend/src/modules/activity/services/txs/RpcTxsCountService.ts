@@ -6,7 +6,7 @@ import { range } from 'lodash'
 import { aggregatePerDay } from '../../utils/aggregatePerDay'
 import { RpcUopsAnalyzer } from '../uops/analyzers/RpcUopsAnalyzer'
 
-export class RpcTxsCountProvider {
+export class RpcTxsCountService {
   constructor(
     private readonly rpcClient: {
       getBlockWithTransactions: (x: number) => Promise<EVMBlock>

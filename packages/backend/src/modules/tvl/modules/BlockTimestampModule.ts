@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { BlockExplorerClient } from '@l2beat/shared'
+import { BlockIndexerClient } from '@l2beat/shared'
 import { TvlConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
@@ -44,21 +44,22 @@ export function initBlockTimestampModule(
               apiKey: chainConfig.config.blockExplorerConfig.etherscanApiKey,
               url: chainConfig.config.blockExplorerConfig.etherscanApiUrl,
               maximumCallsForBlockTimestamp: 3,
+              chain: chainConfig.chain,
             }
           : {
               type: 'Blockscout' as const,
               url: chainConfig.config.blockExplorerConfig.blockscoutApiUrl,
               maximumCallsForBlockTimestamp: 10,
+              chain: chainConfig.chain,
             }
 
     const blockExplorerClient = options
-      ? peripherals.getClient(BlockExplorerClient, options)
+      ? peripherals.getClient(BlockIndexerClient, options)
       : undefined
 
     const blockTimestampProvider = new BlockTimestampProvider({
-      blockExplorerClient,
-      client: rpcClient,
-      logger,
+      indexerClients: blockExplorerClient ? [blockExplorerClient] : [],
+      blockClients: [rpcClient],
     })
 
     const indexer = new BlockTimestampIndexer({

@@ -5,12 +5,12 @@ import { StarknetClient } from '../../../../peripherals/starknet/StarknetClient'
 import { StarknetTransaction } from '../../../../peripherals/starknet/schemas'
 import { activityRecord } from '../../utils/aggregatePerDay.test'
 import { StarknetUopsAnalyzer } from '../uops/analyzers/StarknetUopsAnalyzer'
-import { StarknetTxsCountProvider } from './StarknetTxsCountProvider'
+import { StarknetTxsCountService } from './StarknetTxsCountService'
 
 const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
 
-describe(StarknetTxsCountProvider.name, () => {
-  describe(StarknetTxsCountProvider.prototype.getTxsCount.name, () => {
+describe(StarknetTxsCountService.name, () => {
+  describe(StarknetTxsCountService.prototype.getTxsCount.name, () => {
     it('should return txs count', async () => {
       const client = mockStarknetClient([
         { timestamp: START, count: 1, uopsCount: 1, number: 3000 },
@@ -28,7 +28,7 @@ describe(StarknetTxsCountProvider.name, () => {
         },
       ])
 
-      const txsCountProvider = new StarknetTxsCountProvider(
+      const txsCountProvider = new StarknetTxsCountService(
         client,
         ProjectId('a'),
         new StarknetUopsAnalyzer(),

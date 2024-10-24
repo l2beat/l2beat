@@ -3,12 +3,12 @@ import { expect, mockFn, mockObject } from 'earl'
 import { range } from 'lodash'
 import { ZksyncLiteClient } from '../../../../peripherals/zksynclite/ZksyncLiteClient'
 import { activityRecord } from '../../utils/aggregatePerDay.test'
-import { ZKsyncLiteTxsCountProvider } from './ZKsyncLiteTxsCountProvider'
+import { ZKsyncLiteTxsCountService } from './ZKsyncLiteTxsCountService'
 
 const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
 
-describe(ZKsyncLiteTxsCountProvider.name, () => {
-  describe(ZKsyncLiteTxsCountProvider.prototype.getTxsCount.name, () => {
+describe(ZKsyncLiteTxsCountService.name, () => {
+  describe(ZKsyncLiteTxsCountService.prototype.getTxsCount.name, () => {
     it('should return txs count', async () => {
       const client = mockZksyncClient([
         { timestamp: START, count: 1 },
@@ -16,7 +16,7 @@ describe(ZKsyncLiteTxsCountProvider.name, () => {
         { timestamp: START.add(2, 'days'), count: 5 },
       ])
 
-      const txsCountProvider = new ZKsyncLiteTxsCountProvider(
+      const txsCountProvider = new ZKsyncLiteTxsCountService(
         client,
         ProjectId('a'),
       )

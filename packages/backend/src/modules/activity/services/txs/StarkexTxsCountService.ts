@@ -3,7 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 import { StarkexClient } from '../../../../peripherals/starkex/StarkexClient'
 
-export class StarkexTxsCountProvider {
+export class StarkexTxsCountService {
   constructor(
     private readonly starkexClient: StarkexClient,
     private readonly projectId: ProjectId,

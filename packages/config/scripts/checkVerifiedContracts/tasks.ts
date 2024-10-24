@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { BlockExplorerClient } from '@l2beat/shared'
+import { BlockIndexerClient } from '@l2beat/shared'
 import { EthereumAddress, toBatches } from '@l2beat/shared-pure'
 
 import { providers } from 'ethers'
@@ -10,7 +10,7 @@ export async function verifyContracts(
   addresses: EthereumAddress[],
   previouslyVerified: Set<EthereumAddress>,
   manuallyVerified: Record<string, string>,
-  etherscanClient: BlockExplorerClient,
+  etherscanClient: BlockIndexerClient,
   provider: providers.JsonRpcProvider,
   workersCount: number,
   logger: Logger,

@@ -12,11 +12,16 @@ interface RpcClient2Deps {
   rateLimiter: RateLimiter
   retryHandler: RetryHandler
   logger: Logger
+  chain: string
 }
 
+// TODO: create EVMBlockClient
 export class RpcClient2 {
+  chain: string
+
   constructor(private readonly $: RpcClient2Deps) {
-    this.$.logger = this.$.logger.for(this)
+    this.chain = $.chain
+    this.$.logger = this.$.logger.for(this).tag($.chain)
   }
 
   /** Calls eth_getBlockByNumber on RPC, includes full transactions bodies.

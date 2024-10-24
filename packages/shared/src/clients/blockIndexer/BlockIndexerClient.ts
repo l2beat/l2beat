@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { RateLimiter, UnixTime } from '@l2beat/shared-pure'
-import { HttpClient } from '../HttpClient'
+import { HttpClient } from '../../services'
 import { BlockTimestampResponse, EtherscanResponse } from './types'
 
 interface EtherscanOptions {
@@ -8,15 +8,20 @@ interface EtherscanOptions {
   maximumCallsForBlockTimestamp: number
   url: string
   apiKey: string
+  chain: string
 }
 
 interface BlockscoutOptions {
   type: 'Blockscout'
   maximumCallsForBlockTimestamp: number
   url: string
+  chain: string
 }
 
-export class BlockExplorerClient {
+// TODO: add retries, use HttpClient2
+export class BlockIndexerClient {
+  chain: string
+
   private readonly rateLimiter = new RateLimiter({
     callsPerMinute: 60,
   })
@@ -31,13 +36,14 @@ export class BlockExplorerClient {
   ) {
     this.call = this.rateLimiter.wrap(this.call.bind(this))
     this.binTimeWidth = options.type === 'Etherscan' ? 10 : 1
+    this.chain = options.chain
   }
 
   static create(
     services: { httpClient: HttpClient; logger: Logger },
     options: EtherscanOptions | BlockscoutOptions,
   ) {
-    return new BlockExplorerClient(services.httpClient, options)
+    return new BlockIndexerClient(services.httpClient, options)
   }
 
   // There is a case when there is not enough activity on a given chain

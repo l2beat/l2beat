@@ -3,12 +3,12 @@ import { expect, mockFn, mockObject } from 'earl'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
 import { activityRecord, transactions } from '../../utils/aggregatePerDay.test'
 import { RpcUopsAnalyzer } from '../uops/analyzers/RpcUopsAnalyzer'
-import { RpcTxsCountProvider } from './RpcTxsCountProvider'
+import { RpcTxsCountService } from './RpcTxsCountService'
 
 const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
 
-describe(RpcTxsCountProvider.name, () => {
-  describe(RpcTxsCountProvider.prototype.getTxsCount.name, () => {
+describe(RpcTxsCountService.name, () => {
+  describe(RpcTxsCountService.prototype.getTxsCount.name, () => {
     it('should return txs and uops count', async () => {
       const analyzer = new RpcUopsAnalyzer()
       const client = mockRpcClient([
@@ -30,7 +30,7 @@ describe(RpcTxsCountProvider.name, () => {
           uopsLength: 7,
         })
 
-      const txsCountProvider = new RpcTxsCountProvider(
+      const txsCountProvider = new RpcTxsCountService(
         client,
         ProjectId('a'),
         analyzer,
@@ -60,7 +60,7 @@ describe(RpcTxsCountProvider.name, () => {
           transactionsLength: 2,
           uopsLength: 3,
         })
-      const txsCountProvider = new RpcTxsCountProvider(
+      const txsCountProvider = new RpcTxsCountService(
         client,
         ProjectId('a'),
         analyzer,
