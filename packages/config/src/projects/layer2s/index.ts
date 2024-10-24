@@ -59,6 +59,7 @@ import { hybrid } from './hybrid'
 import { hychain } from './hychain'
 import { hypr } from './hypr'
 import { immutablex } from './immutablex'
+import { ink } from './ink'
 import { intmax } from './intmax'
 import { kakarotzkevm } from './kakarotzkevm'
 import { karak } from './karak'
@@ -229,6 +230,7 @@ export const layer2s: Layer2[] = [
   hychain,
   hypr,
   immutablex,
+  ink,
   intmax,
   kakarotzkevm,
   karak,
