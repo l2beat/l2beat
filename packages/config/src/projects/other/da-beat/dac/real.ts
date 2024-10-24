@@ -20,7 +20,7 @@ export const realDac = AnytrustDAC({
       addresses: [
         discovery.getContractDetails(
           'SequencerInbox',
-          'Main entry point for the Sequencer submitting transaction batches.',
+          'The DA bridge and entry point for the Sequencer submitting transaction batches.',
         ),
       ],
       risks: [],
@@ -31,7 +31,7 @@ export const realDac = AnytrustDAC({
         name: 'Sequencers',
         accounts: discovery.getPermissionsByRole('sequence'),
         description:
-          'Central actors allowed to submit transaction batches to the DA bridge (Sequencer Inbox).',
+          'Central actors allowed to relay transaction batches to the DA bridge (Sequencer Inbox).',
         chain: discovery.chain,
       },
       {
@@ -43,10 +43,6 @@ export const realDac = AnytrustDAC({
         description:
           'Multisig that can upgrade authorized batch posters via the UpgradeExecutor contract.',
       },
-      ...discovery.getMultisigPermission(
-        'GelatoMultisig',
-        'Multisig that can execute upgrades of the DA bridge and L2 system contracts via the UpgradeExecutor.',
-      ),
       {
         name: 'UpgradeExecutor',
         accounts: [
@@ -58,8 +54,12 @@ export const realDac = AnytrustDAC({
           },
         ],
         description:
-          'The UpgradeExecutor can change the Committee members by updating the valid keyset.',
+        'The contract used to manage the upgrade of the DA bridge and other contracts.',
       },
+      ...discovery.getMultisigPermission(
+        'GelatoMultisig',
+        `Multisig that can upgrade the DA bridge, upgrade authorized batch posters (relayers), and change the Committee members by updating the valid keyset (via UpgradeExecutor).`,
+      ),
     ],
     chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignatures,

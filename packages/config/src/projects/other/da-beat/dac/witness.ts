@@ -11,6 +11,11 @@ const upgradeability = {
   upgradeDelay: 'No delay',
 }
 
+const bridgeUpgradeability = {
+  upgradableBy: ['RollupManager'],
+  upgradeDelay: 'No delay',
+}
+
 const membersCountDAC = discovery.getContractValue<number>(
   'WitnessValidiumDAC',
   'getAmountOfMembers',
@@ -34,6 +39,7 @@ export const witnessDac = PolygoncdkDAC({
       addresses: [
         discovery.getContractDetails('WitnessValidium', {
           description: `The DA bridge and main contract of the WitnessValidium. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
+          ...bridgeUpgradeability,
         }),
         discovery.getContractDetails('WitnessValidiumDAC', {
           description:
@@ -63,6 +69,16 @@ export const witnessDac = PolygoncdkDAC({
           'Admin of the WitnessValidium contract, can set core system parameters like replacing the sequencer (relayer), activate forced transactions and update the DA mode.',
       },
       {
+        name: 'RollupManager',
+        accounts: [
+          discovery.formatPermissionedAccount(
+            discovery.getContractValue('WitnessValidium', 'rollupManager'),
+          ),
+        ],
+        description:
+          'The RollupManager can upgrade the DA bridge contract implementation.',
+      },
+      {
         name: 'DACProxyAdminOwner',
         accounts: [
           discovery.formatPermissionedAccount(
@@ -70,7 +86,7 @@ export const witnessDac = PolygoncdkDAC({
           ),
         ],
         description:
-          "Owner of the WitnessValidiumDAC's ProxyAdmin. Can upgrade the contract.",
+          "Owner of the WitnessValidiumDAC's ProxyAdmin. Can upgrade the DAC members.",
       },
     ],
     chain: ChainId.ETHEREUM,

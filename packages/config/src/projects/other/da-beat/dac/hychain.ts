@@ -1,4 +1,4 @@
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { hychain } from '../../../layer2s/hychain'
 import { AnytrustDAC } from '../templates/anytrust-template'
@@ -44,7 +44,7 @@ export const hychainDac = AnytrustDAC({
         name: 'Sequencers',
         accounts: discovery.getPermissionsByRole('sequence'),
         description:
-          'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
+          'Central actors allowed to submit transaction batches to the DA bridge (Sequencer Inbox.',
         chain: discovery.chain,
       },
       {
@@ -54,8 +54,25 @@ export const hychainDac = AnytrustDAC({
           'EXECUTOR_ROLE',
         ),
         description:
-          'Multisig that can upgrade authorized batch posters via the UpgradeExecutor contract.',
+        'Multisig that can upgrade authorized batch posters (relayers) via the UpgradeExecutor contract.',
       },
+      {
+        name: 'UpgradeExecutor',
+        accounts: [
+          {
+            address: EthereumAddress(
+              discovery.getContractValue<string>('RollupProxy', 'owner'),
+            ),
+            type: 'Contract',
+          },
+        ],
+        description:
+          'The UpgradeExecutor can change the Committee members by updating the valid keyset.',
+      },
+      ...discovery.getMultisigPermission(
+        'HychainMultisig',
+        `Multisig that can upgrade the DA bridge and other rollup's smart contracts (via UpgradeExecutor).`,
+      ),
     ],
     chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignatures,

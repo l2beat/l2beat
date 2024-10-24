@@ -11,6 +11,11 @@ const upgradeability = {
   upgradeDelay: 'None',
 }
 
+const bridgeUpgradeability = {
+  upgradableBy: ['RollupManager'],
+  upgradeDelay: 'No delay',
+}
+
 const membersCountDAC = discovery.getContractValue<number>(
   'AstarValidiumDAC',
   'getAmountOfMembers',
@@ -41,8 +46,18 @@ export const astarZkEvmDac = PolygoncdkDAC({
       },
       ...discovery.getMultisigPermission(
         'LocalAdmin',
-        'Admin of the AstarValidiumDAC contract, can set core system parameters like replacing the sequencer (relayer), activate forced transactions, update the DA mode and upgrade the AstarValidiumDAC contract',
+        'Admin of the AstarValidiumDAC contract, can set core system parameters like replacing the sequencer (relayer), activate forced transactions, update the DA mode and upgrade the AstarValidiumDAC contract.',
       ),
+      {
+        name: 'RollupManager',
+        accounts: [
+          discovery.formatPermissionedAccount(
+            discovery.getContractValue('AstarValidium', 'rollupManager'),
+          ),
+        ],
+        description:
+          'The RollupManager can upgrade the DA bridge contract implementation.',
+      },
     ],
     chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignaturesDAC,
@@ -52,6 +67,7 @@ export const astarZkEvmDac = PolygoncdkDAC({
       addresses: [
         discovery.getContractDetails('AstarValidium', {
           description: `The DA bridge and main contract of the Astar zkEVM. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
+          ...bridgeUpgradeability,
         }),
         discovery.getContractDetails('AstarValidiumDAC', {
           description:

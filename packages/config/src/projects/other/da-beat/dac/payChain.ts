@@ -7,8 +7,13 @@ import { DacTransactionDataType } from '../types/DacTransactionDataType'
 const discovery = new ProjectDiscovery('wirex')
 
 const upgradeability = {
-  upgradableBy: ['LocalAdmin'],
+  upgradableBy: ['DACProxyAdminOwner'],
   upgradeDelay: 'None',
+}
+
+const bridgeUpgradeability = {
+  upgradableBy: ['RollupManager'],
+  upgradeDelay: 'No delay',
 }
 
 const membersCountDAC = discovery.getContractValue<number>(
@@ -49,6 +54,26 @@ export const paychainDac = PolygoncdkDAC({
         description:
           'Admin and ForceBatcher of the WirexPayChainValidium contract, can set core system parameters like replacing the sequencer (relayer), activate forced transactions, and set the DA committee members in the WirexPayChainDAC contract.',
       },
+      {
+        name: 'RollupManager',
+        accounts: [
+          discovery.formatPermissionedAccount(
+            discovery.getContractValue('WirexPayChainValidium', 'rollupManager'),
+          ),
+        ],
+        description:
+          'The RollupManager can upgrade the DA bridge contract implementation.',
+      },
+      {
+        name: 'DACProxyAdminOwner',
+        accounts: [
+          discovery.formatPermissionedAccount(
+            discovery.getContractValue('DACProxyAdmin', 'owner'),
+          ),
+        ],
+        description:
+          "Owner of the WirexPayChainDAC's ProxyAdmin. Can upgrade the DAC members.",
+      },
     ],
     chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignaturesDAC,
@@ -58,6 +83,7 @@ export const paychainDac = PolygoncdkDAC({
       addresses: [
         discovery.getContractDetails('WirexPayChainValidium', {
           description: `The DA bridge and main contract of the WirexPayChain zkEVM. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
+          ...bridgeUpgradeability,
         }),
         discovery.getContractDetails('WirexPayChainDAC', {
           description:
