@@ -1,5 +1,3 @@
-import '@total-typescript/ts-reset'
-
 import clsx from 'clsx'
 import { useState } from 'react'
 
