@@ -1,4 +1,5 @@
-import { type Layer2, layer2s } from '@l2beat/config'
+import { type Layer2 } from '@l2beat/config'
+import { resolvedLayer2s } from '@l2beat/config/projects'
 import { z } from 'zod'
 
 export const CostsProjectsFilter = z.discriminatedUnion('type', [
@@ -16,7 +17,7 @@ export function getCostsProjects(
   filter: CostsProjectsFilter = { type: 'all' },
 ): Layer2[] {
   const condition = filterToCondition(filter)
-  return layer2s.filter(
+  return resolvedLayer2s.filter(
     (p) =>
       condition(p) &&
       p.config.trackedTxs !== undefined &&

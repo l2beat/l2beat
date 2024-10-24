@@ -1,4 +1,5 @@
-import { type Bridge, bridges } from '@l2beat/config'
+import { type Bridge } from '@l2beat/config'
+import { resolvedBridges } from '@l2beat/config/projects'
 import { notUndefined } from '@l2beat/shared-pure'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
 import { getProjectsLatestTvlUsd } from '../scaling/tvl/utils/get-latest-tvl-usd'
@@ -15,7 +16,7 @@ export async function getBridgeRiskEntries() {
       getImplementationChangeReport(),
     ])
 
-  const included = bridges.filter(
+  const included = resolvedBridges.filter(
     (project) => !project.isUpcoming && !project.isArchived,
   )
 

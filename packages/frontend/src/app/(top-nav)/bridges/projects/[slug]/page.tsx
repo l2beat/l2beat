@@ -1,4 +1,4 @@
-import { bridges } from '@l2beat/config/build/src/projects/bridges'
+import { resolvedBridges } from '@l2beat/config/projects'
 import { notFound } from 'next/navigation'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/highlightable-link-context'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/desktop-project-navigation'
@@ -11,13 +11,15 @@ import { getProjectMetadata } from '~/utils/metadata'
 import { BridgesProjectSummary } from './_components/bridges-project-summary'
 
 export async function generateStaticParams() {
-  return bridges.map((layer) => ({
+  return resolvedBridges.map((layer) => ({
     slug: layer.display.slug,
   }))
 }
 
 export async function generateMetadata({ params }: Props) {
-  const project = bridges.find((layer) => layer.display.slug === params.slug)
+  const project = resolvedBridges.find(
+    (layer) => layer.display.slug === params.slug,
+  )
   if (!project) {
     notFound()
   }
@@ -41,7 +43,7 @@ interface Props {
 }
 
 export default async function Page({ params }: Props) {
-  const project = bridges.find((p) => p.display.slug === params.slug)
+  const project = resolvedBridges.find((p) => p.display.slug === params.slug)
 
   if (!project) {
     notFound()

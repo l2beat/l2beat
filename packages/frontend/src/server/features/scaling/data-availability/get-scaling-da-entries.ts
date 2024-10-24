@@ -1,4 +1,5 @@
-import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
+import { type Layer2, type Layer3 } from '@l2beat/config'
+import { resolvedLayer2s, resolvedLayer3s } from '@l2beat/config/projects'
 import { notUndefined } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { groupByMainCategories } from '~/utils/group-by-main-categories'
@@ -10,7 +11,7 @@ import { orderByTvl } from '../tvl/utils/order-by-tvl'
 import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
 
 export async function getScalingDaEntries() {
-  const activeProjects = [...layer2s, ...layer3s].filter(
+  const activeProjects = [...resolvedLayer2s, ...resolvedLayer3s].filter(
     (p) => !p.isUpcoming && !(p.type === 'layer2' && p.isArchived),
   )
   const [tvl, projectsVerificationStatuses, implementationChangeReport] =

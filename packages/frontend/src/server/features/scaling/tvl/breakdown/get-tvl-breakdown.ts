@@ -3,6 +3,7 @@ import {
   assert,
   type AmountConfigEntry,
   type AssetId,
+  ChainId,
   type EthereumAddress,
   type ProjectId,
   UnixTime,
@@ -10,7 +11,6 @@ import {
   assertUnreachable,
 } from '@l2beat/shared-pure'
 import { assignTokenMetaToBreakdown } from './assign-token-meta-to-breakdown'
-import { chainConverter } from './chain-converter'
 import { getLatestAmountForConfigurations } from './get-latest-amount-for-configurations'
 import { getLatestPriceForConfigurations } from './get-latest-price-for-configurations'
 import { recordToSortedBreakdown } from './record-to-sorted-breakdown'
@@ -87,7 +87,7 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
           } else {
             breakdown.canonical.set(priceConfig.assetId, {
               assetId: priceConfig.assetId,
-              chainId: chainConverter.toChainId(config.chain),
+              chainId: ChainId.ETHEREUM,
               amount: amountAsNumber,
               usdValue: valueAsNumber,
               usdPrice: price.toString(),
@@ -111,7 +111,7 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
 
           breakdown.external.push({
             assetId: priceConfig.assetId,
-            chainId: chainConverter.toChainId(config.chain),
+            chainId: ChainId.ETHEREUM,
             amount: amountAsNumber,
             usdValue: valueAsNumber,
             usdPrice: price.toString(),
@@ -127,7 +127,7 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
           const address = getTokenAddress(config)
           breakdown.native.push({
             assetId: priceConfig.assetId,
-            chainId: chainConverter.toChainId(config.chain),
+            chainId: ChainId.ETHEREUM,
             amount: amountAsNumber,
             usdValue: valueAsNumber,
             usdPrice: price.toString(),

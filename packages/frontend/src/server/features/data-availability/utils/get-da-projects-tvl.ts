@@ -1,4 +1,4 @@
-import { layer2s, layer3s } from '@l2beat/config'
+import { resolvedLayer2s, resolvedLayer3s } from '@l2beat/config/projects'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import {
@@ -66,7 +66,7 @@ export function pickTvlForProjects(
 }
 
 function getMockDaProjectsTvl(): DaProjectsTvl {
-  return [...layer2s, ...layer3s].map((project) => ({
+  return [...resolvedLayer2s, ...resolvedLayer3s].map((project) => ({
     projectId: project.id,
     tvl: 100000,
   }))

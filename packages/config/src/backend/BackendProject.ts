@@ -24,8 +24,6 @@ import {
   Layer2TxConfig,
   Layer3,
 } from '../projects'
-import { tokenList } from '../tokens'
-import { chainConverter } from './utils'
 
 export interface BackendProject {
   projectId: ProjectId
@@ -198,14 +196,10 @@ export function layer3ToBackendProject(layer3: Layer3): BackendProject {
 }
 
 function toProjectEscrow(escrow: ScalingProjectEscrow): BackendProjectEscrow {
-  const chainId = chainConverter.toChainId(escrow.chain)
-
-  const tokensOnChain = tokenList.filter((t) => t.chainId === chainId)
-
   return {
     address: escrow.address,
     sinceTimestamp: escrow.sinceTimestamp,
-    tokens: mapTokens(escrow, tokensOnChain),
+    tokens: [],
     chain: escrow.chain,
     includeInTotal: escrow.includeInTotal,
     source: escrow.source,

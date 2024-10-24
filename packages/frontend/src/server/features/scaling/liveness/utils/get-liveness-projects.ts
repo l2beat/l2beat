@@ -1,7 +1,7 @@
-import { layer2s } from '@l2beat/config'
+import { resolvedLayer2s } from '@l2beat/config/projects'
 
 export function getLivenessProjects() {
-  return layer2s.filter(
+  return resolvedLayer2s.filter(
     (p) =>
       (p.display.category === 'Optimistic Rollup' ||
         p.display.category === 'ZK Rollup') &&

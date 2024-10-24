@@ -1,9 +1,5 @@
-import {
-  type Layer2,
-  type Layer3,
-  badgesCompareFn,
-  layer2s,
-} from '@l2beat/config'
+import { type Layer2, type Layer3, badgesCompareFn } from '@l2beat/config'
+import { resolvedLayer2s } from '@l2beat/config/projects'
 import { compact } from 'lodash'
 import { env } from '~/env'
 import { getProjectLinks } from '~/utils/project/get-project-links'
@@ -76,7 +72,9 @@ export async function getScalingProjectEntry(project: ScalingProject) {
   }
 
   // L3
-  const hostChain = layer2s.find((layer2) => layer2.id === project.hostChain)
+  const hostChain = resolvedLayer2s.find(
+    (layer2) => layer2.id === project.hostChain,
+  )
   const baseLayerRosetteValues = hostChain
     ? getScalingRosetteValues(hostChain.riskView)
     : undefined

@@ -1,4 +1,5 @@
-import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
+import { type Layer2, type Layer3 } from '@l2beat/config'
+import { resolvedLayer2s, resolvedLayer3s } from '@l2beat/config/projects'
 import {
   type ProjectsVerificationStatuses,
   notUndefined,
@@ -20,7 +21,7 @@ export function getScalingTvlEntries({
   projectsVerificationStatuses: ProjectsVerificationStatuses
   tvl: SevenDayTvlBreakdown
 }) {
-  const projects = [...layer2s, ...layer3s].filter(
+  const projects = [...resolvedLayer2s, ...resolvedLayer3s].filter(
     (project) => !project.isUpcoming && !project.isArchived,
   )
 

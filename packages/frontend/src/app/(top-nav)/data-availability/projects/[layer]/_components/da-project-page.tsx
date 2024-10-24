@@ -1,7 +1,4 @@
-import {
-  type DaBridge,
-  type DaLayer,
-} from '@l2beat/config/build/src/projects/other/da-beat'
+import { type DaBridge, type DaLayer } from '@l2beat/config'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/highlightable-link-context'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/desktop-project-navigation'
 import { MobileProjectNavigation } from '~/components/projects/navigation/mobile-project-navigation'

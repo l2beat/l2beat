@@ -1,4 +1,5 @@
-import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
+import { type Layer2, type Layer3 } from '@l2beat/config'
+import { resolvedLayer2s, resolvedLayer3s } from '@l2beat/config/projects'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import {
@@ -83,8 +84,8 @@ function getSyncStatus(syncedUntil: UnixTime) {
 function getMockActivityTableData(): ActivityTableData {
   const projects = [
     { id: ProjectId.ETHEREUM },
-    ...layer2s.filter((l2) => !l2.isArchived && !l2.isUpcoming),
-    ...layer3s.filter((l3) => !l3.isUpcoming),
+    ...resolvedLayer2s.filter((l2) => !l2.isArchived && !l2.isUpcoming),
+    ...resolvedLayer3s.filter((l3) => !l3.isUpcoming),
   ]
 
   return Object.fromEntries(

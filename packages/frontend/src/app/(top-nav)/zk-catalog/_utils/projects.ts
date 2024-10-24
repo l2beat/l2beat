@@ -1,7 +1,11 @@
-import { layer2s, layer3s, zkCatalogProjects } from '@l2beat/config'
+import {
+  resolvedLayer2s,
+  resolvedLayer3s,
+  resolvedZkCatalogProjects,
+} from '@l2beat/config/projects'
 
 export const projects = [
-  ...zkCatalogProjects,
-  ...layer2s.filter((l2) => l2.stateValidation?.proofVerification),
-  ...layer3s.filter((l3) => l3.stateValidation?.proofVerification),
+  ...resolvedZkCatalogProjects,
+  ...resolvedLayer2s.filter((l2) => l2.stateValidation?.proofVerification),
+  ...resolvedLayer3s.filter((l3) => l3.stateValidation?.proofVerification),
 ]

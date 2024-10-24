@@ -1,4 +1,5 @@
-import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
+import { type Layer2, type Layer3 } from '@l2beat/config'
+import { resolvedLayer2s, resolvedLayer3s } from '@l2beat/config/projects'
 import { compact } from 'lodash'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
 import { projects } from '~/app/(top-nav)/zk-catalog/_utils/projects'
@@ -23,7 +24,7 @@ export type ScalingSummaryEntry = Awaited<
   ReturnType<typeof getScalingSummaryEntry>
 >
 export async function getScalingSummaryEntries() {
-  const projects = [...layer2s, ...layer3s].filter(
+  const projects = [...resolvedLayer2s, ...resolvedLayer3s].filter(
     (project) => !project.isUpcoming && !project.isArchived,
   )
   const [

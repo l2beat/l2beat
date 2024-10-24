@@ -1,4 +1,5 @@
-import { daLayers, getDaProjectKey } from '@l2beat/config'
+import { getDaProjectKey } from '@l2beat/config'
+import { resolvedDaLayers } from '@l2beat/config/projects'
 import { assert } from '@l2beat/shared-pure'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { toDaBridge } from '../utils/get-da-bridge'
@@ -22,7 +23,7 @@ export async function getDaRiskEntries() {
     ])
   const getSumFor = pickTvlForProjects(tvlPerProject)
 
-  const entries = daLayers
+  const entries = resolvedDaLayers
     // Calculate total TVS for each bridge
     .map((daLayer) => ({
       ...daLayer,

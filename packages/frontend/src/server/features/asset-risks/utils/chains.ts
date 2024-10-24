@@ -1,6 +1,6 @@
 import 'server-only'
 
-import { layer2s } from '@l2beat/config/build/src/projects/layer2s'
+import { resolvedLayer2s } from '@l2beat/config/projects'
 import { type Hex } from 'viem'
 import {
   type Chain,
@@ -110,7 +110,9 @@ export function getChain(chainId: number) {
 }
 
 export function getChainStage(chainId: number) {
-  const chain = layer2s.find((l2) => l2.chainConfig?.chainId === chainId)
+  const chain = resolvedLayer2s.find(
+    (l2) => l2.chainConfig?.chainId === chainId,
+  )
   if (chainId === 1 || !chain) return
   if (
     chain.display.category === 'Validium' ||

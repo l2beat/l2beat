@@ -1,10 +1,14 @@
 import crypto from 'crypto'
 import { existsSync, readFileSync } from 'fs'
 import path from 'path'
-import { bridges, layer2s, layer3s } from '@l2beat/config'
+import {
+  resolvedBridges,
+  resolvedLayer2s,
+  resolvedLayer3s,
+} from '@l2beat/config/projects'
 import { expect } from 'earl'
 
-const projects = [...layer2s, ...bridges, ...layer3s]
+const projects = [...resolvedLayer2s, ...resolvedBridges, ...resolvedLayer3s]
 
 describe('meta images', () => {
   for (const project of projects) {

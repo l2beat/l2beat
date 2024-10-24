@@ -1,4 +1,4 @@
-import { layer2s, layer3s } from '@l2beat/config'
+import { resolvedLayer2s, resolvedLayer3s } from '@l2beat/config/projects'
 import { notFound } from 'next/navigation'
 import { env } from '~/env'
 import { getTvlBreakdownForProject } from '~/server/features/scaling/tvl/breakdown/get-tvl-breakdown-for-project'
@@ -11,7 +11,7 @@ import { NativelyMintedTable } from './_components/tables/natively-minted-table'
 import { TvlBreakdownPageHeader } from './_components/tvl-breakdown-page-header'
 import { TvlBreakdownSummaryBox } from './_components/tvl-breakdown-summary-box'
 
-const scalingProjects = [...layer2s, ...layer3s]
+const scalingProjects = [...resolvedLayer2s, ...resolvedLayer3s]
 
 export async function generateMetadata({ params }: Props) {
   const project = scalingProjects.find(

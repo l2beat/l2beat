@@ -1,4 +1,8 @@
-import { bridges, layer2s, layer3s } from '@l2beat/config'
+import {
+  resolvedBridges,
+  resolvedLayer2s,
+  resolvedLayer3s,
+} from '@l2beat/config/projects'
 import { UnixTime } from '@l2beat/shared-pure'
 import {
   unstable_cache as cache,
@@ -83,19 +87,21 @@ function getMock7dTokenBreakdown(): LatestTvl {
   return {
     total: 1000,
     projects: Object.fromEntries(
-      [...layer2s, ...layer3s, ...bridges].map((project) => [
-        project.id,
-        {
-          breakdown: {
-            total: 100,
-            ether: 80,
-            stablecoin: 15,
-            associated: 5,
+      [...resolvedLayer2s, ...resolvedLayer3s, ...resolvedBridges].map(
+        (project) => [
+          project.id,
+          {
+            breakdown: {
+              total: 100,
+              ether: 80,
+              stablecoin: 15,
+              associated: 5,
+            },
+            associatedTokensExcludedChange: Math.random(),
+            change: Math.random(),
           },
-          associatedTokensExcludedChange: Math.random(),
-          change: Math.random(),
-        },
-      ]),
+        ],
+      ),
     ),
   }
 }

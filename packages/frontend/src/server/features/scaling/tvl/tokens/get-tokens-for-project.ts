@@ -2,8 +2,6 @@ import {
   type Bridge,
   type Layer2,
   type Layer3,
-  chainConverter,
-  safeGetTokenByAssetId,
   toBackendProject,
 } from '@l2beat/config'
 import {
@@ -168,9 +166,7 @@ function toDisplayableToken(
     source: 'native' | 'canonical' | 'external'
   },
 ): ProjectToken {
-  const token = safeGetTokenByAssetId(assetId)
-  assert(token, 'Token not found for asset id ' + assetId.toString())
-  let symbol = token.symbol
+  let symbol = 'ETH'
   if (symbol === 'USDC' && source === 'canonical') {
     if (
       projectId.toString() === 'arbitrum' ||
@@ -182,9 +178,9 @@ function toDisplayableToken(
     }
   }
 
-  const name = token.name
-  const address = token.address ?? 'native'
-  const iconUrl = token.iconUrl ?? ''
+  const name = 'ETH'
+  const address = EthereumAddress('0x0000000000000000000000000000000000000000')
+  const iconUrl = ''
 
   return {
     assetId,
@@ -192,7 +188,7 @@ function toDisplayableToken(
     iconUrl,
     name,
     symbol,
-    chain: chainConverter.toName(token.chainId),
+    chain: 'Ethereum',
     source,
   }
 }

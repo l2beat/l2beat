@@ -1,4 +1,9 @@
-import { bridges, layer2s, layer3s, toBackendProject } from '@l2beat/config'
+import { toBackendProject } from '@l2beat/config'
+import {
+  resolvedBridges,
+  resolvedLayer2s,
+  resolvedLayer3s,
+} from '@l2beat/config/projects'
 import {
   assert,
   EthereumAddress,
@@ -56,9 +61,11 @@ const getCachedTokenTvlChart = cache(
     const targetTimestamp = UnixTime.now().toStartOf('hour').add(-2, 'hours')
     const resolution = rangeToResolution(range)
 
-    const project = [...layer2s, ...layer3s, ...bridges].find(
-      (p) => p.id === token.projectId,
-    )
+    const project = [
+      ...resolvedLayer2s,
+      ...resolvedLayer3s,
+      ...resolvedBridges,
+    ].find((p) => p.id === token.projectId)
     assert(project, 'Project not found')
     const backendProject = toBackendProject(project)
     const configMapping = getConfigMapping(backendProject)

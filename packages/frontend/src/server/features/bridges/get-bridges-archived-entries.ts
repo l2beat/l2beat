@@ -1,4 +1,4 @@
-import { bridges } from '@l2beat/config'
+import { resolvedBridges } from '@l2beat/config/projects'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
 import { get7dTokenBreakdown } from '../scaling/tvl/utils/get-7d-token-breakdown'
 import { orderByTvl } from '../scaling/tvl/utils/order-by-tvl'
@@ -9,7 +9,7 @@ export type BridgesArchivedEntry = Awaited<
   ReturnType<typeof getBridgesArchivedEntries>
 >[number]
 export async function getBridgesArchivedEntries() {
-  const archivedBridges = bridges.filter((bridge) => bridge.isArchived)
+  const archivedBridges = resolvedBridges.filter((bridge) => bridge.isArchived)
   const [
     tvl7dBreakdown,
     implementationChangeReport,

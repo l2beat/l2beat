@@ -1,8 +1,8 @@
-import { layer2s, layer3s } from '@l2beat/config'
+import { resolvedLayer2s, resolvedLayer3s } from '@l2beat/config/projects'
 import { NextResponse } from 'next/server'
 import { getTvlBreakdownForProject } from '~/server/features/scaling/tvl/breakdown/get-tvl-breakdown-for-project'
 
-const projects = [...layer2s, ...layer3s]
+const projects = [...resolvedLayer2s, ...resolvedLayer3s]
 
 export async function GET(
   _: Request,

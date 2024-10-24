@@ -1,8 +1,4 @@
-import {
-  type BadgeId,
-  BadgeType,
-  badges,
-} from '@l2beat/config/build/src/projects/badges'
+import { type BadgeId, BadgeType, badges } from '@l2beat/config'
 import { type StoryObj } from '@storybook/react'
 import { ProjectBadge } from './project-badge'
 

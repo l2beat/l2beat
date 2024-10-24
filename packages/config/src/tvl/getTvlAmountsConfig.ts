@@ -23,7 +23,7 @@ export function getTvlAmountsConfig(
 ): AmountConfigEntry[] {
   const entries: AmountConfigEntry[] = []
 
-  const nonZeroSupplyTokens = tokenList.filter((t) => t.supply !== 'zero')
+  const nonZeroSupplyTokens: Token[] = []
   for (const token of nonZeroSupplyTokens) {
     const projectAndChain = findProjectAndChain(token, projects)
 

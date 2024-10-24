@@ -1,4 +1,4 @@
-import { chains } from '@l2beat/config'
+import { resolvedChains } from '@l2beat/config/projects'
 import { diffDiscovery } from '@l2beat/discovery'
 import { get$Implementations } from '@l2beat/discovery-types'
 import {
@@ -90,7 +90,7 @@ function getImplementationChangeReportMock(): ImplementationChangeReport {
 }
 
 function chainNameToId(chainName: string): ChainId {
-  const chain = chains.find((chain) => chain.name === chainName)
+  const chain = resolvedChains.find((chain) => chain.name === chainName)
   assert(chain, `Unknown chain name: ${chainName}`)
   return ChainId(chain.chainId)
 }
