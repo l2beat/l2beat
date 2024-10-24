@@ -1,4 +1,4 @@
-import { layer2s, layer3s } from '@l2beat/config'
+import { resolvedLayer2s, resolvedLayer3s } from '@l2beat/config/projects'
 import { notFound } from 'next/navigation'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/highlightable-link-context'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/desktop-project-navigation'
@@ -10,7 +10,7 @@ import { HydrateClient } from '~/trpc/server'
 import { getProjectMetadata } from '~/utils/metadata'
 import { ScalingProjectSummary } from './_components/scaling-project-summary'
 
-const scalingProjects = [...layer2s, ...layer3s]
+const scalingProjects = [...resolvedLayer2s, ...resolvedLayer3s]
 
 export async function generateStaticParams() {
   return scalingProjects.map((layer) => ({

@@ -1,4 +1,5 @@
-import { type Layer2, layer2s } from '@l2beat/config'
+import { type Layer2 } from '@l2beat/config'
+import { resolvedLayer2s } from '@l2beat/config/projects'
 import { UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
@@ -25,7 +26,7 @@ export async function getScalingFinalityEntries() {
     getProjectsVerificationStatuses(),
   ])
 
-  const includedProjects = getIncludedProjects(layer2s, finality)
+  const includedProjects = getIncludedProjects(resolvedLayer2s, finality)
 
   const entries = includedProjects
     .map((project) => {

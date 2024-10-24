@@ -8,8 +8,8 @@ import {
   type ScalingProjectContracts,
   type ScalingProjectEscrow,
   isSingleAddress,
-  layer2s,
 } from '@l2beat/config'
+import { resolvedLayer2s } from '@l2beat/config/projects'
 import {
   assert,
   type ContractsVerificationStatuses,
@@ -152,7 +152,10 @@ export function getContractsSection(
     if (hostChain === 'Multiple') {
       return 'Multiple'
     }
-    return layer2s.find((l2) => l2.id === hostChain)?.display.name ?? 'Unknown'
+    return (
+      resolvedLayer2s.find((l2) => l2.id === hostChain)?.display.name ??
+      'Unknown'
+    )
   }
 
   const chainName =

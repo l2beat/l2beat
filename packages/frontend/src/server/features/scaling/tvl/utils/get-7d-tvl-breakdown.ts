@@ -1,6 +1,8 @@
-import { bridges } from '@l2beat/config'
-import { layer2s } from '@l2beat/config/build/src/projects/layer2s'
-import { layer3s } from '@l2beat/config/build/src/projects/layer3s'
+import {
+  resolvedBridges,
+  resolvedLayer2s,
+  resolvedLayer3s,
+} from '@l2beat/config/projects'
 import { UnixTime } from '@l2beat/shared-pure'
 import {
   unstable_cache as cache,
@@ -101,28 +103,30 @@ function getMockTvlBreakdown(): SevenDayTvlBreakdown {
   return {
     total: 1000,
     projects: Object.fromEntries(
-      [...layer2s, ...layer3s, ...bridges].map((project) => [
-        project.id,
-        {
-          total: 60,
-          totalChange: 0.4,
-          breakdown: {
-            canonical: 30,
-            native: 20,
-            external: 10,
-            associated: {
-              native: 1,
-              canonical: 2,
-              external: 3,
+      [...resolvedLayer2s, ...resolvedLayer3s, ...resolvedBridges].map(
+        (project) => [
+          project.id,
+          {
+            total: 60,
+            totalChange: 0.4,
+            breakdown: {
+              canonical: 30,
+              native: 20,
+              external: 10,
+              associated: {
+                native: 1,
+                canonical: 2,
+                external: 3,
+              },
+            },
+            change: {
+              canonical: 0.5,
+              native: 0.25,
+              external: 0.25,
             },
           },
-          change: {
-            canonical: 0.5,
-            native: 0.25,
-            external: 0.25,
-          },
-        },
-      ]),
+        ],
+      ),
     ),
   }
 }

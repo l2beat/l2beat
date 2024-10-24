@@ -1,8 +1,8 @@
-import { chains } from '@l2beat/config'
+import { resolvedChains } from '@l2beat/config/projects'
 import { assert, type ChainId } from '@l2beat/shared-pure'
 
 export function getExplorerUrl(chain: string) {
-  const chainConfig = chains.find((c) => c.name === chain)
+  const chainConfig = resolvedChains.find((c) => c.name === chain)
   assert(
     chainConfig !== undefined,
     'Could not find chain config for chain: ' + chain,
@@ -16,7 +16,7 @@ export function getExplorerUrl(chain: string) {
 }
 
 export function getExplorerUrlByChainId(chainId: ChainId): string | undefined {
-  const chain = chains.find((c) => c.chainId === chainId.valueOf())
+  const chain = resolvedChains.find((c) => c.chainId === chainId.valueOf())
   if (!chain) {
     console.warn(
       'getExplorerUrlByChainId has not found a chain in config files',

@@ -4,15 +4,17 @@ import {
   type Layer2,
   type Layer3,
   bridgeToBackendProject,
-  bridges,
   getTvlAmountsConfig,
   getTvlAmountsConfigForProject,
   layer2ToBackendProject,
-  layer2s,
   layer3ToBackendProject,
-  layer3s,
   toBackendProject,
 } from '@l2beat/config'
+import {
+  resolvedBridges,
+  resolvedLayer2s,
+  resolvedLayer3s,
+} from '@l2beat/config/projects'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 
@@ -60,9 +62,9 @@ export function toTvlProject(project: Layer2 | Layer3 | Bridge): TvlProject {
 
 export function getTvlProjects(): TvlProject[] {
   const projects = [
-    ...layer2s.map(layer2ToBackendProject),
-    ...layer3s.map(layer3ToBackendProject),
-    ...bridges.map(bridgeToBackendProject),
+    ...resolvedLayer2s.map(layer2ToBackendProject),
+    ...resolvedLayer3s.map(layer3ToBackendProject),
+    ...resolvedBridges.map(bridgeToBackendProject),
   ]
 
   const tvlAmounts = getTvlAmountsConfig(projects)

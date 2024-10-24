@@ -1,5 +1,5 @@
 import { type DaLayer } from '@l2beat/config'
-import { daEconomicSecurityMeta } from '@l2beat/config/build/src/projects/other/da-beat/types/DaEconomicSecurity'
+import { daEconomicSecurityMeta } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { round } from 'lodash'
 import {

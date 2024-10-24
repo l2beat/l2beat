@@ -1,9 +1,9 @@
-import { layer2s, layer3s } from '@l2beat/config'
+import { resolvedLayer2s, resolvedLayer3s } from '@l2beat/config/projects'
 import { type NextRequest, NextResponse } from 'next/server'
 import { getTvlChartData } from '~/server/features/scaling/tvl/get-tvl-chart-data'
 import { TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 
-const projects = [...layer2s, ...layer3s]
+const projects = [...resolvedLayer2s, ...resolvedLayer3s]
 
 export async function GET(
   request: NextRequest,

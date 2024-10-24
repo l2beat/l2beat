@@ -1,4 +1,4 @@
-import { daLayers } from '@l2beat/config/build/src/projects/other/da-beat/index'
+import { resolvedDaLayers } from '@l2beat/config/projects'
 import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
 import { ProjectHeader } from '~/components/projects/project-header'
@@ -14,7 +14,9 @@ interface Props {
 }
 
 export default async function Page(props: Props) {
-  const daLayer = daLayers.find((p) => p.display.slug === props.params.layer)
+  const daLayer = resolvedDaLayers.find(
+    (p) => p.display.slug === props.params.layer,
+  )
   if (!daLayer) return notFound()
   const daBridge = daLayer.bridges.find(
     (b) => b.display.slug === props.params.bridge,

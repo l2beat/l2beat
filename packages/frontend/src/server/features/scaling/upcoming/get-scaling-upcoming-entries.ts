@@ -1,9 +1,12 @@
-import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
+import { type Layer2, type Layer3 } from '@l2beat/config'
+import { resolvedLayer2s, resolvedLayer3s } from '@l2beat/config/projects'
 import { assert } from '@l2beat/shared-pure'
 import { getHostChain } from '../utils/get-host-chain'
 
 export function getScalingUpcomingEntries() {
-  const projects = [...layer2s, ...layer3s].filter((p) => p.isUpcoming)
+  const projects = [...resolvedLayer2s, ...resolvedLayer3s].filter(
+    (p) => p.isUpcoming,
+  )
 
   return projects
     .sort((a, b) => {

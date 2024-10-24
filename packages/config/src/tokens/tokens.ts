@@ -10,15 +10,9 @@ visible benefits.
 You can check the detailed steps on how to add new tokens in the tvl.md file in the repository.
 */
 
-import { assert, AssetId, Token, UnixTime } from '@l2beat/shared-pure'
+import { AssetId, Token } from '@l2beat/shared-pure'
 
-import { chains } from '../chains'
-import generated from './generated.json'
-import { GeneratedToken } from './types'
-
-export const tokenList: Token[] = generated.tokens
-  .map((t) => GeneratedToken.parse(t))
-  .map(toToken)
+export const tokenList: Token[] = []
 
 const tokenMapByAssetId = new Map(tokenList.map((t) => [t.id, t] as const))
 
@@ -32,27 +26,4 @@ export function getTokenByAssetId(assetId: AssetId) {
     throw new TypeError(`Unknown token ${assetId.toString()}`)
   }
   return token
-}
-
-function toToken(generated: GeneratedToken): Token {
-  const chain = chains.find((c) => c.chainId === +generated.chainId)
-  assert(chain, `Chain nor found for ${generated.symbol}`)
-  assert(
-    chain.minTimestampForTvl,
-    `Token added for chain without minTimestampForTvl ${chain.name}`,
-  )
-
-  const sinceTimestamp = new UnixTime(
-    Math.max(
-      generated.deploymentTimestamp.toNumber(),
-      chain.minTimestampForTvl.toNumber(),
-      generated.coingeckoListingTimestamp.toNumber(),
-    ),
-  )
-
-  return {
-    id: AssetId.create(chain.name, generated.address),
-    ...generated,
-    sinceTimestamp,
-  }
 }

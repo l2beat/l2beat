@@ -1,0 +1,793 @@
+{
+  "json": [
+    {
+      "name": "aevo",
+      "chainId": 2999,
+      "explorerUrl": "https://explorer.aevo.xyz",
+      "explorerApi": {
+        "url": "https://explorer.aevo.xyz/api",
+        "type": "blockscout"
+      },
+      "multicallContracts": [
+        {
+          "sinceBlock": 2790111,
+          "batchSize": 150,
+          "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
+          "version": "3"
+        }
+      ],
+      "minTimestampForTvl": "1693882800"
+    },
+    {
+      "name": "arbitrum",
+      "chainId": 42161,
+      "blockscoutV2ApiUrl": "https://arbitrum.blockscout.com/api/v2",
+      "explorerUrl": "https://arbiscan.io",
+      "explorerApi": {
+        "url": "https://api.arbiscan.io/api",
+        "type": "etherscan"
+      },
+      "minTimestampForTvl": "1622240100",
+      "multicallContracts": [
+        {
+          "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
+          "batchSize": 150,
+          "sinceBlock": 7654707,
+          "version": "3"
+        },
+        {
+          "sinceBlock": 821923,
+          "batchSize": 150,
+          "address": "0x842eC2c7D803033Edf55E478F461FC547Bc54EB2",
+          "version": "2"
+        }
+      ],
+      "coingeckoPlatform": "arbitrum-one"
+    },
+    {
+      "name": "astarzkevm",
+      "chainId": 3776,
+      "explorerUrl": "https://astar-zkevm.explorer.startale.com",
+      "minTimestampForTvl": "1708632059",
+      "multicallContracts": [
+        {
+          "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
+          "batchSize": 150,
+          "sinceBlock": 183817,
+          "version": "3"
+        }
+      ]
+    },
+    {
+      "name": "base",
+      "blockscoutV2ApiUrl": "https://base.blockscout.com/api/v2",
+      "chainId": 8453,
+      "explorerUrl": "https://basescan.org",
+      "explorerApi": {
+        "url": "https://api.basescan.org/api",
+        "type": "etherscan"
+      },
+      "minTimestampForTvl": "1686832547",
+      "multicallContracts": [
+        {
+          "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
+          "batchSize": 150,
+          "sinceBlock": 5022,
+          "version": "3"
+        }
+      ],
+      "coingeckoPlatform": "base"
+    },
+    {
+      "name": "blast",
+      "coingeckoPlatform": "blast",
+      "chainId": 81457,
+      "explorerUrl": "https://blastscan.io/",
+      "explorerApi": {
+        "url": "https://api.blastscan.io/api",
+        "type": "etherscan"
+      },
+      "minTimestampForTvl": "1708809815",
+      "multicallContracts": [
+        {
+          "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
+          "batchSize": 150,
+          "sinceBlock": 88189,
+          "version": "3"
+        }
+      ]
+    },
+    {
+      "name": "bob",
+      "chainId": 60808,
+      "explorerUrl": "https://explorer.gobob.xyz",
+      "explorerApi": {
+        "url": "https://explorer.gobob.xyz/api",
+        "type": "blockscout"
+      },
+      "minTimestampForTvl": "1712861989"
+    },
+    {
+      "multicallContracts": [
+        {
+          "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
+          "batchSize": 150,
+          "sinceBlock": 446859,
+          "version": "3"
+        }
+      ],
+      "name": "bobanetwork",
+      "chainId": 288,
+      "explorerUrl": "https://eth.bobascan.com/",
+      "explorerApi": {
+        "url": "https://api.routescan.io/v2/network/mainnet/evm/288/etherscan/api/",
+        "type": "etherscan"
+      },
+      "coingeckoPlatform": "boba",
+      "minTimestampForTvl": "1635393439"
+    },
+    {
+      "name": "cyber",
+      "chainId": 7560,
+      "explorerUrl": "https://cyberscan.co/",
+      "coingeckoPlatform": "cyber",
+      "explorerApi": {
+        "url": "https://api.routescan.io/v2/network/mainnet/evm/7560/etherscan/api",
+        "type": "etherscan"
+      },
+      "minTimestampForTvl": "1713428569",
+      "multicallContracts": [
+        {
+          "sinceBlock": 1,
+          "batchSize": 150,
+          "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
+          "version": "3"
+        }
+      ]
+    },
+    {
+      "name": "cronoszkevm",
+      "chainId": 388,
+      "coingeckoPlatform": "cronos-zkevm",
+      "explorerUrl": "https://explorer.zkevm.cronos.org/",
+      "minTimestampForTvl": "1722394995"
+    },
+    {
+      "name": "fraxtal",
+      "chainId": 252,
+      "explorerUrl": "https://fraxscan.com/",
+      "explorerApi": {
+        "url": "https://api.fraxscan.com/api",
+        "type": "etherscan"
+      },
+      "minTimestampForTvl": "1706810713",
+      "coingeckoPlatform": "fraxtal"
+    },
+    {
+      "chainId": 1511670449,
+      "minTimestampForTvl": "1716807971",
+      "name": "gpt"
+    },
+    {
+      "name": "galxegravity",
+      "chainId": 1625,
+      "explorerUrl": "https://gscan.xyz/",
+      "explorerApi": {
+        "url": "https://explorer.gravity.xyz/api",
+        "type": "blockscout"
+      },
+      "blockscoutV2ApiUrl": "https://explorer.gravity.xyz/api/v2",
+      "minTimestampForTvl": "1716054191",
+      "multicallContracts": [
+        {
+          "sinceBlock": 52682,
+          "batchSize": 150,
+          "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
+          "version": "3"
+        }
+      ]
+    },
+    {
+      "name": "kinto",
+      "chainId": 7887,
+      "explorerUrl": "https://explorer.kinto.xyz",
+      "explorerApi": {
+        "url": "https://explorer.kinto.xyz/api",
+        "type": "blockscout"
+      },
+      "minTimestampForTvl": "1716249601"
+    },
+    {
+      "name": "kroma",
+      "chainId": 255,
+      "explorerUrl": "https://kromascan.com",
+      "explorerApi": {
+        "url": "https://api.kromascan.com/api",
+        "type": "etherscan"
+      },
+      "multicallContracts": [],
+      "minTimestampForTvl": "1693882800"
+    },
+    {
+      "name": "lambda",
+      "chainId": 56026,
+      "explorerUrl": "https://scan.lambda.im",
+      "explorerApi": {
+        "url": "https://scan.lambda.im/api",
+        "type": "blockscout"
+      },
+      "blockscoutV2ApiUrl": "https://scan.lambda.im/api/v2",
+      "minTimestampForTvl": "1713345623",
+      "multicallContracts": []
+    },
+    {
+      "name": "linea",
+      "chainId": 59144,
+      "explorerUrl": "https://lineascan.build",
+      "explorerApi": {
+        "url": "https://api.lineascan.build/api",
+        "type": "etherscan"
+      },
+      "minTimestampForTvl": "1689775200",
+      "multicallContracts": [
+        {
+          "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
+          "batchSize": 150,
+          "sinceBlock": 42,
+          "version": "3"
+        }
+      ],
+      "coingeckoPlatform": "linea"
+    },
+    {
+      "name": "lyra",
+      "chainId": 957,
+      "explorerUrl": "https://explorer.lyra.finance",
+      "explorerApi": {
+        "url": "https://explorer.lyra.finance/api",
+        "type": "blockscout"
+      },
+      "minTimestampForTvl": "1700021615",
+      "multicallContracts": [
+        {
+          "sinceBlock": 1935198,
+          "batchSize": 150,
+          "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
+          "version": "3"
+        }
+      ]
+    },
+    {
+      "name": "mantapacific",
+      "chainId": 169,
+      "explorerUrl": "https://pacific-explorer.manta.network",
+      "explorerApi": {
+        "url": "https://pacific-explorer.manta.network/api",
+        "type": "blockscout"
+      },
+      "minTimestampForTvl": "1694223959",
+      "multicallContracts": [
+        {
+          "sinceBlock": 332890,
+          "batchSize": 150,
+          "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
+          "version": "3"
+        },
+        {
+          "sinceBlock": 54816,
+          "batchSize": 150,
+          "address": "0x9731502B98F65BBb573D0106ECd9E4097dbcCD30",
+          "version": "2"
+        }
+      ],
+      "coingeckoPlatform": "manta-pacific"
+    },
+    {
+      "name": "mantle",
+      "chainId": 5000,
+      "explorerUrl": "https://explorer.mantle.xyz/",
+      "explorerApi": {
+        "url": "https://api.routescan.io/v2/network/mainnet/evm/5000/etherscan/api",
+        "type": "etherscan"
+      },
+      "minTimestampForTvl": "1688314886",
+      "multicallContracts": [
+        {
+          "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
+          "batchSize": 150,
+          "sinceBlock": 304717,
+          "version": "3"
+        }
+      ],
+      "coingeckoPlatform": "mantle"
+    },
+    {
+      "name": "metis",
+      "chainId": 1088,
+      "explorerUrl": "https://explorer.metis.io",
+      "explorerApi": {
+        "url": "https://api.routescan.io/v2/network/mainnet/evm/1088/etherscan/api",
+        "type": "etherscan"
+      },
+      "minTimestampForTvl": "1637270379",
+      "multicallContracts": [
+        {
+          "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
+          "batchSize": 150,
+          "sinceBlock": 2338552,
+          "version": "3",
+          "isNativeBalanceSupported": false
+        }
+      ],
+      "coingeckoPlatform": "metis"
+    },
+    {
+      "name": "mint",
+      "chainId": 185,
+      "explorerUrl": "https://explorer.mintchain.io",
+      "explorerApi": {
+        "url": "https://explorer.mintchain.io/api",
+        "type": "blockscout"
+      },
+      "multicallContracts": [
+        {
+          "sinceBlock": 19861572,
+          "batchSize": 150,
+          "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
+          "version": "3"
+        }
+      ],
+      "minTimestampForTvl": "1715608931"
+    },
+    {
+      "name": "mode",
+      "chainId": 34443,
+      "explorerUrl": "https://explorer.mode.network",
+      "explorerApi": {
+        "url": "https://api.routescan.io/v2/network/mainnet/evm/34443/etherscan/api",
+        "type": "etherscan"
+      },
+      "minTimestampForTvl": "1700174783",
+      "multicallContracts": [
+        {
+          "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
+          "batchSize": 150,
+          "sinceBlock": 5022,
+          "version": "3"
+        }
+      ],
+      "coingeckoPlatform": "mode"
+    },
+    {
+      "name": "nova",
+      "chainId": 42170,
+      "explorerUrl": "https://nova.arbiscan.io",
+      "explorerApi": {
+        "url": "https://api-nova.arbiscan.io/api",
+        "type": "etherscan"
+      },
+      "minTimestampForTvl": "1656122488",
+      "multicallContracts": [
+        {
+          "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
+          "batchSize": 150,
+          "sinceBlock": 1746963,
+          "version": "3"
+        }
+      ],
+      "coingeckoPlatform": "arbitrum-nova"
+    },
+    {
+      "name": "optimism",
+      "chainId": 10,
+      "explorerUrl": "https://optimistic.etherscan.io",
+      "explorerApi": {
+        "url": "https://api-optimistic.etherscan.io/api",
+        "type": "etherscan"
+      },
+      "blockscoutV2ApiUrl": "https://optimism.blockscout.com/api/v2",
+      "minTimestampForTvl": "1636668000",
+      "multicallContracts": [
+        {
+          "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
+          "batchSize": 150,
+          "sinceBlock": 4286263,
+          "version": "3"
+        },
+        {
+          "sinceBlock": 0,
+          "batchSize": 150,
+          "address": "0xE295aD71242373C37C5FdA7B57F26f9eA1088AFe",
+          "version": "optimism"
+        }
+      ],
+      "coingeckoPlatform": "optimistic-ethereum"
+    },
+    {
+      "name": "polygonzkevm",
+      "chainId": 1101,
+      "explorerUrl": "https://zkevm.polygonscan.com",
+      "explorerApi": {
+        "url": "https://api-zkevm.polygonscan.com/api",
+        "type": "etherscan"
+      },
+      "minTimestampForTvl": "1679679015",
+      "multicallContracts": [
+        {
+          "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
+          "batchSize": 150,
+          "sinceBlock": 57746,
+          "version": "3"
+        }
+      ]
+    },
+    {
+      "name": "real",
+      "chainId": 111188,
+      "explorerUrl": "https://explorer.re.al",
+      "explorerApi": {
+        "url": "https://explorer.re.al/api",
+        "type": "blockscout"
+      },
+      "multicallContracts": [
+        {
+          "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
+          "batchSize": 150,
+          "sinceBlock": 695,
+          "version": "3"
+        }
+      ],
+      "minTimestampForTvl": "1710580715",
+      "coingeckoPlatform": "re-al"
+    },
+    {
+      "name": "reya",
+      "chainId": 1729,
+      "explorerUrl": "https://explorer.reya.network",
+      "explorerApi": {
+        "url": "https://explorer.reya.network/api",
+        "type": "blockscout"
+      },
+      "multicallContracts": [],
+      "minTimestampForTvl": "1713830400"
+    },
+    {
+      "name": "rss3",
+      "chainId": 12553,
+      "explorerUrl": "https://scan.rss3.io/",
+      "explorerApi": {
+        "url": "https://scan.rss3.io/api",
+        "type": "blockscout"
+      },
+      "multicallContracts": [
+        {
+          "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
+          "batchSize": 150,
+          "sinceBlock": 14193,
+          "version": "3"
+        }
+      ]
+    },
+    {
+      "name": "scroll",
+      "chainId": 534352,
+      "explorerUrl": "https://scrollscan.com/",
+      "explorerApi": {
+        "url": "https://api.scrollscan.com/api",
+        "type": "etherscan"
+      },
+      "minTimestampForTvl": "1696917600",
+      "multicallContracts": [
+        {
+          "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
+          "batchSize": 150,
+          "sinceBlock": 14,
+          "version": "3"
+        }
+      ],
+      "coingeckoPlatform": "scroll"
+    },
+    {
+      "name": "silicon",
+      "chainId": 2355,
+      "explorerUrl": "https://scope.silicon.network/",
+      "minTimestampForTvl": "1724183531"
+    },
+    {
+      "name": "taiko",
+      "chainId": 167000,
+      "explorerUrl": "https://taikoscan.io",
+      "explorerApi": {
+        "url": "https://api.taikoscan.io/api",
+        "type": "etherscan"
+      },
+      "minTimestampForTvl": "1716620627"
+    },
+    {
+      "name": "wirex",
+      "chainId": 31415,
+      "explorerUrl": "https://pay-chain-blockscout.wirexpaychain.com",
+      "minTimestampForTvl": "1720093223"
+    },
+    {
+      "chainId": 1702448187,
+      "name": "witness",
+      "minTimestampForTvl": "1718569535"
+    },
+    {
+      "name": "xchain",
+      "chainId": 94524,
+      "explorerUrl": "https://xchain-explorer.idex.io/",
+      "explorerApi": {
+        "url": "https://xchain-explorer.idex.io/api",
+        "type": "blockscout"
+      },
+      "multicallContracts": [],
+      "minTimestampForTvl": "1724198400"
+    },
+    {
+      "name": "xlayer",
+      "chainId": 196,
+      "explorerUrl": "https://rpc.xlayer.tech",
+      "minTimestampForTvl": "1711782180",
+      "multicallContracts": [
+        {
+          "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
+          "batchSize": 150,
+          "sinceBlock": 47416,
+          "version": "3"
+        }
+      ]
+    },
+    {
+      "name": "zkfair",
+      "chainId": 42766,
+      "explorerUrl": "https://scan.zkfair.io/",
+      "explorerApi": {
+        "url": "https://scan.zkfair.io/api/",
+        "type": "blockscout"
+      },
+      "minTimestampForTvl": "1703016000",
+      "multicallContracts": [
+        {
+          "sinceBlock": 6330383,
+          "batchSize": 150,
+          "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
+          "version": "3"
+        }
+      ],
+      "coingeckoPlatform": "zkfair"
+    },
+    {
+      "name": "zksync2",
+      "chainId": 324,
+      "explorerUrl": "https://era.zksync.network/",
+      "explorerApi": {
+        "url": "https://api-era.zksync.network/api",
+        "type": "etherscan"
+      },
+      "minTimestampForTvl": "1676384520",
+      "multicallContracts": [
+        {
+          "version": "3",
+          "address": "0xF9cda624FBC7e059355ce98a31693d299FACd963",
+          "batchSize": 150,
+          "sinceBlock": 3908235
+        }
+      ],
+      "coingeckoPlatform": "zksync"
+    },
+    {
+      "name": "rari",
+      "chainId": 1380012617,
+      "explorerUrl": "https://mainnet.explorer.rarichain.org",
+      "explorerApi": {
+        "url": "https://rari.calderaexplorer.xyz/api",
+        "type": "blockscout"
+      },
+      "blockscoutV2ApiUrl": "https://rari.calderaexplorer.xyz/api/v2",
+      "minTimestampForTvl": "1705716145"
+    },
+    {
+      "name": "zklinknova",
+      "chainId": 810180,
+      "explorerUrl": "https://explorer.zklink.io",
+      "explorerApi": {
+        "url": "https://explorer-api.zklink.io/api",
+        "type": "etherscan"
+      },
+      "minTimestampForTvl": "1709273393"
+    },
+    {
+      "name": "sanko",
+      "chainId": 1996,
+      "explorerUrl": "https://explorer.sanko.xyz/",
+      "explorerApi": {
+        "url": "https://explorer.sanko.xyz/api",
+        "type": "blockscout"
+      },
+      "multicallContracts": [
+        {
+          "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
+          "batchSize": 150,
+          "sinceBlock": 38,
+          "version": "3"
+        }
+      ],
+      "minTimestampForTvl": "1712970000",
+      "coingeckoPlatform": "sanko"
+    },
+    {
+      "name": "l3x",
+      "chainId": 12324,
+      "explorerUrl": "https://explorer.l3x.com/",
+      "explorerApi": {
+        "url": "https://explorer.l3x.com/api",
+        "type": "blockscout"
+      },
+      "multicallContracts": [],
+      "minTimestampForTvl": "1714618907",
+      "coingeckoPlatform": "l3x"
+    },
+    {
+      "name": "avalanche",
+      "chainId": 43114,
+      "explorerUrl": "https://snowtrace.io",
+      "multicallContracts": [
+        {
+          "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
+          "batchSize": 150,
+          "sinceBlock": 11907934,
+          "version": "3"
+        }
+      ]
+    },
+    {
+      "name": "bsc",
+      "chainId": 56,
+      "explorerUrl": "https://bscscan.com",
+      "explorerApi": {
+        "url": "https://api.bscscan.com/api",
+        "type": "etherscan"
+      },
+      "multicallContracts": [
+        {
+          "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
+          "batchSize": 150,
+          "sinceBlock": 15921452,
+          "version": "3"
+        }
+      ]
+    },
+    {
+      "name": "celo",
+      "chainId": 42220,
+      "explorerUrl": "https://celoscan.io",
+      "explorerApi": {
+        "url": "https://api.celoscan.io/api",
+        "type": "etherscan",
+        "missingFeatures": { "getContractCreation": true }
+      },
+      "multicallContracts": [
+        {
+          "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
+          "batchSize": 150,
+          "sinceBlock": 13112599,
+          "version": "3"
+        }
+      ]
+    },
+    {
+      "name": "ethereum",
+      "chainId": 1,
+      "explorerUrl": "https://etherscan.io",
+      "explorerApi": {
+        "url": "https://api.etherscan.io/api",
+        "type": "etherscan"
+      },
+      "blockscoutV2ApiUrl": "https://eth.blockscout.com/api/v2",
+      "minTimestampForTvl": "1573689600",
+      "multicallContracts": [
+        {
+          "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
+          "batchSize": 150,
+          "sinceBlock": 14353601,
+          "version": "3"
+        },
+        {
+          "sinceBlock": 12336033,
+          "batchSize": 150,
+          "address": "0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696",
+          "version": "2"
+        },
+        {
+          "sinceBlock": 7929876,
+          "batchSize": 150,
+          "address": "0xeefBa1e63905eF1D7ACbA5a8513c70307C1cE441",
+          "version": "1"
+        }
+      ],
+      "coingeckoPlatform": "ethereum"
+    },
+    {
+      "name": "gnosis",
+      "chainId": 100,
+      "explorerUrl": "https://gnosisscan.io",
+      "explorerApi": {
+        "url": "https://api.gnosisscan.io/api",
+        "type": "etherscan",
+        "missingFeatures": { "getContractCreation": true }
+      },
+      "multicallContracts": [
+        {
+          "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
+          "batchSize": 150,
+          "sinceBlock": 21022491,
+          "version": "3"
+        }
+      ]
+    },
+    {
+      "name": "polygonpos",
+      "chainId": 137,
+      "explorerUrl": "https://polygonscan.com",
+      "explorerApi": {
+        "url": "https://api.polygonscan.com/api",
+        "type": "etherscan"
+      },
+      "multicallContracts": [
+        {
+          "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
+          "batchSize": 150,
+          "sinceBlock": 25770160,
+          "version": "3"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "values": {
+      "0.minTimestampForTvl": [["custom", "UnixTime"]],
+      "1.minTimestampForTvl": [["custom", "UnixTime"]],
+      "2.minTimestampForTvl": [["custom", "UnixTime"]],
+      "3.minTimestampForTvl": [["custom", "UnixTime"]],
+      "4.minTimestampForTvl": [["custom", "UnixTime"]],
+      "5.minTimestampForTvl": [["custom", "UnixTime"]],
+      "6.minTimestampForTvl": [["custom", "UnixTime"]],
+      "7.minTimestampForTvl": [["custom", "UnixTime"]],
+      "8.minTimestampForTvl": [["custom", "UnixTime"]],
+      "9.minTimestampForTvl": [["custom", "UnixTime"]],
+      "10.minTimestampForTvl": [["custom", "UnixTime"]],
+      "11.minTimestampForTvl": [["custom", "UnixTime"]],
+      "12.minTimestampForTvl": [["custom", "UnixTime"]],
+      "13.minTimestampForTvl": [["custom", "UnixTime"]],
+      "14.minTimestampForTvl": [["custom", "UnixTime"]],
+      "15.minTimestampForTvl": [["custom", "UnixTime"]],
+      "16.minTimestampForTvl": [["custom", "UnixTime"]],
+      "17.minTimestampForTvl": [["custom", "UnixTime"]],
+      "18.minTimestampForTvl": [["custom", "UnixTime"]],
+      "19.minTimestampForTvl": [["custom", "UnixTime"]],
+      "20.minTimestampForTvl": [["custom", "UnixTime"]],
+      "21.minTimestampForTvl": [["custom", "UnixTime"]],
+      "22.minTimestampForTvl": [["custom", "UnixTime"]],
+      "23.minTimestampForTvl": [["custom", "UnixTime"]],
+      "24.minTimestampForTvl": [["custom", "UnixTime"]],
+      "25.minTimestampForTvl": [["custom", "UnixTime"]],
+      "26.minTimestampForTvl": [["custom", "UnixTime"]],
+      "28.minTimestampForTvl": [["custom", "UnixTime"]],
+      "29.minTimestampForTvl": [["custom", "UnixTime"]],
+      "30.minTimestampForTvl": [["custom", "UnixTime"]],
+      "31.minTimestampForTvl": [["custom", "UnixTime"]],
+      "32.minTimestampForTvl": [["custom", "UnixTime"]],
+      "33.minTimestampForTvl": [["custom", "UnixTime"]],
+      "34.minTimestampForTvl": [["custom", "UnixTime"]],
+      "35.minTimestampForTvl": [["custom", "UnixTime"]],
+      "36.minTimestampForTvl": [["custom", "UnixTime"]],
+      "37.minTimestampForTvl": [["custom", "UnixTime"]],
+      "38.minTimestampForTvl": [["custom", "UnixTime"]],
+      "39.minTimestampForTvl": [["custom", "UnixTime"]],
+      "40.minTimestampForTvl": [["custom", "UnixTime"]],
+      "44.minTimestampForTvl": [["custom", "UnixTime"]]
+    }
+  }
+}

@@ -1,0 +1,1031 @@
+{
+  "json": [
+    {
+      "display": { "slug": "SP1Blobstream", "name": "SP1Blobstream" },
+      "proofVerification": {
+        "shortDescription": "Celestia ZK light client implementation.",
+        "aggregation": true,
+        "verifiers": [
+          {
+            "name": "Blobstream SP1 Verifier (Ethereum) - Frozen",
+            "description": "Celestia ZK light client verifying multiple blocks at once. Deployed on Ethereum mainnet.",
+            "contractAddress": "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB",
+            "chainId": 1,
+            "verified": "no",
+            "subVerifiers": [
+              {
+                "name": "Main program",
+                "proofSystem": "-",
+                "mainArithmetization": "-",
+                "mainPCS": "-",
+                "trustedSetup": "-",
+                "link": "https://github.com/succinctlabs/sp1-blobstream/blob/main/program/src/main.rs"
+              },
+              {
+                "name": "Main circuit",
+                "proofSystem": "Plonky3",
+                "mainArithmetization": "Plonk",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/succinctlabs/sp1/tree/dev/crates/core"
+              },
+              {
+                "name": "Recursion circuit",
+                "proofSystem": "Plonky3",
+                "mainArithmetization": "Plonk",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/succinctlabs/sp1/tree/dev/crates/recursion"
+              },
+              {
+                "name": "Final wrap",
+                "proofSystem": "Plonk SNARK",
+                "mainArithmetization": "Plonkish",
+                "mainPCS": "KZG",
+                "trustedSetup": "?"
+              }
+            ]
+          },
+          {
+            "name": "Blobstream SP1 Verifier (Base) - Frozen",
+            "description": "Celestia ZK light client verifying multiple blocks at once. Deployed on Base.",
+            "contractAddress": "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB",
+            "chainId": 8453,
+            "verified": "no",
+            "subVerifiers": [
+              {
+                "name": "Main program",
+                "proofSystem": "-",
+                "mainArithmetization": "-",
+                "mainPCS": "-",
+                "trustedSetup": "-",
+                "link": "https://github.com/succinctlabs/sp1-blobstream/blob/main/program/src/main.rs"
+              },
+              {
+                "name": "Main circuit",
+                "proofSystem": "Plonky3",
+                "mainArithmetization": "Plonk",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/succinctlabs/sp1/tree/dev/crates/core"
+              },
+              {
+                "name": "Recursion circuit",
+                "proofSystem": "Plonky3",
+                "mainArithmetization": "Plonk",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/succinctlabs/sp1/tree/dev/crates/recursion"
+              },
+              {
+                "name": "Final wrap",
+                "proofSystem": "Plonk SNARK",
+                "mainArithmetization": "Plonkish",
+                "mainPCS": "KZG",
+                "trustedSetup": "?"
+              }
+            ]
+          },
+          {
+            "name": "Blobstream SP1 Verifier (Arbitrum One) - Frozen",
+            "description": "Celestia ZK light client verifying multiple blocks at once. Deployed on Arbitrum One.",
+            "contractAddress": "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB",
+            "chainId": 42161,
+            "verified": "no",
+            "subVerifiers": [
+              {
+                "name": "Main program",
+                "proofSystem": "-",
+                "mainArithmetization": "-",
+                "mainPCS": "-",
+                "trustedSetup": "-",
+                "link": "https://github.com/succinctlabs/sp1-blobstream/blob/main/program/src/main.rs"
+              },
+              {
+                "name": "Main circuit",
+                "proofSystem": "Plonky3",
+                "mainArithmetization": "Plonk",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/succinctlabs/sp1/tree/dev/crates/core"
+              },
+              {
+                "name": "Recursion circuit",
+                "proofSystem": "Plonky3",
+                "mainArithmetization": "Plonk",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/succinctlabs/sp1/tree/dev/crates/recursion"
+              },
+              {
+                "name": "Final wrap",
+                "proofSystem": "Plonk SNARK",
+                "mainArithmetization": "Plonkish",
+                "mainPCS": "KZG",
+                "trustedSetup": "?"
+              }
+            ]
+          },
+          {
+            "name": "Blobstream SP1 Verifier (Ethereum) - Frozen",
+            "description": "Celestia ZK light client verifying multiple blocks at once. Deployed on Ethereum mainnet.",
+            "contractAddress": "0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc",
+            "chainId": 1,
+            "verified": "no",
+            "subVerifiers": [
+              {
+                "name": "Main program",
+                "proofSystem": "-",
+                "mainArithmetization": "-",
+                "mainPCS": "-",
+                "trustedSetup": "-",
+                "link": "https://github.com/succinctlabs/sp1-blobstream/blob/main/program/src/main.rs"
+              },
+              {
+                "name": "Main circuit",
+                "proofSystem": "Plonky3",
+                "mainArithmetization": "Plonk",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/succinctlabs/sp1/tree/dev/crates/core"
+              },
+              {
+                "name": "Recursion circuit",
+                "proofSystem": "Plonky3",
+                "mainArithmetization": "Plonk",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/succinctlabs/sp1/tree/dev/crates/recursion"
+              },
+              {
+                "name": "Final wrap",
+                "proofSystem": "Plonk SNARK",
+                "mainArithmetization": "Plonkish",
+                "mainPCS": "KZG",
+                "trustedSetup": "?"
+              }
+            ]
+          },
+          {
+            "name": "Blobstream SP1 Verifier (Base) - Frozen",
+            "description": "Celestia ZK light client verifying multiple blocks at once. Deployed on Base.",
+            "contractAddress": "0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc",
+            "chainId": 8453,
+            "verified": "no",
+            "subVerifiers": [
+              {
+                "name": "Main program",
+                "proofSystem": "-",
+                "mainArithmetization": "-",
+                "mainPCS": "-",
+                "trustedSetup": "-",
+                "link": "https://github.com/succinctlabs/sp1-blobstream/blob/main/program/src/main.rs"
+              },
+              {
+                "name": "Main circuit",
+                "proofSystem": "Plonky3",
+                "mainArithmetization": "Plonk",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/succinctlabs/sp1/tree/dev/crates/core"
+              },
+              {
+                "name": "Recursion circuit",
+                "proofSystem": "Plonky3",
+                "mainArithmetization": "Plonk",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/succinctlabs/sp1/tree/dev/crates/recursion"
+              },
+              {
+                "name": "Final wrap",
+                "proofSystem": "Plonk SNARK",
+                "mainArithmetization": "Plonkish",
+                "mainPCS": "KZG",
+                "trustedSetup": "?"
+              }
+            ]
+          },
+          {
+            "name": "Blobstream SP1 Verifier (Arbitrum One) - Frozen",
+            "description": "Celestia ZK light client verifying multiple blocks at once. Deployed on Arbitrum One.",
+            "contractAddress": "0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc",
+            "chainId": 42161,
+            "verified": "no",
+            "subVerifiers": [
+              {
+                "name": "Main program",
+                "proofSystem": "-",
+                "mainArithmetization": "-",
+                "mainPCS": "-",
+                "trustedSetup": "-",
+                "link": "https://github.com/succinctlabs/sp1-blobstream/blob/main/program/src/main.rs"
+              },
+              {
+                "name": "Main circuit",
+                "proofSystem": "Plonky3",
+                "mainArithmetization": "Plonk",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/succinctlabs/sp1/tree/dev/crates/core"
+              },
+              {
+                "name": "Recursion circuit",
+                "proofSystem": "Plonky3",
+                "mainArithmetization": "Plonk",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/succinctlabs/sp1/tree/dev/crates/recursion"
+              },
+              {
+                "name": "Final wrap",
+                "proofSystem": "Plonk SNARK",
+                "mainArithmetization": "Plonkish",
+                "mainPCS": "KZG",
+                "trustedSetup": "?"
+              }
+            ]
+          },
+          {
+            "name": "Blobstream SP1 Verifier (Ethereum)",
+            "description": "Celestia ZK light client verifying multiple blocks at once. Deployed on Ethereum mainnet.",
+            "contractAddress": "0x1764C29FBd94865198588f10FC75D4f6636d158d",
+            "chainId": 1,
+            "verified": "no",
+            "subVerifiers": [
+              {
+                "name": "Main program",
+                "proofSystem": "-",
+                "mainArithmetization": "-",
+                "mainPCS": "-",
+                "trustedSetup": "-",
+                "link": "https://github.com/succinctlabs/sp1-blobstream/blob/main/program/src/main.rs"
+              },
+              {
+                "name": "Main circuit",
+                "proofSystem": "Plonky3",
+                "mainArithmetization": "Plonk",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/succinctlabs/sp1/tree/dev/crates/core"
+              },
+              {
+                "name": "Recursion circuit",
+                "proofSystem": "Plonky3",
+                "mainArithmetization": "Plonk",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/succinctlabs/sp1/tree/dev/crates/recursion"
+              },
+              {
+                "name": "Final wrap",
+                "proofSystem": "Plonk SNARK",
+                "mainArithmetization": "Plonkish",
+                "mainPCS": "KZG",
+                "trustedSetup": "?"
+              }
+            ]
+          },
+          {
+            "name": "Blobstream SP1 Verifier (Base)",
+            "description": "Celestia ZK light client verifying multiple blocks at once. Deployed on Base.",
+            "contractAddress": "0x1764C29FBd94865198588f10FC75D4f6636d158d",
+            "chainId": 8453,
+            "verified": "no",
+            "subVerifiers": [
+              {
+                "name": "Main program",
+                "proofSystem": "-",
+                "mainArithmetization": "-",
+                "mainPCS": "-",
+                "trustedSetup": "-",
+                "link": "https://github.com/succinctlabs/sp1-blobstream/blob/main/program/src/main.rs"
+              },
+              {
+                "name": "Main circuit",
+                "proofSystem": "Plonky3",
+                "mainArithmetization": "Plonk",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/succinctlabs/sp1/tree/dev/crates/core"
+              },
+              {
+                "name": "Recursion circuit",
+                "proofSystem": "Plonky3",
+                "mainArithmetization": "Plonk",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/succinctlabs/sp1/tree/dev/crates/recursion"
+              },
+              {
+                "name": "Final wrap",
+                "proofSystem": "Plonk SNARK",
+                "mainArithmetization": "Plonkish",
+                "mainPCS": "KZG",
+                "trustedSetup": "?"
+              }
+            ]
+          },
+          {
+            "name": "Blobstream SP1 Verifier (Arbitrum One)",
+            "description": "Celestia ZK light client verifying multiple blocks at once. Deployed on Arbitrum One.",
+            "contractAddress": "0x1764C29FBd94865198588f10FC75D4f6636d158d",
+            "chainId": 42161,
+            "verified": "no",
+            "subVerifiers": [
+              {
+                "name": "Main program",
+                "proofSystem": "-",
+                "mainArithmetization": "-",
+                "mainPCS": "-",
+                "trustedSetup": "-",
+                "link": "https://github.com/succinctlabs/sp1-blobstream/blob/main/program/src/main.rs"
+              },
+              {
+                "name": "Main circuit",
+                "proofSystem": "Plonky3",
+                "mainArithmetization": "Plonk",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/succinctlabs/sp1/tree/dev/crates/core"
+              },
+              {
+                "name": "Recursion circuit",
+                "proofSystem": "Plonky3",
+                "mainArithmetization": "Plonk",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/succinctlabs/sp1/tree/dev/crates/recursion"
+              },
+              {
+                "name": "Final wrap",
+                "proofSystem": "Plonk SNARK",
+                "mainArithmetization": "Plonkish",
+                "mainPCS": "KZG",
+                "trustedSetup": "?"
+              }
+            ]
+          }
+        ],
+        "requiredTools": [{ "name": "?", "version": "?", "link": "?" }]
+      },
+      "type": "zk-catalog"
+    },
+    {
+      "display": { "slug": "nebra-upa", "name": "Nebra UPA" },
+      "proofVerification": {
+        "aggregation": true,
+        "verifiers": [
+          {
+            "name": "UPA verifier",
+            "description": "The Nebra UPA verifier that allows to verify aggregated proofs from multiple projects.",
+            "contractAddress": "0xE990F8e3505391d2b42C80683d403A8371Ee88B9",
+            "chainId": 1,
+            "verified": "no",
+            "subVerifiers": [
+              {
+                "name": "Outer circuit",
+                "proofSystem": "Halo2",
+                "mainArithmetization": "Plonkish",
+                "mainPCS": "KZG",
+                "trustedSetup": "PPOT?",
+                "link": "https://github.com/NebraZKP/upa/tree/v1.2.2/circuits/src/outer"
+              },
+              {
+                "name": "UBV circuit",
+                "proofSystem": "Halo2",
+                "mainArithmetization": "Plonkish",
+                "mainPCS": "KZG",
+                "trustedSetup": "PPOT?",
+                "link": "https://github.com/NebraZKP/upa/tree/v1.2.2/circuits/src/batch_verify"
+              },
+              {
+                "name": "Keccak circuit",
+                "proofSystem": "Halo2",
+                "mainArithmetization": "Plonkish",
+                "mainPCS": "KZG",
+                "trustedSetup": "PPOT?",
+                "link": "https://github.com/NebraZKP/upa/tree/v1.2.2/circuits/src/keccak"
+              }
+            ]
+          }
+        ],
+        "requiredTools": [
+          {
+            "name": "Custom tool",
+            "version": "1.2.2",
+            "link": "https://github.com/NebraZKP/upa/blob/v1.2.2/verification/key_verification.sh"
+          }
+        ]
+      },
+      "type": "zk-catalog"
+    },
+    {
+      "display": { "slug": "payy", "name": "Payy" },
+      "proofVerification": {
+        "shortDescription": "A privacy-preserving payment system.",
+        "aggregation": true,
+        "verifiers": [
+          {
+            "name": "Aggregate verifier",
+            "description": "Combines multiple proofs into a single proof.",
+            "contractAddress": "0x31063c00AD62F9090abb9308f4549A1dee4A6362",
+            "chainId": 137,
+            "verified": "no",
+            "subVerifiers": [
+              {
+                "name": "AggregateVerifier",
+                "proofSystem": "Halo2",
+                "mainArithmetization": "Plonkish",
+                "mainPCS": "KZG",
+                "trustedSetup": "?",
+                "link": "https://github.com/polybase/payy/blob/main/pkg/zk-circuits/src/aggregate_agg/circuit.rs"
+              }
+            ]
+          },
+          {
+            "name": "Mint verifier",
+            "description": "Allows a note to be created without a corresponding input.",
+            "contractAddress": "0xe025Bb7Ce28A4565a890a8d708FaF9Dd48eA1678",
+            "chainId": 137,
+            "verified": "no",
+            "subVerifiers": [
+              {
+                "name": "MintVerifier",
+                "proofSystem": "Halo2",
+                "mainArithmetization": "Plonkish",
+                "mainPCS": "KZG",
+                "trustedSetup": "?",
+                "link": "https://github.com/polybase/payy/blob/main/pkg/zk-circuits/src/mint/circuit.rs"
+              }
+            ]
+          },
+          {
+            "name": "Burn verifier",
+            "description": "Allows a note to be used without a corresponding output, which, when proven, releases funds.",
+            "contractAddress": "0x4449d93873f7523D1B6CdfaA5a792e0867cA3A17",
+            "chainId": 137,
+            "verified": "no",
+            "subVerifiers": [
+              {
+                "name": "BurnVerifier",
+                "proofSystem": "Halo2",
+                "mainArithmetization": "Plonkish",
+                "mainPCS": "KZG",
+                "trustedSetup": "?",
+                "link": "https://github.com/polybase/payy/blob/main/pkg/zk-circuits/src/burn/circuit.rs"
+              }
+            ]
+          }
+        ],
+        "requiredTools": []
+      },
+      "type": "zk-catalog"
+    },
+    {
+      "display": { "slug": "risczero", "name": "RISC Zero" },
+      "proofVerification": {
+        "shortDescription": "ZK verifier for RISC-V programs.",
+        "aggregation": true,
+        "verifiers": [
+          {
+            "name": "RiscZeroVerifier (Ethereum)",
+            "description": "Verifies the computation of a RISC-V program.",
+            "contractAddress": "0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C",
+            "chainId": 1,
+            "verified": "no",
+            "subVerifiers": [
+              {
+                "name": "Final wrap",
+                "proofSystem": "Groth16",
+                "mainArithmetization": "R1CS+QAP",
+                "mainPCS": "N/A",
+                "trustedSetup": "POT23 + circuit specific",
+                "link": "https://github.com/risc0/risc0/tree/main/groth16_proof/groth16"
+              },
+              {
+                "name": "Aggregation circuit",
+                "proofSystem": "STARK",
+                "mainArithmetization": "RAP",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/risc0/risc0/tree/main/risc0/circuit/recursion"
+              },
+              {
+                "name": "Main circuit",
+                "proofSystem": "STARK",
+                "mainArithmetization": "RAP",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/risc0/risc0/tree/main/risc0/circuit/rv32im"
+              }
+            ]
+          },
+          {
+            "name": "RiscZeroVerifier (Arbitrum One)",
+            "description": "Verifies the computation of a RISC-V program.",
+            "contractAddress": "0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "chainId": 42161,
+            "verified": "no",
+            "subVerifiers": [
+              {
+                "name": "Final wrap",
+                "proofSystem": "Groth16",
+                "mainArithmetization": "R1CS+QAP",
+                "mainPCS": "N/A",
+                "trustedSetup": "POT23 + circuit specific",
+                "link": "https://github.com/risc0/risc0/tree/main/groth16_proof/groth16"
+              },
+              {
+                "name": "Aggregation circuit",
+                "proofSystem": "STARK",
+                "mainArithmetization": "RAP",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/risc0/risc0/tree/main/risc0/circuit/recursion"
+              },
+              {
+                "name": "Main circuit",
+                "proofSystem": "STARK",
+                "mainArithmetization": "RAP",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/risc0/risc0/tree/main/risc0/circuit/rv32im"
+              }
+            ]
+          },
+          {
+            "name": "RiscZeroVerifier (Base)",
+            "description": "Verifies the computation of a RISC-V program.",
+            "contractAddress": "0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "chainId": 8453,
+            "verified": "no",
+            "subVerifiers": [
+              {
+                "name": "Final wrap",
+                "proofSystem": "Groth16",
+                "mainArithmetization": "R1CS+QAP",
+                "mainPCS": "N/A",
+                "trustedSetup": "POT23 + circuit specific",
+                "link": "https://github.com/risc0/risc0/tree/main/groth16_proof/groth16"
+              },
+              {
+                "name": "Aggregation circuit",
+                "proofSystem": "STARK",
+                "mainArithmetization": "RAP",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/risc0/risc0/tree/main/risc0/circuit/recursion"
+              },
+              {
+                "name": "Main circuit",
+                "proofSystem": "STARK",
+                "mainArithmetization": "RAP",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/risc0/risc0/tree/main/risc0/circuit/rv32im"
+              }
+            ]
+          },
+          {
+            "name": "RiscZeroVerifier (Linea)",
+            "description": "Verifies the computation of a RISC-V program.",
+            "contractAddress": "0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "chainId": 59144,
+            "verified": "no",
+            "subVerifiers": [
+              {
+                "name": "Final wrap",
+                "proofSystem": "Groth16",
+                "mainArithmetization": "R1CS+QAP",
+                "mainPCS": "N/A",
+                "trustedSetup": "POT23 + circuit specific",
+                "link": "https://github.com/risc0/risc0/tree/main/groth16_proof/groth16"
+              },
+              {
+                "name": "Aggregation circuit",
+                "proofSystem": "STARK",
+                "mainArithmetization": "RAP",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/risc0/risc0/tree/main/risc0/circuit/recursion"
+              },
+              {
+                "name": "Main circuit",
+                "proofSystem": "STARK",
+                "mainArithmetization": "RAP",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/risc0/risc0/tree/main/risc0/circuit/rv32im"
+              }
+            ]
+          },
+          {
+            "name": "RiscZeroVerifier (OP Mainnet)",
+            "description": "Verifies the computation of a RISC-V program.",
+            "contractAddress": "0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "chainId": 10,
+            "verified": "no",
+            "subVerifiers": [
+              {
+                "name": "Final wrap",
+                "proofSystem": "Groth16",
+                "mainArithmetization": "R1CS+QAP",
+                "mainPCS": "N/A",
+                "trustedSetup": "POT23 + circuit specific",
+                "link": "https://github.com/risc0/risc0/tree/main/groth16_proof/groth16"
+              },
+              {
+                "name": "Aggregation circuit",
+                "proofSystem": "STARK",
+                "mainArithmetization": "RAP",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/risc0/risc0/tree/main/risc0/circuit/recursion"
+              },
+              {
+                "name": "Main circuit",
+                "proofSystem": "STARK",
+                "mainArithmetization": "RAP",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/risc0/risc0/tree/main/risc0/circuit/rv32im"
+              }
+            ]
+          },
+          {
+            "name": "RiscZeroVerifier (Polygon zkEVM)",
+            "description": "Verifies the computation of a RISC-V program.",
+            "contractAddress": "0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "chainId": 1101,
+            "verified": "no",
+            "subVerifiers": [
+              {
+                "name": "Final wrap",
+                "proofSystem": "Groth16",
+                "mainArithmetization": "R1CS+QAP",
+                "mainPCS": "N/A",
+                "trustedSetup": "POT23 + circuit specific",
+                "link": "https://github.com/risc0/risc0/tree/main/groth16_proof/groth16"
+              },
+              {
+                "name": "Aggregation circuit",
+                "proofSystem": "STARK",
+                "mainArithmetization": "RAP",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/risc0/risc0/tree/main/risc0/circuit/recursion"
+              },
+              {
+                "name": "Main circuit",
+                "proofSystem": "STARK",
+                "mainArithmetization": "RAP",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/risc0/risc0/tree/main/risc0/circuit/rv32im"
+              }
+            ]
+          }
+        ],
+        "requiredTools": [
+          {
+            "name": "snarkjs",
+            "version": "?",
+            "link": "https://github.com/iden3/snarkjs"
+          },
+          {
+            "name": "circom",
+            "version": "?",
+            "link": "https://github.com/iden3/circom"
+          }
+        ]
+      },
+      "type": "zk-catalog"
+    },
+    {
+      "display": { "slug": "soulwallet", "name": "Soul Wallet" },
+      "proofVerification": {
+        "shortDescription": "Smart contract wallet supporting guardians and email recovery with ZK.",
+        "aggregation": false,
+        "verifiers": [
+          {
+            "name": "EmailApprover",
+            "description": "EIP1271 style approver by verifying user's email onchain. Powered by zkemail.",
+            "contractAddress": "0x0A070fC1DBd9A146517045935B88256f20F969d7",
+            "chainId": 10,
+            "verified": "no",
+            "subVerifiers": [
+              {
+                "name": "EmailApprover",
+                "proofSystem": "Groth16",
+                "mainArithmetization": "R1CS+QAP",
+                "mainPCS": "N/A",
+                "trustedSetup": "POT22 + circuit specific",
+                "link": "https://github.com/SoulWallet/email-approver/blob/v1.0.0/packages/circuits/EmailApprover.circom"
+              }
+            ]
+          }
+        ],
+        "requiredTools": [
+          {
+            "name": "snarkjs",
+            "version": "?",
+            "link": "https://github.com/iden3/snarkjs"
+          },
+          {
+            "name": "circom",
+            "version": "?",
+            "link": "https://github.com/iden3/circom"
+          }
+        ]
+      },
+      "type": "zk-catalog"
+    },
+    {
+      "display": {
+        "slug": "worldcoin-semaphore",
+        "name": "Worldcoin Semaphore"
+      },
+      "proofVerification": {
+        "shortDescription": "Anonymity set inclusion checker for the Worldcoin network.",
+        "aggregation": false,
+        "verifiers": [
+          {
+            "name": "OpWorldID_Zero",
+            "description": "Semaphore verifier for the 'phone' anonymity set. It contains many subverifiers from size 16 to 32, but only the one with size 30 is being actively used. The verification appears as unsuccessful due to circom@2.0.3 not being deterministic when producing the r1cs file.",
+            "contractAddress": "0x5eB2c4a34A82a329C3E5D9F97F78Dc5446C3A9FB",
+            "chainId": 10,
+            "verified": "failed",
+            "performedBy": { "name": "L2BEAT", "link": "https://l2beat.com" },
+            "subVerifiers": [
+              {
+                "name": "Semaphore30",
+                "proofSystem": "Groth16",
+                "mainArithmetization": "R1CS+QAP",
+                "mainPCS": "N/A",
+                "trustedSetup": "PPOT14 + circuit specific",
+                "link": "https://github.com/semaphore-protocol/semaphore/blob/v2.0.0/circuits/semaphore.circom"
+              }
+            ]
+          },
+          {
+            "name": "OpWorldID_One",
+            "description": "Semaphore verifier of size 30 for the 'orb' anonymity set. The verification appears as unsuccessful due to circom@2.0.3 not being deterministic when producing the r1cs file.",
+            "contractAddress": "0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF",
+            "chainId": 10,
+            "verified": "failed",
+            "performedBy": { "name": "L2BEAT", "link": "https://l2beat.com" },
+            "subVerifiers": [
+              {
+                "name": "Semaphore30",
+                "proofSystem": "Groth16",
+                "mainArithmetization": "R1CS+QAP",
+                "mainPCS": "N/A",
+                "trustedSetup": "PPOT14 + circuit specific",
+                "link": "https://github.com/semaphore-protocol/semaphore/blob/v2.0.0/circuits/semaphore.circom"
+              }
+            ]
+          }
+        ],
+        "requiredTools": [
+          {
+            "name": "snarkjs",
+            "version": "v0.6.11",
+            "link": "https://github.com/iden3/snarkjs/releases/tag/v0.6.11"
+          },
+          {
+            "name": "circom",
+            "version": "v2.0.3",
+            "link": "https://github.com/iden3/circom/releases/tag/v2.0.3"
+          }
+        ]
+      },
+      "type": "zk-catalog"
+    },
+    {
+      "display": { "slug": "worldcoin-smtb", "name": "Worldcoin SMTB" },
+      "proofVerification": {
+        "shortDescription": "ZK program to add or delete users from the Worldcoin anonymity set.",
+        "aggregation": false,
+        "verifiers": [
+          {
+            "name": "Size 100 Register",
+            "description": "SMTB Register verifier of size 100.",
+            "contractAddress": "0xb5f23A0c92F2f4aeE506FA3B1Cc2813820d13258",
+            "chainId": 1,
+            "verified": "yes",
+            "performedBy": { "name": "L2BEAT", "link": "https://l2beat.com" },
+            "subVerifiers": [
+              {
+                "name": "RegisterCircuitSize100",
+                "proofSystem": "Groth16",
+                "mainArithmetization": "R1CS+QAP",
+                "mainPCS": "N/A",
+                "trustedSetup": "PPOT23 + circuit specific",
+                "link": "https://github.com/worldcoin/semaphore-mtb/blob/113f8a8a4d2aecf42b9173fd0a52bef5120fcaec/prover/insertion_circuit.go"
+              }
+            ]
+          },
+          {
+            "name": "Size 600 Register",
+            "description": "SMTB Register verifier of size 600.",
+            "contractAddress": "0xFC1c26E964F791f81a33F49D91f79456891AA1c1",
+            "chainId": 1,
+            "verified": "yes",
+            "performedBy": { "name": "L2BEAT", "link": "https://l2beat.com" },
+            "subVerifiers": [
+              {
+                "name": "RegisterCircuitSize600",
+                "proofSystem": "Groth16",
+                "mainArithmetization": "R1CS+QAP",
+                "mainPCS": "N/A",
+                "trustedSetup": "PPOT26 + circuit specific",
+                "link": "https://github.com/worldcoin/semaphore-mtb/blob/113f8a8a4d2aecf42b9173fd0a52bef5120fcaec/prover/insertion_circuit.go"
+              }
+            ]
+          },
+          {
+            "name": "Size 1200 Register",
+            "description": "SMTB Register verifier of size 1200.",
+            "contractAddress": "0xE44c83b9e1971A24EC698829297A0C4026B0CeF9",
+            "chainId": 1,
+            "verified": "yes",
+            "performedBy": { "name": "L2BEAT", "link": "https://l2beat.com" },
+            "subVerifiers": [
+              {
+                "name": "RegisterCircuitSize1200",
+                "proofSystem": "Groth16",
+                "mainArithmetization": "R1CS+QAP",
+                "mainPCS": "N/A",
+                "trustedSetup": "PPOT27 + circuit specific",
+                "link": "https://github.com/worldcoin/semaphore-mtb/blob/113f8a8a4d2aecf42b9173fd0a52bef5120fcaec/prover/insertion_circuit.go"
+              }
+            ]
+          },
+          {
+            "name": "Size 10 Delete",
+            "description": "SMTB Delete verifier of size 10.",
+            "contractAddress": "0xCA7d6822b9c6913B1A1416cE30eF14c4e7f0bFb1",
+            "chainId": 1,
+            "verified": "yes",
+            "performedBy": { "name": "L2BEAT", "link": "https://l2beat.com" },
+            "subVerifiers": [
+              {
+                "name": "DeleteCircuitSize10",
+                "proofSystem": "Groth16",
+                "mainArithmetization": "R1CS+QAP",
+                "mainPCS": "N/A",
+                "trustedSetup": "PPOT19 + circuit specific",
+                "link": "https://github.com/worldcoin/semaphore-mtb/blob/113f8a8a4d2aecf42b9173fd0a52bef5120fcaec/prover/deletion_circuit.go"
+              }
+            ]
+          },
+          {
+            "name": "Size 100 Delete",
+            "description": "SMTB Delete verifier of size 100.",
+            "contractAddress": "0x43B68ccBa7FC726540768fD1537c3179283140ed",
+            "chainId": 1,
+            "verified": "yes",
+            "performedBy": { "name": "L2BEAT", "link": "https://l2beat.com" },
+            "subVerifiers": [
+              {
+                "name": "DeleteCircuitSize100",
+                "proofSystem": "Groth16",
+                "mainArithmetization": "R1CS+QAP",
+                "mainPCS": "N/A",
+                "trustedSetup": "PPOT22 + circuit specific",
+                "link": "https://github.com/worldcoin/semaphore-mtb/blob/113f8a8a4d2aecf42b9173fd0a52bef5120fcaec/prover/deletion_circuit.go"
+              }
+            ]
+          }
+        ],
+        "requiredTools": [
+          {
+            "name": "Semaphore MTB",
+            "version": "113f8a8a4d2aecf42b9173fd0a52bef5120fcaec",
+            "link": "https://github.com/worldcoin/semaphore-mtb"
+          },
+          {
+            "name": "Semaphore MTB Setup",
+            "version": "d46ef6be3eb0c43303d7e817f7d0c005530addf0",
+            "link": "https://github.com/worldcoin/semaphore-mtb-setup"
+          },
+          {
+            "name": "PTAU deserializer",
+            "version": "922115452ffdb4b92972e3b81277e5931fb90efa",
+            "link": "https://github.com/worldcoin/ptau-deserializer"
+          },
+          {
+            "name": "GNARK contract generator",
+            "version": "1eb487a151323cbc41ac4a6b7b24f71268d61be2",
+            "link": "https://github.com/worldcoin/gnark-contract-generator"
+          }
+        ]
+      },
+      "type": "zk-catalog"
+    },
+    {
+      "display": { "slug": "SP1Vector", "name": "SP1Vector" },
+      "proofVerification": {
+        "shortDescription": "Avail ZK light client implementation.",
+        "aggregation": true,
+        "verifiers": [
+          {
+            "name": "Vector SP1 Verifier - Frozen",
+            "description": "Avail ZK light client verifying multiple blocks at once.",
+            "contractAddress": "0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc",
+            "chainId": 1,
+            "verified": "no",
+            "subVerifiers": [
+              {
+                "name": "Main program",
+                "proofSystem": "-",
+                "mainArithmetization": "-",
+                "mainPCS": "-",
+                "trustedSetup": "-",
+                "link": "https://github.com/succinctlabs/sp1-vector/blob/main/program/src/main.rs"
+              },
+              {
+                "name": "Main circuit",
+                "proofSystem": "Plonky3",
+                "mainArithmetization": "Plonk",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/succinctlabs/sp1/tree/dev/crates/core"
+              },
+              {
+                "name": "Recursion circuit",
+                "proofSystem": "Plonky3",
+                "mainArithmetization": "Plonk",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/succinctlabs/sp1/tree/dev/crates/recursion"
+              },
+              {
+                "name": "Final wrap",
+                "proofSystem": "Plonk SNARK",
+                "mainArithmetization": "Plonkish",
+                "mainPCS": "KZG",
+                "trustedSetup": "?"
+              }
+            ]
+          },
+          {
+            "name": "Vector SP1 Verifier",
+            "description": "Avail ZK light client verifying multiple blocks at once.",
+            "contractAddress": "0x1764C29FBd94865198588f10FC75D4f6636d158d",
+            "chainId": 1,
+            "verified": "no",
+            "subVerifiers": [
+              {
+                "name": "Main program",
+                "proofSystem": "-",
+                "mainArithmetization": "-",
+                "mainPCS": "-",
+                "trustedSetup": "-",
+                "link": "https://github.com/succinctlabs/sp1-vector/blob/main/program/src/main.rs"
+              },
+              {
+                "name": "Main circuit",
+                "proofSystem": "Plonky3",
+                "mainArithmetization": "Plonk",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/succinctlabs/sp1/tree/dev/crates/core"
+              },
+              {
+                "name": "Recursion circuit",
+                "proofSystem": "Plonky3",
+                "mainArithmetization": "Plonk",
+                "mainPCS": "FRI",
+                "trustedSetup": "None",
+                "link": "https://github.com/succinctlabs/sp1/tree/dev/crates/recursion"
+              },
+              {
+                "name": "Final wrap",
+                "proofSystem": "Plonk SNARK",
+                "mainArithmetization": "Plonkish",
+                "mainPCS": "KZG",
+                "trustedSetup": "?"
+              }
+            ]
+          }
+        ],
+        "requiredTools": [{ "name": "?", "version": "?", "link": "?" }]
+      },
+      "type": "zk-catalog"
+    }
+  ],
+  "meta": {
+    "referentialEqualities": {
+      "5.proofVerification.verifiers.0.performedBy": [
+        "5.proofVerification.verifiers.1.performedBy",
+        "6.proofVerification.verifiers.0.performedBy",
+        "6.proofVerification.verifiers.1.performedBy",
+        "6.proofVerification.verifiers.2.performedBy",
+        "6.proofVerification.verifiers.3.performedBy",
+        "6.proofVerification.verifiers.4.performedBy"
+      ]
+    }
+  }
+}

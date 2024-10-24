@@ -1,4 +1,8 @@
-import { bridges, layer2s, layer3s } from '@l2beat/config'
+import {
+  resolvedBridges,
+  resolvedLayer2s,
+  resolvedLayer3s,
+} from '@l2beat/config/projects'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { groupBy, sum } from 'lodash'
 import {
@@ -46,7 +50,11 @@ const getCachedProjectsLatestTvlUsd = cache(
 )
 
 function getMockProjectsLatestTvlUsd(): ProjectsLatestTvlUsd {
-  const allProjects = [...layer2s, ...layer3s, ...bridges]
+  const allProjects = [
+    ...resolvedLayer2s,
+    ...resolvedLayer3s,
+    ...resolvedBridges,
+  ]
   return Object.fromEntries(
     allProjects.map((project, i) => [project.id, allProjects.length - i]),
   )

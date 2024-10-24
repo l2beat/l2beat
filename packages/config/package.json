@@ -2,8 +2,13 @@
   "name": "@l2beat/config",
   "version": "0.1.0",
   "private": true,
-  "main": "build/src/index.js",
-  "types": "build/src/index.d.ts",
+  "types": "./build/src/index.d.ts",
+  "exports": {
+    ".": {
+      "default": "./build/src/index.js"
+    },
+    "./projects": "./build/src/resolved/index.js"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "clean": "rm -rf build",
@@ -22,20 +27,23 @@
     "tokens": "node -r esbuild-register scripts/tokens/tokens.ts",
     "tokens:verify": "sh scripts/tokens/verify.sh",
     "coingecko:platforms": "node -r esbuild-register scripts/getCoingeckoPlatforms.ts",
-    "stargatev2-pools": "node -r esbuild-register scripts/stargatev2-pools"
+    "stargatev2-pools": "node -r esbuild-register scripts/stargatev2-pools",
+    "json": "node -r esbuild-register src/resolved/index.ts",
+    "generate-projects-json": "node -r esbuild-register src/projects/layer2s/generate-l2s-json.ts && node -r esbuild-register src/projects/bridges/generate-bridges-json.ts && node -r esbuild-register src/projects/layer3s/generate-l3s-json.ts && node -r esbuild-register src/projects/other/zk-catalog/generate-zk-catalog-projects-json.ts && node -r esbuild-register src/projects/other/da-beat/generate-da-beat-projects-json.ts && node -r esbuild-register src/chains/generate-chains-json.ts"
   },
   "dependencies": {
     "@l2beat/backend-tools": "*",
+    "@l2beat/discovery": "*",
     "@l2beat/discovery-types": "*",
     "@l2beat/shared": "*",
     "@l2beat/shared-pure": "*",
-    "@l2beat/discovery": "*",
     "chalk": "^4.1.2",
     "cheerio": "^1.0.0-rc.11",
     "ethers": "^5.7.2",
     "jsonc-parser": "^3.2.0",
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.7",
+    "superjson": "^2.2.1",
     "zod": "^3.22.2"
   }
 }

@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { bridges } from '@l2beat/config'
+import { resolvedBridges } from '@l2beat/config/projects'
 import { ImageResponse } from 'next/og'
 import { NextResponse } from 'next/server'
 import { ProjectOpengraphImage } from '~/components/opengraph-image/project'
@@ -13,7 +13,7 @@ const size = {
 }
 
 export async function generateStaticParams() {
-  return bridges.map((project) => ({
+  return resolvedBridges.map((project) => ({
     slug: project.display.slug,
   }))
 }
@@ -36,7 +36,7 @@ interface Props {
 }
 
 export default async function Image({ params }: Props) {
-  const project = bridges.find((p) => p.display.slug === params.slug)
+  const project = resolvedBridges.find((p) => p.display.slug === params.slug)
   if (!project) {
     return NextResponse.json({ error: 'Project not found' }, { status: 404 })
   }

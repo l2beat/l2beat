@@ -1,4 +1,4 @@
-import { bridges } from '@l2beat/config'
+import { resolvedBridges } from '@l2beat/config/projects'
 import {
   type ImplementationChangeReportApiResponse,
   type ProjectsVerificationStatuses,
@@ -45,7 +45,7 @@ function getBridges(params: Params) {
     implementationChangeReport,
     projectsVerificationStatuses,
   } = params
-  const activeBridges = bridges.filter(
+  const activeBridges = resolvedBridges.filter(
     (bridge) => !bridge.isArchived && !bridge.isUpcoming,
   )
   const entries = activeBridges.map((bridge) => {

@@ -1,4 +1,5 @@
-import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
+import { type Layer2, type Layer3 } from '@l2beat/config'
+import { resolvedLayer2s, resolvedLayer3s } from '@l2beat/config/projects'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
 import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
@@ -17,7 +18,9 @@ export async function getScalingArchivedEntries() {
       get7dTokenBreakdown({ type: 'layer2' }),
     ])
 
-  const projects = [...layer2s, ...layer3s].filter((p) => p.isArchived)
+  const projects = [...resolvedLayer2s, ...resolvedLayer3s].filter(
+    (p) => p.isArchived,
+  )
 
   const entries = projects.map((project) =>
     getScalingArchivedEntry(

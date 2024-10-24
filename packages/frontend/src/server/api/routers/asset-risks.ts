@@ -1,4 +1,5 @@
-import { type StageConfig, layer2s, layer3s } from '@l2beat/config'
+import { type StageConfig } from '@l2beat/config'
+import { resolvedLayer2s, resolvedLayer3s } from '@l2beat/config/projects'
 import { assert } from '@l2beat/shared-pure'
 import { TRPCError } from '@trpc/server'
 import { getAddress } from 'viem'
@@ -8,7 +9,7 @@ import { refreshBalancesOfAddress } from '~/server/features/asset-risks/refresh-
 import { refreshTokensOfAddress } from '~/server/features/asset-risks/refresh-tokens-of-address'
 import { procedure, router } from '../trpc'
 
-const projects = [...layer2s, ...layer3s]
+const projects = [...resolvedLayer2s, ...resolvedLayer3s]
 
 export const assetRisksRouter = router({
   refreshTokens: procedure

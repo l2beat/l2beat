@@ -3,11 +3,13 @@ import {
   type DaLayer,
   type Layer2,
   type Layer3,
-  bridges,
-  daLayers,
-  layer2s,
-  layer3s,
 } from '@l2beat/config'
+import {
+  resolvedBridges,
+  resolvedDaLayers,
+  resolvedLayer2s,
+  resolvedLayer3s,
+} from '@l2beat/config/projects'
 import { env } from '~/env'
 
 export interface SearchBarProject {
@@ -23,10 +25,10 @@ export interface SearchBarProject {
 
 export function getSearchBarProjects() {
   return toSearchBarProjects([
-    ...layer2s,
-    ...layer3s,
-    ...bridges,
-    ...(env.NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT ? daLayers : []),
+    ...resolvedLayer2s,
+    ...resolvedLayer3s,
+    ...resolvedBridges,
+    ...(env.NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT ? resolvedDaLayers : []),
   ])
 }
 

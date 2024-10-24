@@ -193,6 +193,9 @@ const nextConfig = {
       fallback: [],
     }
   },
+  experimental: {
+    esmExternals: 'loose',
+  },
 }
 
 function createNextConfig() {

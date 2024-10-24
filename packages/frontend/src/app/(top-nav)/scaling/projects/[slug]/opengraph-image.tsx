@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { layer2s, layer3s } from '@l2beat/config'
+import { resolvedLayer2s, resolvedLayer3s } from '@l2beat/config/projects'
 import { ImageResponse } from 'next/og'
 import { NextResponse } from 'next/server'
 import { ProjectOpengraphImage } from '~/components/opengraph-image/project'
@@ -12,7 +12,7 @@ const size = {
   height: 630,
 }
 
-const scalingProjects = [...layer2s, ...layer3s]
+const scalingProjects = [...resolvedLayer2s, ...resolvedLayer3s]
 
 export async function generateStaticParams() {
   return scalingProjects.map((project) => ({
