@@ -18,8 +18,10 @@ import { TechnologySection } from './sections/technology-section'
 import { type ProjectDetailsSection } from './sections/types'
 import { UpcomingDisclaimer } from './sections/upcoming-disclaimer'
 import { GrisiniRiskAnalysisSection } from './sections/grisini-risk-analysis-section'
+import { cn } from '~/utils/cn'
 
 export interface ProjectDetailsProps {
+  nested?: boolean
   parentSection?: string;
   items: ProjectDetailsSection[]
   isUpcoming?: boolean
@@ -27,8 +29,9 @@ export interface ProjectDetailsProps {
 
 export function ProjectDetails(props: ProjectDetailsProps) {
   return (
-    <div className="max-md:px-4">
+    <div className={cn(!props.nested && 'max-md:px-4')}>
       {props.items.map((item, index) => {
+        const { nested } = props
         const sectionOrder = props.parentSection
           ? `${props.parentSection}.${index + 1}`
           : `${index + 1}`
@@ -38,7 +41,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <ChartSection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+                {...{nested, sectionOrder}}
                 {...item.props}
               />
             )
@@ -46,7 +49,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <DetailedDescriptionSection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+               {...{nested, sectionOrder}}
                 {...item.props}
               />
             )
@@ -54,7 +57,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <MilestonesAndIncidentsSection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+               {...{nested, sectionOrder}}
                 {...item.props}
               />
             )
@@ -62,7 +65,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <RiskSummarySection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+               {...{nested, sectionOrder}}
                 {...item.props}
               />
             )
@@ -70,7 +73,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <RiskAnalysisSection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+               {...{nested, sectionOrder}}
                 {...item.props}
               />
             )
@@ -78,7 +81,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <L3RiskAnalysisSection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+               {...{nested, sectionOrder}}
                 {...item.props}
               />
             )
@@ -86,7 +89,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <StageSection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+               {...{nested, sectionOrder}}
                 {...item.props}
               />
             )
@@ -94,7 +97,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <TechnologySection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+               {...{nested, sectionOrder}}
                 {...item.props}
               />
             )
@@ -102,7 +105,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <StateDerivationSection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+               {...{nested, sectionOrder}}
                 {...item.props}
               />
             )
@@ -110,7 +113,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <StateValidationSection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+               {...{nested, sectionOrder}}
                 {...item.props}
               />
             )
@@ -119,7 +122,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <MarkdownSection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+               {...{nested, sectionOrder}}
                 {...item.props}
               />
             )
@@ -127,7 +130,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <PermissionsSection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+               {...{nested, sectionOrder}}
                 {...item.props}
               />
             )
@@ -135,7 +138,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <ContractsSection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+               {...{nested, sectionOrder}}
                 {...item.props}
               />
             )
@@ -143,7 +146,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <KnowledgeNuggetsSection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+               {...{nested, sectionOrder}}
                 {...item.props}
               />
             )
@@ -153,7 +156,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <GroupSection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+               {...{nested, sectionOrder}}
                 {...item.props}
               />
             )
@@ -161,7 +164,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <GrisiniRiskAnalysisSection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+               {...{nested, sectionOrder}}
                 {...item.props}
               />
             )

@@ -14,7 +14,7 @@ export function GroupSection({ description, items, ...sectionProps }: GroupSecti
     <ProjectSection {...sectionProps}>
       <div className="flex flex-1 flex-col gap-2 text-base lg:min-w-[400px]">
         {description && <Markdown>{description}</Markdown>}
-        <ProjectDetails items={items} parentSection={sectionProps.sectionOrder} />
+        <ProjectDetails nested items={items} parentSection={sectionProps.sectionOrder} />
       </div>
     </ProjectSection>
   )
