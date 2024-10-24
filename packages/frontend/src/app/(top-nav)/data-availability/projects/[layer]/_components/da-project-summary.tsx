@@ -19,6 +19,7 @@ import { type DaProjectEntry } from '~/server/features/data-availability/project
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { DaProjectStats } from './da-project-stats'
+import { NoBridgeGrisiniDetailsPlaceholder } from '~/components/grisini/no-bridge-grisini-details-placeholder'
 
 interface Props {
   project: DaProjectEntry
@@ -183,9 +184,14 @@ export function DaProjectSummary({ project }: Props) {
                   <div className="whitespace-pre text-xs text-gray-500 dark:text-gray-600">
                     {project.selectedBridge.name} risks
                   </div>
-                  <GrisiniDetails
-                    items={project.header.daBridgeGrisiniValues}
-                  />
+
+                  {project.selectedBridge.type === 'NoBridge' ? (
+                    <NoBridgeGrisiniDetailsPlaceholder />
+                  ) : (
+                    <GrisiniDetails
+                      items={project.header.daBridgeGrisiniValues}
+                    />
+                  )}
                 </div>
               </div>
               <div>
