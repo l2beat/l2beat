@@ -6,6 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 
 import { HttpClient2 } from '../../clients'
+import { RetryHandler } from '../../tools'
 import { HttpClient } from '../HttpClient'
 import {
   CoinListEntry,
@@ -28,6 +29,7 @@ export class CoingeckoClient {
   constructor(
     private readonly httpClient: HttpClient2,
     private readonly apiKey: string | undefined,
+    private readonly retryHandler: RetryHandler,
   ) {
     const rateLimiter = new RateLimiter({
       callsPerMinute: apiKey ? 400 : 10,
@@ -36,10 +38,14 @@ export class CoingeckoClient {
   }
 
   static create(
-    services: { httpClient: HttpClient },
+    services: { httpClient: HttpClient; retryHandler: RetryHandler },
     options: { apiKey: string | undefined },
   ) {
-    return new CoingeckoClient(services.httpClient, options.apiKey)
+    return new CoingeckoClient(
+      services.httpClient,
+      options.apiKey,
+      services.retryHandler,
+    )
   }
 
   async getCoinList(options?: {
@@ -167,8 +173,13 @@ export class CoingeckoClient {
     if (query) {
       url += `?${query}`
     }
-    const res = await this.httpClient.fetch(url, { timeout: this.timeoutMs })
-    return res
+    try {
+      return await this.httpClient.fetch(url, { timeout: this.timeoutMs })
+    } catch {
+      return await this.retryHandler.retry(() =>
+        this.httpClient.fetch(url, { timeout: this.timeoutMs }),
+      )
+    }
   }
 }
 
