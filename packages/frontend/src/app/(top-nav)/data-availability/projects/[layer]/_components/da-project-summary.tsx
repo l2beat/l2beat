@@ -36,11 +36,6 @@ export function DaProjectSummary({ project }: Props) {
       </header>
       <div className="flex gap-10">
         <div className="w-full">
-          {project.description && (
-            <div className="md:hidden">
-              <AboutSection description={project.description} />
-            </div>
-          )}
           {/* Separators */}
           <div className="flex flex-row gap-10">
             <HorizontalSeparator className="!my-6 flex-1 max-md:-mx-4 max-md:w-screen" />
@@ -203,14 +198,6 @@ export function DaProjectSummary({ project }: Props) {
           </div>
         </div>
       </div>
-
-      {project.description ? (
-        <div className="max-md:hidden">
-          <HorizontalSeparator className="!my-6 flex-1 max-md:-mx-4 max-md:w-screen" />
-          <AboutSection description={project.description} />
-          <HorizontalSeparator className="my-6" />
-        </div>
-      ) : null}
     </section>
   )
 }
