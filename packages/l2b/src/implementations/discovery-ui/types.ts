@@ -21,7 +21,7 @@ export interface ApiProjectChain {
 
 export interface ApiAddressEntry {
   name?: string
-  type: 'EOA' | 'Multisig' | 'Diamond' | 'Timelock' | 'Contract'
+  type: 'EOA' | 'Unverified' | 'Multisig' | 'Diamond' | 'Timelock' | 'Contract'
   address: string
 }
 

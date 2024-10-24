@@ -10,6 +10,7 @@ import { IconFolderOpened } from '../icons/IconFolderOpened'
 import { IconMultisig } from '../icons/IconMultisig'
 import { IconTimelock } from '../icons/IconTimelock'
 import { useApiProject } from './useApiProject'
+import { IconContractUnverified } from '../icons/IconContractUnverified'
 
 export function ListPanel() {
   const response = useApiProject()
@@ -132,6 +133,7 @@ function toShortenedAddress(input: string) {
 function AddressIcon(props: { type: ApiAddressEntry['type'] }) {
   const Icon = {
     EOA: IconEoa,
+    Unverified: IconContractUnverified,
     Multisig: IconMultisig,
     Timelock: IconTimelock,
     Diamond: IconDiamond,
