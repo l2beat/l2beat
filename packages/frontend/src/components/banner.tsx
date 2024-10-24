@@ -32,7 +32,7 @@ export function Banner({ className }: { className?: string }) {
           className="size-[12px] cursor-pointer fill-white transition-colors duration-200 hover:fill-white/90 md:size-[16px]"
         />
       </div>
-      <div className="flex text-sm">
+      <div className="text-sm">
         L2BEAT is participating in Gitcoin Grants 22!
       </div>
       <BannerActionButton />
