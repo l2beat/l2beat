@@ -7,7 +7,7 @@ import {
   RetryHandler,
   RpcClient2,
 } from '@l2beat/shared'
-import { assert, assertUnreachable } from '@l2beat/shared-pure'
+import { assert, ProjectId, assertUnreachable } from '@l2beat/shared-pure'
 import { ActivityConfig } from '../config/Config'
 import { BlockTimestampProvider } from '../modules/tvl/services/BlockTimestampProvider'
 import { DegateClient } from '../peripherals/degate'
@@ -95,6 +95,11 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
   for (const project of config.projects) {
     switch (project.config.type) {
       case 'rpc': {
+        const retryHandler =
+          project.id === ProjectId('zkfair')
+            ? RetryHandler.UNRELIABLE_API(logger)
+            : RetryHandler.RELIABLE_API(logger)
+
         // TODO: handle multiple urls
         const rpcClient = new RpcClient2({
           url: project.config.url,
@@ -102,8 +107,7 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
           rateLimiter: new RateLimiter({
             callsPerMinute: project.config.callsPerMinute,
           }),
-          // TODO: handle zkfair
-          retryHandler: RetryHandler.RELIABLE_API(logger),
+          retryHandler,
           logger,
           chain: project.id,
         })
