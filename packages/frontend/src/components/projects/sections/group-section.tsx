@@ -1,5 +1,7 @@
 import { Markdown } from '~/components/markdown/markdown'
 import { type ProjectDetailsSection, type ProjectSectionProps } from './types'
+import { ProjectSection } from './project-section'
+import { ProjectDetails } from '../project-details'
 
 export interface GroupSectionProps extends ProjectSectionProps {
   // This is a circular ref, but it's fine
@@ -7,13 +9,13 @@ export interface GroupSectionProps extends ProjectSectionProps {
   items: ProjectDetailsSection[]
 }
 
-export function GroupSection({ description, items }: GroupSectionProps) {
+export function GroupSection({ description, items, ...sectionProps }: GroupSectionProps) {
   return (
-    <div className="flex flex-1 flex-col gap-2 text-base lg:min-w-[400px]">
-      {description && <Markdown>{description}</Markdown>} 
-      {items.map((item) => (
-        <div key={item.type}>{item.type}</div>
-      ))}
-    </div>
+    <ProjectSection {...sectionProps}>
+      <div className="flex flex-1 flex-col gap-2 text-base lg:min-w-[400px]">
+        {description && <Markdown>{description}</Markdown>}
+        <ProjectDetails items={items} />
+      </div>
+    </ProjectSection>
   )
 }
