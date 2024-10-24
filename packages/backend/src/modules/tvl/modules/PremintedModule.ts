@@ -1,6 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ConfigMapping } from '@l2beat/config'
-import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
+import {
+  CoingeckoClient,
+  CoingeckoQueryService,
+  HttpClient2,
+  RetryHandler,
+} from '@l2beat/shared'
 import { assert, PremintedEntry, ProjectId } from '@l2beat/shared-pure'
 import { ChainTvlConfig, TvlConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
@@ -131,9 +136,11 @@ function createPeripherals(
     logger: logger.tag(chain),
   })
 
-  const coingeckoClient = peripherals.getClient(CoingeckoClient, {
-    apiKey: config.coingeckoApiKey,
-  })
+  const coingeckoClient = new CoingeckoClient(
+    new HttpClient2(),
+    config.coingeckoApiKey,
+    RetryHandler.RELIABLE_API(logger),
+  )
   const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
 
   const circulatingSupplyService = new CirculatingSupplyService({

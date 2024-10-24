@@ -1,6 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
 import { createPriceId } from '@l2beat/config'
-import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
+import {
+  CoingeckoClient,
+  CoingeckoQueryService,
+  HttpClient2,
+  RetryHandler,
+} from '@l2beat/shared'
 import { CoingeckoId, CoingeckoPriceConfigEntry } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { TvlConfig } from '../../../config/Config'
@@ -25,9 +30,11 @@ export function initPriceModule(
   indexerService: IndexerService,
   hourlyIndexer: HourlyIndexer,
 ): PriceModule {
-  const coingeckoClient = peripherals.getClient(CoingeckoClient, {
-    apiKey: config.coingeckoApiKey,
-  })
+  const coingeckoClient = new CoingeckoClient(
+    new HttpClient2(),
+    config.coingeckoApiKey,
+    RetryHandler.RELIABLE_API(logger),
+  )
   const coingeckoQueryService = new CoingeckoQueryService(
     coingeckoClient,
     logger.tag('prices'),

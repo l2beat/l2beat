@@ -7,7 +7,6 @@ import {
 
 import { HttpClient2 } from '../../clients'
 import { RetryHandler } from '../../tools'
-import { HttpClient } from '../HttpClient'
 import {
   CoinListEntry,
   CoinListPlatformEntry,
@@ -35,17 +34,6 @@ export class CoingeckoClient {
       callsPerMinute: apiKey ? 400 : 10,
     })
     this.query = rateLimiter.wrap(this.query.bind(this))
-  }
-
-  static create(
-    services: { httpClient: HttpClient; retryHandler: RetryHandler },
-    options: { apiKey: string | undefined },
-  ) {
-    return new CoingeckoClient(
-      services.httpClient,
-      options.apiKey,
-      services.retryHandler,
-    )
   }
 
   async getCoinList(options?: {

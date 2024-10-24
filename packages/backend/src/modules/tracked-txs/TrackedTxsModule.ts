@@ -1,7 +1,12 @@
 import { Logger } from '@l2beat/backend-tools'
 import { notUndefined } from '@l2beat/shared-pure'
 
-import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
+import {
+  CoingeckoClient,
+  CoingeckoQueryService,
+  HttpClient2,
+  RetryHandler,
+} from '@l2beat/shared'
 import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
@@ -86,9 +91,11 @@ export function createTrackedTxsModule(
     config.trackedTxsConfig.uses.l2costs &&
     config.trackedTxsConfig.uses.l2costs.aggregatorEnabled
   ) {
-    const coingeckoClient = peripherals.getClient(CoingeckoClient, {
-      apiKey: config.trackedTxsConfig.uses.l2costs.coingeckoApiKey,
-    })
+    const coingeckoClient = new CoingeckoClient(
+      new HttpClient2(),
+      config.trackedTxsConfig.uses.l2costs.coingeckoApiKey,
+      RetryHandler.RELIABLE_API(logger),
+    )
 
     const coingeckoQueryService = new CoingeckoQueryService(
       coingeckoClient,
