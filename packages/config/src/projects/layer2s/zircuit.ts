@@ -168,10 +168,10 @@ export const zircuit: Layer2 = opStackL2({
     },
   ],
   finality: {
-    //all properties to be updated here once the state updates work, this one is copy from Zora
+    //to be enabled once state updates work
     type: 'OPStack-blob',
-    genesisTimestamp: new UnixTime(1686693839),
-    minTimestamp: new UnixTime(1710386579),
+    genesisTimestamp: new UnixTime(1719936217),
+    minTimestamp: new UnixTime(1720137600),
     l2BlockTimeSeconds: 2,
     lag: 0,
     stateUpdate: 'disabled',
