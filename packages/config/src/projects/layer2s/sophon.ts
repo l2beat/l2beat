@@ -30,7 +30,7 @@ export const sophon: Layer2 = zkStackL2({
     name: 'Sophon',
     slug: 'sophon',
     description:
-      "Sophon is a community-driven and entertainment-focused ecosystem built as a Validium on top of the modular ZK Stack.",
+      'Sophon is a community-driven and entertainment-focused ecosystem built as a Validium on top of the modular ZK Stack.',
     links: {
       websites: ['https://sophon.xyz/'],
       apps: ['https://portal.sophon.xyz/', 'https://farm.sophon.xyz/'],
