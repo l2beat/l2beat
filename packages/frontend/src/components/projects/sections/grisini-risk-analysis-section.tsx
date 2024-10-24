@@ -18,7 +18,7 @@ export interface GrisiniRiskAnalysisSectionProps extends ProjectSectionProps {
   grisiniValues: GrisiniValue[]
 }
 
-export function RiskAnalysisSection({
+export function GrisiniRiskAnalysisSection({
   isVerified,
   grisiniValues,
   ...sectionProps

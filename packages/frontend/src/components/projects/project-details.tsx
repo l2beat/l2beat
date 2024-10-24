@@ -17,6 +17,7 @@ import { StateValidationSection } from './sections/state-validation-section'
 import { TechnologySection } from './sections/technology-section'
 import { type ProjectDetailsSection } from './sections/types'
 import { UpcomingDisclaimer } from './sections/upcoming-disclaimer'
+import { GrisiniRiskAnalysisSection } from './sections/grisini-risk-analysis-section'
 
 export interface ProjectDetailsProps {
   items: ProjectDetailsSection[]
@@ -148,6 +149,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'Group':
             return (
               <GroupSection
+                key={item.props.id}
+                sectionOrder={sectionOrder}
+                {...item.props}
+              />
+            )
+          case 'GrisiniRiskAnalysisSection':
+            return (
+              <GrisiniRiskAnalysisSection
                 key={item.props.id}
                 sectionOrder={sectionOrder}
                 {...item.props}
