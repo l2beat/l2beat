@@ -31,7 +31,7 @@ export const realDac = AnytrustDAC({
         name: 'Sequencers',
         accounts: discovery.getPermissionsByRole('sequence'),
         description:
-          'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
+          'Central actors allowed to submit transaction batches to the DA bridge (Sequencer Inbox).',
         chain: discovery.chain,
       },
       {
