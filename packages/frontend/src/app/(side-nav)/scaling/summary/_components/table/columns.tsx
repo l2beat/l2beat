@@ -22,14 +22,14 @@ export const scalingSummaryColumns = [
   columnHelper.accessor('name', {
     cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
   }),
-  columnHelper.accessor('risks', {
+  columnHelper.display({
+    header: 'Risks',
     cell: (ctx) => (
       <PizzaRosetteCell
-        values={ctx.getValue()}
+        values={ctx.row.original.risks}
         isUnderReview={ctx.row.original.isUnderReview}
       />
     ),
-    enableSorting: false,
     meta: {
       align: 'center',
     },
@@ -123,6 +123,49 @@ export const scalingSummaryValidiumAndOptimiumsColumns = [
       )
     },
     enableSorting: false,
+  }),
+  ...scalingSummaryColumns.slice(6),
+]
+
+export const scalingSummaryOthersColumns = [
+  ...scalingSummaryColumns.slice(0, 4),
+  columnHelper.display({
+    id: 'proposer',
+    header: 'Proposer',
+    cell: (ctx) => {
+      const value = ctx.row.original.proposer
+      if (!value) {
+        return <NoDataBadge />
+      }
+
+      return (
+        <TwoRowCell>
+          <TwoRowCell.First>{value.value}</TwoRowCell.First>
+          {value.secondLine && (
+            <TwoRowCell.Second>{value.secondLine}</TwoRowCell.Second>
+          )}
+        </TwoRowCell>
+      )
+    },
+  }),
+  columnHelper.display({
+    id: 'challenger',
+    header: 'Challenger',
+    cell: (ctx) => {
+      const value = ctx.row.original.challenger
+      if (!value) {
+        return <NoDataBadge />
+      }
+
+      return (
+        <TwoRowCell>
+          <TwoRowCell.First>{value.value}</TwoRowCell.First>
+          {value.secondLine && (
+            <TwoRowCell.Second>{value.secondLine}</TwoRowCell.Second>
+          )}
+        </TwoRowCell>
+      )
+    },
   }),
   ...scalingSummaryColumns.slice(6),
 ]
