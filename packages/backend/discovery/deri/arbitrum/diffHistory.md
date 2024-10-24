@@ -1,3 +1,116 @@
+Generated with discovered.json: 0x066b93c300c70edbc22ce8b12816274c368849ed
+
+# Diff at Wed, 23 Oct 2024 14:36:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9cc37d16a5f0b172bb41f98d8a970963e5ca4afb block: 257931565
+- current block number: 257931565
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 257931565 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9) {
+    +++ description: Central contract defining the access control for upgrading the system contract implementations.
+      template:
++        "orbitstack/UpgradeExecutor"
+      description:
++        "Central contract defining the access control for upgrading the system contract implementations."
+    }
+```
+
+```diff
+    contract OneStepProver0 (0x1135265fE014D3FA32B3507E325642B92aFFeAEb) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProver0"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorWalletCreator (0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF)
+    +++ description: None
+```
+
+```diff
+    contract OneStepProverMath (0x4811500e0d376Fa8d2EA3CCb7c61E0afB4F5A7f1) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverMath"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x82709E8564ce17707a7C8420c9e48e9a8A88bfc1)
+    +++ description: None
+```
+
+```diff
+    contract RollupProxy (0x846387C3D6001F74170455B1074D01f05eB3067a) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      description:
+-        "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
++        "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators)."
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9","via":[]}
+      issuedPermissions.1.permission:
+-        "validate"
++        "propose"
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "challenge"
+      issuedPermissions.0.target:
+-        "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"
++        "0xD217853C6A59e51dC1a48CEF21d9E53FCaA8a3f0"
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "ArbOS v10.2 wasmModuleRoot"
++        "0x0754e09320c381566cc0449904c377a52bd34a6b9404432e80afd573b67f7b17"
++++ description: ArbOS version derived from known wasmModuleRoots.
+      values.arbOsFromWmRoot:
++        "ArbOS v10.2 wasmModuleRoot"
+      fieldMeta.arbOsFromWmRoot:
++        {"description":"ArbOS version derived from known wasmModuleRoots."}
+      fieldMeta.setValidatorCount:
++        {"description":"Increments on each Validator change."}
+      fieldMeta.challenges:
++        {"description":"Emitted on createChallenge() in RollupUserLogic."}
+    }
+```
+
+```diff
+    contract OneStepProofEntry (0x99a2A31300816C1FA3f40818AC9280fe7271F878) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProofEntry"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
+    contract OneStepProverMemory (0xDf94F0474F205D086dbc2e66D69a856FCf520622) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverMemory"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
 Generated with discovered.json: 0xd10198b330811844be689732610ad051e36114a0
 
 # Diff at Mon, 21 Oct 2024 12:51:15 GMT:

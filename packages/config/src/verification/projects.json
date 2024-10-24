@@ -93,7 +93,7 @@
   "fuel": true,
   "fuelv1": true,
   "funki": true,
-  "galxegravity": true,
+  "galxegravity": false,
   "galxegravity-dac-layer-galxegravity-dac-bridge": true,
   "gluon": true,
   "gpt": true,

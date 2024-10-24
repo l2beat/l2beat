@@ -1,3 +1,243 @@
+Generated with discovered.json: 0x5ef6344a2b777d058867d9cb1de5c700c08f0cdb
+
+# Diff at Wed, 23 Oct 2024 14:36:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9cc37d16a5f0b172bb41f98d8a970963e5ca4afb block: 20912894
+- current block number: 20912894
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20912894 (main branch discovery), not current.
+
+```diff
+    contract ValidatorWallet (0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"propose","target":"0xFb209827c58283535b744575e11953DCC4bEAD88","description":"can submit state roots to the RollupProxy contract on the host chain."}
+      receivedPermissions.0.permission:
+-        "validate"
++        "challenge"
+      receivedPermissions.0.description:
++        "can challenge state roots on the host chain."
+    }
+```
+
+```diff
+    contract ValidatorWallet (0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"propose","target":"0xFb209827c58283535b744575e11953DCC4bEAD88","description":"can submit state roots to the RollupProxy contract on the host chain."}
+      receivedPermissions.0.permission:
+-        "validate"
++        "challenge"
+      receivedPermissions.0.description:
++        "can challenge state roots on the host chain."
+    }
+```
+
+```diff
+    contract Validator (0x3B0369CAD35d257793F51c28213a4Cf4001397AC) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"propose","target":"0xFb209827c58283535b744575e11953DCC4bEAD88","description":"can submit state roots to the RollupProxy contract on the host chain."}
+      receivedPermissions.0.permission:
+-        "validate"
++        "challenge"
+      receivedPermissions.0.description:
++        "can challenge state roots on the host chain."
+    }
+```
+
+```diff
+    contract ValidatorWallet (0x57004b440Cc4eb2FEd8c4d1865FaC907F9150C76) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"propose","target":"0xFb209827c58283535b744575e11953DCC4bEAD88","description":"can submit state roots to the RollupProxy contract on the host chain."}
+      receivedPermissions.0.permission:
+-        "validate"
++        "challenge"
+      receivedPermissions.0.description:
++        "can challenge state roots on the host chain."
+    }
+```
+
+```diff
+    contract ValidatorWallet (0x658e8123722462F888b6fa01a7dbcEFe1D6DD709) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"propose","target":"0xFb209827c58283535b744575e11953DCC4bEAD88","description":"can submit state roots to the RollupProxy contract on the host chain."}
+      receivedPermissions.0.permission:
+-        "validate"
++        "challenge"
+      receivedPermissions.0.description:
++        "can challenge state roots on the host chain."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorWallet (0x6Ab7A2f1a4febCD40A58b0205bFDA9CAf614b779)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorWalletCreator (0xe05465Aab36ba1277dAE36aa27a7B74830e74DE4)
+    +++ description: None
+```
+
+```diff
+    contract ValidatorWallet (0xE27d4Ed355e5273A3D4855c8e11BC4a8d3e39b87) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"propose","target":"0xFb209827c58283535b744575e11953DCC4bEAD88","description":"can submit state roots to the RollupProxy contract on the host chain."}
+      receivedPermissions.0.permission:
+-        "validate"
++        "challenge"
+      receivedPermissions.0.description:
++        "can challenge state roots on the host chain."
+    }
+```
+
+```diff
+    contract RollupProxy (0xFb209827c58283535b744575e11953DCC4bEAD88) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      description:
+-        "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
++        "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators)."
+      issuedPermissions.26:
++        {"permission":"upgrade","target":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","via":[]}
+      issuedPermissions.25:
++        {"permission":"propose","target":"0xE27d4Ed355e5273A3D4855c8e11BC4a8d3e39b87","via":[]}
+      issuedPermissions.24:
++        {"permission":"propose","target":"0xDfB23DFE9De7dcC974467195C8B7D5cd21C9d7cB","via":[]}
+      issuedPermissions.23:
++        {"permission":"propose","target":"0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E","via":[]}
+      issuedPermissions.22:
++        {"permission":"propose","target":"0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d","via":[]}
+      issuedPermissions.21:
++        {"permission":"propose","target":"0xAB1A39332e934300eBCc57B5f95cA90631a347FF","via":[]}
+      issuedPermissions.20:
++        {"permission":"propose","target":"0x658e8123722462F888b6fa01a7dbcEFe1D6DD709","via":[]}
+      issuedPermissions.19:
++        {"permission":"propose","target":"0x610Aa279989F440820e14248BD3879B148717974","via":[]}
+      issuedPermissions.18:
++        {"permission":"propose","target":"0x57004b440Cc4eb2FEd8c4d1865FaC907F9150C76","via":[]}
+      issuedPermissions.17:
++        {"permission":"propose","target":"0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c","via":[]}
+      issuedPermissions.16:
++        {"permission":"propose","target":"0x3B0369CAD35d257793F51c28213a4Cf4001397AC","via":[]}
+      issuedPermissions.15:
++        {"permission":"propose","target":"0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3","via":[]}
+      issuedPermissions.14:
++        {"permission":"propose","target":"0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23","via":[]}
+      issuedPermissions.13.permission:
+-        "validate"
++        "propose"
+      issuedPermissions.13.target:
+-        "0xE27d4Ed355e5273A3D4855c8e11BC4a8d3e39b87"
++        "0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4"
+      issuedPermissions.12.permission:
+-        "validate"
++        "challenge"
+      issuedPermissions.12.target:
+-        "0xDfB23DFE9De7dcC974467195C8B7D5cd21C9d7cB"
++        "0xE27d4Ed355e5273A3D4855c8e11BC4a8d3e39b87"
+      issuedPermissions.11.permission:
+-        "validate"
++        "challenge"
+      issuedPermissions.11.target:
+-        "0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E"
++        "0xDfB23DFE9De7dcC974467195C8B7D5cd21C9d7cB"
+      issuedPermissions.10.permission:
+-        "validate"
++        "challenge"
+      issuedPermissions.10.target:
+-        "0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d"
++        "0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E"
+      issuedPermissions.9.permission:
+-        "validate"
++        "challenge"
+      issuedPermissions.9.target:
+-        "0xAB1A39332e934300eBCc57B5f95cA90631a347FF"
++        "0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d"
+      issuedPermissions.8.permission:
+-        "validate"
++        "challenge"
+      issuedPermissions.8.target:
+-        "0x658e8123722462F888b6fa01a7dbcEFe1D6DD709"
++        "0xAB1A39332e934300eBCc57B5f95cA90631a347FF"
+      issuedPermissions.7.permission:
+-        "validate"
++        "challenge"
+      issuedPermissions.7.target:
+-        "0x610Aa279989F440820e14248BD3879B148717974"
++        "0x658e8123722462F888b6fa01a7dbcEFe1D6DD709"
+      issuedPermissions.6.permission:
+-        "validate"
++        "challenge"
+      issuedPermissions.6.target:
+-        "0x57004b440Cc4eb2FEd8c4d1865FaC907F9150C76"
++        "0x610Aa279989F440820e14248BD3879B148717974"
+      issuedPermissions.5.permission:
+-        "validate"
++        "challenge"
+      issuedPermissions.5.target:
+-        "0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c"
++        "0x57004b440Cc4eb2FEd8c4d1865FaC907F9150C76"
+      issuedPermissions.4.permission:
+-        "validate"
++        "challenge"
+      issuedPermissions.4.target:
+-        "0x3B0369CAD35d257793F51c28213a4Cf4001397AC"
++        "0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c"
+      issuedPermissions.3.permission:
+-        "validate"
++        "challenge"
+      issuedPermissions.3.target:
+-        "0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3"
++        "0x3B0369CAD35d257793F51c28213a4Cf4001397AC"
+      issuedPermissions.2.permission:
+-        "validate"
++        "challenge"
+      issuedPermissions.2.target:
+-        "0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23"
++        "0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3"
+      issuedPermissions.1.permission:
+-        "validate"
++        "challenge"
+      issuedPermissions.1.target:
+-        "0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4"
++        "0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23"
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "challenge"
+      issuedPermissions.0.target:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4"
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "ArbOS v32 wasmModuleRoot"
++        "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39"
++++ description: ArbOS version derived from known wasmModuleRoots.
+      values.arbOsFromWmRoot:
++        "ArbOS v32 wasmModuleRoot"
+      fieldMeta.arbOsFromWmRoot:
++        {"description":"ArbOS version derived from known wasmModuleRoots."}
+      fieldMeta.setValidatorCount:
++        {"description":"Increments on each Validator change."}
+      fieldMeta.challenges:
++        {"description":"Emitted on createChallenge() in RollupUserLogic."}
+    }
+```
+
 Generated with discovered.json: 0x4f31a47800c47436284e70cf8a65cd2fc30f8cac
 
 # Diff at Mon, 21 Oct 2024 12:46:28 GMT:
