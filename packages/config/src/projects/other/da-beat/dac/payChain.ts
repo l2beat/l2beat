@@ -47,7 +47,7 @@ export const paychainDac = PolygoncdkDAC({
           ),
         ],
         description:
-          'Admin and ForceBatcher of the WirexPayChainValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions, and set the DA committee members in the WirexPayChainDAC contract.',
+          'Admin and ForceBatcher of the WirexPayChainValidium contract, can set core system parameters like replacing the sequencer (relayer), activate forced transactions, and set the DA committee members in the WirexPayChainDAC contract.',
       },
     ],
     chain: ChainId.ETHEREUM,

@@ -54,7 +54,7 @@ export const zkfairDac = PolygoncdkDAC({
       },
       ...discovery.getMultisigPermission(
         'ZKFairAdmin',
-        'Admin of the ZKFairValidiumDAC contract, can set core system parameters like timeouts, sequencer, activate forced transactions, update the DA mode and upgrade the ZKFairValidiumDAC contract',
+        'Admin of the ZKFairValidiumDAC contract, can set core system parameters like replacing the sequencer (relayer), activate forced transactions, update the DA mode and upgrade the ZKFairValidiumDAC contract',
       ),
     ],
     chain: ChainId.ETHEREUM,

@@ -60,7 +60,7 @@ export const witnessDac = PolygoncdkDAC({
           ),
         ],
         description:
-          'Admin of the WitnessValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions and update the DA mode.',
+          'Admin of the WitnessValidium contract, can set core system parameters like replacing the sequencer (relayer), activate forced transactions and update the DA mode.',
       },
       {
         name: 'DACProxyAdminOwner',

@@ -47,7 +47,7 @@ export const gptProtocolDac = PolygoncdkDAC({
           ),
         ],
         description:
-          'Admin and ForceBatcher of the GptProtocolValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions, and set the DA committee members in the GptProtocolDAC contract.',
+          'Admin and ForceBatcher of the GptProtocolValidium contract, can set core system parameters like replacing the sequencer (relayer), activate forced transactions, and set the DA committee members in the GptProtocolDAC contract.',
       },
     ],
     chain: ChainId.ETHEREUM,
