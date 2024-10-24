@@ -1,3 +1,109 @@
+Generated with discovered.json: 0x9d21547d328d6832ffb79e78e8c6033f64534f66
+
+# Diff at Thu, 24 Oct 2024 13:57:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e3624c5de2063bc70ca695acf35d70e8cc60e878 block: 21027403
+- current block number: 21035901
+
+## Description
+
+New project with unknown chainID 2741 deployed. 
+
+## Watched changes
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
++++ description: All new chains created go thorugh the central bridgehub and are thus stored here with their respective STMs.
+      values.chainsCreated.4:
++        {"chainId":2741,"stateTransitionManager":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","chainGovernance":"0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661"}
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
++++ description: If non-zero, the third batch has been posted.
++++ severity: MEDIUM
+      values.zeronetworkThirdBatchTS:
+-        0
++        1729683215
+    }
+```
+
+```diff
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: None
+      values.getAllHyperchainChainIDs.4:
++        2741
+      values.getAllHyperchains.4:
++        "0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21027403 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Safe (0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9)
+    +++ description: None
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
+      values.sophonTenthBatchTS:
+-        0
+      values.zeronetworkTenthBatchTS:
+-        0
++++ description: If non-zero, the third batch has been posted.
++++ severity: MEDIUM
+      values.Project__ThirdBatchTS:
++        0
++++ description: If non-zero, the third batch has been posted.
++++ severity: MEDIUM
+      values.sophonThirdBatchTS:
++        1729673999
++++ description: If non-zero, the third batch has been posted.
++++ severity: MEDIUM
+      values.zeronetworkThirdBatchTS:
++        0
+      fieldMeta.zeronetworkTenthBatchTS:
+-        {"severity":"MEDIUM","description":"If non-zero, the first batch has been posted."}
+      fieldMeta.sophonTenthBatchTS:
+-        {"severity":"MEDIUM","description":"If non-zero, the first batch has been posted."}
+      fieldMeta.zeronetworkThirdBatchTS:
++        {"severity":"MEDIUM","description":"If non-zero, the third batch has been posted."}
+      fieldMeta.sophonThirdBatchTS:
++        {"severity":"MEDIUM","description":"If non-zero, the third batch has been posted."}
+      fieldMeta.Project__ThirdBatchTS:
++        {"severity":"MEDIUM","description":"If non-zero, the third batch has been posted."}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ChainAdmin (0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ChainAdmin (0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (0xe4644b6d106A18062344c0A853666bc0B8f052d1)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x579cb2d4a94299bd6e5baab4aadab66f01057f9e
 
 # Diff at Wed, 23 Oct 2024 09:31:05 GMT:

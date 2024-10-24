@@ -1,8 +1,8 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 21027403,
-  "configHash": "0x1f18f06484ff07fc83113ea85d1c997d67ca5e172ff416a6e13723cb0b7f251d",
+  "blockNumber": 21035901,
+  "configHash": "0xdbe708906dc685ef68780952b15491a272527f1add793d8653ac17ca151cb4e1",
   "contracts": [
     {
       "name": "GnosisSafe",
@@ -101,36 +101,6 @@
       "derivedName": "ChainAdmin"
     },
     {
-      "name": "Safe",
-      "address": "0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1728943067,
-      "values": {
-        "$immutable": false,
-        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
-        "$members": [
-          "0xA167ca2984F7e08EFd4DDf9c5a4A21D66c07813E",
-          "0xc858a504d6c267fe2d462D240b68A7D939B1fEC9",
-          "0xF322467cec88d3CDFa9376B19bD5AD40da665277",
-          "0x3Bc72A56F9036B94ad14BF082bF93731e0545255",
-          "0x3Ec90fA056A39e7281a5b4c8c044B86667D770e1"
-        ],
-        "$threshold": 3,
-        "domainSeparator": "0x89a4b461d7d0ebc4cbf656eccda8c499236d20a7445adf4d25e2bbc6f9882190",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 1,
-        "VERSION": "1.4.1"
-      }
-    },
-    {
       "name": "BridgeHub",
       "address": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
       "sourceHashes": [
@@ -183,6 +153,11 @@
             "chainId": 543210,
             "stateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
             "chainGovernance": "0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3"
+          },
+          {
+            "chainId": 2741,
+            "stateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+            "chainGovernance": "0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661"
           }
         ],
         "CronosDiamond": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
@@ -244,7 +219,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 158,
+        "nonce": 159,
         "VERSION": "1.3.0"
       },
       "fieldMeta": {
@@ -354,15 +329,16 @@
         "getName": "ValidatorTimelock",
         "owner": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "Project__ThirdBatchTS": 0,
         "revertedBlocks": [],
-        "sophonTenthBatchTS": 0,
+        "sophonThirdBatchTS": 1729673999,
         "sophonValidatorsAdded": [
           "0x4cc87B0A504047967CeD9A955431B3229237e7de",
           "0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f"
         ],
         "sophonValidatorsRemoved": [],
         "stateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "zeronetworkTenthBatchTS": 0,
+        "zeronetworkThirdBatchTS": 1729683215,
         "zeronetworkValidatorsAdded": [
           "0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F",
           "0x479B7c95b9509E1A834C994fc94e3581aA8A73B9"
@@ -375,13 +351,17 @@
         "zksyncValidatorsRemoved": []
       },
       "fieldMeta": {
-        "zeronetworkTenthBatchTS": {
+        "zeronetworkThirdBatchTS": {
           "severity": "MEDIUM",
-          "description": "If non-zero, the first batch has been posted."
+          "description": "If non-zero, the third batch has been posted."
         },
-        "sophonTenthBatchTS": {
+        "sophonThirdBatchTS": {
           "severity": "MEDIUM",
-          "description": "If non-zero, the first batch has been posted."
+          "description": "If non-zero, the third batch has been posted."
+        },
+        "Project__ThirdBatchTS": {
+          "severity": "MEDIUM",
+          "description": "If non-zero, the third batch has been posted."
         }
       },
       "derivedName": "ValidatorTimelock"
@@ -593,12 +573,13 @@
         "admin": "0x2cf3bD6a9056b39999F3883955E183F655345063",
         "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
         "genesisUpgrade": "0x3dDD7ED2AeC0758310A4C6596522FCAeD108DdA2",
-        "getAllHyperchainChainIDs": [324, 388, 50104, 543210],
+        "getAllHyperchainChainIDs": [324, 388, 50104, 543210, 2741],
         "getAllHyperchains": [
           "0x32400084C286CF3E17e7B677ea9583e60a000324",
           "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
           "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
-          "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"
+          "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9",
+          "0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9"
         ],
         "getChainAdmin": [],
         "getSemverProtocolVersion": [0, 24, 2],
@@ -611,27 +592,6 @@
         "validatorTimelock": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
       },
       "derivedName": "StateTransitionManager"
-    },
-    {
-      "name": "ChainAdmin",
-      "address": "0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3",
-      "template": "shared-zk-stack/ChainAdmin",
-      "sourceHashes": [
-        "0xefb240f5e06f5ffb38c7e98e9738ecf10381c49716281a3da9d5a1d17438eb4c"
-      ],
-      "sinceTimestamp": 1729084139,
-      "values": {
-        "$immutable": true,
-        "owner": "0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9",
-        "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "tokenMultiplierSetter": "0x0000000000000000000000000000000000000000",
-        "upgradeTimestamps": []
-      },
-      "fieldMeta": {
-        "upgradeTimestamps": {
-          "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
-        }
-      }
     },
     {
       "name": "GnosisSafe",
@@ -763,58 +723,6 @@
         "SECURITY_COUNCIL": "0xBDFfCC71FE84020238F2990a6D2954e87355De0D",
         "ZK_FOUNDATION_SAFE": "0xbC1653bd3829dfEc575AfC3816D4899cd103B51c"
       }
-    },
-    {
-      "name": "ChainAdmin",
-      "address": "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3",
-      "template": "shared-zk-stack/ChainAdmin",
-      "sourceHashes": [
-        "0xefb240f5e06f5ffb38c7e98e9738ecf10381c49716281a3da9d5a1d17438eb4c"
-      ],
-      "sinceTimestamp": 1729079339,
-      "values": {
-        "$immutable": true,
-        "owner": "0xe4644b6d106A18062344c0A853666bc0B8f052d1",
-        "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "tokenMultiplierSetter": "0xe14828E4405239dD331F194F1B7883eeD73bCBF3",
-        "upgradeTimestamps": []
-      },
-      "fieldMeta": {
-        "upgradeTimestamps": {
-          "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
-        }
-      }
-    },
-    {
-      "name": "Safe",
-      "address": "0xe4644b6d106A18062344c0A853666bc0B8f052d1",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1729249919,
-      "values": {
-        "$immutable": false,
-        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
-        "$members": [
-          "0x3b6036d410cA018661324766680674921a8b2d89",
-          "0x20719Abd2E63518e68D30a295388cAd6B542dCEf",
-          "0x14574dfC6B7aF658c5033BA95673864947956521",
-          "0x90E10C37d8d9e854e7775B0069728642A1F88610",
-          "0x7f413262Cb811B034d077d9184b5Efda6943f2c3",
-          "0xd89b0f620E0C72BD82e0447dE07FB0A0Abe01F69"
-        ],
-        "$threshold": 3,
-        "domainSeparator": "0x4ee440c593310d163ce5ee409e8b60941e58aa6b74d5cf7b249e342d0e5189fd",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 1,
-        "VERSION": "1.4.1"
-      }
     }
   ],
   "eoas": [
@@ -823,18 +731,12 @@
     { "address": "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99" },
     { "address": "0x0e621b0A275A207211e161Ee997aA80661Bc1bcf" },
     { "address": "0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F" },
-    { "address": "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137" },
-    { "address": "0x14574dfC6B7aF658c5033BA95673864947956521" },
     { "address": "0x160669864cDe95c190364ad01eDfbAA32E9DA430" },
-    { "address": "0x20719Abd2E63518e68D30a295388cAd6B542dCEf" },
     { "address": "0x227230CD05e89f41E67df3E5fC61B18411d147A9" },
     { "address": "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc" },
     { "address": "0x3527439923a63F8C13CF72b8Fe80a77f6e572092" },
     { "address": "0x3620B9e7c75E09cCC37458c7B6EE6c23D8Ee4f0f" },
     { "address": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8" },
-    { "address": "0x3b6036d410cA018661324766680674921a8b2d89" },
-    { "address": "0x3Bc72A56F9036B94ad14BF082bF93731e0545255" },
-    { "address": "0x3Ec90fA056A39e7281a5b4c8c044B86667D770e1" },
     { "address": "0x3F0009D00cc78979d00Eb635490F23E8d6aCc481" },
     { "address": "0x441e5c8910Ef39996B2D01499509861228cbc2d1" },
     { "address": "0x479B7c95b9509E1A834C994fc94e3581aA8A73B9" },
@@ -843,24 +745,16 @@
     { "address": "0x610e45F112e0c8a9aA7137677C83E7A198A1b991" },
     { "address": "0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df" },
     { "address": "0x702caCafA54B88e9c54449563Fb2e496e85c78b7" },
-    { "address": "0x71d84c3404a6ae258E6471d4934B96a2033F9438" },
-    { "address": "0x7f413262Cb811B034d077d9184b5Efda6943f2c3" },
     { "address": "0x7fEA26A181A792B5107ee0a31e434F5dBcbBe0B7" },
     { "address": "0x8b0c64CcaB94d4618Ef834F396F622f61F2b013D" },
-    { "address": "0x90E10C37d8d9e854e7775B0069728642A1F88610" },
-    { "address": "0xA167ca2984F7e08EFd4DDf9c5a4A21D66c07813E" },
     { "address": "0xa376AaF645dbd9b4f501B2A8a97bc21DcA15B001" },
     { "address": "0xACBD581D1BedB2F71d2F5F01f881586e0623d591" },
     { "address": "0xb799FF3DeF706045B5061B22d748E8F52737415d" },
     { "address": "0xb9d48DaF26F3CBE01A959F09f98E8a2eC8204122" },
-    { "address": "0xc858a504d6c267fe2d462D240b68A7D939B1fEC9" },
     { "address": "0xd5966E3dd25f6086b6aD7D7Fa3292d11b988da95" },
-    { "address": "0xd89b0f620E0C72BD82e0447dE07FB0A0Abe01F69" },
     { "address": "0xD9b0579e2B8387fE153201631EBC4be9dEFA1A6d" },
-    { "address": "0xe14828E4405239dD331F194F1B7883eeD73bCBF3" },
     { "address": "0xE4F4FdaD61f192EBe9a32b2d2fB47A5802891e14" },
     { "address": "0xe79af29d618141Ffef951B240b250d47030D56d7" },
-    { "address": "0xF322467cec88d3CDFa9376B19bD5AD40da665277" },
     { "address": "0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f" },
     { "address": "0xFAdb20191Ab38362C50f52909817B74214CA79AE" },
     { "address": "0xfd03dA3aeb6807a98db96C1704Ea4CFf031BaEd2" }
@@ -894,9 +788,6 @@
       "function tokenMultiplierSetter() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9": [
-      "constructor(address _singleton)"
-    ],
     "0x303a465B659cBB0ab36eE643eA362c509EEb5213": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -911,54 +802,6 @@
       "event NewVerifierParams(tuple(bytes32 recursionNodeLevelVkHash, bytes32 recursionLeafLevelVkHash, bytes32 recursionCircuitsSetVksHash) oldVerifierParams, tuple(bytes32 recursionNodeLevelVkHash, bytes32 recursionLeafLevelVkHash, bytes32 recursionCircuitsSetVksHash) newVerifierParams)",
       "event UpgradeComplete(uint256 indexed newProtocolVersion, bytes32 indexed l2UpgradeTxHash, tuple(tuple(uint256 txType, uint256 from, uint256 to, uint256 gasLimit, uint256 gasPerPubdataByteLimit, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, uint256 paymaster, uint256 nonce, uint256 value, uint256[4] reserved, bytes data, bytes signature, uint256[] factoryDeps, bytes paymasterInput, bytes reservedDynamic) l2ProtocolUpgradeTx, bytes[] factoryDeps, bytes32 bootloaderHash, bytes32 defaultAccountHash, address verifier, tuple(bytes32 recursionNodeLevelVkHash, bytes32 recursionLeafLevelVkHash, bytes32 recursionCircuitsSetVksHash) verifierParams, bytes l1ContractsUpgradeCalldata, bytes postUpgradeCalldata, uint256 upgradeTimestamp, uint256 newProtocolVersion) upgrade)",
       "function upgrade(tuple(tuple(uint256 txType, uint256 from, uint256 to, uint256 gasLimit, uint256 gasPerPubdataByteLimit, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, uint256 paymaster, uint256 nonce, uint256 value, uint256[4] reserved, bytes data, bytes signature, uint256[] factoryDeps, bytes paymasterInput, bytes reservedDynamic) l2ProtocolUpgradeTx, bytes[] factoryDeps, bytes32 bootloaderHash, bytes32 defaultAccountHash, address verifier, tuple(bytes32 recursionNodeLevelVkHash, bytes32 recursionLeafLevelVkHash, bytes32 recursionCircuitsSetVksHash) verifierParams, bytes l1ContractsUpgradeCalldata, bytes postUpgradeCalldata, uint256 upgradeTimestamp, uint256 newProtocolVersion) _proposedUpgrade) returns (bytes32)"
-    ],
-    "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
-      "constructor()",
-      "event AddedOwner(address indexed owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedFallbackHandler(address indexed handler)",
-      "event ChangedGuard(address indexed guard)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address indexed module)",
-      "event EnabledModule(address indexed module)",
-      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
-      "event RemovedOwner(address indexed owner)",
-      "event SafeReceived(address indexed sender, uint256 value)",
-      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeThreshold(uint256 _threshold)",
-      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
-      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getChainId() view returns (uint256)",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isModuleEnabled(address module) view returns (bool)",
-      "function isOwner(address owner) view returns (bool)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function setFallbackHandler(address handler)",
-      "function setGuard(address guard)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "0x4e4943346848c4867F81dFb37c4cA9C5715A7828": [
       "constructor(address _singleton)"
@@ -1200,28 +1043,6 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3": [
-      "constructor(address _initialOwner, address _initialTokenMultiplierSetter)",
-      "error NoCallsProvided()",
-      "error Unauthorized(address caller)",
-      "error ZeroAddress()",
-      "event CallExecuted(tuple(address target, uint256 value, bytes data) _call, bool _success, bytes _returnData)",
-      "event NewTokenMultiplierSetter(address _oldTokenMultiplierSetter, address _newTokenMultiplierSetter)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event UpdateUpgradeTimestamp(uint256 indexed _protocolVersion, uint256 _upgradeTimestamp)",
-      "function acceptOwnership()",
-      "function multicall(tuple(address target, uint256 value, bytes data)[] _calls, bool _requireSuccess) payable",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function protocolVersionToUpgradeTimestamp(uint256 protocolVersion) view returns (uint256 upgradeTimestamp)",
-      "function renounceOwnership()",
-      "function setTokenMultiplier(address _chainContract, uint128 _nominator, uint128 _denominator)",
-      "function setTokenMultiplierSetter(address _tokenMultiplierSetter)",
-      "function setUpgradeTimestamp(uint256 _protocolVersion, uint256 _upgradeTimestamp)",
-      "function tokenMultiplierSetter() view returns (address)",
-      "function transferOwnership(address newOwner)"
-    ],
     "0xCe7a3dFcc35602155809920Ff65e093aa726f6cf": [
       "constructor(address _singleton)"
     ],
@@ -1314,31 +1135,6 @@
       "function ZK_FOUNDATION_SAFE() view returns (address)",
       "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
       "function executeEmergencyUpgrade(tuple(address target, uint256 value, bytes data)[] _calls, bytes32 _salt, bytes _guardiansSignatures, bytes _securityCouncilSignatures, bytes _zkFoundationSignatures)"
-    ],
-    "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3": [
-      "constructor(address _initialOwner, address _initialTokenMultiplierSetter)",
-      "error NoCallsProvided()",
-      "error Unauthorized(address caller)",
-      "error ZeroAddress()",
-      "event CallExecuted(tuple(address target, uint256 value, bytes data) _call, bool _success, bytes _returnData)",
-      "event NewTokenMultiplierSetter(address _oldTokenMultiplierSetter, address _newTokenMultiplierSetter)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event UpdateUpgradeTimestamp(uint256 indexed _protocolVersion, uint256 _upgradeTimestamp)",
-      "function acceptOwnership()",
-      "function multicall(tuple(address target, uint256 value, bytes data)[] _calls, bool _requireSuccess) payable",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function protocolVersionToUpgradeTimestamp(uint256 protocolVersion) view returns (uint256 upgradeTimestamp)",
-      "function renounceOwnership()",
-      "function setTokenMultiplier(address _chainContract, uint128 _nominator, uint128 _denominator)",
-      "function setTokenMultiplierSetter(address _tokenMultiplierSetter)",
-      "function setUpgradeTimestamp(uint256 _protocolVersion, uint256 _upgradeTimestamp)",
-      "function tokenMultiplierSetter() view returns (address)",
-      "function transferOwnership(address newOwner)"
-    ],
-    "0xe4644b6d106A18062344c0A853666bc0B8f052d1": [
-      "constructor(address _singleton)"
     ],
     "0xed1Dc7F0Be2B19cb02a2476150C8ea24A37c5274": [
       "constructor(address _bridgehub, uint256 _maxNumberOfHyperchains)",
