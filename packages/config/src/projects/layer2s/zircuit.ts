@@ -168,13 +168,12 @@ export const zircuit: Layer2 = opStackL2({
     },
   ],
   finality: {
-    //to be enabled once state updates work
     type: 'OPStack-blob',
     genesisTimestamp: new UnixTime(1719936217),
     minTimestamp: new UnixTime(1720137600),
     l2BlockTimeSeconds: 2,
     lag: 0,
-    stateUpdate: 'disabled',
+    stateUpdate: 'disabled',     //to be enabled once state updates work
   },
   milestones: [
     {
