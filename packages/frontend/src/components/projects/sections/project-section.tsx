@@ -7,7 +7,7 @@ import { type ProjectSectionId } from './types'
 export interface ExtendedProjectSectionProps {
   title: string
   id: ProjectSectionId
-  sectionOrder: number | undefined
+  sectionOrder: string | undefined
   className?: string
   children: ReactNode
   isUnderReview?: boolean
@@ -48,7 +48,7 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
 interface ProjectDetailsSectionHeaderProps {
   id: string
   title: string
-  sectionOrder: number | undefined
+  sectionOrder: string | undefined
   className?: string
 }
 

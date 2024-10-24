@@ -20,6 +20,7 @@ import { UpcomingDisclaimer } from './sections/upcoming-disclaimer'
 import { GrisiniRiskAnalysisSection } from './sections/grisini-risk-analysis-section'
 
 export interface ProjectDetailsProps {
+  parentSection?: string;
   items: ProjectDetailsSection[]
   isUpcoming?: boolean
 }
@@ -28,7 +29,9 @@ export function ProjectDetails(props: ProjectDetailsProps) {
   return (
     <div className="max-md:px-4">
       {props.items.map((item, index) => {
-        const sectionOrder = index + 1
+        const sectionOrder = props.parentSection
+          ? `${props.parentSection}.${index + 1}`
+          : `${index + 1}`
 
         switch (item.type) {
           case 'ChartSection':

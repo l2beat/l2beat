@@ -44,7 +44,8 @@ export type ProjectSectionId =
 export type ProjectSectionProps = Omit<
   ExtendedProjectSectionProps,
   'className' | 'children'
->
+> & {
+}
 
 type ProjectDetailsProps<T> = Omit<T, 'sectionOrder'>
 
