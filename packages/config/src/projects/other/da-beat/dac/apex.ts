@@ -43,16 +43,18 @@ export const apexDac = StarkexDAC({
     membersCount: dacConfig.membersCount,
     transactionDataType: DacTransactionDataType.StateDiffs,
     contracts: {
-      addresses: [
-        discovery.getContractDetails(
-          'CommitteeUSDC',
-          'Data Availability Committee (DAC) contract for USDC StarkEx instance, verifying data availability claim from DAC Members (via multisig check).',
-        ),
-        discovery.getContractDetails(
-          'CommitteeUSDT',
-          'Data Availability Committee (DAC) contract for USDT StarkEx instance, verifying data availability claim from DAC Members (via multisig check).',
-        ),
-      ],
+      addresses: {
+        ethereum: [
+          discovery.getContractDetails(
+            'CommitteeUSDC',
+            'Data Availability Committee (DAC) contract for USDC StarkEx instance, verifying data availability claim from DAC Members (via multisig check).',
+          ),
+          discovery.getContractDetails(
+            'CommitteeUSDT',
+            'Data Availability Committee (DAC) contract for USDT StarkEx instance, verifying data availability claim from DAC Members (via multisig check).',
+          ),
+        ],
+      },
       risks: [],
     },
     permissions: [

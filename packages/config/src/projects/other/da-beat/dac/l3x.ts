@@ -17,12 +17,14 @@ export const l3xDac = AnytrustDAC({
   bridge: {
     createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     contracts: {
-      addresses: [
-        discovery.getContractDetails(
-          'SequencerInbox',
-          'Main entry point for the Sequencer submitting transaction batches.',
-        ),
-      ],
+      addresses: {
+        ethereum: [
+          discovery.getContractDetails(
+            'SequencerInbox',
+            'Main entry point for the Sequencer submitting transaction batches.',
+          ),
+        ],
+      },
       risks: [],
     },
 

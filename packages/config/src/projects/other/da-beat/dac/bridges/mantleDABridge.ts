@@ -59,24 +59,26 @@ export const mantleDABridge = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('DataLayrServiceManager', {
-        description:
-          'This contract is the entry point for data availability commitments. It is responsible for storing transaction data headers and confirming the data store by verifying operators signatures.',
-      }),
-      discovery.getContractDetails('BLSRegistry', {
-        description:
-          'This contract stores the number of Mantle DA operators and their public keys. It also store the quorum threshold and the minimum stake required to be part of the quorum.',
-      }),
-      discovery.getContractDetails('RegistryPermission', {
-        description:
-          'This contract is used to manage permissions for the BLSRegistry contract.',
-      }),
-      discovery.getContractDetails('PauserRegistry', {
-        description:
-          'This contract is used to manage permissions for the DataLayrServiceManager contract.',
-      }),
-    ],
+    addresses: {
+      ethereum: [
+        discovery.getContractDetails('DataLayrServiceManager', {
+          description:
+            'This contract is the entry point for data availability commitments. It is responsible for storing transaction data headers and confirming the data store by verifying operators signatures.',
+        }),
+        discovery.getContractDetails('BLSRegistry', {
+          description:
+            'This contract stores the number of Mantle DA operators and their public keys. It also store the quorum threshold and the minimum stake required to be part of the quorum.',
+        }),
+        discovery.getContractDetails('RegistryPermission', {
+          description:
+            'This contract is used to manage permissions for the BLSRegistry contract.',
+        }),
+        discovery.getContractDetails('PauserRegistry', {
+          description:
+            'This contract is used to manage permissions for the DataLayrServiceManager contract.',
+        }),
+      ],
+    },
     risks: [],
   },
   technology: {

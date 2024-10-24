@@ -100,8 +100,8 @@ function getDaBridgeContractsForChain(
       (b): b is OnChainDaBridge | DacBridge =>
         b.type === 'OnChainBridge' || b.type === 'DAC',
     )
-    .flatMap((b) => b.contracts.addresses)
-  const addresses = getUniqueContractsFromList(contracts)
+    .flatMap((b) => Object.values(b.contracts.addresses))
+  const addresses = getUniqueContractsFromList(contracts.flat())
   return addresses.filter((a) => a.chain === chain)
 }
 

@@ -31,16 +31,18 @@ export const xlayerDac = PolygoncdkDAC({
   bridge: {
     createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     contracts: {
-      addresses: [
-        discovery.getContractDetails('XLayerValidium', {
-          description: `The DA bridge and main contract of the XLayerValidium. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
-        }),
-        discovery.getContractDetails('XLayerValidiumDAC', {
-          description:
-            'Validium committee contract that allows the admin to setup the members of the committee and stores the required amount of signatures threshold.',
-          ...upgradeability,
-        }),
-      ],
+      addresses: {
+        ethereum: [
+          discovery.getContractDetails('XLayerValidium', {
+            description: `The DA bridge and main contract of the XLayerValidium. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
+          }),
+          discovery.getContractDetails('XLayerValidiumDAC', {
+            description:
+              'Validium committee contract that allows the admin to setup the members of the committee and stores the required amount of signatures threshold.',
+            ...upgradeability,
+          }),
+        ],
+      },
       risks: [],
     },
     permissions: [

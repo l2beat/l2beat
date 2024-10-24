@@ -164,23 +164,25 @@ export const arbitrumNovaDac = DAC({
       },
     ],
     contracts: {
-      addresses: [
-        discovery.getContractDetails('SequencerInbox', {
-          description:
-            'The DA bridge of the DAC, the main entry point for the Sequencer submitting transaction batches commitments.',
-          ...upgradeExecutorUpgradeability,
-        }),
-        discovery.getContractDetails('UpgradeExecutor', {
-          description:
-            "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1Timelock.",
-          ...upgradeExecutorUpgradeability,
-        }),
-        discovery.getContractDetails('L1Timelock', {
-          description:
-            'Timelock contract for Arbitrum Governance transactions. Scheduled transactions from Arbitrum One L2 (by the DAO or the Security Council) are delayed here and can be canceled by the Security Council or executed to upgrade and change system contracts on Ethereum, Arbitrum One and -Nova.',
-          ...upgradeExecutorUpgradeability,
-        }),
-      ],
+      addresses: {
+        ethereum: [
+          discovery.getContractDetails('SequencerInbox', {
+            description:
+              'The DA bridge of the DAC, the main entry point for the Sequencer submitting transaction batches commitments.',
+            ...upgradeExecutorUpgradeability,
+          }),
+          discovery.getContractDetails('UpgradeExecutor', {
+            description:
+              "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1Timelock.",
+            ...upgradeExecutorUpgradeability,
+          }),
+          discovery.getContractDetails('L1Timelock', {
+            description:
+              'Timelock contract for Arbitrum Governance transactions. Scheduled transactions from Arbitrum One L2 (by the DAO or the Security Council) are delayed here and can be canceled by the Security Council or executed to upgrade and change system contracts on Ethereum, Arbitrum One and -Nova.',
+            ...upgradeExecutorUpgradeability,
+          }),
+        ],
+      },
       risks: [],
     },
   },

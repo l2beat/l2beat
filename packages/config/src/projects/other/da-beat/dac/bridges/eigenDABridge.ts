@@ -112,74 +112,76 @@ export const eigenDAbridge = {
     },
   },
   contracts: {
-    addresses: [
-      {
-        ...discovery.getContractDetails('EigenDAServiceManager', {
-          description:
-            'The EigenDAServiceManager contract is the bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.',
-        }),
-        ...upgrades,
-      },
-      {
-        ...discovery.getContractDetails('RegistryCoordinator', {
-          description: `Contract used by operators to register with the EigenDA AVS. The coordinator has three registries: a StakeRegistry that keeps track of operators' stakes, a BLSApkRegistry that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, and an IndexRegistry that keeps track of an ordered list of operators for each quorum.`,
-        }),
-        ...upgrades,
-      },
-      {
-        ...discovery.getContractDetails('StakeRegistry', {
-          description:
-            'The StakeRegistry contract keeps track of the total stake of each operator.',
-        }),
-        ...upgrades,
-      },
-      {
-        ...discovery.getContractDetails('BLSApkRegistry', {
-          description:
-            'The BLSApkRegistry contract keeps track of the BLS public keys of each operator and the quorum aggregated keys.',
-        }),
-        ...upgrades,
-      },
-      {
-        ...discovery.getContractDetails('EjectionManager', {
-          description:
-            'The EjectionManager contract is responsible for ejecting operators from a quorum for violating the Service Legal Agreement (SLA).',
-        }),
-        ...upgrades,
-      },
-      {
-        ...eigenDiscovery.getContractDetails('PauserRegistry', {
-          description:
-            'Defines and stores pauser and unpauser roles for EigenLayer contracts and the EigenDAServiceManager.',
-        }),
-      },
-      {
-        ...eigenDiscovery.getContractDetails('DelegationManager', {
-          description: `The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.`,
-        }),
-        ...eigenLayerUpgrades,
-      },
-      {
-        ...eigenDiscovery.getContractDetails('StrategyManager', {
-          description:
-            'The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.',
-        }),
-        ...eigenLayerUpgrades,
-      },
-      {
-        ...discovery.getContractDetails('EigenStrategy', {
-          description: `The EigenStrategy contract is responsible for managing the bEIGEN token strategy, representing the stake for the second EigenDA quorum.`,
-        }),
-        ...eigenLayerUpgrades,
-      },
-      {
-        ...eigenDiscovery.getContractDetails('EIGEN token', {
-          description: `The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults).
+    addresses: {
+      ethereum: [
+        {
+          ...discovery.getContractDetails('EigenDAServiceManager', {
+            description:
+              'The EigenDAServiceManager contract is the bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.',
+          }),
+          ...upgrades,
+        },
+        {
+          ...discovery.getContractDetails('RegistryCoordinator', {
+            description: `Contract used by operators to register with the EigenDA AVS. The coordinator has three registries: a StakeRegistry that keeps track of operators' stakes, a BLSApkRegistry that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, and an IndexRegistry that keeps track of an ordered list of operators for each quorum.`,
+          }),
+          ...upgrades,
+        },
+        {
+          ...discovery.getContractDetails('StakeRegistry', {
+            description:
+              'The StakeRegistry contract keeps track of the total stake of each operator.',
+          }),
+          ...upgrades,
+        },
+        {
+          ...discovery.getContractDetails('BLSApkRegistry', {
+            description:
+              'The BLSApkRegistry contract keeps track of the BLS public keys of each operator and the quorum aggregated keys.',
+          }),
+          ...upgrades,
+        },
+        {
+          ...discovery.getContractDetails('EjectionManager', {
+            description:
+              'The EjectionManager contract is responsible for ejecting operators from a quorum for violating the Service Legal Agreement (SLA).',
+          }),
+          ...upgrades,
+        },
+        {
+          ...eigenDiscovery.getContractDetails('PauserRegistry', {
+            description:
+              'Defines and stores pauser and unpauser roles for EigenLayer contracts and the EigenDAServiceManager.',
+          }),
+        },
+        {
+          ...eigenDiscovery.getContractDetails('DelegationManager', {
+            description: `The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.`,
+          }),
+          ...eigenLayerUpgrades,
+        },
+        {
+          ...eigenDiscovery.getContractDetails('StrategyManager', {
+            description:
+              'The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.',
+          }),
+          ...eigenLayerUpgrades,
+        },
+        {
+          ...discovery.getContractDetails('EigenStrategy', {
+            description: `The EigenStrategy contract is responsible for managing the bEIGEN token strategy, representing the stake for the second EigenDA quorum.`,
+          }),
+          ...eigenLayerUpgrades,
+        },
+        {
+          ...eigenDiscovery.getContractDetails('EIGEN token', {
+            description: `The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults).
               EIGEN is a wrapper over a second token, bEIGEN, which will be used solely for intersubjective staking. Forking EIGEN means changing the canonical implementation of the bEIGEN token in the EIGEN token contract.`,
-        }),
-        ...EIGENUpgrades,
-      },
-    ],
+          }),
+          ...EIGENUpgrades,
+        },
+      ],
+    },
     risks: [
       {
         category: 'Funds can be lost if',

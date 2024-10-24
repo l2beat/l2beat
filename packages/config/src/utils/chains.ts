@@ -50,7 +50,10 @@ export function getProjectDevIdsForDA(daLayer: DaLayer): string[] {
   const bridges = daLayer.bridges.filter(
     (b) => b.type === 'OnChainBridge' || b.type === 'DAC',
   )
-  const addresses = bridges.flatMap((b) => b.contracts.addresses)
+  const addresses = bridges.flatMap((b) =>
+    Object.values(b.contracts.addresses).flat(),
+  )
+
   const permissions = bridges.flatMap((b) =>
     b.permissions.filter((p) => {
       const nonEoaAddresses = p.accounts.filter((a) => a.type !== 'EOA')

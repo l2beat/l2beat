@@ -6,7 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import { type ProjectDetailsSection } from '~/components/projects/sections/types'
 import { type RosetteValue } from '~/components/rosette/types'
-import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
+import { getMultiChainContractsSection } from '~/utils/project/contracts-and-permissions/get-multichain-contract-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/to-technology-risk'
 import { getDaOtherConsiderationsSection } from './get-da-other-considerations-section'
@@ -48,15 +48,13 @@ export function getProjectDetails({
 
   const contractsSection =
     daBridge.type !== 'NoBridge' && daBridge.type !== 'Enshrined'
-      ? getContractsSection(
+      ? getMultiChainContractsSection(
           {
             id: daBridge.id,
-            type: daLayer.type,
             isVerified,
             slug: daBridge.display.slug,
             contracts: daBridge.contracts,
             isUnderReview: daLayer.isUnderReview,
-            escrows: undefined,
           },
           contractsVerificationStatuses,
           manuallyVerifiedContracts,
@@ -145,7 +143,7 @@ export function getProjectDetails({
 
   if (contractsSection) {
     items.push({
-      type: 'ContractsSection',
+      type: 'MultichainContractsSection',
       props: {
         ...contractsSection,
         id: 'contracts',

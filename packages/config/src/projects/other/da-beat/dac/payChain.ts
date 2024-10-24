@@ -55,16 +55,18 @@ export const paychainDac = PolygoncdkDAC({
     membersCount: membersCountDAC,
     transactionDataType: DacTransactionDataType.TransactionData,
     contracts: {
-      addresses: [
-        discovery.getContractDetails('WirexPayChainValidium', {
-          description: `The main contract of the WirexPayChain zkEVM. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
-        }),
-        discovery.getContractDetails('WirexPayChainDAC', {
-          description:
-            'Validium committee contract that allows the admin to setup the members of the committee and stores the required amount of signatures threshold.',
-          ...upgradeability,
-        }),
-      ],
+      addresses: {
+        ethereum: [
+          discovery.getContractDetails('WirexPayChainValidium', {
+            description: `The main contract of the WirexPayChain zkEVM. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
+          }),
+          discovery.getContractDetails('WirexPayChainDAC', {
+            description:
+              'Validium committee contract that allows the admin to setup the members of the committee and stores the required amount of signatures threshold.',
+            ...upgradeability,
+          }),
+        ],
+      },
       risks: [],
     },
   },
