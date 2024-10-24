@@ -91,20 +91,16 @@ export function getProjectDetails({
     })
   }
 
-  /* items.push({
-    type: 'RiskAnalysisSection',
+  items.push({
+    type: 'GrisiniRiskAnalysisSection',
     props: {
       id: 'risk-analysis',
       title: 'Risk analysis',
-      rosetteType: 'pentagon',
-      rosetteValues: grisiniValues,
-      isUnderReview: !!daLayer.isUnderReview || daBridge.isUnderReview,
-      shouldHideRosette: daBridge.type === 'NoBridge',
-      warning: daBridge.display.warning,
-      redWarning: daBridge.display.redWarning,
+      isUnderReview: !!daLayer.isUnderReview,
       isVerified,
+      grisiniValues,
     },
-  })*/
+  })
 
   daLayerGroup.push({
     type: 'MarkdownSection',
