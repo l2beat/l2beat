@@ -1,10 +1,12 @@
 import { type ChartSectionProps } from './chart-section'
 import { type ContractsSectionProps } from './contracts/contracts-section'
+import { type MultiChainContractsSectionProps } from './contracts/multichain-contracts-section'
 import { type DetailedDescriptionSectionProps } from './detailed-description-section'
 import { type KnowledgeNuggetsSectionProps } from './knowledge-nuggets-section'
 import { type L3RiskAnalysisSectionProps } from './l3-risk-analysis-section'
 import { type MarkdownSectionProps } from './markdown-section'
 import { type MilestonesAndIncidentsSectionProps } from './milestones-and-incidents-section'
+import { type MultichainPermissionsSectionProps } from './permissions/multichain-permissions-section'
 import { type PermissionsSectionProps } from './permissions/permissions-section'
 import { type ExtendedProjectSectionProps } from './project-section'
 import { type RiskAnalysisSectionProps } from './risk-analysis-section'
@@ -104,9 +106,19 @@ export interface ProjectDetailsPermissionsSection {
   props: ProjectDetailsProps<PermissionsSectionProps>
 }
 
+export interface ProjectDetailsMultichainPermissionsSection {
+  type: 'MultichainPermissionsSection'
+  props: ProjectDetailsProps<MultichainPermissionsSectionProps>
+}
+
 export interface ProjectDetailsContractsSection {
   type: 'ContractsSection'
   props: ProjectDetailsProps<ContractsSectionProps>
+}
+
+export interface ProjectDetailsMultiChainContractsSection {
+  type: 'MultichainContractsSection'
+  props: ProjectDetailsProps<MultiChainContractsSectionProps>
 }
 
 export interface ProjectDetailsKnowledgeNuggetsSection {
@@ -134,7 +146,9 @@ export type ProjectDetailsSection = {
   | ProjectDetailsStateValidationSection
   | ProjectDetailsMarkdownSection
   | ProjectDetailsPermissionsSection
+  | ProjectDetailsMultichainPermissionsSection
   | ProjectDetailsContractsSection
+  | ProjectDetailsMultiChainContractsSection
   | ProjectDetailsKnowledgeNuggetsSection
   | ProjectDetailsUpcomingDisclaimer
 )

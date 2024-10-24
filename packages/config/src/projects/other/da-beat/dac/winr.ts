@@ -17,33 +17,37 @@ export const winrDac = AnytrustDAC({
   bridge: {
     createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     contracts: {
-      addresses: [
-        discovery.getContractDetails(
-          'SequencerInbox',
-          'Main entry point for the Sequencer submitting transaction batches.',
-        ),
-      ],
+      addresses: {
+        ethereum: [
+          discovery.getContractDetails(
+            'SequencerInbox',
+            'Main entry point for the Sequencer submitting transaction batches.',
+          ),
+        ],
+      },
       risks: [],
     },
-    permissions: [
-      // Members: DAC uses BLS sigs, not EOAs
-      {
-        name: 'Sequencers',
-        accounts: discovery.getPermissionsByRole('sequence'),
-        description:
-          'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
-        chain: discovery.chain,
-      },
-      {
-        name: 'RollupOwner',
-        accounts: discovery.getAccessControlRolePermission(
-          'UpgradeExecutor',
-          'EXECUTOR_ROLE',
-        ),
-        description:
-          'Multisig that can upgrade authorized batch posters via the UpgradeExecutor contract.',
-      },
-    ],
+    permissions: {
+      ethereum: [
+        // Members: DAC uses BLS sigs, not EOAs
+        {
+          name: 'Sequencers',
+          accounts: discovery.getPermissionsByRole('sequence'),
+          description:
+            'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
+          chain: discovery.chain,
+        },
+        {
+          name: 'RollupOwner',
+          accounts: discovery.getAccessControlRolePermission(
+            'UpgradeExecutor',
+            'EXECUTOR_ROLE',
+          ),
+          description:
+            'Multisig that can upgrade authorized batch posters via the UpgradeExecutor contract.',
+        },
+      ],
+    },
     chain: ChainId.ARBITRUM,
     requiredMembers: requiredSignatures,
     membersCount: membersCount,

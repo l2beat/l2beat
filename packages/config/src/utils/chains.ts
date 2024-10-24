@@ -50,13 +50,21 @@ export function getProjectDevIdsForDA(daLayer: DaLayer): string[] {
   const bridges = daLayer.bridges.filter(
     (b) => b.type === 'OnChainBridge' || b.type === 'DAC',
   )
-  const addresses = bridges.flatMap((b) => b.contracts.addresses)
-  const permissions = bridges.flatMap((b) =>
-    b.permissions.filter((p) => {
-      const nonEoaAddresses = p.accounts.filter((a) => a.type !== 'EOA')
-      return nonEoaAddresses.length > 0
-    }),
+  const addresses = bridges.flatMap((b) =>
+    Object.values(b.contracts.addresses).flat(),
   )
+
+  const permissions = bridges.flatMap((b) => {
+    const targetPermissions =
+      b.permissions !== 'UnderReview' ? b.permissions : {}
+
+    return Object.values(targetPermissions)
+      .flat()
+      .filter((p) => {
+        const nonEoaAddresses = p.accounts.filter((a) => a.type !== 'EOA')
+        return nonEoaAddresses.length > 0
+      })
+  })
 
   const devIds = [...addresses, ...permissions].map(
     (c) => c.chain ?? 'ethereum',
