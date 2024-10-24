@@ -52,6 +52,10 @@ function contractFromDiscovery(
 ): ApiProjectContract {
   const isUnverified = !!contract.unverified
   const isMultisig = !!contract.values?.['$members']
+  const isToken =
+    !!contract.values?.['name'] &&
+    !!contract.values?.['symbol'] &&
+    !!contract.values?.['decimals']
   const isDiamond = Array.isArray(contract.values?.['$implementation'])
   const isTimelock = !!contract.values?.['TIMELOCK_ADMIN_ROLE']
 
@@ -62,11 +66,13 @@ function contractFromDiscovery(
       ? 'Unverified'
       : isMultisig
         ? 'Multisig'
-        : isTimelock
-          ? 'Timelock'
-          : isDiamond
-            ? 'Diamond'
-            : 'Contract',
+        : isToken
+          ? 'Token'
+          : isTimelock
+            ? 'Timelock'
+            : isDiamond
+              ? 'Diamond'
+              : 'Contract',
     address: toAddress(chain, contract.address),
     // TODO: implement
     values: {},

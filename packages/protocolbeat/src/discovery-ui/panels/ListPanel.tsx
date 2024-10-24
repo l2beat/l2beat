@@ -11,6 +11,7 @@ import { IconMultisig } from '../icons/IconMultisig'
 import { IconTimelock } from '../icons/IconTimelock'
 import { useApiProject } from './useApiProject'
 import { IconContractUnverified } from '../icons/IconContractUnverified'
+import { IconToken } from '../icons/IconToken'
 
 export function ListPanel() {
   const response = useApiProject()
@@ -134,6 +135,7 @@ function AddressIcon(props: { type: ApiAddressEntry['type'] }) {
   const Icon = {
     EOA: IconEoa,
     Unverified: IconContractUnverified,
+    Token: IconToken,
     Multisig: IconMultisig,
     Timelock: IconTimelock,
     Diamond: IconDiamond,
