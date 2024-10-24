@@ -44,7 +44,7 @@ export const sophon: Layer2 = zkStackL2({
         'https://discord.gg/sophonhub',
       ],
     },
-    activityDataSource: 'Blockchain RPC'
+    activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['SOPH'],
   rpcUrl: 'https://rpc.sophon.xyz/',
