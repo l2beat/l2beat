@@ -16,7 +16,7 @@ import { initTvlModule } from './modules/tvl/modules/TvlModule'
 import { createUpdateMonitorModule } from './modules/update-monitor/UpdateMonitorModule'
 import { createVerifiersModule } from './modules/verifiers/VerifiersModule'
 import { Peripherals } from './peripherals/Peripherals'
-import { initBlockProviders } from './providers/init/initProviders'
+import { Providers } from './providers/Providers'
 import { Clock } from './tools/Clock'
 import { getErrorReportingMiddleware } from './tools/ErrorReporter'
 
@@ -38,8 +38,7 @@ export class Application {
 
     const http = new HttpClient()
     const peripherals = new Peripherals(database, http, logger)
-
-    const providers = initBlockProviders(config.activity, logger, http)
+    const providers = new Providers(config)
 
     const trackedTxsModule = createTrackedTxsModule(
       config,

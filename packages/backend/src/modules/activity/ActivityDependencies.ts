@@ -45,12 +45,20 @@ export class ActivityDependencies {
         )
       }
       case 'zksync': {
+        assert(
+          this.blockProviders.zksyncLiteClient,
+          'zksyncLiteClient should be defined',
+        )
         return new ZKsyncLiteTxsCountService(
           this.blockProviders.zksyncLiteClient,
           project.id,
         )
       }
       case 'starknet': {
+        assert(
+          this.blockProviders.starknetClient,
+          'starknetClient should be defined',
+        )
         return new StarknetTxsCountService(
           this.blockProviders.starknetClient,
           project.id,
@@ -58,18 +66,30 @@ export class ActivityDependencies {
         )
       }
       case 'loopring': {
+        assert(
+          this.blockProviders.loopringClient,
+          'loopringClient should be defined',
+        )
         return new LoopringTxsCountService(
           this.blockProviders.loopringClient,
           project.id,
         )
       }
       case 'degate': {
+        assert(
+          this.blockProviders.degateClient,
+          'degateClient should be defined',
+        )
         return new DegateTxsCountService(
           this.blockProviders.degateClient,
           project.id,
         )
       }
       case 'starkex': {
+        assert(
+          this.blockProviders.starkexClient,
+          'starkexClient should be defined',
+        )
         return new StarkexTxsCountService(
           this.blockProviders.starkexClient,
           project.id,

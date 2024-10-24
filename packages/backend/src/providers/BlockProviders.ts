@@ -1,4 +1,12 @@
-import { BlockIndexerClient, BlockProvider, RpcClient2 } from '@l2beat/shared'
+import { Logger, RateLimiter } from '@l2beat/backend-tools'
+import {
+  BlockIndexerClient,
+  BlockProvider,
+  HttpClient,
+  HttpClient2,
+  RetryHandler,
+  RpcClient2,
+} from '@l2beat/shared'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
 import { ActivityConfig } from '../config/Config'
 import { BlockTimestampProvider } from '../modules/tvl/services/BlockTimestampProvider'
@@ -12,11 +20,13 @@ export class BlockProviders {
   constructor(
     private readonly config: ActivityConfig,
     private readonly evmClients: RpcClient2[],
-    readonly zksyncLiteClient: ZksyncLiteClient,
-    readonly starknetClient: StarknetClient,
-    readonly loopringClient: LoopringClient,
-    readonly degateClient: DegateClient,
-    readonly starkexClient: StarkexClient,
+    // there needs to be possiblity of undefined,
+    // because a chain can possibly be disabled
+    readonly zksyncLiteClient: ZksyncLiteClient | undefined,
+    readonly starknetClient: StarknetClient | undefined,
+    readonly loopringClient: LoopringClient | undefined,
+    readonly degateClient: DegateClient | undefined,
+    readonly starkexClient: StarkexClient | undefined,
     private readonly indexerClients: BlockIndexerClient[],
   ) {}
 
@@ -40,18 +50,22 @@ export class BlockProviders {
         return new BlockTimestampProvider({ indexerClients, blockClients })
       }
       case 'zksync': {
+        assert(this.zksyncLiteClient, 'zksyncLiteClient should be defined')
         const blockClients = [this.zksyncLiteClient]
         return new BlockTimestampProvider({ indexerClients, blockClients })
       }
       case 'starknet': {
+        assert(this.starknetClient, 'starknetClient should be defined')
         const blockClients = [this.starknetClient]
         return new BlockTimestampProvider({ indexerClients, blockClients })
       }
       case 'loopring': {
+        assert(this.loopringClient, 'loopringClient should be defined')
         const blockClients = [this.loopringClient]
         return new BlockTimestampProvider({ indexerClients, blockClients })
       }
       case 'degate': {
+        assert(this.degateClient, 'degateClient should be defined')
         const blockClients = [this.degateClient]
         return new BlockTimestampProvider({ indexerClients, blockClients })
       }
@@ -62,4 +76,88 @@ export class BlockProviders {
         assertUnreachable(project.config)
     }
   }
+}
+
+export function initBlockProviders(config: ActivityConfig): BlockProviders {
+  let zksyncLiteClient: ZksyncLiteClient | undefined
+  let starknetClient: StarknetClient | undefined
+  let loopringClient: LoopringClient | undefined
+  let degateClient: DegateClient | undefined
+  let starkexClient: StarkexClient | undefined
+
+  const evmClients: RpcClient2[] = []
+  const indexerClients: BlockIndexerClient[] = []
+
+  const http = new HttpClient()
+  const http2 = new HttpClient2()
+  const logger = Logger.SILENT
+
+  for (const project of config.projects) {
+    switch (project.config.type) {
+      case 'rpc': {
+        // TODO: handle multiple urls
+        const rpcClient = new RpcClient2({
+          url: project.config.url,
+          http: http2,
+          rateLimiter: new RateLimiter({
+            callsPerMinute: project.config.callsPerMinute,
+          }),
+          // TODO: handle zkfair
+          retryHandler: RetryHandler.RELIABLE_API(logger),
+          logger,
+          chain: project.id,
+        })
+
+        evmClients.push(rpcClient)
+
+        break
+      }
+      case 'zksync': {
+        zksyncLiteClient = new ZksyncLiteClient(
+          http,
+          logger,
+          project.config.url,
+          project.config.callsPerMinute,
+        )
+        break
+      }
+      case 'starknet': {
+        starknetClient = new StarknetClient(project.config.url, http, {
+          callsPerMinute: project.config.callsPerMinute,
+        })
+        break
+      }
+      case 'loopring': {
+        loopringClient = new LoopringClient(http, logger, project.config.url, {
+          callsPerMinute: project.config.callsPerMinute,
+        })
+        break
+      }
+      case 'degate': {
+        degateClient = new DegateClient(http, logger, project.config.url, {
+          callsPerMinute: project.config.callsPerMinute,
+        })
+        break
+      }
+      case 'starkex': {
+        starkexClient = new StarkexClient(config.starkexApiKey, http, logger, {
+          callsPerMinute: config.starkexCallsPerMinute,
+        })
+        break
+      }
+      default:
+        assertUnreachable(project.config)
+    }
+  }
+
+  return new BlockProviders(
+    config,
+    evmClients,
+    zksyncLiteClient,
+    starknetClient,
+    loopringClient,
+    degateClient,
+    starkexClient,
+    indexerClients,
+  )
 }
