@@ -147,7 +147,6 @@ export const layerzerov2oft: Bridge = {
         {
           category: 'Funds can be stolen if',
           text: 'the OApp owner upgrades the OFT(Adapter) contract maliciously.',
-          isCritical: true,
         },
       ],
       references: [
@@ -183,12 +182,10 @@ export const layerzerov2oft: Bridge = {
         {
           category: 'Funds can be stolen if',
           text: 'the Executor and the Verifiers collude to submit fraudulent block hash and relay fraudulent transfer.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: 'the OApp owner changes the security stack maliciously.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',

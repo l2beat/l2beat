@@ -68,17 +68,14 @@ export const hyphen: Bridge = {
         {
           category: 'Users can be censored if',
           text: 'the Watch Towers ignore deposits from selected users.',
-          isCritical: true,
         },
         {
           category: 'Users can be censored if',
           text: "the Executors don't act on deposits from selected users.",
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: "an Executor asks LiquidityPool to release funds to a user that hasn't made any corresponding deposit on other chain.",
-          isCritical: true,
         },
         {
           category: 'Funds can be frozen if',
