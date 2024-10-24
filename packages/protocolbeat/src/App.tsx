@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import type { SimpleNode } from './api/SimpleNode'
 import { merge } from './api/merge'
@@ -24,6 +24,11 @@ export function App() {
   const selectedIds = useStore((state) => state.selectedNodeIds)
   const selectedNodes = nodes.filter((x) => selectedIds.includes(x.id))
   const showSidebar = selectedNodes.length > 0
+
+  const updateNodes = useStore((state) => state.updateNodes)
+  useEffect(() => {
+    updateNodes(nodes)
+  }, [updateNodes, nodes])
 
   function clear() {
     setNodes([])
@@ -80,7 +85,7 @@ export function App() {
         )}
       >
         <div className="relative flex h-full w-full items-center justify-center">
-          <Viewport nodes={nodes} />
+          <Viewport />
 
           <div className="absolute top-0 w-full p-2">
             <div className="flex flex-row content-center items-center justify-between">

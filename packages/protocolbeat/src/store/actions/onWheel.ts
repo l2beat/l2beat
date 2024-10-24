@@ -10,14 +10,14 @@ import {
 export function onWheel(
   state: State,
   event: WheelEvent,
-  view: HTMLElement,
+  container: HTMLElement,
 ): Partial<State> {
   event.preventDefault()
   const { deltaX, deltaY } = getWheelDelta(event)
   const { offsetX, offsetY, scale } = state.transform
 
   if (event.ctrlKey || event.metaKey) {
-    const rect = view.getBoundingClientRect()
+    const rect = container.getBoundingClientRect()
 
     let desiredChange = -deltaY * ZOOM_SENSITIVITY
     if (event.ctrlKey && !state.pressed.ctrlKey) {
