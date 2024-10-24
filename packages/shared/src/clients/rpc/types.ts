@@ -36,3 +36,11 @@ export const EVMBlock = z.object({
   hash: z.string(),
   number: Quantity.decode.transform((n) => Number(n)),
 })
+
+export type RPCError = z.infer<typeof RPCError>
+export const RPCError = z.object({
+  error: z.object({
+    code: z.number(),
+    message: z.string(),
+  }),
+})
