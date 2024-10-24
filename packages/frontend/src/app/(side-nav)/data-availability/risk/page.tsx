@@ -26,7 +26,7 @@ export default async function Page() {
             <DaRiskTable items={publicSystems} />
           </DirectoryTabsContent>
           <DirectoryTabsContent value="custom">
-            <DaRiskTable items={customSystems} />
+            <DaRiskTable items={customSystems} excludeBridge />
           </DirectoryTabsContent>
         </DirectoryTabs>
       </div>
