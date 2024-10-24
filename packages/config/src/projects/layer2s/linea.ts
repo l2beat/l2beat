@@ -129,6 +129,7 @@ export const linea: Layer2 = {
       discovery.getEscrowDetails({
         address: EthereumAddress('0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319'),
         sinceTimestamp: new UnixTime(1691060675),
+        excludedTokens: ['rsETH'],
         tokens: '*',
       }),
     ],

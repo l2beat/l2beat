@@ -73,7 +73,7 @@ export const base: Layer2 = opStackL2({
     },
   ],
   badges: [Badge.Infra.Superchain, Badge.Other.L3HostChain],
-  nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN'],
+  nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'rsETH'],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0x9de443AdC5A411E83F1878Ef24C3F52C61571e72'),
