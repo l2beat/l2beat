@@ -28,7 +28,7 @@ const getCachedDaProjectTvl = cache(
 
     return (Object.keys(bridgeUsedIn) as T[]).reduce(
       (acc, curr) => {
-        const projectIds = bridgeUsedIn[curr as keyof typeof bridgeUsedIn]
+        const projectIds = bridgeUsedIn[curr]
         if (projectIds.length === 0) {
           acc[curr] = 0
           return acc

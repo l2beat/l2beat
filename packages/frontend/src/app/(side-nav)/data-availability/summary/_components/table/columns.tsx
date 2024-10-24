@@ -70,7 +70,7 @@ const daBridgeColumn = columnHelper.accessor('daBridge', {
 
 const risksColumn = columnHelper.display({
   header: 'Risks',
-  cell: (ctx) => {
+  cell: () => {
     return null
   },
   meta: {

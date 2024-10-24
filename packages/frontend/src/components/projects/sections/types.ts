@@ -1,7 +1,7 @@
 import { type ChartSectionProps } from './chart-section'
 import { type ContractsSectionProps } from './contracts/contracts-section'
 import { type DetailedDescriptionSectionProps } from './detailed-description-section'
-import { GroupSectionProps } from './group-section'
+import { type GroupSectionProps } from './group-section'
 import { type KnowledgeNuggetsSectionProps } from './knowledge-nuggets-section'
 import { type L3RiskAnalysisSectionProps } from './l3-risk-analysis-section'
 import { type MarkdownSectionProps } from './markdown-section'

@@ -5,7 +5,7 @@ export function GrisiniDetails({ items }: { items: GrisiniValue[] }) {
   return (
     <div className="flex w-[264px] flex-col gap-4">
       {items.map((item) => (
-        <SingleGrisiniDetails {...item} />
+        <SingleGrisiniDetails key={item.name} {...item} />
       ))}
     </div>
   )

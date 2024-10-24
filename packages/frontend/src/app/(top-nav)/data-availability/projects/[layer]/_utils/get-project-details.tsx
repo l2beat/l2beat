@@ -6,7 +6,6 @@ import {
 } from '@l2beat/shared-pure'
 import { type GrisiniValue } from '~/components/grisini/types'
 import { type ProjectDetailsSection } from '~/components/projects/sections/types'
-import { type RosetteValue } from '~/components/rosette/types'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/to-technology-risk'
@@ -116,7 +115,7 @@ export function getProjectDetails({
         type: 'da-layer-technology',
         slug: daLayer.display.slug,
       },
-      content: daLayer.technology,
+      content: daLayer.technology.description,
       risks: daLayer.technology.risks?.map(toTechnologyRisk),
     },
   })

@@ -1,9 +1,10 @@
-import { ProjectDetailsSection } from './types'
+import { type ProjectDetailsSection } from './types'
 
 export interface GroupSectionProps {
   // This is a circular ref, but it's fine
   items: ProjectDetailsSection[]
   id: string
+  title: string
   sectionOrder: number
 }
 

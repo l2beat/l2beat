@@ -5,10 +5,7 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
   DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
   DrawerTrigger,
 } from '~/components/core/drawer'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
@@ -122,9 +119,9 @@ export function DaProjectSummary({ project }: Props) {
                             <div className="flex flex-1 items-center justify-end pr-1 text-sm font-bold text-primary md:pr-12">
                               {formatCurrency(bridge.tvs, 'usd')}
                             </div>
-                            <div className="hidden flex-1 flex flex-row items-center md:flex">
+                            <div className="hidden flex-1 flex-row items-center md:flex">
                               <ProjectsUsedIn
-                                className="flex-wrap justify-start h-5"
+                                className="h-5 flex-wrap justify-start"
                                 usedIn={bridge.usedIn}
                                 maxProjects={4}
                               />
