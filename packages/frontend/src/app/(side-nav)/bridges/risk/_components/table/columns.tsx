@@ -3,7 +3,7 @@ import { NoInfoCell } from '~/components/table/cells/no-info-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { RiskCell } from '~/components/table/cells/risk-cell'
 import { TypeCell } from '~/components/table/cells/type-cell'
-import { sortSentiments } from '~/components/table/sorting/functions/sentiment-sorting'
+import { sortBySentiment } from '~/components/table/sorting/functions/sort-by-sentiment'
 import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
 import { type BridgesRiskEntry } from '~/server/features/bridges/get-bridges-risk-entries'
 
@@ -12,7 +12,7 @@ const sortBridgeRisks =
   (a: Row<BridgesRiskEntry>, b: Row<BridgesRiskEntry>) => {
     return !a.original[key] || !b.original[key]
       ? -1
-      : sortSentiments(a.original[key], b.original[key])
+      : sortBySentiment(a.original[key], b.original[key])
   }
 
 const columnHelper = createColumnHelper<BridgesRiskEntry>()
