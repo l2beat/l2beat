@@ -198,7 +198,10 @@ function Panel(props: { id: PanelId; body: ComponentType<{ kind: PanelId }> }) {
   const HeaderWrapper = isHover ? HoverHeader : Fragment
   return (
     <div
-      className={clsx('flex flex-col', hidden && 'hidden')}
+      className={clsx(
+        'flex flex-col border-black border-r',
+        hidden && 'hidden',
+      )}
       id={`panel-${props.id}`}
     >
       <HeaderWrapper>
@@ -224,7 +227,7 @@ function HoverHeader(props: { children: ReactNode }) {
   return (
     <div
       style={{ left: mouse.x - 100, top: mouse.y - 18 }}
-      className="fixed h-[36px] w-[200px] cursor-move select-none"
+      className="fixed h-[36px] w-[200px] cursor-move select-none border-black border-x"
     >
       {props.children}
     </div>

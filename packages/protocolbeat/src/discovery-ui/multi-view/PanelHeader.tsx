@@ -15,7 +15,7 @@ export function PanelHeader(props: { id: PanelId }) {
   return (
     <div
       className={clsx(
-        'flex h-[36px] select-none border border-black border-y-2 px-[7px] py-1',
+        'group flex h-[36px] select-none border-black border-y px-[7px] py-1',
         isActive ? 'bg-blue-200' : 'bg-slate-100',
       )}
     >
@@ -35,7 +35,7 @@ export function PanelHeader(props: { id: PanelId }) {
           !isFullScreen ? (e) => e.button === 0 && pickUp(props.id) : undefined
         }
       />
-      <div className="flex gap-1">
+      <div className="hidden gap-1 group-hover:flex">
         <button className="w-4" onClick={() => toggleFullScren(props.id)}>
           {isFullScreen ? <IconFullscreenExit /> : <IconFullscreen />}
         </button>

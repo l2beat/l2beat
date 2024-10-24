@@ -49,7 +49,7 @@ export function BottomBar() {
   const altKey = navigator.platform.includes('Mac') ? 'Opt' : 'Alt'
 
   return (
-    <div className="flex h-8 items-center justify-between px-2">
+    <div className="flex h-8 items-center justify-between bg-blue-500 px-2 text-white">
       <div>Bottom Bar</div>
       <div className="flex gap-2">
         <button onClick={() => setHintOpen((open) => !open)}>
