@@ -1,5 +1,5 @@
 import { getEnv } from '@l2beat/backend-tools'
-import { BlockExplorerClient, HttpClient } from '@l2beat/shared'
+import { BlockIndexerClient, HttpClient } from '@l2beat/shared'
 import { assert, Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
@@ -9,7 +9,7 @@ import { ContractSourceResult } from './types'
 export type AddressVerificationStatus = 'verified' | 'unverified' | 'EOA'
 
 export async function isContractVerified(
-  etherscanClient: BlockExplorerClient,
+  etherscanClient: BlockIndexerClient,
   provider: providers.JsonRpcProvider,
   address: EthereumAddress,
 ): Promise<AddressVerificationStatus> {
@@ -27,7 +27,7 @@ export async function isContractVerified(
   return 'verified'
 }
 
-export function getEtherscanClient(chain: string): BlockExplorerClient {
+export function getEtherscanClient(chain: string): BlockIndexerClient {
   const env = getEnv()
   const chainConfig = chains.find((c) => c.name === chain)
   assert(chainConfig, `No chain config for chain: ${chain}`)
@@ -40,11 +40,12 @@ export function getEtherscanClient(chain: string): BlockExplorerClient {
   const ENV_NAME = chain.toUpperCase()
   const ETHERSCAN_API_KEY = env.string(`${ENV_NAME}_ETHERSCAN_API_KEY`)
 
-  return new BlockExplorerClient(new HttpClient(), {
+  return new BlockIndexerClient(new HttpClient(), {
     type: 'Etherscan',
     apiKey: ETHERSCAN_API_KEY,
     url: chainConfig.explorerApi.url,
     maximumCallsForBlockTimestamp: 1, // not important here
+    chain: chainConfig.name,
   })
 }
 
