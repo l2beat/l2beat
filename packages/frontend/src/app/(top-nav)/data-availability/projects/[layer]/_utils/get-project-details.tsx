@@ -169,6 +169,7 @@ export function getProjectDetails({
       props: {
         id: 'da-layer',
         title: daLayer.display.name,
+        description: daLayer.display.description,
         items: daLayerItems,
       },
     },
@@ -177,6 +178,7 @@ export function getProjectDetails({
       props: {
         id: 'da-bridge',
         title: daBridge.display.name,
+        description: daBridge.display.description,
         items: daBridgeItems,
       },
     },
