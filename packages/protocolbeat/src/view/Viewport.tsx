@@ -2,9 +2,8 @@ import { useEffect } from 'react'
 
 import type { SimpleNode } from '../api/SimpleNode'
 import { useStore } from '../store/store'
-import { Connection } from './Connection'
-import { NodeView } from './NodeView'
-import { ScalableView } from './ScalableView'
+import { ConnectionsCanvas } from './ConnectionsCanvas'
+import { NodeViewCanvas } from './NodeViewCanvas'
 import { useViewport } from './useViewport'
 
 export interface ViewportProps {
@@ -20,10 +19,7 @@ export function Viewport(props: ViewportProps) {
     updateNodes(props.nodes)
   }, [updateNodes, props.nodes])
 
-  const setHiddenNodes = useStore((state) => state.setHiddenNodes)
-
   const nodes = useStore((state) => state.nodes)
-  const selectedNodeIds = useStore((state) => state.selectedNodeIds)
   const hiddenNodesIds = useStore((state) => state.hiddenNodesIds)
 
   const transform = useStore((state) => state.transform)
@@ -33,50 +29,18 @@ export function Viewport(props: ViewportProps) {
     (node) => !hiddenNodesIds.includes(node.simpleNode.id),
   )
 
-  function hideNode(nodeId: string) {
-    setHiddenNodes((nodes) => [...nodes, nodeId])
-  }
-
   return (
     <div
       ref={containerRef}
       className="relative h-full w-full overflow-hidden rounded-lg bg-white"
     >
-      <ScalableView ref={viewRef} transform={transform}>
-        {visibleNodes.map((node) =>
-          node.fields.map((field, i) => {
-            const shouldHide =
-              !field.connection ||
-              hiddenNodesIds.find((id) => id === field.connection?.nodeId)
-
-            if (shouldHide) {
-              return null
-            }
-
-            return (
-              <Connection
-                key={`${node.simpleNode.id}-${i}-${field.connection.nodeId}`}
-                from={field.connection.from}
-                to={field.connection.to}
-                isHighlighted={
-                  selectedNodeIds.includes(node.simpleNode.id) ||
-                  selectedNodeIds.includes(field.connection.nodeId)
-                }
-              />
-            )
-          }),
-        )}
-        {visibleNodes.map((node) => (
-          <NodeView
-            key={node.simpleNode.id}
-            node={node}
-            selected={selectedNodeIds.includes(node.simpleNode.id)}
-            discovered={node.simpleNode.discovered}
-            onHideNode={hideNode}
-            loading={!!props.loading[node.simpleNode.id]}
-          />
-        ))}
-      </ScalableView>
+      <div
+        ref={viewRef}
+        className="relative h-full w-full origin-[0_0] select-none"
+      >
+        <ConnectionsCanvas nodes={visibleNodes} transform={transform} />
+        <NodeViewCanvas nodes={visibleNodes} transform={transform} />
+      </div>
       {mouseSelection && (
         <div
           className="absolute border border-blue-600 bg-blue-100 bg-opacity-30"

@@ -5,11 +5,7 @@ export interface State {
   readonly hiddenNodesIds: readonly string[]
   readonly nodes: readonly Node[]
   readonly selection?: Box
-  readonly transform: {
-    readonly offsetX: number
-    readonly offsetY: number
-    readonly scale: number
-  }
+  readonly transform: CameraTransform
   readonly pressed: {
     readonly leftMouseButton: boolean
     readonly middleMouseButton: boolean
@@ -41,6 +37,12 @@ export interface State {
     Record<string, { readonly x: number; readonly y: number }>
   >
   readonly saveLayoutStartTime?: ReturnType<typeof setTimeout>
+}
+
+export interface CameraTransform {
+  readonly offsetX: number
+  readonly offsetY: number
+  readonly scale: number
 }
 
 export interface Node {

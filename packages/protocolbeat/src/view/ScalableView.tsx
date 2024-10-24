@@ -14,9 +14,6 @@ export const ScalableView = forwardRef(
       <div
         ref={ref}
         className="relative h-full w-full origin-[0_0] select-none"
-        style={{
-          transform: `translate(${props.transform.offsetX}px, ${props.transform.offsetY}px) scale(${props.transform.scale})`,
-        }}
       >
         {/* infinite grid */}
         <div
@@ -37,8 +34,6 @@ export const ScalableView = forwardRef(
         >
           <div className="pointer-events-none absolute top-[-220%] left-[-220%] h-[440%] w-[440%] bg-[url(/grid.svg)] bg-center" />
         </div>
-
-        {props.children}
       </div>
     )
   },
