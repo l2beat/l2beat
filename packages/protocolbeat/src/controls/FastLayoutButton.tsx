@@ -1,5 +1,17 @@
 import { Node } from '../store/State'
+import { useStore } from '../store/store'
 import { NodeLocations } from '../store/utils/storageParsing'
+import { ControlButton } from './ControlButton'
+
+export function FastLayoutButton() {
+  const nodes = useStore((state) => state.nodes)
+  const updateNodeLocations = useStore((state) => state.updateNodeLocations)
+  return (
+    <ControlButton onClick={() => updateNodeLocations(autoLayout(nodes))}>
+      Fast layout
+    </ControlButton>
+  )
+}
 
 const X_SPACING = 200
 const Y_SPACING_SM = 20

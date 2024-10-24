@@ -1,10 +1,28 @@
 import type { SimpleNode } from '../../api/SimpleNode'
+import { merge } from '../../api/merge'
 import { White } from '../../utils/color'
 import type { Connection, Node, State } from '../State'
 import { NODE_SPACING, NODE_WIDTH } from '../utils/constants'
 import { persistNodeState, recallNodeState } from '../utils/localStore'
 import { NodeColors, type NodeLocations } from '../utils/storageParsing'
 import { updateNodePositions } from '../utils/updateNodePositions'
+
+export function loadNodes(
+  state: State,
+  projectId: string,
+  nodes: SimpleNode[],
+): Partial<State> {
+  return {
+    projectId,
+    ...updateNodes(
+      state,
+      merge(
+        state.nodes.map((x) => x.simpleNode),
+        nodes,
+      ),
+    ),
+  }
+}
 
 export function updateNodes(state: State, nodes: SimpleNode[]): Partial<State> {
   const oldNodes = new Map(

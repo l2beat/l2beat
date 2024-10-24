@@ -1,38 +1,38 @@
 import clsx from 'clsx'
 import { type ForwardedRef, type ReactNode, forwardRef } from 'react'
 
-import type { State } from '../store/State'
+import { useStore } from '../store/store'
 
 export interface ScalableViewProps {
   children: ReactNode
-  transform: State['transform']
 }
 
 export const ScalableView = forwardRef(
   (props: ScalableViewProps, ref: ForwardedRef<HTMLDivElement>) => {
+    const transform = useStore((state) => state.transform)
     return (
       <div
         ref={ref}
         className="relative h-full w-full origin-[0_0] select-none"
         style={{
-          transform: `translate(${props.transform.offsetX}px, ${props.transform.offsetY}px) scale(${props.transform.scale})`,
+          transform: `translate(${transform.offsetX}px, ${transform.offsetY}px) scale(${transform.scale})`,
         }}
       >
         {/* infinite grid */}
         <div
           className={clsx(
             'absolute h-full w-full',
-            props.transform.scale < 0.5 && 'hidden',
+            transform.scale < 0.5 && 'hidden',
           )}
           style={{
             left:
-              (-props.transform.offsetX +
-                modulo(props.transform.offsetX, 20 * props.transform.scale)) /
-              props.transform.scale,
+              (-transform.offsetX +
+                modulo(transform.offsetX, 20 * transform.scale)) /
+              transform.scale,
             top:
-              (-props.transform.offsetY +
-                modulo(props.transform.offsetY, 20 * props.transform.scale)) /
-              props.transform.scale,
+              (-transform.offsetY +
+                modulo(transform.offsetY, 20 * transform.scale)) /
+              transform.scale,
           }}
         >
           <div className="pointer-events-none absolute top-[-220%] left-[-220%] h-[440%] w-[440%] bg-[url(/grid.svg)] bg-center" />
