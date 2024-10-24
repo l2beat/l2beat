@@ -15,7 +15,7 @@ import { DayTargetIndexer } from './indexers/DayTargetIndexer'
 import { ActivityIndexer } from './indexers/types'
 import { getBatchSizeFromCallsPerMinute } from './utils/getBatchSizeFromCallsPerMinute'
 
-export function createActivityModule(
+export function initActivityModule(
   config: Config,
   logger: Logger,
   clock: Clock,

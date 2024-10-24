@@ -5,7 +5,7 @@ import { createDatabase } from '@l2beat/database'
 import { ApiServer } from './api/ApiServer'
 import { Config } from './config'
 import { ApplicationModule } from './modules/ApplicationModule'
-import { createActivityModule } from './modules/activity/ActivityModule'
+import { initActivityModule } from './modules/activity/ActivityModule'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
@@ -50,7 +50,7 @@ export class Application {
 
     const modules: (ApplicationModule | undefined)[] = [
       createMetricsModule(config),
-      createActivityModule(
+      initActivityModule(
         config,
         logger,
         clock,
