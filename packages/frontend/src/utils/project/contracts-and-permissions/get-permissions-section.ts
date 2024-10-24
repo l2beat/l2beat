@@ -1,4 +1,5 @@
 import {
+  DaBridge,
   type Bridge,
   type DaLayer,
   type Layer2,
@@ -35,7 +36,7 @@ type ProjectParams = {
     | undefined
   isUnderReview: boolean
 } & (
-  | { type: (Layer2 | Bridge | DaLayer)['type'] }
+  | { type: (Layer2 | Bridge | DaBridge)['type'] }
   | { type: Layer3['type']; hostChain: string }
 )
 

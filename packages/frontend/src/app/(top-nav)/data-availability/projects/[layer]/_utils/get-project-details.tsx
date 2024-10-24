@@ -1,5 +1,6 @@
 import { type DaBridge, type DaLayer } from '@l2beat/config'
 import {
+  notUndefined,
   type ContractsVerificationStatuses,
   type ImplementationChangeReportApiResponse,
   type ManuallyVerifiedContracts,
@@ -36,9 +37,9 @@ export function getProjectDetails({
     daBridge.type !== 'NoBridge' && daBridge.type !== 'Enshrined'
       ? getPermissionsSection(
           {
-            id: daLayer.id,
-            type: daLayer.type,
-            isUnderReview: !!daLayer.isUnderReview,
+            id: daBridge.id,
+            type: daBridge.type,
+            isUnderReview: !!daBridge.isUnderReview,
             permissions: daBridge.permissions,
             nativePermissions: undefined,
           },
@@ -52,11 +53,11 @@ export function getProjectDetails({
       ? getContractsSection(
           {
             id: daBridge.id,
-            type: daLayer.type,
+            type: daBridge.type,
             isVerified,
             slug: daBridge.display.slug,
             contracts: daBridge.contracts,
-            isUnderReview: daLayer.isUnderReview,
+            isUnderReview: daBridge.isUnderReview,
             escrows: undefined,
           },
           contractsVerificationStatuses,
@@ -76,21 +77,8 @@ export function getProjectDetails({
     daBridge,
   )
 
-  const daLayerItems: ProjectDetailsSection[] = []
-  const daBridgeItems: ProjectDetailsSection[] = []
-
-  if (riskSummarySection.riskGroups.length > 0) {
-    daLayerItems.push({
-      type: 'RiskSummarySection',
-      props: {
-        id: 'risk-summary',
-        title: 'Risk summary',
-        ...riskSummarySection,
-      },
-    })
-  }
-
-  daLayerItems.push({
+  const daLayerItems: ProjectDetailsSection[] = 
+  [{
     type: 'GrisiniRiskAnalysisSection',
     props: {
       id: 'risk-analysis',
@@ -99,13 +87,12 @@ export function getProjectDetails({
       isVerified,
       grisiniValues,
     },
-  })
-
-  daLayerItems.push({
+  },
+  {
     type: 'MarkdownSection',
     props: {
       id: 'da-layer-technology',
-      title: 'DA Layer technology',
+      title: 'Technology',
       diagram: {
         type: 'da-layer-technology',
         slug: daLayer.display.slug,
@@ -113,57 +100,51 @@ export function getProjectDetails({
       content: daLayer.technology.description,
       risks: daLayer.technology.risks?.map(toTechnologyRisk),
     },
-  })
+  }]
 
-    daBridgeItems.push({
-    type: 'MarkdownSection',
-    props: {
-      id: 'da-bridge-technology',
-      title: 'DA Bridge technology',
-      diagram: {
-        type: 'da-bridge-technology',
-        slug: `${daLayer.display.slug}-${daBridge.display.slug}`,
+
+  const daBridgeItems: ProjectDetailsSection[] = [
+    {
+      type: 'MarkdownSection',
+      props: {
+        id: 'da-bridge-technology',
+        title: 'Technology',
+        diagram: {
+          type: 'da-bridge-technology',
+          slug: `${daLayer.display.slug}-${daBridge.display.slug}`,
+        },
+        content: daBridge.technology.description,
+        risks: daBridge.technology.risks?.map(toTechnologyRisk),
       },
-      content: daBridge.technology.description,
-      risks: daBridge.technology.risks?.map(toTechnologyRisk),
     },
-  })
-
-  if (permissionsSection) {
-    daBridgeItems.push({
+    permissionsSection ? ({
       type: 'PermissionsSection',
       props: {
         ...permissionsSection,
         permissionedEntities: getPermissionedEntities(daBridge),
         id: 'permissions',
-        title: 'DA Bridge permissions',
+        title: 'Permissions',
       },
-    })
-  }
-
-  if (contractsSection) {
-    daBridgeItems.push({
+    }) : undefined,
+    contractsSection ? {
       type: 'ContractsSection',
       props: {
         ...contractsSection,
         id: 'contracts',
-        title: 'DA Bridge contracts',
+        title: 'Contracts',
       },
-    })
-  }
-
-  if (otherConsiderationsSection.items.length > 0) {
-    daBridgeItems.push({
-      type: 'TechnologySection',
-      props: {
-        id: 'other-considerations',
-        title: 'Other considerations',
-        ...otherConsiderationsSection,
-      },
-    })
-  }
+    } : undefined
+  ].filter(notUndefined)
 
   const items: ProjectDetailsSection[] = [
+    riskSummarySection.riskGroups.length > 0 ? {
+      type: 'RiskSummarySection',
+      props: {
+        id: 'risk-summary',
+        title: 'Risk summary',
+        ...riskSummarySection,
+      },
+    } : undefined,
     {
       type: 'Group',
       props: {
@@ -182,7 +163,15 @@ export function getProjectDetails({
         items: daBridgeItems,
       },
     },
-  ]
+    otherConsiderationsSection.items.length > 0 ? {
+      type: 'TechnologySection',
+      props: {
+        id: 'other-considerations',
+        title: 'Other considerations',
+        ...otherConsiderationsSection,
+      },
+    } : undefined
+  ].filter(notUndefined)
 
   return items
 }

@@ -1,6 +1,7 @@
 import {
   type Bridge,
   CONTRACTS,
+  DaBridge,
   type DaLayer,
   type Layer2,
   type Layer3,
@@ -44,7 +45,7 @@ type ProjectParams = {
   escrows: ScalingProjectEscrow[] | undefined
 } & (
   | {
-      type: (Layer2 | Bridge | DaLayer)['type']
+      type: (Layer2 | Bridge | DaBridge)['type']
     }
   | {
       type: Layer3['type']
