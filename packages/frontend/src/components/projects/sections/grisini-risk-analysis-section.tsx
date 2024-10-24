@@ -1,12 +1,8 @@
 import { SingleGrisiniDetails } from '~/components/grisini/single-grisini-details'
 import { type GrisiniValue } from '~/components/grisini/types'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import { ShieldIcon } from '~/icons/shield'
-import { UnverifiedIcon } from '~/icons/unverified'
 import { UnderReviewBadge } from '../../badge/under-review-badge'
 import { Markdown } from '../../markdown/markdown'
-import { BigPentagonRosette } from '../../rosette/pentagon/big-pentagon-rosette'
-import { BigPizzaRosette } from '../../rosette/pizza/big-pizza-rosette'
 import { type RosetteValue } from '../../rosette/types'
 import { SentimentText } from '../../sentiment-text'
 import { WarningBar } from '../../warning-bar'
@@ -30,8 +26,8 @@ export function GrisiniRiskAnalysisSection({
     )
   return (
     <ProjectSection {...sectionProps} isUnderReview={isUnderReview}>
-      {Object.values(grisiniValues).map((value) => (
-        <div className="flex flex-col gap-2 key={value.name}">
+      {Object.values(grisiniValues).map((value, key) => (
+        <div key={key} className="flex flex-col gap-2 key={value.name}">
           <SingleGrisiniDetails {...value} />
           {value.description && (
             <Markdown className="mt-1.5 font-normal leading-snug text-black/80 dark:text-white/80 md:text-lg">
