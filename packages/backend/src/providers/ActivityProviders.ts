@@ -3,12 +3,12 @@ import { BlockProvider } from '@l2beat/shared'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
 import { ActivityConfig } from '../config/Config'
 import { TxsCountProvider } from '../modules/activity/indexers/types'
-import { DegateTxsCountProvider } from '../modules/activity/services/providers/DegateTxsCountProvider'
-import { LoopringTxsCountProvider } from '../modules/activity/services/providers/LoopringTxsCountProvider'
-import { RpcTxsCountProvider } from '../modules/activity/services/providers/RpcTxsCountProvider'
-import { StarkexTxsCountProvider } from '../modules/activity/services/providers/StarkexTxsCountProvider'
-import { StarknetTxsCountProvider } from '../modules/activity/services/providers/StarknetTxsCountProvider'
-import { ZKsyncLiteTxsCountProvider } from '../modules/activity/services/providers/ZKsyncLiteTxsCountProvider'
+import { DegateTxsCountService } from '../modules/activity/services/txs/DegateTxsCountService'
+import { LoopringTxsCountService } from '../modules/activity/services/txs/LoopringTxsCountService'
+import { RpcTxsCountService } from '../modules/activity/services/txs/RpcTxsCountService'
+import { StarkexTxsCountService } from '../modules/activity/services/txs/StarkexTxsCountService'
+import { StarknetTxsCountService } from '../modules/activity/services/txs/StarknetTxsCountService'
+import { ZKsyncLiteTxsCountService } from '../modules/activity/services/txs/ZKsyncLiteTxsCountService'
 import { RpcUopsAnalyzer } from '../modules/activity/services/uops/analyzers/RpcUopsAnalyzer'
 import { StarknetUopsAnalyzer } from '../modules/activity/services/uops/analyzers/StarknetUopsAnalyzer'
 import { BlockTimestampProvider } from '../modules/tvl/services/BlockTimestampProvider'
@@ -32,7 +32,7 @@ export class ActivityProviders {
         const clients = this.clients.getEvmClients(chain)
         const provider = new BlockProvider(clients)
 
-        return new RpcTxsCountProvider(
+        return new RpcTxsCountService(
           provider,
           project.id,
           this.rpcUopsAnalyzer,
@@ -40,29 +40,29 @@ export class ActivityProviders {
         )
       }
       case 'zksync': {
-        return new ZKsyncLiteTxsCountProvider(
+        return new ZKsyncLiteTxsCountService(
           this.clients.zksyncLiteClient,
           project.id,
         )
       }
       case 'starknet': {
-        return new StarknetTxsCountProvider(
+        return new StarknetTxsCountService(
           this.clients.starknetClient,
           project.id,
           this.starknetUopsAnalyzer,
         )
       }
       case 'loopring': {
-        return new LoopringTxsCountProvider(
+        return new LoopringTxsCountService(
           this.clients.loopringClient,
           project.id,
         )
       }
       case 'degate': {
-        return new DegateTxsCountProvider(this.clients.degateClient, project.id)
+        return new DegateTxsCountService(this.clients.degateClient, project.id)
       }
       case 'starkex': {
-        return new StarkexTxsCountProvider(
+        return new StarkexTxsCountService(
           this.clients.starkexClient,
           project.id,
           project.config.product,
