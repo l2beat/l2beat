@@ -36,7 +36,7 @@ export const polynomial: Layer2 = opStackL2({
     minTimestamp: new UnixTime(1718049059),
     l2BlockTimeSeconds: 2,
     lag: 0,
-    stateUpdate: 'disabled',
+    stateUpdate: 'analyze',
   },
   isNodeAvailable: 'UnderReview',
   genesisTimestamp: new UnixTime(1718038307),
