@@ -57,7 +57,7 @@ export const paychainDac = PolygoncdkDAC({
     contracts: {
       addresses: [
         discovery.getContractDetails('WirexPayChainValidium', {
-          description: `The main contract of the WirexPayChain zkEVM. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
+          description: `The DA bridge and main contract of the WirexPayChain zkEVM. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
         }),
         discovery.getContractDetails('WirexPayChainDAC', {
           description:

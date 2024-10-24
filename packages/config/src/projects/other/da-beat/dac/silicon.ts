@@ -54,7 +54,7 @@ export const siliconDac = PolygoncdkDAC({
     contracts: {
       addresses: [
         discovery.getContractDetails('SiliconValidium', {
-          description: `The main contract of Silicon. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
+          description: `The DA bridge and main contract of Silicon. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
         }),
         discovery.getContractDetails('SiliconDAC', {
           description:

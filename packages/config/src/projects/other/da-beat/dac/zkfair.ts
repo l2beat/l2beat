@@ -33,7 +33,7 @@ export const zkfairDac = PolygoncdkDAC({
     contracts: {
       addresses: [
         discovery.getContractDetails('ZKFairValidium', {
-          description: `The main contract of ZKFair. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
+          description: `The DA bridge and main contract of ZKFair. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
         }),
         discovery.getContractDetails('ZKFairValidiumDAC', {
           description:

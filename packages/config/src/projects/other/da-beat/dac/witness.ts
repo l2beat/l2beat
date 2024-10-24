@@ -33,7 +33,7 @@ export const witnessDac = PolygoncdkDAC({
     contracts: {
       addresses: [
         discovery.getContractDetails('WitnessValidium', {
-          description: `The main contract of the WitnessValidium. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
+          description: `The DA bridge and main contract of the WitnessValidium. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
         }),
         discovery.getContractDetails('WitnessValidiumDAC', {
           description:

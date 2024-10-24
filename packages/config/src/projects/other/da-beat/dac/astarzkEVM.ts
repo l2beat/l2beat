@@ -51,7 +51,7 @@ export const astarZkEvmDac = PolygoncdkDAC({
     contracts: {
       addresses: [
         discovery.getContractDetails('AstarValidium', {
-          description: `The main contract of the Astar zkEVM. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
+          description: `The DA bridge and main contract of the Astar zkEVM. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
         }),
         discovery.getContractDetails('AstarValidiumDAC', {
           description:
