@@ -1,7 +1,7 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { RiskCell } from '~/components/table/cells/risk-cell'
-import { sortSentiments } from '~/components/table/sorting/functions/sentiment-sorting'
+import { sortBySentimentAndAlphabetically } from '~/components/table/sorting/functions/sort-by-sentiment'
 import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
 import { ChevronIcon } from '~/icons/chevron'
 import { type DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
@@ -70,7 +70,7 @@ export const columns = [
     header: 'Economic security',
     cell: (ctx) => <RiskCell risk={ctx.getValue()} emptyMode="em-dash" />,
     sortingFn: (rowA, rowB) =>
-      sortSentiments(
+      sortBySentimentAndAlphabetically(
         rowA.original.risks.economicSecurity,
         rowB.original.risks.economicSecurity,
       ),
@@ -83,7 +83,7 @@ export const columns = [
     header: 'Fraud detection',
     cell: (ctx) => <RiskCell risk={ctx.getValue()} emptyMode="em-dash" />,
     sortingFn: (rowA, rowB) =>
-      sortSentiments(
+      sortBySentimentAndAlphabetically(
         rowA.original.risks.fraudDetection,
         rowB.original.risks.fraudDetection,
       ),

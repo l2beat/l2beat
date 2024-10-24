@@ -5,7 +5,7 @@ import { NoInfoCell } from '~/components/table/cells/no-info-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { RiskCell } from '~/components/table/cells/risk-cell'
 import { TypeCell } from '~/components/table/cells/type-cell'
-import { sortSentiments } from '~/components/table/sorting/functions/sentiment-sorting'
+import { sortBySentiment } from '~/components/table/sorting/functions/sort-by-sentiment'
 import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
 import { type BridgesSummaryEntry } from '~/server/features/bridges/get-bridges-summary-entries'
 
@@ -30,7 +30,7 @@ export const bridgesSummaryActiveColumns = [
     sortingFn: (a, b) =>
       !a.original.validatedBy || !b.original.validatedBy
         ? -1
-        : sortSentiments(a.original.validatedBy, b.original.validatedBy),
+        : sortBySentiment(a.original.validatedBy, b.original.validatedBy),
   }),
   columnHelper.accessor('category', {
     header: 'Type',

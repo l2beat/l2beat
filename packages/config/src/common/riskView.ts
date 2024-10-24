@@ -486,7 +486,7 @@ export function EXIT_WINDOW(
     existsBlocklist?: boolean
     multisig?: { threshold: number; count: number }
   } = {},
-): ScalingProjectRiskViewEntry {
+): ScalingProjectRiskViewEntry & { seconds?: number } {
   let window: number = upgradeDelay - exitDelay
   const windowText = window <= 0 ? 'None' : formatSeconds(window)
   if (options.upgradeDelay2 !== undefined) {
