@@ -5,7 +5,8 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { HttpClient } from '../HttpClient'
+import { HttpClient2 } from '../../clients'
+import { RetryHandler } from '../../tools'
 import {
   CoinListEntry,
   CoinListPlatformEntry,
@@ -25,20 +26,14 @@ export class CoingeckoClient {
   private readonly newIds = new Map<string, CoingeckoId>()
 
   constructor(
-    private readonly httpClient: HttpClient,
+    private readonly httpClient: HttpClient2,
     private readonly apiKey: string | undefined,
+    private readonly retryHandler: RetryHandler,
   ) {
     const rateLimiter = new RateLimiter({
       callsPerMinute: apiKey ? 400 : 10,
     })
     this.query = rateLimiter.wrap(this.query.bind(this))
-  }
-
-  static create(
-    services: { httpClient: HttpClient },
-    options: { apiKey: string | undefined },
-  ) {
-    return new CoingeckoClient(services.httpClient, options.apiKey)
   }
 
   async getCoinList(options?: {
@@ -166,14 +161,13 @@ export class CoingeckoClient {
     if (query) {
       url += `?${query}`
     }
-    const res = await this.httpClient.fetch(url, { timeout: this.timeoutMs })
-    if (!res.ok) {
-      const body = await res.text()
-      throw new Error(
-        `Server responded with non-2XX result: ${res.status} ${res.statusText} ${body}`,
+    try {
+      return await this.httpClient.fetch(url, { timeout: this.timeoutMs })
+    } catch {
+      return await this.retryHandler.retry(() =>
+        this.httpClient.fetch(url, { timeout: this.timeoutMs }),
       )
     }
-    return res.json() as unknown
   }
 }
 

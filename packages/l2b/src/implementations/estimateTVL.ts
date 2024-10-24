@@ -1,4 +1,4 @@
-import { CoingeckoClient, HttpClient } from '@l2beat/shared'
+import { CoingeckoClient, HttpClient2, RetryHandler } from '@l2beat/shared'
 import {
   assert,
   Bytes,
@@ -40,8 +40,12 @@ export async function estimateTVL(rpcUrl: string, address: EthereumAddress) {
   }
   console.log(`Found ${nonZeroBalances.length} tokens with non-zero balances`)
 
-  const httpClient = new HttpClient()
-  const coingeckoClient = new CoingeckoClient(httpClient, undefined)
+  const httpClient = new HttpClient2()
+  const coingeckoClient = new CoingeckoClient(
+    httpClient,
+    undefined,
+    RetryHandler.SCRIPT,
+  )
   const tokenIds = nonZeroBalances.map((entry) => entry.coingeckoId)
   const tokenMarketDatas = await coingeckoClient.getCoinsMarket(tokenIds, 'usd')
 

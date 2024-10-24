@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 
-import { CoingeckoClient } from '@l2beat/shared'
+import { CoingeckoClient, HttpClient2, RetryHandler } from '@l2beat/shared'
 import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { Clock } from '../../tools/Clock'
@@ -22,9 +22,11 @@ export function createDaBeatModule(
 
   const pricesRefresher = new DaBeatPricesRefresher(
     peripherals.database,
-    peripherals.getClient(CoingeckoClient, {
-      apiKey: config.daBeat.coingeckoApiKey,
-    }),
+    new CoingeckoClient(
+      new HttpClient2(),
+      config.daBeat.coingeckoApiKey,
+      RetryHandler.RELIABLE_API(logger),
+    ),
     clock,
     logger,
   )

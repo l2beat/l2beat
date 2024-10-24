@@ -1,5 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
-import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
+import {
+  CoingeckoClient,
+  CoingeckoQueryService,
+  HttpClient2,
+  RetryHandler,
+} from '@l2beat/shared'
 import { assert, CirculatingSupplyEntry, ProjectId } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 
@@ -35,7 +40,7 @@ export function initCirculatingSupplyModule(
 
   if (circulatingSupplies.length === 0) return undefined
 
-  const circulatingSupplyService = getDataService(logger, peripherals, config)
+  const circulatingSupplyService = getDataService(logger, config)
 
   const dataIndexers = new Map<string, CirculatingSupplyIndexer>()
   circulatingSupplies.forEach((circulatingSupply) => {
@@ -107,14 +112,12 @@ export function initCirculatingSupplyModule(
   }
 }
 
-function getDataService(
-  logger: Logger,
-  peripherals: Peripherals,
-  config: TvlConfig,
-) {
-  const coingeckoClient = peripherals.getClient(CoingeckoClient, {
-    apiKey: config.coingeckoApiKey,
-  })
+function getDataService(logger: Logger, config: TvlConfig) {
+  const coingeckoClient = new CoingeckoClient(
+    new HttpClient2(),
+    config.coingeckoApiKey,
+    RetryHandler.RELIABLE_API(logger),
+  )
   const coingeckoQueryService = new CoingeckoQueryService(
     coingeckoClient,
     logger.tag('circulatingSupply'),
