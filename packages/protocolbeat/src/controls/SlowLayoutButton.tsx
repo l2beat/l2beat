@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react'
 import type { Node } from '../store/State'
 import { useStore } from '../store/store'
 import type { NodeLocations } from '../store/utils/storageParsing'
-import { autoLayout } from './autoLayout'
+import { ControlButton } from './ControlButton'
 
 // d3 assumes each node is a single point (no width and height),
 // so we scale the coordinates of the simulation to move the nodes
@@ -30,7 +30,7 @@ interface SimulationLink extends SimulationLinkDatum<SimulationNode> {
   target: string
 }
 
-export function AutoLayoutButton() {
+export function SlowLayoutButton() {
   const nodes = useStore((state) => state.nodes)
   const updateNodeLocations = useStore((state) => state.updateNodeLocations)
   const [updatingLayout, setUpdatingLayout] = useState<boolean>(false)
@@ -89,27 +89,12 @@ export function AutoLayoutButton() {
     draw()
   }, [updatingLayout])
 
-  function handleAutoLayout() {
-    updateNodeLocations(autoLayout(nodes))
-  }
-
   return (
-    <>
-      <button
-        className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-        type="button"
-        disabled={updatingLayout}
-        onClick={() => setUpdatingLayout(true)}
-      >
-        {updatingLayout ? 'wait...' : 'Slow layout'}
-      </button>
-      <button
-        className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-        type="button"
-        onClick={handleAutoLayout}
-      >
-        Fast layout
-      </button>
-    </>
+    <ControlButton
+      disabled={updatingLayout}
+      onClick={() => setUpdatingLayout(true)}
+    >
+      {updatingLayout ? 'Wait...' : 'Slow layout'}
+    </ControlButton>
   )
 }

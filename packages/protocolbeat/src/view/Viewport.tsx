@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react'
 import { useStore } from '../store/store'
-import { ScalableView } from './ScalableView'
-import { NodesAndConnections } from './NodesAndConnections'
 import { MouseSelection } from './MouseSelection'
+import { NodesAndConnections } from './NodesAndConnections'
+import { ScalableView } from './ScalableView'
 
 export function Viewport() {
   const containerRef = useRef<HTMLDivElement>(null)
