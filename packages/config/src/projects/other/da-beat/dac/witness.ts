@@ -45,36 +45,38 @@ export const witnessDac = PolygoncdkDAC({
       },
       risks: [],
     },
-    permissions: [
-      {
-        name: 'Committee Members',
-        description: `List of addresses authorized to sign data commitments for the DA bridge.`,
-        accounts: members.map((operator) => ({
-          address: EthereumAddress(operator[1]),
-          type: 'EOA',
-        })),
-      },
-      {
-        name: 'LocalAdmin',
-        accounts: [
-          discovery.formatPermissionedAccount(
-            discovery.getContractValue('WitnessValidium', 'admin'),
-          ),
-        ],
-        description:
-          'Admin of the WitnessValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions and update the DA mode.',
-      },
-      {
-        name: 'DACProxyAdminOwner',
-        accounts: [
-          discovery.formatPermissionedAccount(
-            discovery.getContractValue('ProxyAdmin', 'owner'),
-          ),
-        ],
-        description:
-          "Owner of the WitnessValidiumDAC's ProxyAdmin. Can upgrade the contract.",
-      },
-    ],
+    permissions: {
+      ethereum: [
+        {
+          name: 'Committee Members',
+          description: `List of addresses authorized to sign data commitments for the DA bridge.`,
+          accounts: members.map((operator) => ({
+            address: EthereumAddress(operator[1]),
+            type: 'EOA',
+          })),
+        },
+        {
+          name: 'LocalAdmin',
+          accounts: [
+            discovery.formatPermissionedAccount(
+              discovery.getContractValue('WitnessValidium', 'admin'),
+            ),
+          ],
+          description:
+            'Admin of the WitnessValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions and update the DA mode.',
+        },
+        {
+          name: 'DACProxyAdminOwner',
+          accounts: [
+            discovery.formatPermissionedAccount(
+              discovery.getContractValue('ProxyAdmin', 'owner'),
+            ),
+          ],
+          description:
+            "Owner of the WitnessValidiumDAC's ProxyAdmin. Can upgrade the contract.",
+        },
+      ],
+    },
     chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignaturesDAC,
     membersCount: membersCountDAC,

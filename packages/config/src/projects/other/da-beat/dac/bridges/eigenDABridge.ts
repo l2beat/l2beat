@@ -232,97 +232,99 @@ export const eigenDAbridge = {
       },
     ],
   },
-  permissions: [
-    {
-      name: 'EigenDAProxyAdmin',
-      description: `The contract authorized to upgrade the core EigenDA contracts.`,
-      accounts: [
-        {
-          address: discovery.getContract('eigenDAProxyAdmin').address,
-          type: 'Contract',
-        },
-      ],
-      participants: [
-        {
-          address: EthereumAddress(
-            discovery.getContractValue<string>('eigenDAProxyAdmin', 'owner'),
-          ),
-          type: 'MultiSig',
-        },
-      ],
-    },
-    {
-      name: 'BatchConfirmers',
-      description: `The list of addresses authorized to confirm the availability of blobs batches to the DA bridge.`,
-      accounts: batchConfirmers.map((batchConfirmer) => ({
-        address: EthereumAddress(batchConfirmer),
-        type: 'EOA',
-      })),
-    },
-    {
-      name: 'Pausers',
-      description: `The list of addresses authorized to pause the EigenDAServiceManager contract.`,
-      accounts: pausers.map((pauser) => ({
-        address: EthereumAddress(pauser),
-        type: 'EOA',
-      })),
-    },
-    {
-      name: 'ChurnApprover',
-      description: `The address authorized to approve the replacement of churned EigenDA operators from a quorum.`,
-      accounts: [
-        {
-          address: EthereumAddress(churnApprover),
-          type: 'EOA',
-        },
-      ],
-    },
-    {
-      name: 'Ejectors',
-      description: `The list of addresses authorized to eject EigenDA operators from a quorum.`,
-      accounts: ejectors.map((ejectors) => ({
-        address: EthereumAddress(ejectors),
-        type: 'EOA',
-      })),
-    },
-    {
-      name: 'EigenLayerProxyAdmin',
-      description: `The contract authorized to upgrade the core EigenLayer contracts.`,
-      accounts: [
-        {
-          address: eigenDiscovery.getContract('EigenLayerProxyAdmin').address,
-          type: 'Contract',
-        },
-      ],
-      participants: [
-        {
-          address: EthereumAddress(
-            eigenDiscovery.getContractValue<string>(
-              'EigenLayerProxyAdmin',
-              'owner',
+  permissions: {
+    ethereum: [
+      {
+        name: 'EigenDAProxyAdmin',
+        description: `The contract authorized to upgrade the core EigenDA contracts.`,
+        accounts: [
+          {
+            address: discovery.getContract('eigenDAProxyAdmin').address,
+            type: 'Contract',
+          },
+        ],
+        participants: [
+          {
+            address: EthereumAddress(
+              discovery.getContractValue<string>('eigenDAProxyAdmin', 'owner'),
             ),
-          ),
-          type: 'MultiSig',
-        },
-      ],
-    },
-    ...eigenDiscovery.getMultisigPermission(
-      'EigenLayerExecutorMultisig',
-      'The proxy contract authorized to unpause the EigenDAServiceManager contract and upgrade core contracts through the EigenDAProxyAdmin contract.',
-    ),
-    ...eigenDiscovery.getMultisigPermission(
-      'EigenLayerOperationsMultisig',
-      'This multisig is the owner of the EigenDAServiceManager contract. It holds the power to change the contract state and upgrade the bridge.',
-    ),
-    ...eigenDiscovery.getMultisigPermission(
-      'EigenLayerCommunityMultisig',
-      'This multisig is one of the owners of EigenLayerExecutorMultisig and can upgrade EigenLayer core contracts without delay.',
-    ),
-    eigenDiscovery.contractAsPermissioned(
-      eigenDiscovery.getContract('EigenLayer Timelock'),
-      'The timelock contract for upgrading EigenLayer core contracts via EigenLayerOperationsMultisig.',
-    ),
-  ],
+            type: 'MultiSig',
+          },
+        ],
+      },
+      {
+        name: 'BatchConfirmers',
+        description: `The list of addresses authorized to confirm the availability of blobs batches to the DA bridge.`,
+        accounts: batchConfirmers.map((batchConfirmer) => ({
+          address: EthereumAddress(batchConfirmer),
+          type: 'EOA',
+        })),
+      },
+      {
+        name: 'Pausers',
+        description: `The list of addresses authorized to pause the EigenDAServiceManager contract.`,
+        accounts: pausers.map((pauser) => ({
+          address: EthereumAddress(pauser),
+          type: 'EOA',
+        })),
+      },
+      {
+        name: 'ChurnApprover',
+        description: `The address authorized to approve the replacement of churned EigenDA operators from a quorum.`,
+        accounts: [
+          {
+            address: EthereumAddress(churnApprover),
+            type: 'EOA',
+          },
+        ],
+      },
+      {
+        name: 'Ejectors',
+        description: `The list of addresses authorized to eject EigenDA operators from a quorum.`,
+        accounts: ejectors.map((ejectors) => ({
+          address: EthereumAddress(ejectors),
+          type: 'EOA',
+        })),
+      },
+      {
+        name: 'EigenLayerProxyAdmin',
+        description: `The contract authorized to upgrade the core EigenLayer contracts.`,
+        accounts: [
+          {
+            address: eigenDiscovery.getContract('EigenLayerProxyAdmin').address,
+            type: 'Contract',
+          },
+        ],
+        participants: [
+          {
+            address: EthereumAddress(
+              eigenDiscovery.getContractValue<string>(
+                'EigenLayerProxyAdmin',
+                'owner',
+              ),
+            ),
+            type: 'MultiSig',
+          },
+        ],
+      },
+      ...eigenDiscovery.getMultisigPermission(
+        'EigenLayerExecutorMultisig',
+        'The proxy contract authorized to unpause the EigenDAServiceManager contract and upgrade core contracts through the EigenDAProxyAdmin contract.',
+      ),
+      ...eigenDiscovery.getMultisigPermission(
+        'EigenLayerOperationsMultisig',
+        'This multisig is the owner of the EigenDAServiceManager contract. It holds the power to change the contract state and upgrade the bridge.',
+      ),
+      ...eigenDiscovery.getMultisigPermission(
+        'EigenLayerCommunityMultisig',
+        'This multisig is one of the owners of EigenLayerExecutorMultisig and can upgrade EigenLayer core contracts without delay.',
+      ),
+      eigenDiscovery.contractAsPermissioned(
+        eigenDiscovery.getContract('EigenLayer Timelock'),
+        'The timelock contract for upgrading EigenLayer core contracts via EigenLayerOperationsMultisig.',
+      ),
+    ],
+  },
   chain: ChainId.ETHEREUM,
   requiredMembers: 0, // currently 0 since threshold is not enforced
   membersCount: 400, // max allowed operators (quorum 1 + quorum 2)

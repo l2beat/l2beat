@@ -28,25 +28,27 @@ export const l3xDac = AnytrustDAC({
       risks: [],
     },
 
-    permissions: [
-      // Members: DAC uses BLS sigs, not EOAs
-      {
-        name: 'Sequencers',
-        accounts: discovery.getPermissionsByRole('sequence'),
-        description:
-          'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
-        chain: discovery.chain,
-      },
-      {
-        name: 'RollupOwner',
-        accounts: discovery.getAccessControlRolePermission(
-          'UpgradeExecutor',
-          'EXECUTOR_ROLE',
-        ),
-        description:
-          'Multisig that can upgrade authorized batch posters via the UpgradeExecutor contract.',
-      },
-    ],
+    permissions: {
+      arbitrum: [
+        // Members: DAC uses BLS sigs, not EOAs
+        {
+          name: 'Sequencers',
+          accounts: discovery.getPermissionsByRole('sequence'),
+          description:
+            'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
+          chain: discovery.chain,
+        },
+        {
+          name: 'RollupOwner',
+          accounts: discovery.getAccessControlRolePermission(
+            'UpgradeExecutor',
+            'EXECUTOR_ROLE',
+          ),
+          description:
+            'Multisig that can upgrade authorized batch posters via the UpgradeExecutor contract.',
+        },
+      ],
+    },
     chain: ChainId.ARBITRUM,
     requiredMembers: requiredSignatures,
     membersCount: membersCount,

@@ -7,7 +7,7 @@ import {
 import { type ProjectDetailsSection } from '~/components/projects/sections/types'
 import { type RosetteValue } from '~/components/rosette/types'
 import { getMultiChainContractsSection } from '~/utils/project/contracts-and-permissions/get-multichain-contract-section'
-import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
+import { getMultichainPermissionsSection } from '~/utils/project/contracts-and-permissions/get-multichain-permissions-section'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/to-technology-risk'
 import { getDaOtherConsiderationsSection } from './get-da-other-considerations-section'
 import { getDaProjectRiskSummarySection } from './get-da-project-risk-summary-section'
@@ -33,13 +33,11 @@ export function getProjectDetails({
 }: Params) {
   const permissionsSection =
     daBridge.type !== 'NoBridge' && daBridge.type !== 'Enshrined'
-      ? getPermissionsSection(
+      ? getMultichainPermissionsSection(
           {
             id: daLayer.id,
-            type: daLayer.type,
             isUnderReview: !!daLayer.isUnderReview,
             permissions: daBridge.permissions,
-            nativePermissions: undefined,
           },
           contractsVerificationStatuses,
           manuallyVerifiedContracts,
@@ -131,7 +129,7 @@ export function getProjectDetails({
 
   if (permissionsSection) {
     items.push({
-      type: 'PermissionsSection',
+      type: 'MultichainPermissionsSection',
       props: {
         ...permissionsSection,
         permissionedEntities: getPermissionedEntities(daBridge),

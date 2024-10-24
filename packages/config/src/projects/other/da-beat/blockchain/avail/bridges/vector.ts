@@ -99,32 +99,34 @@ export const vector = {
       },
     ],
   },
-  permissions: [
-    ...discovery.getMultisigPermission(
-      'AvailMultisig',
-      'This multisig is the admin and guardian of the Vector contract. It holds the power to change the contract state and upgrade the bridge.',
-    ),
-    ...discovery.getMultisigPermission(
-      'SuccinctGatewaySP1Multisig',
-      'This multisig is the admin of the SuccinctGatewaySP1 contract. As the manager of router for proof verification, it holds the power to affect the liveness and safety of the bridge.',
-    ),
-    {
-      name: 'Relayers',
-      description: `List of prover (relayer) addresses that are allowed to call commitHeaderRange() to commit block ranges to the Vector contract.`,
-      accounts: relayers.map((relayer) => ({
-        address: EthereumAddress(relayer),
-        type: 'EOA',
-      })),
-    },
-    {
-      name: 'Guardians',
-      description: `The Vector guardians hold the power to freeze the bridge contract, update the SuccinctGateway contract and update the list of authorized relayers.`,
-      accounts: discovery.getAccessControlRolePermission(
-        'Vector',
-        'GUARDIAN_ROLE',
+  permissions: {
+    ethereum: [
+      ...discovery.getMultisigPermission(
+        'AvailMultisig',
+        'This multisig is the admin and guardian of the Vector contract. It holds the power to change the contract state and upgrade the bridge.',
       ),
-    },
-  ],
+      ...discovery.getMultisigPermission(
+        'SuccinctGatewaySP1Multisig',
+        'This multisig is the admin of the SuccinctGatewaySP1 contract. As the manager of router for proof verification, it holds the power to affect the liveness and safety of the bridge.',
+      ),
+      {
+        name: 'Relayers',
+        description: `List of prover (relayer) addresses that are allowed to call commitHeaderRange() to commit block ranges to the Vector contract.`,
+        accounts: relayers.map((relayer) => ({
+          address: EthereumAddress(relayer),
+          type: 'EOA',
+        })),
+      },
+      {
+        name: 'Guardians',
+        description: `The Vector guardians hold the power to freeze the bridge contract, update the SuccinctGateway contract and update the list of authorized relayers.`,
+        accounts: discovery.getAccessControlRolePermission(
+          'Vector',
+          'GUARDIAN_ROLE',
+        ),
+      },
+    ],
+  },
   usedIn: [],
   risks: {
     committeeSecurity:

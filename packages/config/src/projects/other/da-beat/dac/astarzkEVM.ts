@@ -30,20 +30,22 @@ export const astarZkEvmDac = PolygoncdkDAC({
   project: astarzkevm,
   bridge: {
     createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
-    permissions: [
-      {
-        name: 'Committee Members',
-        description: `List of addresses authorized to sign data commitments for the DA bridge.`,
-        accounts: members.map((operator) => ({
-          address: EthereumAddress(operator[1]),
-          type: 'EOA',
-        })),
-      },
-      ...discovery.getMultisigPermission(
-        'LocalAdmin',
-        'Admin of the AstarValidiumDAC contract, can set core system parameters like timeouts, sequencer, activate forced transactions, update the DA mode and upgrade the AstarValidiumDAC contract',
-      ),
-    ],
+    permissions: {
+      ethereum: [
+        {
+          name: 'Committee Members',
+          description: `List of addresses authorized to sign data commitments for the DA bridge.`,
+          accounts: members.map((operator) => ({
+            address: EthereumAddress(operator[1]),
+            type: 'EOA',
+          })),
+        },
+        ...discovery.getMultisigPermission(
+          'LocalAdmin',
+          'Admin of the AstarValidiumDAC contract, can set core system parameters like timeouts, sequencer, activate forced transactions, update the DA mode and upgrade the AstarValidiumDAC contract',
+        ),
+      ],
+    },
     chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignaturesDAC,
     membersCount: membersCountDAC,

@@ -177,33 +177,33 @@ export const SP1Blobstream = CELESTIA_BLOBSTREAM({
       },
     ],
   },
-  permissions: [
-    ...ethereumDiscovery.getMultisigPermission(
-      'BlobstreamMultisig',
-      'This multisig is the admin of the Blobstream contract. It holds the power to change the contract state and upgrade the bridge.',
-    ),
-    ...ethereumDiscovery.getMultisigPermission(
-      'SuccinctGatewaySP1Multisig',
-      'This multisig is the admin of the SuccinctGatewaySP1 contract. As the manager of router for proof verification, it holds the power to affect the liveness and safety of the bridge.',
-    ),
-    {
-      name: 'Relayers',
-      description: `List of prover (relayer) addresses that are allowed to call commitHeaderRange() to commit block ranges to the Blobstream contract.`,
-      accounts: relayers.map((relayer) => ({
-        address: EthereumAddress(relayer),
-        type: 'EOA',
-      })),
-    },
-    {
-      name: 'Guardians',
-      description: `The Blobstream guardians hold the power to freeze the bridge contract, update the SuccinctGateway contract and update the list of authorized relayers.`,
-      accounts: ethereumDiscovery.getAccessControlRolePermission(
-        'Blobstream',
-        'GUARDIAN_ROLE',
+  permissions: {
+    ethereum: [
+      ...ethereumDiscovery.getMultisigPermission(
+        'BlobstreamMultisig',
+        'This multisig is the admin of the Blobstream contract. It holds the power to change the contract state and upgrade the bridge.',
       ),
-    },
-  ],
-  nativePermissions: {
+      ...ethereumDiscovery.getMultisigPermission(
+        'SuccinctGatewaySP1Multisig',
+        'This multisig is the admin of the SuccinctGatewaySP1 contract. As the manager of router for proof verification, it holds the power to affect the liveness and safety of the bridge.',
+      ),
+      {
+        name: 'Relayers',
+        description: `List of prover (relayer) addresses that are allowed to call commitHeaderRange() to commit block ranges to the Blobstream contract.`,
+        accounts: relayers.map((relayer) => ({
+          address: EthereumAddress(relayer),
+          type: 'EOA',
+        })),
+      },
+      {
+        name: 'Guardians',
+        description: `The Blobstream guardians hold the power to freeze the bridge contract, update the SuccinctGateway contract and update the list of authorized relayers.`,
+        accounts: ethereumDiscovery.getAccessControlRolePermission(
+          'Blobstream',
+          'GUARDIAN_ROLE',
+        ),
+      },
+    ],
     arbitrum: [
       ...arbitrumDiscovery.getMultisigPermission(
         'BlobstreamMultisig',

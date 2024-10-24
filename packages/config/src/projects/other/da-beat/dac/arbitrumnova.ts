@@ -126,43 +126,45 @@ export const arbitrumNovaDac = DAC({
       Operator roles like the Sequencers and Validators are managed using the same paths. Sequencer changes can be delegated to a Batch Poster Manager.
       `,
     },
-    permissions: [
-      // Members: DAC uses BLS sigs, not EOAs
-      {
-        name: 'Sequencers',
-        accounts: discovery.getPermissionsByRole('sequence'),
-        description:
-          'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
-        chain: discovery.chain,
-      },
-      ...discovery.getMultisigPermission(
-        'BatchPosterManagerMultisig',
-        'It can update whether an address is authorized to be a batch poster at the sequencer inbox. The UpgradeExecutor retains the ability to update the batch poster manager (along with any batch posters).',
-      ),
-      ...discovery.getMultisigPermission(
-        'SecurityCouncil',
-        'The admin of all contracts in the system, capable of issuing upgrades without notice and delay. This allows it to censor transactions, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer or any other system component (unlimited upgrade power). It is also the admin of the special purpose smart contracts used by validators.',
-        [
-          {
-            text: 'Security Council members - Arbitrum DAO Governance Docs',
-            href: 'https://docs.arbitrum.foundation/foundational-documents/transparency-report-initial-foundation-setup',
-          },
-        ],
-      ),
-      {
-        name: 'UpgradeExecutor',
-        accounts: [
-          {
-            address: EthereumAddress(
-              discovery.getContractValue<string>('RollupProxy', 'owner'),
-            ),
-            type: 'Contract',
-          },
-        ],
-        description:
-          'The UpgradeExecutor can change the Committee members by updating the valid keyset.',
-      },
-    ],
+    permissions: {
+      ethereum: [
+        // Members: DAC uses BLS sigs, not EOAs
+        {
+          name: 'Sequencers',
+          accounts: discovery.getPermissionsByRole('sequence'),
+          description:
+            'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
+          chain: discovery.chain,
+        },
+        ...discovery.getMultisigPermission(
+          'BatchPosterManagerMultisig',
+          'It can update whether an address is authorized to be a batch poster at the sequencer inbox. The UpgradeExecutor retains the ability to update the batch poster manager (along with any batch posters).',
+        ),
+        ...discovery.getMultisigPermission(
+          'SecurityCouncil',
+          'The admin of all contracts in the system, capable of issuing upgrades without notice and delay. This allows it to censor transactions, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer or any other system component (unlimited upgrade power). It is also the admin of the special purpose smart contracts used by validators.',
+          [
+            {
+              text: 'Security Council members - Arbitrum DAO Governance Docs',
+              href: 'https://docs.arbitrum.foundation/foundational-documents/transparency-report-initial-foundation-setup',
+            },
+          ],
+        ),
+        {
+          name: 'UpgradeExecutor',
+          accounts: [
+            {
+              address: EthereumAddress(
+                discovery.getContractValue<string>('RollupProxy', 'owner'),
+              ),
+              type: 'Contract',
+            },
+          ],
+          description:
+            'The UpgradeExecutor can change the Committee members by updating the valid keyset.',
+        },
+      ],
+    },
     contracts: {
       addresses: {
         ethereum: [

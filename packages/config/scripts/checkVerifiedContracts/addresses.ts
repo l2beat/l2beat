@@ -114,14 +114,20 @@ function getDaBridgePermissionsForChain(
       (b): b is OnChainDaBridge | DacBridge =>
         b.type === 'OnChainBridge' || b.type === 'DAC',
     )
-    .flatMap((b) =>
-      b.permissions.flatMap((p) => {
-        return p.accounts.flatMap((a) => ({
-          chain: b.chain.toString(),
-          address: a.address,
-        }))
-      }),
-    )
+    .flatMap((b) => {
+      if (b.permissions === 'UnderReview') {
+        return []
+      }
+
+      return Object.values(b.permissions).flatMap((perChain) => {
+        return perChain.flatMap((a) =>
+          a.accounts.map((a) => ({
+            chain: b.chain.toString(),
+            address: a.address,
+          })),
+        )
+      })
+    })
 
   return permissions.filter((p) => p.chain === chain)
 }

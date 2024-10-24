@@ -30,26 +30,28 @@ export const gptProtocolDac = PolygoncdkDAC({
   project: gpt,
   bridge: {
     createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
-    permissions: [
-      {
-        name: 'Committee Members',
-        description: `List of addresses authorized to sign data commitments for the DA bridge.`,
-        accounts: members.map((operator) => ({
-          address: EthereumAddress(operator[1]),
-          type: 'EOA',
-        })),
-      },
-      {
-        name: 'LocalAdmin',
-        accounts: [
-          discovery.formatPermissionedAccount(
-            discovery.getContractValue('GptProtocolValidium', 'admin'),
-          ),
-        ],
-        description:
-          'Admin and ForceBatcher of the GptProtocolValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions, and set the DA committee members in the GptProtocolDAC contract.',
-      },
-    ],
+    permissions: {
+      ethereum: [
+        {
+          name: 'Committee Members',
+          description: `List of addresses authorized to sign data commitments for the DA bridge.`,
+          accounts: members.map((operator) => ({
+            address: EthereumAddress(operator[1]),
+            type: 'EOA',
+          })),
+        },
+        {
+          name: 'LocalAdmin',
+          accounts: [
+            discovery.formatPermissionedAccount(
+              discovery.getContractValue('GptProtocolValidium', 'admin'),
+            ),
+          ],
+          description:
+            'Admin and ForceBatcher of the GptProtocolValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions, and set the DA committee members in the GptProtocolDAC contract.',
+        },
+      ],
+    },
     chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignaturesDAC,
     membersCount: membersCountDAC,

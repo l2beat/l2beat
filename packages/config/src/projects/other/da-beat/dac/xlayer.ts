@@ -45,36 +45,38 @@ export const xlayerDac = PolygoncdkDAC({
       },
       risks: [],
     },
-    permissions: [
-      {
-        name: 'Committee Members',
-        description: `List of addresses authorized to sign data commitments for the DA bridge.`,
-        accounts: members.map((operator) => ({
-          address: EthereumAddress(operator[1]),
-          type: 'EOA',
-        })),
-      },
-      {
-        name: 'LocalAdmin',
-        accounts: [
-          discovery.formatPermissionedAccount(
-            discovery.getContractValue('XLayerValidium', 'admin'),
-          ),
-        ],
-        description:
-          'Admin of the XLayerValidium contract, can set core system parameters like replacing the sequencer (relayer), activate forced transactions and update the DA mode.',
-      },
-      {
-        name: 'DACProxyAdminOwner',
-        accounts: [
-          discovery.formatPermissionedAccount(
-            discovery.getContractValue('ProxyAdmin', 'owner'),
-          ),
-        ],
-        description:
-          "Owner of the XLayerValidiumDAC's ProxyAdmin. Can upgrade the DA bridge contract.",
-      },
-    ],
+    permissions: {
+      ethereum: [
+        {
+          name: 'Committee Members',
+          description: `List of addresses authorized to sign data commitments for the DA bridge.`,
+          accounts: members.map((operator) => ({
+            address: EthereumAddress(operator[1]),
+            type: 'EOA',
+          })),
+        },
+        {
+          name: 'LocalAdmin',
+          accounts: [
+            discovery.formatPermissionedAccount(
+              discovery.getContractValue('XLayerValidium', 'admin'),
+            ),
+          ],
+          description:
+            'Admin of the XLayerValidium contract, can set core system parameters like replacing the sequencer (relayer), activate forced transactions and update the DA mode.',
+        },
+        {
+          name: 'DACProxyAdminOwner',
+          accounts: [
+            discovery.formatPermissionedAccount(
+              discovery.getContractValue('ProxyAdmin', 'owner'),
+            ),
+          ],
+          description:
+            "Owner of the XLayerValidiumDAC's ProxyAdmin. Can upgrade the DA bridge contract.",
+        },
+      ],
+    },
     chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignaturesDAC,
     membersCount: membersCountDAC,

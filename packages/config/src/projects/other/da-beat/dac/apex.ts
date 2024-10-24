@@ -57,23 +57,25 @@ export const apexDac = StarkexDAC({
       },
       risks: [],
     },
-    permissions: [
-      {
-        name: 'USDC Committee Members',
-        description: `List of addresses authorized to sign data commitments for the DA bridge.`,
-        accounts: usdcCommittee.accounts.map((operator) => ({
-          address: operator.address,
-          type: 'EOA',
-        })),
-      },
-      {
-        name: 'USDT Committee Members',
-        description: `List of addresses authorized to sign data commitments for the DA bridge.`,
-        accounts: usdtCommittee.accounts.map((operator) => ({
-          address: operator.address,
-          type: 'EOA',
-        })),
-      },
-    ],
+    permissions: {
+      ethereum: [
+        {
+          name: 'USDC Committee Members',
+          description: `List of addresses authorized to sign data commitments for the DA bridge.`,
+          accounts: usdcCommittee.accounts.map((operator) => ({
+            address: operator.address,
+            type: 'EOA',
+          })),
+        },
+        {
+          name: 'USDT Committee Members',
+          description: `List of addresses authorized to sign data commitments for the DA bridge.`,
+          accounts: usdtCommittee.accounts.map((operator) => ({
+            address: operator.address,
+            type: 'EOA',
+          })),
+        },
+      ],
+    },
   },
 })

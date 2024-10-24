@@ -54,12 +54,17 @@ export function getProjectDevIdsForDA(daLayer: DaLayer): string[] {
     Object.values(b.contracts.addresses).flat(),
   )
 
-  const permissions = bridges.flatMap((b) =>
-    b.permissions.filter((p) => {
-      const nonEoaAddresses = p.accounts.filter((a) => a.type !== 'EOA')
-      return nonEoaAddresses.length > 0
-    }),
-  )
+  const permissions = bridges.flatMap((b) => {
+    const targetPermissions =
+      b.permissions !== 'UnderReview' ? b.permissions : {}
+
+    return Object.values(targetPermissions)
+      .flat()
+      .filter((p) => {
+        const nonEoaAddresses = p.accounts.filter((a) => a.type !== 'EOA')
+        return nonEoaAddresses.length > 0
+      })
+  })
 
   const devIds = [...addresses, ...permissions].map(
     (c) => c.chain ?? 'ethereum',

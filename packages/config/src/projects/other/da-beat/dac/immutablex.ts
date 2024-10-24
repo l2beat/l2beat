@@ -36,16 +36,18 @@ export const immutableXDac = StarkexDAC({
       },
       risks: [],
     },
-    permissions: [
-      {
-        name: 'Committee Members',
-        description: `List of addresses authorized to sign data commitments for the DA bridge.`,
-        accounts: committee.accounts.map((operator) => ({
-          address: operator.address,
-          type: 'EOA',
-        })),
-      },
-    ],
+    permissions: {
+      ethereum: [
+        {
+          name: 'Committee Members',
+          description: `List of addresses authorized to sign data commitments for the DA bridge.`,
+          accounts: committee.accounts.map((operator) => ({
+            address: operator.address,
+            type: 'EOA',
+          })),
+        },
+      ],
+    },
     chain: ChainId.ETHEREUM,
     requiredMembers: committee.minSigners,
     membersCount: committee.accounts.length,

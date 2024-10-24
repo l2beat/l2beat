@@ -27,9 +27,9 @@ export const apechainDac = AnytrustDAC({
       },
       risks: [],
     },
-    permissions: [
+    permissions: {
       // BLS sigs, not EOAs
-    ],
+    },
     chain: ChainId.ARBITRUM,
     requiredMembers: requiredSignatures,
     membersCount: membersCount,

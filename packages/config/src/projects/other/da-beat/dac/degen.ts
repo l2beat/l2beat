@@ -27,20 +27,22 @@ export const degenDac = AnytrustDAC({
       },
       risks: [],
     },
-    permissions: [
-      // Members: DAC uses BLS sigs, not EOAs
-      {
-        name: 'Sequencers',
-        accounts: discovery.getPermissionsByRole('sequence'),
-        description:
-          'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
-        chain: discovery.chain,
-      },
-      ...discovery.getMultisigPermission(
-        'RollupOwnerMultisig',
-        'It can update whether an address is authorized to be a batch poster at the sequencer inbox. The UpgradeExecutor retains the ability to update the batch poster manager (along with any batch posters).',
-      ),
-    ],
+    permissions: {
+      base: [
+        // Members: DAC uses BLS sigs, not EOAs
+        {
+          name: 'Sequencers',
+          accounts: discovery.getPermissionsByRole('sequence'),
+          description:
+            'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
+          chain: discovery.chain,
+        },
+        ...discovery.getMultisigPermission(
+          'RollupOwnerMultisig',
+          'It can update whether an address is authorized to be a batch poster at the sequencer inbox. The UpgradeExecutor retains the ability to update the batch poster manager (along with any batch posters).',
+        ),
+      ],
+    },
     chain: ChainId.BASE,
     requiredMembers: requiredSignatures,
     membersCount: membersCount,

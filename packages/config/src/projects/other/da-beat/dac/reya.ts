@@ -27,42 +27,44 @@ export const reyaDac = AnytrustDAC({
       },
       risks: [],
     },
-    permissions: [
-      // Members: DAC uses BLS sigs, not EOAs
-      {
-        name: 'Sequencers',
-        accounts: discovery.getPermissionsByRole('sequence'),
-        description:
-          'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
-        chain: discovery.chain,
-      },
-      {
-        name: 'RollupOwner',
-        accounts: discovery.getAccessControlRolePermission(
-          'UpgradeExecutor',
-          'EXECUTOR_ROLE',
+    permissions: {
+      ethereum: [
+        // Members: DAC uses BLS sigs, not EOAs
+        {
+          name: 'Sequencers',
+          accounts: discovery.getPermissionsByRole('sequence'),
+          description:
+            'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
+          chain: discovery.chain,
+        },
+        {
+          name: 'RollupOwner',
+          accounts: discovery.getAccessControlRolePermission(
+            'UpgradeExecutor',
+            'EXECUTOR_ROLE',
+          ),
+          description:
+            'Multisig that can upgrade authorized batch posters via the UpgradeExecutor contract.',
+        },
+        ...discovery.getMultisigPermission(
+          'GelatoMultisig',
+          'Multisig that can execute upgrades via the UpgradeExecutor.',
         ),
-        description:
-          'Multisig that can upgrade authorized batch posters via the UpgradeExecutor contract.',
-      },
-      ...discovery.getMultisigPermission(
-        'GelatoMultisig',
-        'Multisig that can execute upgrades via the UpgradeExecutor.',
-      ),
-      {
-        name: 'UpgradeExecutor',
-        accounts: [
-          {
-            address: EthereumAddress(
-              discovery.getContractValue<string>('RollupProxy', 'owner'),
-            ),
-            type: 'Contract',
-          },
-        ],
-        description:
-          'The UpgradeExecutor can change the Committee members by updating the valid keyset.',
-      },
-    ],
+        {
+          name: 'UpgradeExecutor',
+          accounts: [
+            {
+              address: EthereumAddress(
+                discovery.getContractValue<string>('RollupProxy', 'owner'),
+              ),
+              type: 'Contract',
+            },
+          ],
+          description:
+            'The UpgradeExecutor can change the Committee members by updating the valid keyset.',
+        },
+      ],
+    },
     chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignatures,
     membersCount: membersCount,
