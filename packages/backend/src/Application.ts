@@ -24,6 +24,8 @@ export class Application {
   start: () => Promise<void>
 
   constructor(config: Config, logger: Logger) {
+    logger.for(this).info('Initializing App')
+
     const database = createDatabase({
       ...config.database.connection,
       ...config.database.connectionPoolSize,
