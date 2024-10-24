@@ -99,7 +99,6 @@ export const cBridge: Bridge = {
         {
           category: 'Funds can be frozen if',
           text: 'validators (SGN) decide to not process a withdrawal request from liquidity providers.',
-          isCritical: true,
         },
       ],
     },
@@ -117,17 +116,14 @@ export const cBridge: Bridge = {
         {
           category: 'Users can be censored if',
           text: 'validators (SGN) decide to stop processing certain transactions.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: 'validators (SGN) allow to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: 'validators (SGN) sign a fraudulent message allowing themselves to withdraw all locked funds.',
-          isCritical: true,
         },
       ],
     },

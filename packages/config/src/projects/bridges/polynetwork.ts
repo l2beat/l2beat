@@ -120,12 +120,10 @@ export const polynetwork: Bridge = {
         {
           category: 'Users can be censored if',
           text: 'chain Relayers decide to not pass certain transactions to the destination chain.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: 'a fake block header is relayed through the PolyNetwork chain that allows to prove a burn/mint transaction that never occurred on the source chain.',
-          isCritical: true,
         },
         {
           category: 'Funds can be frozen if',

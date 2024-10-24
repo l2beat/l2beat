@@ -78,22 +78,18 @@ export const xdai: Bridge = {
         {
           category: 'Users can be censored if',
           text: 'validators decide to not pass selected messages between chains.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: 'validators relay a fake message to Gnosis chain to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: 'validators relay a fake message to Ethereum chain allowing a user to withdraw tokens from Ethereum escrow when equivalent amount of tokens has not been deposited and burned on Gnosis chain.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: "there's an exploit in Compound when it holds part of user deposit.",
-          isCritical: true,
         },
         {
           category: 'Funds can be frozen if',
