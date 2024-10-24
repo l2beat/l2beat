@@ -8,11 +8,41 @@
     "0x4cbab69108Aa72151EDa5A3c164eA86845f18438" //L1StandardBridge
   ],
   "names": {
-    "0x8AC80fa0993D95C9d6B8Cb494E561E6731038941": "RSS3Multisig"
+    "0x8AC80fa0993D95C9d6B8Cb494E561E6731038941": "RSS3Multisig",
+    "0xC4f81F990b47c12144e74A901162A2cFDf4b5a9d": "WithdrawalOverwriterMultisig"
   },
   "overrides": {
     "0x3e5FaB39eD4eFB4fc29A5201059AE819f2f0418A": {
       "extends": "opstack/SuperchainConfigFake"
+    },
+    "0x6A12432491bbbE8d3babf75F759766774C778Db4": {
+      // optiportal with 'operator'
+      "displayName": "OptimismPortal",
+      "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This fork of the OptimismPortal also allows an 'operator' address to overwrite the calldata of withdrawals on finalization, potentially stealing the withdrawn funds or calling arbitrary contracts.",
+      "ignoreMethods": ["isOutputFinalized", "balance"],
+      "ignoreInWatchMode": ["params"],
+      "fields": {
+        "guardian": {
+          "target": {
+            "permissions": [{ "type": "guard" }]
+          }
+        },
+        "GUARDIAN": {
+          "target": {
+            "permissions": [{ "type": "guard" }]
+          }
+        },
+        "operator": {
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "can overwrite the calldata of any withdrawals in the OptimismPortal on finalization, potentially stealing the withdrawn funds or calling arbitrary contracts."
+              }
+            ]
+          }
+        }
+      }
     }
   }
 }

@@ -99,6 +99,9 @@ function getScalingSummaryEntry(
       isVerified,
       hasImplementationChanged,
     }),
+    dataAvailability: project.dataAvailability,
+    proposer: project.display.proposer,
+    challenger: project.display.challenger,
     tvl: {
       breakdown: latestTvl?.breakdown,
       change: latestTvl?.change,

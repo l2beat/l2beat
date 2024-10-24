@@ -97,7 +97,6 @@ export const transporter: Bridge = {
         {
           category: 'Users can be censored if',
           text: 'oracle network fails to facilitate the transfer.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',

@@ -91,7 +91,7 @@ export const eigenDA: DaLayer = {
     layer: (layer) => layer === 'EigenDA',
   }),
   risks: {
-    economicSecurity: DaEconomicSecurityRisk.Unknown,
+    economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('EIGEN'),
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
   },
 }

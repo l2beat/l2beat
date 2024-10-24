@@ -12,7 +12,6 @@ import {
 } from '~/components/core/tooltip/tooltip'
 import { DetailedOnHover } from '~/components/detailed-on-hover'
 import { PrimaryValueCell } from '~/components/table/cells/primary-value-cell'
-import { EM_DASH } from '~/consts/characters'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { formatCostValue } from '../_utils/format-cost-value'
 import { useCostsMetricContext } from './costs-metric-context'
@@ -34,8 +33,6 @@ export function CostsTotalCell({ data, warning }: CellProps) {
         return <Skeleton className="h-8 w-full" />
       case 'no-data':
         return <NoDataBadge />
-      case 'no-per-tx-metric':
-        return EM_DASH
       default:
         assertUnreachable(data.reason)
     }

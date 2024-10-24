@@ -70,10 +70,10 @@ const daBridgeColumn = columnHelper.accessor('daBridge', {
   },
 })
 
-const risksColumn = columnHelper.accessor('risks', {
+const risksColumn = columnHelper.display({
   header: 'Risks',
   cell: (ctx) => {
-    const value = ctx.getValue()
+    const value = ctx.row.original.risks
 
     const hasNoBridge =
       ctx.row.original.daBridge !== 'multiple' &&
@@ -114,7 +114,6 @@ const risksColumn = columnHelper.accessor('risks', {
       />
     )
   },
-  enableSorting: false,
   meta: {
     hash: 'risk-analysis',
   },
@@ -136,7 +135,7 @@ const slashableStakeColumn = columnHelper.accessor('economicSecurity', {
   cell: (ctx) => <DaEconomicSecurityCell value={ctx.getValue()} />,
   meta: {
     tooltip:
-      'The assets that are slashable in case of a data withholding attack (the amount of funds a committee would need to burn to successfully deceive the DA bridge). It’s equal to 2/3 of the total validating stake, if any.',
+      'The assets that are slashable in case of a data withholding attack. For public blockchains, it is equal to 2/3 of the total validating stake.',
   },
 })
 
@@ -155,18 +154,17 @@ const slashableStakeForCustomSystem = columnHelper.accessor(
     meta: {
       align: 'right',
       tooltip:
-        'The assets that are slashable in case of a data withholding attack (the amount of funds a committee would need to burn to successfully deceive the DA bridge). It’s equal to 2/3 of the total validating stake, if any.',
+        'The assets that are slashable in case of a data withholding attack. For public blockchains, it is equal to 2/3 of the total validating stake.',
     },
   },
 )
 
-const usedInColumn = columnHelper.accessor('usedIn', {
+const usedInColumn = columnHelper.display({
   header: 'Used in',
   cell: (ctx) => {
-    const value = ctx.getValue()
+    const value = ctx.row.original.usedIn
     return value.length > 0 ? <ProjectsUsedIn usedIn={value} /> : EM_DASH
   },
-  enableSorting: false,
 })
 
 const challengeMechanismColumn = columnHelper.accessor(

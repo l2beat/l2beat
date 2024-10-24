@@ -1,3 +1,49 @@
+Generated with discovered.json: 0x314d6b031cf39abbec7f48054832ebf8b2e71de2
+
+# Diff at Wed, 23 Oct 2024 09:48:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2734bfe28641dfdb3277a5800faf0a057c08a58f block: 20977251
+- current block number: 21027491
+
+## Description
+
+New plugs, added cbBTC to Lyra.
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.105:
++        "0xE88F6b194BD3b43013710A785DDFF41454A19537"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.104:
++        "0xFAB1efe6cA9435faEf9e29f40E575e27A74373A9"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20977251 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract cbBTC Vault Lyra (0x5F18C54e4E10287414A47925a24Ea3A8Cf4A9F50)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USD0++ Vault Polynomial (0xDf9Fa2b420689384E8DD55a706262DC0ED37020F)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x5c01b9d549184d634e7d32f167de18259c782792
 
 # Diff at Wed, 16 Oct 2024 09:34:29 GMT:

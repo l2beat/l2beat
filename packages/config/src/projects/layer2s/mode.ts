@@ -75,7 +75,7 @@ export const mode: Layer2 = opStackL2({
     minTimestamp: new UnixTime(1710386375),
     genesisTimestamp: new UnixTime(1700167583),
     lag: 0,
-    stateUpdate: 'disabled',
+    stateUpdate: 'analyze',
   },
   chainConfig: {
     name: 'mode',
@@ -99,6 +99,7 @@ export const mode: Layer2 = opStackL2({
     ],
     coingeckoPlatform: 'mode',
   },
+  nonTemplateExcludedTokens: ['rsETH'],
   usesBlobs: true,
   discoveryDrivenData: true,
 })
