@@ -58,7 +58,6 @@ export class StarknetClient {
       headers: {
         ['Content-Type']: 'application/json',
       },
-      timeout: 30_000,
       body: JSON.stringify({
         jsonrpc: '2.0',
         method: 'starknet_getBlockWithTxHashes',
@@ -91,6 +90,7 @@ export class StarknetClient {
       headers: {
         ['Content-Type']: 'application/json',
       },
+      timeout: 30_000,
       body: JSON.stringify({
         jsonrpc: '2.0',
         method: 'starknet_getBlockWithTxs',
