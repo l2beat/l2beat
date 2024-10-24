@@ -1,13 +1,13 @@
-Generated with discovered.json: 0x64fa0f9e94f2b749bc8654ebc81c81ab37d69a7f
+Generated with discovered.json: 0x8d1bd1bc8d583d4a3dfdf4aef3ddd559f01d1b95
 
-# Diff at Thu, 24 Oct 2024 11:11:10 GMT:
+# Diff at Thu, 24 Oct 2024 14:09:44 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 21035073
+- current block number: 21035963
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial discovery of a ZK stack Validium sharing the standard implementations and infra contracts. (Custom gastoken SOPH)
 
 ## Initial discovery
 
@@ -20,5 +20,17 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract Verifier (0x70F3FBf8a427155185Ec90BED8a3434203de9604)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SophonZkEvmAdmin (0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SophonChainAdminMultisig (0xe4644b6d106A18062344c0A853666bc0B8f052d1)
     +++ description: None
 ```

@@ -12,7 +12,7 @@ const discovery_ZKstackGovL2 = new ProjectDiscovery(
 )
 const bridge = discovery.getContract('L1SharedBridge')
 
-export const cronoszkevm: Layer2 = zkStackL2({
+export const sophon: Layer2 = zkStackL2({
   discovery,
   discovery_ZKstackGovL2,
   validatorsEvents: {
@@ -33,23 +33,28 @@ export const cronoszkevm: Layer2 = zkStackL2({
       "Sophon is a community-driven and entertainment-focused ecosystem built on top of a modular rollup stack leveraging ZKsync's ZK Stack technology.",
     links: {
       websites: ['https://sophon.xyz/'],
-      apps: ['https://farm.sophon.xyz/'],
-      documentation: ['https://docs.sophon.xyz/'],
+      apps: ['https://portal.sophon.xyz/', 'https://farm.sophon.xyz/'],
+      documentation: ['https://docs.sophon.xyz/sophon'],
       explorers: [],
-      repositories: [],
-      socialMedia: ['https://x.com/sophon'],
+      repositories: ['https://github.com/sophon-org'],
+      socialMedia: [
+        'https://x.com/sophon',
+        'https://blog.sophon.xyz/',
+        'https://t.me/SophonHub',
+        'https://discord.gg/sophonhub',
+      ],
     },
+    activityDataSource: 'Blockchain RPC'
   },
   associatedTokens: ['SOPH'],
-  rpcUrl: '',
+  rpcUrl: 'https://rpc.sophon.xyz/',
   chainConfig: {
-    name: '',
-    chainId: ,
-    coingeckoPlatform: '',
-    explorerUrl: '',
-    minTimestampForTvl: new UnixTime(),
+    name: 'sophon',
+    chainId: 50104,
+    explorerUrl: 'https://explorer.sophon.xyz/',
+    minTimestampForTvl: new UnixTime(1729531437),
   },
-  diamondContract: discovery.getContract(''),
+  diamondContract: discovery.getContract('SophonZkEvm'),
   daProvider: {
     name: 'External',
     bridge: {
@@ -88,9 +93,9 @@ export const cronoszkevm: Layer2 = zkStackL2({
   nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
     discovery.getEscrowDetails({
       address: bridge.address,
-      tokens: ['ybETH', 'CRO', 'USDC', 'WBTC', 'zkCRO'],
+      tokens: [],
       description:
-        'Shared bridge for depositing tokens to Cronos zkEVM and other ZK stack chains.',
+        'Shared bridge for depositing tokens to Sophon and other ZK stack chains.',
       sharedEscrow: {
         type: 'ElasticChian',
         l2BridgeAddress: EthereumAddress(
@@ -99,53 +104,45 @@ export const cronoszkevm: Layer2 = zkStackL2({
         l2EtherAddress: EthereumAddress(
           '0x898b3560affd6d955b1574d87ee09e46669c60ea',
         ),
-        tokensToAssignFromL1: ['zkCRO'],
+        tokensToAssignFromL1: [],
       },
       ...zkStackUpgrades,
     }),
   ],
   nonTemplateContracts: (zkStackUpgrades: Upgradeability) => [
-    discovery.getContractDetails('CronosZkEvm', {
+    discovery.getContractDetails('SophonZkEvm', {
       description:
         'The main Rollup contract. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract \
           then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.',
       ...zkStackUpgrades,
     }),
-    discovery.getContractDetails('CronosZkEVMAdmin', {
+    discovery.getContractDetails('SophonZkEvmAdmin', {
       description:
-        'Intermediary governance contract that has the *ChainAdmin* role in the Cronos zkEVM diamond contract.',
-    }),
-    discovery.getContractDetails('TransactionFiltererDenyList', {
-      description:
-        'Censorship contract that is registered as the TransactionFilterer in the Cronos zkEVM diamond contract. Keeps a list of addresses that are not allowed to force transactions to the Layer 2 (`requestL2Transaction()`).',
+        'Intermediary governance contract that has the *ChainAdmin* role in the Sophon zkEVM diamond contract.',
     }),
   ],
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
-      'CronosChainAdminMultisig',
-      'Inherits all *ChainAdmin* permissions.',
+      'SophonChainAdminMultisig',
+      'Inherits *ChainAdmin* permissions like adding/removing validators in the ValidatorTimelock, adding a TransactionFilterer that can censor transactions, upgrading the Sophon Diamond to a predeployed version of the ZK stack and settings its fee parameters.',
     ),
     {
-      name: 'CronosChainAdminEOA',
+      name: 'SophOracleEOA',
       accounts: [
-        discovery.getAccessControlRolePermission(
-          'CronosZkEVMAdmin',
-          'ADMIN',
-        )[0],
+        discovery.getPermissionedAccount(
+          'SophonZkEvmAdmin',
+          'tokenMultiplierSetter',
+        ),
       ],
-      description: 'Inherits all *ChainAdmin* permissions.',
+      description: 'Can set the conversion factor for SOPH deposits to Sophon.',
     },
-    ...discovery.getMultisigPermission(
-      'TxFiltererOwnerMultisig',
-      'Owns the TransactionFiltererDenyList contract and can manage addresses in the censoring list. Currently also has all *ChainAdmin* permissions through the CronosZkEVMAdmin contract.',
-    ),
   ],
   milestones: [
     {
-      name: 'Alpha Mainnet Launch',
-      link: 'https://blog.cronos.org/p/cronos-zkevm-launches-its-alpha-mainnet',
-      date: '2024-08-15T00:00:00Z',
-      description: 'Cronos zkEVM Launches Its Alpha Mainnet powered by ZKsync.',
+      name: 'Mainnet private launch',
+      link: 'https://blog.sophon.xyz/the-road-to-mainnet/',
+      date: '2024-09-22T00:00:00Z',
+      description: 'Sophon launches their mainnet privately.',
       type: 'general',
     },
   ],

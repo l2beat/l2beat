@@ -6,8 +6,7 @@
   "names": {
     "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3": "SophonZkEvm",
     "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3": "SophonZkEvmAdmin",
-    "0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce": "CronosChainAdminMultisig",
-    "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b": "TxFiltererOwnerMultisig"
+    "0xe4644b6d106A18062344c0A853666bc0B8f052d1": "SophonChainAdminMultisig"
   },
   "sharedModules": {
     "BridgeHub": "shared-zk-stack"
@@ -36,7 +35,7 @@
         "storedBlockHash",
         "storedBatchHash",
         "getName",
-        "priorityQueueFrontOperation",
+        "priorityQueueFrontOperation"
       ],
       "ignoreInWatchMode": [
         "getPriorityQueueSize",
@@ -78,6 +77,7 @@
           }
         },
         "daMode": {
+          "description": "0 = rollup; 1 = Validium",
           "handler": {
             "type": "storage",
             "slot": 38,
