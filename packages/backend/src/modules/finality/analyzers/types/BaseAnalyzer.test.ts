@@ -7,8 +7,14 @@ import {
   LivenessRecord,
 } from '@l2beat/database'
 import { createTrackedTxId } from '@l2beat/shared'
+import { mean } from 'lodash'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
-import { BaseAnalyzer, Transaction } from './BaseAnalyzer'
+import {
+  BaseAnalyzer,
+  Batch,
+  Transaction,
+  batchesToStateUpdateDelays,
+} from './BaseAnalyzer'
 
 describe(BaseAnalyzer.name, () => {
   describe(BaseAnalyzer.prototype.analyzeInterval.name, () => {
@@ -80,6 +86,48 @@ describe(BaseAnalyzer.name, () => {
         timestamp: mockLivenessRecords[1].timestamp,
       })
     })
+  })
+})
+
+describe.only(batchesToStateUpdateDelays.name, () => {
+  it('simple example', () => {
+    const t2iBatches: Batch[] = [
+      {
+        l1Timestamp: 7,
+        l2Blocks: [
+          { blockNumber: 0, timestamp: 0 },
+          { blockNumber: 1, timestamp: 2 },
+          { blockNumber: 2, timestamp: 4 },
+        ],
+      },
+      {
+        l1Timestamp: 15,
+        l2Blocks: [
+          { blockNumber: 3, timestamp: 6 },
+          { blockNumber: 4, timestamp: 8 },
+          { blockNumber: 5, timestamp: 10 },
+          { blockNumber: 6, timestamp: 12 },
+        ],
+      },
+    ]
+    const suBatches: Batch[] = [
+      {
+        l1Timestamp: 21,
+        l2Blocks: [
+          { blockNumber: 0, timestamp: 0 },
+          { blockNumber: 1, timestamp: 2 },
+          { blockNumber: 2, timestamp: 4 },
+          { blockNumber: 3, timestamp: 6 },
+          { blockNumber: 4, timestamp: 8 },
+          { blockNumber: 5, timestamp: 10 },
+          { blockNumber: 6, timestamp: 12 },
+        ],
+      },
+    ]
+
+    const result = batchesToStateUpdateDelays(t2iBatches, suBatches)
+
+    expect(mean(result)).toEqual(66 / 7)
   })
 })
 

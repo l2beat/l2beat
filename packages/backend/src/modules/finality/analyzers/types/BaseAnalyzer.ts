@@ -15,9 +15,14 @@ export type Transaction = {
   timestamp: UnixTime
 }
 
-export interface Delay {
-  duration: number
-  l2BlockNumber: number
+export interface L2Block {
+  timestamp: number
+  blockNumber: number
+}
+
+export interface Batch {
+  l1Timestamp: number
+  l2Blocks: L2Block[]
 }
 
 export abstract class BaseAnalyzer {
@@ -30,7 +35,7 @@ export abstract class BaseAnalyzer {
   async analyzeInterval(
     from: UnixTime,
     to: UnixTime,
-  ): Promise<Delay[] | undefined> {
+  ): Promise<Batch[] | undefined> {
     const configs = await this.db.indexerConfiguration.getByIndexerId(
       'tracked_txs_indexer',
     )
@@ -63,7 +68,6 @@ export abstract class BaseAnalyzer {
     )
 
     const transactions = await livenessWithConfig.getWithinTimeRange(from, to)
-
     if (!transactions.length) {
       return undefined
     }
@@ -73,11 +77,15 @@ export abstract class BaseAnalyzer {
 
     for (const batch of batchedTransactions) {
       const delays = await Promise.all(
-        batch.map((tx) =>
-          this.analyze({
-            txHash: tx.txHash,
-            timestamp: tx.timestamp,
-          }),
+        batch.map(
+          async (tx) =>
+            ({
+              l1Timestamp: tx.timestamp.toNumber(),
+              l2Blocks: await this.analyze({
+                txHash: tx.txHash,
+                timestamp: tx.timestamp,
+              }),
+            }) satisfies Batch,
         ),
       )
       finalityDelays.push(delays.flat())
@@ -93,5 +101,16 @@ export abstract class BaseAnalyzer {
    * @param transaction
    * @returns TTI/SUD delays in seconds for each transaction
    */
-  abstract analyze(transaction: Transaction): Promise<Delay[]>
+  abstract analyze(transaction: Transaction): Promise<L2Block[]>
+}
+
+export function batchToTimeToInclusionDelays(batch: Batch): number[] {
+  return batch.l2Blocks.map((l2Block) => batch.l1Timestamp - l2Block.timestamp)
+}
+
+export function batchesToStateUpdateDelays(
+  t2iBatches: Batch[],
+  suBatches: Batch[],
+): number[] {
+  return []
 }

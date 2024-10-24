@@ -71,7 +71,10 @@ export class PolygonZkEvmFinalityAnalyzer extends BaseAnalyzer {
     ])
 
     // TODO(radomski): Fill out the l2BlockNumber
-    return blocks.map((block) => ({ l2BlockNumber: 0, duration: l1Timestamp.toNumber() - block.timestamp }))
+    return blocks.map((block) => ({
+      l2BlockNumber: 0,
+      duration: l1Timestamp.toNumber() - block.timestamp,
+    }))
   }
 }
 

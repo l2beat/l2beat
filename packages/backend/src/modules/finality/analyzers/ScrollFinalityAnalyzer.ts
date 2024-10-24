@@ -32,9 +32,10 @@ export class ScrollFinalityAnalyzer extends BaseAnalyzer {
     const l2Timestamps = rawBlockContexts.map(decodeBlockContext)
 
     // TODO(radomski): Fill out the l2BlockNumber
-    return l2Timestamps.map(
-      (l2Timestamp) => ({ l2BlockNumber: 0, duration: l1Timestamp.toNumber() - l2Timestamp }),
-    )
+    return l2Timestamps.map((l2Timestamp) => ({
+      l2BlockNumber: 0,
+      duration: l1Timestamp.toNumber() - l2Timestamp,
+    }))
   }
 }
 

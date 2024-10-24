@@ -12,17 +12,6 @@ export class LivenessWithConfigService {
     private readonly db: Database,
   ) {}
 
-  async getSince(since: UnixTime) {
-    const configurationIds = this.configurations.map((c) => c.id)
-
-    const records = await this.db.liveness.getByConfigurationIdSince(
-      configurationIds,
-      since,
-    )
-
-    return records.map((record) => this.toRecordWithConfiguration(record))
-  }
-
   async getUpTo(to: UnixTime) {
     const configurationIds = this.configurations.map((c) => c.id)
 

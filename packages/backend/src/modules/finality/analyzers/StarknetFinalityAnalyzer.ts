@@ -47,7 +47,9 @@ export class StarknetFinalityAnalyzer extends BaseAnalyzer {
       await this.l2Provider.getBlock(l2BlockNumber)
 
     // TODO(radomski): Fill out the l2BlockNumber
-    return [{ l2BlockNumber: 0, duration: l1Timestamp.toNumber() - l2Timestamp }]
+    return [
+      { l2BlockNumber: 0, duration: l1Timestamp.toNumber() - l2Timestamp },
+    ]
   }
 }
 
