@@ -1,4 +1,4 @@
-import { UnixTime, formatSeconds, EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { ScalingProjectTechnologyChoice } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
