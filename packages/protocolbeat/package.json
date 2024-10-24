@@ -16,6 +16,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@tanstack/react-query": "4",
     "@total-typescript/ts-reset": "^0.3.7",
     "@types/react": "^18.3.2",
     "@types/react-dom": "^18.3.0",
@@ -23,6 +24,7 @@
     "d3-force": "^3.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-router-dom": "^6.27.0",
     "zod": "^3.22.2",
     "zustand": "^4.3.2"
   },

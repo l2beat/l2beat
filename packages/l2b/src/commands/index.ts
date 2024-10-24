@@ -14,24 +14,26 @@ import { DetectProxy } from './Proxy'
 import { SolFmt } from './SolFmt'
 import { StarknetProgramHashes } from './StarknetProgramHashes'
 import { TVL } from './TVL'
+import { UI } from './UI'
 
 export function getSubcommands() {
   return [
+    CheckRpc,
     CompareFlatSources,
     CompareOpStacks,
     CompareOrbitStacks,
     CountUserOperations,
-    CheckRpc,
     DeploymentTimestamp,
-    MatchFlat,
-    FlattenAndDiff,
+    DetectProxy,
+    Events,
+    FetchFlatSources,
     Flatten,
+    FlattenAndDiff,
+    MatchFlat,
     Powerdiff,
     SolFmt,
-    FetchFlatSources,
-    TVL,
-    Events,
-    DetectProxy,
     StarknetProgramHashes,
+    TVL,
+    UI,
   ]
 }
