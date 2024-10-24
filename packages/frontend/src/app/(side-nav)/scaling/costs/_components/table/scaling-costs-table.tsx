@@ -125,7 +125,7 @@ function calculateDataByType(
         ...e,
         data: {
           type: 'not-available',
-          reason: 'no-per-tx-metric',
+          reason: 'no-data',
         },
       }
     return {
