@@ -1,6 +1,6 @@
 import { CountedBlock, CountedOperation, CountedTransaction } from '@/types'
 import { expect, mockFn, mockObject } from 'earl'
-import { CodeClient } from '../clients/code/CodeClient'
+import { RpcCodeClient } from '../clients/code/RpcCodeClient'
 import { ContractClient } from '../clients/contract/ContractClient'
 import { SignatureClient } from '../clients/signature/SignatureClient'
 import { DB } from '../db/db'
@@ -50,7 +50,7 @@ describe(NameService.name, () => {
       }
 
       const mockSignatureClient1 = mockObject<SignatureClient>({
-        getSignature: mockFn().resolvesToOnce('name2'),
+        getSignature: mockFn().resolvesToOnce('name2').resolvesToOnce(''),
         getName: mockFn().returns('client1'),
       })
 
@@ -169,7 +169,7 @@ describe(NameService.name, () => {
         IMPLEMENTATIONS: new Map([[mocCodeHash, mockImplementationName]]),
       }
 
-      const mockCodeClient = mockObject<CodeClient>({
+      const mockCodeClient = mockObject<RpcCodeClient>({
         getCodeHash: mockFn().resolvesToOnce(mocCodeHash),
       })
 
@@ -200,7 +200,7 @@ function createNameService(
   db?: DB,
   signatureClients?: SignatureClient[],
   contractClient?: ContractClient,
-  codeClient?: CodeClient,
+  codeClient?: RpcCodeClient,
 ) {
   return new NameService(
     db ?? {
@@ -210,6 +210,6 @@ function createNameService(
     },
     signatureClients ?? [],
     contractClient ?? mockObject<ContractClient>(),
-    codeClient ?? mockObject<CodeClient>(),
+    codeClient ?? mockObject<RpcCodeClient>(),
   )
 }

@@ -1,6 +1,6 @@
 import { CountedBlock, CountedOperation, CountedTransaction } from '@/types'
 import { traverseOperationTree } from '@/utils/traverseOperationTree'
-import { CodeClient } from '../clients/code/CodeClient'
+import { RpcCodeClient } from '../clients/code/RpcCodeClient'
 import { ContractClient } from '../clients/contract/ContractClient'
 import { SignatureClient } from '../clients/signature/SignatureClient'
 import { DB } from '../db/db'
@@ -10,7 +10,7 @@ export class NameService {
     private readonly db: DB,
     private readonly signatureClients: SignatureClient[],
     private readonly contractClient: ContractClient,
-    private readonly codeClient: CodeClient,
+    private readonly codeClient: RpcCodeClient,
   ) {}
 
   async fillNames(block: CountedBlock): Promise<void> {

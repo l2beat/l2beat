@@ -3,10 +3,8 @@ import {} from '@l2beat/shared'
 import { providers } from 'ethers'
 import { Chain } from '../../../chains'
 import { getApiKey, getApiUrl } from '../apiUrls'
-import { CodeClient } from './CodeClient'
 
-// TODO: To be replaced by BlockProvider from @l2beat/shared
-export class RpcCodeClient implements CodeClient {
+export class RpcCodeClient {
   private readonly provider: providers.Provider
 
   constructor(private readonly chain: Chain) {
