@@ -23,13 +23,17 @@ export function loadNodes(
       : Math.max(...existing.map((node) => node.box.x + node.box.width)) +
         NODE_SPACING
 
-  const added = toAdd.map((node, i) => {
-    const box = recallNodeState(projectId)?.locations[node.id]
-    const x = box?.x ?? startX + (NODE_WIDTH + NODE_SPACING) * i
+  const saved = recallNodeState(projectId)
+  let missing = 0
+  const added = toAdd.map((node) => {
+    const box = saved?.locations[node.id]
+    const x = box?.x ?? startX + (NODE_WIDTH + NODE_SPACING) * missing
+    missing++
     const y = box?.y ?? 0
     const width = box?.width ?? NODE_WIDTH
+    const color = saved?.colors?.[node.id] ?? node.color
     // height will be updated by updatePositions
-    return { ...node, box: { x, y, width, height: 0 } }
+    return { ...node, color, box: { x, y, width, height: 0 } }
   })
 
   return updateNodePositions({

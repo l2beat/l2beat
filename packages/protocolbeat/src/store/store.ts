@@ -62,12 +62,13 @@ export const useStore = create<State & Actions>()(
       layout: wrapAction(set, layout),
     }),
     {
-      name: 'store',
+      // You can update the key if changes are backwards incompatible
+      name: 'store-v2',
       partialize: (state) => {
         return {
+          projectId: state.projectId,
           nodes: state.nodes,
           hidden: state.hidden,
-          projectId: state.projectId,
         }
       },
     },
