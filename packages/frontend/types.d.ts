@@ -17,7 +17,7 @@ declare module '@tanstack/react-table' {
     rowSpan?: (cell: CellContext<TData, TValue>) => number
     /**
      * @see DaTable
-     * Columns marked as virtual will not be rendered in the table and must be
+     * Columns marked as virtual will not be rendered in the table and must be rendered by the parent row spans
      */
     virtual?: boolean
   }

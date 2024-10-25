@@ -1,3 +1,4 @@
+import { assertUnreachable } from '@l2beat/shared-pure'
 import { TwoRowCell } from '~/components/table/cells/two-row-cell'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 
@@ -40,11 +41,24 @@ function translateFallback(
         firstLine: 'Ethereum',
         secondLine: 'Calldata',
       }
-    default:
+    case 'Celestia':
+    case 'DAC':
+    case 'EigenDA':
+    case 'External':
+    case 'FraxtalDA':
+    case 'MEMO':
+    case 'Mantle DA':
+    case 'NearDA':
+    case 'RedstoneDA':
+    case 'XterioDA':
+    case undefined:
       return fallback
         ? {
             firstLine: fallback,
           }
         : null
+
+    default:
+      assertUnreachable(fallback)
   }
 }
