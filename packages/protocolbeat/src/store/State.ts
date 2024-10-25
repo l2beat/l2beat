@@ -2,7 +2,7 @@ import type { SimpleNode } from '../api/SimpleNode'
 
 export interface State {
   readonly selected: readonly string[]
-  readonly hiddenNodesIds: readonly string[]
+  readonly hidden: readonly string[]
   readonly nodes: readonly Node[]
   readonly selection?: Box
   readonly transform: {

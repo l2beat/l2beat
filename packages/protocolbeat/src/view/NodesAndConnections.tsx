@@ -4,19 +4,17 @@ import { NodeView } from './NodeView'
 
 export function NodesAndConnections() {
   const nodes = useStore((state) => state.nodes)
-  const hiddenNodesIds = useStore((state) => state.hiddenNodesIds)
-  const selectedNodeIds = useStore((state) => state.selected)
-  const visibleNodes = nodes.filter(
-    (node) => !hiddenNodesIds.includes(node.simpleNode.id),
-  )
+  const hidden = useStore((state) => state.hidden)
+  const selected = useStore((state) => state.selected)
+  const visible = nodes.filter((node) => !hidden.includes(node.simpleNode.id))
 
   return (
     <>
-      {visibleNodes.map((node) =>
+      {visible.map((node) =>
         node.fields.map((field, i) => {
           const shouldHide =
             !field.connection ||
-            hiddenNodesIds.find((id) => id === field.connection?.nodeId)
+            hidden.find((id) => id === field.connection?.nodeId)
 
           if (shouldHide) {
             return null
@@ -28,18 +26,18 @@ export function NodesAndConnections() {
               from={field.connection.from}
               to={field.connection.to}
               isHighlighted={
-                selectedNodeIds.includes(node.simpleNode.id) ||
-                selectedNodeIds.includes(field.connection.nodeId)
+                selected.includes(node.simpleNode.id) ||
+                selected.includes(field.connection.nodeId)
               }
             />
           )
         }),
       )}
-      {visibleNodes.map((node) => (
+      {visible.map((node) => (
         <NodeView
           key={node.simpleNode.id}
           node={node}
-          selected={selectedNodeIds.includes(node.simpleNode.id)}
+          selected={selected.includes(node.simpleNode.id)}
           discovered={node.simpleNode.discovered}
         />
       ))}

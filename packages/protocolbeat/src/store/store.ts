@@ -22,7 +22,7 @@ import { persistNodeState } from './utils/localStore'
 
 const INITIAL_STATE: State = {
   selected: [],
-  hiddenNodesIds: [],
+  hidden: [],
   nodes: [],
   selection: undefined,
   transform: { offsetX: 0, offsetY: 0, scale: 1 },
@@ -66,7 +66,7 @@ export const useStore = create<State & Actions>()(
       partialize: (state) => {
         return {
           nodes: state.nodes,
-          hiddenNodesIds: state.hiddenNodesIds,
+          hidden: state.hidden,
           projectId: state.projectId,
         }
       },

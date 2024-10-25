@@ -69,24 +69,21 @@ export function updateNodes(state: State, nodes: SimpleNode[]): Partial<State> {
 }
 
 export function hideSelected(state: State): Partial<State> {
-  const hiddenNodesIds = [
-    ...new Set([...state.hiddenNodesIds, ...state.selected]),
-  ]
   return {
-    hiddenNodesIds,
+    hidden: [...new Set([...state.hidden, ...state.selected])],
     selected: [],
   }
 }
 
 export function showHidden(): Partial<State> {
-  return { hiddenNodesIds: [] }
+  return { hidden: [] }
 }
 
 export function clear(): Partial<State> {
   return {
     projectId: '',
     nodes: [],
-    hiddenNodesIds: [],
+    hidden: [],
     selected: [],
   }
 }

@@ -17,7 +17,7 @@ export function onKeyDown(state: State, event: KeyboardEvent): Partial<State> {
   }
   if (event.key === DELETE_KEY || event.key === BACKSPACE_KEY) {
     return {
-      hiddenNodesIds: state.hiddenNodesIds.concat(state.selected),
+      hidden: state.hidden.concat(state.selected),
     }
   }
   if (event.key === SHIFT_KEY) {
