@@ -37,6 +37,11 @@ export function ColorButton() {
     }
   }, [ref, open, setOpen])
 
+  function changeColor(color: OklchColor) {
+    colorSelected(color)
+    setOpen(false)
+  }
+
   return (
     <>
       <ControlButton disabled={!selectionExists} onClick={() => setOpen(true)}>
@@ -44,7 +49,7 @@ export function ColorButton() {
       </ControlButton>
       {open && (
         <div ref={ref} className="absolute bottom-20">
-          <ColorPicker onColorChange={colorSelected} />
+          <ColorPicker onColorChange={changeColor} />
         </div>
       )}
     </>
