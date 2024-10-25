@@ -141,8 +141,6 @@ export function EditNetworkPage({
         ? await updateNetwork({ ...data, id: network.id })
         : await insertNetwork(data)
 
-      console.log(result)
-
       if (!result?.data?.success) {
         toast.error(result?.data?.failure ?? 'Unknown error')
       } else {
@@ -406,7 +404,7 @@ export function EditNetworkPage({
               </CardHeader>
               <CardContent className="flex flex-col gap-4">
                 {rpcs.fields.length === 0 && (
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-muted-foreground text-sm">
                     No RPCs added yet.
                   </p>
                 )}
@@ -448,7 +446,7 @@ export function EditNetworkPage({
               </CardHeader>
               <CardContent className="flex flex-col gap-4">
                 {explorers.fields.length === 0 && (
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-muted-foreground text-sm">
                     No explorers added yet.
                   </p>
                 )}

@@ -59,15 +59,16 @@ import {
 } from '~/components/ui/table'
 import { deleteToken, insertToken, updateToken } from '../_actions'
 import '@xyflow/react/dist/style.css'
+import { nanoidSchema } from '~/lib/schemas'
 import { api } from '~/trpc/react'
 
 const tokenFormSchema = z.object({
-  networkId: z.string().length(21),
+  networkId: nanoidSchema,
   address: z.string().length(42),
   backedBy: z.array(
     z.object({
-      sourceTokenId: z.string().length(21),
-      externalBridgeId: z.string().length(21).or(z.literal('')),
+      sourceTokenId: nanoidSchema,
+      externalBridgeId: nanoidSchema.or(z.literal('')),
     }),
   ),
   customMeta: z
@@ -293,7 +294,7 @@ export function EditTokenPage({
                             .map((network) => (
                               <SelectItem key={network.id} value={network.id}>
                                 {network.name}{' '}
-                                <span className="text-xs text-muted-foreground">
+                                <span className="text-muted-foreground text-xs">
                                   ({network.id})
                                 </span>
                               </SelectItem>
@@ -345,44 +346,32 @@ export function EditTokenPage({
                   {[
                     ...(tokenMeta?.aggregate ?? []),
                     ...(tokenMeta?.rest ?? []),
-                  ].map((meta) => (
-                    <TableRow key={meta.source}>
-                      <TableCell
-                        className={
-                          meta.source === 'Aggregate' ? 'font-bold' : ''
-                        }
-                      >
-                        {meta.source}
-                      </TableCell>
-                      <TableCell className="max-w-[200px] break-words font-mono text-xs">
-                        {/* eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing */}
-                        {meta.externalId || 'N/A'}
-                      </TableCell>
-                      <TableCell
-                        className={
-                          meta.source === 'Aggregate' ? 'font-bold' : ''
-                        }
-                      >
-                        {meta.name}
-                      </TableCell>
-                      <TableCell
-                        className={
-                          meta.source === 'Aggregate' ? 'font-bold' : ''
-                        }
-                      >
-                        {meta.symbol}
-                      </TableCell>
-                      <TableCell
-                        className={
-                          meta.source === 'Aggregate' ? 'font-bold' : ''
-                        }
-                      >
-                        {meta.decimals}
-                      </TableCell>
-                      <TableCell>{meta.logoUrl}</TableCell>
-                      <TableCell>{meta.contractName}</TableCell>
-                    </TableRow>
-                  ))}
+                  ].map((meta) => {
+                    const cellClassName =
+                      meta.source === 'Aggregate' ? 'font-bold' : ''
+                    return (
+                      <TableRow key={meta.source}>
+                        <TableCell className={cellClassName}>
+                          {meta.source}
+                        </TableCell>
+                        <TableCell className="max-w-[200px] break-words font-mono text-xs">
+                          {/* eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing */}
+                          {meta.externalId || 'N/A'}
+                        </TableCell>
+                        <TableCell className={cellClassName}>
+                          {meta.name}
+                        </TableCell>
+                        <TableCell className={cellClassName}>
+                          {meta.symbol}
+                        </TableCell>
+                        <TableCell className={cellClassName}>
+                          {meta.decimals}
+                        </TableCell>
+                        <TableCell>{meta.logoUrl}</TableCell>
+                        <TableCell>{meta.contractName}</TableCell>
+                      </TableRow>
+                    )
+                  })}
                   <TableRow>
                     <TableCell>Overrides</TableCell>
                     <TableCell>N/A</TableCell>
@@ -482,7 +471,7 @@ export function EditTokenPage({
             </CardHeader>
             <CardContent>
               {backedBy.fields.length === 0 ? (
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   This token is not backed by any other token.
                 </p>
               ) : (
@@ -516,7 +505,7 @@ export function EditTokenPage({
                                           value={token.tokenId}
                                         >
                                           {token.name ?? 'Unknown'}{' '}
-                                          <span className="text-xs text-muted-foreground">
+                                          <span className="text-muted-foreground text-xs">
                                             ({token.tokenId})
                                           </span>
                                         </SelectItem>
@@ -554,7 +543,7 @@ export function EditTokenPage({
                                             value={bridge.id}
                                           >
                                             {bridge.name}{' '}
-                                            <span className="text-xs text-muted-foreground">
+                                            <span className="text-muted-foreground text-xs">
                                               ({bridge.id})
                                             </span>
                                           </SelectItem>
@@ -605,7 +594,7 @@ export function EditTokenPage({
                 </CardHeader>
                 <CardContent>
                   {backing.length === 0 ? (
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                       This token is not backing any other token.
                     </p>
                   ) : (

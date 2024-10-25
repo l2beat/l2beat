@@ -1,5 +1,6 @@
 import { ExternalBridgeType } from '@l2beat/database/dist/kysely/generated/enums'
 import { z } from 'zod'
+import { nanoidSchema } from '~/lib/schemas'
 
 export const insertBridgeSchema = z.object({
   name: z.string().min(3).max(191),
@@ -8,7 +9,7 @@ export const insertBridgeSchema = z.object({
 })
 
 export const bridgeIdSchema = z.object({
-  id: z.string().length(21),
+  id: nanoidSchema,
 })
 
 export const updateBridgeSchema = insertBridgeSchema.extend(

@@ -26,7 +26,7 @@ export const insertNetwork = actionClient
         return networkId
       })
       return { success: { id } }
-    } catch (_) {
+    } catch {
       return { failure: 'Failed to insert network' }
     }
   })
@@ -49,7 +49,7 @@ export const updateNetwork = actionClient
         )
       })
       return { success: { id } }
-    } catch (_) {
+    } catch {
       return {
         failure: 'Failed to update network, reason: ' + JSON.stringify(_),
       }
@@ -64,7 +64,7 @@ export const deleteNetwork = actionClient
     try {
       await db.network.delete(id)
       return { success: { id } }
-    } catch (_) {
+    } catch {
       return { failure: 'Failed to delete network' }
     }
   })

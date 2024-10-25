@@ -11,12 +11,9 @@ export const insertToken = actionClient
     revalidatePath('/', 'layout')
     const { relations, customMeta, ...data } = parsedInput
     try {
-      const id = await db.transaction(async () => {
-        const { id: networkId } = await db.token.insert(data)
-        return networkId
-      })
+      const { id } = await db.token.insert(data)
       return { success: { id } }
-    } catch (_) {
+    } catch {
       return { failure: 'Failed to insert network' }
     }
   })
@@ -27,14 +24,10 @@ export const updateToken = actionClient
     const { id, ...data } = parsedInput
     revalidatePath('/', 'layout')
     try {
-      await db.transaction(async () => {
-        await db.token.update(id, data)
-      })
+      await db.token.update(id, data)
       return { success: { id } }
-    } catch (_) {
-      return {
-        failure: 'Failed to update network, reason: ' + JSON.stringify(_),
-      }
+    } catch {
+      return { failure: 'Failed to update network' }
     }
   })
 
@@ -44,9 +37,9 @@ export const deleteToken = actionClient
     const { id } = parsedInput
     revalidatePath('/', 'layout')
     try {
-      await db.network.delete(id)
+      await db.token.delete(id)
       return { success: { id } }
-    } catch (_) {
-      return { failure: 'Failed to delete network' }
+    } catch {
+      return { failure: 'Failed to delete token' }
     }
   })

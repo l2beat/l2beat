@@ -1,20 +1,21 @@
 import { z } from 'zod'
+import { nanoidSchema } from '~/lib/schemas'
 
 export const insertTokenSchema = z.object({
-  networkId: z.string().length(21),
+  networkId: nanoidSchema,
   address: z.string().length(42),
   relations: z.array(
     z
       .object({
-        externalBridgeId: z.string().length(21).nullable(),
+        externalBridgeId: nanoidSchema.nullable(),
       })
       .and(
         z.union([
           z.object({
-            sourceTokenId: z.string().length(21),
+            sourceTokenId: nanoidSchema,
           }),
           z.object({
-            targetTokenId: z.string().length(21),
+            targetTokenId: nanoidSchema,
           }),
         ]),
       ),
@@ -31,7 +32,7 @@ export const insertTokenSchema = z.object({
 })
 
 export const tokenIdSchema = z.object({
-  id: z.string().length(21),
+  id: nanoidSchema,
 })
 
 export const updateTokenSchema = insertTokenSchema.extend(tokenIdSchema.shape)

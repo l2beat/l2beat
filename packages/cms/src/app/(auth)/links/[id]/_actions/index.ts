@@ -16,7 +16,7 @@ export const insertBridge = actionClient
     try {
       const id = await db.externalBridge.insert(parsedInput)
       return { success: { id } }
-    } catch (_) {
+    } catch {
       return { failure: 'Failed to insert bridge' }
     }
   })
@@ -29,7 +29,7 @@ export const updateBridge = actionClient
     try {
       await db.externalBridge.update(id, data)
       return { success: { id } }
-    } catch (_) {
+    } catch {
       return { failure: 'Failed to update bridge' }
     }
   })
@@ -42,7 +42,7 @@ export const deleteBridge = actionClient
     try {
       await db.externalBridge.delete(id)
       return { success: { id } }
-    } catch (_) {
+    } catch {
       return { failure: 'Failed to delete bridge' }
     }
   })

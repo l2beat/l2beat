@@ -1,11 +1,12 @@
 import { type TokenBridgeRecord, type TokenMetaRecord } from '@l2beat/database'
 import { z } from 'zod'
 import { db } from '~/db'
+import { nanoidSchema } from '~/lib/schemas'
 import { procedure, router } from '../trpc'
 
 export const tokensRouter = router({
   tokensFlowDiagram: procedure.THIS_SHOULD_BE_PRIVATE_BUT_IS_NOT_YET.input(
-    z.object({ tokenIds: z.array(z.string().length(21)) }),
+    z.object({ tokenIds: z.array(nanoidSchema) }),
   ).query(async ({ input }) => {
     const checkedTokens = new Set<string>()
     const relations: Record<string, TokenBridgeRecord> = {}

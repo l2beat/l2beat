@@ -3,6 +3,7 @@ import {
   NetworkType,
 } from '@l2beat/database/dist/kysely/generated/enums'
 import { z } from 'zod'
+import { nanoidSchema } from '~/lib/schemas'
 
 export const insertNetworkSchema = z.object({
   name: z.string().min(3).max(191),
@@ -26,7 +27,7 @@ export const insertNetworkSchema = z.object({
 })
 
 export const networkIdSchema = z.object({
-  id: z.string().length(21),
+  id: nanoidSchema,
 })
 
 export const updateNetworkSchema = insertNetworkSchema.extend(

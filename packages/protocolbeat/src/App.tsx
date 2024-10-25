@@ -84,7 +84,7 @@ export function App() {
 
       updateNodeLocations(state.locations)
       updateNodeColors(state.colors)
-    } catch (_) {
+    } catch {
       const discovery = parseDiscovery(JSON.parse(contents))
       const projectId = encodeProjectId(discovery)
       const result = transformContracts(projectId, discovery)
