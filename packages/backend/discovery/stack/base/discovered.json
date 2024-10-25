@@ -1,8 +1,8 @@
 {
   "name": "stack",
   "chain": "base",
-  "blockNumber": 20763805,
-  "configHash": "0x3a92f9da37633c839fad59cb487e56a37a5fb55e6e24f54d4dfbda7d8ec7fd41",
+  "blockNumber": 21526119,
+  "configHash": "0x0b84e0eae36c9b147a964b5ac6d273826fe44395a32b11dc3458e5ac44323a5b",
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -245,7 +245,7 @@
       }
     },
     {
-      "name": "StackMultisig",
+      "name": "ConduitMultisig3",
       "address": "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -318,7 +318,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 8,
+        "nonce": 9,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -413,10 +413,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 1,
-        "latestBlockNumber": 18619200,
-        "latestOutputIndex": 430,
-        "nextBlockNumber": 18662400,
-        "nextOutputIndex": 431,
+        "latestBlockNumber": 20131200,
+        "latestOutputIndex": 465,
+        "nextBlockNumber": 20174400,
+        "nextOutputIndex": 466,
         "PROPOSER": "0x28750b59d304e6ce7d3866eF9a0DbFBCfaE56A6E",
         "startingBlockNumber": 0,
         "startingTimestamp": 1709680111,
