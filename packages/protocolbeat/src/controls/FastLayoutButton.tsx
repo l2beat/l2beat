@@ -33,7 +33,7 @@ interface LayoutNode {
   force: number
 }
 
-export function autoLayout(baseNodes: readonly Node[]) {
+function autoLayout(baseNodes: readonly Node[]) {
   const nodes = toLayoutNodes(baseNodes)
   const clusters = clusterNodes(nodes)
 
