@@ -11,13 +11,7 @@ export function loadNodes(
   projectId: string,
   nodes: Node[],
 ): Partial<State> {
-  return {
-    ...updateNodes({ ...state, projectId }, merge(state.nodes, nodes)),
-    projectId,
-  }
-}
-
-export function updateNodes(state: State, nodes: Node[]): Partial<State> {
+  nodes = merge(state.nodes, nodes)
   const oldNodes = new Map(state.nodes.map((node) => [node.id, node]))
   const newIds = new Set(nodes.map((node) => node.id))
 
@@ -39,7 +33,7 @@ export function updateNodes(state: State, nodes: Node[]): Partial<State> {
   const addedNodes = nodes
     .filter((node) => !oldNodes.has(node.id))
     .map((node, i) => {
-      const box = getNodeBoxFromStorage(state.projectId, node)
+      const box = getNodeBoxFromStorage(projectId, node)
       const x = box?.x ?? startX + (NODE_WIDTH + NODE_SPACING) * i
       const y = box?.y ?? 0
       const width = box?.width ?? NODE_WIDTH
@@ -49,6 +43,7 @@ export function updateNodes(state: State, nodes: Node[]): Partial<State> {
 
   return updateNodePositions({
     ...state,
+    projectId,
     nodes: updatedNodes.concat(addedNodes),
   })
 }
@@ -80,10 +75,7 @@ export function colorSelected(state: State, color: OklchColor): Partial<State> {
   return { nodes }
 }
 
-export function updateNodeLocations(
-  state: State,
-  locations: NodeLocations,
-): Partial<State> {
+export function layout(state: State, locations: NodeLocations): Partial<State> {
   const movedNodes = state.nodes.map((n) => ({
     ...n,
     box: {

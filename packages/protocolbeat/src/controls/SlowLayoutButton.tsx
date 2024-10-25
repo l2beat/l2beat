@@ -26,7 +26,7 @@ interface SimulationNode extends SimulationNodeDatum {
 
 export function SlowLayoutButton() {
   const nodes = useStore((state) => state.nodes)
-  const updateNodeLocations = useStore((state) => state.updateNodeLocations)
+  const layout = useStore((state) => state.layout)
   const [updatingLayout, setUpdatingLayout] = useState<boolean>(false)
 
   const draw = () => {
@@ -66,7 +66,7 @@ export function SlowLayoutButton() {
           y: simNode.y * SIM_SCALE,
         }
       })
-      updateNodeLocations(nodeLocations)
+      layout(nodeLocations)
     }
 
     function ended() {

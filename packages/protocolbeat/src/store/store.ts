@@ -7,10 +7,9 @@ import {
   clear,
   colorSelected,
   hideSelected,
+  layout,
   loadNodes,
   showHidden,
-  updateNodeLocations,
-  updateNodes,
 } from './actions/nodes'
 import { onKeyDown } from './actions/onKeyDown'
 import { onKeyUp } from './actions/onKeyUp'
@@ -60,8 +59,7 @@ export const useStore = create<State & Actions>()(
       onMouseUp: wrapAction(set, onMouseUp),
       onMouseMove: wrapAction(set, onMouseMove),
       onWheel: wrapAction(set, onWheel),
-      updateNodes: wrapAction(set, updateNodes),
-      updateNodeLocations: wrapAction(set, updateNodeLocations),
+      layout: wrapAction(set, layout),
     }),
     {
       name: 'store',

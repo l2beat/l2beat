@@ -12,10 +12,8 @@ export interface Actions {
 
   loadNodes: (projectId: string, nodes: Node[]) => void
   colorSelected: (color: OklchColor) => void
+  layout: (locations: NodeLocations) => void
   hideSelected: () => void
   showHidden: () => void
   clear: () => void
-
-  updateNodes: (nodes: Node[]) => void
-  updateNodeLocations: (locations: NodeLocations) => void
 }

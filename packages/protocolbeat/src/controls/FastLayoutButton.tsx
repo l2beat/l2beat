@@ -5,9 +5,9 @@ import { ControlButton } from './ControlButton'
 
 export function FastLayoutButton() {
   const nodes = useStore((state) => state.nodes)
-  const updateNodeLocations = useStore((state) => state.updateNodeLocations)
+  const layout = useStore((state) => state.layout)
   return (
-    <ControlButton onClick={() => updateNodeLocations(autoLayout(nodes))}>
+    <ControlButton onClick={() => layout(autoLayout(nodes))}>
       Fast layout
     </ControlButton>
   )

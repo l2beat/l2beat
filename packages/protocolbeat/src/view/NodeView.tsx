@@ -15,7 +15,7 @@ export interface NodeViewProps {
 export function NodeView(props: NodeViewProps) {
   const ref = useRef<HTMLDivElement>(null)
 
-  const updateNodeLocations = useStore((state) => state.updateNodeLocations)
+  const updateNodeLocations = useStore((state) => state.layout)
   // Using ref instead of inline event listener
   // to prevent side-menu from flashing on hidden node
 
