@@ -1,8 +1,8 @@
 import { SingleGrissiniDetails } from '~/components/rosette/grissini/single-grissini-details'
+import { type RosetteValue } from '~/components/rosette/types'
 import { Markdown } from '../../markdown/markdown'
 import { ProjectSection } from './project-section'
 import { type ProjectSectionProps } from './types'
-import { type RosetteValue } from '~/components/rosette/types'
 
 export interface GrissiniRiskAnalysisSectionProps extends ProjectSectionProps {
   isVerified: boolean | undefined

@@ -5,8 +5,8 @@ import {
   type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
 import { mapBridgeRisksToRosetteValues } from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
-import { type RosetteValue } from '~/components/rosette/types'
 import { type ProjectDetailsSection } from '~/components/projects/sections/types'
+import { type RosetteValue } from '~/components/rosette/types'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/to-technology-risk'
