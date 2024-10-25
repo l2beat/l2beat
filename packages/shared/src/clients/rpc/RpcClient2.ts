@@ -1,10 +1,10 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
-import { UnixTime } from '@l2beat/shared-pure'
+import { Bytes, UnixTime } from '@l2beat/shared-pure'
 import { RetryHandler } from '../../tools/RetryHandler'
 import { generateId } from '../../tools/generateId'
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 import { HttpClient2 } from '../http/HttpClient2'
-import { EVMBlock, Quantity, RpcResponse } from './types'
+import { CallParameters, EVMBlock, Quantity, RpcResponse } from './types'
 
 interface RpcClient2Deps {
   url: string
@@ -53,7 +53,33 @@ export class RpcClient2 {
     )
   }
 
-  async query(method: string, params: (string | number | boolean)[]) {
+  async call(
+    callParams: CallParameters,
+    blockNumber: number | 'latest',
+  ): Promise<Bytes> {
+    const method = 'eth_call'
+    const encodedNumber =
+      blockNumber === 'latest' ? 'latest' : Quantity.encode(BigInt(blockNumber))
+
+    const callObject: Record<string, string> = {
+      to: callParams.to.toString(),
+    }
+    if (callParams.from) {
+      callObject.from = callParams.from.toString()
+    }
+    if (callParams.data) {
+      callObject.data = callParams.data.toString()
+    }
+
+    const params = [callObject, encodedNumber]
+    const bytes = (await this.query(method, params)) as string
+    return Bytes.fromHex(bytes)
+  }
+
+  async query(
+    method: string,
+    params: (string | number | boolean | Record<string, string>)[],
+  ) {
     try {
       return await this.$.rateLimiter.call(() => this._query(method, params))
     } catch {
@@ -63,7 +89,10 @@ export class RpcClient2 {
     }
   }
 
-  async _query(method: string, params: (string | number | boolean)[]) {
+  async _query(
+    method: string,
+    params: (string | number | boolean | Record<string, string>)[],
+  ) {
     const response = await this.$.http.fetch(
       this.$.url,
       {

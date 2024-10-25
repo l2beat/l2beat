@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 export const RpcResponse = z.object({
@@ -36,3 +36,9 @@ export const EVMBlock = z.object({
   hash: z.string(),
   number: Quantity.decode.transform((n) => Number(n)),
 })
+
+export interface CallParameters {
+  from?: EthereumAddress
+  to: EthereumAddress
+  data?: Bytes
+}
