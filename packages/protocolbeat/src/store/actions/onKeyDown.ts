@@ -7,7 +7,7 @@ import {
   SPACE_KEY,
 } from '../utils/constants'
 import { updateNodePositions } from '../utils/updateNodePositions'
-import { hideSelected } from './nodes'
+import { hideSelected } from './other'
 
 export function onKeyDown(state: State, event: KeyboardEvent): Partial<State> {
   if (event.key === SPACE_KEY) {

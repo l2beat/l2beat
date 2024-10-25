@@ -8,9 +8,9 @@ import {
   colorSelected,
   hideSelected,
   layout,
-  loadNodes,
   showHidden,
-} from './actions/nodes'
+} from './actions/other'
+import { loadNodes } from './actions/loadNodes'
 import { onKeyDown } from './actions/onKeyDown'
 import { onKeyUp } from './actions/onKeyUp'
 import { onMouseDown } from './actions/onMouseDown'
