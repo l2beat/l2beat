@@ -80,7 +80,10 @@ export const mantleDABridge = {
     risks: [],
   },
   technology: {
-    description: ` The DA bridge contract is used for storing transaction data headers and confirming the data store by verifying operators signatures.
+    description: ` 
+    ![MantleDA bridge](/images/da-bridge-technology/mantleda/architecture.png#center)
+
+    The DA bridge contract is used for storing transaction data headers and confirming the data store by verifying operators signatures.
       The Mantle sequencer posts the data hash as a commitment to the DataLayrServiceManager contract on Ethereum thorugh an InitDataStore() transaction.
       Once the commitment is posted, the sequencer sends the data to the permissioned set of nodes, who sign the data and send back the signatures to the sequencer.
       The sequencer then posts the signatures to the DataLayrServiceManager contract on Ethereum through a confirmDataStore() transaction.
