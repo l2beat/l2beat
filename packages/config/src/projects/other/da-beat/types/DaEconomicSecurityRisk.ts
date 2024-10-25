@@ -36,7 +36,7 @@ const OffChainVerifiable = {
   value: 'Public committee',
   sentiment: 'warning',
   description:
-    'There are no onchain assets at risk of being slashed in case of a data withholding attack. The committee members are publicly known, and their reputation is at stake should they behave maliciously.',
+    'There are no onchain assets at risk of being slashed in case of a data withholding attack. However, there is indirect economic security derived by the committee members being publicly known, and their reputation is at stake should they behave maliciously.',
 } as const
 
 const Unknown = {

@@ -15,14 +15,16 @@ interface Props {
 }
 
 export function ProjectsUsedIn({ usedIn, className, maxProjects = 5 }: Props) {
+  if (usedIn.length === 0) {
+    return <div>Nobody 😔</div>
+  }
+
   const cappedProjects = usedIn.slice(0, maxProjects)
 
   const restCount = usedIn.slice(maxProjects).length
 
   return (
-    <div
-      className={cn('flex h-5 items-center justify-center gap-1.5', className)}
-    >
+    <div className={cn('flex items-center gap-1.5', className)}>
       {cappedProjects.map((project) => {
         return (
           <Tooltip key={project.slug}>

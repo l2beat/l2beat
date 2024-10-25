@@ -6,7 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import { type RosetteValue } from '~/components/rosette/types'
 
-export function mapDaLayerRisksToGrissiniItems(
+export function mapLayerRisksToRosetteValues(
   risks: Record<
     keyof DaLayerRisks,
     ValueWithSentiment<string, Sentiment> & {
@@ -15,7 +15,7 @@ export function mapDaLayerRisksToGrissiniItems(
     }
   >,
 ): RosetteValue[] {
-  const values: RosetteValue[] = [
+  return [
     {
       name: 'Economic security',
       value: risks.economicSecurity.value,
@@ -31,11 +31,9 @@ export function mapDaLayerRisksToGrissiniItems(
       warning: risks.fraudDetection.warning,
     },
   ]
-
-  return values
 }
 
-export function mapDaBridgeRisksToGrissiniItems(
+export function mapBridgeRisksToRosetteValues(
   risks: Record<
     keyof DaBridgeRisks,
     ValueWithSentiment<string, Sentiment> & {
@@ -44,7 +42,14 @@ export function mapDaBridgeRisksToGrissiniItems(
     }
   >,
 ): RosetteValue[] {
-  const values: RosetteValue[] = [
+  return [
+    {
+      name: 'Committee security',
+      value: risks.committeeSecurity.value,
+      sentiment: risks.committeeSecurity.sentiment,
+      description: risks.committeeSecurity.description,
+      warning: risks.committeeSecurity.warning,
+    },
     {
       name: 'Upgradeability',
       value: risks.upgradeability.value,
@@ -59,14 +64,5 @@ export function mapDaBridgeRisksToGrissiniItems(
       description: risks.relayerFailure.description,
       warning: risks.relayerFailure.warning,
     },
-    {
-      name: 'Committee security',
-      value: risks.committeeSecurity.value,
-      sentiment: risks.committeeSecurity.sentiment,
-      description: risks.committeeSecurity.description,
-      warning: risks.committeeSecurity.warning,
-    },
   ]
-
-  return values
 }

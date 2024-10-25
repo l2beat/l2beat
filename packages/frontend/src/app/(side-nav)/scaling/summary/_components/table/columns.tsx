@@ -104,6 +104,26 @@ export const scalingSummaryColumns = [
 
 export const scalingSummaryValidiumAndOptimiumsColumns = [
   ...scalingSummaryColumns.slice(0, 4),
+  columnHelper.accessor('dataAvailability.layer.value', {
+    header: 'DA Layer',
+    cell: (ctx) => {
+      const value = ctx.getValue()
+      if (!value) {
+        return <NoDataBadge />
+      }
+      return (
+        <TwoRowCell>
+          <TwoRowCell.First>{ctx.getValue()}</TwoRowCell.First>
+          {ctx.row.original.dataAvailability && (
+            <TwoRowCell.Second>
+              {ctx.row.original.dataAvailability.bridge.value}
+            </TwoRowCell.Second>
+          )}
+        </TwoRowCell>
+      )
+    },
+    enableSorting: false,
+  }),
   ...scalingSummaryColumns.slice(6),
 ]
 
@@ -113,7 +133,7 @@ export const scalingSummaryOthersColumns = [
     id: 'proposer',
     header: 'Proposer',
     cell: (ctx) => {
-      const value = ctx.row.original.proposer
+      const value = ctx.row.original.mainPermissions?.proposer
       if (!value) {
         return <NoDataBadge />
       }
@@ -132,7 +152,26 @@ export const scalingSummaryOthersColumns = [
     id: 'challenger',
     header: 'Challenger',
     cell: (ctx) => {
-      const value = ctx.row.original.challenger
+      const value = ctx.row.original.mainPermissions?.challenger
+      if (!value) {
+        return <NoDataBadge />
+      }
+
+      return (
+        <TwoRowCell>
+          <TwoRowCell.First>{value.value}</TwoRowCell.First>
+          {value.secondLine && (
+            <TwoRowCell.Second>{value.secondLine}</TwoRowCell.Second>
+          )}
+        </TwoRowCell>
+      )
+    },
+  }),
+  columnHelper.display({
+    id: 'upgrader',
+    header: 'Upgrader',
+    cell: (ctx) => {
+      const value = ctx.row.original.mainPermissions?.upgrader
       if (!value) {
         return <NoDataBadge />
       }
