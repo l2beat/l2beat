@@ -1,4 +1,4 @@
-import type { SimpleNode } from './SimpleNode'
+import { SimpleNode } from '../store/State'
 
 export function merge(oldNodes: SimpleNode[], newNodes: SimpleNode[]) {
   const combined = [...newNodes, ...oldNodes].filter(
@@ -21,6 +21,7 @@ function createEmptyNodes(nodes: SimpleNode[]): SimpleNode[] {
 
   return [...unknownIds].map((id) => ({
     type: 'Unknown',
+    data: null,
     id,
     color: { l: 0.67, c: 0.166, h: 22 },
     chain: 'unknown',

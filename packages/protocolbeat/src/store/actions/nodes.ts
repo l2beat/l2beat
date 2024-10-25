@@ -1,7 +1,6 @@
-import type { SimpleNode } from '../../api/SimpleNode'
 import { merge } from '../../api/merge'
 import { OklchColor } from '../../utils/color'
-import type { Connection, Node, State } from '../State'
+import type { Connection, Node, SimpleNode, State } from '../State'
 import { NODE_SPACING, NODE_WIDTH } from '../utils/constants'
 import { recallNodeState } from '../utils/localStore'
 import { type NodeLocations } from '../utils/storageParsing'

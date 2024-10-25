@@ -1,4 +1,4 @@
-import type { SimpleNode } from '../api/SimpleNode'
+import { OklchColor } from '../utils/color'
 
 export interface State {
   readonly projectId: string
@@ -43,6 +43,20 @@ export interface Node {
   readonly simpleNode: SimpleNode
   readonly box: Box
   readonly fields: Field[]
+}
+
+export interface SimpleNode {
+  id: string
+  type: 'Contract' | 'EOA' | 'Unknown'
+  data: unknown
+  name: string
+  color: OklchColor
+  proxyType?: string
+  discovered: boolean
+  fields: {
+    name: string
+    connection?: string // id
+  }[]
 }
 
 export interface Field {

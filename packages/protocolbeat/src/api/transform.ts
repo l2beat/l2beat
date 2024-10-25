@@ -1,7 +1,7 @@
+import { SimpleNode } from '../store/State'
 import { recallNodeState } from '../store/utils/localStore'
 import { OklchColor, White } from '../utils/color'
 import { stringHash } from '../utils/stringHash'
-import type { ContractNode, EOANode, SimpleNode } from './SimpleNode'
 import type { DiscoveryContract, DiscoveryOutput } from './paseDiscovery'
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
@@ -38,7 +38,7 @@ export function transformContracts(
   const chain = discovery.chain
   const baseColor = getChainColor(chain)
 
-  const contractNodes: ContractNode[] = discovery.contracts.map((contract) => {
+  const contractNodes: SimpleNode[] = discovery.contracts.map((contract) => {
     const implementations = getAsStringArray(contract.values?.$implementation)
     return {
       type: 'Contract',
@@ -54,7 +54,7 @@ export function transformContracts(
     }
   })
 
-  const eoaNodes: EOANode[] = discovery.eoas.map((eoa) => ({
+  const eoaNodes: SimpleNode[] = discovery.eoas.map((eoa) => ({
     type: 'EOA',
     id: encodeChainAddress(chain, eoa.address),
     color: state?.colors?.[eoa.address] ?? baseColor,

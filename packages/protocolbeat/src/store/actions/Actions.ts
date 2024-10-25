@@ -1,5 +1,5 @@
-import type { SimpleNode } from '../../api/SimpleNode'
 import { OklchColor } from '../../utils/color'
+import { SimpleNode } from '../State'
 import type { NodeLocations } from '../utils/storageParsing'
 
 export interface Actions {

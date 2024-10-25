@@ -1,4 +1,4 @@
-import type { SimpleNode } from '../api/SimpleNode'
+import { SimpleNode } from '../store/State'
 import { useStore } from '../store/store'
 
 export function Sidebar() {
@@ -17,9 +17,10 @@ export function Sidebar() {
 
 function SidebarForSingleNode({ node }: { node: SimpleNode }) {
   const address =
-    node.type === 'Unknown'
-      ? (node.id.split(':')[1] as string)
-      : node.data.address
+    // TODO: better access
+    typeof node.data === 'object' && node.data !== null
+      ? Reflect.get(node.data, 'address')
+      : 'unknown'
   const humanReadableName = node.type === 'Contract' ? node.name : node.type
   const etherscanLink = `https://etherscan.io/address/${address}`
   const sourceLink =
