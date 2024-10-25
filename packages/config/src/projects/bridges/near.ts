@@ -117,7 +117,6 @@ export const near: Bridge = {
         {
           category: 'Funds can be stolen if',
           text: 'bridge administrator removes funds from the bridge escrow.',
-          isCritical: true,
         },
       ],
       isIncomplete: true,
@@ -131,7 +130,6 @@ export const near: Bridge = {
         {
           category: 'Funds can be stolen if',
           text: 'destination token contract is maliciously upgraded.',
-          isCritical: true,
         },
       ],
       isIncomplete: true,

@@ -3,7 +3,6 @@
 import { getCoreRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { useScalingAssociatedTokensContext } from '~/app/(side-nav)/scaling/_components/scaling-associated-tokens-context'
-import { useScalingFilter } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
 import { BasicTable } from '~/components/table/basic-table'
 import { getStageSortedRowModel } from '~/components/table/sorting/get-stage-sorting-row-model'
 import { useTable } from '~/hooks/use-table'
@@ -17,20 +16,14 @@ interface Props {
 
 export function ScalingSummaryValidiumsAndOptimiumsTable({ entries }: Props) {
   const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
-  const includeFilters = useScalingFilter()
-
-  const filteredEntries = useMemo(
-    () => entries.filter(includeFilters),
-    [entries, includeFilters],
-  )
 
   const tableEntries = useMemo(
     () =>
       toTableRows({
-        projects: filteredEntries,
+        projects: entries,
         excludeAssociatedTokens,
       }),
-    [filteredEntries, excludeAssociatedTokens],
+    [entries, excludeAssociatedTokens],
   )
 
   const table = useTable({

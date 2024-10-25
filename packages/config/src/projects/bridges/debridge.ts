@@ -70,7 +70,6 @@ export const debridge: Bridge = {
         {
           category: 'Users can be censored if',
           text: 'nodes decide not to transfer tokens after observing an event on the supported chain.',
-          isCritical: true,
         },
       ],
     },
@@ -83,7 +82,6 @@ export const debridge: Bridge = {
         {
           category: 'Funds can be stolen if',
           text: 'destination token contract is maliciously upgraded or not securely implemented.',
-          isCritical: true,
         },
       ],
     },

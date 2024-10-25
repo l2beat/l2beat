@@ -1,3 +1,166 @@
+Generated with discovered.json: 0x329eeee4eea4fb6c7f5d9ccb83700195a4a701f3
+
+# Diff at Wed, 23 Oct 2024 14:35:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9cc37d16a5f0b172bb41f98d8a970963e5ca4afb block: 20842790
+- current block number: 20842790
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20842790 (main branch discovery), not current.
+
+```diff
+    contract Outbox (0x0389E24A4Bc96518169f83F50FCDdA442dD8eAFd) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) which eventually resolve in execution on L1.
+      template:
++        "orbitstack/Outbox"
+      description:
++        "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) which eventually resolve in execution on L1."
+    }
+```
+
+```diff
+    contract OneStepProofEntry (0x09824fe72BFF474d16D9c2774432E381BBD60662) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProofEntry"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91)
+    +++ description: None
+```
+
+```diff
+    contract OneStepProverMemory (0x4811500e0d376Fa8d2EA3CCb7c61E0afB4F5A7f1) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverMemory"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
+    contract Bridge (0x73C6af7029E714DFf1F1554F88b79B335011Da68) {
+    +++ description: Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for bridge messaging.
+      template:
++        "orbitstack/Bridge"
+      description:
++        "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for bridge messaging."
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881) {
+    +++ description: Central contract defining the access control for upgrading the system contract implementations.
+      template:
++        "orbitstack/UpgradeExecutor"
+      description:
++        "Central contract defining the access control for upgrading the system contract implementations."
+    }
+```
+
+```diff
+    contract OneStepProverMath (0x89AF7C4C2198c426cFe6E86de0680A0850503e06) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverMath"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
+    contract RollupProxy (0x8f98f9ae2f2836Ed3a628c23311Ad9976B9fBF1B) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      description:
+-        "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
++        "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators)."
+      issuedPermissions.4:
++        {"permission":"upgrade","target":"0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881","via":[]}
+      issuedPermissions.3:
++        {"permission":"propose","target":"0xf0DDa810ed19bb640f2A03e8382814e3f0D36e13","via":[]}
+      issuedPermissions.2.permission:
+-        "validate"
++        "propose"
+      issuedPermissions.2.target:
+-        "0xf0DDa810ed19bb640f2A03e8382814e3f0D36e13"
++        "0x88781Fb85EA68bd5B8bE4C1C0c1ED94f4fd35647"
+      issuedPermissions.1.permission:
+-        "validate"
++        "challenge"
+      issuedPermissions.1.target:
+-        "0x88781Fb85EA68bd5B8bE4C1C0c1ED94f4fd35647"
++        "0xf0DDa810ed19bb640f2A03e8382814e3f0D36e13"
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "challenge"
+      issuedPermissions.0.target:
+-        "0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881"
++        "0x88781Fb85EA68bd5B8bE4C1C0c1ED94f4fd35647"
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "ArbOS v11.1 wasmModuleRoot"
++        "0x68e4fe5023f792d4ef584796c84d710303a5e12ea02d6e37e2b5e9c4332507c4"
++++ description: ArbOS version derived from known wasmModuleRoots.
+      values.arbOsFromWmRoot:
++        "ArbOS v11.1 wasmModuleRoot"
+      fieldMeta.arbOsFromWmRoot:
++        {"description":"ArbOS version derived from known wasmModuleRoots."}
+      fieldMeta.setValidatorCount:
++        {"description":"Increments on each Validator change."}
+      fieldMeta.challenges:
++        {"description":"Emitted on createChallenge() in RollupUserLogic."}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorWalletCreator (0x9CAd81628aB7D8e239F1A5B497313341578c5F71)
+    +++ description: None
+```
+
+```diff
+    contract SequencerInbox (0xaF5800ADF22301968613c37DA9C3C2a486eA915A) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      description:
+-        "State batches / commitments get posted here."
++        "A sequencer (registered in this contract) can submit transaction batches or commitments here."
+    }
+```
+
+```diff
+    contract Inbox (0xD6c596b7ca17870DD50D322393deCE6C2085a116) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      template:
++        "orbitstack/Inbox"
+      description:
++        "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds."
+    }
+```
+
+```diff
+    contract OneStepProver0 (0xDf94F0474F205D086dbc2e66D69a856FCf520622) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProver0"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
 Generated with discovered.json: 0x7a2056067cec5d52c1b8a63b2e738a3fb55fdf0d
 
 # Diff at Mon, 21 Oct 2024 12:44:47 GMT:

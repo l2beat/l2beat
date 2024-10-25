@@ -21,7 +21,6 @@ export function CostsBreakdownValueCell({ data, type }: Props) {
     switch (data.reason) {
       case 'loading':
         return <Skeleton className="ml-auto h-6 w-20" />
-      case 'no-per-tx-metric':
       case 'no-data':
         return <NoDataBadge />
       default:

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x157deae99977c5c59aaf69e0b4da78676a0fc583
+Generated with discovered.json: 0x652e372f2410121c6860d417e6909dbdde4af08e
 
-# Diff at Wed, 23 Oct 2024 09:18:19 GMT:
+# Diff at Wed, 23 Oct 2024 14:35:44 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@2734bfe28641dfdb3277a5800faf0a057c08a58f block: 20826339
+- comparing to: main@9cc37d16a5f0b172bb41f98d8a970963e5ca4afb block: 20826339
 - current block number: 21027338
 
 ## Description
@@ -17,6 +17,242 @@ The 'prolong L2 Timelock' tx is queued on L1.
     +++ description: None
       values.scheduledTransactions.45:
 +        {"id":"0xbf3be160a5b8d10510a05f0bb2a976bef48895f2dd097852c6b0059f36debed6","decoded":{"chain":"arbitrum","contractName":"CoreGovTimelockUpdateDelayEightDayAction","function":"perform","inputs":[],"address":"0x5B947D8bF197467be7ef381b7cAfEE0A7B35737A","calldata":"0xb147f40c","executor":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","inboxOnEthereum":"0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"},"raw":{"target":"0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd0000000000000000000000005b947d8bf197467be7ef381b7cafee0a7b35737a00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}}
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20826339 (main branch discovery), not current.
+
+```diff
+    contract ValidatorWallet (0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"propose","target":"0x5eF0D09d1E6204141B4d37530808eD19f60FBa35","description":"can submit state roots to the RollupProxy contract on the host chain."}
+      receivedPermissions.0.permission:
+-        "validate"
++        "challenge"
+      receivedPermissions.0.description:
++        "can challenge state roots on the host chain."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorWallet (0x5Bc5FB83950bBbF156E433c5c098bFe533Db4021)
+    +++ description: None
+```
+
+```diff
+    contract RollupProxy (0x5eF0D09d1E6204141B4d37530808eD19f60FBa35) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      description:
+-        "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
++        "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators)."
+      issuedPermissions.28:
++        {"permission":"upgrade","target":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","via":[]}
+      issuedPermissions.27:
++        {"permission":"propose","target":"0xF8D3E1cF58386c92B27710C6a0D8A54c76BC6ab5","via":[]}
+      issuedPermissions.26:
++        {"permission":"propose","target":"0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b","via":[]}
+      issuedPermissions.25:
++        {"permission":"propose","target":"0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E","via":[]}
+      issuedPermissions.24:
++        {"permission":"propose","target":"0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d","via":[]}
+      issuedPermissions.23:
++        {"permission":"propose","target":"0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0","via":[]}
+      issuedPermissions.22:
++        {"permission":"propose","target":"0xAB1A39332e934300eBCc57B5f95cA90631a347FF","via":[]}
+      issuedPermissions.21:
++        {"permission":"propose","target":"0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5","via":[]}
+      issuedPermissions.20:
++        {"permission":"propose","target":"0x7CF3d537733F6Ba4183A833c9B021265716cE9d0","via":[]}
+      issuedPermissions.19:
++        {"permission":"propose","target":"0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398","via":[]}
+      issuedPermissions.18:
++        {"permission":"propose","target":"0x6Fb914de4653eC5592B7c15F4d9466Cbd03F2104","via":[]}
+      issuedPermissions.17:
++        {"permission":"propose","target":"0x610Aa279989F440820e14248BD3879B148717974","via":[]}
+      issuedPermissions.16:
++        {"permission":"propose","target":"0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78","via":[]}
+      issuedPermissions.15:
++        {"permission":"propose","target":"0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c","via":[]}
+      issuedPermissions.14.permission:
+-        "validate"
++        "propose"
+      issuedPermissions.14.target:
+-        "0xF8D3E1cF58386c92B27710C6a0D8A54c76BC6ab5"
++        "0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4"
+      issuedPermissions.13.permission:
+-        "validate"
++        "challenge"
+      issuedPermissions.13.target:
+-        "0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b"
++        "0xF8D3E1cF58386c92B27710C6a0D8A54c76BC6ab5"
+      issuedPermissions.12.permission:
+-        "validate"
++        "challenge"
+      issuedPermissions.12.target:
+-        "0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E"
++        "0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b"
+      issuedPermissions.11.permission:
+-        "validate"
++        "challenge"
+      issuedPermissions.11.target:
+-        "0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d"
++        "0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E"
+      issuedPermissions.10.permission:
+-        "validate"
++        "challenge"
+      issuedPermissions.10.target:
+-        "0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0"
++        "0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d"
+      issuedPermissions.9.permission:
+-        "validate"
++        "challenge"
+      issuedPermissions.9.target:
+-        "0xAB1A39332e934300eBCc57B5f95cA90631a347FF"
++        "0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0"
+      issuedPermissions.8.permission:
+-        "validate"
++        "challenge"
+      issuedPermissions.8.target:
+-        "0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5"
++        "0xAB1A39332e934300eBCc57B5f95cA90631a347FF"
+      issuedPermissions.7.permission:
+-        "validate"
++        "challenge"
+      issuedPermissions.7.target:
+-        "0x7CF3d537733F6Ba4183A833c9B021265716cE9d0"
++        "0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5"
+      issuedPermissions.6.permission:
+-        "validate"
++        "challenge"
+      issuedPermissions.6.target:
+-        "0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398"
++        "0x7CF3d537733F6Ba4183A833c9B021265716cE9d0"
+      issuedPermissions.5.permission:
+-        "validate"
++        "challenge"
+      issuedPermissions.5.target:
+-        "0x6Fb914de4653eC5592B7c15F4d9466Cbd03F2104"
++        "0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398"
+      issuedPermissions.4.permission:
+-        "validate"
++        "challenge"
+      issuedPermissions.4.target:
+-        "0x610Aa279989F440820e14248BD3879B148717974"
++        "0x6Fb914de4653eC5592B7c15F4d9466Cbd03F2104"
+      issuedPermissions.3.permission:
+-        "validate"
++        "challenge"
+      issuedPermissions.3.target:
+-        "0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78"
++        "0x610Aa279989F440820e14248BD3879B148717974"
+      issuedPermissions.2.permission:
+-        "validate"
++        "challenge"
+      issuedPermissions.2.target:
+-        "0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c"
++        "0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78"
+      issuedPermissions.1.permission:
+-        "validate"
++        "challenge"
+      issuedPermissions.1.target:
+-        "0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4"
++        "0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c"
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "challenge"
+      issuedPermissions.0.target:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4"
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "ArbOS v32 wasmModuleRoot"
++        "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39"
++++ description: ArbOS version derived from known wasmModuleRoots.
+      values.arbOsFromWmRoot:
++        "ArbOS v32 wasmModuleRoot"
+      fieldMeta.arbOsFromWmRoot:
++        {"description":"ArbOS version derived from known wasmModuleRoots."}
+      fieldMeta.setValidatorCount:
++        {"description":"Increments on each Validator change."}
+      fieldMeta.challenges:
++        {"description":"Emitted on createChallenge() in RollupUserLogic."}
+    }
+```
+
+```diff
+    contract Validator (0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"propose","target":"0x5eF0D09d1E6204141B4d37530808eD19f60FBa35","description":"can submit state roots to the RollupProxy contract on the host chain."}
+      receivedPermissions.0.permission:
+-        "validate"
++        "challenge"
+      receivedPermissions.0.description:
++        "can challenge state roots on the host chain."
+    }
+```
+
+```diff
+    contract ValidatorWallet (0x7CF3d537733F6Ba4183A833c9B021265716cE9d0) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"propose","target":"0x5eF0D09d1E6204141B4d37530808eD19f60FBa35","description":"can submit state roots to the RollupProxy contract on the host chain."}
+      receivedPermissions.0.permission:
+-        "validate"
++        "challenge"
+      receivedPermissions.0.description:
++        "can challenge state roots on the host chain."
+    }
+```
+
+```diff
+    contract ValidatorWallet (0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"propose","target":"0x5eF0D09d1E6204141B4d37530808eD19f60FBa35","description":"can submit state roots to the RollupProxy contract on the host chain."}
+      receivedPermissions.0.permission:
+-        "validate"
++        "challenge"
+      receivedPermissions.0.description:
++        "can challenge state roots on the host chain."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorWalletCreator (0x960953f7c69cd2BC2322Db9223A815C680ccc7ea)
+    +++ description: None
+```
+
+```diff
+    contract ValidatorWallet (0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"propose","target":"0x5eF0D09d1E6204141B4d37530808eD19f60FBa35","description":"can submit state roots to the RollupProxy contract on the host chain."}
+      receivedPermissions.0.permission:
+-        "validate"
++        "challenge"
+      receivedPermissions.0.description:
++        "can challenge state roots on the host chain."
+    }
+```
+
+```diff
+    contract ValidatorWallet (0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"propose","target":"0x5eF0D09d1E6204141B4d37530808eD19f60FBa35","description":"can submit state roots to the RollupProxy contract on the host chain."}
+      receivedPermissions.0.permission:
+-        "validate"
++        "challenge"
+      receivedPermissions.0.description:
++        "can challenge state roots on the host chain."
     }
 ```
 
