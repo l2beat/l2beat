@@ -13,15 +13,14 @@ export function onMouseMove(
   event: MouseEvent,
   container: HTMLElement,
 ): Partial<State> {
-  if (!state.pressed.leftMouseButton && !state.pressed.middleMouseButton) {
-    return {}
+  if (!state.input.lmbPressed && !state.input.mmbPressed) {
+    return state
   }
 
   const isLeftMouse =
-    state.pressed.leftMouseButton && event.buttons & HELD_LEFT_MOUSE_BUTTON_MASK
+    state.input.lmbPressed && event.buttons & HELD_LEFT_MOUSE_BUTTON_MASK
   const isMiddleMouse =
-    state.pressed.middleMouseButton &&
-    event.buttons & HELD_MIDDLE_MOUSE_BUTTON_MASK
+    state.input.mmbPressed && event.buttons & HELD_MIDDLE_MOUSE_BUTTON_MASK
   if (isLeftMouse || isMiddleMouse) {
     switch (state.mouseMoveAction) {
       case undefined: {
@@ -61,10 +60,10 @@ export function onMouseMove(
           ...state,
           transform: {
             ...state.transform,
-            offsetX: state.transform.offsetX + x - state.mouseMove.currentX,
-            offsetY: state.transform.offsetY + y - state.mouseMove.currentY,
+            offsetX: state.transform.offsetX + x - state.input.mouseX,
+            offsetY: state.transform.offsetY + y - state.input.mouseY,
           },
-          mouseMove: { ...state.mouseMove, currentX: x, currentY: y },
+          input: { ...state.input, mouseX: x, mouseY: y },
         }
       }
       case 'drag': {
@@ -73,18 +72,18 @@ export function onMouseMove(
         return updateNodePositions({
           ...state,
           mouseUpAction: undefined,
-          mouseMove: { ...state.mouseMove, currentX: x, currentY: y },
+          input: { ...state.input, mouseX: x, mouseY: y },
         })
       }
       case 'select':
       case 'select-add': {
         const { x, y } = toViewCoordinates(event, container, state.transform)
-        const mouseMove = { ...state.mouseMove, currentX: x, currentY: y }
+        const input = { ...state.input, mouseX: x, mouseY: y }
         const selection: Box = {
-          x: Math.min(mouseMove.startX, mouseMove.currentX),
-          y: Math.min(mouseMove.startY, mouseMove.currentY),
-          width: Math.abs(mouseMove.startX - mouseMove.currentX),
-          height: Math.abs(mouseMove.startY - mouseMove.currentY),
+          x: Math.min(input.mouseStartX, input.mouseX),
+          y: Math.min(input.mouseStartY, input.mouseY),
+          width: Math.abs(input.mouseStartX - input.mouseX),
+          height: Math.abs(input.mouseStartY - input.mouseY),
         }
 
         return updateNodePositions({
@@ -98,7 +97,7 @@ export function onMouseMove(
             )
             .map((x) => x.simpleNode.id),
           mouseUpAction: undefined,
-          mouseMove,
+          input,
           selection: toContainerCoordinates(selection, state.transform),
         })
       }

@@ -7,9 +7,9 @@ import {
 } from './constants'
 
 export function updateNodePositions(state: State): State {
-  let dx = state.mouseMove.currentX - state.mouseMove.startX
-  let dy = state.mouseMove.currentY - state.mouseMove.startY
-  if (state.pressed.shiftKey) {
+  let dx = state.input.mouseX - state.input.mouseStartX
+  let dy = state.input.mouseY - state.input.mouseStartY
+  if (state.input.shiftPressed) {
     if (Math.abs(dx) > Math.abs(dy)) {
       dy = 0
     } else {

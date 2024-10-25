@@ -17,7 +17,7 @@ export function onMouseUp(state: State, event: MouseEvent): Partial<State> {
     return {
       selected,
       positionsBeforeMove: {},
-      pressed: { ...state.pressed, leftMouseButton: false },
+      input: { ...state.input, lmbPressed: false },
       mouseMoveAction: undefined,
       selection: undefined,
     }
@@ -25,7 +25,7 @@ export function onMouseUp(state: State, event: MouseEvent): Partial<State> {
 
   if (event.button === CLICKED_MIDDLE_MOUSE_BUTTON) {
     return {
-      pressed: { ...state.pressed, middleMouseButton: false },
+      input: { ...state.input, mmbPressed: false },
       mouseMoveAction:
         state.mouseMoveAction === 'pan' ? undefined : state.mouseMoveAction,
     }

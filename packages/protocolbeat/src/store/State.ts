@@ -10,12 +10,16 @@ export interface State {
     readonly offsetY: number
     readonly scale: number
   }
-  readonly pressed: {
-    readonly leftMouseButton: boolean
-    readonly middleMouseButton: boolean
-    readonly shiftKey: boolean
-    readonly spaceKey: boolean
-    readonly ctrlKey: boolean
+  readonly input: {
+    readonly shiftPressed: boolean
+    readonly spacePressed: boolean
+    readonly ctrlPressed: boolean
+    readonly lmbPressed: boolean
+    readonly mmbPressed: boolean
+    readonly mouseStartX: number
+    readonly mouseStartY: number
+    readonly mouseX: number
+    readonly mouseY: number
   }
   readonly resizingNode?: {
     readonly id: string
@@ -29,12 +33,6 @@ export interface State {
     | 'select'
     | 'select-add'
     | 'resize-node'
-  readonly mouseMove: {
-    readonly startX: number
-    readonly startY: number
-    readonly currentX: number
-    readonly currentY: number
-  }
   readonly selection?: Box
   readonly positionsBeforeMove: Readonly<
     Record<string, { readonly x: number; readonly y: number }>

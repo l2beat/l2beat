@@ -27,18 +27,24 @@ export function onMouseDown(
           startX: event.clientX,
         },
         mouseMoveAction: 'resize-node',
-        pressed: { ...state.pressed, leftMouseButton: true },
+        input: { ...state.input, lmbPressed: true },
       }
     }
   }
 
   if (event.button === CLICKED_LEFT_MOUSE_BUTTON && !state.mouseMoveAction) {
-    if (state.pressed.spaceKey) {
+    if (state.input.spacePressed) {
       const [x, y] = [event.clientX, event.clientY]
       return {
-        pressed: { ...state.pressed, leftMouseButton: true },
+        input: {
+          ...state.input,
+          lmbPressed: true,
+          mouseStartX: x,
+          mouseStartY: y,
+          mouseX: x,
+          mouseY: y,
+        },
         mouseMoveAction: 'pan',
-        mouseMove: { startX: x, startY: y, currentX: x, currentY: y },
       }
     }
 
@@ -72,14 +78,17 @@ export function onMouseDown(
         return updateNodePositions({
           ...state,
           selected,
-          pressed: {
-            ...state.pressed,
-            leftMouseButton: true,
+          input: {
+            ...state.input,
+            lmbPressed: true,
             // this is needed to fix alt tab during shift dragging
-            shiftKey: event.shiftKey,
+            shiftPressed: event.shiftKey,
+            mouseStartX: x,
+            mouseStartY: y,
+            mouseX: x,
+            mouseY: y,
           },
           mouseMoveAction: 'drag',
-          mouseMove: { startX: x, startY: y, currentX: x, currentY: y },
           mouseUpAction,
           positionsBeforeMove: Object.fromEntries(
             state.nodes
@@ -96,18 +105,30 @@ export function onMouseDown(
     return updateNodePositions({
       ...state,
       selected: event.shiftKey ? state.selected : [],
-      pressed: { ...state.pressed, leftMouseButton: true },
+      input: {
+        ...state.input,
+        lmbPressed: true,
+        mouseStartX: x,
+        mouseStartY: y,
+        mouseX: x,
+        mouseY: y,
+      },
       mouseMoveAction: event.shiftKey ? 'select-add' : 'select',
-      mouseMove: { startX: x, startY: y, currentX: x, currentY: y },
     })
   }
 
   if (event.button === CLICKED_MIDDLE_MOUSE_BUTTON && !state.mouseMoveAction) {
     const [x, y] = [event.clientX, event.clientY]
     return {
-      pressed: { ...state.pressed, middleMouseButton: true },
+      input: {
+        ...state.input,
+        mmbPressed: true,
+        mouseStartX: x,
+        mouseStartY: y,
+        mouseX: x,
+        mouseY: y,
+      },
       mouseMoveAction: 'pan',
-      mouseMove: { startX: x, startY: y, currentX: x, currentY: y },
     }
   }
 
