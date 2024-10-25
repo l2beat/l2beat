@@ -24,7 +24,6 @@ const INITIAL_STATE: State = {
   selected: [],
   hidden: [],
   nodes: [],
-  selection: undefined,
   transform: { offsetX: 0, offsetY: 0, scale: 1 },
   pressed: {
     leftMouseButton: false,
@@ -36,8 +35,8 @@ const INITIAL_STATE: State = {
   mouseUpAction: undefined,
   mouseMoveAction: undefined,
   mouseMove: { startX: 0, startY: 0, currentX: 0, currentY: 0 },
-  mouseSelection: undefined,
-  selectedPositions: {},
+  selection: undefined,
+  positionsBeforeMove: {},
   projectId: '',
 }
 

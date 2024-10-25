@@ -19,7 +19,7 @@ export function updateNodePositions(state: State): State {
 
   const nodeDimensions: Record<string, Box> = {}
   for (const node of state.nodes) {
-    const start = state.selectedPositions[node.simpleNode.id]
+    const start = state.positionsBeforeMove[node.simpleNode.id]
     nodeDimensions[node.simpleNode.id] = {
       width: node.box.width,
       height:

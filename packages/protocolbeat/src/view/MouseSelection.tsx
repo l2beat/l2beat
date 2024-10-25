@@ -1,9 +1,9 @@
 import { useStore } from '../store/store'
 
 export function MouseSelection() {
-  const mouseSelection = useStore((state) => state.mouseSelection)
+  const selection = useStore((state) => state.selection)
 
-  if (!mouseSelection) {
+  if (!selection) {
     return null
   }
 
@@ -11,10 +11,10 @@ export function MouseSelection() {
     <div
       className="absolute border border-blue-600 bg-blue-100 bg-opacity-30"
       style={{
-        left: mouseSelection.x,
-        top: mouseSelection.y,
-        width: mouseSelection.width,
-        height: mouseSelection.height,
+        left: selection.x,
+        top: selection.y,
+        width: selection.width,
+        height: selection.height,
       }}
     />
   )

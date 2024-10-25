@@ -1,10 +1,10 @@
 import type { SimpleNode } from '../api/SimpleNode'
 
 export interface State {
+  readonly projectId: string
+  readonly nodes: readonly Node[]
   readonly selected: readonly string[]
   readonly hidden: readonly string[]
-  readonly nodes: readonly Node[]
-  readonly selection?: Box
   readonly transform: {
     readonly offsetX: number
     readonly offsetY: number
@@ -35,9 +35,8 @@ export interface State {
     readonly currentX: number
     readonly currentY: number
   }
-  readonly projectId: string
-  readonly mouseSelection?: Box
-  readonly selectedPositions: Readonly<
+  readonly selection?: Box
+  readonly positionsBeforeMove: Readonly<
     Record<string, { readonly x: number; readonly y: number }>
   >
 }

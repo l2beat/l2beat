@@ -81,7 +81,7 @@ export function onMouseDown(
           mouseMoveAction: 'drag',
           mouseMove: { startX: x, startY: y, currentX: x, currentY: y },
           mouseUpAction,
-          selectedPositions: Object.fromEntries(
+          positionsBeforeMove: Object.fromEntries(
             state.nodes
               .filter((x) => selected.includes(x.simpleNode.id))
               .map((node) => [

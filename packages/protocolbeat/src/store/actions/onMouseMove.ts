@@ -99,7 +99,7 @@ export function onMouseMove(
             .map((x) => x.simpleNode.id),
           mouseUpAction: undefined,
           mouseMove,
-          mouseSelection: toContainerCoordinates(selection, state.transform),
+          selection: toContainerCoordinates(selection, state.transform),
         })
       }
     }

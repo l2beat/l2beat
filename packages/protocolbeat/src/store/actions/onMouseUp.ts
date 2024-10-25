@@ -16,10 +16,10 @@ export function onMouseUp(state: State, event: MouseEvent): Partial<State> {
 
     return {
       selected,
-      selectedPositions: {},
+      positionsBeforeMove: {},
       pressed: { ...state.pressed, leftMouseButton: false },
       mouseMoveAction: undefined,
-      mouseSelection: undefined,
+      selection: undefined,
     }
   }
 
