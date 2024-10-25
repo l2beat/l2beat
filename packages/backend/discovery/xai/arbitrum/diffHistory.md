@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xc2a8e972374c5022dee3d4fdadf04992b4180ecc
+Generated with discovered.json: 0x28f3c907f60c88b5d00bd408a8f7c0a69d019f4f
 
-# Diff at Fri, 25 Oct 2024 10:06:30 GMT:
+# Diff at Fri, 25 Oct 2024 10:53:08 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@e7501f424c0cea9b5438386ee76e509448999836 block: 264372912
-- current block number: 267471848
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@bcba81a42870e55c451475b8615b372a538b8463 block: 264372912
+- current block number: 267482958
 
 ## Description
 
-Config related.
+Renamed ExecutorMultisig to XaiMultisig.
 
 ## Config/verification related changes
 
@@ -105,6 +105,15 @@ discovery. Values are for block 264372912 (main branch discovery), not current.
 +        "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F"
       issuedPermissions.0.via.0:
 +        {"address":"0x041F85dD87c46B941dc9b15c6628B19ee5358485","delay":0}
+    }
+```
+
+```diff
+    contract XaiMultisig (0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E) {
+    +++ description: None
+      name:
+-        "ExecutorMultisig"
++        "XaiMultisig"
     }
 ```
 

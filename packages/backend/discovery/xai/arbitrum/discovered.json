@@ -1,8 +1,8 @@
 {
   "name": "xai",
   "chain": "arbitrum",
-  "blockNumber": 267471848,
-  "configHash": "0x9da3fe7b26f3276181d54f204949c8cc97bb4659d15c5d19c247e0d11b45a513",
+  "blockNumber": 267482958,
+  "configHash": "0x545759ca13f7faf4733426da81f0be17408f07728de40ccd564931cc73123050",
   "contracts": [
     {
       "name": "GnosisSafeAdminMember",
@@ -387,7 +387,7 @@
       "derivedName": "ChallengeManager"
     },
     {
-      "name": "ExecutorMultisig",
+      "name": "XaiMultisig",
       "address": "0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -582,8 +582,8 @@
         "nativeToken": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66",
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerInbox": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
-        "sequencerMessageCount": 101212,
-        "sequencerReportedSubMessageCount": 51617234
+        "sequencerMessageCount": 101217,
+        "sequencerReportedSubMessageCount": 51627048
       },
       "derivedName": "ERC20Bridge"
     },
@@ -679,7 +679,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 101212,
+        "batchCount": 101217,
         "batchPosterManager": "0x000d8C5A70B8805DF02f409F2715d05B9A63E871",
         "batchPosters": ["0x7F68dba68E72a250004812fe04F1123Fca89aBa9"],
         "bridge": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
@@ -982,12 +982,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 6699,
+        "firstUnresolvedNode": 6700,
         "inbox": "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
         "isERC20Enabled": false,
         "lastStakeBlock": 18944658,
-        "latestConfirmed": 6698,
-        "latestNodeCreated": 6850,
+        "latestConfirmed": 6699,
+        "latestNodeCreated": 6851,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x1E400568AD4840dbE50FB32f306B842e9ddeF726",
@@ -1286,7 +1286,7 @@
           "35673515981735159817351",
           "625000000000000000000000000"
         ],
-        "challengeCounter": 7591,
+        "challengeCounter": 7592,
         "CHALLENGER_ROLE": "0xe752add323323eb13e36c71ee508dfd16d74e9e4c4fd78786ba97989e5e13818",
         "challengerPublicKey": "0x977f9fe1d570ba7e48ea76566718023b260ed56eba368ff20dca06e99e650804126663c1a5febdb065ef139a0156a9ad",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
