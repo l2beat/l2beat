@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xca1719de677e2f2abafafab996d933d449087f93
+
+# Diff at Fri, 25 Oct 2024 10:11:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e7501f424c0cea9b5438386ee76e509448999836 block: 21027362
+- current block number: 21041949
+
+## Description
+
+The haust.network Validium is verifying batches.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1.
+      values.isVerifyingBatches.11.0:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x870349753c078e6a60f92c893fa50e6e87f85ae8
 
 # Diff at Wed, 23 Oct 2024 09:22:43 GMT:
