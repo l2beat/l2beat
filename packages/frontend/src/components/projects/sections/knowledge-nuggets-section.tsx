@@ -21,7 +21,12 @@ export function KnowledgeNuggetsSection({
   knowledgeNuggets,
 }: KnowledgeNuggetsSectionProps) {
   return (
-    <ProjectSection title={title} id={id} nested={nested} sectionOrder={sectionOrder}>
+    <ProjectSection
+      title={title}
+      id={id}
+      nested={nested}
+      sectionOrder={sectionOrder}
+    >
       <div className="flex flex-col gap-4">
         {knowledgeNuggets.map((nugget) => (
           <LinkWithThumbnail

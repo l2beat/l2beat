@@ -8,7 +8,7 @@ const meta = {
   component: ContractsSection,
   args: {
     title: 'Contracts',
-    sectionOrder: "1",
+    sectionOrder: '1',
     chainName: 'Ethereum',
     id: 'contracts',
   },

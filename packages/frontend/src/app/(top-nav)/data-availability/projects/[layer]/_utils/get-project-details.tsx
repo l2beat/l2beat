@@ -1,9 +1,9 @@
 import { type DaBridge, type DaLayer } from '@l2beat/config'
 import {
-  notUndefined,
   type ContractsVerificationStatuses,
   type ImplementationChangeReportApiResponse,
   type ManuallyVerifiedContracts,
+  notUndefined,
 } from '@l2beat/shared-pure'
 import { type GrissiniValue } from '~/components/grissini/types'
 import { type ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -32,7 +32,6 @@ export function getProjectDetails({
   implementationChangeReport,
   grissiniValues,
 }: Params) {
-
   const permissionsSection =
     daBridge.type !== 'NoBridge' && daBridge.type !== 'Enshrined'
       ? getPermissionsSection(
@@ -77,7 +76,7 @@ export function getProjectDetails({
     daBridge,
   )
 
-  const daLayerItems: ProjectDetailsSection[] = [];
+  const daLayerItems: ProjectDetailsSection[] = []
 
   daLayerItems.push({
     type: 'GrissiniRiskAnalysisSection',
@@ -88,7 +87,7 @@ export function getProjectDetails({
       isVerified,
       grissiniValues,
     },
-  });
+  })
 
   daLayerItems.push({
     type: 'MarkdownSection',
@@ -102,24 +101,23 @@ export function getProjectDetails({
       content: daLayer.technology.description,
       risks: daLayer.technology.risks?.map(toTechnologyRisk),
     },
-  });
+  })
 
-
-  const daBridgeItems: ProjectDetailsSection[] = [];
+  const daBridgeItems: ProjectDetailsSection[] = []
 
   daBridgeItems.push({
     type: 'MarkdownSection',
-      props: {
-        id: 'da-bridge-technology',
-        title: 'Technology',
-        diagram: {
-          type: 'da-bridge-technology',
-          slug: `${daLayer.display.slug}-${daBridge.display.slug}`,
-        },
-        content: daBridge.technology.description,
-        risks: daBridge.technology.risks?.map(toTechnologyRisk),
+    props: {
+      id: 'da-bridge-technology',
+      title: 'Technology',
+      diagram: {
+        type: 'da-bridge-technology',
+        slug: `${daLayer.display.slug}-${daBridge.display.slug}`,
+      },
+      content: daBridge.technology.description,
+      risks: daBridge.technology.risks?.map(toTechnologyRisk),
     },
-  });
+  })
 
   if (permissionsSection) {
     daBridgeItems.push({
@@ -144,7 +142,7 @@ export function getProjectDetails({
     })
   }
 
-  const items: ProjectDetailsSection[] = [];
+  const items: ProjectDetailsSection[] = []
 
   if (riskSummarySection.riskGroups.length > 0) {
     items.push({
@@ -154,18 +152,18 @@ export function getProjectDetails({
         title: 'Risk summary',
         ...riskSummarySection,
       },
-    });
+    })
   }
 
   items.push({
     type: 'Group',
-      props: {
-        id: 'da-layer',
-        title: daLayer.display.name,
-        description: daLayer.display.description,
-        items: daLayerItems,
-      },
-    });
+    props: {
+      id: 'da-layer',
+      title: daLayer.display.name,
+      description: daLayer.display.description,
+      items: daLayerItems,
+    },
+  })
 
   if (daBridgeItems.length > 0) {
     items.push({
@@ -176,7 +174,7 @@ export function getProjectDetails({
         description: daBridge.display.description,
         items: daBridgeItems,
       },
-    });
+    })
   }
 
   if (otherConsiderationsSection.items.length > 0) {
@@ -187,7 +185,7 @@ export function getProjectDetails({
         title: 'Other considerations',
         ...otherConsiderationsSection,
       },
-    });
+    })
   }
 
   return items

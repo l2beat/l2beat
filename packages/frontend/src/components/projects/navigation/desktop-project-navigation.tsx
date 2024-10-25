@@ -24,11 +24,13 @@ interface Project {
 }
 interface ProjectNavigationProps {
   project: Project
+  projectVariants?: { title: string; href: string }[]
   sections: ProjectNavigationSection[]
 }
 
 export function DesktopProjectNavigation({
   project,
+  projectVariants,
   sections,
 }: ProjectNavigationProps) {
   const headerRef = useRef<HTMLDivElement>(null)
@@ -200,7 +202,7 @@ function NavigationSubsectionEntry(props: {
         {/* Left side */}
         <div className="flex w-6 flex-col items-center">
           {props.selected && (
-            <div className="h-8 w-[5px] rounded-full bg-gradient-to-r from-purple-100 to-pink-100" />
+            <div className="absolute h-[18px] w-[5px] rounded-full bg-gradient-to-r from-purple-100 to-pink-100" />
           )}
           <div className="h-full border-l border-divider" />
         </div>

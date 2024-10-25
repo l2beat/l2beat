@@ -32,7 +32,7 @@ export function UsedInProjectEntry({
             <TooltipTrigger disabledOnMobile>
               <Link
                 href={`/${project.hrefRoot}/projects/${project.slug}/#${project.targetName}`}
-                className='size-5'
+                className="size-5"
               >
                 <Image
                   width={20}

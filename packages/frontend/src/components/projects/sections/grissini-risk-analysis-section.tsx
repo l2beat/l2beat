@@ -20,7 +20,11 @@ export function GrissiniRiskAnalysisSection({
       ({ sentiment }) => sentiment === 'UnderReview',
     )
   return (
-    <ProjectSection {...sectionProps} isUnderReview={isUnderReview} className='space-y-6'>
+    <ProjectSection
+      {...sectionProps}
+      isUnderReview={isUnderReview}
+      className="space-y-6"
+    >
       {Object.values(grissiniValues).map((value, key) => (
         <div key={key} className="flex flex-col gap-2">
           <SingleGrissiniDetails {...value} />

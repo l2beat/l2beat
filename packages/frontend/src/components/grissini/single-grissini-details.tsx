@@ -13,7 +13,11 @@ export interface SingleGrissiniDetailsProps {
   value: string
 }
 
-export function SingleGrissiniDetails({ name, sentiment, value }: GrissiniValue) {
+export function SingleGrissiniDetails({
+  name,
+  sentiment,
+  value,
+}: GrissiniValue) {
   return (
     <div
       className={cn(

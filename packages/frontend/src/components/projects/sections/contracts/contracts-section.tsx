@@ -64,7 +64,7 @@ export function ContractsSection(props: ContractsSectionProps) {
       title={props.title}
       id={props.id}
       nested={props.nested}
-      sectionOrder={props.sectionOrder} 
+      sectionOrder={props.sectionOrder}
       isUnderReview={props.isUnderReview}
       includeChildrenIfUnderReview
     >

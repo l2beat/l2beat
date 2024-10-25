@@ -11,6 +11,7 @@ import {
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { Grissini } from '~/components/grissini/grissini'
 import { GrissiniDetails } from '~/components/grissini/grissini-details'
+import { NoBridgeGrissiniDetailsPlaceholder } from '~/components/grissini/no-bridge-grissini-details-placeholder'
 import { DesktopProjectLinks } from '~/components/projects/links/desktop-project-links'
 import { MobileProjectLinks } from '~/components/projects/links/mobile-project-links'
 import { ProjectHeader } from '~/components/projects/project-header'
@@ -19,7 +20,6 @@ import { type DaProjectEntry } from '~/server/features/data-availability/project
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { DaProjectStats } from './da-project-stats'
-import { NoBridgeGrissiniDetailsPlaceholder } from '~/components/grissini/no-bridge-grissini-details-placeholder'
 
 interface Props {
   project: DaProjectEntry
@@ -59,7 +59,9 @@ export function DaProjectSummary({ project }: Props) {
                   <div className="whitespace-pre text-xs text-gray-500 dark:text-gray-600">
                     {project.name} risks
                   </div>
-                  <GrissiniDetails items={project.header.daLayerGrissiniValues} />
+                  <GrissiniDetails
+                    items={project.header.daLayerGrissiniValues}
+                  />
                 </div>
               </div>
             </div>

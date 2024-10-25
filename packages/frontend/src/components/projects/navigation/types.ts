@@ -1,43 +1,43 @@
-import { notUndefined } from "@l2beat/shared-pure";
-import { type ProjectDetailsSection } from "../sections/types";
+import { notUndefined } from '@l2beat/shared-pure'
+import { type ProjectDetailsSection } from '../sections/types'
 
 export type ProjectNavigationSection = {
-  id: string;
-  title: string;
+  id: string
+  title: string
   subsections?: {
-    id: string;
-    title: string;
-  }[];
-};
+    id: string
+    title: string
+  }[]
+}
 
 export function projectDetailsToNavigationSections(
-  sections: ProjectDetailsSection[]
+  sections: ProjectDetailsSection[],
 ): ProjectNavigationSection[] {
   return sections
     .map((section) => {
       if (section.excludeFromNavigation) {
-        return undefined;
+        return undefined
       }
 
       return {
         id: section.props.id,
         title: section.props.title,
         subsections:
-          section.type === "Group"
+          section.type === 'Group'
             ? section.props.items
                 .map((item) => {
                   if (item.excludeFromNavigation) {
-                    return undefined;
+                    return undefined
                   }
 
                   return {
                     id: item.props.id,
                     title: item.props.title,
-                  };
+                  }
                 })
                 .filter(notUndefined)
             : undefined,
-      };
+      }
     })
-    .filter(notUndefined);
+    .filter(notUndefined)
 }
