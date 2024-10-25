@@ -50,6 +50,10 @@ export default async function Page(props: Props) {
                 showProjectUnderReview: daProjectEntry.isUnderReview,
               }}
               sections={navigationSections}
+              projectVariants={daLayer.bridges.map((bridge) => ({
+                title: bridge.display.name,
+                href: `/data-availability/projects/${daLayer.display.slug}/${bridge.display.slug}`,
+              }))}
             />
           </div>
           <div className="w-full">

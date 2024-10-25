@@ -16,6 +16,15 @@ import { cn } from '~/utils/cn'
 import { scrollVerticallyToItem } from '~/utils/scroll-to-item'
 import { UnderReviewCallout } from '../under-review-callout'
 import { type ProjectNavigationSection } from './types'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '~/components/core/select'
+import { usePathname } from 'next/navigation'
+import { useRouterWithProgressBar } from '~/components/progress-bar'
 
 interface Project {
   title: string
@@ -33,6 +42,8 @@ export function DesktopProjectNavigation({
   projectVariants,
   sections,
 }: ProjectNavigationProps) {
+  const router = useRouterWithProgressBar()
+  const pathname = usePathname()
   const headerRef = useRef<HTMLDivElement>(null)
   const [headerHeight, setHeaderHeight] = useState<number>()
   const currentSection = useCurrentSection()
@@ -77,6 +88,29 @@ export function DesktopProjectNavigation({
           </div>
           {project.showProjectUnderReview && (
             <UnderReviewCallout small className="mt-2" />
+          )}
+          {projectVariants && (
+            <div className="mt-2 pl-12">
+              <Select
+                defaultValue={
+                  projectVariants.find((v) => pathname.startsWith(v.href))?.href
+                }
+                onValueChange={(value) => {
+                  router.push(value)
+                }}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {projectVariants.map((variant) => (
+                    <SelectItem key={variant.href} value={variant.href}>
+                      {variant.title}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           )}
           <HorizontalSeparator className="my-4" />
         </div>
