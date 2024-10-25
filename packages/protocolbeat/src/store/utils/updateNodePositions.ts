@@ -44,12 +44,12 @@ export function updateNodePositions(state: State): State {
         ...node,
         box,
         fields: node.fields.map((field, index) => {
-          if (!field.connection) {
-            return field
-          }
           const to = nodeDimensions[field.connection.nodeId]
           if (!to) {
-            return { ...field, connection: undefined }
+            // this should never happen
+            throw new Error(
+              'missing dimensions for node ' + field.connection.nodeId,
+            )
           }
           return {
             ...field,

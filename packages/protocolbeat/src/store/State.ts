@@ -56,7 +56,7 @@ export interface Node {
 export interface Field {
   readonly box: Box
   readonly name: string
-  readonly connection?: Connection
+  readonly connection: Connection
 }
 
 export interface Connection {
