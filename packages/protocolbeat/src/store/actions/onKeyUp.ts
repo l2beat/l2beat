@@ -10,6 +10,7 @@ export function onKeyUp(state: State, event: KeyboardEvent): Partial<State> {
     return { input: { ...state.input, ctrlPressed: false } }
   }
   if (event.key === SHIFT_KEY) {
+    // When shift is pressed we snap dragged nodes to an axis
     return updateNodePositions({
       ...state,
       input: { ...state.input, shiftPressed: false },

@@ -20,7 +20,7 @@ export function onKeyDown(state: State, event: KeyboardEvent): Partial<State> {
     return hideSelected(state)
   }
   if (event.key === SHIFT_KEY) {
-    // TODO: why!?
+    // When shift is pressed we snap dragged nodes to an axis
     return updateNodePositions({
       ...state,
       input: { ...state.input, shiftPressed: true },
