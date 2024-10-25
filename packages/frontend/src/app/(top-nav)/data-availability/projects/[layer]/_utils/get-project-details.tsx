@@ -12,6 +12,7 @@ import { toTechnologyRisk } from '~/utils/project/risk-summary/to-technology-ris
 import { getDaOtherConsiderationsSection } from './get-da-other-considerations-section'
 import { getDaProjectRiskSummarySection } from './get-da-project-risk-summary-section'
 import { getPermissionedEntities } from './get-permissioned-entities'
+import { mapDaBridgeRisksToGrissiniItems } from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
 interface Params {
   daLayer: DaLayer
   daBridge: DaBridge
@@ -103,6 +104,17 @@ export function getProjectDetails({
   })
 
   const daBridgeItems: ProjectDetailsSection[] = []
+
+  daBridgeItems.push({
+    type: 'GrissiniRiskAnalysisSection',
+    props: {
+      id: 'risk-analysis',
+      title: 'Risk analysis',
+      isUnderReview: !!daLayer.isUnderReview,
+      isVerified,
+      grissiniValues: mapDaBridgeRisksToGrissiniItems(daBridge.risks),
+    },
+  })
 
   daBridgeItems.push({
     type: 'MarkdownSection',
