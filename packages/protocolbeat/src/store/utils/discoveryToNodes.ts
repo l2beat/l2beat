@@ -1,7 +1,7 @@
 import { Field, Node } from '../State'
 import { OklchColor, White } from './color'
-import { stringHash } from './stringHash'
 import type { DiscoveryContract, DiscoveryOutput } from './paseDiscovery'
+import { stringHash } from './stringHash'
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 

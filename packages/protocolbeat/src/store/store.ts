@@ -3,13 +3,6 @@ import { persist } from 'zustand/middleware'
 
 import type { State } from './State'
 import type { Actions } from './actions/Actions'
-import {
-  clear,
-  colorSelected,
-  hideSelected,
-  layout,
-  showHidden,
-} from './actions/other'
 import { loadNodes } from './actions/loadNodes'
 import { onKeyDown } from './actions/onKeyDown'
 import { onKeyUp } from './actions/onKeyUp'
@@ -17,6 +10,13 @@ import { onMouseDown } from './actions/onMouseDown'
 import { onMouseMove } from './actions/onMouseMove'
 import { onMouseUp } from './actions/onMouseUp'
 import { onWheel } from './actions/onWheel'
+import {
+  clear,
+  colorSelected,
+  hideSelected,
+  layout,
+  showHidden,
+} from './actions/other'
 import { persistNodeLayout } from './utils/storage'
 
 const INITIAL_STATE: State = {

@@ -1,5 +1,5 @@
-import { OklchColor } from '../utils/color'
 import { Node } from '../State'
+import { OklchColor } from '../utils/color'
 import type { NodeLocations } from '../utils/storage'
 
 export interface Actions {

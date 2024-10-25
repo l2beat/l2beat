@@ -3,8 +3,8 @@ import { useCallback, useRef } from 'react'
 
 import type { Field, Node } from '../store/State'
 import { useStore } from '../store/store'
-import { NODE_WIDTH } from '../store/utils/constants'
 import { OklchColor, oklchColorToCSS } from '../store/utils/color'
+import { NODE_WIDTH } from '../store/utils/constants'
 import { ResizeHandle } from './ResizeHandle'
 
 export interface NodeViewProps {
