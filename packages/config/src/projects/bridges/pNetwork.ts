@@ -10,6 +10,7 @@ const discovery = new ProjectDiscovery('pNetwork')
 export const pNetwork: Bridge = {
   type: 'bridge',
   id: ProjectId('pNetwork'),
+  createdAt: new UnixTime(1674472649), // 2023-01-23T11:17:29Z
   display: {
     name: 'pNetwork',
     slug: 'pnetwork',
@@ -104,17 +105,14 @@ export const pNetwork: Bridge = {
         {
           category: 'Users can be censored if',
           text: 'validators decide to stop processing certain transactions.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: 'validators allow to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: 'validators sign a fraudulent message allowing themselves to withdraw all locked funds.',
-          isCritical: true,
         },
       ],
     },
@@ -128,7 +126,6 @@ export const pNetwork: Bridge = {
         {
           category: 'Funds can be stolen if',
           text: 'destination token contract is maliciously upgraded.',
-          isCritical: true,
         },
       ],
     },

@@ -12,6 +12,7 @@ const strategiesUpgrades = {
 }
 
 export const edgeless: Layer2 = orbitStackL2({
+  createdAt: new UnixTime(1712313901), // 2024-04-05T10:45:01Z
   display: {
     name: 'Edgeless',
     slug: 'edgeless',

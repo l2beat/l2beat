@@ -10,6 +10,7 @@ const discovery = new ProjectDiscovery('portal')
 export const portal: Bridge = {
   type: 'bridge',
   id: ProjectId('portal'),
+  createdAt: new UnixTime(1665415357), // 2022-10-10T15:22:37Z
   display: {
     name: 'Portal (Wormhole)',
     slug: 'portal',
@@ -119,17 +120,14 @@ export const portal: Bridge = {
         {
           category: 'Users can be censored if',
           text: 'guardians decide to stop processing certain transactions.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: 'guardians allow to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: 'guardians sign a fraudulent message allowing themselves to withdraw all locked funds.',
-          isCritical: true,
         },
       ],
     },
@@ -147,7 +145,6 @@ export const portal: Bridge = {
         {
           category: 'Funds can be stolen if',
           text: 'destination token contract is maliciously upgraded.',
-          isCritical: true,
         },
       ],
     },

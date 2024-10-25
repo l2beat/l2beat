@@ -56,6 +56,7 @@ const committee = getCommittee(discovery)
 export const myria: Layer2 = {
   type: 'layer2',
   id: ProjectId('myria'),
+  createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
     Badge.VM.AppChain,
     Badge.DA.DAC,

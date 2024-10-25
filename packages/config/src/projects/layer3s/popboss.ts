@@ -1,4 +1,4 @@
-import { assert, ProjectId } from '@l2beat/shared-pure'
+import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -9,6 +9,7 @@ import { Layer3 } from './types'
 const discovery = new ProjectDiscovery('popboss', 'arbitrum')
 
 export const popboss: Layer3 = orbitStackL3({
+  createdAt: new UnixTime(1710836229), // 2024-03-19T08:17:09Z
   badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum, Badge.RaaS.Conduit],
   additionalPurposes: ['Gaming'],
   discovery,

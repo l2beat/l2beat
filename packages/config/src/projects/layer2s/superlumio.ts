@@ -7,6 +7,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('superlumio')
 
 export const superlumio: Layer2 = opStackL2({
+  createdAt: new UnixTime(1726646157), // 2024-09-18T07:55:57Z
   discovery,
   badges: [Badge.RaaS.Conduit],
   display: {
@@ -36,7 +37,7 @@ export const superlumio: Layer2 = opStackL2({
     minTimestamp: new UnixTime(1708984751),
     l2BlockTimeSeconds: 2,
     lag: 0,
-    stateUpdate: 'disabled',
+    stateUpdate: 'analyze',
   },
   isNodeAvailable: 'UnderReview',
   milestones: [

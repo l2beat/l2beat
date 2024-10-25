@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { donatuz } from '../../../layer3s/donatuz'
 import { NO_BRIDGE } from '../templates/no-bridge-template'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
@@ -75,6 +76,7 @@ export const eigenDA: DaLayer = {
   },
   bridges: [
     NO_BRIDGE({
+      createdAt: new UnixTime(1724426960), // 2024-08-23T15:29:20Z
       layer: 'EigenDA',
       description:
         'The risk profile in this page refers to scaling solutions that do not integrate with a data availability bridge.',
@@ -89,7 +91,7 @@ export const eigenDA: DaLayer = {
     layer: (layer) => layer === 'EigenDA',
   }),
   risks: {
-    economicSecurity: DaEconomicSecurityRisk.Unknown,
+    economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('EIGEN'),
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
   },
 }

@@ -73,6 +73,7 @@ const CHALLENGE_FEE = utils.formatEther(
 export const lightlink: Bridge = {
   type: 'bridge',
   id: ProjectId('lightlink'),
+  createdAt: new UnixTime(1718443080), // 2024-06-15T09:18:00Z
   display: {
     name: 'LightLink',
     slug: 'lightlink',
@@ -164,17 +165,14 @@ export const lightlink: Bridge = {
         {
           category: 'Users can be censored if',
           text: 'validators decide to not mint tokens after observing an event on Ethereum.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: 'validators decide to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: "validators relay a withdraw request that wasn't originated on the source chain.",
-          isCritical: true,
         },
       ],
     },
@@ -192,7 +190,6 @@ export const lightlink: Bridge = {
         {
           category: 'Funds can be stolen if',
           text: 'destination token contract is maliciously upgraded.',
-          isCritical: true,
         },
       ],
     },

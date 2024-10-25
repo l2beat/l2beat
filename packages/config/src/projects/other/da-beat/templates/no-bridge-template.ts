@@ -11,6 +11,7 @@ import { linkByDA } from '../utils/link-by-da'
 type TemplateSpecific = {
   /** DA layer name to automatically match projects with */
   layer: string
+  createdAt: NoDaBridge['createdAt']
 }
 
 type Optionals = Partial<{
@@ -70,6 +71,7 @@ export function NO_BRIDGE(template: TemplateVars): NoDaBridge {
   return {
     id,
     type,
+    createdAt: template.createdAt,
     display,
     risks,
     technology,

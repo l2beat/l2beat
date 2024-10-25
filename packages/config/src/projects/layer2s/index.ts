@@ -136,6 +136,7 @@ import { swan } from './swan'
 import { swell } from './swell'
 import { sxnetwork } from './sxnetwork'
 import { sxt } from './sxt'
+import { t1 } from './t1'
 import { taiko } from './taiko'
 import { tanx } from './tanx'
 import { telos } from './telos'
@@ -307,6 +308,7 @@ export const layer2s: Layer2[] = [
   swan,
   swell,
   sxt,
+  t1,
   sxnetwork,
   taiko,
   tanx,

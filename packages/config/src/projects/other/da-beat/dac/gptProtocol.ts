@@ -1,4 +1,4 @@
-import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { gpt } from '../../../layer2s/gpt'
 import { PolygoncdkDAC } from '../templates/polygoncdk-template'
@@ -7,8 +7,13 @@ import { DacTransactionDataType } from '../types/DacTransactionDataType'
 const discovery = new ProjectDiscovery('gpt')
 
 const upgradeability = {
-  upgradableBy: ['LocalAdmin'],
+  upgradableBy: ['DACProxyAdminOwner'],
   upgradeDelay: 'None',
+}
+
+const bridgeUpgradeability = {
+  upgradableBy: ['RollupManager'],
+  upgradeDelay: 'No delay',
 }
 
 const membersCountDAC = discovery.getContractValue<number>(
@@ -29,6 +34,7 @@ const members = discovery.getContractValue<string[]>(
 export const gptProtocolDac = PolygoncdkDAC({
   project: gpt,
   bridge: {
+    createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     permissions: [
       {
         name: 'Committee Members',
@@ -46,7 +52,27 @@ export const gptProtocolDac = PolygoncdkDAC({
           ),
         ],
         description:
-          'Admin and ForceBatcher of the GptProtocolValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions, and set the DA committee members in the GptProtocolDAC contract.',
+          'Admin and ForceBatcher of the GptProtocolValidium contract, can set core system parameters like replacing the sequencer (relayer), activate forced transactions, and set the DA committee members in the GptProtocolDAC contract.',
+      },
+      {
+        name: 'RollupManager',
+        accounts: [
+          discovery.formatPermissionedAccount(
+            discovery.getContractValue('GptProtocolValidium', 'rollupManager'),
+          ),
+        ],
+        description:
+          'The RollupManager can upgrade the DA bridge contract implementation.',
+      },
+      {
+        name: 'DACProxyAdminOwner',
+        accounts: [
+          discovery.formatPermissionedAccount(
+            discovery.getContractValue('DACProxyAdmin', 'owner'),
+          ),
+        ],
+        description:
+          "Owner of the GptProtocolDAC's ProxyAdmin. Can upgrade the DAC members.",
       },
     ],
     chain: ChainId.ETHEREUM,
@@ -56,7 +82,8 @@ export const gptProtocolDac = PolygoncdkDAC({
     contracts: {
       addresses: [
         discovery.getContractDetails('GptProtocolValidium', {
-          description: `The main contract of the WirexPayChain zkEVM. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
+          description: `The DA bridge and main contract of the WirexPayChain zkEVM. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
+          ...bridgeUpgradeability,
         }),
         discovery.getContractDetails('GptProtocolDAC', {
           description:

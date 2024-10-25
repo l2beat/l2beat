@@ -4,6 +4,7 @@ import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/pizza-rosette-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { StageCell } from '~/components/table/cells/stage/stage-cell'
+import { TwoRowCell } from '~/components/table/cells/two-row-cell'
 import {
   TypeCell,
   TypeExplanationTooltip,
@@ -21,14 +22,14 @@ export const scalingSummaryColumns = [
   columnHelper.accessor('name', {
     cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
   }),
-  columnHelper.accessor('risks', {
+  columnHelper.display({
+    header: 'Risks',
     cell: (ctx) => (
       <PizzaRosetteCell
-        values={ctx.getValue()}
+        values={ctx.row.original.risks}
         isUnderReview={ctx.row.original.isUnderReview}
       />
     ),
-    enableSorting: false,
     meta: {
       align: 'center',
     },
@@ -103,5 +104,87 @@ export const scalingSummaryColumns = [
 
 export const scalingSummaryValidiumAndOptimiumsColumns = [
   ...scalingSummaryColumns.slice(0, 4),
+  columnHelper.accessor('dataAvailability.layer.value', {
+    header: 'DA Layer',
+    cell: (ctx) => {
+      const value = ctx.getValue()
+      if (!value) {
+        return <NoDataBadge />
+      }
+      return (
+        <TwoRowCell>
+          <TwoRowCell.First>{ctx.getValue()}</TwoRowCell.First>
+          {ctx.row.original.dataAvailability && (
+            <TwoRowCell.Second>
+              {ctx.row.original.dataAvailability.bridge.value}
+            </TwoRowCell.Second>
+          )}
+        </TwoRowCell>
+      )
+    },
+    enableSorting: false,
+  }),
+  ...scalingSummaryColumns.slice(6),
+]
+
+export const scalingSummaryOthersColumns = [
+  ...scalingSummaryColumns.slice(0, 4),
+  columnHelper.display({
+    id: 'proposer',
+    header: 'Proposer',
+    cell: (ctx) => {
+      const value = ctx.row.original.mainPermissions?.proposer
+      if (!value) {
+        return <NoDataBadge />
+      }
+
+      return (
+        <TwoRowCell>
+          <TwoRowCell.First>{value.value}</TwoRowCell.First>
+          {value.secondLine && (
+            <TwoRowCell.Second>{value.secondLine}</TwoRowCell.Second>
+          )}
+        </TwoRowCell>
+      )
+    },
+  }),
+  columnHelper.display({
+    id: 'challenger',
+    header: 'Challenger',
+    cell: (ctx) => {
+      const value = ctx.row.original.mainPermissions?.challenger
+      if (!value) {
+        return <NoDataBadge />
+      }
+
+      return (
+        <TwoRowCell>
+          <TwoRowCell.First>{value.value}</TwoRowCell.First>
+          {value.secondLine && (
+            <TwoRowCell.Second>{value.secondLine}</TwoRowCell.Second>
+          )}
+        </TwoRowCell>
+      )
+    },
+  }),
+  columnHelper.display({
+    id: 'upgrader',
+    header: 'Upgrader',
+    cell: (ctx) => {
+      const value = ctx.row.original.mainPermissions?.upgrader
+      if (!value) {
+        return <NoDataBadge />
+      }
+
+      return (
+        <TwoRowCell>
+          <TwoRowCell.First>{value.value}</TwoRowCell.First>
+          {value.secondLine && (
+            <TwoRowCell.Second>{value.secondLine}</TwoRowCell.Second>
+          )}
+        </TwoRowCell>
+      )
+    },
+  }),
   ...scalingSummaryColumns.slice(6),
 ]

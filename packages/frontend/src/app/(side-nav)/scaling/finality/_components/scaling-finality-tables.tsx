@@ -23,6 +23,7 @@ export function ScalingFinalityTables(props: Props) {
       rollups: props.entries.rollups.filter(includeFilters),
       validiumsAndOptimiums:
         props.entries.validiumsAndOptimiums.filter(includeFilters),
+      others: props.entries.others?.filter(includeFilters),
     }
     return (
       <>
@@ -37,10 +38,20 @@ export function ScalingFinalityTables(props: Props) {
             <DirectoryTabsTrigger value="rollups">
               Rollups <CountBadge>{filteredEntries.rollups.length}</CountBadge>
             </DirectoryTabsTrigger>
+            {filteredEntries.others && filteredEntries.others.length > 0 && (
+              <DirectoryTabsTrigger value="others">
+                Others <CountBadge>{filteredEntries.others.length}</CountBadge>
+              </DirectoryTabsTrigger>
+            )}
           </DirectoryTabsList>
           <DirectoryTabsContent value="rollups">
             <ScalingFinalityTable entries={filteredEntries.rollups} rollups />
           </DirectoryTabsContent>
+          {filteredEntries.others && filteredEntries.others.length > 0 && (
+            <DirectoryTabsContent value="others">
+              <ScalingFinalityTable entries={filteredEntries.others} />
+            </DirectoryTabsContent>
+          )}
         </DirectoryTabs>
       </>
     )

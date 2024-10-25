@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -14,6 +14,7 @@ import { type Layer2, type Layer2Display } from '../types'
 
 export interface UnderReviewConfigCommon {
   id: string
+  createdAt: UnixTime
   rpcUrl?: string
   escrows?: ScalingProjectEscrow[]
   chainConfig?: ChainConfig
@@ -37,6 +38,7 @@ export function underReviewL2(templateVars: UnderReviewConfigL2): Layer2 {
     isUnderReview: true,
     type: 'layer2',
     id: ProjectId(templateVars.id),
+    createdAt: templateVars.createdAt,
     display: templateVars.display,
     stage: {
       stage:
@@ -72,6 +74,7 @@ export function underReviewL3(templateVars: UnderReviewConfigL3): Layer3 {
     type: 'layer3',
     isUnderReview: true,
     id: ProjectId(templateVars.id),
+    createdAt: templateVars.createdAt,
     hostChain: templateVars.hostChain,
     display: {
       ...templateVars.display,

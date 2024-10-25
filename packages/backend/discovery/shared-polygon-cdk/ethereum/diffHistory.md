@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x870349753c078e6a60f92c893fa50e6e87f85ae8
+
+# Diff at Wed, 23 Oct 2024 09:22:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2734bfe28641dfdb3277a5800faf0a057c08a58f block: 20997898
+- current block number: 21027362
+
+## Description
+
+New haust.network associated chain deployed. (mainnet?) Not verifying batches yet.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1.
+      values.isVerifyingBatches.11:
++        [false]
+      values.rollupCount:
+-        11
++        12
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.11:
++        ["0x505ce1246F7e2Fd899dc5d3cfB17A47500Eb58bC",938,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4]
+    }
+```
+
 Generated with discovered.json: 0xdcc5c4dfc2847b00f0f100ee9eb97abee8fcf819
 
 # Diff at Mon, 21 Oct 2024 11:10:04 GMT:

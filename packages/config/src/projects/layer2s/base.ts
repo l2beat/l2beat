@@ -8,6 +8,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('base')
 
 export const base: Layer2 = opStackL2({
+  createdAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
   discovery,
   display: {
     name: 'Base',
@@ -41,7 +42,7 @@ export const base: Layer2 = opStackL2({
     genesisTimestamp: new UnixTime(1686789347),
     l2BlockTimeSeconds: 2,
     lag: 0,
-    stateUpdate: 'disabled',
+    stateUpdate: 'analyze',
   },
   genesisTimestamp: new UnixTime(1686796655),
   stateDerivation: DERIVATION.OPSTACK('BASE'),
@@ -72,7 +73,7 @@ export const base: Layer2 = opStackL2({
     },
   ],
   badges: [Badge.Infra.Superchain, Badge.Other.L3HostChain],
-  nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN'],
+  nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'rsETH'],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0x9de443AdC5A411E83F1878Ef24C3F52C61571e72'),

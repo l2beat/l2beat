@@ -55,6 +55,7 @@ const validatorsOld = () => {
 }
 
 export const zksyncera: Layer2 = zkStackL2({
+  createdAt: new UnixTime(1671115151), // 2022-12-15T14:39:11Z
   discovery,
   discovery_ZKstackGovL2,
   validatorsEvents: {

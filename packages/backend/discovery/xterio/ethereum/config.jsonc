@@ -20,6 +20,9 @@
     "0x089A4754538B74Ff63Bc6AbeaD7A95973aB03572": "PreimageOracle"
   },
   "overrides": {
+    "0xcbF423525a5471Fc5037a5397F99f6F09fe41379": {
+      "extends": "opstack/SuperchainConfigFake"
+    },
     "PreimageOracle": {
       "ignoreMethods": ["zeroHashes"]
     },

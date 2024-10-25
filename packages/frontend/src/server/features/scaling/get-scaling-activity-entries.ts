@@ -66,7 +66,9 @@ export async function getScalingActivityEntries() {
   }
 
   return {
-    entries: [ethereumEntry, ...entries],
+    entries: [ethereumEntry, ...entries].sort(
+      (a, b) => b.data.pastDayTps - a.data.pastDayTps,
+    ),
   }
 }
 

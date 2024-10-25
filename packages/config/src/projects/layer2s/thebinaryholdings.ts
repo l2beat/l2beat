@@ -7,6 +7,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('thebinaryholdings')
 
 export const thebinaryholdings: Layer2 = opStackL2({
+  createdAt: new UnixTime(1726668186), // 2024-09-18T14:03:06Z
   discovery,
   badges: [Badge.Infra.Superchain],
   display: {
@@ -37,7 +38,7 @@ export const thebinaryholdings: Layer2 = opStackL2({
     minTimestamp: new UnixTime(1719397465),
     l2BlockTimeSeconds: 2,
     lag: 0,
-    stateUpdate: 'disabled',
+    stateUpdate: 'analyze',
   },
   isNodeAvailable: 'UnderReview',
   milestones: [],

@@ -143,6 +143,7 @@ const permissionlessGameMaxClockExtension =
 export const optimism: Layer2 = {
   type: 'layer2',
   id: ProjectId('optimism'),
+  createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
     Badge.VM.EVM,
     Badge.DA.EthereumBlobs,
@@ -204,6 +205,7 @@ export const optimism: Layer2 = {
         // L1StandardBridge
         address: EthereumAddress('0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1'),
         tokens: '*',
+        excludedTokens: ['rsETH'],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65'),

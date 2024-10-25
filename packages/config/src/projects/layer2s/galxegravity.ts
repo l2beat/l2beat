@@ -8,6 +8,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('galxegravity', 'ethereum')
 
 export const galxegravity: Layer2 = orbitStackL2({
+  createdAt: new UnixTime(1719415787), // 2024-06-26T15:29:47Z
   discovery,
   badges: [Badge.DA.DAC, Badge.RaaS.Conduit],
   associatedTokens: ['G'],
@@ -62,10 +63,5 @@ export const galxegravity: Layer2 = orbitStackL2({
       },
     ],
   },
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'ConduitMultisig',
-      "MultiSig that can upgrade the rollup's smart contract system (via UpgradeExecutor) and gain access to all funds.",
-    ),
-  ],
+  discoveryDrivenData: true,
 })

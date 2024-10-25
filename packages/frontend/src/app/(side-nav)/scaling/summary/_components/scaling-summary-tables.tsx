@@ -13,6 +13,7 @@ import { type RecategorisedScalingEntry } from '~/utils/group-by-main-categories
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingTvlFilters } from '../../_components/scaling-tvl-filters'
 import { OthersComingSoonNotice } from './table/others-coming-soon-notice'
+import { ScalingSummaryOthersTable } from './table/scaling-summary-others-table'
 import { ScalingSummaryRollupsTable } from './table/scaling-summary-rollups-table'
 import { ScalingSummaryTable } from './table/scaling-summary-table'
 import { ScalingSummaryValidiumsAndOptimiumsTable } from './table/scaling-summary-validiums-and-optimiums-table'
@@ -26,7 +27,9 @@ export function ScalingSummaryTables(props: Props) {
       rollups: props.entries.rollups.filter(includeFilters),
       validiumsAndOptimiums:
         props.entries.validiumsAndOptimiums.filter(includeFilters),
+      others: props.entries.others?.filter(includeFilters),
     }
+
     return (
       <>
         <HorizontalSeparator className="my-4 !border-divider" />
@@ -34,6 +37,7 @@ export function ScalingSummaryTables(props: Props) {
           items={[
             ...filteredEntries.rollups,
             ...filteredEntries.validiumsAndOptimiums,
+            ...(filteredEntries.others ?? []),
           ]}
         />
         <DirectoryTabs defaultValue="rollups">
@@ -42,12 +46,17 @@ export function ScalingSummaryTables(props: Props) {
               Rollups <CountBadge>{filteredEntries.rollups.length}</CountBadge>
             </DirectoryTabsTrigger>
             <DirectoryTabsTrigger value="validiums-and-optimiums">
-              Validiums & Optimiums{' '}
+              Validiums & Optimiums
               <CountBadge>
                 {filteredEntries.validiumsAndOptimiums.length}
               </CountBadge>
             </DirectoryTabsTrigger>
-            <DirectoryTabsTrigger value="others">Others</DirectoryTabsTrigger>
+            <DirectoryTabsTrigger value="others">
+              Others
+              {filteredEntries.others && filteredEntries.others.length > 0 && (
+                <CountBadge>{filteredEntries.others.length}</CountBadge>
+              )}
+            </DirectoryTabsTrigger>
           </DirectoryTabsList>
           <DirectoryTabsContent value="rollups">
             <ScalingSummaryRollupsTable entries={filteredEntries.rollups} />
@@ -58,7 +67,11 @@ export function ScalingSummaryTables(props: Props) {
             />
           </DirectoryTabsContent>
           <DirectoryTabsContent value="others">
-            <OthersComingSoonNotice />
+            {filteredEntries.others && filteredEntries.others.length > 0 ? (
+              <ScalingSummaryOthersTable entries={filteredEntries.others} />
+            ) : (
+              <OthersComingSoonNotice />
+            )}
           </DirectoryTabsContent>
         </DirectoryTabs>
       </>

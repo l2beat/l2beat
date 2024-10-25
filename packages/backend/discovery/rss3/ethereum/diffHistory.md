@@ -1,4 +1,85 @@
-Generated with discovered.json: 0xec61257d6878ad38ef92103f21864d22598fe4cc
+Generated with discovered.json: 0xb96a6f6354ef4f3a4167d998bf12ffa82449c437
+
+# Diff at Wed, 23 Oct 2024 09:07:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2734bfe28641dfdb3277a5800faf0a057c08a58f block: 20920298
+- current block number: 21027285
+
+## Description
+
+OptimismPortal upgrade: An 'operator' address is introduced that can call a new `finalizeWithdrawalTransaction()` with additional arbitrary calldata that then replaces the calldata of the transaction being finalized. This allows arbitrary rerouting of funds or using legitimate withdrawals to make arbitrary (malicious) calls.
+
+## Watched changes
+
+```diff
+    contract OptimismPortal (0x6A12432491bbbE8d3babf75F759766774C778Db4) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This fork of the OptimismPortal also allows an 'operator' address to overwrite the calldata of withdrawals on finalization, potentially stealing the withdrawn funds or calling arbitrary contracts.
+      template:
+-        "opstack/OptimismPortal"
+      sourceHashes.1:
+-        "0x347fa20f8dfc82ef7433b3eb7915a248528d908fc77907c0d879f96a00106732"
++        "0x84fc56b8558ed12594b26997990b30e8da2a496417a7d467aa0e31e5281f9168"
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0x8AC80fa0993D95C9d6B8Cb494E561E6731038941","via":[{"address":"0x1075B29e5F7a911128C77F3989702E150C988904","delay":0}]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "guard"
+      issuedPermissions.1.target:
+-        "0x8AC80fa0993D95C9d6B8Cb494E561E6731038941"
++        "0x7ef00577fAAa44D0491970D6516eB7b90EC3c80E"
+      issuedPermissions.1.via.0:
+-        {"address":"0x1075B29e5F7a911128C77F3989702E150C988904","delay":0}
+      issuedPermissions.0.permission:
+-        "guard"
++        "configure"
+      issuedPermissions.0.target:
+-        "0x7ef00577fAAa44D0491970D6516eB7b90EC3c80E"
++        "0xC4f81F990b47c12144e74A901162A2cFDf4b5a9d"
+      values.$implementation:
+-        "0xc5b17F1DF579D033DB17174B837fe4D2dF05b050"
++        "0x491825c073DaE5b31b0AAE4c01f2EBEa254c838b"
+      values.$pastUpgrades.1:
++        ["2024-10-22T16:54:35.000Z","0x8a4278f30ca52243ebf1afe80f5ec3edcb73f34f9e826f8523c30029bbd7fbd8",["0x491825c073DaE5b31b0AAE4c01f2EBEa254c838b"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.operator:
++        "0xC4f81F990b47c12144e74A901162A2cFDf4b5a9d"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract WithdrawalOverwriterMultisig (0xC4f81F990b47c12144e74A901162A2cFDf4b5a9d)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../OptimismPortal/OptimismPortal.sol              |   92 +-
+ .../.flat/WithdrawalOverwriterMultisig/Safe.sol    | 1088 ++++++++++++++++++++
+ .../WithdrawalOverwriterMultisig/SafeProxy.p.sol   |   37 +
+ 3 files changed, 1213 insertions(+), 4 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20920298 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (0x6A12432491bbbE8d3babf75F759766774C778Db4) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This fork of the OptimismPortal also allows an 'operator' address to overwrite the calldata of withdrawals on finalization, potentially stealing the withdrawn funds or calling arbitrary contracts.
+      description:
+-        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
++        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This fork of the OptimismPortal also allows an 'operator' address to overwrite the calldata of withdrawals on finalization, potentially stealing the withdrawn funds or calling arbitrary contracts."
+    }
+```
+
+Generated with discovered.json: 0x57905eb79d2acfebb39b6a28309330bf11266da6
 
 # Diff at Mon, 21 Oct 2024 12:47:58 GMT:
 

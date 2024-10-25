@@ -1,4 +1,4 @@
-import { ChainId } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { sxnetwork } from '../../../layer2s/sxnetwork'
 import { AnytrustDAC } from '../templates/anytrust-template'
@@ -15,11 +15,12 @@ const { membersCount, requiredSignatures } = dac
 export const sxnetworkDac = AnytrustDAC({
   project: sxnetwork,
   bridge: {
+    createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     contracts: {
       addresses: [
         discovery.getContractDetails(
           'SequencerInbox',
-          'Main entry point for the Sequencer submitting transaction batches.',
+          'The DA bridge and entry point for the Sequencer submitting transaction batches.',
         ),
       ],
       risks: [],
@@ -30,7 +31,7 @@ export const sxnetworkDac = AnytrustDAC({
         name: 'Sequencers',
         accounts: discovery.getPermissionsByRole('sequence'),
         description:
-          'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
+          'Central actors allowed to relay transaction batches to the DA bridge (Sequencer Inbox).',
         chain: discovery.chain,
       },
       {
@@ -40,7 +41,20 @@ export const sxnetworkDac = AnytrustDAC({
           'EXECUTOR_ROLE',
         ),
         description:
-          'Multisig that can upgrade authorized batch posters via the UpgradeExecutor contract.',
+          'Can upgrade the DA bridge, committee members, and authorized batch posters (relayers) via the UpgradeExecutor contract.',
+      },
+      {
+        name: 'UpgradeExecutor',
+        accounts: [
+          {
+            address: EthereumAddress(
+              discovery.getContractValue<string>('RollupProxy', 'owner'),
+            ),
+            type: 'Contract',
+          },
+        ],
+        description:
+          'The UpgradeExecutor can update the DA bridge and change the committee members by updating the valid keyset.',
       },
     ],
     chain: ChainId.ETHEREUM,

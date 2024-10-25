@@ -31,7 +31,7 @@ type CostsAvailableData = {
 
 type CostsNotAvailableData = {
   type: 'not-available'
-  reason: 'loading' | 'no-per-tx-metric' | 'no-data'
+  reason: 'loading' | 'no-data'
   syncStatus?: never
 }
 
@@ -159,7 +159,6 @@ export const scalingCostsColumns = [
         case 'loading':
           return <Skeleton className="ml-auto h-6 w-24" />
         case 'no-data':
-        case 'no-per-tx-metric':
           return <NoDataBadge />
         default:
           assertUnreachable(data.reason)

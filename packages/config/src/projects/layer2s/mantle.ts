@@ -19,6 +19,7 @@ const threshold =
   ) / 1000 // Quorum threshold is in basis points, but stake is equal for all members (100k MNT)
 
 export const mantle: Layer2 = opStackL2({
+  createdAt: new UnixTime(1680782525), // 2023-04-06T12:02:05Z
   badges: [Badge.DA.CustomDA],
   daProvider: {
     name: 'Mantle DA',
@@ -57,7 +58,7 @@ export const mantle: Layer2 = opStackL2({
     },
   },
   associatedTokens: ['MNT'],
-  nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN'],
+  nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'FBTC'],
   discovery,
   display: {
     name: 'Mantle',

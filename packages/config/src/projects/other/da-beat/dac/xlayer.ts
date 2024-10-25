@@ -1,4 +1,4 @@
-import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { xlayer } from '../../../layer2s/xlayer'
 import { PolygoncdkDAC } from '../templates/polygoncdk-template'
@@ -8,6 +8,11 @@ const discovery = new ProjectDiscovery('xlayer')
 
 const upgradeability = {
   upgradableBy: ['DACProxyAdminOwner'],
+  upgradeDelay: 'No delay',
+}
+
+const bridgeUpgradeability = {
+  upgradableBy: ['RollupManager'],
   upgradeDelay: 'No delay',
 }
 
@@ -29,10 +34,12 @@ const members = discovery.getContractValue<string[]>(
 export const xlayerDac = PolygoncdkDAC({
   project: xlayer,
   bridge: {
+    createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     contracts: {
       addresses: [
         discovery.getContractDetails('XLayerValidium', {
-          description: `The main contract of the XLayerValidium. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
+          description: `The DA bridge and main contract of the XLayerValidium. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
+          ...bridgeUpgradeability,
         }),
         discovery.getContractDetails('XLayerValidiumDAC', {
           description:
@@ -59,7 +66,17 @@ export const xlayerDac = PolygoncdkDAC({
           ),
         ],
         description:
-          'Admin of the XLayerValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions and update the DA mode.',
+          'Admin of the XLayerValidium contract, can set core system parameters like replacing the sequencer (relayer), activate forced transactions and update the DA mode.',
+      },
+      {
+        name: 'RollupManager',
+        accounts: [
+          discovery.formatPermissionedAccount(
+            discovery.getContractValue('XLayerValidium', 'rollupManager'),
+          ),
+        ],
+        description:
+          'The RollupManager can upgrade the DA bridge contract implementation.',
       },
       {
         name: 'DACProxyAdminOwner',
@@ -69,7 +86,7 @@ export const xlayerDac = PolygoncdkDAC({
           ),
         ],
         description:
-          "Owner of the XLayerValidiumDAC's ProxyAdmin. Can upgrade the contract.",
+          "Owner of the XLayerValidiumDAC's ProxyAdmin. Can upgrade the DAC members.",
       },
     ],
     chain: ChainId.ETHEREUM,

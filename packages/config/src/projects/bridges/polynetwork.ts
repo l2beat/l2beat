@@ -16,6 +16,7 @@ const warningText = isPaused ? 'The bridge is currently paused.' : undefined
 export const polynetwork: Bridge = {
   type: 'bridge',
   id: ProjectId('polynetwork'),
+  createdAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Poly Bridge',
     slug: 'polynetwork',
@@ -119,12 +120,10 @@ export const polynetwork: Bridge = {
         {
           category: 'Users can be censored if',
           text: 'chain Relayers decide to not pass certain transactions to the destination chain.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: 'a fake block header is relayed through the PolyNetwork chain that allows to prove a burn/mint transaction that never occurred on the source chain.',
-          isCritical: true,
         },
         {
           category: 'Funds can be frozen if',

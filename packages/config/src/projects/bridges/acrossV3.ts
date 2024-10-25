@@ -26,6 +26,7 @@ const bondSymbol = discovery.getContractValue<string>('BondToken', 'symbol')
 export const acrossV3: Bridge = {
   type: 'bridge',
   id: PROJECT_ID,
+  createdAt: new UnixTime(1712746402), // 2024-04-10T10:53:22Z
   display: {
     name: 'Across V3',
     slug: 'acrossv3',
@@ -280,7 +281,6 @@ export const acrossV3: Bridge = {
       {
         category: 'Funds can be stolen if',
         text: 'a Spoke Pool contract receives a malicious code upgrade. There is no delay on code upgrades.',
-        isCritical: true,
       },
     ],
   },

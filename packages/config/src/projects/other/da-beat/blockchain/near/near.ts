@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { NO_BRIDGE } from '../../templates/no-bridge-template'
 import { DaEconomicSecurityRisk } from '../../types/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
@@ -104,7 +105,11 @@ export const near: DaLayer = {
   },
   bridges: [
     NO_BRIDGE({
+      createdAt: new UnixTime(1721664340), // 2024-07-22T16:05:40Z
       layer: 'NearDA',
+      technology: {
+        description: `There is no DA bridge on Ethereum allowing to verify blob inclusion in the NEAR blockchain.`,
+      },
     }),
   ],
   usedIn: linkByDA({

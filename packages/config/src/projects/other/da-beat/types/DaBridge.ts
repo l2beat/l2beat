@@ -1,4 +1,4 @@
-import { ChainId } from '@l2beat/shared-pure'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import {
   ScalingProjectContracts,
   ScalingProjectPermission,
@@ -63,6 +63,8 @@ export type DacBridge = CommonDaBridge & {
 type CommonDaBridge = {
   /** Unique identifier of the data availability bridge. */
   id: string
+  /** Date of creation of the file (not the project) */
+  createdAt: UnixTime
   display: DaBridgeDisplay
   /** Is the DA bridge under review? */
   isUnderReview?: boolean
