@@ -17,7 +17,7 @@ export function FileDropZone(props: { children: ReactNode }) {
   return (
     <div
       id="drop_zone"
-      className="h-full w-full"
+      className="flex h-full w-full"
       onDrop={(event) => {
         event.preventDefault()
         ;[...event.dataTransfer.items].forEach((item) => {
