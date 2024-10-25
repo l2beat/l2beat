@@ -1,4 +1,9 @@
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  EthereumAddress,
+  UnixTime,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { zkfair } from '../../../layer2s/zkfair'
 import { PolygoncdkDAC } from '../templates/polygoncdk-template'
@@ -6,9 +11,14 @@ import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('zkfair')
 
-const upgradeability = {
-  upgradableBy: ['ZKFairAdmin'],
-  upgradeDelay: 'None',
+const bridgeDelay = discovery.getContractValue<number>(
+  'Timelock',
+  'getMinDelay',
+)
+
+const bridgeUpgradeability = {
+  upgradableBy: ['DACProxyAdminOwner'],
+  upgradeDelay: `${formatSeconds(bridgeDelay)} delay.`,
 }
 
 const membersCountDAC = discovery.getContractValue<number>(
@@ -33,12 +43,13 @@ export const zkfairDac = PolygoncdkDAC({
     contracts: {
       addresses: [
         discovery.getContractDetails('ZKFairValidium', {
-          description: `The main contract of ZKFair. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
+          description: `The DA bridge and main contract of ZKFair. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
+          ...bridgeUpgradeability,
         }),
         discovery.getContractDetails('ZKFairValidiumDAC', {
           description:
             'Validium committee contract that allows the admin to setup the members of the committee and stores the required amount of signatures threshold.',
-          ...upgradeability,
+          ...bridgeUpgradeability,
         }),
       ],
       risks: [],
@@ -53,9 +64,18 @@ export const zkfairDac = PolygoncdkDAC({
         })),
       },
       ...discovery.getMultisigPermission(
-        'ZKFairAdmin',
-        'Admin of the ZKFairValidiumDAC contract, can set core system parameters like timeouts, sequencer, activate forced transactions, update the DA mode and upgrade the ZKFairValidiumDAC contract',
+        'ZKFairOwner',
+        'Owner of the ZKFairValidium contract, can set core system parameters like replacing the sequencer (relayer), activate forced transactions, update the DA mode and change DAC members by upgrading the ZKFairValidiumDAC contract.',
       ),
+      {
+        name: 'DACProxyAdminOwner',
+        accounts: discovery.getAccessControlRolePermission(
+          'Timelock',
+          'EXECUTOR_ROLE',
+        ),
+        description:
+          'Controls the ZKFairValidiumDAC and ZKFairValidium contracts. Can upgrade the DA bridge contract implementation and committee members.',
+      },
     ],
     chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignaturesDAC,

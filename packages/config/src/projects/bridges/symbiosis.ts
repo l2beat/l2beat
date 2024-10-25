@@ -77,19 +77,19 @@ export const symbiosis: Bridge = {
         {
           category: 'Users can be censored if',
           text: 'MPC nodes decide to censor certain transactions.',
-          isCritical: true,
+
           _ignoreTextFormatting: true,
         },
         {
           category: 'Funds can be stolen if',
           text: 'MPC nodes decide to maliciously takeover them or there is an external exploit which will result in signing malicious transaction.',
-          isCritical: true,
+
           _ignoreTextFormatting: true,
         },
         {
           category: 'Funds can be lost if',
           text: 'MPC nodes lose their private keys.',
-          isCritical: true,
+
           _ignoreTextFormatting: true,
         },
       ],
@@ -102,7 +102,6 @@ export const symbiosis: Bridge = {
         {
           category: 'Funds can be lost if',
           text: 'destination token contract is maliciously upgraded or not securely implemented.',
-          isCritical: true,
         },
       ],
       references: [],

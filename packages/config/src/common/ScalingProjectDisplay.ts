@@ -1,3 +1,4 @@
+import { StringWithAutocomplete } from '@l2beat/shared-pure'
 import { WarningWithSentiment } from '../projects'
 import { ScalingProjectCategory } from './ScalingProjectCategory'
 import { ScalingProjectLinks } from './ScalingProjectLinks'
@@ -13,13 +14,19 @@ export type ScalingProjectDisplay = {
   /** Name of the category the scaling project belongs to */
   category: ScalingProjectCategory
   isOther?: boolean
-  proposer?: {
-    value: string
-    secondLine?: string
-  }
-  challenger?: {
-    value: string
-    secondLine?: string
+  mainPermissions?: {
+    proposer: {
+      value: string
+      secondLine?: string
+    }
+    challenger: {
+      value: StringWithAutocomplete<'None'>
+      secondLine?: string
+    }
+    upgrader: {
+      value: string
+      secondLine?: string
+    }
   }
   /** A warning displayed in the header of the project. Also will be displayed as yellow shield next to project name (table view) */
   headerWarning?: string

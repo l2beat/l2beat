@@ -67,17 +67,14 @@ Withdrawals to Ethereum can be delayed by a predefined time with a flow rate mec
         {
           category: 'Users can be censored if',
           text: 'validators on Axelar decide to not mint tokens after observing an event on Ethereum.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: 'validators decide to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: "validators relay a withdraw request that wasn't originated on the source chain.",
-          isCritical: true,
         },
       ],
     },
