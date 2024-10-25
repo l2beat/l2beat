@@ -10,7 +10,7 @@ export const ham: Layer3 = opStackL3({
   createdAt: new UnixTime(1722499160), // 2024-08-01T07:59:20Z
   discovery,
   hostChain: ProjectId('base'),
-  badges: [Badge.L3ParentChain.Base, Badge.Infra.Superchain],
+  badges: [Badge.L3ParentChain.Base, Badge.Infra.Superchain, Badge.RaaS.Caldera],
   additionalPurposes: ['Social'],
   display: {
     name: 'Ham',
