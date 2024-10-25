@@ -2,7 +2,7 @@ import { useStore } from '../store/store'
 import { ControlButton } from './ControlButton'
 
 export function HideButton() {
-  const selectionExists = useStore((state) => state.selectedNodeIds.length > 0)
+  const selectionExists = useStore((state) => state.selected.length > 0)
   const hideSelected = useStore((state) => state.hideSelected)
 
   return (

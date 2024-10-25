@@ -61,9 +61,7 @@ export function updateNodePositions(state: State): State {
             },
             connection: {
               nodeId: field.connection.nodeId,
-              highlighted: state.selectedNodeIds.includes(
-                field.connection.nodeId,
-              ),
+              highlighted: state.selected.includes(field.connection.nodeId),
               ...processConnection(index, box, to),
             },
           }

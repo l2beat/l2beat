@@ -21,7 +21,7 @@ import { onWheel } from './actions/onWheel'
 import { persistNodeState } from './utils/localStore'
 
 const INITIAL_STATE: State = {
-  selectedNodeIds: [],
+  selected: [],
   hiddenNodesIds: [],
   nodes: [],
   selection: undefined,

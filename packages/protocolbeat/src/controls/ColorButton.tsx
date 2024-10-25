@@ -6,7 +6,7 @@ import { ControlButton } from './ControlButton'
 export function ColorButton() {
   const ref = useRef<HTMLDivElement>(null)
   const [open, setOpen] = useState(false)
-  const selectionExists = useStore((state) => state.selectedNodeIds.length > 0)
+  const selectionExists = useStore((state) => state.selected.length > 0)
   const colorSelected = useStore((state) => state.colorSelected)
 
   useEffect(() => {

@@ -46,32 +46,32 @@ export function onMouseDown(
 
     for (const node of reverseIter(state.nodes)) {
       if (boxContains(node.box, x, y)) {
-        const includes = state.selectedNodeIds.includes(node.simpleNode.id)
+        const includes = state.selected.includes(node.simpleNode.id)
 
-        let selectedNodeIds: readonly string[]
+        let selected: readonly string[]
         let mouseUpAction: State['mouseUpAction']
         if (event.metaKey || event.altKey) {
-          selectedNodeIds = []
+          selected = []
 
           const field = node.fields.find((f) => boxContains(f.box, x, y))
           if (field !== undefined && field.connection !== undefined) {
-            selectedNodeIds = [field.connection.nodeId]
+            selected = [field.connection.nodeId]
           }
         } else if (!event.shiftKey && !includes) {
-          selectedNodeIds = [node.simpleNode.id]
+          selected = [node.simpleNode.id]
         } else if (!event.shiftKey && includes) {
-          selectedNodeIds = state.selectedNodeIds
+          selected = state.selected
           mouseUpAction = { type: 'DeselectAllBut', id: node.simpleNode.id }
         } else if (event.shiftKey && !includes) {
-          selectedNodeIds = [...state.selectedNodeIds, node.simpleNode.id]
+          selected = [...state.selected, node.simpleNode.id]
         } else {
-          selectedNodeIds = state.selectedNodeIds
+          selected = state.selected
           mouseUpAction = { type: 'DeselectOne', id: node.simpleNode.id }
         }
 
         return updateNodePositions({
           ...state,
-          selectedNodeIds,
+          selected,
           pressed: {
             ...state.pressed,
             leftMouseButton: true,
@@ -83,7 +83,7 @@ export function onMouseDown(
           mouseUpAction,
           selectedPositions: Object.fromEntries(
             state.nodes
-              .filter((x) => selectedNodeIds.includes(x.simpleNode.id))
+              .filter((x) => selected.includes(x.simpleNode.id))
               .map((node) => [
                 node.simpleNode.id,
                 { x: node.box.x, y: node.box.y },
@@ -95,7 +95,7 @@ export function onMouseDown(
 
     return updateNodePositions({
       ...state,
-      selectedNodeIds: event.shiftKey ? state.selectedNodeIds : [],
+      selected: event.shiftKey ? state.selected : [],
       pressed: { ...state.pressed, leftMouseButton: true },
       mouseMoveAction: event.shiftKey ? 'select-add' : 'select',
       mouseMove: { startX: x, startY: y, currentX: x, currentY: y },

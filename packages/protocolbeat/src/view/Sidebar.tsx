@@ -2,13 +2,13 @@ import type { SimpleNode } from '../api/SimpleNode'
 import { useStore } from '../store/store'
 
 export function Sidebar() {
-  const multiple = useStore((state) => state.selectedNodeIds.length > 1)
+  const multipleSelection = useStore((state) => state.selected.length > 1)
   const selected = useStore(
     (state) =>
-      state.nodes.find((x) => state.selectedNodeIds[0] === x.simpleNode.id)
+      state.nodes.find((x) => state.selected[0] === x.simpleNode.id)
         ?.simpleNode,
   )
-  if (!selected || multiple) {
+  if (!selected || multipleSelection) {
     return null
   }
 

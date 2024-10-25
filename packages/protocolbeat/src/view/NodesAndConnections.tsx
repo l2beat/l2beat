@@ -5,7 +5,7 @@ import { NodeView } from './NodeView'
 export function NodesAndConnections() {
   const nodes = useStore((state) => state.nodes)
   const hiddenNodesIds = useStore((state) => state.hiddenNodesIds)
-  const selectedNodeIds = useStore((state) => state.selectedNodeIds)
+  const selectedNodeIds = useStore((state) => state.selected)
   const visibleNodes = nodes.filter(
     (node) => !hiddenNodesIds.includes(node.simpleNode.id),
   )

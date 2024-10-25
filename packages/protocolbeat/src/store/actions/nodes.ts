@@ -70,11 +70,11 @@ export function updateNodes(state: State, nodes: SimpleNode[]): Partial<State> {
 
 export function hideSelected(state: State): Partial<State> {
   const hiddenNodesIds = [
-    ...new Set([...state.hiddenNodesIds, ...state.selectedNodeIds]),
+    ...new Set([...state.hiddenNodesIds, ...state.selected]),
   ]
   return {
     hiddenNodesIds,
-    selectedNodeIds: [],
+    selected: [],
   }
 }
 
@@ -87,13 +87,13 @@ export function clear(): Partial<State> {
     projectId: '',
     nodes: [],
     hiddenNodesIds: [],
-    selectedNodeIds: [],
+    selected: [],
   }
 }
 
 export function colorSelected(state: State, color: OklchColor): Partial<State> {
   const nodes = state.nodes.map((node) =>
-    state.selectedNodeIds.includes(node.simpleNode.id)
+    state.selected.includes(node.simpleNode.id)
       ? { ...node, simpleNode: { ...node.simpleNode, color } }
       : node,
   )

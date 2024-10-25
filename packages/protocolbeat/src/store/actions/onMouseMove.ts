@@ -89,12 +89,12 @@ export function onMouseMove(
 
         return updateNodePositions({
           ...state,
-          selectedNodeIds: state.nodes
+          selected: state.nodes
             .filter(
               (node) =>
                 intersects(node.box, selection) ||
                 (state.mouseMoveAction === 'select-add' &&
-                  state.selectedNodeIds.includes(node.simpleNode.id)),
+                  state.selected.includes(node.simpleNode.id)),
             )
             .map((x) => x.simpleNode.id),
           mouseUpAction: undefined,
