@@ -5,7 +5,7 @@ import {
   type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
 import { mapBridgeRisksToRosetteValues } from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
-import { type GrissiniValue } from '~/components/grissini/types'
+import { type RosetteValue } from '~/components/rosette/types'
 import { type ProjectDetailsSection } from '~/components/projects/sections/types'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
@@ -20,7 +20,7 @@ interface Params {
   contractsVerificationStatuses: ContractsVerificationStatuses
   manuallyVerifiedContracts: ManuallyVerifiedContracts
   implementationChangeReport: ImplementationChangeReportApiResponse
-  grissiniValues: GrissiniValue[]
+  grissiniValues: RosetteValue[]
 }
 
 export function getProjectDetails({

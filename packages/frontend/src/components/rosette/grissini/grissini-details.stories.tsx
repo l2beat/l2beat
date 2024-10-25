@@ -11,7 +11,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    items: [
+    values: [
       {
         name: 'Economic security',
         sentiment: 'good',

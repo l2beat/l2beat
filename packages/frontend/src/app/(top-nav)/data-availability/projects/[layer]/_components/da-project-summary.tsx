@@ -9,9 +9,6 @@ import {
   DrawerTrigger,
 } from '~/components/core/drawer'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
-import { Grissini } from '~/components/grissini/grissini'
-import { GrissiniDetails } from '~/components/grissini/grissini-details'
-import { NoBridgeGrissiniDetailsPlaceholder } from '~/components/grissini/no-bridge-grissini-details-placeholder'
 import { DesktopProjectLinks } from '~/components/projects/links/desktop-project-links'
 import { MobileProjectLinks } from '~/components/projects/links/mobile-project-links'
 import { ProjectHeader } from '~/components/projects/project-header'
@@ -20,6 +17,9 @@ import { type DaProjectEntry } from '~/server/features/data-availability/project
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { DaProjectStats } from './da-project-stats'
+import { GrissiniDetails } from '~/components/rosette/grissini/grissini-details'
+import { GrissiniIcon } from '~/components/rosette/grissini/grissini-icon'
+import { NoBridgeGrissiniDetailsPlaceholder } from '~/components/rosette/grissini/no-bridge-grissini-details-placeholder'
 
 interface Props {
   project: DaProjectEntry
@@ -60,7 +60,7 @@ export function DaProjectSummary({ project }: Props) {
                     {project.name} risks
                   </div>
                   <GrissiniDetails
-                    items={project.header.daLayerGrissiniValues}
+                    values={project.header.daLayerGrissiniValues}
                   />
                 </div>
               </div>
@@ -75,9 +75,8 @@ export function DaProjectSummary({ project }: Props) {
                   </div>
                   <div className="hidden flex-row items-center gap-2 rounded-md border border-blue-500 bg-blue-400 px-3 py-2 text-xs font-semibold text-blue-700 dark:text-blue-700 md:flex lg:px-6">
                     <InfoIcon className="size-4 shrink-0 fill-current dark:fill-current" />
-                    Please select DA bridge to view detailed risks &
-                    characteristics. Bridge selection will define total DA
-                    risks.
+                    Please select one of the available DA bridges to view its
+                    risks and detailed analysis.
                   </div>
                   <div className="flex flex-col md:h-[278px]">
                     <div className="hidden flex-row gap-4 rounded-t-lg border-surface-tertiary bg-surface-secondary px-4 py-2 text-xs font-semibold uppercase text-secondary dark:bg-zinc-800 md:flex md:border-b">
@@ -112,7 +111,7 @@ export function DaProjectSummary({ project }: Props) {
                             {bridge.name}
                           </div>
                           <div className="flex flex-1 items-center justify-center">
-                            <Grissini items={bridge.grissiniValues} />
+                            <GrissiniIcon values={bridge.grissiniValues} />
                           </div>
                           <div className="flex flex-1 items-center justify-end pr-1 text-sm font-bold text-primary md:pr-12">
                             {formatCurrency(bridge.tvs, 'usd')}
@@ -167,7 +166,9 @@ export function DaProjectSummary({ project }: Props) {
                                     {bridge.name}
                                   </div>
                                   <div>
-                                    <Grissini items={bridge.grissiniValues} />
+                                    <GrissiniIcon
+                                      values={bridge.grissiniValues}
+                                    />
                                   </div>
                                 </div>
                               ))}
@@ -195,7 +196,7 @@ export function DaProjectSummary({ project }: Props) {
                     <NoBridgeGrissiniDetailsPlaceholder />
                   ) : (
                     <GrissiniDetails
-                      items={project.header.daBridgeGrissiniValues}
+                      values={project.header.daBridgeGrissiniValues}
                     />
                   )}
                 </div>

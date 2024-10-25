@@ -4,8 +4,8 @@ import {
   sentimentToTextColor,
   sentimentToTransparentBgColor,
 } from '~/utils/sentiment'
+import { type RosetteValue } from '../types'
 import { SingleGrissini } from './single-grissini'
-import { type GrissiniValue } from './types'
 
 export interface SingleGrissiniDetailsProps {
   name: string
@@ -17,7 +17,7 @@ export function SingleGrissiniDetails({
   name,
   sentiment,
   value,
-}: GrissiniValue) {
+}: RosetteValue) {
   return (
     <div
       className={cn(
