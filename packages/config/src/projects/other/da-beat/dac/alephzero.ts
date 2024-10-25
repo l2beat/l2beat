@@ -20,7 +20,7 @@ export const alephzeroDac = AnytrustDAC({
       addresses: [
         discovery.getContractDetails(
           'SequencerInbox',
-          'Main entry point for the Sequencer submitting transaction batches.',
+          'The DA bridge and entry point for the Sequencer submitting transaction batches.',
         ),
       ],
       risks: [],
@@ -31,7 +31,7 @@ export const alephzeroDac = AnytrustDAC({
         name: 'Sequencers',
         accounts: discovery.getPermissionsByRole('sequence'),
         description:
-          'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
+          'Central actors allowed to relay transaction batches to the DA bridge (Sequencer Inbox).',
         chain: discovery.chain,
       },
       {
@@ -54,7 +54,7 @@ export const alephzeroDac = AnytrustDAC({
           },
         ],
         description:
-          'The UpgradeExecutor can change the Committee members by updating the valid keyset.',
+          'The contract used to manage the upgrade of the DA bridge and other contracts.',
       },
       {
         name: 'ExecutorEOA',
@@ -62,7 +62,8 @@ export const alephzeroDac = AnytrustDAC({
           'UpgradeExecutor',
           'EXECUTOR_ROLE',
         ),
-        description: 'EOA that can execute upgrades via the UpgradeExecutor.',
+        description:
+          'EOA that can upgrade the DA bridge, upgrade authorized batch posters (relayers), and change the Committee members by updating the valid keyset (via UpgradeExecutor).',
       },
     ],
     chain: ChainId.ETHEREUM,

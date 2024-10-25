@@ -1,4 +1,4 @@
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { degen } from '../../../layer3s/degen'
 import { AnytrustDAC } from '../templates/anytrust-template'
@@ -20,7 +20,7 @@ export const degenDac = AnytrustDAC({
       addresses: [
         discovery.getContractDetails(
           'SequencerInbox',
-          'Main entry point for the Sequencer submitting transaction batches.',
+          'The DA bridge and entry point for the Sequencer submitting transaction batches.',
         ),
       ],
       risks: [],
@@ -31,12 +31,25 @@ export const degenDac = AnytrustDAC({
         name: 'Sequencers',
         accounts: discovery.getPermissionsByRole('sequence'),
         description:
-          'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
+          'Central actors allowed to relay transaction batches to the DA bridge (Sequencer Inbox).',
         chain: discovery.chain,
+      },
+      {
+        name: 'UpgradeExecutor',
+        accounts: [
+          {
+            address: EthereumAddress(
+              discovery.getContractValue<string>('RollupProxy', 'owner'),
+            ),
+            type: 'Contract',
+          },
+        ],
+        description:
+          'The contract used to manage the upgrade of the DA bridge and other contracts.',
       },
       ...discovery.getMultisigPermission(
         'RollupOwnerMultisig',
-        'It can update whether an address is authorized to be a batch poster at the sequencer inbox. The UpgradeExecutor retains the ability to update the batch poster manager (along with any batch posters).',
+        `Multisig that can upgrade the DA bridge, upgrade authorized batch posters (relayers), and change the Committee members by updating the valid keyset (via UpgradeExecutor).`,
       ),
     ],
     chain: ChainId.BASE,
