@@ -37,7 +37,9 @@ export class RpcClient implements BlockClient {
       transactions: rpcBlock.transactions.map((tx: EVMTransaction) => ({
         hash: tx.hash,
         data: tx.data,
+        from: tx.from,
         to: tx.to,
+        type: tx.type,
       })),
     }
   }
