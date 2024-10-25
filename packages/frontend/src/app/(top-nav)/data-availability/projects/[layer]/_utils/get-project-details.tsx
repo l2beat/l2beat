@@ -81,7 +81,7 @@ export function getProjectDetails({
   daLayerItems.push({
     type: 'GrissiniRiskAnalysisSection',
     props: {
-      id: 'risk-analysis',
+      id: 'da-layer-risk-analysis',
       title: 'Risk analysis',
       isUnderReview: !!daLayer.isUnderReview,
       isVerified,
@@ -108,7 +108,7 @@ export function getProjectDetails({
   daBridgeItems.push({
     type: 'GrissiniRiskAnalysisSection',
     props: {
-      id: 'risk-analysis',
+      id: 'da-bridge-risk-analysis',
       title: 'Risk analysis',
       isUnderReview: !!daLayer.isUnderReview,
       isVerified,
@@ -136,7 +136,7 @@ export function getProjectDetails({
       props: {
         ...permissionsSection,
         permissionedEntities: getPermissionedEntities(daBridge),
-        id: 'permissions',
+        id: 'da-bridge-permissions',
         title: 'Permissions',
       },
     })
@@ -147,7 +147,7 @@ export function getProjectDetails({
       type: 'ContractsSection',
       props: {
         ...contractsSection,
-        id: 'contracts',
+        id: 'da-bridge-contracts',
         title: 'Contracts',
       },
     })
