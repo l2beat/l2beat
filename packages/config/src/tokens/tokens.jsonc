@@ -1,6 +1,25 @@
 {
   "ethereum": [
     {
+      "symbol": "LsETH",
+      "category": "ether",
+      "address": "0x8c1BEd5b9a0928467c9B1341Da1D7BD5e10b6549"
+    },
+    {
+      "symbol": "FBTC",
+      "address": "0xC96dE26018A54D51c097160568752c4E3BD6C364"
+    },
+    {
+      "symbol": "LsETH",
+      "category": "ether",
+      "address": "0x8c1BEd5b9a0928467c9B1341Da1D7BD5e10b6549"
+    },
+    {
+      "symbol": "weETHs",
+      "category": "ether",
+      "address": "0x917ceE801a67f933F2e6b33fC0cD1ED2d5909D88"
+    },
+    {
       "symbol": "SolvBTC",
       "address": "0x7a56e1c57c7475ccf742a1832b028f0456652f97"
     },
@@ -268,7 +287,6 @@
     },
     {
       "symbol": "cbBTC",
-      "category": "ether",
       "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
     },
     {
@@ -547,6 +565,11 @@
       "address": "0x853d955aCEf822Db058eb8505911ED77F175b99e"
     },
     {
+      "symbol": "FRTN",
+      "coingeckoId": "ebisusbay-fortune",
+      "address": "0x884255f543b40accb5fee3a4b2d1f74bc065c257"
+    },
+    {
       "symbol": "frxETH",
       "category": "ether",
       "address": "0x5E8422345238F34275888049021821E8E08CAa1f"
@@ -558,6 +581,11 @@
     {
       "symbol": "FTX Token",
       "address": "0x50D1c9771902476076eCFc8B2A83Ad6b9355a4c9"
+    },
+    {
+      "symbol": "FUL",
+      "coingeckoId": "fulcrom",
+      "address": "0x4eb8a4015a67975a23adc80aa50d2d996986f43d"
     },
     {
       "symbol": "FX",
@@ -1558,7 +1586,119 @@
       }
     }
   ],
+  "zircuit": [
+    {
+      "symbol": "pzETH",
+      "category": "ether",
+      "address": "0x9cb41CD74D01ae4b4f640EC40f7A60cA1bCF83E7",
+      "coingeckoId": "renzo-restaked-lst",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC20)",
+            "slug": "connext"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "ezETH",
+      "category": "ether",
+      "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+      "coingeckoId": "renzo-restaked-eth",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC20)",
+            "slug": "connext"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "swETH",
+      "address": "0x850CDF416668210ED0c36bfFF5d21921C7adA3b8",
+      "category": "ether",
+      "coingeckoId": "sweth",
+      "source": "native",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero OFT",
+            "slug": "omnichain"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargate"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "rsETH",
+      "category": "ether",
+      "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
+      "source": "external",
+      "supply": "totalSupply",
+      "coingeckoId": "kelp-dao-restaked-eth",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "rswETH",
+      "address": "0xD8b29106d4ceBad087C30B10c0E41BAa3A9ea703",
+      "category": "ether",
+      "coingeckoId": "restaked-swell-eth",
+      "source": "native",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    }
+  ],
   "arbitrum": [
+    {
+      "symbol": "PEPE",
+      "address": "0x25d887Ce7a35172C62FeBFD67a1856F20FaEbB00",
+      "source": "native",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero OFT",
+            "slug": "omnichain"
+          }
+        ]
+      }
+    },
     {
       "symbol": "STAR",
       "address": "0xB299751B088336E165dA313c33e3195B8c6663A6",
@@ -2036,8 +2176,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "omnichain"
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
           }
         ]
       }
@@ -2099,7 +2239,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
+            "name": "Layer Zero v2",
             "slug": "stargate"
           }
         ]
@@ -2430,8 +2570,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "omnichain"
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
           }
         ]
       }
@@ -2662,8 +2802,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "omnichain"
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
           }
         ]
       }
@@ -3159,8 +3299,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "omnichain"
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
           }
         ]
       }
@@ -3402,8 +3542,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "omnichain"
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
           }
         ]
       }
@@ -3563,8 +3703,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "omnichain"
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
           }
         ]
       }
@@ -3678,6 +3818,12 @@
   ],
   "scroll": [
     {
+      "symbol": "SCR",
+      "address": "0xd29687c813D741E2F938F4aC377128810E217b1b",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "symbol": "SolvBTC",
       "address": "0x3Ba89d490AB1C0c9CC2313385b30710e838370a4",
       "supply": "totalSupply",
@@ -3739,8 +3885,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "omnichain"
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
           }
         ]
       }

@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x6ff68a50e2e898ef57cdadae011ae82ed87712a5
+
+# Diff at Fri, 25 Oct 2024 08:48:14 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@bcba81a42870e55c451475b8615b372a538b8463 block: 264777898
+- current block number: 267453071
+
+## Description
+
+Timelock extended to 8 days. Exit window is now 7 days.
+
+## Watched changes
+
+```diff
+    contract ConstitutionHash (0x1D62fFeB72e4c360CcBbacf7c965153b00260417) {
+    +++ description: None
+      values.constitutionHash:
+-        "0x7cc34e90dde73cfe0b4a041e79b5638e99f0d9547001e42b466c32a18ed6789d"
++        "0x28faf2acba9b3ff80ec484e3d5646931eeef40568b1b7c38dbe52b890bfd7938"
+    }
+```
+
+```diff
+    contract L2Timelock (0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0) {
+    +++ description: None
+      values.getMinDelay:
+-        259200
++        691200
+    }
+```
+
 Generated with discovered.json: 0x9126898633ba31c4b13e0a40b10ec8a79f561861
 
 # Diff at Mon, 21 Oct 2024 11:12:57 GMT:

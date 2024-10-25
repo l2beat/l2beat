@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xd358bc491cf3406660ca41be3d97de27c76a27fa
+
+# Diff at Tue, 22 Oct 2024 13:52:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c4e420ffba204be049626040a9ea287e023948f8 block: 17827903
+- current block number: 17827903
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 17827903 (main branch discovery), not current.
+
+```diff
+    contract SuperchainConfig (0xFC57b0947C079073A1C5Fe61887Eb3495972EE72) {
+    +++ description: This is NOT the shared SuperchainConfig of the OP stack Superchain. This SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      template:
+-        "opstack/SuperchainConfig"
++        "opstack/SuperchainConfigFake"
+      description:
+-        "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
++        "This is NOT the shared SuperchainConfig of the OP stack Superchain. This SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
+    }
+```
+
 Generated with discovered.json: 0xd691fdc8633eca0807ca64f5eb4d3681404c7f1d
 
 # Diff at Mon, 21 Oct 2024 12:52:11 GMT:

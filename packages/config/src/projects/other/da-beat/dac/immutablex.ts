@@ -3,10 +3,16 @@ import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { getCommittee } from '../../../../discovery/starkware'
 import { immutablex } from '../../../layer2s/immutablex'
 import { StarkexDAC } from '../templates/starkex-template'
+import { DaCommitteeSecurityRisk, DaEconomicSecurityRisk } from '../types'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('immutablex')
 const committee = getCommittee(discovery)
+const requiredHonestMembersPercentage = (
+  ((committee.accounts.length - committee.minSigners + 1) /
+    committee.accounts.length) *
+  100
+).toFixed(0)
 
 export const immutableXDac = StarkexDAC({
   project: immutablex,
@@ -84,5 +90,12 @@ export const immutableXDac = StarkexDAC({
         href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
       },
     ],
+  },
+  risks: {
+    economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,
+    committeeSecurity: DaCommitteeSecurityRisk.NoHonestMinimumCommiteeSecurity(
+      `${committee.minSigners}/${committee.accounts.length}`,
+      requiredHonestMembersPercentage,
+    ),
   },
 })

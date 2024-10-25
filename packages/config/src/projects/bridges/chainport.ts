@@ -111,7 +111,6 @@ export const chainport: Bridge = {
         {
           category: 'Funds can be frozen if',
           text: 'third party actors decide to not relay selected messages between chains.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',

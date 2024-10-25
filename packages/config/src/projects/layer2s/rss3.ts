@@ -103,7 +103,6 @@ export const rss3: Layer2 = opStackL2({
     stateUpdate: 'disabled',
   },
   genesisTimestamp: new UnixTime(1709858519),
-  l1StandardBridgeTokens: ['RSS3'],
   isNodeAvailable: false,
   discoveryDrivenData: true,
   milestones: [

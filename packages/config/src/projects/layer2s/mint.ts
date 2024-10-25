@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('mint')
 export const mint: Layer2 = opStackL2({
   createdAt: new UnixTime(1695904849), // 2023-09-28T12:40:49Z
   discovery,
-  badges: [Badge.RaaS.Conduit],
+  badges: [Badge.RaaS.Conduit, Badge.Infra.Superchain],
   additionalPurposes: ['NFT'],
   display: {
     name: 'Mint',

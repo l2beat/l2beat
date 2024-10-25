@@ -7,7 +7,12 @@ import { Layer2 } from './types'
 export const race: Layer2 = underReviewL2({
   id: 'race',
   createdAt: new UnixTime(1726563843), // 2024-09-17T09:04:03Z
-  badges: [Badge.Stack.OPStack, Badge.VM.EVM, Badge.DA.EthereumCalldata],
+  badges: [
+    Badge.Stack.OPStack,
+    Badge.VM.EVM,
+    Badge.DA.EthereumCalldata,
+    Badge.Infra.Superchain,
+  ],
   display: {
     name: 'Race Network',
     slug: 'race',

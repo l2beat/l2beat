@@ -1,6 +1,7 @@
 'use client'
 
 import { type DialogProps } from '@radix-ui/react-dialog'
+import { Slot } from '@radix-ui/react-slot'
 import { Command as CommandPrimitive, useCommandState } from 'cmdk'
 import * as React from 'react'
 import { SearchIcon } from '~/icons/search'
@@ -46,9 +47,9 @@ const CommandDialog = ({
         overlayClassName="max-md:hidden"
         onEscapeKeyDown={onEscapeKeyDown}
       >
-        <Command className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-secondary [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:size-5">
+        <Slot className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-secondary [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:size-5">
           {children}
-        </Command>
+        </Slot>
       </DialogContent>
     </Dialog>
   )
@@ -70,7 +71,7 @@ const CommandInput = React.forwardRef<
       <CommandPrimitive.Input
         ref={ref}
         className={cn(
-          'flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-gray-500 disabled:cursor-not-allowed disabled:opacity-50 sidebar:placeholder:!text-secondary dark:placeholder:text-gray-50',
+          'flex h-11 w-full bg-transparent py-3 text-sm outline-none placeholder:text-gray-500 disabled:cursor-not-allowed disabled:opacity-50 sidebar:placeholder:!text-secondary dark:placeholder:text-gray-50',
           className,
         )}
         {...props}

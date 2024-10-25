@@ -20,7 +20,7 @@ interface Props {
 
 export function DaProjectStats({ project }: Props) {
   const durationStorage =
-    project.kind === 'DAC'
+    project.kind === 'DAC' || project.kind === 'DA Service'
       ? {
           value: 'Flexible',
           tooltip:
@@ -38,11 +38,11 @@ export function DaProjectStats({ project }: Props) {
       <ProjectStat
         title="Total value secured"
         value={formatCurrency(project.header.tvs, 'usd')}
-        tooltip="The total value locked of all L2s using this layer."
+        tooltip="The total value locked of all projects using this layer."
       />
       <ProjectStat
         title="Economic security"
-        tooltip="The assets that are slashable in case of a data withholding attack (the amount of funds a committee would need to burn to successfully deceive the DA bridge). It’s equal to 2/3 of the total validating stake, if any."
+        tooltip="The assets that are slashable in case of a data withholding attack. For public blockchains, it is equal to 2/3 of the total validating stake."
         value={
           // EC not set
           project.header.economicSecurity
@@ -60,17 +60,13 @@ export function DaProjectStats({ project }: Props) {
       <ProjectStat title="Duration of storage" {...durationStorage} />
       <ProjectStat
         className="md:col-span-2"
-        title="Used in"
+        title="Used by"
         value={
-          project.header.usedIn.length !== 0 ? (
-            <ProjectsUsedIn
-              usedIn={project.header.usedIn}
-              className="flex-wrap justify-start"
-              maxProjects={Infinity}
-            />
-          ) : (
-            'None'
-          )
+          <ProjectsUsedIn
+            usedIn={project.header.usedIn}
+            className="flex-wrap justify-start"
+            maxProjects={Infinity}
+          />
         }
       />
     </div>
