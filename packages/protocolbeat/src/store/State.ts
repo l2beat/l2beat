@@ -40,23 +40,17 @@ export interface State {
 }
 
 export interface Node {
-  readonly simpleNode: SimpleNode
-  readonly box: Box
+  readonly id: string
+  readonly name: string
   readonly fields: Field[]
-}
-
-export interface SimpleNode {
-  id: string
-  type: 'Contract' | 'EOA' | 'Unknown'
-  data: unknown
-  name: string
-  color: OklchColor
-  proxyType?: string
-  discovered: boolean
-  fields: {
-    name: string
-    connection?: string // id
-  }[]
+  readonly box: Box
+  readonly color: OklchColor
+  readonly meta: {
+    readonly type: 'Contract' | 'EOA' | 'Unknown'
+    readonly address: string
+    readonly data: unknown
+    readonly proxyType?: string
+  }
 }
 
 export interface Field {

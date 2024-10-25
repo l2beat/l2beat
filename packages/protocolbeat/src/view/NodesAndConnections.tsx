@@ -6,7 +6,7 @@ export function NodesAndConnections() {
   const nodes = useStore((state) => state.nodes)
   const hidden = useStore((state) => state.hidden)
   const selected = useStore((state) => state.selected)
-  const visible = nodes.filter((node) => !hidden.includes(node.simpleNode.id))
+  const visible = nodes.filter((node) => !hidden.includes(node.id))
 
   return (
     <>
@@ -22,11 +22,11 @@ export function NodesAndConnections() {
 
           return (
             <Connection
-              key={`${node.simpleNode.id}-${i}-${field.connection.nodeId}`}
+              key={`${node.id}-${i}-${field.connection.nodeId}`}
               from={field.connection.from}
               to={field.connection.to}
               isHighlighted={
-                selected.includes(node.simpleNode.id) ||
+                selected.includes(node.id) ||
                 selected.includes(field.connection.nodeId)
               }
             />
@@ -35,10 +35,9 @@ export function NodesAndConnections() {
       )}
       {visible.map((node) => (
         <NodeView
-          key={node.simpleNode.id}
+          key={node.id}
           node={node}
-          selected={selected.includes(node.simpleNode.id)}
-          discovered={node.simpleNode.discovered}
+          selected={selected.includes(node.id)}
         />
       ))}
     </>

@@ -10,7 +10,6 @@ import { ResizeHandle } from './ResizeHandle'
 export interface NodeViewProps {
   node: Node
   selected: boolean
-  discovered: boolean
 }
 
 export function NodeView(props: NodeViewProps) {
@@ -28,7 +27,7 @@ export function NodeView(props: NodeViewProps) {
     const newBox = getLocationByChildWidth(ref.current)
 
     updateNodeLocations({
-      [props.node.simpleNode.id]: newBox,
+      [props.node.id]: newBox,
     })
   }, [])
 
@@ -40,12 +39,11 @@ export function NodeView(props: NodeViewProps) {
         top: props.node.box.y,
         width: props.node.box.width,
         height: props.node.box.height,
-        backgroundColor: oklchColorToCSS(props.node.simpleNode.color),
+        backgroundColor: oklchColorToCSS(props.node.color),
       }}
       className={clsx(
         'absolute rounded-md border-2 border-black',
         props.selected && 'outline outline-2 outline-blue-400',
-        props.discovered ? '' : 'bg-yellow-300',
       )}
     >
       <div
@@ -54,20 +52,17 @@ export function NodeView(props: NodeViewProps) {
           props.node.fields.length > 0 && 'border-black border-b-2',
         )}
       >
-        <div className="truncate">{props.node.simpleNode.name}</div>
+        <div className="truncate">{props.node.name}</div>
       </div>
       {props.node.fields.map(({ name, connection }, i) => (
         <NodeField
           key={i}
           name={name}
           connection={connection}
-          color={props.node.simpleNode.color}
+          color={props.node.color}
         />
       ))}
-      <ResizeHandle
-        nodeId={props.node.simpleNode.id}
-        onDoubleClick={onDoubleClick}
-      />
+      <ResizeHandle nodeId={props.node.id} onDoubleClick={onDoubleClick} />
     </div>
   )
 }

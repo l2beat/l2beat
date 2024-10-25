@@ -17,7 +17,7 @@ export function onMouseDown(
   // Resize anchor
   if (isResizeHandle(event.target)) {
     const { nodeId } = event.target.dataset
-    const node = state.nodes.find((n) => n.simpleNode.id === nodeId)
+    const node = state.nodes.find((n) => n.id === nodeId)
 
     if (node && nodeId) {
       return {
@@ -52,7 +52,7 @@ export function onMouseDown(
 
     for (const node of reverseIter(state.nodes)) {
       if (boxContains(node.box, x, y)) {
-        const includes = state.selected.includes(node.simpleNode.id)
+        const includes = state.selected.includes(node.id)
 
         let selected: readonly string[]
         let mouseUpAction: State['mouseUpAction']
@@ -64,15 +64,15 @@ export function onMouseDown(
             selected = [field.connection.nodeId]
           }
         } else if (!event.shiftKey && !includes) {
-          selected = [node.simpleNode.id]
+          selected = [node.id]
         } else if (!event.shiftKey && includes) {
           selected = state.selected
-          mouseUpAction = { type: 'DeselectAllBut', id: node.simpleNode.id }
+          mouseUpAction = { type: 'DeselectAllBut', id: node.id }
         } else if (event.shiftKey && !includes) {
-          selected = [...state.selected, node.simpleNode.id]
+          selected = [...state.selected, node.id]
         } else {
           selected = state.selected
-          mouseUpAction = { type: 'DeselectOne', id: node.simpleNode.id }
+          mouseUpAction = { type: 'DeselectOne', id: node.id }
         }
 
         return updateNodePositions({
@@ -92,11 +92,8 @@ export function onMouseDown(
           mouseUpAction,
           positionsBeforeMove: Object.fromEntries(
             state.nodes
-              .filter((x) => selected.includes(x.simpleNode.id))
-              .map((node) => [
-                node.simpleNode.id,
-                { x: node.box.x, y: node.box.y },
-              ]),
+              .filter((x) => selected.includes(x.id))
+              .map((node) => [node.id, { x: node.box.x, y: node.box.y }]),
           ),
         })
       }

@@ -1,4 +1,4 @@
-import { SimpleNode } from '../store/State'
+import { Field, Node } from '../store/State'
 import { recallNodeState } from '../store/utils/localStore'
 import { OklchColor, White } from '../utils/color'
 import { stringHash } from '../utils/stringHash'
@@ -33,59 +33,62 @@ function getChainColor(chain: string): OklchColor {
 export function transformContracts(
   projectId: string,
   discovery: DiscoveryOutput,
-): SimpleNode[] {
+): Node[] {
   const state = recallNodeState(projectId)
   const chain = discovery.chain
   const baseColor = getChainColor(chain)
 
-  const contractNodes: SimpleNode[] = discovery.contracts.map((contract) => {
+  const contractNodes = discovery.contracts.map((contract): Node => {
     const implementations = getAsStringArray(contract.values?.$implementation)
     return {
-      type: 'Contract',
       id: encodeChainAddress(chain, contract.address),
-      color: state?.colors?.[contract.address] ?? baseColor,
       name: emojifyContractName(contract),
-      proxyType: contract.proxyType,
-      discovered: true,
-      fields: mapFields(contract.values, chain).filter(
-        (x) => !x.value || !implementations.includes(x.value),
-      ),
-      data: contract,
+      box: { x: 0, y: 0, width: 0, height: 0 },
+      color: state?.colors?.[contract.address] ?? baseColor,
+      fields: mapFields(contract.values, chain, implementations),
+      meta: {
+        type: 'Contract',
+        proxyType: contract.proxyType,
+        data: contract,
+        address: contract.address,
+      },
     }
   })
 
-  const eoaNodes: SimpleNode[] = discovery.eoas.map((eoa) => ({
-    type: 'EOA',
-    id: encodeChainAddress(chain, eoa.address),
-    color: state?.colors?.[eoa.address] ?? baseColor,
-    name: `🧍 EOA ${eoa.address}`,
-    discovered: true,
-    fields: [],
-    data: eoa,
-  }))
+  const eoaNodes = discovery.eoas.map(
+    (eoa): Node => ({
+      id: encodeChainAddress(chain, eoa.address),
+      name: `🧍 EOA ${eoa.address}`,
+      box: { x: 0, y: 0, width: 0, height: 0 },
+      color: state?.colors?.[eoa.address] ?? baseColor,
+      fields: [],
+      meta: {
+        type: 'EOA',
+        proxyType: undefined,
+        data: eoa,
+        address: eoa.address,
+      },
+    }),
+  )
 
   return [...contractNodes, ...eoaNodes]
-}
-
-interface FieldProps {
-  name: string
-  value?: string
-  connection?: string
 }
 
 function mapFields(
   values: Record<string, unknown> | undefined,
   chain: string,
+  implementations: string[],
   prefix = '',
-): FieldProps[] {
+): Field[] {
   if (values === undefined) {
     return []
   }
   return Object.entries(values).flatMap(
-    ([key, value]: [string, unknown]): FieldProps[] => {
+    ([key, value]: [string, unknown]): Field[] => {
       if (
         typeof value === 'string' &&
-        (isAddress(value) || isChainAddress(value))
+        (isAddress(value) || isChainAddress(value)) &&
+        !implementations.includes(value)
       ) {
         if (value === ZERO_ADDRESS) {
           return []
@@ -94,14 +97,19 @@ function mapFields(
         return [
           {
             name: concatKey(prefix, key),
-            value,
-            connection: encodeChainAddress(chain, value),
+            box: { x: 0, y: 0, width: 0, height: 0 },
+            connection: {
+              nodeId: encodeChainAddress(chain, value),
+              from: { direction: 'left', x: 0, y: 0 },
+              to: { direction: 'left', x: 0, y: 0 },
+            },
           },
         ]
       } else if (typeof value === 'object' && value !== null) {
         return mapFields(
           value as Record<string, unknown>,
           chain,
+          implementations,
           concatKey(prefix, key),
         )
       }

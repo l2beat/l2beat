@@ -40,12 +40,8 @@ export function encodeNodeState(state: State): StorageNodeLocations {
   return {
     version: 1,
     projectId: state.projectId,
-    locations: Object.fromEntries(
-      state.nodes.map((n) => [n.simpleNode.id, n.box]),
-    ),
-    colors: Object.fromEntries(
-      state.nodes.map((n) => [n.simpleNode.id, n.simpleNode.color]),
-    ),
+    locations: Object.fromEntries(state.nodes.map((n) => [n.id, n.box])),
+    colors: Object.fromEntries(state.nodes.map((n) => [n.id, n.color])),
   }
 }
 

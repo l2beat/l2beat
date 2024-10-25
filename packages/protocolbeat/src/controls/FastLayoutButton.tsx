@@ -64,7 +64,7 @@ export function autoLayout(baseNodes: readonly Node[]) {
 function toLayoutNodes(baseNodes: readonly Node[]) {
   const nodes = baseNodes.map(
     (base): LayoutNode => ({
-      id: base.simpleNode.id,
+      id: base.id,
       connectionsIn: [],
       connectionsOut: [],
       base,
@@ -254,8 +254,8 @@ function groupByLevel(nodes: LayoutNode[]) {
         index = order.push(node.id) - 1
       }
 
-      const uniqueChildren = node.base.simpleNode.fields
-        .flatMap((f) => (f.connection ? [f.connection] : []))
+      const uniqueChildren = node.base.fields
+        .flatMap((f) => (f.connection ? [f.connection.nodeId] : []))
         .filter((id) => order.indexOf(id) === -1)
       order.splice(index, 0, ...uniqueChildren)
     }

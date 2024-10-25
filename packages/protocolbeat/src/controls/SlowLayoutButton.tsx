@@ -39,24 +39,21 @@ export function SlowLayoutButton() {
     if (!updatingLayout) return
 
     const simNodes: SimulationNode[] = nodes.map((node) => ({
-      id: node.simpleNode.id,
+      id: node.id,
       x: node.box.x / SIM_SCALE,
       y: node.box.y / SIM_SCALE,
       node,
     }))
 
     const links = nodes
-      .map((n) => n.simpleNode)
       .flatMap((n) =>
         n.fields.map((f) => ({
           source: n.id,
-          target: f.connection,
+          target: f.connection?.nodeId,
         })),
       )
-      .filter((l) => l.target !== undefined)
-      .filter(
-        (l) => simNodes.find((sn) => sn.id === l.target) !== undefined,
-      ) as SimulationLink[]
+      .filter((l): l is SimulationLink => l.target !== undefined)
+      .filter((l) => simNodes.find((sn) => sn.id === l.target) !== undefined)
 
     const simulation = forceSimulation(simNodes)
       .force(

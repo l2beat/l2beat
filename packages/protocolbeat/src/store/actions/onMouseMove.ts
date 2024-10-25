@@ -41,7 +41,7 @@ export function onMouseMove(
         )
 
         const nodes = state.nodes.map((node) =>
-          node.simpleNode.id === state.resizingNode?.id
+          node.id === state.resizingNode?.id
             ? {
                 ...node,
                 box: { ...node.box, width: newWidth },
@@ -93,9 +93,9 @@ export function onMouseMove(
               (node) =>
                 intersects(node.box, selection) ||
                 (state.mouseMoveAction === 'select-add' &&
-                  state.selected.includes(node.simpleNode.id)),
+                  state.selected.includes(node.id)),
             )
-            .map((x) => x.simpleNode.id),
+            .map((x) => x.id),
           mouseUpAction: undefined,
           input,
           selection: toContainerCoordinates(selection, state.transform),

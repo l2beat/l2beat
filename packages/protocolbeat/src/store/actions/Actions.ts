@@ -1,5 +1,5 @@
 import { OklchColor } from '../../utils/color'
-import { SimpleNode } from '../State'
+import { Node } from '../State'
 import type { NodeLocations } from '../utils/storageParsing'
 
 export interface Actions {
@@ -10,12 +10,12 @@ export interface Actions {
   onMouseUp: (event: MouseEvent) => void
   onWheel: (event: WheelEvent, view: HTMLElement) => void
 
-  loadNodes: (projectId: string, nodes: SimpleNode[]) => void
+  loadNodes: (projectId: string, nodes: Node[]) => void
   colorSelected: (color: OklchColor) => void
   hideSelected: () => void
   showHidden: () => void
   clear: () => void
 
-  updateNodes: (nodes: SimpleNode[]) => void
+  updateNodes: (nodes: Node[]) => void
   updateNodeLocations: (locations: NodeLocations) => void
 }
