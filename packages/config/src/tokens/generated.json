@@ -1697,6 +1697,20 @@
       "supply": "zero"
     },
     {
+      "name": "Fortune",
+      "coingeckoId": "ebisusbay-fortune",
+      "address": "0x884255F543b40AcCB5feE3a4b2D1f74bc065C257",
+      "symbol": "FRTN",
+      "decimals": 18,
+      "deploymentTimestamp": 1723511591,
+      "coingeckoListingTimestamp": 1686873600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30768/large/fortune_token.png?1696529636",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Frax",
       "coingeckoId": "frax",
       "address": "0x853d955aCEf822Db058eb8505911ED77F175b99e",
@@ -1776,6 +1790,20 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/9026/large/F.png?1696509161",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "FUL",
+      "coingeckoId": "fulcrom",
+      "address": "0x4eb8A4015A67975A23adc80aA50d2d996986F43D",
+      "symbol": "FUL",
+      "decimals": 18,
+      "deploymentTimestamp": 1722578039,
+      "coingeckoListingTimestamp": 1680566400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29684/large/FUL_Token_%281%29.png?1696528618",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -4567,20 +4595,6 @@
       "supply": "zero"
     },
     {
-      "name": "Veno Yield bearing USD",
-      "coingeckoId": "veno-usd",
-      "address": "0xfa59075dfce274e028b58bddfcc3d709960f594a",
-      "symbol": "ybUSD",
-      "decimals": 18,
-      "deploymentTimestamp": 1722855647,
-      "coingeckoListingTimestamp": 1724112000,
-      "category": "stablecoin",
-      "iconUrl": "https://assets.coingecko.com/coins/images/39775/standard/Screenshot_2024-08-19_at_5.09.13%E2%80%AFPM.png?1724058679",
-      "chainId": 1,
-      "source": "canonical",
-      "supply": "zero"
-    },
-    {
       "name": "VENT",
       "coingeckoId": "vent-finance",
       "address": "0x5F0bc16D50F72d10b719dBF6845DE2E599eb5624",
@@ -5043,20 +5057,6 @@
       "supply": "zero"
     },
     {
-      "name": "Ebisu's Bay Fortune",
-      "coingeckoId": "fortune-token",
-      "address": "0x884255f543b40accb5fee3a4b2d1f74bc065c257",
-      "symbol": "FRTN",
-      "decimals": 18,
-      "deploymentTimestamp": 1723511591,
-      "coingeckoListingTimestamp": 1686787200,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/30768/standard/fortune_token.png?1696529636",
-      "chainId": 1,
-      "source": "canonical",
-      "supply": "zero"
-    },
-    {
       "name": "Ether",
       "coingeckoId": "ethereum",
       "symbol": "ETH",
@@ -5206,20 +5206,6 @@
           }
         ]
       }
-    },
-    {
-      "name": "Fulcrom",
-      "coingeckoId": "fulcrom",
-      "address": "0x4eb8a4015a67975a23adc80aa50d2d996986f43d",
-      "symbol": "FUL",
-      "decimals": 18,
-      "deploymentTimestamp": 1722578039,
-      "coingeckoListingTimestamp": 1680480000,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/29684/standard/FUL_Token_%281%29.png?1696528618",
-      "chainId": 1,
-      "source": "canonical",
-      "supply": "zero"
     },
     {
       "name": "KelpDao Restaked ETH",
@@ -6705,20 +6691,6 @@
       "chainId": 5000,
       "source": "native",
       "supply": "circulatingSupply"
-    },
-    {
-      "name": "Moonflow",
-      "coingeckoId": "moonflow",
-      "address": "0x4a52Fa1a1115814c59C643F53f14199b8fb11cEa",
-      "symbol": "MOON",
-      "decimals": 18,
-      "deploymentTimestamp": 1723714163,
-      "coingeckoListingTimestamp": 1706227200,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/34862/standard/profile_pic_test_%281%29.jpg?1716085666",
-      "chainId": 1,
-      "source": "canonical",
-      "supply": "zero"
     },
     {
       "name": "Staked USDe",

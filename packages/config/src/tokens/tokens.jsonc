@@ -566,6 +566,7 @@
     },
     {
       "symbol": "FRTN",
+      "coingeckoId": "ebisusbay-fortune",
       "address": "0x884255f543b40accb5fee3a4b2d1f74bc065c257"
     },
     {
@@ -583,6 +584,7 @@
     },
     {
       "symbol": "FUL",
+      "coingeckoId": "fulcrom",
       "address": "0x4eb8a4015a67975a23adc80aa50d2d996986f43d"
     },
     {
@@ -828,10 +830,6 @@
     {
       "symbol": "MELD",
       "address": "0x333000333b26eE30214B4af6419D9ab07a450400"
-    },
-    {
-      "symbol": "MOON",
-      "address": "0x4a52Fa1a1115814c59C643F53f14199b8fb11cEa"
     },
     {
       "symbol": "mETH", // manta eth, needed for fuel tvl (OFT)
@@ -1233,12 +1231,6 @@
       "category": "ether",
       "address": "0x76bf2D1e6dFda645c0c17440B17Eccc181dfC351",
       "coingeckoId": "veno-eth" // ybETH price currently is not on CG
-    },
-    {
-      "symbol": "ybUSD",
-      "category": "stablecoin",
-      "address": "0xfa59075dfce274e028b58bddfcc3d709960f594a",
-      "coingeckoId": "veno-usd" // ybUSD price currently is not on CG, can use vUSD as price proxy
     },
     {
       "symbol": "STARL",
