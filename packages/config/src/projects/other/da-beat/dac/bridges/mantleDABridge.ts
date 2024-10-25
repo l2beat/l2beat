@@ -114,10 +114,12 @@ export const mantleDABridge = {
     {
       name: 'Register Operator Manager',
       description: `Address authorized to register or change status of DA node operators.`,
-      accounts: [{
-        address: EthereumAddress(registerOperatorManager),
-        type: 'EOA',
-      }],
+      accounts: [
+        {
+          address: EthereumAddress(registerOperatorManager),
+          type: 'EOA',
+        },
+      ],
     },
   ],
   chain: ChainId.ETHEREUM,
