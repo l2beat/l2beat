@@ -1,7 +1,7 @@
 {
   "name": "degen",
   "chain": "base",
-  "blockNumber": 21526189,
+  "blockNumber": 21530732,
   "configHash": "0xd7b887354e25d9d9097a5da222c4badef5bde1cefe24b6ed2966d91e278751e6",
   "contracts": [
     {
@@ -490,7 +490,7 @@
         "isERC20Enabled": false,
         "lastStakeBlock": 12468814,
         "latestConfirmed": 1512,
-        "latestNodeCreated": 1523,
+        "latestNodeCreated": 1524,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xe63ddb12FBb6211a73F12a4367b10dA0834B82da",
@@ -652,7 +652,7 @@
           "0x766DD3A13d17C6D175975C89225bde89F052dBc4"
         ],
         "allowedOutboxList": ["0xe63ddb12FBb6211a73F12a4367b10dA0834B82da"],
-        "delayedMessageCount": 143539,
+        "delayedMessageCount": 143543,
         "nativeToken": "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed",
         "rollup": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
         "sequencerInbox": "0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221",

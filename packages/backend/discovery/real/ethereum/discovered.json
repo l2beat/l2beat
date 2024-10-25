@@ -1,7 +1,7 @@
 {
   "name": "real",
   "chain": "ethereum",
-  "blockNumber": 20941805,
+  "blockNumber": 21041849,
   "configHash": "0xc11a7bd8a1cb6f23788560e8b94fe3dd3ab010bdd534241c01464cec170cb25a",
   "contracts": [
     {
@@ -41,8 +41,13 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xB032ff02cd6425e4b816137207AA8560932180f1",
-          "via": []
+          "target": "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a",
+          "via": [
+            {
+              "address": "0xB032ff02cd6425e4b816137207AA8560932180f1",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1710580715,
@@ -78,8 +83,13 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xB032ff02cd6425e4b816137207AA8560932180f1",
-          "via": []
+          "target": "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a",
+          "via": [
+            {
+              "address": "0xB032ff02cd6425e4b816137207AA8560932180f1",
+              "delay": 0
+            }
+          ]
         }
       ],
       "ignoreInWatchMode": [
@@ -105,12 +115,12 @@
           "0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C"
         ],
         "allowedOutboxList": ["0x8592Ca44dE1D354A20F75160F5602E5933D33761"],
-        "delayedMessageCount": 4585,
+        "delayedMessageCount": 4832,
         "nativeToken": "0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
         "rollup": "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
         "sequencerInbox": "0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0",
-        "sequencerMessageCount": 3021,
-        "sequencerReportedSubMessageCount": 808372
+        "sequencerMessageCount": 3104,
+        "sequencerReportedSubMessageCount": 903629
       },
       "derivedName": "ERC20Bridge"
     },
@@ -136,8 +146,13 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xB032ff02cd6425e4b816137207AA8560932180f1",
-          "via": []
+          "target": "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a",
+          "via": [
+            {
+              "address": "0xB032ff02cd6425e4b816137207AA8560932180f1",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1710845159,
@@ -190,8 +205,13 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xB032ff02cd6425e4b816137207AA8560932180f1",
-          "via": []
+          "target": "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a",
+          "via": [
+            {
+              "address": "0xB032ff02cd6425e4b816137207AA8560932180f1",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1710580715,
@@ -228,8 +248,13 @@
         },
         {
           "permission": "upgrade",
-          "target": "0xB032ff02cd6425e4b816137207AA8560932180f1",
-          "via": []
+          "target": "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a",
+          "via": [
+            {
+              "address": "0xB032ff02cd6425e4b816137207AA8560932180f1",
+              "delay": 0
+            }
+          ]
         }
       ],
       "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
@@ -245,7 +270,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 3021,
+        "batchCount": 3104,
         "batchPosters": ["0x0e00df1afC8574762Ac4C4D8E5D1a19bD6A8Fa2E"],
         "bridge": "0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03",
         "dacKeyset": {
@@ -269,7 +294,7 @@
         "rollup": "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 4584
+        "totalDelayedMessagesRead": 4827
       },
       "fieldMeta": {
         "maxTimeVariation": {
@@ -293,15 +318,15 @@
       "values": {
         "$immutable": true,
         "assetsVault": "0xf985E2c73d74BefF3C8c16EFC4fa5ab4cfb62294",
-        "getAllStrategiesValue": "442860323380082341091",
+        "getAllStrategiesValue": "673849490172705061801",
         "getAllStrategyPendingValue": 0,
         "getStrategies": {
           "addrs": ["0x679D4C1cC6855C57726BEA1784F578315d6431f6"],
           "allocations": [1000000]
         },
         "getTotalInvestedValue": {
-          "_value": "442860323380082341091",
-          "strategiesValue": ["442860323380082341091"]
+          "_value": "673849490172705061801",
+          "strategiesValue": ["673849490172705061801"]
         },
         "realVault": "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1"
       },
@@ -317,7 +342,7 @@
       "sinceTimestamp": 1710542279,
       "values": {
         "$immutable": true,
-        "getTokenPrice": "1012744453115845048",
+        "getTokenPrice": "1013909581228229297",
         "real": "0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
         "vault": "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1"
       },
@@ -337,9 +362,9 @@
       "sinceTimestamp": 1715706239,
       "values": {
         "$immutable": true,
-        "getInvestedValue": "442860323380082341091",
+        "getInvestedValue": "673849490172705061801",
         "getStETHWithdrawalStatus": { "requestIds": [], "statuses": [] },
-        "getTotalValue": "442860323380082341091",
+        "getTotalValue": "673849490172705061801",
         "governance": "0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3",
         "manager": "0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8",
         "MAX_STETH_WITHDRAWAL_AMOUNT": "1000000000000000000000",
@@ -366,8 +391,13 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xB032ff02cd6425e4b816137207AA8560932180f1",
-          "via": []
+          "target": "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a",
+          "via": [
+            {
+              "address": "0xB032ff02cd6425e4b816137207AA8560932180f1",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1710580715,
@@ -418,10 +448,11 @@
     {
       "name": "ProxyAdmin",
       "address": "0xB032ff02cd6425e4b816137207AA8560932180f1",
+      "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
       ],
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "target": "0x369001149fe80892665a7b0c17fe8Db6BeFC7F5d"
@@ -547,8 +578,8 @@
         "minter": "0x655756824385F8903AC8cFDa17B656cc26f7C7da",
         "name": "Real Ether",
         "symbol": "reETH",
-        "tokenPrice": "1012744453115845048",
-        "totalSupply": "438132407466722281583"
+        "tokenPrice": "1013909581228229297",
+        "totalSupply": "670409028429691123862"
       },
       "derivedName": "Real"
     },
@@ -612,12 +643,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 2484,
+        "firstUnresolvedNode": 2568,
         "inbox": "0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11",
         "isERC20Enabled": false,
         "lastStakeBlock": 19524244,
-        "latestConfirmed": 2483,
-        "latestNodeCreated": 2521,
+        "latestConfirmed": 2567,
+        "latestNodeCreated": 2605,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x8592Ca44dE1D354A20F75160F5602E5933D33761",
@@ -731,14 +762,70 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xB032ff02cd6425e4b816137207AA8560932180f1",
-          "via": []
+          "target": "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a",
+          "via": [
+            {
+              "address": "0xB032ff02cd6425e4b816137207AA8560932180f1",
+              "delay": 0
+            }
+          ]
         }
       ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
+          "target": "0x369001149fe80892665a7b0c17fe8Db6BeFC7F5d",
+          "via": [{ "address": "0xB032ff02cd6425e4b816137207AA8560932180f1" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03",
+          "via": [{ "address": "0xB032ff02cd6425e4b816137207AA8560932180f1" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x490f337Ac108b2a555183f5b5fd2ee84a7F45a18",
+          "via": [{ "address": "0xB032ff02cd6425e4b816137207AA8560932180f1" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C",
+          "via": [{ "address": "0xB032ff02cd6425e4b816137207AA8560932180f1" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0",
+          "via": [{ "address": "0xB032ff02cd6425e4b816137207AA8560932180f1" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x8592Ca44dE1D354A20F75160F5602E5933D33761",
+          "via": [{ "address": "0xB032ff02cd6425e4b816137207AA8560932180f1" }]
+        },
+        {
+          "permission": "upgrade",
           "target": "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a"
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a",
+          "via": [{ "address": "0xB032ff02cd6425e4b816137207AA8560932180f1" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11",
+          "via": [{ "address": "0xB032ff02cd6425e4b816137207AA8560932180f1" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xfC89B875970122E24C6C5ADd4Dea139443943ea7",
+          "via": [{ "address": "0xB032ff02cd6425e4b816137207AA8560932180f1" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0xB032ff02cd6425e4b816137207AA8560932180f1"
         }
       ],
       "sinceTimestamp": 1710580715,
@@ -797,8 +884,13 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xB032ff02cd6425e4b816137207AA8560932180f1",
-          "via": []
+          "target": "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a",
+          "via": [
+            {
+              "address": "0xB032ff02cd6425e4b816137207AA8560932180f1",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1710580715,
@@ -832,7 +924,7 @@
       "sinceTimestamp": 1715706239,
       "values": {
         "$immutable": true,
-        "getBalance": "852672787193560226",
+        "getBalance": "5880766064602042083",
         "realVault": "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1",
         "strategyManager": "0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8"
       },
@@ -855,7 +947,7 @@
       "values": {
         "$immutable": true,
         "assetsVault": "0xf985E2c73d74BefF3C8c16EFC4fa5ab4cfb62294",
-        "currentSharePrice": "1012744453115845048",
+        "currentSharePrice": "1013909581228229297",
         "feeRecipient": "0x0000000000000000000000000000000000000000",
         "minter": "0x655756824385F8903AC8cFDa17B656cc26f7C7da",
         "minWithdrawableShares": 100,
@@ -863,12 +955,12 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "proposal": "0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4",
         "real": "0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
-        "rebaseTime": 1728616811,
+        "rebaseTime": 1729830635,
         "rebaseTimeInterval": 86400,
         "strategyManager": "0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8",
-        "withdrawableAmountInPast": "843672787193560226",
+        "withdrawableAmountInPast": "651292425219578538",
         "withdrawFeeRate": 0,
-        "withdrawingSharesInPast": "836185287933671463",
+        "withdrawingSharesInPast": "646185287933671463",
         "withdrawingSharesInRound": 0
       },
       "derivedName": "RealVault"
@@ -884,8 +976,13 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xB032ff02cd6425e4b816137207AA8560932180f1",
-          "via": []
+          "target": "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a",
+          "via": [
+            {
+              "address": "0xB032ff02cd6425e4b816137207AA8560932180f1",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1710845159,
@@ -1919,6 +2016,7 @@
     ]
   },
   "usedTemplates": {
+    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "orbitstack/Bridge": "0xe6d023f6c725ce1ccf0ca453ab25787255f946d6561dcd83975ec33a9720caf6",
     "orbitstack/Inbox": "0x1938bb9de2d7f328ae3e83f2dd9f5d3c5575b599fc097cf9308bac4d5bb3e89e",
