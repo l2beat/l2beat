@@ -118,11 +118,15 @@ export function DaProjectSummary({ project }: Props) {
                             {formatCurrency(bridge.tvs, 'usd')}
                           </div>
                           <div className="hidden flex-1 flex-row items-center md:flex">
-                            <ProjectsUsedIn
-                              className="h-5 flex-wrap justify-start"
-                              usedIn={bridge.usedIn}
-                              maxProjects={4}
-                            />
+                            {bridge.usedIn.length > 0 ? (
+                              <ProjectsUsedIn
+                                className="h-5 flex-wrap justify-start"
+                                usedIn={bridge.usedIn}
+                                maxProjects={4}
+                              />
+                            ) : (
+                              'Nobody 😔'
+                            )}
                           </div>
                         </div>
                       ))}
