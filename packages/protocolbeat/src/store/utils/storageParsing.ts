@@ -22,7 +22,6 @@ const NodeColors = z.record(
 )
 
 const StorageNodeLocations = z.object({
-  version: z.number().min(1).max(1),
   projectId: z.string(),
   locations: NodeLocations,
   colors: NodeColors.optional(),
@@ -38,7 +37,6 @@ export function getLayoutStorageKey(projectId: string): string {
 
 export function encodeNodeState(state: State): StorageNodeLocations {
   return {
-    version: 1,
     projectId: state.projectId,
     locations: Object.fromEntries(state.nodes.map((n) => [n.id, n.box])),
     colors: Object.fromEntries(state.nodes.map((n) => [n.id, n.color])),
@@ -49,8 +47,5 @@ export function decodeNodeState(
   inputJson: string,
 ): StorageNodeLocations | undefined {
   const result = StorageNodeLocations.safeParse(JSON.parse(inputJson))
-  if (result.success) {
-    result.data
-  }
-  return undefined
+  return result.success ? result.data : undefined
 }
