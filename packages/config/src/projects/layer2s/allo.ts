@@ -15,11 +15,16 @@ export const allo: Layer2 = upcomingL2({
     provider: 'OP Stack',
     links: {
       websites: ['https://allo.xyz'],
-      apps: [],
+      apps: ['https://app.allo.xyz/'],
       explorers: [],
       repositories: [],
       documentation: [],
-      socialMedia: ['https://x.com/allo_xyz'],
+      socialMedia: [
+        'https://x.com/allo_xyz',
+        'https://discord.gg/allo',
+        'https://t.me/allo_xyz',
+        'https://linkedin.com/company/alloxyz/',
+      ],
     },
   },
 })
