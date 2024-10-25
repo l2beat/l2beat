@@ -1,6 +1,7 @@
 'use client'
 import {
   type CSSProperties,
+  Fragment,
   useCallback,
   useEffect,
   useMemo,
@@ -172,9 +173,8 @@ function ProjectNavigationList({
           )
 
         return (
-          <>
+          <Fragment key={i}>
             <a
-              key={section.id}
               href={`#${section.id}`}
               ref={selected ? currentMenuEntry : null}
               className={cn(
@@ -187,16 +187,16 @@ function ProjectNavigationList({
             </a>
             {section.subsections && (
               <div className="flex flex-col">
-                {section.subsections.map((subsection) => (
+                {section.subsections.map((subsection, i) => (
                   <NavigationSubsectionEntry
-                    key={subsection.id}
+                    key={i}
                     {...subsection}
                     selected={subsection.id === currentSection?.id}
                   />
                 ))}
               </div>
             )}
-          </>
+          </Fragment>
         )
       })}
     </div>

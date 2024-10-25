@@ -89,42 +89,42 @@ export function DaProjectSummary({ project }: Props) {
                     </div>
                     <div className="flex flex-1 flex-col gap-2 overflow-y-auto rounded-lg bg-zinc-100 dark:bg-zinc-900 md:gap-0 md:bg-none dark:md:bg-none">
                       {project.bridges.map((bridge, index) => (
-                        <Link
+                        <div
                           key={bridge.id}
-                          href={`/data-availability/projects/${project.slug}/${bridge.slug}`}
+                          className={cn(
+                            'flex min-h-[56px] flex-row gap-4 rounded-lg border-surface-tertiary bg-surface-secondary px-4 py-2 md:rounded-none md:border-b md:bg-transparent',
+                            // Hide 3rd and further bridges on mobile (will be shown in a drawer)
+                            index > 2 && 'md:hidden',
+                          )}
                         >
-                          <div
-                            className={cn(
-                              'flex min-h-[56px] flex-row gap-4 rounded-lg border-surface-tertiary bg-surface-secondary px-4 py-2 md:rounded-none md:border-b md:bg-transparent',
-                              // Hide 3rd and further bridges on mobile (will be shown in a drawer)
-                              index > 2 && 'md:hidden',
-                            )}
-                          >
-                            <div className="flex items-center px-1 md:px-3">
+                          <div className="flex items-center px-1 md:px-3">
+                            <Link
+                              href={`/data-availability/projects/${project.slug}/${bridge.slug}`}
+                            >
                               <RadioButtonLikeIcon
                                 selected={
                                   bridge.id === project.selectedBridge.id
                                 }
                               />
-                            </div>
-                            <div className="flex flex-1 items-center text-sm font-bold text-primary">
-                              {bridge.name}
-                            </div>
-                            <div className="flex flex-1 items-center justify-center">
-                              <Grissini items={bridge.GrissiniValues} />
-                            </div>
-                            <div className="flex flex-1 items-center justify-end pr-1 text-sm font-bold text-primary md:pr-12">
-                              {formatCurrency(bridge.tvs, 'usd')}
-                            </div>
-                            <div className="hidden flex-1 flex-row items-center md:flex">
-                              <ProjectsUsedIn
-                                className="h-5 flex-wrap justify-start"
-                                usedIn={bridge.usedIn}
-                                maxProjects={4}
-                              />
-                            </div>
+                            </Link>
                           </div>
-                        </Link>
+                          <div className="flex flex-1 items-center text-sm font-bold text-primary">
+                            {bridge.name}
+                          </div>
+                          <div className="flex flex-1 items-center justify-center">
+                            <Grissini items={bridge.GrissiniValues} />
+                          </div>
+                          <div className="flex flex-1 items-center justify-end pr-1 text-sm font-bold text-primary md:pr-12">
+                            {formatCurrency(bridge.tvs, 'usd')}
+                          </div>
+                          <div className="hidden flex-1 flex-row items-center md:flex">
+                            <ProjectsUsedIn
+                              className="h-5 flex-wrap justify-start"
+                              usedIn={bridge.usedIn}
+                              maxProjects={4}
+                            />
+                          </div>
+                        </div>
                       ))}
                       <div
                         className={cn(
