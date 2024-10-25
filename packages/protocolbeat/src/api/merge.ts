@@ -25,16 +25,12 @@ function createEmptyNodes(nodes: Node[]): Node[] {
     const name = `Unknown ${address.slice(0, 6)}…${address.slice(-4)}`
     return {
       id,
+      address,
       name,
       box: { x: 0, y: 0, width: 0, height: 0 },
       color: { l: 0.67, c: 0.166, h: 22 },
       fields: [],
-      meta: {
-        type: 'Unknown',
-        proxyType: undefined,
-        address,
-        data: null,
-      },
+      data: null,
     }
   })
 }

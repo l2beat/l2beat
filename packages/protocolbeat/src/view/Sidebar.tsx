@@ -14,12 +14,8 @@ export function Sidebar() {
 }
 
 function SidebarForSingleNode({ node }: { node: Node }) {
-  const address = node.meta.address
-  const etherscanLink = `https://etherscan.io/address/${address}`
-  const sourceLink =
-    node.meta.type === 'Contract'
-      ? `https://vscode.blockscan.com/ethereum/${address}`
-      : undefined
+  const etherscanLink = `https://etherscan.io/address/${node.address}`
+  const sourceLink = `https://vscode.blockscan.com/ethereum/${node.address}`
 
   return (
     <div className="flex w-[400px] flex-col gap-2 overflow-y-auto bg-white p-2 drop-shadow-xl">
@@ -31,14 +27,14 @@ function SidebarForSingleNode({ node }: { node: Node }) {
           title="Etherscan"
           rel="noreferrer"
         >
-          {address}
+          {node.address}
         </a>{' '}
         {sourceLink ? (
           <a
             href={sourceLink}
             className="font-bold"
             target="_blank"
-            title="DethCode"
+            title="Source Code"
             rel="noreferrer"
           >
             📜
@@ -48,7 +44,7 @@ function SidebarForSingleNode({ node }: { node: Node }) {
 
       <p className="text-gray-500">Details:</p>
       <pre className="overflow-auto text-sm">
-        <code>{JSON.stringify(node.meta.data, null, 2)}</code>
+        <code>{JSON.stringify(node.data, null, 2)}</code>
       </pre>
     </div>
   )

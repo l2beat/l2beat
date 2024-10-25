@@ -41,16 +41,12 @@ export interface State {
 
 export interface Node {
   readonly id: string
+  readonly address: string
   readonly name: string
   readonly fields: Field[]
   readonly box: Box
   readonly color: OklchColor
-  readonly meta: {
-    readonly type: 'Contract' | 'EOA' | 'Unknown'
-    readonly address: string
-    readonly data: unknown
-    readonly proxyType?: string
-  }
+  readonly data: unknown
 }
 
 export interface Field {

@@ -42,32 +42,24 @@ export function transformContracts(
     const implementations = getAsStringArray(contract.values?.$implementation)
     return {
       id: encodeChainAddress(chain, contract.address),
+      address: contract.address,
       name: emojifyContractName(contract),
       box: { x: 0, y: 0, width: 0, height: 0 },
       color: state?.colors?.[contract.address] ?? baseColor,
       fields: mapFields(contract.values, chain, implementations),
-      meta: {
-        type: 'Contract',
-        proxyType: contract.proxyType,
-        data: contract,
-        address: contract.address,
-      },
+      data: contract,
     }
   })
 
   const eoaNodes = discovery.eoas.map(
     (eoa): Node => ({
       id: encodeChainAddress(chain, eoa.address),
+      address: eoa.address,
       name: `🧍 EOA ${eoa.address}`,
       box: { x: 0, y: 0, width: 0, height: 0 },
       color: state?.colors?.[eoa.address] ?? baseColor,
       fields: [],
-      meta: {
-        type: 'EOA',
-        proxyType: undefined,
-        data: eoa,
-        address: eoa.address,
-      },
+      data: eoa,
     }),
   )
 
