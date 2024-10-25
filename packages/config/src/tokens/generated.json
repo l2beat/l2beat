@@ -1697,6 +1697,20 @@
       "supply": "zero"
     },
     {
+      "name": "Fortune",
+      "coingeckoId": "ebisusbay-fortune",
+      "address": "0x884255F543b40AcCB5feE3a4b2D1f74bc065C257",
+      "symbol": "FRTN",
+      "decimals": 18,
+      "deploymentTimestamp": 1723511591,
+      "coingeckoListingTimestamp": 1686873600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30768/large/fortune_token.png?1696529636",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Frax",
       "coingeckoId": "frax",
       "address": "0x853d955aCEf822Db058eb8505911ED77F175b99e",
@@ -1776,6 +1790,20 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/9026/large/F.png?1696509161",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "FUL",
+      "coingeckoId": "fulcrom",
+      "address": "0x4eb8A4015A67975A23adc80aA50d2d996986F43D",
+      "symbol": "FUL",
+      "decimals": 18,
+      "deploymentTimestamp": 1722578039,
+      "coingeckoListingTimestamp": 1680566400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29684/large/FUL_Token_%281%29.png?1696528618",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"

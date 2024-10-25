@@ -576,6 +576,11 @@
       "address": "0x853d955aCEf822Db058eb8505911ED77F175b99e"
     },
     {
+      "symbol": "FRTN",
+      "coingeckoId": "ebisusbay-fortune",
+      "address": "0x884255f543b40accb5fee3a4b2d1f74bc065c257"
+    },
+    {
       "symbol": "frxETH",
       "category": "ether",
       "address": "0x5E8422345238F34275888049021821E8E08CAa1f"
@@ -587,6 +592,11 @@
     {
       "symbol": "FTX Token",
       "address": "0x50D1c9771902476076eCFc8B2A83Ad6b9355a4c9"
+    },
+    {
+      "symbol": "FUL",
+      "coingeckoId": "fulcrom",
+      "address": "0x4eb8a4015a67975a23adc80aa50d2d996986f43d"
     },
     {
       "symbol": "FUND",

@@ -117,6 +117,7 @@
   "immutablex": true,
   "immutablex-dac-layer-immutablex-dac-bridge": true,
   "immutablezkevm": true,
+  "ink": true,
   "intmax": true,
   "invm": true,
   "kakarotzkevm": true,

@@ -1,3 +1,140 @@
+Generated with discovered.json: 0x69683f988d85e45fc575adf86e0d556c83e10040
+
+# Diff at Fri, 25 Oct 2024 07:35:40 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@ae2c410e7fd6561c1946613ca693d2dc0322c23d block: 20331015
+- current block number: 21526189
+
+## Description
+
+Renamed rollup owner to ConduitMultisig3.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20331015 (main branch discovery), not current.
+
+```diff
+    contract Inbox (0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      issuedPermissions.0.target:
+-        "0xFB48D385Fa3da33762B350e1d705b9E46054E677"
++        "0xaA3A7A2ec2477A61082E1C41a2c6710587917028"
+      issuedPermissions.0.via.0:
++        {"address":"0xFB48D385Fa3da33762B350e1d705b9E46054E677","delay":0}
+    }
+```
+
+```diff
+    contract SequencerInbox (0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221) {
+    +++ description: State batches / commitments get posted here.
+      issuedPermissions.1.target:
+-        "0xFB48D385Fa3da33762B350e1d705b9E46054E677"
++        "0xaA3A7A2ec2477A61082E1C41a2c6710587917028"
+      issuedPermissions.1.via.0:
++        {"address":"0xFB48D385Fa3da33762B350e1d705b9E46054E677","delay":0}
+    }
+```
+
+```diff
+    contract ChallengeManager (0x67812161Bbb6aCF891aA6028BC614a660961ceD8) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      issuedPermissions.0.target:
+-        "0xFB48D385Fa3da33762B350e1d705b9E46054E677"
++        "0xaA3A7A2ec2477A61082E1C41a2c6710587917028"
+      issuedPermissions.0.via.0:
++        {"address":"0xFB48D385Fa3da33762B350e1d705b9E46054E677","delay":0}
+    }
+```
+
+```diff
+    contract ERC20RollupEventInbox (0x766DD3A13d17C6D175975C89225bde89F052dBc4) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xFB48D385Fa3da33762B350e1d705b9E46054E677"
++        "0xaA3A7A2ec2477A61082E1C41a2c6710587917028"
+      issuedPermissions.0.via.0:
++        {"address":"0xFB48D385Fa3da33762B350e1d705b9E46054E677","delay":0}
+    }
+```
+
+```diff
+    contract ConduitMultisig3 (0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104) {
+    +++ description: None
+      name:
+-        "RollupOwnerMultisig"
++        "ConduitMultisig3"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xaA3A7A2ec2477A61082E1C41a2c6710587917028) {
+    +++ description: Central contract defining the access control for upgrading the system contract implementations.
+      issuedPermissions.0.target:
+-        "0xFB48D385Fa3da33762B350e1d705b9E46054E677"
++        "0xaA3A7A2ec2477A61082E1C41a2c6710587917028"
+      issuedPermissions.0.via.0:
++        {"address":"0xFB48D385Fa3da33762B350e1d705b9E46054E677","delay":0}
+      receivedPermissions.7:
++        {"permission":"upgrade","target":"0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C","via":[{"address":"0xFB48D385Fa3da33762B350e1d705b9E46054E677"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","target":"0xe63ddb12FBb6211a73F12a4367b10dA0834B82da","via":[{"address":"0xFB48D385Fa3da33762B350e1d705b9E46054E677"}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","target":"0xD34F3a11F10DB069173b32d84F02eDA578709143"}
+      receivedPermissions.4:
++        {"permission":"upgrade","target":"0xaA3A7A2ec2477A61082E1C41a2c6710587917028","via":[{"address":"0xFB48D385Fa3da33762B350e1d705b9E46054E677"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","target":"0x766DD3A13d17C6D175975C89225bde89F052dBc4","via":[{"address":"0xFB48D385Fa3da33762B350e1d705b9E46054E677"}]}
+      receivedPermissions.2:
++        {"permission":"upgrade","target":"0x67812161Bbb6aCF891aA6028BC614a660961ceD8","via":[{"address":"0xFB48D385Fa3da33762B350e1d705b9E46054E677"}]}
+      receivedPermissions.1:
++        {"permission":"upgrade","target":"0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221","via":[{"address":"0xFB48D385Fa3da33762B350e1d705b9E46054E677"}]}
+      receivedPermissions.0.target:
+-        "0xD34F3a11F10DB069173b32d84F02eDA578709143"
++        "0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7"
+      receivedPermissions.0.via:
++        [{"address":"0xFB48D385Fa3da33762B350e1d705b9E46054E677"}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0xFB48D385Fa3da33762B350e1d705b9E46054E677"}]
+    }
+```
+
+```diff
+    contract Outbox (0xe63ddb12FBb6211a73F12a4367b10dA0834B82da) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) which eventually resolve in execution on L1.
+      issuedPermissions.0.target:
+-        "0xFB48D385Fa3da33762B350e1d705b9E46054E677"
++        "0xaA3A7A2ec2477A61082E1C41a2c6710587917028"
+      issuedPermissions.0.via.0:
++        {"address":"0xFB48D385Fa3da33762B350e1d705b9E46054E677","delay":0}
+    }
+```
+
+```diff
+    contract Bridge (0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C) {
+    +++ description: Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for bridge messaging.
+      issuedPermissions.0.target:
+-        "0xFB48D385Fa3da33762B350e1d705b9E46054E677"
++        "0xaA3A7A2ec2477A61082E1C41a2c6710587917028"
+      issuedPermissions.0.via.0:
++        {"address":"0xFB48D385Fa3da33762B350e1d705b9E46054E677","delay":0}
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xFB48D385Fa3da33762B350e1d705b9E46054E677) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7"},{"permission":"upgrade","target":"0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221"},{"permission":"upgrade","target":"0x67812161Bbb6aCF891aA6028BC614a660961ceD8"},{"permission":"upgrade","target":"0x766DD3A13d17C6D175975C89225bde89F052dBc4"},{"permission":"upgrade","target":"0xaA3A7A2ec2477A61082E1C41a2c6710587917028"},{"permission":"upgrade","target":"0xe63ddb12FBb6211a73F12a4367b10dA0834B82da"},{"permission":"upgrade","target":"0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7"},{"permission":"upgrade","target":"0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221"},{"permission":"upgrade","target":"0x67812161Bbb6aCF891aA6028BC614a660961ceD8"},{"permission":"upgrade","target":"0x766DD3A13d17C6D175975C89225bde89F052dBc4"},{"permission":"upgrade","target":"0xaA3A7A2ec2477A61082E1C41a2c6710587917028"},{"permission":"upgrade","target":"0xe63ddb12FBb6211a73F12a4367b10dA0834B82da"},{"permission":"upgrade","target":"0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C"}]
+    }
+```
+
 Generated with discovered.json: 0x54b337c00b230ec43c4fe2127373698a0e65251c
 
 # Diff at Wed, 23 Oct 2024 14:37:21 GMT:
