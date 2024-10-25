@@ -1,7 +1,6 @@
 import {
   type Bridge,
   CONTRACTS,
-  DaBridge,
   type DaLayer,
   type Layer2,
   type Layer3,

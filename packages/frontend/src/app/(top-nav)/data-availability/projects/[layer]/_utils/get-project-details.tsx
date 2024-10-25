@@ -3,7 +3,6 @@ import {
   type ContractsVerificationStatuses,
   type ImplementationChangeReportApiResponse,
   type ManuallyVerifiedContracts,
-  notUndefined,
 } from '@l2beat/shared-pure'
 import { type GrissiniValue } from '~/components/grissini/types'
 import { type ProjectDetailsSection } from '~/components/projects/sections/types'

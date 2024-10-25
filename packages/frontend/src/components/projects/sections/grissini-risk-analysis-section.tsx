@@ -10,7 +10,6 @@ export interface GrissiniRiskAnalysisSectionProps extends ProjectSectionProps {
 }
 
 export function GrissiniRiskAnalysisSection({
-  isVerified,
   grissiniValues,
   ...sectionProps
 }: GrissiniRiskAnalysisSectionProps) {

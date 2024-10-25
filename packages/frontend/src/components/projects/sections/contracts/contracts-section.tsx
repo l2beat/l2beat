@@ -78,7 +78,7 @@ export function ContractsSection(props: ContractsSectionProps) {
             src={props.diagram.src}
             alt={props.diagram.caption}
           />
-          <figcaption className="te xt-xs text-gray-500 dark:text-gray-600">
+          <figcaption className="text-xs text-gray-500 dark:text-gray-600">
             {props.diagram.caption}
           </figcaption>
         </figure>

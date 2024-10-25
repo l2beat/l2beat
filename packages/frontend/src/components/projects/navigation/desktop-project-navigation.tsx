@@ -10,13 +10,8 @@ import {
 } from 'react'
 
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
-import { useCurrentSection } from '~/hooks/use-current-section'
-import { SummaryIcon } from '~/icons/summary'
-import { cn } from '~/utils/cn'
-import { scrollVerticallyToItem } from '~/utils/scroll-to-item'
-import { UnderReviewCallout } from '../under-review-callout'
-import { type ProjectNavigationSection } from './types'
 import {
   Select,
   SelectContent,
@@ -24,8 +19,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/core/select'
-import { usePathname } from 'next/navigation'
 import { useRouterWithProgressBar } from '~/components/progress-bar'
+import { useCurrentSection } from '~/hooks/use-current-section'
+import { SummaryIcon } from '~/icons/summary'
+import { cn } from '~/utils/cn'
+import { scrollVerticallyToItem } from '~/utils/scroll-to-item'
+import { UnderReviewCallout } from '../under-review-callout'
+import { type ProjectNavigationSection } from './types'
 
 interface Project {
   title: string
