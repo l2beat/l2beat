@@ -21,7 +21,7 @@ export const ink: Layer2 = upcomingL2({
       repositories: ['https://github.com/inkonchain'],
       socialMedia: [
         'https://x.com/inkonchain',
-        'https://discord.com/invite/inkonchain?utm_source=landing&utm_medium=nav',
+        'https://discord.com/invite/inkonchain',
       ],
     },
   },
