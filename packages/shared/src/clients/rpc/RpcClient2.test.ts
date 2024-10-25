@@ -1,8 +1,15 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
+import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
+import { utils } from 'ethers'
 import { RetryHandler } from '../../tools/RetryHandler'
 import { HttpClient2 } from '../http/HttpClient2'
 import { RpcClient2 } from './RpcClient2'
+
+export const erc20Interface = new utils.Interface([
+  'function balanceOf(address account) view returns (uint256)',
+  'function totalSupply() view returns (uint256)',
+])
 
 describe(RpcClient2.name, () => {
   describe(RpcClient2.prototype.getBlockWithTransactions.name, () => {
@@ -45,6 +52,100 @@ describe(RpcClient2.name, () => {
       expect(http.fetch.calls[0].args[1]?.body).toMatchRegex(
         /"params":\["latest",true\]/,
       )
+    })
+  })
+
+  describe(RpcClient2.prototype.call.name, () => {
+    it('calls eth_call with correct parameters', async () => {
+      const http = mockObject<HttpClient2>({
+        fetch: async () => ({
+          result: '0x123abc',
+        }),
+      })
+      const rpc = mockClient({ http })
+
+      const result = await rpc.call(
+        {
+          to: EthereumAddress('0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'),
+          data: Bytes.fromHex('0x70a08231'),
+        },
+        'latest',
+      )
+
+      expect(result).toEqual(Bytes.fromHex('0x123abc'))
+      expect(http.fetch).toHaveBeenCalledTimes(1)
+      //@ts-expect-error
+      expect(http.fetch.calls[0].args[1]?.body).toMatchRegex(
+        /"method":"eth_call"/,
+      )
+      //@ts-expect-error
+      expect(http.fetch.calls[0].args[1]?.body).toMatchRegex(
+        /"params":\[{"to":"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48","data":"0x70a08231"},"latest"\]/,
+      )
+    })
+
+    it('handles numeric block numbers', async () => {
+      const http = mockObject<HttpClient2>({
+        fetch: async () => ({
+          result: '0x1',
+        }),
+      })
+      const rpc = mockClient({ http })
+
+      await rpc.call(
+        {
+          to: EthereumAddress('0x1234567890123456789012345678901234567890'),
+          data: Bytes.fromHex('0x'),
+        },
+        12345678,
+      )
+
+      //@ts-expect-error
+      expect(http.fetch.calls[0].args[1]?.body).toMatchRegex(
+        /"params":\[{"to":"0x1234567890123456789012345678901234567890","data":"0x"},"0xbc614e"\]/,
+      )
+    })
+
+    it('includes from address if provided', async () => {
+      const http = mockObject<HttpClient2>({
+        fetch: async () => ({
+          result: '0x',
+        }),
+      })
+      const rpc = mockClient({ http })
+
+      await rpc.call(
+        {
+          from: EthereumAddress('0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa'),
+          to: EthereumAddress('0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB'),
+          data: Bytes.fromHex('0x123456'),
+        },
+        'latest',
+      )
+
+      //@ts-expect-error
+      expect(http.fetch.calls[0].args[1]?.body).toMatchRegex(
+        /"params":\[{"to":"0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB","from":"0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa","data":"0x123456"},"latest"\]/,
+      )
+    })
+
+    it('handles empty response', async () => {
+      const http = mockObject<HttpClient2>({
+        fetch: async () => ({
+          result: '0x',
+        }),
+      })
+      const rpc = mockClient({ http })
+
+      const result = await rpc.call(
+        {
+          to: EthereumAddress('0x1234567890123456789012345678901234567890'),
+          data: Bytes.fromHex('0x'),
+        },
+        'latest',
+      )
+
+      expect(result).toEqual(Bytes.fromHex('0x'))
     })
   })
 
