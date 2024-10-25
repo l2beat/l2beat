@@ -61,7 +61,6 @@ export function updateNodePositions(state: State): State {
             },
             connection: {
               nodeId: field.connection.nodeId,
-              highlighted: state.selected.includes(field.connection.nodeId),
               ...processConnection(index, box, to),
             },
           }
@@ -77,7 +76,7 @@ function processConnection(
   index: number,
   from: { x: number; y: number; width: number },
   to: { x: number; y: number; width: number },
-): Omit<Connection, 'nodeId' | 'highlighted'> {
+): Omit<Connection, 'nodeId'> {
   const fromY =
     from.y + HEADER_HEIGHT + BORDER_WIDTH + FIELD_HEIGHT * (index + 0.5)
   const toY = to.y + HEADER_HEIGHT / 2

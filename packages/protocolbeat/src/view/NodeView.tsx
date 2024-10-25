@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { useCallback, useRef } from 'react'
 
-import type { Node } from '../store/State'
+import type { Connection, Node } from '../store/State'
 import { useStore } from '../store/store'
 import { NODE_WIDTH } from '../store/utils/constants'
 import { OklchColor, oklchColorToCSS } from '../utils/color'
@@ -32,12 +32,6 @@ export function NodeView(props: NodeViewProps) {
     })
   }, [])
 
-  const highlightedColor: OklchColor = {
-    l: 0.65,
-    c: Math.max(props.node.simpleNode.color.c, 0.1),
-    h: (props.node.simpleNode.color.h + 180) % 360,
-  }
-
   return (
     <div
       ref={ref}
@@ -63,37 +57,61 @@ export function NodeView(props: NodeViewProps) {
         <div className="truncate">{props.node.simpleNode.name}</div>
       </div>
       {props.node.fields.map(({ name, connection }, i) => (
-        <div className="relative" key={i}>
-          <div
-            className="h-[24px] w-full truncate rounded-full px-2 leading-[24px]"
-            style={{
-              backgroundColor:
-                connection?.highlighted === true
-                  ? oklchColorToCSS(highlightedColor)
-                  : undefined,
-            }}
-          >
-            {name}
-          </div>
-          {connection && (
-            <div
-              className={clsx(
-                'absolute h-[12px] w-[12px]',
-                'rounded-full border-2 border-black bg-white',
-              )}
-              style={{
-                left: connection.from.direction === 'left' ? -7 : undefined,
-                right: connection.from.direction === 'right' ? -7 : undefined,
-                top: 6,
-              }}
-            />
-          )}
-        </div>
+        <NodeField
+          key={i}
+          name={name}
+          connection={connection}
+          color={props.node.simpleNode.color}
+        />
       ))}
       <ResizeHandle
         nodeId={props.node.simpleNode.id}
         onDoubleClick={onDoubleClick}
       />
+    </div>
+  )
+}
+
+function NodeField(props: {
+  name: string
+  connection?: Connection
+  color: OklchColor
+}) {
+  const isHighlighted = useStore(
+    (state) =>
+      props.connection && state.selected.includes(props.connection.nodeId),
+  )
+
+  const highlightedColor: OklchColor = {
+    l: 0.65,
+    c: Math.max(props.color.c, 0.1),
+    h: (props.color.h + 180) % 360,
+  }
+  return (
+    <div className="relative">
+      <div
+        className="h-[24px] w-full truncate rounded-full px-2 leading-[24px]"
+        style={{
+          backgroundColor: isHighlighted
+            ? oklchColorToCSS(highlightedColor)
+            : undefined,
+        }}
+      >
+        {props.name}
+      </div>
+      {props.connection && (
+        <div
+          className={clsx(
+            'absolute h-[12px] w-[12px]',
+            'rounded-full border-2 border-black bg-white',
+          )}
+          style={{
+            left: props.connection.from.direction === 'left' ? -7 : undefined,
+            right: props.connection.from.direction === 'right' ? -7 : undefined,
+            top: 6,
+          }}
+        />
+      )}
     </div>
   )
 }

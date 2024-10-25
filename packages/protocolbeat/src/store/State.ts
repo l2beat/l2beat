@@ -53,7 +53,6 @@ export interface Field {
 
 export interface Connection {
   readonly nodeId: string
-  readonly highlighted: boolean
   readonly from: {
     readonly direction: 'left' | 'right'
     readonly x: number
