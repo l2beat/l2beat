@@ -54,13 +54,13 @@ export interface Node {
 }
 
 export interface Field {
-  readonly box: Box
   readonly name: string
+  readonly target: string
+  readonly box: Box
   readonly connection: Connection
 }
 
 export interface Connection {
-  readonly nodeId: string
   readonly from: {
     readonly direction: 'left' | 'right'
     readonly x: number

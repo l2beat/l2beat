@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { useCallback, useRef } from 'react'
 
-import type { Connection, Node } from '../store/State'
+import type { Field, Node } from '../store/State'
 import { useStore } from '../store/store'
 import { NODE_WIDTH } from '../store/utils/constants'
 import { OklchColor, oklchColorToCSS } from '../utils/color'
@@ -54,27 +54,20 @@ export function NodeView(props: NodeViewProps) {
       >
         <div className="truncate">{props.node.name}</div>
       </div>
-      {props.node.fields.map(({ name, connection }, i) => (
-        <NodeField
-          key={i}
-          name={name}
-          connection={connection}
-          color={props.node.color}
-        />
+      {props.node.fields.map((field, i) => (
+        <NodeField key={i} field={field} color={props.node.color} />
       ))}
       <ResizeHandle nodeId={props.node.id} onDoubleClick={onDoubleClick} />
     </div>
   )
 }
 
-function NodeField(props: {
-  name: string
-  connection?: Connection
-  color: OklchColor
-}) {
-  const isHighlighted = useStore(
-    (state) =>
-      props.connection && state.selected.includes(props.connection.nodeId),
+function NodeField(props: { field: Field; color: OklchColor }) {
+  const isHighlighted = useStore((state) =>
+    state.selected.includes(props.field.target),
+  )
+  const targetHidden = useStore((state) =>
+    state.hidden.includes(props.field.target),
   )
 
   const highlightedColor: OklchColor = {
@@ -92,17 +85,21 @@ function NodeField(props: {
             : undefined,
         }}
       >
-        {props.name}
+        {props.field.name}
       </div>
-      {props.connection && (
+      {!targetHidden && (
         <div
           className={clsx(
             'absolute h-[12px] w-[12px]',
             'rounded-full border-2 border-black bg-white',
           )}
           style={{
-            left: props.connection.from.direction === 'left' ? -7 : undefined,
-            right: props.connection.from.direction === 'right' ? -7 : undefined,
+            left:
+              props.field.connection.from.direction === 'left' ? -7 : undefined,
+            right:
+              props.field.connection.from.direction === 'right'
+                ? -7
+                : undefined,
             top: 6,
           }}
         />

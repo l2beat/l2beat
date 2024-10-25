@@ -98,8 +98,8 @@ function mapFields(
           {
             name: concatKey(prefix, key),
             box: { x: 0, y: 0, width: 0, height: 0 },
+            target: encodeChainAddress(chain, value),
             connection: {
-              nodeId: encodeChainAddress(chain, value),
               from: { direction: 'left', x: 0, y: 0 },
               to: { direction: 'left', x: 0, y: 0 },
             },

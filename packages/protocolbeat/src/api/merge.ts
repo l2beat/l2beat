@@ -13,8 +13,8 @@ function createEmptyNodes(nodes: Node[]): Node[] {
 
   for (const node of nodes) {
     for (const field of node.fields) {
-      if (field.connection && !knownIds.has(field.connection.nodeId)) {
-        unknownIds.add(field.connection.nodeId)
+      if (!knownIds.has(field.target)) {
+        unknownIds.add(field.target)
       }
     }
   }

@@ -1,5 +1,4 @@
 import {
-  type SimulationLinkDatum,
   type SimulationNodeDatum,
   forceCenter,
   forceLink,
@@ -25,11 +24,6 @@ interface SimulationNode extends SimulationNodeDatum {
   node: Node
 }
 
-interface SimulationLink extends SimulationLinkDatum<SimulationNode> {
-  source: string
-  target: string
-}
-
 export function SlowLayoutButton() {
   const nodes = useStore((state) => state.nodes)
   const updateNodeLocations = useStore((state) => state.updateNodeLocations)
@@ -46,14 +40,13 @@ export function SlowLayoutButton() {
     }))
 
     const links = nodes
-      .flatMap((n) =>
-        n.fields.map((f) => ({
-          source: n.id,
-          target: f.connection?.nodeId,
+      .flatMap((node) =>
+        node.fields.map((field) => ({
+          source: node.id,
+          target: field.target,
         })),
       )
-      .filter((l): l is SimulationLink => l.target !== undefined)
-      .filter((l) => simNodes.find((sn) => sn.id === l.target) !== undefined)
+      .filter((l) => simNodes.some((sn) => sn.id === l.target))
 
     const simulation = forceSimulation(simNodes)
       .force(

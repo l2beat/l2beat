@@ -60,8 +60,8 @@ export function onMouseDown(
           selected = []
 
           const field = node.fields.find((f) => boxContains(f.box, x, y))
-          if (field !== undefined && field.connection !== undefined) {
-            selected = [field.connection.nodeId]
+          if (field !== undefined) {
+            selected = [field.target]
           }
         } else if (!event.shiftKey && !includes) {
           selected = [node.id]

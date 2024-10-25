@@ -12,9 +12,7 @@ export function NodesAndConnections() {
     <>
       {visible.map((node) =>
         node.fields.map((field, i) => {
-          const shouldHide =
-            !field.connection ||
-            hidden.find((id) => id === field.connection?.nodeId)
+          const shouldHide = hidden.find((id) => id === field.target)
 
           if (shouldHide) {
             return null
@@ -22,12 +20,11 @@ export function NodesAndConnections() {
 
           return (
             <Connection
-              key={`${node.id}-${i}-${field.connection.nodeId}`}
+              key={`${node.id}-${i}-${field.target}`}
               from={field.connection.from}
               to={field.connection.to}
               isHighlighted={
-                selected.includes(node.id) ||
-                selected.includes(field.connection.nodeId)
+                selected.includes(node.id) || selected.includes(field.target)
               }
             />
           )

@@ -44,12 +44,10 @@ export function updateNodePositions(state: State): State {
         ...node,
         box,
         fields: node.fields.map((field, index) => {
-          const to = nodeDimensions[field.connection.nodeId]
+          const to = nodeDimensions[field.target]
           if (!to) {
             // this should never happen
-            throw new Error(
-              'missing dimensions for node ' + field.connection.nodeId,
-            )
+            throw new Error('missing dimensions for node ' + field.target)
           }
           return {
             ...field,
@@ -60,7 +58,7 @@ export function updateNodePositions(state: State): State {
               height: FIELD_HEIGHT,
             },
             connection: {
-              nodeId: field.connection.nodeId,
+              nodeId: field.target,
               ...processConnection(index, box, to),
             },
           }
