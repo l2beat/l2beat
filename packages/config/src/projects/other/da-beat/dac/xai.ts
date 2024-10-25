@@ -1,7 +1,7 @@
-import { ChainId } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { xai } from '../../../layer3s/xai'
-import { DAC } from '../templates/dac-template'
+import { AnytrustDAC } from '../templates/anytrust-template'
 import { DaEconomicSecurityRisk } from '../types'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
@@ -13,15 +13,16 @@ const dac = discovery.getContractValue<{
 }>('SequencerInbox', 'dacKeyset')
 const { membersCount, requiredSignatures } = dac
 
-export const xaiDac = DAC({
+export const xaiDac = AnytrustDAC({
   project: xai,
   risks: { economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable },
   bridge: {
+    createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     contracts: {
       addresses: [
         discovery.getContractDetails(
           'SequencerInbox',
-          'Main entry point for the Sequencer submitting transaction batches.',
+          'The DA bridge and entry point for the Sequencer submitting transaction batches.',
         ),
       ],
       risks: [],
@@ -30,9 +31,9 @@ export const xaiDac = DAC({
       // Members: DAC uses BLS sigs, not EOAs
       {
         name: 'Sequencers',
-        accounts: discovery.getPermissionsByRole('Sequencer'),
+        accounts: discovery.getPermissionsByRole('sequence'),
         description:
-          'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
+          'Central actors allowed to relay transaction batches to the DA bridge (Sequencer Inbox).',
         chain: discovery.chain,
       },
       {
@@ -42,49 +43,61 @@ export const xaiDac = DAC({
           'EXECUTOR_ROLE',
         ),
         description:
-          'Multisig that can upgrade authorized batch posters via the UpgradeExecutor contract.',
+          'Multisig that can upgrade authorized batch posters (relayers) via the UpgradeExecutor contract.',
+      },
+      {
+        name: 'UpgradeExecutor',
+        accounts: [
+          {
+            address: EthereumAddress(
+              discovery.getContractValue<string>('RollupProxy', 'owner'),
+            ),
+            type: 'Contract',
+          },
+        ],
+        description:
+          'The contract used to manage the upgrade of the DA bridge and other contracts.',
+      },
+      ...discovery.getMultisigPermission(
+        'XaiMultisig',
+        'Multisig that can upgrade the DA bridge, upgrade authorized batch posters (relayers), and change the Committee members by updating the valid keyset (via UpgradeExecutor).',
+      ),
+    ],
+    chain: ChainId.ARBITRUM,
+    requiredMembers: requiredSignatures,
+    membersCount: membersCount,
+    transactionDataType: DacTransactionDataType.TransactionDataCompressed,
+    knownMembers: [
+      {
+        external: false,
+        name: 'Xai',
+        href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
+      },
+      {
+        external: true,
+        name: 'Ex Populus',
+        href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
+      },
+      {
+        external: true,
+        name: 'Rug Radio',
+        href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
+      },
+      {
+        external: true,
+        name: 'LayerZero',
+        href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
+      },
+      {
+        external: true,
+        name: 'Team Secret',
+        href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
+      },
+      {
+        external: true,
+        name: 'Offchain Labs',
+        href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
       },
     ],
-    chain: ChainId.ETHEREUM,
-    requiredMembers: requiredSignatures,
-    totalMembers: membersCount,
-    transactionDataType: DacTransactionDataType.TransactionDataCompressed,
-    members: {
-      type: 'public',
-      list: [
-        {
-          name: 'Xai',
-          href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
-        },
-        {
-          name: 'Ex Populus',
-          href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
-        },
-        {
-          name: 'Rug Radio',
-          href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
-        },
-        {
-          name: 'LayerZero',
-          href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
-        },
-        {
-          name: 'Laguna Games',
-          href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
-        },
-        {
-          name: 'Team Secret',
-          href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
-        },
-        {
-          name: 'Offchain Labs',
-          href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
-        },
-        {
-          name: 'Other Third Party',
-          href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
-        },
-      ],
-    },
   },
 })

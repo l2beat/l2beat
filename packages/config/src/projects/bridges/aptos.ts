@@ -10,6 +10,7 @@ const discovery = new ProjectDiscovery('aptos')
 export const aptos: Bridge = {
   type: 'bridge',
   id: ProjectId('aptos'),
+  createdAt: new UnixTime(1667124468), // 2022-10-30T10:07:48Z
   display: {
     name: 'Aptos (LayerZero)',
     slug: 'aptos',
@@ -68,22 +69,18 @@ export const aptos: Bridge = {
         {
           category: 'Users can be censored if',
           text: 'oracles or relayers fail to facilitate the transfer.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: 'oracles and relayers collude to submit fraudulent block hash and relay fraudulent transfer .',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: 'token bridge owner (currently EOA) enables emergency withdrawal and users do not exit with their funds within a week.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: "token bridge owner (currently EOA) sets WETH contract address to a malicious contract that will allow the owner to steal user's ETH.",
-          isCritical: true,
         },
       ],
       isIncomplete: true,

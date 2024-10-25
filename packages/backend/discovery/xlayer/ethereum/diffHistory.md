@@ -1,3 +1,43 @@
+Generated with discovered.json: 0xb451442de8dd00663b965053dfab5ef97cf48109
+
+# Diff at Mon, 21 Oct 2024 11:12:12 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20832964
+- current block number: 20832964
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20832964 (main branch discovery), not current.
+
+```diff
+    contract XLayerValidiumDAC (0x05652Ec92366F3C2255991a265c499E01Ba58e6a) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xd620Ca1ad5c3888e4521c3374cE4088Cb78079b8"]
+      values.$pastUpgrades.0.1:
+-        ["0xd620Ca1ad5c3888e4521c3374cE4088Cb78079b8"]
++        "0xf57e0fd610164ee944168cddc98cc89adfe29cb9c9c96940eb5d899a0249e44f"
+    }
+```
+
+```diff
+    contract XLayerValidium (0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"]
+      values.$pastUpgrades.0.1:
+-        ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"]
++        "0x35215d1a6f4ad41bedfbfc481d53b9d508864a6ace025f243264978e1a755f81"
+    }
+```
+
 Generated with discovered.json: 0xd841085d5e6926c5981e003384a8768b3569b012
 
 # Diff at Mon, 14 Oct 2024 10:57:55 GMT:

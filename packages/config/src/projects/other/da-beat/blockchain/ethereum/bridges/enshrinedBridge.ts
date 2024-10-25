@@ -1,10 +1,12 @@
-import { DaAccessibilityRisk, DaExitWindowRisk } from '../../../types'
-import { DaAttestationSecurityRisk } from '../../../types/DaAttestationSecurityRisk'
+import { UnixTime } from '@l2beat/shared-pure'
+import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../../../types'
 import { DaBridge, EnshrinedBridge } from '../../../types/DaBridge'
+import { DaRelayerFailureRisk } from '../../../types/DaRelayerFailureRisk'
 import { linkByDA } from '../../../utils/link-by-da'
 
 export const enshrinedBridge: EnshrinedBridge = {
   id: 'enshrined-bridge',
+  createdAt: new UnixTime(1721236013), // 2024-07-17T17:06:53Z
   type: 'Enshrined',
   display: {
     name: 'Enshrined Bridge',
@@ -32,9 +34,11 @@ export const enshrinedBridge: EnshrinedBridge = {
     bridge: (bridge) => bridge === 'Enshrined',
   }),
   risks: {
-    accessibility: DaAccessibilityRisk.Enshrined,
-    attestations: DaAttestationSecurityRisk.Enshrined,
-    exitWindow: DaExitWindowRisk.Enshrined,
+    committeeSecurity: DaCommitteeSecurityRisk.RobustAndDiverseCommittee(
+      'Ethereum Validators',
+    ),
+    upgradeability: DaUpgradeabilityRisk.Immutable,
     // we should add a note on the frontend that the specific rollup contracts could be upgradable and the security properties of each depend on the single rollup implementation
+    relayerFailure: DaRelayerFailureRisk.SelfPropose,
   },
 } satisfies DaBridge

@@ -9,7 +9,7 @@ import {
   TypeCell,
   TypeExplanationTooltip,
 } from '~/components/table/cells/type-cell'
-import { getCommonProjectColumns } from '~/components/table/common-project-columns'
+import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
 import { LIVENESS_ANOMALIES_COMING_SOON_PROJECTS } from '~/consts/projects'
 import { InfoIcon } from '~/icons/info'
 import { AnomalyIndicator } from '../anomaly-indicator'
@@ -78,9 +78,8 @@ export const columns = [
       tooltip: <TypeExplanationTooltip showOnlyRollupsDefinitions />,
     },
   }),
-  columnHelper.accessor('anomalies', {
+  columnHelper.display({
     header: '30-day\nanomalies',
-    enableSorting: false,
     cell: (ctx) => {
       const entry = ctx.row.original
       const showComingSoon =
@@ -89,7 +88,7 @@ export const columns = [
 
       return (
         <AnomalyIndicator
-          anomalyEntries={ctx.getValue()}
+          anomalyEntries={entry.anomalies}
           showComingSoon={showComingSoon}
         />
       )

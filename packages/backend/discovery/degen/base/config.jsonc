@@ -15,7 +15,6 @@
     "0xe63ddb12FBb6211a73F12a4367b10dA0834B82da": "Outbox",
     "0x67812161Bbb6aCF891aA6028BC614a660961ceD8": "ChallengeManager",
     "0xaA3A7A2ec2477A61082E1C41a2c6710587917028": "UpgradeExecutor",
-    "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104": "RollupOwnerMultisig",
     "0x43019F8BE1F192587883b67dEA2994999f5a2de2": "UTBDecent", // Decent omnichain service (LayerZero)
     "0xf70da97812CB96acDF810712Aa562db8dfA3dbEF": "Relay Bridge" // EOA Bridge / Liquidity network https://relay.link/transactions/
   },
@@ -77,7 +76,7 @@
         },
         "batchPosters": {
           "target": {
-            "role": "Sequencer"
+            "permissions": [{ "type": "sequence" }]
           },
           "handler": {
             "type": "arbitrumActors",
@@ -106,9 +105,6 @@
           }
         }
       }
-    },
-    "RollupOwnerMultisig": {
-      "ignoreInWatchMode": ["nonce"]
     }
   }
 }

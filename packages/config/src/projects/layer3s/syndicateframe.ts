@@ -8,8 +8,10 @@ import { Layer3 } from './types'
 const discovery = new ProjectDiscovery('syndicateframe', 'base')
 
 export const syndicateframe: Layer3 = opStackL3({
+  createdAt: new UnixTime(1711471599), // 2024-03-26T16:46:39Z
   discovery,
   badges: [Badge.L3ParentChain.Base, Badge.RaaS.Caldera],
+  additionalPurposes: ['Social'],
   hostChain: ProjectId('base'),
   display: {
     name: 'Syndicate Frame Chain',
@@ -17,7 +19,6 @@ export const syndicateframe: Layer3 = opStackL3({
     slug: 'syndicateframe',
     description:
       'Syndicate Frame Chain is an OP Stack L3 on Base for Farcaster Frame developers.',
-    purposes: ['Social', 'NFT'],
     links: {
       websites: ['https://syndicate.io/blog/syndicate-frame-chain'],
       apps: [

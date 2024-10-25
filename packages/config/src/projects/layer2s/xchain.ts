@@ -1,19 +1,19 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { subtractOne } from '../../common/assessCount'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { underReviewL2 } from './templates/underReview'
+import { orbitStackL2 } from './templates/orbitStack'
 import { Layer2 } from './types'
 
-export const xchain: Layer2 = underReviewL2({
-  id: 'xchain',
+const discovery = new ProjectDiscovery('xchain')
+
+export const xchain: Layer2 = orbitStackL2({
+  createdAt: new UnixTime(1690896554), // 2023-08-01T13:29:14Z
+  badges: [Badge.RaaS.Conduit, Badge.DA.DAC],
   display: {
     name: 'XCHAIN',
     slug: 'xchain',
-    category: 'Optimium',
-    provider: 'Arbitrum',
     description:
       'XCHAIN is an Optimium based on the Arbitrum Orbit stack. It is built to support IDEX - a high-performance perpetual swaps exchange. It allows for gas free and nearly instant settlement of all IDEX transactions.',
-    purposes: ['DeFi'],
     links: {
       websites: ['https://idex.io/'],
       apps: ['https://exchange.idex.io/'],
@@ -39,13 +39,25 @@ export const xchain: Layer2 = underReviewL2({
     multicallContracts: [],
     minTimestampForTvl: UnixTime.fromDate(new Date('2024-08-21T00:00:00Z')),
   },
-  transactionApi: {
-    type: 'rpc',
-    startBlock: 1,
-    defaultUrl: 'https://xchain-rpc.idex.io/',
-    defaultCallsPerMinute: 1500,
-    assessCount: subtractOne,
-  },
-  badges: [Badge.VM.EVM, Badge.Stack.Orbit, Badge.RaaS.Conduit],
-  //using the Stargate v2 Hydra bridge, docs do not include the contracts yet
+  rpcUrl: 'https://xchain-rpc.idex.io/',
+
+  discovery,
+  bridge: discovery.getContract('Bridge'),
+  rollupProxy: discovery.getContract('RollupProxy'),
+  sequencerInbox: discovery.getContract('SequencerInbox'),
+  nonTemplatePermissions: [
+    ...discovery.getMultisigPermission(
+      'ConduitMultisig',
+      'Admin that can upgrade the smart contract system (via UpgradeExecutor) at any time and gain access to all funds.',
+    ),
+  ],
+  milestones: [
+    {
+      name: 'Mainnet launch',
+      link: 'https://blog.idex.io/p/idex-mainnet-is-live',
+      date: '2024-09-02T00:00:00Z',
+      description: 'XCHAIN launches together with a new version of IDEX.',
+      type: 'general',
+    },
+  ],
 })

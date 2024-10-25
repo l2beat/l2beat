@@ -30,6 +30,7 @@ const upgradeability = {
 }
 
 export const silicon: Layer2 = polygonCDKStack({
+  createdAt: new UnixTime(1725027256), // 2024-08-30T14:14:16Z
   badges: [Badge.DA.DAC],
   discovery,
   display: {
@@ -37,7 +38,6 @@ export const silicon: Layer2 = polygonCDKStack({
     slug: 'silicon',
     description:
       'Silicon is a Validium built on the Polygon CDK Stack, aiming to become the social network of the future.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://silicon.network/'],
       apps: ['https://bridge.silicon.network/'],

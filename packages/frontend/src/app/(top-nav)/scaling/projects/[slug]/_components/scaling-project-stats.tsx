@@ -8,13 +8,14 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { StatWithChange } from '~/components/projects/stat-with-change'
 import { StageTooltip } from '~/components/table/cells/stage/stage-tooltip'
 import { TypeCell } from '~/components/table/cells/type-cell'
+import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
+import { env } from '~/env'
 import { InfoIcon } from '~/icons/info'
 import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { cn } from '~/utils/cn'
-import { formatNumber } from '~/utils/format-number'
+import { formatNumber } from '~/utils/number-format/format-number'
 import { TokenBreakdownStat } from './token-breakdown-stat'
 
 interface Props {
@@ -23,6 +24,8 @@ interface Props {
 }
 
 export function ScalingProjectStats({ project, className }: Props) {
+  const isOther =
+    env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS && project.header.isOther
   return (
     <div
       className={cn(
@@ -41,10 +44,12 @@ export function ScalingProjectStats({ project, className }: Props) {
         tooltip="Transactions per second averaged over the past day displayed together with a percentage change compared to 7D ago."
         value={
           project.header.activity ? (
-            <StatWithChange
-              stat={project.header.activity.lastDayTps}
+            <ValueWithPercentageChange
               change={project.header.activity.tpsWeeklyChange}
-            />
+              changeClassName="text-base font-medium"
+            >
+              {project.header.activity.lastDayTps.toFixed(2)}
+            </ValueWithPercentageChange>
           ) : (
             <UpcomingBadge />
           )
@@ -61,7 +66,7 @@ export function ScalingProjectStats({ project, className }: Props) {
         }
       />
       <HorizontalSeparator className="col-span-full max-md:hidden" />
-      {project.stageConfig.stage !== 'NotApplicable' ? (
+      {project.stageConfig.stage !== 'NotApplicable' && !isOther ? (
         <ProjectStat
           title="Stage"
           value={
@@ -83,7 +88,9 @@ export function ScalingProjectStats({ project, className }: Props) {
       ) : null}
       <ProjectStat
         title="Type"
-        value={<TypeCell>{project.header.category}</TypeCell>}
+        value={
+          <TypeCell>{isOther ? 'Other' : project.header.category}</TypeCell>
+        }
       />
       <ProjectStat
         title={pluralize(project.header.purposes.length, 'Purpose')}

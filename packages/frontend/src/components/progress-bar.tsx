@@ -40,15 +40,14 @@ export function useRouterWithProgressBar() {
       currentUrl?.searchParams?.toString()
     const paramsChanged =
       hasSearchParams && targetUrl?.search !== currentUrl?.search
-    if (targetUrl.pathname === pathname && !paramsChanged)
-      return Promise.resolve(true)
+    if (targetUrl.pathname === pathname && !paramsChanged) return true
     NProgress.start()
     return router.push(href, options)
   }
 
   function replace(href: string, options?: NavigateOptions) {
     const targetUrl = new URL(href, location.href)
-    if (targetUrl.pathname === pathname) return Promise.resolve(true)
+    if (targetUrl.pathname === pathname) return true
     NProgress.start()
     return router.replace(href, options)
   }

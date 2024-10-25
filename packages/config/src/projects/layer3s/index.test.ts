@@ -99,18 +99,6 @@ describe('layer3s', () => {
     })
   })
 
-  describe('every purpose is short', () => {
-    const purposes = layer3s.map((x) => x.display.purposes)
-    for (const purpose of purposes) {
-      const totalLength = purpose.reduce((acc, curr) => {
-        return acc + curr.length
-      }, 0)
-      it(purpose.join(', '), () => {
-        expect(totalLength).toBeLessThanOrEqual(20)
-      })
-    }
-  })
-
   describe('milestones', () => {
     describe('knowledgeNuggets', () => {
       const knowledgeNuggets = layer3s.flatMap(
@@ -162,11 +150,11 @@ describe('layer3s', () => {
     }
   })
 
-  describe('upcoming project have createdAt', () => {
+  describe('Other category projects have other details', () => {
     for (const layer3 of layer3s) {
-      if (layer3.isUpcoming) {
+      if (layer3.display.isOther) {
         it(layer3.display.name, () => {
-          expect(layer3.createdAt).not.toEqual(undefined)
+          expect(layer3.display.mainPermissions).not.toEqual(undefined)
         })
       }
     }

@@ -1,7 +1,10 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../../../../discovery/ProjectDiscovery'
-import { DaExitWindowRisk } from '../../../../../types'
-import { DaAttestationSecurityRisk } from '../../../../../types/DaAttestationSecurityRisk'
+import {
+  DaCommitteeSecurityRisk,
+  DaUpgradeabilityRisk,
+} from '../../../../../types'
+import { DaRelayerFailureRisk } from '../../../../../types/DaRelayerFailureRisk'
 import { CELESTIA_BLOBSTREAM } from '../template'
 
 const discovery = new ProjectDiscovery('blobstream', 'arbitrum')
@@ -33,6 +36,7 @@ const nextHeaderProvers = discovery.getContractValue<string[]>(
 
 export const blobstreamArbitrum = CELESTIA_BLOBSTREAM({
   chain: 'arbitrum',
+  createdAt: new UnixTime(1719930680), // 2024-07-02T14:31:20Z
   display: {
     links: {
       websites: [],
@@ -57,6 +61,12 @@ export const blobstreamArbitrum = CELESTIA_BLOBSTREAM({
       
       By default, BlobstreamX on Arbitrum is updated by the Celestia operator at a regular cadence of 1 hour.
   `,
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: 'the DA bridge accepts an incorrect or malicious data commitment provided by a dishonest majority of Celestia validators.',
+      },
+    ],
   },
   contracts: {
     addresses: [
@@ -86,11 +96,7 @@ export const blobstreamArbitrum = CELESTIA_BLOBSTREAM({
     risks: [
       {
         category: 'Funds can be lost if',
-        text: 'the bridge contract receives a malicious code upgrade. There is no delay on code upgrades.',
-      },
-      {
-        category: 'Funds can be lost if',
-        text: 'a dishonest majority of Celestia validators post incorrect or malicious data commitments.',
+        text: 'the bridge contract or its dependencies receive a malicious code upgrade. There is no delay on code upgrades.',
       },
     ],
   },
@@ -126,7 +132,10 @@ export const blobstreamArbitrum = CELESTIA_BLOBSTREAM({
     // no project integrates it for state validation
   ],
   risks: {
-    attestations: DaAttestationSecurityRisk.SigVerifiedZK(true),
-    exitWindow: DaExitWindowRisk.LowOrNoDelay(0), // TIMELOCK_ROLE is 4/6 multisig
+    committeeSecurity: DaCommitteeSecurityRisk.RobustAndDiverseCommittee(
+      'Celestia Validators',
+    ),
+    upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(0), // TIMELOCK_ROLE is 4/6 multisig
+    relayerFailure: DaRelayerFailureRisk.NoMechanism,
   },
 })

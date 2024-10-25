@@ -1,12 +1,12 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
+import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { Skeleton } from '~/components/core/skeleton'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
-import { getCommonProjectColumns } from '~/components/table/common-project-columns'
-import { EM_DASH } from '~/consts/characters'
+import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
 import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { type SyncStatus } from '~/types/sync-status'
-import { formatNumber } from '~/utils/format-number'
+import { formatNumber } from '~/utils/number-format/format-number'
 import { getColumnHeaderUnderline } from '~/utils/table/get-column-header-underline'
 import { SyncStatusWrapper } from '../../../finality/_components/table/sync-status-wrapper'
 import { CostsBreakdownValueCell } from '../costs-breakdown-value-cell'
@@ -31,7 +31,7 @@ type CostsAvailableData = {
 
 type CostsNotAvailableData = {
   type: 'not-available'
-  reason: 'loading' | 'coming-soon' | 'no-per-tx-metric' | 'no-data'
+  reason: 'loading' | 'no-data'
   syncStatus?: never
 }
 
@@ -62,8 +62,6 @@ export const scalingCostsColumns = [
           align: 'center',
           tooltip:
             'The total cost that is a sum of the costs for calldata, computation, blobs, and overhead.',
-          cellClassName: '!px-2',
-          headClassName: '!px-2',
         },
       }),
     ],
@@ -153,17 +151,15 @@ export const scalingCostsColumns = [
       const data = ctx.row.original.data
       if (data.type === 'available') {
         const value = data.txCount
-        if (!value) return EM_DASH
+        if (value === undefined) return <NoDataBadge />
         return formatNumber(value)
       }
 
       switch (data.reason) {
         case 'loading':
           return <Skeleton className="ml-auto h-6 w-24" />
-        case 'coming-soon':
         case 'no-data':
-        case 'no-per-tx-metric':
-          return EM_DASH
+          return <NoDataBadge />
         default:
           assertUnreachable(data.reason)
       }

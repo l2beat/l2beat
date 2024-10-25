@@ -18,6 +18,9 @@
     "0xE7d0fE72637B3C949cd81c63A4Ff1fb23feeF3b2": "PreimageOracle"
   },
   "overrides": {
+    "0x4b5b41c240173191425F5928bc6bdd0d439331BB": {
+      "extends": "opstack/SuperchainConfigFake"
+    },
     "OptimismPortal": {
       "ignoreMethods": ["isOutputFinalized"],
       "ignoreInWatchMode": ["params"]

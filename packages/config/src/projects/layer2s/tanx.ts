@@ -55,6 +55,7 @@ const committee = getCommittee(discovery)
 export const tanx: Layer2 = {
   type: 'layer2',
   id: ProjectId('brine'),
+  createdAt: new UnixTime(1690545663), // 2023-07-28T12:01:03Z
   badges: [
     Badge.VM.AppChain,
     Badge.DA.DAC,

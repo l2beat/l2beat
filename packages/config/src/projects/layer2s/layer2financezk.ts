@@ -21,6 +21,7 @@ const upgradeDelay = 0
 export const layer2financezk: Layer2 = {
   type: 'layer2',
   id: ProjectId('layer2financezk'),
+  createdAt: new UnixTime(1654522914), // 2022-06-06T13:41:54Z
   isArchived: true,
   display: {
     name: 'L2.Finance-zk',
@@ -29,7 +30,7 @@ export const layer2financezk: Layer2 = {
       'Layer2.finance-ZK has been shut down, users are encouraged to use optimistic rollup version.',
     description:
       'Celer’s Layer2.finance in ZK proofs Mode Built with StarkEx from StarkWare.',
-    purposes: ['DeFi'],
+    purposes: ['Exchange'],
     provider: 'StarkEx',
     category: 'Validium',
     links: {

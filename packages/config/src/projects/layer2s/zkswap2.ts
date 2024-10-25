@@ -15,6 +15,7 @@ const discovery = new ProjectDiscovery('zkswap2')
 export const zkswap2: Layer2 = {
   type: 'layer2',
   id: ProjectId('zkswap2'),
+  createdAt: new UnixTime(1629199654), // 2021-08-17T11:27:34Z
   isArchived: true,
   display: {
     name: 'ZKSwap 2.0',
@@ -23,7 +24,7 @@ export const zkswap2: Layer2 = {
       'Version 3 of the protocol called ZkSpace is available and users are encouraged to move their assets there.',
     description:
       'ZKSwap is a fork of ZKsync with added AMM functionality. Based on ZK Rollup technology, ZKSwap aims to execute the full functionality of Uniswap on Layer 2, but increase the TPS, and make transaction processing cheaper.',
-    purposes: ['Payments', 'AMM'],
+    purposes: ['Payments', 'Exchange'],
     provider: 'ZKsync Lite',
     category: 'ZK Rollup',
 

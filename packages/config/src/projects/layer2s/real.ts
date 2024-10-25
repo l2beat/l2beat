@@ -8,14 +8,15 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('real')
 
 export const real: Layer2 = orbitStackL2({
+  createdAt: new UnixTime(1717598702), // 2024-06-05T14:45:02Z
   discovery,
   badges: [Badge.DA.DAC, Badge.RaaS.Gelato],
+  additionalPurposes: ['RWA'],
   display: {
     name: 'Re.al',
     slug: 'real',
     description:
       'Re.al is an Arbitrum Orbit stack L2 with AnyTrust data availability, focusing on Real World Assets.',
-    purposes: ['RWA', 'Universal'],
     links: {
       websites: ['https://re.al'],
       apps: ['https://re.al/bridge/', 'https://re.al/app/bridge/'],

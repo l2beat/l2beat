@@ -16,6 +16,7 @@ const orbitMultisigThreshold = `${discovery.getContractValue<number>(
 export const orbit: Bridge = {
   type: 'bridge',
   id: ProjectId('orbit'),
+  createdAt: new UnixTime(1663234549), // 2022-09-15T09:35:49Z
   display: {
     name: 'Orbit Bridge',
     slug: 'orbit',
@@ -124,22 +125,18 @@ export const orbit: Bridge = {
         {
           category: 'Users can be censored if',
           text: 'validators decide to not pass selected messages between chains.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: 'validators relay a fake message to a destination chain to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: 'validators relay a fake message to Ethereum chain allowing a user to withdraw tokens from Ethereum escrow when equivalent amount of tokens has not been deposited and burned on destination chain.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: "there's an exploit in contracts that invest user deposit.",
-          isCritical: true,
         },
         {
           category: 'Funds can be frozen if',

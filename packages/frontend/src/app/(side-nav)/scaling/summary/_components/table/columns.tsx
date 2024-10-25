@@ -1,18 +1,18 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { TotalCell } from '~/app/(side-nav)/scaling/summary/_components/table/total-cell'
-import { UpcomingBadge } from '~/components/badge/upcoming-badge'
+import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/pizza-rosette-cell'
-import { NumberCell } from '~/components/table/cells/number-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { StageCell } from '~/components/table/cells/stage/stage-cell'
+import { TwoRowCell } from '~/components/table/cells/two-row-cell'
 import {
   TypeCell,
   TypeExplanationTooltip,
 } from '~/components/table/cells/type-cell'
-import { getCommonProjectColumns } from '~/components/table/common-project-columns'
+import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { sortStages } from '~/components/table/sorting/functions/stage-sorting'
-import { EM_DASH } from '~/consts/characters'
-import { formatNumber } from '~/utils/format-number'
+import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
+import { formatTps } from '~/utils/number-format/format-tps'
 import { type ScalingSummaryTableRow } from '../../_utils/to-table-rows'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
@@ -22,16 +22,16 @@ export const scalingSummaryColumns = [
   columnHelper.accessor('name', {
     cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
   }),
-  columnHelper.accessor('risks', {
+  columnHelper.display({
+    header: 'Risks',
     cell: (ctx) => (
       <PizzaRosetteCell
-        values={ctx.getValue()}
+        values={ctx.row.original.risks}
         isUnderReview={ctx.row.original.isUnderReview}
       />
     ),
-    enableSorting: false,
     meta: {
-      headClassName: 'w-0',
+      align: 'center',
     },
   }),
   columnHelper.accessor('category', {
@@ -50,56 +50,48 @@ export const scalingSummaryColumns = [
       hash: 'stage',
     },
   }),
-  columnHelper.accessor('tvl', {
-    id: 'total',
-    header: 'Total value locked',
-    cell: (ctx) => {
-      const value = ctx.row.original.tvl
-      if (!value.breakdown) {
-        return <UpcomingBadge />
-      }
-
-      return (
-        <TotalCell
-          associatedTokenSymbols={value.associatedTokens}
-          tvlWarnings={value.warnings}
-          breakdown={value.breakdown}
-          change={value.change}
-        />
-      )
+  columnHelper.accessor(
+    (e) => {
+      return e.tvl?.breakdown?.total
     },
-    sortingFn: ({ original: a }, { original: b }) => {
-      const aTvl = a.tvl.breakdown?.total ?? 0
-      const bTvl = b.tvl.breakdown?.total ?? 0
+    {
+      id: 'total',
+      header: 'Total value locked',
+      cell: (ctx) => {
+        const value = ctx.row.original.tvl
+        if (value.breakdown?.total === undefined) {
+          return <NoDataBadge />
+        }
 
-      if (aTvl === bTvl) {
-        return b.name.localeCompare(a.name)
-      }
-
-      return aTvl - bTvl
+        return (
+          <TotalCell
+            associatedTokenSymbols={value.associatedTokens}
+            tvlWarnings={value.warnings}
+            breakdown={value.breakdown}
+            change={value.change}
+          />
+        )
+      },
+      sortUndefined: 'last',
+      meta: {
+        align: 'right',
+        tooltip:
+          'Total Value Locked is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens.',
+      },
     },
-    meta: {
-      align: 'right',
-      tooltip:
-        'Total Value Locked is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens.',
-    },
-  }),
+  ),
   columnHelper.accessor('activity.pastDayTps', {
     header: 'Past day TPS',
     cell: (ctx) => {
       const data = ctx.row.original.activity
       if (!data) {
-        return EM_DASH
+        return <NoDataBadge />
       }
+
       return (
-        <div className="flex items-center">
-          <NumberCell className="font-bold">
-            {formatNumber(ctx.getValue())}
-          </NumberCell>
-          <NumberCell signed className="ml-1 font-medium">
-            {data.change}
-          </NumberCell>
-        </div>
+        <ValueWithPercentageChange change={data.change}>
+          {formatTps(ctx.getValue())}
+        </ValueWithPercentageChange>
       )
     },
     sortUndefined: 'last',
@@ -108,4 +100,91 @@ export const scalingSummaryColumns = [
       tooltip: 'Transactions per second averaged over the past day.',
     },
   }),
+]
+
+export const scalingSummaryValidiumAndOptimiumsColumns = [
+  ...scalingSummaryColumns.slice(0, 4),
+  columnHelper.accessor('dataAvailability.layer.value', {
+    header: 'DA Layer',
+    cell: (ctx) => {
+      const value = ctx.getValue()
+      if (!value) {
+        return <NoDataBadge />
+      }
+      return (
+        <TwoRowCell>
+          <TwoRowCell.First>{ctx.getValue()}</TwoRowCell.First>
+          {ctx.row.original.dataAvailability && (
+            <TwoRowCell.Second>
+              {ctx.row.original.dataAvailability.bridge.value}
+            </TwoRowCell.Second>
+          )}
+        </TwoRowCell>
+      )
+    },
+    enableSorting: false,
+  }),
+  ...scalingSummaryColumns.slice(6),
+]
+
+export const scalingSummaryOthersColumns = [
+  ...scalingSummaryColumns.slice(0, 4),
+  columnHelper.display({
+    id: 'proposer',
+    header: 'Proposer',
+    cell: (ctx) => {
+      const value = ctx.row.original.mainPermissions?.proposer
+      if (!value) {
+        return <NoDataBadge />
+      }
+
+      return (
+        <TwoRowCell>
+          <TwoRowCell.First>{value.value}</TwoRowCell.First>
+          {value.secondLine && (
+            <TwoRowCell.Second>{value.secondLine}</TwoRowCell.Second>
+          )}
+        </TwoRowCell>
+      )
+    },
+  }),
+  columnHelper.display({
+    id: 'challenger',
+    header: 'Challenger',
+    cell: (ctx) => {
+      const value = ctx.row.original.mainPermissions?.challenger
+      if (!value) {
+        return <NoDataBadge />
+      }
+
+      return (
+        <TwoRowCell>
+          <TwoRowCell.First>{value.value}</TwoRowCell.First>
+          {value.secondLine && (
+            <TwoRowCell.Second>{value.secondLine}</TwoRowCell.Second>
+          )}
+        </TwoRowCell>
+      )
+    },
+  }),
+  columnHelper.display({
+    id: 'upgrader',
+    header: 'Upgrader',
+    cell: (ctx) => {
+      const value = ctx.row.original.mainPermissions?.upgrader
+      if (!value) {
+        return <NoDataBadge />
+      }
+
+      return (
+        <TwoRowCell>
+          <TwoRowCell.First>{value.value}</TwoRowCell.First>
+          {value.secondLine && (
+            <TwoRowCell.Second>{value.secondLine}</TwoRowCell.Second>
+          )}
+        </TwoRowCell>
+      )
+    },
+  }),
+  ...scalingSummaryColumns.slice(6),
 ]

@@ -113,6 +113,7 @@
         "$pastUpgrades": [
           [
             "2022-07-12T10:32:51.000Z",
+            "0xde8dc7be51fd7efb7940f1c079ad9c47107e15911a3388264cd14a660af92fe5",
             ["0x8Dbce625664E61Bd3902Ec84DE5E22d2B12c3fb6"]
           ]
         ],
@@ -268,6 +269,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
   }
 }

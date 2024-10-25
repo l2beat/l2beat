@@ -32,13 +32,14 @@ const upgradeability = {
 }
 
 export const gpt: Layer2 = polygonCDKStack({
+  createdAt: new UnixTime(1720180654), // 2024-07-05T11:57:34Z
   badges: [Badge.DA.DAC, Badge.RaaS.Gateway],
+  additionalPurposes: ['AI'],
   display: {
     name: 'GPT Protocol',
     slug: 'gpt',
     description:
       'GPT Protocol is a Validium built on the Polygon CDK stack. The purpose of the project is to create a decentralized market of AI compute power.',
-    purposes: ['AI'],
     links: {
       websites: ['https://gptprotocol.org/'],
       apps: [

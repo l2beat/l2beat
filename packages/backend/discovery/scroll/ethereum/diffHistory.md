@@ -1,4 +1,337 @@
-Generated with discovered.json: 0x7775587af963162c55fdfb42afb86ccca6bc012a
+Generated with discovered.json: 0x0a534c8201190e15b7498a40fa071db310731c59
+
+# Diff at Mon, 21 Oct 2024 12:48:09 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e660599f23a07618fe949a07be1f516ce44f1914 block: 20891049
+- current block number: 20891049
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20891049 (main branch discovery), not current.
+
+```diff
+    contract MultipleVersionRollupVerifier (0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F) {
+    +++ description: Used to update the verifier and keep track of current and old versions.
+      descriptions:
+-        ["Used to update the verifier and keep track of current and old versions."]
+      description:
++        "Used to update the verifier and keep track of current and old versions."
+    }
+```
+
+```diff
+    contract ScrollOwner (0x798576400F7D662961BA15C6b3F3d813447a26a6) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      descriptions:
+-        ["Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role."]
+      description:
++        "Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role."
+    }
+```
+
+Generated with discovered.json: 0x9a42cb161d5a63ef5379e507db48f193259f9917
+
+# Diff at Mon, 21 Oct 2024 11:09:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20891049
+- current block number: 20891049
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20891049 (main branch discovery), not current.
+
+```diff
+    contract L1MessageQueue (0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0x137CC585F607EDeBBc3CA6360AffCFeab507B374"]
+      values.$pastUpgrades.2.1:
+-        ["0x137CC585F607EDeBBc3CA6360AffCFeab507B374"]
++        "0x3928e0223337a112ea68c84db95441185a3e1da809638be13c0135761aa19ee7"
+      values.$pastUpgrades.1.2:
++        ["0xeBaed7A81c298B24EE6d59c22698A951dc448E01"]
+      values.$pastUpgrades.1.1:
+-        ["0xeBaed7A81c298B24EE6d59c22698A951dc448E01"]
++        "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826"
+      values.$pastUpgrades.0.2:
++        ["0xBC9D741501A20F962756C95BF906b4abffadcf8F"]
+      values.$pastUpgrades.0.1:
+-        ["0xBC9D741501A20F962756C95BF906b4abffadcf8F"]
++        "0xdd4c82f4c38c76c6bb222f2b319e870ed48d8d4dc2a73e0baa5d560a286924b2"
+    }
+```
+
+```diff
+    contract L1BatchBridgeGateway (0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x7999cdD5E2893475D89211A2E3FdA67a841E3233"]
+      values.$pastUpgrades.1.1:
+-        ["0x7999cdD5E2893475D89211A2E3FdA67a841E3233"]
++        "0x3ee1ca7b7a92d6181b5a38859b4ae747c6fb4b42e4407c3a854f55b82564aba1"
+      values.$pastUpgrades.0.2:
++        ["0xFAf8f72e54d1089fa1882b6f597BfDFF59a8AFca"]
+      values.$pastUpgrades.0.1:
+-        ["0xFAf8f72e54d1089fa1882b6f597BfDFF59a8AFca"]
++        "0x56e31c0072f983bfee035b6bf464b53b9d998afab20e0046cdc3fc209b4a191e"
+    }
+```
+
+```diff
+    contract L1ERC721Gateway (0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xd1841c5756428812233eEA78afC17cb2D3e392bb"]
+      values.$pastUpgrades.1.1:
+-        ["0xd1841c5756428812233eEA78afC17cb2D3e392bb"]
++        "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826"
+      values.$pastUpgrades.0.2:
++        ["0xDE3be7C2AA151D1E152DDfcBf0962FcDf5323DAe"]
+      values.$pastUpgrades.0.1:
+-        ["0xDE3be7C2AA151D1E152DDfcBf0962FcDf5323DAe"]
++        "0x5cb06c63fb2583db9eba85a73ca794a9d36eace7f91925962b8cc97fd06b9b7d"
+    }
+```
+
+```diff
+    contract wstETHescrowLido (0x6625C6332c9F91F2D27c304E729B86db87A3f504) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xF4f2066EE72D62e3caF9678459149BA7FCf2262F"]
+      values.$pastUpgrades.1.1:
+-        ["0xF4f2066EE72D62e3caF9678459149BA7FCf2262F"]
++        "0xd755174ba6bacec85b68b77c9ec2a8b966955746be59a6efa932f47c37dda482"
+      values.$pastUpgrades.0.2:
++        ["0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb"]
+      values.$pastUpgrades.0.1:
+-        ["0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb"]
++        "0xec5c25ea4b3e6d1dc9fa4cb7b7dd37a7a245a171cd3d16fb312628b5ecc9e841"
+    }
+```
+
+```diff
+    contract DaiEscrow (0x67260A8B73C5B77B55c1805218A42A7A6F98F515) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb"]
+      values.$pastUpgrades.0.1:
+-        ["0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb"]
++        "0x9776779beb429ea826a81a8c1c5f782933bfc8ce568afa1c6f2c2b866be2a3a5"
+    }
+```
+
+```diff
+    contract L1ScrollMessenger (0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x72981fD00087fF4F60aBFdE9f353cB1912A37fb6"]
+      values.$pastUpgrades.1.1:
+-        ["0x72981fD00087fF4F60aBFdE9f353cB1912A37fb6"]
++        "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826"
+      values.$pastUpgrades.0.2:
++        ["0xAf2F898a8680cb52766ABE0588ebe6b9bFe37845"]
+      values.$pastUpgrades.0.1:
+-        ["0xAf2F898a8680cb52766ABE0588ebe6b9bFe37845"]
++        "0xcad9f31340db6aca3a5da0d704ee33a9b6c43a5b1be4406cc0ed33edbdd7c92e"
+    }
+```
+
+```diff
+    contract EnforcedTxGateway (0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x642af405bF64660665B37977449C9C536B806318"]
+      values.$pastUpgrades.0.1:
+-        ["0x642af405bF64660665B37977449C9C536B806318"]
++        "0xd2e3c3d2839a35492419c5a1ae863e7a23d963cb4853c59e8e20832e0ee4ed3e"
+    }
+```
+
+```diff
+    contract L1WETHGateway (0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0xa4F400593DFfc0ae02F940ab58f6e3Cc6fb9FB49"]
+      values.$pastUpgrades.1.1:
+-        ["0xa4F400593DFfc0ae02F940ab58f6e3Cc6fb9FB49"]
++        "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826"
+      values.$pastUpgrades.0.2:
++        ["0xd3c42158682D55E082EaBe08a29F7515A97cA307"]
+      values.$pastUpgrades.0.1:
+-        ["0xd3c42158682D55E082EaBe08a29F7515A97cA307"]
++        "0x0f1df3c211e6b201b0bb0cc41c87c2fbb36683f2a24080d935ffdc587723c033"
+    }
+```
+
+```diff
+    contract L1ETHGateway (0x7F2b8C31F88B6006c382775eea88297Ec1e3E905) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x546E0bF31FB6e7babD493452e4e6999191367B42"]
+      values.$pastUpgrades.1.1:
+-        ["0x546E0bF31FB6e7babD493452e4e6999191367B42"]
++        "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826"
+      values.$pastUpgrades.0.2:
++        ["0x1fcbE079c4Bbab37406daB7Dfd35AcAe37D5C55d"]
+      values.$pastUpgrades.0.1:
+-        ["0x1fcbE079c4Bbab37406daB7Dfd35AcAe37D5C55d"]
++        "0xbd63d1902c6343a9cdb81aa8944621690e4dd62a82640fded7f7c3d969e3647a"
+    }
+```
+
+```diff
+    contract OLD_L2GasPriceOracle (0x987e300fDfb06093859358522a79098848C33852) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xfDF1eE0098168eaa61BF87Db68C39c85151a4E9E"]
+      values.$pastUpgrades.0.1:
+-        ["0xfDF1eE0098168eaa61BF87Db68C39c85151a4E9E"]
++        "0xf25a4fbbd1569b188ce8855ff12760904d976be976c35afeb4abd9566db5ca38"
+    }
+```
+
+```diff
+    contract pufETHEscrow (0xA033Ff09f2da45f0e9ae495f525363722Df42b2a) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0x08D77Ea90DB9BF6c0d3f66E6b8394DA2E81B9a03"]
+      values.$pastUpgrades.2.1:
+-        ["0x08D77Ea90DB9BF6c0d3f66E6b8394DA2E81B9a03"]
++        "0xb367f770c26a72ea837a51c2c1fc84a3396914db1d58c020177b207e0f876a79"
+      values.$pastUpgrades.1.2:
++        ["0x08D77Ea90DB9BF6c0d3f66E6b8394DA2E81B9a03"]
+      values.$pastUpgrades.1.1:
+-        ["0x08D77Ea90DB9BF6c0d3f66E6b8394DA2E81B9a03"]
++        "0xe03abd155a10591ed1fa4a1e2ad0d6042549bfd67769dbf6bd66d25743950905"
+      values.$pastUpgrades.0.2:
++        ["0xc4d46E8402F476F269c379677C99F18E22Ea030e"]
+      values.$pastUpgrades.0.1:
+-        ["0xc4d46E8402F476F269c379677C99F18E22Ea030e"]
++        "0xa2ff9275d6280e3cc298653463c5d8423c44cfbc66a52a9a138becbb106dc0f8"
+    }
+```
+
+```diff
+    contract ScrollChain (0xa13BAF47339d63B743e7Da8741db5456DAc1E556) {
+    +++ description: None
+      values.$pastUpgrades.4.2:
++        ["0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f"]
+      values.$pastUpgrades.4.1:
+-        ["0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f"]
++        "0x3928e0223337a112ea68c84db95441185a3e1da809638be13c0135761aa19ee7"
+      values.$pastUpgrades.3.2:
++        ["0x4F250B05262240C787a1eE222687C6eC395C628A"]
+      values.$pastUpgrades.3.1:
+-        ["0x4F250B05262240C787a1eE222687C6eC395C628A"]
++        "0x87f533704b3cdac75c20bbdcd202a97ee62075c188ccea27ab7ff494cdeea247"
+      values.$pastUpgrades.2.2:
++        ["0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8"]
+      values.$pastUpgrades.2.1:
+-        ["0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8"]
++        "0x6eb161ed649cf22771e586a8546eec157717e2dec4c871e7ad4e4d2c5c59a905"
+      values.$pastUpgrades.1.2:
++        ["0xFA148514d03420b7b1a13eC74da06D2Ca875539C"]
+      values.$pastUpgrades.1.1:
+-        ["0xFA148514d03420b7b1a13eC74da06D2Ca875539C"]
++        "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826"
+      values.$pastUpgrades.0.2:
++        ["0x2E07f0FBA71709bb5e1f045b02152E45B451D75f"]
+      values.$pastUpgrades.0.1:
+-        ["0x2E07f0FBA71709bb5e1f045b02152E45B451D75f"]
++        "0xecc94033ca66ea9068acde109b0c9e3c539191645916a35952bb6d9fd2be3a02"
+    }
+```
+
+```diff
+    contract L1CustomERC20Gateway (0xb2b10a289A229415a124EFDeF310C10cb004B6ff) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x7F512E2E9dfC4552941D99A5b2405BBcF5781C2c"]
+      values.$pastUpgrades.1.1:
+-        ["0x7F512E2E9dfC4552941D99A5b2405BBcF5781C2c"]
++        "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826"
+      values.$pastUpgrades.0.2:
++        ["0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb"]
+      values.$pastUpgrades.0.1:
+-        ["0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb"]
++        "0x12f874f5ca5a8dbdc5162db5179a4e4b753f4fcff8dab3f416bd1ce707ecb9ff"
+    }
+```
+
+```diff
+    contract L1ERC1155Gateway (0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x244BF7aEf29F03916569470a51fA0794B62F8cd7"]
+      values.$pastUpgrades.1.1:
+-        ["0x244BF7aEf29F03916569470a51fA0794B62F8cd7"]
++        "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826"
+      values.$pastUpgrades.0.2:
++        ["0xCb4638620E4C6DeCef26374e71b0dd4871863593"]
+      values.$pastUpgrades.0.1:
+-        ["0xCb4638620E4C6DeCef26374e71b0dd4871863593"]
++        "0xe6cabeddb49c286b33e0e6d4a43af76e1a2108ac9fc91afb508a5ea86a8fc646"
+    }
+```
+
+```diff
+    contract L1StandardERC20Gateway (0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x4015Fc868C06689ABEba4a9dC8FA43B804F6239c"]
+      values.$pastUpgrades.1.1:
+-        ["0x4015Fc868C06689ABEba4a9dC8FA43B804F6239c"]
++        "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826"
+      values.$pastUpgrades.0.2:
++        ["0x9218732389D80f9b8723C3f32a38865B7a63564A"]
+      values.$pastUpgrades.0.1:
+-        ["0x9218732389D80f9b8723C3f32a38865B7a63564A"]
++        "0x85d366c40632340d9e835fdd0a1646909a56d60c680373f15f9d36878ff13029"
+    }
+```
+
+```diff
+    contract L1USDCGateway (0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x56ce8A8E8399f6cD5e7e4f549E8BfD673f2AfF5e"]
+      values.$pastUpgrades.1.1:
+-        ["0x56ce8A8E8399f6cD5e7e4f549E8BfD673f2AfF5e"]
++        "0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826"
+      values.$pastUpgrades.0.2:
++        ["0x6667123b5017AAB9945F73345848B82D7A953AA8"]
+      values.$pastUpgrades.0.1:
+-        ["0x6667123b5017AAB9945F73345848B82D7A953AA8"]
++        "0x394b36151c614a7dfd048ddc1085046d2a50e5fd54af4c335d4a08aa79dd773d"
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xb93Ac04010Bd61F45BF492022A5b49a902F798F3"]
+      values.$pastUpgrades.0.1:
+-        ["0xb93Ac04010Bd61F45BF492022A5b49a902F798F3"]
++        "0x8f6851c707737c446ee55f39be1442ce8cfa50ef8522b34bac247c0bb39a14ec"
+    }
+```
+
+Generated with discovered.json: 0xafd1c1ddac67caddf5e22e82e7cc0db2def73728
 
 # Diff at Mon, 14 Oct 2024 10:55:22 GMT:
 

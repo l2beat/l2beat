@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
@@ -7,9 +7,11 @@ import { Layer3 } from './types'
 const discovery = new ProjectDiscovery('playblock', 'nova')
 
 export const playblock: Layer3 = orbitStackL3({
+  createdAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
   discovery,
   hostChain: ProjectId('nova'),
   badges: [Badge.DA.DAC, Badge.L3ParentChain.Nova, Badge.RaaS.Gelato],
+  additionalPurposes: ['Gaming'],
   display: {
     redWarning:
       'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
@@ -17,7 +19,6 @@ export const playblock: Layer3 = orbitStackL3({
     slug: 'playblock',
     description:
       'PlayBlock is an Orbit stack Layer 3 on Arbitrum Nova. It is built by the team behind Playnance, and is focused on gasless gaming and gambling.',
-    purposes: ['Gaming'],
     links: {
       websites: ['https://playnance.com/'],
       apps: [],

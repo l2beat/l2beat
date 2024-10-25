@@ -55,6 +55,7 @@ const validatorsOld = () => {
 }
 
 export const zksyncera: Layer2 = zkStackL2({
+  createdAt: new UnixTime(1671115151), // 2022-12-15T14:39:11Z
   discovery,
   discovery_ZKstackGovL2,
   validatorsEvents: {
@@ -73,7 +74,6 @@ export const zksyncera: Layer2 = zkStackL2({
     slug: 'zksync-era',
     description:
       'ZKsync Era is a general-purpose ZK Rollup with full EVM compatibility.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://zksync.io/', 'https://zksync.dappradar.com/'],
       apps: ['https://portal.zksync.io/bridge/'],

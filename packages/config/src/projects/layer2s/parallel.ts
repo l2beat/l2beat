@@ -8,6 +8,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('parallel')
 
 export const parallel: Layer2 = orbitStackL2({
+  createdAt: new UnixTime(1704289654), // 2024-01-03T13:47:34Z
   discovery,
   badges: [],
   display: {
@@ -17,7 +18,6 @@ export const parallel: Layer2 = orbitStackL2({
       'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     description:
       'Parallel is an Ethereum L2 solution utilizing Arbitrum Nitro technology.',
-    purposes: ['Universal', 'DeFi'],
     links: {
       websites: ['https://parallel.fi'],
       apps: ['https://parallel.fi/airdrop'],

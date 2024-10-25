@@ -19,6 +19,7 @@ const discovery = new ProjectDiscovery('honeypot')
 export const honeypot: Layer2 = {
   type: 'layer2',
   id: ProjectId('honeypot'),
+  createdAt: new UnixTime(1683905088), // 2023-05-12T15:24:48Z
   badges: [
     Badge.VM.CartesiVM,
     Badge.VM.AppChain,
@@ -217,6 +218,14 @@ export const honeypot: Layer2 = {
     ],
     risks: [],
   },
+  permissions: [
+    {
+      name: 'Authority owner',
+      description:
+        'The Authority owner can submit claims to the Honeypot DApp.',
+      accounts: [discovery.getPermissionedAccount('Authority', 'owner')],
+    },
+  ],
   milestones: [
     {
       name: 'Honeypot announcement',

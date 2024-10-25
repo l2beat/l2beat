@@ -53,6 +53,7 @@ const committee = getCommittee(discovery)
 export const canvasconnect: Layer2 = {
   type: 'layer2',
   id: ProjectId('canvasconnect'),
+  createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   isArchived: true,
   display: {
     name: 'Canvas Connect',
@@ -61,7 +62,7 @@ export const canvasconnect: Layer2 = {
       'Canvas Connect is currently open only to whitelisted institutional clients.',
     description:
       'Canvas Connect is a Layer 2 solution based on StarkEx technology, specifically designed to provide centralized investment and trading services to financial institutions.',
-    purposes: ['Privacy', 'DeFi'],
+    purposes: ['Privacy', 'Exchange'],
     provider: 'StarkEx',
     category: 'Validium',
     links: {

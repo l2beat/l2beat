@@ -8,6 +8,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('blast')
 
 export const blast: Layer2 = opStackL2({
+  createdAt: new UnixTime(1700555008), // 2023-11-21T08:23:28Z
   discovery,
   display: {
     name: 'Blast',
@@ -15,7 +16,6 @@ export const blast: Layer2 = opStackL2({
     architectureImage: 'blast',
     description:
       'Blast is an EVM-compatible Optimistic Rollup supporting native yield. It invests funds deposited into the L1 bridge into various DeFi protocols transferring yield back to the L2.',
-    purposes: ['Universal', 'DeFi'],
     links: {
       websites: ['https://blast.io/en'],
       apps: ['https://blast.io/en/bridge'],

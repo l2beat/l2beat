@@ -8,13 +8,14 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('mint')
 
 export const mint: Layer2 = opStackL2({
+  createdAt: new UnixTime(1695904849), // 2023-09-28T12:40:49Z
   discovery,
-  badges: [Badge.RaaS.Conduit],
+  badges: [Badge.RaaS.Conduit, Badge.Infra.Superchain],
+  additionalPurposes: ['NFT'],
   display: {
     name: 'Mint',
     slug: 'mint',
     description: 'Mint Blockchain is a Layer 2 network for NFTs.',
-    purposes: ['Universal', 'NFT'],
     links: {
       websites: ['https://mintchain.io/'],
       apps: ['https://bridge.mintchain.io/', 'https://mintchain.io/faucet'],

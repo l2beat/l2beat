@@ -1,7 +1,7 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { UpcomingBadge } from '~/components/badge/upcoming-badge'
+import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
-import { getCommonProjectColumns } from '~/components/table/common-project-columns'
+import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
 import { getColumnHeaderUnderline } from '~/utils/table/get-column-header-underline'
 import { type ScalingTvlTableRow } from '../../_utils/to-table-rows'
 import { TotalValueLockedCell } from './total-value-locked-cell'
@@ -28,7 +28,7 @@ export const scalingTvlColumns = [
             breakdown.canonical + breakdown.external + breakdown.native ===
             0
           ) {
-            return undefined
+            return 0
           }
           return breakdown.canonical + breakdown.external + breakdown.native
         },
@@ -38,7 +38,7 @@ export const scalingTvlColumns = [
           cell: (ctx) => {
             const data = ctx.row.original.tvl.data
             if (!data) {
-              return <UpcomingBadge />
+              return <NoDataBadge />
             }
             return (
               <TotalValueLockedCell
@@ -67,7 +67,7 @@ export const scalingTvlColumns = [
     cell: (ctx) => {
       const data = ctx.row.original.tvl.data
       if (!data) {
-        return <UpcomingBadge />
+        return <NoDataBadge />
       }
 
       return (
@@ -79,7 +79,7 @@ export const scalingTvlColumns = [
     },
     sortUndefined: 'last',
     meta: {
-      align: 'center',
+      align: 'right',
       tooltip:
         'These tokens use L1 Ethereum as their main ledger and are bridged to L2 via a canonical bridge locking tokens in L1 escrow and minting on L2 an IOU representation of that token. The value is displayed together with a percentage change compared to 7D ago.',
       headClassName: getColumnHeaderUnderline('before:bg-purple-100'),
@@ -91,7 +91,7 @@ export const scalingTvlColumns = [
     cell: (ctx) => {
       const data = ctx.row.original.tvl.data
       if (!data) {
-        return <UpcomingBadge />
+        return <NoDataBadge />
       }
 
       return (
@@ -103,7 +103,7 @@ export const scalingTvlColumns = [
     },
     sortUndefined: 'last',
     meta: {
-      align: 'center',
+      align: 'right',
       tooltip:
         'These tokens use some external blockchain as their main ledger and are bridged to L2 via a non-canonical bridge. Tokens are locked on their native ledger and the bridge is minting on L2 an IOU representation of that token. The value is displayed together with a percentage change compared to 7D ago.',
       headClassName: getColumnHeaderUnderline('before:bg-yellow-200'),
@@ -115,7 +115,7 @@ export const scalingTvlColumns = [
     cell: (ctx) => {
       const data = ctx.row.original.tvl.data
       if (!data) {
-        return <UpcomingBadge />
+        return <NoDataBadge />
       }
 
       return (
@@ -127,7 +127,7 @@ export const scalingTvlColumns = [
     },
     sortUndefined: 'last',
     meta: {
-      align: 'center',
+      align: 'right',
       tooltip:
         'These tokens are using L2 as their ledger and are minted directly on L2. Note that for some tokens (omnichain tokens) their ledger is distributed across many blockchains and they can be moved to L2 via a burn-mint bridge. The value is displayed together with a percentage change compared to 7D ago.',
       headClassName: getColumnHeaderUnderline('before:bg-pink-100'),

@@ -2,7 +2,7 @@
   "name": "optopia",
   "chain": "ethereum",
   "blockNumber": 20427351,
-  "configHash": "0x7c506a1eabbab73ca42ccd6096a866c9aca67062c90b0931c2c938ce109ecc2e",
+  "configHash": "0x832dfabee4a571474954b5f2ff520d4b4a1f7e8d85443d489e85460f58dbc8b0",
   "contracts": [
     {
       "name": "AddressManager",
@@ -11,9 +11,7 @@
       "sourceHashes": [
         "0xdc86a850f11dc2b5c0472a05d0e3c14f239baf2c3b1ab19631591b0827985380"
       ],
-      "descriptions": [
-        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
-      ],
+      "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -42,9 +40,7 @@
         "0x1cc8a3b7de3d2c54c4706bb3f3015714d3b56647fc9fbfd6f8b068f5f63c1c25"
       ],
       "proxyType": "resolved delegate proxy",
-      "descriptions": [
-        "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
-      ],
+      "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "categories": ["Core"],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1715334971,
@@ -54,6 +50,7 @@
         "$pastUpgrades": [
           [
             "2024-05-10T09:57:11.000Z",
+            "0xf3b204596e40214b046c7cebacfb0be751ab67df24f25ce689a7422367ba9793",
             ["0xD09C8E2C6D124bCE71235046B95ab676bE1d5601"]
           ]
         ],
@@ -138,9 +135,7 @@
         "0x1010ff7f40ab4d53e6d9996aefa04423dabe9d0e22fac2d02b330ed3aa2c5740"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
-      ],
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -258,10 +253,13 @@
         "0xe35fb7bc0433439337b3eadda3d6fb7991918162f62a337a695e8c7f948cdd35"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
-      ],
+      "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
       "issuedPermissions": [
+        {
+          "permission": "guard",
+          "target": "0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0x2C73A1610EE822a8C2C21eddd455e725A3334c8C",
@@ -281,22 +279,27 @@
         "$pastUpgrades": [
           [
             "2024-05-10T09:57:23.000Z",
+            "0x47e3348f1a815baed93634d82c6eec4839f21c6f2cc949b589bf7c9912adadfa",
             ["0x63dD9FB4b0Af7a158E819cDfE781082bCb60e21D"]
           ],
           [
             "2024-05-23T11:39:11.000Z",
+            "0x07498c42d2879512867123618dc2fa47869d97a111c091722f489e05ebedce96",
             ["0xFe9B3d40DB0ec8f97D9ea638e926b3aEED8cF29B"]
           ],
           [
             "2024-05-24T03:40:35.000Z",
+            "0xfd1c496fe0c25e3f59bfafb68e47aa9bc0fee4c77220290e398676ee63a6b68f",
             ["0x63dD9FB4b0Af7a158E819cDfE781082bCb60e21D"]
           ],
           [
             "2024-05-29T06:06:23.000Z",
+            "0x04b31173f0fd9c8ab794ad926a7f96b867974dd952c91423910d17f5c702e8af",
             ["0x9b29299b791a36DA8Dd7dDeBe55038576995145b"]
           ],
           [
             "2024-05-29T06:10:23.000Z",
+            "0x9070b165958b48b3eabe3dac62a836e942ad8ec64273ce5f9d4627deb427974e",
             ["0xFe9B3d40DB0ec8f97D9ea638e926b3aEED8cF29B"]
           ]
         ],
@@ -321,17 +324,20 @@
     {
       "name": "SuperchainConfig",
       "address": "0x5e8d351FD046Aa0b3DDA24096751996C0c397C61",
-      "template": "opstack/SuperchainConfig",
+      "template": "opstack/SuperchainConfigFake",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
-      ],
+      "description": "This is NOT the shared SuperchainConfig of the OP stack Superchain. This SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
       "categories": ["Upgrades&Governance"],
       "issuedPermissions": [
+        {
+          "permission": "guard",
+          "target": "0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0x2C73A1610EE822a8C2C21eddd455e725A3334c8C",
@@ -350,6 +356,7 @@
         "$pastUpgrades": [
           [
             "2024-05-10T09:56:11.000Z",
+            "0x8ceff1123470899bafdc1e6b187d546752254d5a05ab2ac78ed21396ee1528f8",
             ["0xF3E372Ec07a9Bf0C94ff21ceBe02952F2164996F"]
           ]
         ],
@@ -370,13 +377,16 @@
         "0xdf9a11b46747139bfe0135df8a65a2728a2dbd60a689e2398c45627915cdd752"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
-      ],
+      "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "issuedPermissions": [
         {
           "permission": "configure",
           "target": "0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE",
+          "via": []
+        },
+        {
+          "permission": "sequence",
+          "target": "0x3D0Bf26E60a689a7Da5EA3ddAD7371F27f7671a5",
           "via": []
         },
         {
@@ -398,6 +408,7 @@
         "$pastUpgrades": [
           [
             "2024-05-10T09:57:11.000Z",
+            "0x24ca235a5fe65c9dde1db0054a48b85133ac9524cb2416a70c9458d9a3340790",
             ["0xa65DE544846795C7eeAd60790197B0EB755547ee"]
           ]
         ],
@@ -458,9 +469,7 @@
         "0x482ec6e91304ac39a3fb4505634427bddfddee23b8e93a4f7f995ca5083ae3c3"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Used to bridge ERC-721 tokens from host chain to this chain."
-      ],
+      "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -480,6 +489,7 @@
         "$pastUpgrades": [
           [
             "2024-05-10T09:57:11.000Z",
+            "0xdaefb6ed2c511dbaa99b5a0d6b38ee6dfb6cf267872509b3f72f93d8d482dcf5",
             ["0xe04D088840aE793afd0970fE97FEC6Ac7BaF4AAC"]
           ]
         ],
@@ -517,6 +527,7 @@
         "$pastUpgrades": [
           [
             "2024-05-10T09:57:11.000Z",
+            "0x2fdeb4652fc3616644be2358c6410407c7e04b5e8dd205ceb5bf5ee6fc27484f",
             ["0xAd8890C1DF1f29f6a26B6eCcc73c299599c40F3d"]
           ]
         ],
@@ -532,10 +543,18 @@
         "0x025c187b0231be4785898f25f98d749f953f5d06781772aef242812e2ecf52e3"
       ],
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
-      ],
+      "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
       "issuedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "target": "0x33397410000A219fa5a476c5B51032B367C77e78",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0x2C73A1610EE822a8C2C21eddd455e725A3334c8C",
@@ -560,6 +579,7 @@
         "$pastUpgrades": [
           [
             "2024-05-10T09:57:11.000Z",
+            "0x180139009c00eb38a40976d4c9203252b2c5ecfdd00af1678827f1dd32ba29ba",
             ["0x38f2D861b23866b92188155C4876F0879cA706Ec"]
           ]
         ],
@@ -589,22 +609,43 @@
     { "address": "0x000000000000000000000000000000000000dEaD" },
     {
       "address": "0x33397410000A219fa5a476c5B51032B367C77e78",
-      "roles": ["Proposer"]
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "target": "0xdd80E05004f40815EaEf12ffeE69c2a8A5112aA5"
+        }
+      ]
     },
     {
       "address": "0x3D0Bf26E60a689a7Da5EA3ddAD7371F27f7671a5",
-      "roles": ["Sequencer"]
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0x94118F86eE37Fa4Fdb266CDab1e55B8F0D6959D9"
+        }
+      ]
     },
     { "address": "0x91901DF65F086A3330D1C95796d66a1cF941E1B1" },
     { "address": "0xb6130283Ed292E3f42465617d6d8FFd61F615462" },
     {
       "address": "0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE",
-      "roles": ["Challenger", "Guardian"],
       "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0xdd80E05004f40815EaEf12ffeE69c2a8A5112aA5"
+        },
         {
           "permission": "configure",
           "target": "0x94118F86eE37Fa4Fdb266CDab1e55B8F0D6959D9",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+        },
+        {
+          "permission": "guard",
+          "target": "0x39A90926306E11497EC5FE1C459910258B620edD"
+        },
+        {
+          "permission": "guard",
+          "target": "0x5e8d351FD046Aa0b3DDA24096751996C0c397C61"
         }
       ]
     },
@@ -964,14 +1005,14 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
-    "opstack/L2OutputOracle": "0x3115dc811ed6d817de9e32e09c4d7eb9434085e53936b3a2b3733e2041ca263a",
-    "opstack/OptimismPortal": "0x2a32f6874a8c0e85e685fa944143e7968d675fed43b46e7385411ad11f8a1a43",
-    "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
-    "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
+    "opstack/L2OutputOracle": "0xfc8737561d85bab2fe5e39a7a02436a0cb0e7f96d7a7adc2ee3ea486b391c2fc",
+    "opstack/OptimismPortal": "0x5fb419891d613086f39879ae360e765fdb6d154ef5ea5b2f5f98a4443a1b4839",
+    "opstack/SuperchainConfigFake": "0x53a7342e3ad0ea230608a115aa098bc297d88c30ea6560b549c25853b184cc7b",
+    "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3"
   }
 }

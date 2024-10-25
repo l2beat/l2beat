@@ -11,6 +11,7 @@ import { utils } from 'ethers'
 import { startsWith, uniq } from 'lodash'
 
 import { get$Implementations } from '@l2beat/discovery-types'
+import { describe } from 'mocha'
 import { chains } from '../../chains'
 import {
   NUGGETS,
@@ -452,18 +453,6 @@ describe('layer2s', () => {
     })
   })
 
-  describe('every purpose is short', () => {
-    const purposes = layer2s.map((x) => x.display.purposes)
-    for (const purpose of purposes) {
-      const totalLength = purpose.reduce((acc, curr) => {
-        return acc + curr.length
-      }, 0)
-      it(purpose.join(', '), () => {
-        expect(totalLength).toBeLessThanOrEqual(20)
-      })
-    }
-  })
-
   describe('milestones', () => {
     describe('name', () => {
       describe('no longer than 50 characters', () => {
@@ -631,11 +620,11 @@ describe('layer2s', () => {
     }
   })
 
-  describe('upcoming project have createdAt', () => {
+  describe('Other category projects have other details', () => {
     for (const layer2 of layer2s) {
-      if (layer2.isUpcoming) {
+      if (layer2.display.isOther) {
         it(layer2.display.name, () => {
-          expect(layer2.createdAt).not.toEqual(undefined)
+          expect(layer2.display.mainPermissions).not.toEqual(undefined)
         })
       }
     }

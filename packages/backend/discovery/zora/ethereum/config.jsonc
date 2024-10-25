@@ -7,6 +7,7 @@
     "0x83A4521A3573Ca87f3a971B169C5A0E1d34481c3" // "opstack/L1ERC721Bridge"
   ],
   "names": {
-    "0xC72aE5c7cc9a332699305E29F68Be66c73b60542": "ZoraMultisig"
+    "0xC72aE5c7cc9a332699305E29F68Be66c73b60542": "ZoraMultisig",
+    "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72": "ZoraMultisig2"
   }
 }

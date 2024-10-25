@@ -7,16 +7,15 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('polynomial')
 
 export const polynomial: Layer2 = opStackL2({
+  createdAt: new UnixTime(1726570826), // 2024-09-17T11:00:26Z
   discovery,
-  badges: [Badge.RaaS.Conduit],
+  badges: [Badge.RaaS.Conduit, Badge.Infra.Superchain],
+  additionalPurposes: ['Exchange'],
   display: {
     name: 'Polynomial',
     slug: 'polynomial',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
       'Polynomial Chain is a derivatives chain that addresses liquidity fragmentation with a unified liquidity layer, enabling innovative derivatives.',
-    purposes: ['DeFi'],
     links: {
       websites: ['https://polynomial.fi/'],
       apps: [],

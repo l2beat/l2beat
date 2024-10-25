@@ -9,16 +9,15 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('mode')
 
 export const mode: Layer2 = opStackL2({
+  createdAt: new UnixTime(1695904849), // 2023-09-28T12:40:49Z
   discovery,
   badges: [Badge.Infra.Superchain, Badge.RaaS.Conduit],
   display: {
     name: 'Mode Network',
+    shortName: 'Mode',
     slug: 'mode',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
       'Mode is an OP stack Optimistic Rollup building the AIFi economy. Their mission is to scale DeFi to billions of users through onchain agents and AI powered financial applications to build a more open, efficient, and inclusive financial future.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://mode.network/'],
       apps: ['https://app.mode.network/'],
@@ -76,7 +75,7 @@ export const mode: Layer2 = opStackL2({
     minTimestamp: new UnixTime(1710386375),
     genesisTimestamp: new UnixTime(1700167583),
     lag: 0,
-    stateUpdate: 'disabled',
+    stateUpdate: 'analyze',
   },
   chainConfig: {
     name: 'mode',
@@ -100,6 +99,7 @@ export const mode: Layer2 = opStackL2({
     ],
     coingeckoPlatform: 'mode',
   },
+  nonTemplateExcludedTokens: ['rsETH'],
   usesBlobs: true,
   discoveryDrivenData: true,
 })

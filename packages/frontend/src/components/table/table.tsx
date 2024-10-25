@@ -14,6 +14,7 @@ const Table = React.forwardRef<
           ref={ref}
           className={cn('w-full border-collapse text-left', className)}
           cellSpacing={0}
+          cellPadding={0}
           {...props}
         />
       </div>
@@ -82,7 +83,8 @@ const TableHead = React.forwardRef<
   <th
     ref={ref}
     className={cn(
-      'h-10 py-2 pr-3 text-left align-bottom font-medium uppercase first:pl-2 last:pr-2',
+      'h-10 py-2 text-left align-bottom text-[13px] font-medium uppercase',
+      'pr-3 first:pl-2 last:pr-2 md:pr-4',
       className,
     )}
     {...props}

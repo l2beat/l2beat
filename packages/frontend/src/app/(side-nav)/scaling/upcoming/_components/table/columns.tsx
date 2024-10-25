@@ -4,7 +4,7 @@ import {
   TypeCell,
   TypeExplanationTooltip,
 } from '~/components/table/cells/type-cell'
-import { getCommonProjectColumns } from '~/components/table/common-project-columns'
+import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
 import { type ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/get-scaling-upcoming-entries'
 
 const columnHelper = createColumnHelper<ScalingUpcomingEntry>()
@@ -23,9 +23,8 @@ export const scalingUpcomingColumns = [
       tooltip: <TypeExplanationTooltip />,
     },
   }),
-  columnHelper.accessor('purposes', {
+  columnHelper.display({
     header: 'Purpose',
-    cell: (ctx) => ctx.getValue().join(', '),
-    enableSorting: false,
+    cell: (ctx) => ctx.row.original.purposes.join(', '),
   }),
 ]

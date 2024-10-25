@@ -9,6 +9,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('publicgoodsnetwork')
 
 export const publicgoodsnetwork: Layer2 = opStackL2({
+  createdAt: new UnixTime(1690446197), // 2023-07-27T08:23:17Z
   badges: [Badge.DA.Celestia, Badge.Infra.Superchain, Badge.RaaS.Conduit],
   daProvider: CELESTIA_DA_PROVIDER,
   discovery,
@@ -17,11 +18,8 @@ export const publicgoodsnetwork: Layer2 = opStackL2({
     shortName: 'PGN',
     slug: 'publicgoodsnetwork',
     architectureImage: 'publicgoodsnetwork',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
       'Public Goods Network is an OP stack chain focused on funding public goods.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://publicgoods.network/'],
       apps: ['https://bridge.publicgoods.network/'],

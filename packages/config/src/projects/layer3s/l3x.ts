@@ -12,6 +12,7 @@ const upgradeability = {
 }
 
 export const l3x: Layer3 = orbitStackL3({
+  createdAt: new UnixTime(1718370384), // 2024-06-14T13:06:24Z
   hostChain: ProjectId('arbitrum'),
   discovery,
   badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum],
@@ -22,7 +23,6 @@ export const l3x: Layer3 = orbitStackL3({
     slug: 'l3x',
     description:
       'L3X is an Orbit stack Appchain on Arbitrum focusing on DeFi (leveraged trading and liquid restaking).',
-    purposes: ['DeFi'],
     links: {
       websites: ['https://l3x.com/'],
       apps: [

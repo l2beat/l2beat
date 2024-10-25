@@ -1,5 +1,6 @@
 import { ContractValue } from './Discovery'
 import { EthereumAddress } from './EthereumAddress'
+import { Hash256 } from './Hash256'
 
 export function get$Implementations(
   values: Record<string, ContractValue | undefined> | undefined,
@@ -9,7 +10,7 @@ export function get$Implementations(
 
 export function get$PastUpgrades(
   values: Record<string, ContractValue | undefined> | undefined,
-): [string, EthereumAddress[]][] {
+): [string, Hash256, EthereumAddress[]][] {
   return toAddressRecord(values?.$pastUpgrades)
 }
 
@@ -23,10 +24,11 @@ export function toAddressRecord(value: ContractValue | undefined) {
   if (Array.isArray(value) && value.every((v) => Array.isArray(v))) {
     return value.map(
       (e) =>
-        [e[0] as string, e[1] as unknown as EthereumAddress[]] as [
-          string,
-          EthereumAddress[],
-        ],
+        [
+          e[0] as string,
+          e[1] as unknown as Hash256,
+          e[2] as unknown as EthereumAddress[],
+        ] as [string, Hash256, EthereumAddress[]],
     )
   }
   return []

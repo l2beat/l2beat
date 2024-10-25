@@ -92,19 +92,6 @@
       },
       "ignoreRelatives": ["ZKSYNC_ERA"]
     },
-    "EraChainAdminProxy": {
-      "ignoreMethods": ["protocolVersionToUpgradeTimestamp"],
-      "fields": {
-        "upgradeTimestamps": {
-          "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)",
-          "handler": {
-            "type": "stateFromEvent",
-            "event": "UpdateUpgradeTimestamp",
-            "returnParams": ["_protocolVersion", "_upgradeTimestamp"]
-          }
-        }
-      }
-    },
     "BridgeHub": {
       "ignoreMethods": ["baseToken", "stateTransitionManager"],
       "ignoreRelatives": ["zksyncEraDiamond"],
@@ -149,6 +136,36 @@
             "type": "call",
             "method": "stateTransitionManager",
             "args": [388]
+          }
+        },
+        "ZeroNetworkDiamond": {
+          "handler": {
+            "type": "call",
+            "method": "getHyperchain",
+            "args": [543210],
+            "ignoreRelative": true
+          }
+        },
+        "ZeroNetworkSTM": {
+          "handler": {
+            "type": "call",
+            "method": "stateTransitionManager",
+            "args": [543210]
+          }
+        },
+        "SophonDiamond": {
+          "handler": {
+            "type": "call",
+            "method": "getHyperchain",
+            "args": [50104],
+            "ignoreRelative": true
+          }
+        },
+        "SophonSTM": {
+          "handler": {
+            "type": "call",
+            "method": "stateTransitionManager",
+            "args": [50104]
           }
         }
       }
@@ -206,6 +223,60 @@
             "valueKey": "_removedValidator",
             "arg": "_chainId",
             "argValue": "388"
+          }
+        },
+        "zeronetworkValidatorsAdded": {
+          "handler": {
+            "type": "arrayFromOneEventWithArg",
+            "event": "ValidatorAdded",
+            "valueKey": "_addedValidator",
+            "arg": "_chainId",
+            "argValue": "543210"
+          }
+        },
+        "zeronetworkValidatorsRemoved": {
+          "handler": {
+            "type": "arrayFromOneEventWithArg",
+            "event": "ValidatorRemoved",
+            "valueKey": "_removedValidator",
+            "arg": "_chainId",
+            "argValue": "543210"
+          }
+        },
+        "sophonValidatorsAdded": {
+          "handler": {
+            "type": "arrayFromOneEventWithArg",
+            "event": "ValidatorAdded",
+            "valueKey": "_addedValidator",
+            "arg": "_chainId",
+            "argValue": "50104"
+          }
+        },
+        "sophonValidatorsRemoved": {
+          "handler": {
+            "type": "arrayFromOneEventWithArg",
+            "event": "ValidatorRemoved",
+            "valueKey": "_removedValidator",
+            "arg": "_chainId",
+            "argValue": "50104"
+          }
+        },
+        "zeronetworkTenthBatchTS": {
+          "description": "If non-zero, the first batch has been posted.",
+          "severity": "MEDIUM",
+          "handler": {
+            "type": "call",
+            "method": "getCommittedBatchTimestamp",
+            "args": [543210, 10]
+          }
+        },
+        "sophonTenthBatchTS": {
+          "description": "If non-zero, the first batch has been posted.",
+          "severity": "MEDIUM",
+          "handler": {
+            "type": "call",
+            "method": "getCommittedBatchTimestamp",
+            "args": [50104, 10]
           }
         },
         "revertedBlocks": {

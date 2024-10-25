@@ -1,4 +1,4 @@
-import { assert, ProjectId } from '@l2beat/shared-pure'
+import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -9,16 +9,17 @@ import { Layer3 } from './types'
 const discovery = new ProjectDiscovery('degen', 'base')
 
 export const degen: Layer3 = orbitStackL3({
+  createdAt: new UnixTime(1712135735), // 2024-04-03T09:15:35Z
   hostChain: ProjectId('base'),
   discovery,
   badges: [Badge.DA.DAC, Badge.L3ParentChain.Base, Badge.RaaS.Conduit],
+  additionalPurposes: ['Social'],
   nativeToken: 'DEGEN',
   display: {
     name: 'Degen Chain',
     slug: 'degen',
     description:
       'Degen Chain is an ultra-low-cost L3 for the Degen community built with Arbitrum Orbit, Base for settlement, and AnyTrust for data availability. DEGEN is the native gas token.',
-    purposes: ['Social', 'DeFi', 'Universal'],
     links: {
       websites: ['https://syndicate.io/blog/degen-chain'],
       apps: ['https://bridge.degen.tips/', 'https://degen.tips/'],
@@ -45,7 +46,7 @@ export const degen: Layer3 = orbitStackL3({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
-      'RollupOwnerMultisig',
+      'ConduitMultisig3',
       (() => {
         const discoveredAdminOwner = discovery.getAddressFromValue(
           'ProxyAdmin',
@@ -57,9 +58,8 @@ export const degen: Layer3 = orbitStackL3({
           'UpgradeExecutor',
           'EXECUTOR_ROLE',
         ).members[0]
-        const discoveredRollupOwnerMultisig = discovery.getContract(
-          'RollupOwnerMultisig',
-        ).address
+        const discoveredRollupOwnerMultisig =
+          discovery.getContract('ConduitMultisig3').address
         assert(
           discoveredAdminOwner === discoveredUpgradeExecutorAddy &&
             discoveredExecutor === discoveredRollupOwnerMultisig,

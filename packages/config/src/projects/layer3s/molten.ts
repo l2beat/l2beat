@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
@@ -7,15 +7,16 @@ import { Layer3 } from './types'
 const discovery = new ProjectDiscovery('molten', 'arbitrum')
 
 export const molten: Layer3 = orbitStackL3({
+  createdAt: new UnixTime(1716471996), // 2024-05-23T13:46:36Z
   discovery,
   badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum, Badge.RaaS.Caldera],
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Molten Network',
+    shortName: 'Molten',
     slug: 'molten',
     description:
       'Molten is an Orbit stack L3 on Arbitrum with AnyTrust DA, created by the UniDex team.',
-    purposes: ['DeFi'],
     links: {
       websites: ['https://moltennetwork.com/'],
       apps: [

@@ -30,6 +30,7 @@ const upgradeability = {
 }
 
 export const xlayer: Layer2 = polygonCDKStack({
+  createdAt: new UnixTime(1713983341), // 2024-04-24T18:29:01Z
   discovery,
   badges: [Badge.DA.DAC, Badge.Infra.AggLayer],
   daProvider: {
@@ -91,7 +92,6 @@ export const xlayer: Layer2 = polygonCDKStack({
     slug: 'xlayer',
     description:
       'X Layer is Validium by OKX with seamless integration with OKX products. It is powered by the Polygon CDK.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://okx.com/xlayer'],
       apps: [],

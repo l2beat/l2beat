@@ -1,14 +1,16 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../../../../../discovery/ProjectDiscovery'
-import { DaAccessibilityRisk } from '../../../types/DaAccessibilityRisk'
-import { DaAttestationSecurityRisk } from '../../../types/DaAttestationSecurityRisk'
+import { DaCommitteeSecurityRisk } from '../../../types'
 import { DaBridge } from '../../../types/DaBridge'
-import { DaExitWindowRisk } from '../../../types/DaExitWindowRisk'
+import { DaRelayerFailureRisk } from '../../../types/DaRelayerFailureRisk'
+import { DaUpgradeabilityRisk } from '../../../types/DaUpgradeabilityRisk'
 
 const discovery = new ProjectDiscovery('vector')
 
-const relayers = discovery.getContractValue<string[]>('SP1Vector', 'relayers')
+const chainName = 'Ethereum'
+const updateInterval = 1.5 // hours
+const relayers = discovery.getContractValue<string[]>('Vector', 'relayers')
 
 const SP1Verifier = discovery.getContractValue<string>(
   'SuccinctGatewaySP1',
@@ -22,6 +24,7 @@ const validation = {
 
 export const vector = {
   id: 'vector',
+  createdAt: new UnixTime(1725372159), // 2024-09-03T14:02:39Z
   type: 'OnChainBridge',
   chain: 'Ethereum',
   display: {
@@ -59,37 +62,70 @@ export const vector = {
     risks: [
       {
         category: 'Funds can be lost if',
-        text: 'the bridge contract receives a malicious code upgrade. There is no delay on code upgrades.',
+        text: 'the bridge contract or its dependencies receive a malicious code upgrade. There is no delay on code upgrades.',
       },
       {
-        category: 'Funds can be lost if',
-        text: 'a dishonest majority of Avail validators post incorrect or malicious data commitments.',
+        category: 'Funds can be frozen if',
+        text: 'the bridge contract is frozen by the Guardian (AvailMultisig).',
       },
     ],
   },
   technology: {
     description: ` 
-   Vector SP1 is an implementation of zero-knowledge proof circuits for Vector, Avail's Data Attestation Bridge.
-   The VectorSP1 contract should be used to store the latest data from the Avail chain, including the headers and data commitments.`,
+    ## Architecture
+      
+    ![Avail vector architecture](/images/da-bridge-technology/avail/vector/architecture.png#center)
+    
+     The Vector bridge is a data availability bridge that facilitates data availability commitments to be bridged between Avail and ${chainName}.
+     The SP1 Vector bridge is composed of three main components: the **Vector** contract, the **Succinct Gateway** contracts, and the **Verifier** contracts.  <br /> 
+     By default, Vector operates asynchronously, handling requests in a fulfillment-based manner. First, zero-knowledge proofs of Avail block ranges are requested for proving. Requests can be submitted either off-chain through the Succinct API, or onchain through the requestCall() method of the Succinct Gateway smart contract.
+     Alternatively, it is possible to run an SP1 Vector operator with local proving, allowing for self-generating the proofs.
+     Once a proving request is received, the off-chain prover generates the proof and submits it to the Vector contract. The Vector contract verifies the proof with the corresponding verifier contract and, if successful, stores the data commitment in storage. <br /> 
+
+    By default, Vector on ${chainName} is updated by the Succinct operator at a cadence of approximately ${updateInterval} hours.
+    `,
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: 'the DA bridge accepts an incorrect or malicious data commitment provided by a dishonest majority of Avail validators.',
+      },
+      {
+        category: 'Funds can be frozen if',
+        text: 'the permissioned relayers are unable to submit DA commitments to the Vector contract.',
+      },
+    ],
   },
   permissions: [
+    ...discovery.getMultisigPermission(
+      'AvailMultisig',
+      'This multisig is the admin and guardian of the Vector contract. It holds the power to change the contract state and upgrade the bridge.',
+    ),
     ...discovery.getMultisigPermission(
       'SuccinctGatewaySP1Multisig',
       'This multisig is the admin of the SuccinctGatewaySP1 contract. As the manager of router for proof verification, it holds the power to affect the liveness and safety of the bridge.',
     ),
     {
       name: 'Relayers',
-      description: `List of prover (relayer) addresses that are allowed to call commitHeaderRange() to commit block ranges to the Blobstream contract.`,
+      description: `List of prover (relayer) addresses that are allowed to call commitHeaderRange() to commit block ranges to the Vector contract.`,
       accounts: relayers.map((relayer) => ({
         address: EthereumAddress(relayer),
         type: 'EOA',
       })),
     },
+    {
+      name: 'Guardians',
+      description: `The Vector guardians hold the power to freeze the bridge contract, update the SuccinctGateway contract and update the list of authorized relayers.`,
+      accounts: discovery.getAccessControlRolePermission(
+        'Vector',
+        'GUARDIAN_ROLE',
+      ),
+    },
   ],
   usedIn: [],
   risks: {
-    attestations: DaAttestationSecurityRisk.SigVerifiedZK(true),
-    accessibility: DaAccessibilityRisk.NotEnshrined,
-    exitWindow: DaExitWindowRisk.LowOrNoDelay(), // no delay
+    committeeSecurity:
+      DaCommitteeSecurityRisk.RobustAndDiverseCommittee('Validators set'),
+    upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // 4/7 multisig w/ no delay
+    relayerFailure: DaRelayerFailureRisk.NoMechanism,
   },
 } satisfies DaBridge

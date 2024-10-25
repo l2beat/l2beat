@@ -1,4 +1,4 @@
-import { formatSeconds } from '@l2beat/shared-pure'
+import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { NO_BRIDGE } from '../templates/no-bridge-template'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
@@ -25,6 +25,7 @@ export const redstoneDA: DaLayer = {
   id: 'redstone-da',
   type: 'DaLayer',
   kind: 'DAC',
+  systemCategory: 'custom',
   display: {
     name: 'RedstoneDA',
     slug: 'redstone',
@@ -42,6 +43,7 @@ export const redstoneDA: DaLayer = {
       ],
     },
   },
+  hasChallengeMechanism: true,
   technology: {
     description: `
     ## Data Availability Challenges
@@ -56,6 +58,7 @@ export const redstoneDA: DaLayer = {
   },
   bridges: [
     NO_BRIDGE({
+      createdAt: new UnixTime(1726747460), // 2024-09-19T12:04:20Z
       layer: 'RedstoneDA',
       description:
         'The risk profile in this page refers to scaling solutions that do not integrate with a data availability bridge.',

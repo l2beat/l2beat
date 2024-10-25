@@ -13,30 +13,30 @@ describeDatabase(ActivityRepository.name, (db) => {
   describe(ActivityRepository.prototype.upsertMany.name, () => {
     it('adds new rows', async () => {
       await repository.upsertMany([
-        record('a', START, 1, 2, 1, 1, 2),
-        record('a', START.add(1, 'days'), 2, 2, 1, 3, 4),
-        record('a', START.add(2, 'days'), 4, 5, 2, 5, 6),
+        record('a', START, 1, 2, 1, 2),
+        record('a', START.add(1, 'days'), 2, 2, 3, 4),
+        record('a', START.add(2, 'days'), 4, 5, 5, 6),
       ])
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([
-        record('a', START, 1, 2, 1, 1, 2),
-        record('a', START.add(1, 'days'), 2, 2, 1, 3, 4),
-        record('a', START.add(2, 'days'), 4, 5, 2, 5, 6),
+        record('a', START, 1, 2, 1, 2),
+        record('a', START.add(1, 'days'), 2, 2, 3, 4),
+        record('a', START.add(2, 'days'), 4, 5, 5, 6),
       ])
     })
 
     it('merges on conflict', async () => {
       await repository.upsertMany([
-        record('a', START, 1, 2, 2, 1, 2),
-        record('a', START.add(1, 'days'), 2, 2, 1, 4, 5),
+        record('a', START, 1, 2, 1, 2),
+        record('a', START.add(1, 'days'), 2, 2, 4, 5),
       ])
-      await repository.upsertMany([record('a', START, 3, 3, 1, 1, 3)])
+      await repository.upsertMany([record('a', START, 3, 3, 1, 3)])
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([
-        record('a', START, 3, 3, 1, 1, 3),
-        record('a', START.add(1, 'days'), 2, 2, 1, 4, 5),
+        record('a', START, 3, 3, 1, 3),
+        record('a', START.add(1, 'days'), 2, 2, 4, 5),
       ])
     })
   })
@@ -160,9 +160,9 @@ describeDatabase(ActivityRepository.name, (db) => {
     .name, () => {
     it('should return all rows including data point', async () => {
       await repository.upsertMany([
-        record('a', START, 1, 1, 1, 0, 10),
-        record('a', START.add(1, 'days'), 1, 2, 2, 11, 20),
-        record('a', START.add(2, 'days'), 1, 1, 1, 21, 30),
+        record('a', START, 1, 1, 0, 10),
+        record('a', START.add(1, 'days'), 1, 2, 11, 20),
+        record('a', START.add(2, 'days'), 1, 1, 21, 30),
       ])
 
       const results = await repository.getByProjectIncludingDataPoint(
@@ -170,9 +170,7 @@ describeDatabase(ActivityRepository.name, (db) => {
         15,
       )
 
-      expect(results).toEqual([
-        record('a', START.add(1, 'days'), 1, 2, 2, 11, 20),
-      ])
+      expect(results).toEqual([record('a', START.add(1, 'days'), 1, 2, 11, 20)])
     })
   })
 
@@ -241,7 +239,7 @@ describeDatabase(ActivityRepository.name, (db) => {
       ])
       expect(result).toEqual(
         [record('a', START, 1), record('a', START.add(1, 'days'), 1)].map((i) =>
-          omit(i, ['projectId', 'start', 'end', 'uopsCount', 'ratio']),
+          omit(i, ['projectId', 'start', 'end', 'uopsCount']),
         ),
       )
     })
@@ -279,7 +277,6 @@ function record(
   timestamp: UnixTime,
   count: number = 1,
   uopsCount: number | null = null,
-  ratio: number | null = null,
   start: number = 1,
   end: number = 2,
 ): ActivityRecord {
@@ -288,7 +285,6 @@ function record(
     timestamp,
     count,
     uopsCount,
-    ratio,
     start,
     end,
   }

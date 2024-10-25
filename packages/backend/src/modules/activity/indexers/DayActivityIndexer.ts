@@ -34,14 +34,7 @@ export class DayActivityIndexer extends ManagedChildIndexer {
       adjustedTo,
     )
 
-    await this.$.db.activity.upsertMany(
-      counts.map((count) => ({
-        ...count,
-        ratio: count.uopsCount
-          ? parseFloat((count.uopsCount / count.count).toFixed(2))
-          : null,
-      })),
-    )
+    await this.$.db.activity.upsertMany(counts)
 
     return adjustedTo
   }

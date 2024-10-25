@@ -5,6 +5,7 @@ export class RateLimitedProvider {
   private readonly rateLimiter: RateLimiter
   call: providers.Provider['call']
   getBlock: providers.Provider['getBlock']
+  getBlockWithTransactions: providers.Provider['getBlockWithTransactions']
   getBlockNumber: providers.Provider['getBlockNumber']
   getLogs: providers.Provider['getLogs']
   getBalance: providers.Provider['getBalance']
@@ -18,6 +19,9 @@ export class RateLimitedProvider {
     this.call = this.rateLimiter.wrap(this.provider.call.bind(this.provider))
     this.getBlock = this.rateLimiter.wrap(
       this.provider.getBlock.bind(this.provider),
+    )
+    this.getBlockWithTransactions = this.rateLimiter.wrap(
+      this.provider.getBlockWithTransactions.bind(this.provider),
     )
     this.getBlockNumber = this.rateLimiter.wrap(
       this.provider.getBlockNumber.bind(this.provider),

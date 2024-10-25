@@ -10,6 +10,7 @@ const discovery = new ProjectDiscovery('debridge')
 export const debridge: Bridge = {
   type: 'bridge',
   id: ProjectId('debridge'),
+  createdAt: new UnixTime(1673362295), // 2023-01-10T14:51:35Z
   display: {
     name: 'deBridge',
     slug: 'debridge',
@@ -69,7 +70,6 @@ export const debridge: Bridge = {
         {
           category: 'Users can be censored if',
           text: 'nodes decide not to transfer tokens after observing an event on the supported chain.',
-          isCritical: true,
         },
       ],
     },
@@ -82,7 +82,6 @@ export const debridge: Bridge = {
         {
           category: 'Funds can be stolen if',
           text: 'destination token contract is maliciously upgraded or not securely implemented.',
-          isCritical: true,
         },
       ],
     },

@@ -2,15 +2,15 @@ import { merge } from 'lodash'
 import { Layer2 } from '../../../layer2s'
 import { Layer3 } from '../../../layer3s'
 import {
-  DaAccessibilityRisk,
-  DaAttestationSecurityRisk,
+  DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
-  DaExitWindowRisk,
   DaFraudDetectionRisk,
+  DaUpgradeabilityRisk,
   DacBridge,
   DacDaLayer,
 } from '../types'
 import { DaLinks } from '../types/DaLinks'
+import { DaRelayerFailureRisk } from '../types/DaRelayerFailureRisk'
 import { toUsedInProject } from '../utils/to-used-in-project'
 
 type TemplateSpecific = {
@@ -23,10 +23,11 @@ type Optionals = {
   risks?: Partial<DacDaLayer['risks'] & DacBridge['risks']>
   /** Links for given DAC, defaults to Project's main links */
   links?: Partial<DaLinks>
-  /** Optional layer description and technology, defaults to generic ones*/
+  /** Optional layer description and technology, defaults to generic ones. Other considerations will be passed through. */
   layer?: {
     technology?: DacDaLayer['technology']
     description?: DacDaLayer['display']['description']
+    otherConsiderations?: DacDaLayer['otherConsiderations']
   }
   /**
    * Optional layer description and technology, defaults to generic ones
@@ -36,19 +37,25 @@ type Optionals = {
     description?: DacBridge['display']['description']
   } & Pick<
     DacBridge,
+    | 'createdAt'
     | 'chain'
-    | 'totalMembers'
+    | 'membersCount'
+    | 'knownMembers'
     | 'requiredMembers'
     | 'permissions'
     | 'contracts'
-    | 'members'
     | 'transactionDataType'
     | 'isUnderReview'
+    | 'otherConsiderations'
   >
   /** Optional warning, defaults to undefined */
   warning?: DacBridge['display']['warning']
   /** Optional red warning, defaults to undefined */
   redWarning?: DacBridge['display']['redWarning']
+  /** Optional challenge mechanism, defaults to undefined */
+  hasChallengeMechanism?: DacDaLayer['hasChallengeMechanism']
+  /** Optional fallback, defaults to undefined */
+  fallback?: DacDaLayer['fallback']
 }
 
 type TemplateVars = Optionals & TemplateSpecific
@@ -74,7 +81,7 @@ export function DAC(template: TemplateVars): DacDaLayer {
     template.bridge.technology?.description ??
     `## Simple DA Bridge
     The DA bridge is a smart contract verifying a data availability claim from DAC Members via signature verification.
-    The bridge requires a ${template.bridge.requiredMembers}/${template.bridge.totalMembers} threshold of signatures to be met before the data commitment is accepted.
+    The bridge requires a ${template.bridge.requiredMembers}/${template.bridge.membersCount} threshold of signatures to be met before the data commitment is accepted.
   `
 
   const bridgeDisplay: DacBridge['display'] = {
@@ -97,12 +104,15 @@ export function DAC(template: TemplateVars): DacDaLayer {
       risks: template.bridge.technology?.risks,
     },
     risks: {
-      attestations:
-        template.risks?.attestations ?? DaAttestationSecurityRisk.NotVerified,
-      exitWindow: template.risks?.exitWindow ?? DaExitWindowRisk.Immutable,
-      accessibility:
-        template.risks?.accessibility ?? DaAccessibilityRisk.NotEnshrined,
+      committeeSecurity:
+        template.risks?.committeeSecurity ?? DaCommitteeSecurityRisk.Auto(),
+      // TODO: make it required and remove the default
+      upgradeability:
+        template.risks?.upgradeability ?? DaUpgradeabilityRisk.Immutable,
+      relayerFailure:
+        template.risks?.relayerFailure ?? DaRelayerFailureRisk.NoMechanism,
     },
+    otherConsiderations: template.bridge.otherConsiderations,
   }
 
   // DAC "DA-Layer"
@@ -129,6 +139,9 @@ export function DAC(template: TemplateVars): DacDaLayer {
     id: `${template.project.display.slug}-dac-layer`,
     kind: 'DAC',
     type: 'DaLayer',
+    systemCategory: 'custom',
+    fallback: template.fallback,
+    hasChallengeMechanism: template.hasChallengeMechanism,
     display: layerDisplay,
     technology: {
       description: layerTechnology,
@@ -142,6 +155,7 @@ export function DAC(template: TemplateVars): DacDaLayer {
       fraudDetection:
         template.risks?.fraudDetection ?? DaFraudDetectionRisk.NoFraudDetection,
     },
+    otherConsiderations: template.layer?.otherConsiderations,
   }
 
   return dacLayer

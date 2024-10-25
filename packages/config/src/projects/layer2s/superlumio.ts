@@ -7,16 +7,14 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('superlumio')
 
 export const superlumio: Layer2 = opStackL2({
+  createdAt: new UnixTime(1726646157), // 2024-09-18T07:55:57Z
   discovery,
   badges: [Badge.RaaS.Conduit],
   display: {
     name: 'SuperLumio',
     slug: 'superlumio',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
       'SuperLumio (сanary mainnet) marks the initial phase of the Lumio Layer 2 on the Optimism Superchain, launched as a pure Ethereum Virtual Machine fork with the support of Conduit technology. This platform is designed to serve as a testnet-in-production. Lumio is a rollup technology suite that enables developers to build with any VM on any chain.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://lumio.io/'],
       apps: [],
@@ -39,7 +37,7 @@ export const superlumio: Layer2 = opStackL2({
     minTimestamp: new UnixTime(1708984751),
     l2BlockTimeSeconds: 2,
     lag: 0,
-    stateUpdate: 'disabled',
+    stateUpdate: 'analyze',
   },
   isNodeAvailable: 'UnderReview',
   milestones: [

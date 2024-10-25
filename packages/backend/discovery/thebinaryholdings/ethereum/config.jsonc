@@ -11,6 +11,9 @@
     "0x7aC7e5989EaC278B7BbfeF560871a2026baD472c": "SystemConfig"
   },
   "overrides": {
+    "0x34bb53D7C525114A27F0FE2aF91bdDAd186abb12": {
+      "extends": "opstack/SuperchainConfigFake"
+    },
     "SystemConfig": {
       "ignoreRelatives": ["disputeGameFactory", "gasPayingToken"] // because the OptimismPortal used doesn't support dispute games. It uses the old L2OutputOracle instead. They deployed mismatched versions of the contracts.
     }

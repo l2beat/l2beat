@@ -1,7 +1,7 @@
-import { ChainId } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { reya } from '../../../layer2s/reya'
-import { DAC } from '../templates/dac-template'
+import { AnytrustDAC } from '../templates/anytrust-template'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('reya')
@@ -12,14 +12,15 @@ const dac = discovery.getContractValue<{
 }>('SequencerInbox', 'dacKeyset')
 const { membersCount, requiredSignatures } = dac
 
-export const reyaDac = DAC({
+export const reyaDac = AnytrustDAC({
   project: reya,
   bridge: {
+    createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     contracts: {
       addresses: [
         discovery.getContractDetails(
           'SequencerInbox',
-          'Main entry point for the Sequencer submitting transaction batches.',
+          'The DA bridge and entry point for the Sequencer submitting transaction batches.',
         ),
       ],
       risks: [],
@@ -28,9 +29,9 @@ export const reyaDac = DAC({
       // Members: DAC uses BLS sigs, not EOAs
       {
         name: 'Sequencers',
-        accounts: discovery.getPermissionsByRole('Sequencer'),
+        accounts: discovery.getPermissionsByRole('sequence'),
         description:
-          'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
+          'Central actors allowed to relay transaction batches to the DA bridge (Sequencer Inbox).',
         chain: discovery.chain,
       },
       {
@@ -42,13 +43,27 @@ export const reyaDac = DAC({
         description:
           'Multisig that can upgrade authorized batch posters via the UpgradeExecutor contract.',
       },
+      {
+        name: 'UpgradeExecutor',
+        accounts: [
+          {
+            address: EthereumAddress(
+              discovery.getContractValue<string>('RollupProxy', 'owner'),
+            ),
+            type: 'Contract',
+          },
+        ],
+        description:
+          'The contract used to manage the upgrade of the DA bridge and other contracts.',
+      },
+      ...discovery.getMultisigPermission(
+        'GelatoMultisig',
+        `Multisig that can upgrade the DA bridge, upgrade authorized batch posters (relayers), and change the Committee members by updating the valid keyset (via UpgradeExecutor).`,
+      ),
     ],
     chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignatures,
-    totalMembers: membersCount,
+    membersCount: membersCount,
     transactionDataType: DacTransactionDataType.TransactionDataCompressed,
-    members: {
-      type: 'unknown',
-    },
   },
 })

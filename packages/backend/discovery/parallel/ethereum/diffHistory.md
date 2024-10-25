@@ -1,3 +1,571 @@
+Generated with discovered.json: 0x968a88b2073525782e9d5e028b27dd6996e0704b
+
+# Diff at Fri, 25 Oct 2024 09:54:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e7501f424c0cea9b5438386ee76e509448999836 block: 20842798
+- current block number: 21041856
+
+## Description
+
+Config related.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20842798 (main branch discovery), not current.
+
+```diff
+    contract Inbox (0x12485B9d469c1D51d05b5C39e009D50eF0170cF7) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d"
++        "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89"
+      issuedPermissions.0.via.0:
++        {"address":"0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d","delay":0}
+    }
+```
+
+```diff
+    contract L1WETHGateway (0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d"
++        "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89"
+      issuedPermissions.0.via.0:
++        {"address":"0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d","delay":0}
+    }
+```
+
+```diff
+    contract ChallengeManager (0x28c32059d7e6147cf5257DFC127f7258beA1cdf4) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      issuedPermissions.0.target:
+-        "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d"
++        "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89"
+      issuedPermissions.0.via.0:
++        {"address":"0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d","delay":0}
+    }
+```
+
+```diff
+    contract RollupEventInbox (0x36E5DE57f862cf5bA28624845faB8c2fF6Aa41d2) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d"
++        "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89"
+      issuedPermissions.0.via.0:
++        {"address":"0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d","delay":0}
+    }
+```
+
+```diff
+    contract Bridge (0x5a961c7D162195a9Dc5a357Cc168b0694283382E) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d"
++        "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89"
+      issuedPermissions.0.via.0:
++        {"address":"0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d","delay":0}
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0x5D657b905275F36AD62C3d5C36966975613aFB96) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d"
++        "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89"
+      issuedPermissions.0.via.0:
++        {"address":"0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d","delay":0}
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x12485B9d469c1D51d05b5C39e009D50eF0170cF7"},{"permission":"upgrade","target":"0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d"},{"permission":"upgrade","target":"0x28c32059d7e6147cf5257DFC127f7258beA1cdf4"},{"permission":"upgrade","target":"0x36E5DE57f862cf5bA28624845faB8c2fF6Aa41d2"},{"permission":"upgrade","target":"0x5a961c7D162195a9Dc5a357Cc168b0694283382E"},{"permission":"upgrade","target":"0x5D657b905275F36AD62C3d5C36966975613aFB96"},{"permission":"upgrade","target":"0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d"},{"permission":"upgrade","target":"0xa1c86E2362dba0525075622af6d5f739B1304D45"},{"permission":"upgrade","target":"0xb4795A0edae98d7820C37F06f6b858e7acb51DF8"},{"permission":"upgrade","target":"0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3"},{"permission":"upgrade","target":"0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x12485B9d469c1D51d05b5C39e009D50eF0170cF7"},{"permission":"upgrade","target":"0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d"},{"permission":"upgrade","target":"0x28c32059d7e6147cf5257DFC127f7258beA1cdf4"},{"permission":"upgrade","target":"0x36E5DE57f862cf5bA28624845faB8c2fF6Aa41d2"},{"permission":"upgrade","target":"0x5a961c7D162195a9Dc5a357Cc168b0694283382E"},{"permission":"upgrade","target":"0x5D657b905275F36AD62C3d5C36966975613aFB96"},{"permission":"upgrade","target":"0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d"},{"permission":"upgrade","target":"0xa1c86E2362dba0525075622af6d5f739B1304D45"},{"permission":"upgrade","target":"0xb4795A0edae98d7820C37F06f6b858e7acb51DF8"},{"permission":"upgrade","target":"0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3"},{"permission":"upgrade","target":"0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89"}]
+    }
+```
+
+```diff
+    contract L1ERC20Gateway (0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d"
++        "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89"
+      issuedPermissions.0.via.0:
++        {"address":"0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d","delay":0}
+    }
+```
+
+```diff
+    contract L1CustomGateway (0xa1c86E2362dba0525075622af6d5f739B1304D45) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d"
++        "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89"
+      issuedPermissions.0.via.0:
++        {"address":"0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d","delay":0}
+    }
+```
+
+```diff
+    contract SequencerInbox (0xb4795A0edae98d7820C37F06f6b858e7acb51DF8) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      issuedPermissions.2.target:
+-        "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d"
++        "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89"
+      issuedPermissions.2.via.0:
++        {"address":"0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d","delay":0}
+    }
+```
+
+```diff
+    contract Outbox (0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d"
++        "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89"
+      issuedPermissions.0.via.0:
++        {"address":"0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d","delay":0}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89) {
+    +++ description: Central contract defining the access control for upgrading the system contract implementations.
+      issuedPermissions.0.target:
+-        "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d"
++        "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89"
+      issuedPermissions.0.via.0:
++        {"address":"0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d","delay":0}
+      receivedPermissions.11:
++        {"permission":"upgrade","target":"0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89","via":[{"address":"0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d"}]}
+      receivedPermissions.10:
++        {"permission":"upgrade","target":"0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3","via":[{"address":"0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d"}]}
+      receivedPermissions.9:
++        {"permission":"upgrade","target":"0xb4795A0edae98d7820C37F06f6b858e7acb51DF8","via":[{"address":"0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d"}]}
+      receivedPermissions.8:
++        {"permission":"upgrade","target":"0xa1c86E2362dba0525075622af6d5f739B1304D45","via":[{"address":"0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d"}]}
+      receivedPermissions.7:
++        {"permission":"upgrade","target":"0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d","via":[{"address":"0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","target":"0x6594085ca55a2B3a5fAD1C57A270D060eEa99877"}
+      receivedPermissions.5:
++        {"permission":"upgrade","target":"0x5D657b905275F36AD62C3d5C36966975613aFB96","via":[{"address":"0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d"}]}
+      receivedPermissions.4:
++        {"permission":"upgrade","target":"0x5a961c7D162195a9Dc5a357Cc168b0694283382E","via":[{"address":"0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","target":"0x36E5DE57f862cf5bA28624845faB8c2fF6Aa41d2","via":[{"address":"0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d"}]}
+      receivedPermissions.2:
++        {"permission":"upgrade","target":"0x28c32059d7e6147cf5257DFC127f7258beA1cdf4","via":[{"address":"0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d"}]}
+      receivedPermissions.1:
++        {"permission":"upgrade","target":"0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d","via":[{"address":"0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d"}]}
+      receivedPermissions.0.target:
+-        "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877"
++        "0x12485B9d469c1D51d05b5C39e009D50eF0170cF7"
+      receivedPermissions.0.via:
++        [{"address":"0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d"}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d"}]
+    }
+```
+
+Generated with discovered.json: 0xbc60c8c4d461994cce50474261d4f6a480f2aa2c
+
+# Diff at Wed, 23 Oct 2024 14:36:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9cc37d16a5f0b172bb41f98d8a970963e5ca4afb block: 20842798
+- current block number: 20842798
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20842798 (main branch discovery), not current.
+
+```diff
+    contract OneStepProverHostIo (0x17e7F68ce50A77e55C7834ddF31AEf86403B8010) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverHostIo"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91)
+    +++ description: None
+```
+
+```diff
+    contract ChallengeManager (0x28c32059d7e6147cf5257DFC127f7258beA1cdf4) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      template:
++        "orbitstack/ChallengeManager"
+      description:
++        "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor."
+    }
+```
+
+```diff
+    contract OneStepProofEntry (0x57EA090Ac0554d174AE0e2855B460e84A1A7C221) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProofEntry"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
+    contract RollupProxy (0x6594085ca55a2B3a5fAD1C57A270D060eEa99877) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      description:
+-        "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
++        "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators)."
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89","via":[]}
+      issuedPermissions.1.permission:
+-        "validate"
++        "propose"
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "challenge"
+      issuedPermissions.0.target:
+-        "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89"
++        "0xcCE420Beb5a68091572A1cd860e10aE3Ce286FeA"
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "ArbOS v31 wasmModuleRoot"
++        "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69"
++++ description: ArbOS version derived from known wasmModuleRoots.
+      values.arbOsFromWmRoot:
++        "ArbOS v31 wasmModuleRoot"
+      fieldMeta.arbOsFromWmRoot:
++        {"description":"ArbOS version derived from known wasmModuleRoots."}
+      fieldMeta.setValidatorCount:
++        {"description":"Increments on each Validator change."}
+      fieldMeta.challenges:
++        {"description":"Emitted on createChallenge() in RollupUserLogic."}
+    }
+```
+
+```diff
+    contract OneStepProver0 (0x72B166070781a552D7b95a907eF59ca05d3D5a62) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProver0"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x7Deda2425eC2d4EA0DF689A78de2fBF002075576)
+    +++ description: None
+```
+
+```diff
+    contract OneStepProverMemory (0x8b73Ef238ADaB31EBC7c05423d243c345241a22f) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverMemory"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
+    contract OneStepProverMath (0x90eC62De2EB7C7512a22bD2D55926AD6bA609F38) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverMath"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorWalletCreator (0x9CAd81628aB7D8e239F1A5B497313341578c5F71)
+    +++ description: None
+```
+
+```diff
+    contract SequencerInbox (0xb4795A0edae98d7820C37F06f6b858e7acb51DF8) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.dacKeyset:
++        {"requiredSignatures":0,"membersCount":0,"blsSignatures":[]}
+      template:
++        "orbitstack/SequencerInbox"
+      description:
++        "A sequencer (registered in this contract) can submit transaction batches or commitments here."
+      fieldMeta:
++        {"maxTimeVariation":{"description":"Struct: delayBlocks, futureBlocks, delaySeconds, futureSeconds. onlyRollupOwner settable. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."}}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89) {
+    +++ description: Central contract defining the access control for upgrading the system contract implementations.
+      template:
++        "orbitstack/UpgradeExecutor"
+      description:
++        "Central contract defining the access control for upgrading the system contract implementations."
+    }
+```
+
+Generated with discovered.json: 0x0ca993c2d9a8d1b0a5c38c492ef03ce2759a0472
+
+# Diff at Mon, 21 Oct 2024 12:47:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e660599f23a07618fe949a07be1f516ce44f1914 block: 20842798
+- current block number: 20842798
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20842798 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x6594085ca55a2B3a5fAD1C57A270D060eEa99877) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      descriptions:
+-        ["Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."]
+      description:
++        "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
+    }
+```
+
+Generated with discovered.json: 0x6ec6d30eecf1f01bbfd69ca8340cd6edad6eab36
+
+# Diff at Mon, 21 Oct 2024 11:08:55 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8895d33866f5665c4c710f4ddaa32bfa63cc3c78 block: 20842798
+- current block number: 20842798
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20842798 (main branch discovery), not current.
+
+```diff
+    contract Inbox (0x12485B9d469c1D51d05b5C39e009D50eF0170cF7) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x1162084C3C6575121146582Db5BE43189e8CEe6b"]
+      values.$pastUpgrades.0.1:
+-        ["0x1162084C3C6575121146582Db5BE43189e8CEe6b"]
++        "0x56a0bbc36c0e79b2338cddce3f80c7998dd0f526d885a6b1aa827543769619df"
+    }
+```
+
+```diff
+    contract L1WETHGateway (0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xa86996bED19547f7dEf22a087dD61b5F9Fb6C684"]
+      values.$pastUpgrades.0.1:
+-        ["0xa86996bED19547f7dEf22a087dD61b5F9Fb6C684"]
++        "0x13cbbc1a526c431bc86f883ba14816912d3f1a6f92105d2c34a08c15d806ffa4"
+    }
+```
+
+```diff
+    contract ChallengeManager (0x28c32059d7e6147cf5257DFC127f7258beA1cdf4) {
+    +++ description: None
+      values.$pastUpgrades.1.2:
++        ["0x1D901DD7A5eFE421C3C437B147040E5AF22E6A43"]
+      values.$pastUpgrades.1.1:
+-        ["0x1D901DD7A5eFE421C3C437B147040E5AF22E6A43"]
++        "0xaa0434ce70e52e72a359fc871e5285e8504dc1e24c28b3882f85c603465e88ff"
+      values.$pastUpgrades.0.2:
++        ["0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754"]
+      values.$pastUpgrades.0.1:
+-        ["0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754"]
++        "0x56a0bbc36c0e79b2338cddce3f80c7998dd0f526d885a6b1aa827543769619df"
+    }
+```
+
+```diff
+    contract RollupEventInbox (0x36E5DE57f862cf5bA28624845faB8c2fF6Aa41d2) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"]
+      values.$pastUpgrades.0.1:
+-        ["0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"]
++        "0x56a0bbc36c0e79b2338cddce3f80c7998dd0f526d885a6b1aa827543769619df"
+    }
+```
+
+```diff
+    contract Bridge (0x5a961c7D162195a9Dc5a357Cc168b0694283382E) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"]
+      values.$pastUpgrades.0.1:
+-        ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"]
++        "0x56a0bbc36c0e79b2338cddce3f80c7998dd0f526d885a6b1aa827543769619df"
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0x5D657b905275F36AD62C3d5C36966975613aFB96) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x6525137BfF366fbc0A89E3e5A4d244B5A0090a6D"]
+      values.$pastUpgrades.0.1:
+-        ["0x6525137BfF366fbc0A89E3e5A4d244B5A0090a6D"]
++        "0x13cbbc1a526c431bc86f883ba14816912d3f1a6f92105d2c34a08c15d806ffa4"
+    }
+```
+
+```diff
+    contract RollupProxy (0x6594085ca55a2B3a5fAD1C57A270D060eEa99877) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      values.$pastUpgrades.0.2:
++        ["0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A","0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"]
+      values.$pastUpgrades.0.1:
+-        ["0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A","0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"]
++        "0x56a0bbc36c0e79b2338cddce3f80c7998dd0f526d885a6b1aa827543769619df"
+    }
+```
+
+```diff
+    contract L1ERC20Gateway (0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xf43bce5D32742FFC862eA182b0b5544CbDBB0F02"]
+      values.$pastUpgrades.0.1:
+-        ["0xf43bce5D32742FFC862eA182b0b5544CbDBB0F02"]
++        "0x13cbbc1a526c431bc86f883ba14816912d3f1a6f92105d2c34a08c15d806ffa4"
+    }
+```
+
+```diff
+    contract L1CustomGateway (0xa1c86E2362dba0525075622af6d5f739B1304D45) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xedB05ED1a37750833fBE85b808c872D841d00859"]
+      values.$pastUpgrades.0.1:
+-        ["0xedB05ED1a37750833fBE85b808c872D841d00859"]
++        "0x13cbbc1a526c431bc86f883ba14816912d3f1a6f92105d2c34a08c15d806ffa4"
+    }
+```
+
+```diff
+    contract SequencerInbox (0xb4795A0edae98d7820C37F06f6b858e7acb51DF8) {
+    +++ description: None
+      values.$pastUpgrades.2.2:
++        ["0x958985cf2c54f99ba4a599221A8090C1F9Cee9A5"]
+      values.$pastUpgrades.2.1:
+-        ["0x958985cf2c54f99ba4a599221A8090C1F9Cee9A5"]
++        "0x2f5db148c87e87a1670b52d003d051efecdfb606bc0b265f36d7bfeb9977601e"
+      values.$pastUpgrades.1.2:
++        ["0x383f16fB2809a56fC639c1eE2c93Ad2aa7Ee130A"]
+      values.$pastUpgrades.1.1:
+-        ["0x383f16fB2809a56fC639c1eE2c93Ad2aa7Ee130A"]
++        "0xaa0434ce70e52e72a359fc871e5285e8504dc1e24c28b3882f85c603465e88ff"
+      values.$pastUpgrades.0.2:
++        ["0x873484Ba63353C8b71210ce123B465512d408B27"]
+      values.$pastUpgrades.0.1:
+-        ["0x873484Ba63353C8b71210ce123B465512d408B27"]
++        "0x56a0bbc36c0e79b2338cddce3f80c7998dd0f526d885a6b1aa827543769619df"
+    }
+```
+
+```diff
+    contract Outbox (0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC"]
+      values.$pastUpgrades.0.1:
+-        ["0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC"]
++        "0x56a0bbc36c0e79b2338cddce3f80c7998dd0f526d885a6b1aa827543769619df"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x6c21303F5986180B1394d2C89f3e883890E2867b"]
+      values.$pastUpgrades.0.1:
+-        ["0x6c21303F5986180B1394d2C89f3e883890E2867b"]
++        "0x56a0bbc36c0e79b2338cddce3f80c7998dd0f526d885a6b1aa827543769619df"
+    }
+```
+
+Generated with discovered.json: 0xd3d0a9a02626d8f526e3be925c9dc81daaeb5784
+
+# Diff at Wed, 16 Oct 2024 11:39:02 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a3d139b799cc0b28e5e912febb17464d4e5aef5d block: 20842798
+- current block number: 20842798
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20842798 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x6594085ca55a2B3a5fAD1C57A270D060eEa99877) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      issuedPermissions.1:
++        {"permission":"validate","target":"0xcCE420Beb5a68091572A1cd860e10aE3Ce286FeA","via":[]}
+    }
+```
+
+```diff
+    contract SequencerInbox (0xb4795A0edae98d7820C37F06f6b858e7acb51DF8) {
+    +++ description: None
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d","via":[]}
+      issuedPermissions.1:
++        {"permission":"sequence","target":"0x7a6BD06483710252d807bE205255E69490efca3A","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "sequence"
+      issuedPermissions.0.target:
+-        "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d"
++        "0x40acDc94a00b33151B40763b3Fed7C46fF639Df4"
+    }
+```
+
 Generated with discovered.json: 0x7b867d5d7368e182d23751657f7e6e351568223c
 
 # Diff at Mon, 14 Oct 2024 10:54:17 GMT:

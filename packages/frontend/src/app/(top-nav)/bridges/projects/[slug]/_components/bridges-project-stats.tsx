@@ -9,13 +9,13 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { PercentChange } from '~/components/percent-change'
-import { RiskCell } from '~/components/table/cells/risk-cell'
+import { SentimentText } from '~/components/sentiment-text'
+import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { InfoIcon } from '~/icons/info'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { type BridgesProjectEntry } from '~/server/features/bridges/project/get-bridges-project-entry'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/format'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 
 interface Props {
   project: BridgesProjectEntry
@@ -37,25 +37,22 @@ export function BridgesProjectStats({ project }: Props) {
               <TooltipTrigger>
                 <div>
                   <span className="flex items-center gap-2">
-                    <span className="font-bold">
-                      {formatCurrency(
-                        project.header.tvl.tvlBreakdown.total,
-                        'usd',
-                        {
-                          showLessThanMinimum: false,
-                        },
-                      )}
-                    </span>
-                    <PercentChange
-                      className="text-base font-medium"
-                      value={project.header.tvl.tvlBreakdown.totalChange}
-                    />
                     {project.header.tvl.tokenBreakdown.warnings.length > 0 && (
                       <RoundedWarningIcon
                         sentiment={isAnyTokenWarningBad ? 'bad' : 'warning'}
                         className="size-4"
                       />
                     )}
+                    <ValueWithPercentageChange
+                      className="font-bold"
+                      changeClassName="text-base font-medium"
+                      change={project.header.tvl.tvlBreakdown.totalChange}
+                    >
+                      {formatCurrency(
+                        project.header.tvl.tvlBreakdown.total,
+                        'usd',
+                      )}
+                    </ValueWithPercentageChange>
                   </span>
                   <TokenBreakdown
                     {...project.header.tvl.tokenBreakdown}
@@ -80,11 +77,29 @@ export function BridgesProjectStats({ project }: Props) {
       />
       <ProjectStat
         title="Destination"
-        value={<RiskCell risk={project.header.destination} />}
+        value={
+          <SentimentText
+            sentiment={project.header.destination.sentiment}
+            className="text-lg font-medium !leading-none md:text-xl md:font-bold"
+          >
+            {project.header.destination.value}
+          </SentimentText>
+        }
       />
       <ProjectStat
         title="Validated by"
-        value={<RiskCell risk={project.header.validatedBy} />}
+        value={
+          project.header.validatedBy ? (
+            <SentimentText
+              sentiment={project.header.validatedBy.sentiment}
+              className="text-lg font-medium !leading-none md:text-xl md:font-bold"
+            >
+              {project.header.validatedBy.value}
+            </SentimentText>
+          ) : (
+            <NoDataBadge />
+          )
+        }
       />
       <ProjectStat title="Type" value={project.header.category} />
     </div>

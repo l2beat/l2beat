@@ -147,10 +147,12 @@
         "$pastUpgrades": [
           [
             "2023-04-23T03:26:01.000Z",
+            "0x0bffba3e49b5ef798fb426ca159552d8719c8c32365c8a37de18ca6cc64b5af2",
             ["0xC5fd9570ac1A5dAb9edA7839bD33229252B0C05d"]
           ],
           [
             "2023-06-26T22:49:44.000Z",
+            "0xa4689e5bc9adcabcd6ae41acea1de59dda7e03f386829c1ac180a60008981650",
             ["0xF622DFb40bf7340DBCf1e5147D6CFD95d7c5cF1F"]
           ]
         ],
@@ -176,6 +178,7 @@
         "$pastUpgrades": [
           [
             "2023-04-27T02:17:19.000Z",
+            "0x684e89a37563bccdae1d451436093e0b3dffb06e0b690f949bb5598f1caf20fd",
             ["0x0cA22b3dB505E13a9F40e6AB6DAf33B37D98Cf2f"]
           ]
         ],
@@ -1584,6 +1587,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
   }
 }

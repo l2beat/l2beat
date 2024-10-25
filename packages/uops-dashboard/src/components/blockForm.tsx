@@ -1,8 +1,8 @@
 import { type ChainId, SUPPORTED_CHAINS } from '@/chains'
 import type {
   ApiError,
-  Block,
   BlockWithChain,
+  CountedBlock,
   UserOperationsApiRequest,
 } from '@/types'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
@@ -72,7 +72,7 @@ export function BlockForm({
 
       const body = await res.json()
       if (res.status === 200) {
-        const block = body as Block
+        const block = body as CountedBlock
         const chain = SUPPORTED_CHAINS.find((c) => c.id === chainId)
 
         if (!chain) {

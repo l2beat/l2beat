@@ -6,13 +6,14 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('optopia')
 
 export const optopia: Layer2 = opStackL2({
+  createdAt: new UnixTime(1722451042), // 2024-07-31T18:37:22Z
   discovery,
+  additionalPurposes: ['AI'],
   display: {
     name: 'Optopia',
     slug: 'optopia',
     description:
       'Optopia is an OP stack Rollup on Ethereum focusing on the intersection of AI, Intents and DeFi.',
-    purposes: ['Universal', 'AI'],
     links: {
       websites: ['https://optopia.ai/'],
       apps: ['https://bridge.optopia.ai/'],

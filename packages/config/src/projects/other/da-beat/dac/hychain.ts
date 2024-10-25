@@ -1,7 +1,7 @@
-import { ChainId } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { hychain } from '../../../layer2s/hychain'
-import { DAC } from '../templates/dac-template'
+import { AnytrustDAC } from '../templates/anytrust-template'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('hychain')
@@ -12,7 +12,7 @@ const dac = discovery.getContractValue<{
 }>('SequencerInbox', 'dacKeyset')
 const { membersCount, requiredSignatures } = dac
 
-export const hychainDac = DAC({
+export const hychainDac = AnytrustDAC({
   project: hychain,
   links: {
     websites: ['https://hychain.com'],
@@ -27,6 +27,7 @@ export const hychainDac = DAC({
     ],
   },
   bridge: {
+    createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     contracts: {
       addresses: [
         discovery.getContractDetails(
@@ -41,9 +42,9 @@ export const hychainDac = DAC({
       // Members: DAC uses BLS sigs, not EOAs
       {
         name: 'Sequencers',
-        accounts: discovery.getPermissionsByRole('Sequencer'),
+        accounts: discovery.getPermissionsByRole('sequence'),
         description:
-          'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
+          'Central actors allowed to submit transaction batches to the DA bridge (Sequencer Inbox.',
         chain: discovery.chain,
       },
       {
@@ -53,15 +54,29 @@ export const hychainDac = DAC({
           'EXECUTOR_ROLE',
         ),
         description:
-          'Multisig that can upgrade authorized batch posters via the UpgradeExecutor contract.',
+          'Multisig that can upgrade authorized batch posters (relayers) via the UpgradeExecutor contract.',
       },
+      {
+        name: 'UpgradeExecutor',
+        accounts: [
+          {
+            address: EthereumAddress(
+              discovery.getContractValue<string>('RollupProxy', 'owner'),
+            ),
+            type: 'Contract',
+          },
+        ],
+        description:
+          'The UpgradeExecutor can change the Committee members by updating the valid keyset.',
+      },
+      ...discovery.getMultisigPermission(
+        'HychainMultisig',
+        `Multisig that can upgrade the DA bridge and other rollup's smart contracts (via UpgradeExecutor).`,
+      ),
     ],
     chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignatures,
-    totalMembers: membersCount,
+    membersCount: membersCount,
     transactionDataType: DacTransactionDataType.TransactionDataCompressed,
-    members: {
-      type: 'unknown',
-    },
   },
 })
