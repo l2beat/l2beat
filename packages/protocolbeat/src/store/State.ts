@@ -40,7 +40,6 @@ export interface State {
   readonly selectedPositions: Readonly<
     Record<string, { readonly x: number; readonly y: number }>
   >
-  readonly saveLayoutStartTime?: ReturnType<typeof setTimeout>
 }
 
 export interface Node {

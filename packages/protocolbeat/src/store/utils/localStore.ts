@@ -7,7 +7,7 @@ import {
 } from './storageParsing'
 
 export function persistNodeState(state: State): void {
-  if (state.nodes.length <= 0) {
+  if (state.nodes.length <= 0 || !state.projectId) {
     return
   }
   const locations = encodeNodeState(state)

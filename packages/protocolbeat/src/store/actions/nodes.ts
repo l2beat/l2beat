@@ -1,10 +1,10 @@
 import type { SimpleNode } from '../../api/SimpleNode'
 import { merge } from '../../api/merge'
-import { White } from '../../utils/color'
+import { OklchColor } from '../../utils/color'
 import type { Connection, Node, State } from '../State'
 import { NODE_SPACING, NODE_WIDTH } from '../utils/constants'
-import { persistNodeState, recallNodeState } from '../utils/localStore'
-import { NodeColors, type NodeLocations } from '../utils/storageParsing'
+import { recallNodeState } from '../utils/localStore'
+import { type NodeLocations } from '../utils/storageParsing'
 import { updateNodePositions } from '../utils/updateNodePositions'
 
 export function loadNodes(
@@ -13,14 +13,14 @@ export function loadNodes(
   nodes: SimpleNode[],
 ): Partial<State> {
   return {
-    projectId,
     ...updateNodes(
-      state,
+      { ...state, projectId },
       merge(
         state.nodes.map((x) => x.simpleNode),
         nodes,
       ),
     ),
+    projectId,
   }
 }
 
@@ -62,16 +62,42 @@ export function updateNodes(state: State, nodes: SimpleNode[]): Partial<State> {
       return simpleNodeToNode(node, x, y, width)
     })
 
-  clearTimeout(state.saveLayoutStartTime)
-  const result = updateNodePositions({
+  return updateNodePositions({
     ...state,
     nodes: updatedNodes.concat(addedNodes),
-    saveLayoutStartTime: setTimeout(() => {
-      persistNodeState(state)
-    }, 250),
   })
+}
 
-  return result
+export function hideSelected(state: State): Partial<State> {
+  const hiddenNodesIds = [
+    ...new Set([...state.hiddenNodesIds, ...state.selectedNodeIds]),
+  ]
+  return {
+    hiddenNodesIds,
+    selectedNodeIds: [],
+  }
+}
+
+export function showHidden(): Partial<State> {
+  return { hiddenNodesIds: [] }
+}
+
+export function clear(): Partial<State> {
+  return {
+    projectId: '',
+    nodes: [],
+    hiddenNodesIds: [],
+    selectedNodeIds: [],
+  }
+}
+
+export function colorSelected(state: State, color: OklchColor): Partial<State> {
+  const nodes = state.nodes.map((node) =>
+    state.selectedNodeIds.includes(node.simpleNode.id)
+      ? { ...node, simpleNode: { ...node.simpleNode, color } }
+      : node,
+  )
+  return { nodes }
 }
 
 export function updateNodeLocations(
@@ -90,18 +116,6 @@ export function updateNodeLocations(
     ...state,
     nodes: movedNodes,
   })
-}
-
-export function updateNodeColors(
-  state: State,
-  colors?: NodeColors,
-): Partial<State> {
-  const simpleNodes: SimpleNode[] = state.nodes.map((n) => ({
-    ...n.simpleNode,
-    color: colors?.[n.simpleNode.id] ?? White,
-  }))
-
-  return updateNodes(state, simpleNodes)
 }
 
 function getNodeBoxFromStorage(projectId: string, node: SimpleNode) {

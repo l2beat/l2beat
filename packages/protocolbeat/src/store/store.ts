@@ -4,8 +4,11 @@ import { persist } from 'zustand/middleware'
 import type { State } from './State'
 import type { Actions } from './actions/Actions'
 import {
+  clear,
+  colorSelected,
+  hideSelected,
   loadNodes,
-  updateNodeColors,
+  showHidden,
   updateNodeLocations,
   updateNodes,
 } from './actions/nodes'
@@ -15,6 +18,7 @@ import { onMouseDown } from './actions/onMouseDown'
 import { onMouseMove } from './actions/onMouseMove'
 import { onMouseUp } from './actions/onMouseUp'
 import { onWheel } from './actions/onWheel'
+import { persistNodeState } from './utils/localStore'
 
 const INITIAL_STATE: State = {
   selectedNodeIds: [],
@@ -34,7 +38,6 @@ const INITIAL_STATE: State = {
   mouseMove: { startX: 0, startY: 0, currentX: 0, currentY: 0 },
   mouseSelection: undefined,
   selectedPositions: {},
-  saveLayoutStartTime: undefined,
   projectId: '',
 }
 
@@ -44,6 +47,10 @@ export const useStore = create<State & Actions>()(
       ...INITIAL_STATE,
 
       loadNodes: wrapAction(set, loadNodes),
+      colorSelected: wrapAction(set, colorSelected),
+      hideSelected: wrapAction(set, hideSelected),
+      showHidden: wrapAction(set, showHidden),
+      clear: wrapAction(set, clear),
 
       onKeyDown: wrapAction(set, onKeyDown),
       onKeyUp: wrapAction(set, onKeyUp),
@@ -53,18 +60,6 @@ export const useStore = create<State & Actions>()(
       onWheel: wrapAction(set, onWheel),
       updateNodes: wrapAction(set, updateNodes),
       updateNodeLocations: wrapAction(set, updateNodeLocations),
-      updateNodeColors: wrapAction(set, updateNodeColors),
-
-      setProjectId: (projectId: string) =>
-        set((state) => ({ ...state, projectId: projectId })),
-      setHiddenNodes: (updateFn) => {
-        set((state) => {
-          // stale-state
-          const hiddenNodesIds = updateFn([...state.hiddenNodesIds])
-
-          return { ...state, hiddenNodesIds }
-        })
-      },
     }),
     {
       name: 'store',
@@ -78,6 +73,14 @@ export const useStore = create<State & Actions>()(
     },
   ),
 )
+
+let timeout: ReturnType<typeof setTimeout>
+useStore.subscribe((state) => {
+  clearTimeout(timeout)
+  timeout = setTimeout(() => {
+    persistNodeState(state)
+  }, 50)
+})
 
 function wrapAction<A extends unknown[]>(
   set: (cb: (state: State) => Partial<State>) => void,

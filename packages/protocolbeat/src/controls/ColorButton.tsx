@@ -6,9 +6,8 @@ import { ControlButton } from './ControlButton'
 export function ColorButton() {
   const ref = useRef<HTMLDivElement>(null)
   const [open, setOpen] = useState(false)
-  const nodes = useStore((state) => state.nodes)
-  const selectedIds = useStore((state) => state.selectedNodeIds)
-  const updateNodes = useStore((state) => state.updateNodes)
+  const selectionExists = useStore((state) => state.selectedNodeIds.length > 0)
+  const colorSelected = useStore((state) => state.colorSelected)
 
   useEffect(() => {
     if (!open) {
@@ -38,27 +37,14 @@ export function ColorButton() {
     }
   }, [ref, open, setOpen])
 
-  function changeColor(color: OklchColor) {
-    const simpleNodes = nodes.map((x) => x.simpleNode)
-    const matching = simpleNodes
-      .filter((n) => selectedIds.includes(n.id))
-      .map((n) => ({ ...n, color }))
-    const old = simpleNodes.filter((n) => !selectedIds.includes(n.id))
-    updateNodes(old.concat(matching))
-    setOpen(false)
-  }
-
   return (
     <>
-      <ControlButton
-        disabled={selectedIds.length === 0}
-        onClick={() => setOpen(true)}
-      >
+      <ControlButton disabled={!selectionExists} onClick={() => setOpen(true)}>
         Color
       </ControlButton>
       {open && (
         <div ref={ref} className="absolute bottom-20">
-          <ColorPicker onColorChange={changeColor} />
+          <ColorPicker onColorChange={colorSelected} />
         </div>
       )}
     </>

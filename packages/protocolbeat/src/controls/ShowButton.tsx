@@ -3,9 +3,9 @@ import { ControlButton } from './ControlButton'
 
 export function ShowButton() {
   const hiddenCount = useStore((state) => state.hiddenNodesIds.length)
-  const setHiddenNodes = useStore((state) => state.setHiddenNodes)
+  const showHidden = useStore((state) => state.showHidden)
   return (
-    <ControlButton onClick={() => setHiddenNodes(() => [])}>
+    <ControlButton disabled={hiddenCount === 0} onClick={showHidden}>
       Show ({hiddenCount})
     </ControlButton>
   )
