@@ -112,7 +112,7 @@ export function DaProjectSummary({ project }: Props) {
                             {bridge.name}
                           </div>
                           <div className="flex flex-1 items-center justify-center">
-                            <Grissini items={bridge.GrissiniValues} />
+                            <Grissini items={bridge.grissiniValues} />
                           </div>
                           <div className="flex flex-1 items-center justify-end pr-1 text-sm font-bold text-primary md:pr-12">
                             {formatCurrency(bridge.tvs, 'usd')}
@@ -167,7 +167,7 @@ export function DaProjectSummary({ project }: Props) {
                                     {bridge.name}
                                   </div>
                                   <div>
-                                    <Grissini items={bridge.GrissiniValues} />
+                                    <Grissini items={bridge.grissiniValues} />
                                   </div>
                                 </div>
                               ))}

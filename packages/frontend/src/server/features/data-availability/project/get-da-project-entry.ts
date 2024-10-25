@@ -1,7 +1,7 @@
 import { type DaBridge, type DaLayer, getDaProjectKey } from "@l2beat/config";
 import {
-  mapDaBridgeRisksToGrissiniItems,
-  mapDaLayerRisksToGrissiniItems,
+  mapBridgeRisksToRosetteValues,
+  mapLayerRisksToRosetteValues,
 } from "~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values";
 import { getProjectDetails } from "~/app/(top-nav)/data-availability/projects/[layer]/_utils/get-project-details";
 import { type GrissiniValue } from "~/components/grissini/types";
@@ -44,7 +44,7 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
 
   const isVerified =
     !!projectsVerificationStatuses[getDaProjectKey(daLayer, daBridge)];
-  const grissiniValues = mapDaLayerRisksToGrissiniItems(
+  const grissiniValues = mapLayerRisksToRosetteValues(
     getDaRisks(
       daLayer,
       daBridge,
@@ -76,19 +76,19 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
       name: daBridge.display.name,
       slug: daBridge.display.slug,
       type: daBridge.type,
-      grissiniValues: mapDaBridgeRisksToGrissiniItems(daBridge.risks),
+      grissiniValues: mapBridgeRisksToRosetteValues(daBridge.risks),
     },
     bridges: daLayer.bridges.map((bridge) => ({
       id: bridge.id,
       name: bridge.display.name,
       slug: bridge.display.slug,
-      GrissiniValues: mapDaBridgeRisksToGrissiniItems(bridge.risks),
+      grissiniValues: mapBridgeRisksToRosetteValues(bridge.risks),
       tvs: tvsEntries[bridge.id] ?? 0,
       usedIn: bridge.usedIn,
     })),
     header: getHeader({
       daLayerGrissiniValues: grissiniValues,
-      daBridgeGrissiniValues: mapDaBridgeRisksToGrissiniItems(daBridge.risks),
+      daBridgeGrissiniValues: mapBridgeRisksToRosetteValues(daBridge.risks),
       daLayer,
       daBridge,
       tvs: tvsEntries[tvlSource.id] ?? 0,
