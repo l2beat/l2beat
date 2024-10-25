@@ -21,7 +21,7 @@ describe(StarknetFinalityAnalyzer.name, () => {
 
       const l2Client = mockObject<StarknetClient>({
         getBlock: mockFn().resolvesTo({
-          timestamp: new UnixTime(L2_TIMESTAMP),
+          timestamp: L2_TIMESTAMP,
         }),
       })
 
@@ -39,12 +39,16 @@ describe(StarknetFinalityAnalyzer.name, () => {
         l2Client,
       )
 
-      const result = await analyzer.analyze({
-        txHash: TX_HASH,
-        timestamp: new UnixTime(L1_TIMESTAMP),
-      })
+      const tx = { txHash: TX_HASH, timestamp: new UnixTime(L1_TIMESTAMP) }
+      const previousTx = tx // not used
+      const result = await analyzer.analyze(previousTx, tx)
 
-      expect(result).toEqual([L1_TIMESTAMP - L2_TIMESTAMP])
+      expect(result).toEqual([
+        {
+          blockNumber: 766901,
+          timestamp: L2_TIMESTAMP,
+        },
+      ])
       expect(l2Client.getBlock).toHaveBeenNthCalledWith(1, L2_BLOCK)
     })
   })

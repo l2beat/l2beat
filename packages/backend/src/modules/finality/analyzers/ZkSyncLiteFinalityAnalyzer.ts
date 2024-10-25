@@ -1,8 +1,9 @@
-import { TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
+import { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { BigNumber, utils } from 'ethers'
 import { z } from 'zod'
 
-import { BaseAnalyzer, L2Block } from './types/BaseAnalyzer'
+import { BaseAnalyzer } from './types/BaseAnalyzer'
+import type { L2Block, Transaction } from './types/BaseAnalyzer'
 
 type RawCommittedBlock = {
   timestamp: BigNumber
@@ -19,16 +20,15 @@ export class ZkSyncLiteFinalityAnalyzer extends BaseAnalyzer {
     return 'proofSubmissions'
   }
 
-  async analyze(transaction: {
-    txHash: string
-    timestamp: UnixTime
-  }): Promise<L2Block[]> {
+  async analyze(
+    _previousTransaction: Transaction,
+    transaction: Transaction,
+  ): Promise<L2Block[]> {
     const tx = await this.provider.getTransaction(transaction.txHash)
     const l2Blocks = decodeTransaction(tx.data)
 
-    // TODO(radomski): Fill out the l2BlockNumber
     return l2Blocks.map((l2Block) => ({
-      blockNumber: 0,
+      blockNumber: l2Block.blockNumber,
       timestamp: l2Block.timestamp,
     }))
   }

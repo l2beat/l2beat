@@ -30,12 +30,19 @@ describe(LoopringFinalityAnalyzer.name, () => {
         loopringClient,
       )
 
-      const result = await analyzer.analyze({
+      const tx = {
         txHash: MOCK_DATA.txHash,
         timestamp: new UnixTime(MOCK_DATA.l1Timestamp),
-      })
+      }
+      const previousTx = tx // not used
+      const result = await analyzer.analyze(previousTx, tx)
 
-      expect(result).toEqual([MOCK_DATA.l1Timestamp - MOCK_DATA.blockCreatedAt])
+      expect(result).toEqual([
+        {
+          blockNumber: 41025,
+          timestamp: MOCK_DATA.blockCreatedAt,
+        },
+      ])
     })
   })
 })

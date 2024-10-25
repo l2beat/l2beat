@@ -1,15 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
-import {
-  assert,
-  ProjectId,
-  TrackedTxsConfigSubtype,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { assert, ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 
 import { Database } from '@l2beat/database'
 import { BlobClient } from '@l2beat/shared'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
-import { BaseAnalyzer, L2Block } from '../types/BaseAnalyzer'
+import { BaseAnalyzer } from '../types/BaseAnalyzer'
+import type { L2Block, Transaction } from '../types/BaseAnalyzer'
 import { ChannelBank } from './ChannelBank'
 import { getRollupData } from './blobToData'
 import { SpanBatchDecoderOpts, decodeSpanBatch } from './decodeSpanBatch'
@@ -36,10 +32,10 @@ export class OpStackTimeToInclusionAnalyzer extends BaseAnalyzer {
     return 'batchSubmissions'
   }
 
-  async analyze(transaction: {
-    txHash: string
-    timestamp: UnixTime
-  }): Promise<L2Block[]> {
+  async analyze(
+    _previousTransactions: Transaction,
+    transaction: Transaction,
+  ): Promise<L2Block[]> {
     try {
       this.logger.debug('Getting finality', { transaction })
       // get blobs relevant to the transaction

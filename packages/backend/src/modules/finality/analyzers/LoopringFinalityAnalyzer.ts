@@ -1,16 +1,12 @@
-import {
-  assert,
-  ProjectId,
-  TrackedTxsConfigSubtype,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { assert, ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { BigNumber, utils } from 'ethers'
 
 import { Database } from '@l2beat/database'
 import { DegateClient } from '../../../peripherals/degate'
 import { LoopringClient } from '../../../peripherals/loopring/LoopringClient'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
-import { BaseAnalyzer, L2Block } from './types/BaseAnalyzer'
+import { BaseAnalyzer } from './types/BaseAnalyzer'
+import type { L2Block, Transaction } from './types/BaseAnalyzer'
 
 export class LoopringFinalityAnalyzer extends BaseAnalyzer {
   constructor(
@@ -26,9 +22,10 @@ export class LoopringFinalityAnalyzer extends BaseAnalyzer {
     return 'stateUpdates'
   }
 
-  async analyze({
-    txHash,
-  }: { txHash: string; timestamp: UnixTime }): Promise<L2Block[]> {
+  async analyze(
+    _previousTransaction: Transaction,
+    { txHash }: Transaction,
+  ): Promise<L2Block[]> {
     const tx = await this.provider.getTransaction(txHash)
     const { logs } = await tx.wait()
 
@@ -46,7 +43,6 @@ export class LoopringFinalityAnalyzer extends BaseAnalyzer {
     const blockIdx = BigNumber.from(log.args.blockIdx).toNumber()
     const block = await this.l2Provider.getBlock(blockIdx)
 
-    // TODO(radomski): Fill out the l2BlockNumber
     return [{ blockNumber: blockIdx, timestamp: block.createdAt.toNumber() }]
   }
 

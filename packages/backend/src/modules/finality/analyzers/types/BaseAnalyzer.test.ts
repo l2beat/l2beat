@@ -12,6 +12,7 @@ import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
 import {
   BaseAnalyzer,
   Batch,
+  L2Block,
   Transaction,
   batchesToStateUpdateDelays,
 } from './BaseAnalyzer'
@@ -23,6 +24,11 @@ describe(BaseAnalyzer.name, () => {
 
       const mockConfigurationId = createTrackedTxId.random()
       const mockLivenessRecords: LivenessRecord[] = [
+        mockObject<LivenessRecord>({
+          configurationId: mockConfigurationId,
+          txHash: 'tx3',
+          timestamp: now.add(-1, 'hours'),
+        }),
         mockObject<LivenessRecord>({
           configurationId: mockConfigurationId,
           txHash: 'tx1',
@@ -72,18 +78,31 @@ describe(BaseAnalyzer.name, () => {
 
       expect(
         await mockAnalyzer.analyzeInterval(now, now.add(10, 'hours')),
-      ).toEqual([1, 1])
+      ).toEqual([
+        {
+          l1Timestamp: now.toNumber(),
+          l2Blocks: [{ blockNumber: 2, timestamp: 1 }],
+        },
+        {
+          l1Timestamp: now.add(1, 'hours').toNumber(),
+          l2Blocks: [{ blockNumber: 2, timestamp: 1 }],
+        },
+      ])
       expect(
         mockLivenessRepository.getByConfigurationIdWithinTimeRange,
-      ).toHaveBeenCalledWith([mockConfigurationId], now, now.add(10, 'hours'))
+      ).toHaveBeenCalledWith(
+        [mockConfigurationId],
+        now.add(-1, 'days'),
+        now.add(10, 'hours'),
+      )
       expect(getFinalitySpy).toHaveBeenCalledTimes(2)
-      expect(getFinalitySpy).toHaveBeenCalledWith({
-        txHash: mockLivenessRecords[0].txHash,
-        timestamp: mockLivenessRecords[0].timestamp,
-      })
       expect(getFinalitySpy).toHaveBeenCalledWith({
         txHash: mockLivenessRecords[1].txHash,
         timestamp: mockLivenessRecords[1].timestamp,
+      })
+      expect(getFinalitySpy).toHaveBeenCalledWith({
+        txHash: mockLivenessRecords[2].txHash,
+        timestamp: mockLivenessRecords[2].timestamp,
       })
     })
   })
@@ -145,9 +164,9 @@ class MockAnalyzer extends BaseAnalyzer {
     super(provider, db, projectId)
   }
 
-  async analyze(tx: Transaction) {
+  async analyze(_: Transaction, tx: Transaction): Promise<L2Block[]> {
     this.getFinalitySpy(tx)
-    return [1]
+    return [{ timestamp: 1, blockNumber: 2 }]
   }
 
   override getTrackedTxSubtype() {

@@ -1,13 +1,10 @@
-import {
-  ProjectId,
-  TrackedTxsConfigSubtype,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { Database } from '@l2beat/database'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
-import { BaseAnalyzer, L2Block } from './types/BaseAnalyzer'
+import { BaseAnalyzer } from './types/BaseAnalyzer'
+import type { L2Block, Transaction } from './types/BaseAnalyzer'
 
 const calldataFnName = 'submitData'
 const calldataFn =
@@ -32,26 +29,26 @@ export class LineaFinalityAnalyzer extends BaseAnalyzer {
     return 'batchSubmissions'
   }
 
-  async analyze(transaction: {
-    txHash: string
-    timestamp: UnixTime
-  }): Promise<L2Block[]> {
+  async analyze(
+    _previousTransaction: Transaction,
+    transaction: Transaction,
+  ): Promise<L2Block[]> {
     const tx = await this.provider.getTransaction(transaction.txHash)
     const decodedInput = this.decodeInput(tx.data)
 
     const firstBlockInData = Number(decodedInput[0])
     const lastBlockInData = Number(decodedInput[1])
 
-    const timestamps = await Promise.all([
-      (await this.l2Provider.getBlock(firstBlockInData)).timestamp,
-      (await this.l2Provider.getBlock(lastBlockInData)).timestamp,
+    return await Promise.all([
+      {
+        blockNumber: firstBlockInData,
+        timestamp: (await this.l2Provider.getBlock(firstBlockInData)).timestamp,
+      },
+      {
+        blockNumber: lastBlockInData,
+        timestamp: (await this.l2Provider.getBlock(lastBlockInData)).timestamp,
+      },
     ])
-
-    // TODO(radomski): Fill out the l2BlockNumber
-    return timestamps.map((l2Timestamp) => ({
-      blockNumber: 0,
-      timestamp: l2Timestamp,
-    }))
   }
 
   private decodeInput(data: string): [bigint, bigint] {

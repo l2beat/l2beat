@@ -3,7 +3,8 @@ import { assert, ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { Database } from '@l2beat/database'
 import { utils } from 'ethers'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
-import { BaseAnalyzer, L2Block, Transaction } from '../types/BaseAnalyzer'
+import { BaseAnalyzer } from '../types/BaseAnalyzer'
+import type { L2Block, Transaction } from '../types/BaseAnalyzer'
 
 const PROPOSE_FUNCTION_SIGNATURE =
   'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)'

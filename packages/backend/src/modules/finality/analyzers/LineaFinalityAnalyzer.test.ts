@@ -23,14 +23,19 @@ describe(LineaFinalityAnalyzer.name, () => {
         ProjectId('linea'),
         l2provider,
       )
-      const results = await calculator.analyze({
-        txHash: '0x121',
-        timestamp: new UnixTime(l1Timestamp),
-      })
+      const tx = { txHash: '0x121', timestamp: new UnixTime(l1Timestamp) }
+      const previousTx = tx // not used
+      const results = await calculator.analyze(previousTx, tx)
 
       expect(results).toEqualUnsorted([
-        l1Timestamp - Math.min(...TIMESTAMPS1),
-        l1Timestamp - Math.max(...TIMESTAMPS1),
+        {
+          blockNumber: 2371262,
+          timestamp: Math.min(...TIMESTAMPS1),
+        },
+        {
+          blockNumber: 2371336,
+          timestamp: Math.max(...TIMESTAMPS1),
+        },
       ])
     })
 
@@ -49,14 +54,19 @@ describe(LineaFinalityAnalyzer.name, () => {
         ProjectId('linea'),
         l2provider,
       )
-      const results = await calculator.analyze({
-        txHash: '0x121',
-        timestamp: new UnixTime(l1Timestamp),
-      })
+      const tx = { txHash: '0x121', timestamp: new UnixTime(l1Timestamp) }
+      const previousTx = tx // not used
+      const results = await calculator.analyze(previousTx, tx)
 
       expect(results).toEqualUnsorted([
-        l1Timestamp - Math.min(...TIMESTAMPS1),
-        l1Timestamp - Math.max(...TIMESTAMPS1),
+        {
+          blockNumber: 2371262,
+          timestamp: Math.min(...TIMESTAMPS1),
+        },
+        {
+          blockNumber: 2371336,
+          timestamp: Math.max(...TIMESTAMPS1),
+        },
       ])
     })
   })

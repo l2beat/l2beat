@@ -137,17 +137,55 @@ export function batchesToStateUpdateDelays(
   t2iBatches: Batch[],
   suBatches: Batch[],
 ): number[] {
+  let oldestBlock: L2Block | undefined = t2iBatches[0]?.l2Blocks[0]
+  let newestBlock: L2Block | undefined = t2iBatches[0]?.l2Blocks[0]
+
   const map: Map<number, number> = new Map()
   for (const batch of t2iBatches) {
     for (const l2Block of batch.l2Blocks) {
+      if (oldestBlock && oldestBlock.blockNumber > l2Block.blockNumber) {
+        oldestBlock = l2Block
+      }
+      if (newestBlock && newestBlock.blockNumber < l2Block.blockNumber) {
+        newestBlock = l2Block
+      }
+
       map.set(l2Block.blockNumber, batch.l1Timestamp)
     }
   }
 
+  const getL2BlockTimestamp = (l2BlockNumber: number): number => {
+    if (oldestBlock && oldestBlock.blockNumber > l2BlockNumber) {
+      return oldestBlock.timestamp
+    }
+
+    if (newestBlock && newestBlock.blockNumber < l2BlockNumber) {
+      return newestBlock.timestamp
+    }
+
+    return (
+      map.get(l2BlockNumber) ??
+      lerp(
+        oldestBlock.timestamp,
+        newestBlock.timestamp,
+        (l2BlockNumber - oldestBlock.blockNumber) /
+          (newestBlock.blockNumber - oldestBlock.blockNumber),
+      )
+    )
+  }
+
   return suBatches.flatMap((b) =>
-    b.l2Blocks.map(
-      // biome-ignore lint/style/noNonNullAssertion: <explanation>
-      (l2Block) => b.l1Timestamp - map.get(l2Block.blockNumber)!,
-    ),
+    b.l2Blocks.map((l2Block) => {
+      const l1Timestamp = b.l1Timestamp
+      const l2Timestamp = getL2BlockTimestamp(l2Block.blockNumber)
+      if (l2Timestamp > l1Timestamp) {
+        console.log(l2Block, b.l1Timestamp)
+      }
+      return l1Timestamp - l2Timestamp
+    }),
   )
+}
+
+function lerp(start: number, end: number, t: number): number {
+  return start + (end - start) * t
 }

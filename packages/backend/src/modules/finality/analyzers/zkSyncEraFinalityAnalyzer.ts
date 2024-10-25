@@ -1,7 +1,8 @@
-import { TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
+import { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { BaseAnalyzer, L2Block } from './types/BaseAnalyzer'
+import { BaseAnalyzer } from './types/BaseAnalyzer'
+import type { L2Block, Transaction } from './types/BaseAnalyzer'
 
 type zkSyncEraDecoded = [
   number,
@@ -15,23 +16,28 @@ export class zkSyncEraFinalityAnalyzer extends BaseAnalyzer {
     return 'proofSubmissions'
   }
 
-  async analyze(transaction: { txHash: string; timestamp: UnixTime }): Promise<
-    L2Block[]
-  > {
+  async analyze(
+    _previousTransaction: Transaction,
+    transaction: Transaction,
+  ): Promise<L2Block[]> {
     const tx = await this.provider.getTransaction(transaction.txHash)
     const decodedInput = this.decodeInput(tx.data)
-    const timestamps: number[] = []
+    const blocks: L2Block[] = []
 
-    timestamps.push(Number(decodedInput[1][6]))
-    decodedInput[2].forEach((batch) => {
-      timestamps.push(Number(batch[6]))
+    // TODO(radomski): This is prevBatch, should we include it?
+    blocks.push({
+      timestamp: Number(decodedInput[1][6]),
+      blockNumber: Number(decodedInput[1][0]),
     })
 
-    // TODO(radomski): Fill out the l2BlockNumber
-    return timestamps.map((l2Timestamp) => ({
-      blockNumber: 0,
-      timestamp: l2Timestamp,
-    }))
+    decodedInput[2].forEach((batch) => {
+      blocks.push({
+        timestamp: Number(batch[6]),
+        blockNumber: Number(batch[0]),
+      })
+    })
+
+    return blocks
   }
 
   private decodeInput(data: string) {

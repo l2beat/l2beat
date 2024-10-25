@@ -26,12 +26,11 @@ describe(ZkSyncLiteFinalityAnalyzer.name, () => {
         projectId,
       )
 
-      const result = await analyzer.analyze({
-        txHash: TX_HASH,
-        timestamp: new UnixTime(L1_TIMESTAMP),
-      })
+      const tx = { txHash: TX_HASH, timestamp: new UnixTime(L1_TIMESTAMP) }
+      const previousTx = tx // not used
+      const result = await analyzer.analyze(previousTx, tx)
 
-      expect(result).toEqual([L1_TIMESTAMP - L2_TIMESTAMP])
+      expect(result).toEqual([{ blockNumber: 435243, timestamp: L2_TIMESTAMP }])
     })
   })
 })
