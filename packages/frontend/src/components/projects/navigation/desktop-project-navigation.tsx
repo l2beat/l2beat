@@ -129,21 +129,38 @@ function ProjectNavigationList({
         Summary
       </a>
       {sections.map((section, i) => {
-        const selected = currentSection?.id === section.id
+        const selected =
+          currentSection?.id === section.id ||
+          !!section.subsections?.some(
+            (subsection) => subsection.id === currentSection?.id,
+          )
 
         return (
-          <a
-            key={section.id}
-            href={`#${section.id}`}
-            ref={selected ? currentMenuEntry : null}
-            className={cn(
-              'flex flex-row items-center transition-opacity hover:opacity-100',
-              !selected && 'opacity-60',
+          <>
+            <a
+              key={section.id}
+              href={`#${section.id}`}
+              ref={selected ? currentMenuEntry : null}
+              className={cn(
+                'flex flex-row items-center transition-opacity hover:opacity-100',
+                !selected && 'opacity-60',
+              )}
+            >
+              <NavigationListIndex index={i + 1} selected={selected} />
+              <span className="ml-3">{section.title}</span>
+            </a>
+            {section.subsections && (
+              <div className="flex flex-col">
+                {section.subsections.map((subsection) => (
+                  <NavigationSubsectionEntry
+                    key={subsection.id}
+                    {...subsection}
+                    selected={subsection.id === currentSection?.id}
+                  />
+                ))}
+              </div>
             )}
-          >
-            <NavigationListIndex index={i + 1} selected={selected} />
-            <span className="ml-3">{section.title}</span>
-          </a>
+          </>
         )
       })}
     </div>
@@ -162,5 +179,34 @@ function NavigationListIndex(props: { index: number; selected: boolean }) {
     >
       <span>{props.index}</span>
     </div>
+  )
+}
+
+function NavigationSubsectionEntry(props: {
+  title: string
+  id: string
+  selected: boolean
+}) {
+  return (
+    <a
+      key={props.id}
+      href={`#${props.id}`}
+      className={cn(
+        'flex flex-row items-center transition-opacity hover:opacity-100',
+        !props.selected && 'opacity-60',
+      )}
+    >
+      <div className="flex flex-row gap-3">
+        {/* Left side */}
+        <div className="flex w-6 flex-col items-center">
+          {props.selected && (
+            <div className="h-8 w-[5px] rounded-full bg-gradient-to-r from-purple-100 to-pink-100" />
+          )}
+          <div className="h-full border-l border-divider" />
+        </div>
+        {/* Right side */}
+        <div className="flex-1 pb-3">{props.title}</div>
+      </div>
+    </a>
   )
 }

@@ -9,12 +9,20 @@ export interface GroupSectionProps extends ProjectSectionProps {
   items: ProjectDetailsSection[]
 }
 
-export function GroupSection({ description, items, ...sectionProps }: GroupSectionProps) {
+export function GroupSection({
+  description,
+  items,
+  ...sectionProps
+}: GroupSectionProps) {
   return (
-    <ProjectSection {...sectionProps}>
+    <ProjectSection {...sectionProps} as="div">
       <div className="flex flex-1 flex-col gap-2 text-base lg:min-w-[400px]">
         {description && <Markdown>{description}</Markdown>}
-        <ProjectDetails nested items={items} parentSection={sectionProps.sectionOrder} />
+        <ProjectDetails
+          nested
+          items={items}
+          parentSection={sectionProps.sectionOrder}
+        />
       </div>
     </ProjectSection>
   )

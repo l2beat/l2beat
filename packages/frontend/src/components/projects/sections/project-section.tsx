@@ -13,11 +13,13 @@ export interface ExtendedProjectSectionProps {
   children: ReactNode
   isUnderReview?: boolean
   includeChildrenIfUnderReview?: boolean
+  as?: 'section' | 'div'
 }
 
 export function ProjectSection(props: ExtendedProjectSectionProps) {
+  const Component = props.as ?? 'section'
   return (
-    <section
+    <Component
       id={props.id}
       className={cn(
         !props.nested &&
@@ -44,7 +46,7 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
       ) : (
         props.children
       )}
-    </section>
+    </Component>
   )
 }
 
