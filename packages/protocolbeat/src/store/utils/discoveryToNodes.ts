@@ -1,7 +1,6 @@
-import { Field, Node } from '../store/State'
-import { recallNodeState } from '../store/utils/localStore'
-import { OklchColor, White } from '../utils/color'
-import { stringHash } from '../utils/stringHash'
+import { Field, Node } from '../State'
+import { OklchColor, White } from './color'
+import { stringHash } from './stringHash'
 import type { DiscoveryContract, DiscoveryOutput } from './paseDiscovery'
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
@@ -30,11 +29,7 @@ function getChainColor(chain: string): OklchColor {
   return { l: 0.75, c: 0.12, h: stringHash(chain) % 360 }
 }
 
-export function transformContracts(
-  projectId: string,
-  discovery: DiscoveryOutput,
-): Node[] {
-  const state = recallNodeState(projectId)
+export function discoveryToNodes(discovery: DiscoveryOutput): Node[] {
   const chain = discovery.chain
   const baseColor = getChainColor(chain)
 
@@ -45,7 +40,7 @@ export function transformContracts(
       address: contract.address,
       name: emojifyContractName(contract),
       box: { x: 0, y: 0, width: 0, height: 0 },
-      color: state?.colors?.[contract.address] ?? baseColor,
+      color: baseColor,
       fields: mapFields(contract.values, chain, implementations),
       data: contract,
     }
@@ -57,7 +52,7 @@ export function transformContracts(
       address: eoa.address,
       name: `🧍 EOA ${eoa.address}`,
       box: { x: 0, y: 0, width: 0, height: 0 },
-      color: state?.colors?.[eoa.address] ?? baseColor,
+      color: baseColor,
       fields: [],
       data: eoa,
     }),

@@ -21,7 +21,7 @@ const NodeColors = z.record(
   }),
 )
 
-const StorageNodeLocations = z.object({
+const StoredNodeLayout = z.object({
   projectId: z.string(),
   locations: NodeLocations,
   colors: NodeColors.optional(),
@@ -29,23 +29,38 @@ const StorageNodeLocations = z.object({
 
 export type NodeLocations = z.infer<typeof NodeLocations>
 export type NodeColors = z.infer<typeof NodeColors>
-export type StorageNodeLocations = z.infer<typeof StorageNodeLocations>
+export type StoredNodeLayout = z.infer<typeof StoredNodeLayout>
 
 export function getLayoutStorageKey(projectId: string): string {
   return `layout/${projectId}`
 }
 
-export function encodeNodeState(state: State): StorageNodeLocations {
-  return {
+export function persistNodeLayout(state: State): void {
+  if (state.nodes.length <= 0 || !state.projectId) {
+    return
+  }
+  const locations = {
     projectId: state.projectId,
     locations: Object.fromEntries(state.nodes.map((n) => [n.id, n.box])),
     colors: Object.fromEntries(state.nodes.map((n) => [n.id, n.color])),
   }
+  localStorage.setItem(
+    getLayoutStorageKey(state.projectId),
+    JSON.stringify(locations),
+  )
 }
 
-export function decodeNodeState(
-  inputJson: string,
-): StorageNodeLocations | undefined {
-  const result = StorageNodeLocations.safeParse(JSON.parse(inputJson))
-  return result.success ? result.data : undefined
+export function recallNodeLayout(
+  projectId: string,
+): StoredNodeLayout | undefined {
+  const key = getLayoutStorageKey(projectId)
+  const storage = localStorage.getItem(key)
+  if (storage === null) {
+    return undefined
+  }
+  const result = StoredNodeLayout.safeParse(JSON.parse(storage))
+  if (!result.success) {
+    localStorage.removeItem(key)
+  }
+  return result.data
 }

@@ -17,7 +17,7 @@ import { onMouseDown } from './actions/onMouseDown'
 import { onMouseMove } from './actions/onMouseMove'
 import { onMouseUp } from './actions/onMouseUp'
 import { onWheel } from './actions/onWheel'
-import { persistNodeState } from './utils/localStore'
+import { persistNodeLayout } from './utils/storage'
 
 const INITIAL_STATE: State = {
   selected: [],
@@ -79,7 +79,7 @@ let timeout: ReturnType<typeof setTimeout>
 useStore.subscribe((state) => {
   clearTimeout(timeout)
   timeout = setTimeout(() => {
-    persistNodeState(state)
+    persistNodeLayout(state)
   }, 50)
 })
 

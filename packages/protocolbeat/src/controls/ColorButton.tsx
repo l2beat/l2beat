@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useStore } from '../store/store'
-import { OklchColor, oklchColorToCSS } from '../utils/color'
+import { OklchColor, oklchColorToCSS } from '../store/utils/color'
 import { ControlButton } from './ControlButton'
 
 export function ColorButton() {

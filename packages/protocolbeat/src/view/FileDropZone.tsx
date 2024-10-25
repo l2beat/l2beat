@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
-import { encodeProjectId, parseDiscovery } from '../api/paseDiscovery'
-import { transformContracts } from '../api/transform'
+import { encodeProjectId, parseDiscovery } from '../store/utils/paseDiscovery'
+import { discoveryToNodes } from '../store/utils/discoveryToNodes'
 import { useStore } from '../store/store'
 
 export function FileDropZone(props: { children: ReactNode }) {
@@ -10,8 +10,8 @@ export function FileDropZone(props: { children: ReactNode }) {
     const contents = await file.text()
     const discovery = parseDiscovery(JSON.parse(contents))
     const projectId = encodeProjectId(discovery)
-    const result = transformContracts(projectId, discovery)
-    loadNodes(projectId, result)
+    const nodes = discoveryToNodes(discovery)
+    loadNodes(projectId, nodes)
   }
 
   return (

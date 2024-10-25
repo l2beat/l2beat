@@ -1,6 +1,6 @@
-import { OklchColor } from '../../utils/color'
+import { OklchColor } from '../utils/color'
 import type { State } from '../State'
-import type { NodeLocations } from '../utils/storageParsing'
+import type { NodeLocations } from '../utils/storage'
 import { updateNodePositions } from '../utils/updateNodePositions'
 
 export function hideSelected(state: State): Partial<State> {

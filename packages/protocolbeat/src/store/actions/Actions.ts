@@ -1,6 +1,6 @@
-import { OklchColor } from '../../utils/color'
+import { OklchColor } from '../utils/color'
 import { Node } from '../State'
-import type { NodeLocations } from '../utils/storageParsing'
+import type { NodeLocations } from '../utils/storage'
 
 export interface Actions {
   onKeyDown: (event: KeyboardEvent) => void

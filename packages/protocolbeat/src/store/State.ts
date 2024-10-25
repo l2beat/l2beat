@@ -1,4 +1,4 @@
-import { OklchColor } from '../utils/color'
+import { OklchColor } from './utils/color'
 
 export interface State {
   readonly projectId: string

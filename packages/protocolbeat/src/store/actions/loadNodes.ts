@@ -1,6 +1,6 @@
 import type { Node, State } from '../State'
 import { NODE_SPACING, NODE_WIDTH } from '../utils/constants'
-import { recallNodeState } from '../utils/localStore'
+import { recallNodeLayout } from '../utils/storage'
 import { updateNodePositions } from '../utils/updateNodePositions'
 
 export function loadNodes(
@@ -23,7 +23,7 @@ export function loadNodes(
       : Math.max(...existing.map((node) => node.box.x + node.box.width)) +
         NODE_SPACING
 
-  const saved = recallNodeState(projectId)
+  const saved = recallNodeLayout(projectId)
   let missing = 0
   const added = toAdd.map((node) => {
     const box = saved?.locations[node.id]

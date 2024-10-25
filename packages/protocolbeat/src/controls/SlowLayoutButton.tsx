@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react'
 
 import type { Node } from '../store/State'
 import { useStore } from '../store/store'
-import type { NodeLocations } from '../store/utils/storageParsing'
+import type { NodeLocations } from '../store/utils/storage'
 import { ControlButton } from './ControlButton'
 
 // d3 assumes each node is a single point (no width and height),
