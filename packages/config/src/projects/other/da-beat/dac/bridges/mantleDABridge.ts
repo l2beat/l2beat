@@ -30,9 +30,9 @@ const dataStorePermissionList = discovery.getContractValue<string[]>(
   'dataStorePermission',
 )
 
-const registerOperatorPermissionList = discovery.getContractValue<string[]>(
+const registerOperatorManager = discovery.getContractValue<string>(
   'RegistryPermission',
-  'registerOperatorPermission',
+  'permissionPerson',
 )
 
 export const mantleDABridge = {
@@ -62,7 +62,7 @@ export const mantleDABridge = {
     addresses: [
       discovery.getContractDetails('DataLayrServiceManager', {
         description:
-          'This contract is the entry point for data availability commitments. It is responsible for storing transaction data headers and confirming the data store by verifying operators signatures.',
+          'The DA bridge and the entry point for data availability commitments. It is responsible for storing transaction data headers and confirming the data store by verifying operators signatures.',
       }),
       discovery.getContractDetails('BLSRegistry', {
         description:
@@ -101,20 +101,20 @@ export const mantleDABridge = {
       })),
     },
     {
-      name: 'Permission Data Store',
-      description: `List of addresses authorized to post data commitments to the DA bridge.`,
+      name: 'Permissioned Data Store',
+      description: `List of relayers authorized to post data commitments to the DA bridge.`,
       accounts: dataStorePermissionList.map((permissionedAddress) => ({
         address: EthereumAddress(permissionedAddress),
         type: 'EOA',
       })),
     },
     {
-      name: 'Permissioned Register Operator',
-      description: `List of addresses authorized to register or change status of DA node operators.`,
-      accounts: registerOperatorPermissionList.map((permissionedAddress) => ({
-        address: EthereumAddress(permissionedAddress),
+      name: 'Register Operator Manager',
+      description: `Address authorized to register or change status of DA node operators.`,
+      accounts: [{
+        address: EthereumAddress(registerOperatorManager),
         type: 'EOA',
-      })),
+      }],
     },
   ],
   chain: ChainId.ETHEREUM,
