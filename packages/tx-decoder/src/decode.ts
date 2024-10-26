@@ -33,7 +33,6 @@ export function decode(
   abi: string[],
 ): DecodedResult | undefined {
   const selector = data.slice(0, 10).toLowerCase()
-
   for (const fn of abi) {
     try {
       const abiItem = parseAbiItem(fn)
@@ -73,6 +72,8 @@ export function decode(
   }
 }
 
+// if abi = multiSend, decode multiSend
+
 export function decodeCustom(
   data: `0x${string}`,
   abi: string,
@@ -80,7 +81,52 @@ export function decodeCustom(
   abi = abi.trim()
   if (abi.startsWith('function')) {
     return decode(data, [abi])
-  } else if (abi.startsWith('(')) {
+  } 
+  else if (abi.startsWith('multiSend')) {
+    // operationByte + 20 address bytes + 32 value bytes + 32 data length bytes + data = 85 bytes + data
+    const transactions = data.slice(2); // Remove the '0x' prefix
+    const values: Value[] = [];
+    let i = 0; 
+    let j=0;
+    while (i < transactions.length) {
+      const operation = `0x${transactions.slice(i, i + 2)}`; // call or delegatecall, ignored
+      const to = `0x${transactions.slice(i + 2, i + 42)}`;
+      const value = BigInt(`0x${transactions.slice(i + 42, i + 106)}`);
+      const dataLength = parseInt(transactions.slice(i + 106, i + 170), 16);
+      const data = `0x${transactions.slice(i + 170, i + 170 + dataLength * 2)}`;
+      const singleOp: Value[] = [];
+      singleOp.push({
+        stack: ['0'],
+        type: 'address',
+        value: to,
+      });
+      singleOp.push({
+        stack: ['1'],
+        type: 'uint256',
+        value: value,
+      }); 
+      singleOp.push({
+        stack: ['2'],
+        type: 'bytes',
+        value: data,
+      });
+      values.push({
+        stack: [j],
+        type: '(address,uint256,bytes)',
+        value: singleOp,
+      });
+
+      i += 170 + dataLength * 2;
+      j++;
+    }
+
+    return {
+      type: 'parameters',
+      abi: abi,
+      values: values
+    };
+  }
+  else if (abi.startsWith('(')) {
     try {
       const parameters = parseAbiParameters(abi.slice(1, -1))
 

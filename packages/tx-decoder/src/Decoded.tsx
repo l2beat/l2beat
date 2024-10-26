@@ -80,7 +80,7 @@ export function Decoded(props: DecodedProps) {
           </div>
           {decoded?.type === 'error' ? (
             <div className="text-red-600 text-xs">
-              Cannot decode with provided ABI. See console for details.
+              {decoded?.error}
             </div>
           ) : (
             <div className="text-xs">
