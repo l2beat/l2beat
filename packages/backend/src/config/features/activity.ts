@@ -70,15 +70,15 @@ export function getChainActivityBlockExplorerConfig(
   return project.explorerApi?.type === 'etherscan'
     ? {
         type: project.explorerApi.type,
-        etherscanApiKey: env.string([
+        apiKey: env.string([
           `${ENV_NAME}_ETHERSCAN_API_KEY_FOR_ACTIVITY`,
           `${ENV_NAME}_ETHERSCAN_API_KEY`,
         ]),
-        etherscanApiUrl: project.explorerApi.url,
+        url: project.explorerApi.url,
       }
     : {
         type: project.explorerApi.type,
-        blockscoutApiUrl: project.explorerApi.url,
+        url: project.explorerApi.url,
       }
 }
 

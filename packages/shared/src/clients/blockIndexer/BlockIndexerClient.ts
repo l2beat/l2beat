@@ -1,19 +1,17 @@
-import { Logger } from '@l2beat/backend-tools'
-import { RateLimiter, UnixTime } from '@l2beat/shared-pure'
+import { Logger, RateLimiter } from '@l2beat/backend-tools'
+import { UnixTime } from '@l2beat/shared-pure'
 import { HttpClient } from '../../services'
 import { BlockTimestampResponse, EtherscanResponse } from './types'
 
 interface EtherscanOptions {
-  type: 'Etherscan'
-  maximumCallsForBlockTimestamp: number
+  type: 'etherscan'
   url: string
   apiKey: string
   chain: string
 }
 
 interface BlockscoutOptions {
-  type: 'Blockscout'
-  maximumCallsForBlockTimestamp: number
+  type: 'blockscout'
   url: string
   chain: string
 }
@@ -22,28 +20,29 @@ interface BlockscoutOptions {
 export class BlockIndexerClient {
   chain: string
 
-  private readonly rateLimiter = new RateLimiter({
-    callsPerMinute: 60,
-  })
   // If you ask for a timestamp
   // and there were no blocks for <timestamp - binTimeWidth, timestamp>
   // API will return the error
   private readonly binTimeWidth
+  private readonly maximumCallsForBlockTimestamp
 
   constructor(
     private readonly httpClient: HttpClient,
+    private readonly rateLimiter: RateLimiter,
     private readonly options: EtherscanOptions | BlockscoutOptions,
   ) {
     this.call = this.rateLimiter.wrap(this.call.bind(this))
-    this.binTimeWidth = options.type === 'Etherscan' ? 10 : 1
+    this.binTimeWidth = options.type === 'etherscan' ? 10 : 1
+    this.maximumCallsForBlockTimestamp = options.type === 'etherscan' ? 3 : 10
     this.chain = options.chain
   }
 
   static create(
     services: { httpClient: HttpClient; logger: Logger },
+    rateLimiter: RateLimiter,
     options: EtherscanOptions | BlockscoutOptions,
   ) {
-    return new BlockIndexerClient(services.httpClient, options)
+    return new BlockIndexerClient(services.httpClient, rateLimiter, options)
   }
 
   // There is a case when there is not enough activity on a given chain
@@ -52,7 +51,7 @@ export class BlockIndexerClient {
     let current = new UnixTime(timestamp.toNumber())
 
     let counter = 1
-    while (counter <= this.options.maximumCallsForBlockTimestamp) {
+    while (counter <= this.maximumCallsForBlockTimestamp) {
       try {
         const result = await this.call('block', 'getblocknobytime', {
           timestamp: current.toString(),
@@ -81,7 +80,7 @@ export class BlockIndexerClient {
       cause: {
         current,
         timestamp,
-        calls: this.options.maximumCallsForBlockTimestamp,
+        calls: this.maximumCallsForBlockTimestamp,
       },
     })
   }
@@ -93,7 +92,7 @@ export class BlockIndexerClient {
       ...params,
     })
 
-    if (this.options.type === 'Etherscan') {
+    if (this.options.type === 'etherscan') {
       query.append('apikey', this.options.apiKey)
     }
     const url = `${this.options.url}?${query.toString()}`

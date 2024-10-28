@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/backend-tools'
+import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import { BlockIndexerClient } from '@l2beat/shared'
 import { TvlConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
@@ -35,26 +35,15 @@ export function initBlockTimestampModule(
       chain: chainConfig.chain,
     })
 
-    const options =
-      chainConfig.config.blockExplorerConfig === undefined
-        ? undefined
-        : chainConfig.config.blockExplorerConfig.type === 'etherscan'
-          ? {
-              type: 'Etherscan' as const,
-              apiKey: chainConfig.config.blockExplorerConfig.etherscanApiKey,
-              url: chainConfig.config.blockExplorerConfig.etherscanApiUrl,
-              maximumCallsForBlockTimestamp: 3,
-              chain: chainConfig.chain,
-            }
-          : {
-              type: 'Blockscout' as const,
-              url: chainConfig.config.blockExplorerConfig.blockscoutApiUrl,
-              maximumCallsForBlockTimestamp: 10,
-              chain: chainConfig.chain,
-            }
-
-    const blockExplorerClient = options
-      ? peripherals.getClient(BlockIndexerClient, options)
+    const blockExplorerClient = chainConfig.config.blockExplorerConfig
+      ? new BlockIndexerClient(
+          peripherals.httpClient,
+          new RateLimiter({ callsPerMinute: 120 }),
+          {
+            ...chainConfig.config.blockExplorerConfig,
+            chain: chainConfig.chain,
+          },
+        )
       : undefined
 
     const blockTimestampProvider = new BlockTimestampProvider({

@@ -1,4 +1,4 @@
-import { getEnv } from '@l2beat/backend-tools'
+import { RateLimiter, getEnv } from '@l2beat/backend-tools'
 import { BlockIndexerClient, HttpClient } from '@l2beat/shared'
 import { assert, Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
@@ -40,13 +40,16 @@ export function getEtherscanClient(chain: string): BlockIndexerClient {
   const ENV_NAME = chain.toUpperCase()
   const ETHERSCAN_API_KEY = env.string(`${ENV_NAME}_ETHERSCAN_API_KEY`)
 
-  return new BlockIndexerClient(new HttpClient(), {
-    type: 'Etherscan',
-    apiKey: ETHERSCAN_API_KEY,
-    url: chainConfig.explorerApi.url,
-    maximumCallsForBlockTimestamp: 1, // not important here
-    chain: chainConfig.name,
-  })
+  return new BlockIndexerClient(
+    new HttpClient(),
+    new RateLimiter({ callsPerMinute: 120 }),
+    {
+      type: 'etherscan',
+      apiKey: ETHERSCAN_API_KEY,
+      url: chainConfig.explorerApi.url,
+      chain: chainConfig.name,
+    },
+  )
 }
 
 export function getProvider(chain: string): providers.JsonRpcProvider {

@@ -87,12 +87,22 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
 
   const evmClients: RpcClient2[] = []
   const indexerClients: BlockIndexerClient[] = []
+  //todo indexer clients
 
   const http = new HttpClient()
   const http2 = new HttpClient2()
   const logger = Logger.SILENT
 
   for (const project of config.projects) {
+    if (project.blockExplorerConfig) {
+      indexerClients.push(
+        new BlockIndexerClient(http, new RateLimiter({ callsPerMinute: 120 }), {
+          ...project.blockExplorerConfig,
+          chain: project.id,
+        }),
+      )
+    }
+
     switch (project.config.type) {
       case 'rpc': {
         const retryHandler =
