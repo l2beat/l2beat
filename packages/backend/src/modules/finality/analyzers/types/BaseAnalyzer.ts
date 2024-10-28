@@ -121,7 +121,7 @@ export abstract class BaseAnalyzer {
   /**
    *
    * @param transaction
-   * @returns TTI/SUD delays in seconds for each transaction
+   * @returns array of L2Block number and timestamp
    */
   abstract analyze(
     previousTransaction: Transaction,
