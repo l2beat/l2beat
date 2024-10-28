@@ -45,7 +45,8 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
     getImplementationChangeReport(),
   ])
 
-  const layerTvs = tvlPerProject.reduce((acc, value) => acc + value.tvl, 0) / 100
+  const layerTvs =
+    tvlPerProject.reduce((acc, value) => acc + value.tvl, 0) / 100
   const getSumFor = pickTvlForProjects(tvlPerProject)
 
   const isVerified =
