@@ -20,7 +20,7 @@ const nonFlatConfigs = fixupConfigRules(
   compat.extends('next/core-web-vitals', 'plugin:react-hooks/recommended'),
 )
 
-const typescriptConfigs = [
+const typescriptConfigs = tsEslint.config(
   ...tsEslint.configs.recommendedTypeChecked,
   ...tsEslint.configs.stylisticTypeChecked,
   {
@@ -64,9 +64,9 @@ const typescriptConfigs = [
       ],
     },
   },
-]
+)
 
-const tailwindConfigs = [
+const tailwindConfigs = tsEslint.config(
   ...tailwind.configs['flat/recommended'],
   {
     settings: {
@@ -82,13 +82,13 @@ const tailwindConfigs = [
       'tailwindcss/no-unnecessary-arbitrary-value': ['error'],
     },
   },
-]
+)
 
-const config = [
+const config = tsEslint.config(
   ...nonFlatConfigs,
   ...typescriptConfigs,
   ...tailwindConfigs,
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument
   ...storybook.configs['flat/recommended'],
   {
     rules: {
@@ -121,6 +121,6 @@ const config = [
       ],
     },
   },
-]
+)
 
 export default config
