@@ -38,7 +38,7 @@ export function DaProjectStats({ project }: Props) {
       <ProjectStat
         title="Total value secured"
         value={formatCurrency(project.header.tvs, 'usd')}
-        tooltip="The total value locked of all L2s using this layer."
+        tooltip="The total value locked of all projects using this layer."
       />
       <ProjectStat
         title="Economic security"
@@ -56,21 +56,17 @@ export function DaProjectStats({ project }: Props) {
             : EM_DASH
         }
       />
-      <HorizontalSeparator className="col-span-full my-5 max-md:hidden" />
+      <HorizontalSeparator className="col-span-full my-1 max-md:hidden" />
       <ProjectStat title="Duration of storage" {...durationStorage} />
       <ProjectStat
         className="md:col-span-2"
-        title="Used in"
+        title="Used by"
         value={
-          project.header.usedIn.length !== 0 ? (
-            <ProjectsUsedIn
-              usedIn={project.header.usedIn}
-              className="flex-wrap justify-start"
-              maxProjects={Infinity}
-            />
-          ) : (
-            'None'
-          )
+          <ProjectsUsedIn
+            usedIn={project.header.usedIn}
+            className="flex-wrap justify-start"
+            maxProjects={Infinity}
+          />
         }
       />
     </div>

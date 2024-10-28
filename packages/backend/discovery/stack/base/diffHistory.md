@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xdbe6d374de0ddd30e17c9c2b7963290858d7acec
+
+# Diff at Fri, 25 Oct 2024 07:33:17 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@ae2c410e7fd6561c1946613ca693d2dc0322c23d block: 20763805
+- current block number: 21526119
+
+## Description
+
+Renamed upgrader to ConduitMultisig3.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20763805 (main branch discovery), not current.
+
+```diff
+    contract ConduitMultisig3 (0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104) {
+    +++ description: None
+      name:
+-        "StackMultisig"
++        "ConduitMultisig3"
+    }
+```
+
 Generated with discovered.json: 0x86baefa1fdf40dc6fcf47933d92829878b4fd42a
 
 # Diff at Mon, 21 Oct 2024 12:52:18 GMT:

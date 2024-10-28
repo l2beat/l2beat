@@ -21,6 +21,7 @@ export type ApiError = {
 }
 
 export type CountedTransaction = {
+  from: string
   type: string
   hash: string
   operationsCount: number

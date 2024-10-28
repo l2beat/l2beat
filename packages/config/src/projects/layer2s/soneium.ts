@@ -17,7 +17,7 @@ export const soneium: Layer2 = upcomingL2({
       websites: ['https://soneium.org/en/'],
       apps: ['https://bridge.soneium.org/en/testnet'],
       documentation: ['https://soneium.org/en/docs/'],
-      explorers: [],
+      explorers: ['https://explorer-testnet.soneium.org/'],
       repositories: ['https://github.com/Soneium'],
       socialMedia: [
         'https://x.com/soneium',

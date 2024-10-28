@@ -552,6 +552,12 @@ export const arbitrum: Layer2 = orbitStackL2({
   },
   milestones: [
     {
+      name: 'Exit window extension to 7 days',
+      link: 'https://www.tally.xyz/gov/arbitrum/proposal/27888300053486667232765715922683646778055572080881341292116987136155397805421?govId=eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9',
+      date: '2024-10-25T00:00:00Z',
+      type: 'general',
+    },
+    {
       name: 'ArbOS 32 Emergency upgrade',
       link: 'https://github.com/OffchainLabs/nitro/releases/tag/v3.2.0',
       date: '2024-09-25T00:00:00Z',

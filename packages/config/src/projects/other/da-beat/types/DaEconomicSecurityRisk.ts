@@ -4,6 +4,7 @@ export type DaEconomicSecurityRisk =
   | ReturnType<typeof OnChainNotSlashable>
   | typeof OnChainQuantifiable
   | typeof OffChainVerifiable
+  | typeof DAChallengesNoFunds
   | typeof Unknown
 
 const OnChainQuantifiable = {
@@ -47,8 +48,16 @@ const Unknown = {
     'There are no onchain assets at risk of being slashed in case of a data withholding attack, and the committee members are not publicly known.',
 } as const
 
+const DAChallengesNoFunds = {
+  type: 'DAChallengesNoFunds',
+  value: 'DA Challenges',
+  sentiment: 'bad',
+  description: `There are no onchain assets at risk of being slashed in case of a data withholding attack. However, there is a mechanism that allows users to challenge unavailability of data. The system is not secure if the malicious sequencer is able to outspend the altruistic challengers, and there is no pool of funds onchain to incentivize challengers.`,
+} as const
+
 export const DaEconomicSecurityRisk = {
   Unknown,
+  DAChallengesNoFunds,
   OffChainVerifiable,
   OnChainQuantifiable,
   OnChainNotSlashable,

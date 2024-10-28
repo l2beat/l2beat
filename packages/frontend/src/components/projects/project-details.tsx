@@ -1,9 +1,12 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 
+import { cn } from '~/utils/cn'
 import { ChartSection } from './sections/chart-section'
 import { ContractsSection } from './sections/contracts/contracts-section'
 import { MultiChainContractsSection } from './sections/contracts/multichain-contracts-section'
 import { DetailedDescriptionSection } from './sections/detailed-description-section'
+import { GrissiniRiskAnalysisSection } from './sections/grissini-risk-analysis-section'
+import { GroupSection } from './sections/group-section'
 import { KnowledgeNuggetsSection } from './sections/knowledge-nuggets-section'
 import { L3RiskAnalysisSection } from './sections/l3-risk-analysis-section'
 import { MarkdownSection } from './sections/markdown-section'
@@ -20,22 +23,27 @@ import { type ProjectDetailsSection } from './sections/types'
 import { UpcomingDisclaimer } from './sections/upcoming-disclaimer'
 
 export interface ProjectDetailsProps {
+  nested?: boolean
+  parentSection?: string
   items: ProjectDetailsSection[]
   isUpcoming?: boolean
 }
 
 export function ProjectDetails(props: ProjectDetailsProps) {
   return (
-    <div className="max-md:px-4">
+    <div className={cn(!props.nested && 'max-md:px-4')}>
       {props.items.map((item, index) => {
-        const sectionOrder = index + 1
+        const { nested } = props
+        const sectionOrder = props.parentSection
+          ? `${props.parentSection}.${index + 1}`
+          : `${index + 1}`
 
         switch (item.type) {
           case 'ChartSection':
             return (
               <ChartSection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+                {...{ nested, sectionOrder }}
                 {...item.props}
               />
             )
@@ -43,7 +51,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <DetailedDescriptionSection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+                {...{ nested, sectionOrder }}
                 {...item.props}
               />
             )
@@ -51,7 +59,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <MilestonesAndIncidentsSection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+                {...{ nested, sectionOrder }}
                 {...item.props}
               />
             )
@@ -59,7 +67,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <RiskSummarySection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+                {...{ nested, sectionOrder }}
                 {...item.props}
               />
             )
@@ -67,7 +75,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <RiskAnalysisSection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+                {...{ nested, sectionOrder }}
                 {...item.props}
               />
             )
@@ -75,7 +83,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <L3RiskAnalysisSection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+                {...{ nested, sectionOrder }}
                 {...item.props}
               />
             )
@@ -83,7 +91,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <StageSection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+                {...{ nested, sectionOrder }}
                 {...item.props}
               />
             )
@@ -91,7 +99,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <TechnologySection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+                {...{ nested, sectionOrder }}
                 {...item.props}
               />
             )
@@ -99,7 +107,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <StateDerivationSection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+                {...{ nested, sectionOrder }}
                 {...item.props}
               />
             )
@@ -107,7 +115,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <StateValidationSection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+                {...{ nested, sectionOrder }}
                 {...item.props}
               />
             )
@@ -116,7 +124,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <MarkdownSection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+                {...{ nested, sectionOrder }}
                 {...item.props}
               />
             )
@@ -124,7 +132,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <PermissionsSection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+                {...{ nested, sectionOrder }}
                 {...item.props}
               />
             )
@@ -140,7 +148,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <ContractsSection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+                {...{ nested, sectionOrder }}
                 {...item.props}
               />
             )
@@ -156,12 +164,28 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <KnowledgeNuggetsSection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+                {...{ nested, sectionOrder }}
                 {...item.props}
               />
             )
           case 'UpcomingDisclaimer':
             return <UpcomingDisclaimer key={`${item.type}${index}`} />
+          case 'Group':
+            return (
+              <GroupSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'GrissiniRiskAnalysisSection':
+            return (
+              <GrissiniRiskAnalysisSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
           default:
             assertUnreachable(item)
         }

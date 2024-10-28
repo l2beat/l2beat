@@ -21,7 +21,7 @@ export const galxegravityDac = AnytrustDAC({
         ethereum: [
           discovery.getContractDetails(
             'SequencerInbox',
-            'Main entry point for the Sequencer submitting transaction batches.',
+            'The DA bridge and entry point for the Sequencer submitting transaction batches.',
           ),
         ],
       },
@@ -34,7 +34,7 @@ export const galxegravityDac = AnytrustDAC({
           name: 'Sequencers',
           accounts: discovery.getPermissionsByRole('sequence'),
           description:
-            'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
+            'Central actors allowed to relay transaction batches to the DA bridge (Sequencer Inbox).',
           chain: discovery.chain,
         },
         {
@@ -44,7 +44,7 @@ export const galxegravityDac = AnytrustDAC({
             'EXECUTOR_ROLE',
           ),
           description:
-            'Multisig that can upgrade authorized batch posters via the UpgradeExecutor contract.',
+            'Multisig that can upgrade authorized batch posters (relayers) via the UpgradeExecutor contract.',
         },
         {
           name: 'UpgradeExecutor',
@@ -57,11 +57,11 @@ export const galxegravityDac = AnytrustDAC({
             },
           ],
           description:
-            'The UpgradeExecutor can change the Committee members by updating the valid keyset.',
+            'The contract used to manage the upgrade of the DA bridge and other contracts.',
         },
         ...discovery.getMultisigPermission(
           'ConduitMultisig',
-          "MultiSig that can upgrade the DA bridge and other rollup's smart contracts (via UpgradeExecutor) and gain access to all funds.",
+          `Multisig that can upgrade the DA bridge, upgrade authorized batch posters (relayers), and change the Committee members by updating the valid keyset (via UpgradeExecutor).`,
         ),
       ],
     },

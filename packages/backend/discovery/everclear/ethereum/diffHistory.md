@@ -1,3 +1,157 @@
+Generated with discovered.json: 0x93c028a81066a301242f64d1f8cd974cb8d14889
+
+# Diff at Fri, 25 Oct 2024 09:48:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e7501f424c0cea9b5438386ee76e509448999836 block: 20942187
+- current block number: 21041834
+
+## Description
+
+Config related.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20942187 (main branch discovery), not current.
+
+```diff
+    contract L1ERC20Gateway (0x149e3df73d9D48cb6573555De9256cc1456F50B5) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x305042e5A81424f2f824f93Ff2195b5712D7dE14"
++        "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B"
+      issuedPermissions.0.via.0:
++        {"address":"0x305042e5A81424f2f824f93Ff2195b5712D7dE14","delay":0}
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x305042e5A81424f2f824f93Ff2195b5712D7dE14) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x149e3df73d9D48cb6573555De9256cc1456F50B5"},{"permission":"upgrade","target":"0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa"},{"permission":"upgrade","target":"0x4eb4fB614e1aa3634513319F4Ec7334bC4321356"},{"permission":"upgrade","target":"0x7B0517E0104dB60198f9d573C0aB8d480207827E"},{"permission":"upgrade","target":"0x97FdC935c5E25613AA13a054C7Aa71cf751DB495"},{"permission":"upgrade","target":"0xA880b3fC75928695ac75e06793277aC4bEA84a3E"},{"permission":"upgrade","target":"0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B"},{"permission":"upgrade","target":"0xCdA94226d0BAFA963D6011fb2A06dEc7333646e8"},{"permission":"upgrade","target":"0xdE3fdE71a026236b6b5C35505643FF4155EAb20D"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x149e3df73d9D48cb6573555De9256cc1456F50B5"},{"permission":"upgrade","target":"0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa"},{"permission":"upgrade","target":"0x4eb4fB614e1aa3634513319F4Ec7334bC4321356"},{"permission":"upgrade","target":"0x7B0517E0104dB60198f9d573C0aB8d480207827E"},{"permission":"upgrade","target":"0x97FdC935c5E25613AA13a054C7Aa71cf751DB495"},{"permission":"upgrade","target":"0xA880b3fC75928695ac75e06793277aC4bEA84a3E"},{"permission":"upgrade","target":"0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B"},{"permission":"upgrade","target":"0xCdA94226d0BAFA963D6011fb2A06dEc7333646e8"},{"permission":"upgrade","target":"0xdE3fdE71a026236b6b5C35505643FF4155EAb20D"}]
+    }
+```
+
+```diff
+    contract Outbox (0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x305042e5A81424f2f824f93Ff2195b5712D7dE14"
++        "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B"
+      issuedPermissions.0.via.0:
++        {"address":"0x305042e5A81424f2f824f93Ff2195b5712D7dE14","delay":0}
+    }
+```
+
+```diff
+    contract Bridge (0x4eb4fB614e1aa3634513319F4Ec7334bC4321356) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x305042e5A81424f2f824f93Ff2195b5712D7dE14"
++        "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B"
+      issuedPermissions.0.via.0:
++        {"address":"0x305042e5A81424f2f824f93Ff2195b5712D7dE14","delay":0}
+    }
+```
+
+```diff
+    contract SequencerInbox (0x7B0517E0104dB60198f9d573C0aB8d480207827E) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      issuedPermissions.1.target:
+-        "0x305042e5A81424f2f824f93Ff2195b5712D7dE14"
++        "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B"
+      issuedPermissions.1.via.0:
++        {"address":"0x305042e5A81424f2f824f93Ff2195b5712D7dE14","delay":0}
+    }
+```
+
+```diff
+    contract Inbox (0x97FdC935c5E25613AA13a054C7Aa71cf751DB495) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x305042e5A81424f2f824f93Ff2195b5712D7dE14"
++        "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B"
+      issuedPermissions.0.via.0:
++        {"address":"0x305042e5A81424f2f824f93Ff2195b5712D7dE14","delay":0}
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0xA880b3fC75928695ac75e06793277aC4bEA84a3E) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x305042e5A81424f2f824f93Ff2195b5712D7dE14"
++        "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B"
+      issuedPermissions.0.via.0:
++        {"address":"0x305042e5A81424f2f824f93Ff2195b5712D7dE14","delay":0}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B) {
+    +++ description: Central contract defining the access control for upgrading the system contract implementations.
+      issuedPermissions.0.target:
+-        "0x305042e5A81424f2f824f93Ff2195b5712D7dE14"
++        "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B"
+      issuedPermissions.0.via.0:
++        {"address":"0x305042e5A81424f2f824f93Ff2195b5712D7dE14","delay":0}
+      receivedPermissions.9:
++        {"permission":"upgrade","target":"0xdE3fdE71a026236b6b5C35505643FF4155EAb20D","via":[{"address":"0x305042e5A81424f2f824f93Ff2195b5712D7dE14"}]}
+      receivedPermissions.8:
++        {"permission":"upgrade","target":"0xCdA94226d0BAFA963D6011fb2A06dEc7333646e8","via":[{"address":"0x305042e5A81424f2f824f93Ff2195b5712D7dE14"}]}
+      receivedPermissions.7:
++        {"permission":"upgrade","target":"0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C"}
+      receivedPermissions.6:
++        {"permission":"upgrade","target":"0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B","via":[{"address":"0x305042e5A81424f2f824f93Ff2195b5712D7dE14"}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","target":"0xA880b3fC75928695ac75e06793277aC4bEA84a3E","via":[{"address":"0x305042e5A81424f2f824f93Ff2195b5712D7dE14"}]}
+      receivedPermissions.4:
++        {"permission":"upgrade","target":"0x97FdC935c5E25613AA13a054C7Aa71cf751DB495","via":[{"address":"0x305042e5A81424f2f824f93Ff2195b5712D7dE14"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","target":"0x7B0517E0104dB60198f9d573C0aB8d480207827E","via":[{"address":"0x305042e5A81424f2f824f93Ff2195b5712D7dE14"}]}
+      receivedPermissions.2:
++        {"permission":"upgrade","target":"0x4eb4fB614e1aa3634513319F4Ec7334bC4321356","via":[{"address":"0x305042e5A81424f2f824f93Ff2195b5712D7dE14"}]}
+      receivedPermissions.1:
++        {"permission":"upgrade","target":"0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa","via":[{"address":"0x305042e5A81424f2f824f93Ff2195b5712D7dE14"}]}
+      receivedPermissions.0.target:
+-        "0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C"
++        "0x149e3df73d9D48cb6573555De9256cc1456F50B5"
+      receivedPermissions.0.via:
++        [{"address":"0x305042e5A81424f2f824f93Ff2195b5712D7dE14"}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0x305042e5A81424f2f824f93Ff2195b5712D7dE14"}]
+    }
+```
+
+```diff
+    contract ChallengeManager (0xCdA94226d0BAFA963D6011fb2A06dEc7333646e8) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      issuedPermissions.0.target:
+-        "0x305042e5A81424f2f824f93Ff2195b5712D7dE14"
++        "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B"
+      issuedPermissions.0.via.0:
++        {"address":"0x305042e5A81424f2f824f93Ff2195b5712D7dE14","delay":0}
+    }
+```
+
+```diff
+    contract RollupEventInbox (0xdE3fdE71a026236b6b5C35505643FF4155EAb20D) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x305042e5A81424f2f824f93Ff2195b5712D7dE14"
++        "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B"
+      issuedPermissions.0.via.0:
++        {"address":"0x305042e5A81424f2f824f93Ff2195b5712D7dE14","delay":0}
+    }
+```
+
 Generated with discovered.json: 0xdfda5f8f304c5c3862103918616141c32e007765
 
 # Diff at Wed, 23 Oct 2024 14:35:53 GMT:
