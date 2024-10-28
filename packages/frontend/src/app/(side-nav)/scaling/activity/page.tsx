@@ -2,6 +2,7 @@ import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import { ActivityChart } from '~/components/chart/activity/activity-chart'
 import { MainPageCard } from '~/components/main-page-card'
 import { MainPageHeader } from '~/components/main-page-header'
+import { SpiderWeb } from '~/components/spider-web'
 import { getScalingActivityEntries } from '~/server/features/scaling/get-scaling-activity-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'
@@ -34,7 +35,8 @@ export default async function Page() {
       <ScalingFilterContextProvider>
         <ActivityTimeRangeContextProvider>
           <MainPageHeader>Activity</MainPageHeader>
-          <MainPageCard>
+          <MainPageCard className="relative">
+            <SpiderWeb className="absolute left-0 top-0 hidden md:block" />
             <ActivityChart
               milestones={HOMEPAGE_MILESTONES}
               entries={

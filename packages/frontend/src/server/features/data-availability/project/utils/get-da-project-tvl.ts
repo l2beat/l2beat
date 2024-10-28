@@ -7,30 +7,58 @@ import { env } from '~/env'
 import { db } from '~/server/database'
 import { sumValuesPerSource } from '../../../scaling/tvl/utils/sum-values-per-source'
 
-export async function getDaProjectTvl(projectIds: ProjectId[]) {
+export async function getDaProjectTvl<T extends string>(
+  bridgeUsedIn: Record<T, ProjectId[]>,
+) {
   if (env.MOCK) {
-    return getMockDaProjectTvl(projectIds)
+    return getMockDaProjectTvl(bridgeUsedIn)
   }
   noStore()
-  return await getCachedDaProjectTvl(projectIds)
+  return await getCachedDaProjectTvl(bridgeUsedIn)
 }
 
-const getCachedDaProjectTvl = cache(async (projectIds: ProjectId[]) => {
-  if (projectIds.length === 0) return 0
+const getCachedDaProjectTvl = cache(
+  async <T extends string>(bridgeUsedIn: Record<T, ProjectId[]>) => {
+    const projectIds = [
+      ...new Set(Object.values(bridgeUsedIn).flat()),
+    ] as ProjectId[]
 
-  const values = await db.value.getLatestValues(projectIds)
+    const allValues =
+      projectIds.length === 0 ? [] : await db.value.getLatestValues(projectIds)
 
-  const { canonical, external, native } = sumValuesPerSource(values, {
-    forTotal: true,
-    excludeAssociatedTokens: false,
-  })
+    return (Object.keys(bridgeUsedIn) as T[]).reduce(
+      (acc, curr) => {
+        const projectIds = bridgeUsedIn[curr]
+        if (projectIds.length === 0) {
+          acc[curr] = 0
+          return acc
+        }
 
-  const tvl = canonical + external + native
+        const values = allValues.filter((value) =>
+          projectIds.includes(value.projectId),
+        )
+        const { canonical, external, native } = sumValuesPerSource(values, {
+          forTotal: true,
+          excludeAssociatedTokens: false,
+        })
 
-  // Fiat denomination to cents
-  return Number(tvl) / 100
-})
+        const tvl = canonical + external + native
 
-const getMockDaProjectTvl = (projectIds: ProjectId[]) => {
-  return projectIds.length * 1000
+        // Fiat denomination to cents
+        acc[curr] = Number(tvl) / 100
+        return acc
+      },
+      {} as Record<T, number>,
+    )
+  },
+)
+
+const getMockDaProjectTvl = <T extends string>(
+  bridgeUsedIn: Record<T, ProjectId[]>,
+) => {
+  return Object.fromEntries(
+    (
+      Object.entries(bridgeUsedIn) as [keyof typeof bridgeUsedIn, ProjectId[]][]
+    ).map(([bridge, projectIds]) => [bridge, projectIds.length * 1000]),
+  )
 }

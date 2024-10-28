@@ -100,8 +100,7 @@ function getScalingSummaryEntry(
       hasImplementationChanged,
     }),
     dataAvailability: project.dataAvailability,
-    proposer: project.display.proposer,
-    challenger: project.display.challenger,
+    mainPermissions: project.display.mainPermissions,
     tvl: {
       breakdown: latestTvl?.breakdown,
       change: latestTvl?.change,

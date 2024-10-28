@@ -1,6 +1,5 @@
 'use client'
 import { assert } from '@l2beat/shared-pure'
-import { type Dispatch, type SetStateAction, useState } from 'react'
 import {
   Select,
   SelectContent,
@@ -26,13 +25,11 @@ interface Props<T extends string> {
 }
 
 export function TableFilter<T extends string>(props: Props<T>) {
-  const [open, setOpen] = useState(false)
-
   if (props.value) {
     return <SelectedValue {...props} />
   }
 
-  return <TableFilterSelect {...props} open={open} setOpen={setOpen} />
+  return <TableFilterSelect {...props} />
 }
 
 function SelectedValue<T extends string>({
@@ -59,16 +56,11 @@ function SelectedValue<T extends string>({
 }
 
 function TableFilterSelect<T extends string>({
-  open,
-  setOpen,
   title,
   options,
   value,
   onValueChange,
-}: Props<T> & {
-  open: boolean
-  setOpen: Dispatch<SetStateAction<boolean>>
-}) {
+}: Props<T>) {
   // Select component does not support undefined values
   // so we need to replace them with a special value
   // that will be handled by the onValueChange handler
@@ -77,8 +69,6 @@ function TableFilterSelect<T extends string>({
   return (
     <Select
       value={value ?? ''}
-      open={open}
-      onOpenChange={setOpen}
       onValueChange={(v) => {
         const mappedValue = (v === UNDEFINED_VALUE ? undefined : v) as
           | T

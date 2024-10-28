@@ -113,15 +113,10 @@ export const xai: Layer3 = orbitStackL3({
     }),
   ],
   nonTemplatePermissions: [
-    {
-      name: 'RollupOwner',
-      accounts: discovery.getAccessControlRolePermission(
-        'UpgradeExecutor',
-        'EXECUTOR_ROLE',
-      ),
-      description:
-        'Multisig that can execute upgrades via the UpgradeExecutor.',
-    },
+    ...discovery.getMultisigPermission(
+      'XaiMultisig',
+      'Multisig that can execute upgrades via the UpgradeExecutor.',
+    ),
     {
       name: 'Xai Deployer (StakingProxyAdmin owner)',
       accounts: [

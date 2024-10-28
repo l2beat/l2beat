@@ -1,3 +1,157 @@
+Generated with discovered.json: 0x001801eef2d2433777f8848d0113dcbc9f47142e
+
+# Diff at Fri, 25 Oct 2024 10:05:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e7501f424c0cea9b5438386ee76e509448999836 block: 262322423
+- current block number: 267471544
+
+## Description
+
+Config related.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 262322423 (main branch discovery), not current.
+
+```diff
+    contract ChallengeManager (0x1f269F38196484ef81e58C0144AaD2c5F6394bB4) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      issuedPermissions.0.target:
+-        "0xd18b1C6376633000c85541F7c15c591Ffe5f9556"
++        "0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276"
+      issuedPermissions.0.via.0:
++        {"address":"0xd18b1C6376633000c85541F7c15c591Ffe5f9556","delay":0}
+    }
+```
+
+```diff
+    contract SequencerInbox (0x24B68936C13A414cd91437aE7AA730321B9ff159) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      issuedPermissions.1.target:
+-        "0xd18b1C6376633000c85541F7c15c591Ffe5f9556"
++        "0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276"
+      issuedPermissions.1.via.0:
++        {"address":"0xd18b1C6376633000c85541F7c15c591Ffe5f9556","delay":0}
+    }
+```
+
+```diff
+    contract Bridge (0x2f285781B8d58678a3483de52D618198E4d27532) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xd18b1C6376633000c85541F7c15c591Ffe5f9556"
++        "0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276"
+      issuedPermissions.0.via.0:
++        {"address":"0xd18b1C6376633000c85541F7c15c591Ffe5f9556","delay":0}
+    }
+```
+
+```diff
+    contract ERC20RollupEventInbox (0x365ce7234CE515c2e0139f3578b6c5989da1a863) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xd18b1C6376633000c85541F7c15c591Ffe5f9556"
++        "0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276"
+      issuedPermissions.0.via.0:
++        {"address":"0xd18b1C6376633000c85541F7c15c591Ffe5f9556","delay":0}
+    }
+```
+
+```diff
+    contract Outbox (0x575d32f7ff0C72921645e302cb14d2757E300786) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) which eventually resolve in execution on L1.
+      issuedPermissions.0.target:
+-        "0xd18b1C6376633000c85541F7c15c591Ffe5f9556"
++        "0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276"
+      issuedPermissions.0.via.0:
++        {"address":"0xd18b1C6376633000c85541F7c15c591Ffe5f9556","delay":0}
+    }
+```
+
+```diff
+    contract Inbox (0x718E2a83775343d5c0B1eE0676703cBAF30CaFCD) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      issuedPermissions.0.target:
+-        "0xd18b1C6376633000c85541F7c15c591Ffe5f9556"
++        "0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276"
+      issuedPermissions.0.via.0:
++        {"address":"0xd18b1C6376633000c85541F7c15c591Ffe5f9556","delay":0}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276) {
+    +++ description: Central contract defining the access control for upgrading the system contract implementations.
+      issuedPermissions.0.target:
+-        "0xd18b1C6376633000c85541F7c15c591Ffe5f9556"
++        "0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276"
+      issuedPermissions.0.via.0:
++        {"address":"0xd18b1C6376633000c85541F7c15c591Ffe5f9556","delay":0}
+      receivedPermissions.9:
++        {"permission":"upgrade","target":"0xb4951c0C41CFceB0D195A95FE66280457A80a990","via":[{"address":"0xd18b1C6376633000c85541F7c15c591Ffe5f9556"}]}
+      receivedPermissions.8:
++        {"permission":"upgrade","target":"0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4"}
+      receivedPermissions.7:
++        {"permission":"upgrade","target":"0x847186fbeEBf41eEe9c230360D0bF8585c0Db57B","via":[{"address":"0xd18b1C6376633000c85541F7c15c591Ffe5f9556"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","target":"0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276","via":[{"address":"0xd18b1C6376633000c85541F7c15c591Ffe5f9556"}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","target":"0x718E2a83775343d5c0B1eE0676703cBAF30CaFCD","via":[{"address":"0xd18b1C6376633000c85541F7c15c591Ffe5f9556"}]}
+      receivedPermissions.4:
++        {"permission":"upgrade","target":"0x575d32f7ff0C72921645e302cb14d2757E300786","via":[{"address":"0xd18b1C6376633000c85541F7c15c591Ffe5f9556"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","target":"0x365ce7234CE515c2e0139f3578b6c5989da1a863","via":[{"address":"0xd18b1C6376633000c85541F7c15c591Ffe5f9556"}]}
+      receivedPermissions.2:
++        {"permission":"upgrade","target":"0x2f285781B8d58678a3483de52D618198E4d27532","via":[{"address":"0xd18b1C6376633000c85541F7c15c591Ffe5f9556"}]}
+      receivedPermissions.1:
++        {"permission":"upgrade","target":"0x24B68936C13A414cd91437aE7AA730321B9ff159","via":[{"address":"0xd18b1C6376633000c85541F7c15c591Ffe5f9556"}]}
+      receivedPermissions.0.target:
+-        "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4"
++        "0x1f269F38196484ef81e58C0144AaD2c5F6394bB4"
+      receivedPermissions.0.via:
++        [{"address":"0xd18b1C6376633000c85541F7c15c591Ffe5f9556"}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0xd18b1C6376633000c85541F7c15c591Ffe5f9556"}]
+    }
+```
+
+```diff
+    contract L1OrbitGatewayRouter (0x847186fbeEBf41eEe9c230360D0bF8585c0Db57B) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xd18b1C6376633000c85541F7c15c591Ffe5f9556"
++        "0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276"
+      issuedPermissions.0.via.0:
++        {"address":"0xd18b1C6376633000c85541F7c15c591Ffe5f9556","delay":0}
+    }
+```
+
+```diff
+    contract L1OrbitERC20Gateway (0xb4951c0C41CFceB0D195A95FE66280457A80a990) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xd18b1C6376633000c85541F7c15c591Ffe5f9556"
++        "0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276"
+      issuedPermissions.0.via.0:
++        {"address":"0xd18b1C6376633000c85541F7c15c591Ffe5f9556","delay":0}
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xd18b1C6376633000c85541F7c15c591Ffe5f9556) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x1f269F38196484ef81e58C0144AaD2c5F6394bB4"},{"permission":"upgrade","target":"0x24B68936C13A414cd91437aE7AA730321B9ff159"},{"permission":"upgrade","target":"0x2f285781B8d58678a3483de52D618198E4d27532"},{"permission":"upgrade","target":"0x365ce7234CE515c2e0139f3578b6c5989da1a863"},{"permission":"upgrade","target":"0x575d32f7ff0C72921645e302cb14d2757E300786"},{"permission":"upgrade","target":"0x718E2a83775343d5c0B1eE0676703cBAF30CaFCD"},{"permission":"upgrade","target":"0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276"},{"permission":"upgrade","target":"0x847186fbeEBf41eEe9c230360D0bF8585c0Db57B"},{"permission":"upgrade","target":"0xb4951c0C41CFceB0D195A95FE66280457A80a990"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x1f269F38196484ef81e58C0144AaD2c5F6394bB4"},{"permission":"upgrade","target":"0x24B68936C13A414cd91437aE7AA730321B9ff159"},{"permission":"upgrade","target":"0x2f285781B8d58678a3483de52D618198E4d27532"},{"permission":"upgrade","target":"0x365ce7234CE515c2e0139f3578b6c5989da1a863"},{"permission":"upgrade","target":"0x575d32f7ff0C72921645e302cb14d2757E300786"},{"permission":"upgrade","target":"0x718E2a83775343d5c0B1eE0676703cBAF30CaFCD"},{"permission":"upgrade","target":"0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276"},{"permission":"upgrade","target":"0x847186fbeEBf41eEe9c230360D0bF8585c0Db57B"},{"permission":"upgrade","target":"0xb4951c0C41CFceB0D195A95FE66280457A80a990"}]
+    }
+```
+
 Generated with discovered.json: 0x30892d8c9883b7c17282e008cacd4c887a943c3f
 
 # Diff at Wed, 23 Oct 2024 14:37:05 GMT:

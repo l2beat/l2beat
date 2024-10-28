@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x701e6a346f897333eefd6ceae8172660a88a4fc3
+
+# Diff at Fri, 25 Oct 2024 09:55:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e7501f424c0cea9b5438386ee76e509448999836 block: 21027285
+- current block number: 21041870
+
+## Description
+
+Config related.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21027285 (main branch discovery), not current.
+
+```diff
+    contract WithdrawalOverwriterMultisig (0xC4f81F990b47c12144e74A901162A2cFDf4b5a9d) {
+    +++ description: None
+      values.getOwners:
+-        ["0xF209b7Bbadf8d9518a822aEaa7119B38b17377A7","0xf877475092Dc23AD9d367B27D48645d56564D310","0xEE52b76e6A9F6eA669F8A99bb63b113819cDCbEF","0x70f8b7f14eA00209A70a926134B86E5eb9f4317f","0xc06d32F7C20f100C7b8657dE2b24f201A46BC3DD"]
+      values.getThreshold:
+-        3
+      template:
++        "GnosisSafe"
+    }
+```
+
 Generated with discovered.json: 0xb96a6f6354ef4f3a4167d998bf12ffa82449c437
 
 # Diff at Wed, 23 Oct 2024 09:07:17 GMT:

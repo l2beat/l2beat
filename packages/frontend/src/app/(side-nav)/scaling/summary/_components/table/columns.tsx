@@ -129,7 +129,7 @@ export const scalingSummaryOthersColumns = [
     id: 'proposer',
     header: 'Proposer',
     cell: (ctx) => {
-      const value = ctx.row.original.proposer
+      const value = ctx.row.original.mainPermissions?.proposer
       if (!value) {
         return <NoDataBadge />
       }
@@ -148,7 +148,26 @@ export const scalingSummaryOthersColumns = [
     id: 'challenger',
     header: 'Challenger',
     cell: (ctx) => {
-      const value = ctx.row.original.challenger
+      const value = ctx.row.original.mainPermissions?.challenger
+      if (!value) {
+        return <NoDataBadge />
+      }
+
+      return (
+        <TwoRowCell>
+          <TwoRowCell.First>{value.value}</TwoRowCell.First>
+          {value.secondLine && (
+            <TwoRowCell.Second>{value.secondLine}</TwoRowCell.Second>
+          )}
+        </TwoRowCell>
+      )
+    },
+  }),
+  columnHelper.display({
+    id: 'upgrader',
+    header: 'Upgrader',
+    cell: (ctx) => {
+      const value = ctx.row.original.mainPermissions?.upgrader
       if (!value) {
         return <NoDataBadge />
       }

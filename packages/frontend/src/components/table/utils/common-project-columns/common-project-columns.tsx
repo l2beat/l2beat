@@ -51,5 +51,5 @@ export function getCommonProjectColumns<T extends CommonProjectColumnsEntry>(
       },
       size: 28,
     }),
-  ]
+  ] as const
 }
