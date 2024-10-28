@@ -37,16 +37,16 @@ export function DaProjectSummary({ project }: Props) {
       <div className="flex gap-10">
         <div className="w-full">
           {/* Separators */}
-          <div className="flex flex-row gap-10">
-            <HorizontalSeparator className="!my-6 flex-1 max-md:-mx-4 max-md:w-screen" />
-            <HorizontalSeparator className="!my-6 hidden w-[264px] lg:block" />
+          <div className="md:flex flex-row gap-10 hidden">
+            <HorizontalSeparator className="!mt-[0.875rem] !mb-6 flex-1 max-md:-mx-4 max-md:w-screen" />
+            <HorizontalSeparator className="!mt-[0.875rem] !mb-6 hidden w-[264px] lg:block" />
           </div>
           {/* Details row */}
-          <div className="flex flex-col gap-10">
+          <div className="flex flex-col gap-6 md:gap-10">
             {/* Left side (links and stats) */}
             <div className="flex flex-row items-end gap-10">
               <div className="flex-1">
-                <div className="space-y-4">
+                <div className="flex flex-col gap-4">
                   <div className="max-md:hidden">
                     <DesktopProjectLinks projectLinks={project.header.links} />
                   </div>
@@ -55,7 +55,7 @@ export function DaProjectSummary({ project }: Props) {
               </div>
               {/* Right side (DA Layer Grissini details) */}
               <div className="hidden lg:block">
-                <div className="flex flex-col space-y-4 pt-3">
+                <div className="flex flex-col gap-4 pt-3">
                   <div className="whitespace-pre text-xs text-gray-500 dark:text-gray-600">
                     {project.name} risks
                   </div>
@@ -67,7 +67,7 @@ export function DaProjectSummary({ project }: Props) {
             </div>
             <div className="flex flex-col-reverse md:flex-col">
               {/* Table row */}
-              <div className="flex flex-row items-end gap-10 py-8 md:py-0">
+              <div className="flex flex-row items-end gap-10 py-8 max-md:pt-6 md:py-0">
                 {/* Left side (table with title and banner) */}
                 <div className="flex flex-1 flex-col gap-4">
                   <div className="whitespace-pre text-xs uppercase text-gray-500 dark:text-gray-600">
