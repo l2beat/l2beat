@@ -60,9 +60,7 @@ function ProjectContract({
     <div key={contract.address}>
       <div id={contract.address} className="font-mono text-lg">
         <strong>{contract.name}</strong>{' '}
-        <a className="text-blue-700 text-sm" href={`#${contract.address}`}>
-          {contract.address}
-        </a>
+        <p className="text-sm">{contract.address}</p>
       </div>
       <ol>
         {contract.fields.map((field, i) => (

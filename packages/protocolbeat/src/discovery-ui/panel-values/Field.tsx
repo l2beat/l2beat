@@ -1,6 +1,7 @@
 import { clsx } from 'clsx'
 import { ReactNode } from 'react'
 import { FieldValue } from '../api/types'
+import { usePanelStore } from '../store'
 
 export interface FieldProps {
   name: string
@@ -11,16 +12,17 @@ export interface FieldProps {
 export function Field({ name, value, level }: FieldProps) {
   let inlineDisplay: ReactNode = null
   let blockDisplay: ReactNode = null
+  const select = usePanelStore((state) => state.select)
 
   if (value.type === 'address') {
     if (value.name && !value.name.startsWith('<')) {
       inlineDisplay = (
-        <a
-          className="font-mono text-blue-700 text-sm"
-          href={`#${value.address}`}
+        <button
+          className="inline-block text-left font-mono text-blue-700 text-sm"
+          onClick={() => select([value.address])}
         >
           <strong>{value.name}</strong> {value.address}
-        </a>
+        </button>
       )
     } else {
       inlineDisplay = (
