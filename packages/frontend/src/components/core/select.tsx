@@ -21,17 +21,17 @@ function useSelectContext() {
   return context
 }
 
-const Select = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Root>
->((props) => {
+const Select = (
+  props: React.ComponentPropsWithoutRef<typeof SelectPrimitive.Root>,
+) => {
   const [isOpen, setIsOpen] = React.useState(false)
   return (
     <SelectContext.Provider value={setIsOpen}>
-      <SelectPrimitive.Root {...props} open={isOpen} onOpenChange={setIsOpen} />
+      <SelectPrimitive.Root open={isOpen} onOpenChange={setIsOpen} {...props} />
     </SelectContext.Provider>
   )
-})
+}
+
 Select.displayName = SelectPrimitive.Root.displayName
 
 const SelectGroup = SelectPrimitive.Group
