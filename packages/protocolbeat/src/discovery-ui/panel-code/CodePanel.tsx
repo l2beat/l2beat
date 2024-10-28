@@ -6,6 +6,7 @@ import { getCode, getProject } from '../api/api'
 import { useMultiViewStore } from '../multi-view/store'
 import { usePanelStore } from '../store'
 import './monaco-workers'
+import clsx from 'clsx'
 
 export function CodePanel() {
   const { project } = useParams()
@@ -22,6 +23,10 @@ export function CodePanel() {
     enabled: selectedAddress !== undefined,
     queryFn: () => getCode(project, selectedAddress),
   })
+  const [current, setCurrent] = useState(0)
+  useEffect(() => {
+    setCurrent(0)
+  }, [codeResponse.data])
 
   if (projectResponse.isLoading || codeResponse.isLoading) {
     return <div>Loading</div>
@@ -29,7 +34,24 @@ export function CodePanel() {
   if (projectResponse.isError || codeResponse.isError) {
     return <div>Error</div>
   }
-  return <CodeView code={codeResponse.data.sources[0]?.code ?? '// No code'} />
+  return (
+    <div className="flex h-full w-full flex-col">
+      <div className="flex gap-1">
+        {codeResponse.data.sources.map((x, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrent(i)}
+            className={clsx(current === i && 'bg-blue-400')}
+          >
+            {x.name}
+          </button>
+        ))}
+      </div>
+      <CodeView
+        code={codeResponse.data.sources[current]?.code ?? '// No code'}
+      />
+    </div>
+  )
 }
 
 function CodeView({ code }: { code: string }) {
