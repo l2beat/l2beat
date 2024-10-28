@@ -5,7 +5,7 @@
 ## 1. General Information
 
 ### 1.1. About Us
-These Terms of Service (“Terms”) govern your access to and use of the L2BEAT website - l2beat.com (“the Website”), operated by L2BEAT, a limited liability company (spółka z ograniczoną odpowiedzialnością) with its registered office in Warsaw at Poznańska 16/4, 00-680 Warsaw, Poland entered into the Register of Entrepreneurs of the National Court Register kept by the District Court for the Capital City of Warsaw,12th Business Department of the National Court Register, under KRS No 0000920990, NIP: 7011051128 (“L2BEAT”).
+These Terms of Service (“Terms”) govern your access to and use of the L2BEAT website - l2beat.com (“the Website”), operated by L2BEAT, a limited liability company (spółka z ograniczoną odpowiedzialnością) with its registered office in Warsaw at Poznańska 16/4, 00-680 Warsaw, Poland, KRS No 0000920990 (“L2BEAT”).
 
 ### 1.2. Acceptance of Terms
 By accessing or using the Website, you agree to be bound by these Terms and all applicable laws and regulations. If you do not agree with these Terms, you must not use the Website.
@@ -15,9 +15,8 @@ By accessing or using the Website, you agree to be bound by these Terms and all 
 
 ### 2.1. Nature of Service
 The Website provides information, analytics, and data about Layer 2 scaling solutions on the Ethereum blockchain. L2BEAT does not execute any actions independently. The Website serves as a tool for users to access and understand information regarding various blockchain technologies. L2BEAT does not guarantee the functionality, security, or accuracy of any third-party information accessed through the Website, nor can it ensure that such information is error-free or will work as intended.
-### 2.2. Third-Party Independence
-The Website provides information, analytics, and data about Layer 2 scaling solutions on the Ethereum blockchain. L2BEAT does not execute any actions independently. The Website serves as a tool for users to access and understand information regarding various blockchain technologies. L2BEAT does not guarantee the functionality, security, or accuracy of any third-party information accessed through the Website, nor can it ensure that such information is error-free or will work as intended.
 
+### 2.2. Third-Party Independence
 - Layer 2 Projects: The Layer 2 solutions and projects featured on the Website are operated independently by their own operators, and L2BEAT does not control their operations. These projects can change or cease operations, affecting the availability of information or services.
 - Smart Contracts: Any smart contracts associated with the Layer 2 projects are authored by their respective authors or organizations. L2BEAT is not responsible for the functionality or security of these smart contracts or any other underlying systems.
 
@@ -104,7 +103,6 @@ L2BEAT reserves the right to update or modify these Terms at any time. Current T
 
 ## 11. Governing Law and Jurisdiction
 These Terms are governed by the laws of Poland, without regard to its conflict of law principles. Any disputes arising from these Terms or your use of the Website shall be finally settled under the Arbitration Rules of the Court of Arbitration at the Polish Chamber of Commerce in Warsaw in force on the date of commencement of the proceeding by an arbitrator or arbitrators appointed in accordance with the said Rules.
-L2BEAT does not endorse, guarantee, or assume responsibility for any third-party products or services, including those available through Layer 2 projects or other respective authors and organizations.
 
 
 ## 12. Miscellaneous
@@ -118,4 +116,3 @@ No waiver of any term of these Terms shall be deemed a further or continuing wai
 
 ## 13. Contact Information
 If you have any questions or concerns about these Terms, please contact us at legal@l2beat.com
-L2BEAT does not endorse, guarantee, or assume responsibility for any third-party products or services, including those available through Layer 2 projects or other respective authors and organizations.
