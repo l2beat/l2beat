@@ -39,29 +39,34 @@ export const bridgesSummaryActiveColumns = [
         'Token bridges use escrows and mint tokens. Liquidity Networks use pools and swap tokens. Hybrid do both.',
     },
   }),
-  columnHelper.accessor('tvl.breakdown.total', {
-    id: 'total',
-    header: 'Total',
-    cell: (ctx) => {
-      const value = ctx.row.original.tvl
-      if (value.breakdown?.total === undefined) {
-        return <NoDataBadge />
-      }
+  columnHelper.accessor(
+    (e) => {
+      return e.tvl.breakdown?.total
+    },
+    {
+      id: 'total',
+      header: 'Total',
+      cell: (ctx) => {
+        const value = ctx.row.original.tvl
+        if (value.breakdown?.total === undefined) {
+          return <NoDataBadge />
+        }
 
-      return (
-        <TotalCell
-          associatedTokenSymbols={value.associatedTokens}
-          tvlWarnings={value.warnings}
-          breakdown={value.breakdown}
-          change={value.change}
-        />
-      )
+        return (
+          <TotalCell
+            associatedTokenSymbols={value.associatedTokens}
+            tvlWarnings={value.warnings}
+            breakdown={value.breakdown}
+            change={value.change}
+          />
+        )
+      },
+      sortUndefined: 'last',
+      meta: {
+        align: 'right',
+        tooltip:
+          'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago.',
+      },
     },
-    sortUndefined: 'last',
-    meta: {
-      align: 'right',
-      tooltip:
-        'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago.',
-    },
-  }),
+  ),
 ]
