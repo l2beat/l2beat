@@ -84,7 +84,7 @@ export function DaProjectSummary({ project }: Props) {
                       <div className="flex-1">DA Bridge</div>
                       <div className="flex-1 text-center">DA Risks</div>
                       <div className="flex-1 pr-12 text-right">TVS</div>
-                      <div className="flex-1">Used by</div>
+                      <div className="flex-[1.5] lg:flex-1">Used by</div>
                     </div>
                     <div className="flex flex-1 flex-col gap-2 overflow-y-auto rounded-lg bg-zinc-100 dark:bg-zinc-900 md:gap-0 md:bg-none dark:md:bg-none">
                       {project.bridges.map((bridge, index) => (
@@ -116,7 +116,7 @@ export function DaProjectSummary({ project }: Props) {
                           <div className="flex flex-1 items-center justify-end pr-1 text-sm font-bold text-primary md:pr-12">
                             {formatCurrency(bridge.tvs, 'usd')}
                           </div>
-                          <div className="hidden flex-1 flex-row items-center md:flex">
+                          <div className="hidden flex-[1.5] lg:flex-1 flex-row items-center md:flex">
                             {bridge.usedIn.length > 0 ? (
                               <ProjectsUsedIn
                                 className="h-5 flex-wrap justify-start"
