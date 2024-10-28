@@ -19,9 +19,6 @@ import {
 import { getDaProjectTvl } from './utils/get-da-project-tvl'
 
 export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
-  // TODO: Remove it to re-enable per-combination TVL
-  const tvlSource = daLayer.kind === 'DAC' ? daBridge : daLayer
-
   const [
     economicSecurity,
     tvsEntries,
@@ -42,13 +39,15 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
     getImplementationChangeReport(),
   ])
 
+  const layerTvs = Object.values(tvsEntries).reduce((acc, tvs) => acc + tvs, 0)
+
   const isVerified =
     !!projectsVerificationStatuses[getDaProjectKey(daLayer, daBridge)]
   const grissiniValues = mapLayerRisksToRosetteValues(
     getDaRisks(
       daLayer,
       daBridge,
-      tvsEntries[tvlSource.id] ?? 0,
+      layerTvs,
       economicSecurity,
     ),
   )
@@ -91,7 +90,7 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
       daBridgeGrissiniValues: mapBridgeRisksToRosetteValues(daBridge.risks),
       daLayer,
       daBridge,
-      tvs: tvsEntries[tvlSource.id] ?? 0,
+      tvs: layerTvs,
       economicSecurity,
     }),
     projectDetails,
