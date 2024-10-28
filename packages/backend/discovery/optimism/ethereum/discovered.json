@@ -2,7 +2,7 @@
   "name": "optimism",
   "chain": "ethereum",
   "blockNumber": 21027355,
-  "configHash": "0x3c6748f4154b3403666ecc1a409d2ec7f2022a49b905a7e173a0e7e665295c30",
+  "configHash": "0x86147f5081c2dfd587718e6ad33be12fb88346c749dee8b704ea91030022f217",
   "contracts": [
     {
       "name": "LivenessModule",

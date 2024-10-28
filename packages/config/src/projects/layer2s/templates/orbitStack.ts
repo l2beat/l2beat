@@ -775,13 +775,42 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     templateVars.display.category ??
     (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup')
 
-  const upgraderDescription = (()=>{
-    const upgradersProxy = templateVars.discovery.getUpgraders(templateVars.rollupProxy.address)
-    assert(upgradersProxy.length === 1, 'Expected exactly one upgrader for the RollupProxy')
-    const upgrader
-    const upgradersBridge = templateVars.discovery.getUpgraders(templateVars.bridge.address)
-    assert(upgradersBridge.length === 1, 'Expected exactly one upgrader for the Bridge')
-    return ""
+  const upgraderDescription = (() => {
+    const upgradersProxy = templateVars.discovery.getUpgraders(
+      templateVars.rollupProxy.address,
+    )
+    assert(
+      upgradersProxy.length === 1,
+      'Expected exactly one upgrader for the RollupProxy',
+    )
+    const upgraderProxy = upgradersProxy[0]
+    const upgradersBridge = templateVars.discovery.getUpgraders(
+      templateVars.bridge.address,
+    )
+    assert(
+      upgradersBridge.length === 1,
+      'Expected exactly one upgrader for the Bridge',
+    )
+    const upgraderBridge = upgradersBridge[0]
+    assert(
+      upgraderProxy.address === upgraderBridge.address,
+      'Proxy and Bridge upgrader must have the same upgrader',
+    )
+    assert(
+      upgraderProxy.type !== 'Contract',
+      'Upgrader must be either be EOA or Multisig',
+    )
+    return upgraderProxy.type === 'EOA'
+      ? '1/1 EOA'
+      : (() => {
+          const upgraderAsContract =
+            templateVars.discovery.getContractByAddress(upgraderProxy.address)
+          assert(
+            upgraderAsContract !== undefined,
+            'Upgrader must be a contract',
+          )
+          return `${templateVars.discovery.getMultisigStats(upgraderAsContract.name)} multisig`
+        })()
   })()
 
   return {
@@ -891,12 +920,10 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
               })
             })()
           : RISK_VIEW.DATA_ON_CHAIN,
-      exitWindow:
-        templateVars.nonTemplateRiskView?.exitWindow ??
-        {
-          ...RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
-          secondLine: upgraderDescription
-        }
+      exitWindow: templateVars.nonTemplateRiskView?.exitWindow ?? {
+        ...RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+        secondLine: upgraderDescription,
+      },
       sequencerFailure:
         templateVars.nonTemplateRiskView?.sequencerFailure ??
         RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),
