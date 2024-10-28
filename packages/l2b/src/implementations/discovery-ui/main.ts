@@ -1,9 +1,9 @@
 import { join } from 'path'
 import { ConfigReader } from '@l2beat/discovery'
 import express from 'express'
+import { getCode } from './getCode'
 import { getProject } from './getProject'
 import { getProjects } from './getProjects'
-import { getCode } from './getCode'
 
 export function runDiscoveryUi() {
   const app = express()

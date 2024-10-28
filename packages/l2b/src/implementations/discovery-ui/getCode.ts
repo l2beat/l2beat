@@ -1,9 +1,9 @@
-import { ConfigReader } from '@l2beat/discovery'
-import { ApiCodeResponse } from './types'
-import { getChainFullName } from '@l2beat/discovery/dist/config/config.discovery'
-import { get$Implementations } from '@l2beat/discovery-types'
-import { readdirSync, readFileSync } from 'fs'
+import { readFileSync, readdirSync } from 'fs'
 import { join } from 'path'
+import { ConfigReader } from '@l2beat/discovery'
+import { get$Implementations } from '@l2beat/discovery-types'
+import { getChainFullName } from '@l2beat/discovery/dist/config/config.discovery'
+import { ApiCodeResponse } from './types'
 
 export function getCode(
   configReader: ConfigReader,
