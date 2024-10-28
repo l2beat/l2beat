@@ -29,6 +29,6 @@ export const river: Layer2 = opStackL2({
   },
   isNodeAvailable: true,
   rpcUrl: 'https://explorer.river.build/api',
-  genesisTimestamp: new UnixTime(1716094800),//first sequencer tx
+  genesisTimestamp: new UnixTime(1716094800), //first sequencer tx
   discoveryDrivenData: true,
 })
