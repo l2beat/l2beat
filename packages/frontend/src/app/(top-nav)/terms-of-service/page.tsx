@@ -1,3 +1,4 @@
+import { type Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { ContentWrapper } from '~/components/content-wrapper'
 import { FullPageHeader } from '~/components/full-page-header'
@@ -7,6 +8,22 @@ import { getCollectionEntry } from '~/content/get-collection'
 import { roboto_serif } from '~/fonts'
 import { cn } from '~/utils/cn'
 import { formatPublicationDate } from '~/utils/dates'
+import { getDefaultMetadata } from '~/utils/metadata'
+
+export async function generateMetadata(): Promise<Metadata | null> {
+  const page = getCollectionEntry('pages', 'terms-of-service')
+  if (!page) {
+    return null
+  }
+  return getDefaultMetadata({
+    title: `Terms of Service - L2BEAT`,
+    description: 'Terms of Service for L2BEAT',
+    openGraph: {
+      type: 'article',
+      url: `/terms-of-service`,
+    },
+  })
+}
 
 export default function Page() {
   const page = getCollectionEntry('pages', 'terms-of-service')
