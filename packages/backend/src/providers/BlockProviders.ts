@@ -6,6 +6,7 @@ import {
   HttpClient2,
   RetryHandler,
   RpcClient2,
+  ZksyncLiteClient,
 } from '@l2beat/shared'
 import { assert, ProjectId, assertUnreachable } from '@l2beat/shared-pure'
 import { ActivityConfig } from '../config/Config'
@@ -14,7 +15,6 @@ import { DegateClient } from '../peripherals/degate'
 import { LoopringClient } from '../peripherals/loopring/LoopringClient'
 import { StarkexClient } from '../peripherals/starkex/StarkexClient'
 import { StarknetClient } from '../peripherals/starknet/StarknetClient'
-import { ZksyncLiteClient } from '../peripherals/zksynclite/ZksyncLiteClient'
 
 export class BlockProviders {
   constructor(

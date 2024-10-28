@@ -1,7 +1,7 @@
+import { ZksyncLiteClient } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { range } from 'lodash'
-import { ZksyncLiteClient } from '../../../../peripherals/zksynclite/ZksyncLiteClient'
 import { activityRecord } from '../../utils/aggregatePerDay.test'
 import { ZKsyncLiteTxsCountService } from './ZKsyncLiteTxsCountService'
 

@@ -1,8 +1,9 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
-import { HttpClient2, RetryHandler } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 
-import { getBlockNumberAtOrBefore } from '../getBlockNumberAtOrBefore'
+import { RetryHandler } from '../../tools'
+import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
+import { HttpClient2 } from '../http/HttpClient2'
 import {
   ZksyncLiteBlocksResultSchema,
   ZksyncLiteResponse,
