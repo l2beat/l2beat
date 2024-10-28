@@ -1,6 +1,6 @@
 import { UnderReviewBadge } from '../../badge/under-review-badge'
-import { RiskValue } from '../risk-value'
 import { type GrissiniCellProps } from './grissini-cell'
+import { GrissiniDetails } from './grissini-details'
 
 export function GrissiniTooltip({ values, isUnderReview }: GrissiniCellProps) {
   if (isUnderReview) {
@@ -28,9 +28,7 @@ export function GrissiniTooltip({ values, isUnderReview }: GrissiniCellProps) {
       </span>
 
       <div className="flex flex-col gap-4">
-        {values.map((value) => (
-          <RiskValue key={value.name} {...value} />
-        ))}
+        <GrissiniDetails values={values} className="w-auto min-w-[264px]" />
       </div>
     </div>
   )
