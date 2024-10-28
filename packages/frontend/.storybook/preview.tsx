@@ -56,7 +56,7 @@ const preview: Preview = {
     },
   ],
 
-  tags: ['autodocs']
+  tags: ['autodocs'],
 }
 
 export default preview
