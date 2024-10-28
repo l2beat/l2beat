@@ -73,7 +73,7 @@ export function DaProjectSummary({ project }: Props) {
                   <div className="whitespace-pre text-xs uppercase text-gray-500 dark:text-gray-600">
                     Select a bridge
                   </div>
-                  <div className="hidden flex-row items-center gap-2 rounded-md border border-blue-500 bg-blue-400 px-3 py-2 text-xs font-semibold text-blue-700 dark:text-blue-700 md:flex lg:px-6">
+                  <div className="hidden flex-row items-center gap-2 rounded-md border border-blue-500 bg-blue-400 px-3 py-2 text-xs font-medium text-blue-700 dark:text-blue-700 md:flex lg:px-6">
                     <InfoIcon className="size-4 shrink-0 fill-current dark:fill-current" />
                     Please select one of the available DA bridges to view its
                     risks and detailed analysis.
