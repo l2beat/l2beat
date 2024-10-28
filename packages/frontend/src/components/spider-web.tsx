@@ -14,7 +14,7 @@ export function SpiderWeb(props: SpiderWebProps) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={cn(
-        'pointer-events-none h-32 w-36 rounded-tl-xl fill-black opacity-30 dark:fill-white dark:opacity-25',
+        'pointer-events-none h-32 w-36 rounded-tl-xl fill-black opacity-20 dark:fill-white dark:opacity-25',
         props.className,
       )}
     >
