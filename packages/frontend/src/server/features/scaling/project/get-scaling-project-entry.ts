@@ -129,7 +129,8 @@ async function getHeader(project: ScalingProject) {
     links: getProjectLinks(project.display.links),
     hostChain:
       project.type === 'layer3'
-        ? layer2s.find((l) => l.id === project.hostChain)?.display.name
+        ? (layer2s.find((l) => l.id === project.hostChain)?.display.name ??
+          project.hostChain)
         : undefined,
     tvl:
       !env.EXCLUDED_TVL_PROJECTS?.includes(project.id.toString()) &&
