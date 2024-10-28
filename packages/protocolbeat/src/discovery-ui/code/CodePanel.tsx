@@ -46,6 +46,7 @@ function CodeView({ code }: { code: string }) {
     const editor = monaco.editor.create(monacoEl.current, {
       language: 'sol',
       minimap: { enabled: false },
+      readOnly: true,
     })
     setEditor(editor)
 
