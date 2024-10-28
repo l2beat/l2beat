@@ -8,7 +8,7 @@ const meta = {
   component: ContractsSection,
   args: {
     title: 'Contracts',
-    sectionOrder: 1,
+    sectionOrder: '1',
     chainName: 'Ethereum',
     id: 'contracts',
   },
@@ -26,7 +26,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    sectionOrder: 13,
+    sectionOrder: '13',
     chainName: 'Ethereum',
     nativeContracts: {
       'Arbitrum One': [
