@@ -18,7 +18,7 @@ export const river: Layer2 = opStackL2({
       'River is an L2 based on the OP Stack. It is used by River protocol - a protocol for building decentralized real-time messaging apps.',
     links: {
       websites: ['https://river.build/'],
-      apps: [],
+      apps: ['https://river-mainnet.bridge.river.build/'],
       documentation: [],
       explorers: ['https://explorer.river.build/'],
       repositories: [],
@@ -29,6 +29,6 @@ export const river: Layer2 = opStackL2({
   },
   isNodeAvailable: true,
   rpcUrl: 'https://explorer.river.build/api',
-  genesisTimestamp: new UnixTime(1729867724),
+  genesisTimestamp: new UnixTime(1716094800),//first sequencer tx
   discoveryDrivenData: true,
 })
