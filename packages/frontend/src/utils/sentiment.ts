@@ -14,7 +14,21 @@ export function sentimentToFillColor(sentiment: Sentiment): string {
   }
 }
 
-export function sentimentToBgColor(sentiment: Sentiment): string {
+export function sentimentToOpaqueBgColor(sentiment: Sentiment): string {
+  switch (sentiment) {
+    case 'bad':
+      return 'bg-orange-600'
+    case 'warning':
+      return 'bg-yellow-200'
+    case 'good':
+      return 'bg-green-300 dark:bg-green-450'
+    case 'neutral':
+    case 'UnderReview':
+      return 'bg-gray-400 dark:bg-zinc-700'
+  }
+}
+
+export function sentimentToTransparentBgColor(sentiment: Sentiment): string {
   switch (sentiment) {
     case 'bad':
       return 'bg-orange-600/15'

@@ -33,7 +33,6 @@ export function ProjectsUsedIn({ usedIn, className, maxProjects = 5 }: Props) {
                 <Image
                   width={20}
                   height={20}
-                  className="min-h-5 min-w-5"
                   src={`/icons/${project.slug}.png`}
                   alt={`${project.name} logo`}
                 />

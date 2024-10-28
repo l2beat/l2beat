@@ -1,10 +1,12 @@
-import { type Sentiment } from '@l2beat/shared-pure'
+'use client'
+
 import { useRef } from 'react'
 import { useEventListener } from '~/hooks/use-event-listener'
 import { useOnClickOutside } from '~/hooks/use-on-click-outside'
 import { cn } from '~/utils/cn'
 import { useRosetteTooltipContext } from '../rosette-tooltip-context'
 import { type RosetteValue } from '../types'
+import { SingleGrissini } from './single-grissini'
 
 interface Props {
   values: RosetteValue[]
@@ -36,31 +38,13 @@ export function GrissiniIcon({ values, className }: Props) {
         className,
       )}
     >
-      {values.map((value, i) => {
-        const bgColor = sentimentToBgColor(value.sentiment)
-
-        return (
-          <div
-            className={cn('h-8 w-2 rounded-full', bgColor)}
-            key={i}
-            onMouseEnter={() => selectRisk(value, 'top')}
-          />
-        )
-      })}
+      {values.map((value, i) => (
+        <SingleGrissini
+          sentiment={value.sentiment}
+          key={i}
+          onMouseEnter={() => selectRisk(value, 'top')}
+        />
+      ))}
     </div>
   )
-}
-
-function sentimentToBgColor(sentiment: Sentiment) {
-  switch (sentiment) {
-    case 'bad':
-      return 'bg-orange-600'
-    case 'warning':
-      return 'bg-yellow-200'
-    case 'good':
-      return 'bg-[#15CA60] dark:bg-green-450'
-    case 'neutral':
-    case 'UnderReview':
-      return 'bg-gray-400 dark:bg-zinc-700'
-  }
 }

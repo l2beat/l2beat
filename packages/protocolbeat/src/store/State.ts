@@ -1,21 +1,25 @@
-import type { SimpleNode } from '../api/SimpleNode'
+import { OklchColor } from './utils/color'
 
 export interface State {
-  readonly selectedNodeIds: readonly string[]
-  readonly hiddenNodesIds: readonly string[]
+  readonly projectId: string
   readonly nodes: readonly Node[]
-  readonly selection?: Box
+  readonly selected: readonly string[]
+  readonly hidden: readonly string[]
   readonly transform: {
     readonly offsetX: number
     readonly offsetY: number
     readonly scale: number
   }
-  readonly pressed: {
-    readonly leftMouseButton: boolean
-    readonly middleMouseButton: boolean
-    readonly shiftKey: boolean
-    readonly spaceKey: boolean
-    readonly ctrlKey: boolean
+  readonly input: {
+    readonly shiftPressed: boolean
+    readonly spacePressed: boolean
+    readonly ctrlPressed: boolean
+    readonly lmbPressed: boolean
+    readonly mmbPressed: boolean
+    readonly mouseStartX: number
+    readonly mouseStartY: number
+    readonly mouseX: number
+    readonly mouseY: number
   }
   readonly resizingNode?: {
     readonly id: string
@@ -29,35 +33,30 @@ export interface State {
     | 'select'
     | 'select-add'
     | 'resize-node'
-  readonly mouseMove: {
-    readonly startX: number
-    readonly startY: number
-    readonly currentX: number
-    readonly currentY: number
-  }
-  readonly projectId: string
-  readonly mouseSelection?: Box
-  readonly selectedPositions: Readonly<
+  readonly selection?: Box
+  readonly positionsBeforeMove: Readonly<
     Record<string, { readonly x: number; readonly y: number }>
   >
-  readonly saveLayoutStartTime?: ReturnType<typeof setTimeout>
 }
 
 export interface Node {
-  readonly simpleNode: SimpleNode
-  readonly box: Box
+  readonly id: string
+  readonly address: string
+  readonly name: string
   readonly fields: Field[]
+  readonly box: Box
+  readonly color: OklchColor
+  readonly data: unknown
 }
 
 export interface Field {
-  readonly box: Box
   readonly name: string
-  readonly connection?: Connection
+  readonly target: string
+  readonly box: Box
+  readonly connection: Connection
 }
 
 export interface Connection {
-  readonly nodeId: string
-  readonly highlighted: boolean
   readonly from: {
     readonly direction: 'left' | 'right'
     readonly x: number
