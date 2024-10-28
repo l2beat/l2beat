@@ -3,6 +3,7 @@ import { persist } from 'zustand/middleware'
 
 import type { State } from './State'
 import type { Actions } from './actions/Actions'
+import { loadNodes } from './actions/loadNodes'
 import { onKeyDown } from './actions/onKeyDown'
 import { onKeyUp } from './actions/onKeyUp'
 import { onMouseDown } from './actions/onMouseDown'
@@ -10,66 +11,81 @@ import { onMouseMove } from './actions/onMouseMove'
 import { onMouseUp } from './actions/onMouseUp'
 import { onWheel } from './actions/onWheel'
 import {
-  updateNodeColors,
-  updateNodeLocations,
-  updateNodes,
-} from './actions/updateNodes'
+  clear,
+  colorSelected,
+  hideSelected,
+  layout,
+  showHidden,
+} from './actions/other'
+import { persistNodeLayout } from './utils/storage'
+
+const INITIAL_STATE: State = {
+  selected: [],
+  hidden: [],
+  nodes: [],
+  transform: { offsetX: 0, offsetY: 0, scale: 1 },
+  input: {
+    shiftPressed: false,
+    spacePressed: false,
+    ctrlPressed: false,
+    lmbPressed: false,
+    mmbPressed: false,
+    mouseStartX: 0,
+    mouseStartY: 0,
+    mouseX: 0,
+    mouseY: 0,
+  },
+  mouseUpAction: undefined,
+  mouseMoveAction: undefined,
+  selection: undefined,
+  positionsBeforeMove: {},
+  projectId: '',
+}
 
 export const useStore = create<State & Actions>()(
   persist(
     (set) => ({
-      selectedNodeIds: [],
-      hiddenNodesIds: [],
-      nodes: [],
-      selection: undefined,
-      transform: { offsetX: 0, offsetY: 0, scale: 1 },
-      pressed: {
-        leftMouseButton: false,
-        middleMouseButton: false,
-        ctrlKey: false,
-        shiftKey: false,
-        spaceKey: false,
-      },
-      mouseUpAction: undefined,
-      mouseMoveAction: undefined,
-      mouseMove: { startX: 0, startY: 0, currentX: 0, currentY: 0 },
-      mouseSelection: undefined,
-      selectedPositions: {},
-      saveLayoutStartTime: undefined,
-      projectId: '',
+      ...INITIAL_STATE,
 
-      onKeyDown: (...args) => set((state) => onKeyDown(state, ...args)),
-      onKeyUp: (...args) => set((state) => onKeyUp(state, ...args)),
-      onMouseDown: (...args) => set((state) => onMouseDown(state, ...args)),
-      onMouseUp: (...args) => set((state) => onMouseUp(state, ...args)),
-      onMouseMove: (...args) => set((state) => onMouseMove(state, ...args)),
-      onWheel: (...args) => set((state) => onWheel(state, ...args)),
-      updateNodes: (...args) => set((state) => updateNodes(state, ...args)),
-      updateNodeLocations: (...args) =>
-        set((state) => updateNodeLocations(state, ...args)),
-      updateNodeColors: (...args) =>
-        set((state) => updateNodeColors(state, ...args)),
-      setProjectId: (projectId: string) =>
-        set((state) => ({ ...state, projectId: projectId })),
+      loadNodes: wrapAction(set, loadNodes),
+      colorSelected: wrapAction(set, colorSelected),
+      hideSelected: wrapAction(set, hideSelected),
+      showHidden: wrapAction(set, showHidden),
+      clear: wrapAction(set, clear),
 
-      setHiddenNodes: (updateFn) => {
-        set((state) => {
-          // stale-state
-          const hiddenNodesIds = updateFn([...state.hiddenNodesIds])
-
-          return { ...state, hiddenNodesIds }
-        })
-      },
+      onKeyDown: wrapAction(set, onKeyDown),
+      onKeyUp: wrapAction(set, onKeyUp),
+      onMouseDown: wrapAction(set, onMouseDown),
+      onMouseUp: wrapAction(set, onMouseUp),
+      onMouseMove: wrapAction(set, onMouseMove),
+      onWheel: wrapAction(set, onWheel),
+      layout: wrapAction(set, layout),
     }),
     {
-      name: 'store',
+      // You can update the key if changes are backwards incompatible
+      name: 'store-v2',
       partialize: (state) => {
         return {
-          nodes: state.nodes,
-          hiddenNodesIds: state.hiddenNodesIds,
           projectId: state.projectId,
+          nodes: state.nodes,
+          hidden: state.hidden,
         }
       },
     },
   ),
 )
+
+let timeout: ReturnType<typeof setTimeout>
+useStore.subscribe((state) => {
+  clearTimeout(timeout)
+  timeout = setTimeout(() => {
+    persistNodeLayout(state)
+  }, 50)
+})
+
+function wrapAction<A extends unknown[]>(
+  set: (cb: (state: State) => Partial<State>) => void,
+  action: (state: State, ...args: A) => Partial<State>,
+): (...args: A) => void {
+  return (...args: A) => set((state) => action(state, ...args))
+}

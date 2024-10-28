@@ -1,6 +1,8 @@
 import { type ChartSectionProps } from './chart-section'
 import { type ContractsSectionProps } from './contracts/contracts-section'
 import { type DetailedDescriptionSectionProps } from './detailed-description-section'
+import { type GrissiniRiskAnalysisSectionProps } from './grissini-risk-analysis-section'
+import { type GroupSectionProps } from './group-section'
 import { type KnowledgeNuggetsSectionProps } from './knowledge-nuggets-section'
 import { type L3RiskAnalysisSectionProps } from './l3-risk-analysis-section'
 import { type MarkdownSectionProps } from './markdown-section'
@@ -14,7 +16,7 @@ import { type StateDerivationSectionProps } from './state-derivation-section'
 import { type StateValidationSectionProps } from './state-validation-section'
 import { type TechnologySectionProps } from './technology-section'
 
-export type ProjectSectionId =
+type SectionId =
   | 'tvl'
   | 'activity'
   | 'onchain-costs'
@@ -25,8 +27,6 @@ export type ProjectSectionId =
   | 'l3-risk-analysis'
   | 'stage'
   | 'technology'
-  | 'da-layer-technology'
-  | 'da-bridge-technology'
   | 'operator'
   | 'withdrawals'
   | 'other-considerations'
@@ -36,6 +36,10 @@ export type ProjectSectionId =
   | 'permissions'
   | 'contracts'
   | 'knowledge-nuggets'
+
+type GroupId = 'da-layer' | 'da-bridge'
+
+export type ProjectSectionId = SectionId | GroupId | `${GroupId}-${SectionId}`
 
 export type ProjectSectionProps = Omit<
   ExtendedProjectSectionProps,
@@ -119,6 +123,16 @@ export interface ProjectDetailsUpcomingDisclaimer {
   excludeFromNavigation: true
 }
 
+export interface ProjectDetailsGroup {
+  type: 'Group'
+  props: ProjectDetailsProps<GroupSectionProps>
+}
+
+export interface ProjectDetailsGrissiniRiskAnalysisSection {
+  type: 'GrissiniRiskAnalysisSection'
+  props: ProjectDetailsProps<GrissiniRiskAnalysisSectionProps>
+}
+
 export type ProjectDetailsSection = {
   excludeFromNavigation?: boolean
 } & (
@@ -137,4 +151,6 @@ export type ProjectDetailsSection = {
   | ProjectDetailsContractsSection
   | ProjectDetailsKnowledgeNuggetsSection
   | ProjectDetailsUpcomingDisclaimer
+  | ProjectDetailsGroup
+  | ProjectDetailsGrissiniRiskAnalysisSection
 )

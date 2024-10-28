@@ -1,4 +1,4 @@
-import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { ScalingProjectTechnologyChoice } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
@@ -150,6 +150,22 @@ export const zircuit: Layer2 = opStackL2({
         which are used to manage throttling (withdrawal limits) on OptimismPortal.',
       ...upgradeability,
     }),
+  ],
+  nonTemplateTrackedTxs: [
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x92Ef6Af472b39F1b363da45E35530c24619245A4'),
+        selector: '0xa9efd6b8',
+        functionSignature:
+          'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber, bytes _proof)',
+        sinceTimestamp: new UnixTime(1720137600),
+      },
+    },
   ],
   milestones: [
     {

@@ -6,23 +6,16 @@ import {
 } from '@l2beat/shared-pure'
 import { type RosetteValue } from '~/components/rosette/types'
 
-export function mapRisksToRosetteValues(
+export function mapLayerRisksToRosetteValues(
   risks: Record<
-    keyof (DaLayerRisks & DaBridgeRisks),
+    keyof DaLayerRisks,
     ValueWithSentiment<string, Sentiment> & {
       description?: string
       warning?: WarningValueWithSentiment
     }
   >,
 ): RosetteValue[] {
-  const values: RosetteValue[] = [
-    {
-      name: 'Upgradeability',
-      value: risks.upgradeability.value,
-      sentiment: risks.upgradeability.sentiment,
-      description: risks.upgradeability.description,
-      warning: risks.upgradeability.warning,
-    },
+  return [
     {
       name: 'Economic security',
       value: risks.economicSecurity.value,
@@ -31,19 +24,25 @@ export function mapRisksToRosetteValues(
       warning: risks.economicSecurity.warning,
     },
     {
-      name: 'Relayer failure',
-      value: risks.relayerFailure.value,
-      sentiment: risks.relayerFailure.sentiment,
-      description: risks.relayerFailure.description,
-      warning: risks.relayerFailure.warning,
-    },
-    {
       name: 'Fraud detection',
       value: risks.fraudDetection.value,
       sentiment: risks.fraudDetection.sentiment,
       description: risks.fraudDetection.description,
       warning: risks.fraudDetection.warning,
     },
+  ]
+}
+
+export function mapBridgeRisksToRosetteValues(
+  risks: Record<
+    keyof DaBridgeRisks,
+    ValueWithSentiment<string, Sentiment> & {
+      description?: string
+      warning?: WarningValueWithSentiment
+    }
+  >,
+): RosetteValue[] {
+  return [
     {
       name: 'Committee security',
       value: risks.committeeSecurity.value,
@@ -51,7 +50,19 @@ export function mapRisksToRosetteValues(
       description: risks.committeeSecurity.description,
       warning: risks.committeeSecurity.warning,
     },
+    {
+      name: 'Upgradeability',
+      value: risks.upgradeability.value,
+      sentiment: risks.upgradeability.sentiment,
+      description: risks.upgradeability.description,
+      warning: risks.upgradeability.warning,
+    },
+    {
+      name: 'Relayer failure',
+      value: risks.relayerFailure.value,
+      sentiment: risks.relayerFailure.sentiment,
+      description: risks.relayerFailure.description,
+      warning: risks.relayerFailure.warning,
+    },
   ]
-
-  return values
 }

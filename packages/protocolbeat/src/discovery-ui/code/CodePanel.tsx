@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
-import { useStore } from '../store'
-import { getCode, getProject } from '../api/api'
-import { useParams } from 'react-router-dom'
-import { useEffect, useRef } from 'react'
 import * as monaco from 'monaco-editor'
+import { useEffect, useRef } from 'react'
+import { useParams } from 'react-router-dom'
+import { getCode, getProject } from '../api/api'
+import { useStore } from '../store'
 
 export function CodePanel() {
   const { project } = useParams()

@@ -1,93 +1,62 @@
-import { useEffect } from 'react'
-
-import type { SimpleNode } from '../api/SimpleNode'
+import { useEffect, useRef } from 'react'
 import { useStore } from '../store/store'
-import { Connection } from './Connection'
-import { NodeView } from './NodeView'
+import { MouseSelection } from './MouseSelection'
+import { NodesAndConnections } from './NodesAndConnections'
 import { ScalableView } from './ScalableView'
-import { useViewport } from './useViewport'
 
-export interface ViewportProps {
-  nodes: SimpleNode[]
-  loading: Record<string, boolean | undefined>
-}
+export function Viewport() {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const viewRef = useRef<HTMLDivElement>(null)
 
-export function Viewport(props: ViewportProps) {
-  const { containerRef, viewRef } = useViewport()
+  const onKeyDown = useStore((state) => state.onKeyDown)
+  const onKeyUp = useStore((state) => state.onKeyUp)
+  const onMouseDown = useStore((state) => state.onMouseDown)
+  const onMouseMove = useStore((state) => state.onMouseMove)
+  const onMouseUp = useStore((state) => state.onMouseUp)
+  const onWheel = useStore((state) => state.onWheel)
 
-  const updateNodes = useStore((state) => state.updateNodes)
   useEffect(() => {
-    updateNodes(props.nodes)
-  }, [updateNodes, props.nodes])
+    function handleWheel(event: WheelEvent) {
+      if (!viewRef.current) return
+      onWheel(event, viewRef.current)
+    }
 
-  const setHiddenNodes = useStore((state) => state.setHiddenNodes)
+    function handleMouseDown(event: MouseEvent) {
+      if (!containerRef.current) return
+      onMouseDown(event, containerRef.current)
+    }
 
-  const nodes = useStore((state) => state.nodes)
-  const selectedNodeIds = useStore((state) => state.selectedNodeIds)
-  const hiddenNodesIds = useStore((state) => state.hiddenNodesIds)
+    function handleMouseMove(event: MouseEvent) {
+      if (!containerRef.current) return
+      onMouseMove(event, containerRef.current)
+    }
 
-  const transform = useStore((state) => state.transform)
-  const mouseSelection = useStore((state) => state.mouseSelection)
-
-  const visibleNodes = nodes.filter(
-    (node) => !hiddenNodesIds.includes(node.simpleNode.id),
-  )
-
-  function hideNode(nodeId: string) {
-    setHiddenNodes((nodes) => [...nodes, nodeId])
-  }
+    const target = containerRef.current
+    target?.addEventListener('wheel', handleWheel)
+    target?.addEventListener('mousedown', handleMouseDown)
+    window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mouseup', onMouseUp)
+    window.addEventListener('keydown', onKeyDown)
+    window.addEventListener('keyup', onKeyUp)
+    return () => {
+      target?.removeEventListener('wheel', handleWheel)
+      target?.removeEventListener('mousedown', handleMouseDown)
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('mouseup', onMouseUp)
+      window.removeEventListener('keydown', onKeyDown)
+      window.removeEventListener('keyup', onKeyUp)
+    }
+  }, [onKeyDown, onKeyUp, onMouseDown, onMouseMove, onMouseUp, onWheel])
 
   return (
     <div
       ref={containerRef}
       className="relative h-full w-full overflow-hidden rounded-lg bg-white"
     >
-      <ScalableView ref={viewRef} transform={transform}>
-        {visibleNodes.map((node) =>
-          node.fields.map((field, i) => {
-            const shouldHide =
-              !field.connection ||
-              hiddenNodesIds.find((id) => id === field.connection?.nodeId)
-
-            if (shouldHide) {
-              return null
-            }
-
-            return (
-              <Connection
-                key={`${node.simpleNode.id}-${i}-${field.connection.nodeId}`}
-                from={field.connection.from}
-                to={field.connection.to}
-                isHighlighted={
-                  selectedNodeIds.includes(node.simpleNode.id) ||
-                  selectedNodeIds.includes(field.connection.nodeId)
-                }
-              />
-            )
-          }),
-        )}
-        {visibleNodes.map((node) => (
-          <NodeView
-            key={node.simpleNode.id}
-            node={node}
-            selected={selectedNodeIds.includes(node.simpleNode.id)}
-            discovered={node.simpleNode.discovered}
-            onHideNode={hideNode}
-            loading={!!props.loading[node.simpleNode.id]}
-          />
-        ))}
+      <ScalableView ref={viewRef}>
+        <NodesAndConnections />
       </ScalableView>
-      {mouseSelection && (
-        <div
-          className="absolute border border-blue-600 bg-blue-100 bg-opacity-30"
-          style={{
-            left: mouseSelection.x,
-            top: mouseSelection.y,
-            width: mouseSelection.width,
-            height: mouseSelection.height,
-          }}
-        />
-      )}
+      <MouseSelection />
     </div>
   )
 }

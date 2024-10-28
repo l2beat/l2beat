@@ -8,6 +8,7 @@ export type ChainId =
   | 'immutablex'
   | 'gravity'
   | 'optimism'
+  | 'zksync-era'
 
 export type Chain = {
   id: ChainId
@@ -17,6 +18,7 @@ export type Chain = {
   getBlockLink: (blockNumber: number) => string
   getTxLink: (txHash: string) => string
   getContractLink: (address: string) => string
+  getTransactionTypeName?: (type: number) => string
 }
 
 export const SUPPORTED_CHAINS: Chain[] = [
@@ -111,5 +113,17 @@ export const SUPPORTED_CHAINS: Chain[] = [
       `https://app.blocksec.com/explorer/tx/optimism/${txHash}`,
     getContractLink: (address: string) =>
       `https://optimistic.etherscan.io/address/${address}`,
+  },
+  {
+    id: 'zksync-era',
+    name: 'ZKsync Era',
+    suggestedBlocksCount: 100,
+    batchSize: 10,
+    getBlockLink: (blockNumber: number) =>
+      `https://era.zksync.network//block/${blockNumber}`,
+    getTxLink: (txHash: string) =>
+      `https://app.blocksec.com/explorer/tx/zksync-era/${txHash}`,
+    getContractLink: (address: string) =>
+      `https://era.zksync.network//address/${address}`,
   },
 ]
