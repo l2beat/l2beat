@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x9ea99468cb8a7d2f77e8a9081a91238a2ba510df
+Generated with discovered.json: 0xb537dbe57d573aff09c4c57eea65a7d414beaa42
 
-# Diff at Mon, 28 Oct 2024 14:04:04 GMT:
+# Diff at Mon, 28 Oct 2024 14:19:56 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - comparing to: main@846d03afee15838cf7b18315c02ebdb6a2071f6c block: 21041836
@@ -17,58 +17,10 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 21041836 (main branch discovery), not current.
 
 ```diff
--   Status: DELETED
-    contract OneStepProofEntry (0x09824fe72BFF474d16D9c2774432E381BBD60662)
-    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
-```
-
-```diff
--   Status: DELETED
-    contract OneStepProverMemory (0x4811500e0d376Fa8d2EA3CCb7c61E0afB4F5A7f1)
-    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
-```
-
-```diff
     contract UpgradeExecutor (0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881) {
     +++ description: Central contract defining the access control for upgrading the system contract implementations.
       values.executors:
 +        ["0x798Fa726f0B4DF564681446D051b344E3FE4a6ca"]
-    }
-```
-
-```diff
--   Status: DELETED
-    contract OneStepProverMath (0x89AF7C4C2198c426cFe6E86de0680A0850503e06)
-    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
-```
-
-```diff
--   Status: DELETED
-    contract OneStepProverHostIo (0x99a2A31300816C1FA3f40818AC9280fe7271F878)
-    +++ description: None
-```
-
-```diff
--   Status: DELETED
-    contract OneStepProver0 (0xDf94F0474F205D086dbc2e66D69a856FCf520622)
-    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
-```
-
-```diff
-    contract ChallengeManager (0xE8AcC0E28a82a26D498f2C66B64C56B9Ef996c2e) {
-    +++ description: None
-      values.bridge:
--        "0x73C6af7029E714DFf1F1554F88b79B335011Da68"
-      values.osp:
--        "0x09824fe72BFF474d16D9c2774432E381BBD60662"
-      values.resultReceiver:
--        "0x8f98f9ae2f2836Ed3a628c23311Ad9976B9fBF1B"
-      values.sequencerInbox:
--        "0xaF5800ADF22301968613c37DA9C3C2a486eA915A"
-      values.totalChallengesCreated:
--        0
-      errors:
-+        {"bridge":"Execution reverted","osp":"Execution reverted","resultReceiver":"Execution reverted","sequencerInbox":"Execution reverted","totalChallengesCreated":"Execution reverted"}
     }
 ```
 
