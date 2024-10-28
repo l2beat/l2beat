@@ -15,7 +15,7 @@ export const river: Layer2 = opStackL2({
     name: 'River',
     slug: 'river',
     description:
-      'River is an L2 based on the OP Stack. It is used by River protocol - a protocol for building decentralized real-time messaging apps, and acts as the backbone of the messaging protocol.',
+      'River is a Rollup based on the OP Stack. It is used by the River protocol - a protocol for building decentralized real-time messaging apps - acting as its backbone.',
     links: {
       websites: ['https://river.build/'],
       apps: ['https://river-mainnet.bridge.river.build/'],

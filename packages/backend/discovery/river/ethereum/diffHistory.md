@@ -1,13 +1,13 @@
-Generated with discovered.json: 0xded96925c0a10fb23c21ae35f059d471a282788c
+Generated with discovered.json: 0x615f65ab4c1ad5ea94c1073a72ef795e4569689b
 
-# Diff at Fri, 25 Oct 2024 14:40:50 GMT:
+# Diff at Mon, 28 Oct 2024 15:30:37 GMT:
 
-- author: Radina Talanova (<nt.radina@gmail.com>)
-- current block number: 21043289
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- current block number: 21065033
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial discovery: Standard OP stack rollup.
 
 ## Initial discovery
 
@@ -19,7 +19,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x2876c43B17A5750CBea5E2A3C42718374E21D5a2)
+    contract RiverMultisig (0x2876c43B17A5750CBea5E2A3C42718374E21D5a2)
     +++ description: None
 ```
 

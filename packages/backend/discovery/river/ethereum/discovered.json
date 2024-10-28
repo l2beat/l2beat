@@ -1,8 +1,8 @@
 {
   "name": "river",
   "chain": "ethereum",
-  "blockNumber": 21043289,
-  "configHash": "0x6de2bc5b697d522132880a2cdf0c0504c1b87c664a0d1b15c2fc111fc546b54b",
+  "blockNumber": 21065033,
+  "configHash": "0x7d45316f4acb54779f32a6b318c37b6e4d5318a2000188857e73238fc8484f05",
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -49,7 +49,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "RiverMultisig",
       "address": "0x2876c43B17A5750CBea5E2A3C42718374E21D5a2",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -140,7 +140,8 @@
         "multisigThreshold": "4 of 6 (67%)",
         "nonce": 0,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "L2OutputOracle",
@@ -199,10 +200,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 6861600,
-        "latestOutputIndex": 1905,
-        "nextBlockNumber": 6865200,
-        "nextOutputIndex": 1906,
+        "latestBlockNumber": 6991200,
+        "latestOutputIndex": 1941,
+        "nextBlockNumber": 6994800,
+        "nextOutputIndex": 1942,
         "proposer": "0x1F7D2BCe97a04D2f935C62b53fE04fed373d2d17",
         "PROPOSER": "0x1F7D2BCe97a04D2f935C62b53fE04fed373d2d17",
         "startingBlockNumber": 0,
