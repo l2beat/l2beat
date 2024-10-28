@@ -25,7 +25,7 @@ export const patex: Layer2 = upcomingL2({
         'https://youtube.com/channel/UCLmHyM6kZ5bViyh7my6ZkpA',
       ],
     },
-  }
+  },
 })
 //for once it goes live again
 //rpcUrl: 'https://rpc.patex.io/', //chainid 789
