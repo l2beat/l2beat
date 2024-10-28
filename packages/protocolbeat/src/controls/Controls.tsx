@@ -5,7 +5,11 @@ import { HideButton } from './HideButton'
 import { ShowButton } from './ShowButton'
 import { SlowLayoutButton } from './SlowLayoutButton'
 
-export function Controls() {
+interface ControlsProps {
+  panelMode: boolean
+}
+
+export function Controls(props: ControlsProps) {
   return (
     <div className="-translate-x-1/2 absolute bottom-8 left-1/2 flex select-none items-center gap-1 rounded-lg bg-white p-2 shadow-xl">
       <SlowLayoutButton />
@@ -14,8 +18,12 @@ export function Controls() {
       <ShowButton />
       <HideButton />
       <ColorButton />
-      <span className="opacity-20">|</span>
-      <ClearButton />
+      {!props.panelMode && (
+        <>
+          <span className="opacity-20">|</span>
+          <ClearButton />
+        </>
+      )}
     </div>
   )
 }

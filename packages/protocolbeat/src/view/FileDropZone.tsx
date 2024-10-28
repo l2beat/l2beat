@@ -3,7 +3,10 @@ import { useStore } from '../store/store'
 import { discoveryToNodes } from '../store/utils/discoveryToNodes'
 import { encodeProjectId, parseDiscovery } from '../store/utils/paseDiscovery'
 
-export function FileDropZone(props: { children: ReactNode }) {
+export function FileDropZone(props: {
+  children: ReactNode
+  disabled: boolean
+}) {
   const loadNodes = useStore((state) => state.loadNodes)
 
   async function loadFromFile(file: File) {
@@ -20,6 +23,9 @@ export function FileDropZone(props: { children: ReactNode }) {
       className="flex h-full w-full"
       onDrop={(event) => {
         event.preventDefault()
+        if (props.disabled) {
+          return
+        }
         ;[...event.dataTransfer.items].forEach((item) => {
           if (item.kind === 'file') {
             const file = item.getAsFile()

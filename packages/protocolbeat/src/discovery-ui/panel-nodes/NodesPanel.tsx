@@ -69,7 +69,7 @@ export function NodesPanel() {
 
   return (
     <div className="h-full w-full overflow-x-hidden font-ui">
-      <App />
+      <App panelMode />
     </div>
   )
 }
