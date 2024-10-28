@@ -421,17 +421,18 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
   const upgraderDescription =
     templateVars.exitWindowSecondLine ??
     (() => {
-      const upgradersPortal = templateVars.discovery.getUpgraders(
-        portal.address,
-      )
+      const upgradersPortal = templateVars.discovery.getUpgraders(portal)
       assert(
         upgradersPortal.length === 1,
         'Portal must have exactly one upgrader',
       )
       const upgraderPortal = upgradersPortal[0]
-      const upgradersL1StandardBridge = templateVars.discovery.getUpgraders(
+      const l1StandardBridge = templateVars.discovery.getContractByAddress(
         l1StandardBridgeEscrow,
       )
+      assert(l1StandardBridge !== undefined, 'L1StandardBridge must exist')
+      const upgradersL1StandardBridge =
+        templateVars.discovery.getUpgraders(l1StandardBridge)
       assert(
         upgradersL1StandardBridge.length === 1,
         'L1StandardBridge must have exactly one upgrader',
@@ -441,7 +442,6 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
         upgraderPortal.address === upgraderL1StandardBridge.address,
         'Portal and L1StandardBridge must have the same upgrader',
       )
-
       assert(
         upgraderPortal.type !== 'Contract',
         'Upgrader must either be EOA or Multisig',

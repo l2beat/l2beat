@@ -420,12 +420,9 @@ export class ProjectDiscovery {
     return members.map((member) => this.formatPermissionedAccount(member))
   }
 
-  getUpgraders(address: EthereumAddress): ScalingProjectPermissionedAccount[] {
-    const contract = this.getContractByAddress(address)
-    assert(
-      contract !== undefined,
-      `No contract of ${address} address found (${this.projectName})`,
-    )
+  getUpgraders(
+    contract: ContractParameters,
+  ): ScalingProjectPermissionedAccount[] {
     const upgraders = contract.issuedPermissions
       ?.filter((p) => p.permission === 'upgrade')
       .map((p) => p.target)

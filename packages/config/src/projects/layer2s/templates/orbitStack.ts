@@ -777,7 +777,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
 
   const upgraderDescription = (() => {
     const upgradersProxy = templateVars.discovery.getUpgraders(
-      templateVars.rollupProxy.address,
+      templateVars.rollupProxy,
     )
     assert(
       upgradersProxy.length === 1,
@@ -785,7 +785,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     )
     const upgraderProxy = upgradersProxy[0]
     const upgradersBridge = templateVars.discovery.getUpgraders(
-      templateVars.bridge.address,
+      templateVars.bridge,
     )
     assert(
       upgradersBridge.length === 1,
