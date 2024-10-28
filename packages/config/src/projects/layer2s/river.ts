@@ -10,6 +10,7 @@ export const river: Layer2 = opStackL2({
   createdAt: new UnixTime(1729867724), // 2024-10-25T17:48:44Z
   badges: [Badge.RaaS.Caldera],
   discovery,
+  usesBlobs: true,
   display: {
     name: 'River',
     slug: 'river',
