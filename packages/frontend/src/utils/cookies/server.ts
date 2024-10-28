@@ -26,10 +26,6 @@ export async function setCookie<T extends KnownCookieName>(
   options: Partial<ResponseCookie>,
 ) {
   const meta = knownCookies[name]
-  const cookie = await cookies() 
-  cookie.set(
-    meta.key,
-    serializeKnownCookie({ name, value }),
-    options,
-  )
+  const cookie = await cookies()
+  cookie.set(meta.key, serializeKnownCookie({ name, value }), options)
 }
