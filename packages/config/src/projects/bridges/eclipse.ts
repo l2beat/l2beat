@@ -65,7 +65,6 @@ export const eclipse: Bridge = {
         {
           category: 'Users can be censored if',
           text: 'the bridge operators decide not to mint tokens after observing a deposit.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',

@@ -8,7 +8,7 @@ const meta = {
   component: PermissionsSection,
   args: {
     id: 'permissions',
-    sectionOrder: 1,
+    sectionOrder: '1',
     includeChildrenIfUnderReview: false,
     isUnderReview: false,
     title: 'Permissions',

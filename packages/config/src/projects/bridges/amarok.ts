@@ -133,7 +133,6 @@ export const amarok: Bridge = {
         {
           category: 'Funds can be stolen if',
           text: 'connectors to optimistic rollups receive a fraudulent message within 7-day fraud-proof window and this is not caught by the watchers.',
-          isCritical: true,
         },
       ],
     },

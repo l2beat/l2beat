@@ -114,7 +114,6 @@ export const hop: Bridge = {
         {
           category: 'Funds can be stolen if',
           text: 'destination token contract is maliciously upgraded.',
-          isCritical: true,
         },
       ],
       isIncomplete: true,

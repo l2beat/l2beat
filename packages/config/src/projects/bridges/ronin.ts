@@ -113,22 +113,18 @@ export const ronin: Bridge = {
         {
           category: 'Users can be censored if',
           text: 'validators decide to not approve a token mint after observing an event on Ethereum.',
-          isCritical: true,
         },
         {
           category: 'Users can be censored if',
           text: 'validators decide not to sign withdrawal requests.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: 'validators allow to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: 'malicious validators generate signature of a fake withdrawal request.',
-          isCritical: true,
         },
         {
           category: 'Funds can be frozen if',

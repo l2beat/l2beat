@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x94df63d6b202c679a5ef25a3acf56e3129badb8d
+
+# Diff at Fri, 25 Oct 2024 05:58:15 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@ae2c410e7fd6561c1946613ca693d2dc0322c23d block: 20995261
+- current block number: 21040685
+
+## Description
+
+Renamed multisig to better show control.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20995261 (main branch discovery), not current.
+
+```diff
+    contract AlchemyMultisig (0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) {
+    +++ description: None
+      name:
+-        "WorldchainMultisig"
++        "AlchemyMultisig"
+    }
+```
+
 Generated with discovered.json: 0x147615e7e246e0558fe40f76a733c1703e82eec1
 
 # Diff at Mon, 21 Oct 2024 12:50:11 GMT:

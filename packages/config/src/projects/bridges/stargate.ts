@@ -70,12 +70,10 @@ export const stargate: Bridge = {
         {
           category: 'Users can be censored if',
           text: 'oracles or relayers fail to facilitate the transfer.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: 'oracles and relayers collude to submit fraudulent block hash and relay fraudulent transfer .',
-          isCritical: true,
         },
       ],
       isIncomplete: true,

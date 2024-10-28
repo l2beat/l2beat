@@ -503,7 +503,6 @@ export const fraxferry: Bridge = {
         {
           category: 'Funds can be stolen if',
           text: 'bridge owner removes funds from the bridge escrow.',
-          isCritical: true,
         },
       ],
     },

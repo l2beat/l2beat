@@ -9,7 +9,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { RiskCell } from '~/components/table/cells/risk-cell'
+import { SentimentText } from '~/components/sentiment-text'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { InfoIcon } from '~/icons/info'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
@@ -77,11 +77,29 @@ export function BridgesProjectStats({ project }: Props) {
       />
       <ProjectStat
         title="Destination"
-        value={<RiskCell risk={project.header.destination} />}
+        value={
+          <SentimentText
+            sentiment={project.header.destination.sentiment}
+            className="text-lg font-medium !leading-none md:text-xl md:font-bold"
+          >
+            {project.header.destination.value}
+          </SentimentText>
+        }
       />
       <ProjectStat
         title="Validated by"
-        value={<RiskCell risk={project.header.validatedBy} />}
+        value={
+          project.header.validatedBy ? (
+            <SentimentText
+              sentiment={project.header.validatedBy.sentiment}
+              className="text-lg font-medium !leading-none md:text-xl md:font-bold"
+            >
+              {project.header.validatedBy.value}
+            </SentimentText>
+          ) : (
+            <NoDataBadge />
+          )
+        }
       />
       <ProjectStat title="Type" value={project.header.category} />
     </div>

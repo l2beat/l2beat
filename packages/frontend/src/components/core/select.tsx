@@ -8,7 +8,31 @@ import { CheckIcon } from '~/icons/check'
 import { ChevronIcon } from '~/icons/chevron'
 import { cn } from '~/utils/cn'
 
-const Select = SelectPrimitive.Root
+const SelectContext = React.createContext<
+  React.Dispatch<React.SetStateAction<boolean>> | undefined
+>(undefined)
+
+function useSelectContext() {
+  const context = React.useContext(SelectContext)
+  if (!context) {
+    throw new Error('useSelectContext must be used within a SelectContext')
+  }
+
+  return context
+}
+
+const Select = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Root>
+>((props) => {
+  const [isOpen, setIsOpen] = React.useState(false)
+  return (
+    <SelectContext.Provider value={setIsOpen}>
+      <SelectPrimitive.Root {...props} open={isOpen} onOpenChange={setIsOpen} />
+    </SelectContext.Provider>
+  )
+})
+Select.displayName = SelectPrimitive.Root.displayName
 
 const SelectGroup = SelectPrimitive.Group
 
@@ -17,24 +41,35 @@ const SelectValue = SelectPrimitive.Value
 const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
-  <SelectPrimitive.Trigger
-    ref={ref}
-    className={cn(
-      'group/trigger flex min-h-8 select-none items-center justify-between gap-1.5 whitespace-nowrap rounded-lg px-3 py-1 shadow-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
-      'bg-gray-200 text-sm font-medium leading-none data-[state=open]:hover:bg-gray-400 dark:bg-zinc-700 dark:data-[state=open]:hover:bg-slate-600',
-      'sidebar:!bg-surface-primary sidebar:data-[state=open]:hover:!bg-surface-secondary sidebar:main-page-card:!bg-surface-secondary sidebar:main-page-card:data-[state=open]:hover:!bg-surface-tertiary',
-      'z-20 transition-colors',
-      className,
-    )}
-    {...props}
-  >
-    {children}
-    <SelectPrimitive.Icon asChild>
-      <ChevronIcon className="size-3 fill-current stroke-[1.8px] transition-transform group-data-[state=open]/trigger:rotate-180" />
-    </SelectPrimitive.Icon>
-  </SelectPrimitive.Trigger>
-))
+>(({ className, children, ...props }, ref) => {
+  const setIsOpen = useSelectContext()
+  return (
+    <SelectPrimitive.Trigger
+      ref={ref}
+      onPointerDown={(e) => {
+        if (e.pointerType === 'touch') e.preventDefault()
+      }}
+      onPointerUp={(e) => {
+        if (e.pointerType === 'touch') {
+          setIsOpen((prevState) => !prevState)
+        }
+      }}
+      className={cn(
+        'group/trigger flex min-h-8 select-none items-center justify-between gap-1.5 whitespace-nowrap rounded-lg px-3 py-1 shadow-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
+        'bg-gray-200 text-sm font-medium leading-none data-[state=open]:hover:bg-gray-400 dark:bg-zinc-700 dark:data-[state=open]:hover:bg-slate-600',
+        'sidebar:!bg-surface-primary sidebar:data-[state=open]:hover:!bg-surface-secondary sidebar:main-page-card:!bg-surface-secondary sidebar:main-page-card:data-[state=open]:hover:!bg-surface-tertiary',
+        'z-20 transition-colors',
+        className,
+      )}
+      {...props}
+    >
+      {children}
+      <SelectPrimitive.Icon asChild>
+        <ChevronIcon className="size-3 fill-current stroke-[1.8px] transition-transform group-data-[state=open]/trigger:rotate-180" />
+      </SelectPrimitive.Icon>
+    </SelectPrimitive.Trigger>
+  )
+})
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName
 
 const SelectScrollUpButton = React.forwardRef<
