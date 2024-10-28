@@ -10,17 +10,25 @@ import { getImplementationChangeReport } from '../../implementation-change-repor
 import { getContractsVerificationStatuses } from '../../verification-status/get-contracts-verification-statuses'
 import { getManuallyVerifiedContracts } from '../../verification-status/get-manually-verified-contracts'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
+import {
+  getDaProjectsTvl,
+  pickTvlForProjects,
+} from '../utils/get-da-projects-tvl'
 import { getDaRisks } from '../utils/get-da-risks'
 import { kindToType } from '../utils/kind-to-layer-type'
 import {
   type EconomicSecurityData,
   getDaProjectEconomicSecurity,
 } from './utils/get-da-project-economic-security'
-import { getUniqueProjectsInUse } from '../utils/get-da-projects'
-import { getDaProjectsTvl, pickTvlForProjects } from '../utils/get-da-projects-tvl'
 
 export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
-  const uniqueProjectsInUse = getUniqueProjectsInUse()
+  const uniqueProjectsInUse = [
+    ...new Set(
+      daLayer.bridges.flatMap((bridge) =>
+        bridge.usedIn.map((project) => project.id),
+      ),
+    ),
+  ]
   const [
     economicSecurity,
     tvlPerProject,
