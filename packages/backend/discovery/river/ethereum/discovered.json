@@ -1,8 +1,8 @@
 {
   "name": "river",
   "chain": "ethereum",
-  "blockNumber": 21065033,
-  "configHash": "0x7d45316f4acb54779f32a6b318c37b6e4d5318a2000188857e73238fc8484f05",
+  "blockNumber": 21065199,
+  "configHash": "0x2c0f18a97874246df9ce179e2245d4dc4f02dac46507ae983adddc792faf8438",
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -200,10 +200,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 6991200,
-        "latestOutputIndex": 1941,
-        "nextBlockNumber": 6994800,
-        "nextOutputIndex": 1942,
+        "latestBlockNumber": 6994800,
+        "latestOutputIndex": 1942,
+        "nextBlockNumber": 6998400,
+        "nextOutputIndex": 1943,
         "proposer": "0x1F7D2BCe97a04D2f935C62b53fE04fed373d2d17",
         "PROPOSER": "0x1F7D2BCe97a04D2f935C62b53fE04fed373d2d17",
         "startingBlockNumber": 0,
@@ -470,13 +470,13 @@
     {
       "name": "SuperchainConfig",
       "address": "0xb6aFBB2A7299e968c9f98f8b518bD89e670a420A",
-      "template": "opstack/SuperchainConfig",
+      "template": "opstack/SuperchainConfigFake",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
+      "description": "This is NOT the shared SuperchainConfig of the OP stack Superchain. This SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
       "categories": ["Upgrades&Governance"],
       "issuedPermissions": [
         {
@@ -1022,7 +1022,7 @@
     "opstack/L2OutputOracle": "0xfc8737561d85bab2fe5e39a7a02436a0cb0e7f96d7a7adc2ee3ea486b391c2fc",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
     "opstack/OptimismPortal": "0x5fb419891d613086f39879ae360e765fdb6d154ef5ea5b2f5f98a4443a1b4839",
-    "opstack/SuperchainConfig": "0x76190197170f60e32f3e466ca757cb0bde1055ea134384678dd0911e7a5338ef",
+    "opstack/SuperchainConfigFake": "0x53a7342e3ad0ea230608a115aa098bc297d88c30ea6560b549c25853b184cc7b",
     "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3"
   }
 }
