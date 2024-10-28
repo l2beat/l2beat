@@ -92,7 +92,6 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
       daLayerGrissiniValues: grissiniValues,
       daBridgeGrissiniValues: mapBridgeRisksToRosetteValues(daBridge.risks),
       daLayer,
-      daBridge,
       tvs: layerTvs,
       economicSecurity,
     }),
@@ -104,7 +103,6 @@ interface HeaderParams {
   daLayerGrissiniValues: RosetteValue[]
   daBridgeGrissiniValues: RosetteValue[]
   daLayer: DaLayer
-  daBridge: DaBridge
   tvs: number
   economicSecurity: EconomicSecurityData | undefined
 }
@@ -113,7 +111,6 @@ function getHeader({
   daLayerGrissiniValues,
   daBridgeGrissiniValues,
   daLayer,
-  daBridge,
   tvs,
   economicSecurity,
 }: HeaderParams) {
