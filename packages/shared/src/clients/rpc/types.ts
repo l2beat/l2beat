@@ -27,7 +27,7 @@ export const EVMTransaction = z
     /** Address of the receiver, null when its a contract creation transaction. */
     to: z.union([z.string(), z.null()]),
     input: z.string(),
-    type: Quantity.decode.transform((n) => Number(n)),
+    type: Quantity.decode.transform((n) => Number(n)).optional(),
   })
   .transform(({ hash, from, to, input, type }) => ({
     hash,
