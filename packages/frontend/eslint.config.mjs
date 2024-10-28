@@ -16,15 +16,13 @@ const compat = new FlatCompat({
   allConfig: js.configs.all,
 })
 
-const eslintConfig = [
-  ...fixupConfigRules(
-    compat.extends('next/core-web-vitals', 'plugin:react-hooks/recommended'),
-  ),
+const nonFlatConfigs = fixupConfigRules(
+  compat.extends('next/core-web-vitals', 'plugin:react-hooks/recommended'),
+)
+
+const typescriptConfigs = [
   ...tsEslint.configs.recommendedTypeChecked,
   ...tsEslint.configs.stylisticTypeChecked,
-  ...tailwind.configs['flat/recommended'],
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-  ...storybook.configs['flat/recommended'],
   {
     languageOptions: {
       parser: tsEslint.parser,
@@ -34,13 +32,6 @@ const eslintConfig = [
         project: true,
       },
     },
-
-    settings: {
-      tailwindcss: {
-        callees: ['cn', 'cva'],
-      },
-    },
-
     rules: {
       '@typescript-eslint/array-type': 'off',
       '@typescript-eslint/consistent-type-definitions': 'off',
@@ -71,7 +62,36 @@ const eslintConfig = [
           },
         },
       ],
+    },
+  },
+]
 
+const tailwindConfigs = [
+  ...tailwind.configs['flat/recommended'],
+  {
+    settings: {
+      tailwindcss: {
+        callees: ['cn', 'cva'],
+      },
+    },
+    rules: {
+      'tailwindcss/classnames-order': ['error'],
+      'tailwindcss/enforces-negative-arbitrary-values': ['error'],
+      'tailwindcss/enforces-shorthand': ['error'],
+      'tailwindcss/no-contradicting-classname': ['error'],
+      'tailwindcss/no-unnecessary-arbitrary-value': ['error'],
+    },
+  },
+]
+
+const config = [
+  ...nonFlatConfigs,
+  ...typescriptConfigs,
+  ...tailwindConfigs,
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
+  ...storybook.configs['flat/recommended'],
+  {
+    rules: {
       'no-restricted-imports': [
         'error',
         {
@@ -99,14 +119,8 @@ const eslintConfig = [
           ],
         },
       ],
-
-      'tailwindcss/classnames-order': ['error'],
-      'tailwindcss/enforces-negative-arbitrary-values': ['error'],
-      'tailwindcss/enforces-shorthand': ['error'],
-      'tailwindcss/no-contradicting-classname': ['error'],
-      'tailwindcss/no-unnecessary-arbitrary-value': ['error'],
     },
   },
 ]
 
-export default eslintConfig
+export default config
