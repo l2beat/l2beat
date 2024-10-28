@@ -5,16 +5,6 @@ export const RpcResponse = z.object({
   result: z.union([z.string(), z.number(), z.record(z.string(), z.any())]),
 })
 
-export type EVMTransaction = z.infer<typeof EVMTransaction>
-export const EVMTransaction = z
-  .object({
-    hash: z.string(),
-    /** Address of the receiver, null when its a contract creation transaction. */
-    to: z.union([z.string(), z.null()]),
-    input: z.string(),
-  })
-  .transform(({ hash, to, input }) => ({ hash, to, data: input }))
-
 export const Quantity = {
   decode: z.preprocess((s) => {
     const res = z.string().parse(s)
@@ -28,6 +18,24 @@ export const Quantity = {
 
   encode: (n: bigint) => `0x${n.toString(16)}`,
 }
+
+export type EVMTransaction = z.infer<typeof EVMTransaction>
+export const EVMTransaction = z
+  .object({
+    hash: z.string(),
+    from: z.string(),
+    /** Address of the receiver, null when its a contract creation transaction. */
+    to: z.union([z.string(), z.null()]),
+    input: z.string(),
+    type: Quantity.decode.transform((n) => Number(n)),
+  })
+  .transform(({ hash, from, to, input, type }) => ({
+    hash,
+    from,
+    to,
+    data: input,
+    type,
+  }))
 
 export type EVMBlock = z.infer<typeof EVMBlock>
 export const EVMBlock = z.object({
