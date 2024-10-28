@@ -22,7 +22,7 @@ const config = {
   ],
 
   framework: {
-    name: getAbsolutePath('@storybook/experimental-nextjs-vite'),
+    name: getAbsolutePath('@storybook/nextjs'),
     options: {},
   },
 
