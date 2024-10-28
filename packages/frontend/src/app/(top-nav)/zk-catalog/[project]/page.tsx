@@ -14,9 +14,8 @@ interface Props {
   }>
 }
 
-export async function generateMetadata({
-  params,
-}: Props): Promise<Metadata | null> {
+export async function generateMetadata(props: Props): Promise<Metadata | null> {
+  const params = await props.params
   const project = projects.find((p) => p.display.slug === params.project)
 
   if (!project) {

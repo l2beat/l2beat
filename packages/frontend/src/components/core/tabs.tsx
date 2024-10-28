@@ -9,37 +9,35 @@ import { cn } from '~/utils/cn'
  * This component is a wrapper around the Radix Tabs component that allows you
  * to store the selected tab in the URL search params.
  */
-const Tabs = React.forwardRef<
-  React.ElementRef<typeof TabsPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Root> & {
-    storeInSearchParams?: boolean
-  }
->(
-  (
-    { defaultValue: passedDefaultValue, storeInSearchParams = true, ...props },
-    ref,
-  ) => {
-    const state = useSearchParamState('tab', passedDefaultValue, {
-      shallow: true,
-    })
-    const [value, setValue] = storeInSearchParams ? state : [passedDefaultValue]
+const Tabs = ({
+  ref,
+  defaultValue: passedDefaultValue,
+  storeInSearchParams = true,
+  ...props
+}: React.ComponentProps<typeof TabsPrimitive.Root> & {
+  storeInSearchParams?: boolean
+}) => {
+  const state = useSearchParamState('tab', passedDefaultValue, {
+    shallow: true,
+  })
+  const [value, setValue] = storeInSearchParams ? state : [passedDefaultValue]
 
-    return (
-      <TabsPrimitive.Root
-        ref={ref}
-        defaultValue={value}
-        onValueChange={setValue}
-        {...props}
-      />
-    )
-  },
-)
+  return (
+    <TabsPrimitive.Root
+      ref={ref}
+      defaultValue={value}
+      onValueChange={setValue}
+      {...props}
+    />
+  )
+}
 Tabs.displayName = TabsPrimitive.Root.displayName
 
-const TabsList = React.forwardRef<
-  React.ElementRef<typeof TabsPrimitive.List>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
->(({ className, ...props }, ref) => (
+const TabsList = ({
+  ref,
+  className,
+  ...props
+}: React.ComponentProps<typeof TabsPrimitive.List>) => (
   <TabsPrimitive.List
     ref={ref}
     className={cn(
@@ -48,13 +46,15 @@ const TabsList = React.forwardRef<
     )}
     {...props}
   />
-))
+)
 TabsList.displayName = TabsPrimitive.List.displayName
 
-const TabsTrigger = React.forwardRef<
-  React.ElementRef<typeof TabsPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
+const TabsTrigger = ({
+  ref,
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof TabsPrimitive.Trigger>) => (
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
@@ -66,19 +66,20 @@ const TabsTrigger = React.forwardRef<
     {children}
     <span className="absolute bottom-0 left-0 block h-1 w-full rounded-t-sm bg-gray-700 opacity-0 transition-all duration-300 group-hover:opacity-80  group-data-[state=active]:bg-brand group-data-[state=active]:opacity-100" />
   </TabsPrimitive.Trigger>
-))
+)
 TabsTrigger.displayName = TabsPrimitive.Trigger.displayName
 
-const TabsContent = React.forwardRef<
-  React.ElementRef<typeof TabsPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
->(({ className, ...props }, ref) => (
+const TabsContent = ({
+  ref,
+  className,
+  ...props
+}: React.ComponentProps<typeof TabsPrimitive.Content>) => (
   <TabsPrimitive.Content
     ref={ref}
     className={cn('mt-3 md:mt-6', className)}
     {...props}
   />
-))
+)
 TabsContent.displayName = TabsPrimitive.Content.displayName
 
 export { Tabs, TabsList, TabsTrigger, TabsContent }
