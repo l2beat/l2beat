@@ -113,7 +113,6 @@ function getHeader({
   daLayerGrissiniValues,
   daBridgeGrissiniValues,
   daLayer,
-  daBridge,
   tvs,
   economicSecurity,
 }: HeaderParams) {
