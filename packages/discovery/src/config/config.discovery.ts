@@ -11,6 +11,14 @@ export function getChainShortName(chain: string) {
   return chainConfig.shortName
 }
 
+export function getChainFullName(shortName: string) {
+  const chainConfig = chains.find((c) => c.shortName === shortName)
+  if (!chainConfig) {
+    throw new Error(`No config for chain: ${shortName}`)
+  }
+  return chainConfig.name
+}
+
 export function getChainConfigs(): DiscoveryChainConfig[] {
   return chains.flatMap((chain) => {
     try {

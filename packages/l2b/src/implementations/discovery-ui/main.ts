@@ -3,6 +3,7 @@ import { ConfigReader } from '@l2beat/discovery'
 import express from 'express'
 import { getProject } from './getProject'
 import { getProjects } from './getProjects'
+import { getCode } from './getCode'
 
 export function runDiscoveryUi() {
   const app = express()
@@ -19,6 +20,15 @@ export function runDiscoveryUi() {
 
   app.get('/api/projects/:project', (req, res) => {
     const response = getProject(configReader, req.params.project)
+    res.json(response)
+  })
+
+  app.get('/api/projects/:project/code/:address', (req, res) => {
+    const response = getCode(
+      configReader,
+      req.params.project,
+      req.params.address,
+    )
     res.json(response)
   })
 

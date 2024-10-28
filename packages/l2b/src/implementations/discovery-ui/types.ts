@@ -91,3 +91,7 @@ export interface UnknownFieldValue {
 export interface ApiProjectContract extends ApiAddressEntry {
   fields: Field[]
 }
+
+export interface ApiCodeResponse {
+  sources: { name: string; code: string }[]
+}

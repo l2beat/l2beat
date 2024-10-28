@@ -19,7 +19,7 @@ import {
 export class ConfigReader {
   public templateService: TemplateService
 
-  constructor(private readonly rootPath: string = '') {
+  constructor(readonly rootPath: string = '') {
     this.templateService = new TemplateService(rootPath)
   }
 
