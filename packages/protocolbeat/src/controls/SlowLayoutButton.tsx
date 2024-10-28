@@ -1,5 +1,4 @@
 import {
-  type SimulationLinkDatum,
   type SimulationNodeDatum,
   forceCenter,
   forceLink,
@@ -10,8 +9,8 @@ import { useEffect, useState } from 'react'
 
 import type { Node } from '../store/State'
 import { useStore } from '../store/store'
-import type { NodeLocations } from '../store/utils/storageParsing'
-import { autoLayout } from './autoLayout'
+import type { NodeLocations } from '../store/utils/storage'
+import { ControlButton } from './ControlButton'
 
 // d3 assumes each node is a single point (no width and height),
 // so we scale the coordinates of the simulation to move the nodes
@@ -25,38 +24,29 @@ interface SimulationNode extends SimulationNodeDatum {
   node: Node
 }
 
-interface SimulationLink extends SimulationLinkDatum<SimulationNode> {
-  source: string
-  target: string
-}
-
-export function AutoLayoutButton() {
+export function SlowLayoutButton() {
   const nodes = useStore((state) => state.nodes)
-  const updateNodeLocations = useStore((state) => state.updateNodeLocations)
+  const layout = useStore((state) => state.layout)
   const [updatingLayout, setUpdatingLayout] = useState<boolean>(false)
 
   const draw = () => {
     if (!updatingLayout) return
 
     const simNodes: SimulationNode[] = nodes.map((node) => ({
-      id: node.simpleNode.id,
+      id: node.id,
       x: node.box.x / SIM_SCALE,
       y: node.box.y / SIM_SCALE,
       node,
     }))
 
     const links = nodes
-      .map((n) => n.simpleNode)
-      .flatMap((n) =>
-        n.fields.map((f) => ({
-          source: n.id,
-          target: f.connection,
+      .flatMap((node) =>
+        node.fields.map((field) => ({
+          source: node.id,
+          target: field.target,
         })),
       )
-      .filter((l) => l.target !== undefined)
-      .filter(
-        (l) => simNodes.find((sn) => sn.id === l.target) !== undefined,
-      ) as SimulationLink[]
+      .filter((l) => simNodes.some((sn) => sn.id === l.target))
 
     const simulation = forceSimulation(simNodes)
       .force(
@@ -76,7 +66,7 @@ export function AutoLayoutButton() {
           y: simNode.y * SIM_SCALE,
         }
       })
-      updateNodeLocations(nodeLocations)
+      layout(nodeLocations)
     }
 
     function ended() {
@@ -89,27 +79,12 @@ export function AutoLayoutButton() {
     draw()
   }, [updatingLayout])
 
-  function handleAutoLayout() {
-    updateNodeLocations(autoLayout(nodes))
-  }
-
   return (
-    <>
-      <button
-        className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-        type="button"
-        disabled={updatingLayout}
-        onClick={() => setUpdatingLayout(true)}
-      >
-        {updatingLayout ? 'wait...' : 'Slow layout'}
-      </button>
-      <button
-        className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-        type="button"
-        onClick={handleAutoLayout}
-      >
-        Fast layout
-      </button>
-    </>
+    <ControlButton
+      disabled={updatingLayout}
+      onClick={() => setUpdatingLayout(true)}
+    >
+      {updatingLayout ? 'Wait...' : 'Slow layout'}
+    </ControlButton>
   )
 }

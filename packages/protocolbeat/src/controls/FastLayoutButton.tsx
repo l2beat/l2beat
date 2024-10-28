@@ -1,5 +1,17 @@
 import { Node } from '../store/State'
-import { NodeLocations } from '../store/utils/storageParsing'
+import { useStore } from '../store/store'
+import { NodeLocations } from '../store/utils/storage'
+import { ControlButton } from './ControlButton'
+
+export function FastLayoutButton() {
+  const nodes = useStore((state) => state.nodes)
+  const layout = useStore((state) => state.layout)
+  return (
+    <ControlButton onClick={() => layout(autoLayout(nodes))}>
+      Fast layout
+    </ControlButton>
+  )
+}
 
 const X_SPACING = 200
 const Y_SPACING_SM = 20
@@ -21,7 +33,7 @@ interface LayoutNode {
   force: number
 }
 
-export function autoLayout(baseNodes: readonly Node[]) {
+function autoLayout(baseNodes: readonly Node[]) {
   const nodes = toLayoutNodes(baseNodes)
   const clusters = clusterNodes(nodes)
 
@@ -52,7 +64,7 @@ export function autoLayout(baseNodes: readonly Node[]) {
 function toLayoutNodes(baseNodes: readonly Node[]) {
   const nodes = baseNodes.map(
     (base): LayoutNode => ({
-      id: base.simpleNode.id,
+      id: base.id,
       connectionsIn: [],
       connectionsOut: [],
       base,
@@ -70,8 +82,7 @@ function toLayoutNodes(baseNodes: readonly Node[]) {
 
   for (const node of nodes) {
     for (const field of node.base.fields) {
-      const id = field.connection?.nodeId
-      const other = id && byId.get(id)
+      const other = byId.get(field.target)
       if (other && other !== node) {
         if (!node.connectionsOut.includes(other)) {
           node.connectionsOut.push(other)
@@ -242,8 +253,8 @@ function groupByLevel(nodes: LayoutNode[]) {
         index = order.push(node.id) - 1
       }
 
-      const uniqueChildren = node.base.simpleNode.fields
-        .flatMap((f) => (f.connection ? [f.connection] : []))
+      const uniqueChildren = node.base.fields
+        .flatMap((f) => f.target)
         .filter((id) => order.indexOf(id) === -1)
       order.splice(index, 0, ...uniqueChildren)
     }
