@@ -87,6 +87,7 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
       grissiniValues: mapBridgeRisksToRosetteValues(bridge.risks),
       tvs: getSumFor(bridge.usedIn.map((project) => project.id)),
       usedIn: bridge.usedIn,
+      type: daBridge.type,
     })),
     header: getHeader({
       daLayerGrissiniValues: grissiniValues,

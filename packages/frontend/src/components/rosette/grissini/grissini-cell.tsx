@@ -12,6 +12,7 @@ export interface GrissiniCellProps {
   values: RosetteValue[]
   isUnderReview?: boolean
   className?: string
+  hasNoBridge?: boolean
 }
 
 export function GrissiniCell(props: GrissiniCellProps) {
@@ -27,10 +28,18 @@ export function GrissiniCell(props: GrissiniCellProps) {
           props.className,
         )}
       >
-        <GrissiniIcon values={props.values} className="size-8 md:size-8" />
+        <GrissiniIcon
+          values={props.values}
+          hasNoBridge={props.hasNoBridge}
+          className="size-8 md:size-8"
+        />
       </TooltipTrigger>
       <TooltipContent fitContent>
-        <GrissiniTooltip values={props.values} isUnderReview={isUnderReview} />
+        <GrissiniTooltip
+          values={props.values}
+          isUnderReview={isUnderReview}
+          hasNoBridge={props.hasNoBridge}
+        />
       </TooltipContent>
     </Tooltip>
   )
