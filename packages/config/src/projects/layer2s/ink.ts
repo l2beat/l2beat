@@ -22,6 +22,7 @@ export const ink: Layer2 = upcomingL2({
       socialMedia: [
         'https://x.com/inkonchain',
         'https://discord.com/invite/inkonchain',
+        'https://t.me/inkonchain',
       ],
     },
   },
