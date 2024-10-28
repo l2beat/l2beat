@@ -22,6 +22,7 @@ import {
   isErc4337,
   isGnosisSafe,
 } from '@l2beat/shared'
+import { assert } from '@l2beat/shared-pure'
 import { generateId } from '../../utils/generateId'
 import { rankBlocks } from '../../utils/rankBlocks'
 import { traverseOperationTree } from '../../utils/traverseOperationTree'
@@ -105,6 +106,8 @@ export class RpcCounter implements Counter {
         tx,
       )
 
+      assert(tx.type, 'Tx type should be defined')
+
       return {
         from: tx.from,
         type: this.getTransactionType(tx.type, tx.to),
@@ -115,6 +118,8 @@ export class RpcCounter implements Counter {
         includesUnknown,
       }
     }
+
+    assert(tx.type, 'Tx type should be defined')
 
     return {
       from: tx.from,
