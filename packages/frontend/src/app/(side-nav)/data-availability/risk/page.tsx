@@ -4,6 +4,7 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
+import { MainPageHeader } from '~/components/main-page-header'
 import { getDaRiskEntries } from '~/server/features/data-availability/risks/get-da-risk-entries'
 import { groupBySystem } from '../_utils/group-by-system'
 import { DaRiskTable } from './_components/table/da-risk-table'
@@ -14,9 +15,7 @@ export default async function Page() {
 
   return (
     <div>
-      <h1 className="my-5 ml-6 text-3xl font-bold max-lg:hidden">
-        Risk Analysis
-      </h1>
+      <MainPageHeader>Risk Analysis</MainPageHeader>
       <div className="flex flex-col gap-6">
         <DirectoryTabs defaultValue="public">
           <DirectoryTabsList>
@@ -27,7 +26,7 @@ export default async function Page() {
             <DaRiskTable items={publicSystems} />
           </DirectoryTabsContent>
           <DirectoryTabsContent value="custom">
-            <DaRiskTable items={customSystems} />
+            <DaRiskTable items={customSystems} excludeBridge />
           </DirectoryTabsContent>
         </DirectoryTabs>
       </div>

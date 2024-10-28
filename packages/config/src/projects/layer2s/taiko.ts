@@ -91,6 +91,7 @@ const LivenessBond = utils.formatEther(TaikoChainConfig.livenessBond)
 
 export const taiko: Layer2 = {
   id: ProjectId('taiko'),
+  createdAt: new UnixTime(1680768480), // 2023-04-06T08:08:00Z
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (blobs or calldata)'],
     bridge: { type: 'Enshrined' },

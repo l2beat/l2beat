@@ -1,45 +1,25 @@
-Generated with discovered.json: 0x843371d9e4ae712d8d276a9a7b262c9576132dd3
+Generated with discovered.json: 0x9eb2d05d3472d7651e9c0dd368e51ead6e18c373
 
-# Diff at Tue, 22 Oct 2024 07:37:36 GMT:
+# Diff at Wed, 23 Oct 2024 09:21:39 GMT:
 
-- author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@6a7866608333e54b0b2ab51f05e30bac1278f96a block: 20948093
-- current block number: 21019672
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2734bfe28641dfdb3277a5800faf0a057c08a58f block: 20948093
+- current block number: 21027355
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Gas limit doubled to 60M.
 
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 20948093 (main branch discovery), not current.
+## Watched changes
 
 ```diff
-    contract OptimismMintableERC20Factory (0x75505a97BD334E7BD3C476893285569C4136Fa0F) {
-    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
-      description:
--        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."
-+        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa."
-    }
-```
-
-```diff
-    contract OPFMultisig_1 (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
     +++ description: None
-      name:
--        "FoundationMultisig_1"
-+        "OPFMultisig_1"
-    }
-```
-
-```diff
-    contract OPFMultisig_2 (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
-    +++ description: None
-      name:
--        "FoundationMultisig_2"
-+        "OPFMultisig_2"
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        30000000
++        60000000
     }
 ```
 

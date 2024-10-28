@@ -51,6 +51,7 @@ export interface DAProvider {
 }
 
 export interface PolygonCDKStackConfig {
+  createdAt: UnixTime
   daProvider?: DAProvider
   discovery: ProjectDiscovery
   display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'>
@@ -144,6 +145,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
 
   return {
     type: 'layer2',
+    createdAt: templateVars.createdAt,
     id: ProjectId(templateVars.discovery.projectName),
     display: {
       ...templateVars.display,

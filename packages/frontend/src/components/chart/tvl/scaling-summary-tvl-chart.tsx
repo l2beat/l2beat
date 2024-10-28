@@ -95,7 +95,7 @@ function Header({ total, unit, change, timeRange }: Props) {
           )}
         </div>
         {loading ? (
-          <Skeleton className="my-px h-3.5 w-40" />
+          <Skeleton className="my-0.5 h-4 w-40" />
         ) : (
           <p className="whitespace-nowrap text-right text-xs">
             <PercentChange value={change} />

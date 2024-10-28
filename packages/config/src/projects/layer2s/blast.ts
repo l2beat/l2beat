@@ -9,6 +9,7 @@ const discovery = new ProjectDiscovery('blast')
 const upgraderStats = discovery.getMultisigStats('BlastMultisig')
 
 export const blast: Layer2 = opStackL2({
+  createdAt: new UnixTime(1700555008), // 2023-11-21T08:23:28Z
   discovery,
   display: {
     name: 'Blast',

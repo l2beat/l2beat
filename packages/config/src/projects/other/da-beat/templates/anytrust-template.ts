@@ -37,6 +37,7 @@ type Optionals = {
     description?: DacBridge['display']['description']
   } & Pick<
     DacBridge,
+    | 'createdAt'
     | 'chain'
     | 'membersCount'
     | 'knownMembers'
@@ -121,7 +122,7 @@ export function AnytrustDAC(template: TemplateVars): DacDaLayer {
         template.risks?.committeeSecurity ?? DaCommitteeSecurityRisk.Auto(),
       // TODO: make it required and remove the default
       upgradeability:
-        template.risks?.upgradeability ?? DaUpgradeabilityRisk.Immutable,
+        template.risks?.upgradeability ?? DaUpgradeabilityRisk.LowOrNoDelay(),
       relayerFailure:
         template.risks?.relayerFailure ?? DaRelayerFailureRisk.NoMechanism,
     },
@@ -155,7 +156,6 @@ export function AnytrustDAC(template: TemplateVars): DacDaLayer {
     The proof consists of a hash of the Keyset used in signing, a bitmap indicating which members signed, and a BLS aggregated signature. 
     L2 nodes reading from the sequencer inbox verify the certificate’s validity by checking the number of signers, the aggregated signature, and that the expiration time is at least two weeks ahead of the L2 timestamp. 
     If the DACert is valid, it provides a proof that the corresponding data is available from honest committee members.
-
     `
 
   const layerDisplay: DacDaLayer['display'] = {
@@ -170,7 +170,7 @@ export function AnytrustDAC(template: TemplateVars): DacDaLayer {
     kind: 'DAC',
     type: 'DaLayer',
     systemCategory: 'custom',
-    fallback: template.fallback,
+    fallback: template.fallback ?? 'Ethereum (blobs)',
     hasChallengeMechanism: template.hasChallengeMechanism,
     display: layerDisplay,
     technology: {

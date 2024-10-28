@@ -1,4 +1,4 @@
-import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
 import { mantle } from '../../../../layer2s/mantle'
 import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../../types'
@@ -30,13 +30,14 @@ const dataStorePermissionList = discovery.getContractValue<string[]>(
   'dataStorePermission',
 )
 
-const registerOperatorPermissionList = discovery.getContractValue<string[]>(
+const registerOperatorManager = discovery.getContractValue<string>(
   'RegistryPermission',
-  'registerOperatorPermission',
+  'permissionPerson',
 )
 
 export const mantleDABridge = {
   id: 'mantleDABridge',
+  createdAt: new UnixTime(1723022143), // 2024-08-07T09:15:43Z
   type: 'DAC',
   display: {
     name: 'Mantle DAC',
@@ -61,7 +62,7 @@ export const mantleDABridge = {
     addresses: [
       discovery.getContractDetails('DataLayrServiceManager', {
         description:
-          'This contract is the entry point for data availability commitments. It is responsible for storing transaction data headers and confirming the data store by verifying operators signatures.',
+          'The DA bridge and the entry point for data availability commitments. It is responsible for storing transaction data headers and confirming the data store by verifying operators signatures.',
       }),
       discovery.getContractDetails('BLSRegistry', {
         description:
@@ -79,7 +80,10 @@ export const mantleDABridge = {
     risks: [],
   },
   technology: {
-    description: ` The DA bridge contract is used for storing transaction data headers and confirming the data store by verifying operators signatures.
+    description: ` 
+    ![MantleDA bridge](/images/da-bridge-technology/mantleda/architecture.png#center)
+
+    The DA bridge contract is used for storing transaction data headers and confirming the data store by verifying operators signatures.
       The Mantle sequencer posts the data hash as a commitment to the DataLayrServiceManager contract on Ethereum thorugh an InitDataStore() transaction.
       Once the commitment is posted, the sequencer sends the data to the permissioned set of nodes, who sign the data and send back the signatures to the sequencer.
       The sequencer then posts the signatures to the DataLayrServiceManager contract on Ethereum through a confirmDataStore() transaction.
@@ -100,20 +104,22 @@ export const mantleDABridge = {
       })),
     },
     {
-      name: 'Permission Data Store',
-      description: `List of addresses authorized to post data commitments to the DA bridge.`,
+      name: 'Permissioned Data Store',
+      description: `List of relayers authorized to post data commitments to the DA bridge.`,
       accounts: dataStorePermissionList.map((permissionedAddress) => ({
         address: EthereumAddress(permissionedAddress),
         type: 'EOA',
       })),
     },
     {
-      name: 'Permissioned Register Operator',
-      description: `List of addresses authorized to register or change status of DA node operators.`,
-      accounts: registerOperatorPermissionList.map((permissionedAddress) => ({
-        address: EthereumAddress(permissionedAddress),
-        type: 'EOA',
-      })),
+      name: 'Register Operator Manager',
+      description: `Address authorized to register or change status of DA node operators.`,
+      accounts: [
+        {
+          address: EthereumAddress(registerOperatorManager),
+          type: 'EOA',
+        },
+      ],
     },
   ],
   chain: ChainId.ETHEREUM,
@@ -122,7 +128,9 @@ export const mantleDABridge = {
   membersCount: committeeMembers,
   usedIn: toUsedInProject([mantle]),
   risks: {
-    committeeSecurity: DaCommitteeSecurityRisk.NoCommiteeSecurity(),
+    committeeSecurity: DaCommitteeSecurityRisk.NoDiversityCommiteeSecurity(
+      `${threshold}/${committeeMembers}`,
+    ),
     upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay
     relayerFailure: DaRelayerFailureRisk.NoMechanism,
   },

@@ -2,7 +2,7 @@
   "name": "lisk",
   "chain": "ethereum",
   "blockNumber": 20941810,
-  "configHash": "0x54b600f138a147f390a890b238a88a803b26d43d59f30b55edf592f85fcc7e87",
+  "configHash": "0xc64395e614708dcfbe8c4eb5b5e651c9a28307d2ddee2fb606fc19f8ceed884e",
   "contracts": [
     {
       "name": "SystemConfig",
@@ -231,13 +231,13 @@
     {
       "name": "SuperchainConfig",
       "address": "0x26C7bFB430d68Bf74d2d52497836d4336b555dE7",
-      "template": "opstack/SuperchainConfig",
+      "template": "opstack/SuperchainConfigFake",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
+      "description": "This is NOT the shared SuperchainConfig of the OP stack Superchain. This SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
       "categories": ["Upgrades&Governance"],
       "issuedPermissions": [
         {
@@ -1127,7 +1127,7 @@
     "opstack/L2OutputOracle": "0xfc8737561d85bab2fe5e39a7a02436a0cb0e7f96d7a7adc2ee3ea486b391c2fc",
     "opstack/OptimismMintableERC20Factory": "0x5cbd1780073601234f3c935cd21047c041be38b9153332d93a4031fb302ab603",
     "opstack/OptimismPortal": "0x5fb419891d613086f39879ae360e765fdb6d154ef5ea5b2f5f98a4443a1b4839",
-    "opstack/SuperchainConfig": "0x76190197170f60e32f3e466ca757cb0bde1055ea134384678dd0911e7a5338ef",
+    "opstack/SuperchainConfigFake": "0x53a7342e3ad0ea230608a115aa098bc297d88c30ea6560b549c25853b184cc7b",
     "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3"
   }
 }

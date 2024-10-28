@@ -1,12 +1,15 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('swan')
 
 export const swan: Layer2 = opStackL2({
+  createdAt: new UnixTime(1722275591), // 2024-07-29T17:53:11Z
   discovery,
+  badges: [Badge.Infra.Superchain],
   additionalPurposes: ['AI', 'Storage'],
   display: {
     name: 'Swan Chain',

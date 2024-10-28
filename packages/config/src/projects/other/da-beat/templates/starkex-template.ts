@@ -37,6 +37,7 @@ type Optionals = {
     description?: DacBridge['display']['description']
   } & Pick<
     DacBridge,
+    | 'createdAt'
     | 'chain'
     | 'membersCount'
     | 'knownMembers'
@@ -124,7 +125,7 @@ export function StarkexDAC(template: TemplateVars): DacDaLayer {
       upgradeability:
         template.risks?.upgradeability ?? DaUpgradeabilityRisk.Immutable,
       relayerFailure:
-        template.risks?.relayerFailure ?? DaRelayerFailureRisk.NoMechanism,
+        template.risks?.relayerFailure ?? DaRelayerFailureRisk.SelfPropose,
     },
     otherConsiderations: template.bridge.otherConsiderations,
   }
@@ -168,7 +169,8 @@ export function StarkexDAC(template: TemplateVars): DacDaLayer {
     kind: 'DAC',
     type: 'DaLayer',
     systemCategory: 'custom',
-    fallback: template.fallback,
+    fallback: template.fallback, // Currently none?
+    // https://github.com/starkware-libs/starkex-data-availability-committee?tab=readme-ov-file#publishing-committee-members-data
     hasChallengeMechanism: template.hasChallengeMechanism,
     display: layerDisplay,
     technology: {

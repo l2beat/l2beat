@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x74628dbd20f24f6ce1965e28b0ac36872bdbc45a
+Generated with discovered.json: 0x49a5fcb52e9729c0dab86a13c3f3fc7f897a7def
 
-# Diff at Tue, 22 Oct 2024 07:14:24 GMT:
+# Diff at Tue, 22 Oct 2024 13:50:24 GMT:
 
-- author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@6a7866608333e54b0b2ab51f05e30bac1278f96a block: 20941810
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c4e420ffba204be049626040a9ea287e023948f8 block: 20941810
 - current block number: 20941810
 
 ## Description
@@ -17,11 +17,14 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 20941810 (main branch discovery), not current.
 
 ```diff
-    contract OptimismMintableERC20Factory (0xc1dA06CC5DD5cE23bABa924463de7F762039252d) {
-    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+    contract SuperchainConfig (0x26C7bFB430d68Bf74d2d52497836d4336b555dE7) {
+    +++ description: This is NOT the shared SuperchainConfig of the OP stack Superchain. This SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      template:
+-        "opstack/SuperchainConfig"
++        "opstack/SuperchainConfigFake"
       description:
--        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."
-+        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa."
+-        "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
++        "This is NOT the shared SuperchainConfig of the OP stack Superchain. This SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
     }
 ```
 

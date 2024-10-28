@@ -1,19 +1,33 @@
 import { type ColumnHelper } from '@tanstack/react-table'
 import Image from 'next/image'
-import { IndexCell } from './cells/index-cell'
+import { EM_DASH } from '~/consts/characters'
+import { IndexCell } from '../cells/index-cell'
 
 interface BaseProject {
   slug: string
   name: string
 }
 
+export interface CommonProjectColumnsOptions {
+  customActivityIndexing?: boolean
+}
+
 export function getCommonProjectColumns<T extends BaseProject>(
   columnHelper: ColumnHelper<T>,
+  opts?: CommonProjectColumnsOptions,
 ) {
   return [
     columnHelper.accessor((_, index) => index + 1, {
       header: '#',
-      cell: (ctx) => <IndexCell>{ctx.row.index + 1}</IndexCell>,
+      cell: (ctx) => (
+        <IndexCell>
+          {opts?.customActivityIndexing
+            ? ctx.row.index === 0
+              ? EM_DASH
+              : ctx.row.index
+            : ctx.row.index + 1}
+        </IndexCell>
+      ),
       meta: {
         headClassName: 'w-0',
       },
@@ -36,5 +50,5 @@ export function getCommonProjectColumns<T extends BaseProject>(
       },
       size: 28,
     }),
-  ]
+  ] as const
 }

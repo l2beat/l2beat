@@ -11,7 +11,7 @@ import { getCookie } from '~/utils/cookies/server'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingAssociatedTokensContextProvider } from '../_components/scaling-associated-tokens-context'
 import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
-import { ScalingTvlTable } from './_components/table/scaling-tvl-table'
+import { ScalingTvlTables } from './_components/scaling-tvl-tables'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -50,12 +50,17 @@ export default async function Page() {
           <MainPageCard>
             <ScalingStackedTvlChart
               milestones={HOMEPAGE_MILESTONES}
-              entries={entries}
+              entries={
+                entries.type === 'recategorised'
+                  ? [
+                      ...entries.entries.rollups,
+                      ...entries.entries.validiumsAndOptimiums,
+                    ]
+                  : entries.entries
+              }
             />
           </MainPageCard>
-          <MainPageCard className="md:mt-6">
-            <ScalingTvlTable entries={entries} />
-          </MainPageCard>
+          <ScalingTvlTables {...entries} />
         </ScalingAssociatedTokensContextProvider>
       </ScalingFilterContextProvider>
     </HydrateClient>

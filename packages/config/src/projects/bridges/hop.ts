@@ -10,6 +10,7 @@ const discovery = new ProjectDiscovery('hop')
 export const hop: Bridge = {
   type: 'bridge',
   id: ProjectId('hop'),
+  createdAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Hop',
     slug: 'hop',
@@ -113,7 +114,6 @@ export const hop: Bridge = {
         {
           category: 'Funds can be stolen if',
           text: 'destination token contract is maliciously upgraded.',
-          isCritical: true,
         },
       ],
       isIncomplete: true,

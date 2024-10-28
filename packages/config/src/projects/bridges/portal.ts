@@ -10,6 +10,7 @@ const discovery = new ProjectDiscovery('portal')
 export const portal: Bridge = {
   type: 'bridge',
   id: ProjectId('portal'),
+  createdAt: new UnixTime(1665415357), // 2022-10-10T15:22:37Z
   display: {
     name: 'Portal (Wormhole)',
     slug: 'portal',
@@ -25,14 +26,14 @@ export const portal: Bridge = {
       socialMedia: [
         'https://discord.gg/wormholecrypto',
         'https://t.me/wormholecrypto',
-        'https://twitter.com/wormholecrypto',
+        'https://x.com/wormhole',
         'https://youtube.com/@wormholecrypto',
       ],
     },
     description:
       'Portal Token Bridge is built on top of Wormhole, which is a message passing protocol that performs cross-chain communication.',
     detailedDescription:
-      'It leverages specialized network of nodes called Guardians to do this. It is governed by the same set of Guardians that run the underlying Wormhole protocols.',
+      'It leverages a specialized network of nodes called Guardians to do this. It is governed by the same set of Guardians that run the underlying Wormhole protocols.',
     category: 'Token Bridge',
   },
   config: {
@@ -40,22 +41,7 @@ export const portal: Bridge = {
       {
         address: EthereumAddress('0x3ee18B2214AFF97000D974cf647E7C347E8fa585'), // Escrows to various chains
         sinceTimestamp: new UnixTime(1631535967),
-        tokens: [
-          'WETH',
-          //'NEXM',
-          'XCN',
-          'USDT',
-          'USDC',
-          'HUSD',
-          'BUSD',
-          'LINK',
-          'SRM',
-          'SUSHI',
-          'UNI',
-          'LDO',
-          'DAI',
-          'stETH',
-        ],
+        tokens: '*',
         chain: 'ethereum',
       },
     ],
@@ -96,7 +82,7 @@ export const portal: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'This is a Token Bridge that locks tokens in the escrow contracts on Ethereum and mints tokens on the destination network. What differentiates this solution is the cross-chain message passing via the Wormhole protocol, in which emitted messages on one chain are observed by a network of nodes and then verified. After verification, this message is submitted to the destination chain for processing.',
+        'This is a type of Token Bridge that locks tokens in the escrow contracts on the source chain and mints tokens at the destination. What differentiates this solution is the cross-chain message passing via the Wormhole protocol, in which emitted messages on one chain are observed by a network of nodes and then verified. After verification, this message is submitted to the destination chain for processing.',
       references: [
         {
           text: 'Docs: Wormhole architecture',
@@ -108,7 +94,7 @@ export const portal: Bridge = {
     validation: {
       name: 'Transfers are externally verified',
       description:
-        'Validation process takes place in external network called the Guardian Network. Nodes in the network, called Guardians, observe the Core Contract on each supported chain and produce VAAs (Verified Action Approvals, essentially signed messages) when those contracts receive an interaction. Based on the VAA user can withdraw funds on the other end of the bridge.',
+        'Validation process takes place in an external network called the Guardian Network. Nodes in the network, called Guardians, observe the Core Contract on each supported chain and produce VAAs (Verified Action Approvals, essentially signed messages) when those contracts receive an interaction. Based on the VAA users can withdraw funds on the other end of the bridge.',
       references: [
         {
           text: 'WormholeCore contract: function verifyVM()',
@@ -119,24 +105,21 @@ export const portal: Bridge = {
         {
           category: 'Users can be censored if',
           text: 'guardians decide to stop processing certain transactions.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
-          text: 'guardians allow to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
-          isCritical: true,
+          text: 'guardians allow to mint more tokens than there are locked on Ethereum, preventing some existing holders from being able to bring their funds back to Ethereum.',
         },
         {
           category: 'Funds can be stolen if',
           text: 'guardians sign a fraudulent message allowing themselves to withdraw all locked funds.',
-          isCritical: true,
         },
       ],
     },
     destinationToken: {
       name: 'Destination tokens',
       description:
-        'Type of the token received on the destination chain depends on the token, if it is native to this chain user will receive canonical token. If the bridged token is not native to the destination chain then user will end up with wrapped version, the contract is called BridgeToken and is upgradable.',
+        'The type of token received on the destination chain depends on the token, if it is native to this chain, the user will receive the canonical token. If the bridged token is not native to the destination chain the user will receive a wrapped version. The token contract in this case is called BridgeToken and is upgradable.',
       references: [
         {
           text: 'BridgeToken contract implementation',
@@ -147,7 +130,6 @@ export const portal: Bridge = {
         {
           category: 'Funds can be stolen if',
           text: 'destination token contract is maliciously upgraded.',
-          isCritical: true,
         },
       ],
     },
@@ -157,7 +139,7 @@ export const portal: Bridge = {
     addresses: [
       discovery.getContractDetails(
         'WormholeCore',
-        'Governance contract storing current Guardian set and provides a facility to verify a cross-chain message by verifying Guardians signatures. \
+        'Governance contract storing the current Guardian set and providing a facility to verify cross-chain messages by verifying Guardians signatures. \
         Guardians themselves can choose a new Guardian set. Can be upgraded by Guardians.',
       ),
       discovery.getContractDetails(

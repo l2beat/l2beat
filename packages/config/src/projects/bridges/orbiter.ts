@@ -6,6 +6,7 @@ import { Bridge } from './types'
 export const orbiter: Bridge = {
   type: 'bridge',
   id: ProjectId('orbiter'),
+  createdAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Orbiter',
     slug: 'orbiter',
@@ -102,17 +103,14 @@ export const orbiter: Bridge = {
         {
           category: 'Funds can be stolen if',
           text: "selected Maker decides to misuse user's funds.",
-          isCritical: true,
         },
         {
           category: 'Funds can be frozen if',
           text: "selected Maker doesn't act on user deposit.",
-          isCritical: true,
         },
         {
           category: 'Users can be censored if',
           text: "selected Maker doesn't act on user deposit.",
-          isCritical: true,
         },
       ],
     },

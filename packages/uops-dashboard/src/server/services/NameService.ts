@@ -20,9 +20,7 @@ export class NameService {
     }
   }
 
-  private async fillMethodNames(
-    rootOperation: CountedOperation,
-  ): Promise<CountedOperation> {
+  async fillMethodNames(rootOperation: CountedOperation) {
     const selectors = new Set<string>()
 
     // get all method selectors
@@ -35,6 +33,13 @@ export class NameService {
     const signatures: Record<string, string> = {}
     for (const selector of selectors) {
       let signature = this.db.METHODS.get(selector)
+
+      if (signature) {
+        const name = signature.split('(')[0]
+        this.db.METHODS.set(selector, name)
+        signatures[selector] = name
+        continue
+      }
 
       for (const client of this.signatureClients) {
         try {
@@ -71,13 +76,9 @@ export class NameService {
         }
       },
     )
-
-    return rootOperation
   }
 
-  private async fillContractNames(
-    rootOperation: CountedOperation,
-  ): Promise<CountedOperation> {
+  async fillContractNames(rootOperation: CountedOperation) {
     const addresses = new Set<string>()
 
     // get all contract addresses
@@ -91,13 +92,16 @@ export class NameService {
     for (const address of addresses) {
       let name = this.db.CONTRACTS.get(address.toLowerCase())
 
+      if (name) {
+        names[address] = name
+        continue
+      }
+
       try {
-        if (!name) {
-          console.log(`SCAN::Getting name for ${address}`)
-          name = await this.contractClient.getName(address)
-          if (name) {
-            this.db.CONTRACTS.set(address.toLowerCase(), name)
-          }
+        console.log(`SCAN::Getting name for ${address}`)
+        name = await this.contractClient.getName(address)
+        if (name) {
+          this.db.CONTRACTS.set(address.toLowerCase(), name)
         }
       } catch (error) {
         console.error(`Failed to get data for ${address}: ${error}`)
@@ -114,7 +118,5 @@ export class NameService {
         operation.contractName = names[operation.contractAddress]
       }
     })
-
-    return rootOperation
   }
 }

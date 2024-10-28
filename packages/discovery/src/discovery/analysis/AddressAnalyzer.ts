@@ -60,6 +60,7 @@ export interface ExtendedTemplate {
 
 export interface AnalyzedEOA {
   type: 'EOA'
+  name?: string
   address: EthereumAddress
   combinedMeta?: ContractMeta
 }
@@ -86,7 +87,7 @@ export class AddressAnalyzer {
     const code = await provider.getBytecode(address)
     if (code.length === 0) {
       logger.logEoa()
-      return { type: 'EOA', address }
+      return { type: 'EOA', name: overrides?.name, address }
     }
 
     const deployment = await provider.getDeployment(address)

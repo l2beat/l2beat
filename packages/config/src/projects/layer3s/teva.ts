@@ -1,10 +1,11 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { underReviewL3 } from '../layer2s/templates/underReview'
 import { Layer3 } from './types'
 
 export const teva: Layer3 = underReviewL3({
   id: 'teva',
+  createdAt: new UnixTime(1717416738), // 2024-06-03T12:12:18Z
   hostChain: ProjectId('zksync2'),
   display: {
     name: 'Teva Chain',

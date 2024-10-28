@@ -2,7 +2,7 @@ import {
   ContractParameters,
   get$Implementations,
 } from '@l2beat/discovery-types'
-import { assert, ProjectId, formatSeconds } from '@l2beat/shared-pure'
+import { assert, ProjectId, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { unionBy } from 'lodash'
@@ -92,6 +92,7 @@ export const WASMVM_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
 ]
 
 export interface OrbitStackConfigCommon {
+  createdAt: UnixTime
   discovery: ProjectDiscovery
   stateValidationImage?: string
   associatedTokens?: string[]
@@ -129,6 +130,7 @@ export interface OrbitStackConfigCommon {
   nativeAddresses?: Record<string, ScalingProjectContract[]>
   nativePermissions?: Record<string, ScalingProjectPermission[]> | 'UnderReview'
   additionalPurposes?: ScalingProjectPurpose[]
+  discoveryDrivenData?: boolean
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -305,7 +307,7 @@ export function orbitStackCommon(
 
   const validators: ScalingProjectPermission = {
     name: 'Validators/Proposers',
-    accounts: templateVars.discovery.getPermissionsByRole('validate'),
+    accounts: templateVars.discovery.getPermissionsByRole('propose'), // Validators in Arbitrum are proposers and challengers
     description:
       'They can submit new state roots and challenge state roots. Some of the operators perform their duties through special purpose smart contracts.',
     chain: templateVars.discovery.chain,
@@ -337,14 +339,18 @@ export function orbitStackCommon(
 
   return {
     id: ProjectId(templateVars.discovery.projectName),
+    createdAt: templateVars.createdAt,
     contracts: {
-      addresses: unionBy(
-        [
-          ...(templateVars.nonTemplateContracts ?? []),
-          ...resolvedTemplates.contracts,
-        ],
-        'address',
-      ),
+      addresses:
+        templateVars.discoveryDrivenData === true
+          ? templateVars.discovery.getDiscoveredContracts()
+          : unionBy(
+              [
+                ...(templateVars.nonTemplateContracts ?? []),
+                ...resolvedTemplates.contracts,
+              ],
+              'address',
+            ),
       nativeAddresses: templateVars.nativeAddresses,
       risks: templateVars.nonTemplateContractRisks ?? [
         CONTRACTS.UPGRADE_NO_DELAY_RISK,
@@ -452,12 +458,15 @@ export function orbitStackCommon(
         templateVars.nonTemplateTechnology?.otherConsiderations ??
         EVM_OTHER_CONSIDERATIONS,
     },
-    permissions: [
-      sequencers,
-      validators,
-      ...resolvedTemplates.permissions,
-      ...(templateVars.nonTemplatePermissions ?? []),
-    ],
+    permissions:
+      templateVars.discoveryDrivenData === true
+        ? templateVars.discovery.getDiscoveredPermissions()
+        : [
+            sequencers,
+            validators,
+            ...resolvedTemplates.permissions,
+            ...(templateVars.nonTemplatePermissions ?? []),
+          ],
     nativePermissions: templateVars.nativePermissions,
     stateDerivation: templateVars.stateDerivation,
     stateValidation:
@@ -721,6 +730,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     },
     milestones: [],
     knowledgeNuggets: [],
+    discoveryDrivenData: templateVars.discoveryDrivenData,
   }
 }
 

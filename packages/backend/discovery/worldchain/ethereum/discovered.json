@@ -1,8 +1,8 @@
 {
   "name": "worldchain",
   "chain": "ethereum",
-  "blockNumber": 20995261,
-  "configHash": "0xd9e8a4bf7695647472a58433bf0bbd7a8d8cc6cd794cf1ec2ce42075c902b2bd",
+  "blockNumber": 21040685,
+  "configHash": "0x5576285d388a8f7cfb61ff839987e2231e40515285b84e10e9ae9efd44f7bbdb",
   "contracts": [
     {
       "name": "L1OpUSDCBridgeAdapter",
@@ -110,10 +110,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 4975200,
-        "latestOutputIndex": 2763,
-        "nextBlockNumber": 4977000,
-        "nextOutputIndex": 2764,
+        "latestBlockNumber": 5248800,
+        "latestOutputIndex": 2915,
+        "nextBlockNumber": 5250600,
+        "nextOutputIndex": 2916,
         "proposer": "0x2307278fC8aB0005974A6DeD2FA6d1187333a223",
         "PROPOSER": "0x2307278fC8aB0005974A6DeD2FA6d1187333a223",
         "startingBlockNumber": 0,
@@ -412,7 +412,7 @@
       }
     },
     {
-      "name": "WorldchainMultisig",
+      "name": "AlchemyMultisig",
       "address": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -538,8 +538,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 491310,
-          "prevBlockNum": 20995219
+          "prevBoughtGas": 1301449,
+          "prevBlockNum": 21040669
         },
         "paused": false,
         "superchainConfig": "0xa231f8be37e583f276f93dF516D88a043bfe47E3",
@@ -623,7 +623,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292623127",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292623968",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,

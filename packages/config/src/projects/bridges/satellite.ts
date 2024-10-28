@@ -17,6 +17,7 @@ const mintLimiterThreshold = discovery.getContractValue<number>(
 export const satellite: Bridge = {
   type: 'bridge',
   id: ProjectId('satellite'),
+  createdAt: new UnixTime(1664183093), // 2022-09-26T09:04:53Z
   display: {
     name: 'Satellite (Axelar)',
     slug: 'satellite',
@@ -74,17 +75,14 @@ export const satellite: Bridge = {
         {
           category: 'Users can be censored if',
           text: 'validators on Axelar decide to not mint tokens after observing an event on Ethereum.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: 'validators decide to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: "validators relay a withdraw request that wasn't originated on the source chain.",
-          isCritical: true,
         },
       ],
     },
@@ -97,7 +95,6 @@ export const satellite: Bridge = {
         {
           category: 'Funds can be stolen if',
           text: 'destination token contract is maliciously upgraded.',
-          isCritical: true,
         },
       ],
       isIncomplete: true,

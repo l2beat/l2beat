@@ -36,6 +36,7 @@ const lockRequirementInWei = discovery.getContractValue<number>(
 export const near: Bridge = {
   type: 'bridge',
   id: ProjectId('near'),
+  createdAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Rainbow Bridge',
     slug: 'near',
@@ -116,7 +117,6 @@ export const near: Bridge = {
         {
           category: 'Funds can be stolen if',
           text: 'bridge administrator removes funds from the bridge escrow.',
-          isCritical: true,
         },
       ],
       isIncomplete: true,
@@ -130,7 +130,6 @@ export const near: Bridge = {
         {
           category: 'Funds can be stolen if',
           text: 'destination token contract is maliciously upgraded.',
-          isCritical: true,
         },
       ],
       isIncomplete: true,

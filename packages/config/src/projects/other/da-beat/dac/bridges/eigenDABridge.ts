@@ -1,4 +1,9 @@
-import { ChainId, EthereumAddress, formatSeconds } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  EthereumAddress,
+  UnixTime,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
 import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../../types'
 import { DaBridge } from '../../types/DaBridge'
@@ -42,6 +47,22 @@ const quorumThresholds = discovery.getContractValue<string>(
 const quorum1Threshold = parseInt(quorumThresholds.substring(2, 4), 16)
 const quorum2Threshold = parseInt(quorumThresholds.substring(4, 6), 16)
 
+const ejectionCooldown = discovery.getContractValue<number>(
+  'RegistryCoordinator',
+  'ejectionCooldown',
+)
+
+const ejectionRateLimitWindow = discovery.getContractValue<number[]>(
+  'EjectionManager',
+  'ejectionRateLimitWindow',
+) // [0] for quorum 1. [1] for quorum 2.
+
+const ejectableStakePercentParam = discovery.getContractValue<string>(
+  'EjectionManager',
+  'ejectableStakePercent',
+)
+const ejectableStakePercent = parseFloat(ejectableStakePercentParam) / 100
+
 const operatorSetParamsQuorum1 = discovery.getContractValue<number[]>(
   'RegistryCoordinator',
   'operatorSetParamsQuorum1',
@@ -74,9 +95,10 @@ const ejectors = discovery.getContractValue<string[]>(
 
 export const eigenDAbridge = {
   id: 'eigenda-bridge',
+  createdAt: new UnixTime(1724426960), // 2024-08-23T15:29:20Z
   type: 'DAC',
   display: {
-    name: 'EigenDAServiceManager',
+    name: 'ServiceManager',
     slug: 'bridge',
     description:
       'EigenDA DA attestations are bridged to Ethereum through the EigenDAServiceManager smart contract.',
@@ -192,7 +214,10 @@ export const eigenDAbridge = {
     ![EigenDA bridge architecture](/images/da-bridge-technology/eigenda/architecture2.png#center)
 
     Although thresholds are not enforced by the confirmBatch method, current quorum thresholds are set to ${quorum1Threshold}% of registered stake for the ETH quorum and ${quorum2Threshold}% for the EIGEN token quorum. The quorum thresholds are set on the EigenDAServiceManager contract and can be changed by the contract owner.
-    There is a maximum of ${operatorSetParamsQuorum1[0]} operators that can register for the ETH quorum and ${operatorSetParamsQuorum2[0]} for the EIGEN token quorum. Once the cap is reached, new operators must have 10% more weight than the lowest-weighted operator to join the active set. Entering the quorum is subject to the approval of the churn approver. Operators can be ejected from a quorum by the ejectors without delay should they violate the Service Legal Agreement (SLA).
+    There is a maximum of ${operatorSetParamsQuorum1[0]} operators that can register for the ETH quorum and ${operatorSetParamsQuorum2[0]} for the EIGEN token quorum. Once the cap is reached, new operators must have 10% more weight than the lowest-weighted operator to join the active set. Entering the quorum is subject to the approval of the churn approver. Operators can be ejected from a quorum by the ejectors without delay should they violate the Service Legal Agreement (SLA). \n
+
+    Ejectors can eject maximum ${ejectableStakePercent}% of the total stake in a ${formatSeconds(ejectionRateLimitWindow[0])} window for the ETH quorum, and the same stake percentage over a ${formatSeconds(ejectionRateLimitWindow[1])} window for the EIGEN quorum.
+    An ejected operator can rejoin the quorum after ${formatSeconds(ejectionCooldown)}. 
   `,
     risks: [
       {
@@ -298,7 +323,7 @@ export const eigenDAbridge = {
   ],
   chain: ChainId.ETHEREUM,
   requiredMembers: 0, // currently 0 since threshold is not enforced
-  membersCount: 400,
+  membersCount: 400, // max allowed operators (quorum 1 + quorum 2)
   transactionDataType: DacTransactionDataType.TransactionData,
   usedIn: toUsedInProject([]),
   risks: {

@@ -3,7 +3,7 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { Skeleton } from '~/components/core/skeleton'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
-import { getCommonProjectColumns } from '~/components/table/common-project-columns'
+import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
 import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { type SyncStatus } from '~/types/sync-status'
 import { formatNumber } from '~/utils/number-format/format-number'
@@ -31,7 +31,7 @@ type CostsAvailableData = {
 
 type CostsNotAvailableData = {
   type: 'not-available'
-  reason: 'loading' | 'no-per-tx-metric' | 'no-data'
+  reason: 'loading' | 'no-data'
   syncStatus?: never
 }
 
@@ -159,7 +159,6 @@ export const scalingCostsColumns = [
         case 'loading':
           return <Skeleton className="ml-auto h-6 w-24" />
         case 'no-data':
-        case 'no-per-tx-metric':
           return <NoDataBadge />
         default:
           assertUnreachable(data.reason)

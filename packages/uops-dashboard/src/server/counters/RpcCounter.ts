@@ -59,6 +59,7 @@ export class RpcCounter implements Counter {
 
       const currentSmartAccountUsage =
         this.generateSmartAccountUsageForBlock(current)
+
       for (const [signature, count] of currentSmartAccountUsage) {
         const currentCount = smartAccountUsage.get(signature) ?? 0
         smartAccountUsage.set(signature, currentCount + count)
@@ -94,6 +95,7 @@ export class RpcCounter implements Counter {
         tx.data as string,
         tx.to ?? '',
         methods,
+        generateId,
       )
 
       const { includesBatch, includesUnknown } =
@@ -121,6 +123,7 @@ export class RpcCounter implements Counter {
     calldata: string,
     to: string,
     methods: Method[],
+    generateId: () => string,
   ): CountedOperation {
     const countOperationsRecursive = (
       operation: Operation,
@@ -224,7 +227,7 @@ export class RpcCounter implements Counter {
     }
   }
 
-  getTransactionType(to?: string): string {
+  getTransactionType(to: string | null): string {
     switch (to?.toLowerCase()) {
       case ENTRY_POINT_ADDRESS_0_6_0:
         return 'ERC-4337 Entry Point 0.6.0'

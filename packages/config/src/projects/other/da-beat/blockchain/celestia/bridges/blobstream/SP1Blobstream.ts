@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../../../discovery/ProjectDiscovery'
 import { DaCommitteeSecurityRisk } from '../../../../types/DaCommitteeSecurityRisk'
 import { DaRelayerFailureRisk } from '../../../../types/DaRelayerFailureRisk'
@@ -61,6 +61,7 @@ const BaseSP1Verifier = baseDiscovery.getContractValue<string>(
 
 export const SP1Blobstream = CELESTIA_BLOBSTREAM({
   chain: 'ethereum',
+  createdAt: new UnixTime(1729253328), // 2024-10-18T12:08:48Z
   usedIn: [
     // no project integrates it for state validation
   ],
@@ -193,6 +194,14 @@ export const SP1Blobstream = CELESTIA_BLOBSTREAM({
         type: 'EOA',
       })),
     },
+    {
+      name: 'Guardians',
+      description: `The Blobstream guardians hold the power to freeze the bridge contract, update the SuccinctGateway contract and update the list of authorized relayers.`,
+      accounts: ethereumDiscovery.getAccessControlRolePermission(
+        'Blobstream',
+        'GUARDIAN_ROLE',
+      ),
+    },
   ],
   nativePermissions: {
     arbitrum: [
@@ -235,9 +244,8 @@ export const SP1Blobstream = CELESTIA_BLOBSTREAM({
     ],
   },
   risks: {
-    committeeSecurity: DaCommitteeSecurityRisk.RobustAndDiverseCommittee(
-      'Celestia Validators',
-    ),
+    committeeSecurity:
+      DaCommitteeSecurityRisk.RobustAndDiverseCommittee('Validators set'),
     upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(0), // TIMELOCK_ROLE is 4/6 multisig
     relayerFailure: DaRelayerFailureRisk.NoMechanism,
   },

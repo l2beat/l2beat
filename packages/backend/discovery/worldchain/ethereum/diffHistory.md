@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xa2ba47827f7d7b8e2935a3c2b3c85f52731b0185
+Generated with discovered.json: 0x94df63d6b202c679a5ef25a3acf56e3129badb8d
 
-# Diff at Tue, 22 Oct 2024 07:18:33 GMT:
+# Diff at Fri, 25 Oct 2024 05:58:15 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@6a7866608333e54b0b2ab51f05e30bac1278f96a block: 20995261
-- current block number: 20995261
+- comparing to: main@ae2c410e7fd6561c1946613ca693d2dc0322c23d block: 20995261
+- current block number: 21040685
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Renamed multisig to better show control.
 
 ## Config/verification related changes
 
@@ -17,11 +17,11 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 20995261 (main branch discovery), not current.
 
 ```diff
-    contract OptimismMintableERC20Factory (0x82Cb528466cF22412d89bdBE9bCF04856790dD0e) {
-    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
-      description:
--        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."
-+        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa."
+    contract AlchemyMultisig (0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) {
+    +++ description: None
+      name:
+-        "WorldchainMultisig"
++        "AlchemyMultisig"
     }
 ```
 
