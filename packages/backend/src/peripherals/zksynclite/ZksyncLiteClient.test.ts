@@ -1,17 +1,22 @@
-import { Logger } from '@l2beat/backend-tools'
-import { HttpClient } from '@l2beat/shared'
+import { Logger, RateLimiter } from '@l2beat/backend-tools'
+import { HttpClient, HttpClient2, RetryHandler } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { Response } from 'node-fetch'
 
 import { ZksyncLiteClient } from './ZksyncLiteClient'
 
+const mockDeps = {
+  url: 'https://example.com',
+  logger: Logger.SILENT,
+}
+
 describe(ZksyncLiteClient.name, () => {
   describe(ZksyncLiteClient.prototype.getTransactionsInBlock.name, () => {
     it('returns transactions array', async () => {
       const transactions = Array.from({ length: 69 }, () => fakeTransaction())
 
-      const httpClient = mockObject<HttpClient>({
+      const http = mockObject<HttpClient>({
         fetch: async () =>
           new Response(
             JSON.stringify({
@@ -21,11 +26,7 @@ describe(ZksyncLiteClient.name, () => {
             }),
           ),
       })
-      const zksyncClient = new ZksyncLiteClient(
-        httpClient,
-        Logger.SILENT,
-        'https://example.com',
-      )
+      const zksyncClient = mockClient({ http })
       const expected = transactions.map((tx) => ({
         ...tx,
         createdAt: UnixTime.fromDate(tx.createdAt),
@@ -35,7 +36,7 @@ describe(ZksyncLiteClient.name, () => {
     })
 
     it('throws for invalid schema', async () => {
-      const httpClient = mockObject<HttpClient>({
+      const http = mockObject<HttpClient>({
         fetch: async () =>
           new Response(
             JSON.stringify({
@@ -45,11 +46,7 @@ describe(ZksyncLiteClient.name, () => {
             }),
           ),
       })
-      const zksyncClient = new ZksyncLiteClient(
-        httpClient,
-        Logger.SILENT,
-        'https://example.com',
-      )
+      const zksyncClient = mockClient({ http })
 
       await expect(zksyncClient.getTransactionsInBlock(42)).toBeRejectedWith(
         TypeError,
@@ -61,7 +58,7 @@ describe(ZksyncLiteClient.name, () => {
       const transactions1 = Array.from({ length: 100 }, () => fakeTransaction())
       const transactions2 = Array.from({ length: 69 }, () => fakeTransaction())
 
-      const httpClient = mockObject<HttpClient>({
+      const http = mockObject<HttpClient>({
         fetch: mockFn()
           .resolvesToOnce(
             new Response(
@@ -86,11 +83,7 @@ describe(ZksyncLiteClient.name, () => {
           ),
       })
 
-      const zksyncClient = new ZksyncLiteClient(
-        httpClient,
-        Logger.SILENT,
-        'https://example.com',
-      )
+      const zksyncClient = mockClient({ http })
 
       const result = await zksyncClient.getTransactionsInBlock(42)
       const expected = transactions1
@@ -104,7 +97,7 @@ describe(ZksyncLiteClient.name, () => {
       const transactions2 = Array.from({ length: 68 }, () => fakeTransaction())
       transactions2.unshift(fakeTransaction({ txHash: 'not-tx-hash' }))
 
-      const httpClient = mockObject<HttpClient>({
+      const http = mockObject<HttpClient>({
         fetch: mockFn()
           .resolvesToOnce(
             new Response(
@@ -129,11 +122,7 @@ describe(ZksyncLiteClient.name, () => {
           ),
       })
 
-      const zksyncClient = new ZksyncLiteClient(
-        httpClient,
-        Logger.SILENT,
-        'https://example.com',
-      )
+      const zksyncClient = mockClient({ http })
 
       await expect(zksyncClient.getTransactionsInBlock(42)).toBeRejectedWith(
         Error,
@@ -144,7 +133,7 @@ describe(ZksyncLiteClient.name, () => {
 
   describe(ZksyncLiteClient.prototype.getLatestBlock.name, () => {
     it('gets latest block', async () => {
-      const httpClient = mockObject<HttpClient>({
+      const http = mockObject<HttpClient>({
         fetch: async () =>
           new Response(
             JSON.stringify({
@@ -154,18 +143,14 @@ describe(ZksyncLiteClient.name, () => {
             }),
           ),
       })
-      const zksyncClient = new ZksyncLiteClient(
-        httpClient,
-        Logger.SILENT,
-        'https://example.com',
-      )
+      const zksyncClient = mockClient({ http })
 
       const result = await zksyncClient.getLatestBlock()
       expect(result).toEqual(42)
     })
 
     it('throws for invalid schema', async () => {
-      const httpClient = mockObject<HttpClient>({
+      const http = mockObject<HttpClient>({
         fetch: async () =>
           new Response(
             JSON.stringify({
@@ -175,11 +160,7 @@ describe(ZksyncLiteClient.name, () => {
             }),
           ),
       })
-      const zksyncClient = new ZksyncLiteClient(
-        httpClient,
-        Logger.SILENT,
-        'https://example.com',
-      )
+      const zksyncClient = mockClient({ http })
 
       await expect(zksyncClient.getLatestBlock()).toBeRejectedWith(
         TypeError,
@@ -188,9 +169,9 @@ describe(ZksyncLiteClient.name, () => {
     })
   })
 
-  describe(ZksyncLiteClient.prototype.call.name, () => {
+  describe(ZksyncLiteClient.prototype.query.name, () => {
     it('throws for error responses', async () => {
-      const httpClient = mockObject<HttpClient>({
+      const http = mockObject<HttpClient>({
         async fetch() {
           return new Response(
             JSON.stringify({
@@ -201,46 +182,34 @@ describe(ZksyncLiteClient.name, () => {
           )
         },
       })
-      const zksyncClient = new ZksyncLiteClient(
-        httpClient,
-        Logger.SILENT,
-        'https://example.com',
-      )
-      await expect(zksyncClient.call('foo', { bar: '1234' })).toBeRejectedWith(
+      const zksyncClient = mockClient({ http })
+      await expect(zksyncClient.query('foo', { bar: '1234' })).toBeRejectedWith(
         Error,
         'Oops!',
       )
     })
 
     it('throws for malformed responses', async () => {
-      const httpClient = mockObject<HttpClient>({
+      const http = mockObject<HttpClient>({
         async fetch() {
           return new Response(JSON.stringify({ status: '', foo: 'bar' }))
         },
       })
-      const zksyncClient = new ZksyncLiteClient(
-        httpClient,
-        Logger.SILENT,
-        'https://example.com',
-      )
-      await expect(zksyncClient.call('foo', { bar: '1234' })).toBeRejectedWith(
+      const zksyncClient = mockClient({ http })
+      await expect(zksyncClient.query('foo', { bar: '1234' })).toBeRejectedWith(
         TypeError,
         'Invalid Zksync response.',
       )
     })
 
     it('throws for http errors', async () => {
-      const httpClient = mockObject<HttpClient>({
+      const http = mockObject<HttpClient>({
         async fetch() {
           return new Response('foo', { status: 400 })
         },
       })
-      const zksyncClient = new ZksyncLiteClient(
-        httpClient,
-        Logger.SILENT,
-        'https://example.com',
-      )
-      await expect(zksyncClient.call('foo', { bar: '1234' })).toBeRejectedWith(
+      const zksyncClient = mockClient({ http })
+      await expect(zksyncClient.query('foo', { bar: '1234' })).toBeRejectedWith(
         Error,
         'Http error 400: foo',
       )
@@ -248,13 +217,34 @@ describe(ZksyncLiteClient.name, () => {
   })
 })
 
-interface Transaction {
+function mockClient(deps: {
+  http: HttpClient2
+  url?: string
+  rateLimiter?: RateLimiter
+  retryHandler?: RetryHandler
+}) {
+  return new ZksyncLiteClient({
+    url: deps.url ?? 'https://example.com',
+    http: deps.http,
+    rateLimiter:
+      deps.rateLimiter ?? new RateLimiter({ callsPerMinute: 100_000 }),
+    retryHandler: deps.retryHandler ?? RetryHandler.TEST,
+    logger: Logger.SILENT,
+    chain: 'chain',
+  })
+}
+
+function fakeTransaction(
+  transaction?: Partial<{
+    txHash: string
+    blockIndex: number
+    createdAt: Date
+  }>,
+): {
   txHash: string
   blockIndex: number
   createdAt: Date
-}
-
-function fakeTransaction(transaction?: Partial<Transaction>): Transaction {
+} {
   return {
     txHash: 'tx-hash',
     blockIndex: Math.floor(Math.random() * 1000),

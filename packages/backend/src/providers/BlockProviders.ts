@@ -113,13 +113,13 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
         // TODO: handle multiple urls
         const rpcClient = new RpcClient2({
           url: project.config.url,
+          chain: project.id,
           http: http2,
           rateLimiter: new RateLimiter({
             callsPerMinute: project.config.callsPerMinute,
           }),
           retryHandler,
           logger,
-          chain: project.id,
         })
 
         evmClients.push(rpcClient)
@@ -127,12 +127,16 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
         break
       }
       case 'zksync': {
-        zksyncLiteClient = new ZksyncLiteClient(
+        zksyncLiteClient = new ZksyncLiteClient({
+          url: project.config.url,
+          chain: project.id,
           http,
+          rateLimiter: new RateLimiter({
+            callsPerMinute: project.config.callsPerMinute,
+          }),
+          retryHandler: RetryHandler.RELIABLE_API(logger),
           logger,
-          project.config.url,
-          project.config.callsPerMinute,
-        )
+        })
         break
       }
       case 'starknet': {

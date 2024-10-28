@@ -1,11 +1,6 @@
-import { Logger } from '@l2beat/backend-tools'
-import { HttpClient } from '@l2beat/shared'
-import {
-  assert,
-  RateLimiter,
-  UnixTime,
-  getErrorMessage,
-} from '@l2beat/shared-pure'
+import { Logger, RateLimiter } from '@l2beat/backend-tools'
+import { HttpClient2, RetryHandler } from '@l2beat/shared'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 
 import { getBlockNumberAtOrBefore } from '../getBlockNumberAtOrBefore'
 import {
@@ -20,37 +15,24 @@ interface Transaction {
   createdAt: UnixTime
 }
 
+interface Dependencies {
+  url: string
+  http: HttpClient2
+  rateLimiter: RateLimiter
+  retryHandler: RetryHandler
+  logger: Logger
+  chain: string
+}
+
 const PAGE_LIMIT = 100
-const CALLS_PER_MINUTE = 60
 
 export class ZksyncLiteClient {
-  constructor(
-    private readonly httpClient: HttpClient,
-    private readonly logger: Logger,
-    private readonly url: string,
-    callsPerMinute = CALLS_PER_MINUTE,
-  ) {
-    this.logger = logger.for(this)
-    const rateLimiter = new RateLimiter({
-      callsPerMinute,
-    })
-    this.call = rateLimiter.wrap(this.call.bind(this))
-  }
-
-  static create(
-    services: { httpClient: HttpClient; logger: Logger },
-    options: { url: string; callsPerMinute: number | undefined },
-  ) {
-    return new ZksyncLiteClient(
-      services.httpClient,
-      services.logger,
-      options.url,
-      options.callsPerMinute,
-    )
+  constructor(private readonly $: Dependencies) {
+    this.$.logger = this.$.logger.for(this).tag($.chain)
   }
 
   async getLatestBlock() {
-    const result = await this.call('blocks/lastFinalized')
+    const result = await this.query('blocks/lastFinalized')
 
     const parsed = ZksyncLiteBlocksResultSchema.safeParse(result)
 
@@ -112,7 +94,7 @@ export class ZksyncLiteClient {
   }
 
   private async getTransactionsPage(blockNumber: number, from: string) {
-    const result = await this.call(`blocks/${blockNumber}/transactions`, {
+    const result = await this.query(`blocks/${blockNumber}/transactions`, {
       from,
       limit: PAGE_LIMIT.toString(),
       direction: 'older',
@@ -127,52 +109,33 @@ export class ZksyncLiteClient {
     return parsed.data
   }
 
-  async call(path: string, params?: Record<string, string>) {
-    const query = new URLSearchParams(params)
-    const url = `${this.url}/${path}?${query.toString()}`
-
-    const start = Date.now()
-    const { httpResponse, error } = await this.httpClient
-      .fetch(url, { timeout: 20_000 })
-      .then(
-        (httpResponse) => ({ httpResponse, error: undefined }),
-        (error: unknown) => ({ httpResponse: undefined, error }),
+  async query(path: string, params?: Record<string, string>) {
+    try {
+      return await this.$.rateLimiter.call(() => this._query(path, params))
+    } catch {
+      return await this.$.retryHandler.retry(() =>
+        this.$.rateLimiter.call(() => this._query(path, params)),
       )
-    const timeMs = Date.now() - start
-
-    if (!httpResponse) {
-      const message = getErrorMessage(error)
-      this.recordError(path, timeMs, message)
-      throw error
     }
+  }
 
-    const text = await httpResponse.text()
+  private async _query(path: string, params?: Record<string, string>) {
+    const query = new URLSearchParams(params)
+    const url = `${this.$.url}/${path}?${query.toString()}`
 
-    if (!httpResponse.ok) {
-      this.recordError(path, timeMs, text)
-      throw new Error(`Http error ${httpResponse.status}: ${text}`)
-    }
+    const response = await this.$.http.fetch(url, { timeout: 20_000 })
 
-    const json: unknown = JSON.parse(text)
-    const zksyncLiteResponse = ZksyncLiteResponse.safeParse(json)
+    const zksyncLiteResponse = ZksyncLiteResponse.safeParse(response)
 
     if (!zksyncLiteResponse.success) {
       const message = 'Invalid Zksync response.'
-      this.recordError(path, timeMs, message)
       throw new TypeError(message)
     }
 
     if (zksyncLiteResponse.data.status !== 'success') {
-      this.recordError(path, timeMs, zksyncLiteResponse.data.error.message)
       throw new Error(zksyncLiteResponse.data.error.message)
     }
 
-    this.logger.debug({ type: 'success', timeMs, path })
-
     return zksyncLiteResponse.data.result
-  }
-
-  private recordError(path: string, timeMs: number, message: string) {
-    this.logger.debug({ type: 'error', message, timeMs, path })
   }
 }

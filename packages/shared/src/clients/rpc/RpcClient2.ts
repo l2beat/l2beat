@@ -6,20 +6,20 @@ import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 import { HttpClient2 } from '../http/HttpClient2'
 import { EVMBlock, Quantity, RPCError, RpcResponse } from './types'
 
-interface RpcClient2Deps {
+interface Dependencies {
   url: string
+  chain: string
   http: HttpClient2
   rateLimiter: RateLimiter
   retryHandler: RetryHandler
   logger: Logger
-  chain: string
 }
 
 // TODO: create EVMBlockClient
 export class RpcClient2 {
   chain: string
 
-  constructor(private readonly $: RpcClient2Deps) {
+  constructor(private readonly $: Dependencies) {
     this.chain = $.chain
     this.$.logger = this.$.logger.for(this).tag($.chain)
   }
@@ -68,7 +68,7 @@ export class RpcClient2 {
     }
   }
 
-  async _query(method: string, params: (string | number | boolean)[]) {
+  private async _query(method: string, params: (string | number | boolean)[]) {
     const response = await this.$.http.fetch(
       this.$.url,
       {
