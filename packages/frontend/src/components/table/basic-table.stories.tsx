@@ -33,7 +33,6 @@ const basicTableColumns = [
   columnHelper.accessor('name', {
     header: 'Name',
     cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
-    sortDescFirst: false,
   }),
   columnHelper.group({
     id: 'data',

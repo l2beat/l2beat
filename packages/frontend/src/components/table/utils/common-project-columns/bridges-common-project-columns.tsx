@@ -14,7 +14,6 @@ export function getBridgesCommonProjectColumns<
     columnHelper.accessor((row) => row.name, {
       id: 'name',
       cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
-      sortDescFirst: false,
     }),
   ]
 }

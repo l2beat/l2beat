@@ -34,5 +34,5 @@ export function sortBySentimentAndAlphabetically<
     return sentimentResult
   }
 
-  return (rowA?.value ?? '').localeCompare(rowB?.value ?? '')
+  return (rowB?.value ?? '').localeCompare(rowA?.value ?? '')
 }

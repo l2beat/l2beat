@@ -14,7 +14,6 @@ export function getScalingCommonProjectColumns<
     columnHelper.accessor((row) => row.name, {
       id: 'name',
       cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
-      sortDescFirst: false,
       meta: opts?.activity
         ? {
             headClassName: 'w-0 min-w-[154px]',

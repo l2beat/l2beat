@@ -25,6 +25,7 @@ export const scalingRiskColumns = [
       },
       cell: (ctx) => <RiskCell risk={ctx.row.original.risks.stateValidation} />,
       sortUndefined: 'last',
+      sortDescFirst: true,
       sortingFn: (a, b) =>
         sortBySentimentAndAlphabetically(
           a.original.risks.stateValidation,
@@ -47,6 +48,7 @@ export const scalingRiskColumns = [
         <RiskCell risk={ctx.row.original.risks.dataAvailability} />
       ),
       sortUndefined: 'last',
+      sortDescFirst: true,
       sortingFn: (a, b) =>
         sortBySentimentAndAlphabetically(
           a.original.risks.dataAvailability,
@@ -68,6 +70,7 @@ export const scalingRiskColumns = [
       },
       cell: (ctx) => <RiskCell risk={ctx.row.original.risks.exitWindow} />,
       sortUndefined: 'last',
+      sortDescFirst: true,
       sortingFn: (a, b) => {
         const sentimentResult = sortBySentiment(
           a.original.risks.exitWindow,
@@ -105,6 +108,7 @@ export const scalingRiskColumns = [
         <RiskCell risk={ctx.row.original.risks.sequencerFailure} />
       ),
       sortUndefined: 'last',
+      sortDescFirst: true,
       sortingFn: (a, b) =>
         sortBySentimentAndAlphabetically(
           a.original.risks.sequencerFailure,
@@ -126,6 +130,7 @@ export const scalingRiskColumns = [
       },
       cell: (ctx) => <RiskCell risk={ctx.row.original.risks.proposerFailure} />,
       sortUndefined: 'last',
+      sortDescFirst: true,
       sortingFn: (a, b) =>
         sortBySentimentAndAlphabetically(
           a.original.risks.proposerFailure,

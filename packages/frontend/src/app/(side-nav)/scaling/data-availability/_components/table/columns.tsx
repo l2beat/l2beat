@@ -27,20 +27,20 @@ export const columns = [
       </TypeCell>
     ),
   }),
-  columnHelper.accessor('dataAvailability.layer', {
+  columnHelper.accessor('dataAvailability.layer.value', {
     header: 'DA Layer',
     meta: {
       tooltip:
         'The data availability layer where the data (transaction data or state diffs) is published.',
     },
     cell: (ctx) => {
-      const layer = ctx.getValue()
+      const data = ctx.row.original.dataAvailability.layer
       return (
         <SentimentText
-          sentiment={layer.sentiment}
-          description={layer.description}
+          sentiment={data.sentiment}
+          description={data.description}
         >
-          {layer.value}
+          {ctx.getValue()}
         </SentimentText>
       )
     },
@@ -50,20 +50,23 @@ export const columns = [
         b.original.dataAvailability.layer,
       ),
   }),
-  columnHelper.accessor('dataAvailability.bridge', {
+  columnHelper.accessor('dataAvailability.bridge.value', {
     header: 'DA Bridge',
     meta: {
       tooltip:
         'The DA bridge used for informing Ethereum contracts if data has been made available.',
     },
-    cell: (ctx) => (
-      <SentimentText
-        sentiment={ctx.row.original.dataAvailability.bridge.sentiment}
-        description={ctx.row.original.dataAvailability.bridge.description}
-      >
-        {ctx.row.original.dataAvailability.bridge.value}
-      </SentimentText>
-    ),
+    cell: (ctx) => {
+      const data = ctx.row.original.dataAvailability.bridge
+      return (
+        <SentimentText
+          sentiment={data.sentiment}
+          description={data.description}
+        >
+          {ctx.getValue()}
+        </SentimentText>
+      )
+    },
     sortingFn: (a, b) => {
       const bridgeA = a.original.dataAvailability.bridge
       const bridgeB = b.original.dataAvailability.bridge

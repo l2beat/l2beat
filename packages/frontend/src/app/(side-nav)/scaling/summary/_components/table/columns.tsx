@@ -39,13 +39,26 @@ export const scalingSummaryColumns = [
       tooltip: <TypeExplanationTooltip />,
     },
   }),
-  columnHelper.accessor('stage', {
-    cell: (ctx) => <StageCell stageConfig={ctx.getValue()} />,
-    sortingFn: sortStages,
-    meta: {
-      hash: 'stage',
+  columnHelper.accessor(
+    (e) => {
+      if (
+        e.stage?.stage === 'NotApplicable' ||
+        e.stage?.stage === 'UnderReview'
+      ) {
+        return undefined
+      }
+      return e.stage
     },
-  }),
+    {
+      id: 'stage',
+      cell: (ctx) => <StageCell stageConfig={ctx.row.original.stage} />,
+      sortingFn: sortStages,
+      sortUndefined: 'last',
+      meta: {
+        hash: 'stage',
+      },
+    },
+  ),
   columnHelper.accessor(
     (e) => {
       return e.tvl?.breakdown?.total

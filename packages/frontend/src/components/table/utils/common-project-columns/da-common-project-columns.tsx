@@ -19,7 +19,6 @@ export function getDaCommonProjectColumns<T extends CommonProjectColumnsEntry>(
         tooltip:
           'The data availability layer where the data (transaction data or state diffs) is posted.',
       },
-      sortDescFirst: false,
       cell: (ctx) => (
         <ProjectNameCell
           project={{

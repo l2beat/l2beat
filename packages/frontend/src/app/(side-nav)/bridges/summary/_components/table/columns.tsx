@@ -4,7 +4,7 @@ import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { NoInfoCell } from '~/components/table/cells/no-info-cell'
 import { RiskCell } from '~/components/table/cells/risk-cell'
 import { TypeCell } from '~/components/table/cells/type-cell'
-import { sortBySentiment } from '~/components/table/sorting/functions/sort-by-sentiment'
+import { sortBySentimentAndAlphabetically } from '~/components/table/sorting/functions/sort-by-sentiment'
 import { getBridgesCommonProjectColumns } from '~/components/table/utils/common-project-columns/bridges-common-project-columns'
 import { type BridgesSummaryEntry } from '~/server/features/bridges/get-bridges-summary-entries'
 
@@ -24,9 +24,10 @@ export const bridgesSummaryActiveColumns = [
     },
     sortUndefined: 'last',
     sortingFn: (a, b) =>
-      !a.original.validatedBy || !b.original.validatedBy
-        ? -1
-        : sortBySentiment(a.original.validatedBy, b.original.validatedBy),
+      sortBySentimentAndAlphabetically(
+        a.original.validatedBy,
+        b.original.validatedBy,
+      ),
   }),
   columnHelper.accessor('category', {
     header: 'Type',
