@@ -10,7 +10,8 @@
     "plugin:@typescript-eslint/recommended-type-checked",
     "plugin:@typescript-eslint/stylistic-type-checked",
     "plugin:tailwindcss/recommended",
-    "plugin:storybook/recommended"
+    "plugin:storybook/recommended",
+    "plugin:react-hooks/recommended"
   ],
   "settings": {
     "tailwindcss": {
