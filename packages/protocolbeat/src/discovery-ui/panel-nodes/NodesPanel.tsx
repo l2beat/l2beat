@@ -3,11 +3,12 @@ import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { App } from '../../App'
 import { Field, Node } from '../../store/State'
-import { useStore as useNodeStore } from '../../store/store'
+import { useStore as useNodeStore, useStore } from '../../store/store'
 import { NODE_WIDTH } from '../../store/utils/constants'
 import { getChainColor } from '../../store/utils/discoveryToNodes'
 import { getProject } from '../api/api'
 import { Field as ApiField, FieldValue } from '../api/types'
+import { usePanelStore } from '../store'
 
 export function NodesPanel() {
   const { project } = useParams()
@@ -20,6 +21,19 @@ export function NodesPanel() {
   })
   const clear = useNodeStore((state) => state.clear)
   const loadNodes = useNodeStore((state) => state.loadNodes)
+
+  const panelSelected = usePanelStore((state) => state.selected)
+  const panelSelect = usePanelStore((state) => state.select)
+  const nodesSelected = useStore((state) => state.selected)
+  const nodesSelect = useStore((state) => state.selectAndFocus)
+
+  useEffect(() => {
+    nodesSelect(panelSelected)
+  }, [panelSelected, nodesSelect])
+
+  useEffect(() => {
+    panelSelect(nodesSelected)
+  }, [nodesSelected, panelSelect])
 
   useEffect(() => {
     clear()

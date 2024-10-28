@@ -1,11 +1,11 @@
 import { create } from 'zustand'
 
 export interface State {
-  selected: string[]
+  readonly selected: readonly string[]
 }
 
 export interface Actions {
-  select: (selected: string[]) => void
+  select: (selected: readonly string[]) => void
 }
 
 export const usePanelStore = create<State & Actions>((set) => ({

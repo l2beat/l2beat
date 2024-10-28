@@ -17,6 +17,7 @@ import {
   layout,
   showHidden,
 } from './actions/other'
+import { selectAndFocus } from './actions/selectAndFocus'
 import { persistNodeLayout } from './utils/storage'
 
 const INITIAL_STATE: State = {
@@ -52,6 +53,8 @@ export const useStore = create<State & Actions>()(
       hideSelected: wrapAction(set, hideSelected),
       showHidden: wrapAction(set, showHidden),
       clear: wrapAction(set, clear),
+      layout: wrapAction(set, layout),
+      selectAndFocus: wrapAction(set, selectAndFocus),
 
       onKeyDown: wrapAction(set, onKeyDown),
       onKeyUp: wrapAction(set, onKeyUp),
@@ -59,7 +62,6 @@ export const useStore = create<State & Actions>()(
       onMouseUp: wrapAction(set, onMouseUp),
       onMouseMove: wrapAction(set, onMouseMove),
       onWheel: wrapAction(set, onWheel),
-      layout: wrapAction(set, layout),
     }),
     {
       // You can update the key if changes are backwards incompatible
