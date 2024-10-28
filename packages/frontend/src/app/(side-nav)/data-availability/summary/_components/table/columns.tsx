@@ -1,4 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
+import { NaBadge } from '~/components/badge/na-badge'
 import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
 import { TwoRowCell } from '~/components/table/cells/two-row-cell'
 import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
@@ -63,14 +64,16 @@ const daBridgeRisksColumn = columnHelper.display({
 
 const tvsColumn = columnHelper.accessor('tvs', {
   header: 'TVS',
-  cell: (ctx) =>
-    ctx.row.original.usedIn.length > 0 ? (
+  cell: (ctx) => {
+    const valueToFormat =
+      ctx.row.original.usedIn.length > 0 ? ctx.row.original.tvs : 0
+
+    return (
       <div className="w-full pl-4 text-right text-sm font-medium">
-        {formatCurrency(ctx.row.original.tvs, 'usd')}
+        {formatCurrency(valueToFormat, 'usd')}
       </div>
-    ) : (
-      EM_DASH
-    ),
+    )
+  },
   enableSorting: false,
   meta: {
     tooltip: 'The total value locked of all projects using this layer.',
@@ -110,11 +113,11 @@ const membersColumn = columnHelper.display({
     const [firstBridge] = ctx.row.original.bridges
 
     if (!firstBridge) {
-      return EM_DASH
+      return <NaBadge />
     }
 
     if (firstBridge.type !== 'DAC') {
-      return EM_DASH
+      return <NaBadge />
     }
 
     return <DacMembersCell {...firstBridge} />
