@@ -2,6 +2,7 @@ import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import { ScalingCostsChart } from '~/components/chart/costs/scaling-costs-chart'
 import { MainPageCard } from '~/components/main-page-card'
 import { MainPageHeader } from '~/components/main-page-header'
+import { SpiderWeb } from '~/components/spider-web'
 import { getScalingCostsEntries } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'
@@ -31,7 +32,8 @@ export default async function Page() {
           <CostsUnitContextProvider>
             <CostsMetricContextProvider>
               <MainPageHeader>Onchain costs</MainPageHeader>
-              <MainPageCard>
+              <MainPageCard className="relative">
+                <SpiderWeb className="absolute left-0 top-0 hidden md:block" />
                 <ScalingCostsChart
                   entries={
                     entries.type === 'recategorised'
