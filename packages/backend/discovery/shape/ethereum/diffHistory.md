@@ -7,7 +7,7 @@ Generated with discovered.json: 0x59f5c1563ea358ac473956b2ebb44a8a48245f23
 
 ## Description
 
-Initial discovery: Standard OP stack rollup.
+Initial discovery: Standard OP stack rollup with EOA admin. (alchemy)
 
 ## Initial discovery
 
