@@ -1,6 +1,5 @@
 import { createEnv } from '@t3-oss/env-nextjs'
 import { z } from 'zod'
-import { vercel } from '@t3-oss/env-core/presets'
 
 const coerceBoolean = z.string().transform((val) => {
   return val !== 'false' && val !== '0'
@@ -28,6 +27,10 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(['development', 'test', 'production'])
       .default('development'),
+    VERCEL_GIT_COMMIT_REF: z.string().optional(),
+    VERCEL_GIT_COMMIT_SHA: z.string().default('local'),
+    VERCEL_URL: z.string().optional(),
+    VERCEL_ENV: z.enum(['production', 'preview', 'development']).optional(),
     EXCLUDED_ACTIVITY_PROJECTS: stringArray.optional(),
     EXCLUDED_TVL_PROJECTS: stringArray.optional(),
   },
@@ -58,6 +61,10 @@ export const env = createEnv({
     ETHEREUM_RPC_URL: process.env.ETHEREUM_RPC_URL,
     MOCK: process.env.MOCK,
     NODE_ENV: process.env.NODE_ENV,
+    VERCEL_GIT_COMMIT_REF: process.env.VERCEL_GIT_COMMIT_REF,
+    VERCEL_GIT_COMMIT_SHA: process.env.VERCEL_GIT_COMMIT_SHA,
+    VERCEL_ENV: process.env.VERCEL_ENV,
+    VERCEL_URL: process.env.VERCEL_URL,
     EXCLUDED_ACTIVITY_PROJECTS: process.env.EXCLUDED_ACTIVITY_PROJECTS,
     EXCLUDED_TVL_PROJECTS: process.env.EXCLUDED_TVL_PROJECTS,
     // Client
@@ -89,5 +96,4 @@ export const env = createEnv({
    * `SOME_VAR=''` will throw an error.
    */
   emptyStringAsUndefined: true,
-  extends: [vercel()],
 })
