@@ -7,6 +7,7 @@ import {
   ApiProjectContract,
   ApiProjectResponse,
   Field,
+  FieldValue,
 } from './types'
 
 export function getProject(configReader: ConfigReader, project: string) {
@@ -61,7 +62,7 @@ function contractFromDiscovery(
   const fields: Field[] = Object.entries(contract.values ?? {}).map(
     ([name, value]) => ({
       name,
-      value: parseFieldValue(value, names),
+      value: fixAddresses(parseFieldValue(value, names), chain),
     }),
   )
   return {
@@ -70,6 +71,32 @@ function contractFromDiscovery(
     address: toAddress(chain, contract.address),
     fields,
   }
+}
+
+function fixAddresses(value: FieldValue, chain: string): FieldValue {
+  if (value.type === 'object') {
+    return {
+      type: 'object',
+      value: Object.fromEntries(
+        Object.entries(value).map(([key, value]) => [
+          key,
+          fixAddresses(value, chain),
+        ]),
+      ),
+    }
+  } else if (value.type === 'array') {
+    return {
+      type: 'array',
+      values: value.values.map((value) => fixAddresses(value, chain)),
+    }
+  } else if (value.type === 'address') {
+    return {
+      type: 'address',
+      name: value.name,
+      address: toAddress(chain, value.address),
+    }
+  }
+  return value
 }
 
 function getNames(discovery: DiscoveryOutput) {
