@@ -26,7 +26,7 @@ export function ProjectsUsedIn({ usedIn, className, maxProjects = 5 }: Props) {
   return (
     <div
       className={cn(
-        'flex flex-nowrap shrink-0 items-center gap-1.5',
+        'flex shrink-0 flex-nowrap items-center gap-1.5',
         className,
       )}
     >

@@ -37,9 +37,9 @@ export function DaProjectSummary({ project }: Props) {
       <div className="flex gap-10">
         <div className="w-full">
           {/* Separators */}
-          <div className="md:flex flex-row gap-10 hidden">
-            <HorizontalSeparator className="!mt-[0.875rem] !mb-6 flex-1 max-md:-mx-4 max-md:w-screen" />
-            <HorizontalSeparator className="!mt-[0.875rem] !mb-6 hidden w-[264px] lg:block" />
+          <div className="hidden flex-row gap-10 md:flex">
+            <HorizontalSeparator className="!mb-6 !mt-3.5 flex-1 max-md:-mx-4 max-md:w-screen" />
+            <HorizontalSeparator className="!mb-6 !mt-3.5 hidden w-[264px] lg:block" />
           </div>
           {/* Details row */}
           <div className="flex flex-col gap-6 md:gap-10">
@@ -116,7 +116,7 @@ export function DaProjectSummary({ project }: Props) {
                           <div className="flex flex-1 items-center justify-end pr-1 text-sm font-bold text-primary md:pr-12">
                             {formatCurrency(bridge.tvs, 'usd')}
                           </div>
-                          <div className="hidden flex-[1.5] lg:flex-1 flex-row items-center md:flex">
+                          <div className="hidden flex-[1.5] flex-row items-center md:flex lg:flex-1">
                             {bridge.usedIn.length > 0 ? (
                               <ProjectsUsedIn
                                 className="h-5 flex-wrap justify-start"
