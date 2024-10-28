@@ -20,7 +20,7 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
 
     this.logger.info('Fetching blocks', { from, to: adjustedTo })
 
-    const counts = await this.$.txsCountProvider.getTxsCount(from, adjustedTo)
+    const counts = await this.$.txsCountService.getTxsCount(from, adjustedTo)
     const currentMap = await this.getDatabaseEntries(counts)
 
     const dataToSave = counts.map(

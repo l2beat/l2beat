@@ -27,7 +27,7 @@ export const EVMTransaction = z
     /** Address of the receiver, null when its a contract creation transaction. */
     to: z.union([z.string(), z.null()]),
     input: z.string(),
-    type: Quantity.decode.transform((n) => Number(n)),
+    type: Quantity.decode.transform((n) => Number(n)).optional(),
   })
   .transform(({ hash, from, to, input, type }) => ({
     hash,
@@ -43,4 +43,12 @@ export const EVMBlock = z.object({
   timestamp: Quantity.decode.transform((n) => Number(n)),
   hash: z.string(),
   number: Quantity.decode.transform((n) => Number(n)),
+})
+
+export type RPCError = z.infer<typeof RPCError>
+export const RPCError = z.object({
+  error: z.object({
+    code: z.number(),
+    message: z.string(),
+  }),
 })

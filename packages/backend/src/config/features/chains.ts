@@ -75,15 +75,15 @@ export function getChainTvlConfig(
         ? chainConfig.explorerApi.type === 'etherscan'
           ? {
               type: chainConfig.explorerApi.type,
-              etherscanApiKey: env.string([
+              apiKey: env.string([
                 `${ENV_NAME}_ETHERSCAN_API_KEY_FOR_TVL`,
                 `${ENV_NAME}_ETHERSCAN_API_KEY`,
               ]),
-              etherscanApiUrl: chainConfig.explorerApi.url,
+              url: chainConfig.explorerApi.url,
             }
           : {
               type: chainConfig.explorerApi.type,
-              blockscoutApiUrl: chainConfig.explorerApi.url,
+              url: chainConfig.explorerApi.url,
             }
         : undefined,
       minBlockTimestamp:

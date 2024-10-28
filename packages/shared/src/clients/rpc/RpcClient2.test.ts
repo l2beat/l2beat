@@ -150,6 +150,7 @@ function mockClient(deps: {
       deps.rateLimiter ?? new RateLimiter({ callsPerMinute: 100_000 }),
     retryHandler: deps.retryHandler ?? RetryHandler.TEST,
     logger: Logger.SILENT,
+    chain: 'chain',
   })
 }
 

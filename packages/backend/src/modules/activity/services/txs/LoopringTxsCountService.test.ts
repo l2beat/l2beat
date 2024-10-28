@@ -2,12 +2,12 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { LoopringClient } from '../../../../peripherals/loopring/LoopringClient'
 import { activityRecord } from '../../utils/aggregatePerDay.test'
-import { LoopringTxsCountProvider } from './LoopringTxsCountProvider'
+import { LoopringTxsCountService } from './LoopringTxsCountService'
 
 const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
 
-describe(LoopringTxsCountProvider.name, () => {
-  describe(LoopringTxsCountProvider.prototype.getTxsCount.name, () => {
+describe(LoopringTxsCountService.name, () => {
+  describe(LoopringTxsCountService.prototype.getTxsCount.name, () => {
     it('should return txs count', async () => {
       const client = mockLoopringClient([
         { timestamp: START, count: 1, number: 1 },
@@ -15,7 +15,7 @@ describe(LoopringTxsCountProvider.name, () => {
         { timestamp: START.add(2, 'days'), count: 5, number: 3 },
       ])
 
-      const txsCountProvider = new LoopringTxsCountProvider(
+      const txsCountProvider = new LoopringTxsCountService(
         client,
         ProjectId('a'),
       )
