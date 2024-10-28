@@ -20,6 +20,7 @@ export interface MultiChainContractsSectionProps {
   diagram?: DiagramParams
   isIncomplete?: boolean
   isUnderReview?: boolean
+  nested?: boolean
 }
 
 export function MultiChainContractsSection(
@@ -53,6 +54,7 @@ export function MultiChainContractsSection(
       sectionOrder={props.sectionOrder}
       isUnderReview={props.isUnderReview}
       includeChildrenIfUnderReview
+      nested={props.nested}
     >
       {hasContractsImplementationChanged && <ContractsUpdated />}
       {props.isIncomplete && <TechnologyIncompleteNote />}

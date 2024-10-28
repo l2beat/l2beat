@@ -140,7 +140,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <MultichainPermissionsSection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+                {...{ nested, sectionOrder }}
                 {...item.props}
               />
             )
@@ -156,7 +156,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <MultiChainContractsSection
                 key={item.props.id}
-                sectionOrder={sectionOrder}
+                {...{ nested, sectionOrder }}
                 {...item.props}
               />
             )
