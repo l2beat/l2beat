@@ -119,7 +119,7 @@ export class RpcCounter implements Counter {
       }
     }
 
-    assert(tx.type, 'Tx type should be defined')
+    assert(tx.type !== undefined, 'Tx type should be defined')
 
     return {
       from: tx.from,
