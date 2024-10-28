@@ -1,21 +1,17 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { RiskCell } from '~/components/table/cells/risk-cell'
 import { sortByExitWindow } from '~/components/table/sorting/functions/sort-by-exit-window'
 import {
   sortBySentiment,
   sortBySentimentAndAlphabetically,
 } from '~/components/table/sorting/functions/sort-by-sentiment'
-import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
+import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { type ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
 
 const columnHelper = createColumnHelper<ScalingRiskEntry>()
 
 export const scalingRiskColumns = [
-  ...getCommonProjectColumns(columnHelper),
-  columnHelper.accessor('name', {
-    cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
-  }),
+  ...getScalingCommonProjectColumns(columnHelper),
   columnHelper.accessor(
     (e) => {
       const value = e.risks.stateValidation.value

@@ -2,7 +2,7 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { RiskCell } from '~/components/table/cells/risk-cell'
 import { sortBySentimentAndAlphabetically } from '~/components/table/sorting/functions/sort-by-sentiment'
-import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
+import { getDaCommonProjectColumns } from '~/components/table/utils/common-project-columns/da-common-project-columns'
 import { ChevronIcon } from '~/icons/chevron'
 import { type DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
 import { cn } from '~/utils/cn'
@@ -10,7 +10,7 @@ import { cn } from '~/utils/cn'
 const columnHelper = createColumnHelper<DaRiskEntry>()
 
 export const columns = [
-  ...getCommonProjectColumns(columnHelper),
+  ...getDaCommonProjectColumns(columnHelper),
   columnHelper.accessor('name', {
     header: 'DA Layer',
     cell: (ctx) => (
@@ -24,6 +24,7 @@ export const columns = [
       tooltip:
         'The data availability layer where the data (transaction data or state diffs) is posted.',
     },
+    sortDescFirst: false,
   }),
   columnHelper.accessor('daBridge', {
     header: 'DA Bridge',

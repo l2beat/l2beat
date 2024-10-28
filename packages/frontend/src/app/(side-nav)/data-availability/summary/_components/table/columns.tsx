@@ -1,7 +1,7 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { PentagonRosetteCell } from '~/components/rosette/pentagon/pentagon-rosette-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
-import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
+import { getDaCommonProjectColumns } from '~/components/table/utils/common-project-columns/da-common-project-columns'
 import { EM_DASH } from '~/consts/characters'
 import { ChevronIcon } from '~/icons/chevron'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
@@ -12,21 +12,6 @@ import { DaEconomicSecurityCell } from './da-economic-security-cell'
 import { ProjectsUsedIn } from './projects-used-in'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
-
-const nameColumn = columnHelper.accessor('name', {
-  header: 'DA Layer',
-  meta: {
-    tooltip:
-      'The data availability layer where the data (transaction data or state diffs) is posted.',
-  },
-  cell: (ctx) => (
-    <ProjectNameCell
-      project={{
-        name: ctx.getValue(),
-      }}
-    />
-  ),
-})
 
 const daBridgeColumn = columnHelper.accessor('daBridge', {
   header: 'DA Bridge',
@@ -181,8 +166,7 @@ const fallbackColumn = columnHelper.accessor('fallback', {
 })
 
 export const columns = [
-  ...getCommonProjectColumns(columnHelper),
-  nameColumn,
+  ...getDaCommonProjectColumns(columnHelper),
   daBridgeColumn,
   risksColumn,
   tvsColumn,
@@ -191,8 +175,7 @@ export const columns = [
 ]
 
 export const customSystemsColumns = [
-  ...getCommonProjectColumns(columnHelper),
-  nameColumn,
+  ...getDaCommonProjectColumns(columnHelper),
   daBridgeColumn,
   risksColumn,
   tvsColumn,

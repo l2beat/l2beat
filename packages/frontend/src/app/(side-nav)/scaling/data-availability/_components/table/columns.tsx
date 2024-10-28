@@ -1,6 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { SentimentText } from '~/components/sentiment-text'
-import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import {
   TypeCell,
   TypeExplanationTooltip,
@@ -10,16 +9,13 @@ import {
   sortBySentiment,
   sortBySentimentAndAlphabetically,
 } from '~/components/table/sorting/functions/sort-by-sentiment'
-import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
+import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
 
 const columnHelper = createColumnHelper<ScalingDataAvailabilityEntry>()
 
 export const columns = [
-  ...getCommonProjectColumns(columnHelper),
-  columnHelper.accessor('name', {
-    cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
-  }),
+  ...getScalingCommonProjectColumns(columnHelper),
   columnHelper.accessor('category', {
     header: 'Type',
     meta: {

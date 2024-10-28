@@ -8,7 +8,7 @@ import {
 import { useTable } from '~/hooks/use-table'
 import { BasicTable } from './basic-table'
 import { ProjectNameCell } from './cells/project-name-cell'
-import { getCommonProjectColumns } from './utils/common-project-columns'
+import { getCommonProjectColumns } from './utils/common-project-columns/common-project-columns'
 
 interface StorybookEntry {
   id: ProjectId
@@ -33,6 +33,7 @@ const basicTableColumns = [
   columnHelper.accessor('name', {
     header: 'Name',
     cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
+    sortDescFirst: false,
   }),
   columnHelper.group({
     id: 'data',

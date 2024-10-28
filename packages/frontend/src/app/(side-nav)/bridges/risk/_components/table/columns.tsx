@@ -1,10 +1,9 @@
 import { type Row, createColumnHelper } from '@tanstack/react-table'
 import { NoInfoCell } from '~/components/table/cells/no-info-cell'
-import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { RiskCell } from '~/components/table/cells/risk-cell'
 import { TypeCell } from '~/components/table/cells/type-cell'
 import { sortBySentiment } from '~/components/table/sorting/functions/sort-by-sentiment'
-import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
+import { getBridgesCommonProjectColumns } from '~/components/table/utils/common-project-columns/bridges-common-project-columns'
 import { type BridgesRiskEntry } from '~/server/features/bridges/get-bridges-risk-entries'
 
 const sortBridgeRisks =
@@ -18,10 +17,7 @@ const sortBridgeRisks =
 const columnHelper = createColumnHelper<BridgesRiskEntry>()
 
 export const bridgesRisksColumns = [
-  ...getCommonProjectColumns(columnHelper),
-  columnHelper.accessor('name', {
-    cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
-  }),
+  ...getBridgesCommonProjectColumns(columnHelper),
   columnHelper.accessor('destination', {
     header: 'Destination',
     cell: (ctx) => {

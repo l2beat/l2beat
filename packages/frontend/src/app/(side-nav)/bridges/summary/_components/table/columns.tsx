@@ -2,20 +2,16 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { TotalCell } from '~/app/(side-nav)/scaling/summary/_components/table/total-cell'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { NoInfoCell } from '~/components/table/cells/no-info-cell'
-import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { RiskCell } from '~/components/table/cells/risk-cell'
 import { TypeCell } from '~/components/table/cells/type-cell'
 import { sortBySentiment } from '~/components/table/sorting/functions/sort-by-sentiment'
-import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
+import { getBridgesCommonProjectColumns } from '~/components/table/utils/common-project-columns/bridges-common-project-columns'
 import { type BridgesSummaryEntry } from '~/server/features/bridges/get-bridges-summary-entries'
 
 const columnHelper = createColumnHelper<BridgesSummaryEntry>()
 
 export const bridgesSummaryActiveColumns = [
-  ...getCommonProjectColumns(columnHelper),
-  columnHelper.accessor('name', {
-    cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
-  }),
+  ...getBridgesCommonProjectColumns(columnHelper),
   columnHelper.accessor('validatedBy', {
     header: 'Validated by',
     cell: (ctx) => {
