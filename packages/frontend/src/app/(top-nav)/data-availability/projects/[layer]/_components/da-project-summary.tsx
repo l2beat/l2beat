@@ -124,7 +124,9 @@ export function DaProjectSummary({ project }: Props) {
                                 maxProjects={4}
                               />
                             ) : (
-                              'Nobody 😔'
+                              <span className="text-sm font-medium">
+                                Nobody 😔
+                              </span>
                             )}
                           </div>
                         </div>
