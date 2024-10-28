@@ -7,21 +7,32 @@ import { compact } from 'lodash'
 import { type ProjectLink } from '~/components/projects/links/types'
 
 export function getDataAvailabilityProjectLinks(
-  daLayerLinks: DaLayer['display']['links'],
-  daBridgeLinks: DaBridge['display']['links'],
+  daLayer: DaLayer,
 ): ProjectLink[] {
-  const websites = [...daLayerLinks.websites, ...daBridgeLinks.websites]
-  const apps = [...daLayerLinks.apps, ...daBridgeLinks.apps]
+  const websites = [
+    ...daLayer.display.links.websites,
+    ...daLayer.bridges.flatMap((b) => b.display.links.websites),
+  ]
+  const apps = [
+    ...daLayer.display.links.apps,
+    ...daLayer.bridges.flatMap((b) => b.display.links.apps),
+  ]
   const documentation = [
-    ...daLayerLinks.documentation,
-    ...daBridgeLinks.documentation,
+    ...daLayer.display.links.documentation,
+    ...daLayer.bridges.flatMap((b) => b.display.links.documentation),
   ]
-  const explorers = [...daLayerLinks.explorers, ...daBridgeLinks.explorers]
+  const explorers = [
+    ...daLayer.display.links.explorers,
+    ...daLayer.bridges.flatMap((b) => b.display.links.explorers),
+  ]
   const repositories = [
-    ...daLayerLinks.repositories,
-    ...daBridgeLinks.repositories,
+    ...daLayer.display.links.repositories,
+    ...daLayer.bridges.flatMap((b) => b.display.links.repositories),
   ]
-  const socials = [...daLayerLinks.socialMedia, ...daBridgeLinks.socialMedia]
+  const socials = [
+    ...daLayer.display.links.socialMedia,
+    ...daLayer.bridges.flatMap((b) => b.display.links.socialMedia),
+  ]
 
   return compact([
     websites.length !== 0 && { name: 'Website', links: websites },

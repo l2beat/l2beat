@@ -1,7 +1,7 @@
 {
   "name": "omni",
   "chain": "ethereum",
-  "blockNumber": 20985714,
+  "blockNumber": 21041846,
   "configHash": "0x8b9143b8282c5576f9a2a9ff4dd23827f7b9648de7f19a0142caccc137c3d916",
   "contracts": [
     {
@@ -171,11 +171,13 @@
     {
       "name": "Safe",
       "address": "0x670a3e447F4DE92C012777Ac5591D81E12aD0957",
+      "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
         "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1729072343,
       "values": {
         "$immutable": false,
@@ -189,13 +191,6 @@
         "$threshold": 2,
         "domainSeparator": "0x55fd33e1f6d651168aaf544b6f7a3e8b59f3673b8dfdef28e13b9053b118aa40",
         "getChainId": 1,
-        "getOwners": [
-          "0xeca6EAa2C77d8f0aA9247e681C64455deAae51aC",
-          "0x0577FEC70907676039f7DAF961F8A44bda3Ea9Af",
-          "0xB1dD1828794075f7521365163A93DE9e68e3c49f",
-          "0x9bd93c5ad5e0a6be890c82FD77eE42ce8B642eF8"
-        ],
-        "getThreshold": 2,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
         "nonce": 1,

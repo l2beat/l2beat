@@ -15,8 +15,8 @@ export const lens: Layer2 = upcomingL2({
     provider: 'ZK Stack',
     links: {
       websites: ['https://lens.xyz'],
-      apps: [],
-      documentation: ['https://docs.lens.xyz'],
+      apps: ['https://lens.xyz/mint'],
+      documentation: ['https://lens.xyz/docs'],
       explorers: ['https://momoka.lens.xyz'],
       repositories: ['https://github.com/lens-protocol'],
       socialMedia: [

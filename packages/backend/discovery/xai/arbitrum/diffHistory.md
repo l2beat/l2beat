@@ -1,3 +1,166 @@
+Generated with discovered.json: 0xdf92bba31fd4453d1e9ef630a9dd359a4d1ac4da
+
+# Diff at Fri, 25 Oct 2024 12:22:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e7501f424c0cea9b5438386ee76e509448999836 block: 264372912
+- current block number: 267504356
+
+## Description
+
+Renamed ExecutorMultisig to XaiMultisig.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 264372912 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x041F85dD87c46B941dc9b15c6628B19ee5358485) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F"},{"permission":"upgrade","target":"0x1E400568AD4840dbE50FB32f306B842e9ddeF726"},{"permission":"upgrade","target":"0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35"},{"permission":"upgrade","target":"0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8"},{"permission":"upgrade","target":"0x3a3f62034a42a35eA1686B199bB73006aa525eE4"},{"permission":"upgrade","target":"0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f"},{"permission":"upgrade","target":"0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1"},{"permission":"upgrade","target":"0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9"},{"permission":"upgrade","target":"0xb591cE747CF19cF30e11d656EB94134F523A9e77"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F"},{"permission":"upgrade","target":"0x1E400568AD4840dbE50FB32f306B842e9ddeF726"},{"permission":"upgrade","target":"0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35"},{"permission":"upgrade","target":"0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8"},{"permission":"upgrade","target":"0x3a3f62034a42a35eA1686B199bB73006aa525eE4"},{"permission":"upgrade","target":"0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f"},{"permission":"upgrade","target":"0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1"},{"permission":"upgrade","target":"0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9"},{"permission":"upgrade","target":"0xb591cE747CF19cF30e11d656EB94134F523A9e77"}]
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F) {
+    +++ description: Central contract defining the access control for upgrading the system contract implementations.
+      issuedPermissions.0.target:
+-        "0x041F85dD87c46B941dc9b15c6628B19ee5358485"
++        "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F"
+      issuedPermissions.0.via.0:
++        {"address":"0x041F85dD87c46B941dc9b15c6628B19ee5358485","delay":0}
+      receivedPermissions.9:
++        {"permission":"upgrade","target":"0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336"}
+      receivedPermissions.8:
++        {"permission":"upgrade","target":"0xb591cE747CF19cF30e11d656EB94134F523A9e77","via":[{"address":"0x041F85dD87c46B941dc9b15c6628B19ee5358485"}]}
+      receivedPermissions.7:
++        {"permission":"upgrade","target":"0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9","via":[{"address":"0x041F85dD87c46B941dc9b15c6628B19ee5358485"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","target":"0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1","via":[{"address":"0x041F85dD87c46B941dc9b15c6628B19ee5358485"}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","target":"0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f","via":[{"address":"0x041F85dD87c46B941dc9b15c6628B19ee5358485"}]}
+      receivedPermissions.4:
++        {"permission":"upgrade","target":"0x3a3f62034a42a35eA1686B199bB73006aa525eE4","via":[{"address":"0x041F85dD87c46B941dc9b15c6628B19ee5358485"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","target":"0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8","via":[{"address":"0x041F85dD87c46B941dc9b15c6628B19ee5358485"}]}
+      receivedPermissions.2:
++        {"permission":"upgrade","target":"0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35","via":[{"address":"0x041F85dD87c46B941dc9b15c6628B19ee5358485"}]}
+      receivedPermissions.1:
++        {"permission":"upgrade","target":"0x1E400568AD4840dbE50FB32f306B842e9ddeF726","via":[{"address":"0x041F85dD87c46B941dc9b15c6628B19ee5358485"}]}
+      receivedPermissions.0.target:
+-        "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336"
++        "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F"
+      receivedPermissions.0.via:
++        [{"address":"0x041F85dD87c46B941dc9b15c6628B19ee5358485"}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0x041F85dD87c46B941dc9b15c6628B19ee5358485"}]
+    }
+```
+
+```diff
+    contract Outbox (0x1E400568AD4840dbE50FB32f306B842e9ddeF726) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) which eventually resolve in execution on L1.
+      issuedPermissions.0.target:
+-        "0x041F85dD87c46B941dc9b15c6628B19ee5358485"
++        "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F"
+      issuedPermissions.0.via.0:
++        {"address":"0x041F85dD87c46B941dc9b15c6628B19ee5358485","delay":0}
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x041F85dD87c46B941dc9b15c6628B19ee5358485"
++        "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F"
+      issuedPermissions.0.via.0:
++        {"address":"0x041F85dD87c46B941dc9b15c6628B19ee5358485","delay":0}
+    }
+```
+
+```diff
+    contract ERC20RollupEventInbox (0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x041F85dD87c46B941dc9b15c6628B19ee5358485"
++        "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F"
+      issuedPermissions.0.via.0:
++        {"address":"0x041F85dD87c46B941dc9b15c6628B19ee5358485","delay":0}
+    }
+```
+
+```diff
+    contract ChallengeManager (0x3a3f62034a42a35eA1686B199bB73006aa525eE4) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      issuedPermissions.0.target:
+-        "0x041F85dD87c46B941dc9b15c6628B19ee5358485"
++        "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F"
+      issuedPermissions.0.via.0:
++        {"address":"0x041F85dD87c46B941dc9b15c6628B19ee5358485","delay":0}
+    }
+```
+
+```diff
+    contract XaiMultisig (0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E) {
+    +++ description: None
+      name:
+-        "ExecutorMultisig"
++        "XaiMultisig"
+    }
+```
+
+```diff
+    contract Bridge (0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f) {
+    +++ description: Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for bridge messaging.
+      issuedPermissions.0.target:
+-        "0x041F85dD87c46B941dc9b15c6628B19ee5358485"
++        "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F"
+      issuedPermissions.0.via.0:
++        {"address":"0x041F85dD87c46B941dc9b15c6628B19ee5358485","delay":0}
+    }
+```
+
+```diff
+    contract SequencerInbox (0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      issuedPermissions.1.target:
+-        "0x041F85dD87c46B941dc9b15c6628B19ee5358485"
++        "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F"
+      issuedPermissions.1.via.0:
++        {"address":"0x041F85dD87c46B941dc9b15c6628B19ee5358485","delay":0}
+    }
+```
+
+```diff
+    contract Inbox (0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      issuedPermissions.0.target:
+-        "0x041F85dD87c46B941dc9b15c6628B19ee5358485"
++        "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F"
+      issuedPermissions.0.via.0:
++        {"address":"0x041F85dD87c46B941dc9b15c6628B19ee5358485","delay":0}
+    }
+```
+
+```diff
+    contract L1ERC20Gateway (0xb591cE747CF19cF30e11d656EB94134F523A9e77) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x041F85dD87c46B941dc9b15c6628B19ee5358485"
++        "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F"
+      issuedPermissions.0.via.0:
++        {"address":"0x041F85dD87c46B941dc9b15c6628B19ee5358485","delay":0}
+    }
+```
+
 Generated with discovered.json: 0x1b1d882b71a41fc8e5b7c5f0bc2a7fa69662ca21
 
 # Diff at Wed, 23 Oct 2024 14:37:16 GMT:

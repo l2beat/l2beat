@@ -76,7 +76,7 @@ export const scalingFinalityColumns = [
     cell: (ctx) => {
       const { data } = ctx.row.original
       return data?.stateUpdateDelay ? (
-        data.stateUpdateDelay.averageInSeconds === 0 ? (
+        data.stateUpdateDelay.averageInSeconds <= 0 ? (
           'None'
         ) : (
           <FinalityDurationCell
