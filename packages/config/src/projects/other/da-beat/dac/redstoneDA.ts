@@ -66,6 +66,10 @@ export const redstoneDA: DaLayer = {
         description: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.
         However, there is a mechanism that allows users to challenge unavailability of data. \n`,
       },
+      usedIn: linkByDA({
+        layer: (layer) => layer === 'RedstoneDA',
+        bridge: (bridge) => bridge === 'None + DA challenges',
+      }),
     }),
   ],
   usedIn: linkByDA({
