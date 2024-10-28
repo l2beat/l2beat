@@ -7,5 +7,10 @@
   ],
   "names": {
     "0xacAF178b5048CB56712dc59E95fBA72F7990A005": "ShapeMultisig"
+  },
+  "overrides": {
+    "0x125664BEf08177ca43f6f301E63118b1e4cCDe09": {
+      "extends": "opstack/SuperchainConfigFake"
+    }
   }
 }

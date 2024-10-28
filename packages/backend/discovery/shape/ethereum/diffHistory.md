@@ -1,13 +1,13 @@
-Generated with discovered.json: 0xcf1df78abc5005ec13840c9d80904b1c97f96d53
+Generated with discovered.json: 0x59f5c1563ea358ac473956b2ebb44a8a48245f23
 
-# Diff at Mon, 28 Oct 2024 15:59:19 GMT:
+# Diff at Mon, 28 Oct 2024 16:23:35 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 21065176
+- current block number: 21065298
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial discovery: Standard OP stack rollup.
 
 ## Initial discovery
 
@@ -20,7 +20,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract SuperchainConfig (0x125664BEf08177ca43f6f301E63118b1e4cCDe09)
-    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+    +++ description: This is NOT the shared SuperchainConfig of the OP stack Superchain. This SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
 ```
 
 ```diff
@@ -49,7 +49,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0xacAF178b5048CB56712dc59E95fBA72F7990A005)
+    contract ShapeMultisig (0xacAF178b5048CB56712dc59E95fBA72F7990A005)
     +++ description: None
 ```
 
