@@ -83,7 +83,7 @@ export default function Page({ params }: Props) {
 
 function Header({ publication }: { publication: GovernancePublicationEntry }) {
   return (
-    <FullPageHeader contentWrapperClassName="flex-col items-start gap-6">
+    <FullPageHeader contentWrapperClassName="flex-col items-start gap-2 md:gap-6">
       <p className="text-2xs font-medium uppercase text-purple-100 dark:text-pink-200">
         {publication.readTimeInMinutes} min read • Published on{' '}
         {publication.publishedOn}

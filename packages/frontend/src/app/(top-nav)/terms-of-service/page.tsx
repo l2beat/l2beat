@@ -34,7 +34,7 @@ export default function Page() {
 
 function Header({ lastUpdated }: { lastUpdated: Date }) {
   return (
-    <FullPageHeader contentWrapperClassName="flex-col items-start gap-6">
+    <FullPageHeader contentWrapperClassName="flex-col items-start gap-2 md:gap-6">
       <p className="text-2xs font-medium uppercase text-purple-100 dark:text-pink-200">
         Last updated on {formatPublicationDate(lastUpdated)}
       </p>
