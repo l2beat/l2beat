@@ -121,8 +121,7 @@ function getHeader({
     daLayerGrissiniValues,
     daBridgeGrissiniValues,
     links: getDataAvailabilityProjectLinks(
-      daLayer.display.links,
-      daBridge.display.links,
+      daLayer,
     ),
     tvs,
     economicSecurity,
