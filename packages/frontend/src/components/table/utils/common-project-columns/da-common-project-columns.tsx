@@ -28,5 +28,5 @@ export function getDaCommonProjectColumns<T extends CommonProjectColumnsEntry>(
         />
       ),
     }),
-  ]
+  ] as const
 }
