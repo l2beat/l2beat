@@ -7,9 +7,10 @@ module.exports = {
         ui: ['system-ui', 'sans-serif'],
         mono: [
           'ui-monospace',
+          'Menlo',
+          'Monaco',
           'Cascadia Code',
           'Source Code Pro',
-          'Menlo',
           'Consolas',
           'DejaVu Sans Mono',
           'monospace',

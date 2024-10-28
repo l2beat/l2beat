@@ -2,6 +2,8 @@ import { useQuery } from '@tanstack/react-query'
 import { useStore } from '../store'
 import { getCode, getProject } from '../api/api'
 import { useParams } from 'react-router-dom'
+import { useEffect, useRef } from 'react'
+import * as monaco from 'monaco-editor'
 
 export function CodePanel() {
   const { project } = useParams()
@@ -22,8 +24,28 @@ export function CodePanel() {
   if (projectResponse.isLoading || codeResponse.isLoading) {
     return <div>Loading</div>
   }
-  if (projectResponse.isError || codeResponse.isLoading) {
+  if (projectResponse.isError || codeResponse.isError) {
     return <div>Error</div>
   }
-  return <div className="h-full">Code {JSON.stringify(codeResponse.data)}</div>
+  return <CodeView code={codeResponse.data.sources[0]?.code ?? '// No code'} />
+}
+
+function CodeView({ code }: { code: string }) {
+  const monacoEl = useRef(null)
+
+  useEffect(() => {
+    if (!monacoEl.current) {
+      return
+    }
+    const editor = monaco.editor.create(monacoEl.current, {
+      value: code,
+      language: 'sol',
+      theme: '',
+      minimap: { enabled: false },
+    })
+
+    return () => editor?.dispose()
+  }, [code])
+
+  return <div className="h-full w-full" ref={monacoEl}></div>
 }
