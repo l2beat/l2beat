@@ -1,7 +1,9 @@
+import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { getProject } from '../api/api'
 import { ApiAddressEntry, ApiProjectChain } from '../api/types'
-import { useApiProject } from '../api/useApiProject'
 import { IconChevronDown } from '../icons/IconChevronDown'
 import { IconChevronRight } from '../icons/IconChevronRight'
 import { IconContract } from '../icons/IconContract'
@@ -13,10 +15,17 @@ import { IconFolderOpened } from '../icons/IconFolderOpened'
 import { IconMultisig } from '../icons/IconMultisig'
 import { IconTimelock } from '../icons/IconTimelock'
 import { IconToken } from '../icons/IconToken'
-import { useStore } from '../store'
+import { usePanelStore } from '../store'
 
 export function ListPanel() {
-  const response = useApiProject()
+  const { project } = useParams()
+  if (!project) {
+    throw new Error('Cannot use component outside of project page!')
+  }
+  const response = useQuery({
+    queryKey: ['projects', project],
+    queryFn: () => getProject(project),
+  })
   if (response.isLoading) {
     return <div>Loading</div>
   }
@@ -88,7 +97,7 @@ function ListItemContracts(props: {
   startClosed?: boolean
 }) {
   const [open, setOpen] = useState(!props.startClosed)
-  const selected = useStore((state) => state.selected)
+  const selected = usePanelStore((state) => state.selected)
   useEffect(() => {
     const selectedSet = new Set<string>(selected)
     for (const { address } of props.entries) {
@@ -135,8 +144,10 @@ function ListItemContracts(props: {
 }
 
 function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
-  const isSelected = useStore((state) => state.selected.includes(entry.address))
-  const select = useStore((state) => state.select)
+  const isSelected = usePanelStore((state) =>
+    state.selected.includes(entry.address),
+  )
+  const select = usePanelStore((state) => state.select)
   return (
     <li
       className={clsx(

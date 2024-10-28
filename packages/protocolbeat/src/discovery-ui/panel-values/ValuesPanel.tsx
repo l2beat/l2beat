@@ -1,11 +1,20 @@
+import { useQuery } from '@tanstack/react-query'
+import { useParams } from 'react-router-dom'
+import { getProject } from '../api/api'
 import { ApiProjectChain, ApiProjectContract } from '../api/types'
-import { useApiProject } from '../api/useApiProject'
-import { useStore } from '../store'
+import { usePanelStore } from '../store'
 import { Field } from './Field'
 
 export function ValuesPanel() {
-  const response = useApiProject()
-  const selectedAddress = useStore((state) => state.selected[0])
+  const { project } = useParams()
+  if (!project) {
+    throw new Error('Cannot use component outside of project page!')
+  }
+  const response = useQuery({
+    queryKey: ['projects', project],
+    queryFn: () => getProject(project),
+  })
+  const selectedAddress = usePanelStore((state) => state.selected[0])
 
   if (response.isLoading) {
     return <div>Loading</div>

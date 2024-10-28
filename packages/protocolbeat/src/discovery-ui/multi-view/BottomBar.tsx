@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useStore } from './store'
+import { useMultiViewStore } from './store'
 
 function Keys(props: { keys: string[] }) {
   return (
@@ -14,10 +14,10 @@ function Keys(props: { keys: string[] }) {
 }
 export function BottomBar() {
   const [hintOpen, setHintOpen] = useState(false)
-  const loadLayout = useStore((state) => state.loadLayout)
-  const addPanel = useStore((state) => state.addPanel)
-  const removePanel = useStore((state) => state.removePanel)
-  const toggleFullScren = useStore((state) => state.toggleFullScren)
+  const loadLayout = useMultiViewStore((state) => state.loadLayout)
+  const addPanel = useMultiViewStore((state) => state.addPanel)
+  const removePanel = useMultiViewStore((state) => state.removePanel)
+  const toggleFullScren = useMultiViewStore((state) => state.toggleFullScren)
 
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {

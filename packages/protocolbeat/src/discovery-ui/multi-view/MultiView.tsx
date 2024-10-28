@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import { ComponentType, Fragment, ReactNode, useEffect, useRef } from 'react'
 import { BottomBar } from './BottomBar'
 import { PanelHeader } from './PanelHeader'
-import { PanelId, useStore } from './store'
+import { PanelId, useMultiViewStore } from './store'
 
 const RESIZE_AREA = 20
 const MIN_PANEL_WIDTH = 160
@@ -15,13 +15,13 @@ export interface MultiViewProps {
 export function MultiView(props: MultiViewProps) {
   const panelContainerRef = useRef<HTMLDivElement>(null)
 
-  const panels = useStore((state) => state.panels)
-  const fullScreen = useStore((state) => state.fullScreen)
-  const resize = useStore((state) => state.resize)
-  const mouseMove = useStore((state) => state.mouseMove)
-  const drop = useStore((state) => state.drop)
-  const order = useStore((state) => state.order)
-  const setActivePanel = useStore((state) => state.setActivePanel)
+  const panels = useMultiViewStore((state) => state.panels)
+  const fullScreen = useMultiViewStore((state) => state.fullScreen)
+  const resize = useMultiViewStore((state) => state.resize)
+  const mouseMove = useMultiViewStore((state) => state.mouseMove)
+  const drop = useMultiViewStore((state) => state.drop)
+  const order = useMultiViewStore((state) => state.order)
+  const setActivePanel = useMultiViewStore((state) => state.setActivePanel)
 
   useEffect(() => {
     let left = 0
@@ -87,7 +87,7 @@ export function MultiView(props: MultiViewProps) {
     function onMouseMove(e: MouseEvent) {
       mouseMove(e.clientX, e.clientY)
 
-      const { hover } = useStore.getState()
+      const { hover } = useMultiViewStore.getState()
       document.body.classList.toggle('select-none', !!hover)
 
       if (hover) {
@@ -162,11 +162,11 @@ export function MultiView(props: MultiViewProps) {
 }
 
 function TopBar(props: { project: string }) {
-  const layouts = useStore((state) => state.layouts)
-  const selectedLayout = useStore((state) => state.selectedLayout)
-  const loadLayout = useStore((state) => state.loadLayout)
-  const saveLayout = useStore((state) => state.saveLayout)
-  const addPanel = useStore((state) => state.addPanel)
+  const layouts = useMultiViewStore((state) => state.layouts)
+  const selectedLayout = useMultiViewStore((state) => state.selectedLayout)
+  const loadLayout = useMultiViewStore((state) => state.loadLayout)
+  const saveLayout = useMultiViewStore((state) => state.saveLayout)
+  const addPanel = useMultiViewStore((state) => state.addPanel)
   return (
     <div className="flex h-10 items-center justify-between px-2">
       <div>DISCOVERY {props.project}</div>
@@ -190,10 +190,10 @@ function TopBar(props: { project: string }) {
 }
 
 function Panel(props: { id: PanelId; body: ComponentType<{ kind: PanelId }> }) {
-  const hidden = useStore(
+  const hidden = useMultiViewStore(
     (state) => state.fullScreen !== undefined && state.fullScreen !== props.id,
   )
-  const isHover = useStore((state) => state.hover === props.id)
+  const isHover = useMultiViewStore((state) => state.hover === props.id)
 
   const HeaderWrapper = isHover ? HoverHeader : Fragment
   return (
@@ -222,7 +222,7 @@ function Panel(props: { id: PanelId; body: ComponentType<{ kind: PanelId }> }) {
 }
 
 function HoverHeader(props: { children: ReactNode }) {
-  const mouse = useStore((state) => state.mouse)
+  const mouse = useMultiViewStore((state) => state.mouse)
 
   return (
     <div

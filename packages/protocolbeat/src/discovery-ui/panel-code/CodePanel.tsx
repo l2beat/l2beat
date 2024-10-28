@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
 import * as monaco from 'monaco-editor'
-import './monaco-workers'
 import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getCode, getProject } from '../api/api'
-import { useStore } from '../store'
-import { useStore as useMultiViewStore } from '../multi-view/store'
+import { useMultiViewStore } from '../multi-view/store'
+import { usePanelStore } from '../store'
+import './monaco-workers'
 
 export function CodePanel() {
   const { project } = useParams()
@@ -16,7 +16,7 @@ export function CodePanel() {
     queryKey: ['projects', project],
     queryFn: () => getProject(project),
   })
-  const selectedAddress = useStore((state) => state.selected[0])
+  const selectedAddress = usePanelStore((state) => state.selected[0])
   const codeResponse = useQuery({
     queryKey: ['projects', project, 'code', selectedAddress],
     enabled: selectedAddress !== undefined,

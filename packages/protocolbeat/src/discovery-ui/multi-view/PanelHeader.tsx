@@ -2,15 +2,17 @@ import clsx from 'clsx'
 import { IconClose } from '../icons/IconClose'
 import { IconFullscreen } from '../icons/IconFullscreen'
 import { IconFullscreenExit } from '../icons/IconFullscreenExit'
-import { PANEL_IDS, PanelId, useStore } from './store'
+import { PANEL_IDS, PanelId, useMultiViewStore } from './store'
 
 export function PanelHeader(props: { id: PanelId }) {
-  const isFullScreen = useStore((state) => state.fullScreen === props.id)
-  const isActive = useStore((state) => state.active === props.id)
-  const changePanel = useStore((state) => state.changePanel)
-  const pickUp = useStore((state) => state.pickUp)
-  const toggleFullScren = useStore((state) => state.toggleFullScren)
-  const removePanel = useStore((state) => state.removePanel)
+  const isFullScreen = useMultiViewStore(
+    (state) => state.fullScreen === props.id,
+  )
+  const isActive = useMultiViewStore((state) => state.active === props.id)
+  const changePanel = useMultiViewStore((state) => state.changePanel)
+  const pickUp = useMultiViewStore((state) => state.pickUp)
+  const toggleFullScren = useMultiViewStore((state) => state.toggleFullScren)
+  const removePanel = useMultiViewStore((state) => state.removePanel)
 
   return (
     <div

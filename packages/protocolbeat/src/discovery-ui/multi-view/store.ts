@@ -77,7 +77,7 @@ function readSelectedLayout() {
 
 const storedLayouts = readStoredLayouts()
 const selectedLayout = readSelectedLayout()
-export const useStore = create<State & Action>((set) => ({
+export const useMultiViewStore = create<State & Action>((set) => ({
   mouse: { x: 0, y: 0 },
   // biome-ignore lint/style/noNonNullAssertion: We know it's there
   panels: storedLayouts[selectedLayout]!,
