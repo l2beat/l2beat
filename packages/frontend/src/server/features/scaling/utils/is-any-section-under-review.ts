@@ -4,7 +4,6 @@ import {
   type Layer2,
   type Layer3,
   type ScalingProjectRiskView,
-  type ScalingProjectRiskViewEntry,
 } from '@l2beat/config'
 
 // this function should be updated when new sections that can be under review are added
@@ -26,8 +25,6 @@ export function isAnyRiskUnderReview(
 ) {
   return (
     riskView &&
-    Object.values(riskView as Record<string, ScalingProjectRiskViewEntry>).some(
-      (risk) => risk.sentiment === 'UnderReview',
-    )
+    Object.values(riskView).some((risk) => risk.sentiment === 'UnderReview')
   )
 }
