@@ -1,9 +1,9 @@
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import {
-  ScalingProjectContracts,
   ScalingProjectPermission,
   ScalingProjectTechnologyChoice,
 } from '../../../../common'
+import { DaBridgeContracts } from './DaBridgeContracts'
 import { DaCommitteeSecurityRisk } from './DaCommitteeSecurityRisk'
 import { DaLinks } from './DaLinks'
 import { DaRelayerFailureRisk } from './DaRelayerFailureRisk'
@@ -31,15 +31,13 @@ export type OnChainDaBridge = CommonDaBridge & {
   /** The chain name the data availability bridge lives on. */
   chain: string
   /** Data about related permissions - preferably from discovery. */
-  permissions: ScalingProjectPermission[]
-  /** Data about related permissions on chains other than Ethereum - preferably from discovery. */
-  nativePermissions?: Record<string, ScalingProjectPermission[]> | 'UnderReview'
+  permissions: Record<string, ScalingProjectPermission[]> | 'UnderReview'
   /** Data about the validation type of the bridge */
   validation: {
     type: string
   }
   /** Data about the contracts used in the bridge - preferably from discovery. */
-  contracts: ScalingProjectContracts
+  contracts: DaBridgeContracts
 }
 
 export type DacBridge = CommonDaBridge & {
@@ -55,9 +53,9 @@ export type DacBridge = CommonDaBridge & {
   /** The type of data. */
   transactionDataType: DacTransactionDataType
   /** Data about related permissions - preferably from discovery. */
-  permissions: ScalingProjectPermission[]
+  permissions: Record<string, ScalingProjectPermission[]>
   /** Data about the contracts used in the bridge - preferably from discovery. */
-  contracts: ScalingProjectContracts
+  contracts: DaBridgeContracts
 }
 
 type CommonDaBridge = {

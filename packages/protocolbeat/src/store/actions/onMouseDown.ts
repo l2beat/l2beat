@@ -17,7 +17,7 @@ export function onMouseDown(
   // Resize anchor
   if (isResizeHandle(event.target)) {
     const { nodeId } = event.target.dataset
-    const node = state.nodes.find((n) => n.simpleNode.id === nodeId)
+    const node = state.nodes.find((n) => n.id === nodeId)
 
     if (node && nodeId) {
       return {
@@ -27,18 +27,24 @@ export function onMouseDown(
           startX: event.clientX,
         },
         mouseMoveAction: 'resize-node',
-        pressed: { ...state.pressed, leftMouseButton: true },
+        input: { ...state.input, lmbPressed: true },
       }
     }
   }
 
   if (event.button === CLICKED_LEFT_MOUSE_BUTTON && !state.mouseMoveAction) {
-    if (state.pressed.spaceKey) {
+    if (state.input.spacePressed) {
       const [x, y] = [event.clientX, event.clientY]
       return {
-        pressed: { ...state.pressed, leftMouseButton: true },
+        input: {
+          ...state.input,
+          lmbPressed: true,
+          mouseStartX: x,
+          mouseStartY: y,
+          mouseX: x,
+          mouseY: y,
+        },
         mouseMoveAction: 'pan',
-        mouseMove: { startX: x, startY: y, currentX: x, currentY: y },
       }
     }
 
@@ -46,48 +52,48 @@ export function onMouseDown(
 
     for (const node of reverseIter(state.nodes)) {
       if (boxContains(node.box, x, y)) {
-        const includes = state.selectedNodeIds.includes(node.simpleNode.id)
+        const includes = state.selected.includes(node.id)
 
-        let selectedNodeIds: readonly string[]
+        let selected: readonly string[]
         let mouseUpAction: State['mouseUpAction']
         if (event.metaKey || event.altKey) {
-          selectedNodeIds = []
+          selected = []
 
           const field = node.fields.find((f) => boxContains(f.box, x, y))
-          if (field !== undefined && field.connection !== undefined) {
-            selectedNodeIds = [field.connection.nodeId]
+          if (field !== undefined) {
+            selected = [field.target]
           }
         } else if (!event.shiftKey && !includes) {
-          selectedNodeIds = [node.simpleNode.id]
+          selected = [node.id]
         } else if (!event.shiftKey && includes) {
-          selectedNodeIds = state.selectedNodeIds
-          mouseUpAction = { type: 'DeselectAllBut', id: node.simpleNode.id }
+          selected = state.selected
+          mouseUpAction = { type: 'DeselectAllBut', id: node.id }
         } else if (event.shiftKey && !includes) {
-          selectedNodeIds = [...state.selectedNodeIds, node.simpleNode.id]
+          selected = [...state.selected, node.id]
         } else {
-          selectedNodeIds = state.selectedNodeIds
-          mouseUpAction = { type: 'DeselectOne', id: node.simpleNode.id }
+          selected = state.selected
+          mouseUpAction = { type: 'DeselectOne', id: node.id }
         }
 
         return updateNodePositions({
           ...state,
-          selectedNodeIds,
-          pressed: {
-            ...state.pressed,
-            leftMouseButton: true,
+          selected,
+          input: {
+            ...state.input,
+            lmbPressed: true,
             // this is needed to fix alt tab during shift dragging
-            shiftKey: event.shiftKey,
+            shiftPressed: event.shiftKey,
+            mouseStartX: x,
+            mouseStartY: y,
+            mouseX: x,
+            mouseY: y,
           },
           mouseMoveAction: 'drag',
-          mouseMove: { startX: x, startY: y, currentX: x, currentY: y },
           mouseUpAction,
-          selectedPositions: Object.fromEntries(
+          positionsBeforeMove: Object.fromEntries(
             state.nodes
-              .filter((x) => selectedNodeIds.includes(x.simpleNode.id))
-              .map((node) => [
-                node.simpleNode.id,
-                { x: node.box.x, y: node.box.y },
-              ]),
+              .filter((x) => selected.includes(x.id))
+              .map((node) => [node.id, { x: node.box.x, y: node.box.y }]),
           ),
         })
       }
@@ -95,19 +101,31 @@ export function onMouseDown(
 
     return updateNodePositions({
       ...state,
-      selectedNodeIds: event.shiftKey ? state.selectedNodeIds : [],
-      pressed: { ...state.pressed, leftMouseButton: true },
+      selected: event.shiftKey ? state.selected : [],
+      input: {
+        ...state.input,
+        lmbPressed: true,
+        mouseStartX: x,
+        mouseStartY: y,
+        mouseX: x,
+        mouseY: y,
+      },
       mouseMoveAction: event.shiftKey ? 'select-add' : 'select',
-      mouseMove: { startX: x, startY: y, currentX: x, currentY: y },
     })
   }
 
   if (event.button === CLICKED_MIDDLE_MOUSE_BUTTON && !state.mouseMoveAction) {
     const [x, y] = [event.clientX, event.clientY]
     return {
-      pressed: { ...state.pressed, middleMouseButton: true },
+      input: {
+        ...state.input,
+        mmbPressed: true,
+        mouseStartX: x,
+        mouseStartY: y,
+        mouseX: x,
+        mouseY: y,
+      },
       mouseMoveAction: 'pan',
-      mouseMove: { startX: x, startY: y, currentX: x, currentY: y },
     }
   }
 

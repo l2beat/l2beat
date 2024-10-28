@@ -34,7 +34,7 @@ export function MobileProjectNavigation({ sections }: Props) {
   return (
     <OverflowWrapper
       ref={overflowContainer}
-      className="bg-white dark:bg-neutral-900"
+      className="flex justify-center bg-white dark:bg-neutral-900"
     >
       <div className="flex items-center">
         <a

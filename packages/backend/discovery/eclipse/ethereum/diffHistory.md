@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x295923dcc511c729fda3a20b1db66baad067c07f
+
+# Diff at Fri, 25 Oct 2024 10:10:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e7501f424c0cea9b5438386ee76e509448999836 block: 20997772
+- current block number: 21041942
+
+## Description
+
+Single signer changed in AuthorityMultisig.
+
+## Watched changes
+
+```diff
+    contract AuthorityMultisig (0x4720342419C1D316B948690d12C86D5b485C64E0) {
+    +++ description: None
+      values.$members.3:
+-        "0xAFa49B46301BaaD9152dD5aF0C05245B0FA58695"
++        "0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA"
+      values.$members.2:
+-        "0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA"
++        "0x757210F15AB48f0F8d328984fc321CfA6BB5BFc2"
+      values.$members.1:
+-        "0x757210F15AB48f0F8d328984fc321CfA6BB5BFc2"
++        "0x950815d0e585095B06111CD101440fb1E95AB2a5"
+      values.$members.0:
+-        "0x950815d0e585095B06111CD101440fb1E95AB2a5"
++        "0xCD2fA978D163c0068167dDff8b6951f0E626e6A4"
+    }
+```
+
 Generated with discovered.json: 0xc8d8f321c1c5b2dde2d7092a08ebb40586ef5d7c
 
 # Diff at Mon, 21 Oct 2024 11:05:44 GMT:

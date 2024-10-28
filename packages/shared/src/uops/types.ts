@@ -36,5 +36,6 @@ export type StarknetTransaction = {
   hash: string
   data: string[]
   type: string
+  from: string
   to?: string
 }

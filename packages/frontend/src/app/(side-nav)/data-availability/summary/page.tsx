@@ -7,8 +7,8 @@ import {
 import { MainPageHeader } from '~/components/main-page-header'
 import { getDaSummaryEntries } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { groupBySystem } from '../_utils/group-by-system'
-import { DaSummaryCustomSystemsTable } from './_components/table/da-summary-custom-systems-table'
-import { DaSummaryTable } from './_components/table/da-summary-table'
+import { DaSummaryCustomTable } from './_components/table/da-summary-custom-table'
+import { DaSummaryPublicTable } from './_components/table/da-summary-public-table'
 
 export default async function Page() {
   const items = await getDaSummaryEntries()
@@ -24,10 +24,10 @@ export default async function Page() {
             <DirectoryTabsTrigger value="custom">Custom</DirectoryTabsTrigger>
           </DirectoryTabsList>
           <DirectoryTabsContent value="public">
-            <DaSummaryTable items={publicSystems} />
+            <DaSummaryPublicTable items={publicSystems} />
           </DirectoryTabsContent>
           <DirectoryTabsContent value="custom">
-            <DaSummaryCustomSystemsTable items={customSystems} />
+            <DaSummaryCustomTable items={customSystems} />
           </DirectoryTabsContent>
         </DirectoryTabs>
       </div>

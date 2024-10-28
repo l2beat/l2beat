@@ -8,7 +8,7 @@ const meta = {
   args: {
     id: 'risk-analysis',
     title: 'Risk analysis',
-    sectionOrder: 1,
+    sectionOrder: '1',
     isVerified: true,
     redWarning: undefined,
     warning: undefined,

@@ -7,9 +7,9 @@ import {
 } from './constants'
 
 export function updateNodePositions(state: State): State {
-  let dx = state.mouseMove.currentX - state.mouseMove.startX
-  let dy = state.mouseMove.currentY - state.mouseMove.startY
-  if (state.pressed.shiftKey) {
+  let dx = state.input.mouseX - state.input.mouseStartX
+  let dy = state.input.mouseY - state.input.mouseStartY
+  if (state.input.shiftPressed) {
     if (Math.abs(dx) > Math.abs(dy)) {
       dy = 0
     } else {
@@ -19,8 +19,8 @@ export function updateNodePositions(state: State): State {
 
   const nodeDimensions: Record<string, Box> = {}
   for (const node of state.nodes) {
-    const start = state.selectedPositions[node.simpleNode.id]
-    nodeDimensions[node.simpleNode.id] = {
+    const start = state.positionsBeforeMove[node.id]
+    nodeDimensions[node.id] = {
       width: node.box.width,
       height:
         HEADER_HEIGHT +
@@ -35,21 +35,19 @@ export function updateNodePositions(state: State): State {
   const newState = {
     ...state,
     nodes: state.nodes.map((node) => {
-      const box = nodeDimensions[node.simpleNode.id]
+      const box = nodeDimensions[node.id]
       if (!box) {
         // this should never happen
-        throw new Error('missing dimensions for node ' + node.simpleNode.id)
+        throw new Error('missing dimensions for node ' + node.id)
       }
       return {
         ...node,
         box,
         fields: node.fields.map((field, index) => {
-          if (!field.connection) {
-            return field
-          }
-          const to = nodeDimensions[field.connection.nodeId]
+          const to = nodeDimensions[field.target]
           if (!to) {
-            return { ...field, connection: undefined }
+            // this should never happen
+            throw new Error('missing dimensions for node ' + field.target)
           }
           return {
             ...field,
@@ -60,10 +58,7 @@ export function updateNodePositions(state: State): State {
               height: FIELD_HEIGHT,
             },
             connection: {
-              nodeId: field.connection.nodeId,
-              highlighted: state.selectedNodeIds.includes(
-                field.connection.nodeId,
-              ),
+              nodeId: field.target,
               ...processConnection(index, box, to),
             },
           }
@@ -79,7 +74,7 @@ function processConnection(
   index: number,
   from: { x: number; y: number; width: number },
   to: { x: number; y: number; width: number },
-): Omit<Connection, 'nodeId' | 'highlighted'> {
+): Omit<Connection, 'nodeId'> {
   const fromY =
     from.y + HEADER_HEIGHT + BORDER_WIDTH + FIELD_HEIGHT * (index + 0.5)
   const toY = to.y + HEADER_HEIGHT / 2
