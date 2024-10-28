@@ -13,7 +13,7 @@ import { TechnologyIncompleteNote } from './technology-incomplete-note'
 export interface MultiChainContractsSectionProps {
   id: ProjectSectionId
   title: string
-  sectionOrder: number
+  sectionOrder: string
   contracts: Record<string, TechnologyContract[]>
   risks: TechnologyRisk[]
   references: Reference[]
