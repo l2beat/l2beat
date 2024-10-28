@@ -140,7 +140,6 @@ const basicTableData: StorybookEntry[] = [
 const meta = {
   title: 'Components/Table/Basic',
   render: () => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const table = useTable({
       columns: basicTableColumns,
       data: basicTableData,
