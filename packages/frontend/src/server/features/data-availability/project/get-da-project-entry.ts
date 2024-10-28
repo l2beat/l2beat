@@ -120,9 +120,7 @@ function getHeader({
   return {
     daLayerGrissiniValues,
     daBridgeGrissiniValues,
-    links: getDataAvailabilityProjectLinks(
-      daLayer,
-    ),
+    links: getDataAvailabilityProjectLinks(daLayer),
     tvs,
     economicSecurity,
     durationStorage:

@@ -21,7 +21,7 @@ export function getDataAvailabilityProjectLinks(
     ...daLayer.display.links.documentation,
     ...daLayer.bridges.flatMap((b) => b.display.links.documentation),
   ]
-    const explorers = [
+  const explorers = [
     ...daLayer.display.links.explorers,
     ...daLayer.bridges.flatMap((b) => b.display.links.explorers),
   ]
