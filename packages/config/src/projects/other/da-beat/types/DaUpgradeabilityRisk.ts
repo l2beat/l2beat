@@ -4,6 +4,7 @@ import { DaRiskViewOptions } from './DaRiskView'
 export type DaUpgradeabilityRisk =
   | typeof NoBridge
   | typeof Immutable
+  | typeof ImmutableNoSecurity
   | ReturnType<typeof Eoa>
   | ReturnType<typeof LowOrNoDelay>
   | ReturnType<typeof SecurityCouncil>
@@ -13,6 +14,14 @@ const Immutable = {
   value: 'Immutable',
   sentiment: 'good',
   description: 'The bridge smart contract is immutable and cannot be updated.',
+} as const
+
+const ImmutableNoSecurity = {
+  type: 'Immutable',
+  value: 'Immutable',
+  sentiment: 'bad',
+  description:
+    'The bridge smart contract is immutable and cannot be updated. The bridge committee security is low and cannot be improved.',
 } as const
 
 const NoBridge = {
@@ -93,7 +102,7 @@ function LowOrNoDelay(delaySeconds?: number) {
   const value =
     delaySeconds && delaySeconds < SEVEN_DAYS_SECONDS
       ? formatSeconds(delaySeconds)
-      : 'None'
+      : 'No delay'
 
   return {
     type: 'LowOrNoDelay',
@@ -108,6 +117,7 @@ export const DaUpgradeabilityRisk = {
   Eoa,
   NoBridge,
   Immutable,
+  ImmutableNoSecurity,
   LowOrNoDelay,
   SecurityCouncil,
 } satisfies DaRiskViewOptions
