@@ -29,6 +29,10 @@ export default function HalloweenCursor() {
       cursor.style.left = `${cursorX}px`
       cursor.style.top = `${cursorY}px`
       requestAnimationFrame(animate)
+      if (mouseX !== 0 && mouseY !== 0) {
+        cursor.style.display = 'block'
+        cursor.style.opacity = '0.5'
+      }
     }
     animate()
 
@@ -48,8 +52,11 @@ export default function HalloweenCursor() {
     <svg
       ref={cursorRef}
       xmlns="http://www.w3.org/2000/svg"
-      className="pointer-events-none fixed z-[1000] size-16 -translate-x-96 overflow-hidden fill-current align-middle opacity-50 blur-[1px] duration-75"
-      style={{ verticalAlign: 'middle', transition: 'transform 0.2s ease' }}
+      className="pointer-events-none fixed z-[1000] hidden size-16 -translate-x-96 overflow-hidden fill-current align-middle opacity-0 blur-[1px] duration-75"
+      style={{
+        verticalAlign: 'middle',
+        transition: 'transform,opacity 0.2s ease',
+      }}
       width="96"
       height="96"
       viewBox="0 0 96 96"

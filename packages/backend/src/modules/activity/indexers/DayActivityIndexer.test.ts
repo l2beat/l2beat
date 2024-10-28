@@ -6,7 +6,7 @@ import { mockDatabase } from '../../../test/database'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import { DayActivityIndexer } from './DayActivityIndexer'
-import { DayActivityIndexerDeps, TxsCountProvider } from './types'
+import { DayActivityIndexerDeps, TxsCountService } from './types'
 
 const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
 
@@ -17,35 +17,35 @@ describe(DayActivityIndexer.name, () => {
 
   describe(DayActivityIndexer.prototype.update.name, () => {
     it('make update based on batchSize', async () => {
-      const txsCountProvider = mockObject<TxsCountProvider>({
+      const txsCountService = mockObject<TxsCountService>({
         getTxsCount: mockFn().resolvesTo([]),
       })
 
       const indexer = createIndexer({
-        txsCountProvider,
+        txsCountService,
         batchSize: 50,
       })
 
       const newSafeHeight = await indexer.update(0, 100)
 
-      expect(txsCountProvider.getTxsCount).toHaveBeenCalledWith(0, 50)
+      expect(txsCountService.getTxsCount).toHaveBeenCalledWith(0, 50)
       expect(newSafeHeight).toEqual(50)
     })
 
     it('make update based on batchSize and uncertaintyBuffer', async () => {
-      const txsCountProvider = mockObject<TxsCountProvider>({
+      const txsCountService = mockObject<TxsCountService>({
         getTxsCount: mockFn().resolvesTo([]),
       })
 
       const indexer = createIndexer({
-        txsCountProvider,
+        txsCountService,
         batchSize: 50,
         uncertaintyBuffer: 10,
       })
 
       const newSafeHeight = await indexer.update(50, 100)
 
-      expect(txsCountProvider.getTxsCount).toHaveBeenCalledWith(40, 90)
+      expect(txsCountService.getTxsCount).toHaveBeenCalledWith(40, 90)
       expect(newSafeHeight).toEqual(90)
     })
 
@@ -60,19 +60,19 @@ describe(DayActivityIndexer.name, () => {
         activityRecord('a', START.add(2, 'days'), 2),
       ]
 
-      const txsCountProvider = mockObject<TxsCountProvider>({
+      const txsCountService = mockObject<TxsCountService>({
         getTxsCount: mockFn().resolvesTo(mockActvityRecords),
       })
 
       const indexer = createIndexer({
-        txsCountProvider,
+        txsCountService,
         db: mockDatabase({ activity: activityRepository }),
         batchSize: 100,
       })
 
       const newSafeHeight = await indexer.update(0, 10)
 
-      expect(txsCountProvider.getTxsCount).toHaveBeenCalledWith(0, 10)
+      expect(txsCountService.getTxsCount).toHaveBeenCalledWith(0, 10)
       expect(activityRepository.upsertMany).toHaveBeenCalledWith(
         mockActvityRecords,
       )
@@ -114,7 +114,7 @@ function createIndexer(
   return new DayActivityIndexer({
     logger: Logger.SILENT,
     parents: [],
-    txsCountProvider: mockObject<TxsCountProvider>({
+    txsCountService: mockObject<TxsCountService>({
       getTxsCount: mockFn().resolvesTo([]),
     }),
     db: mockDatabase({
