@@ -1,7 +1,7 @@
 {
   "name": "sanko",
   "chain": "arbitrum",
-  "blockNumber": 268780411,
+  "blockNumber": 268839192,
   "configHash": "0xf3abcf9a1083ee94b42259795756dc388d27a3301a883f233696621cbffafb9a",
   "contracts": [
     {
@@ -137,7 +137,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 3936,
+        "batchCount": 3939,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x2f4dDaD3aB0AC4225fd8023EE07d04e2A758017a"],
         "bridge": "0x2f285781B8d58678a3483de52D618198E4d27532",
@@ -242,12 +242,12 @@
           "0x575d32f7ff0C72921645e302cb14d2757E300786",
           "0xa9Aa07F082D9c15D0B6D7e9e5B68b1f898399C29"
         ],
-        "delayedMessageCount": 100223,
+        "delayedMessageCount": 100224,
         "nativeToken": "0x8B0E6f19Ee57089F7649A455D89D7bC6314D04e8",
         "rollup": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
         "sequencerInbox": "0x24B68936C13A414cd91437aE7AA730321B9ff159",
-        "sequencerMessageCount": 3936,
-        "sequencerReportedSubMessageCount": 2122222
+        "sequencerMessageCount": 3939,
+        "sequencerReportedSubMessageCount": 2123785
       },
       "derivedName": "ERC20Bridge"
     },
@@ -737,11 +737,11 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1151,
+        "firstUnresolvedNode": 1152,
         "inbox": "0x718E2a83775343d5c0B1eE0676703cBAF30CaFCD",
         "isERC20Enabled": false,
         "lastStakeBlock": 19642604,
-        "latestConfirmed": 1150,
+        "latestConfirmed": 1151,
         "latestNodeCreated": 1176,
         "loserStakeEscrow": "0xe8216687Ef40C65F64D6dcd335b0aaab4A1Bc400",
         "minimumAssertionPeriod": 75,
