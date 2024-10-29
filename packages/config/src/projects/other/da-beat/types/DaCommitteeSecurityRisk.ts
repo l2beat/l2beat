@@ -75,7 +75,7 @@ const NoBridge = {
   value: 'N/A',
   sentiment: 'bad',
   description:
-    'Without a DA bridge, there is no committee attesting to the availability of data. The scaling solution using this DA layer relies only on the honesty of the sequencer.',
+    'There is no committee attesting to the availability of data. ',
 } as const
 
 const Auto = (params?: {
