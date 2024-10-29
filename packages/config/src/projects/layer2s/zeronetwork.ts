@@ -15,8 +15,8 @@ export const zeronetwork: Layer2 = zkStackL2({
   discovery,
   discovery_ZKstackGovL2,
   validatorsEvents: {
-    added: 'zeroNetworkValidatorsAdded',
-    removed: 'zeroNetworkValidatorsRemoved',
+    added: 'zeronetworkValidatorsAdded',
+    removed: 'zeronetworkValidatorsRemoved',
   },
   badges: [
     Badge.VM.EVM,
@@ -42,6 +42,7 @@ export const zeronetwork: Layer2 = zkStackL2({
         'https://discord.com/invite/VfC24at',
       ],
     },
+    activityDataSource: 'Blockchain RPC'
   },
   rpcUrl: 'https://rpc.zerion.io/v1/zero',
   chainConfig: {
@@ -101,8 +102,8 @@ export const zeronetwork: Layer2 = zkStackL2({
   milestones: [
     {
       name: 'Mainnet launch',
-      link: '',
-      date: '2024-00-00T00:00:00Z',
+      link: 'https://zero.network/blog',
+      date: '2024-01-01T00:00:00Z', // TODO: Update
       description: 'ZERϴ launches their mainnet.',
       type: 'general',
     },

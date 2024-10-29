@@ -1,8 +1,8 @@
 {
   "name": "zeronetwork",
   "chain": "ethereum",
-  "blockNumber": 21071767,
-  "configHash": "0x9acc12b84aec02c502fe8f18372949f7d4a778a313c056450a36f16e6a3e1480",
+  "blockNumber": 21071838,
+  "configHash": "0xa2a4e39e9c8006ccbe3cd6c48e05ce131d27f625954afe92c4758bfc7cc2f8e6",
   "contracts": [
     {
       "name": "ZeroNetworkChainAdminMultisig",
@@ -57,12 +57,6 @@
       "sinceTimestamp": 1729084139,
       "values": {
         "$immutable": true,
-        "accessControl": {
-          "DEFAULT_ADMIN_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": []
-          }
-        },
         "owner": "0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "tokenMultiplierSetter": "0x0000000000000000000000000000000000000000",
