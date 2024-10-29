@@ -44,7 +44,7 @@ export function GlossarySideNav(props: Props) {
                 key={entry.id}
                 entry={entry}
                 selected={selected}
-                ref={selected ? selectedItem : null}
+                ref={selected ? selectedItem : undefined}
               />
             )
           })}

@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { bridges } from '@l2beat/config'
 import { ImageResponse } from 'next/og'
 import { NextResponse } from 'next/server'

@@ -20,7 +20,7 @@ export default async function Page() {
   const [entries] = await Promise.all([
     getBridgesSummaryEntries(),
     api.tvl.chart.prefetch({
-      range: getCookie('bridgesSummaryChartRange'),
+      range: await getCookie('bridgesSummaryChartRange'),
       filter: { type: 'bridge' },
       excludeAssociatedTokens: false,
     }),

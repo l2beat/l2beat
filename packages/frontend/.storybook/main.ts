@@ -11,6 +11,7 @@ function getAbsolutePath(value: string) {
 /** @type { import('@storybook/nextjs').StorybookConfig } */
 const config = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+
   addons: [
     getAbsolutePath('@storybook/addon-links'),
     getAbsolutePath('@storybook/addon-essentials'),
@@ -19,10 +20,12 @@ const config = {
     getAbsolutePath('@storybook/addon-themes'),
     getAbsolutePath('storybook-addon-pseudo-states'),
   ],
+
   framework: {
     name: getAbsolutePath('@storybook/nextjs'),
     options: {},
   },
+
   staticDirs: [
     '../public',
     {
@@ -30,5 +33,9 @@ const config = {
       to: 'src/fonts',
     },
   ],
+
+  typescript: {
+    reactDocgen: 'react-docgen-typescript',
+  },
 }
 export default config

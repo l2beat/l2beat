@@ -1,7 +1,7 @@
 {
   "name": "fuel",
   "chain": "ethereum",
-  "blockNumber": 21027362,
+  "blockNumber": 21064224,
   "configHash": "0x806b6e12987328e4566d178ecc15cff1171dd77d8a81e748ea34b478960b3f10",
   "contracts": [
     {
@@ -38,7 +38,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 37,
+        "nonce": 38,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -178,7 +178,7 @@
             "members": ["0x32da601374b38154f05904B16F44A1911Aa6f314"]
           }
         },
-        "currentPeriodAmount": 2000000000000000,
+        "currentPeriodAmount": "472459529432000000000",
         "currentPeriodEnd": 1730129231,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "depositLimitGlobal": "19572000000000000000000",
@@ -186,8 +186,8 @@
         "FUEL_BASE_ASSET_DECIMALS": 9,
         "fuelBaseAssetDecimals": 9,
         "fuelChainStateContract": "0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130",
-        "getNextOutgoingMessageNonce": 139551,
-        "limitAmount": "10000000000000000000",
+        "getNextOutgoingMessageNonce": 185011,
+        "limitAmount": "7829000000000000000000",
         "MAX_MESSAGE_DATA_SIZE": 65536,
         "paused": false,
         "PAUSER_ROLE": "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a",
@@ -195,7 +195,7 @@
         "RATE_LIMIT_DURATION": 604800,
         "rateLimitEnabled": true,
         "SET_RATE_LIMITER_ROLE": "0x7e5b1c957d4df4bad29cdaceffe50f28f282a0d5096601b958917550d4b2e016",
-        "totalDeposited": "12303657869610000000000",
+        "totalDeposited": "15519872764538000000000",
         "withdrawalsPaused": false
       },
       "derivedName": "FuelMessagePortalV3"
