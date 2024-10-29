@@ -4,6 +4,7 @@ import {
   type ScalingProjectContract,
   isSingleAddress,
 } from '@l2beat/config'
+import { UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
 import {
   type ContractsVerificationStatuses,
   type EthereumAddress,
@@ -25,7 +26,6 @@ import { type Reference } from '../../../components/projects/sections/reference-
 import { toTechnologyRisk } from '../risk-summary/to-technology-risk'
 import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
-import { UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
 
 type ProjectParams = {
   id: string
@@ -34,7 +34,7 @@ type ProjectParams = {
   isVerified: boolean
   architectureImage?: string
   contracts: DaBridgeContracts
-  dacUsedIn?: UsedInProject,
+  dacUsedIn?: UsedInProject
 }
 
 type MultiChainContractsSection = Omit<

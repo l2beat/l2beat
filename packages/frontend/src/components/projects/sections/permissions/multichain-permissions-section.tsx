@@ -1,9 +1,9 @@
 import { UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
+import { CheckOutScalingProjectBanner } from '../check-out-scaling-project-banner'
 import { ContractEntry, type TechnologyContract } from '../contract-entry'
 import { PermissionedEntityEntry } from '../permissioned-entity-entry'
 import { ProjectSection } from '../project-section'
 import { type ProjectSectionProps } from '../types'
-import { CheckOutScalingProjectBanner } from '../check-out-scaling-project-banner'
 
 export interface MultichainPermissionsSectionProps extends ProjectSectionProps {
   permissions: Record<string, TechnologyContract[]>
