@@ -11,6 +11,7 @@ import {
 } from '@l2beat/shared-pure'
 import { concat } from 'lodash'
 import { type MultichainPermissionsSectionProps } from '~/components/projects/sections/permissions/multichain-permissions-section'
+import { type UsedInProject } from '~/components/projects/sections/permissions/used-in-project'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
 import {
@@ -20,7 +21,6 @@ import {
 import { type ProjectSectionProps } from '../../../components/projects/sections/types'
 import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
-import { UsedInProject } from '~/components/projects/sections/permissions/used-in-project'
 
 type ProjectParams = {
   id: string

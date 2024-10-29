@@ -1,6 +1,7 @@
 'use client'
 import { type UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
 import partition from 'lodash/partition'
+import { ProjectDetailsRelatedProjectBanner } from '~/components/project-details-related-project-banner'
 import { type DiagramParams } from '~/utils/project/get-diagram-params'
 import { CheckOutScalingProjectBanner } from '../check-out-scaling-project-banner'
 import { ContractEntry, type TechnologyContract } from '../contract-entry'
@@ -11,7 +12,6 @@ import { RiskList, type TechnologyRisk } from '../risk-list'
 import { type ProjectSectionId } from '../types'
 import { ContractsUpdated } from './contracts-updated'
 import { TechnologyIncompleteNote } from './technology-incomplete-note'
-import { ProjectDetailsRelatedProjectBanner } from '~/components/project-details-related-project-banner'
 
 export interface MultiChainContractsSectionProps {
   id: ProjectSectionId
