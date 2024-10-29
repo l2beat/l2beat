@@ -58,7 +58,7 @@ export const mantle: Layer2 = opStackL2({
     },
   },
   associatedTokens: ['MNT'],
-  nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN'],
+  nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'FBTC'],
   discovery,
   display: {
     name: 'Mantle',

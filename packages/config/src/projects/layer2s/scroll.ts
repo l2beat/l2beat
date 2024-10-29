@@ -152,10 +152,12 @@ export const scroll: Layer2 = {
     coingeckoPlatform: 'scroll',
   },
   config: {
+    associatedTokens: ['SCR'],
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9'),
         tokens: '*',
+        excludedTokens: ['rsETH'],
         ...upgradesScrollMultisig,
       }),
       discovery.getEscrowDetails({

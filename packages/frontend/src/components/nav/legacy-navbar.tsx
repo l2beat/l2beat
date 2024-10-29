@@ -3,7 +3,8 @@ import { externalLinks } from '~/consts/external-links'
 import { env } from '~/env'
 import { HiringBadge } from '../badge/hiring-badge'
 import { DarkThemeToggle } from '../dark-theme-toggle'
-import { Logo } from '../logo'
+import { HalloweenLogo } from '../halloween-logo'
+import { SmallSearchBarButton } from '../search-bar/search-bar-button'
 import { SocialLinks } from '../social-links'
 import { LegacyNavLink } from './legacy-nav-link'
 import { type NavGroup } from './types'
@@ -24,7 +25,7 @@ export function LegacyNavbar({
         <ul className="flex items-center py-4">
           <li className="mr-8">
             <Link href={logoLink}>
-              <Logo className="h-8 w-auto" />
+              <HalloweenLogo className="h-[41px] w-auto" />
             </Link>
           </li>
           {groups.map((group) => {
@@ -69,7 +70,10 @@ export function LegacyNavbar({
             <LegacyNavLink title="FAQ" href="/faq" />
           </ul>
           <div className="h-8 w-px bg-gray-300 dark:bg-gray-700" />
-          <DarkThemeToggle />
+          <div className="flex gap-4">
+            <DarkThemeToggle />
+            <SmallSearchBarButton />
+          </div>
         </div>
       </nav>
     </div>

@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "UpgradeExecutor",
+  "description": "Central contract defining the access control for upgrading the system contract implementations.",
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    },
+    // TODO: accesscrontrol EXECUTOR_ROLE -> permission(act) mapping missing
+    "executors": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "EXECUTOR_ROLE"
+      }
+    }
+  }
+}

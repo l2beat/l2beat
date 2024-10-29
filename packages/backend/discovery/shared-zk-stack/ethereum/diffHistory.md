@@ -1,3 +1,188 @@
+Generated with discovered.json: 0x49be4a26135f66dff4b13920e7b71330ccc21716
+
+# Diff at Mon, 28 Oct 2024 13:16:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@00bd1d18460d612b1f06ce2339854c105cd41bd5 block: 21027403
+- current block number: 21064368
+
+## Description
+
+New chainID 2741 deployed.
+
+## Watched changes
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
++++ description: All new chains created go thorugh the central bridgehub and are thus stored here with their respective STMs.
+      values.chainsCreated.4:
++        {"chainId":2741,"stateTransitionManager":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","chainGovernance":"0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661"}
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
++++ description: If non-zero, the first batch has been posted.
++++ severity: MEDIUM
+      values.zeronetworkTenthBatchTS:
+-        0
++        1729719755
+    }
+```
+
+```diff
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: None
+      values.getAllHyperchainChainIDs.4:
++        2741
+      values.getAllHyperchains.4:
++        "0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ChainAdmin (0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...-0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661.sol |  222 ++++
+ .../Safe.sol                                       | 1088 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ 3 files changed, 1347 insertions(+)
+```
+
+Generated with discovered.json: 0x579cb2d4a94299bd6e5baab4aadab66f01057f9e
+
+# Diff at Wed, 23 Oct 2024 09:31:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2734bfe28641dfdb3277a5800faf0a057c08a58f block: 21013457
+- current block number: 21027403
+
+## Description
+
+ChainAdmin change for Sophon and Zero network. Both produced first batches already, not officially launched yet though.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract Safe (0x5e6C5551C1b0626e9061fD4Daca6DA866Fd405aC)
+    +++ description: None
+```
+
+```diff
+    contract ChainAdmin (0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3) {
+    +++ description: None
+      values.owner:
+-        "0x5e6C5551C1b0626e9061fD4Daca6DA866Fd405aC"
++        "0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9"
+      values.pendingOwner:
+-        "0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract ChainAdmin (0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3) {
+    +++ description: None
+      values.owner:
+-        "0x5e6C5551C1b0626e9061fD4Daca6DA866Fd405aC"
++        "0xe4644b6d106A18062344c0A853666bc0B8f052d1"
+      values.pendingOwner:
+-        "0xe4644b6d106A18062344c0A853666bc0B8f052d1"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Safe.sol => /dev/null                          | 1088 --------------------
+ .../SafeProxy.p.sol => /dev/null                   |   37 -
+ 2 files changed, 1125 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21013457 (main branch discovery), not current.
+
+```diff
+    contract Safe (0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9) {
+    +++ description: None
+      values.getOwners:
+-        ["0xA167ca2984F7e08EFd4DDf9c5a4A21D66c07813E","0xc858a504d6c267fe2d462D240b68A7D939B1fEC9","0xF322467cec88d3CDFa9376B19bD5AD40da665277","0x3Bc72A56F9036B94ad14BF082bF93731e0545255","0x3Ec90fA056A39e7281a5b4c8c044B86667D770e1"]
+      values.getThreshold:
+-        3
+      template:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
+      values.sophonFirstBatchTS:
+-        0
+      values.zeronetworkFirstBatchTS:
+-        0
++++ description: If non-zero, the first batch has been posted.
++++ severity: MEDIUM
+      values.sophonTenthBatchTS:
++        0
++++ description: If non-zero, the first batch has been posted.
++++ severity: MEDIUM
+      values.zeronetworkTenthBatchTS:
++        0
+      fieldMeta.zeronetworkFirstBatchTS:
+-        {"severity":"MEDIUM","description":"If non-zero, the first batch has been posted."}
+      fieldMeta.sophonFirstBatchTS:
+-        {"severity":"MEDIUM","description":"If non-zero, the first batch has been posted."}
+      fieldMeta.zeronetworkTenthBatchTS:
++        {"severity":"MEDIUM","description":"If non-zero, the first batch has been posted."}
+      fieldMeta.sophonTenthBatchTS:
++        {"severity":"MEDIUM","description":"If non-zero, the first batch has been posted."}
+    }
+```
+
+```diff
+    contract Safe (0x5e6C5551C1b0626e9061fD4Daca6DA866Fd405aC) {
+    +++ description: None
+      values.getOwners:
+-        ["0xf2BFa7c00aDDF7765B40e83Fc4207b16EBD6db89","0xD767A6058c34E88Dc4Ce49114C362C8FAc265A76","0x2AF852529DDF5D3cF3130423b56DF8Db50A11b6B","0x090268B1b2170eB5964402321aDa988D7c75a90e"]
+      values.getThreshold:
+-        2
+      template:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract Safe (0xe4644b6d106A18062344c0A853666bc0B8f052d1) {
+    +++ description: None
+      values.getOwners:
+-        ["0x3b6036d410cA018661324766680674921a8b2d89","0x20719Abd2E63518e68D30a295388cAd6B542dCEf","0x14574dfC6B7aF658c5033BA95673864947956521","0x90E10C37d8d9e854e7775B0069728642A1F88610","0x7f413262Cb811B034d077d9184b5Efda6943f2c3","0xd89b0f620E0C72BD82e0447dE07FB0A0Abe01F69"]
+      values.getThreshold:
+-        3
+      template:
++        "GnosisSafe"
+    }
+```
+
 Generated with discovered.json: 0x0e6c70c0ef9c01d3fdef20ceb46ed231ce43f024
 
 # Diff at Mon, 21 Oct 2024 12:48:28 GMT:

@@ -59,6 +59,7 @@ import { hybrid } from './hybrid'
 import { hychain } from './hychain'
 import { hypr } from './hypr'
 import { immutablex } from './immutablex'
+import { ink } from './ink'
 import { intmax } from './intmax'
 import { kakarotzkevm } from './kakarotzkevm'
 import { karak } from './karak'
@@ -118,8 +119,10 @@ import { redstone } from './redstone'
 import { reya } from './reya'
 import { rhinofi } from './rhinofi'
 import { rise } from './rise'
+import { river } from './river'
 import { rss3 } from './rss3'
 import { scroll } from './scroll'
+import { shape } from './shape'
 import { silicon } from './silicon'
 import { socialnetwork } from './socialnetwork'
 import { soneium } from './soneium'
@@ -135,6 +138,7 @@ import { swan } from './swan'
 import { swell } from './swell'
 import { sxnetwork } from './sxnetwork'
 import { sxt } from './sxt'
+import { t1 } from './t1'
 import { taiko } from './taiko'
 import { tanx } from './tanx'
 import { telos } from './telos'
@@ -229,6 +233,7 @@ export const layer2s: Layer2[] = [
   hychain,
   hypr,
   immutablex,
+  ink,
   intmax,
   kakarotzkevm,
   karak,
@@ -289,6 +294,7 @@ export const layer2s: Layer2[] = [
   reya,
   rhinofi,
   rise,
+  river,
   rss3,
   scroll,
   silicon,
@@ -300,11 +306,13 @@ export const layer2s: Layer2[] = [
   specular,
   starknet,
   stealthchain,
+  shape,
   superlumio,
   superseed,
   swan,
   swell,
   sxt,
+  t1,
   sxnetwork,
   taiko,
   tanx,

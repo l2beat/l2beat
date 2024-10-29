@@ -126,17 +126,14 @@ export const polygonpos: Bridge = {
         {
           category: 'Users can be censored if',
           text: 'validators on Polygon decide to not mint tokens after observing an event on Ethereum.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: 'validators decide to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: 'validators submit a fraudulent checkpoint allowing themselves to withdraw all locked funds.',
-          isCritical: true,
         },
       ],
       isIncomplete: true,
@@ -150,7 +147,6 @@ export const polygonpos: Bridge = {
         {
           category: 'Funds can be stolen if',
           text: 'destination token contract is maliciously upgraded.',
-          isCritical: true,
         },
       ],
       isIncomplete: true,

@@ -1,7 +1,8 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { providers, utils } from 'ethers'
 import * as z from 'zod'
 
+import { ContractValue } from '@l2beat/discovery-types'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
@@ -14,6 +15,7 @@ export const AccessControlHandlerDefinition = z.strictObject({
   roleNames: z.optional(
     z.record(z.string().regex(/^0x[a-f\d]{64}$/i), z.string()),
   ),
+  pickRoleMembers: z.optional(z.string()),
   ignoreRelative: z.optional(z.boolean()),
 })
 
@@ -60,18 +62,30 @@ export class AccessControlHandler implements Handler {
     this.logger.logExecution(this.field, ['Checking AccessControl'])
     const unnamedRoles = await fetchAccessControl(provider, address)
 
+    const roles = Object.fromEntries(
+      Object.entries(unnamedRoles).map(([role, { adminRole, members }]) => {
+        return [
+          this.getRoleName(role),
+          { adminRole: this.getRoleName(adminRole), members },
+        ]
+      }),
+    )
+
     return {
       field: this.field,
-      value: Object.fromEntries(
-        Object.entries(unnamedRoles).map(([role, { adminRole, members }]) => {
-          return [
-            this.getRoleName(role),
-            { adminRole: this.getRoleName(adminRole), members },
-          ]
-        }),
-      ),
+      value: this.getValue(roles),
       ignoreRelative: this.definition.ignoreRelative,
     }
+  }
+
+  getValue(roles: Record<string, { members: string[] }>): ContractValue {
+    if (this.definition.pickRoleMembers !== undefined) {
+      const role = this.definition.pickRoleMembers
+      assert(roles[role] !== undefined, `No role (${role}) found`)
+      return roles[role]['members']
+    }
+
+    return roles
   }
 }
 

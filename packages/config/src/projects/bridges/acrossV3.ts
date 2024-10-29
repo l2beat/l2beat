@@ -281,7 +281,6 @@ export const acrossV3: Bridge = {
       {
         category: 'Funds can be stolen if',
         text: 'a Spoke Pool contract receives a malicious code upgrade. There is no delay on code upgrades.',
-        isCritical: true,
       },
     ],
   },

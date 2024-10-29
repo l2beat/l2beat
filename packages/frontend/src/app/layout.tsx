@@ -11,6 +11,9 @@ import { GlossaryContextProvider } from '../components/markdown/glossary-context
 import { ProgressBar } from '../components/progress-bar'
 import { roboto } from '../fonts'
 import '../styles/globals.css'
+import HalloweenCursor from '~/components/halloween-cursor'
+import { getSearchBarProjects } from '~/components/search-bar/get-search-bar-projects'
+import { SearchBarContextProvider } from '~/components/search-bar/search-bar-context'
 
 export const metadata: Metadata = getDefaultMetadata()
 
@@ -21,6 +24,7 @@ export default async function RootLayout({
 }>) {
   const terms = getCollection('glossary')
 
+  const searchBarProjects = getSearchBarProjects()
   return (
     // We suppress the hydration warning here because we're using:
     // - next-themes's ThemeProvider
@@ -31,6 +35,11 @@ export default async function RootLayout({
       <head>
         {/* The rest of the icons are handled by the App Router */}
         <link rel="mask-icon" href="/mask-icon.svg" />
+        {/* Prevent zooming on input click on iOS by adding maximum-scale=1 */}
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1"
+        />
       </head>
       <body className={roboto.variable}>
         <PlausibleProvider
@@ -50,7 +59,10 @@ export default async function RootLayout({
                     matches: [term.data.term, ...(term.data.match ?? [])],
                   }))}
                 >
-                  {children}
+                  <SearchBarContextProvider projects={searchBarProjects}>
+                    <HalloweenCursor />
+                    {children}
+                  </SearchBarContextProvider>
                   <ProgressBar />
                 </GlossaryContextProvider>
               </TooltipProvider>

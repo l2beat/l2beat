@@ -99,6 +99,8 @@ function getScalingSummaryEntry(
       isVerified,
       hasImplementationChanged,
     }),
+    dataAvailability: project.dataAvailability,
+    mainPermissions: project.display.mainPermissions,
     tvl: {
       breakdown: latestTvl?.breakdown,
       change: latestTvl?.change,

@@ -9,6 +9,7 @@ const API_URLS: Map<ChainId, string> = new Map([
   ['arbitrum', 'https://cold-fluent-card.arbitrum-mainnet.quiknode.pro'],
   ['gravity', 'https://rpc.gravity.xyz'],
   ['optimism', 'https://icy-late-sailboat.optimism.quiknode.pro'],
+  ['zksync-era', 'https://mainnet.era.zksync.io'],
 ])
 
 const SCAN_URLS: Map<ChainId, string> = new Map([
@@ -18,6 +19,7 @@ const SCAN_URLS: Map<ChainId, string> = new Map([
   ['taiko', 'https://api.taikoscan.io'],
   ['arbitrum', 'https://api.arbiscan.io'],
   ['optimism', 'https://mainnet.optimism.io'],
+  ['zksync-era', 'https://api-era.zksync.network'],
 ])
 
 export type ApiKeyType = 'RPC' | 'SCAN'
@@ -43,7 +45,7 @@ export function getScanUrl(chainId: ChainId): string {
 }
 
 export function getApiKey(chainId: ChainId, type: ApiKeyType): string {
-  const envName = `${chainId.toUpperCase()}_${type}_API_KEY`
+  const envName = `${chainId.toUpperCase().replace('-', '_')}_${type}_API_KEY`
   const value = process.env[envName]
 
   if (!value) {

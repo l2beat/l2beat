@@ -17,6 +17,9 @@
     "0x1aeC4c3BE47C30d0BEfa7514Cf9D99EaC596959D": "SuperchainConfig"
   },
   "overrides": {
+    "SuperchainConfig": {
+      "extends": "opstack/SuperchainConfigFake"
+    },
     "ProxyAdminOwner": {
       "ignoreInWatchMode": ["nonce"]
     },

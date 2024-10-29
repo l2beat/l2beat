@@ -1,15 +1,15 @@
 {
   "name": "kroma",
   "chain": "ethereum",
-  "blockNumber": 20912649,
-  "configHash": "0x2dc78fa0c026b5bfa1b50ed5ae271d153b773a2e2f38e5ace3d7934eae709860",
+  "blockNumber": 21064298,
+  "configHash": "0xfbe2bd7b523e0e89fb983ff6dc8d9f84e179c23764ad55ae8f40416d7b711370",
   "contracts": [
     {
       "name": "L2OutputOracle",
       "address": "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
-        "0x23bd4269751ee622a2c70f6ff77812e48b54e0f5b236f7b143e78d31fd26ce19"
+        "0x3e082acc764e6210a6d92e75bffb677ec096ac9d382eef70ea3152f9eeb72791"
       ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -23,32 +23,42 @@
         "latestBlockNumber",
         "latestOutputIndex",
         "nextBlockNumber",
-        "nextOutputIndex"
+        "nextOutputIndex",
+        "nextFinalizeOutputIndex",
+        "nextOutputMinL2Timestamp"
       ],
       "sinceTimestamp": 1693880579,
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
-        "$implementation": "0x14126FFa3889a026A79F0f99FaE80B3dc9E38095",
+        "$implementation": "0x4B68F22d96a04F6d80e284C20A648f8Da2fD569b",
         "$pastUpgrades": [
           [
             "2023-09-05T02:26:47.000Z",
             "0xf1ce5facb5ac6b858552c8af4867797e1c69ad89629f1c836b7f489770683783",
             ["0x14126FFa3889a026A79F0f99FaE80B3dc9E38095"]
+          ],
+          [
+            "2024-10-24T04:28:47.000Z",
+            "0xb2a500d332d7b3348b8ffa91aba9b8a5a3bc018b44225a1b6e99605c56c6564e",
+            ["0x4B68F22d96a04F6d80e284C20A648f8Da2fD569b"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 2,
         "COLOSSEUM": "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 17204400,
-        "latestOutputIndex": 9558,
-        "nextBlockNumber": 17206200,
-        "nextOutputIndex": 9559,
+        "latestBlockNumber": 18118800,
+        "latestOutputIndex": 10066,
+        "nextBlockNumber": 18120600,
+        "nextFinalizeOutputIndex": 9899,
+        "nextOutputIndex": 10067,
+        "nextOutputMinL2Timestamp": 1730121589,
         "startingBlockNumber": 0,
         "startingTimestamp": 1693880387,
         "SUBMISSION_INTERVAL": 1800,
+        "VALIDATOR_MANAGER": "0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363",
         "VALIDATOR_POOL": "0xFdFF462845953D90719A78Fd12a2d103541d2103",
-        "version": "1.0.0"
+        "version": "1.1.0"
       },
       "fieldMeta": {
         "COLOSSEUM": {
@@ -132,6 +142,60 @@
       "derivedName": "TimeLock"
     },
     {
+      "name": "ValidatorManager",
+      "address": "0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363",
+      "sourceHashes": [
+        "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
+        "0x3b00390af29aee88ea29fcb7a7d70395cae6d537dfc25f3a71768f5c6280479a"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Manages the set of Proposers (Validators in Kroma) and selects the next proposer with the permission to submit the output root. It is also the entry point for other contracts, such as the L2OutputOracle and the Colosseum, which distribute output rewards and slash challenge losers. It makes successive calls to the AssetManager to apply changes to the proposers' assets.",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
+          "via": []
+        }
+      ],
+      "ignoreInWatchMode": [
+        "activatedValidatorCount",
+        "activatedValidatorTotalWeight"
+      ],
+      "sinceTimestamp": 1729473911,
+      "values": {
+        "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
+        "$implementation": "0x0Ed7bb332F7307F5c97E566E74A4A73ab6671082",
+        "$pastUpgrades": [
+          [
+            "2024-10-24T04:28:47.000Z",
+            "0xb2a500d332d7b3348b8ffa91aba9b8a5a3bc018b44225a1b6e99605c56c6564e",
+            ["0x0Ed7bb332F7307F5c97E566E74A4A73ab6671082"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "activatedValidatorCount": 0,
+        "activatedValidatorTotalWeight": 0,
+        "ASSET_MANAGER": "0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3",
+        "BASE_REWARD": "400000000000000000000",
+        "BOOSTED_REWARD_DENOM": 100,
+        "BOOSTED_REWARD_NUMERATOR": 40,
+        "COMMISSION_CHANGE_DELAY_SECONDS": 1209600,
+        "COMMISSION_RATE_DENOM": 100,
+        "HARD_JAIL_PERIOD_SECONDS": 604800,
+        "JAIL_THRESHOLD": 2,
+        "L2_ORACLE": "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
+        "MAX_OUTPUT_FINALIZATIONS": 10,
+        "MIN_ACTIVATE_AMOUNT": "10000000000000000000000",
+        "MIN_REGISTER_AMOUNT": "10000000000000000000000",
+        "nextValidator": "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
+        "ROUND_DURATION_SECONDS": 1800,
+        "SOFT_JAIL_PERIOD_SECONDS": 259200,
+        "TRUSTED_VALIDATOR": "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
+        "version": "1.0.0"
+      },
+      "derivedName": "ValidatorManager"
+    },
+    {
       "name": "KromaPortal",
       "address": "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de",
       "sourceHashes": [
@@ -165,7 +229,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 200000,
-          "prevBlockNum": 20906854
+          "prevBlockNum": 21064278
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35",
@@ -327,7 +391,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 0,
-        "messageNonce": 3979,
+        "messageNonce": 3991,
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -397,6 +461,10 @@
         },
         {
           "permission": "upgrade",
+          "target": "0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363"
+        },
+        {
+          "permission": "upgrade",
           "target": "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de"
         },
         {
@@ -426,6 +494,10 @@
         {
           "permission": "upgrade",
           "target": "0x827962404D7104202C5aaa6b929115C8211d9596"
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3"
         },
         {
           "permission": "upgrade",
@@ -492,7 +564,7 @@
       "address": "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
-        "0x044a9955ffcea5b68400e934c9bd2a7e7f856ad28b98727c0cf762a44a428601"
+        "0x00a929674c752e3543c7d0b26d1965574c3f956dd892502eb782e8087e12af45"
       ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -505,7 +577,7 @@
       "sinceTimestamp": 1693880615,
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
-        "$implementation": "0xb87eaB624EE684C1799f1E8b24936A1c90759eEc",
+        "$implementation": "0xAB54b3e775f645cf4486039bfA4dA539E70c9f99",
         "$pastUpgrades": [
           [
             "2023-09-05T02:27:11.000Z",
@@ -521,9 +593,14 @@
             "2024-04-25T08:09:11.000Z",
             "0x0fb2eca6483b1d042af562bf0e8e804c1356df56d7b8094e9d6edd4b63edf715",
             ["0xb87eaB624EE684C1799f1E8b24936A1c90759eEc"]
+          ],
+          [
+            "2024-10-24T04:28:47.000Z",
+            "0xb2a500d332d7b3348b8ffa91aba9b8a5a3bc018b44225a1b6e99605c56c6564e",
+            ["0xAB54b3e775f645cf4486039bfA4dA539E70c9f99"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -742,9 +819,9 @@
             "feeVault": "0x8898EF6f9838A0Ec088F174A77F8a094fB788C4e",
             "defaultFeeAmount": 2000000000000000
           },
-          "spSnap": { "evalValue": "974041155081783749744" },
+          "spSnap": { "evalValue": "887687639576999392795" },
           "assets": ["0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee"],
-          "snaps": [{ "evalValue": "974041155081783749744" }]
+          "snaps": [{ "evalValue": "887687639576999392795" }]
         },
         "owner": "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f",
         "paused": false,
@@ -792,6 +869,48 @@
       "derivedName": "EcoProxyAdmin"
     },
     {
+      "name": "AssetManager",
+      "address": "0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3",
+      "sourceHashes": [
+        "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
+        "0x59a4633c528a59f6b040de0109dcbf2d648d32898f6ff0533fe1585e26f08ef0"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Manages the delegation and undelegation of KRO tokens and Kroma Guardian House (KGH) NFTs for Proposers (Kroma Validators) and distributes rewards.",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1729473899,
+      "values": {
+        "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
+        "$implementation": "0xf34fa8D3ac4AAcAD8307da8C8E51bDddCDa60Ede",
+        "$pastUpgrades": [
+          [
+            "2024-10-24T04:28:47.000Z",
+            "0xb2a500d332d7b3348b8ffa91aba9b8a5a3bc018b44225a1b6e99605c56c6564e",
+            ["0xf34fa8D3ac4AAcAD8307da8C8E51bDddCDa60Ede"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "ASSET_TOKEN": "0x25500000d700bbE27104577CCcce8eAbCC96c8ad",
+        "BOND_AMOUNT": "5000000000000000000000",
+        "DECIMAL_OFFSET": 1000000,
+        "KGH": "0xacA91C74748090f861E25D142B6fCB265c6171c8",
+        "MIN_DELEGATION_PERIOD": 604800,
+        "SECURITY_COUNCIL": "0x3de211088dF516da72efe68D386b561BEE256Ec4",
+        "TAX_DENOMINATOR": 100,
+        "TAX_NUMERATOR": 20,
+        "VALIDATOR_MANAGER": "0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363",
+        "VALIDATOR_REWARD_VAULT": "0xe57E217d8ed498992452791622711B866403E950",
+        "version": "1.0.0"
+      },
+      "derivedName": "AssetManager"
+    },
+    {
       "name": "spETH_ProxyAdmin",
       "address": "0xa50f2b3d55fb311c81f6FB75998B48A67505c6F4",
       "sourceHashes": [
@@ -831,6 +950,32 @@
       "derivedName": "EcoProxyAdmin"
     },
     {
+      "name": "",
+      "address": "0xacA91C74748090f861E25D142B6fCB265c6171c8",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1726035323,
+      "values": {
+        "$admin": "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f",
+        "$implementation": "0x3549aB4534b05f8a0226De1c7F991626066C0a1a",
+        "$pastUpgrades": [
+          [
+            "2024-09-11T06:15:23.000Z",
+            "0x28f3992b9205b28edfa49508bd2626dfc5d25c3dad98acc104d5746da827815d",
+            ["0x3549aB4534b05f8a0226De1c7F991626066C0a1a"]
+          ]
+        ],
+        "$upgradeCount": 1
+      }
+    },
+    {
       "name": "UpgradeGovernor",
       "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537",
       "sourceHashes": [
@@ -864,7 +1009,7 @@
         ],
         "$upgradeCount": 2,
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 20912649,
+        "clock": 21064298,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -962,7 +1107,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "clock": 20912649,
+        "clock": 21064298,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "DOMAIN_SEPARATOR": "0x1630586f33defc933258f4512df143dd6bf7adb1b4d039178e748d4cac4813b8",
         "eip712Domain": {
@@ -1007,6 +1152,37 @@
         "version": "1.0.1"
       },
       "derivedName": "SecurityCouncilToken"
+    },
+    {
+      "name": "KromaRewardVaultMultisig",
+      "address": "0xe57E217d8ed498992452791622711B866403E950",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1722386411,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0x547fc089E9f2971d27b9780214ED891F6d154faa",
+          "0x138AAFab6Dc4Fd30957da1Bbded441ABF9Ccb848",
+          "0xc0ab283E81aE99197Cfe1C8BEE9C593CD4FF7FB3",
+          "0xF5624B7E74C4Ed876C9793C7895184747a8D2310",
+          "0xEEE06120a1861102D69Aa69535091a8FE72D9e43"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0xa3b1c4350b8f7c41d1c5c6fc46d38935d7bb29011d1d9e108878529a9c1aa379",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 1,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "spETH",
@@ -1063,7 +1239,7 @@
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "symbol": "spETH",
-        "totalSupply": "927904832582073518161"
+        "totalSupply": "844317518874783759847"
       },
       "derivedName": "SPETH"
     },
@@ -1080,7 +1256,7 @@
       "address": "0xFdFF462845953D90719A78Fd12a2d103541d2103",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
-        "0x22ee68d5248870b98295dbc19fb66375ddbb2b23f040c2c6d8cc43a946f9940f"
+        "0xac308f84cc546d491c72f2e9d4309c3e67334cd61b5300e0eb259d2950e20511"
       ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -1094,7 +1270,7 @@
       "sinceTimestamp": 1693880567,
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
-        "$implementation": "0x8EDc4cCa2aF96f5D5141d55333043a65c3f59Ec4",
+        "$implementation": "0xE36776FFA20a9206dcD742C981402a3f3d81938d",
         "$pastUpgrades": [
           [
             "2023-09-05T02:26:23.000Z",
@@ -1110,22 +1286,28 @@
             "2024-04-05T08:14:59.000Z",
             "0xd420f3a8af8254ca1095409b3c4c2a3a1faa26fbe50c0477663e1bcb39727dfc",
             ["0x8EDc4cCa2aF96f5D5141d55333043a65c3f59Ec4"]
+          ],
+          [
+            "2024-10-24T04:28:47.000Z",
+            "0xb2a500d332d7b3348b8ffa91aba9b8a5a3bc018b44225a1b6e99605c56c6564e",
+            ["0xE36776FFA20a9206dcD742C981402a3f3d81938d"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "L2_ORACLE": "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
         "MAX_UNBOND": 10,
-        "nextValidator": "0xC74970A67e867Ee3dA881B6030B3f7785CFbca0A",
+        "nextValidator": "0x13f2Af6e5c21fd75f8c4B09fd3b360cB8475db81",
         "PORTAL": "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de",
         "REQUIRED_BOND_AMOUNT": "200000000000000000",
         "ROUND_DURATION": 1800,
         "SECURITY_COUNCIL": "0x3de211088dF516da72efe68D386b561BEE256Ec4",
         "TAX_DENOMINATOR": 100,
         "TAX_NUMERATOR": 20,
+        "TERMINATE_OUTPUT_INDEX": 10106,
         "TRUSTED_VALIDATOR": "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
-        "validatorCount": 248,
+        "validatorCount": 82,
         "VAULT_REWARD_GAS_LIMIT": 100000,
-        "version": "1.0.1"
+        "version": "1.1.0"
       },
       "derivedName": "ValidatorPool"
     }
@@ -1133,13 +1315,19 @@
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x000000000000000000000000000000000000dEaD" },
+    { "address": "0x138AAFab6Dc4Fd30957da1Bbded441ABF9Ccb848" },
+    { "address": "0x13f2Af6e5c21fd75f8c4B09fd3b360cB8475db81" },
     { "address": "0x3a4F65D1ACFb2A3F5AD93ef7b240bfa1079052e0" },
-    { "address": "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6" },
+    {
+      "name": "KromaOperator",
+      "address": "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6"
+    },
     { "address": "0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12" },
     { "address": "0x4200000000000000000000000000000000000004" },
     { "address": "0x4200000000000000000000000000000000000009" },
     { "address": "0x420000000000000000000000000000000000000A" },
     { "address": "0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1" },
+    { "address": "0x547fc089E9f2971d27b9780214ED891F6d154faa" },
     { "address": "0x5ddcf494A8b6EeE4904934E829109cCF584EAF80" },
     { "address": "0x61e0D34b5206Fa8005EC1De8000df9B9dDee23Db" },
     { "address": "0x66FA82F4AEA284d1d208437F179dFE13d8118f3A" },
@@ -1158,6 +1346,10 @@
         },
         {
           "permission": "upgrade",
+          "target": "0xacA91C74748090f861E25D142B6fCB265c6171c8"
+        },
+        {
+          "permission": "upgrade",
           "target": "0xd26F4195B147b988E7497779f7DED22ba130204d"
         }
       ]
@@ -1165,8 +1357,10 @@
     { "address": "0x8898EF6f9838A0Ec088F174A77F8a094fB788C4e" },
     { "address": "0x8ECF028Cd647379E580DaA6701A11154750fcd3c" },
     { "address": "0x994C074BD9503e4f01CB834e2c409FA16b41E587" },
-    { "address": "0xC74970A67e867Ee3dA881B6030B3f7785CFbca0A" },
+    { "address": "0xc0ab283E81aE99197Cfe1C8BEE9C593CD4FF7FB3" },
     { "address": "0xECe4AAf6A41aa81A164363Ec6C420510617Fc998" },
+    { "address": "0xEEE06120a1861102D69Aa69535091a8FE72D9e43" },
+    { "address": "0xF5624B7E74C4Ed876C9793C7895184747a8D2310" },
     { "address": "0xfF00000000000000000000000000000000000255" }
   ],
   "abis": {
@@ -1279,6 +1473,71 @@
       "function transferOwnership(address newOwner)",
       "function unpause()"
     ],
+    "0x0Ed7bb332F7307F5c97E566E74A4A73ab6671082": [
+      "constructor(tuple(address _l2Oracle, address _assetManager, address _trustedValidator, uint128 _commissionChangeDelaySeconds, uint128 _roundDurationSeconds, uint128 _softJailPeriodSeconds, uint128 _hardJailPeriodSeconds, uint128 _jailThreshold, uint128 _maxOutputFinalizations, uint128 _baseReward, uint128 _minRegisterAmount, uint128 _minActivateAmount) _constructorParams)",
+      "error ImproperValidatorStatus()",
+      "error InsufficientAsset()",
+      "error InvalidConstructorParams()",
+      "error MaxCommissionRateExceeded()",
+      "error NotAllowedCaller()",
+      "error NotElapsedCommissionChangeDelay()",
+      "error NotElapsedJailPeriod()",
+      "error NotInitiatedCommissionChange()",
+      "error NotSelectedPriorityValidator()",
+      "error SameCommissionRate()",
+      "event ChallengeRewardDistributed(uint256 indexed outputIndex, address indexed recipient, uint128 amount)",
+      "event RewardDistributed(uint256 indexed outputIndex, address indexed validator, uint128 validatorReward, uint128 baseReward, uint128 boostedReward)",
+      "event SlashReverted(uint256 indexed outputIndex, address indexed loser, uint128 amount)",
+      "event Slashed(uint256 indexed outputIndex, address indexed loser, uint128 amount)",
+      "event ValidatorActivated(address indexed validator, uint256 activatedAt)",
+      "event ValidatorCommissionChangeFinalized(address indexed validator, uint8 oldCommissionRate, uint8 newCommissionRate)",
+      "event ValidatorCommissionChangeInitiated(address indexed validator, uint8 oldCommissionRate, uint8 newCommissionRate)",
+      "event ValidatorJailed(address indexed validator, uint128 expiresAt)",
+      "event ValidatorRegistered(address indexed validator, bool activated, uint8 commissionRate, uint128 assets)",
+      "event ValidatorStopped(address indexed validator, uint256 stopsAt)",
+      "event ValidatorUnjailed(address indexed validator)",
+      "function ASSET_MANAGER() view returns (address)",
+      "function BASE_REWARD() view returns (uint128)",
+      "function BOOSTED_REWARD_DENOM() view returns (uint128)",
+      "function BOOSTED_REWARD_NUMERATOR() view returns (uint128)",
+      "function COMMISSION_CHANGE_DELAY_SECONDS() view returns (uint128)",
+      "function COMMISSION_RATE_DENOM() view returns (uint128)",
+      "function HARD_JAIL_PERIOD_SECONDS() view returns (uint128)",
+      "function JAIL_THRESHOLD() view returns (uint128)",
+      "function L2_ORACLE() view returns (address)",
+      "function MAX_OUTPUT_FINALIZATIONS() view returns (uint128)",
+      "function MIN_ACTIVATE_AMOUNT() view returns (uint128)",
+      "function MIN_REGISTER_AMOUNT() view returns (uint128)",
+      "function ROUND_DURATION_SECONDS() view returns (uint128)",
+      "function SOFT_JAIL_PERIOD_SECONDS() view returns (uint128)",
+      "function TRUSTED_VALIDATOR() view returns (address)",
+      "function activateValidator()",
+      "function activatedValidatorCount() view returns (uint32)",
+      "function activatedValidatorTotalWeight() view returns (uint120)",
+      "function afterSubmitL2Output(uint256 outputIndex)",
+      "function bondValidatorKro(address validator)",
+      "function canFinalizeCommissionChangeAt(address validator) view returns (uint128)",
+      "function checkSubmissionEligibility(address validator) view",
+      "function finalizeCommissionChange()",
+      "function getCommissionRate(address validator) view returns (uint8)",
+      "function getPendingCommissionRate(address validator) view returns (uint8)",
+      "function getStatus(address validator) view returns (uint8)",
+      "function getWeight(address validator) view returns (uint120)",
+      "function inJail(address validator) view returns (bool)",
+      "function initCommissionChange(uint8 newCommissionRate)",
+      "function isActive(address validator) view returns (bool)",
+      "function jailExpiresAt(address validator) view returns (uint128)",
+      "function nextValidator() view returns (address)",
+      "function noSubmissionCount(address validator) view returns (uint8)",
+      "function registerValidator(uint128 assets, uint8 commissionRate, address withdrawAccount)",
+      "function revertSlash(uint256 outputIndex, address loser)",
+      "function slash(uint256 outputIndex, address winner, address loser)",
+      "function tryActivateValidator(address validator)",
+      "function tryUnjail()",
+      "function unbondValidatorKro(address validator)",
+      "function updateValidatorTree(address validator, bool tryRemove)",
+      "function version() view returns (string)"
+    ],
     "0x108eDc4Df0b9B04dcE9f6FFBD65Dd9895562c14C": [
       "constructor()",
       "error ErrLocked()",
@@ -1336,34 +1595,6 @@
       "function unpause()",
       "function version() view returns (string)"
     ],
-    "0x14126FFa3889a026A79F0f99FaE80B3dc9E38095": [
-      "constructor(address _validatorPool, address _colosseum, uint256 _submissionInterval, uint256 _l2BlockTime, uint256 _startingBlockNumber, uint256 _startingTimestamp, uint256 _finalizationPeriodSeconds)",
-      "event Initialized(uint8 version)",
-      "event OutputReplaced(uint256 indexed outputIndex, bytes32 newOutputRoot)",
-      "event OutputSubmitted(bytes32 indexed outputRoot, uint256 indexed l2OutputIndex, uint256 indexed l2BlockNumber, uint256 l1Timestamp)",
-      "function COLOSSEUM() view returns (address)",
-      "function FINALIZATION_PERIOD_SECONDS() view returns (uint256)",
-      "function L2_BLOCK_TIME() view returns (uint256)",
-      "function SUBMISSION_INTERVAL() view returns (uint256)",
-      "function VALIDATOR_POOL() view returns (address)",
-      "function computeL2Timestamp(uint256 _l2BlockNumber) view returns (uint256)",
-      "function finalizedAt(uint256 _outputIndex) view returns (uint256)",
-      "function getL2Output(uint256 _l2OutputIndex) view returns (tuple(address submitter, bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
-      "function getL2OutputAfter(uint256 _l2BlockNumber) view returns (tuple(address submitter, bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
-      "function getL2OutputIndexAfter(uint256 _l2BlockNumber) view returns (uint256)",
-      "function getSubmitter(uint256 _outputIndex) view returns (address)",
-      "function initialize(uint256 _startingBlockNumber, uint256 _startingTimestamp)",
-      "function isFinalized(uint256 _outputIndex) view returns (bool)",
-      "function latestBlockNumber() view returns (uint256)",
-      "function latestOutputIndex() view returns (uint256)",
-      "function nextBlockNumber() view returns (uint256)",
-      "function nextOutputIndex() view returns (uint256)",
-      "function replaceL2Output(uint256 _l2OutputIndex, bytes32 _newOutputRoot, address _submitter)",
-      "function startingBlockNumber() view returns (uint256)",
-      "function startingTimestamp() view returns (uint256)",
-      "function submitL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber) payable",
-      "function version() view returns (string)"
-    ],
     "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1375,6 +1606,16 @@
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
     "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -1511,6 +1752,38 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "0x4B68F22d96a04F6d80e284C20A648f8Da2fD569b": [
+      "constructor(address _validatorPool, address _validatorManager, address _colosseum, uint256 _submissionInterval, uint256 _l2BlockTime, uint256 _startingBlockNumber, uint256 _startingTimestamp, uint256 _finalizationPeriodSeconds)",
+      "event Initialized(uint8 version)",
+      "event OutputReplaced(uint256 indexed outputIndex, address indexed newSubmitter, bytes32 newOutputRoot)",
+      "event OutputSubmitted(bytes32 indexed outputRoot, uint256 indexed l2OutputIndex, uint256 indexed l2BlockNumber, uint256 l1Timestamp)",
+      "function COLOSSEUM() view returns (address)",
+      "function FINALIZATION_PERIOD_SECONDS() view returns (uint256)",
+      "function L2_BLOCK_TIME() view returns (uint256)",
+      "function SUBMISSION_INTERVAL() view returns (uint256)",
+      "function VALIDATOR_MANAGER() view returns (address)",
+      "function VALIDATOR_POOL() view returns (address)",
+      "function computeL2Timestamp(uint256 _l2BlockNumber) view returns (uint256)",
+      "function finalizedAt(uint256 _outputIndex) view returns (uint256)",
+      "function getL2Output(uint256 _l2OutputIndex) view returns (tuple(address submitter, bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
+      "function getL2OutputAfter(uint256 _l2BlockNumber) view returns (tuple(address submitter, bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
+      "function getL2OutputIndexAfter(uint256 _l2BlockNumber) view returns (uint256)",
+      "function getSubmitter(uint256 _outputIndex) view returns (address)",
+      "function initialize(uint256 _startingBlockNumber, uint256 _startingTimestamp)",
+      "function isFinalized(uint256 _outputIndex) view returns (bool)",
+      "function latestBlockNumber() view returns (uint256)",
+      "function latestOutputIndex() view returns (uint256)",
+      "function nextBlockNumber() view returns (uint256)",
+      "function nextFinalizeOutputIndex() view returns (uint256)",
+      "function nextOutputIndex() view returns (uint256)",
+      "function nextOutputMinL2Timestamp() view returns (uint256)",
+      "function replaceL2Output(uint256 _l2OutputIndex, bytes32 _newOutputRoot, address _submitter)",
+      "function setNextFinalizeOutputIndex(uint256 _outputIndex)",
+      "function startingBlockNumber() view returns (uint256)",
+      "function startingTimestamp() view returns (uint256)",
+      "function submitL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber) payable",
+      "function version() view returns (string)"
     ],
     "0x4cd05aB629055a449617a28E3466660403eA7126": [
       "constructor(uint256 _hashScalar, uint256 _m56Px, uint256 _m56Py)",
@@ -1848,41 +2121,6 @@
       "function unstake(address asset, address to, uint256 spAmount) returns (uint256 assetAmount)",
       "function updateCoreSupportAsset(address asset, tuple(address assetEvaluator, uint8 id) assetInfo)"
     ],
-    "0x8EDc4cCa2aF96f5D5141d55333043a65c3f59Ec4": [
-      "constructor(address _l2OutputOracle, address _portal, address _securityCouncil, address _trustedValidator, uint256 _requiredBondAmount, uint256 _maxUnbond, uint256 _roundDuration)",
-      "event BondIncreased(uint256 indexed outputIndex, address indexed challenger, uint128 amount)",
-      "event Bonded(address indexed submitter, uint256 indexed outputIndex, uint128 amount, uint128 expiresAt)",
-      "event Initialized(uint8 version)",
-      "event PendingBondAdded(uint256 indexed outputIndex, address indexed challenger, uint128 amount)",
-      "event PendingBondReleased(uint256 indexed outputIndex, address indexed challenger, address indexed recipient, uint128 amount)",
-      "event Unbonded(uint256 indexed outputIndex, address indexed recipient, uint128 amount)",
-      "function L2_ORACLE() view returns (address)",
-      "function MAX_UNBOND() view returns (uint256)",
-      "function PORTAL() view returns (address)",
-      "function REQUIRED_BOND_AMOUNT() view returns (uint128)",
-      "function ROUND_DURATION() view returns (uint256)",
-      "function SECURITY_COUNCIL() view returns (address)",
-      "function TAX_DENOMINATOR() view returns (uint128)",
-      "function TAX_NUMERATOR() view returns (uint128)",
-      "function TRUSTED_VALIDATOR() view returns (address)",
-      "function VAULT_REWARD_GAS_LIMIT() view returns (uint64)",
-      "function addPendingBond(uint256 _outputIndex, address _challenger)",
-      "function balanceOf(address _addr) view returns (uint256)",
-      "function createBond(uint256 _outputIndex, uint128 _expiresAt)",
-      "function deposit() payable",
-      "function getBond(uint256 _outputIndex) view returns (tuple(uint128 amount, uint128 expiresAt))",
-      "function getPendingBond(uint256 _outputIndex, address _challenger) view returns (uint128)",
-      "function increaseBond(uint256 _outputIndex, address _challenger)",
-      "function initialize()",
-      "function isValidator(address _addr) view returns (bool)",
-      "function nextValidator() view returns (address)",
-      "function releasePendingBond(uint256 _outputIndex, address _challenger, address _recipient)",
-      "function unbond()",
-      "function validatorCount() view returns (uint256)",
-      "function version() view returns (string)",
-      "function withdraw(uint256 _amount)",
-      "function withdrawTo(address _to, uint256 _amount)"
-    ],
     "0x9841bC06C8284095824e9397AC818aD1114C444C": [
       "constructor(address proxyAdminLogic, address initialOwner)",
       "error AddressEmptyCode(address target)",
@@ -1891,15 +2129,7 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xa50f2b3d55fb311c81f6FB75998B48A67505c6F4": [
-      "constructor(address proxyAdminLogic, address initialOwner)",
-      "error AddressEmptyCode(address target)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedInnerCall()",
-      "event Upgraded(address indexed implementation)"
-    ],
-    "0xb3c415c2Aad428D5570208e1772cb68e7D06a537": [
+    "0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -1909,14 +2139,47 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "0xb87eaB624EE684C1799f1E8b24936A1c90759eEc": [
+    "0xa50f2b3d55fb311c81f6FB75998B48A67505c6F4": [
+      "constructor(address proxyAdminLogic, address initialOwner)",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0xAB54b3e775f645cf4486039bfA4dA539E70c9f99": [
       "constructor(address _l2Oracle, address _zkVerifier, uint256 _submissionInterval, uint256 _creationPeriodSeconds, uint256 _bisectionTimeout, uint256 _provingTimeout, bytes32 _dummyHash, uint256 _maxTxs, uint256[] _segmentsLengths, address _securityCouncil, address _zkMerkleTrie)",
+      "error BlockHashMismatched()",
+      "error BlockHashMismatchedBtwSrcAndDst()",
+      "error CannotCancelChallenge()",
+      "error CreationPeriodPassed()",
+      "error FirstSegmentMismatched()",
+      "error ImproperChallengeStatus()",
+      "error ImproperChallengeStatusToCancel()",
+      "error ImproperValidatorStatus()",
+      "error InvalidAddressGiven()",
+      "error InvalidInclusionProof()",
+      "error InvalidOutputGiven()",
+      "error InvalidPublicInput()",
+      "error InvalidSegmentsLength()",
+      "error InvalidTurn()",
+      "error InvalidZKProof()",
+      "error L1Reorged()",
+      "error LastSegmentMatched()",
+      "error NotAllowedCaller()",
+      "error NotAllowedGenesisOutput()",
+      "error OnlyChallengerCanCancel()",
+      "error OutputAlreadyDeleted()",
+      "error OutputAlreadyFinalized()",
+      "error OutputNotDeleted()",
+      "error StateRootMismatched()",
       "event Bisected(uint256 indexed outputIndex, address indexed challenger, uint8 turn, uint256 timestamp)",
       "event ChallengeCanceled(uint256 indexed outputIndex, address indexed challenger, uint256 timestamp)",
       "event ChallengeCreated(uint256 indexed outputIndex, address indexed asserter, address indexed challenger, uint256 timestamp)",
       "event ChallengeDismissed(uint256 indexed outputIndex, address indexed challenger, uint256 timestamp)",
       "event ChallengerTimedOut(uint256 indexed outputIndex, address indexed challenger, uint256 timestamp)",
       "event Initialized(uint8 version)",
+      "event OutputForceDeleted(uint256 indexed outputIndex, address indexed asseter, uint256 timestamp)",
       "event Proven(uint256 indexed outputIndex, address indexed challenger, uint256 timestamp)",
       "event ReadyToProve(uint256 indexed outputIndex, address indexed challenger)",
       "function BISECTION_TIMEOUT() view returns (uint256)",
@@ -1934,17 +2197,27 @@
       "function challengerTimeout(uint256 _outputIndex, address _challenger)",
       "function challenges(uint256, address) view returns (uint8 turn, uint64 timeoutAt, address asserter, address challenger, uint256 segSize, uint256 segStart)",
       "function createChallenge(uint256 _outputIndex, bytes32 _l1BlockHash, uint256 _l1BlockNumber, bytes32[] _segments)",
+      "function deletedOutputs(uint256) view returns (address submitter, bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber)",
       "function dismissChallenge(uint256 _outputIndex, address _challenger, address _asserter, bytes32 _outputRoot, bytes32 _publicInputHash)",
       "function forceDeleteOutput(uint256 _outputIndex)",
-      "function getChallenge(uint256 _outputIndex, address _challenger) view returns (tuple(uint8 turn, uint64 timeoutAt, address asserter, address challenger, bytes32[] segments, uint256 segSize, uint256 segStart))",
-      "function getSegmentsLength(uint8 _turn) view returns (uint256)",
+      "function getSegments(uint256 _outputIndex, address _challenger) view returns (bytes32[])",
       "function getStatus(uint256 _outputIndex, address _challenger) view returns (uint8)",
       "function initialize(uint256[] _segmentsLengths)",
-      "function isAbleToBisect(uint256 _outputIndex, address _challenger) view returns (bool)",
       "function isInCreationPeriod(uint256 _outputIndex) view returns (bool)",
       "function proveFault(uint256 _outputIndex, uint256 _pos, tuple(tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 blockHash, bytes32 nextBlockHash) srcOutputRootProof, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 blockHash, bytes32 nextBlockHash) dstOutputRootProof, tuple(bytes32 blockHash, bytes32 parentHash, uint64 timestamp, uint64 number, uint64 gasLimit, uint256 baseFee, bytes32 transactionsRoot, bytes32 stateRoot, bytes32 withdrawalsRoot, bytes32[] txHashes, uint64 blobGasUsed, uint64 excessBlobGas, bytes32 parentBeaconRoot) publicInput, tuple(bytes uncleHash, bytes coinbase, bytes receiptsRoot, bytes logsBloom, bytes difficulty, bytes gasUsed, bytes extraData, bytes mixHash, bytes nonce) rlps, bytes32 l2ToL1MessagePasserBalance, bytes32 l2ToL1MessagePasserCodeHash, bytes[] merkleProof) _proof, uint256[] _zkproof, uint256[] _pair)",
+      "function segmentsLengths(uint256) view returns (uint256)",
       "function verifiedPublicInputs(bytes32) view returns (bool)",
       "function version() view returns (string)"
+    ],
+    "0xb3c415c2Aad428D5570208e1772cb68e7D06a537": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
     "0xbB1cDB5Cc35B1c9801DA8772aCBcDbd323A912D9": [
       "constructor(address _messenger, address _otherBridge)",
@@ -1965,6 +2238,92 @@
       "error ERC1967NonPayable()",
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
+    ],
+    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0xE36776FFA20a9206dcD742C981402a3f3d81938d": [
+      "constructor(address _l2OutputOracle, address _portal, address _securityCouncil, address _trustedValidator, uint256 _requiredBondAmount, uint256 _maxUnbond, uint256 _roundDuration, uint256 _terminateOutputIndex)",
+      "event BondIncreased(uint256 indexed outputIndex, address indexed challenger, uint128 amount)",
+      "event Bonded(address indexed submitter, uint256 indexed outputIndex, uint128 amount, uint128 expiresAt)",
+      "event Initialized(uint8 version)",
+      "event PendingBondAdded(uint256 indexed outputIndex, address indexed challenger, uint128 amount)",
+      "event PendingBondReleased(uint256 indexed outputIndex, address indexed challenger, address indexed recipient, uint128 amount)",
+      "event Unbonded(uint256 indexed outputIndex, address indexed recipient, uint128 amount)",
+      "function L2_ORACLE() view returns (address)",
+      "function MAX_UNBOND() view returns (uint256)",
+      "function PORTAL() view returns (address)",
+      "function REQUIRED_BOND_AMOUNT() view returns (uint128)",
+      "function ROUND_DURATION() view returns (uint256)",
+      "function SECURITY_COUNCIL() view returns (address)",
+      "function TAX_DENOMINATOR() view returns (uint128)",
+      "function TAX_NUMERATOR() view returns (uint128)",
+      "function TERMINATE_OUTPUT_INDEX() view returns (uint256)",
+      "function TRUSTED_VALIDATOR() view returns (address)",
+      "function VAULT_REWARD_GAS_LIMIT() view returns (uint64)",
+      "function addPendingBond(uint256 _outputIndex, address _challenger)",
+      "function balanceOf(address _addr) view returns (uint256)",
+      "function createBond(uint256 _outputIndex, uint128 _expiresAt)",
+      "function deposit() payable",
+      "function getBond(uint256 _outputIndex) view returns (tuple(uint128 amount, uint128 expiresAt))",
+      "function getPendingBond(uint256 _outputIndex, address _challenger) view returns (uint128)",
+      "function increaseBond(uint256 _outputIndex, address _challenger)",
+      "function initialize()",
+      "function isTerminated(uint256 _outputIndex) view returns (bool)",
+      "function isValidator(address _addr) view returns (bool)",
+      "function nextValidator() view returns (address)",
+      "function releasePendingBond(uint256 _outputIndex, address _challenger, address _recipient)",
+      "function unbond()",
+      "function validatorCount() view returns (uint256)",
+      "function version() view returns (string)",
+      "function withdraw(uint256 _amount)",
+      "function withdrawTo(address _to, uint256 _amount)"
     ],
     "0xe44da6e9fA92E3FD897Da84d38fa6B9322Dd22c3": [
       "constructor()",
@@ -2033,6 +2392,75 @@
       "function paused() view returns (bool)",
       "function version() pure returns (string)"
     ],
+    "0xe57E217d8ed498992452791622711B866403E950": [
+      "constructor(address _singleton)"
+    ],
+    "0xf34fa8D3ac4AAcAD8307da8C8E51bDddCDa60Ede": [
+      "constructor(address _assetToken, address _kgh, address _securityCouncil, address _validatorRewardVault, address _validatorManager, uint128 _minDelegationPeriod, uint128 _bondAmount)",
+      "error ImproperValidatorStatus()",
+      "error InsufficientAsset()",
+      "error InsufficientShare()",
+      "error InvalidTokenIdsInput()",
+      "error NotAllowedCaller()",
+      "error NotAllowedZeroInput()",
+      "error NotElapsedMinDelegationPeriod()",
+      "error ZeroAddress()",
+      "event Deposited(address indexed validator, uint128 amount)",
+      "event KghBatchDelegated(address indexed validator, address indexed delegator, uint256[] tokenIds)",
+      "event KghBatchUndelegated(address indexed validator, address indexed delegator, uint256[] tokenIds, uint128 amount)",
+      "event KghDelegated(address indexed validator, address indexed delegator, uint256 tokenId)",
+      "event KghRewardClaimed(address indexed validator, address indexed delegator, uint128 amount)",
+      "event KghUndelegated(address indexed validator, address indexed delegator, uint256 tokenId, uint128 amount)",
+      "event KroDelegated(address indexed validator, address indexed delegator, uint128 amount, uint128 shares)",
+      "event KroUndelegated(address indexed validator, address indexed delegator, uint128 amount, uint128 shares)",
+      "event ValidatorKroBonded(address indexed validator, uint128 amount, uint128 remainder)",
+      "event ValidatorKroUnbonded(address indexed validator, uint128 amount, uint128 remainder)",
+      "event Withdrawn(address indexed validator, uint128 amount)",
+      "function ASSET_TOKEN() view returns (address)",
+      "function BOND_AMOUNT() view returns (uint128)",
+      "function DECIMAL_OFFSET() view returns (uint128)",
+      "function KGH() view returns (address)",
+      "function MIN_DELEGATION_PERIOD() view returns (uint128)",
+      "function SECURITY_COUNCIL() view returns (address)",
+      "function TAX_DENOMINATOR() view returns (uint128)",
+      "function TAX_NUMERATOR() view returns (uint128)",
+      "function VALIDATOR_MANAGER() view returns (address)",
+      "function VALIDATOR_REWARD_VAULT() view returns (address)",
+      "function bondValidatorKro(address validator)",
+      "function canUndelegateKghAt(address validator, address delegator, uint256 tokenId) view returns (uint128)",
+      "function canUndelegateKroAt(address validator, address delegator) view returns (uint128)",
+      "function canWithdrawAt(address validator) view returns (uint128)",
+      "function claimKghReward(address validator)",
+      "function decreaseBalanceWithChallenge(address loser) returns (uint128)",
+      "function delegate(address validator, uint128 assets) returns (uint128)",
+      "function delegateKgh(address validator, uint256 tokenId)",
+      "function delegateKghBatch(address validator, uint256[] tokenIds)",
+      "function deposit(uint128 assets)",
+      "function depositToRegister(address validator, uint128 assets, address withdrawAccount)",
+      "function getKghNum(address validator, address delegator) view returns (uint128)",
+      "function getKghReward(address validator, address delegator) view returns (uint128)",
+      "function getKroAssets(address validator, address delegator) view returns (uint128)",
+      "function getKroTotalShareBalance(address validator, address delegator) view returns (uint128)",
+      "function getWithdrawAccount(address validator) view returns (address)",
+      "function increaseBalanceWithChallenge(address winner, uint128 challengeReward) returns (uint128)",
+      "function increaseBalanceWithReward(address validator, uint128 baseReward, uint128 boostedReward, uint128 validatorReward)",
+      "function onERC721Received(address, address, uint256, bytes) pure returns (bytes4)",
+      "function previewDelegate(address validator, uint128 assets) view returns (uint128)",
+      "function previewUndelegate(address validator, uint128 shares) view returns (uint128)",
+      "function reflectiveWeight(address validator) view returns (uint128)",
+      "function revertDecreaseBalanceWithChallenge(address loser) returns (uint128)",
+      "function totalKghNum(address validator) view returns (uint128)",
+      "function totalKroAssets(address validator) view returns (uint128)",
+      "function totalValidatorKro(address validator) view returns (uint128)",
+      "function totalValidatorKroBonded(address validator) view returns (uint128)",
+      "function totalValidatorKroNotBonded(address validator) view returns (uint128)",
+      "function unbondValidatorKro(address validator)",
+      "function undelegate(address validator, uint128 assets)",
+      "function undelegateKgh(address validator, uint256 tokenId)",
+      "function undelegateKghBatch(address validator, uint256[] tokenIds)",
+      "function version() view returns (string)",
+      "function withdraw(address validator, uint128 assets)"
+    ],
     "0xf96d4B1e0a0B129e1471e88dF6f1281b933Bc474": [
       "constructor(address proxyAdminLogic, address _logic, bytes _data) payable",
       "error AddressEmptyCode(address target)",
@@ -2055,5 +2483,7 @@
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+  }
 }
