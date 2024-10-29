@@ -16,7 +16,8 @@ export const avail: DaLayer = {
   display: {
     name: 'Avail',
     slug: 'avail',
-    description: 'Avail is a public blockchain and data availability network combining erasure coding, KZG polynomial commitments, and data availability sampling.',
+    description:
+      'Avail is a public blockchain and data availability network combining erasure coding, KZG polynomial commitments, and data availability sampling.',
     links: {
       websites: ['https://www.availproject.org/'],
       documentation: ['https://docs.availproject.org/'],

@@ -19,26 +19,26 @@ const RobustAndDiverseCommittee = (value?: string) =>
     Participation in the committee is permissionless, based only on stake requirements and an honest majority of validators processing the new operator's request to join the active set.`,
   }) as const
 
-  const LimitedCommitteeSecurity = (
-    value?: string,
-    externalMembersPercentage?: string,
-    totalNumberOfOperators?: number
-  ) =>
-    ({
-      type: 'LimitedCommitteeSecurity',
-      value: value ?? 'Permissioned',
-      sentiment: 'warning',
-      description: `The committee requires an honest minority (1/3 or less) of members (or the network stake) to prevent the DA bridge from accepting an unavailable data commitment.
+const LimitedCommitteeSecurity = (
+  value?: string,
+  externalMembersPercentage?: string,
+  totalNumberOfOperators?: number,
+) =>
+  ({
+    type: 'LimitedCommitteeSecurity',
+    value: value ?? 'Permissioned',
+    sentiment: 'warning',
+    description: `The committee requires an honest minority (1/3 or less) of members (or the network stake) to prevent the DA bridge from accepting an unavailable data commitment.
         ${
           totalNumberOfOperators
             ? `There are ${totalNumberOfOperators} registered operators in the committee, but entry or exit of members is partially controlled by a centralized entity.`
             : `There are at least 5 external actors in the committee${
-                externalMembersPercentage ? ` (${externalMembersPercentage}%)` : ''
+                externalMembersPercentage
+                  ? ` (${externalMembersPercentage}%)`
+                  : ''
               }, but entry or exit of members is partially controlled by a centralized entity.`
         }`,
-    }) as const;
-  
-  
+  }) as const
 
 const NoCommiteeSecurity = (value?: string) =>
   ({
