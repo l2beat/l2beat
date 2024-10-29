@@ -1,9 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
-import { BlockExplorerClient } from '@l2beat/shared'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { install } from '@sinonjs/fake-timers'
 import { expect, mockObject } from 'earl'
 
+import { BlockIndexerClient } from '@l2beat/shared'
 import { providers } from 'ethers'
 import { verifyContracts } from './tasks'
 
@@ -44,7 +44,7 @@ describe('checkVerifiedContracts:tasks', () => {
         {
           '0x5555555555555555555555555555555555555555': 'https://example.com',
         },
-        EthereumClientMock as unknown as BlockExplorerClient,
+        EthereumClientMock as unknown as BlockIndexerClient,
         MockProvider,
         2,
         Logger.SILENT,
@@ -80,7 +80,7 @@ describe('checkVerifiedContracts:tasks', () => {
         ].map(EthereumAddress),
         new Set(),
         {},
-        EthereumClientMock as unknown as BlockExplorerClient,
+        EthereumClientMock as unknown as BlockIndexerClient,
         MockProvider,
         2,
         Logger.SILENT,

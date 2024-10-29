@@ -5,7 +5,7 @@ import { StarknetClient } from '../../../../peripherals/starknet/StarknetClient'
 import { aggregatePerDay } from '../../utils/aggregatePerDay'
 import { StarknetUopsAnalyzer } from '../uops/analyzers/StarknetUopsAnalyzer'
 
-export class StarknetTxsCountProvider {
+export class StarknetTxsCountService {
   constructor(
     private readonly starknetClient: StarknetClient,
     private readonly projectId: ProjectId,

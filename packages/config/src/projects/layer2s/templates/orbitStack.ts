@@ -483,6 +483,7 @@ export function orbitStackCommon(
       [Badge.Stack.Orbit, Badge.VM.EVM, daBadge],
       templateVars.badges ?? [],
     ),
+    discoveryDrivenData: templateVars.discoveryDrivenData,
   }
 }
 
@@ -730,7 +731,6 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     },
     milestones: [],
     knowledgeNuggets: [],
-    discoveryDrivenData: templateVars.discoveryDrivenData,
   }
 }
 

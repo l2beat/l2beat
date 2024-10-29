@@ -37,56 +37,63 @@ export const xterioDABridge = {
     },
   },
   contracts: {
-    addresses: [
-      {
-        address: EthereumAddress(sequencerInbox),
-        name: 'DA Bridge (EOA)',
-        description:
-          'This DA bridge address is used to store transaction batch hashes as data availability commitments.',
-      },
-      discovery.getContractDetails('ProxyAdmin', {
-        description:
-          'The ProxyAdmin contract is the owner of SystemConfig and can change the address of the DA bridge for the system.',
-      }),
-      discovery.getContractDetails('DataAvailabilityChallenge', {
-        description:
-          'The DataAvailabilityChallenge contract is used to challenge the data availability of tx data hashes. See the technology section for more details.',
-      }),
-    ],
+    addresses: {
+      ethereum: [
+        {
+          address: EthereumAddress(sequencerInbox),
+          name: 'DA Bridge (EOA)',
+          description:
+            'This DA bridge address is used to store transaction batch hashes as data availability commitments.',
+        },
+        discovery.getContractDetails('ProxyAdmin', {
+          description:
+            'The ProxyAdmin contract is the owner of SystemConfig and can change the address of the DA bridge for the system.',
+        }),
+        discovery.getContractDetails('DataAvailabilityChallenge', {
+          description:
+            'The DataAvailabilityChallenge contract is used to challenge the data availability of tx data hashes. See the technology section for more details.',
+        }),
+      ],
+    },
     risks: [],
   },
   technology: {
     description: `Only hashes of data batches are posted as DA commitments to an EOA on Ethereum.
       However, there is a mechanism that allows users to challenge unavailability of data. \n`,
   },
-  permissions: [
-    {
-      name: 'Sequencer (relayer)',
-      accounts: [
-        discovery.getPermissionedAccount('SystemConfig', 'batcherHash'),
-      ],
-      description:
-        'Central actor allowed to relay DA commitments to the DA bridge.',
-    },
-    ...discovery.getMultisigPermission(
-      'RollupOwnerMultisig',
-      'Owner of the ProxyAdmin and the rollup system. It can change any system component.',
-    ),
-    {
-      name: 'SystemConfig owner',
-      description:
-        'Account privileged to change System Config parameters such as Sequencer Address and gas limit.',
-      accounts: [discovery.getPermissionedAccount('SystemConfig', 'owner')],
-    },
-    {
-      name: 'DataAvailabilityChallenge owner',
-      accounts: [
-        discovery.getPermissionedAccount('DataAvailabilityChallenge', 'owner'),
-      ],
-      description:
-        'Owner of the DataAvailabilityChallenge contract. It can upgrade the contract params, potentially making the system insecure.',
-    },
-  ],
+  permissions: {
+    ethereum: [
+      {
+        name: 'Sequencer (relayer)',
+        accounts: [
+          discovery.getPermissionedAccount('SystemConfig', 'batcherHash'),
+        ],
+        description:
+          'Central actor allowed to relay DA commitments to the DA bridge.',
+      },
+      ...discovery.getMultisigPermission(
+        'RollupOwnerMultisig',
+        'Owner of the ProxyAdmin and the rollup system. It can change any system component.',
+      ),
+      {
+        name: 'SystemConfig owner',
+        description:
+          'Account privileged to change System Config parameters such as Sequencer Address and gas limit.',
+        accounts: [discovery.getPermissionedAccount('SystemConfig', 'owner')],
+      },
+      {
+        name: 'DataAvailabilityChallenge owner',
+        accounts: [
+          discovery.getPermissionedAccount(
+            'DataAvailabilityChallenge',
+            'owner',
+          ),
+        ],
+        description:
+          'Owner of the DataAvailabilityChallenge contract. It can upgrade the contract params, potentially making the system insecure.',
+      },
+    ],
+  },
   chain: ChainId.ETHEREUM,
   transactionDataType: DacTransactionDataType.TransactionData,
   requiredMembers: 1,
