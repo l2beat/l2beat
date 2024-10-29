@@ -19,10 +19,10 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@l2beat/backend-tools": "*",
-    "@l2beat/discovery-types": "*",
-    "@l2beat/shared": "*",
-    "@l2beat/shared-pure": "*",
+    "@l2beat/backend-tools": "workspace:*",
+    "@l2beat/discovery-types": "workspace:*",
+    "@l2beat/shared": "workspace:*",
+    "@l2beat/shared-pure": "workspace:*",
     "@mradomski/fast-solidity-parser": "0.1.1",
     "bignumber.js": "^9.1.2",
     "chalk": "^4.1.2",

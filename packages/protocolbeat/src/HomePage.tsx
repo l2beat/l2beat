@@ -1,19 +1,19 @@
-import { useQuery } from '@tanstack/react-query'
-import { Link } from 'react-router-dom'
-import { getProjects } from './api/api'
+import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
+import { getProjects } from "./api/api";
 
 export function HomePage() {
   const result = useQuery({
-    queryKey: ['projects'],
+    queryKey: ["projects"],
     queryFn: getProjects,
-  })
+  });
 
   if (result.isPending) {
-    return <div>Loading</div>
+    return <div>Loading</div>;
   }
 
   if (result.isError) {
-    return <div>Error</div>
+    return <div>Error</div>;
   }
 
   return (
@@ -23,11 +23,11 @@ export function HomePage() {
         {result.data.map((entry, i) => (
           <li key={i}>
             <Link to={`/ui/p/${entry.name}`}>
-              {entry.name} ({entry.chains.length} chains)
+              {entry.name} ({entry.chains.length} chains2)
             </Link>
           </li>
         ))}
       </ol>
     </div>
-  )
+  );
 }

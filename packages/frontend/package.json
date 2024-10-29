@@ -20,11 +20,13 @@
     "tinify-logos": "node --loader esbuild-register/loader -r esbuild-register scripts/logos/tinifyLogos.ts"
   },
   "dependencies": {
-    "@l2beat/backend": "*",
-    "@l2beat/config": "*",
-    "@l2beat/database": "*",
-    "@l2beat/discovery": "*",
-    "@l2beat/shared-pure": "*",
+    "@l2beat/backend": "workspace:*",
+    "@l2beat/config": "workspace:*",
+    "@l2beat/database": "workspace:*",
+    "@l2beat/discovery": "workspace:*",
+    "@l2beat/discovery-types": "workspace:*",
+    "@l2beat/shared": "workspace:*",
+    "@l2beat/shared-pure": "workspace:*",
     "@radix-ui/react-accordion": "^1.2.0",
     "@radix-ui/react-checkbox": "^1.1.0",
     "@radix-ui/react-collapsible": "^1.1.0",
@@ -47,6 +49,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
+    "dotenv": "^16.4.5",
     "gray-matter": "^4.0.3",
     "js-cookie": "^3.0.5",
     "lodash": "^4.17.21",
@@ -60,6 +63,7 @@
     "react-dom": "19.0.0-rc-69d4b800-20241021",
     "react-jazzicon": "^1.0.4",
     "sharp": "^0.33.5",
+    "sqlite3": "^5.1.6",
     "superjson": "^2.2.1",
     "tailwind-merge": "^2.3.0",
     "vaul": "^0.9.1",
@@ -99,15 +103,13 @@
     "mockdate": "^3.0.5",
     "pino-pretty": "^11.1.0",
     "postcss": "^8.4.38",
+    "postcss-load-config": "^6.0.1",
     "storybook": "^8.3.6",
     "storybook-addon-pseudo-states": "^3.1.1",
     "tailwindcss": "^3.4.1",
     "tailwindcss-animate": "^1.0.7",
     "tinify": "^1.7.1",
+    "type-fest": "^4.26.1",
     "typescript-eslint": "^8.12.0"
-  },
-  "resolutions": {
-    "@types/react": "npm:types-react@19.0.0-rc.1",
-    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
   }
 }
