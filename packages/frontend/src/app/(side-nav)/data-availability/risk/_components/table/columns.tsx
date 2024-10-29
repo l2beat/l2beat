@@ -18,7 +18,7 @@ const baseColumns = [
 
 const economicSecurityColumn = columnHelper.display({
   id: 'economic-security',
-  header: 'Economic security',
+  header: 'Economic\nsecurity',
   cell: (ctx) => <RiskCell risk={ctx.row.original.risks.economicSecurity} />,
   meta: {
     tooltip:
@@ -28,7 +28,7 @@ const economicSecurityColumn = columnHelper.display({
 
 const fraudDetectionColumn = columnHelper.display({
   id: 'fraud-detection',
-  header: 'Fraud detection',
+  header: 'Fraud\ndetection',
   cell: (ctx) => <RiskCell risk={ctx.row.original.risks.fraudDetection} />,
   meta: {
     tooltip:
@@ -71,7 +71,7 @@ const bridgeColumn = virtual(
 const committeeSecurityColumn = virtual(
   columnHelper.display({
     id: 'committee-security',
-    header: 'Committee Security',
+    header: 'Committee\nsecurity',
     meta: {
       tooltip:
         'Shows if the DA bridge can securely confirm that the data availability attestations are backed by the DA layer’s economic security, meaning that the signatures from the DA layer are accurately verified and tracked on-chain.',
@@ -93,7 +93,7 @@ const upgradeabilityColumn = virtual(
 const relayerFailureColumn = virtual(
   columnHelper.display({
     id: 'relayer-failure',
-    header: 'Relayer Failure',
+    header: 'Relayer\nfailure',
     meta: {
       tooltip:
         'Shows if there is an additional trust assumption on the majority of committee members. It distinguishes between DA solutions that are integrated into the Ethereum protocol (enshrined) and those that are external, thus requiring an additional trust assumption.',
