@@ -28,6 +28,7 @@ type Optionals = {
     technology?: DacDaLayer['technology']
     description?: DacDaLayer['display']['description']
     otherConsiderations?: DacDaLayer['otherConsiderations']
+    numberOfOperators?: DacDaLayer['numberOfOperators']
   }
   /**
    * Optional layer description and technology, defaults to generic ones
@@ -142,13 +143,14 @@ export function DAC(template: TemplateVars): DacDaLayer {
     systemCategory: 'custom',
     fallback: template.fallback,
     challengeMechanism: template.challengeMechanism,
+    numberOfOperators: template.layer?.numberOfOperators,
     display: layerDisplay,
     technology: {
       description: layerTechnology,
       risks: template.layer?.technology?.risks,
     },
-    usedIn,
     bridges: [dacBridge],
+    usedIn,
     risks: {
       economicSecurity:
         template.risks?.economicSecurity ?? DaEconomicSecurityRisk.Unknown,
