@@ -11,6 +11,7 @@ import { RiskList, type TechnologyRisk } from '../risk-list'
 import { type ProjectSectionId } from '../types'
 import { ContractsUpdated } from './contracts-updated'
 import { TechnologyIncompleteNote } from './technology-incomplete-note'
+import { ProjectDetailsRelatedProjectBanner } from '~/components/project-details-related-project-banner'
 
 export interface MultiChainContractsSectionProps {
   id: ProjectSectionId
@@ -112,9 +113,9 @@ export function MultiChainContractsSection(
       )}
       <ReferenceList references={props.references} />
       {props.dacUsedIn && (
-        <CheckOutScalingProjectBanner
-          what="contracts"
-          dacUsedIn={props.dacUsedIn}
+        <ProjectDetailsRelatedProjectBanner
+          text="Check all contracts for the scaling project here:"
+          project={{ ...props.dacUsedIn, type: 'scaling' }}
         />
       )}
     </ProjectSection>
