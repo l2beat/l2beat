@@ -26,7 +26,7 @@ export function ListPanel() {
     queryKey: ['projects', project],
     queryFn: () => getProject(project),
   })
-  if (response.isLoading) {
+  if (response.isPending) {
     return <div>Loading</div>
   }
   if (response.isError) {

@@ -16,7 +16,7 @@ export function ValuesPanel() {
   })
   const selectedAddress = usePanelStore((state) => state.selected[0])
 
-  if (response.isLoading) {
+  if (response.isPending) {
     return <div>Loading</div>
   }
   if (response.isError) {

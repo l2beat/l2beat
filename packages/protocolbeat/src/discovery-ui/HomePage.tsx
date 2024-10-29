@@ -8,7 +8,7 @@ export function HomePage() {
     queryFn: getProjects,
   })
 
-  if (result.isLoading) {
+  if (result.isPending) {
     return <div>Loading</div>
   }
 

@@ -28,7 +28,7 @@ export function CodePanel() {
     setCurrent(0)
   }, [codeResponse.data])
 
-  if (projectResponse.isLoading || codeResponse.isLoading) {
+  if (projectResponse.isPending || codeResponse.isPending) {
     return <div>Loading</div>
   }
   if (projectResponse.isError || codeResponse.isError) {
