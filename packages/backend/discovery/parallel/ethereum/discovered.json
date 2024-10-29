@@ -15,8 +15,26 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+          "target": "0x19293FBec52F94165f903708a74513Dd6dFedd0a",
           "via": [
+            {
+              "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+              "delay": 0
+            },
+            {
+              "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d",
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
+          "via": [
+            {
+              "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+              "delay": 0
+            },
             {
               "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d",
               "delay": 0
@@ -55,8 +73,26 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+          "target": "0x19293FBec52F94165f903708a74513Dd6dFedd0a",
           "via": [
+            {
+              "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+              "delay": 0
+            },
+            {
+              "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d",
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
+          "via": [
+            {
+              "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+              "delay": 0
+            },
             {
               "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d",
               "delay": 0
@@ -103,6 +139,107 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x12485B9d469c1D51d05b5C39e009D50eF0170cF7",
+          "via": [
+            { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
+            { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d",
+          "via": [
+            { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
+            { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x28c32059d7e6147cf5257DFC127f7258beA1cdf4",
+          "via": [
+            { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
+            { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x36E5DE57f862cf5bA28624845faB8c2fF6Aa41d2",
+          "via": [
+            { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
+            { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x5a961c7D162195a9Dc5a357Cc168b0694283382E",
+          "via": [
+            { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
+            { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x5D657b905275F36AD62C3d5C36966975613aFB96",
+          "via": [
+            { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
+            { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877",
+          "via": [{ "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d",
+          "via": [
+            { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
+            { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xa1c86E2362dba0525075622af6d5f739B1304D45",
+          "via": [
+            { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
+            { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xb4795A0edae98d7820C37F06f6b858e7acb51DF8",
+          "via": [
+            { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
+            { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3",
+          "via": [
+            { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
+            { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+          "via": [
+            { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
+            { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1692705983,
       "values": {
@@ -138,8 +275,26 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+          "target": "0x19293FBec52F94165f903708a74513Dd6dFedd0a",
           "via": [
+            {
+              "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+              "delay": 0
+            },
+            {
+              "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d",
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
+          "via": [
+            {
+              "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+              "delay": 0
+            },
             {
               "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d",
               "delay": 0
@@ -192,8 +347,26 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+          "target": "0x19293FBec52F94165f903708a74513Dd6dFedd0a",
           "via": [
+            {
+              "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+              "delay": 0
+            },
+            {
+              "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d",
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
+          "via": [
+            {
+              "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+              "delay": 0
+            },
             {
               "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d",
               "delay": 0
@@ -245,8 +418,26 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+          "target": "0x19293FBec52F94165f903708a74513Dd6dFedd0a",
           "via": [
+            {
+              "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+              "delay": 0
+            },
+            {
+              "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d",
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
+          "via": [
+            {
+              "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+              "delay": 0
+            },
             {
               "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d",
               "delay": 0
@@ -296,8 +487,26 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+          "target": "0x19293FBec52F94165f903708a74513Dd6dFedd0a",
           "via": [
+            {
+              "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+              "delay": 0
+            },
+            {
+              "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d",
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
+          "via": [
+            {
+              "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+              "delay": 0
+            },
             {
               "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d",
               "delay": 0
@@ -349,8 +558,23 @@
         },
         {
           "permission": "upgrade",
-          "target": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
-          "via": []
+          "target": "0x19293FBec52F94165f903708a74513Dd6dFedd0a",
+          "via": [
+            {
+              "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
+          "via": [
+            {
+              "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+              "delay": 0
+            }
+          ]
         }
       ],
       "ignoreInWatchMode": [
@@ -531,8 +755,26 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+          "target": "0x19293FBec52F94165f903708a74513Dd6dFedd0a",
           "via": [
+            {
+              "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+              "delay": 0
+            },
+            {
+              "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d",
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
+          "via": [
+            {
+              "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+              "delay": 0
+            },
             {
               "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d",
               "delay": 0
@@ -605,8 +847,26 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+          "target": "0x19293FBec52F94165f903708a74513Dd6dFedd0a",
           "via": [
+            {
+              "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+              "delay": 0
+            },
+            {
+              "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d",
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
+          "via": [
+            {
+              "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+              "delay": 0
+            },
             {
               "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d",
               "delay": 0
@@ -657,8 +917,26 @@
         },
         {
           "permission": "upgrade",
-          "target": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+          "target": "0x19293FBec52F94165f903708a74513Dd6dFedd0a",
           "via": [
+            {
+              "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+              "delay": 0
+            },
+            {
+              "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d",
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
+          "via": [
+            {
+              "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+              "delay": 0
+            },
             {
               "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d",
               "delay": 0
@@ -743,8 +1021,26 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+          "target": "0x19293FBec52F94165f903708a74513Dd6dFedd0a",
           "via": [
+            {
+              "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+              "delay": 0
+            },
+            {
+              "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d",
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
+          "via": [
+            {
+              "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+              "delay": 0
+            },
             {
               "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d",
               "delay": 0
@@ -789,8 +1085,26 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+          "target": "0x19293FBec52F94165f903708a74513Dd6dFedd0a",
           "via": [
+            {
+              "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+              "delay": 0
+            },
+            {
+              "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d",
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
+          "via": [
+            {
+              "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+              "delay": 0
+            },
             {
               "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d",
               "delay": 0
@@ -798,71 +1112,14 @@
           ]
         }
       ],
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0x12485B9d469c1D51d05b5C39e009D50eF0170cF7",
-          "via": [{ "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" }]
-        },
-        {
-          "permission": "upgrade",
-          "target": "0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d",
-          "via": [{ "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" }]
-        },
-        {
-          "permission": "upgrade",
-          "target": "0x28c32059d7e6147cf5257DFC127f7258beA1cdf4",
-          "via": [{ "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" }]
-        },
-        {
-          "permission": "upgrade",
-          "target": "0x36E5DE57f862cf5bA28624845faB8c2fF6Aa41d2",
-          "via": [{ "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" }]
-        },
-        {
-          "permission": "upgrade",
-          "target": "0x5a961c7D162195a9Dc5a357Cc168b0694283382E",
-          "via": [{ "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" }]
-        },
-        {
-          "permission": "upgrade",
-          "target": "0x5D657b905275F36AD62C3d5C36966975613aFB96",
-          "via": [{ "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" }]
-        },
-        {
-          "permission": "upgrade",
-          "target": "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877"
-        },
-        {
-          "permission": "upgrade",
-          "target": "0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d",
-          "via": [{ "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" }]
-        },
-        {
-          "permission": "upgrade",
-          "target": "0xa1c86E2362dba0525075622af6d5f739B1304D45",
-          "via": [{ "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" }]
-        },
-        {
-          "permission": "upgrade",
-          "target": "0xb4795A0edae98d7820C37F06f6b858e7acb51DF8",
-          "via": [{ "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" }]
-        },
-        {
-          "permission": "upgrade",
-          "target": "0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3",
-          "via": [{ "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" }]
-        },
-        {
-          "permission": "upgrade",
-          "target": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
-          "via": [{ "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" }]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
           "target": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d"
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877"
         }
       ],
       "sinceTimestamp": 1704125939,
@@ -953,7 +1210,110 @@
       ]
     },
     { "address": "0xe3bb30f7742eC97Be5D60789A2b1273e462C0287" },
-    { "address": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C" }
+    {
+      "address": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x12485B9d469c1D51d05b5C39e009D50eF0170cF7",
+          "via": [
+            { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
+            { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d",
+          "via": [
+            { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
+            { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x28c32059d7e6147cf5257DFC127f7258beA1cdf4",
+          "via": [
+            { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
+            { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x36E5DE57f862cf5bA28624845faB8c2fF6Aa41d2",
+          "via": [
+            { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
+            { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x5a961c7D162195a9Dc5a357Cc168b0694283382E",
+          "via": [
+            { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
+            { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x5D657b905275F36AD62C3d5C36966975613aFB96",
+          "via": [
+            { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
+            { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877",
+          "via": [{ "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d",
+          "via": [
+            { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
+            { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xa1c86E2362dba0525075622af6d5f739B1304D45",
+          "via": [
+            { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
+            { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xb4795A0edae98d7820C37F06f6b858e7acb51DF8",
+          "via": [
+            { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
+            { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3",
+          "via": [
+            { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
+            { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+          "via": [
+            { "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d" },
+            { "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89"
+        }
+      ]
+    }
   ],
   "abis": {
     "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A": [
@@ -1703,6 +2063,6 @@
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
     "orbitstack/RollupProxy": "0x0bdbca452bd7b5e2036a979dd61b8581a0bf7bad54f04ef69e70b97ee375f8f2",
     "orbitstack/SequencerInbox": "0x80eed651d83fd6cd84047260bf02ec5e3a5f21b36049e1e45f34bd0a452e02f9",
-    "orbitstack/UpgradeExecutor": "0xfc511145ffe13b3c34e458aa6933ea35bbe6f8f5f87744952833fccee4560451"
+    "orbitstack/UpgradeExecutor": "0xa25e02367a436cebea22481663da914bbf1fd9492d903659cc6ec9ddbaccb241"
   }
 }

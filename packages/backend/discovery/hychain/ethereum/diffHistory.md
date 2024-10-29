@@ -1,3 +1,144 @@
+Generated with discovered.json: 0x841c99d607e4e2b5ef340477ea694be1e4612526
+
+# Diff at Tue, 29 Oct 2024 08:02:08 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@dd2750779d294ea31d352eac7a7f2e0e655f6440 block: 21041836
+- current block number: 21041836
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21041836 (main branch discovery), not current.
+
+```diff
+    contract Outbox (0x0389E24A4Bc96518169f83F50FCDdA442dD8eAFd) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) which eventually resolve in execution on L1.
+      issuedPermissions.0.target:
+-        "0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881"
++        "0x798Fa726f0B4DF564681446D051b344E3FE4a6ca"
+      issuedPermissions.0.via.1:
++        {"address":"0x4C5984E3841790335E6DC2e7ed92802FbF8a300F","delay":0}
+      issuedPermissions.0.via.0.address:
+-        "0x4C5984E3841790335E6DC2e7ed92802FbF8a300F"
++        "0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881"
+    }
+```
+
+```diff
+    contract ERC20RollupEventInbox (0x617f70525Dc4D2BBbd6ADFd3781DbEAe5C8F0048) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881"
++        "0x798Fa726f0B4DF564681446D051b344E3FE4a6ca"
+      issuedPermissions.0.via.1:
++        {"address":"0x4C5984E3841790335E6DC2e7ed92802FbF8a300F","delay":0}
+      issuedPermissions.0.via.0.address:
+-        "0x4C5984E3841790335E6DC2e7ed92802FbF8a300F"
++        "0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881"
+    }
+```
+
+```diff
+    contract Bridge (0x73C6af7029E714DFf1F1554F88b79B335011Da68) {
+    +++ description: Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for bridge messaging.
+      issuedPermissions.0.target:
+-        "0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881"
++        "0x798Fa726f0B4DF564681446D051b344E3FE4a6ca"
+      issuedPermissions.0.via.1:
++        {"address":"0x4C5984E3841790335E6DC2e7ed92802FbF8a300F","delay":0}
+      issuedPermissions.0.via.0.address:
+-        "0x4C5984E3841790335E6DC2e7ed92802FbF8a300F"
++        "0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881"
+    }
+```
+
+```diff
+    contract HychainMultisig (0x798Fa726f0B4DF564681446D051b344E3FE4a6ca) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x0389E24A4Bc96518169f83F50FCDdA442dD8eAFd","via":[{"address":"0x4C5984E3841790335E6DC2e7ed92802FbF8a300F"},{"address":"0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881"}]},{"permission":"upgrade","target":"0x617f70525Dc4D2BBbd6ADFd3781DbEAe5C8F0048","via":[{"address":"0x4C5984E3841790335E6DC2e7ed92802FbF8a300F"},{"address":"0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881"}]},{"permission":"upgrade","target":"0x73C6af7029E714DFf1F1554F88b79B335011Da68","via":[{"address":"0x4C5984E3841790335E6DC2e7ed92802FbF8a300F"},{"address":"0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881"}]},{"permission":"upgrade","target":"0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881","via":[{"address":"0x4C5984E3841790335E6DC2e7ed92802FbF8a300F"},{"address":"0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881"}]},{"permission":"upgrade","target":"0x8f98f9ae2f2836Ed3a628c23311Ad9976B9fBF1B","via":[{"address":"0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881"}]},{"permission":"upgrade","target":"0xaF5800ADF22301968613c37DA9C3C2a486eA915A","via":[{"address":"0x4C5984E3841790335E6DC2e7ed92802FbF8a300F"},{"address":"0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881"}]},{"permission":"upgrade","target":"0xD6c596b7ca17870DD50D322393deCE6C2085a116","via":[{"address":"0x4C5984E3841790335E6DC2e7ed92802FbF8a300F"},{"address":"0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881"}]},{"permission":"upgrade","target":"0xE8AcC0E28a82a26D498f2C66B64C56B9Ef996c2e","via":[{"address":"0x4C5984E3841790335E6DC2e7ed92802FbF8a300F"},{"address":"0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881"}]
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881) {
+    +++ description: Central contract defining the access control for upgrading the system contract implementations.
+      issuedPermissions.0.target:
+-        "0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881"
++        "0x798Fa726f0B4DF564681446D051b344E3FE4a6ca"
+      issuedPermissions.0.via.1:
++        {"address":"0x4C5984E3841790335E6DC2e7ed92802FbF8a300F","delay":0}
+      issuedPermissions.0.via.0.address:
+-        "0x4C5984E3841790335E6DC2e7ed92802FbF8a300F"
++        "0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881"
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x0389E24A4Bc96518169f83F50FCDdA442dD8eAFd","via":[{"address":"0x4C5984E3841790335E6DC2e7ed92802FbF8a300F"}]},{"permission":"upgrade","target":"0x617f70525Dc4D2BBbd6ADFd3781DbEAe5C8F0048","via":[{"address":"0x4C5984E3841790335E6DC2e7ed92802FbF8a300F"}]},{"permission":"upgrade","target":"0x73C6af7029E714DFf1F1554F88b79B335011Da68","via":[{"address":"0x4C5984E3841790335E6DC2e7ed92802FbF8a300F"}]},{"permission":"upgrade","target":"0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881","via":[{"address":"0x4C5984E3841790335E6DC2e7ed92802FbF8a300F"}]},{"permission":"upgrade","target":"0x8f98f9ae2f2836Ed3a628c23311Ad9976B9fBF1B"},{"permission":"upgrade","target":"0xaF5800ADF22301968613c37DA9C3C2a486eA915A","via":[{"address":"0x4C5984E3841790335E6DC2e7ed92802FbF8a300F"}]},{"permission":"upgrade","target":"0xD6c596b7ca17870DD50D322393deCE6C2085a116","via":[{"address":"0x4C5984E3841790335E6DC2e7ed92802FbF8a300F"}]},{"permission":"upgrade","target":"0xE8AcC0E28a82a26D498f2C66B64C56B9Ef996c2e","via":[{"address":"0x4C5984E3841790335E6DC2e7ed92802FbF8a300F"}]}]
+      directlyReceivedPermissions.1:
++        {"permission":"upgrade","target":"0x8f98f9ae2f2836Ed3a628c23311Ad9976B9fBF1B"}
+    }
+```
+
+```diff
+    contract RollupProxy (0x8f98f9ae2f2836Ed3a628c23311Ad9976B9fBF1B) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.4.target:
+-        "0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881"
++        "0x798Fa726f0B4DF564681446D051b344E3FE4a6ca"
+      issuedPermissions.4.via.0:
++        {"address":"0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881","delay":0}
+    }
+```
+
+```diff
+    contract SequencerInbox (0xaF5800ADF22301968613c37DA9C3C2a486eA915A) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      issuedPermissions.1.target:
+-        "0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881"
++        "0x798Fa726f0B4DF564681446D051b344E3FE4a6ca"
+      issuedPermissions.1.via.1:
++        {"address":"0x4C5984E3841790335E6DC2e7ed92802FbF8a300F","delay":0}
+      issuedPermissions.1.via.0.address:
+-        "0x4C5984E3841790335E6DC2e7ed92802FbF8a300F"
++        "0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881"
+    }
+```
+
+```diff
+    contract Inbox (0xD6c596b7ca17870DD50D322393deCE6C2085a116) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      issuedPermissions.0.target:
+-        "0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881"
++        "0x798Fa726f0B4DF564681446D051b344E3FE4a6ca"
+      issuedPermissions.0.via.1:
++        {"address":"0x4C5984E3841790335E6DC2e7ed92802FbF8a300F","delay":0}
+      issuedPermissions.0.via.0.address:
+-        "0x4C5984E3841790335E6DC2e7ed92802FbF8a300F"
++        "0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881"
+    }
+```
+
+```diff
+    contract ChallengeManager (0xE8AcC0E28a82a26D498f2C66B64C56B9Ef996c2e) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881"
++        "0x798Fa726f0B4DF564681446D051b344E3FE4a6ca"
+      issuedPermissions.0.via.1:
++        {"address":"0x4C5984E3841790335E6DC2e7ed92802FbF8a300F","delay":0}
+      issuedPermissions.0.via.0.address:
+-        "0x4C5984E3841790335E6DC2e7ed92802FbF8a300F"
++        "0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881"
+    }
+```
+
 Generated with discovered.json: 0xb537dbe57d573aff09c4c57eea65a7d414beaa42
 
 # Diff at Mon, 28 Oct 2024 14:19:56 GMT:
