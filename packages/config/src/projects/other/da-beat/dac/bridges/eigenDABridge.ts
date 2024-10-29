@@ -226,7 +226,7 @@ export const eigenDAbridge = {
 
     ![EigenDA bridge architecture](/images/da-bridge-technology/eigenda/architecture2.png#center)
 
-    Although thresholds are not enforced onchain by the confirmBatch method, the minimum thresholds that the disperser would need to reach before relaying the batch commitment to Ethereum are set to ${quorum1Threshold}% of registered stake for the ETH quorum, and ${quorum2Threshold}% for the EIGEN token quorum. If these thresholds for dispersal are met, the system can tolerate up to ${quorum1AdversaryThreshold}% of the total stake being adversarial, achieving this with approximately ~4.5 data redundancy.  
+    Although thresholds are not enforced onchain by the confirmBatch method, the minimum thresholds that the disperser would need to reach before relaying the batch commitment to Ethereum are set to ${quorum1Threshold}% of the registered stake for the ETH quorum and ${quorum2Threshold}% for the EIGEN token quorum. If these thresholds for dispersal are met, the system can tolerate up to ${quorum1AdversaryThreshold}% of the total stake being adversarial, achieving this with approximately 4.5 data redundancy.  
     The quorum thresholds are set on the EigenDAServiceManager contract and can be changed by the contract owner.
     There is a maximum of ${operatorSetParamsQuorum1[0]} operators that can register for the ETH quorum and ${operatorSetParamsQuorum2[0]} for the EIGEN token quorum. Once the cap is reached, new operators must have 10% more weight than the lowest-weighted operator to join the active set. Entering the quorum is subject to the approval of the churn approver. Operators can be ejected from a quorum by the ejectors without delay should they violate the Service Legal Agreement (SLA). \n
 
