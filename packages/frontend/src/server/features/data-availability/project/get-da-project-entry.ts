@@ -1,4 +1,5 @@
 import { type DaBridge, type DaLayer, getDaProjectKey } from '@l2beat/config'
+import { type UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
 import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
@@ -20,7 +21,6 @@ import {
   type EconomicSecurityData,
   getDaProjectEconomicSecurity,
 } from './utils/get-da-project-economic-security'
-import { UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
 
 export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
   const uniqueProjectsInUse = [
@@ -122,7 +122,7 @@ function getHeader({
   daLayer,
   tvs,
   economicSecurity,
-  usedIn
+  usedIn,
 }: HeaderParams) {
   return {
     daLayerGrissiniValues,
@@ -132,7 +132,7 @@ function getHeader({
     economicSecurity,
     durationStorage:
       daLayer.kind === 'PublicBlockchain' ? daLayer.pruningWindow : undefined,
-    usedIn
+    usedIn,
   }
 }
 
