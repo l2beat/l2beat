@@ -1,12 +1,11 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
-import { EM_DASH } from '~/consts/characters'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 
 export function DaEconomicSecurityCell({
   value,
 }: { value: DaSummaryEntry['economicSecurity'] }) {
-  if (!value) return EM_DASH
+  if (!value) return formatCurrency(0, 'usd')
 
   switch (value.status) {
     case 'Synced':
