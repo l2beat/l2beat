@@ -1,7 +1,7 @@
 import { clsx } from 'clsx'
 import { ReactNode } from 'react'
 import { FieldValue } from '../api/types'
-import { usePanelStore } from '../store'
+import { usePanelStore } from '../store/store'
 
 export interface FieldProps {
   name: string

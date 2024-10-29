@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getCode, getProject } from '../api/api'
 import { useMultiViewStore } from '../multi-view/store'
-import { usePanelStore } from '../store'
+import { usePanelStore } from '../store/store'
 import './monaco-workers'
 import clsx from 'clsx'
 
