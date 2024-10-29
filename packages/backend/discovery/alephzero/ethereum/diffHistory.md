@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x0213bf244190a4d14c06b53dfa9632752117bc35
+Generated with discovered.json: 0x1f7fd3e5b6bbd027934d96f7eef325916030dadc
 
-# Diff at Tue, 29 Oct 2024 12:41:20 GMT:
+# Diff at Tue, 29 Oct 2024 13:03:25 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@7b3fc9dc9074e1d423b48522c3f0273c86aab54a block: 21041819
@@ -48,7 +48,7 @@ This project is now converted to use discoveryDriven data.
 -        "0x830D41c5624EE982cddEd92Ba01DAB3a4856116f"
 +        "0xeC475675629B38E42d4aC5d40761618268E7Ed21"
       issuedPermissions.2.via.0.description:
-+        "can finalize a state root before the challenge period has passed. That allows withdrawing from the bridge based on this state root."
++        "can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
       issuedPermissions.1.permission:
 -        "propose"
 +        "challenge"
