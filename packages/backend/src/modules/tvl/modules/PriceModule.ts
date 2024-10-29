@@ -1,14 +1,10 @@
-import { Logger } from '@l2beat/backend-tools'
 import { createPriceId } from '@l2beat/config'
-import { Database } from '@l2beat/database'
 import { CoingeckoId, CoingeckoPriceConfigEntry } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { TvlConfig } from '../../../config/Config'
-import { Providers } from '../../../providers/Providers'
-import { Clock } from '../../../tools/Clock'
-import { PriceDependencies } from '../dependencies/PriceDependencies'
 import { DescendantIndexer } from '../indexers/DescendantIndexer'
 import { PriceIndexer } from '../indexers/PriceIndexer'
+import { TvlDependencies } from './TvlDependencies'
 
 interface PriceModule {
   start: () => Promise<void> | void
@@ -17,13 +13,8 @@ interface PriceModule {
 
 export function initPriceModule(
   config: TvlConfig,
-  logger: Logger,
-  clock: Clock,
-  providers: Providers,
-  database: Database,
+  dependencies: TvlDependencies,
 ): PriceModule {
-  const dependencies = new PriceDependencies(database, clock, logger, providers)
-
   const { indexers, descendant } = createPriceIndexers(config, dependencies)
 
   return {
@@ -38,10 +29,7 @@ export function initPriceModule(
   }
 }
 
-function createPriceIndexers(
-  config: TvlConfig,
-  dependencies: PriceDependencies,
-) {
+function createPriceIndexers(config: TvlConfig, dependencies: TvlDependencies) {
   const indexerService = dependencies.getIndexerService()
   const syncOptimizer = dependencies.getSyncOptimizer()
   const priceService = dependencies.getPriceService()

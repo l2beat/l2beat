@@ -8,7 +8,7 @@ import { HourlyIndexer } from '../indexers/HourlyIndexer'
 import { PriceService } from '../services/PriceService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
-export class PriceDependencies {
+export class TvlDependencies {
   private readonly priceProviders: PriceProviders
 
   constructor(
