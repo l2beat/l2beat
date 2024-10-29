@@ -9,22 +9,23 @@ import {
 } from '~/consts/cookies'
 import { parseKnownCookie, serializeKnownCookie } from './common'
 
-export function getCookie<T extends KnownCookieName>(
+export async function getCookie<T extends KnownCookieName>(
   name: T,
-): KnownCookieValue<T> {
+): Promise<KnownCookieValue<T>> {
   const meta = knownCookies[name]
-  const cookie = cookies().get(meta.key)
+  const cookie = (await cookies()).get(meta.key)
   if (cookie === undefined) {
     return meta.defaultValue
   }
   return parseKnownCookie({ name, value: cookie.value })
 }
 
-export function setCookie<T extends KnownCookieName>(
+export async function setCookie<T extends KnownCookieName>(
   name: T,
   value: KnownCookieValue<T>,
   options: Partial<ResponseCookie>,
 ) {
   const meta = knownCookies[name]
-  cookies().set(meta.key, serializeKnownCookie({ name, value }), options)
+  const cookie = await cookies()
+  cookie.set(meta.key, serializeKnownCookie({ name, value }), options)
 }
