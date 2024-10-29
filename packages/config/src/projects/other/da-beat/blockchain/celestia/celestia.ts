@@ -46,7 +46,7 @@ export const celestia: DaLayer = {
     
     ![Blobs](/images/da-layer-technology/celestia/blobs.png#center)
 
-    All data posted in a Celestia blob is divided into chunks of fixed size, called shares, and each blob is arranged in a k * k matrix of shares.\n
+    All data posted in a Celestia blob is divided into chunks of fixed size, called shares, and each blob is arranged in a k * k matrix of shares. Currently k = 64, for a total of 4096 shares.\n
 
     ![Blobs matrix](/images/da-layer-technology/celestia/blobs-matrix.png#center)
 
@@ -129,7 +129,7 @@ export const celestia: DaLayer = {
   pruningWindow: 86400 * 30, // 30 days in seconds
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
-    fraudDetection: DaFraudDetectionRisk.DasWithNoBlobsReconstruction(true),
+    fraudDetection: DaFraudDetectionRisk.CelestiaDasWithNoBlobsReconstruction(true),
   },
   economicSecurity: {
     type: 'Celestia',

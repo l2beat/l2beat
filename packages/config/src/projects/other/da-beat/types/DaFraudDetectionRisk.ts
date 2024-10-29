@@ -4,6 +4,7 @@ export type DaFraudDetectionRisk =
   | typeof NoFraudDetection
   | typeof ErasureCodingProof
   | ReturnType<typeof DasWithBlobsReconstruction>
+  | ReturnType<typeof CelestiaDasWithNoBlobsReconstruction>
   | ReturnType<typeof DasWithNoBlobsReconstruction>
 
 function DasWithBlobsReconstruction(erasureCoding: boolean) {
@@ -21,7 +22,7 @@ function CelestiaDasWithNoBlobsReconstruction(erasureCoding: boolean) {
     type: 'CelestiaDasWithNoBlobsReconstruction',
     value: 'DAS',
     sentiment: erasureCoding ? 'warning' : 'bad',
-    description: `The DA layer uses data availability sampling (DAS) to protect against data withholding attacks. However, light nodes cannot collectively reconstruct the block if some of it is withheld or the minimum number of light nodes required to perform DAS is not available. This means that the data may be lost if a block producer withholds data or if there are not enough honest light nodes to perform DAS.`,
+    description: `The DA layer uses data availability sampling (DAS) to protect against data withholding attacks. However, light nodes cannot always reconstruct the block collectively if some of it is withheld. This issue arises if the minimum number of light nodes required for block reconstruction is unavailable, or if a selective share disclosure attack extends the block reconstruction time beyond the erasure-coding fraud proof window.`,
     secondLine: '',
   } as const
 }
@@ -55,5 +56,6 @@ export const DaFraudDetectionRisk = {
   NoFraudDetection,
   ErasureCodingProof,
   DasWithBlobsReconstruction,
+  CelestiaDasWithNoBlobsReconstruction,
   DasWithNoBlobsReconstruction,
 } satisfies DaRiskViewOptions

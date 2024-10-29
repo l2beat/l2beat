@@ -47,6 +47,15 @@ const quorumThresholds = discovery.getContractValue<string>(
 const quorum1Threshold = parseInt(quorumThresholds.substring(2, 4), 16)
 const quorum2Threshold = parseInt(quorumThresholds.substring(4, 6), 16)
 
+const quorumAdversaryThresholds = discovery.getContractValue<string>(
+  'EigenDAServiceManager',
+  'quorumAdversaryThresholdPercentages',
+)
+
+const quorum1AdversaryThreshold = parseInt(quorumAdversaryThresholds.substring(2, 4), 16)
+const quorum2AdversaryThreshold = parseInt(quorumAdversaryThresholds.substring(4, 6), 16)
+
+
 const ejectionCooldown = discovery.getContractValue<number>(
   'RegistryCoordinator',
   'ejectionCooldown',
@@ -92,6 +101,8 @@ const ejectors = discovery.getContractValue<string[]>(
   'EjectionManager',
   'ejectors',
 )
+
+const totalNumberOfRegisteredOperators = discovery.getContractValue<string[]>('RegistryCoordinator', 'registeredOperators').length;
 
 export const eigenDAbridge = {
   id: 'eigenda-bridge',
@@ -215,13 +226,18 @@ export const eigenDAbridge = {
 
     ![EigenDA bridge architecture](/images/da-bridge-technology/eigenda/architecture2.png#center)
 
-    Although thresholds are not enforced by the confirmBatch method, current quorum thresholds are set to ${quorum1Threshold}% of registered stake for the ETH quorum and ${quorum2Threshold}% for the EIGEN token quorum. The quorum thresholds are set on the EigenDAServiceManager contract and can be changed by the contract owner.
+    Although thresholds are not enforced onchain by the confirmBatch method, the minimum thresholds that the disperser would need to reach before relaying the batch commitment to Ethereum are set to ${quorum1Threshold}% of registered stake for the ETH quorum, and ${quorum2Threshold}% for the EIGEN token quorum. If these thresholds for dispersal are met, the system can tolerate up to ${quorum1AdversaryThreshold}% of the total stake being adversarial, achieving this with approximately ~4.5 data redundancy.  
+    The quorum thresholds are set on the EigenDAServiceManager contract and can be changed by the contract owner.
     There is a maximum of ${operatorSetParamsQuorum1[0]} operators that can register for the ETH quorum and ${operatorSetParamsQuorum2[0]} for the EIGEN token quorum. Once the cap is reached, new operators must have 10% more weight than the lowest-weighted operator to join the active set. Entering the quorum is subject to the approval of the churn approver. Operators can be ejected from a quorum by the ejectors without delay should they violate the Service Legal Agreement (SLA). \n
 
     Ejectors can eject maximum ${ejectableStakePercent}% of the total stake in a ${formatSeconds(ejectionRateLimitWindow[0])} window for the ETH quorum, and the same stake percentage over a ${formatSeconds(ejectionRateLimitWindow[1])} window for the EIGEN quorum.
     An ejected operator can rejoin the quorum after ${formatSeconds(ejectionCooldown)}. 
   `,
     risks: [
+      {
+        category: 'Funds can be lost if',
+        text: 'the relayer posts an invalid commitment and EigenDA operators do not make the data available for verification.',
+      },
       {
         category: 'Funds can be frozen if',
         text: 'the permissioned relayers are unable to submit DA commitments to the Vector contract.',
@@ -331,7 +347,7 @@ export const eigenDAbridge = {
   transactionDataType: DacTransactionDataType.TransactionData,
   usedIn: toUsedInProject([]),
   risks: {
-    committeeSecurity: DaCommitteeSecurityRisk.LimitedCommitteeSecurity(),
+    committeeSecurity: DaCommitteeSecurityRisk.LimitedCommitteeSecurity("Permissioned", undefined, totalNumberOfRegisteredOperators),
     upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(0),
     relayerFailure: DaRelayerFailureRisk.NoMechanism,
   },

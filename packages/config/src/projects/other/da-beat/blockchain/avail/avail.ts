@@ -77,11 +77,11 @@ export const avail: DaLayer = {
     risks: [
       {
         category: 'Funds can be lost if',
-        text: `a dishonest supermajority of Avail validators finalizes an unavailable block, and there aren't light nodes on the network verifying data availability, or they fail at social signaling unavailable data.`,
+        text: `a dishonest majority of Avail validators finalizes an unavailable block, and there aren't light nodes on the network verifying data availability, or they fail at social signaling unavailable data.`,
       },
       {
         category: 'Funds can be lost if',
-        text: 'a dishonest supermajority of Avail validators finalizes an unavailable block, and the number of light nodes on the network is not enough to ensure block reconstruction.',
+        text: 'a dishonest majority of Avail validators finalizes an unavailable block, and the number of light nodes on the network is not enough to ensure block reconstruction.',
       },
     ],
   },

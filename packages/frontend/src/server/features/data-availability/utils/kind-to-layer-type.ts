@@ -9,8 +9,8 @@ export function kindToType(kind: DaLayer['kind']) {
       return 'Data Availability Committee'
     case 'DA Service':
       return 'DA Service'
-    case 'No DA':
-      return 'No DA'
+    case 'No DAC':
+      return 'No DAC'
     default:
       return assertUnreachable(kind)
   }

@@ -31,7 +31,7 @@ export type BlockchainDaLayer = CommonDaLayer & {
 }
 
 export type DacDaLayer = CommonDaLayer & {
-  kind: 'DAC' | 'DA Service' | 'No DA'
+  kind: 'DAC' | 'DA Service' | 'No DAC'
   bridges: (DacBridge | NoDaBridge)[]
 }
 
