@@ -6,8 +6,9 @@ const projects = [...layer2s, ...layer3s]
 
 export async function GET(
   _: Request,
-  { params }: { params: { slug: string } },
+  props: { params: Promise<{ slug: string }> },
 ) {
+  const params = await props.params
   const project = projects.find((p) => p.display.slug === params.slug)
 
   if (!project) {

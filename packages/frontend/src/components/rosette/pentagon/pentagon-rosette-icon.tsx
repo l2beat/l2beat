@@ -32,8 +32,7 @@ export function PentagonRosetteIcon({
   const content = context?.content
   const [first, second, third, fourth, fifth] = values
 
-  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-  const shouldGrayOut = isUnderReview || hasNoBridge
+  const shouldGrayOut = !!isUnderReview || !!hasNoBridge
 
   assert(first && second && third && fourth && fifth, 'Invalid number of risks')
 

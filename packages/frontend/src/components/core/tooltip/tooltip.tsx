@@ -15,7 +15,7 @@ const TooltipProvider = TooltipPrimitive.Provider
 const Tooltip = ({
   children,
   ...props
-}: React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Root>) => {
+}: React.ComponentProps<typeof TooltipPrimitive.Root>) => {
   const [open, setOpen] = useState(!!props.defaultOpen)
 
   return (
@@ -27,12 +27,13 @@ const Tooltip = ({
   )
 }
 
-const TooltipTrigger = React.forwardRef<
-  React.ElementRef<typeof TooltipPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Trigger> & {
-    disabledOnMobile?: boolean
-  }
->(({ disabledOnMobile, ...props }, ref) => {
+const TooltipTrigger = ({
+  ref,
+  disabledOnMobile,
+  ...props
+}: React.ComponentProps<typeof TooltipPrimitive.Trigger> & {
+  disabledOnMobile?: boolean
+}) => {
   const localRef = useRef(null)
   const breakpoint = useBreakpoint()
   const isMobile = breakpoint === 'mobile'
@@ -58,15 +59,18 @@ const TooltipTrigger = React.forwardRef<
       {...props}
     />
   )
-})
+}
 TooltipTrigger.displayName = TooltipPrimitive.Trigger.displayName
 
-const TooltipContent = React.forwardRef<
-  React.ElementRef<typeof TooltipPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content> & {
-    fitContent?: boolean
-  }
->(({ className, sideOffset = 8, fitContent, ...props }, ref) => (
+const TooltipContent = ({
+  ref,
+  className,
+  sideOffset = 8,
+  fitContent,
+  ...props
+}: React.ComponentProps<typeof TooltipPrimitive.Content> & {
+  fitContent?: boolean
+}) => (
   <TooltipPrimitive.Content
     ref={ref}
     sideOffset={sideOffset}
@@ -77,7 +81,7 @@ const TooltipContent = React.forwardRef<
     )}
     {...props}
   />
-))
+)
 TooltipContent.displayName = TooltipPrimitive.Content.displayName
 
 export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider }

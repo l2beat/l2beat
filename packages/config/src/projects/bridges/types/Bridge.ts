@@ -21,7 +21,7 @@ export interface Bridge {
   isUnderReview?: boolean
   display: BridgeDisplay
   config: BridgeConfig
-  riskView?: BridgeRiskView
+  riskView: BridgeRiskView
   technology: BridgeTechnology
   contracts?: ScalingProjectContracts
   permissions?: ScalingProjectPermission[] | 'UnderReview'
@@ -48,7 +48,7 @@ export interface BridgeConfig {
 }
 
 export interface BridgeRiskView {
-  validatedBy?: ScalingProjectRiskViewEntry
+  validatedBy: ScalingProjectRiskViewEntry
   sourceUpgradeability?: ScalingProjectRiskViewEntry
   destinationToken?: ScalingProjectRiskViewEntry
 }

@@ -53,7 +53,7 @@ type Optionals = {
   /** Optional red warning, defaults to undefined */
   redWarning?: DacBridge['display']['redWarning']
   /** Optional challenge mechanism, defaults to undefined */
-  hasChallengeMechanism?: DacDaLayer['hasChallengeMechanism']
+  challengeMechanism?: DacDaLayer['challengeMechanism']
   /** Optional fallback, defaults to undefined */
   fallback?: DacDaLayer['fallback']
 }
@@ -163,7 +163,7 @@ export function PolygoncdkDAC(template: TemplateVars): DacDaLayer {
     systemCategory: 'custom',
     fallback: template.fallback, // Currently none?
     // https://github.com/0xPolygon/cdk-validium-node/blame/0a1743e0009a3225858c24328459d44ddb44a3ae/docs/diff/diff.md#L101
-    hasChallengeMechanism: template.hasChallengeMechanism,
+    challengeMechanism: template.challengeMechanism,
     display: layerDisplay,
     technology: {
       description: layerTechnology,

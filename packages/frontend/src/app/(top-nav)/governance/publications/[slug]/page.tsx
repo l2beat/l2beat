@@ -14,9 +14,9 @@ import {
 } from '../../_utils/get-governance-publication-entry'
 
 interface Props {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 export async function generateStaticParams() {
@@ -27,9 +27,8 @@ export async function generateStaticParams() {
   }))
 }
 
-export async function generateMetadata({
-  params,
-}: Props): Promise<Metadata | null> {
+export async function generateMetadata(props: Props): Promise<Metadata | null> {
+  const params = await props.params
   const publication = getCollectionEntry('publications', params.slug)
   if (!publication) {
     return null
@@ -45,7 +44,8 @@ export async function generateMetadata({
   })
 }
 
-export default function Page({ params }: Props) {
+export default async function Page(props: Props) {
+  const params = await props.params
   const publication = getCollectionEntry('publications', params.slug)
   if (!publication) {
     return notFound()
@@ -83,7 +83,7 @@ export default function Page({ params }: Props) {
 
 function Header({ publication }: { publication: GovernancePublicationEntry }) {
   return (
-    <FullPageHeader contentWrapperClassName="flex-col items-start gap-6">
+    <FullPageHeader contentWrapperClassName="flex-col items-start gap-2 md:gap-6">
       <p className="text-2xs font-medium uppercase text-purple-100 dark:text-pink-200">
         {publication.readTimeInMinutes} min read • Published on{' '}
         {publication.publishedOn}

@@ -1,6 +1,6 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 import { within } from '@storybook/test'
-import { userEvent, waitFor } from '@storybook/testing-library'
+import { userEvent, waitFor } from '@storybook/test'
 import range from 'lodash/range'
 import { onlyMobileModes } from '~/../.storybook/modes'
 import { OverflowWrapper } from './overflow-wrapper'

@@ -15,7 +15,10 @@ export function FullPageHeader(props: Props) {
 
   return (
     <Comp
-      className={cn('bg-pure-white py-24 dark:bg-zinc-900', props.className)}
+      className={cn(
+        'bg-pure-white pb-8 pt-12 dark:bg-zinc-900 md:py-24',
+        props.className,
+      )}
     >
       <ContentWrapper
         className={cn(
