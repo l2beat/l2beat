@@ -16,6 +16,16 @@ function DasWithBlobsReconstruction(erasureCoding: boolean) {
   } as const
 }
 
+function CelestiaDasWithNoBlobsReconstruction(erasureCoding: boolean) {
+  return {
+    type: 'CelestiaDasWithNoBlobsReconstruction',
+    value: 'DAS',
+    sentiment: erasureCoding ? 'warning' : 'bad',
+    description: `The DA layer uses data availability sampling (DAS) to protect against data withholding attacks. However, light nodes cannot collectively reconstruct the block if some of it is withheld or the minimum number of light nodes required to perform DAS is not available. This means that the data may be lost if a block producer withholds data or if there are not enough honest light nodes to perform DAS.`,
+    secondLine: '',
+  } as const
+}
+
 function DasWithNoBlobsReconstruction(erasureCoding: boolean) {
   return {
     type: 'DasWithNoBlobsReconstruction',

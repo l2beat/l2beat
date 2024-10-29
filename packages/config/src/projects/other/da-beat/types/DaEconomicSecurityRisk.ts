@@ -11,7 +11,7 @@ const OnChainQuantifiable = {
   type: 'OnChainQuantifiable',
   value: 'Staked assets',
   sentiment: 'good',
-  description: `There are staked assets on the DA layer that can be slashed in case of a data withholding attack. A dishonest majority of validators must collude to validate a block with missing or invalid data. The invalid block would be added to the chain but rejected by honest full nodes.
+  description: `There are staked assets on the DA layer that can be slashed in case of a data withholding attack. A dishonest supermajority of validators must collude to finalize a block with missing or invalid data. The invalid block would be added to the chain but rejected by honest full nodes.
     `,
 } as const
 

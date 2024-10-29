@@ -41,7 +41,7 @@ export const celestia: DaLayer = {
     Celestia uses CometBTF, the canonical implementation of Tendermint consensus protocol. The consensus protocol is fork-free by construction under an honest majority of stake assumption.
     Celestia achieves finality at each block, with an average time between blocks of 12 seconds.
     ## Blobs
-    In Celestia, blobs are user-submitted data that does not modify the blockchain state.  
+    In Celestia, blobs are user-submitted data that do not modify the blockchain state.  
     Each blob has two components, one is a binary object of raw data bytes, and the other is the namespace of the specific application for which the blob data is intended for.\n
     
     ![Blobs](/images/da-layer-technology/celestia/blobs.png#center)
@@ -50,7 +50,7 @@ export const celestia: DaLayer = {
 
     ![Blobs matrix](/images/da-layer-technology/celestia/blobs-matrix.png#center)
 
-    Celestia shares' rows and columns are erasure-coded into a 2k * 2k matrix and committed to in a Namespace Merkle Trees (NMTs), a version of a standard Merkle tree using a namespaced hash function. 
+    Celestia shares' rows and columns are erasure-coded into a 2k * 2k matrix and committed to in a Namespaced Merkle Trees (NMTs), a version of a standard Merkle tree using a namespaced hash function. 
     In NMTs, every node in the tree includes the range of namespaces of all its child nodes, allowing applications to request and retrieve data for a specific namespace sub-tree while maintaining all functionalities (e.g., inclusion and range proofs) of a standard Merkle tree.\n
 
     ![Matrix proofs](/images/da-layer-technology/celestia/matrix-proofs.png#center)
@@ -79,15 +79,15 @@ export const celestia: DaLayer = {
     risks: [
       {
         category: 'Funds can be lost if',
-        text: `a dishonest majority of Celestia validators finalizes an unavailable block, and there aren't light nodes on the network verifying data availability, or they fail at social signaling unavailable data.`,
+        text: `a dishonest supermajority of Celestia validators finalizes an unavailable block, and there aren't light nodes on the network verifying data availability, or they fail at social signaling unavailable data.`,
       },
       {
         category: 'Funds can be lost if',
-        text: 'a dishonest majority of Celestia validators finalizes an unavailable block, and the number of light nodes on the network is not enough to ensure block reconstruction.',
+        text: 'a dishonest supermajority of Celestia validators finalizes an unavailable block, and the number of light nodes on the network is not enough to ensure block reconstruction.',
       },
       {
         category: 'Funds can be lost if',
-        text: 'a dishonest majority of Celestia validators finalizes an unavailable block, and full nodes block reconstruction time is longer than the erasure-coding fraud proof window.',
+        text: 'a dishonest supermajority of Celestia validators finalizes an unavailable block, and full nodes block reconstruction time is longer than the erasure-coding fraud proof window.',
       },
     ],
   },
