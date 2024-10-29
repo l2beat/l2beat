@@ -16,15 +16,16 @@ import {
   type TechnologyContract,
   type TechnologyContractAddress,
 } from '../../../components/projects/sections/contract-entry'
-import { type UsedInProject } from '../../../components/projects/sections/permissions/used-in-project'
 import { type ProjectSectionProps } from '../../../components/projects/sections/types'
 import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
+import { UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
 
 type ProjectParams = {
   id: string
   permissions: Record<string, ScalingProjectPermission[]> | 'UnderReview'
   isUnderReview: boolean
+  dacUsedIn?: UsedInProject,
 }
 
 type PermissionSection = Omit<
@@ -47,6 +48,7 @@ export function getMultichainPermissionsSection(
   const section: PermissionSection = {
     isUnderReview: projectParams.isUnderReview,
     permissions: {},
+    dacUsedIn: projectParams.dacUsedIn,
   }
 
   if (projectParams.permissions === 'UnderReview') {

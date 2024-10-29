@@ -9,6 +9,8 @@ import { RiskList, type TechnologyRisk } from '../risk-list'
 import { type ProjectSectionId } from '../types'
 import { ContractsUpdated } from './contracts-updated'
 import { TechnologyIncompleteNote } from './technology-incomplete-note'
+import { UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
+import { CheckOutScalingProjectBanner } from '../check-out-scaling-project-banner'
 
 export interface MultiChainContractsSectionProps {
   id: ProjectSectionId
@@ -21,6 +23,7 @@ export interface MultiChainContractsSectionProps {
   isIncomplete?: boolean
   isUnderReview?: boolean
   nested?: boolean
+  dacUsedIn?: UsedInProject
 }
 
 export function MultiChainContractsSection(
@@ -108,6 +111,12 @@ export function MultiChainContractsSection(
         </>
       )}
       <ReferenceList references={props.references} />
+      {props.dacUsedIn && (
+        <CheckOutScalingProjectBanner
+          what="contracts"
+          dacUsedIn={props.dacUsedIn}
+        />
+      )}
     </ProjectSection>
   )
 }

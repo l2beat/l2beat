@@ -25,6 +25,7 @@ import { type Reference } from '../../../components/projects/sections/reference-
 import { toTechnologyRisk } from '../risk-summary/to-technology-risk'
 import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
+import { UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
 
 type ProjectParams = {
   id: string
@@ -33,6 +34,7 @@ type ProjectParams = {
   isVerified: boolean
   architectureImage?: string
   contracts: DaBridgeContracts
+  dacUsedIn?: UsedInProject,
 }
 
 type MultiChainContractsSection = Omit<
@@ -100,6 +102,7 @@ export function getMultiChainContractsSection(
     isIncomplete: projectParams.contracts?.isIncomplete,
     isUnderReview:
       projectParams.isUnderReview ?? projectParams.contracts?.isUnderReview,
+    dacUsedIn: projectParams.dacUsedIn,
   }
 }
 
