@@ -115,17 +115,16 @@ export function AnytrustDAC(template: TemplateVars): DacDaLayer {
     display: bridgeDisplay,
     technology: {
       description: bridgeTechnology,
-      risks: 
-        [
-          {
-            category: 'Funds can be lost if',
-            text: `a malicious committee attests to an invalid data availability certificate.`,
-          },
-          {
-            category: 'Funds can be lost if',
-            text: `the bridge contract or its dependencies receive a malicious code upgrade. There is no delay on code upgrades.`,
-          },
-        ],
+      risks: [
+        {
+          category: 'Funds can be lost if',
+          text: `a malicious committee attests to an invalid data availability certificate.`,
+        },
+        {
+          category: 'Funds can be lost if',
+          text: `the bridge contract or its dependencies receive a malicious code upgrade. There is no delay on code upgrades.`,
+        },
+      ],
     },
     risks: {
       committeeSecurity:
