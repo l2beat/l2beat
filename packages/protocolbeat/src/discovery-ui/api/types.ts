@@ -1,4 +1,6 @@
 // Make sure it follows packages/l2b/src/implementations/discovery-ui/types.ts
+// If you find that you are changing this file often consider moving both
+// of those files into a single shared package.
 
 export type ApiProjectsResponse = ApiProjectEntry[]
 

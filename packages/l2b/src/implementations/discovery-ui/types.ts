@@ -1,4 +1,6 @@
 // Make sure it follows packages/protocolbeat/src/discovery-ui/api/types.ts
+// If you find that you are changing this file often consider moving both
+// of those files into a single shared package.
 
 export type ApiProjectsResponse = ApiProjectEntry[]
 
