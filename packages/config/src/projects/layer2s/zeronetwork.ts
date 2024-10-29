@@ -42,7 +42,7 @@ export const zeronetwork: Layer2 = zkStackL2({
         'https://discord.com/invite/VfC24at',
       ],
     },
-    activityDataSource: 'Blockchain RPC'
+    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.zerion.io/v1/zero',
   chainConfig: {
