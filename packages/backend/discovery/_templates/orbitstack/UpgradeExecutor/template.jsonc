@@ -7,7 +7,13 @@
       "handler": {
         "type": "accessControl"
       }
-    }
+    },
     // TODO: accesscrontrol EXECUTOR_ROLE -> permission(act) mapping missing
+    "executors": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "EXECUTOR_ROLE"
+      }
+    }
   }
 }

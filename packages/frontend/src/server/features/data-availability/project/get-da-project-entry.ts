@@ -10,36 +10,44 @@ import { getImplementationChangeReport } from '../../implementation-change-repor
 import { getContractsVerificationStatuses } from '../../verification-status/get-contracts-verification-statuses'
 import { getManuallyVerifiedContracts } from '../../verification-status/get-manually-verified-contracts'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
+import {
+  getDaProjectsTvl,
+  pickTvlForProjects,
+} from '../utils/get-da-projects-tvl'
 import { getDaRisks } from '../utils/get-da-risks'
 import { kindToType } from '../utils/kind-to-layer-type'
 import {
   type EconomicSecurityData,
   getDaProjectEconomicSecurity,
 } from './utils/get-da-project-economic-security'
-import { getDaProjectTvl } from './utils/get-da-project-tvl'
 
 export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
+  const uniqueProjectsInUse = [
+    ...new Set(
+      daLayer.bridges.flatMap((bridge) =>
+        bridge.usedIn.map((project) => project.id),
+      ),
+    ),
+  ]
   const [
     economicSecurity,
-    tvsEntries,
+    tvlPerProject,
     projectsVerificationStatuses,
     contractsVerificationStatuses,
     manuallyVerifiedContracts,
     implementationChangeReport,
   ] = await Promise.all([
     getDaProjectEconomicSecurity(daLayer),
-    getDaProjectTvl(
-      Object.fromEntries(
-        daLayer.bridges.map((b) => [b.id, b.usedIn.map((u) => u.id)] as const),
-      ),
-    ),
+    getDaProjectsTvl(uniqueProjectsInUse),
     getProjectsVerificationStatuses(),
     getContractsVerificationStatuses(daLayer),
     getManuallyVerifiedContracts(daLayer),
     getImplementationChangeReport(),
   ])
 
-  const layerTvs = Object.values(tvsEntries).reduce((acc, tvs) => acc + tvs, 0)
+  const layerTvs =
+    tvlPerProject.reduce((acc, value) => acc + value.tvl, 0) / 100
+  const getSumFor = pickTvlForProjects(tvlPerProject)
 
   const isVerified =
     !!projectsVerificationStatuses[getDaProjectKey(daLayer, daBridge)]
@@ -77,7 +85,7 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
       name: bridge.display.name,
       slug: bridge.display.slug,
       grissiniValues: mapBridgeRisksToRosetteValues(bridge.risks),
-      tvs: tvsEntries[bridge.id] ?? 0,
+      tvs: getSumFor(bridge.usedIn.map((project) => project.id)),
       usedIn: bridge.usedIn,
     })),
     header: getHeader({
@@ -112,10 +120,7 @@ function getHeader({
   return {
     daLayerGrissiniValues,
     daBridgeGrissiniValues,
-    links: getDataAvailabilityProjectLinks(
-      daLayer.display.links,
-      daBridge.display.links,
-    ),
+    links: getDataAvailabilityProjectLinks(daLayer),
     tvs,
     economicSecurity,
     durationStorage:

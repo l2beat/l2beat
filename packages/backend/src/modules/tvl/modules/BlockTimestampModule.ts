@@ -1,5 +1,5 @@
-import { Logger } from '@l2beat/backend-tools'
-import { BlockExplorerClient } from '@l2beat/shared'
+import { Logger, RateLimiter } from '@l2beat/backend-tools'
+import { BlockIndexerClient } from '@l2beat/shared'
 import { TvlConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
@@ -35,30 +35,20 @@ export function initBlockTimestampModule(
       chain: chainConfig.chain,
     })
 
-    const options =
-      chainConfig.config.blockExplorerConfig === undefined
-        ? undefined
-        : chainConfig.config.blockExplorerConfig.type === 'etherscan'
-          ? {
-              type: 'Etherscan' as const,
-              apiKey: chainConfig.config.blockExplorerConfig.etherscanApiKey,
-              url: chainConfig.config.blockExplorerConfig.etherscanApiUrl,
-              maximumCallsForBlockTimestamp: 3,
-            }
-          : {
-              type: 'Blockscout' as const,
-              url: chainConfig.config.blockExplorerConfig.blockscoutApiUrl,
-              maximumCallsForBlockTimestamp: 10,
-            }
-
-    const blockExplorerClient = options
-      ? peripherals.getClient(BlockExplorerClient, options)
+    const blockExplorerClient = chainConfig.config.blockExplorerConfig
+      ? new BlockIndexerClient(
+          peripherals.httpClient,
+          new RateLimiter({ callsPerMinute: 120 }),
+          {
+            ...chainConfig.config.blockExplorerConfig,
+            chain: chainConfig.chain,
+          },
+        )
       : undefined
 
     const blockTimestampProvider = new BlockTimestampProvider({
-      blockExplorerClient,
-      client: rpcClient,
-      logger,
+      indexerClients: blockExplorerClient ? [blockExplorerClient] : [],
+      blockClients: [rpcClient],
     })
 
     const indexer = new BlockTimestampIndexer({

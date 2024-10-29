@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x00da2911a7167b4162f2a9edc78776db5b4698a0
+
+# Diff at Mon, 28 Oct 2024 14:08:53 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@846d03afee15838cf7b18315c02ebdb6a2071f6c block: 267471266
+- current block number: 267471266
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 267471266 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (0x246bAB4F36095ABc74052Cc122c318298a9ef876) {
+    +++ description: Central contract defining the access control for upgrading the system contract implementations.
+      values.executors:
++        ["0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56"]
+    }
+```
+
 Generated with discovered.json: 0xe767c613445b1d5f6869515a9beb87286da72cdd
 
 # Diff at Fri, 25 Oct 2024 10:03:51 GMT:
