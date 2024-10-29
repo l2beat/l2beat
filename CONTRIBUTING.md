@@ -25,9 +25,9 @@ locally. To install dependencies do the following.
 
 1. Install [node.js](https://nodejs.org/en/) version 18. To easily manage node versions we recommend
    [fnm](https://github.com/Schniz/fnm)
-2. Install [yarn](https://classic.yarnpkg.com/en/docs/install#debian-stable), preferably through
-   `npm i -g yarn`
-3. In the repository root run `yarn` to install project specific dependencies
+2. Install [pnpm](https://classic.pnpmpkg.com/en/docs/install#debian-stable), preferably through
+   `npm i -g pnpm`
+3. In the repository root run `pnpm` to install project specific dependencies
 
 ## Running the website locally
 
@@ -36,10 +36,10 @@ is actually displayed) then it's quite easy. Just run the following commands aft
 repository:
 
 ```
-yarn
-yarn build:dependencies
+pnpm
+pnpm build:dependencies
 cd packages/frontend
-yarn dev:mock
+pnpm dev:mock
 ```
 
 ## Add tokens to a project
@@ -55,7 +55,7 @@ General token prerequisites (without these your token CANNOT be added):
 
 1. Study the general prerequisites (see above) and check if your token complies.
 2. Add your token to the list (`packages/config/src/tokens/tokens.jsonc`). The order of the tokens should be kept alphabetical.
-3. Run `yarn tokens` in the `packages/config/` directory.
+3. Run `pnpm tokens` in the `packages/config/` directory.
 
 Refer to the [docs - tvl.md](docs/tvl.md) for further token insights.
 
@@ -70,10 +70,10 @@ If you want to add a new Layer 2 project you can do that by opening a PR. To do 
 3. Add your project into `packages/config/src/projects/layer2s/index.ts`. The order of the projects should be
    kept alphabetical.
 4. Add a square PNG project icon with a minimum size of 128x128 pixels to
-   `packages/frontend/public/icons`. From the `packages/frontend` directory run `yarn tinify-logos` afterwards to reduce its size.
+   `packages/frontend/public/icons`. From the `packages/frontend` directory run `pnpm tinify-logos` afterwards to reduce its size.
 5. Run the website locally to check out your changes. (optional, see above)
 6. Make sure that things like linting, formatting and tests are all passing. To
-   check their status you can run `yarn lint:fix`, `yarn format:fix` or `yarn test`
+   check their status you can run `pnpm lint:fix`, `pnpm format:fix` or `pnpm test`
    respectively. We greatly encourage doing this before the last step as it
    shortens the amount of time needed for your project to be added.
 7. Open a PR :D
@@ -97,9 +97,9 @@ If you want to add a new Layer 3 project you can do that by opening a PR. To do 
    kept alphabetical.
 4. Add a square PNG project icon with a minimum size of 128x128 pixels into
    packages/frontend/src/static/icons. From the `packages/frontend` directory
-   run `yarn tinify-logos` afterwards to reduce its size.
+   run `pnpm tinify-logos` afterwards to reduce its size.
 6. Make sure that things like linting, formatting and tests are all passing. To
-   check their status you can run `yarn lint:fix`, `yarn format:fix` or `yarn test`
+   check their status you can run `pnpm lint:fix`, `pnpm format:fix` or `pnpm test`
    respectively. We greatly encourage doing this before the last step as it
    shortens the amount of time needed for your project to be added.
 7. Open a PR :D

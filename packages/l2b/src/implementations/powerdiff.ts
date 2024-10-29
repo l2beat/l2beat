@@ -121,7 +121,7 @@ function diffPaths(
             <p>Error with difftastic:</p>
             <p><code>exceeded DFT_PARSE_ERROR_LIMIT</code></p>
             <p>Include the following command to increase the limit:</p>
-            <p><code>export DFT_PARSE_ERROR_LIMIT=100; yarn powerdiff ...</code></p>
+            <p><code>export DFT_PARSE_ERROR_LIMIT=100; pnpm powerdiff ...</code></p>
           </div>`,
         )
       }

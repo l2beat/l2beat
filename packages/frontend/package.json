@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
-    "dev:mock": "MOCK=true yarn dev",
+    "dev:mock": "MOCK=true pnpm dev",
     "build": "next build",
-    "build:dependencies": "cd ../.. && yarn build:dependencies",
+    "build:dependencies": "cd ../.. && pnpm build:dependencies",
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",

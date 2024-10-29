@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "build:dependencies": "cd ../.. && yarn build:dependencies",
+    "build:dependencies": "cd ../.. && pnpm build:dependencies",
     "clean": "rm -rf dist",
     "format": "biome format .",
     "format:fix": "biome format --write .",

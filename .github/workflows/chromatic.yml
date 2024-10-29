@@ -18,9 +18,9 @@ jobs:
         with:
           fetch-depth: 0
       - name: Install dependencies
-        run: yarn
+        run: pnpm install
       - name: Build dependencies
-        run: yarn build:dependencies
+        run: pnpm build:dependencies
       - name: Publish to Chromatic
         run: >
           npx chromatic

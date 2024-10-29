@@ -9,8 +9,8 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "build:dependencies": "cd ../.. && yarn build:dependencies",
-    "l2bup": "yarn build:dependencies && yarn build && npm install -g .",
+    "build:dependencies": "cd ../.. && pnpm build:dependencies",
+    "l2bup": "pnpm build:dependencies && pnpm build && npm install -g .",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist",
     "format": "biome format .",
