@@ -46,6 +46,8 @@ export type CommonDaLayer = {
   challengeMechanism?: DaChallengeMechanism
   /** Fallback */
   fallback?: ScalingDaLayerOption
+  /** Number of operators in the data availability layer. */
+  numberOfOperators?: number
   /** Display information for the data availability layer. */
   display: DaLayerDisplay
   /** Is the DA layer upcoming? */

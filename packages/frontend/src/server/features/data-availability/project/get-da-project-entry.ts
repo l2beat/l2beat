@@ -130,6 +130,7 @@ function getHeader({
     economicSecurity,
     durationStorage:
       daLayer.kind === 'PublicBlockchain' ? daLayer.pruningWindow : undefined,
+    numberOfOperators: daLayer.numberOfOperators,
     usedIn,
   }
 }
