@@ -130,7 +130,7 @@ export const vector = {
   usedIn: [],
   risks: {
     committeeSecurity:
-      DaCommitteeSecurityRisk.RobustAndDiverseCommittee('Validators set'),
+      DaCommitteeSecurityRisk.RobustAndDiverseCommittee('Validator set'),
     upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // 4/7 multisig w/ no delay
     relayerFailure: DaRelayerFailureRisk.NoMechanism,
   },
