@@ -10,17 +10,17 @@ import {
 export function onWheel(
   state: State,
   event: WheelEvent,
-  view: HTMLElement,
+  container: HTMLElement,
 ): Partial<State> {
   event.preventDefault()
   const { deltaX, deltaY } = getWheelDelta(event)
   const { offsetX, offsetY, scale } = state.transform
 
   if (event.ctrlKey || event.metaKey) {
-    const rect = view.getBoundingClientRect()
+    const rect = container.getBoundingClientRect()
 
     let desiredChange = -deltaY * ZOOM_SENSITIVITY
-    if (event.ctrlKey && !state.pressed.ctrlKey) {
+    if (event.ctrlKey && !state.input.ctrlPressed) {
       // NOTE(radomski): This is a magic value but there is no other way to
       // handle this nicely in a compact way. The `onwheel` event triggers
       // for mouse scrolling, touchpad scrolling AND touchpad pinching.

@@ -11,11 +11,7 @@ function DasWithBlobsReconstruction(erasureCoding: boolean) {
     type: 'DasWithBlobsReconstruction',
     value: 'DAS',
     sentiment: erasureCoding ? 'good' : 'warning',
-    description: `
-      The DA layer uses data availability sampling (DAS) to protect against data withholding attacks. 
-      By relying on a minimum number of light nodes to perform DAS for each block, it ensures that the entire block can be reconstructed even if some data is withheld by an adversarial block producer. 
-      The blob reconstruction protocol guarantees that with a sufficient number of honest light nodes sharing their samples, all data can be accurately reconstructed and its integrity verified.
-    `,
+    description: `The DA layer uses data availability sampling (DAS) to protect against data withholding attacks. By relying on a minimum number of light nodes to perform DAS for each block, it ensures that the entire block can be reconstructed even if some data is withheld by an adversarial block producer. The blob reconstruction protocol guarantees that with a sufficient number of honest light nodes sharing their samples, all data can be accurately reconstructed and its integrity verified.`,
     secondLine: 'with blobs reconstruction',
   } as const
 }
@@ -25,11 +21,8 @@ function DasWithNoBlobsReconstruction(erasureCoding: boolean) {
     type: 'DasWithNoBlobsReconstruction',
     value: 'DAS',
     sentiment: erasureCoding ? 'warning' : 'bad',
-    description: `
-    The DA layer uses data availability sampling (DAS) to protect against data withholding attacks. However, there is no mechanism in place to reconstruct the data if some of it is withheld or the minimum number of light nodes
-    required to perform DAS is not available. This means that the data may be lost if a block producer withholds data or if there are not enough honest light nodes to perform DAS.
-    `,
-    secondLine: 'No reconstruction',
+    description: `The DA layer uses data availability sampling (DAS) to protect against data withholding attacks. However, there is no mechanism in place to reconstruct the data if some of it is withheld or the minimum number of light nodes required to perform DAS is not available. This means that the data may be lost if a block producer withholds data or if there are not enough honest light nodes to perform DAS.`,
+    secondLine: '',
   } as const
 }
 

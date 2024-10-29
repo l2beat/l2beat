@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { EVMBlock, RpcClient2 } from '../../clients'
 
 export class BlockProvider {
@@ -10,6 +10,18 @@ export class BlockProvider {
     for (const [index, client] of this.clients.entries()) {
       try {
         return await client.getBlockWithTransactions(x)
+      } catch (error) {
+        if (index === this.clients.length - 1) throw error
+      }
+    }
+
+    throw new Error('Programmer error: Clients should not be empty')
+  }
+
+  async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<number> {
+    for (const [index, client] of this.clients.entries()) {
+      try {
+        return await client.getBlockNumberAtOrBefore(timestamp)
       } catch (error) {
         if (index === this.clients.length - 1) throw error
       }

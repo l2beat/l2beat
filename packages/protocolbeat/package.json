@@ -16,7 +16,6 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@total-typescript/ts-reset": "^0.3.7",
     "@types/react": "^18.3.2",
     "@types/react-dom": "^18.3.0",
     "clsx": "^2.1.1",

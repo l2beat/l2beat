@@ -7,24 +7,24 @@ import {
   SPACE_KEY,
 } from '../utils/constants'
 import { updateNodePositions } from '../utils/updateNodePositions'
+import { hideSelected } from './other'
 
 export function onKeyDown(state: State, event: KeyboardEvent): Partial<State> {
   if (event.key === SPACE_KEY) {
-    return { pressed: { ...state.pressed, spaceKey: true } }
+    return { input: { ...state.input, spacePressed: true } }
   }
   if (event.key === CTRL_KEY) {
-    return { pressed: { ...state.pressed, ctrlKey: true } }
+    return { input: { ...state.input, ctrlPressed: true } }
   }
   if (event.key === DELETE_KEY || event.key === BACKSPACE_KEY) {
-    return {
-      hiddenNodesIds: state.hiddenNodesIds.concat(state.selectedNodeIds),
-    }
+    return hideSelected(state)
   }
   if (event.key === SHIFT_KEY) {
+    // When shift is pressed we snap dragged nodes to an axis
     return updateNodePositions({
       ...state,
-      pressed: { ...state.pressed, shiftKey: true },
+      input: { ...state.input, shiftPressed: true },
     })
   }
-  return {}
+  return state
 }

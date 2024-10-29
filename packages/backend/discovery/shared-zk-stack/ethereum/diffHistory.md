@@ -1,3 +1,68 @@
+Generated with discovered.json: 0x49be4a26135f66dff4b13920e7b71330ccc21716
+
+# Diff at Mon, 28 Oct 2024 13:16:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@00bd1d18460d612b1f06ce2339854c105cd41bd5 block: 21027403
+- current block number: 21064368
+
+## Description
+
+New chainID 2741 deployed.
+
+## Watched changes
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
++++ description: All new chains created go thorugh the central bridgehub and are thus stored here with their respective STMs.
+      values.chainsCreated.4:
++        {"chainId":2741,"stateTransitionManager":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","chainGovernance":"0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661"}
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
++++ description: If non-zero, the first batch has been posted.
++++ severity: MEDIUM
+      values.zeronetworkTenthBatchTS:
+-        0
++        1729719755
+    }
+```
+
+```diff
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: None
+      values.getAllHyperchainChainIDs.4:
++        2741
+      values.getAllHyperchains.4:
++        "0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ChainAdmin (0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...-0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661.sol |  222 ++++
+ .../Safe.sol                                       | 1088 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ 3 files changed, 1347 insertions(+)
+```
+
 Generated with discovered.json: 0x579cb2d4a94299bd6e5baab4aadab66f01057f9e
 
 # Diff at Wed, 23 Oct 2024 09:31:05 GMT:
