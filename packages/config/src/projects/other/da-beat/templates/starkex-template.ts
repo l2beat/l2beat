@@ -116,7 +116,12 @@ export function StarkexDAC(template: TemplateVars): DacDaLayer {
     display: bridgeDisplay,
     technology: {
       description: bridgeTechnology,
-      risks: template.bridge.technology?.risks,
+      risks: [
+        {
+          category: 'Funds can be lost if',
+          text: `a malicious committee signs a data availability attestation for an unavailable transaction batch.`,
+        },
+      ]
     },
     risks: {
       committeeSecurity:

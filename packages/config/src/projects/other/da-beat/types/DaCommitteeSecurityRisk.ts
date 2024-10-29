@@ -67,7 +67,7 @@ const NoHonestMinimumCommiteeSecurity = (
     value: value ?? 'None',
     sentiment: 'bad',
     description: `The committee should require an honest minority (33% or less) of members to prevent the DA bridge from accepting an unavailable data commitment.
-   Currently, this committee requires ${honestMembersPercentage}% of members to be honest. `,
+   Currently, an honest minority is not able to prevent an unavailable data commitment from being accepted, as this committee requires ${honestMembersPercentage}% of members to be honest. `,
   }) as const
 
 const NoBridge = {
