@@ -5,16 +5,16 @@ import { utils } from 'ethers'
 import { Database } from '@l2beat/database'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { L2Block } from './types/BaseAnalyzer'
-import { zkSyncEraFinalityAnalyzer } from './zkSyncEraFinalityAnalyzer'
+import { zkSyncEraT2IAnalyzer } from './zkSyncEraT2IAnalyzer'
 
-describe(zkSyncEraFinalityAnalyzer.name, () => {
-  describe(zkSyncEraFinalityAnalyzer.prototype.analyze.name, () => {
+describe(zkSyncEraT2IAnalyzer.name, () => {
+  describe(zkSyncEraT2IAnalyzer.prototype.analyze.name, () => {
     it('correctly decode and returns correct data', async () => {
       const provider = getMockRpcClient()
 
       const l1Timestamp = 1705407431
 
-      const analyzer = new zkSyncEraFinalityAnalyzer(
+      const analyzer = new zkSyncEraT2IAnalyzer(
         provider,
         mockObject<Database>(),
         ProjectId('zksync2'),

@@ -4,10 +4,10 @@ import { utils } from 'ethers'
 
 import { Database } from '@l2beat/database'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
-import { LineaFinalityAnalyzer } from './LineaFinalityAnalyzer'
+import { LineaT2IAnalyzer } from './LineaT2IAnalyzer'
 
-describe(LineaFinalityAnalyzer.name, () => {
-  describe(LineaFinalityAnalyzer.prototype.analyze.name, () => {
+describe(LineaT2IAnalyzer.name, () => {
+  describe(LineaT2IAnalyzer.prototype.analyze.name, () => {
     it('correctly decode and returns correct data for calldata example', async () => {
       const provider = mockObject<RpcClient>({
         getTransaction: mockFn().resolvesTo({
@@ -17,7 +17,7 @@ describe(LineaFinalityAnalyzer.name, () => {
       const l2provider = mockL2RpcClient(TIMESTAMPS1)
       const l1Timestamp = 1708352483
 
-      const calculator = new LineaFinalityAnalyzer(
+      const calculator = new LineaT2IAnalyzer(
         provider,
         mockObject<Database>(),
         ProjectId('linea'),
@@ -48,7 +48,7 @@ describe(LineaFinalityAnalyzer.name, () => {
       const l2provider = mockL2RpcClient(TIMESTAMPS1)
       const l1Timestamp = 1708352483
 
-      const calculator = new LineaFinalityAnalyzer(
+      const calculator = new LineaT2IAnalyzer(
         provider,
         mockObject<Database>(),
         ProjectId('linea'),

@@ -4,10 +4,10 @@ import { expect, mockFn, mockObject } from 'earl'
 import { Database } from '@l2beat/database'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { StarknetClient } from '../../../peripherals/starknet/StarknetClient'
-import { StarknetFinalityAnalyzer } from './StarknetFinalityAnalyzer'
+import { StarknetT2IAnalyzer } from './StarknetT2IAnalyzer'
 
-describe(StarknetFinalityAnalyzer.name, () => {
-  describe(StarknetFinalityAnalyzer.prototype.analyze.name, () => {
+describe(StarknetT2IAnalyzer.name, () => {
+  describe(StarknetT2IAnalyzer.prototype.analyze.name, () => {
     it('should return timestamp differences between l1 and l2 blocks', async () => {
       const TX_HASH =
         '0x8063b9ceea01ba171e08f3ac2771f30ca1784ed3bf08c326102d13da22651005'
@@ -32,7 +32,7 @@ describe(StarknetFinalityAnalyzer.name, () => {
         }),
       })
 
-      const analyzer = new StarknetFinalityAnalyzer(
+      const analyzer = new StarknetT2IAnalyzer(
         rpcClient,
         mockObject<Database>({}),
         projectId,

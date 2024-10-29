@@ -4,11 +4,11 @@ import { utils } from 'ethers'
 
 import { Database } from '@l2beat/database'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
-import { ScrollFinalityAnalyzer } from './ScrollFinalityAnalyzer'
+import { ScrollT2IAnalyzer } from './ScrollT2IAnalyzer'
 import { L2Block } from './types/BaseAnalyzer'
 
-describe(ScrollFinalityAnalyzer.name, () => {
-  describe(ScrollFinalityAnalyzer.prototype.analyze.name, () => {
+describe(ScrollT2IAnalyzer.name, () => {
+  describe(ScrollT2IAnalyzer.prototype.analyze.name, () => {
     it('should return timestamp differences between l1 and l2 blocks', async () => {
       const TX_HASH = '0x123'
       const L1_TIMESTAMP = 1700001000
@@ -27,7 +27,7 @@ describe(ScrollFinalityAnalyzer.name, () => {
         }),
       })
 
-      const analyzer = new ScrollFinalityAnalyzer(
+      const analyzer = new ScrollT2IAnalyzer(
         rpcClient,
         mockObject<Database>(),
         projectId,

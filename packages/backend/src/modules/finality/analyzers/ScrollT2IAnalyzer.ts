@@ -12,7 +12,7 @@ const ScrollBatchCommit = z.object({
   skippedL1MessageBitmap: z.string(),
 })
 
-export class ScrollFinalityAnalyzer extends BaseAnalyzer {
+export class ScrollT2IAnalyzer extends BaseAnalyzer {
   override getTrackedTxSubtype(): TrackedTxsConfigSubtype {
     return 'batchSubmissions'
   }

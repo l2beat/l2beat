@@ -15,7 +15,7 @@ const CommittedBlock = z.object({
   timestamp: z.number(),
 })
 
-export class ZkSyncLiteFinalityAnalyzer extends BaseAnalyzer {
+export class ZkSyncLiteT2IAnalyzer extends BaseAnalyzer {
   override getTrackedTxSubtype(): TrackedTxsConfigSubtype {
     return 'proofSubmissions'
   }

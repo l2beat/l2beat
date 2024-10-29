@@ -12,7 +12,7 @@ import { SpanBatchDecoderOpts, decodeSpanBatch } from './decodeSpanBatch'
 import { getFrames } from './getFrames'
 import { getBatchFromChannel } from './utils'
 
-export class OpStackTimeToInclusionAnalyzer extends BaseAnalyzer {
+export class OpStackT2IAnalyzer extends BaseAnalyzer {
   private readonly channelBank: ChannelBank
 
   constructor(

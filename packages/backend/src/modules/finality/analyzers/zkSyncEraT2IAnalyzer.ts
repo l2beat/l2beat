@@ -11,7 +11,7 @@ type zkSyncEraDecoded = [
   [number[], number[]],
 ]
 
-export class zkSyncEraFinalityAnalyzer extends BaseAnalyzer {
+export class zkSyncEraT2IAnalyzer extends BaseAnalyzer {
   getTrackedTxSubtype(): TrackedTxsConfigSubtype {
     return 'proofSubmissions'
   }

@@ -15,7 +15,7 @@ import type { L2Block, Transaction } from '../types/BaseAnalyzer'
 import { decodeBatch } from './batch'
 import { toTransactionHash } from './hash'
 
-export class PolygonZkEvmFinalityAnalyzer extends BaseAnalyzer {
+export class PolygonZkEvmT2IAnalyzer extends BaseAnalyzer {
   constructor(
     provider: RpcClient,
     db: Database,

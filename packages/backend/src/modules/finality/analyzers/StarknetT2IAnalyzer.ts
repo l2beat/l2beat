@@ -15,7 +15,7 @@ const StarknetStateUpdate = z.object({
 })
 type StarknetStateUpdate = z.infer<typeof StarknetStateUpdate>
 
-export class StarknetFinalityAnalyzer extends BaseAnalyzer {
+export class StarknetT2IAnalyzer extends BaseAnalyzer {
   constructor(
     provider: RpcClient,
     db: Database,

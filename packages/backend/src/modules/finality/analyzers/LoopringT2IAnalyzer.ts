@@ -8,7 +8,7 @@ import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { BaseAnalyzer } from './types/BaseAnalyzer'
 import type { L2Block, Transaction } from './types/BaseAnalyzer'
 
-export class LoopringFinalityAnalyzer extends BaseAnalyzer {
+export class LoopringT2IAnalyzer extends BaseAnalyzer {
   constructor(
     provider: RpcClient,
     db: Database,

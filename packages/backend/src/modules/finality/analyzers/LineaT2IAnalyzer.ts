@@ -15,7 +15,7 @@ const blobFn =
   'function submitBlobs(((bytes32,uint256,uint256,bytes32),uint256,bytes,bytes)[], bytes32, bytes32)'
 const iface = new utils.Interface([calldataFn, blobFn])
 
-export class LineaFinalityAnalyzer extends BaseAnalyzer {
+export class LineaT2IAnalyzer extends BaseAnalyzer {
   constructor(
     provider: RpcClient,
     db: Database,

@@ -9,7 +9,7 @@ import type { L2Block, Transaction } from '../types/BaseAnalyzer'
 import { calculateDelaysFromSegments } from './calculateDelaysFromSegments'
 import { getSegments } from './getSegments'
 
-export class ArbitrumFinalityAnalyzer extends BaseAnalyzer {
+export class ArbitrumT2IAnalyzer extends BaseAnalyzer {
   constructor(
     private readonly blobClient: BlobClient,
     private readonly logger: Logger,
