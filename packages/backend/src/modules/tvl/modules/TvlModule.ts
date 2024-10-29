@@ -3,6 +3,7 @@ import { ConfigMapping } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import { Config } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
+import { Providers } from '../../../providers/Providers'
 import { Clock } from '../../../tools/Clock'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { ApplicationModule } from '../../ApplicationModule'
@@ -21,6 +22,7 @@ export function initTvlModule(
   config: Config,
   logger: Logger,
   peripherals: Peripherals,
+  providers: Providers,
   clock: Clock,
 ): ApplicationModule | undefined {
   if (!config.tvl) {
@@ -58,10 +60,9 @@ export function initTvlModule(
   const priceModule = initPriceModule(
     config.tvl,
     logger,
-    peripherals,
-    syncOptimizer,
-    indexerService,
-    hourlyIndexer,
+    clock,
+    providers,
+    peripherals.database,
   )
 
   const circulatingSupplyModule = initCirculatingSupplyModule(
