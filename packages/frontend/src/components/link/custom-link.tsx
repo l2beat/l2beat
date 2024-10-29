@@ -3,7 +3,7 @@ import NextLink from 'next/link'
 import React from 'react'
 
 export type CustomLinkProps = Omit<
-  React.ComponentPropsWithoutRef<typeof NextLink>,
+  React.ComponentProps<typeof NextLink>,
   'href'
 > &
   VariantProps<typeof linkVariants> & {
