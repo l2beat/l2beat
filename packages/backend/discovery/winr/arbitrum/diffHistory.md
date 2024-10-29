@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xcfa5d22f23b3e2f4c3b5ce84a9279a266a697e95
+
+# Diff at Tue, 29 Oct 2024 09:40:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7b3fc9dc9074e1d423b48522c3f0273c86aab54a block: 267471744
+- current block number: 268839923
+
+## Description
+
+Update challenge period to 1h.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x2633ea91d15BeE85105C9b27E068f406F2F36a4a) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ description: Challenge period. (Number of blocks until a node is confirmed).
+      values.confirmPeriodBlocks:
+-        40320
++        300
+    }
+```
+
 Generated with discovered.json: 0x6dbe7f6968298a514868837f6eddbe60c2492aa3
 
 # Diff at Tue, 29 Oct 2024 08:54:08 GMT:
