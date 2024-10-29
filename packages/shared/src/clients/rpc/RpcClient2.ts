@@ -4,7 +4,8 @@ import { RetryHandler } from '../../tools/RetryHandler'
 import { generateId } from '../../tools/generateId'
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 import { HttpClient2 } from '../http/HttpClient2'
-import { CallParameters, EVMBlock, Quantity, RpcResponse } from './types'
+import { CallParameters } from './types'
+import { EVMBlock, Quantity, RPCError, RpcResponse } from './types'
 
 interface RpcClient2Deps {
   url: string
@@ -12,11 +13,16 @@ interface RpcClient2Deps {
   rateLimiter: RateLimiter
   retryHandler: RetryHandler
   logger: Logger
+  chain: string
 }
 
+// TODO: create EVMBlockClient
 export class RpcClient2 {
+  chain: string
+
   constructor(private readonly $: RpcClient2Deps) {
-    this.$.logger = this.$.logger.for(this)
+    this.chain = $.chain
+    this.$.logger = this.$.logger.for(this).tag($.chain)
   }
 
   /** Calls eth_getBlockByNumber on RPC, includes full transactions bodies.
@@ -113,8 +119,17 @@ export class RpcClient2 {
     const parsed = RpcResponse.safeParse(response)
     // TODO: add per-provider parsing heuristics
     if (!parsed.success) {
-      this.$.logger.error(JSON.stringify(response))
-      throw new Error('Error during parsing of rpc response')
+      const parsedError = RPCError.safeParse(response)
+
+      if (parsedError.success) {
+        throw new Error(
+          `${parsedError.data.error.code}: ${parsedError.data.error.message}`,
+        )
+      }
+
+      throw new Error(
+        `Error during parsing of rpc response: ${method} ${JSON.stringify(params)}`,
+      )
     }
     return parsed.data.result
   }

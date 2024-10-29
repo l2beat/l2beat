@@ -1,7 +1,7 @@
 {
   "name": "rss3",
   "chain": "ethereum",
-  "blockNumber": 21027285,
+  "blockNumber": 21041870,
   "configHash": "0xc90237ac9d232942699e2395976f51875ba5a8cb3948f7d87bcb44b12bf122b2",
   "contracts": [
     {
@@ -236,7 +236,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491822,
-          "prevBlockNum": 21025371
+          "prevBlockNum": 21041000
         },
         "paused": false,
         "superchainConfig": "0x3e5FaB39eD4eFB4fc29A5201059AE819f2f0418A",
@@ -373,7 +373,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621206",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621217",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -518,6 +518,7 @@
     {
       "name": "WithdrawalOverwriterMultisig",
       "address": "0xC4f81F990b47c12144e74A901162A2cFDf4b5a9d",
+      "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
         "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
@@ -530,6 +531,7 @@
           "description": "can overwrite the calldata of any withdrawals in the OptimismPortal on finalization, potentially stealing the withdrawn funds or calling arbitrary contracts."
         }
       ],
+      "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1729561211,
       "values": {
         "$immutable": false,
@@ -544,14 +546,6 @@
         "$threshold": 3,
         "domainSeparator": "0x97ce9fdef3a68ed6c6f6586305dfde8ad9987238ec00eda8475498ff7fe1f98e",
         "getChainId": 1,
-        "getOwners": [
-          "0xF209b7Bbadf8d9518a822aEaa7119B38b17377A7",
-          "0xf877475092Dc23AD9d367B27D48645d56564D310",
-          "0xEE52b76e6A9F6eA669F8A99bb63b113819cDCbEF",
-          "0x70f8b7f14eA00209A70a926134B86E5eb9f4317f",
-          "0xc06d32F7C20f100C7b8657dE2b24f201A46BC3DD"
-        ],
-        "getThreshold": 3,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
         "nonce": 1,
@@ -616,10 +610,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 9907200,
-        "latestOutputIndex": 5503,
-        "nextBlockNumber": 9909000,
-        "nextOutputIndex": 5504,
+        "latestBlockNumber": 9995400,
+        "latestOutputIndex": 5552,
+        "nextBlockNumber": 9997200,
+        "nextOutputIndex": 5553,
         "proposer": "0x0016b6bacD56a0D1DaFdA52d06B7eFe65AA0816a",
         "PROPOSER": "0x0016b6bacD56a0D1DaFdA52d06B7eFe65AA0816a",
         "startingBlockNumber": 0,

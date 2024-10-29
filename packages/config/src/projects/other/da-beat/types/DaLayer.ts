@@ -6,6 +6,7 @@ import {
   NoDaBridge,
   OnChainDaBridge,
 } from './DaBridge'
+import { DaChallengeMechanism } from './DaChallengeMechanism'
 import { DaConsensusAlgorithm } from './DaConsensusAlgorithm'
 import { DaEconomicSecurity } from './DaEconomicSecurity'
 import { DaEconomicSecurityRisk } from './DaEconomicSecurityRisk'
@@ -41,8 +42,8 @@ export type CommonDaLayer = {
   id: string
   /** Classification layers will be split based on */
   systemCategory: 'public' | 'custom'
-  /** Whether given solution has challenge mechanism in place */
-  hasChallengeMechanism?: boolean
+  /** Supported challenge mechanism in place */
+  challengeMechanism?: DaChallengeMechanism
   /** Fallback */
   fallback?: ScalingDaLayerOption
   /** Display information for the data availability layer. */

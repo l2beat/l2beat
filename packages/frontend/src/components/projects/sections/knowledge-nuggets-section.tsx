@@ -8,7 +8,8 @@ import { type ProjectSectionId } from './types'
 export interface KnowledgeNuggetsSectionProps {
   title: string
   id: ProjectSectionId
-  sectionOrder: number
+  sectionOrder: string
+  nested?: boolean
   knowledgeNuggets: KnowledgeNugget[]
 }
 
@@ -16,10 +17,16 @@ export function KnowledgeNuggetsSection({
   title,
   id,
   sectionOrder,
+  nested,
   knowledgeNuggets,
 }: KnowledgeNuggetsSectionProps) {
   return (
-    <ProjectSection title={title} id={id} sectionOrder={sectionOrder}>
+    <ProjectSection
+      title={title}
+      id={id}
+      nested={nested}
+      sectionOrder={sectionOrder}
+    >
       <div className="flex flex-col gap-4">
         {knowledgeNuggets.map((nugget) => (
           <LinkWithThumbnail

@@ -1,7 +1,7 @@
 {
   "name": "reya",
   "chain": "ethereum",
-  "blockNumber": 20941807,
+  "blockNumber": 21041865,
   "configHash": "0x539f2350e96d1f936212de4a32d2d3b8fbc68ec80af62d6d1f02c9b79cf52101",
   "contracts": [
     {
@@ -17,11 +17,24 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9",
-          "via": []
+          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+          "via": [
+            {
+              "address": "0x07390626b8Bc2C04b1D93c7D246A0629198D7868",
+              "delay": 0
+            },
+            {
+              "address": "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9",
+              "delay": 0
+            }
+          ]
         }
       ],
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9"
+        },
         {
           "permission": "upgrade",
           "target": "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A"
@@ -55,7 +68,8 @@
         },
         "ADMIN_ROLE": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63"
+        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "executors": ["0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"]
       },
       "derivedName": "UpgradeExecutor"
     },
@@ -100,8 +114,17 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9",
-          "via": []
+          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+          "via": [
+            {
+              "address": "0x07390626b8Bc2C04b1D93c7D246A0629198D7868",
+              "delay": 0
+            },
+            {
+              "address": "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9",
+              "delay": 0
+            }
+          ]
         }
       ],
       "ignoreInWatchMode": [
@@ -127,11 +150,11 @@
           "0xFd9f59554351122b231F832a0e0A1aBb0604D7fd"
         ],
         "allowedOutboxList": ["0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9"],
-        "delayedMessageCount": 20562,
+        "delayedMessageCount": 21111,
         "rollup": "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A",
         "sequencerInbox": "0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d",
-        "sequencerMessageCount": 19385,
-        "sequencerReportedSubMessageCount": 47763837
+        "sequencerMessageCount": 19894,
+        "sequencerReportedSubMessageCount": 48600564
       },
       "derivedName": "Bridge"
     },
@@ -146,8 +169,17 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9",
-          "via": []
+          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+          "via": [
+            {
+              "address": "0x07390626b8Bc2C04b1D93c7D246A0629198D7868",
+              "delay": 0
+            },
+            {
+              "address": "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1709380607,
@@ -198,8 +230,13 @@
         },
         {
           "permission": "upgrade",
-          "target": "0x07390626b8Bc2C04b1D93c7D246A0629198D7868",
-          "via": []
+          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+          "via": [
+            {
+              "address": "0x07390626b8Bc2C04b1D93c7D246A0629198D7868",
+              "delay": 0
+            }
+          ]
         }
       ],
       "ignoreInWatchMode": [
@@ -234,12 +271,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 1819,
+        "firstUnresolvedNode": 1847,
         "inbox": "0x672109752635177ebcb17F2C7e04575A709014BD",
         "isERC20Enabled": false,
         "lastStakeBlock": 19347657,
-        "latestConfirmed": 1818,
-        "latestNodeCreated": 1830,
+        "latestConfirmed": 1846,
+        "latestNodeCreated": 1858,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9",
@@ -331,8 +368,17 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9",
-          "via": []
+          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+          "via": [
+            {
+              "address": "0x07390626b8Bc2C04b1D93c7D246A0629198D7868",
+              "delay": 0
+            },
+            {
+              "address": "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1709380607,
@@ -371,8 +417,17 @@
         },
         {
           "permission": "upgrade",
-          "target": "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9",
-          "via": []
+          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+          "via": [
+            {
+              "address": "0x07390626b8Bc2C04b1D93c7D246A0629198D7868",
+              "delay": 0
+            },
+            {
+              "address": "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9",
+              "delay": 0
+            }
+          ]
         }
       ],
       "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
@@ -388,7 +443,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 19385,
+        "batchCount": 19894,
         "batchPosters": ["0xf5636Df6f86f31668aeAe9bB8a1C4F0ED147926a"],
         "bridge": "0x383c03c4EfF819E73409DbC690755a9992393814",
         "dacKeyset": {
@@ -413,7 +468,7 @@
         "rollup": "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 20561
+        "totalDelayedMessagesRead": 21110
       },
       "derivedName": "SequencerInbox"
     },
@@ -428,8 +483,17 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9",
-          "via": []
+          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+          "via": [
+            {
+              "address": "0x07390626b8Bc2C04b1D93c7D246A0629198D7868",
+              "delay": 0
+            },
+            {
+              "address": "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1709380607,
@@ -455,10 +519,11 @@
     {
       "name": "ProxyAdmin",
       "address": "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9",
+      "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
       ],
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "target": "0x07390626b8Bc2C04b1D93c7D246A0629198D7868"
@@ -523,6 +588,75 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x07390626b8Bc2C04b1D93c7D246A0629198D7868",
+          "via": [
+            { "address": "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9" },
+            { "address": "0x07390626b8Bc2C04b1D93c7D246A0629198D7868" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x383c03c4EfF819E73409DbC690755a9992393814",
+          "via": [
+            { "address": "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9" },
+            { "address": "0x07390626b8Bc2C04b1D93c7D246A0629198D7868" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9",
+          "via": [
+            { "address": "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9" },
+            { "address": "0x07390626b8Bc2C04b1D93c7D246A0629198D7868" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A",
+          "via": [{ "address": "0x07390626b8Bc2C04b1D93c7D246A0629198D7868" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x672109752635177ebcb17F2C7e04575A709014BD",
+          "via": [
+            { "address": "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9" },
+            { "address": "0x07390626b8Bc2C04b1D93c7D246A0629198D7868" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d",
+          "via": [
+            { "address": "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9" },
+            { "address": "0x07390626b8Bc2C04b1D93c7D246A0629198D7868" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x728B406A4809118533D96bB3b5C50712C99d8Fa5",
+          "via": [
+            { "address": "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9" },
+            { "address": "0x07390626b8Bc2C04b1D93c7D246A0629198D7868" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xFd9f59554351122b231F832a0e0A1aBb0604D7fd",
+          "via": [
+            { "address": "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9" },
+            { "address": "0x07390626b8Bc2C04b1D93c7D246A0629198D7868" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0x07390626b8Bc2C04b1D93c7D246A0629198D7868"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1711489163,
       "values": {
@@ -586,8 +720,17 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9",
-          "via": []
+          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+          "via": [
+            {
+              "address": "0x07390626b8Bc2C04b1D93c7D246A0629198D7868",
+              "delay": 0
+            },
+            {
+              "address": "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1709380607,
@@ -1275,12 +1418,13 @@
     ]
   },
   "usedTemplates": {
+    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "orbitstack/OneStepProofEntry": "0xf3bff5da86f9bbb5f9ac93a0f2239f0769d051b67a44be2e52c322799e3b8d4f",
     "orbitstack/OneStepProver0": "0x80f18705038deef096683a89d16549bf343ada57cac1f2750df2f06fbbaed5ca",
     "orbitstack/OneStepProverMath": "0x8dd8aebb517eb6eaf15437ddbb90dff66f2b14d9d6b5390dd87fbdab15168188",
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
     "orbitstack/RollupProxy": "0x0bdbca452bd7b5e2036a979dd61b8581a0bf7bad54f04ef69e70b97ee375f8f2",
-    "orbitstack/UpgradeExecutor": "0x603e9f3f0d76cb0bbc6fbf2ac64cce35b00905689e35c7535a2c5fec00147370"
+    "orbitstack/UpgradeExecutor": "0xa25e02367a436cebea22481663da914bbf1fd9492d903659cc6ec9ddbaccb241"
   }
 }

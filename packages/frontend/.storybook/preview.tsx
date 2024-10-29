@@ -33,6 +33,7 @@ const preview: Preview = {
       },
     },
   },
+
   decorators: [
     withThemeByClassName({
       themes: {
@@ -54,6 +55,8 @@ const preview: Preview = {
       )
     },
   ],
+
+  tags: ['autodocs'],
 }
 
 export default preview

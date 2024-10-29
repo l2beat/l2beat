@@ -1,7 +1,7 @@
 {
   "name": "socket",
   "chain": "ethereum",
-  "blockNumber": 21027491,
+  "blockNumber": 21064404,
   "configHash": "0x1f97925c22ae0d7e5ba013bf6514fd291d4596c36ca353b65430e23b4140de68",
   "contracts": [
     {
@@ -563,7 +563,7 @@
         "capacitorFactory__": "0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a",
         "chainSlug": 1,
         "executionManager__": "0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C",
-        "globalMessageCount": 6541,
+        "globalMessageCount": 6672,
         "hasher__": "0x5C71beE4a6b0D617D8c3d107D331292741789E27",
         "inboundSwitchboards": [
           "0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287",
@@ -687,7 +687,11 @@
           "0x76ddfc271089e58Af68D8597D41aEF52Fb53EC3D",
           "0x80f5143AF6BF51B38C038BaFF71465Be9b48cAEe",
           "0xFAB1efe6cA9435faEf9e29f40E575e27A74373A9",
-          "0xE88F6b194BD3b43013710A785DDFF41454A19537"
+          "0xE88F6b194BD3b43013710A785DDFF41454A19537",
+          "0xCF83efEe74f61771AF78b05DeA847773D3952C33",
+          "0x7FBCd72B6368f1771C9F6Ee16502C19b0AADBa1D",
+          "0xE3255bb716d8BA81aA97Ff20c75b404D9844CBE1",
+          "0xf1807B621efC3B072d1203dD28C880BBEDc56161"
         ],
         "transmitManager__": "0xeD037aFBffC65a94E9CC592947E851FB2f730341",
         "version": "0x484f1c5889188a0a81068ce8c49d8f7c3b3f1b0c1723b50ebd656a8d4f99e356"
@@ -1108,7 +1112,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 185,
+        "nonce": 186,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

@@ -278,6 +278,7 @@ function generateAnomalies(): LivenessAnomaly[] {
         () =>
           ({
             type: Math.random() > 0.5 ? 'batchSubmissions' : 'stateUpdates',
+
             timestamp: UnixTime.now()
               .add(
                 // TODO: (liveness) should we include current day
@@ -286,6 +287,7 @@ function generateAnomalies(): LivenessAnomaly[] {
               )
               .add(Math.round(Math.random() * 172800), 'seconds')
               .toNumber(),
+
             durationInSeconds: generateRandomTime(),
           }) as const,
       )

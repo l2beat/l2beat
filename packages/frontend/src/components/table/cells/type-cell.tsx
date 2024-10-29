@@ -18,6 +18,8 @@ import {
   TooltipTrigger,
 } from '../../core/tooltip/tooltip'
 
+import type { JSX } from 'react'
+
 export interface TypeCellProps {
   children: string | undefined
   disableColors?: boolean

@@ -1,202 +1,210 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { PentagonRosetteCell } from '~/components/rosette/pentagon/pentagon-rosette-cell'
-import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
+import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
+import { TwoRowCell } from '~/components/table/cells/two-row-cell'
 import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
 import { EM_DASH } from '~/consts/characters'
-import { ChevronIcon } from '~/icons/chevron'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
-import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/format-currency'
-import { mapRisksToRosetteValues } from '../../../_utils/map-risks-to-rosette-values'
+import { DaFallbackCell } from '../../../_components/da-fallback-cell'
+import { DaLayerCell } from '../../../_components/da-layer-cell'
+import { DacMembersCell } from '../../../_components/dac-members-cell'
+import { virtual, withSpanByBridges } from '../../../_utils/col-utils'
+import {
+  mapBridgeRisksToRosetteValues,
+  mapLayerRisksToRosetteValues,
+} from '../../../_utils/map-risks-to-rosette-values'
 import { DaEconomicSecurityCell } from './da-economic-security-cell'
-import { ProjectsUsedIn } from './projects-used-in'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
 
-const nameColumn = columnHelper.accessor('name', {
+export const [indexColumn, logoColumn] = getCommonProjectColumns(columnHelper)
+
+export const daLayerColumn = columnHelper.accessor('name', {
   header: 'DA Layer',
+  cell: (ctx) => <DaLayerCell entry={ctx.row.original} />,
   meta: {
     tooltip:
       'The data availability layer where the data (transaction data or state diffs) is posted.',
   },
-  cell: (ctx) => (
-    <ProjectNameCell
-      project={{
-        name: ctx.getValue(),
-      }}
-    />
-  ),
 })
 
-const daBridgeColumn = columnHelper.accessor('daBridge', {
-  header: 'DA Bridge',
+export const daRisksColumn = columnHelper.display({
+  id: 'da-risks',
+  header: 'DA Risks',
   cell: (ctx) => {
-    const value = ctx.getValue()
-    if (value === 'multiple') {
-      return (
-        <button
-          className="flex flex-row items-center gap-4 italic text-gray-500 dark:text-gray-400"
-          onClick={(e) => {
-            e.preventDefault()
-            ctx.row.toggleExpanded()
-          }}
-        >
-          Multiple bridges
-          <ChevronIcon
-            className={cn(
-              'fill-black transition-transform dark:fill-white',
-              ctx.row.getIsExpanded() && 'rotate-180',
-            )}
-          />
-        </button>
-      )
-    }
-    return (
-      <ProjectNameCell
-        className="!pl-0"
-        project={{
-          ...ctx.row.original,
-          name: value.name,
-          shortName: undefined,
-        }}
-      />
-    )
+    const risks = mapLayerRisksToRosetteValues(ctx.row.original.risks)
+
+    return <GrissiniCell values={risks} />
   },
   meta: {
-    cellClassName: 'pl-8',
-    headClassName: 'pl-8',
-    tooltip:
-      'The DA bridge through which Ethereum is informed that data has been made available. ',
+    align: 'center',
   },
 })
 
-const risksColumn = columnHelper.display({
-  header: 'Risks',
+const daBridgeRisksColumn = columnHelper.display({
+  id: 'bridge-risks',
+  header: 'Bridge Risks',
   cell: (ctx) => {
-    const value = ctx.row.original.risks
+    const [firstBridge] = ctx.row.original.bridges
 
-    const hasNoBridge =
-      ctx.row.original.daBridge !== 'multiple' &&
-      ctx.row.original.daBridge.type === 'NoBridge'
-
-    if ('relayerFailure' in value) {
-      return (
-        <PentagonRosetteCell
-          className="justify-start"
-          values={mapRisksToRosetteValues(value)}
-          isUnderReview={ctx.row.original.isUnderReview}
-          hasNoBridge={hasNoBridge}
-        />
-      )
+    if (!firstBridge) {
+      return EM_DASH
     }
 
-    return (
-      <PentagonRosetteCell
-        className="justify-start"
-        values={mapRisksToRosetteValues({
-          economicSecurity: value.economicSecurity,
-          fraudDetection: value.fraudDetection,
-          relayerFailure: {
-            value: 'Depends on the DA Bridge',
-            sentiment: 'neutral',
-          },
-          upgradeability: {
-            value: 'Depends on the DA Bridge',
-            sentiment: 'neutral',
-          },
-          committeeSecurity: {
-            value: 'Depends on the DA Bridge',
-            sentiment: 'neutral',
-          },
-        })}
-        isUnderReview={ctx.row.original.isUnderReview}
-        hasNoBridge={hasNoBridge}
-      />
-    )
+    const risks = mapBridgeRisksToRosetteValues(firstBridge.risks)
+
+    return <GrissiniCell values={risks} />
   },
+  enableSorting: false,
   meta: {
-    hash: 'risk-analysis',
+    align: 'center',
   },
 })
 
 const tvsColumn = columnHelper.accessor('tvs', {
-  header: 'Total value secured',
+  header: 'TVS',
   cell: (ctx) =>
-    ctx.row.original.usedIn.length > 0
-      ? formatCurrency(ctx.row.original.tvs, 'usd')
-      : EM_DASH,
+    ctx.row.original.usedIn.length > 0 ? (
+      <div className="w-full pl-4 text-right text-sm font-medium">
+        {formatCurrency(ctx.row.original.tvs, 'usd')}
+      </div>
+    ) : (
+      EM_DASH
+    ),
+  enableSorting: false,
   meta: {
-    tooltip: 'The total value locked of all L2s using this layer.',
+    tooltip: 'The total value locked of all projects using this layer.',
+    align: 'right',
   },
 })
 
 const slashableStakeColumn = columnHelper.accessor('economicSecurity', {
-  header: 'Slashable stake',
-  cell: (ctx) => <DaEconomicSecurityCell value={ctx.getValue()} />,
+  header: () => <span className="text-right">{'Slashable\nstake'}</span>,
+  cell: (ctx) => {
+    const value = ctx.getValue()
+    if (ctx.row.original.risks.economicSecurity.type === 'Unknown') {
+      return (
+        <div className="w-full pl-4 text-right text-xs font-medium md:text-sm">
+          {formatCurrency(0, 'usd')}
+        </div>
+      )
+    }
+
+    return (
+      <div className="w-full pl-4 text-right text-xs font-medium md:text-sm">
+        <DaEconomicSecurityCell value={value} />
+      </div>
+    )
+  },
   meta: {
+    align: 'right',
     tooltip:
       'The assets that are slashable in case of a data withholding attack. For public blockchains, it is equal to 2/3 of the total validating stake.',
   },
+  enableSorting: false,
 })
 
-const slashableStakeForCustomSystem = columnHelper.accessor(
-  'economicSecurity',
-  {
-    header: 'Slashable stake',
-    cell: (ctx) => {
-      const value = ctx.getValue()
-      if (ctx.row.original.risks.economicSecurity.type === 'Unknown') {
-        return formatCurrency(0, 'usd')
-      }
-
-      return <DaEconomicSecurityCell value={value} />
-    },
-    meta: {
-      align: 'right',
-      tooltip:
-        'The assets that are slashable in case of a data withholding attack. For public blockchains, it is equal to 2/3 of the total validating stake.',
-    },
-  },
-)
-
-const usedInColumn = columnHelper.display({
-  header: 'Used in',
+const membersColumn = columnHelper.display({
+  header: 'Members',
   cell: (ctx) => {
-    const value = ctx.row.original.usedIn
-    return value.length > 0 ? <ProjectsUsedIn usedIn={value} /> : EM_DASH
+    const [firstBridge] = ctx.row.original.bridges
+
+    if (!firstBridge) {
+      return EM_DASH
+    }
+
+    if (firstBridge.type !== 'DAC') {
+      return EM_DASH
+    }
+
+    return <DacMembersCell {...firstBridge} />
   },
 })
 
-const challengeMechanismColumn = columnHelper.accessor(
-  'hasChallengeMechanism',
-  {
-    header: 'Challenge\nmechanism',
-    cell: (ctx) => (ctx.getValue() ? 'Yes' : 'None'),
-  },
-)
+const challengeMechanismColumn = columnHelper.accessor('challengeMechanism', {
+  header: 'Challenge\nmechanism',
+  cell: (ctx) => (
+    <TwoRowCell>
+      <TwoRowCell.First>{ctx.getValue()?.value ?? 'None'}</TwoRowCell.First>
+    </TwoRowCell>
+  ),
+  enableSorting: false,
+})
 
 const fallbackColumn = columnHelper.accessor('fallback', {
   header: 'Fallback',
-  cell: (ctx) => ctx.getValue() ?? 'None',
+  cell: (ctx) => <DaFallbackCell entry={ctx.row.original} />,
+  enableSorting: false,
 })
 
-export const columns = [
-  ...getCommonProjectColumns(columnHelper),
-  nameColumn,
-  daBridgeColumn,
-  risksColumn,
+export const customColumns = [
+  indexColumn,
+  logoColumn,
+  daLayerColumn,
+  daRisksColumn,
+  daBridgeRisksColumn,
   tvsColumn,
-  slashableStakeColumn,
-  usedInColumn,
-]
-
-export const customSystemsColumns = [
-  ...getCommonProjectColumns(columnHelper),
-  nameColumn,
-  daBridgeColumn,
-  risksColumn,
-  tvsColumn,
+  membersColumn,
   fallbackColumn,
   challengeMechanismColumn,
-  slashableStakeForCustomSystem,
+  slashableStakeColumn,
+]
+
+const daLayerGroup = columnHelper.group({
+  header: 'DA Layer',
+  columns: [
+    withSpanByBridges(daRisksColumn),
+    withSpanByBridges(tvsColumn),
+    withSpanByBridges(slashableStakeColumn),
+  ],
+})
+
+export const bridgeColumn = virtual(
+  columnHelper.display({
+    id: 'bridge',
+    header: 'Bridge',
+    meta: {
+      headClassName: 'px-4',
+      tooltip:
+        'The DA bridge through which Ethereum is informed that data has been made available.',
+    },
+  }),
+)
+
+const bridgeRisksColumn = virtual(
+  columnHelper.display({
+    id: 'bridge-risks',
+    header: 'Bridge Risks',
+  }),
+)
+
+const bridgeTvsColumn = virtual(
+  columnHelper.display({
+    id: 'bridge-tvs',
+    header: 'Value Secured',
+    meta: {
+      tooltip: 'The total value locked of all projects using this bridge.',
+    },
+  }),
+)
+
+const bridgeUsedByColumn = virtual(
+  columnHelper.display({
+    id: 'bridge-used-by',
+    header: 'Used By',
+  }),
+)
+
+const bridgeGroup = columnHelper.group({
+  header: 'DA Bridge',
+  columns: [bridgeRisksColumn, bridgeTvsColumn, bridgeUsedByColumn],
+})
+
+export const publicSystemsColumns = [
+  withSpanByBridges(indexColumn),
+  withSpanByBridges(logoColumn),
+  withSpanByBridges(daLayerColumn),
+  daLayerGroup,
+  bridgeColumn,
+  bridgeGroup,
 ]

@@ -35,65 +35,69 @@ export const paychainDac = PolygoncdkDAC({
   project: wirex,
   bridge: {
     createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
-    permissions: [
-      {
-        name: 'Committee Members',
-        description: `List of addresses authorized to sign data commitments for the DA bridge.`,
-        accounts: members.map((operator) => ({
-          address: EthereumAddress(operator[1]),
-          type: 'EOA',
-        })),
-      },
-      {
-        name: 'LocalAdmin',
-        accounts: [
-          discovery.formatPermissionedAccount(
-            discovery.getContractValue('WirexPayChainValidium', 'admin'),
-          ),
-        ],
-        description:
-          'Admin and ForceBatcher of the WirexPayChainValidium contract, can set core system parameters like replacing the sequencer (relayer), activate forced transactions, and set the DA committee members in the WirexPayChainDAC contract.',
-      },
-      {
-        name: 'RollupManager',
-        accounts: [
-          discovery.formatPermissionedAccount(
-            discovery.getContractValue(
-              'WirexPayChainValidium',
-              'rollupManager',
+    permissions: {
+      ethereum: [
+        {
+          name: 'Committee Members',
+          description: `List of addresses authorized to sign data commitments for the DA bridge.`,
+          accounts: members.map((operator) => ({
+            address: EthereumAddress(operator[1]),
+            type: 'EOA',
+          })),
+        },
+        {
+          name: 'LocalAdmin',
+          accounts: [
+            discovery.formatPermissionedAccount(
+              discovery.getContractValue('WirexPayChainValidium', 'admin'),
             ),
-          ),
-        ],
-        description:
-          'The RollupManager can upgrade the DA bridge contract implementation.',
-      },
-      {
-        name: 'DACProxyAdminOwner',
-        accounts: [
-          discovery.formatPermissionedAccount(
-            discovery.getContractValue('DACProxyAdmin', 'owner'),
-          ),
-        ],
-        description:
-          "Owner of the WirexPayChainDAC's ProxyAdmin. Can upgrade the DAC members.",
-      },
-    ],
+          ],
+          description:
+            'Admin and ForceBatcher of the WirexPayChainValidium contract, can set core system parameters like replacing the sequencer (relayer), activate forced transactions, and set the DA committee members in the WirexPayChainDAC contract.',
+        },
+        {
+          name: 'RollupManager',
+          accounts: [
+            discovery.formatPermissionedAccount(
+              discovery.getContractValue(
+                'WirexPayChainValidium',
+                'rollupManager',
+              ),
+            ),
+          ],
+          description:
+            'The RollupManager can upgrade the DA bridge contract implementation.',
+        },
+        {
+          name: 'DACProxyAdminOwner',
+          accounts: [
+            discovery.formatPermissionedAccount(
+              discovery.getContractValue('DACProxyAdmin', 'owner'),
+            ),
+          ],
+          description:
+            "Owner of the WirexPayChainDAC's ProxyAdmin. Can upgrade the DAC members.",
+        },
+      ],
+    },
     chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignaturesDAC,
     membersCount: membersCountDAC,
     transactionDataType: DacTransactionDataType.TransactionData,
     contracts: {
-      addresses: [
-        discovery.getContractDetails('WirexPayChainValidium', {
-          description: `The DA bridge and main contract of the WirexPayChain zkEVM. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
-          ...bridgeUpgradeability,
-        }),
-        discovery.getContractDetails('WirexPayChainDAC', {
-          description:
-            'Validium committee contract that allows the admin to setup the members of the committee and stores the required amount of signatures threshold.',
-          ...upgradeability,
-        }),
-      ],
+      addresses: {
+        ethereum: [
+          discovery.getContractDetails('WirexPayChainValidium', {
+            description: `The DA bridge and main contract of the WirexPayChain zkEVM. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
+            ...bridgeUpgradeability,
+          }),
+          discovery.getContractDetails('WirexPayChainDAC', {
+            description:
+              'Validium committee contract that allows the admin to setup the members of the committee and stores the required amount of signatures threshold.',
+            ...upgradeability,
+          }),
+        ],
+      },
       risks: [],
     },
   },

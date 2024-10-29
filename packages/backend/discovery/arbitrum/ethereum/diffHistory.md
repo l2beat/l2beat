@@ -1,3 +1,290 @@
+Generated with discovered.json: 0x0e84e60281e9bd0caa80ded9d50c991ca952ab64
+
+# Diff at Fri, 25 Oct 2024 09:46:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e7501f424c0cea9b5438386ee76e509448999836 block: 21027338
+- current block number: 21041823
+
+## Description
+
+Config related.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21027338 (main branch discovery), not current.
+
+```diff
+    contract Outbox (0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      issuedPermissions.0.via.0:
++        {"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD","delay":0}
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x0ea6999172c1B4563695F76A52de73c848587b17) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5"}]
+    }
+```
+
+```diff
+    contract SequencerInbox (0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) {
+    +++ description: None
+      issuedPermissions.2.target:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      issuedPermissions.2.via.0:
++        {"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD","delay":0}
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x3f92814930f43c6a1C6B133E5945E7B3338F33a6) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x7CF3d537733F6Ba4183A833c9B021265716cE9d0"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x7CF3d537733F6Ba4183A833c9B021265716cE9d0"}]
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x3ffFbAdAF827559da092217e474760E2b2c3CeDd) {
+    +++ description: None
+      receivedPermissions.10:
++        {"permission":"upgrade","target":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","via":[{"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"}]}
+      receivedPermissions.9:
++        {"permission":"upgrade","target":"0xe5896783a2F463446E1f624e64Aa6836BE4C6f58","via":[{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}]}
+      receivedPermissions.8:
++        {"permission":"upgrade","target":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a","via":[{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}]}
+      receivedPermissions.7:
++        {"permission":"upgrade","target":"0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40","via":[{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","target":"0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a","via":[{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","target":"0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"}
+      receivedPermissions.4:
++        {"permission":"upgrade","target":"0x57Bd336d579A51938619271a7Cc137a46D0501B1","via":[{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","target":"0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f","via":[{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}]}
+      receivedPermissions.2.target:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      receivedPermissions.1.target:
+-        "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
++        "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6"
+      receivedPermissions.1.via:
++        [{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}]
+      receivedPermissions.0.target:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
+      receivedPermissions.0.via.0.address:
+-        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
++        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+      directlyReceivedPermissions.2:
++        {"permission":"act","target":"0xF06E95eF589D9c38af242a8AAee8375f14023F85"}
+      directlyReceivedPermissions.1.target:
+-        "0xF06E95eF589D9c38af242a8AAee8375f14023F85"
++        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
+      directlyReceivedPermissions.0.target:
+-        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
++        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x4561A4cDA2CB8a61ED023785bc1817fdf685dcb3) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78"}]
+    }
+```
+
+```diff
+    contract Inbox (0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      issuedPermissions.0.via.0:
++        {"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD","delay":0}
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x509E3CDc218d163DB9A03678107b72e00163b061) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0"}]
+    }
+```
+
+```diff
+    contract ArbitrumProxyAdmin (0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"},{"permission":"upgrade","target":"0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6"},{"permission":"upgrade","target":"0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"},{"permission":"upgrade","target":"0x57Bd336d579A51938619271a7Cc137a46D0501B1"},{"permission":"upgrade","target":"0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a"},{"permission":"upgrade","target":"0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"},{"permission":"upgrade","target":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"permission":"upgrade","target":"0xe5896783a2F463446E1f624e64Aa6836BE4C6f58"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"},{"permission":"upgrade","target":"0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6"},{"permission":"upgrade","target":"0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"},{"permission":"upgrade","target":"0x57Bd336d579A51938619271a7Cc137a46D0501B1"},{"permission":"upgrade","target":"0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a"},{"permission":"upgrade","target":"0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"},{"permission":"upgrade","target":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"permission":"upgrade","target":"0xe5896783a2F463446E1f624e64Aa6836BE4C6f58"}]
+    }
+```
+
+```diff
+    contract ValidatorWallet (0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x4561A4cDA2CB8a61ED023785bc1817fdf685dcb3"
++        "0x194DAFaB3B9B24B181a63F81eE42b322Cd0Db6E5"
+      issuedPermissions.0.via.0:
++        {"address":"0x4561A4cDA2CB8a61ED023785bc1817fdf685dcb3","delay":0}
+    }
+```
+
+```diff
+    contract RollupEventInbox (0x57Bd336d579A51938619271a7Cc137a46D0501B1) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      issuedPermissions.0.via.0:
++        {"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD","delay":0}
+    }
+```
+
+```diff
+    contract OutboxV0 (0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      issuedPermissions.0.via.0:
++        {"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD","delay":0}
+    }
+```
+
+```diff
+    contract OutboxV1 (0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      issuedPermissions.0.via.0:
++        {"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD","delay":0}
+    }
+```
+
+```diff
+    contract ValidatorWallet (0x7CF3d537733F6Ba4183A833c9B021265716cE9d0) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x3f92814930f43c6a1C6B133E5945E7B3338F33a6"
++        "0xC234E41AE2cb00311956Aa7109fC801ae8c80941"
+      issuedPermissions.0.via.0:
++        {"address":"0x3f92814930f43c6a1C6B133E5945E7B3338F33a6","delay":0}
+    }
+```
+
+```diff
+    contract Bridge (0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      issuedPermissions.0.via.0:
++        {"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD","delay":0}
+    }
+```
+
+```diff
+    contract ValidatorWallet (0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x0ea6999172c1B4563695F76A52de73c848587b17"
++        "0xC234E41AE2cb00311956Aa7109fC801ae8c80941"
+      issuedPermissions.0.via.0:
++        {"address":"0x0ea6999172c1B4563695F76A52de73c848587b17","delay":0}
+    }
+```
+
+```diff
+    contract ValidatorWallet (0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x509E3CDc218d163DB9A03678107b72e00163b061"
++        "0xd3132d052C9045D7cB0236586C9E2276e654343D"
+      issuedPermissions.0.via.0:
++        {"address":"0x509E3CDc218d163DB9A03678107b72e00163b061","delay":0}
+    }
+```
+
+```diff
+    contract ValidatorOwnerMultisig (0xC234E41AE2cb00311956Aa7109fC801ae8c80941) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x7CF3d537733F6Ba4183A833c9B021265716cE9d0","via":[{"address":"0x3f92814930f43c6a1C6B133E5945E7B3338F33a6"}]},{"permission":"upgrade","target":"0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5","via":[{"address":"0x0ea6999172c1B4563695F76A52de73c848587b17"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0x0ea6999172c1B4563695F76A52de73c848587b17"},{"permission":"act","target":"0x3f92814930f43c6a1C6B133E5945E7B3338F33a6"}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xCcadc6B174BEcf31a35b818373e90391971a1C0c) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b"}]
+    }
+```
+
+```diff
+    contract ChallengeManager (0xe5896783a2F463446E1f624e64Aa6836BE4C6f58) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      issuedPermissions.0.via.0:
++        {"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD","delay":0}
+    }
+```
+
+```diff
+    contract ValidatorWallet (0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xCcadc6B174BEcf31a35b818373e90391971a1C0c"
++        "0xcd6BeDC12de2bF49afDE86cc91031d207318F207"
+      issuedPermissions.0.via.0:
++        {"address":"0xCcadc6B174BEcf31a35b818373e90391971a1C0c","delay":0}
+    }
+```
+
 Generated with discovered.json: 0x652e372f2410121c6860d417e6909dbdde4af08e
 
 # Diff at Wed, 23 Oct 2024 14:35:44 GMT:

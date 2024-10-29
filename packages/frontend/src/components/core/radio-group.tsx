@@ -4,12 +4,14 @@ import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
 import * as React from 'react'
 import { cn } from '~/utils/cn'
 
-const RadioGroup = React.forwardRef<
-  React.ElementRef<typeof RadioGroupPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root> & {
-    variant?: 'highlighted'
-  }
->(({ className, variant, ...props }, ref) => {
+const RadioGroup = ({
+  ref,
+  className,
+  variant,
+  ...props
+}: React.ComponentProps<typeof RadioGroupPrimitive.Root> & {
+  variant?: 'highlighted'
+}) => {
   return (
     <RadioGroupPrimitive.Root
       className={cn(
@@ -22,13 +24,14 @@ const RadioGroup = React.forwardRef<
       ref={ref}
     />
   )
-})
+}
 RadioGroup.displayName = RadioGroupPrimitive.Root.displayName
 
-const RadioGroupItem = React.forwardRef<
-  React.ElementRef<typeof RadioGroupPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Item>
->(({ className, ...props }, ref) => {
+const RadioGroupItem = ({
+  ref,
+  className,
+  ...props
+}: React.ComponentProps<typeof RadioGroupPrimitive.Item>) => {
   return (
     <RadioGroupPrimitive.Item
       ref={ref}
@@ -42,7 +45,7 @@ const RadioGroupItem = React.forwardRef<
       {...props}
     />
   )
-})
+}
 RadioGroupItem.displayName = RadioGroupPrimitive.Item.displayName
 
 export { RadioGroup, RadioGroupItem }
