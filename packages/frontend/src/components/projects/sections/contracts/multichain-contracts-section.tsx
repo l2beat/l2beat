@@ -3,7 +3,6 @@ import { type UsedInProject } from '@l2beat/config/build/src/projects/other/da-b
 import partition from 'lodash/partition'
 import { ProjectDetailsRelatedProjectBanner } from '~/components/project-details-related-project-banner'
 import { type DiagramParams } from '~/utils/project/get-diagram-params'
-import { CheckOutScalingProjectBanner } from '../check-out-scaling-project-banner'
 import { ContractEntry, type TechnologyContract } from '../contract-entry'
 import { ProjectSection } from '../project-section'
 import { ReferenceList } from '../reference-list'
