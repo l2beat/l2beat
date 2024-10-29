@@ -57,8 +57,3 @@ function getDacMembers(value: string | undefined) {
   assert(required && total, 'Invalid dac members')
   return { required: parseInt(required), total: parseInt(total) }
 }
-
-console.log([
-  approximateProbabilityOfCompromise({ required: 1, total: 1 }),
-  approximateProbabilityOfCompromise({ required: 2, total: 3 }),
-])
