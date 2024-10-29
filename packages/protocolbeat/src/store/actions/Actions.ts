@@ -16,4 +16,5 @@ export interface Actions {
   hideSelected: () => void
   showHidden: () => void
   clear: () => void
+  selectAndFocus: (selected: readonly string[]) => void
 }

@@ -3,14 +3,18 @@ import { FileDropZone } from './view/FileDropZone'
 import { Sidebar } from './view/Sidebar'
 import { Viewport } from './view/Viewport'
 
-export function App() {
+interface AppProps {
+  panelMode?: boolean
+}
+
+export function App(props: AppProps) {
   return (
-    <FileDropZone>
+    <FileDropZone disabled={!!props.panelMode}>
       <div className="relative h-full w-full flex-1">
         <Viewport />
-        <Controls />
+        <Controls panelMode={!!props.panelMode} />
       </div>
-      <Sidebar />
+      {!props.panelMode && <Sidebar />}
     </FileDropZone>
   )
 }
