@@ -22,7 +22,6 @@ export function selectAndFocus(
     minX = Math.min(node.box.x, minX)
     minY = Math.min(node.box.y, minY)
   }
-  console.log(minX, minY)
 
   return {
     transform: {
