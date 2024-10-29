@@ -44,6 +44,7 @@ export const columns = [
         </SentimentText>
       )
     },
+    sortDescFirst: true,
     sortingFn: (a, b) =>
       sortBySentimentAndAlphabetically(
         a.original.dataAvailability.layer,
@@ -67,6 +68,7 @@ export const columns = [
         </SentimentText>
       )
     },
+    sortDescFirst: true,
     sortingFn: (a, b) => {
       const bridgeA = a.original.dataAvailability.bridge
       const bridgeB = b.original.dataAvailability.bridge
