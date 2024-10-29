@@ -6,12 +6,9 @@ import { groupBy } from 'lodash'
 import { TvlConfig } from '../../../config/Config'
 import { Providers } from '../../../providers/Providers'
 import { Clock } from '../../../tools/Clock'
-import { IndexerService } from '../../../tools/uif/IndexerService'
 import { PriceDependencies } from '../dependencies/PriceDependencies'
 import { DescendantIndexer } from '../indexers/DescendantIndexer'
-import { HourlyIndexer } from '../indexers/HourlyIndexer'
 import { PriceIndexer } from '../indexers/PriceIndexer'
-import { SyncOptimizer } from '../utils/SyncOptimizer'
 
 interface PriceModule {
   start: () => Promise<void> | void
@@ -25,14 +22,9 @@ export function initPriceModule(
   providers: Providers,
   database: Database,
 ): PriceModule {
-  const dependencies = new PriceDependencies(database, providers)
+  const dependencies = new PriceDependencies(database, clock, logger, providers)
 
-  const { indexers, descendant } = createPriceIndexers(
-    config,
-    logger,
-    clock,
-    dependencies,
-  )
+  const { indexers, descendant } = createPriceIndexers(config, dependencies)
 
   return {
     start: async () => {
@@ -48,14 +40,13 @@ export function initPriceModule(
 
 function createPriceIndexers(
   config: TvlConfig,
-  logger: Logger,
-  clock: Clock,
   dependencies: PriceDependencies,
 ) {
-  const indexerService = new IndexerService(dependencies.database)
-  const syncOptimizer = new SyncOptimizer(clock)
-  const hourlyIndexer = new HourlyIndexer(logger, clock)
+  const indexerService = dependencies.getIndexerService()
+  const syncOptimizer = dependencies.getSyncOptimizer()
   const priceService = dependencies.getPriceService()
+  const hourlyIndexer = dependencies.getHourlyIndexer()
+  const logger = dependencies.logger
 
   const byCoingeckoId = groupBy(config.prices, (price) => price.coingeckoId)
 
