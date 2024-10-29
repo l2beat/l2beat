@@ -6,7 +6,7 @@ interface CharProps {
   char: string
   href: string | undefined
   selected: boolean
-  ref: RefObject<HTMLLIElement | null> | null
+  ref?: RefObject<HTMLLIElement | null>
 }
 
 export function AlphabetSelectorChar({ char, href, selected, ref }: CharProps) {

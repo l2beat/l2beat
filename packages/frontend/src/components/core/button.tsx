@@ -31,20 +31,16 @@ interface Props
 }
 
 const Button = ({
-  ref,
   className,
   variant,
   size,
   asChild = false,
   ...props
-}: Props & {
-  ref?: React.RefObject<HTMLButtonElement>
-}) => {
+}: Props & {}) => {
   const Comp = asChild ? Slot : 'button'
   return (
     <Comp
       className={cn(buttonVariants({ variant, size, className }))}
-      ref={ref}
       {...props}
     />
   )

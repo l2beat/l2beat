@@ -5,15 +5,10 @@ import { cn } from '~/utils/cn'
 interface Props {
   entry: CollectionEntry<'glossary'>
   selected: boolean
+  ref?: React.RefObject<HTMLLIElement | null>
 }
 
-export const GlossarySideNavItem = ({
-  ref,
-  entry,
-  selected,
-}: Props & {
-  ref: React.RefObject<HTMLLIElement | null> | null
-}) => {
+export const GlossarySideNavItem = ({ ref, entry, selected }: Props) => {
   return (
     <li ref={ref}>
       <a
