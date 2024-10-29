@@ -3,7 +3,7 @@ import {
   type ScalingProjectPermissionedAccount,
   type ScalingProjectReference,
 } from '@l2beat/config'
-import { type UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
+import { type UsedInProject as ConfigUsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
 import {
   type ContractsVerificationStatuses,
   type ManuallyVerifiedContracts,
@@ -20,12 +20,13 @@ import {
 import { type ProjectSectionProps } from '../../../components/projects/sections/types'
 import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
+import { UsedInProject } from '~/components/projects/sections/permissions/used-in-project'
 
 type ProjectParams = {
   id: string
   permissions: Record<string, ScalingProjectPermission[]> | 'UnderReview'
   isUnderReview: boolean
-  dacUsedIn?: UsedInProject
+  dacUsedIn?: ConfigUsedInProject
 }
 
 type PermissionSection = Omit<
