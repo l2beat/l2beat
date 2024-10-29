@@ -30,6 +30,14 @@ export function TransactionList({
       return -1
     }
 
+    if (a.type.startsWith('ERC') || a.type.startsWith('EIP-712')) {
+      return -1
+    }
+
+    if (b.type.startsWith('ERC') || b.type.startsWith('EIP-712')) {
+      return 1
+    }
+
     return a.type.localeCompare(b.type)
   }
 

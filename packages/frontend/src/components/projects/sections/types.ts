@@ -1,10 +1,14 @@
 import { type ChartSectionProps } from './chart-section'
 import { type ContractsSectionProps } from './contracts/contracts-section'
+import { type MultiChainContractsSectionProps } from './contracts/multichain-contracts-section'
 import { type DetailedDescriptionSectionProps } from './detailed-description-section'
+import { type GrissiniRiskAnalysisSectionProps } from './grissini-risk-analysis-section'
+import { type GroupSectionProps } from './group-section'
 import { type KnowledgeNuggetsSectionProps } from './knowledge-nuggets-section'
 import { type L3RiskAnalysisSectionProps } from './l3-risk-analysis-section'
 import { type MarkdownSectionProps } from './markdown-section'
 import { type MilestonesAndIncidentsSectionProps } from './milestones-and-incidents-section'
+import { type MultichainPermissionsSectionProps } from './permissions/multichain-permissions-section'
 import { type PermissionsSectionProps } from './permissions/permissions-section'
 import { type ExtendedProjectSectionProps } from './project-section'
 import { type RiskAnalysisSectionProps } from './risk-analysis-section'
@@ -14,7 +18,7 @@ import { type StateDerivationSectionProps } from './state-derivation-section'
 import { type StateValidationSectionProps } from './state-validation-section'
 import { type TechnologySectionProps } from './technology-section'
 
-export type ProjectSectionId =
+type SectionId =
   | 'tvl'
   | 'activity'
   | 'onchain-costs'
@@ -25,8 +29,6 @@ export type ProjectSectionId =
   | 'l3-risk-analysis'
   | 'stage'
   | 'technology'
-  | 'da-layer-technology'
-  | 'da-bridge-technology'
   | 'operator'
   | 'withdrawals'
   | 'other-considerations'
@@ -36,6 +38,10 @@ export type ProjectSectionId =
   | 'permissions'
   | 'contracts'
   | 'knowledge-nuggets'
+
+type GroupId = 'da-layer' | 'da-bridge'
+
+export type ProjectSectionId = SectionId | GroupId | `${GroupId}-${SectionId}`
 
 export type ProjectSectionProps = Omit<
   ExtendedProjectSectionProps,
@@ -104,9 +110,19 @@ export interface ProjectDetailsPermissionsSection {
   props: ProjectDetailsProps<PermissionsSectionProps>
 }
 
+export interface ProjectDetailsMultichainPermissionsSection {
+  type: 'MultichainPermissionsSection'
+  props: ProjectDetailsProps<MultichainPermissionsSectionProps>
+}
+
 export interface ProjectDetailsContractsSection {
   type: 'ContractsSection'
   props: ProjectDetailsProps<ContractsSectionProps>
+}
+
+export interface ProjectDetailsMultiChainContractsSection {
+  type: 'MultichainContractsSection'
+  props: ProjectDetailsProps<MultiChainContractsSectionProps>
 }
 
 export interface ProjectDetailsKnowledgeNuggetsSection {
@@ -117,6 +133,16 @@ export interface ProjectDetailsKnowledgeNuggetsSection {
 export interface ProjectDetailsUpcomingDisclaimer {
   type: 'UpcomingDisclaimer'
   excludeFromNavigation: true
+}
+
+export interface ProjectDetailsGroup {
+  type: 'Group'
+  props: ProjectDetailsProps<GroupSectionProps>
+}
+
+export interface ProjectDetailsGrissiniRiskAnalysisSection {
+  type: 'GrissiniRiskAnalysisSection'
+  props: ProjectDetailsProps<GrissiniRiskAnalysisSectionProps>
 }
 
 export type ProjectDetailsSection = {
@@ -134,7 +160,11 @@ export type ProjectDetailsSection = {
   | ProjectDetailsStateValidationSection
   | ProjectDetailsMarkdownSection
   | ProjectDetailsPermissionsSection
+  | ProjectDetailsMultichainPermissionsSection
   | ProjectDetailsContractsSection
+  | ProjectDetailsMultiChainContractsSection
   | ProjectDetailsKnowledgeNuggetsSection
   | ProjectDetailsUpcomingDisclaimer
+  | ProjectDetailsGroup
+  | ProjectDetailsGrissiniRiskAnalysisSection
 )

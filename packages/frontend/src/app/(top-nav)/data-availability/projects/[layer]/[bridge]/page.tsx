@@ -1,40 +1,67 @@
 import { daLayers } from '@l2beat/config/build/src/projects/other/da-beat/index'
 import { notFound } from 'next/navigation'
-import { Suspense } from 'react'
-import { ProjectHeader } from '~/components/projects/project-header'
-import { DaBridgeSelect } from '../_components/da-bridge-select'
-import { DaProjectPage } from '../_components/da-project-page'
-import DaProjectPageSkeleton from '../_components/da-project-page-skeleton'
+import { HighlightableLinkContextProvider } from '~/components/link/highlightable/highlightable-link-context'
+import { DesktopProjectNavigation } from '~/components/projects/navigation/desktop-project-navigation'
+import { MobileProjectNavigation } from '~/components/projects/navigation/mobile-project-navigation'
+import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
+import { ProjectDetails } from '~/components/projects/project-details'
+import { getDaProjectEntry } from '~/server/features/data-availability/project/get-da-project-entry'
+import { DaProjectSummary } from '../_components/da-project-summary'
 
 interface Props {
-  params: {
+  params: Promise<{
     layer: string
     bridge: string
-  }
+  }>
 }
 
 export default async function Page(props: Props) {
-  const daLayer = daLayers.find((p) => p.display.slug === props.params.layer)
+  const params = await props.params
+  const daLayer = daLayers.find((p) => p.display.slug === params.layer)
   if (!daLayer) return notFound()
-  const daBridge = daLayer.bridges.find(
-    (b) => b.display.slug === props.params.bridge,
-  )
+  const daBridge = daLayer.bridges.find((b) => b.display.slug === params.bridge)
   if (!daBridge) return notFound()
 
-  const header = (
-    <header className="space-y-4 pt-6 max-md:bg-gray-100 max-md:pb-4 max-md:dark:bg-zinc-900 md:space-y-3">
-      <ProjectHeader title={daLayer.display.name} slug={daLayer.display.slug} />
-      <DaBridgeSelect
-        defaultValue={daBridge.display.slug}
-        layerSlug={daLayer.display.slug}
-        bridges={daLayer.bridges}
-      />
-    </header>
+  const daProjectEntry = await getDaProjectEntry(daLayer, daBridge)
+
+  const navigationSections = projectDetailsToNavigationSections(
+    daProjectEntry.projectDetails,
   )
+  const isNavigationEmpty = navigationSections.length === 0
 
   return (
-    <Suspense fallback={<DaProjectPageSkeleton header={header} />}>
-      <DaProjectPage header={header} daLayer={daLayer} daBridge={daBridge} />
-    </Suspense>
+    <>
+      {!isNavigationEmpty && (
+        <div className="sticky top-0 z-100 md:hidden">
+          <MobileProjectNavigation sections={navigationSections} />
+        </div>
+      )}
+      <DaProjectSummary project={daProjectEntry} />
+      {isNavigationEmpty ? (
+        <ProjectDetails items={daProjectEntry.projectDetails} />
+      ) : (
+        <div className="gap-x-12 md:flex">
+          <div className="mt-10 hidden w-[242px] shrink-0 md:block">
+            <DesktopProjectNavigation
+              project={{
+                title: daProjectEntry.name,
+                slug: daLayer.display.slug,
+                showProjectUnderReview: daProjectEntry.isUnderReview,
+              }}
+              sections={navigationSections}
+              projectVariants={daLayer.bridges.map((bridge) => ({
+                title: bridge.display.name,
+                href: `/data-availability/projects/${daLayer.display.slug}/${bridge.display.slug}`,
+              }))}
+            />
+          </div>
+          <div className="w-full">
+            <HighlightableLinkContextProvider>
+              <ProjectDetails items={daProjectEntry.projectDetails} />
+            </HighlightableLinkContextProvider>
+          </div>
+        </div>
+      )}
+    </>
   )
 }

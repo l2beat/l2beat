@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xca8ef6b0cd851905c181a9094d4c17e2e9b3a188
+
+# Diff at Mon, 28 Oct 2024 12:47:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@00bd1d18460d612b1f06ce2339854c105cd41bd5 block: 21027362
+- current block number: 21064224
+
+## Description
+
+Withdrawal limit for the ETH escrow raised to 7829 ETH or USD ~20M. Current contract TVL is USD 39M.
+
+## Watched changes
+
+```diff
+    contract FuelMessagePortal (0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf) {
+    +++ description: None
+      values.limitAmount:
+-        "10000000000000000000"
++        "7829000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x1f17ce4ea058b80f90b7ed862c7a76b29124680c
 
 # Diff at Wed, 23 Oct 2024 09:22:40 GMT:

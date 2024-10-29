@@ -3,6 +3,7 @@ import type { CountedBlock, StatResults } from '@/types'
 import { BlockClient } from '../clients/block/BlockClient'
 import { RpcClient } from '../clients/block/RpcClient'
 import { StarknetClient } from '../clients/block/StarknetClient'
+import { RpcCodeClient } from '../clients/code/RpcCodeClient'
 import { ScanClient } from '../clients/contract/ScanClient'
 import { EtherfaceClient } from '../clients/signature/EtherfaceClient'
 import { FourByteClient } from '../clients/signature/FourByteClient'
@@ -30,7 +31,8 @@ export class ChainService {
       case 'taiko':
       case 'arbitrum':
       case 'gravity':
-      case 'optimism': {
+      case 'optimism':
+      case 'zksync-era': {
         this.client = new RpcClient(chain)
         this.counter = new RpcCounter()
         const signatureClients = [
@@ -39,7 +41,13 @@ export class ChainService {
           new OpenChainClient(),
         ]
         const contractClient = new ScanClient(chain)
-        this.nameService = new NameService(db, signatureClients, contractClient)
+        const codeClient = new RpcCodeClient(chain)
+        this.nameService = new NameService(
+          db,
+          signatureClients,
+          contractClient,
+          codeClient,
+        )
         break
       }
       default:

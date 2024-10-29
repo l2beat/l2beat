@@ -9,13 +9,13 @@ import { DayTargetIndexer } from './DayTargetIndexer'
 export interface ActivityIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
   projectId: ProjectId
-  txsCountProvider: TxsCountProvider
+  txsCountService: TxsCountService
   db: Database
   /** The number of blocks/days to process at once. In case of error this is the maximum amount of blocks/days we will need to refetch */
   batchSize: number
 }
 
-export interface TxsCountProvider {
+export interface TxsCountService {
   getTxsCount(from: number, to: number): Promise<ActivityRecord[]>
 }
 

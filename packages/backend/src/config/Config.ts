@@ -123,13 +123,13 @@ export interface FinalityConfig {
 
 export interface BlockscoutChainConfig {
   readonly type: 'blockscout'
-  readonly blockscoutApiUrl: string
+  readonly url: string
 }
 
 export interface EtherscanChainConfig {
   readonly type: 'etherscan'
-  readonly etherscanApiKey: string
-  readonly etherscanApiUrl: string
+  readonly apiKey: string
+  readonly url: string
 }
 
 export interface ChainTvlConfig {

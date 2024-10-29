@@ -1,114 +1,99 @@
-export interface ProjectParameters {
+// Make sure it follows packages/l2b/src/implementations/discovery-ui/types.ts
+// If you find that you are changing this file often consider moving both
+// of those files into a single shared package.
+
+export type ApiProjectsResponse = ApiProjectEntry[]
+
+export interface ApiProjectEntry {
   name: string
-  blockNumber: number
-  contracts: ContractParameters[]
-  eoas: string[]
-  abis: Record<string, string[]>
+  chains: string[]
 }
 
-export type ContractValue =
-  | string
-  | number
-  | boolean
-  | ContractValue[]
-  | { [key: string]: ContractValue }
+export interface ApiProjectResponse {
+  chains: ApiProjectChain[]
+}
 
-export interface ContractParameters {
+export interface ApiProjectChain {
   name: string
-  unverified?: true
+  initialContracts: ApiProjectContract[]
+  discoveredContracts: ApiProjectContract[]
+  ignoredContracts: ApiAddressEntry[]
+  eoas: ApiAddressEntry[]
+}
+
+export interface ApiAddressEntry {
+  name?: string
+  type:
+    | 'EOA'
+    | 'Unverified'
+    | 'Token'
+    | 'Multisig'
+    | 'Diamond'
+    | 'Timelock'
+    | 'Contract'
   address: string
-  code?: string
-  upgradeability: UpgradeabilityParameters
-  values?: Record<string, ContractValue>
-  errors?: Record<string, string>
 }
 
-export type UpgradeabilityParameters =
-  | ImmutableUpgradeability
-  | GnosisSafeUpgradeability
-  | EIP1967ProxyUpgradeability
-  | ZeppelinOSProxyUpgradeability
-  | StarkWareProxyUpgradeability
-  | StarkWareDiamondUpgradeability
-  | ArbitrumProxyUpgradeability
-  | NewArbitrumProxyUpgradeability
-  | ResolvedDelegateProxyUpgradeability
-  | EIP897ProxyUpgradeability
-  | CallImplementationProxyUpgradeability
-  | EIP2535ProxyUpgradeability
-
-export interface ImmutableUpgradeability {
-  type: 'immutable'
+export interface Field {
+  name: string
+  value: FieldValue
 }
 
-export interface GnosisSafeUpgradeability {
-  type: 'gnosis safe'
-  masterCopy: string
+export type FieldValue =
+  | AddressFieldValue
+  | HexFieldValue
+  | StringFieldValue
+  | NumberFieldValue
+  | BooleanFieldValue
+  | ArrayFieldValue
+  | ObjectFieldValue
+  | UnknownFieldValue
+
+export interface AddressFieldValue {
+  type: 'address'
+  name?: string
+  address: string
 }
 
-export interface EIP1967ProxyUpgradeability {
-  type: 'EIP1967 proxy'
-  admin: string
-  implementation: string
+export interface HexFieldValue {
+  type: 'hex'
+  value: string
 }
 
-export interface ZeppelinOSProxyUpgradeability {
-  type: 'ZeppelinOS proxy'
-  admin?: string
-  owner?: string
-  implementation: string
+export interface StringFieldValue {
+  type: 'string'
+  value: string
 }
 
-export interface StarkWareProxyUpgradeability {
-  type: 'StarkWare proxy'
-  implementation: string
-  callImplementation: string
-  upgradeDelay: number
-  isFinal: boolean
+export interface NumberFieldValue {
+  type: 'number'
+  value: string
 }
 
-export interface StarkWareDiamondUpgradeability {
-  type: 'StarkWare diamond'
-  implementation: string
-  upgradeDelay: number
-  isFinal: boolean
-  facets: Record<string, string>
+export interface BooleanFieldValue {
+  type: 'boolean'
+  value: boolean
 }
 
-export interface ArbitrumProxyUpgradeability {
-  type: 'Arbitrum proxy'
-  admin: string
-  adminImplementation: string
-  userImplementation: string
+export interface ArrayFieldValue {
+  type: 'array'
+  values: FieldValue[]
 }
 
-export interface NewArbitrumProxyUpgradeability {
-  type: 'new Arbitrum proxy'
-  admin: string
-  implementation: string
-  adminImplementation: string
-  userImplementation: string
+export interface ObjectFieldValue {
+  type: 'object'
+  value: Record<string, FieldValue>
 }
 
-export interface ResolvedDelegateProxyUpgradeability {
-  type: 'resolved delegate proxy'
-  addressManager: string
-  implementationName: string
-  implementation: string
+export interface UnknownFieldValue {
+  type: 'unknown'
+  value: string
 }
 
-export interface EIP897ProxyUpgradeability {
-  type: 'EIP897 proxy'
-  isUpgradable: boolean
-  implementation: string
+export interface ApiProjectContract extends ApiAddressEntry {
+  fields: Field[]
 }
 
-export interface CallImplementationProxyUpgradeability {
-  type: 'call implementation proxy'
-  implementation: string
-}
-
-export interface EIP2535ProxyUpgradeability {
-  type: 'EIP2535 diamond proxy'
-  facets: string[]
+export interface ApiCodeResponse {
+  sources: { name: string; code: string }[]
 }

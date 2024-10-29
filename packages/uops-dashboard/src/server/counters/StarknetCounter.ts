@@ -10,6 +10,7 @@ export class StarknetCounter implements Counter {
         const starknetTx = tx as StarknetTransaction
         return {
           type: starknetTx.type,
+          from: starknetTx.from,
           hash: starknetTx.hash,
           operationsCount: this.getOperationsCount(starknetTx, block.number),
         }

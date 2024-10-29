@@ -1,3 +1,68 @@
+Generated with discovered.json: 0x11b0c068afb99205b38b77b23ace2acc285acff0
+
+# Diff at Tue, 29 Oct 2024 08:55:45 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@dd2750779d294ea31d352eac7a7f2e0e655f6440 block: 76950926
+- current block number: 76950926
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 76950926 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.2.target:
+-        "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"
++        "0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a"
+      issuedPermissions.2.via.0:
++        {"address":"0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9","delay":0}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9) {
+    +++ description: Central contract defining the access control for upgrading the system contract implementations.
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0"}]
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0"}]
+    }
+```
+
+Generated with discovered.json: 0xb4d42dc4c3761c58ffd5b39724d57f0dc97dd416
+
+# Diff at Mon, 28 Oct 2024 14:09:48 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@846d03afee15838cf7b18315c02ebdb6a2071f6c block: 76950926
+- current block number: 76950926
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 76950926 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9) {
+    +++ description: Central contract defining the access control for upgrading the system contract implementations.
+      values.executors:
++        ["0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a"]
+    }
+```
+
 Generated with discovered.json: 0xdebd3c8bd2acbfe3a05522d60ee78962976e1269
 
 # Diff at Wed, 23 Oct 2024 14:37:25 GMT:

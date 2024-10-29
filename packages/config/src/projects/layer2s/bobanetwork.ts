@@ -53,7 +53,7 @@ export const bobanetwork: Layer2 = opStackL2({
   // Explicitly set since we are getting weird results from the finality calculation
   finality: undefined,
   genesisTimestamp: new UnixTime(1713303530), // boba network anchorage upgrade + 3 timestamp
-  associatedTokens: ['BOBA', 'OMG'],
+  associatedTokens: ['BOBA'],
   isNodeAvailable: 'UnderReview',
   discoveryDrivenData: true,
   nonTemplateTrackedTxs: [

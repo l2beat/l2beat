@@ -73,7 +73,24 @@
     ["0xd692f41fd540abb39aff27d7914ad7f1831f785b", "Login"],
     ["0x974474c8bcb36302be93858466728271fb36544e", "SCVirtualAssetEvents"],
     ["0x4af334f9ae78edd787750063b22a2eaefdbcd3ee", "SCVirtualAssetEvents"],
-    ["0x91ff962f7de9865d3ca8ca151bac28969f52f34b", "Smart"]
+    ["0x91ff962f7de9865d3ca8ca151bac28969f52f34b", "Smart"],
+    ["0x9978c826d93883701522d2ca645d5436e5654252", "Diamond"],
+    [
+      "0x21f665c783d52ae74c32dc0aa6083205187ada8a",
+      "TransparentUpgradeableProxy"
+    ],
+    ["0x4bba932e9792a2b917d47830c93a9bc79320e4f7", "OdosRouterV2"],
+    [
+      "0x919386306c47b2fe1036e3b4f7c40d22d2461a23",
+      "TransparentUpgradeableProxy"
+    ],
+    ["0xca5824d2b23abb066d1e23e421ae631ac8823255", "HSPriceAggregatorV1"],
+    ["0x79db8c67d0c33203da4efb58f7d325e1e0d4d692", "ZeekCoin"],
+    ["0xaf08a9d918f16332f22cf8dc9abe9d9e14ddcbc2", "ProxyPattern"],
+    [
+      "0x5a7d6b2f92c77fad6ccabd7ee0624e64907eaf3e",
+      "TransparentUpgradeableProxy"
+    ]
   ],
   "METHODS": [
     ["0xfec93e49", "follow"],
@@ -134,6 +151,20 @@
     ["0x82ad56cb", "aggregate3"],
     ["0x8c7a3e2c", "EmitGameUserActivityWithSign"],
     ["0x54d62dc7", "prepapreClaim"],
-    ["0x4e71d92d", "claim"]
+    ["0x4e71d92d", "claim"],
+    ["0x3d13f874", "claim"],
+    ["0x2e1a7d4d", "withdraw"],
+    ["0x3d18b912", "getReward"],
+    ["0x6b3a4851", "claim"],
+    ["0x83bd37f9", "swapCompact"],
+    ["0x4357855e", "fulfill"],
+    ["0xa694fc3a", "stake"],
+    ["0x1aa3a008", "register"]
+  ],
+  "IMPLEMENTATIONS": [
+    [
+      "4d2aa8996a48ad516189934f3f57706d4a3ae04d3e761374a86db84cf18be1f1",
+      "ClaveWallet"
+    ]
   ]
 }
