@@ -1,8 +1,8 @@
-import clsx from 'clsx'
-import { ComponentType, Fragment, ReactNode, useEffect, useRef } from 'react'
+import { ComponentType, useEffect, useRef } from 'react'
 import { BottomBar } from './BottomBar'
-import { PanelHeader } from './PanelHeader'
+import { Panel } from './Panel'
 import { PanelId, useMultiViewStore } from './store'
+import { TopBar } from './TopBar'
 
 const RESIZE_AREA = 20
 const MIN_PANEL_WIDTH = 160
@@ -157,79 +157,6 @@ export function MultiView(props: MultiViewProps) {
         })}
       </div>
       <BottomBar />
-    </div>
-  )
-}
-
-function TopBar(props: { project: string }) {
-  const layouts = useMultiViewStore((state) => state.layouts)
-  const selectedLayout = useMultiViewStore((state) => state.selectedLayout)
-  const loadLayout = useMultiViewStore((state) => state.loadLayout)
-  const saveLayout = useMultiViewStore((state) => state.saveLayout)
-  const addPanel = useMultiViewStore((state) => state.addPanel)
-  return (
-    <div className="flex h-10 items-center justify-between px-2">
-      <div>DISCOVERY {props.project}</div>
-      <div className="flex gap-2">
-        <div className="grid grid-cols-6">
-          {layouts.map((_, i) => (
-            <button
-              key={i}
-              className={clsx('w-4', selectedLayout === i && 'bg-fuchsia-300')}
-              onClick={() => loadLayout(i)}
-            >
-              {i + 1}
-            </button>
-          ))}
-        </div>
-        <button onClick={() => saveLayout(selectedLayout)}>Save Layout</button>
-        <button onClick={() => addPanel()}>Add Panel</button>
-      </div>
-    </div>
-  )
-}
-
-function Panel(props: { id: PanelId; body: ComponentType<{ kind: PanelId }> }) {
-  const hidden = useMultiViewStore(
-    (state) => state.fullScreen !== undefined && state.fullScreen !== props.id,
-  )
-  const isPickedUp = useMultiViewStore((state) => state.pickedUp === props.id)
-
-  const HeaderWrapper = isPickedUp ? HoverHeader : Fragment
-  return (
-    <div
-      className={clsx(
-        'flex flex-col border-black border-r',
-        hidden && 'hidden',
-      )}
-      id={`panel-${props.id}`}
-    >
-      <HeaderWrapper>
-        <PanelHeader id={props.id} />
-      </HeaderWrapper>
-      <div
-        className={clsx(
-          // This value has to be updated to account for other element sizes!
-          'max-h-[calc(100vh-108px)] flex-1 overflow-y-scroll',
-          isPickedUp && 'hidden',
-        )}
-      >
-        <props.body kind={props.id} />
-      </div>
-      {isPickedUp && <div className="flex-1 bg-slate-100" />}
-    </div>
-  )
-}
-
-function HoverHeader(props: { children: ReactNode }) {
-  const mouse = useMultiViewStore((state) => state.mouse)
-
-  return (
-    <div
-      style={{ left: mouse.x - 100, top: mouse.y - 18 }}
-      className="fixed h-[36px] w-[200px] cursor-move select-none border-black border-x"
-    >
-      {props.children}
     </div>
   )
 }
