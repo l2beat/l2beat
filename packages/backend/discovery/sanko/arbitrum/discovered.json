@@ -1,7 +1,7 @@
 {
   "name": "sanko",
   "chain": "arbitrum",
-  "blockNumber": 268551938,
+  "blockNumber": 268780411,
   "configHash": "0xf3abcf9a1083ee94b42259795756dc388d27a3301a883f233696621cbffafb9a",
   "contracts": [
     {
@@ -129,16 +129,18 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 3922,
+        "batchCount": 3936,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x2f4dDaD3aB0AC4225fd8023EE07d04e2A758017a"],
         "bridge": "0x2f285781B8d58678a3483de52D618198E4d27532",
         "BROTLI_MESSAGE_HEADER_FLAG": "0x00",
         "dacKeyset": {
-          "requiredSignatures": 1,
-          "membersCount": 1,
+          "requiredSignatures": 2,
+          "membersCount": 3,
           "blsSignatures": [
-            "YBM8WH8fzFQs+IXcFMBei3c0fIp6lNYHAw/kaFJEygDiksyqeAE8rWf9HA5OoHsDVwOYrnfZkCSfRjlLEtBaTLPJaU4OfE2N0XzEuRdxmwEVPRO8Ju8IlyFtNyIBAKq3DwF4EqTAXqxCxd05xmmFGkPNkmF6206kv7VGp0cXmEinXf5so12V3pnb+pePP3e3pRhRfu19/rZzXtMJNE55U37hH3VFCC+y13NNoeNqQztRRsroRtQQ9czMa042Zwd0BRluNTa40csEMom/D0Y6o/4cMf7At3G6VYIGy7z/0twDSmhRVXe2xpVJqbxEsTkdyxRPFelDCvZeylRxtN9NHo+BXbvoBUToQDeizLpx2f1hdlggZUI4y+QIN/VJ6h0x3A=="
+            "YBM8WH8fzFQs+IXcFMBei3c0fIp6lNYHAw/kaFJEygDiksyqeAE8rWf9HA5OoHsDVwOYrnfZkCSfRjlLEtBaTLPJaU4OfE2N0XzEuRdxmwEVPRO8Ju8IlyFtNyIBAKq3DwF4EqTAXqxCxd05xmmFGkPNkmF6206kv7VGp0cXmEinXf5so12V3pnb+pePP3e3pRhRfu19/rZzXtMJNE55U37hH3VFCC+y13NNoeNqQztRRsroRtQQ9czMa042Zwd0BRluNTa40csEMom/D0Y6o/4cMf7At3G6VYIGy7z/0twDSmhRVXe2xpVJqbxEsTkdyxRPFelDCvZeylRxtN9NHo+BXbvoBUToQDeizLpx2f1hdlggZUI4y+QIN/VJ6h0x3A==",
+            "YBermx2JgluR6LOr3uddo6T6q/KNIWUnA6MDPaROfi3h4JFGLH0mIfprfjiOaQQqLwJJIMLkcAeDOn+X2USQE1VRRm93ppYJ5JO8JfTJ7m2o6wUdeq95C/bsjgUTnDrY4QAQHRPczi8UplQhDFmmsKQGlv3647YodoPunLwX/gQQrDxxUgRXlkedUkn62lCvVAL3wwwWImQoyzwAyD0vYt6wTK/Z3sv2vk36mwf8IUypZEzU7F4fKV2DFBlMruUlHwWdLhEm45sZzPalDEM12LUq1+5Y+5xeodsa/Ar8d/ZTlgJp617XZ7fMEu1zPQiWvBM6Xr2ALWsfoBXDgft8wuCGoViBx5PQaRiYHlWCTI2YbPyUEhbBY/G3NMvcibPIWg==",
+            "YAmzm1YxVZXP20AOM0Knc2gRdNzux0yK3jevjCUcvPu7HxO5YA2L/LTdA5x8rXzOgBE/NQshfpla3sXps7Fy6kqzG4TgatKowxqjmUykc7xEd0vZIwmt/gQNuRxpSS5U4BHrkm1N05QXHUNwbDbXaklRazFHiO0DCbVa2MpwWRKxQUFfrWTt9o84QVUWPzr/+QFH1fNxAIWFj/MgOdOKOa8huL3c2HMOXUUPne5Jzf5hZYlVndUJZ9aKm1Oe8H/cNRRiHN4zFfPcWYD0OQeW3qlVaTulMWxGtXX23MyyJlcRBd0m/UdiYPvwepvLRBwhhxaLGGctsLIBtbDwfsnl2WcA3Mo1OdWBqVFsirfPVnBYQie0+dCcWfPCi4ATbu4rgg=="
           ]
         },
         "DAS_MESSAGE_HEADER_FLAG": "0x80",
@@ -146,14 +148,14 @@
         "DATA_BLOB_HEADER_FLAG": "0x50",
         "HEADER_LENGTH": 40,
         "isUsingFeeToken": true,
-        "keySetUpdates": 1,
+        "keySetUpdates": 2,
         "maxDataSize": 104857,
         "maxTimeVariation": [17280, 48, 86400, 3600],
         "reader4844": "0x0000000000000000000000000000000000000000",
         "rollup": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 100217,
+        "totalDelayedMessagesRead": 100223,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -228,12 +230,12 @@
           "0x575d32f7ff0C72921645e302cb14d2757E300786",
           "0xa9Aa07F082D9c15D0B6D7e9e5B68b1f898399C29"
         ],
-        "delayedMessageCount": 100218,
+        "delayedMessageCount": 100223,
         "nativeToken": "0x8B0E6f19Ee57089F7649A455D89D7bC6314D04e8",
         "rollup": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
         "sequencerInbox": "0x24B68936C13A414cd91437aE7AA730321B9ff159",
-        "sequencerMessageCount": 3922,
-        "sequencerReportedSubMessageCount": 2114435
+        "sequencerMessageCount": 3936,
+        "sequencerReportedSubMessageCount": 2122222
       },
       "derivedName": "ERC20Bridge"
     },
@@ -300,7 +302,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 11,
+        "nonce": 13,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -589,8 +591,28 @@
           "via": []
         },
         {
+          "permission": "challenge",
+          "target": "0x839ed36E86D36328c687a211CBe36C271065BAfD",
+          "via": []
+        },
+        {
+          "permission": "challenge",
+          "target": "0x964C83a66F78b67F75f076e386C433A1a10cefDB",
+          "via": []
+        },
+        {
           "permission": "propose",
           "target": "0x795aA8E945b571c57b12E7b5B77De10A88a1FADe",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "target": "0x839ed36E86D36328c687a211CBe36C271065BAfD",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "target": "0x964C83a66F78b67F75f076e386C433A1a10cefDB",
           "via": []
         },
         {
@@ -640,12 +662,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1149,
+        "firstUnresolvedNode": 1151,
         "inbox": "0x718E2a83775343d5c0B1eE0676703cBAF30CaFCD",
         "isERC20Enabled": false,
         "lastStakeBlock": 19642604,
-        "latestConfirmed": 1148,
-        "latestNodeCreated": 1173,
+        "latestConfirmed": 1150,
+        "latestNodeCreated": 1176,
         "loserStakeEscrow": "0xe8216687Ef40C65F64D6dcd335b0aaab4A1Bc400",
         "minimumAssertionPeriod": 75,
         "outbox": "0x575d32f7ff0C72921645e302cb14d2757E300786",
@@ -654,12 +676,16 @@
         "rollupDeploymentBlock": 19642305,
         "rollupEventInbox": "0x365ce7234CE515c2e0139f3578b6c5989da1a863",
         "sequencerInbox": "0x24B68936C13A414cd91437aE7AA730321B9ff159",
-        "setValidatorCount": 1,
+        "setValidatorCount": 2,
         "stakerCount": 1,
         "stakeToken": "0x0000000000000000000000000000000000000000",
         "totalWithdrawableFunds": 0,
         "VALIDATOR_AFK_BLOCKS": 45818,
-        "validators": ["0x795aA8E945b571c57b12E7b5B77De10A88a1FADe"],
+        "validators": [
+          "0x795aA8E945b571c57b12E7b5B77De10A88a1FADe",
+          "0x839ed36E86D36328c687a211CBe36C271065BAfD",
+          "0x964C83a66F78b67F75f076e386C433A1a10cefDB"
+        ],
         "validatorUtils": "0x9e83136d4B3AD04C766591EA51712F9aEa3194C0",
         "validatorWalletCreator": "0x0cB25fa1Bb1b12Ef908c09FD2d3C34f16F455DB3",
         "validatorWhitelistDisabled": false,
@@ -888,6 +914,36 @@
       ]
     },
     { "address": "0x82Ef0CBb725852D7CC30ADeA95415e23B8f433E3" },
+    {
+      "address": "0x839ed36E86D36328c687a211CBe36C271065BAfD",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
+          "description": "can challenge state roots on the host chain."
+        },
+        {
+          "permission": "propose",
+          "target": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
+          "description": "can submit state roots to the RollupProxy contract on the host chain."
+        }
+      ]
+    },
+    {
+      "address": "0x964C83a66F78b67F75f076e386C433A1a10cefDB",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
+          "description": "can challenge state roots on the host chain."
+        },
+        {
+          "permission": "propose",
+          "target": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
+          "description": "can submit state roots to the RollupProxy contract on the host chain."
+        }
+      ]
+    },
     { "address": "0xAf574BbE2139e39F560C4db1A118E1245aC0983d" },
     { "address": "0xC75725f4644D54865d11B78d3Ca6b7779FA61581" },
     { "address": "0xE1D7b68b36f14c9c86683d295f1C403008ecc943" },
