@@ -1,21 +1,23 @@
+import { RateLimiter } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { Response } from 'node-fetch'
-
-import { HttpClient } from '../HttpClient'
-import { BlockExplorerClient } from './BlockExplorerClient'
+import { HttpClient } from '../../services'
+import { BlockIndexerClient } from './BlockIndexerClient'
 
 const API_URL = 'https://example.com/api'
 
 const OPTIONS = {
-  type: 'Etherscan' as const,
+  type: 'etherscan' as const,
   apiKey: 'key',
   url: API_URL,
-  maximumCallsForBlockTimestamp: 3,
+  chain: 'chain',
 }
 
-describe(BlockExplorerClient.name, () => {
-  describe(BlockExplorerClient.prototype.getBlockNumberAtOrBefore.name, () => {
+const rate = new RateLimiter({ callsPerMinute: 10000 })
+
+describe(BlockIndexerClient.name, () => {
+  describe(BlockIndexerClient.prototype.getBlockNumberAtOrBefore.name, () => {
     it('constructs a correct url', async () => {
       const result = 1234
       const httpClient = mockObject<HttpClient>({
@@ -26,7 +28,7 @@ describe(BlockExplorerClient.name, () => {
         },
       })
 
-      const arbiscanClient = new BlockExplorerClient(httpClient, OPTIONS)
+      const arbiscanClient = new BlockIndexerClient(httpClient, rate, OPTIONS)
       const blockNumber = await arbiscanClient.getBlockNumberAtOrBefore(
         new UnixTime(3141592653),
       )
@@ -63,7 +65,7 @@ describe(BlockExplorerClient.name, () => {
           ),
       })
 
-      const arbiscanClient = new BlockExplorerClient(httpClient, OPTIONS)
+      const arbiscanClient = new BlockIndexerClient(httpClient, rate, OPTIONS)
       const blockNumber =
         await arbiscanClient.getBlockNumberAtOrBefore(timestamp)
 
@@ -105,7 +107,7 @@ describe(BlockExplorerClient.name, () => {
           .resolvesToOnce(new Response(gatewayErrorJsonString)),
       })
 
-      const etherscanClient = new BlockExplorerClient(httpClient, OPTIONS)
+      const etherscanClient = new BlockIndexerClient(httpClient, rate, OPTIONS)
 
       await expect(() =>
         etherscanClient.getBlockNumberAtOrBefore(timestamp),
@@ -142,7 +144,7 @@ describe(BlockExplorerClient.name, () => {
           .throwsOnce(errorString),
       })
 
-      const etherscanClient = new BlockExplorerClient(httpClient, OPTIONS)
+      const etherscanClient = new BlockIndexerClient(httpClient, rate, OPTIONS)
 
       await expect(() =>
         etherscanClient.getBlockNumberAtOrBefore(timestamp),
@@ -178,7 +180,7 @@ describe(BlockExplorerClient.name, () => {
           .throwsOnce(1234),
       })
 
-      const etherscanClient = new BlockExplorerClient(httpClient, OPTIONS)
+      const etherscanClient = new BlockIndexerClient(httpClient, rate, OPTIONS)
 
       await expect(() =>
         etherscanClient.getBlockNumberAtOrBefore(timestamp),
@@ -216,7 +218,7 @@ describe(BlockExplorerClient.name, () => {
           .resolvesToOnce(NOT_OK),
       })
 
-      const etherscanClient = new BlockExplorerClient(httpClient, OPTIONS)
+      const etherscanClient = new BlockIndexerClient(httpClient, rate, OPTIONS)
 
       await expect(() =>
         etherscanClient.getBlockNumberAtOrBefore(timestamp),
@@ -224,7 +226,7 @@ describe(BlockExplorerClient.name, () => {
     })
   })
 
-  describe(BlockExplorerClient.prototype.call.name, () => {
+  describe(BlockIndexerClient.prototype.call.name, () => {
     it('constructs a correct url', async () => {
       const httpClient = mockObject<HttpClient>({
         async fetch(url) {
@@ -237,7 +239,7 @@ describe(BlockExplorerClient.name, () => {
         },
       })
 
-      const etherscanClient = new BlockExplorerClient(httpClient, OPTIONS)
+      const etherscanClient = new BlockIndexerClient(httpClient, rate, OPTIONS)
       await etherscanClient.call('mod', 'act', { foo: 'bar', baz: '123' })
     })
 
@@ -253,10 +255,10 @@ describe(BlockExplorerClient.name, () => {
         },
       })
 
-      const etherscanClient = new BlockExplorerClient(httpClient, {
-        type: 'Blockscout',
+      const etherscanClient = new BlockIndexerClient(httpClient, rate, {
+        type: 'blockscout',
         url: API_URL,
-        maximumCallsForBlockTimestamp: 30,
+        chain: 'chain',
       })
       await etherscanClient.call('mod', 'act', { foo: 'bar', baz: '123' })
     })
@@ -268,7 +270,7 @@ describe(BlockExplorerClient.name, () => {
         },
       })
 
-      const etherscanClient = new BlockExplorerClient(httpClient, OPTIONS)
+      const etherscanClient = new BlockIndexerClient(httpClient, rate, OPTIONS)
       await expect(etherscanClient.call('mod', 'act', {})).toBeRejectedWith(
         'Server responded with non-2XX result: 404 Not Found',
       )
@@ -281,7 +283,7 @@ describe(BlockExplorerClient.name, () => {
         },
       })
 
-      const etherscanClient = new BlockExplorerClient(httpClient, OPTIONS)
+      const etherscanClient = new BlockIndexerClient(httpClient, rate, OPTIONS)
       await expect(etherscanClient.call('mod', 'act', {})).toBeRejected()
     })
 
@@ -293,7 +295,7 @@ describe(BlockExplorerClient.name, () => {
         },
       })
 
-      const etherscanClient = new BlockExplorerClient(httpClient, OPTIONS)
+      const etherscanClient = new BlockIndexerClient(httpClient, rate, OPTIONS)
       const result = await etherscanClient.call('mod', 'act', {})
       expect(result).toEqual(response.result)
     })
@@ -310,7 +312,7 @@ describe(BlockExplorerClient.name, () => {
         },
       })
 
-      const etherscanClient = new BlockExplorerClient(httpClient, OPTIONS)
+      const etherscanClient = new BlockIndexerClient(httpClient, rate, OPTIONS)
       await expect(etherscanClient.call('mod', 'act', {})).toBeRejectedWith(
         response.result,
       )

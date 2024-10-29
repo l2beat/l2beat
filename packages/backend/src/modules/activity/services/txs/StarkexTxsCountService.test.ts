@@ -2,13 +2,13 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { StarkexClient } from '../../../../peripherals/starkex/StarkexClient'
 import { activityRecord } from '../../utils/aggregatePerDay.test'
-import { StarkexTxsCountProvider } from './StarkexTxsCountProvider'
+import { StarkexTxsCountService } from './StarkexTxsCountService'
 
-describe(StarkexTxsCountProvider.prototype.getTxsCount.name, () => {
+describe(StarkexTxsCountService.prototype.getTxsCount.name, () => {
   it('should return txs count', async () => {
     const client = mockStarkexClient([2, 3, 4, 5])
 
-    const txsCountProvider = new StarkexTxsCountProvider(
+    const txsCountProvider = new StarkexTxsCountService(
       client,
       ProjectId('a'),
       ['a', 'b'],
