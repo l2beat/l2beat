@@ -1,14 +1,16 @@
-Generated with discovered.json: 0xad41e55439f173f3f32a2508d554935c8971bf67
+Generated with discovered.json: 0x0213bf244190a4d14c06b53dfa9632752117bc35
 
-# Diff at Tue, 29 Oct 2024 10:52:37 GMT:
+# Diff at Tue, 29 Oct 2024 12:41:20 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@7b3fc9dc9074e1d423b48522c3f0273c86aab54a block: 21041819
-- current block number: 21070815
+- current block number: 21071352
 
 ## Description
 
 Upgrade to ArbOS v32 and introduction of an anyTrustFastConfirmer address. The address, currently set to a multisig, is permissioned to call `fastConfirmNextNode()` in the RollupProxy's RollupUserLogic.sol and can thus finalize the latest node (state), disregarding the challenge period.
+
+This project is now converted to use discoveryDriven data.
 
 ## Watched changes
 
@@ -21,24 +23,32 @@ Upgrade to ArbOS v32 and introduction of an anyTrustFastConfirmer address. The a
 ```diff
     contract RollupProxy (0x1CA12290D954CFe022323b6A6Df92113ed6b1C98) {
     +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      template:
+-        "orbitstack/RollupProxy"
++        "orbitstack/RollupProxy_fastConfirm"
       sourceHashes.2:
 -        "0xef94a66bd5339efd18fb9ca1f8031482e7ef7bbe6c5a0a10fae254ab83712406"
 +        "0x7ee21b18b2e18c636bfafc08ff72692cc43302b2599ba75f0abad67282866dd5"
       sourceHashes.1:
 -        "0x8b48118fe606012c0dcac2ccc1821785935aec89fab8f219f47b32c482b0017e"
 +        "0x9349e73cbc2d2b818c1d79711574ba210b56249d8d3845bc78c776caf8f8ff42"
-      issuedPermissions.4:
+      issuedPermissions.5:
 +        {"permission":"upgrade","target":"0x257812604076712675ae9788F5Bd738173CA3CE0","via":[{"address":"0x830D41c5624EE982cddEd92Ba01DAB3a4856116f","delay":0}]}
-      issuedPermissions.3:
+      issuedPermissions.4:
 +        {"permission":"propose","target":"0x2b2566944f8ff8a256b39C6A36900991EC1fF3c6","via":[{"address":"0xeC475675629B38E42d4aC5d40761618268E7Ed21","delay":0,"description":"can submit state roots to the RollupProxy contract on the host chain."}]}
+      issuedPermissions.3:
++        {"permission":"propose","target":"0x2b2566944f8ff8a256b39C6A36900991EC1fF3c6","via":[]}
       issuedPermissions.2.permission:
 -        "upgrade"
-+        "propose"
++        "configure"
       issuedPermissions.2.target:
 -        "0x257812604076712675ae9788F5Bd738173CA3CE0"
 +        "0x2b2566944f8ff8a256b39C6A36900991EC1fF3c6"
-      issuedPermissions.2.via.0:
--        {"address":"0x830D41c5624EE982cddEd92Ba01DAB3a4856116f","delay":0}
+      issuedPermissions.2.via.0.address:
+-        "0x830D41c5624EE982cddEd92Ba01DAB3a4856116f"
++        "0xeC475675629B38E42d4aC5d40761618268E7Ed21"
+      issuedPermissions.2.via.0.description:
++        "can finalize a state root before the challenge period has passed. That allows withdrawing from the bridge based on this state root."
       issuedPermissions.1.permission:
 -        "propose"
 +        "challenge"
@@ -71,6 +81,8 @@ Upgrade to ArbOS v32 and introduction of an anyTrustFastConfirmer address. The a
 +        "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39"
       values.anyTrustFastConfirmer:
 +        "0xeC475675629B38E42d4aC5d40761618268E7Ed21"
+      fieldMeta.minimumAssertionPeriod:
++        {"description":"Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "}
     }
 ```
 
@@ -100,14 +112,10 @@ Upgrade to ArbOS v32 and introduction of an anyTrustFastConfirmer address. The a
 
 ```diff
     contract ChallengeManager (0xb9e6987d1E0936b93f512bC89632E15DcA706d87) {
-    +++ description: None
-      template:
--        "orbitstack/ChallengeManager"
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
       sourceHashes.1:
 -        "0x58a6261c83c2766f749641902ad6fdb695ea189d2747f073b57a8f35b9a547e5"
 +        "0x1a095768302d7d1c3d02375eaa3341833b4f1aaac707e1c608bce478c87cbf27"
-      description:
--        "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor."
       values.$implementation:
 -        "0x1D901DD7A5eFE421C3C437B147040E5AF22E6A43"
 +        "0x02E05A9245C5853f895daDcc3A8216C953C8736B"
@@ -125,44 +133,44 @@ Upgrade to ArbOS v32 and introduction of an anyTrustFastConfirmer address. The a
 ```diff
 +   Status: CREATED
     contract OneStepProverHostIo (0x0003A96B27ce73505b43ea1b71a5aB06bec568C4)
-    +++ description: None
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
 ```
 
 ```diff
 +   Status: CREATED
     contract OneStepProverMemory (0x1cD76B9C33b2e3b04D7B181399d492B3e49AD7fB)
-    +++ description: None
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
 ```
 
 ```diff
 +   Status: CREATED
     contract OneStepProver0 (0x2dCCAbE89cF76132619a9B18e9F9e48E837222b5)
-    +++ description: None
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
 ```
 
 ```diff
 +   Status: CREATED
     contract OneStepProofEntry (0x8Faa21891B0b928afEbd5314D1D313f8f7B34DaC)
-    +++ description: None
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
 ```
 
 ```diff
 +   Status: CREATED
     contract OneStepProverMath (0xCf4b98cFF2976E4eb579B9498f398b5bd279A6eD)
-    +++ description: None
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
 ```
 
 ```diff
 +   Status: CREATED
-    contract AlephZeroFastConfirmer (0xeC475675629B38E42d4aC5d40761618268E7Ed21)
+    contract AlephZeroMultisig (0xeC475675629B38E42d4aC5d40761618268E7Ed21)
     +++ description: None
 ```
 
 ## Source code changes
 
 ```diff
-.../.flat/AlephZeroFastConfirmer/GnosisSafe.sol    | 953 +++++++++++++++++++++
- .../AlephZeroFastConfirmer/GnosisSafeProxy.p.sol   |  35 +
+.../.flat/AlephZeroMultisig/GnosisSafe.sol         | 953 +++++++++++++++++++++
+ .../.flat/AlephZeroMultisig/GnosisSafeProxy.p.sol  |  35 +
  .../ChallengeManager/ChallengeManager.sol          | 404 ++++++---
  .../OneStepProofEntry.sol                          | 485 +++++++++--
  .../{.flat@21041819 => .flat}/OneStepProver0.sol   | 765 ++++++++++++-----
@@ -186,6 +194,57 @@ discovery. Values are for block 21041819 (main branch discovery), not current.
       fieldMeta.confirmPeriodBlocks.description:
 -        "Challenge period. (Number of blocks until a node is confirmed)."
 +        "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
+    }
+```
+
+```diff
+    contract ERC20Bridge (0x41Ec9456AB918f2aBA81F38c03Eb0B93b78E84d9) {
+    +++ description: Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      name:
+-        "Bridge"
++        "ERC20Bridge"
+      description:
+-        "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for bridge messaging."
++        "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
+      displayName:
++        "Bridge"
+    }
+```
+
+```diff
+    contract ERC20Inbox (0x56D8EC76a421063e1907503aDd3794c395256AEb) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      name:
+-        "Inbox"
++        "ERC20Inbox"
+      displayName:
++        "Inbox"
+    }
+```
+
+```diff
+    contract ERC20Outbox (0x73bb50c32a3BD6A1032aa5cFeA048fBDA3D6aF6e) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      name:
+-        "Outbox"
++        "ERC20Outbox"
+      description:
+-        "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) which eventually resolve in execution on L1."
++        "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1."
+      displayName:
++        "Outbox"
+    }
+```
+
+```diff
+    contract L1OrbitERC20Gateway (0xccaF21F002EAF230c9Fa810B34837a3739B70F7B) {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      template:
++        "orbitstack/ERC20Gateway"
+      displayName:
++        "ERC20Gateway"
+      description:
++        "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract."
     }
 ```
 

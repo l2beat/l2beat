@@ -1,22 +1,24 @@
 {
   "name": "alephzero",
   "chain": "ethereum",
-  "blockNumber": 21070815,
-  "configHash": "0xd7adb56efbb43e47cc50a93b84d8961891aa41b57b47b18d49c99b4ba11f9750",
+  "blockNumber": 21071352,
+  "configHash": "0xe85c59016d29a30c554da1a1e7e8d6452b154b45d702b420fc39b78d0edef321",
   "contracts": [
     {
       "name": "OneStepProverHostIo",
       "address": "0x0003A96B27ce73505b43ea1b71a5aB06bec568C4",
+      "template": "orbitstack/OneStepProverHostIo",
       "sourceHashes": [
         "0x2e969e0e83aea53307795f6826413e39bb416a64bc6da18f3a339ffeef444d32"
       ],
+      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148899,
       "values": { "$immutable": true }
     },
     {
       "name": "RollupProxy",
       "address": "0x1CA12290D954CFe022323b6A6Df92113ed6b1C98",
-      "template": "orbitstack/RollupProxy",
+      "template": "orbitstack/RollupProxy_fastConfirm",
       "sourceHashes": [
         "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca",
         "0x9349e73cbc2d2b818c1d79711574ba210b56249d8d3845bc78c776caf8f8ff42",
@@ -38,6 +40,17 @@
               "address": "0xeC475675629B38E42d4aC5d40761618268E7Ed21",
               "delay": 0,
               "description": "can challenge state roots on the host chain."
+            }
+          ]
+        },
+        {
+          "permission": "configure",
+          "target": "0x2b2566944f8ff8a256b39C6A36900991EC1fF3c6",
+          "via": [
+            {
+              "address": "0xeC475675629B38E42d4aC5d40761618268E7Ed21",
+              "delay": 0,
+              "description": "can finalize a state root before the challenge period has passed. That allows withdrawing from the bridge based on this state root."
             }
           ]
         },
@@ -141,6 +154,9 @@
         "zombieLatestStakedNode": []
       },
       "fieldMeta": {
+        "minimumAssertionPeriod": {
+          "description": "Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "
+        },
         "confirmPeriodBlocks": {
           "description": "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
         },
@@ -157,7 +173,6 @@
           "description": "Emitted on createChallenge() in RollupUserLogic."
         }
       },
-      "derivedName": "RollupProxy",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -190,9 +205,11 @@
     {
       "name": "OneStepProverMemory",
       "address": "0x1cD76B9C33b2e3b04D7B181399d492B3e49AD7fB",
+      "template": "orbitstack/OneStepProverMemory",
       "sourceHashes": [
         "0x3955092d1dbd80f0910d7782a25da1e3da45533c7890928a1c6c63cbf5def5bf"
       ],
+      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148875,
       "values": { "$immutable": true }
     },
@@ -208,14 +225,16 @@
     {
       "name": "OneStepProver0",
       "address": "0x2dCCAbE89cF76132619a9B18e9F9e48E837222b5",
+      "template": "orbitstack/OneStepProver0",
       "sourceHashes": [
         "0x642d283934aef1189cf62e1bcd34a5081762b33fdd3ec8e823f304f874e48748"
       ],
+      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148863,
       "values": { "$immutable": true }
     },
     {
-      "name": "Bridge",
+      "name": "ERC20Bridge",
       "address": "0x41Ec9456AB918f2aBA81F38c03Eb0B93b78E84d9",
       "template": "orbitstack/Bridge",
       "sourceHashes": [
@@ -223,7 +242,8 @@
         "0x057de68a7007d55f4394ba6eafb2c802efcaf13583ff9342ea4d0ee3924d9be1"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for bridge messaging.",
+      "displayName": "Bridge",
+      "description": "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -267,10 +287,9 @@
         "nativeToken": "0xdD0ae774F7E300CdAA4EA371cD55169665Ee6AFe",
         "rollup": "0x1CA12290D954CFe022323b6A6Df92113ed6b1C98",
         "sequencerInbox": "0xF75206c49c1694594E3e69252E519434f1579876",
-        "sequencerMessageCount": 2571,
-        "sequencerReportedSubMessageCount": 4104567
-      },
-      "derivedName": "ERC20Bridge"
+        "sequencerMessageCount": 2572,
+        "sequencerReportedSubMessageCount": 4109757
+      }
     },
     {
       "name": "ERC20RollupEventInbox",
@@ -313,7 +332,7 @@
       }
     },
     {
-      "name": "Inbox",
+      "name": "ERC20Inbox",
       "address": "0x56D8EC76a421063e1907503aDd3794c395256AEb",
       "template": "orbitstack/Inbox",
       "sourceHashes": [
@@ -321,6 +340,7 @@
         "0xcb390b491549387c8fcc09fb22fbea7adf54cc74b7247a0c738369ddd7049b92"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "Inbox",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
       "issuedPermissions": [
         {
@@ -356,11 +376,10 @@
         "maxDataSize": 117964,
         "paused": false,
         "sequencerInbox": "0xF75206c49c1694594E3e69252E519434f1579876"
-      },
-      "derivedName": "ERC20Inbox"
+      }
     },
     {
-      "name": "Outbox",
+      "name": "ERC20Outbox",
       "address": "0x73bb50c32a3BD6A1032aa5cFeA048fBDA3D6aF6e",
       "template": "orbitstack/Outbox",
       "sourceHashes": [
@@ -368,7 +387,8 @@
         "0x3073f29910dee50069a001fb20e58cca3dcc1b3c8da4b91809af2dd356ef0c8c"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) which eventually resolve in execution on L1.",
+      "displayName": "Outbox",
+      "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -407,8 +427,7 @@
         "l2ToL1WithdrawalAmount": 0,
         "OUTBOX_VERSION": 2,
         "rollup": "0x1CA12290D954CFe022323b6A6Df92113ed6b1C98"
-      },
-      "derivedName": "ERC20Outbox"
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -527,15 +546,16 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["0x257812604076712675ae9788F5Bd738173CA3CE0"]
-      },
-      "derivedName": "UpgradeExecutor"
+      }
     },
     {
       "name": "OneStepProofEntry",
       "address": "0x8Faa21891B0b928afEbd5314D1D313f8f7B34DaC",
+      "template": "orbitstack/OneStepProofEntry",
       "sourceHashes": [
         "0x96f85480073b58d0e985cd6c68956f4a52f5ed8b2ce751b18868e2e830be3678"
       ],
+      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148911,
       "values": {
         "$immutable": true,
@@ -548,11 +568,13 @@
     {
       "name": "ChallengeManager",
       "address": "0xb9e6987d1E0936b93f512bC89632E15DcA706d87",
+      "template": "orbitstack/ChallengeManager",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0x1a095768302d7d1c3d02375eaa3341833b4f1aaac707e1c608bce478c87cbf27"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -591,17 +613,19 @@
         "resultReceiver": "0x1CA12290D954CFe022323b6A6Df92113ed6b1C98",
         "sequencerInbox": "0xF75206c49c1694594E3e69252E519434f1579876",
         "totalChallengesCreated": 0
-      },
-      "derivedName": "ChallengeManager"
+      }
     },
     {
       "name": "L1OrbitERC20Gateway",
       "address": "0xccaF21F002EAF230c9Fa810B34837a3739B70F7B",
+      "template": "orbitstack/ERC20Gateway",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
         "0x17c9d8bf5017982cb88ab1d4f22a085c097ab9c7a910fa109fe9e7204840bef8"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "ERC20Gateway",
+      "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -641,9 +665,11 @@
     {
       "name": "OneStepProverMath",
       "address": "0xCf4b98cFF2976E4eb579B9498f398b5bd279A6eD",
+      "template": "orbitstack/OneStepProverMath",
       "sourceHashes": [
         "0x3de1ddc210fe283d7298c5f06879df577c6a475329a206b1928c74d10db656d5"
       ],
+      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148887,
       "values": { "$immutable": true }
     },
@@ -692,7 +718,7 @@
       }
     },
     {
-      "name": "AlephZeroFastConfirmer",
+      "name": "AlephZeroMultisig",
       "address": "0xeC475675629B38E42d4aC5d40761618268E7Ed21",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -705,6 +731,11 @@
           "permission": "challenge",
           "target": "0x1CA12290D954CFe022323b6A6Df92113ed6b1C98",
           "description": "can challenge state roots on the host chain."
+        },
+        {
+          "permission": "configure",
+          "target": "0x1CA12290D954CFe022323b6A6Df92113ed6b1C98",
+          "description": "can finalize a state root before the challenge period has passed. That allows withdrawing from the bridge based on this state root."
         },
         {
           "permission": "propose",
@@ -772,7 +803,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 2571,
+        "batchCount": 2572,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xbc35c3fBd56318Bf360086f50576233Dc93AFF20"],
         "bridge": "0x41Ec9456AB918f2aBA81F38c03Eb0B93b78E84d9",
@@ -805,8 +836,7 @@
         "maxTimeVariation": {
           "description": "Struct: delayBlocks, futureBlocks, delaySeconds, futureSeconds. onlyRollupOwner settable. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
         }
-      },
-      "derivedName": "SequencerInbox"
+      }
     }
   ],
   "eoas": [
@@ -913,6 +943,12 @@
           "permission": "challenge",
           "target": "0x1CA12290D954CFe022323b6A6Df92113ed6b1C98",
           "description": "can challenge state roots on the host chain."
+        },
+        {
+          "permission": "configure",
+          "target": "0x1CA12290D954CFe022323b6A6Df92113ed6b1C98",
+          "description": "can finalize a state root before the challenge period has passed. That allows withdrawing from the bridge based on this state root.",
+          "via": [{ "address": "0xeC475675629B38E42d4aC5d40761618268E7Ed21" }]
         },
         {
           "permission": "propose",
@@ -1623,10 +1659,17 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "orbitstack/Bridge": "0xe6d023f6c725ce1ccf0ca453ab25787255f946d6561dcd83975ec33a9720caf6",
+    "orbitstack/Bridge": "0x6e309bce5a8758ba24f800f3c0135c502fd5cc22724da5165d8368377eb6c9c8",
+    "orbitstack/ChallengeManager": "0xc4fbc82c5001579bb1f880d92a3510cda3dc4a65e284fc300363ce048c2fb6d7",
+    "orbitstack/ERC20Gateway": "0xf1eafb4b453c67c3928c43ad270e71102bda129c494c4cf3d132be60695af7f9",
     "orbitstack/Inbox": "0x1938bb9de2d7f328ae3e83f2dd9f5d3c5575b599fc097cf9308bac4d5bb3e89e",
-    "orbitstack/Outbox": "0xac65b89cf03d50afb81ade4d5623f1815977ae46d92280d53ca828df34424488",
-    "orbitstack/RollupProxy": "0x9de477a7ec4abe22558d85184e1ff68cebea26c903f45220337156ae3acf3dc5",
+    "orbitstack/OneStepProofEntry": "0xf3bff5da86f9bbb5f9ac93a0f2239f0769d051b67a44be2e52c322799e3b8d4f",
+    "orbitstack/OneStepProver0": "0x80f18705038deef096683a89d16549bf343ada57cac1f2750df2f06fbbaed5ca",
+    "orbitstack/OneStepProverHostIo": "0xacacb7603847a3f0212fdf80c653040278214c00451f763907e270d1f19efec0",
+    "orbitstack/OneStepProverMath": "0x8dd8aebb517eb6eaf15437ddbb90dff66f2b14d9d6b5390dd87fbdab15168188",
+    "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
+    "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
+    "orbitstack/RollupProxy_fastConfirm": "0x032f2187c1553c3305982f26f19516e1898a10aa2af0e35f45e1e542a006bce3",
     "orbitstack/SequencerInbox": "0x80eed651d83fd6cd84047260bf02ec5e3a5f21b36049e1e45f34bd0a452e02f9",
     "orbitstack/UpgradeExecutor": "0xa25e02367a436cebea22481663da914bbf1fd9492d903659cc6ec9ddbaccb241"
   }
