@@ -1,6 +1,7 @@
 import { formatSeconds } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
+import { DaChallengeMechanism } from '../types/DaChallengeMechanism'
 import { DaLayer } from '../types/DaLayer'
 import { linkByDA } from '../utils/link-by-da'
 import { xterioDABridge } from './bridges/xterioDABridge'
@@ -44,7 +45,7 @@ export const xterioDA: DaLayer = {
       ],
     },
   },
-  hasChallengeMechanism: true,
+  challengeMechanism: DaChallengeMechanism.DaChallenges,
   technology: {
     description: `
     ## Architecture

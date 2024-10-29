@@ -9,18 +9,17 @@ import { getDaProjectEntry } from '~/server/features/data-availability/project/g
 import { DaProjectSummary } from '../_components/da-project-summary'
 
 interface Props {
-  params: {
+  params: Promise<{
     layer: string
     bridge: string
-  }
+  }>
 }
 
 export default async function Page(props: Props) {
-  const daLayer = daLayers.find((p) => p.display.slug === props.params.layer)
+  const params = await props.params
+  const daLayer = daLayers.find((p) => p.display.slug === params.layer)
   if (!daLayer) return notFound()
-  const daBridge = daLayer.bridges.find(
-    (b) => b.display.slug === props.params.bridge,
-  )
+  const daBridge = daLayer.bridges.find((b) => b.display.slug === params.bridge)
   if (!daBridge) return notFound()
 
   const daProjectEntry = await getDaProjectEntry(daLayer, daBridge)

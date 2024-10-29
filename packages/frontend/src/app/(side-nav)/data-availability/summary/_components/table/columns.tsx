@@ -112,18 +112,15 @@ const membersColumn = columnHelper.display({
   },
 })
 
-const challengeMechanismColumn = columnHelper.accessor(
-  'hasChallengeMechanism',
-  {
-    header: 'Challenge\nmechanism',
-    cell: (ctx) => (
-      <TwoRowCell>
-        <TwoRowCell.First>{ctx.getValue() ? 'Yes' : 'None'}</TwoRowCell.First>
-      </TwoRowCell>
-    ),
-    enableSorting: false,
-  },
-)
+const challengeMechanismColumn = columnHelper.accessor('challengeMechanism', {
+  header: 'Challenge\nmechanism',
+  cell: (ctx) => (
+    <TwoRowCell>
+      <TwoRowCell.First>{ctx.getValue()?.value ?? 'None'}</TwoRowCell.First>
+    </TwoRowCell>
+  ),
+  enableSorting: false,
+})
 
 const fallbackColumn = columnHelper.accessor('fallback', {
   header: 'Fallback',

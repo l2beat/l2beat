@@ -5,12 +5,15 @@ import * as React from 'react'
 import { CheckIcon } from '~/icons/check'
 import { cn } from '~/utils/cn'
 
-const Checkbox = React.forwardRef<
-  React.ElementRef<typeof CheckboxPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> & {
-    id: string
-  }
->(({ className, id, children, ...props }, ref) => (
+const Checkbox = ({
+  ref,
+  className,
+  id,
+  children,
+  ...props
+}: React.ComponentProps<typeof CheckboxPrimitive.Root> & {
+  id: string
+}) => (
   <div
     className={cn(
       'flex h-8 w-max select-none items-center space-x-2 rounded-lg bg-gray-200 py-1 pl-2 pr-3 dark:bg-zinc-700',
@@ -43,7 +46,7 @@ const Checkbox = React.forwardRef<
       {children}
     </label>
   </div>
-))
+)
 Checkbox.displayName = CheckboxPrimitive.Root.displayName
 
 export { Checkbox }
