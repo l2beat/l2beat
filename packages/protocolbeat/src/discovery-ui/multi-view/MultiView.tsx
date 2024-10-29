@@ -1,8 +1,8 @@
 import { ComponentType, useEffect, useRef } from 'react'
 import { BottomBar } from './BottomBar'
 import { Panel } from './Panel'
-import { PanelId, useMultiViewStore } from './store'
 import { TopBar } from './TopBar'
+import { PanelId, useMultiViewStore } from './store'
 
 const RESIZE_AREA = 20
 const MIN_PANEL_WIDTH = 160
