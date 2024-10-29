@@ -8,7 +8,7 @@ import { toUsedInProject } from '../utils/to-used-in-project'
 export const fraxtalDA: DaLayer = {
   id: 'dac',
   type: 'DaLayer',
-  kind: 'DA Service',
+  kind: 'No DA',
   systemCategory: 'custom',
   display: {
     name: 'FraxtalDA',

@@ -20,7 +20,7 @@ interface Props {
 
 export function DaProjectStats({ project }: Props) {
   const durationStorage =
-    project.kind === 'DAC' || project.kind === 'DA Service'
+    project.kind === 'DAC' || project.kind === 'DA Service' || project.kind === 'No DA'
       ? {
           value: 'Flexible',
           tooltip:
