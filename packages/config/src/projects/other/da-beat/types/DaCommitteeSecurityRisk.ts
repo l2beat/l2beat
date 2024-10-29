@@ -31,7 +31,7 @@ const LimitedCommitteeSecurity = (value?: string) =>
 const NoCommiteeSecurity = (value?: string) =>
   ({
     type: 'NoCommiteeSecurity',
-    value: value ?? 'No Committee Security',
+    value: value ?? 'None',
     sentiment: 'bad',
     description: `The committee does not meet basic security standards, either due to insufficient size, lack of member diversity, or poorly defined threshold parameters. The system lacks an effective DA bridge and it is reliant on the assumption of an honest sequencer, creating significant risks to data integrity and availability.`,
   }) as const
@@ -39,7 +39,7 @@ const NoCommiteeSecurity = (value?: string) =>
 const NoDiversityCommiteeSecurity = (value?: string) =>
   ({
     type: 'NoDiversityCommiteeSecurity',
-    value: value ?? 'No Committee Security',
+    value: value ?? 'None',
     sentiment: 'bad',
     description: `The committee requires an honest minority (1/3 or less) of members (or the network stake) to prevent the DA bridge from accepting an unavailable data commitment.
     However, the committee is not diverse enough to prevent a single entity from controlling the majority of the committee.
@@ -52,7 +52,7 @@ const NoHonestMinimumCommiteeSecurity = (
 ) =>
   ({
     type: 'NoHonestMinimumCommiteeSecurity',
-    value: value ?? 'No Committee Security',
+    value: value ?? 'None',
     sentiment: 'bad',
     description: `The committee should require an honest minority (33% or less) of members to prevent the DA bridge from accepting an unavailable data commitment.
    Currently, this committee requires ${honestMembersPercentage}% of members to be honest. `,

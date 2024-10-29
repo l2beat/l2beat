@@ -8,7 +8,7 @@ import { toUsedInProject } from '../utils/to-used-in-project'
 export const fraxtalDA: DaLayer = {
   id: 'dac',
   type: 'DaLayer',
-  kind: 'DAC',
+  kind: 'DA Service',
   systemCategory: 'custom',
   display: {
     name: 'FraxtalDA',
@@ -46,7 +46,7 @@ export const fraxtalDA: DaLayer = {
       description:
         'The risk profile in this page refers to scaling solutions that do not integrate with a data availability bridge.',
       technology: {
-        description: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.\n`,
+        description: `Ethereum has no proof of data availability for this project. Only the sequencer is attesting to the availability of the data.\n`,
       },
     }),
   ],
