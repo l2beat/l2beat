@@ -4,12 +4,11 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import {
   TypeCell,
   TypeExplanationTooltip,
 } from '~/components/table/cells/type-cell'
-import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
+import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { LIVENESS_ANOMALIES_COMING_SOON_PROJECTS } from '~/consts/projects'
 import { InfoIcon } from '~/icons/info'
 import { AnomalyIndicator } from '../anomaly-indicator'
@@ -20,10 +19,7 @@ import { type ScalingLivenessTableEntry } from './to-table-entry'
 const columnHelper = createColumnHelper<ScalingLivenessTableEntry>()
 
 export const columns = [
-  ...getCommonProjectColumns(columnHelper),
-  columnHelper.accessor('name', {
-    cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
-  }),
+  ...getScalingCommonProjectColumns(columnHelper),
   columnHelper.group({
     id: 'data',
     header: () => <IntervalsHeader average={true} />,

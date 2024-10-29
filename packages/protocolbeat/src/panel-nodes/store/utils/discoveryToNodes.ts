@@ -21,7 +21,7 @@ function isChainAddress(value: string): boolean {
   )
 }
 
-function getChainColor(chain: string): OklchColor {
+export function getChainColor(chain: string): OklchColor {
   if (chain === 'ethereum') {
     return White
   }
@@ -135,7 +135,7 @@ function emojifyContractName(contract: DiscoveryContract): string {
   return contract.name
 }
 
-function getAsStringArray(value: unknown): string[] {
+export function getAsStringArray(value: unknown): string[] {
   if (typeof value === 'string') {
     return [value]
   }

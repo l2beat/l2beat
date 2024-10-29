@@ -53,7 +53,7 @@ type Optionals = {
   /** Optional red warning, defaults to undefined */
   redWarning?: DacBridge['display']['redWarning']
   /** Optional challenge mechanism, defaults to undefined */
-  hasChallengeMechanism?: DacDaLayer['hasChallengeMechanism']
+  challengeMechanism?: DacDaLayer['challengeMechanism']
   /** Optional fallback, defaults to undefined */
   fallback?: DacDaLayer['fallback']
 }
@@ -181,7 +181,7 @@ export function AnytrustDAC(template: TemplateVars): DacDaLayer {
     type: 'DaLayer',
     systemCategory: 'custom',
     fallback: template.fallback ?? 'Ethereum (blobs)',
-    hasChallengeMechanism: template.hasChallengeMechanism,
+    challengeMechanism: template.challengeMechanism,
     display: layerDisplay,
     technology: {
       description: layerTechnology,

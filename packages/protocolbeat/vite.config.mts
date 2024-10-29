@@ -7,11 +7,23 @@ export default defineConfig({
   plugins: [react()],
   build: {
     outDir: 'build',
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules/monaco-editor')) {
+            return 'monaco'
+          }
+          if (id.includes('node_modules')) {
+            return 'vendor'
+          }
+        },
+      },
+    },
   },
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:3000/',
+        target: 'http://localhost:2021/',
         changeOrigin: true,
         timeout: 99999999,
       },
