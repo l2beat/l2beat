@@ -33,7 +33,7 @@
         "permissions": [
           {
             "type": "configure",
-            "description": "can finalize a state root before the challenge period has passed. That allows withdrawing from the bridge based on this state root."
+            "description": "can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
           }
         ]
       }
