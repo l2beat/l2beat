@@ -121,7 +121,7 @@ export function StarkexDAC(template: TemplateVars): DacDaLayer {
           category: 'Funds can be lost if',
           text: `a malicious committee signs a data availability attestation for an unavailable transaction batch.`,
         },
-      ]
+      ],
     },
     risks: {
       committeeSecurity:

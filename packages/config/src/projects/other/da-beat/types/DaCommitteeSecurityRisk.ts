@@ -74,8 +74,7 @@ const NoBridge = {
   type: 'NoBridge',
   value: 'N/A',
   sentiment: 'bad',
-  description:
-    'There is no committee attesting to the availability of data. ',
+  description: 'There is no committee attesting to the availability of data. ',
 } as const
 
 const Auto = (params?: {
