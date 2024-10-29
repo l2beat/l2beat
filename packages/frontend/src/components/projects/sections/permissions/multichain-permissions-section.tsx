@@ -1,4 +1,4 @@
-import { UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
+import { type UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
 import { CheckOutScalingProjectBanner } from '../check-out-scaling-project-banner'
 import { ContractEntry, type TechnologyContract } from '../contract-entry'
 import { PermissionedEntityEntry } from '../permissioned-entity-entry'

@@ -1,5 +1,5 @@
 'use client'
-import { UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
+import { type UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
 import partition from 'lodash/partition'
 import { type DiagramParams } from '~/utils/project/get-diagram-params'
 import { CheckOutScalingProjectBanner } from '../check-out-scaling-project-banner'

@@ -3,7 +3,7 @@ import {
   type ScalingProjectPermissionedAccount,
   type ScalingProjectReference,
 } from '@l2beat/config'
-import { UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
+import { type UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
 import {
   type ContractsVerificationStatuses,
   type ManuallyVerifiedContracts,
