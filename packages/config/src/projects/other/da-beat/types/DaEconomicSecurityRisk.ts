@@ -22,7 +22,7 @@ const OnChainNotSlashable = (token?: string) => {
       ? `Node operators are required to stake a minimum of 32 ETH (first quorum) or 1 EIGEN (second quorum) to become members of the DA network. However, there is no slashing mechanism in place for misbehaving nodes. The EIGEN token social forking protocol for intersubjective attributable faults is under active development.`
       : `Although node operators are required to stake ${tokenExpression} to become members of the DA network, there is no slashing mechanism in place for misbehaving nodes.`
 
-  const value = token === 'EIGEN' ? `Slashing under development` : `No slashing`
+  const value = `No slashing`
 
   return {
     type: 'OnChainNotSlashable',

@@ -44,7 +44,7 @@ export const fraxtalDA: DaLayer = {
       createdAt: new UnixTime(1726754891), // 2024-09-19T14:08:11Z
       layer: 'FraxtalDA',
       description:
-        'The risk profile in this page refers to scaling solutions that do not integrate with a data availability bridge.',
+        'The risk profile in this page refers to L2s that do not integrate with a data availability bridge.',
       technology: {
         description: `Ethereum has no proof of data availability for this project. Only the sequencer is attesting to the availability of the data.\n`,
       },

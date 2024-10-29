@@ -77,11 +77,11 @@ export const avail: DaLayer = {
     risks: [
       {
         category: 'Funds can be lost if',
-        text: `a dishonest majority of Avail validators finalize an unavailable block, and there aren't light nodes on the network verifying data availability, or they fail at social signaling unavailable data.`,
+        text: `a dishonest majority of Avail validators finalizes an unavailable block, and there aren't light nodes on the network verifying data availability, or they fail at social signaling unavailable data.`,
       },
       {
         category: 'Funds can be lost if',
-        text: 'a dishonest majority of Avail validators finalize an unavailable block, and the number of light nodes on the network is not enough to ensure block reconstruction.',
+        text: 'a dishonest majority of Avail validators finalizes an unavailable block, and the number of light nodes on the network is not enough to ensure block reconstruction.',
       },
     ],
   },
@@ -90,7 +90,7 @@ export const avail: DaLayer = {
       createdAt: new UnixTime(1725372159), // 2024-09-03T14:02:39Z
       layer: 'Avail',
       description:
-        'The risk profile in this page refers to scaling solutions that do not integrate with a data availability bridge.',
+        'The risk profile in this page refers to L2s that do not integrate with a data availability bridge.',
       technology: {
         description: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.\n`,
       },
