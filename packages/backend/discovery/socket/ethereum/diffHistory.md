@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x32132ccd3c6ecd135d75d553836a305b2f4685ae
+
+# Diff at Mon, 28 Oct 2024 13:24:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@00bd1d18460d612b1f06ce2339854c105cd41bd5 block: 21027491
+- current block number: 21064404
+
+## Description
+
+New plugs, data updated, no significant new token escrows.
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.109:
++        "0xf1807B621efC3B072d1203dD28C880BBEDc56161"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.108:
++        "0xE3255bb716d8BA81aA97Ff20c75b404D9844CBE1"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.107:
++        "0x7FBCd72B6368f1771C9F6Ee16502C19b0AADBa1D"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.106:
++        "0xCF83efEe74f61771AF78b05DeA847773D3952C33"
+    }
+```
+
 Generated with discovered.json: 0x314d6b031cf39abbec7f48054832ebf8b2e71de2
 
 # Diff at Wed, 23 Oct 2024 09:48:53 GMT:
