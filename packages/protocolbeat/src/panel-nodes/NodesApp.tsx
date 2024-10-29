@@ -7,7 +7,7 @@ interface AppProps {
   panelMode?: boolean
 }
 
-export function App(props: AppProps) {
+export function NodesApp(props: AppProps) {
   return (
     <FileDropZone disabled={!!props.panelMode}>
       <div className="relative h-full w-full flex-1">

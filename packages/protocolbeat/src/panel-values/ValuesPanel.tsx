@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 import { getProject } from '../api/api'
 import { ApiProjectChain, ApiProjectContract } from '../api/types'
-import { usePanelStore } from '../store'
+import { usePanelStore } from '../store/store'
 import { Field } from './Field'
 
 export function ValuesPanel() {
@@ -16,7 +16,7 @@ export function ValuesPanel() {
   })
   const selectedAddress = usePanelStore((state) => state.selected[0])
 
-  if (response.isLoading) {
+  if (response.isPending) {
     return <div>Loading</div>
   }
   if (response.isError) {

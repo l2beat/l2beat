@@ -15,7 +15,7 @@ import { IconFolderOpened } from '../icons/IconFolderOpened'
 import { IconMultisig } from '../icons/IconMultisig'
 import { IconTimelock } from '../icons/IconTimelock'
 import { IconToken } from '../icons/IconToken'
-import { usePanelStore } from '../store'
+import { usePanelStore } from '../store/store'
 
 export function ListPanel() {
   const { project } = useParams()
@@ -26,7 +26,7 @@ export function ListPanel() {
     queryKey: ['projects', project],
     queryFn: () => getProject(project),
   })
-  if (response.isLoading) {
+  if (response.isPending) {
     return <div>Loading</div>
   }
   if (response.isError) {

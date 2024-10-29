@@ -16,7 +16,7 @@ const router = createBrowserRouter([
 
 const queryClient = new QueryClient()
 
-export function App() {
+export function DiscoveryApp() {
   return (
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
