@@ -94,11 +94,11 @@ export abstract class BaseAnalyzer {
       firstInRange !== -1 ? sortedSafeTransactions.slice(firstInRange - 1) : []
     const windowedTransactions = slidingWindow(transactions, 2, 1)
 
-    const finalityDelays = []
+    const finalityBatches = []
     const batchedTransactions = chunk(windowedTransactions, 10)
 
     for (const batch of batchedTransactions) {
-      const delays = await Promise.all(
+      const batches = await Promise.all(
         batch.map(
           async ([prevTx, tx]) =>
             ({
@@ -110,10 +110,10 @@ export abstract class BaseAnalyzer {
             }) satisfies Batch,
         ),
       )
-      finalityDelays.push(delays.flat())
+      finalityBatches.push(batches.flat())
     }
 
-    return finalityDelays.flat()
+    return finalityBatches.flat()
   }
 
   abstract getTrackedTxSubtype(): TrackedTxsConfigSubtype
