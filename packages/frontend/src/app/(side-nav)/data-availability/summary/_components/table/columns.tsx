@@ -1,12 +1,11 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
 import { TwoRowCell } from '~/components/table/cells/two-row-cell'
-import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
+import { getDaCommonProjectColumns } from '~/components/table/utils/common-project-columns/da-common-project-columns'
 import { EM_DASH } from '~/consts/characters'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { DaFallbackCell } from '../../../_components/da-fallback-cell'
-import { DaLayerCell } from '../../../_components/da-layer-cell'
 import { DacMembersCell } from '../../../_components/dac-members-cell'
 import { virtual, withSpanByBridges } from '../../../_utils/col-utils'
 import {
@@ -17,16 +16,8 @@ import { DaEconomicSecurityCell } from './da-economic-security-cell'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
 
-export const [indexColumn, logoColumn] = getCommonProjectColumns(columnHelper)
-
-export const daLayerColumn = columnHelper.accessor('name', {
-  header: 'DA Layer',
-  cell: (ctx) => <DaLayerCell entry={ctx.row.original} />,
-  meta: {
-    tooltip:
-      'The data availability layer where the data (transaction data or state diffs) is posted.',
-  },
-})
+export const [indexColumn, logoColumn, daLayerColumn] =
+  getDaCommonProjectColumns(columnHelper)
 
 export const daRisksColumn = columnHelper.display({
   id: 'da-risks',
