@@ -24,7 +24,7 @@ const daResolveWindow = formatSeconds(
 export const xterioDA: DaLayer = {
   id: 'xterio-da',
   type: 'DaLayer',
-  kind: 'DAC',
+  kind: 'No DAC',
   systemCategory: 'custom',
   display: {
     name: 'XterioDA',
