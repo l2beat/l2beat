@@ -63,7 +63,8 @@ const tvsColumn = columnHelper.accessor('tvs', {
       EM_DASH
     ),
   meta: {
-    tooltip: 'The total value locked of all projects using this layer.',
+    tooltip:
+      'Total value secured (TVS) is the total value locked of all projects using this layer.',
     align: 'right',
   },
 })
@@ -172,7 +173,8 @@ const bridgeTvsColumn = virtual(
     id: 'bridge-tvs',
     header: 'Value Secured',
     meta: {
-      tooltip: 'The total value locked of all projects using this bridge.',
+      tooltip:
+        'Value secured is the total value locked of all projects using this bridge.',
     },
   }),
 )
