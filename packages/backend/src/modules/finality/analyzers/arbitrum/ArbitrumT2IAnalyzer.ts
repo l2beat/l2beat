@@ -30,24 +30,13 @@ export class ArbitrumT2IAnalyzer extends BaseAnalyzer {
     transaction: Transaction,
   ): Promise<L2Block[]> {
     this.logger.debug('Getting finality', { transaction })
-    const submissionTimestamp = transaction.timestamp
     // get blobs relevant to the transaction
     const { blobs } = await this.blobClient.getRelevantBlobs(transaction.txHash)
 
     const segments = getSegments(blobs)
-    const delays = calculateDelaysFromSegments(
-      segments,
-      submissionTimestamp.toNumber(),
-    )
     // https://linear.app/l2beat/issue/L2B-4752/refactor-finalityindexer-logic-to-allow-analyzers-different
     // TODO: refactor FinalityIndexer to enable calculating finality
     // more accurately
-
-    // TODO(radomski): Fill out the l2BlockNumber
-    return [
-      { blockNumber: 0, timestamp: delays.minDelay },
-      { blockNumber: 0, timestamp: delays.avgDelay },
-      { blockNumber: 0, timestamp: delays.maxDelay },
-    ]
+    return calculateDelaysFromSegments(segments)
   }
 }
