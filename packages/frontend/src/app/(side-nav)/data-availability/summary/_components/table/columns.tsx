@@ -62,7 +62,6 @@ const tvsColumn = columnHelper.accessor('tvs', {
     ) : (
       EM_DASH
     ),
-  enableSorting: false,
   meta: {
     tooltip: 'The total value locked of all projects using this layer.',
     align: 'right',
@@ -92,7 +91,6 @@ const slashableStakeColumn = columnHelper.accessor('economicSecurity', {
     tooltip:
       'The assets that are slashable in case of a data withholding attack. For public blockchains, it is equal to 2/3 of the total validating stake.',
   },
-  enableSorting: false,
 })
 
 const membersColumn = columnHelper.display({
