@@ -13,7 +13,7 @@ export type State = {
   selectedLayout: number
   active: PanelId | undefined
   fullScreen: PanelId | undefined
-  hover: PanelId | undefined
+  pickedUp: PanelId | undefined
 }
 
 export type Action = {
@@ -85,17 +85,16 @@ export const useMultiViewStore = create<State & Action>((set) => ({
   selectedLayout: selectedLayout,
   active: undefined,
   fullScreen: undefined,
-  hover: undefined,
+  pickedUp: undefined,
   changePanel: (from, to) =>
     set((state) => {
       const fromPanel = state.panels.find((x) => x.id === from)
       if (!fromPanel) {
         return state
       }
-      const toPanel = state.panels.find((x) => x.id === to) || {
+      const toPanel: Panel = state.panels.find((x) => x.id === to) || {
         id: to,
         size: fromPanel.size,
-        hover: false,
       }
       return {
         panels: state.panels.map((panel) =>
@@ -175,29 +174,31 @@ export const useMultiViewStore = create<State & Action>((set) => ({
       }
     }),
   mouseMove: (x, y) => set(() => ({ mouse: { x, y } })),
-  pickUp: (id) => set(() => ({ hover: id })),
+  pickUp: (id) => set(() => ({ pickedUp: id })),
   order: (id, before) =>
     set((state) => {
-      const target = state.panels.find((f) => f.id === id && id !== state.hover)
-      const hover = state.panels.find((f) => f.id === state.hover)
-      if (!target || !hover) {
+      const target = state.panels.find(
+        (f) => f.id === id && id !== state.pickedUp,
+      )
+      const pickedUp = state.panels.find((f) => f.id === state.pickedUp)
+      if (!target || !pickedUp) {
         return state
       }
       const panels = []
       for (const panel of state.panels) {
         if (panel === target) {
           if (before) {
-            panels.push(hover, panel)
+            panels.push(pickedUp, panel)
           } else {
-            panels.push(panel, hover)
+            panels.push(panel, pickedUp)
           }
-        } else if (panel !== hover) {
+        } else if (panel !== pickedUp) {
           panels.push(panel)
         }
       }
       return { panels }
     }),
-  drop: () => set(() => ({ hover: undefined })),
+  drop: () => set(() => ({ pickedUp: undefined })),
   loadLayout: (n) =>
     set((state) => {
       const layout = state.layouts[n]

@@ -87,10 +87,10 @@ export function MultiView(props: MultiViewProps) {
     function onMouseMove(e: MouseEvent) {
       mouseMove(e.clientX, e.clientY)
 
-      const { hover } = useMultiViewStore.getState()
-      document.body.classList.toggle('select-none', !!hover)
+      const { pickedUp } = useMultiViewStore.getState()
+      document.body.classList.toggle('select-none', !!pickedUp)
 
-      if (hover) {
+      if (pickedUp) {
         const container = panelContainerRef.current
         if (!container) {
           return
@@ -100,7 +100,7 @@ export function MultiView(props: MultiViewProps) {
           const box = panel.getBoundingClientRect()
           if (e.clientX >= box.left && e.clientX < box.right) {
             const panelId = panel.id.slice('panel-'.length) as PanelId
-            if (panelId !== hover) {
+            if (panelId !== pickedUp) {
               order(panelId, e.clientX < (box.left + box.right) / 2)
             }
             break
@@ -193,9 +193,9 @@ function Panel(props: { id: PanelId; body: ComponentType<{ kind: PanelId }> }) {
   const hidden = useMultiViewStore(
     (state) => state.fullScreen !== undefined && state.fullScreen !== props.id,
   )
-  const isHover = useMultiViewStore((state) => state.hover === props.id)
+  const isPickedUp = useMultiViewStore((state) => state.pickedUp === props.id)
 
-  const HeaderWrapper = isHover ? HoverHeader : Fragment
+  const HeaderWrapper = isPickedUp ? HoverHeader : Fragment
   return (
     <div
       className={clsx(
@@ -211,12 +211,12 @@ function Panel(props: { id: PanelId; body: ComponentType<{ kind: PanelId }> }) {
         className={clsx(
           // This value has to be updated to account for other element sizes!
           'max-h-[calc(100vh-108px)] flex-1 overflow-y-scroll',
-          isHover && 'hidden',
+          isPickedUp && 'hidden',
         )}
       >
         <props.body kind={props.id} />
       </div>
-      {isHover && <div className="flex-1 bg-slate-100" />}
+      {isPickedUp && <div className="flex-1 bg-slate-100" />}
     </div>
   )
 }
