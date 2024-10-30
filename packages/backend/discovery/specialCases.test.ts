@@ -1,5 +1,5 @@
-import { assert } from '@l2beat/backend-tools'
 import { ConfigReader } from '@l2beat/discovery'
+import { assert } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 describe('specialCases', () => {
