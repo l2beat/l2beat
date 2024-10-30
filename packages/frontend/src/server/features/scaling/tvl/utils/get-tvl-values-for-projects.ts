@@ -13,11 +13,13 @@ export async function getTvlValuesForProjects(
   range: TvlChartRange,
 ) {
   const { days, resolution } = getRangeConfig(range)
-  const target = getTvlTargetTimestamp().toStartOf(
-    resolution === 'hourly' ? 'hour' : 'day',
-  )
+  const target = getTvlTargetTimestamp()
 
-  const from = days !== Infinity && target.add(-days, 'days')
+  const from =
+    days !== Infinity &&
+    target
+      .toStartOf(resolution === 'hourly' ? 'hour' : 'day')
+      .add(-days, 'days')
 
   // NOTE: This cannot be optimized using from because the values need to be interpolated
   const valueRecords = await db.value.getForProjects(projects.map((p) => p.id))
@@ -50,10 +52,9 @@ export async function getTvlValuesForProjects(
           : 'day',
     )
 
-    const timestamps = generateTimestamps(
-      [minTimestamp, target],
-      resolution,
-    ).filter((t) => t.lte(target))
+    const timestamps = generateTimestamps([minTimestamp, target], resolution, {
+      addTarget: true,
+    }).filter((t) => t.lte(target))
 
     for (const timestamp of timestamps) {
       const values = (valuesByTimestamp[timestamp.toString()] ?? []).filter(

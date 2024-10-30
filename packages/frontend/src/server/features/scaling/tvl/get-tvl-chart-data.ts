@@ -67,7 +67,7 @@ export const getCachedTvlChartData = cache(
       forTotal,
     })
   },
-  ['getTvlChartData'],
+  ['getTvlChartDataXD'],
   { revalidate: 10 * UnixTime.MINUTE },
 )
 
@@ -76,7 +76,6 @@ function getChartData(
   ethPrices: Record<number, number>,
   options: {
     excludeAssociatedTokens: boolean
-
     forTotal: boolean
   },
 ) {
