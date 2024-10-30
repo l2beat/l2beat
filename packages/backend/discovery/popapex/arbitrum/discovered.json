@@ -1,7 +1,7 @@
 {
   "name": "popapex",
   "chain": "arbitrum",
-  "blockNumber": 267471118,
+  "blockNumber": 269235285,
   "configHash": "0x610a10967c241f05169850013f1febf37784c8d1a24332d166099259bff3d56b",
   "contracts": [
     {
@@ -51,11 +51,11 @@
           "0x7b18A3073774e00C072DeBd390ed6fE4251493A7"
         ],
         "allowedOutboxList": ["0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2"],
-        "delayedMessageCount": 40691,
+        "delayedMessageCount": 41252,
         "rollup": "0x65AD139061B3f6DDb16170a07b925337ddf42407",
         "sequencerInbox": "0xa58F38102579dAE7C584850780dDA55744f67DF1",
-        "sequencerMessageCount": 39696,
-        "sequencerReportedSubMessageCount": 59017281
+        "sequencerMessageCount": 40254,
+        "sequencerReportedSubMessageCount": 60761314
       },
       "derivedName": "Bridge"
     },
@@ -263,12 +263,12 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 2195,
+        "firstUnresolvedNode": 2206,
         "inbox": "0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1",
         "isERC20Enabled": false,
         "lastStakeBlock": 19278432,
-        "latestConfirmed": 2194,
-        "latestNodeCreated": 2206,
+        "latestConfirmed": 2205,
+        "latestNodeCreated": 2216,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2",
@@ -431,6 +431,7 @@
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
+          "0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
           "0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
           "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
@@ -443,8 +444,8 @@
         "domainSeparator": "0x8e983e66cfd245a874ba795dfb67eec98f9f6261d8eed2360f67db156c7d3a86",
         "getChainId": 42161,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 7 (29%)",
-        "nonce": 36,
+        "multisigThreshold": "2 of 8 (25%)",
+        "nonce": 38,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -559,7 +560,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 39696,
+        "batchCount": 40254,
         "batchPosters": ["0x139aC582825DD6A9b9D6A6a64f1bE149C84e0d03"],
         "bridge": "0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6",
         "dacKeyset": {
@@ -582,7 +583,7 @@
         "rollup": "0x65AD139061B3f6DDb16170a07b925337ddf42407",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 40690
+        "totalDelayedMessagesRead": 41250
       },
       "fieldMeta": {
         "maxTimeVariation": {
@@ -749,6 +750,7 @@
     },
     { "address": "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f" },
     { "address": "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe" },
+    { "address": "0xA0737fea60F0601A192E3d2c98865A883ab0bda2" },
     { "address": "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038" },
     { "address": "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4" },
     {

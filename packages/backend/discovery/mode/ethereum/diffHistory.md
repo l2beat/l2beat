@@ -1,3 +1,49 @@
+Generated with discovered.json: 0x0c5708bd0e5260e72c3cbf44639c886c55681a1d
+
+# Diff at Wed, 30 Oct 2024 13:10:52 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0a8a53530022c6c5edd257c3682a3e7f80d0c550 block: 20992152
+- current block number: 21078666
+
+## Description
+
+Conduit MS: Signer added.
+
+## Watched changes
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.7:
++        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+      values.$members.6:
+-        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
++        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+      values.$members.5:
+-        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
++        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+      values.$members.4:
+-        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
++        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+      values.$members.3:
+-        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
++        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.$members.2:
+-        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
++        "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
+      values.$members.1:
+-        "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
++        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
+      values.$members.0:
+-        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
++        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
+      values.multisigThreshold:
+-        "4 of 7 (57%)"
++        "4 of 8 (50%)"
+    }
+```
+
 Generated with discovered.json: 0xecb5d2b1186453aaec05cf065c6e08d9ea13daec
 
 # Diff at Tue, 29 Oct 2024 13:13:19 GMT:

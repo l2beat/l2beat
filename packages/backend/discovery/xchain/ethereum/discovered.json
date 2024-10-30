@@ -1,7 +1,7 @@
 {
   "name": "xchain",
   "chain": "ethereum",
-  "blockNumber": 21041874,
+  "blockNumber": 21078680,
   "configHash": "0xd9766caf53dc37b940b151b01e14a34d8abdcdb670556ef9adbd2df88a78c17b",
   "contracts": [
     {
@@ -231,11 +231,11 @@
           "0x6c8faa6b06d4bDD5Af628ac28954736a0fC0BD6b"
         ],
         "allowedOutboxList": ["0x0b8071337dcB089478Ea740efC10904d9F359141"],
-        "delayedMessageCount": 46,
+        "delayedMessageCount": 47,
         "rollup": "0xeb61c3FA03544021cf76412eFb9D0Ce7D8c0290d",
         "sequencerInbox": "0x47861E0419BE83d0175818a09221B6DF2EFD7793",
-        "sequencerMessageCount": 513,
-        "sequencerReportedSubMessageCount": 547034
+        "sequencerMessageCount": 593,
+        "sequencerReportedSubMessageCount": 611594
       },
       "derivedName": "Bridge"
     },
@@ -288,7 +288,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 513,
+        "batchCount": 593,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x74978411BbBCbC466e79fb855DAe981997100deB"],
         "bridge": "0x2Be65c5b58F78B02AB5c0e798A9ffC181703D3C1",
@@ -312,7 +312,7 @@
         "rollup": "0xeb61c3FA03544021cf76412eFb9D0Ce7D8c0290d",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 46,
+        "totalDelayedMessagesRead": 47,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -407,6 +407,7 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
           "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
           "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
@@ -419,8 +420,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 55,
+        "multisigThreshold": "4 of 8 (50%)",
+        "nonce": 56,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -671,12 +672,12 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 278,
+        "firstUnresolvedNode": 288,
         "inbox": "0xE961Ef06c26D0f032F0298c97C41e648d3bb715a",
         "isERC20Enabled": false,
         "lastStakeBlock": 19938496,
-        "latestConfirmed": 277,
-        "latestNodeCreated": 288,
+        "latestConfirmed": 287,
+        "latestNodeCreated": 299,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0b8071337dcB089478Ea740efC10904d9F359141",
@@ -776,6 +777,7 @@
         }
       ]
     },
+    { "address": "0xA0737fea60F0601A192E3d2c98865A883ab0bda2" },
     { "address": "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038" },
     { "address": "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4" },
     { "address": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C" },
