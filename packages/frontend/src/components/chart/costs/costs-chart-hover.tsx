@@ -1,8 +1,9 @@
 import { formatCostValue } from '~/app/(side-nav)/scaling/costs/_utils/format-cost-value'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { Square } from '~/components/square'
 import { type CostsUnit } from '~/server/features/scaling/costs/types'
+import { type CostsResolution } from '~/server/features/scaling/costs/utils/range'
 import { formatTimestamp } from '~/utils/dates'
-import { HorizontalSeparator } from '../../core/horizontal-separator'
-import { Square } from '../../square'
 
 export interface CostsChartPointData {
   timestamp: number
@@ -13,15 +14,19 @@ export interface CostsChartPointData {
   overhead: number
 }
 
-export function CostsChartHover({
-  data,
-  unit,
-}: { data: CostsChartPointData; unit: CostsUnit }) {
+interface Props {
+  data: CostsChartPointData
+  unit: CostsUnit
+  resolution: CostsResolution
+}
+
+export function CostsChartHover({ data, unit, resolution }: Props) {
   return (
     <div>
       <div className="mb-1 whitespace-nowrap">
         {formatTimestamp(data.timestamp, {
-          mode: 'datetime',
+          mode: resolution === 'daily' ? 'date' : 'datetime',
+          longMonthName: resolution === 'daily',
         })}
       </div>
       <div className="flex w-full items-center justify-between gap-2">
