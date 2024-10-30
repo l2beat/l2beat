@@ -132,12 +132,20 @@ const challengeMechanismColumn = columnHelper.accessor('challengeMechanism', {
     </TwoRowCell>
   ),
   enableSorting: false,
+  meta: {
+    tooltip:
+      'Shows if there is a mechanism that enables users to dispute the availability or accuracy of data committed by the DA provider',
+  },
 })
 
 const fallbackColumn = columnHelper.accessor('fallback', {
   header: 'Fallback',
   cell: (ctx) => <DaFallbackCell entry={ctx.row.original} />,
   enableSorting: false,
+  meta: {
+    tooltip:
+      'Is there a mechanism that allows data to be posted to an alternative DA layer in case of downtime or unavailability of the primary layer? If so, where is the data posted?',
+  },
 })
 
 export const customColumns = [
