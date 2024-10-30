@@ -16,6 +16,9 @@ export abstract class ClientCore {
 
   /** This method will call prepareRequest, perform HTTP fetch and validate the response.
   * Rate limiting and retry handling is built-in.
+
+  * @param ...args arbitraty params, should be the same as the ones from prepareRequest
+  * @returns parsed json object
   */
   async query(...args: unknown[]): Promise<json> {
     try {
