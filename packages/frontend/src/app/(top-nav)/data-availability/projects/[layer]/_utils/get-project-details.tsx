@@ -109,6 +109,7 @@ export function getProjectDetails({
       isUnderReview: !!daLayer.isUnderReview,
       isVerified,
       grissiniValues: mapBridgeRisksToRosetteValues(daBridge.risks),
+      hideRisks: daBridge.type === 'NoBridge',
     },
   })
 
