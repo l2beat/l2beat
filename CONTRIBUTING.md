@@ -25,9 +25,9 @@ locally. To install dependencies do the following.
 
 1. Install [node.js](https://nodejs.org/en/) version 18. To easily manage node versions we recommend
    [fnm](https://github.com/Schniz/fnm)
-2. Install [pnpm](https://classic.pnpmpkg.com/en/docs/install#debian-stable), preferably through
-   `npm i -g pnpm`
-3. In the repository root run `pnpm` to install project specific dependencies
+2. Install [pnpm](https://pnpm.io/installation#using-corepack), preferably using Corepack
+   `corepack enable pnpm`
+3. In the repository root run `pnpm install` to install project specific dependencies
 
 ## Running the website locally
 
@@ -36,7 +36,7 @@ is actually displayed) then it's quite easy. Just run the following commands aft
 repository:
 
 ```
-pnpm
+pnpm install
 pnpm build:dependencies
 cd packages/frontend
 pnpm dev:mock

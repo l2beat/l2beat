@@ -29,9 +29,9 @@ pnpm db:seed
 QUEUE_DASHBOARD_PORT=3000
 ```
 
-8. Start the queue:
+8. Start the worker:
 ```bash
-pnpm queue
+pnpm start
 ```
 
 > Check out current queue schema here: [Queue schema](https://link.excalidraw.com/l/1Pobo8fNXle/22icgOkmpSn)

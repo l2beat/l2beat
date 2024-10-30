@@ -4,5 +4,5 @@ build:
 run:
   web:
     command: 
-    - pnpm start
+    - npm run start
     image: backend
