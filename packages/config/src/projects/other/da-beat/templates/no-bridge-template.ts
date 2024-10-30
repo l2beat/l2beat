@@ -1,4 +1,5 @@
 import {
+  DaBridgeContracts,
   DaBridgeRisks,
   DaCommitteeSecurityRisk,
   DaUpgradeabilityRisk,
@@ -21,6 +22,8 @@ type Optionals = Partial<{
   warnings: NoDaBridge['display']['warning']
   redWarnings: NoDaBridge['display']['redWarning']
   description: NoDaBridge['display']['description']
+  permissions: NoDaBridge['permissions']
+  contracts: NoDaBridge['contracts']
   technology: NoDaBridge['technology']
   otherConsiderations: NoDaBridge['otherConsiderations']
 }>
@@ -68,6 +71,13 @@ export function NO_BRIDGE(template: TemplateVars): NoDaBridge {
     ...template.risks,
   } satisfies DaBridgeRisks
 
+  const contracts: DaBridgeContracts = template.contracts ?? {
+    risks: [],
+    addresses: {},
+  }
+
+  const permissions = template.permissions ?? {}
+
   return {
     id,
     type,
@@ -76,6 +86,8 @@ export function NO_BRIDGE(template: TemplateVars): NoDaBridge {
     risks,
     technology,
     usedIn,
+    permissions,
+    contracts,
     otherConsiderations: template.otherConsiderations,
   }
 }
