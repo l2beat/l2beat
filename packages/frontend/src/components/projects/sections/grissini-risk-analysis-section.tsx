@@ -28,7 +28,7 @@ export function GrissiniRiskAnalysisSection({
         <div key={key} className="flex flex-col gap-2">
           <SingleGrissiniDetails {...value} />
           {value.description && (
-            <Markdown className="mt-1.5 font-normal leading-snug text-black/80 dark:text-white/80 md:text-lg">
+            <Markdown className="mt-2 leading-snug text-gray-850 dark:text-gray-400">
               {value.description}
             </Markdown>
           )}
