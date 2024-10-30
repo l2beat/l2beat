@@ -11,16 +11,17 @@ export interface ClientCoreDeps {
   logger: Logger
 }
 
-export abstract class ClientCore {
+export abstract class ClientCore<Args extends unknown[]> {
   constructor(private readonly deps: ClientCoreDeps) { }
 
-  /** This method will call prepareRequest, perform HTTP fetch and validate the response.
-  * Rate limiting and retry handling is built-in.
-
-  * @param ...args arbitraty params, should be the same as the ones from prepareRequest
-  * @returns parsed json object
-  */
-  async query(...args: unknown[]): Promise<json> {
+  /**
+   * This method will call prepareRequest, perform HTTP fetch, and validate the response.
+   * Rate limiting and retry handling are built-in.
+   *
+   * @param args - Parameters passed to prepareRequest, which must match its signature
+   * @returns Parsed JSON object
+   */
+  async query(...args: Args): Promise<json> {
     try {
       return await this.deps.rateLimiter.call(() => this._query(...args))
     } catch {
@@ -30,23 +31,26 @@ export abstract class ClientCore {
     }
   }
 
-  private async _query(...args: unknown[]): Promise<json> {
-    const request = this.prepareRequest(...args)
+  private async _query(...args: Args): Promise<json> {
+    const request = this.prepareRequest(...args);
 
-    const response = await this.deps.http.fetch(request.url, request.init)
+    const response = await this.deps.http.fetch(request.url, request.init);
 
-    const isResponseValid = this.validateResponse(response)
+    const isResponseValid = this.validateResponse(response);
 
-    if (isResponseValid === false) {
-      throw new Error('Response validation failed')
+    if (!isResponseValid) {
+      throw new Error('Response validation failed');
     }
 
-    return response
+    return response;
   }
 
-  /** This method should return params that will be used for HTTP fetch */
-  abstract prepareRequest(...args: unknown[]): { url: string, init: RequestInit }
+  /**
+   * This method should return parameters used for the HTTP fetch.
+   * It must accept the same parameters as query and _query.
+   */
+  abstract prepareRequest(...args: Args): { url: string; init: RequestInit };
 
   /** This method should return false when there are errors in the response, true otherwise */
-  abstract validateResponse(response: unknown): boolean
+  abstract validateResponse(response: unknown): boolean;
 }

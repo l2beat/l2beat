@@ -11,7 +11,7 @@ interface Dependencies extends ClientCoreDependencies {
   generateId?: () => string
 }
 
-export class RpcClient2 extends ClientCore {
+export class RpcClient2 extends ClientCore<[string, (string | number | boolean)[]]> {
   constructor(private readonly $: Dependencies) {
     super({ ...$ })
   }
