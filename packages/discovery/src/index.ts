@@ -1,5 +1,5 @@
 export { discover } from './cli/discoverCommand'
-export { getChainConfig } from './config/config.discovery'
+export { getChainConfig, getChainShortName } from './config/config.discovery'
 export type {
   DiscoveryChainConfig,
   DiscoveryModuleConfig,

@@ -30,18 +30,24 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
         with:
-          node-version: 18.x
-          cache: 'yarn'
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: yarn --frozen-lockfile
+        run: pnpm install
 
       - name: Check if prisma migration is updated
         run: |-
-          yarn prisma migrate diff --exit-code \
-            --from-migrations packages/database/prisma/migrations \
-            --to-schema-datamodel packages/database/prisma/schema.prisma \
+          cd packages/database
+          pnpm prisma migrate diff --exit-code \
+            --from-migrations prisma/migrations \
+            --to-schema-datamodel prisma/schema.prisma \
             --shadow-database-url ${{env.DATABASE_URL}}

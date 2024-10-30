@@ -5,7 +5,7 @@ import { argv } from 'process'
 const path = argv[2]
 
 if (!path) {
-  console.error('Usage: yarn export <output-path>')
+  console.error('Usage: pnpm export <output-path>')
   process.exit(1)
 }
 

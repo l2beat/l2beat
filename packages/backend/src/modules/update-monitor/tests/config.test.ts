@@ -55,7 +55,7 @@ describe('discovery config.jsonc', () => {
     expect(notEqual).toBeEmpty()
     notEqual.forEach((p) => {
       console.log(
-        `Following projects do not have the same name in config and discovery.json. Run "yarn discover <config.name>" - ${p}`,
+        `Following projects do not have the same name in config and discovery.json. Run "pnpm discover <config.name>" - ${p}`,
       )
     })
   })
@@ -148,7 +148,7 @@ describe('discovery config.jsonc', () => {
         //
         // assert(
         //   discovery.shapeFilesHash === shapeFilesHash,
-        //   `Looks like you have added/moved/removed/modified shape files. This requires refreshing discovery of all projects. Run "yarn refresh-discovery"`,
+        //   `Looks like you have added/moved/removed/modified shape files. This requires refreshing discovery of all projects. Run "pnpm refresh-discovery"`,
         // )
 
         const outdatedTemplates = []
@@ -172,13 +172,13 @@ describe('discovery config.jsonc', () => {
         outdatedConfigHashes.length === 0,
         `Following projects have outdated hashes (chain-project): ${outdatedConfigHashes.join(
           ', ',
-        )}. Run "yarn refresh-discovery"`,
+        )}. Run "pnpm refresh-discovery"`,
       )
       assert(
         outdatedTemplateHashes.length === 0,
         `Following projects use outdated templates: ${outdatedTemplateHashes.join(
           ', ',
-        )}. Run "yarn refresh-discovery"`,
+        )}. Run "pnpm refresh-discovery"`,
       )
     }
   })
@@ -190,7 +190,7 @@ describe('discovery config.jsonc', () => {
 
         assert(
           discovery.contracts.every((c) => c.errors === undefined),
-          `${c.name} discovery.json includes errors. Run "yarn discover ${c.name}".`,
+          `${c.name} discovery.json includes errors. Run "pnpm discover ${c.name}".`,
         )
       }
     }

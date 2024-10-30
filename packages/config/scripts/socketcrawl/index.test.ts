@@ -24,13 +24,13 @@ describe('socket', () => {
     // Check that all discovered plugs are in the addresses list from the socket script
     assert(
       plugs.length === addresses.length,
-      'There are new plugs in the socket discovery output. Go to packages/config and run yarn socket-crawl, then handle the crawl results from the script.',
+      'There are new plugs in the socket discovery output. Go to packages/config and run pnpm socket-crawl, then handle the crawl results from the script.',
     )
     try {
       expect(plugs.every((plug) => addresses.includes(plug))).toEqual(true)
     } catch (error) {
       console.error(
-        'The crawl results from the socket script are outdated. Go to packages/config and run yarn socket-crawl, then handle the crawl results from the script.',
+        'The crawl results from the socket script are outdated. Go to packages/config and run pnpm socket-crawl, then handle the crawl results from the script.',
       )
       throw error
     }

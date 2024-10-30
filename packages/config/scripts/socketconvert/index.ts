@@ -4,7 +4,7 @@ import * as fs from 'fs'
  *
  * Converts socket superbridge .json's to a usable format
  * Fill input.json with a file like  https://github.com/SocketDotTech/socket-plugs/blob/main/deployments/superbridge/prod_lyra_addresses.json
- * run with `yarn socket-convert` from config/
+ * run with `pnpm socket-convert` from config/
  *
  */
 
