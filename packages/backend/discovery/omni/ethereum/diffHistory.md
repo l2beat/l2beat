@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x800925fe243370aecbf94f1313ff3237591234ee
+
+# Diff at Tue, 29 Oct 2024 12:59:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7b3fc9dc9074e1d423b48522c3f0273c86aab54a block: 21041846
+- current block number: 21071443
+
+## Description
+
+Ignore sub-multisigs of the BridgeGovernance Multisig.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21041846 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x2a4d2c101e242cfadd5cb5292326be1710a212e5
 
 # Diff at Fri, 25 Oct 2024 09:51:16 GMT:
