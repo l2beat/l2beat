@@ -2,8 +2,7 @@ import { assertUnreachable } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { Skeleton } from '~/components/core/skeleton'
-import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
-import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
+import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { type SyncStatus } from '~/types/sync-status'
 import { formatNumber } from '~/utils/number-format/format-number'
@@ -38,10 +37,7 @@ type CostsNotAvailableData = {
 const columnHelper = createColumnHelper<ScalingCostsTableEntry>()
 
 export const scalingCostsColumns = [
-  ...getCommonProjectColumns(columnHelper),
-  columnHelper.accessor('name', {
-    cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
-  }),
+  ...getScalingCommonProjectColumns(columnHelper),
   columnHelper.group({
     id: 'total-cost',
     header: undefined,

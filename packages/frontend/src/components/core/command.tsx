@@ -9,12 +9,14 @@ import { cn } from '~/utils/cn'
 import { linkVariants } from '../link/custom-link'
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from './dialog'
 
-const Command = React.forwardRef<
-  React.ElementRef<typeof CommandPrimitive>,
-  React.ComponentPropsWithoutRef<typeof CommandPrimitive> & {
-    sidebar?: boolean
-  }
->(({ className, sidebar, ...props }, ref) => (
+const Command = ({
+  ref,
+  className,
+  sidebar,
+  ...props
+}: React.ComponentProps<typeof CommandPrimitive> & {
+  sidebar?: boolean
+}) => (
   <CommandPrimitive
     ref={ref}
     className={cn(
@@ -24,7 +26,7 @@ const Command = React.forwardRef<
     )}
     {...props}
   />
-))
+)
 Command.displayName = CommandPrimitive.displayName
 
 const CommandDialog = ({
@@ -55,12 +57,14 @@ const CommandDialog = ({
   )
 }
 
-const CommandInput = React.forwardRef<
-  React.ElementRef<typeof CommandPrimitive.Input>,
-  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input> & {
-    reset?: () => void
-  }
->(({ className, reset, ...props }, ref) => {
+const CommandInput = ({
+  ref,
+  className,
+  reset,
+  ...props
+}: React.ComponentProps<typeof CommandPrimitive.Input> & {
+  reset?: () => void
+}) => {
   const search = useCommandState((state) => state.search)
   return (
     <div
@@ -86,14 +90,15 @@ const CommandInput = React.forwardRef<
       )}
     </div>
   )
-})
+}
 
 CommandInput.displayName = CommandPrimitive.Input.displayName
 
-const CommandList = React.forwardRef<
-  React.ElementRef<typeof CommandPrimitive.List>,
-  React.ComponentPropsWithoutRef<typeof CommandPrimitive.List>
->(({ className, ...props }, ref) => (
+const CommandList = ({
+  ref,
+  className,
+  ...props
+}: React.ComponentProps<typeof CommandPrimitive.List>) => (
   <CommandPrimitive.List
     ref={ref}
     className={cn(
@@ -102,27 +107,28 @@ const CommandList = React.forwardRef<
     )}
     {...props}
   />
-))
+)
 
 CommandList.displayName = CommandPrimitive.List.displayName
 
-const CommandEmpty = React.forwardRef<
-  React.ElementRef<typeof CommandPrimitive.Empty>,
-  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Empty>
->((props, ref) => (
+const CommandEmpty = ({
+  ref,
+  ...props
+}: React.ComponentProps<typeof CommandPrimitive.Empty>) => (
   <CommandPrimitive.Empty
     ref={ref}
     className="px-4 py-6 text-center text-sm"
     {...props}
   />
-))
+)
 
 CommandEmpty.displayName = CommandPrimitive.Empty.displayName
 
-const CommandGroup = React.forwardRef<
-  React.ElementRef<typeof CommandPrimitive.Group>,
-  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Group>
->(({ className, ...props }, ref) => (
+const CommandGroup = ({
+  ref,
+  className,
+  ...props
+}: React.ComponentProps<typeof CommandPrimitive.Group>) => (
   <CommandPrimitive.Group
     ref={ref}
     className={cn(
@@ -131,14 +137,15 @@ const CommandGroup = React.forwardRef<
     )}
     {...props}
   />
-))
+)
 
 CommandGroup.displayName = CommandPrimitive.Group.displayName
 
-const CommandSeparator = React.forwardRef<
-  React.ElementRef<typeof CommandPrimitive.Separator>,
-  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Separator>
->(({ className, ...props }, ref) => (
+const CommandSeparator = ({
+  ref,
+  className,
+  ...props
+}: React.ComponentProps<typeof CommandPrimitive.Separator>) => (
   <CommandPrimitive.Separator
     ref={ref}
     className={cn(
@@ -147,13 +154,14 @@ const CommandSeparator = React.forwardRef<
     )}
     {...props}
   />
-))
+)
 CommandSeparator.displayName = CommandPrimitive.Separator.displayName
 
-const CommandItem = React.forwardRef<
-  React.ElementRef<typeof CommandPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Item>
->(({ className, ...props }, ref) => (
+const CommandItem = ({
+  ref,
+  className,
+  ...props
+}: React.ComponentProps<typeof CommandPrimitive.Item>) => (
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
@@ -162,7 +170,7 @@ const CommandItem = React.forwardRef<
     )}
     {...props}
   />
-))
+)
 
 CommandItem.displayName = CommandPrimitive.Item.displayName
 

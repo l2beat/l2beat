@@ -2,7 +2,6 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { TotalCell } from '~/app/(side-nav)/scaling/summary/_components/table/total-cell'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/pizza-rosette-cell'
-import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { StageCell } from '~/components/table/cells/stage/stage-cell'
 import { TwoRowCell } from '~/components/table/cells/two-row-cell'
 import {
@@ -11,17 +10,14 @@ import {
 } from '~/components/table/cells/type-cell'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { sortStages } from '~/components/table/sorting/functions/stage-sorting'
-import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
+import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { formatUops } from '~/utils/number-format/format-uops'
 import { type ScalingSummaryTableRow } from '../../_utils/to-table-rows'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 
 export const scalingSummaryColumns = [
-  ...getCommonProjectColumns(columnHelper),
-  columnHelper.accessor('name', {
-    cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
-  }),
+  ...getScalingCommonProjectColumns(columnHelper),
   columnHelper.display({
     header: 'Risks',
     cell: (ctx) => (
@@ -43,13 +39,26 @@ export const scalingSummaryColumns = [
       tooltip: <TypeExplanationTooltip />,
     },
   }),
-  columnHelper.accessor('stage', {
-    cell: (ctx) => <StageCell stageConfig={ctx.getValue()} />,
-    sortingFn: sortStages,
-    meta: {
-      hash: 'stage',
+  columnHelper.accessor(
+    (e) => {
+      if (
+        e.stage?.stage === 'NotApplicable' ||
+        e.stage?.stage === 'UnderReview'
+      ) {
+        return undefined
+      }
+      return e.stage
     },
-  }),
+    {
+      id: 'stage',
+      cell: (ctx) => <StageCell stageConfig={ctx.row.original.stage} />,
+      sortingFn: sortStages,
+      sortUndefined: 'last',
+      meta: {
+        hash: 'stage',
+      },
+    },
+  ),
   columnHelper.accessor(
     (e) => {
       return e.tvl?.breakdown?.total

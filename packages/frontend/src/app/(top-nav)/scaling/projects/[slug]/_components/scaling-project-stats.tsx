@@ -96,6 +96,9 @@ export function ScalingProjectStats({ project, className }: Props) {
         title={pluralize(project.header.purposes.length, 'Purpose')}
         value={project.header.purposes.join(', ')}
       />
+      {project.header.hostChain && (
+        <ProjectStat title="Host chain" value={project.header.hostChain} />
+      )}
     </div>
   )
 }

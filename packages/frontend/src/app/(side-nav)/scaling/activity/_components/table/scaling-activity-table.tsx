@@ -27,7 +27,7 @@ export function ScalingActivityTable({
 }: Props) {
   const table = useTable({
     columns: getScalingActivityColumns({
-      customActivityIndexing: !!customSortedRowModel,
+      activity: !!customSortedRowModel,
     }),
     data: entries,
     getCoreRowModel: getCoreRowModel(),

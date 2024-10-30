@@ -257,7 +257,7 @@ export const amarok: Bridge = {
       sentiment: 'warning',
     },
     sourceUpgradeability: {
-      value: 'YES',
+      value: 'Yes',
       description: `Connext can be upgraded by a ${discovery.getMultisigStats(
         'Connext Multisig',
       )} MultiSig`,

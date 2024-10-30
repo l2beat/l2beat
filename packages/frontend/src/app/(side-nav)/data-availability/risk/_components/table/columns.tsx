@@ -1,22 +1,14 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { RiskCell } from '~/components/table/cells/risk-cell'
-import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
+
+import { getDaCommonProjectColumns } from '~/components/table/utils/common-project-columns/da-common-project-columns'
 import { type DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
-import { DaLayerCell } from '../../../_components/da-layer-cell'
 import { virtual, withSpanByBridges } from '../../../_utils/col-utils'
 
 const columnHelper = createColumnHelper<DaRiskEntry>()
 
-export const [indexColumn, logoColumn] = getCommonProjectColumns(columnHelper)
-
-export const daLayerColumn = columnHelper.accessor('name', {
-  header: 'DA Layer',
-  cell: (ctx) => <DaLayerCell entry={ctx.row.original} />,
-  meta: {
-    tooltip:
-      'The data availability layer where the data (transaction data or state diffs) is posted.',
-  },
-})
+export const [indexColumn, logoColumn, daLayerColumn] =
+  getDaCommonProjectColumns(columnHelper)
 
 const baseColumns = [
   withSpanByBridges(indexColumn),
@@ -26,7 +18,7 @@ const baseColumns = [
 
 const economicSecurityColumn = columnHelper.display({
   id: 'economic-security',
-  header: 'Economic security',
+  header: 'Economic\nsecurity',
   cell: (ctx) => <RiskCell risk={ctx.row.original.risks.economicSecurity} />,
   meta: {
     tooltip:
@@ -36,7 +28,7 @@ const economicSecurityColumn = columnHelper.display({
 
 const fraudDetectionColumn = columnHelper.display({
   id: 'fraud-detection',
-  header: 'Fraud detection',
+  header: 'Fraud\ndetection',
   cell: (ctx) => <RiskCell risk={ctx.row.original.risks.fraudDetection} />,
   meta: {
     tooltip:
@@ -79,7 +71,7 @@ const bridgeColumn = virtual(
 const committeeSecurityColumn = virtual(
   columnHelper.display({
     id: 'committee-security',
-    header: 'Committee Security',
+    header: 'Committee\nsecurity',
     meta: {
       tooltip:
         'Shows if the DA bridge can securely confirm that the data availability attestations are backed by the DA layer’s economic security, meaning that the signatures from the DA layer are accurately verified and tracked on-chain.',
@@ -101,7 +93,7 @@ const upgradeabilityColumn = virtual(
 const relayerFailureColumn = virtual(
   columnHelper.display({
     id: 'relayer-failure',
-    header: 'Relayer Failure',
+    header: 'Relayer\nfailure',
     meta: {
       tooltip:
         'Shows if there is an additional trust assumption on the majority of committee members. It distinguishes between DA solutions that are integrated into the Ethereum protocol (enshrined) and those that are external, thus requiring an additional trust assumption.',

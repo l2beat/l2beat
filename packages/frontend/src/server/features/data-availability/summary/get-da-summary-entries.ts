@@ -80,7 +80,7 @@ export async function getDaSummaryEntries() {
         kind: daLayer.kind,
         href: bridges[0]?.href,
         systemCategory: daLayer.systemCategory,
-        hasChallengeMechanism: daLayer.hasChallengeMechanism,
+        challengeMechanism: daLayer.challengeMechanism,
         fallback: daLayer.fallback,
         isUnderReview: !!daLayer.isUnderReview,
         layerType: kindToType(daLayer.kind),

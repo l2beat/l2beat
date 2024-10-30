@@ -1,7 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
-import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
-import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
+import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { getColumnHeaderUnderline } from '~/utils/table/get-column-header-underline'
 import { type ScalingTvlTableRow } from '../../_utils/to-table-rows'
 import { TotalValueLockedCell } from './total-value-locked-cell'
@@ -10,10 +9,7 @@ import { ValueLockedCell } from './value-locked-cell'
 const columnHelper = createColumnHelper<ScalingTvlTableRow>()
 
 export const scalingTvlColumns = [
-  ...getCommonProjectColumns(columnHelper),
-  columnHelper.accessor('name', {
-    cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
-  }),
+  ...getScalingCommonProjectColumns(columnHelper),
   columnHelper.group({
     id: 'data',
     header: undefined,

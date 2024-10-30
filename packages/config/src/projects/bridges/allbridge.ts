@@ -177,7 +177,7 @@ export const allbridge: Bridge = {
       sentiment: 'warning',
     },
     sourceUpgradeability: {
-      value: 'YES',
+      value: 'Yes',
       description: `Allbridge contracts are immutable but all critical parameters can be changed by an EOA`,
       sentiment: 'bad',
     },

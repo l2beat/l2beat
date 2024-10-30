@@ -7,7 +7,7 @@ import {
   useSearchParams,
 } from 'next/navigation'
 import NProgress from 'nprogress'
-import React, { Suspense, useEffect } from 'react'
+import React, { Suspense, useEffect, type JSX } from 'react'
 import { useBreakpoint } from '~/hooks/use-is-mobile'
 
 export function ProgressBar() {

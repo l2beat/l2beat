@@ -1,12 +1,9 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { PrimaryValueCell } from '~/components/table/cells/primary-value-cell'
-import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
-import {
-  type CommonProjectColumnsOptions,
-  getCommonProjectColumns,
-} from '~/components/table/utils/common-project-columns'
+import { type CommonProjectColumnsOptions } from '~/components/table/utils/common-project-columns/common-project-columns'
+import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling-activity-entries'
 import { formatInteger } from '~/utils/number-format/format-integer'
 import { formatUops } from '~/utils/number-format/format-uops'
@@ -19,13 +16,7 @@ const columnHelper = createColumnHelper<ScalingActivityEntry>()
 export const getScalingActivityColumns = (
   opts?: CommonProjectColumnsOptions,
 ) => [
-  ...getCommonProjectColumns(columnHelper, opts),
-  columnHelper.accessor('name', {
-    cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
-    meta: {
-      headClassName: 'w-0 min-w-[154px]',
-    },
-  }),
+  ...getScalingCommonProjectColumns(columnHelper, opts),
   columnHelper.accessor('data.pastDayUops', {
     header: 'Past day UOPS',
     cell: (ctx) => {
