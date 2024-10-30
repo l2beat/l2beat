@@ -53,7 +53,7 @@ type Optionals = {
   /** Optional red warning, defaults to undefined */
   redWarning?: DacBridge['display']['redWarning']
   /** Optional challenge mechanism, defaults to undefined */
-  hasChallengeMechanism?: DacDaLayer['hasChallengeMechanism']
+  challengeMechanism?: DacDaLayer['challengeMechanism']
   /** Optional fallback, defaults to undefined */
   fallback?: DacDaLayer['fallback']
 }
@@ -115,7 +115,16 @@ export function AnytrustDAC(template: TemplateVars): DacDaLayer {
     display: bridgeDisplay,
     technology: {
       description: bridgeTechnology,
-      risks: template.bridge.technology?.risks,
+      risks: [
+        {
+          category: 'Funds can be lost if',
+          text: `a malicious committee attests to an invalid data availability certificate.`,
+        },
+        {
+          category: 'Funds can be lost if',
+          text: `the bridge contract or its dependencies receive a malicious code upgrade. There is no delay on code upgrades.`,
+        },
+      ],
     },
     risks: {
       committeeSecurity:
@@ -171,7 +180,7 @@ export function AnytrustDAC(template: TemplateVars): DacDaLayer {
     type: 'DaLayer',
     systemCategory: 'custom',
     fallback: template.fallback ?? 'Ethereum (blobs)',
-    hasChallengeMechanism: template.hasChallengeMechanism,
+    challengeMechanism: template.challengeMechanism,
     display: layerDisplay,
     technology: {
       description: layerTechnology,

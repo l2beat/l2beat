@@ -18,7 +18,7 @@ export const metadata = getDefaultMetadata({
 })
 
 export default async function Page() {
-  const range = getCookie('activityTimeRange')
+  const range = await getCookie('activityTimeRange')
   const [entries, _, __] = await Promise.all([
     getScalingActivityEntries(),
     api.activity.chart.prefetch({

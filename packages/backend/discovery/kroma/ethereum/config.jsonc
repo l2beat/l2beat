@@ -95,7 +95,9 @@
         "latestBlockNumber",
         "latestOutputIndex",
         "nextBlockNumber",
-        "nextOutputIndex"
+        "nextOutputIndex",
+        "nextFinalizeOutputIndex",
+        "nextOutputMinL2Timestamp"
       ],
       "fields": {
         "COLOSSEUM": {

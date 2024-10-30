@@ -3,6 +3,22 @@ import { getEnv } from '@l2beat/backend-tools'
 import { chains } from './chains'
 import { DiscoveryChainConfig } from './types'
 
+export function getChainShortName(chain: string) {
+  const chainConfig = chains.find((c) => c.name === chain)
+  if (!chainConfig) {
+    throw new Error(`No config for chain: ${chain}`)
+  }
+  return chainConfig.shortName
+}
+
+export function getChainFullName(shortName: string) {
+  const chainConfig = chains.find((c) => c.shortName === shortName)
+  if (!chainConfig) {
+    throw new Error(`No config for chain: ${shortName}`)
+  }
+  return chainConfig.name
+}
+
 export function getChainConfigs(): DiscoveryChainConfig[] {
   return chains.flatMap((chain) => {
     try {

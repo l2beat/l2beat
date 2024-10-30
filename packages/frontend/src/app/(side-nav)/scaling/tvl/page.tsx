@@ -28,7 +28,7 @@ export default async function Page() {
       get7dTvlBreakdown(),
       api.tvl.chart.prefetch({
         filter: { type: 'layer2' },
-        range: getCookie('scalingTvlChartRange'),
+        range: await getCookie('scalingTvlChartRange'),
         excludeAssociatedTokens: false,
       }),
       api.tvl.total.prefetch({

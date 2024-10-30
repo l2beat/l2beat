@@ -1,10 +1,10 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { underReviewL2 } from './templates/underReview'
+import { UnixTime } from '@l2beat/shared-pure'
+import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const patex: Layer2 = underReviewL2({
-  id: ProjectId('patex'),
-  createdAt: new UnixTime(1722264698), // 2024-07-29T14:51:38Z
+export const patex: Layer2 = upcomingL2({
+  id: 'patex',
+  createdAt: new UnixTime(1707313169), // 2024-02-07T13:39:29Z
   display: {
     category: 'Optimistic Rollup',
     name: 'Patex Network',
@@ -25,15 +25,14 @@ export const patex: Layer2 = underReviewL2({
         'https://youtube.com/channel/UCLmHyM6kZ5bViyh7my6ZkpA',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
-  rpcUrl: 'https://rpc.patex.io/', //chainid 789
-  escrows: [
-    {
-      chain: 'ethereum',
-      address: EthereumAddress('0x0d6e11E2A3B2B3a245bf839c07D775983aCB787d'), // unverified
-      sinceTimestamp: new UnixTime(1686211235),
-      tokens: ['ETH'],
-    },
-  ],
 })
+//for once it goes live again
+//rpcUrl: 'https://rpc.patex.io/', //chainid 789
+//  escrows: [
+//   {
+//      chain: 'ethereum',
+//      address: EthereumAddress('0x0d6e11E2A3B2B3a245bf839c07D775983aCB787d'), // unverified
+//      sinceTimestamp: new UnixTime(1686211235),
+//      tokens: ['ETH'],
+//    },
