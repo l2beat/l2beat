@@ -137,10 +137,7 @@ function toTechnologyContract(
       return {
         name,
         address,
-        href:
-          permission.fromRole === true
-            ? `#${name}`
-            : `${etherscanUrl}/address/${address}#code`,
+        href: `${etherscanUrl}/address/${address}#code`,
         isAdmin: false,
         verificationStatus: toVerificationStatus(
           verificationStatusForChain[address],
