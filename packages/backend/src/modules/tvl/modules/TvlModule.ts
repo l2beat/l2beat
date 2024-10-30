@@ -72,11 +72,7 @@ export function initTvlModule(
 
   const blockTimestampModule = initBlockTimestampModule(
     config.tvl,
-    logger,
-    peripherals,
-    syncOptimizer,
-    indexerService,
-    hourlyIndexer,
+    dependencies,
   )
 
   const chainModule = initChainModule(

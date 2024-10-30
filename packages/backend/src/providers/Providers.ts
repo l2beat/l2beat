@@ -6,11 +6,13 @@ import {
   initCirculatingSupplyProviders,
 } from './CirculatingSupplyProviders'
 import { PriceProviders, initPriceProviders } from './PriceProviders'
+import { TvlBlockProviders, initTvlBlockProviders } from './TvlBlockProviders'
 
 export class Providers {
   block: BlockProviders | undefined
   price: PriceProviders | undefined
   circulatingSupply: CirculatingSupplyProviders | undefined
+  tvlBlock: TvlBlockProviders | undefined
 
   constructor(readonly config: Config) {
     this.block = config.activity
@@ -20,6 +22,7 @@ export class Providers {
     this.circulatingSupply = config.tvl
       ? initCirculatingSupplyProviders(config.tvl)
       : undefined
+    this.tvlBlock = config.tvl ? initTvlBlockProviders(config.tvl) : undefined
   }
 
   getBlockProviders() {
@@ -38,5 +41,10 @@ export class Providers {
       'Circulating Supply providers unintended access',
     )
     return this.circulatingSupply
+  }
+
+  getTvlBlockProviders() {
+    assert(this.tvlBlock, 'TVL Block providers unintended access')
+    return this.tvlBlock
   }
 }
