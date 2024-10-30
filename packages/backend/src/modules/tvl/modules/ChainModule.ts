@@ -193,7 +193,7 @@ function createPeripherals(
   )
 
   const circulatingSupplyService = new CirculatingSupplyService({
-    coingeckoQueryService,
+    circulatingSupplyProvider: coingeckoQueryService,
   })
   const valueService = new ValueService(peripherals.database)
 

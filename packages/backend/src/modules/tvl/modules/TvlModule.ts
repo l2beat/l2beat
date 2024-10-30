@@ -65,13 +65,9 @@ export function initTvlModule(
 
   const circulatingSupplyModule = initCirculatingSupplyModule(
     config.tvl,
-    logger,
-    peripherals,
-    syncOptimizer,
-    indexerService,
     configMapping,
-    hourlyIndexer,
     priceModule.descendant,
+    dependencies,
   )
 
   const blockTimestampModule = initBlockTimestampModule(

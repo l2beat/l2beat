@@ -1,24 +1,12 @@
-import { Logger } from '@l2beat/backend-tools'
-import {
-  CoingeckoClient,
-  CoingeckoQueryService,
-  HttpClient2,
-  RetryHandler,
-} from '@l2beat/shared'
 import { assert, CirculatingSupplyEntry, ProjectId } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 
 import { ConfigMapping, createAmountId } from '@l2beat/config'
 import { TvlConfig } from '../../../config/Config'
-import { Peripherals } from '../../../peripherals/Peripherals'
-import { IndexerService } from '../../../tools/uif/IndexerService'
 import { CirculatingSupplyIndexer } from '../indexers/CirculatingSupplyIndexer'
 import { DescendantIndexer } from '../indexers/DescendantIndexer'
-import { HourlyIndexer } from '../indexers/HourlyIndexer'
 import { ValueIndexer } from '../indexers/ValueIndexer'
-import { CirculatingSupplyService } from '../services/CirculatingSupplyService'
-import { ValueService } from '../services/ValueService'
-import { SyncOptimizer } from '../utils/SyncOptimizer'
+import { TvlDependencies } from './TvlDependencies'
 
 interface CirculatingSupplyModule {
   start: () => Promise<void> | void
@@ -26,13 +14,9 @@ interface CirculatingSupplyModule {
 
 export function initCirculatingSupplyModule(
   config: TvlConfig,
-  logger: Logger,
-  peripherals: Peripherals,
-  syncOptimizer: SyncOptimizer,
-  indexerService: IndexerService,
   configMapping: ConfigMapping,
-  hourlyIndexer: HourlyIndexer,
   descendantPriceIndexer: DescendantIndexer,
+  dependencies: TvlDependencies,
 ): CirculatingSupplyModule | undefined {
   const circulatingSupplies = config.amounts.filter(
     (a): a is CirculatingSupplyEntry => a.type === 'circulatingSupply',
@@ -40,10 +24,44 @@ export function initCirculatingSupplyModule(
 
   if (circulatingSupplies.length === 0) return undefined
 
-  const circulatingSupplyService = getDataService(logger, config)
+  const { dataIndexers, valueIndexers } = createCirculatingSupplyIndexers(
+    config,
+    circulatingSupplies,
+    configMapping,
+    descendantPriceIndexer,
+    dependencies,
+  )
+
+  return {
+    start: async () => {
+      for (const indexer of dataIndexers.values()) {
+        await indexer.start()
+      }
+
+      for (const indexer of valueIndexers) {
+        await indexer.start()
+      }
+    },
+  }
+}
+
+function createCirculatingSupplyIndexers(
+  config: TvlConfig,
+  entries: CirculatingSupplyEntry[],
+  configMapping: ConfigMapping,
+  descendantPriceIndexer: DescendantIndexer,
+  dependencies: TvlDependencies,
+) {
+  const circulatingSupplyService = dependencies.getCirculatingSupplyService()
+  const logger = dependencies.logger
+  const indexerService = dependencies.getIndexerService()
+  const db = dependencies.database
+  const hourlyIndexer = dependencies.getHourlyIndexer()
+  const syncOptimizer = dependencies.getSyncOptimizer()
+  const valueService = dependencies.getValueService()
 
   const dataIndexers = new Map<string, CirculatingSupplyIndexer>()
-  circulatingSupplies.forEach((circulatingSupply) => {
+  entries.forEach((circulatingSupply) => {
     const indexer = new CirculatingSupplyIndexer({
       logger,
       parents: [hourlyIndexer],
@@ -51,13 +69,13 @@ export function initCirculatingSupplyModule(
       indexerService,
       configuration: circulatingSupply,
       circulatingSupplyService,
-      db: peripherals.database,
+      db,
       syncOptimizer,
     })
     dataIndexers.set(createAmountId(circulatingSupply), indexer)
   })
 
-  const perProject = groupBy(circulatingSupplies, 'project')
+  const perProject = groupBy(entries, 'project')
 
   const valueIndexers: ValueIndexer[] = []
   for (const [project, amountConfigs] of Object.entries(perProject)) {
@@ -71,8 +89,6 @@ export function initCirculatingSupplyModule(
       return indexer
     })
 
-    const valueService = new ValueService(peripherals.database)
-
     const minHeight = Math.min(
       ...amountConfigs.map((c) => c.sinceTimestamp.toNumber()),
     )
@@ -82,7 +98,7 @@ export function initCirculatingSupplyModule(
 
     const indexer = new ValueIndexer({
       valueService,
-      db: peripherals.database,
+      db,
       priceConfigs: [...priceConfigs],
       amountConfigs,
       project: ProjectId(project),
@@ -99,32 +115,5 @@ export function initCirculatingSupplyModule(
     valueIndexers.push(indexer)
   }
 
-  return {
-    start: async () => {
-      for (const indexer of dataIndexers.values()) {
-        await indexer.start()
-      }
-
-      for (const indexer of valueIndexers) {
-        await indexer.start()
-      }
-    },
-  }
-}
-
-function getDataService(logger: Logger, config: TvlConfig) {
-  const coingeckoClient = new CoingeckoClient(
-    new HttpClient2(),
-    config.coingeckoApiKey,
-    RetryHandler.RELIABLE_API(logger),
-  )
-  const coingeckoQueryService = new CoingeckoQueryService(
-    coingeckoClient,
-    logger.tag('circulatingSupply'),
-  )
-
-  const circulatingSupplyService = new CirculatingSupplyService({
-    coingeckoQueryService,
-  })
-  return circulatingSupplyService
+  return { dataIndexers, valueIndexers }
 }
