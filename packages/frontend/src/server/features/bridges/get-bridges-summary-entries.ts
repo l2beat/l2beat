@@ -91,7 +91,7 @@ function getBridges(params: Params) {
           associatedTokenWarning?.sentiment === 'bad' && associatedTokenWarning,
         ]),
       },
-      validatedBy: bridge.riskView?.validatedBy,
+      validatedBy: bridge.riskView.validatedBy,
       category: bridge.display.category,
       warning: bridge.display.warning,
     }
