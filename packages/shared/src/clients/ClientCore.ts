@@ -12,8 +12,7 @@ export interface ClientCoreDeps {
 }
 
 export abstract class ClientCore {
-  constructor(protected readonly deps: ClientCoreDeps) { }
-
+  constructor(private readonly deps: ClientCoreDeps) { }
 
   /** This method will call prepareRequest, perform HTTP fetch and validate the response.
   * Rate limiting and retry handling is built-in.

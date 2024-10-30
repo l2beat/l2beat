@@ -72,7 +72,7 @@ export class RpcClient2 extends ClientCore {
 
     if (parsedError.success) {
       // TODO: based on error return differently
-      this.deps.logger.warn(`Response validation error`, { ...parsedError.data.error })
+      this.$.logger.warn(`Response validation error`, { ...parsedError.data.error })
       return false
     }
 
