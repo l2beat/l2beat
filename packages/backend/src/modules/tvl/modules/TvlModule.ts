@@ -95,10 +95,8 @@ export function initTvlModule(
 
   const aggLayerModule = initAggLayerModule(
     config.tvl,
-    logger,
     peripherals,
-    syncOptimizer,
-    indexerService,
+    dependencies,
     configMapping,
     priceModule.descendant,
     blockTimestampModule?.blockTimestampIndexers,
