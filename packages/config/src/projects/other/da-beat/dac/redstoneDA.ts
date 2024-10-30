@@ -25,7 +25,7 @@ const daResolveWindow = formatSeconds(
 export const redstoneDA: DaLayer = {
   id: 'redstone-da',
   type: 'DaLayer',
-  kind: 'DAC',
+  kind: 'No DAC',
   systemCategory: 'custom',
   display: {
     name: 'RedstoneDA',
