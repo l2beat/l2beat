@@ -23,7 +23,7 @@ export function HomePage() {
         {result.data.map((entry, i) => (
           <li key={i}>
             <Link to={`/ui/p/${entry.name}`}>
-              {entry.name} ({entry.chains.length} chains2)
+              {entry.name} ({entry.chains.length} chains)
             </Link>
           </li>
         ))}
