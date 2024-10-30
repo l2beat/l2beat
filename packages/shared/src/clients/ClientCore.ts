@@ -14,18 +14,24 @@ export interface ClientCoreDeps {
 export abstract class ClientCore {
   constructor(protected readonly deps: ClientCoreDeps) { }
 
-  async fetch(url: string, init: RequestInit): Promise<json> {
+
+  /** This method will call prepareRequest, perform HTTP fetch and validate the response.
+  * Rate limiting and retry handling is built-in.
+  */
+  async query(...args: unknown[]): Promise<json> {
     try {
-      return await this.deps.rateLimiter.call(() => this._fetch(url, init))
+      return await this.deps.rateLimiter.call(() => this._query(...args))
     } catch {
       return await this.deps.retryHandler.retry(() =>
-        this.deps.rateLimiter.call(() => this._fetch(url, init)),
+        this.deps.rateLimiter.call(() => this._query(...args)),
       )
     }
   }
 
-  private async _fetch(url: string, init: RequestInit): Promise<json> {
-    const response = await this.deps.http.fetch(url, init)
+  private async _query(...args: unknown[]): Promise<json> {
+    const request = this.prepareRequest(...args)
+
+    const response = await this.deps.http.fetch(request.url, request.init)
 
     const isResponseValid = this.validateResponse(response)
 
@@ -36,6 +42,9 @@ export abstract class ClientCore {
     return response
   }
 
-  /** This method should prepare params for fetch */
+  /** This method should return params that will be used for HTTP fetch */
+  abstract prepareRequest(...args: unknown[]): { url: string, init: RequestInit }
+
+  /** This method should return false when there are errors in the response, true otherwise */
   abstract validateResponse(response: unknown): boolean
 }

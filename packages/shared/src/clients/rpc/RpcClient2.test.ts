@@ -81,6 +81,31 @@ describe(RpcClient2.name, () => {
     })
   })
 
+  describe(RpcClient2.prototype.prepareRequest.name, () => {
+    it('a', () => {
+      const rpc = mockClient({ generateId: () => 'unique-id' })
+
+      const result = rpc.prepareRequest('rpc_method', ['a', 1, true])
+
+      expect(result).toEqual({
+        url: 'API_URL',
+        init: {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            method: 'rpc_method',
+            params: ['a', 1, true],
+            id: 'unique-id',
+            jsonrpc: '2.0',
+          }),
+          redirect: 'follow',
+          timeout: 5_000,
+        }
+      })
+    })
+
+  })
+
   describe(RpcClient2.prototype.validateResponse.name, () => {
     it('returns false when response includes errors', async () => {
       const rpc = mockClient({})
@@ -110,6 +135,7 @@ function mockClient(deps: {
   url?: string
   rateLimiter?: RateLimiter
   retryHandler?: RetryHandler
+  generateId?: () => string
 }) {
   return new RpcClient2({
     chain: 'chain',
@@ -118,7 +144,8 @@ function mockClient(deps: {
     rateLimiter:
       deps.rateLimiter ?? new RateLimiter({ callsPerMinute: 100_000 }),
     retryHandler: deps.retryHandler ?? RetryHandler.TEST,
-    logger: Logger.SILENT
+    logger: Logger.SILENT,
+    generateId: deps.generateId
   })
 }
 

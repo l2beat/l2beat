@@ -4,13 +4,14 @@ import { json } from "@l2beat/shared-pure";
 import { Logger, RateLimiter } from "@l2beat/backend-tools";
 import { RetryHandler } from "../tools";
 import { ClientCore } from "./ClientCore";
+import { RequestInit } from "node-fetch";
 
 describe(ClientCore.name, () => {
-  describe(ClientCore.prototype.fetch.name, () => {
+  describe(ClientCore.prototype.query.name, () => {
     it("Fetches URL with params and returns response", async () => {
       const { clientCore, http } = mocks();
 
-      const response = await clientCore.fetch("https://api.test.com/data", { timeout: 1 });
+      const response = await clientCore.query("https://api.test.com/data", { timeout: 1 });
 
       expect(response).toEqual({ result: 'success' });
       expect(http.fetch).toHaveBeenOnlyCalledWith("https://api.test.com/data", { timeout: 1 })
@@ -19,7 +20,7 @@ describe(ClientCore.name, () => {
     it("Applies rate limiting", async () => {
       const { clientCore, rateLimiter } = mocks();
 
-      await clientCore.fetch("https://api.test.com/data", {});
+      await clientCore.query("https://api.test.com/data", {});
 
       expect(rateLimiter.call).toHaveBeenCalledTimes(1);
     });
@@ -28,7 +29,7 @@ describe(ClientCore.name, () => {
       const { clientCore, rateLimiter, retryHandler, http } = mocks();
       http.fetch.rejectsWithOnce(new Error("Network error"));
 
-      await clientCore.fetch("https://api.test.com/data", {});
+      await clientCore.query("https://api.test.com/data", {});
 
       expect(rateLimiter.call).toHaveBeenCalledTimes(2);
       expect(retryHandler.retry).toHaveBeenCalledTimes(1);
@@ -38,7 +39,7 @@ describe(ClientCore.name, () => {
       const { clientCore, http, retryHandler } = mocks();
       http.fetch.resolvesToOnce(null);
 
-      await clientCore.fetch("https://api.test.com/data", {});
+      await clientCore.query("https://api.test.com/data", {});
 
       expect(retryHandler.retry).toHaveBeenCalledTimes(1);
     });
@@ -64,6 +65,10 @@ function mocks() {
   class TestClientCore extends ClientCore {
     validateResponse(response: unknown): boolean {
       return !!response;
+    }
+
+    override prepareRequest(...args: unknown[]): { url: string; init: RequestInit; } {
+      return ({ url: 's', init: {} })
     }
   }
 

@@ -3,10 +3,12 @@ import { generateId } from '../../tools/generateId'
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 import { ClientCore, ClientCoreDeps as ClientCoreDependencies } from '../ClientCore'
 import { EVMBlock, EVMBlockResponse, Quantity, RPCError } from './types'
+import { RequestInit } from 'node-fetch'
 
 interface Dependencies extends ClientCoreDependencies {
   url: string,
   chain: string
+  generateId?: () => string
 }
 
 export class RpcClient2 extends ClientCore {
@@ -47,18 +49,21 @@ export class RpcClient2 extends ClientCore {
     return { ...block.data.result }
   }
 
-  async query(method: string, params: (string | number | boolean)[]) {
-    return await this.fetch(this.$.url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        method,
-        params,
-        id: generateId(),
-        jsonrpc: '2.0',
-      }),
-      redirect: 'follow',
-      timeout: 5_000, // Most RPCs respond in ~2s during regular conditions
+  override prepareRequest(method: string, params: (string | number | boolean)[]): { url: string; init: RequestInit } {
+    return ({
+      url: this.$.url,
+      init: {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          method,
+          params,
+          id: this.$.generateId ? this.$.generateId() : generateId(),
+          jsonrpc: '2.0',
+        }),
+        redirect: 'follow',
+        timeout: 5_000, // Most RPCs respond in ~2s during regular conditions
+      }
     })
   }
 
@@ -73,4 +78,6 @@ export class RpcClient2 extends ClientCore {
 
     return true
   }
+
+  get chain() { return this.$.chain }
 }
