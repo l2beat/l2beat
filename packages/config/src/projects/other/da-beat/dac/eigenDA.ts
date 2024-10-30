@@ -39,28 +39,28 @@ export const eigenDA: DaLayer = {
     - Lastly, the **retriever** client is responsible for querying the EigenDA operators to retrieve blob chunks, verifying their integrity and reconstructs the original blob. 
     
     ### Operators Registration 
-    Operators register with the EigenDAServiceManager via the registerOperatorToAVS() function, enabling them to participate in the data availability network. They are resposible for holding and serving blobs data, and earn rewards for their participation in the network.
+    Operators register with the EigenDAServiceManager via the [registerOperatorToAVS()](https://etherscan.io/address/0xdAbdB3Cd346B7D5F5779b0B614EdE1CC9DcBA5b7#code#F1#L61) function, enabling them to participate in the data availability network. They are resposible for holding and serving blobs data, and earn rewards for their participation in the network.
 
     ![EigenDA operator registration](/images/da-layer-technology/eigenda/registration.png#center)
 
     ### Operators Stake Update  
     
-    EigenDA operators' stake for quorum verification is fetched from the EigenDA StakeRegistry contract. To keep the stake in sync with changes in share balances in the EigenLayer DelegationManager (e.g., due to tokens delegated/undelegated to operators), the permissionless updateOperatorStake() function on the RegistryCoordinator contract needs to be called periodically. This function updates the operators' quorum weight in the StakeRegistry contract based on the operators' shares in the EigenLayer DelegationManager contract.
+    EigenDA operators' stake for quorum verification is fetched from the EigenDA StakeRegistry contract. To keep the stake in sync with changes in share balances in the EigenLayer DelegationManager (e.g., due to tokens delegated/undelegated to operators), the permissionless [updateOperators()](https://etherscan.io/address/0xdcabf0bE991d4609096CCe316df08d091356E03F#code#F1#L263) function on the RegistryCoordinator contract needs to be called periodically. This function updates the operators' quorum weight in the StakeRegistry contract based on the operators' shares in the EigenLayer DelegationManager contract.
     ![EigenDA operator stake sync](/images/da-layer-technology/eigenda/stakesync.png#center)
 
     ### Operators Blob Storage and Retrieval 
 
-    The process of storing a blob on EigenDA works as follows. A sequencer submits blobs to the EigenDA Disperser, which erasure codes the blobs into chunks and generates KZG commitments and proofs for each chunk, certifying the correctness of the data. The disperser then sends the chunks, KZG commitments, and KZG proofs to the operators.
+    The process of storing a blob on EigenDA works as follows. A sequencer submits blobs to the EigenDA Disperser, which erasure codes the blobs into chunks and generates KZG commitments and proofs for each chunk, certifying the correctness of the data. The disperser then [sends the chunks](https://github.com/Layr-Labs/eigenda/blob/2ed86a0c1dd730b56c8235031c19e08a9837bde8/disperser/batcher/batcher.go#L469), KZG commitments, and KZG proofs to the operators.
     Multiple operators are responsible for storing chunks of the encoded data blobs and their associated KZG commitment and proof.
-    Once the chunks, KZG commitments, and KZG proofs are sent to the operators, each of them generates a signature certifying that they have stored the data. These signatures are then sent to the Disperser which aggregates them and uploads them to Ethereum by sending a transaction to the EigenDAServiceManager (the DA bridge).
+    Once the chunks, KZG commitments, and KZG proofs are sent to the operators, each of them generates a signature certifying that they have stored the data. These signatures are then sent to the Disperser which [aggregates](https://github.com/Layr-Labs/eigenda/blob/2ed86a0c1dd730b56c8235031c19e08a9837bde8/disperser/batcher/batcher.go#L533) them and [submits them](https://github.com/Layr-Labs/eigenda/blob/2ed86a0c1dd730b56c8235031c19e08a9837bde8/disperser/batcher/batcher.go#L550) to Ethereum by sending a transaction to the EigenDAServiceManager (the DA bridge).
     
     ![EigenDA storing/retrieving](/images/da-layer-technology/eigenda/storing-retrieving.png#center)
 
     ## L2 Data Availability
-    The Disperser collects the operators' signatures and submits them to the EigenDAServiceManager contract via the confirmBatch() function. This submission includes a call to the BLSRegistry contract to verify signatures and check whether the required quorum of operators' stake has been achieved.
+    The Disperser collects the operators' signatures and submits them to the EigenDAServiceManager contract via the [confirmBatch()](https://etherscan.io/address/0xf5fd25a90902c27068cf5ebe53be8da693ac899e#code#F1#L71) function. This submission includes a call to the BLSRegistry contract to verify signatures and check whether the required quorum of operators' stake has been achieved.
     Threshold BLS signatures are not used. Instead, the threshold check is performed on the signers' total stake fetched by the StakeRegistry, and the stake threshold percentage to reach is provided in the batch header input data.
 
-    The EigenDARollupUtils.sol library's verifyBlob() function can then be used by L2s to verify that a data blob is included within a confirmed batch in the EigenDAServiceManager. 
+    The EigenDARollupUtils.sol library's [verifyBlob()](https://github.com/Layr-Labs/eigenda-utils/blob/c4cbc9ec078aeca3e4a04bd278e2fb136bf3e6de/src/libraries/EigenDARollupUtils.sol#L33) function can then be used by L2s to verify that a data blob is included within a confirmed batch in the EigenDAServiceManager. 
     This function is not used by the EigenDAServiceManager contract itself, but rather by L2 systems to prove inclusion of the blob in the EigenDAServiceManager contract, and that their trust assumptions (i.e., batch confirmation threshold) were as expected.
   `,
     risks: [
