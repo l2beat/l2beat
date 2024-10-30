@@ -320,6 +320,9 @@ importers:
 
   packages/database:
     dependencies:
+      '@l2beat/backend-tools':
+        specifier: workspace:*
+        version: link:../backend-tools
       '@l2beat/discovery':
         specifier: workspace:*
         version: link:../discovery

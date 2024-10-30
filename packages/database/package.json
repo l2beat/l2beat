@@ -18,6 +18,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@l2beat/backend-tools": "workspace:*",
     "@l2beat/discovery": "workspace:*",
     "@l2beat/discovery-types": "workspace:*",
     "@l2beat/shared": "workspace:*",
