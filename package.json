@@ -7,8 +7,12 @@
     "yarn": ">=1.22.0 <2"
   },
   "workspaces": {
-    "packages": [
-      "packages/*"
+    "packages": ["packages/*"],
+    "nohoist": [
+      "**/@types/react/**",
+      "**/@types/react-dom/**",
+      "**/react/**",
+      "**/react-dom/**"
     ]
   },
   "packageManager": "yarn@1.22.19",

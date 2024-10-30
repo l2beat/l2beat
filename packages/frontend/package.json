@@ -58,7 +58,6 @@
     "qrcode": "^1.5.3",
     "react": "19.0.0-rc-69d4b800-20241021",
     "react-dom": "19.0.0-rc-69d4b800-20241021",
-    "react-jazzicon": "^1.0.4",
     "sharp": "^0.33.5",
     "superjson": "^2.2.1",
     "tailwind-merge": "^2.3.0",
