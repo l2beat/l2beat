@@ -78,7 +78,7 @@ export function DaProjectSummary({ project }: Props) {
                     Please select one of the available DA bridges to view its
                     risks and detailed analysis.
                   </div>
-                  <div className="flex flex-col md:h-[278px]">
+                  <div className="flex flex-col lg:h-[278px] lg:overflow-y-scroll">
                     <div className="hidden flex-row gap-4 rounded-t-lg border-surface-tertiary bg-surface-secondary px-4 py-2 text-xs font-semibold uppercase text-secondary dark:bg-zinc-800 md:flex md:border-b">
                       <div className="w-12"></div>
                       <div className="flex-1">DA Bridge</div>
