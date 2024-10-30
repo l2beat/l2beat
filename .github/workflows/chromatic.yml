@@ -33,7 +33,7 @@ jobs:
         run: pnpm build:dependencies
       - name: Publish to Chromatic
         run: >
-          npx chromatic
+          pnpm exec chromatic
           --project-token ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           --only-changed
           --exit-once-uploaded
