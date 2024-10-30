@@ -17,13 +17,13 @@ export const DaRelayerFailureRisk = {
     type: 'Governance' as const,
     value: 'Governance',
     sentiment: 'warning' as const,
-    description: `The DA bridge has a Security Council or a governance mechanism to propose new relayers. In case of relayer failure, the DA bridge liveness can be restored by proposing a new relayer after a delay of ${formatSeconds(delaySeconds)} via governance upgrade, or through a Security Council without delay.`,
+    description: `The relayer role is permissioned, but the DA bridge has a Security Council or a governance mechanism to propose new relayers. In case of relayer failure, the DA bridge liveness can be restored by proposing a new relayer after a delay of ${formatSeconds(delaySeconds)} via governance upgrade, or through a Security Council without delay.`,
   }),
   NoMechanism: {
     type: 'NoMechanism' as const,
     value: 'No mechanism',
     sentiment: 'bad' as const,
-    description: `The DA bridge does not have a Security Council or a governance mechanism to propose new relayers. In case of relayer failure, the DA bridge will halt and be unable to recover without the intervention of a centralized entity.`,
+    description: `The relayer role is permissioned, and the DA bridge does not have a Security Council or a governance mechanism to propose new relayers. In case of relayer failure, the DA bridge will halt and be unable to recover without the intervention of a centralized entity.`,
   },
   NoBridge: {
     type: 'NoBridge' as const,

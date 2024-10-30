@@ -303,8 +303,6 @@ export function orbitStackCommon(
     ? Badge.DA.EthereumBlobs
     : Badge.DA.EthereumCalldata
 
-  const resolvedTemplates = templateVars.discovery.resolveOrbitStackTemplates()
-
   const validators: ScalingProjectPermission = {
     name: 'Validators/Proposers',
     accounts: templateVars.discovery.getPermissionsByRole('propose'), // Validators in Arbitrum are proposers and challengers
@@ -347,7 +345,8 @@ export function orbitStackCommon(
           : unionBy(
               [
                 ...(templateVars.nonTemplateContracts ?? []),
-                ...resolvedTemplates.contracts,
+                ...templateVars.discovery.resolveOrbitStackTemplates()
+                  .contracts,
               ],
               'address',
             ),
@@ -464,7 +463,7 @@ export function orbitStackCommon(
         : [
             sequencers,
             validators,
-            ...resolvedTemplates.permissions,
+            ...templateVars.discovery.resolveOrbitStackTemplates().permissions,
             ...(templateVars.nonTemplatePermissions ?? []),
           ],
     nativePermissions: templateVars.nativePermissions,

@@ -18,7 +18,8 @@ export async function generateStaticParams() {
   }))
 }
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata(props: Props) {
+  const params = await props.params
   const project = scalingProjects.find(
     (layer) => layer.display.slug === params.slug,
   )
@@ -39,12 +40,13 @@ export async function generateMetadata({ params }: Props) {
 }
 
 interface Props {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
-export default async function Page({ params }: Props) {
+export default async function Page(props: Props) {
+  const params = await props.params
   const project = scalingProjects.find((p) => p.display.slug === params.slug)
 
   if (!project) {

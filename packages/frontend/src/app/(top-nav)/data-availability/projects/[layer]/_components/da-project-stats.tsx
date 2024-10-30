@@ -20,7 +20,9 @@ interface Props {
 
 export function DaProjectStats({ project }: Props) {
   const durationStorage =
-    project.kind === 'DAC' || project.kind === 'DA Service'
+    project.kind === 'DAC' ||
+    project.kind === 'DA Service' ||
+    project.kind === 'No DAC'
       ? {
           value: 'Flexible',
           tooltip:
@@ -38,7 +40,7 @@ export function DaProjectStats({ project }: Props) {
       <ProjectStat
         title="Total value secured"
         value={formatCurrency(project.header.tvs, 'usd')}
-        tooltip="The total value locked of all projects using this layer."
+        tooltip="Total value secured (TVS) is the total value locked of all projects using this layer."
       />
       <ProjectStat
         title="Economic security"
@@ -58,8 +60,14 @@ export function DaProjectStats({ project }: Props) {
       />
       <HorizontalSeparator className="col-span-full my-1 max-md:hidden" />
       <ProjectStat title="Duration of storage" {...durationStorage} />
+      {project.header.numberOfOperators && (
+        <ProjectStat
+          title="Number of operators"
+          value={project.header.numberOfOperators}
+        />
+      )}
       <ProjectStat
-        className="md:col-span-2"
+        className={cn(!project.header.numberOfOperators && 'md:col-span-2')}
         title="Used by"
         value={
           <ProjectsUsedIn

@@ -1,12 +1,12 @@
 # How to run discovery?
 
-- `yarn discover [chain] [project]` run discovery for the project
-- `yarn discover --help` print out all the possible switches for discovery
-- `yarn invert [chain] [project] --mermaid` builds a mermaid graph of the project
+- `pnpm discover [chain] [project]` run discovery for the project
+- `pnpm discover --help` print out all the possible switches for discovery
+- `pnpm invert [chain] [project] --mermaid` builds a mermaid graph of the project
 
 A list of currently supported chains is [here](https://github.com/l2beat/tools/blob/main/packages/discovery/src/config/chains.ts)
 If you misspell the chain name, a list of all possible chains is printed
-In the case you have discovery of the same project on multiple chains, you can discover all of them for a single project running: `yarn discover all [project]`.
+In the case you have discovery of the same project on multiple chains, you can discover all of them for a single project running: `pnpm discover all [project]`.
 
 # Discovery documentation
 
@@ -20,7 +20,7 @@ NOTE: We use a pseudo-TS syntax to simplify parameter types here:
 Create a new folder in `discovery` named after the project, with `config.jsonc` inside. Then run
 
 ```
-yarn discover <project_chain> <project_name>
+pnpm discover <project_chain> <project_name>
 ```
 
 A file `discovered.json` will appear in this folder, showing you this project's structure. Make sure to resolve all the errors by ignoring methods or adding specific field handlers.

@@ -44,7 +44,7 @@ export const winr: Layer3 = orbitStackL3({
       tokens: '*',
     },
     {
-      // socket superbridge, converted with `yarn socket-convert` (https://github.com/WINRLabs/winr-token-bridge/blob/main/deployments/superbridge/prod_winr_prod_mainnet_addresses.json)
+      // socket superbridge, converted with `pnpm socket-convert` (https://github.com/WINRLabs/winr-token-bridge/blob/main/deployments/superbridge/prod_winr_prod_mainnet_addresses.json)
       address: EthereumAddress('0x8E83aED64a0Ad5d7d3A57B6172F14FcA5bfADE56'),
       sinceTimestamp: new UnixTime(1722608545),
       source: 'external',

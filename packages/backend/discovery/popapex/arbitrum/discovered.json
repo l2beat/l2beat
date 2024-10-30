@@ -2,7 +2,7 @@
   "name": "popapex",
   "chain": "arbitrum",
   "blockNumber": 267471118,
-  "configHash": "0xd381e2490d29d7f7699390a6b6507f684ed7f499837ffc4baa65e814bbf57e72",
+  "configHash": "0x610a10967c241f05169850013f1febf37784c8d1a24332d166099259bff3d56b",
   "contracts": [
     {
       "name": "Bridge",
@@ -15,8 +15,12 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x3d0b021E1d2A8747411E3724d5165716B35448f3",
+          "target": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
           "via": [
+            {
+              "address": "0x3d0b021E1d2A8747411E3724d5165716B35448f3",
+              "delay": 0
+            },
             {
               "address": "0xCC6f49cff395c4d160C61112522700dcB007c41d",
               "delay": 0
@@ -66,8 +70,12 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x3d0b021E1d2A8747411E3724d5165716B35448f3",
+          "target": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
           "via": [
+            {
+              "address": "0x3d0b021E1d2A8747411E3724d5165716B35448f3",
+              "delay": 0
+            },
             {
               "address": "0xCC6f49cff395c4d160C61112522700dcB007c41d",
               "delay": 0
@@ -123,8 +131,12 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x3d0b021E1d2A8747411E3724d5165716B35448f3",
+          "target": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
           "via": [
+            {
+              "address": "0x3d0b021E1d2A8747411E3724d5165716B35448f3",
+              "delay": 0
+            },
             {
               "address": "0xCC6f49cff395c4d160C61112522700dcB007c41d",
               "delay": 0
@@ -132,51 +144,14 @@
           ]
         }
       ],
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6",
-          "via": [{ "address": "0xCC6f49cff395c4d160C61112522700dcB007c41d" }]
-        },
-        {
-          "permission": "upgrade",
-          "target": "0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2",
-          "via": [{ "address": "0xCC6f49cff395c4d160C61112522700dcB007c41d" }]
-        },
-        {
-          "permission": "upgrade",
-          "target": "0x3d0b021E1d2A8747411E3724d5165716B35448f3",
-          "via": [{ "address": "0xCC6f49cff395c4d160C61112522700dcB007c41d" }]
-        },
-        {
-          "permission": "upgrade",
-          "target": "0x65AD139061B3f6DDb16170a07b925337ddf42407"
-        },
-        {
-          "permission": "upgrade",
-          "target": "0x7b18A3073774e00C072DeBd390ed6fE4251493A7",
-          "via": [{ "address": "0xCC6f49cff395c4d160C61112522700dcB007c41d" }]
-        },
-        {
-          "permission": "upgrade",
-          "target": "0xa58F38102579dAE7C584850780dDA55744f67DF1",
-          "via": [{ "address": "0xCC6f49cff395c4d160C61112522700dcB007c41d" }]
-        },
-        {
-          "permission": "upgrade",
-          "target": "0xaF57dD96a0c0E8757329D55C56De6eC50Aac73Ea",
-          "via": [{ "address": "0xCC6f49cff395c4d160C61112522700dcB007c41d" }]
-        },
-        {
-          "permission": "upgrade",
-          "target": "0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1",
-          "via": [{ "address": "0xCC6f49cff395c4d160C61112522700dcB007c41d" }]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
           "target": "0xCC6f49cff395c4d160C61112522700dcB007c41d"
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x65AD139061B3f6DDb16170a07b925337ddf42407"
         }
       ],
       "sinceTimestamp": 1708543048,
@@ -207,7 +182,8 @@
         },
         "ADMIN_ROLE": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63"
+        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "executors": ["0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56"]
       },
       "derivedName": "UpgradeExecutor"
     },
@@ -246,8 +222,13 @@
         },
         {
           "permission": "upgrade",
-          "target": "0x3d0b021E1d2A8747411E3724d5165716B35448f3",
-          "via": []
+          "target": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
+          "via": [
+            {
+              "address": "0x3d0b021E1d2A8747411E3724d5165716B35448f3",
+              "delay": 0
+            }
+          ]
         }
       ],
       "ignoreInWatchMode": [
@@ -312,7 +293,7 @@
       },
       "fieldMeta": {
         "confirmPeriodBlocks": {
-          "description": "Challenge period. (Number of blocks until a node is confirmed)."
+          "description": "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
         },
         "wasmModuleRoot": {
           "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."
@@ -375,6 +356,75 @@
         "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6",
+          "via": [
+            { "address": "0xCC6f49cff395c4d160C61112522700dcB007c41d" },
+            { "address": "0x3d0b021E1d2A8747411E3724d5165716B35448f3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2",
+          "via": [
+            { "address": "0xCC6f49cff395c4d160C61112522700dcB007c41d" },
+            { "address": "0x3d0b021E1d2A8747411E3724d5165716B35448f3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x3d0b021E1d2A8747411E3724d5165716B35448f3",
+          "via": [
+            { "address": "0xCC6f49cff395c4d160C61112522700dcB007c41d" },
+            { "address": "0x3d0b021E1d2A8747411E3724d5165716B35448f3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x65AD139061B3f6DDb16170a07b925337ddf42407",
+          "via": [{ "address": "0x3d0b021E1d2A8747411E3724d5165716B35448f3" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x7b18A3073774e00C072DeBd390ed6fE4251493A7",
+          "via": [
+            { "address": "0xCC6f49cff395c4d160C61112522700dcB007c41d" },
+            { "address": "0x3d0b021E1d2A8747411E3724d5165716B35448f3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xa58F38102579dAE7C584850780dDA55744f67DF1",
+          "via": [
+            { "address": "0xCC6f49cff395c4d160C61112522700dcB007c41d" },
+            { "address": "0x3d0b021E1d2A8747411E3724d5165716B35448f3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xaF57dD96a0c0E8757329D55C56De6eC50Aac73Ea",
+          "via": [
+            { "address": "0xCC6f49cff395c4d160C61112522700dcB007c41d" },
+            { "address": "0x3d0b021E1d2A8747411E3724d5165716B35448f3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1",
+          "via": [
+            { "address": "0xCC6f49cff395c4d160C61112522700dcB007c41d" },
+            { "address": "0x3d0b021E1d2A8747411E3724d5165716B35448f3" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0x3d0b021E1d2A8747411E3724d5165716B35448f3"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1701465533,
       "values": {
@@ -410,8 +460,12 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x3d0b021E1d2A8747411E3724d5165716B35448f3",
+          "target": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
           "via": [
+            {
+              "address": "0x3d0b021E1d2A8747411E3724d5165716B35448f3",
+              "delay": 0
+            },
             {
               "address": "0xCC6f49cff395c4d160C61112522700dcB007c41d",
               "delay": 0
@@ -479,8 +533,12 @@
         },
         {
           "permission": "upgrade",
-          "target": "0x3d0b021E1d2A8747411E3724d5165716B35448f3",
+          "target": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
           "via": [
+            {
+              "address": "0x3d0b021E1d2A8747411E3724d5165716B35448f3",
+              "delay": 0
+            },
             {
               "address": "0xCC6f49cff395c4d160C61112522700dcB007c41d",
               "delay": 0
@@ -544,8 +602,12 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x3d0b021E1d2A8747411E3724d5165716B35448f3",
+          "target": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
           "via": [
+            {
+              "address": "0x3d0b021E1d2A8747411E3724d5165716B35448f3",
+              "delay": 0
+            },
             {
               "address": "0xCC6f49cff395c4d160C61112522700dcB007c41d",
               "delay": 0
@@ -584,8 +646,12 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x3d0b021E1d2A8747411E3724d5165716B35448f3",
+          "target": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
           "via": [
+            {
+              "address": "0x3d0b021E1d2A8747411E3724d5165716B35448f3",
+              "delay": 0
+            },
             {
               "address": "0xCC6f49cff395c4d160C61112522700dcB007c41d",
               "delay": 0
@@ -1299,8 +1365,8 @@
     "orbitstack/OneStepProver0": "0x80f18705038deef096683a89d16549bf343ada57cac1f2750df2f06fbbaed5ca",
     "orbitstack/OneStepProverMath": "0x8dd8aebb517eb6eaf15437ddbb90dff66f2b14d9d6b5390dd87fbdab15168188",
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
-    "orbitstack/RollupProxy": "0x0bdbca452bd7b5e2036a979dd61b8581a0bf7bad54f04ef69e70b97ee375f8f2",
+    "orbitstack/RollupProxy": "0x9de477a7ec4abe22558d85184e1ff68cebea26c903f45220337156ae3acf3dc5",
     "orbitstack/SequencerInbox": "0x80eed651d83fd6cd84047260bf02ec5e3a5f21b36049e1e45f34bd0a452e02f9",
-    "orbitstack/UpgradeExecutor": "0x603e9f3f0d76cb0bbc6fbf2ac64cce35b00905689e35c7535a2c5fec00147370"
+    "orbitstack/UpgradeExecutor": "0xa25e02367a436cebea22481663da914bbf1fd9492d903659cc6ec9ddbaccb241"
   }
 }

@@ -1,7 +1,8 @@
 import { createColumnHelper } from '@tanstack/react-table'
+import { NaBadge } from '~/components/badge/na-badge'
 import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
 import { TwoRowCell } from '~/components/table/cells/two-row-cell'
-import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
+import { getDaCommonProjectColumns } from '~/components/table/utils/common-project-columns/da-common-project-columns'
 import { EM_DASH } from '~/consts/characters'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { formatCurrency } from '~/utils/number-format/format-currency'
@@ -17,7 +18,7 @@ import { DaEconomicSecurityCell } from './da-economic-security-cell'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
 
-export const [indexColumn, logoColumn] = getCommonProjectColumns(columnHelper)
+export const [indexColumn, logoColumn] = getDaCommonProjectColumns(columnHelper)
 
 export const daLayerColumn = columnHelper.accessor('name', {
   header: 'DA Layer',
@@ -63,17 +64,20 @@ const daBridgeRisksColumn = columnHelper.display({
 
 const tvsColumn = columnHelper.accessor('tvs', {
   header: 'TVS',
-  cell: (ctx) =>
-    ctx.row.original.usedIn.length > 0 ? (
+  cell: (ctx) => {
+    const valueToFormat =
+      ctx.row.original.usedIn.length > 0 ? ctx.row.original.tvs : 0
+
+    return (
       <div className="w-full pl-4 text-right text-sm font-medium">
-        {formatCurrency(ctx.row.original.tvs, 'usd')}
+        {formatCurrency(valueToFormat, 'usd')}
       </div>
-    ) : (
-      EM_DASH
-    ),
+    )
+  },
   enableSorting: false,
   meta: {
-    tooltip: 'The total value locked of all projects using this layer.',
+    tooltip:
+      'Total value secured (TVS) is the total value locked of all projects using this layer.',
     align: 'right',
   },
 })
@@ -101,7 +105,6 @@ const slashableStakeColumn = columnHelper.accessor('economicSecurity', {
     tooltip:
       'The assets that are slashable in case of a data withholding attack. For public blockchains, it is equal to 2/3 of the total validating stake.',
   },
-  enableSorting: false,
 })
 
 const membersColumn = columnHelper.display({
@@ -110,29 +113,26 @@ const membersColumn = columnHelper.display({
     const [firstBridge] = ctx.row.original.bridges
 
     if (!firstBridge) {
-      return EM_DASH
+      return <NaBadge />
     }
 
     if (firstBridge.type !== 'DAC') {
-      return EM_DASH
+      return <NaBadge />
     }
 
     return <DacMembersCell {...firstBridge} />
   },
 })
 
-const challengeMechanismColumn = columnHelper.accessor(
-  'hasChallengeMechanism',
-  {
-    header: 'Challenge\nmechanism',
-    cell: (ctx) => (
-      <TwoRowCell>
-        <TwoRowCell.First>{ctx.getValue() ? 'Yes' : 'None'}</TwoRowCell.First>
-      </TwoRowCell>
-    ),
-    enableSorting: false,
-  },
-)
+const challengeMechanismColumn = columnHelper.accessor('challengeMechanism', {
+  header: 'Challenge\nmechanism',
+  cell: (ctx) => (
+    <TwoRowCell>
+      <TwoRowCell.First>{ctx.getValue()?.value ?? 'None'}</TwoRowCell.First>
+    </TwoRowCell>
+  ),
+  enableSorting: false,
+})
 
 const fallbackColumn = columnHelper.accessor('fallback', {
   header: 'Fallback',
@@ -186,7 +186,8 @@ const bridgeTvsColumn = virtual(
     id: 'bridge-tvs',
     header: 'Value Secured',
     meta: {
-      tooltip: 'The total value locked of all projects using this bridge.',
+      tooltip:
+        'Value secured is the total value locked of all projects using this bridge.',
     },
   }),
 )

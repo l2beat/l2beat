@@ -1,6 +1,7 @@
 import { formatSeconds } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
+import { DaChallengeMechanism } from '../types/DaChallengeMechanism'
 import { DaLayer } from '../types/DaLayer'
 import { linkByDA } from '../utils/link-by-da'
 import { redstoneDABridge } from './bridges/redstoneDABridge'
@@ -24,7 +25,7 @@ const daResolveWindow = formatSeconds(
 export const redstoneDA: DaLayer = {
   id: 'redstone-da',
   type: 'DaLayer',
-  kind: 'DAC',
+  kind: 'No DAC',
   systemCategory: 'custom',
   display: {
     name: 'RedstoneDA',
@@ -43,7 +44,7 @@ export const redstoneDA: DaLayer = {
       ],
     },
   },
-  hasChallengeMechanism: true,
+  challengeMechanism: DaChallengeMechanism.DaChallenges,
   technology: {
     description: `
     ## Architecture

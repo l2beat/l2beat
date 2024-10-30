@@ -19,6 +19,7 @@ export function parseKnownCookie<T extends KnownCookieName>({
     const parsedValue: unknown = JSON.parse(value)
     return meta.schema.parse(parsedValue)
   } catch (e) {
+    console.error(`Failed to parse cookie ${name}`, e)
     return meta.defaultValue
   }
 }
