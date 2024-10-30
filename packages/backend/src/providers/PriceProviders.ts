@@ -2,11 +2,8 @@ import { Logger } from '@l2beat/backend-tools'
 import {
   CoingeckoClient,
   CoingeckoQueryService,
-  HttpClient2,
   PriceProvider,
-  RetryHandler,
 } from '@l2beat/shared'
-import { Config } from '../config/Config'
 
 export class PriceProviders {
   private readonly priceProvider: PriceProvider
@@ -19,14 +16,10 @@ export class PriceProviders {
   }
 }
 
-export function initPriceProviders(config: Config): PriceProviders {
+export function initPriceProviders(
+  coingeckoClient: CoingeckoClient,
+): PriceProviders {
   const logger = Logger.SILENT
-
-  const coingeckoClient = new CoingeckoClient(
-    new HttpClient2(),
-    config.coingeckoApiKey,
-    RetryHandler.RELIABLE_API(logger),
-  )
   const coingeckoQueryService = new CoingeckoQueryService(
     coingeckoClient,
     logger.tag('prices'),

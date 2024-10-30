@@ -40,12 +40,13 @@ export class Application {
 
     const http = new HttpClient()
     const peripherals = new Peripherals(database, http, logger)
-    const providers = new Providers(config)
+    const providers = new Providers(config, logger)
 
     const trackedTxsModule = createTrackedTxsModule(
       config,
       logger,
       peripherals,
+      providers,
       clock,
     )
 
@@ -64,7 +65,7 @@ export class Application {
       createLzOAppsModule(config, logger),
       initTvlModule(config, logger, peripherals, providers, clock),
       createVerifiersModule(config, logger, peripherals, clock),
-      createDaBeatModule(config, logger, peripherals, clock),
+      createDaBeatModule(config, logger, peripherals, providers, clock),
     ]
 
     const apiServer = new ApiServer(

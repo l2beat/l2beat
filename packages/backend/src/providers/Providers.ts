@@ -1,3 +1,5 @@
+import { Logger } from '@l2beat/backend-tools'
+import { CoingeckoClient, HttpClient2, RetryHandler } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { Config } from '../config'
 import { BlockProviders, initBlockProviders } from './BlockProviders'
@@ -13,16 +15,27 @@ export class Providers {
   price: PriceProviders | undefined
   circulatingSupply: CirculatingSupplyProviders | undefined
   tvlBlock: TvlBlockProviders | undefined
+  coingeckoClient: CoingeckoClient
 
-  constructor(readonly config: Config) {
+  constructor(
+    readonly config: Config,
+    readonly logger: Logger,
+  ) {
+    this.coingeckoClient = new CoingeckoClient(
+      new HttpClient2(),
+      config.coingeckoApiKey,
+      RetryHandler.RELIABLE_API(logger),
+    )
     this.block = config.activity
       ? initBlockProviders(config.activity)
       : undefined
-    this.price = config.tvl ? initPriceProviders(config) : undefined
     this.circulatingSupply = config.tvl
-      ? initCirculatingSupplyProviders(config)
+      ? initCirculatingSupplyProviders(this.coingeckoClient)
       : undefined
     this.tvlBlock = config.tvl ? initTvlBlockProviders(config.tvl) : undefined
+    this.price = config.tvl
+      ? initPriceProviders(this.coingeckoClient)
+      : undefined
   }
 
   getBlockProviders() {
