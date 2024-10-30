@@ -86,10 +86,8 @@ export function initTvlModule(
 
   const premintedModule = initPremintedModule(
     config.tvl,
-    logger,
     peripherals,
-    syncOptimizer,
-    indexerService,
+    dependencies,
     configMapping,
     priceModule.descendant,
     blockTimestampModule?.blockTimestampIndexers,

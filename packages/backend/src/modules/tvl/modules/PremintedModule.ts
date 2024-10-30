@@ -1,25 +1,15 @@
-import { Logger } from '@l2beat/backend-tools'
 import { ConfigMapping } from '@l2beat/config'
-import {
-  CoingeckoClient,
-  CoingeckoQueryService,
-  HttpClient2,
-  RetryHandler,
-} from '@l2beat/shared'
 import { assert, PremintedEntry, ProjectId } from '@l2beat/shared-pure'
-import { ChainTvlConfig, TvlConfig } from '../../../config/Config'
+import { TvlConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
-import { IndexerService } from '../../../tools/uif/IndexerService'
 import { BlockTimestampIndexer } from '../indexers/BlockTimestampIndexer'
 import { DescendantIndexer } from '../indexers/DescendantIndexer'
 import { PremintedIndexer } from '../indexers/PremintedIndexer'
 import { ValueIndexer } from '../indexers/ValueIndexer'
 import { AmountService } from '../services/AmountService'
-import { CirculatingSupplyService } from '../services/CirculatingSupplyService'
-import { ValueService } from '../services/ValueService'
-import { SyncOptimizer } from '../utils/SyncOptimizer'
+import { TvlDependencies } from './TvlDependencies'
 
 interface PremintedModule {
   start: () => Promise<void> | void
@@ -27,14 +17,50 @@ interface PremintedModule {
 
 export function initPremintedModule(
   config: TvlConfig,
-  logger: Logger,
   peripherals: Peripherals,
-  syncOptimizer: SyncOptimizer,
-  indexerService: IndexerService,
+  dependencies: TvlDependencies,
   configMapping: ConfigMapping,
   descendantPriceIndexer: DescendantIndexer,
   blockTimestampIndexers?: Map<string, BlockTimestampIndexer>,
 ): PremintedModule | undefined {
+  const { dataIndexers, valueIndexers } = createIndexers(
+    config,
+    peripherals,
+    dependencies,
+    configMapping,
+    descendantPriceIndexer,
+    blockTimestampIndexers,
+  )
+
+  if (dataIndexers.length === 0) return undefined
+
+  return {
+    start: async () => {
+      for (const dataIndexer of dataIndexers) {
+        await dataIndexer.start()
+      }
+
+      for (const valueIndexer of valueIndexers) {
+        await valueIndexer.start()
+      }
+    },
+  }
+}
+
+function createIndexers(
+  config: TvlConfig,
+  peripherals: Peripherals,
+  dependencies: TvlDependencies,
+  configMapping: ConfigMapping,
+  descendantPriceIndexer: DescendantIndexer,
+  blockTimestampIndexers?: Map<string, BlockTimestampIndexer>,
+) {
+  const logger = dependencies.logger
+  const indexerService = dependencies.getIndexerService()
+  const syncOptimizer = dependencies.getSyncOptimizer()
+  const circulatingSupplyService = dependencies.getCirculatingSupplyService()
+  const valueService = dependencies.getValueService()
+
   const dataIndexers: PremintedIndexer[] = []
   const valueIndexers: ValueIndexer[] = []
 
@@ -52,8 +78,20 @@ export function initPremintedModule(
       continue
     }
 
-    const { amountService, valueService, circulatingSupplyService } =
-      createPeripherals(peripherals, chainConfig, logger, chain, config)
+    const rpcClient = peripherals.getClient(RpcClient, {
+      url: chainConfig.config.providerUrl,
+      callsPerMinute: chainConfig.config.providerCallsPerMinute,
+      chain: chainConfig.chain,
+    })
+
+    const amountService = new AmountService({
+      rpcClient: rpcClient,
+      multicallClient: new MulticallClient(
+        rpcClient,
+        chainConfig.config.multicallConfig,
+      ),
+      logger: logger.tag(chain),
+    })
 
     const blockTimestampIndexer =
       blockTimestampIndexers && blockTimestampIndexers.get(chain)
@@ -96,61 +134,5 @@ export function initPremintedModule(
       valueIndexers.push(valueIndexer)
     }
   }
-
-  if (dataIndexers.length === 0) return undefined
-
-  return {
-    start: async () => {
-      for (const dataIndexer of dataIndexers) {
-        await dataIndexer.start()
-      }
-
-      for (const valueIndexer of valueIndexers) {
-        await valueIndexer.start()
-      }
-    },
-  }
-}
-
-function createPeripherals(
-  peripherals: Peripherals,
-  chainConfig: ChainTvlConfig,
-  logger: Logger,
-  chain: string,
-  config: TvlConfig,
-) {
-  assert(chainConfig.config)
-
-  const rpcClient = peripherals.getClient(RpcClient, {
-    url: chainConfig.config.providerUrl,
-    callsPerMinute: chainConfig.config.providerCallsPerMinute,
-    chain: chainConfig.chain,
-  })
-
-  const amountService = new AmountService({
-    rpcClient: rpcClient,
-    multicallClient: new MulticallClient(
-      rpcClient,
-      chainConfig.config.multicallConfig,
-    ),
-    logger: logger.tag(chain),
-  })
-
-  const coingeckoClient = new CoingeckoClient(
-    new HttpClient2(),
-    config.coingeckoApiKey,
-    RetryHandler.RELIABLE_API(logger),
-  )
-  const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
-
-  const circulatingSupplyService = new CirculatingSupplyService({
-    circulatingSupplyProvider: coingeckoQueryService,
-  })
-  const valueService = new ValueService(peripherals.database)
-
-  return {
-    amountService,
-    valueService,
-    circulatingSupplyService,
-  }
+  return { dataIndexers, valueIndexers }
 }
