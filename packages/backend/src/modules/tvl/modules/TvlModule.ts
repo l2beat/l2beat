@@ -35,7 +35,6 @@ export function initTvlModule(
     providers,
   )
 
-  const indexerService = dependencies.getIndexerService()
   const syncOptimizer = dependencies.getSyncOptimizer()
 
   const configMapping = new ConfigMapping(
@@ -104,10 +103,8 @@ export function initTvlModule(
 
   const elasticChainModule = initElasticChainModule(
     config.tvl,
-    logger,
     peripherals,
-    syncOptimizer,
-    indexerService,
+    dependencies,
     configMapping,
     priceModule.descendant,
     blockTimestampModule?.blockTimestampIndexers,
