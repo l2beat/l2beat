@@ -8,7 +8,7 @@ Generated with discovered.json: 0xd0d214bc52e7c817deae041468a7292f5fdc33c5
 
 ## Description
 
-ManyChainsMS changes and new pools handled by shape matches.
+Transporter discovery is working again after a pause: ManyChainMS changes and new pools handled by shape matches.
 
 ## Watched changes
 
