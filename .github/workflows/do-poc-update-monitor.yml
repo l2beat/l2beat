@@ -41,8 +41,8 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install
       - name: Apply migrations
-        run: yarn prisma migrate deploy --schema=packages/database/prisma/schema.prisma
+        run: pnpm prisma migrate deploy --schema=packages/database/prisma/schema.prisma
         env:
           PRISMA_DB_URL: ${{ secrets.DO_POC_DATABASE_URL }}

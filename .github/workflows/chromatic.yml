@@ -13,17 +13,27 @@ jobs:
       run:
         working-directory: ./packages/frontend
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
         with:
-          fetch-depth: 0
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
       - name: Install dependencies
-        run: yarn
+        run: pnpm install
       - name: Build dependencies
-        run: yarn build:dependencies
+        run: pnpm build:dependencies
       - name: Publish to Chromatic
         run: >
-          npx chromatic
+          pnpm exec chromatic
           --project-token ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           --only-changed
           --exit-once-uploaded

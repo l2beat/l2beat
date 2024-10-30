@@ -5,7 +5,7 @@
   "sideEffects": false,
   "scripts": {
     "clean": "rm -rf dist",
-    "prebuild": "yarn clean",
+    "prebuild": "pnpm clean",
     "build": "vite build",
     "preview": "vite preview",
     "start": "vite",

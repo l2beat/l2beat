@@ -34,17 +34,22 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
         with:
-          node-version: 18.x
-          cache: "yarn"
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: yarn --frozen-lockfile
+        run: pnpm install
 
       - name: Build frontend
-        run: yarn build:frontend
+        run: pnpm build:frontend
 
   build-protocolbeat:
     name: Build protocolbeat
@@ -56,17 +61,22 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
         with:
-          node-version: 18.x
-          cache: "yarn"
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: yarn --frozen-lockfile
+        run: pnpm install
 
       - name: Build protocolbeat
-        run: yarn build:protocolbeat
+        run: pnpm build:protocolbeat
 
   build-tx-decoder:
     name: Build tx-decoder
@@ -77,18 +87,23 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v3
-
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
+        
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
         with:
-          node-version: 18.x
-          cache: "yarn"
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: yarn --frozen-lockfile
+        run: pnpm install
 
       - name: Build tx-decoder
-        run: yarn build:tx-decoder
+        run: pnpm build:tx-decoder
 
   build-uops-dashboard:
     name: Build uops-dashboard
@@ -99,18 +114,23 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v3
-
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
+        
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
         with:
-          node-version: 18.x
-          cache: "yarn"
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: yarn --frozen-lockfile
+        run: pnpm install
 
       - name: Build tx-decoder
-        run: yarn build:uops-dashboard
+        run: pnpm build:uops-dashboard
 
   typecheck:
     name: Typecheck
@@ -122,17 +142,22 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
         with:
-          node-version: 18.x
-          cache: "yarn"
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: yarn --frozen-lockfile
+        run: pnpm install
 
       - name: Typecheck
-        run: yarn typecheck
+        run: pnpm typecheck
 
   test:
     name: Test
@@ -159,17 +184,22 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
         with:
-          node-version: 18.x
-          cache: "yarn"
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: yarn --frozen-lockfile
+        run: pnpm install
 
       - name: Test
-        run: yarn test --reporter min
+        run: pnpm test --reporter min
 
   biome:
     name: Lint & Format

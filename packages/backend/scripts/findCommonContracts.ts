@@ -224,7 +224,7 @@ interface Config {
 }
 
 function printUsage(): void {
-  console.log('Usage: yarn common-contracts --inputs=<l2s | bridges | all>')
+  console.log('Usage: pnpm common-contracts --inputs=<l2s | bridges | all>')
 }
 
 function parseCliParameters(): Config {
