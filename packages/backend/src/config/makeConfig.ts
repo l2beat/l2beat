@@ -85,6 +85,7 @@ export function makeConfig(
           },
           isReadonly,
         },
+    coingeckoApiKey: env.string('COINGECKO_API_KEY'),
     api: {
       port: env.integer('PORT', isLocal ? 3000 : undefined),
       cache: {
@@ -121,10 +122,6 @@ export function makeConfig(
             'l2costs',
             'aggregator',
           ),
-          coingeckoApiKey: env.optionalString([
-            'COINGECKO_API_KEY_FOR_TVL',
-            'COINGECKO_API_KEY',
-          ]),
         },
       },
     },
@@ -204,10 +201,6 @@ export function makeConfig(
     chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
 
     daBeat: flags.isEnabled('da-beat') && {
-      coingeckoApiKey: env.string([
-        'COINGECKO_API_KEY_FOR_DA_BEAT',
-        'COINGECKO_API_KEY',
-      ]),
       quicknodeApiUrl: env.string([
         'QUICKNODE_API_URL_FOR_DA_BEAT',
         'QUICKNODE_API_URL',

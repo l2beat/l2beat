@@ -18,9 +18,9 @@ export class Providers {
     this.block = config.activity
       ? initBlockProviders(config.activity)
       : undefined
-    this.price = config.tvl ? initPriceProviders(config.tvl) : undefined
+    this.price = config.tvl ? initPriceProviders(config) : undefined
     this.circulatingSupply = config.tvl
-      ? initCirculatingSupplyProviders(config.tvl)
+      ? initCirculatingSupplyProviders(config)
       : undefined
     this.tvlBlock = config.tvl ? initTvlBlockProviders(config.tvl) : undefined
   }

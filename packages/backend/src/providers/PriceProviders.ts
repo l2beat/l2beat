@@ -6,7 +6,7 @@ import {
   PriceProvider,
   RetryHandler,
 } from '@l2beat/shared'
-import { TvlConfig } from '../config/Config'
+import { Config } from '../config/Config'
 
 export class PriceProviders {
   private readonly priceProvider: PriceProvider
@@ -19,7 +19,7 @@ export class PriceProviders {
   }
 }
 
-export function initPriceProviders(config: TvlConfig): PriceProviders {
+export function initPriceProviders(config: Config): PriceProviders {
   const logger = Logger.SILENT
 
   const coingeckoClient = new CoingeckoClient(

@@ -93,7 +93,7 @@ export function createTrackedTxsModule(
   ) {
     const coingeckoClient = new CoingeckoClient(
       new HttpClient2(),
-      config.trackedTxsConfig.uses.l2costs.coingeckoApiKey,
+      config.coingeckoApiKey,
       RetryHandler.RELIABLE_API(logger),
     )
 

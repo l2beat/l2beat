@@ -6,7 +6,7 @@ import {
   HttpClient2,
   RetryHandler,
 } from '@l2beat/shared'
-import { TvlConfig } from '../config/Config'
+import { Config } from '../config/Config'
 
 export class CirculatingSupplyProviders {
   private readonly circulatingSupplyProvider: CirculatingSupplyProvider
@@ -23,7 +23,7 @@ export class CirculatingSupplyProviders {
 }
 
 export function initCirculatingSupplyProviders(
-  config: TvlConfig,
+  config: Config,
 ): CirculatingSupplyProviders {
   const logger = Logger.SILENT
 

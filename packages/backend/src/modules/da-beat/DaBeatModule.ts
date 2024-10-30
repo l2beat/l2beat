@@ -24,7 +24,7 @@ export function createDaBeatModule(
     peripherals.database,
     new CoingeckoClient(
       new HttpClient2(),
-      config.daBeat.coingeckoApiKey,
+      config.coingeckoApiKey,
       RetryHandler.RELIABLE_API(logger),
     ),
     clock,
