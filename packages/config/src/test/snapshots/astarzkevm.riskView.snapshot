@@ -36,8 +36,8 @@
       {
         contract: "PolygonRollupManager"
         references: [
-          "https://etherscan.io/address/0x3b82Da772c825283d85d5d6717A77C6Ff582053b"
-          "https://etherscan.io/address/0x3b82Da772c825283d85d5d6717A77C6Ff582053b"
+          "https://etherscan.io/address/0x103388f5661d224F4aFb555C7E4a8FB52d0b752d"
+          "https://etherscan.io/address/0x103388f5661d224F4aFb555C7E4a8FB52d0b752d"
         ]
       }
     ]
@@ -62,7 +62,7 @@
       {
         contract: "PolygonRollupManager"
         references: [
-          "https://etherscan.io/address/0x3b82Da772c825283d85d5d6717A77C6Ff582053b"
+          "https://etherscan.io/address/0x103388f5661d224F4aFb555C7E4a8FB52d0b752d"
         ]
       }
     ]
