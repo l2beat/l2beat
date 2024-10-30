@@ -1,9 +1,6 @@
 import { assert } from '@l2beat/shared-pure'
+import { result } from 'lodash'
 import { z } from 'zod'
-
-export const RpcResponse = z.object({
-  result: z.union([z.string(), z.number(), z.record(z.string(), z.any())]),
-})
 
 export const Quantity = {
   decode: z.preprocess((s) => {
@@ -37,12 +34,19 @@ export const EVMTransaction = z
     type,
   }))
 
-export type EVMBlock = z.infer<typeof EVMBlock>
-export const EVMBlock = z.object({
-  transactions: z.array(EVMTransaction),
-  timestamp: Quantity.decode.transform((n) => Number(n)),
-  hash: z.string(),
-  number: Quantity.decode.transform((n) => Number(n)),
+export interface EVMBlock {
+  transactions: EVMTransaction[],
+  timestamp: number,
+  hash: string,
+  number: number,
+}
+export const EVMBlockResponse = z.object({
+  result: z.object({
+    transactions: z.array(EVMTransaction),
+    timestamp: Quantity.decode.transform((n) => Number(n)),
+    hash: z.string(),
+    number: Quantity.decode.transform((n) => Number(n)),
+  })
 })
 
 export type RPCError = z.infer<typeof RPCError>

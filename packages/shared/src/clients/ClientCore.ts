@@ -5,7 +5,6 @@ import { RetryHandler } from '../tools'
 import { HttpClient2 } from './http/HttpClient2'
 
 export interface ClientCoreDeps {
-  id: string
   http: HttpClient2
   rateLimiter: RateLimiter
   retryHandler: RetryHandler
@@ -13,24 +12,20 @@ export interface ClientCoreDeps {
 }
 
 export abstract class ClientCore {
-  id: string
-
-  constructor(protected readonly $: ClientCoreDeps) {
-    this.id = $.id
-  }
+  constructor(protected readonly deps: ClientCoreDeps) { }
 
   async fetch(url: string, init: RequestInit): Promise<json> {
     try {
-      return await this.$.rateLimiter.call(() => this._fetch(url, init))
+      return await this.deps.rateLimiter.call(() => this._fetch(url, init))
     } catch {
-      return await this.$.retryHandler.retry(() =>
-        this.$.rateLimiter.call(() => this._fetch(url, init)),
+      return await this.deps.retryHandler.retry(() =>
+        this.deps.rateLimiter.call(() => this._fetch(url, init)),
       )
     }
   }
 
   private async _fetch(url: string, init: RequestInit): Promise<json> {
-    const response = await this.$.http.fetch(url, init)
+    const response = await this.deps.http.fetch(url, init)
 
     const isResponseValid = this.validateResponse(response)
 

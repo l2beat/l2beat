@@ -1,27 +1,32 @@
-import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
-import { RetryHandler } from '../../tools/RetryHandler'
 import { generateId } from '../../tools/generateId'
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
-import { HttpClient2 } from '../http/HttpClient2'
-import { EVMBlock, Quantity, RPCError, RpcResponse } from './types'
+import { ClientCore, ClientCoreDeps as ClientCoreDependencies } from '../ClientCore'
+import { EVMBlock, EVMBlockResponse, Quantity, RPCError } from './types'
 
-interface Dependencies {
-  url: string
+interface Dependencies extends ClientCoreDependencies {
+  url: string,
   chain: string
-  http: HttpClient2
-  rateLimiter: RateLimiter
-  retryHandler: RetryHandler
-  logger: Logger
 }
 
-// TODO: create EVMBlockClient
-export class RpcClient2 {
-  chain: string
-
+export class RpcClient2 extends ClientCore {
   constructor(private readonly $: Dependencies) {
-    this.chain = $.chain
-    this.$.logger = this.$.logger.for(this).tag($.chain)
+    super({ ...$ })
+  }
+
+  async getLatestBlockNumber() {
+    const block = await this.getBlockWithTransactions('latest')
+    return Number(block.number)
+  }
+
+  async getBlockNumberAtOrBefore(timestamp: UnixTime, start = 0) {
+    const end = await this.getLatestBlockNumber()
+    return await getBlockNumberAtOrBefore(
+      timestamp,
+      start,
+      end,
+      this.getBlockWithTransactions.bind(this),
+    )
   }
 
   /** Calls eth_getBlockByNumber on RPC, includes full transactions bodies.
@@ -35,72 +40,37 @@ export class RpcClient2 {
       blockNumber === 'latest' ? 'latest' : Quantity.encode(BigInt(blockNumber))
     const blockResponse = await this.query(method, [encodedNumber, true])
 
-    const block = EVMBlock.safeParse(blockResponse)
+    const block = EVMBlockResponse.safeParse(blockResponse)
     if (!block.success) {
       throw new Error(`Block ${blockNumber}: Error during parsing`)
     }
-    return block.data
-  }
-
-  async getLatestBlockNumber() {
-    const block = await this.getBlockWithTransactions('latest')
-    return Number(block.number)
-  }
-
-  async getBlockNumberAtOrBefore(timestamp: UnixTime, start = 0) {
-    const end = await this.getLatestBlockNumber()
-
-    return await getBlockNumberAtOrBefore(
-      timestamp,
-      start,
-      end,
-      this.getBlockWithTransactions.bind(this),
-    )
+    return { ...block.data.result }
   }
 
   async query(method: string, params: (string | number | boolean)[]) {
-    try {
-      return await this.$.rateLimiter.call(() => this._query(method, params))
-    } catch {
-      return await this.$.retryHandler.retry(() =>
-        this.$.rateLimiter.call(() => this._query(method, params)),
-      )
-    }
+    return await this.fetch(this.$.url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        method,
+        params,
+        id: generateId(),
+        jsonrpc: '2.0',
+      }),
+      redirect: 'follow',
+      timeout: 5_000, // Most RPCs respond in ~2s during regular conditions
+    })
   }
 
-  private async _query(method: string, params: (string | number | boolean)[]) {
-    const response = await this.$.http.fetch(
-      this.$.url,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          method,
-          params,
-          id: generateId(),
-          jsonrpc: '2.0',
-        }),
-        redirect: 'follow',
-      },
-      5_000, // Most RPCs respond in ~2s during regular conditions
-    )
+  override validateResponse(response: unknown): boolean {
+    const parsedError = RPCError.safeParse(response)
 
-    // this parsing is needed for APIs which return 200 and error in the body
-    const parsed = RpcResponse.safeParse(response)
-    // TODO: add per-provider parsing heuristics
-    if (!parsed.success) {
-      const parsedError = RPCError.safeParse(response)
-
-      if (parsedError.success) {
-        throw new Error(
-          `${parsedError.data.error.code}: ${parsedError.data.error.message}`,
-        )
-      }
-
-      throw new Error(
-        `Error during parsing of rpc response: ${method} ${JSON.stringify(params)}`,
-      )
+    if (parsedError.success) {
+      // TODO: based on error return differently
+      this.deps.logger.warn(`Response validation error`, { ...parsedError.data.error })
+      return false
     }
-    return parsed.data.result
+
+    return true
   }
 }

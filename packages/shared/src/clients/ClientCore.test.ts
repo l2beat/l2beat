@@ -68,7 +68,6 @@ function mocks() {
   }
 
   const clientCore = new TestClientCore({
-    id: "test",
     http,
     rateLimiter,
     retryHandler,
