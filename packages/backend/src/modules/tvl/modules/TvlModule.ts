@@ -77,10 +77,8 @@ export function initTvlModule(
 
   const chainModule = initChainModule(
     config.tvl,
-    logger,
     peripherals,
-    syncOptimizer,
-    indexerService,
+    dependencies,
     configMapping,
     priceModule.descendant,
     blockTimestampModule?.blockTimestampIndexers,
