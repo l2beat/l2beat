@@ -43,7 +43,7 @@ export const avail: DaLayer = {
 
 
     ## Consensus
-    Avail implements a Nominated Proof-of-Stake (NPoS) Sybil resistance mechanism, combined with the BABE/GRANDPA consensus protocol. 
+    Avail implements a [Nominated Proof-of-Stake (NPoS)](https://docs.availproject.org/docs/learn-about-avail/consensus/npos) Sybil resistance mechanism, combined with the [BABE/GRANDPA](https://docs.availproject.org/docs/learn-about-avail/consensus/babe) consensus protocol. 
     BABE handles block production by assigning block production slots according to validators' stake and using a Verifiable Random Function (VRF). 
     At the start of each epoch, nodes run the Block-Production-Lottery algorithm to assign block production slots and share the results with other nodes. 
     Slots are randomly assigned, meaning multiple validators might be selected for the same slot (with a 'race' determining who gets to propose the block) and some slots may remain empty. 
@@ -51,22 +51,22 @@ export const avail: DaLayer = {
     Finality is achieved through GRANDPA, a GHOST-based finality gadget that provides finality through consecutive rounds of validators voting.
     
     ## Blobs
-    Data submitted to the Avail blockchain through submitData transactions is organized into a data matrix, with each block data divided into equal-sized cells. 
+    Data submitted to the Avail blockchain through [submitData](https://docs.availproject.org/api-reference/avail-node-api/da-submit-data) transactions is organized into a data matrix, with each block data divided into equal-sized cells. 
     This matrix is erasure coded using Reed-Solomon (RS) codes and committed using Kate-Zaverucha-Goldberg (KZG) polynomial commitments. 
     Each block header on Avail includes two types of attestations: KZG polynomial commitments of the submitted data and the root of a Merkle tree, where the leaves represent the data blobs. 
 
     ## Data Availability Sampling (DAS)
-    Avail ensures data availability through a data availability sampling (DAS) mechanism, which involves both Light clients and App clients.
+    Avail ensures data availability through a data availability sampling (DAS) mechanism, which involves both [Light clients](https://github.com/availproject/avail-light/blob/main/core/src/light_client.rs) and [App clients](https://github.com/availproject/avail-light/blob/main/core/src/app_client.rs).
     Light clients sample the data matrix by requesting data cells, and for each cell they then check the KZG polynomial openings against the commitments in the block header.
-    Light clients first attempt to fetch cells using a Kademlia-based Distributed Hash Table (DHT) within a light clients peer-to-peer (P2P) network.
-    If the randomly selected cells are not available via DHT, the light client resorts to RPC calls to the Avail node(s) to obtain the data. Cells retrieved this way are then shared back into the DHT network, enhancing the overall availability of block data.
+    Light clients first attempt to [fetch cells using a Kademlia-based Distributed Hash Table (DHT)](https://github.com/availproject/avail-light/blob/a9e1741a6c7579d6ab1988eb409808b33f999180/core/src/network.rs#L170) within a light clients peer-to-peer (P2P) network.
+    If the randomly selected cells are not available via DHT, the light client resorts to [RPC calls](https://github.com/availproject/avail-light/blob/a9e1741a6c7579d6ab1988eb409808b33f999180/core/src/network.rs#L180) to the Avail node(s) to obtain the data. Cells retrieved this way are then shared back into the DHT network, enhancing the overall availability of block data.
     After gathering the data, the light client verifies the cells and calculates a confidence level, which is stored locally for reference.
 
-    App clients focus on data specific to a given application ID. They reconstruct entire rows of the data matrix by requesting and assembling any missing cells from the network.
+    App clients focus on data specific to a given application ID. They [reconstruct entire rows](https://github.com/availproject/avail-light/blob/a9e1741a6c7579d6ab1988eb409808b33f999180/core/src/app_client.rs#L380) of the data matrix by requesting and assembling any missing cells from the network.
 
     ## Erasure Coding Proof
 
-    Avail uses Kate-Zaverucha-Goldberg (KZG) polynomial commitments as validity proofs of erasure-coded data. Light clients verify the commitments by checking the KZG polynomial openings against the commitments in the block header.
+    Avail uses Kate-Zaverucha-Goldberg (KZG) polynomial commitments as validity proofs of erasure-coded data. Light clients [verify the commitments](https://github.com/availproject/light-client-lib/blob/686cd2732d41ca1f57e43376929160a823e1ddb0/src/light_client.rs#L254) by checking the KZG polynomial openings against the commitments in the block header.
  
     ## L2s Data Availability
 
