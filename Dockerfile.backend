@@ -41,4 +41,4 @@ COPY --from=builder /src/ .
 COPY --from=builder /dist/difft /usr/local/bin/difft
 COPY docker/.profile.d .profile.d
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
-CMD node -r source-map-support/register build/src/index.js
+CMD cd packages/backend && node -r source-map-support/register build/src/index.js
