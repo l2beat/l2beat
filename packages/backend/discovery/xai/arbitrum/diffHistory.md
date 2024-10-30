@@ -1,3 +1,94 @@
+Generated with discovered.json: 0xa3f994ed9f8edef595618f281e564b7afb6e9c6a
+
+# Diff at Wed, 30 Oct 2024 12:11:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0a8a53530022c6c5edd257c3682a3e7f80d0c550 block: 267504356
+- current block number: 269220300
+
+## Description
+
+Minor upgrade to the SentryReferee that adds an admin-permissioned `closeCurrentChallenge()` function and migrates the math from inside the SentryReferee to a separate RefereeCalculations contract.
+
+## Watched changes
+
+```diff
+    contract StakingProxyAdmin (0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723) {
+    +++ description: None
+      directlyReceivedPermissions.5:
++        {"permission":"upgrade","target":"0xfD41041180571C5D371BEA3D9550E55653671198"}
+      directlyReceivedPermissions.4.target:
+-        "0xfD41041180571C5D371BEA3D9550E55653671198"
++        "0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5"
+      directlyReceivedPermissions.3.target:
+-        "0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5"
++        "0xCd62360854aecf6285Fa310D69C5EBaf4Cd5e95F"
+    }
+```
+
+```diff
+    contract SentryReferee (0xfD41041180571C5D371BEA3D9550E55653671198) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xf01cd4fba1b7619d893eac322f11d01c25dec45cec99f03c7c3dac3db562d011"
++        "0x049618a11ae7ca2b4087908a6cb43e2102853e1798710e66a169be6fd6d4ed99"
+      values.$implementation:
+-        "0x609152cb742916E0F7FBC4391Be750C458b049fe"
++        "0xfCa2657FC4456Ac256A78A31aAB1128F5e1d2D40"
+      values.$pastUpgrades.8:
++        ["2024-10-29T18:27:08.000Z","0x526befebd96c284baeeb94980c3561d88cc1ba40fb12c1c8b8db78b29b18ce20",["0xfCa2657FC4456Ac256A78A31aAB1128F5e1d2D40"]]
+      values.$upgradeCount:
+-        8
++        9
+      values.refereeCalculationsAddress:
++        "0xCd62360854aecf6285Fa310D69C5EBaf4Cd5e95F"
+      derivedName:
+-        "Referee8"
++        "Referee9"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract RefereeCalculations (0xCd62360854aecf6285Fa310D69C5EBaf4Cd5e95F)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../RefereeCalculations/RefereeCalculations.sol    | 1770 ++++++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  695 ++++++++
+ .../SentryReferee/Referee9.sol}                    |  605 ++-----
+ 3 files changed, 2576 insertions(+), 494 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 267504356 (main branch discovery), not current.
+
+```diff
+    contract SentryReferee (0xfD41041180571C5D371BEA3D9550E55653671198) {
+    +++ description: None
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7","0xfeBC06428a15C6618Baa5589C3E9C40ACF71aA79"]},"CHALLENGER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xC74c1e08963CEEf0e1F2F2a2eeB879f443e86836"]},"KYC_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x7eC7e03563f781ED4c56BBC4c5F28C1B4dB932ff","0xCBA55AAD91BB119794C48AF09A734Fc31A4CDF56","0x83f396d217820386464e8E99205DCf090d0DD04c"]}}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (0x7eC7e03563f781ED4c56BBC4c5F28C1B4dB932ff)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (0xfeBC06428a15C6618Baa5589C3E9C40ACF71aA79)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x8f8970beaded181d35f0b5f8369891a3dd7914df
 
 # Diff at Tue, 29 Oct 2024 13:22:44 GMT:
