@@ -87,6 +87,8 @@ const maxTimeVariation = discovery.getContractValue<number[]>(
 )
 const selfSequencingDelay = maxTimeVariation[2]
 
+const securityCouncilStats = discovery.getMultisigStats('SecurityCouncil')
+
 export const arbitrum: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
@@ -489,6 +491,7 @@ export const arbitrum: Layer2 = orbitStackL2({
         validatorAfkTime,
         l1TimelockDelay,
       ),
+      secondLine: `${securityCouncilStats} Security Council or DAO`,
       sources: [
         {
           contract: 'RollupProxy',

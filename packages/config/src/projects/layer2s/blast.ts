@@ -6,6 +6,7 @@ import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('blast')
+const upgraderStats = discovery.getMultisigStats('BlastMultisig')
 
 export const blast: Layer2 = opStackL2({
   createdAt: new UnixTime(1700555008), // 2023-11-21T08:23:28Z
@@ -30,6 +31,7 @@ export const blast: Layer2 = opStackL2({
       sentiment: 'bad',
     },
   },
+  exitWindowSecondLine: `${upgraderStats} multisig`,
   nonTemplateTechnology: {
     exitMechanisms: [
       {

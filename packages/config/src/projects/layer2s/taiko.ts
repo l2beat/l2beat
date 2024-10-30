@@ -15,6 +15,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
+import { assert } from '@l2beat/shared-pure'
 
 const discovery = new ProjectDiscovery('taiko')
 
@@ -88,6 +89,29 @@ const MinorityContestBond = utils.formatEther(
 ) // value in TAIKO
 
 const LivenessBond = utils.formatEther(TaikoChainConfig.livenessBond)
+
+const taikoUpgraders = discovery.getUpgraders(
+  discovery.getContract('TaikoL1Contract'),
+)
+assert(
+  taikoUpgraders.length === 1,
+  'Assumption: Taiko should have one upgrader',
+)
+const taikoUpgrader = taikoUpgraders[0]
+assert(
+  taikoUpgrader.type === 'MultiSig',
+  'Assumption: Taiko upgrader should be a multisig',
+)
+const upgraderDescription = (() => {
+  const upgraderAsContract = discovery.getContractByAddress(
+    taikoUpgrader.address,
+  )
+  assert(
+    upgraderAsContract !== undefined,
+    'Assumption: Upgrader contract should be found',
+  )
+  return `${discovery.getMultisigStats(upgraderAsContract.name)} multisig`
+})()
 
 export const taiko: Layer2 = {
   id: ProjectId('taiko'),
@@ -208,6 +232,7 @@ export const taiko: Layer2 = {
         'There is no window for users to exit in case of an unwanted upgrade since contracts are instantly upgradable.',
       sentiment: 'bad',
       value: 'None',
+      secondLine: upgraderDescription,
     },
     sequencerFailure: {
       description:

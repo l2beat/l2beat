@@ -6,6 +6,8 @@ import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('base')
+const upgraderBase = discovery.getMultisigStats('BaseMultisig1')
+const upgraderOP = discovery.getMultisigStats('OPFMultisig_2')
 
 export const base: Layer2 = opStackL2({
   createdAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
@@ -35,6 +37,7 @@ export const base: Layer2 = opStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
+  exitWindowSecondLine: `${upgraderBase} (Base) + ${upgraderOP} (OPF) msigs`,
   rpcUrl: 'https://developer-access-mainnet.base.org',
   finality: {
     type: 'OPStack-blob',

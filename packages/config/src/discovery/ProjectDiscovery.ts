@@ -420,6 +420,20 @@ export class ProjectDiscovery {
     return members.map((member) => this.formatPermissionedAccount(member))
   }
 
+  getUpgraders(
+    contract: ContractParameters,
+  ): ScalingProjectPermissionedAccount[] {
+    const upgraders = contract.issuedPermissions
+      ?.filter((p) => p.permission === 'upgrade')
+      .map((p) => p.target)
+    assert(
+      upgraders !== undefined,
+      `No upgraders found for ${contract.name} contract (${this.projectName})`,
+    )
+
+    return upgraders.map((upgrader) => this.formatPermissionedAccount(upgrader))
+  }
+
   getContract(identifier: string): ContractParameters {
     try {
       identifier = utils.getAddress(identifier)
@@ -582,7 +596,7 @@ export class ProjectDiscovery {
       contractIdentifier,
       '$members',
     ).length
-    return `${threshold} / ${size}`
+    return `${threshold}/${size}`
   }
 
   getConstructorArg<T extends ContractValue>(
