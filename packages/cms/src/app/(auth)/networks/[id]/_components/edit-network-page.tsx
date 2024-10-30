@@ -404,7 +404,7 @@ export function EditNetworkPage({
               </CardHeader>
               <CardContent className="flex flex-col gap-4">
                 {rpcs.fields.length === 0 && (
-                  <p className="text-muted-foreground text-sm">
+                  <p className="text-sm text-muted-foreground">
                     No RPCs added yet.
                   </p>
                 )}
@@ -446,7 +446,7 @@ export function EditNetworkPage({
               </CardHeader>
               <CardContent className="flex flex-col gap-4">
                 {explorers.fields.length === 0 && (
-                  <p className="text-muted-foreground text-sm">
+                  <p className="text-sm text-muted-foreground">
                     No explorers added yet.
                   </p>
                 )}

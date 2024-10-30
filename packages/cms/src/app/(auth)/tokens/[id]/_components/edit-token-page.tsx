@@ -294,7 +294,7 @@ export function EditTokenPage({
                             .map((network) => (
                               <SelectItem key={network.id} value={network.id}>
                                 {network.name}{' '}
-                                <span className="text-muted-foreground text-xs">
+                                <span className="text-xs text-muted-foreground">
                                   ({network.id})
                                 </span>
                               </SelectItem>
@@ -471,7 +471,7 @@ export function EditTokenPage({
             </CardHeader>
             <CardContent>
               {backedBy.fields.length === 0 ? (
-                <p className="text-muted-foreground text-sm">
+                <p className="text-sm text-muted-foreground">
                   This token is not backed by any other token.
                 </p>
               ) : (
@@ -505,7 +505,7 @@ export function EditTokenPage({
                                           value={token.tokenId}
                                         >
                                           {token.name ?? 'Unknown'}{' '}
-                                          <span className="text-muted-foreground text-xs">
+                                          <span className="text-xs text-muted-foreground">
                                             ({token.tokenId})
                                           </span>
                                         </SelectItem>
@@ -543,7 +543,7 @@ export function EditTokenPage({
                                             value={bridge.id}
                                           >
                                             {bridge.name}{' '}
-                                            <span className="text-muted-foreground text-xs">
+                                            <span className="text-xs text-muted-foreground">
                                               ({bridge.id})
                                             </span>
                                           </SelectItem>
@@ -594,7 +594,7 @@ export function EditTokenPage({
                 </CardHeader>
                 <CardContent>
                   {backing.length === 0 ? (
-                    <p className="text-muted-foreground text-sm">
+                    <p className="text-sm text-muted-foreground">
                       This token is not backing any other token.
                     </p>
                   ) : (
