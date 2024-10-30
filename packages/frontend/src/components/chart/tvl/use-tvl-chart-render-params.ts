@@ -6,6 +6,7 @@ import { type SeriesStyle } from '../core/styles'
 import { getChartRange } from '../core/utils/get-chart-range-from-columns'
 import { mapMilestones } from '../core/utils/map-milestones'
 import { type ChartUnit } from '../types'
+import { assert } from '@l2beat/shared-pure'
 
 export type TvlDataPoint = readonly [number, number, number, number, number]
 
@@ -41,6 +42,14 @@ export function useTvlChartRenderParams({ data, milestones, unit }: Params) {
       }) ?? [],
     [data, mappedMilestones, unit],
   )
+  const total = useMemo(() => {
+    const lastColumn = columns.at(-1)
+    assert(lastColumn, 'No columns')
+    return {
+      usd: lastColumn.data.usdValue,
+      eth: lastColumn.data.ethValue,
+    }
+  }, [columns])
 
   const firstValue = useMemo(() => columns[0]?.values[0]?.value, [columns])
   const lastValue = useMemo(
@@ -71,6 +80,7 @@ export function useTvlChartRenderParams({ data, milestones, unit }: Params) {
     chartRange,
     valuesStyle,
     formatYAxisLabel,
+    total,
   }
 }
 

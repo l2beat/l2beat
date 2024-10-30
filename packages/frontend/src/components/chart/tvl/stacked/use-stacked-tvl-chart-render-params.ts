@@ -1,4 +1,5 @@
 import { type Milestone } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
 import { useCallback, useMemo } from 'react'
 import { type CostsUnit } from '~/server/features/scaling/costs/types'
 import { formatCurrency } from '~/utils/number-format/format-currency'
@@ -46,6 +47,19 @@ export function useStackedTvlChartRenderParams({
     [data, mappedMilestones, unit],
   )
 
+  const total = useMemo(() => {
+    const lastColumn = columns.at(-1)
+    assert(lastColumn, 'No columns')
+    const total =
+      lastColumn.data.canonical +
+      lastColumn.data.external +
+      lastColumn.data.native
+    return {
+      usd: total / 100,
+      eth: total / lastColumn.data.ethPrice,
+    }
+  }, [columns])
+
   const firstValue = useMemo(() => columns[0]?.values[0]?.value, [columns])
   const lastValue = useMemo(
     () => columns[columns.length - 1]?.values[0]!.value ?? 0,
@@ -83,6 +97,7 @@ export function useStackedTvlChartRenderParams({
     valuesStyle,
     formatYAxisLabel,
     change,
+    total,
   }
 }
 
