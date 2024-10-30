@@ -10,6 +10,10 @@ import { SyncOptimizer } from '../utils/SyncOptimizer'
 
 export class TvlDependencies {
   private readonly priceProviders: PriceProviders
+  private readonly hourlyIndexer: HourlyIndexer
+  private readonly priceService: PriceService
+  private readonly syncOptimizer: SyncOptimizer
+  private readonly indexerService: IndexerService
 
   constructor(
     readonly database: Database,
@@ -18,23 +22,27 @@ export class TvlDependencies {
     readonly providers: Providers,
   ) {
     this.priceProviders = providers.getPriceProviders()
+    this.hourlyIndexer = new HourlyIndexer(logger, clock)
+    this.syncOptimizer = new SyncOptimizer(this.clock)
+    this.priceService = new PriceService({
+      priceProvider: this.priceProviders.getPriceProvider(),
+    })
+    this.indexerService = new IndexerService(this.database)
   }
 
   getPriceService() {
-    return new PriceService({
-      priceProvider: this.priceProviders.getPriceProvider(),
-    })
+    return this.priceService
   }
 
   getIndexerService() {
-    return new IndexerService(this.database)
+    return this.indexerService
   }
 
   getSyncOptimizer() {
-    return new SyncOptimizer(this.clock)
+    return this.syncOptimizer
   }
 
   getHourlyIndexer() {
-    return new HourlyIndexer(this.logger, this.clock)
+    return this.hourlyIndexer
   }
 }

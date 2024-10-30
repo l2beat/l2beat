@@ -9,10 +9,13 @@ import {
 import { TvlConfig } from '../config/Config'
 
 export class PriceProviders {
-  constructor(private readonly coingeckoQueryService: CoingeckoQueryService) {}
+  private readonly priceProvider: PriceProvider
+  constructor(private readonly coingeckoQueryService: CoingeckoQueryService) {
+    this.priceProvider = new PriceProvider(coingeckoQueryService)
+  }
 
   getPriceProvider() {
-    return new PriceProvider(this.coingeckoQueryService)
+    return this.priceProvider
   }
 }
 
