@@ -9,10 +9,10 @@
   "workspaces": {
     "packages": ["packages/*"],
     "nohoist": [
-      "**/@types/react/**",
-      "**/@types/react-dom/**",
-      "**/react/**",
-      "**/react-dom/**"
+      "**/@types/react",
+      "**/@types/react-dom",
+      "**/react",
+      "**/react-dom"
     ]
   },
   "packageManager": "yarn@1.22.19",
