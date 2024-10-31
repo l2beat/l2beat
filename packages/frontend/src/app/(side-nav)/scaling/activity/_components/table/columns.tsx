@@ -90,7 +90,7 @@ export const getScalingActivityColumns = (
     meta: {
       align: 'right',
       tooltip:
-        'The ratio of user operations to transactions over the past day. A high ratio indicates that most transactions contain multiple user operations bundled into a single transaction.',
+        'The ratio of user operations to transactions over the past day. A high ratio indicates that for some transactions multiple individual user operations are bundled in a single transaction.',
     },
   }),
 ]
