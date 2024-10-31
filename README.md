@@ -18,10 +18,10 @@ We believe in knowledge sharing and open access. Our code is and will remain ope
 
 Some of the sub-packages are published to NPM. We use a tool called [changesets](https://github.com/changesets/changesets) to manage versioning, cross-dependency versioning and publishing new versions to NPM.  When you make a change, before merging to master:
 
-- run `yarn changeset` and mark the packages you wish to publish, select what kind of a change it is (major,minor,patch) and provide the summary of the changes
+- run `pnpm changeset` and mark the packages you wish to publish, select what kind of a change it is (major,minor,patch) and provide the summary of the changes
 
 When you want to publish all previous changes to NPM:
 
-- now run `yarn changeset version`, this will change the generated `.changeset/file.md` into an entry into `CHANGELOG.md` and `package.json` in changed packages
+- now run `pnpm changeset version`, this will change the generated `.changeset/file.md` into an entry into `CHANGELOG.md` and `package.json` in changed packages
 
 After your PR with changed `CHANGELOG.md` and `package.json` is merged into `main`, a CI step will run which will try to publish all change changes.

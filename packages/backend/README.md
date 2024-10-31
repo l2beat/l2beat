@@ -10,8 +10,8 @@ To run or develop the backend you need to install and build its dependencies. Yo
 running the following commands in the repository root:
 
 ```
-yarn
-yarn build
+pnpm install
+pnpm build
 ```
 
 ### Database
@@ -30,7 +30,7 @@ online.
 
 Alternatively you can simply run `./scripts/start_db.sh` which will always do what's needed.
 
-To update database schema to the latest version run `yarn dev:migrate`. That way you will have the
+To update database schema to the latest version run `pnpm dev:migrate`. That way you will have the
 lastest schema in your local database.
 
 ### Third party services
@@ -211,16 +211,16 @@ You can configure the log level by setting the `LOG_LEVEL` variable. The possibl
 
 ## Scripts
 
-- `yarn build` - build
-- `yarn format:fix` - run biome automatic formatter
-- `yarn format` - check if formatting is correct with biome
-- `yarn lint:fix` - run biome automatic fixer
-- `yarn lint` - check if the code satisfies the biome configuration
-- `yarn start:dev` - run the backend server from source ts
-- `yarn start` - run the backend server from built js
-- `yarn test` - run tests
-- `yarn typecheck` - check if the code satisfies the typescript compiler
-- `yarn db:migrate` - apply the latest migration
+- `pnpm build` - build
+- `pnpm format:fix` - run biome automatic formatter
+- `pnpm format` - check if formatting is correct with biome
+- `pnpm lint:fix` - run biome automatic fixer
+- `pnpm lint` - check if the code satisfies the biome configuration
+- `pnpm start:dev` - run the backend server from source ts
+- `pnpm start` - run the backend server from built js
+- `pnpm test` - run tests
+- `pnpm typecheck` - check if the code satisfies the typescript compiler
+- `pnpm db:migrate` - apply the latest migration
 
 - `scripts/rediscoverRawDevAll.sh` - re-runs raw discovery --dev on all existing projects
 

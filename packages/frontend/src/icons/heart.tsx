@@ -121,8 +121,8 @@ export function HeartIcon(props: SvgIconProps) {
           y2="18.1781"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F79C9C" />
-          <stop offset="1" stop-color="#FCE8E8" />
+          <stop stopColor="#F79C9C" />
+          <stop offset="1" stopColor="#FCE8E8" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_1_2664"
@@ -132,8 +132,8 @@ export function HeartIcon(props: SvgIconProps) {
           y2="18.0822"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F7A3A3" />
-          <stop offset="1" stop-color="#FCE8E8" />
+          <stop stopColor="#F7A3A3" />
+          <stop offset="1" stopColor="#FCE8E8" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_1_2664"
@@ -143,8 +143,8 @@ export function HeartIcon(props: SvgIconProps) {
           y2="17.9863"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F8AAAA" />
-          <stop offset="1" stop-color="#FCE8E8" />
+          <stop stopColor="#F8AAAA" />
+          <stop offset="1" stopColor="#FCE8E8" />
         </linearGradient>
         <linearGradient
           id="paint3_linear_1_2664"
@@ -154,8 +154,8 @@ export function HeartIcon(props: SvgIconProps) {
           y2="17.8903"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F8B1B1" />
-          <stop offset="1" stop-color="#FCE8E8" />
+          <stop stopColor="#F8B1B1" />
+          <stop offset="1" stopColor="#FCE8E8" />
         </linearGradient>
         <linearGradient
           id="paint4_linear_1_2664"
@@ -165,8 +165,8 @@ export function HeartIcon(props: SvgIconProps) {
           y2="17.7949"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F9B8B8" />
-          <stop offset="1" stop-color="#FCE8E8" />
+          <stop stopColor="#F9B8B8" />
+          <stop offset="1" stopColor="#FCE8E8" />
         </linearGradient>
         <linearGradient
           id="paint5_linear_1_2664"
@@ -176,8 +176,8 @@ export function HeartIcon(props: SvgIconProps) {
           y2="17.699"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F9BFBF" />
-          <stop offset="1" stop-color="#FCE8E8" />
+          <stop stopColor="#F9BFBF" />
+          <stop offset="1" stopColor="#FCE8E8" />
         </linearGradient>
         <linearGradient
           id="paint6_linear_1_2664"
@@ -187,8 +187,8 @@ export function HeartIcon(props: SvgIconProps) {
           y2="17.603"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FAC5C5" />
-          <stop offset="1" stop-color="#FCE8E8" />
+          <stop stopColor="#FAC5C5" />
+          <stop offset="1" stopColor="#FCE8E8" />
         </linearGradient>
         <linearGradient
           id="paint7_linear_1_2664"
@@ -198,8 +198,8 @@ export function HeartIcon(props: SvgIconProps) {
           y2="17.5071"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FACCCC" />
-          <stop offset="1" stop-color="#FCE8E8" />
+          <stop stopColor="#FACCCC" />
+          <stop offset="1" stopColor="#FCE8E8" />
         </linearGradient>
         <linearGradient
           id="paint8_linear_1_2664"
@@ -209,8 +209,8 @@ export function HeartIcon(props: SvgIconProps) {
           y2="17.4112"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FBD3D3" />
-          <stop offset="1" stop-color="#FCE8E8" />
+          <stop stopColor="#FBD3D3" />
+          <stop offset="1" stopColor="#FCE8E8" />
         </linearGradient>
         <linearGradient
           id="paint9_linear_1_2664"
@@ -220,8 +220,8 @@ export function HeartIcon(props: SvgIconProps) {
           y2="17.3158"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FBDADA" />
-          <stop offset="1" stop-color="#FCE8E8" />
+          <stop stopColor="#FBDADA" />
+          <stop offset="1" stopColor="#FCE8E8" />
         </linearGradient>
         <linearGradient
           id="paint10_linear_1_2664"
@@ -231,8 +231,8 @@ export function HeartIcon(props: SvgIconProps) {
           y2="17.2198"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FCE1E1" />
-          <stop offset="1" stop-color="#FCE8E8" />
+          <stop stopColor="#FCE1E1" />
+          <stop offset="1" stopColor="#FCE8E8" />
         </linearGradient>
         <linearGradient
           id="paint11_linear_1_2664"
@@ -242,8 +242,8 @@ export function HeartIcon(props: SvgIconProps) {
           y2="17.4292"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#E06868" />
-          <stop offset="1" stop-color="#F7DCDC" />
+          <stop stopColor="#E06868" />
+          <stop offset="1" stopColor="#F7DCDC" />
         </linearGradient>
         <linearGradient
           id="paint12_linear_1_2664"
@@ -253,8 +253,8 @@ export function HeartIcon(props: SvgIconProps) {
           y2="17.3271"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#E27373" />
-          <stop offset="1" stop-color="#F7DCDC" />
+          <stop stopColor="#E27373" />
+          <stop offset="1" stopColor="#F7DCDC" />
         </linearGradient>
         <linearGradient
           id="paint13_linear_1_2664"
@@ -264,8 +264,8 @@ export function HeartIcon(props: SvgIconProps) {
           y2="17.2252"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#E47D7D" />
-          <stop offset="1" stop-color="#F7DCDC" />
+          <stop stopColor="#E47D7D" />
+          <stop offset="1" stopColor="#F7DCDC" />
         </linearGradient>
         <linearGradient
           id="paint14_linear_1_2664"
@@ -275,8 +275,8 @@ export function HeartIcon(props: SvgIconProps) {
           y2="17.1229"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#E68888" />
-          <stop offset="1" stop-color="#F7DCDC" />
+          <stop stopColor="#E68888" />
+          <stop offset="1" stopColor="#F7DCDC" />
         </linearGradient>
         <linearGradient
           id="paint15_linear_1_2664"
@@ -286,8 +286,8 @@ export function HeartIcon(props: SvgIconProps) {
           y2="17.0215"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#E89292" />
-          <stop offset="1" stop-color="#F7DCDC" />
+          <stop stopColor="#E89292" />
+          <stop offset="1" stopColor="#F7DCDC" />
         </linearGradient>
         <linearGradient
           id="paint16_linear_1_2664"
@@ -297,8 +297,8 @@ export function HeartIcon(props: SvgIconProps) {
           y2="16.9189"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#EA9D9D" />
-          <stop offset="1" stop-color="#F7DCDC" />
+          <stop stopColor="#EA9D9D" />
+          <stop offset="1" stopColor="#F7DCDC" />
         </linearGradient>
         <linearGradient
           id="paint17_linear_1_2664"
@@ -308,8 +308,8 @@ export function HeartIcon(props: SvgIconProps) {
           y2="16.8168"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#EDA7A7" />
-          <stop offset="1" stop-color="#F7DCDC" />
+          <stop stopColor="#EDA7A7" />
+          <stop offset="1" stopColor="#F7DCDC" />
         </linearGradient>
         <linearGradient
           id="paint18_linear_1_2664"
@@ -319,8 +319,8 @@ export function HeartIcon(props: SvgIconProps) {
           y2="16.7152"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#EFB2B2" />
-          <stop offset="1" stop-color="#F7DCDC" />
+          <stop stopColor="#EFB2B2" />
+          <stop offset="1" stopColor="#F7DCDC" />
         </linearGradient>
         <linearGradient
           id="paint19_linear_1_2664"
@@ -330,8 +330,8 @@ export function HeartIcon(props: SvgIconProps) {
           y2="16.6126"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F1BCBC" />
-          <stop offset="1" stop-color="#F7DCDC" />
+          <stop stopColor="#F1BCBC" />
+          <stop offset="1" stopColor="#F7DCDC" />
         </linearGradient>
         <linearGradient
           id="paint20_linear_1_2664"
@@ -341,8 +341,8 @@ export function HeartIcon(props: SvgIconProps) {
           y2="16.5105"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F3C7C7" />
-          <stop offset="1" stop-color="#F7DCDC" />
+          <stop stopColor="#F3C7C7" />
+          <stop offset="1" stopColor="#F7DCDC" />
         </linearGradient>
         <linearGradient
           id="paint21_linear_1_2664"
@@ -352,8 +352,8 @@ export function HeartIcon(props: SvgIconProps) {
           y2="16.4089"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F5D1D1" />
-          <stop offset="1" stop-color="#F7DCDC" />
+          <stop stopColor="#F5D1D1" />
+          <stop offset="1" stopColor="#F7DCDC" />
         </linearGradient>
         <radialGradient
           id="paint22_radial_1_2664"
@@ -363,10 +363,10 @@ export function HeartIcon(props: SvgIconProps) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(7.49368 6.37395) scale(8.17846 9.26892)"
         >
-          <stop stop-color="#FF7666" />
-          <stop offset="0.126" stop-color="#FB6C59" />
-          <stop offset="0.714" stop-color="#EC4023" />
-          <stop offset="1" stop-color="#E62F0E" />
+          <stop stopColor="#FF7666" />
+          <stop offset="0.126" stopColor="#FB6C59" />
+          <stop offset="0.714" stopColor="#EC4023" />
+          <stop offset="1" stopColor="#E62F0E" />
         </radialGradient>
         <linearGradient
           id="paint23_linear_1_2664"
@@ -376,8 +376,8 @@ export function HeartIcon(props: SvgIconProps) {
           y2="15.5586"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.147" stop-color="#F4523D" stopOpacity="0" />
-          <stop offset="0.845" stop-color="#A52510" />
+          <stop offset="0.147" stopColor="#F4523D" stopOpacity="0" />
+          <stop offset="0.845" stopColor="#A52510" />
         </linearGradient>
         <radialGradient
           id="paint24_radial_1_2664"
@@ -387,8 +387,8 @@ export function HeartIcon(props: SvgIconProps) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(7.16957 6.88785) rotate(-37.9592) scale(3.24001 2.26483)"
         >
-          <stop offset="0.129" stop-color="#F9A29B" />
-          <stop offset="0.834" stop-color="#F9A29B" stopOpacity="0" />
+          <stop offset="0.129" stopColor="#F9A29B" />
+          <stop offset="0.834" stopColor="#F9A29B" stopOpacity="0" />
         </radialGradient>
       </defs>
     </SvgIcon>

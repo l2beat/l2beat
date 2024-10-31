@@ -7,8 +7,9 @@ const projects = [...layer2s, ...layer3s]
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { slug: string } },
+  props: { params: Promise<{ slug: string }> },
 ) {
+  const params = await props.params
   const searchParams = request.nextUrl.searchParams
   const range = TvlChartRange.catch('30d').parse(searchParams.get('range'))
 

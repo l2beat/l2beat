@@ -1,8 +1,4 @@
-import {
-  type DaBridge,
-  type DaLayer,
-  type ScalingProjectLinks,
-} from '@l2beat/config'
+import { type DaLayer, type ScalingProjectLinks } from '@l2beat/config'
 import { compact } from 'lodash'
 import { type ProjectLink } from '~/components/projects/links/types'
 

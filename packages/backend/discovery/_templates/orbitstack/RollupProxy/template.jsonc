@@ -29,7 +29,7 @@
       }
     },
     "confirmPeriodBlocks": {
-      "description": "Challenge period. (Number of blocks until a node is confirmed)."
+      "description": "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
     },
     "wasmModuleRoot": {
       "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."

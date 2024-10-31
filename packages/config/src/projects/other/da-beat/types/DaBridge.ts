@@ -20,6 +20,18 @@ export type DaBridge =
 
 export type NoDaBridge = CommonDaBridge & {
   type: 'NoBridge'
+  /**
+   * Data about related permissions - preferably from discovery.
+   * It makes less sense to have permissions for NoBridge, but it's here in case we need to
+   * add some complementary information.
+   */
+  permissions: Record<string, ScalingProjectPermission[]> | 'UnderReview'
+  /**
+   * Data about the contracts used in the bridge - preferably from discovery.
+   * It makes less sense to have contracts for NoBridge, but it's here in case we need to
+   * add some complementary information.
+   */
+  contracts: DaBridgeContracts
 }
 
 export type EnshrinedBridge = CommonDaBridge & {

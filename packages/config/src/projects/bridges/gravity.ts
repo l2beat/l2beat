@@ -93,7 +93,7 @@ export const gravity: Bridge = {
     {
       name: 'Cosmos Validators',
       description:
-        'Control Gravity contract on Ethereum, funds cannot be transfer without the signature of at least 2/3 of the validators set.',
+        'Control Gravity contract on Ethereum, funds cannot be transfer without the signature of at least 2/3 of the validator set.',
       accounts: [],
     },
   ],

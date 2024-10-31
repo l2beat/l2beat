@@ -3,13 +3,9 @@
   "private": true,
   "license": "MIT",
   "engines": {
-    "node": "^18.0.0",
-    "yarn": ">=1.22.0 <2"
+    "node": "^22.0.0"
   },
-  "workspaces": {
-    "packages": ["packages/*"]
-  },
-  "packageManager": "yarn@1.22.19",
+  "packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee",
   "scripts": {
     "build": "turbo run build",
     "build:backend": "turbo run build --filter=@l2beat/backend",
@@ -20,18 +16,18 @@
     "build:dependencies": "turbo run build --filter=@l2beat/frontend^... --filter=@l2beat/backend^...",
     "watch:dependencies": "turbo watch build --filter=@l2beat/frontend^... --filter=@l2beat/backend^...",
     "clean": "turbo run clean",
-    "fix": "yarn lint:fix && yarn format:fix",
-    "format": "wsrun -ecam format",
-    "format:fix": "wsrun -ecam format:fix",
-    "lint": "wsrun -ecam lint",
-    "lint:fix": "wsrun -ecam lint:fix",
-    "start": "cd packages/backend && yarn start",
+    "fix": "pnpm lint:fix && pnpm format:fix",
+    "format": "pnpm -r format",
+    "format:fix": "pnpm -r format:fix",
+    "lint": "pnpm -r lint",
+    "lint:fix": "pnpm -r lint:fix",
+    "start": "cd packages/backend && pnpm start",
     "test": "turbo run test -- --reporter progress",
     "test:exclude-backend": "turbo run test --filter=!@l2beat/backend --filter=!@l2beat/database",
     "typecheck": "turbo run typecheck",
     "ci:check": "turbo run ci:check",
-    "heroku-postbuild": "yarn build:backend && yarn install --production",
-    "checkout": "yarn clean && yarn && yarn build"
+    "heroku-postbuild": "pnpm build:backend && pnpm install --production",
+    "checkout": "pnpm clean && pnpm && pnpm build"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.3",
@@ -48,7 +44,6 @@
     "ts-node": "^10.9.1",
     "turbo": "^2.0.12",
     "typescript": "^5.5.3",
-    "wait-for-expect": "^3.0.2",
-    "wsrun": "^5.2.4"
+    "wait-for-expect": "^3.0.2"
   }
 }

@@ -20,8 +20,8 @@
     value: "None"
   }
   proposerFailure: {
-    definingMetric: 1033656
-    description: "Anyone can become a Proposer after 11d 23h of inactivity from the currently whitelisted Proposers."
+    definingMetric: 553416
+    description: "Anyone can become a Proposer after 6d 9h of inactivity from the currently whitelisted Proposers."
     sentiment: "good"
     value: "Self propose"
   }
@@ -33,8 +33,8 @@
   }
   stateValidation: {
     definingMetric: 1
-    description: "No actor outside of the single Proposer can submit fraud proofs. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks. There is a 5d 14h challenge period."
-    secondLine: "5d 14h challenge period"
+    description: "No actor outside of the single Proposer can submit fraud proofs. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks. There is a 1h challenge period."
+    secondLine: "1h challenge period"
     sentiment: "bad"
     value: "Fraud proofs (INT)"
   }
@@ -67,8 +67,8 @@
     value: "None"
   }
   proposerFailure: {
-    definingMetric: 2133288
-    description: "Anyone can become a Proposer after 24d 16h of inactivity from the currently whitelisted Proposers."
+    definingMetric: 1653048
+    description: "Anyone can become a Proposer after 19d 3h of inactivity from the currently whitelisted Proposers."
     sentiment: "good"
     value: "Self propose"
   }
@@ -80,8 +80,8 @@
   }
   stateValidation: {
     definingMetric: 1
-    description: "No actor outside of the single Proposer can submit fraud proofs. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks. There is a 5d 14h challenge period."
-    secondLine: "5d 14h challenge period"
+    description: "No actor outside of the single Proposer can submit fraud proofs. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks. There is a 1h challenge period."
+    secondLine: "1h challenge period"
     sentiment: "bad"
     value: "Fraud proofs (INT)"
   }

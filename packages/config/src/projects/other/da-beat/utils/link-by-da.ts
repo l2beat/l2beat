@@ -20,6 +20,7 @@ export function linkByDA(where: {
   return toUsedInProject(
     [...layer2s, ...layer3s]
       .filter(filterFn)
-      .filter((project) => !project.isArchived),
+      .filter((project) => !project.isArchived)
+      .sort((a, b) => a.display.name.localeCompare(b.display.name)),
   )
 }

@@ -15,7 +15,7 @@ import { TokensTable } from './_components/table/tokens-table'
 export type Risk = SetOptional<ScalingProjectRisk, 'category'>
 
 interface Props {
-  params: { address: string }
+  params: Promise<{ address: string }>
 }
 
 async function getAddressDisplayName(address: Hex) {
@@ -34,7 +34,11 @@ async function getAddressDisplayName(address: Hex) {
   return resolvedEnsDomain ?? address
 }
 
-export async function generateMetadata({ params: { address } }: Props) {
+export async function generateMetadata(props: Props) {
+  const params = await props.params
+
+  const { address } = params
+
   if (!isAddress(address)) return {}
   return {
     title: `${await getAddressDisplayName(
@@ -44,7 +48,11 @@ export async function generateMetadata({ params: { address } }: Props) {
   }
 }
 
-export default async function Page({ params: { address } }: Props) {
+export default async function Page(props: Props) {
+  const params = await props.params
+
+  const { address } = params
+
   if (!isAddress(address)) {
     return redirect('/')
   }

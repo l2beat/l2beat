@@ -131,26 +131,30 @@ export const fuel: Layer2 = {
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: 'UnderReview',
+
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        stateVerificationOnL1: false,
+        fraudProofSystemAtLeast5Outsiders: null,
+        usersCanExitWithoutCooperation: false,
+        usersHave7DaysToExit: false,
+        securityCouncilProperlySetUp: false,
+      },
+      stage2: {
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+      },
     },
-    stage1: {
-      stateVerificationOnL1: false,
-      fraudProofSystemAtLeast5Outsiders: null,
-      usersCanExitWithoutCooperation: false,
-      usersHave7DaysToExit: false,
-      securityCouncilProperlySetUp: false,
-    },
-    stage2: {
-      fraudProofSystemIsPermissionless: null,
-      delayWith30DExitWindow: false,
-      proofSystemOverriddenOnlyInCaseOfABug: false,
-    },
-  }),
+    { rollupNodeLink: 'https://github.com/FuelLabs/network-watchtower' },
+  ),
   technology: {
     stateCorrectness: {
       name: 'Fraud proofs are in development',

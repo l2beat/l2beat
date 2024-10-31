@@ -1,3 +1,66 @@
+Generated with discovered.json: 0x1595c2bb52291e5edea61159da4d34466d89e118
+
+# Diff at Wed, 30 Oct 2024 13:22:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0a8a53530022c6c5edd257c3682a3e7f80d0c550 block: 20941810
+- current block number: 21078724
+
+## Description
+
+GelatoMS: Signer removed, threshold decreased.
+
+## Watched changes
+
+```diff
+    contract GelatoMultisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      values.$members.8:
+-        "0x547D0F472309e4239b296D01e03bEDc101241a26"
+      values.$members.7:
+-        "0xf83bC4688979b13Da02CB94c76cEB169540760b5"
++        "0x547D0F472309e4239b296D01e03bEDc101241a26"
+      values.$members.6:
+-        "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e"
++        "0xf83bC4688979b13Da02CB94c76cEB169540760b5"
+      values.$members.5:
+-        "0xc85aC6d2fdC376F335455D4cCA30c45ED1080849"
++        "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e"
+      values.$threshold:
+-        6
++        4
+      values.multisigThreshold:
+-        "6 of 9 (67%)"
++        "4 of 8 (50%)"
+    }
+```
+
+Generated with discovered.json: 0x198f883b6f8dc6ff7e56c16f98997a93a2c53f84
+
+# Diff at Tue, 29 Oct 2024 13:10:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7b3fc9dc9074e1d423b48522c3f0273c86aab54a block: 20941810
+- current block number: 20941810
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20941810 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x113cB99283AF242Da0A0C54347667edF531Aa7d6) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      fieldMeta:
++        {"FINALIZATION_PERIOD_SECONDS":{"description":"Challenge period (Number of seconds until a state root is finalized)."}}
+    }
+```
+
 Generated with discovered.json: 0x49a5fcb52e9729c0dab86a13c3f3fc7f897a7def
 
 # Diff at Tue, 22 Oct 2024 13:50:24 GMT:

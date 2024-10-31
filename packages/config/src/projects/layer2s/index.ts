@@ -119,8 +119,10 @@ import { redstone } from './redstone'
 import { reya } from './reya'
 import { rhinofi } from './rhinofi'
 import { rise } from './rise'
+import { river } from './river'
 import { rss3 } from './rss3'
 import { scroll } from './scroll'
+import { shape } from './shape'
 import { silicon } from './silicon'
 import { socialnetwork } from './socialnetwork'
 import { soneium } from './soneium'
@@ -292,6 +294,7 @@ export const layer2s: Layer2[] = [
   reya,
   rhinofi,
   rise,
+  river,
   rss3,
   scroll,
   silicon,
@@ -303,6 +306,7 @@ export const layer2s: Layer2[] = [
   specular,
   starknet,
   stealthchain,
+  shape,
   superlumio,
   superseed,
   swan,
