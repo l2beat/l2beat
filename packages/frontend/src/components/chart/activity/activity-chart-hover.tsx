@@ -13,9 +13,12 @@ interface Props {
 
 export function ActivityChartHover(props: Props) {
   return (
-    <div>
+    <div className="min-w-36">
       <div className="mb-1.5 whitespace-nowrap">
-        {formatTimestamp(props.timestamp, { mode: 'datetime' })}
+        {formatTimestamp(props.timestamp, {
+          mode: 'date',
+          longMonthName: true,
+        })}
       </div>
       <div className="flex w-full items-center justify-between gap-2">
         <div className="flex items-center gap-1">

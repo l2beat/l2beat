@@ -1,9 +1,10 @@
-import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { PERFORMED_BY } from './common'
 import { PROOFS } from './common/proofSystems'
 import { ZkCatalogProject } from './types/ZkCatalogProject'
 
 export const worldcoinsemaphore: ZkCatalogProject = {
+  createdAt: new UnixTime(1717506924), // 2024-06-04T13:15:24Z
   display: {
     slug: 'worldcoin-semaphore',
     name: 'Worldcoin Semaphore',

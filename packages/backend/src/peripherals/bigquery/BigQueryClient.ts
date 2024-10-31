@@ -1,5 +1,5 @@
 import { BigQuery, Query } from '@google-cloud/bigquery'
-import { RateLimiter } from '@l2beat/shared-pure'
+import { RateLimiter } from '@l2beat/backend-tools'
 
 export interface BigQueryAuth {
   // Client Email

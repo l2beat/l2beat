@@ -26,17 +26,13 @@ export function BridgesTvlChart() {
   )
   const [timeRange, setTimeRange] = useCookieState('bridgesSummaryChartRange')
 
-  const { data: total } = api.tvl.total.useQuery({
-    filter: { type: 'bridge' },
-    excludeAssociatedTokens: false,
-  })
   const { data, isLoading } = api.tvl.chart.useQuery({
     range: timeRange,
     filter: { type: 'bridge' },
     excludeAssociatedTokens: false,
   })
 
-  const { chartRange, formatYAxisLabel, valuesStyle, columns, change } =
+  const { chartRange, formatYAxisLabel, valuesStyle, columns, change, total } =
     useTvlChartRenderParams({ milestones: [], unit, data })
 
   return (

@@ -1,0 +1,6 @@
+{
+  "extends": ["../../biome.json"],
+  "linter": {
+    "enabled": false
+  }
+}

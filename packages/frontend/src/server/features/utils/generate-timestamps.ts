@@ -1,11 +1,16 @@
 import { UnixTime, assertUnreachable } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 
+interface Options {
+  addTarget?: boolean
+}
+
 export function generateTimestamps(
   [from, to]: [UnixTime, UnixTime],
   resolution: 'hourly' | 'sixHourly' | 'daily',
+  opts?: Options,
 ) {
-  return range(
+  const generated = range(
     Math.floor((to.toNumber() - from.toNumber()) / divider(resolution)) + 1,
   ).map((i) => {
     return from.add(
@@ -13,6 +18,12 @@ export function generateTimestamps(
       resolution === 'hourly' || resolution === 'sixHourly' ? 'hours' : 'days',
     )
   })
+  const isLastGeneratedTarget = generated.at(-1)?.equals(to)
+  if (opts?.addTarget && !isLastGeneratedTarget) {
+    generated.push(to)
+  }
+
+  return generated
 }
 
 function divider(resolution: 'hourly' | 'sixHourly' | 'daily') {
