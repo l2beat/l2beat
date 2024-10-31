@@ -1,9 +1,8 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import { fraxtal } from '../../../layer2s/fraxtal'
-import { NO_BRIDGE } from '../templates/no-bridge-template'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
 import { DaLayer } from '../types/DaLayer'
 import { toUsedInProject } from '../utils/to-used-in-project'
+import { fraxtalDABridge } from './bridges/fraxtalDABridge'
 
 export const fraxtalDA: DaLayer = {
   id: 'dac',
@@ -43,15 +42,7 @@ export const fraxtalDA: DaLayer = {
     `,
   },
   bridges: [
-    NO_BRIDGE({
-      createdAt: new UnixTime(1726754891), // 2024-09-19T14:08:11Z
-      layer: 'FraxtalDA',
-      description:
-        'The risk profile in this page refers to L2s that do not integrate with a data availability bridge.',
-      technology: {
-        description: `There is no committee attesting to the availability of the data. For L2 chain derivation, the system relies on sequencer commitments to an L1 onchain inbox. See DA layer technology section for more details.\n`,
-      },
-    }),
+    fraxtalDABridge,
   ],
   usedIn: [...toUsedInProject([fraxtal])],
   risks: {
