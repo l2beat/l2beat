@@ -51,7 +51,7 @@ export const updateNetwork = actionClient
       return { success: { id } }
     } catch {
       return {
-        failure: 'Failed to update network'
+        failure: 'Failed to update network',
       }
     }
   })
