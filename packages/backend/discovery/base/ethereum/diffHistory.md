@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x0b7e351f21dc557c02e7032b4e8fa7bbfc1bb974
+Generated with discovered.json: 0x45b950ab298a302d19a6e1345fe3a1b9c671988b
 
-# Diff at Thu, 31 Oct 2024 14:12:49 GMT:
+# Diff at Thu, 31 Oct 2024 14:35:49 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@f409157dbd8c6fad51290f20e7bd5692f0556969 block: 20941326
-- current block number: 21086136
+- current block number: 21086252
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Fault proofs upgrade: The dispute game contracts use the OP Mainnet implementations and identical parameters. Base risks are now like OP Mainnet except for upgradeability (Exit Window) because there is no SecurityCouncil. A proper Security Council and according upgrade delay are also the only requirements for Base to reach stage 1.
 
 ## Watched changes
 
