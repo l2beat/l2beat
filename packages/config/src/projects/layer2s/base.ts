@@ -530,7 +530,7 @@ export const base: Layer2 = {
     },
     ...discovery.getMultisigPermission(
       'SuperchainGuardianMultisig',
-      'Can pause withdrawals or blacklist dispute games in case of an emergency. It is controlled by the OP stack Security Council multisig, but a module allows the OP Foundation Multisig to act through it. The Security Council can disable the module if the Foundation acts maliciously.',
+      'Can pause withdrawals or blacklist dispute games in case of an emergency. It is controlled by the OP stack Security Council multisig, who can disable the DeputyGuardian module if the Foundation acts maliciously.',
     ),
     discovery.contractAsPermissioned(
       discovery.getContract('ProxyAdmin'),
@@ -554,7 +554,7 @@ export const base: Layer2 = {
     ),
     ...discovery.getMultisigPermission(
       'SecurityCouncilMultisig',
-      `This is the OP stack SecurityCouncil. Member of the SuperchainProxyAdminOwner. It implements a LivenessModule used to remove inactive (${livenessInterval}) members while making sure that the threshold remains above 75%. If the number of members falls below 8, the Foundation takes ownership of the Security Council.`,
+      `This is the shared SecurityCouncil of all Superchain member chains, and one of the signers of the SuperchainProxyAdminOwner 2/2.`,
       [
         {
           text: 'Security Council members - Optimism Collective forum',
