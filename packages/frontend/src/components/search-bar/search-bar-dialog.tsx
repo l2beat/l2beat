@@ -74,7 +74,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
           },
         })
         .flatMap((match) => match.obj)
-        .toSorted((a, b) => a.index - b.index),
+        .sort((a, b) => a.index - b.index),
 
     [value],
   )
