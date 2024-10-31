@@ -5,7 +5,7 @@ import {
   parseAbiItem,
   parseAbiParameters,
 } from 'viem'
-import { decode, decodeCustom } from './decode'
+import { decode } from './decode'
 
 describe(decode.name, () => {
   it('simple function', () => {
@@ -258,20 +258,6 @@ describe(decode.name, () => {
       },
     ])
   })
-})
-
-describe(decodeCustom.name, () => {
-  it('fallbacks to decode for functions', () => {
-    const abi = 'function foo(address, uint, bool)'
-    const encoded = encodeFunctionData({
-      abi: [parseAbiItem(abi)],
-      functionName: 'foo',
-      args: ['0xABaBaBaBABabABabAbAbABAbABabababaBaBABaB', 2n, true],
-    })
-
-    const decoded = decodeCustom(encoded, abi)
-    expect(decoded).toEqual(decode(encoded, [abi]))
-  })
 
   it('can decode parameters', () => {
     const abi = '(address, uint, bool)'
@@ -281,7 +267,7 @@ describe(decodeCustom.name, () => {
       true,
     ])
 
-    const decoded = decodeCustom(encoded, abi)
+    const decoded = decode(encoded, [abi])
     if (decoded?.type !== 'parameters') {
       throw new Error('Decoding returned unexpected result')
     }
