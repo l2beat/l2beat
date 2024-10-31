@@ -12,7 +12,7 @@ export interface ClientCoreDependencies {
 }
 
 export abstract class ClientCore {
-  constructor(private readonly deps: ClientCoreDependencies) { }
+  constructor(private readonly deps: ClientCoreDependencies) {}
 
   /**
    * This method will perform HTTP fetch, and validate the response.
