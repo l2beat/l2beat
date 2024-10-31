@@ -52,26 +52,26 @@ export const near: DaLayer = {
   ## Near Nightshade
 
   ### Consensus
-  NEAR's Nightshade consensus operates a Proof-of-Stake (PoS) system that enables parallel processing of transactions through a sharded architecture. As with any PoS system, validators are required to lock a stake to be eligible for block production and attestations.
-  The main differentiator of the NEAR blockchain is that its blocks do not contain actual transactions but rather block headers of separate blockchains, known as shards.
+  NEAR's [Nightshade](https://pages.near.org/downloads/Nightshade.pdf) consensus operates a Proof-of-Stake (PoS) system that enables parallel processing of transactions through a sharded architecture. As with any PoS system, validators are required to lock a stake to be eligible for block production and attestations.
+  The main differentiator of the NEAR blockchain is that its blocks do not contain actual transactions but rather block headers of separate blockchains, known as [shards](https://dev.near.org/documentation/build/data-infrastructure/lake-data-structures/shard).
   The ***main chain*** can contain many shards, and the current NEAR implementation supports 6 shards.
   
 
   ![Near Shards](/images/da-layer-technology/near/nearShards.png#center)\n
 
 
-  Each shard is composed of chunks, which are equivalent to standard blockchain blocks.
+  Each shard is composed of [chunks](https://docs.near.org/build/data-infrastructure/lake-data-structures/chunk), which are equivalent to standard blockchain blocks.
   Essentially, the state of the main chain is split into n shards, and only the shards block headers end up being part of the main chain.
 
 
   ![Near Chunks](/images/da-layer-technology/near/nearChunks.png#center)\n
   
 
-  Becoming a block producer requires locking (staking) a certain amount of tokens, currently 25,500 NEAR. Staking operates through a threshold PoS mechanism, where a user’s stake must exceed the protocol's seat price—determined by the total NEAR tokens staked by other validators—in order to become a validator. The largest stakers at the beginning of a particular epoch are selected as block producers for that epoch. Each block producer is randomly assigned a certain number of shards to manage.
-  Before the epoch starts, the block producer downloads the state of the shard(s) they are assigned to (they have 1 epoch to complete this download). Throughout the epoch, they collect transactions that affect their assigned shard(s) and apply them to the state. NEAR nodes have an automatic 'garbage collection' routine that deletes the state of previous shards after five epochs, freeing up unused storage.
+  Becoming a block producer requires locking (staking) a certain amount of tokens, currently around [11,000 NEAR](https://nearblocks.io/node-explorer). Staking operates through a threshold PoS mechanism, where a user’s stake must exceed the protocol's seat price—determined by the total NEAR tokens staked by other validators—in order to become a validator. The largest stakers at the beginning of a particular [epoch](https://near.github.io/nearcore/architecture/how/epoch.html#how-do-we-pick-the-next-validators) are selected as block producers for that epoch. Each block producer is randomly assigned a certain number of shards to manage.
+  Before the epoch starts, the block producer downloads the state of the shard(s) they are assigned to (they have 1 epoch to complete this download). Throughout the epoch, they collect transactions that affect their assigned shard(s) and apply them to the state. NEAR nodes have an automatic '[garbage collection](https://near.github.io/nearcore/architecture/how/gc.html)' routine that deletes the state of previous shards after five epochs, freeing up unused storage.
   Within an epoch (12 hours), the main chain block and shard block production schedule is determined by a randomness seed generated at the beginning of the epoch. For each block height, a main chain block producer is assigned.
   Validators participate in several validation rounds within the epoch. For each round, one validator in each shard is chosen to be the chunk producer, and one validator from the entire set is chosen to be the block producer. Validators can serve as both block and chunk producers, but they maintain separate stakes for these roles.
-  The shard block producer is responsible for producing the part of the block related to their shard, known as a chunk. The chunk contains the list of transactions for the shard to be included in the block, as well as the Merkle root of the resulting state. Each main chain block contains either one or zero chunks per shard, depending on whether the shard can keep up with the main chain block production speed.
+  The shard block producer is responsible for producing the part of the block related to their shard, known as a chunk. The chunk [contains](https://near.github.io/nearcore/architecture/how/tx_receipts.html#advanced-but-reality-is-more-complex) the list of transactions for the shard to be included in the block, as well as the Merkle root of the resulting state. Each main chain block contains either one or zero chunks per shard, depending on whether the shard can keep up with the main chain block production speed.
   
   
   ![Near Validators](/images/da-layer-technology/near/nearValidators.png#center)\n
@@ -84,7 +84,7 @@ export const near: DaLayer = {
   ### Data Availability
   Since only shard chunk producers maintain the shard state (while main chain validators do not), and main chain block producers need to attest to the chunk headers, data availability of the shard data must be ensured.
 
-  After a block producer creates a chunk, they generate an erasure-coded version of it using Reed-Solomon encoding. The extended chunk is then split into multiple parts, which are distributed to all main chain validators.
+  After a block producer creates a chunk, they generate an [erasure-coded version](https://github.com/near/nearcore/blob/8e30ccdd425ecbbeeec8d96bfc9a7e02bc35c2d3/core/primitives/src/stateless_validation/partial_witness.rs#L21) of it using Reed-Solomon encoding. The extended chunk is then split into multiple parts, which are distributed to all main chain validators.
 
   ![Near Erasure Coding](/images/da-layer-technology/near/nearErasureCoding.png)\n
 
@@ -96,10 +96,10 @@ export const near: DaLayer = {
   
 
   ### Finality
-  Finality is determined by the Nightshade Finality Gadget (NFG). A block is considered final after two consecutive blocks are built on the same fork, making the block that is two blocks behind (t-2) final. Reverting a finalized block would require slashing at least one-third of the total stake.
+  Finality is determined by a [modified](https://github.com/near/nearcore/issues/2342) [Doomslug](https://discovery-domain.org/papers/doomslug.pdf) finality gadget. A block is considered final after two consecutive blocks are built on the same fork, making the block that is two blocks behind (t-2) final. Reverting a finalized block would require slashing at least one-third of the total stake.
 
   ## L2s Data Availability
-  A rollup can utilize a dedicated Data Availability (DA) smart contract on a NEAR shard, known as a Blob Store contract, where it posts data as standard NEAR transactions. All transactions are converted into Receipts, and depending on their actions, some receipts may be processed over two blocks.
+  A rollup can utilize a dedicated Data Availability (DA) smart contract on a NEAR shard, known as a [Blob Store contract](https://github.com/Nuffle-Labs/data-availability/blob/5026b81aa5d941aaf4dd1b23bc219b9150e84405/contracts/blob-store/src/lib.rs), where it posts data as standard NEAR transactions. All transactions are converted into [Receipts](https://near.github.io/nearcore/architecture/how/tx_receipts.html), and depending on their actions, some receipts may be processed over two blocks.
   Regarding data retrieval, full nodes prune Receipts after 3 epochs (approximately 36 hours). Once the pruning window expires, the data remains accessible only through archive nodes.
   `,
   },
