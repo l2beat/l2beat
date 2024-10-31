@@ -122,7 +122,7 @@ export const orderly: Layer2 = opStackL2({
   milestones: [
     {
       name: 'ORDER Token Airdrop',
-      link: 'https://taiko.mirror.xyz/VSOtILX2DQsc_6IMt5hBT1fEYSH8243pZ8IA_pBfHks',
+      link: 'https://orderly.network/blog/orderly-network-staking-unstake-ORDER/',
       date: '2024-08-26T00:00:00.00Z',
       description: 'ORDER token launched as a governance token.',
       type: 'general',
