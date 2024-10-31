@@ -59,11 +59,9 @@ describe(RpcClient2.name, () => {
   describe(RpcClient2.prototype.call.name, () => {
     it('calls eth_call with correct parameters', async () => {
       const http = mockObject<HttpClient2>({
-        fetch: async () => ({
-          result: '0x123abc',
-        }),
+        fetch: async () => '0x123abc',
       })
-      const rpc = mockClient({ http })
+      const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
       const result = await rpc.call(
         {
@@ -75,23 +73,32 @@ describe(RpcClient2.name, () => {
 
       expect(result).toEqual(Bytes.fromHex('0x123abc'))
       expect(http.fetch).toHaveBeenCalledTimes(1)
-      //@ts-expect-error
-      expect(http.fetch.calls[0].args[1]?.body).toMatchRegex(
-        /"method":"eth_call"/,
-      )
-      //@ts-expect-error
-      expect(http.fetch.calls[0].args[1]?.body).toMatchRegex(
-        /"params":\[{"to":"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48","data":"0x70a08231"},"latest"\]/,
-      )
+
+      expect(http.fetch).toHaveBeenCalledWith('API_URL', {
+        body: JSON.stringify({
+          method: 'eth_call',
+          params: [
+            {
+              to: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+              data: '0x70a08231',
+            },
+            'latest',
+          ],
+          id: 'unique-id',
+          jsonrpc: '2.0',
+        }),
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        redirect: 'follow',
+        timeout: 5000,
+      })
     })
 
     it('handles numeric block numbers', async () => {
       const http = mockObject<HttpClient2>({
-        fetch: async () => ({
-          result: '0x1',
-        }),
+        fetch: async () => '0x1',
       })
-      const rpc = mockClient({ http })
+      const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
       await rpc.call(
         {
@@ -101,19 +108,31 @@ describe(RpcClient2.name, () => {
         12345678,
       )
 
-      //@ts-expect-error
-      expect(http.fetch.calls[0].args[1]?.body).toMatchRegex(
-        /"params":\[{"to":"0x1234567890123456789012345678901234567890","data":"0x"},"0xbc614e"\]/,
-      )
+      expect(http.fetch).toHaveBeenCalledWith('API_URL', {
+        body: JSON.stringify({
+          method: 'eth_call',
+          params: [
+            {
+              to: '0x1234567890123456789012345678901234567890',
+              data: '0x',
+            },
+            '0xbc614e',
+          ],
+          id: 'unique-id',
+          jsonrpc: '2.0',
+        }),
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        redirect: 'follow',
+        timeout: 5000,
+      })
     })
 
     it('includes from address if provided', async () => {
       const http = mockObject<HttpClient2>({
-        fetch: async () => ({
-          result: '0x',
-        }),
+        fetch: async () => '0x',
       })
-      const rpc = mockClient({ http })
+      const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
       await rpc.call(
         {
@@ -124,17 +143,30 @@ describe(RpcClient2.name, () => {
         'latest',
       )
 
-      //@ts-expect-error
-      expect(http.fetch.calls[0].args[1]?.body).toMatchRegex(
-        /"params":\[{"to":"0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB","from":"0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa","data":"0x123456"},"latest"\]/,
-      )
+      expect(http.fetch).toHaveBeenCalledWith('API_URL', {
+        body: JSON.stringify({
+          method: 'eth_call',
+          params: [
+            {
+              to: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
+              from: '0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa',
+              data: '0x123456',
+            },
+            'latest',
+          ],
+          id: 'unique-id',
+          jsonrpc: '2.0',
+        }),
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        redirect: 'follow',
+        timeout: 5000,
+      })
     })
 
     it('handles empty response', async () => {
       const http = mockObject<HttpClient2>({
-        fetch: async () => ({
-          result: '0x',
-        }),
+        fetch: async () => '0x',
       })
       const rpc = mockClient({ http })
 
