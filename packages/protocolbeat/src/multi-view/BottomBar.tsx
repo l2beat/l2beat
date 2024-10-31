@@ -5,13 +5,17 @@ function Keys(props: { keys: string[] }) {
   return (
     <span className="inline-flex gap-1">
       {props.keys.map((key, i) => (
-        <kbd key={i} className="bg-black px-1 text-white">
+        <kbd
+          key={i}
+          className="rounded border-latte border-b-2 bg-milk px-1 text-coffee leading-tight"
+        >
           {key}
         </kbd>
       ))}
     </span>
   )
 }
+
 export function BottomBar() {
   const [hintOpen, setHintOpen] = useState(false)
   const loadLayout = useMultiViewStore((state) => state.loadLayout)
@@ -49,7 +53,7 @@ export function BottomBar() {
   const altKey = navigator.platform.includes('Mac') ? 'Opt' : 'Alt'
 
   return (
-    <div className="flex h-8 items-center justify-between bg-blue-500 px-2 text-black">
+    <div className="flex h-8 items-center justify-between border-latte border-t px-2 text-sm">
       <div>Bottom Bar</div>
       <div className="flex gap-2">
         <button onClick={() => setHintOpen((open) => !open)}>
@@ -57,7 +61,7 @@ export function BottomBar() {
         </button>
       </div>
       {hintOpen && (
-        <div className="fixed right-2 bottom-8 bg-slate-100 p-4">
+        <div className="fixed right-2 bottom-10 border border-latte bg-coffee p-4">
           <p>Keyboard Shortcuts</p>
           <ul>
             <li>

@@ -137,7 +137,7 @@ export function MultiView(props: MultiViewProps) {
   }, [])
 
   return (
-    <div className="flex h-full w-full flex-col">
+    <div className="flex h-full w-full flex-col bg-coffee font-ui text-milk">
       <TopBar project={props.project} />
       <div
         ref={panelContainerRef}

@@ -15,7 +15,7 @@ export function TopBar(props: { project: string }) {
           {layouts.map((_, i) => (
             <button
               key={i}
-              className={clsx('w-4', selectedLayout === i && 'bg-fuchsia-300')}
+              className={clsx('w-4', selectedLayout === i && 'bg-autumn')}
               onClick={() => loadLayout(i)}
             >
               {i + 1}

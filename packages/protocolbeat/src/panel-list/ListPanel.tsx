@@ -36,14 +36,14 @@ export function ListPanel() {
     <div className="h-full w-full overflow-x-hidden font-ui">
       <ol>
         {response.data.chains.map((chain, i) => (
-          <ListItemChain key={i} chain={chain} />
+          <ListItemChain key={i} chain={chain} first={i === 0} />
         ))}
       </ol>
     </div>
   )
 }
 
-function ListItemChain(props: { chain: ApiProjectChain }) {
+function ListItemChain(props: { chain: ApiProjectChain; first: boolean }) {
   const [open, setOpen] = useState(true)
 
   function onFocus() {
@@ -51,10 +51,10 @@ function ListItemChain(props: { chain: ApiProjectChain }) {
   }
 
   return (
-    <li>
+    <li className={clsx(!props.first && 'mt-2 border-t border-t-latte')}>
       <button
         onClick={() => setOpen((open) => !open)}
-        className="flex h-[22px] w-full cursor-pointer select-none items-center gap-1 font-bold text-xs uppercase hover:bg-slate-400"
+        className="flex h-[22px] w-full cursor-pointer select-none items-center gap-1 font-bold text-xs uppercase hover:bg-autumn"
       >
         {open && <IconChevronDown />}
         {!open && <IconChevronRight />}
@@ -116,7 +116,7 @@ function ListItemContracts(props: {
     <>
       <button
         onClick={() => setOpen((open) => !open)}
-        className="flex h-[22px] w-full cursor-pointer select-none items-center gap-1 pl-2 text-sm hover:bg-slate-400"
+        className="flex h-[22px] w-full cursor-pointer select-none items-center gap-1 pl-2 font-bold text-cream text-sm hover:bg-autumn"
       >
         {open && (
           <>
@@ -152,12 +152,12 @@ function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
     <li
       className={clsx(
         'flex h-[22px] cursor-pointer select-none items-center gap-1 pl-4 text-sm',
-        isSelected && 'bg-blue-200 hover:bg-blue-400',
-        !isSelected && 'bg-slate-200 hover:bg-slate-400',
+        isSelected && 'bg-autumn',
+        !isSelected && 'bg-coffee hover:bg-autumn',
       )}
       onClick={() => select([entry.address])}
     >
-      <div className="mr-[7px] h-[22px] border-black border-l" />
+      <div className="mr-[7px] h-[22px] border-latte border-l" />
       <AddressIcon type={entry.type} />
       {entry.name ? (
         <span className="overflow-hidden text-ellipsis">{entry.name}</span>
