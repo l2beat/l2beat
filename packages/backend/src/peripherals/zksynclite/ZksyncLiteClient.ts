@@ -1,8 +1,7 @@
-import { Logger } from '@l2beat/backend-tools'
+import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
 import {
   assert,
-  RateLimiter,
   UnixTime,
   getErrorMessage,
 } from '@l2beat/shared-pure'

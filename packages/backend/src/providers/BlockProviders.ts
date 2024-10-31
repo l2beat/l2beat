@@ -6,7 +6,6 @@ import {
   HttpClient2,
   RetryHandler,
   RpcClient2,
-  ZksyncLiteClient,
 } from '@l2beat/shared'
 import { assert, ProjectId, assertUnreachable } from '@l2beat/shared-pure'
 import { ActivityConfig } from '../config/Config'
@@ -15,6 +14,7 @@ import { DegateClient } from '../peripherals/degate'
 import { LoopringClient } from '../peripherals/loopring/LoopringClient'
 import { StarkexClient } from '../peripherals/starkex/StarkexClient'
 import { StarknetClient } from '../peripherals/starknet/StarknetClient'
+import { ZksyncLiteClient } from '../peripherals/zksynclite/ZksyncLiteClient'
 
 export class BlockProviders {
   constructor(
@@ -28,7 +28,7 @@ export class BlockProviders {
     readonly degateClient: DegateClient | undefined,
     readonly starkexClient: StarkexClient | undefined,
     private readonly indexerClients: BlockIndexerClient[],
-  ) {}
+  ) { }
 
   getEvmBlockProvider(chain: string) {
     const clients = this.evmClients.filter((r) => r.chain === chain)
@@ -127,16 +127,7 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
         break
       }
       case 'zksync': {
-        zksyncLiteClient = new ZksyncLiteClient({
-          url: project.config.url,
-          chain: project.id,
-          http,
-          rateLimiter: new RateLimiter({
-            callsPerMinute: project.config.callsPerMinute,
-          }),
-          retryHandler: RetryHandler.RELIABLE_API(logger),
-          logger,
-        })
+        zksyncLiteClient = new ZksyncLiteClient(http, logger, project.config.url, project.config.callsPerMinute)
         break
       }
       case 'starknet': {
