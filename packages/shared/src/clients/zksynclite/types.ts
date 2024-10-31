@@ -27,5 +27,4 @@ export const ZksyncLiteError = z.object({
     code: z.number(),
     message: z.string(),
   }),
-  result: z.null(),
 })

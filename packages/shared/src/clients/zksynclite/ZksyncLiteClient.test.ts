@@ -92,6 +92,22 @@ describe(ZksyncLiteClient.name, () => {
       expect(result).toEqual(42)
     })
   })
+
+  describe(ZksyncLiteClient.prototype.validateResponse.name, () => {
+    it('retruns false when error is present', () => {
+      const zksyncClient = mockClient({})
+
+      const result = zksyncClient.validateResponse({
+        status: 'error',
+        error: {
+          errorType: 'error',
+          code: 1,
+          message: 'bad error',
+        }
+      })
+      expect(result).toEqual(false)
+    })
+  })
 })
 
 function mockClient(deps: {
