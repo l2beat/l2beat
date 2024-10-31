@@ -53,6 +53,8 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
             .go(value, allProjects, {
               limit: 15,
               keys: ['name', (e) => e.tags.join()],
+              scoreFn: (match) =>
+                match.score * (match.obj.type === 'zk-catalog' ? 0.9 : 1),
             })
             .map((match) => match.obj),
     [value, recentlyAdded, allProjects],
@@ -71,7 +73,9 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
             return match.score * orderValue
           },
         })
-        .flatMap((match) => match.obj),
+        .flatMap((match) => match.obj)
+        .toSorted((a, b) => a.index - b.index),
+
     [value],
   )
 

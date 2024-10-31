@@ -7,12 +7,18 @@ export type SearchBarPage = {
   href: string
 }
 
-export const searchBarPages: SearchBarPage[] = [
+export const searchBarPages = withIndex([
   {
     type: 'scaling',
     name: 'Summary',
     tags: ['pages', 'scaling'],
     href: '/scaling/summary',
+  },
+  {
+    type: 'scaling',
+    name: 'Risk Analysis',
+    tags: ['pages', 'scaling', 'risks'],
+    href: '/scaling/risk',
   },
   {
     type: 'scaling',
@@ -22,9 +28,9 @@ export const searchBarPages: SearchBarPage[] = [
   },
   {
     type: 'scaling',
-    name: 'Risk Analysis',
-    tags: ['pages', 'scaling', 'risks'],
-    href: '/scaling/risk',
+    name: 'Activity',
+    tags: ['pages', 'scaling'],
+    href: '/scaling/activity',
   },
   {
     type: 'scaling',
@@ -43,12 +49,6 @@ export const searchBarPages: SearchBarPage[] = [
     name: 'Finality',
     tags: ['pages', 'scaling'],
     href: '/scaling/finality',
-  },
-  {
-    type: 'scaling',
-    name: 'Activity',
-    tags: ['pages', 'scaling'],
-    href: '/scaling/activity',
   },
   {
     type: 'scaling',
@@ -86,7 +86,7 @@ export const searchBarPages: SearchBarPage[] = [
     tags: ['pages', 'bridges'],
     href: '/bridges/archived',
   },
-  ...(env.NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT
+  ...(env.FEATURE_FLAG_DA_BEAT
     ? [
         {
           type: 'da' as const,
@@ -127,16 +127,14 @@ export const searchBarPages: SearchBarPage[] = [
     href: '/faq',
     tags: ['pages'],
   },
-]
+])
+
+function withIndex(arr: SearchBarPage[]) {
+  return arr.map((e, i) => ({ ...e, index: i }))
+}
 
 export const searchBarTypeOrderValue: SearchBarPage['type'][] = [
   'da',
   'bridges',
   'scaling',
 ]
-
-export function sortPagesByType(a: SearchBarPage, b: SearchBarPage) {
-  const aIndex = searchBarTypeOrderValue.indexOf(a.type)
-  const bIndex = searchBarTypeOrderValue.indexOf(b.type)
-  return aIndex - bIndex
-}
