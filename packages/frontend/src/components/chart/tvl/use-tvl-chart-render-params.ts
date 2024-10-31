@@ -1,5 +1,4 @@
 import { type Milestone } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
 import { useCallback, useMemo } from 'react'
 import { type CostsUnit } from '~/server/features/scaling/costs/types'
 import { formatCurrency } from '~/utils/number-format/format-currency'
@@ -44,7 +43,9 @@ export function useTvlChartRenderParams({ data, milestones, unit }: Params) {
   )
   const total = useMemo(() => {
     const lastColumn = columns.at(-1)
-    assert(lastColumn, 'No columns')
+    if (!lastColumn) {
+      return undefined
+    }
     return {
       usd: lastColumn.data.usdValue,
       eth: lastColumn.data.ethValue,
