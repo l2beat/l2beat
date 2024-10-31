@@ -1,3 +1,60 @@
+Generated with discovered.json: 0xa5b3daef192cd8af98f03ff6c587a0f3efadda12
+
+# Diff at Tue, 29 Oct 2024 13:16:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7b3fc9dc9074e1d423b48522c3f0273c86aab54a block: 21041849
+- current block number: 21041849
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21041849 (main branch discovery), not current.
+
+```diff
+    contract Bridge (0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03) {
+    +++ description: Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      description:
+-        "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for bridge messaging."
++        "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
+    }
+```
+
+```diff
+    contract Outbox (0x8592Ca44dE1D354A20F75160F5602E5933D33761) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      description:
+-        "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) which eventually resolve in execution on L1."
++        "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1."
+    }
+```
+
+```diff
+    contract RollupProxy (0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      fieldMeta.confirmPeriodBlocks.description:
+-        "Challenge period. (Number of blocks until a node is confirmed)."
++        "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
+    }
+```
+
+```diff
+    contract L1OrbitERC20Gateway (0xfC89B875970122E24C6C5ADd4Dea139443943ea7) {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      template:
++        "orbitstack/ERC20Gateway"
+      displayName:
++        "ERC20Gateway"
+      description:
++        "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract."
+    }
+```
+
 Generated with discovered.json: 0x0d7820aa837ddb2a5abc836ad54d314dc1e41e6d
 
 # Diff at Tue, 29 Oct 2024 08:05:30 GMT:

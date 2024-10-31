@@ -17,7 +17,7 @@ export const celestia: DaLayer = {
     name: 'Celestia',
     slug: 'celestia',
     description:
-      'Celestia is a modular data availability network that allows scaling solutions to post arbitrary data as blobs.',
+      'Celestia is a modular data availability network that allows L2s to post arbitrary data as blobs.',
     links: {
       websites: ['https://celestia.org/'],
       documentation: ['https://docs.celestia.org/'],
@@ -41,16 +41,16 @@ export const celestia: DaLayer = {
     Celestia uses CometBTF, the canonical implementation of Tendermint consensus protocol. The consensus protocol is fork-free by construction under an honest majority of stake assumption.
     Celestia achieves finality at each block, with an average time between blocks of 12 seconds.
     ## Blobs
-    In Celestia, blobs are user-submitted data that does not modify the blockchain state.  
+    In Celestia, blobs are user-submitted data that do not modify the blockchain state.  
     Each blob has two components, one is a binary object of raw data bytes, and the other is the namespace of the specific application for which the blob data is intended for.\n
     
     ![Blobs](/images/da-layer-technology/celestia/blobs.png#center)
 
-    All data posted in a Celestia blob is divided into chunks of fixed size, called shares, and each blob is arranged in a k * k matrix of shares.\n
+    All data posted in a Celestia blob is divided into chunks of fixed size, called shares, and each blob is arranged in a k * k matrix of shares. Currently k = 64, for a total of 4096 shares.\n
 
     ![Blobs matrix](/images/da-layer-technology/celestia/blobs-matrix.png#center)
 
-    Celestia shares' rows and columns are erasure-coded into a 2k * 2k matrix and committed to in a Namespace Merkle Trees (NMTs), a version of a standard Merkle tree using a namespaced hash function. 
+    Celestia shares' rows and columns are erasure-coded into a 2k * 2k matrix and committed to in a Namespaced Merkle Trees (NMTs), a version of a standard Merkle tree using a namespaced hash function. 
     In NMTs, every node in the tree includes the range of namespaces of all its child nodes, allowing applications to request and retrieve data for a specific namespace sub-tree while maintaining all functionalities (e.g., inclusion and range proofs) of a standard Merkle tree.\n
 
     ![Matrix proofs](/images/da-layer-technology/celestia/matrix-proofs.png#center)
@@ -72,22 +72,22 @@ export const celestia: DaLayer = {
     Upon receiving and verifying the BEFP, all Celestia nodes should halt providing services (e.g., submitTx).
 
     ## L2s Data Availability
-    Scaling solutions can post data to Celestia by submitting blobs through a payForBlobs transaction. The transaction can include data as a single blob or multiple blobs, with the total maximum size determined by the maximum block size. The transaction fee is determined by the size of the data and the current gas price. 
+    L2s can post data to Celestia by submitting blobs through a payForBlobs transaction. The transaction can include data as a single blob or multiple blobs, with the total maximum size determined by the maximum block size. The transaction fee is determined by the size of the data and the current gas price. 
     Applications can then retrieve the data by querying the Celestia blockchain for the data root of the blob and the namespace of the application. The data can be reconstructed by querying the Celestia network for the shares of the data matrix and reconstructing the data using the erasure coding scheme.
 
     `,
     risks: [
       {
         category: 'Funds can be lost if',
-        text: `a dishonest majority of Celestia validators finalize an unavailable block, and there aren't light nodes on the network verifying data availability, or they fail at social signaling unavailable data.`,
+        text: `a dishonest supermajority of Celestia validators finalizes an unavailable block, and there aren't light nodes on the network verifying data availability, or they fail at social signaling unavailable data.`,
       },
       {
         category: 'Funds can be lost if',
-        text: 'a dishonest majority of Celestia validators finalize an unavailable block, and the number of light nodes on the network is not enough to ensure block reconstruction.',
+        text: 'a dishonest supermajority of Celestia validators finalizes an unavailable block, and the number of light nodes on the network is not enough to ensure block reconstruction.',
       },
       {
         category: 'Funds can be lost if',
-        text: 'a dishonest majority of Celestia validators finalize an unavailable block, and full nodes block reconstruction time is longer than the erasure-coding fraud proof window.',
+        text: 'a dishonest supermajority of Celestia validators finalizes an unavailable block, and full nodes block reconstruction time is longer than the erasure-coding fraud proof window.',
       },
     ],
   },
@@ -96,7 +96,7 @@ export const celestia: DaLayer = {
       createdAt: new UnixTime(1721138888), // 2024-07-16T14:08:08Z
       layer: 'Celestia',
       description:
-        'The risk profile in this page refers to scaling solutions that do not integrate with a data availability bridge.',
+        'The risk profile in this page refers to L2s that do not integrate with a data availability bridge.',
       technology: {
         description: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.\n`,
       },
@@ -129,7 +129,8 @@ export const celestia: DaLayer = {
   pruningWindow: 86400 * 30, // 30 days in seconds
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
-    fraudDetection: DaFraudDetectionRisk.DasWithNoBlobsReconstruction(true),
+    fraudDetection:
+      DaFraudDetectionRisk.CelestiaDasWithNoBlobsReconstruction(true),
   },
   economicSecurity: {
     type: 'Celestia',

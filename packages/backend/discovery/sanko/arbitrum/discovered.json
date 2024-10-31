@@ -1,17 +1,19 @@
 {
   "name": "sanko",
   "chain": "arbitrum",
-  "blockNumber": 268780411,
-  "configHash": "0xf3abcf9a1083ee94b42259795756dc388d27a3301a883f233696621cbffafb9a",
+  "blockNumber": 268839192,
+  "configHash": "0x3cd9dbb1338f2d98cd6bb8ea1a5aac8068b06ef5373627ae5d55eec8a05a170c",
   "contracts": [
     {
       "name": "ChallengeManager",
       "address": "0x1f269F38196484ef81e58C0144AaD2c5F6394bB4",
+      "template": "orbitstack/ChallengeManager",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0x1a095768302d7d1c3d02375eaa3341833b4f1aaac707e1c608bce478c87cbf27"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -137,7 +139,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 3936,
+        "batchCount": 3939,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x2f4dDaD3aB0AC4225fd8023EE07d04e2A758017a"],
         "bridge": "0x2f285781B8d58678a3483de52D618198E4d27532",
@@ -177,18 +179,22 @@
     {
       "name": "OneStepProverMath",
       "address": "0x29E1631710Fa96920eB2F65EaD4B1F270daB59cB",
+      "template": "orbitstack/OneStepProverMath",
       "sourceHashes": [
         "0x3de1ddc210fe283d7298c5f06879df577c6a475329a206b1928c74d10db656d5"
       ],
+      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1729091394,
       "values": { "$immutable": true }
     },
     {
       "name": "OneStepProverMemory",
       "address": "0x2D81591AfB19e1a1C1c932303790370c7257f454",
+      "template": "orbitstack/OneStepProverMemory",
       "sourceHashes": [
         "0x3955092d1dbd80f0910d7782a25da1e3da45533c7890928a1c6c63cbf5def5bf"
       ],
+      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1729091392,
       "values": { "$immutable": true }
     },
@@ -242,12 +248,12 @@
           "0x575d32f7ff0C72921645e302cb14d2757E300786",
           "0xa9Aa07F082D9c15D0B6D7e9e5B68b1f898399C29"
         ],
-        "delayedMessageCount": 100223,
+        "delayedMessageCount": 100224,
         "nativeToken": "0x8B0E6f19Ee57089F7649A455D89D7bC6314D04e8",
         "rollup": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
         "sequencerInbox": "0x24B68936C13A414cd91437aE7AA730321B9ff159",
-        "sequencerMessageCount": 3936,
-        "sequencerReportedSubMessageCount": 2122222
+        "sequencerMessageCount": 3939,
+        "sequencerReportedSubMessageCount": 2123785
       },
       "derivedName": "ERC20Bridge"
     },
@@ -417,7 +423,7 @@
         "0x3073f29910dee50069a001fb20e58cca3dcc1b3c8da4b91809af2dd356ef0c8c"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) which eventually resolve in execution on L1.",
+      "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -462,18 +468,22 @@
     {
       "name": "OneStepProver0",
       "address": "0x5C864714456935f05cd74D78CFE05Bcc726CddEe",
+      "template": "orbitstack/OneStepProver0",
       "sourceHashes": [
         "0x642d283934aef1189cf62e1bcd34a5081762b33fdd3ec8e823f304f874e48748"
       ],
+      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1729091391,
       "values": { "$immutable": true }
     },
     {
       "name": "OneStepProofEntry",
       "address": "0x5D1E3dC946fC8F2DD6C96C018e5a120CC2b76368",
+      "template": "orbitstack/OneStepProofEntry",
       "sourceHashes": [
         "0x96f85480073b58d0e985cd6c68956f4a52f5ed8b2ce751b18868e2e830be3678"
       ],
+      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1729091397,
       "values": {
         "$immutable": true,
@@ -737,11 +747,11 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1151,
+        "firstUnresolvedNode": 1152,
         "inbox": "0x718E2a83775343d5c0B1eE0676703cBAF30CaFCD",
         "isERC20Enabled": false,
         "lastStakeBlock": 19642604,
-        "latestConfirmed": 1150,
+        "latestConfirmed": 1151,
         "latestNodeCreated": 1176,
         "loserStakeEscrow": "0xe8216687Ef40C65F64D6dcd335b0aaab4A1Bc400",
         "minimumAssertionPeriod": 75,
@@ -771,7 +781,7 @@
       },
       "fieldMeta": {
         "confirmPeriodBlocks": {
-          "description": "Challenge period. (Number of blocks until a node is confirmed)."
+          "description": "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
         },
         "wasmModuleRoot": {
           "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."
@@ -951,9 +961,11 @@
     {
       "name": "OneStepProverHostIo",
       "address": "0xE13987CcaFD999397021222630DEC78BaAa9fE15",
+      "template": "orbitstack/OneStepProverHostIo",
       "sourceHashes": [
         "0x2e969e0e83aea53307795f6826413e39bb416a64bc6da18f3a339ffeef444d32"
       ],
+      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1729091396,
       "values": { "$immutable": true }
     }
@@ -1772,9 +1784,15 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
+    "orbitstack/ChallengeManager": "0xc4fbc82c5001579bb1f880d92a3510cda3dc4a65e284fc300363ce048c2fb6d7",
     "orbitstack/Inbox": "0x1938bb9de2d7f328ae3e83f2dd9f5d3c5575b599fc097cf9308bac4d5bb3e89e",
-    "orbitstack/Outbox": "0xac65b89cf03d50afb81ade4d5623f1815977ae46d92280d53ca828df34424488",
-    "orbitstack/RollupProxy": "0x0bdbca452bd7b5e2036a979dd61b8581a0bf7bad54f04ef69e70b97ee375f8f2",
+    "orbitstack/OneStepProofEntry": "0xf3bff5da86f9bbb5f9ac93a0f2239f0769d051b67a44be2e52c322799e3b8d4f",
+    "orbitstack/OneStepProver0": "0x80f18705038deef096683a89d16549bf343ada57cac1f2750df2f06fbbaed5ca",
+    "orbitstack/OneStepProverHostIo": "0xacacb7603847a3f0212fdf80c653040278214c00451f763907e270d1f19efec0",
+    "orbitstack/OneStepProverMath": "0x8dd8aebb517eb6eaf15437ddbb90dff66f2b14d9d6b5390dd87fbdab15168188",
+    "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
+    "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
+    "orbitstack/RollupProxy": "0x9de477a7ec4abe22558d85184e1ff68cebea26c903f45220337156ae3acf3dc5",
     "orbitstack/SequencerInbox": "0x80eed651d83fd6cd84047260bf02ec5e3a5f21b36049e1e45f34bd0a452e02f9",
     "orbitstack/UpgradeExecutor": "0xa25e02367a436cebea22481663da914bbf1fd9492d903659cc6ec9ddbaccb241"
   }

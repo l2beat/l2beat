@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x69f72827742a9be57e6c068fb10d18923615192b
+
+# Diff at Tue, 29 Oct 2024 13:22:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7b3fc9dc9074e1d423b48522c3f0273c86aab54a block: 267471266
+- current block number: 267471266
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 267471266 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x330F8fEB25f3427cABA32446728C36ae67f2135b) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      fieldMeta.confirmPeriodBlocks.description:
+-        "Challenge period. (Number of blocks until a node is confirmed)."
++        "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
+    }
+```
+
 Generated with discovered.json: 0xda828c89a805add28d6f121c1c7f5652bfe70caf
 
 # Diff at Tue, 29 Oct 2024 08:53:06 GMT:

@@ -37,10 +37,11 @@ export const sxnetwork: Layer2 = orbitStackL2({
     activityDataSource: 'Blockchain RPC',
   },
   isNodeAvailable: 'UnderReview',
-  bridge: discovery.getContract('Bridge'),
+  bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   associatedTokens: ['SX'],
+  discoveryDrivenData: true,
   rpcUrl: 'https://rpc.sx-rollup.gelato.digital', //chainid 4162
   transactionApi: {
     type: 'rpc',

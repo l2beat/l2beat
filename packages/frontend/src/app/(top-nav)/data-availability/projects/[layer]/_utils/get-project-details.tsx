@@ -33,7 +33,7 @@ export function getProjectDetails({
   grissiniValues,
 }: Params) {
   const permissionsSection =
-    daBridge.type !== 'NoBridge' && daBridge.type !== 'Enshrined'
+    daBridge.type !== 'Enshrined'
       ? getMultichainPermissionsSection(
           {
             id: daLayer.id,
@@ -46,7 +46,7 @@ export function getProjectDetails({
       : undefined
 
   const contractsSection =
-    daBridge.type !== 'NoBridge' && daBridge.type !== 'Enshrined'
+    daBridge.type !== 'Enshrined'
       ? getMultiChainContractsSection(
           {
             id: daBridge.id,
