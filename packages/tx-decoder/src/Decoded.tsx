@@ -4,8 +4,8 @@ import { get4ByteSignatures } from './api/FourByte'
 import { getOpenChainSignatures } from './api/OpenChain'
 import { SimpleValue } from './components/SimpleValue'
 import { ValueHeading } from './components/ValueHeading'
-import { decode } from './decode/decode'
 import { Value } from './decode/DecodedResult'
+import { decode } from './decode/decode'
 
 interface DecodedProps {
   encoded: `0x${string}`
@@ -78,6 +78,17 @@ export function Decoded(props: DecodedProps) {
             >
               Decode
             </button>
+            <select
+              className="rounded-sm border-zinc-900 border-b-4 bg-zinc-800 px-2.5 py-1 active:mt-1 active:border-b-0"
+              value={customAbi}
+              onChange={(e) => setCustomAbi(e.target.value)}
+            >
+              <option value="">Use plugin</option>
+              <option value="plugin:multisend">multiSend</option>
+              <option value="(address, address, uint256, uint256, uint256, bytes)">
+                scheduleBatch
+              </option>
+            </select>
           </div>
           {customAbi ? (
             <div className="text-red-600 text-xs">
