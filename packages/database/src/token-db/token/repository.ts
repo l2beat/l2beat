@@ -218,6 +218,10 @@ export class TokenRepository extends BaseRepository {
     return rows
   }
 
+  async delete(id: string): Promise<void> {
+    await this.db.deleteFrom('Token').where('Token.id', '=', id).execute()
+  }
+
   async deleteAll(): Promise<bigint> {
     const result = await this.db.deleteFrom('Token').executeTakeFirstOrThrow()
     return result.numDeletedRows
