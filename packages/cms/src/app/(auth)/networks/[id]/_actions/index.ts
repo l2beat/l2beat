@@ -51,7 +51,7 @@ export const updateNetwork = actionClient
       return { success: { id } }
     } catch {
       return {
-        failure: 'Failed to update network, reason: ' + JSON.stringify(_),
+        failure: 'Failed to update network'
       }
     }
   })

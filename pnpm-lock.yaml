@@ -295,6 +295,12 @@ importers:
       '@radix-ui/react-slot':
         specifier: ^1.1.0
         version: 1.1.0(@types/react@18.3.12)(react@18.3.1)
+      '@tanstack/react-query':
+        specifier: ^5.51.11
+        version: 5.59.16(react@18.3.1)
+      '@tanstack/react-query-devtools':
+        specifier: ^5.59.0
+        version: 5.59.16(@tanstack/react-query@5.59.16(react@18.3.1))(react@18.3.1)
       '@trpc/client':
         specifier: ^11.0.0-rc.446
         version: 11.0.0-rc.599(@trpc/server@11.0.0-rc.599)
@@ -343,6 +349,9 @@ importers:
       sonner:
         specifier: ^1.5.0
         version: 1.5.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      superjson:
+        specifier: ^2.2.1
+        version: 2.2.1
       tailwind-merge:
         specifier: ^2.5.3
         version: 2.5.4
@@ -371,6 +380,9 @@ importers:
       postcss:
         specifier: ^8
         version: 8.4.47
+      postcss-load-config:
+        specifier: ^6.0.1
+        version: 6.0.1(jiti@1.21.6)(postcss@8.4.47)(tsx@4.19.2)(yaml@2.6.0)
       tailwindcss:
         specifier: ^3.4.1
         version: 3.4.14(ts-node@10.9.2(@swc/core@1.7.40(@swc/helpers@0.5.13))(@types/node@20.17.2)(typescript@5.6.3))
@@ -816,6 +828,9 @@ importers:
       tinify:
         specifier: ^1.7.1
         version: 1.7.1
+      tsx:
+        specifier: ^4.9.3
+        version: 4.19.2
       type-fest:
         specifier: ^4.26.1
         version: 4.26.1
@@ -13996,6 +14011,12 @@ snapshots:
   '@tanstack/query-core@5.59.16': {}
 
   '@tanstack/query-devtools@5.58.0': {}
+
+  '@tanstack/react-query-devtools@5.59.16(@tanstack/react-query@5.59.16(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@tanstack/query-devtools': 5.58.0
+      '@tanstack/react-query': 5.59.16(react@18.3.1)
+      react: 18.3.1
 
   '@tanstack/react-query-devtools@5.59.16(@tanstack/react-query@5.59.16(react@19.0.0-rc-69d4b800-20241021))(react@19.0.0-rc-69d4b800-20241021)':
     dependencies:
