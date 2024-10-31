@@ -23,6 +23,13 @@ module.exports = {
           'DejaVu Sans Mono',
           'monospace',
         ],
+        serif: [
+          'Charter',
+          'Bitstream Charter',
+          'Sitka Text',
+          'Cambria',
+          'serif',
+        ],
       },
     },
   },

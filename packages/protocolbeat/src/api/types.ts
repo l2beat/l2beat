@@ -21,16 +21,19 @@ export interface ApiProjectChain {
   eoas: ApiAddressEntry[]
 }
 
+export type ApiAddressType =
+  | 'EOA'
+  | 'Unverified'
+  | 'Token'
+  | 'Multisig'
+  | 'Diamond'
+  | 'Timelock'
+  | 'Contract'
+  | 'Unknown'
+
 export interface ApiAddressEntry {
   name?: string
-  type:
-    | 'EOA'
-    | 'Unverified'
-    | 'Token'
-    | 'Multisig'
-    | 'Diamond'
-    | 'Timelock'
-    | 'Contract'
+  type: ApiAddressType
   address: string
 }
 
@@ -52,6 +55,7 @@ export type FieldValue =
 export interface AddressFieldValue {
   type: 'address'
   name?: string
+  addressType: ApiAddressType
   address: string
 }
 

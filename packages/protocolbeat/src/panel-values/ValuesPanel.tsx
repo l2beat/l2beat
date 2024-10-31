@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 import { getProject } from '../api/api'
 import { ApiProjectChain, ApiProjectContract } from '../api/types'
+import { AddressIcon } from '../common/AddressIcon'
 import { usePanelStore } from '../store/store'
 import { Field } from './Field'
 
@@ -26,7 +27,7 @@ export function ValuesPanel() {
   const selected = findSelected(response.data.chains, selectedAddress)
 
   return (
-    <div className="h-full w-full overflow-x-hidden">
+    <div className="h-full w-full overflow-x-auto p-2">
       {!selected && <div>Select a contract</div>}
       {selected && <ProjectContract contract={selected} />}
     </div>
@@ -57,16 +58,20 @@ function ProjectContract({
   contract: ApiProjectContract
 }) {
   return (
-    <div key={contract.address}>
-      <div id={contract.address} className="font-mono text-lg">
-        <strong>{contract.name}</strong>{' '}
-        <p className="text-sm">{contract.address}</p>
+    <>
+      <div id={contract.address} className="mb-2 text-lg">
+        <p className="flex items-center gap-1 font-bold">
+          <AddressIcon type={contract.type} />{' '}
+          {contract.name ??
+            (contract.type === 'Unverified' ? 'Unverified' : 'Unknown')}
+        </p>
+        <p className="font-mono text-xs">{contract.address}</p>
       </div>
       <ol>
         {contract.fields.map((field, i) => (
           <Field key={i} name={field.name} value={field.value} level={0} />
         ))}
       </ol>
-    </div>
+    </>
   )
 }

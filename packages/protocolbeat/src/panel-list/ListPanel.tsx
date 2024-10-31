@@ -4,17 +4,12 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getProject } from '../api/api'
 import { ApiAddressEntry, ApiProjectChain } from '../api/types'
+import { AddressIcon } from '../common/AddressIcon'
+import { toShortenedAddress } from '../common/toShortenedAddress'
 import { IconChevronDown } from '../icons/IconChevronDown'
 import { IconChevronRight } from '../icons/IconChevronRight'
-import { IconContract } from '../icons/IconContract'
-import { IconContractUnverified } from '../icons/IconContractUnverified'
-import { IconDiamond } from '../icons/IconDiamond'
-import { IconEoa } from '../icons/IconEoa'
 import { IconFolder } from '../icons/IconFolder'
 import { IconFolderOpened } from '../icons/IconFolderOpened'
-import { IconMultisig } from '../icons/IconMultisig'
-import { IconTimelock } from '../icons/IconTimelock'
-import { IconToken } from '../icons/IconToken'
 import { usePanelStore } from '../store/store'
 
 export function ListPanel() {
@@ -168,23 +163,4 @@ function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
       )}
     </li>
   )
-}
-
-function toShortenedAddress(input: string) {
-  const [chain, address] = input.split(':') as [string, string]
-  return `${chain}:${address.slice(0, 6)}…${address.slice(-4)}`
-}
-
-function AddressIcon(props: { type: ApiAddressEntry['type'] }) {
-  const Icon = {
-    EOA: IconEoa,
-    Unverified: IconContractUnverified,
-    Token: IconToken,
-    Multisig: IconMultisig,
-    Timelock: IconTimelock,
-    Diamond: IconDiamond,
-    Contract: IconContract,
-  }[props.type]
-
-  return <Icon />
 }

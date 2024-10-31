@@ -1,6 +1,8 @@
 import { clsx } from 'clsx'
 import { ReactNode } from 'react'
 import { FieldValue } from '../api/types'
+import { AddressIcon } from '../common/AddressIcon'
+import { toShortenedAddress } from '../common/toShortenedAddress'
 import { usePanelStore } from '../store/store'
 
 export interface FieldProps {
@@ -15,37 +17,51 @@ export function Field({ name, value, level }: FieldProps) {
   const select = usePanelStore((state) => state.select)
 
   if (value.type === 'address') {
-    if (value.name && !value.name.startsWith('<')) {
+    if (value.addressType !== 'Unknown') {
       inlineDisplay = (
         <button
-          className="inline-block text-left font-mono text-blue-700 text-sm"
+          className="inline-block w-min whitespace-nowrap text-left font-mono text-blue-400 text-xs"
           onClick={() => select([value.address])}
         >
-          <strong>{value.name}</strong> {value.address}
+          <AddressIcon
+            type={value.addressType}
+            className="-top-px relative mr-1 inline-block"
+          />
+          <strong>
+            {value.name ?? (value.addressType === 'EOA' ? 'EOA' : 'Unknown')}
+          </strong>{' '}
+          {toShortenedAddress(value.address)}
         </button>
       )
     } else {
       inlineDisplay = (
-        <p className="font-mono text-gray-700 text-sm">
-          <strong>{value.name ?? '???'}</strong> {value.address}
+        <p className="whitespace-nowrap font-mono text-cream text-xs">
+          <strong>{value.name ?? 'Unknown'}</strong>{' '}
+          {toShortenedAddress(value.address)}
         </p>
       )
     }
   } else if (value.type === 'hex') {
-    const parts: string[] = []
-    for (let i = 2; i < value.value.length; i += 64) {
-      parts.push(value.value.slice(i, i + 64))
-    }
-    inlineDisplay = (
-      <div className="flex font-mono text-gray-700 text-sm">
-        <span>0x</span>
-        <div>
-          {parts.map((part, i) => (
-            <div key={i}>{part}</div>
-          ))}
+    if (value.value.length <= 66) {
+      inlineDisplay = (
+        <div className="flex font-mono text-cream text-xs">{value.value}</div>
+      )
+    } else {
+      const parts: string[] = []
+      for (let i = 2; i < value.value.length; i += 64) {
+        parts.push(value.value.slice(i, i + 64))
+      }
+      inlineDisplay = (
+        <div className="flex font-mono text-cream text-xs">
+          <span>0x</span>
+          <div>
+            {parts.map((part, i) => (
+              <div key={i}>{part}</div>
+            ))}
+          </div>
         </div>
-      </div>
-    )
+      )
+    }
   } else if (value.type === 'string') {
     const QUOT_OPEN = '\u201C'
     const QUOT_CLOSE = '\u201D'
@@ -59,20 +75,20 @@ export function Field({ name, value, level }: FieldProps) {
   } else if (value.type === 'number') {
     const fmt = Intl.NumberFormat('en-US')
     inlineDisplay = (
-      <p className="overflow-hidden break-words font-mono text-orange-800">
+      <p className="overflow-hidden break-words font-mono text-orange-400">
         {fmt.format(BigInt(value.value))}
       </p>
     )
   } else if (value.type === 'boolean') {
     inlineDisplay = (
-      <p className="font-bold font-mono text-orange-800 text-sm uppercase">
+      <p className="font-bold font-mono text-orange-400 text-xs uppercase">
         {value.value.toString()}
       </p>
     )
   } else if (value.type === 'array') {
     inlineDisplay = (
-      <span className="text-sm">
-        [ <span className="text-gray-700">length: </span>
+      <span>
+        [ <span className="text-cream">length: </span>
         {value.values.length} ]
       </span>
     )
@@ -85,8 +101,8 @@ export function Field({ name, value, level }: FieldProps) {
     )
   } else if (value.type === 'object') {
     inlineDisplay = (
-      <span className="text-sm">
-        {'{'} <span className="text-gray-700">members: </span>
+      <span>
+        {'{'} <span className="text-cream">members: </span>
         {Object.keys(value.value).length} {'}'}
       </span>
     )
@@ -102,17 +118,9 @@ export function Field({ name, value, level }: FieldProps) {
   }
 
   return (
-    <li className={level === 0 ? 'pl-4' : 'pl-8'}>
+    <li className={clsx('text-sm', level !== 0 && 'pl-8')}>
       <div className="grid grid-cols-[auto_1fr] items-baseline gap-x-2">
-        <p
-          className={clsx(
-            'w-max min-w-[3ch] text-right font-mono',
-            name.startsWith('$') && 'text-green-700',
-            level > 0 && 'text-sm',
-          )}
-        >
-          {name}:
-        </p>
+        <p className="w-max min-w-[3ch] text-right">{name}:</p>
         {inlineDisplay}
       </div>
       {blockDisplay}
