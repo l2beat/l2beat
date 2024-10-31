@@ -13,7 +13,7 @@ interface Props {
 
 export function ActivityChartHover(props: Props) {
   return (
-    <div>
+    <div className="min-w-36">
       <div className="mb-1.5 whitespace-nowrap">
         {formatTimestamp(props.timestamp, {
           mode: 'date',

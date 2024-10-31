@@ -36,7 +36,7 @@ export function StackedTvlChartHover(props: Props) {
     },
   ]
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex min-w-52 flex-col gap-1">
       <div className="whitespace-nowrap">
         {formatTimestamp(props.timestamp, {
           mode: 'datetime',

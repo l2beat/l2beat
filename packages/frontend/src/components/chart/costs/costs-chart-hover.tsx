@@ -22,7 +22,7 @@ interface Props {
 
 export function CostsChartHover({ data, unit, resolution }: Props) {
   return (
-    <div>
+    <div className="min-w-40">
       <div className="mb-1 whitespace-nowrap">
         {formatTimestamp(data.timestamp, {
           mode: resolution === 'daily' ? 'date' : 'datetime',
