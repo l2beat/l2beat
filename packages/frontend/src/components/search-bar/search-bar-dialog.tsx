@@ -1,6 +1,7 @@
 'use client'
 
 import { assertUnreachable } from '@l2beat/shared-pure'
+import Fuse from 'fuse.js'
 import Image from 'next/image'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import {
@@ -17,7 +18,6 @@ import { useRouterWithProgressBar } from '../progress-bar'
 import { type SearchBarProject } from './get-search-bar-projects'
 import { useSearchBarContext } from './search-bar-context'
 import { type SearchBarPage, searchBarPages } from './search-bar-pages'
-
 interface Props {
   allProjects: SearchBarProject[]
   recentlyAdded: SearchBarProject[]
@@ -41,51 +41,31 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [setOpen])
 
+  const allProjectsFuse = useMemo(
+    () =>
+      new Fuse(allProjects, {
+        keys: ['name', 'tags'],
+        threshold: 0.3,
+      }),
+    [allProjects],
+  )
+
   const filteredProjects = useMemo(
     () =>
       value === ''
         ? recentlyAdded
-        : allProjects
-            .filter((p) => {
-              return (
-                p.name.toLowerCase().includes(value.toLowerCase()) ||
-                p.matchers.some((m) =>
-                  m.toLowerCase().includes(value.toLowerCase()),
-                )
-              )
-            })
-            .sort((a, b) => {
-              // Sort filtered pages: exact matches first, then partial matches
-              const searchTerm = value.toLowerCase()
-              const aName = a.name.toLowerCase()
-              const bName = b.name.toLowerCase()
+        : allProjectsFuse.search(value).map((r) => r.item),
+    [value, recentlyAdded, allProjectsFuse],
+  )
 
-              if (aName.startsWith(searchTerm) && !bName.startsWith(searchTerm))
-                return -1
-              if (!aName.startsWith(searchTerm) && bName.startsWith(searchTerm))
-                return 1
-
-              if (aName.includes(searchTerm) && !bName.includes(searchTerm))
-                return -1
-              if (!aName.includes(searchTerm) && bName.includes(searchTerm))
-                return 1
-
-              return a.name.localeCompare(b.name)
-            })
-            .slice(0, 15),
-    [value, allProjects, recentlyAdded],
+  const pagesFuse = useMemo(
+    () => new Fuse(searchBarPages, { keys: ['name', 'tags'] }),
+    [],
   )
 
   const filteredPages = useMemo(
-    () =>
-      searchBarPages.filter(
-        (p) =>
-          p.name.toLowerCase().includes(value.toLowerCase()) ||
-          p.matchers?.some((m) =>
-            m.toLowerCase().includes(value.toLowerCase()),
-          ),
-      ),
-    [value],
+    () => pagesFuse.search(value).map((r) => r.item),
+    [value, pagesFuse],
   )
 
   const onEscapeKeyDown = (e?: KeyboardEvent) => {

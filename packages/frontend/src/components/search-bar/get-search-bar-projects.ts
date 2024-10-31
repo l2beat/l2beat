@@ -18,7 +18,7 @@ export interface SearchBarProject {
   name: string
   iconUrl: string
   href: string
-  matchers: string[]
+  tags: string[]
   createdAt: number
   type: 'layer2' | 'layer3' | 'bridge' | 'da' | 'zk-catalog'
 }
@@ -48,7 +48,7 @@ function toSearchBarProjects(
             : `${project.display.name} with ${bridge.display.name}`,
         iconUrl: `/icons/${project.display.slug}.png`,
         href: `/data-availability/projects/${project.display.slug}/${bridge.display.slug}`,
-        matchers: [project.display.slug, bridge.display.slug],
+        tags: [project.display.slug, bridge.display.slug],
         createdAt: bridge.createdAt.toNumber(),
       }))
     }
@@ -61,7 +61,7 @@ function toSearchBarProjects(
         name: project.display.name,
         iconUrl: `/icons/${project.display.slug}.png`,
         href: `/zk-catalog/${project.display.slug}`,
-        matchers: [project.display.slug],
+        tags: [project.display.slug],
         createdAt: project.createdAt.toNumber(),
       }
     }
@@ -73,7 +73,7 @@ function toSearchBarProjects(
       name: project.display.name,
       iconUrl: `/icons/${project.display.slug}.png`,
       href: getHref(project),
-      matchers: [project.display.slug],
+      tags: [project.display.slug],
       createdAt: project.createdAt.toNumber(),
     }
 

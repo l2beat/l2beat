@@ -3,86 +3,86 @@ import { env } from '~/env'
 export type SearchBarPage = {
   type?: 'scaling' | 'bridges' | 'da'
   name: string
-  matchers?: string[]
+  tags?: string[]
   href: string
 }
 export const searchBarPages: SearchBarPage[] = [
   {
     type: 'scaling',
     name: 'Summary',
-    matchers: ['scaling'],
+    tags: ['pages', 'scaling'],
     href: '/scaling/summary',
   },
   {
     type: 'scaling',
     name: 'Value Locked',
-    matchers: ['scaling', 'tvl'],
+    tags: ['pages', 'scaling', 'tvl'],
     href: '/scaling/tvl',
   },
   {
     type: 'scaling',
     name: 'Risk Analysis',
-    matchers: ['scaling', 'risks'],
+    tags: ['pages', 'scaling', 'risks'],
     href: '/scaling/risk',
   },
   {
     type: 'scaling',
     name: 'Data Availability',
-    matchers: ['scaling'],
+    tags: ['pages', 'scaling'],
     href: '/scaling/data-availability',
   },
   {
     type: 'scaling',
     name: 'Liveness',
-    matchers: ['scaling'],
+    tags: ['pages', 'scaling'],
     href: '/scaling/liveness',
   },
   {
     type: 'scaling',
     name: 'Finality',
-    matchers: ['scaling'],
+    tags: ['pages', 'scaling'],
     href: '/scaling/finality',
   },
   {
     type: 'scaling',
     name: 'Activity',
-    matchers: ['scaling'],
+    tags: ['pages', 'scaling'],
     href: '/scaling/activity',
   },
   {
     type: 'scaling',
     name: 'Costs',
-    matchers: ['scaling'],
+    tags: ['pages', 'scaling'],
     href: '/scaling/costs',
   },
   {
     type: 'scaling',
     name: 'Upcoming',
-    matchers: ['scaling'],
+    tags: ['pages', 'scaling'],
     href: '/scaling/upcoming',
   },
   {
     type: 'scaling',
     name: 'Archived',
-    matchers: ['scaling'],
+    tags: ['pages', 'scaling'],
     href: '/scaling/archived',
   },
   {
     type: 'bridges',
     name: 'Summary',
-    matchers: ['bridges'],
+    tags: ['pages', 'bridges'],
     href: '/bridges/summary',
   },
   {
     type: 'bridges',
     name: 'Risk Analysis',
-    matchers: ['bridges', 'risks'],
+    tags: ['pages', 'bridges', 'risks'],
     href: '/bridges/risk',
   },
   {
     type: 'bridges',
     name: 'Archived',
-    matchers: ['bridges'],
+    tags: ['pages', 'bridges'],
     href: '/bridges/archived',
   },
   ...(env.NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT
@@ -90,32 +90,13 @@ export const searchBarPages: SearchBarPage[] = [
         {
           type: 'da' as const,
           name: 'Summary',
-          matchers: [
-            'da',
-            'data availability',
-            'dataavailability',
-            'data-availability',
-            'data',
-            'availability',
-            'dabeat',
-            'da-beat',
-          ],
+          tags: ['pages', 'da', 'data', 'availability'],
           href: '/data-availability/summary',
         },
         {
           type: 'da' as const,
           name: 'Risk Analysis',
-          matchers: [
-            'da',
-            'data availability',
-            'dataavailability',
-            'data-availability',
-            'data',
-            'availability',
-            'dabeat',
-            'da-beat',
-            'risks',
-          ],
+          tags: ['pages', 'da', 'data', 'availability', 'risks'],
           href: '/data-availability/risk',
         },
       ]
@@ -123,22 +104,26 @@ export const searchBarPages: SearchBarPage[] = [
   {
     name: 'ZK Catalog',
     href: '/zk-catalog',
-    matchers: ['zk', 'catalog', 'zk-catalog', 'zkcatalog'],
+    tags: ['pages', 'zk', 'catalog'],
   },
   {
     name: 'Donate',
     href: '/donate',
+    tags: ['pages'],
   },
   {
     name: 'Governance',
     href: '/governance',
+    tags: ['pages'],
   },
   {
     name: 'Glossary',
     href: '/glossary',
+    tags: ['pages'],
   },
   {
     name: 'FAQ',
     href: '/faq',
+    tags: ['pages'],
   },
 ]
