@@ -24,8 +24,7 @@ interface Props {
 }
 
 export function ScalingProjectStats({ project, className }: Props) {
-  const isOther =
-    env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS && project.header.isOther
+  const isOther = env.FEATURE_FLAG_OTHER_PROJECTS && project.header.isOther
   return (
     <div
       className={cn(

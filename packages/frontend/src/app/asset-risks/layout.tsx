@@ -11,7 +11,7 @@ export const metadata: Metadata = getDefaultMetadata({
 export default async function Layout({
   children,
 }: { children: React.ReactNode }) {
-  if (!env.NEXT_PUBLIC_FEATURE_FLAG_ASSET_RISKS) {
+  if (!env.FEATURE_FLAG_ASSET_RISKS) {
     return notFound()
   }
 

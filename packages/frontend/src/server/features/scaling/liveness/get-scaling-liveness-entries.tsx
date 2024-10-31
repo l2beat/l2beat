@@ -51,7 +51,7 @@ export async function getScalingLivenessEntries() {
     })
     .filter(notUndefined)
 
-  if (env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION) {
+  if (env.FEATURE_FLAG_RECATEGORISATION) {
     return {
       type: 'recategorised' as const,
       entries: groupByMainCategories(orderByStageAndTvl(entries, tvl)),

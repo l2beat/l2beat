@@ -39,12 +39,6 @@ export const env = createEnv({
    * Environment variables exposed to the client (should be prefixed with `NEXT_PUBLIC_`)
    */
   client: {
-    NEXT_PUBLIC_FEATURE_FLAG_ASSET_RISKS: featureFlag.default('false'),
-    NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION: featureFlag.default('false'),
-    NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS: featureFlag.default('false'),
-    NEXT_PUBLIC_FEATURE_FLAG_INTERNAL_TOOLS: featureFlag.default(
-      process.env.NODE_ENV === 'development' ? 'true' : 'false',
-    ),
     NEXT_PUBLIC_GITCOIN_ROUND_LIVE: featureFlag.default('false'),
     NEXT_PUBLIC_PLAUSIBLE_DOMAIN: z.string().default('localhost'),
     NEXT_PUBLIC_PLAUSIBLE_ENABLED: coerceBoolean.optional(),
@@ -53,7 +47,13 @@ export const env = createEnv({
   },
 
   shared: {
+    FEATURE_FLAG_ASSET_RISKS: featureFlag.default('false'),
+    FEATURE_FLAG_RECATEGORISATION: featureFlag.default('false'),
+    FEATURE_FLAG_OTHER_PROJECTS: featureFlag.default('false'),
     FEATURE_FLAG_DA_BEAT: featureFlag.default('false'),
+    FEATURE_FLAG_INTERNAL_TOOLS: featureFlag.default(
+      process.env.NODE_ENV === 'development' ? 'true' : 'false',
+    ),
   },
 
   /**
@@ -73,14 +73,6 @@ export const env = createEnv({
     EXCLUDED_ACTIVITY_PROJECTS: process.env.EXCLUDED_ACTIVITY_PROJECTS,
     EXCLUDED_TVL_PROJECTS: process.env.EXCLUDED_TVL_PROJECTS,
     // Client
-    NEXT_PUBLIC_FEATURE_FLAG_ASSET_RISKS:
-      process.env.NEXT_PUBLIC_FEATURE_FLAG_ASSET_RISKS,
-    NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION:
-      process.env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION,
-    NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS:
-      process.env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS,
-    NEXT_PUBLIC_FEATURE_FLAG_INTERNAL_TOOLS:
-      process.env.NEXT_PUBLIC_FEATURE_FLAG_INTERNAL_TOOLS,
     NEXT_PUBLIC_GITCOIN_ROUND_LIVE: process.env.FEATURE_FLAG_GITCOIN_OPTION,
     NEXT_PUBLIC_PLAUSIBLE_DOMAIN: process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN,
     NEXT_PUBLIC_PLAUSIBLE_ENABLED: process.env.NEXT_PUBLIC_PLAUSIBLE_ENABLED,
@@ -88,7 +80,11 @@ export const env = createEnv({
     NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID:
       process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID,
     // Shared
+    FEATURE_FLAG_ASSET_RISKS: process.env.FEATURE_FLAG_ASSET_RISKS,
+    FEATURE_FLAG_RECATEGORISATION: process.env.FEATURE_FLAG_RECATEGORISATION,
+    FEATURE_FLAG_OTHER_PROJECTS: process.env.FEATURE_FLAG_OTHER_PROJECTS,
     FEATURE_FLAG_DA_BEAT: process.env.FEATURE_FLAG_DA_BEAT,
+    FEATURE_FLAG_INTERNAL_TOOLS: process.env.FEATURE_FLAG_INTERNAL_TOOLS,
   },
 
   /**

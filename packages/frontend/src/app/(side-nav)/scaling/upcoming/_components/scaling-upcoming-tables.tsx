@@ -21,7 +21,7 @@ export function ScalingUpcomingTables({
 }: { entries: ScalingUpcomingEntry[] }) {
   const includeFilters = useScalingUpcomingFilter()
 
-  if (env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION) {
+  if (env.FEATURE_FLAG_RECATEGORISATION) {
     const { rollups, validiumsAndOptimiums } = groupByMainCategories(entries)
     const filteredRollups = rollups.filter(includeFilters)
     const filteredValidiumsAndOptimiums =
