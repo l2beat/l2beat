@@ -7,9 +7,9 @@ import {
 } from '@l2beat/shared-pure'
 import { unstable_noStore as noStore } from 'next/cache'
 import { env } from '~/env'
+import { cache } from '~/utils/cache'
 import { getConfigMapping } from '../utils/get-config-mapping'
 import { getTvlBreakdown } from './get-tvl-breakdown'
-import { cache } from '~/utils/cache'
 
 export type ProjectTvlBreakdown = Awaited<
   ReturnType<ReturnType<typeof getTvlBreakdown>>

@@ -3,9 +3,9 @@ import { daEconomicSecurityMeta } from '@l2beat/config/build/src/projects/other/
 import { UnixTime } from '@l2beat/shared-pure'
 import { round } from 'lodash'
 import { unstable_noStore as noStore } from 'next/cache'
-import { cache } from '~/utils/cache'
 import { env } from '~/env'
 import { db } from '~/server/database'
+import { cache } from '~/utils/cache'
 
 export type EconomicSecurityData =
   | {

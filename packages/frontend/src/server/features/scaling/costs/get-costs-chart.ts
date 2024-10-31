@@ -4,6 +4,7 @@ import { unstable_noStore as noStore } from 'next/cache'
 import { z } from 'zod'
 import { env } from '~/env'
 import { db } from '~/server/database'
+import { cache } from '~/utils/cache'
 import { getRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generate-timestamps'
 import { addIfDefined } from './utils/add-if-defined'
@@ -13,7 +14,6 @@ import {
 } from './utils/get-costs-projects'
 import { getCostsTargetTimestamp } from './utils/get-costs-target-timestamp'
 import { CostsTimeRange, rangeToResolution } from './utils/range'
-import { cache } from '~/utils/cache'
 
 export const CostsChartParams = z.object({
   range: CostsTimeRange,

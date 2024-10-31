@@ -2,11 +2,11 @@ import { type Bridge, type Layer2, type Layer3 } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_noStore as noStore } from 'next/cache'
 import { env } from '~/env'
+import { cache } from '~/utils/cache'
 import { getTokenBreakdown } from './utils/get-token-breakdown'
 import { getTvlBreakdown } from './utils/get-tvl-breakdown'
 import { toTvlProject } from './utils/get-tvl-projects'
 import { getTvlValuesForProjects } from './utils/get-tvl-values-for-projects'
-import { cache } from '~/utils/cache'
 
 export async function getTvlProjectStats(project: Layer2 | Layer3 | Bridge) {
   if (env.MOCK) {

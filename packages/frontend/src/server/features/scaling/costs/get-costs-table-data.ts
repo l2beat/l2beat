@@ -1,12 +1,12 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_noStore as noStore } from 'next/cache'
 import { env } from '~/env'
+import { cache } from '~/utils/cache'
 import { getLatestActivityForProjects } from '../activity/get-activity-for-projects'
 import { getCostsForProjects } from './get-costs-for-projects'
 import { type LatestCostsProjectResponse } from './types'
 import { getCostsProjects } from './utils/get-costs-projects'
 import { type CostsTimeRange } from './utils/range'
-import { cache } from '~/utils/cache'
 
 export function getCostsTableData(
   ...parameters: Parameters<typeof getCachedCostsTableData>

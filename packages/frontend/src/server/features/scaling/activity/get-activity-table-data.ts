@@ -4,12 +4,12 @@ import { groupBy } from 'lodash'
 import { unstable_noStore as noStore } from 'next/cache'
 import { env } from '~/env'
 import { db } from '~/server/database'
+import { cache } from '~/utils/cache'
 import { countToTps } from './utils/count-to-tps'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import { getLastDayTps } from './utils/get-last-day-tps'
 import { getTpsWeeklyChange } from './utils/get-tps-weekly-change'
 import { sumActivityCount } from './utils/sum-activity-count'
-import { cache } from '~/utils/cache'
 
 export async function getActivityTableData(projects: (Layer2 | Layer3)[]) {
   if (env.MOCK) {

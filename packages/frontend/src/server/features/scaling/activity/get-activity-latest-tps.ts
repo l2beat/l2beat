@@ -4,10 +4,10 @@ import { groupBy } from 'lodash'
 import { unstable_noStore as noStore } from 'next/cache'
 import { env } from '~/env'
 import { db } from '~/server/database'
+import { cache } from '~/utils/cache'
 import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import { getLastDayTps } from './utils/get-last-day-tps'
-import { cache } from '~/utils/cache'
 
 export async function getActivityLatestTps(projects: (Layer2 | Layer3)[]) {
   if (env.MOCK) {

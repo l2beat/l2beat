@@ -4,10 +4,10 @@ import { layer3s } from '@l2beat/config/build/src/projects/layer3s'
 import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_noStore as noStore } from 'next/cache'
 import { env } from '~/env'
+import { cache } from '~/utils/cache'
 import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
 import { getTvlBreakdown } from './get-tvl-breakdown'
 import { getTvlProjects } from './get-tvl-projects'
-import { cache } from '~/utils/cache'
 import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
 
 export function get7dTvlBreakdown(

@@ -2,9 +2,9 @@ import { type Layer2, type Layer3 } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_noStore as noStore } from 'next/cache'
 import { db } from '~/server/database'
+import { cache } from '~/utils/cache'
 import { type TimeRange } from '~/utils/range/range'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
-import { cache } from '~/utils/cache'
 
 export function getLatestActivityForProjects(
   ...parameters: Parameters<typeof getCachedLatestActivityForProjects>

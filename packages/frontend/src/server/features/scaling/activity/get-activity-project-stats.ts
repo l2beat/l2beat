@@ -2,10 +2,10 @@ import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { unstable_noStore as noStore } from 'next/cache'
 import { env } from '~/env'
 import { db } from '~/server/database'
+import { cache } from '~/utils/cache'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import { getLastDayTps } from './utils/get-last-day-tps'
 import { getTpsWeeklyChange } from './utils/get-tps-weekly-change'
-import { cache } from '~/utils/cache'
 import { sumActivityCount } from './utils/sum-activity-count'
 
 export async function getActivityProjectStats(projectId: ProjectId) {

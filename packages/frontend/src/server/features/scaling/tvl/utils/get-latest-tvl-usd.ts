@@ -4,8 +4,8 @@ import { groupBy, sum } from 'lodash'
 import { unstable_noStore as noStore } from 'next/cache'
 import { env } from '~/env'
 import { db } from '~/server/database'
-import { sumValuesPerSource } from './sum-values-per-source'
 import { cache } from '~/utils/cache'
+import { sumValuesPerSource } from './sum-values-per-source'
 
 /*
   This function should only be used for ordering projects by TVL.

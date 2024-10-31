@@ -10,6 +10,7 @@ import { unstable_noStore as noStore } from 'next/cache'
 import { z } from 'zod'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
+import { cache } from '~/utils/cache'
 import { getRangeWithMax } from '~/utils/range/range'
 import { getConfigMapping } from '../utils/get-config-mapping'
 import {
@@ -20,7 +21,6 @@ import {
 import { calculateValue } from './utils/calculate-value'
 import { getTokenAmounts } from './utils/get-token-amounts'
 import { getTokenPrices } from './utils/get-token-prices'
-import { cache } from '~/utils/cache'
 
 const TokenParams = z.object({
   projectId: z.string(),

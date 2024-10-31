@@ -12,6 +12,7 @@ import { groupBy, range } from 'lodash'
 import { unstable_noStore as noStore } from 'next/cache'
 import { env } from '~/env'
 import { db } from '~/server/database'
+import { cache } from '~/utils/cache'
 import { getConfigurationsSyncedUntil } from '../../utils/get-configurations-synced-until'
 import {
   type TrackedTxsProject,
@@ -25,7 +26,6 @@ import {
   type LivenessResponse,
 } from './types'
 import { getLivenessProjects } from './utils/get-liveness-projects'
-import { cache } from '~/utils/cache'
 
 export async function getLiveness() {
   if (env.MOCK) {
