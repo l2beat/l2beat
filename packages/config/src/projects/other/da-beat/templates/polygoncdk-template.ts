@@ -147,7 +147,7 @@ export function PolygoncdkDAC(template: TemplateVars): DacDaLayer {
     ## Architecture
     ![polygoncdk architecture](/images/da-layer-technology/polygoncdk/architecture${template.bridge.membersCount}.png#center)
 
-    Polygon CDK validiums utilize a data availability solution that relies on a Data Availability Committee (DAC) to ensure data integrity and manage off-chain transaction data. 
+    Polygon CDK validiums utilize a [data availability solution](https://docs.polygon.technology/cdk/architecture/cdk-validium/#data-availability-committee-dac) that relies on a Data Availability Committee (DAC) to ensure data integrity and manage off-chain transaction data. 
     This architecture comprises the following components:
     - **Operator**: A trusted entity that collects transactions, computes hash values for the transaction batch, and then requests and collects signatures from Committee members.
     - **Data Availability Committee (DAC)**: A group of nodes responsible for validating batch data against the hash values provided by the operator (sequencer), ensuring the data accurately represents the transactions.

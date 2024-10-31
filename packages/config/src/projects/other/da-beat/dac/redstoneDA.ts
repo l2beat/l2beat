@@ -57,7 +57,7 @@ export const redstoneDA: DaLayer = {
     A challenge can be resolved by publishing the preimage data within an additional ${daResolveWindow}.
     In such case, a portion of the challenger bond is burned, with the exact amount estimated as the cost incurred by the resolver to publish the full data, meaning that the resolver and challenger will approximately lose the same amount of funds.
     The system is not secure if the malicious sequencer is able to outspend the altruistic challengers. 
-    If instead, after a challenge, the preimage data is not published, the chain reorgs to the last fully derivable state.
+    If instead, after a challenge, the preimage data is not published, the chain reorgs to the last fully derivable state. For more details, see the OP [Alt-da specification](https://github.com/ethereum-optimism/specs/blob/main/specs/experimental/alt-da.md) and this [Ethresear.ch post](https://ethresear.ch/t/universal-plasma-and-da-challenges/18629) discussing security considerations.
   `,
   },
   bridges: [redstoneDABridge],

@@ -149,7 +149,7 @@ export function AnytrustDAC(template: TemplateVars): DacDaLayer {
     ## Architecture
     ![Anytrust architecture](/images/da-layer-technology/anytrust/architecture${template.bridge.membersCount}.png#center)
 
-    The DAC uses a data availability solution built on the AnyTrust protocol. It is composed of the following components:
+    The DAC uses a data availability solution built on the [AnyTrust](https://docs.arbitrum.io/how-arbitrum-works/inside-anytrust) protocol. It is composed of the following components:
     - **Sequencer Inbox**: Main entry point for the Sequencer submitting transaction batches.
     - **Data Availability Committee (DAC)**: A group of members responsible for storing and providing data on demand.
     - **Data Availability Certificate (DACert)**: A commitment ensuring that data blobs are available without needing full data posting on the L1 chain. 

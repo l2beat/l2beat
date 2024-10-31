@@ -147,7 +147,7 @@ export function StarkexDAC(template: TemplateVars): DacDaLayer {
     ## Architecture
     ![starkex architecture](/images/da-layer-technology/starkex/architecture${template.bridge.membersCount}.png#center)
 
-    The Starkware application utilizes a data availability solution that relies on a Committee Service to ensure data persistence. This architecture comprises the following components:
+    The Starkware application utilizes a data availability solution that relies on a [Committee Service](https://github.com/starkware-libs/starkex-data-availability-committee) to ensure data persistence. This architecture comprises the following components:
 
     - **Availability Gateway**: The primary interface provided by the operator for committee members to access new batch information and submit signed availability claims.
     - **Data Availability Committee (DAC)**: A group of nodes responsible for storing state data associated with each Merkle root and attesting to data availability by signing claims.

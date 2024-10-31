@@ -39,7 +39,7 @@ export const memo: DaLayer = {
 
     ![Meeda architecture](/images/da-layer-technology/meeda/architecture.png#center)
 
-    Meeda's architecture consists of several components. 
+    Meeda's [architecture](https://memolabs.gitbook.io/meeda/readme/overview-of-meeda/whats-meeda) consists of several components. 
     Storage Nodes store blob data and generate data availability commitments, with node deployment available to all users. 
     Light Nodes are responsible for challenging storage nodes through onchain verification, and their deployment is also open to all users. 
     The Operator, currently deployed by the project itself, handles the erasure coding of data and data chunks distribution, as well as the aggregation of KZG commitment proofs from Storage Nodes. 
