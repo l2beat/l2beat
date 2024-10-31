@@ -4,7 +4,7 @@ import { RequestInit } from 'node-fetch'
 import { RetryHandler } from '../tools'
 import { HttpClient2 } from './http/HttpClient2'
 
-export interface ClientCoreDeps {
+export interface ClientCoreDependencies {
   http: HttpClient2
   rateLimiter: RateLimiter
   retryHandler: RetryHandler
@@ -12,7 +12,7 @@ export interface ClientCoreDeps {
 }
 
 export abstract class ClientCore {
-  constructor(private readonly deps: ClientCoreDeps) {}
+  constructor(private readonly deps: ClientCoreDependencies) { }
 
   /**
    * This method will perform HTTP fetch, and validate the response.
@@ -34,6 +34,8 @@ export abstract class ClientCore {
 
   private async _fetch(url: string, init: RequestInit): Promise<json> {
     const response = await this.deps.http.fetch(url, init)
+
+    console.log(response)
 
     const isResponseValid = this.validateResponse(response)
 

@@ -3,7 +3,7 @@ import { generateId } from '../../tools/generateId'
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 import {
   ClientCore,
-  ClientCoreDeps as ClientCoreDependencies,
+  ClientCoreDependencies as ClientCoreDependencies,
 } from '../ClientCore'
 import { EVMBlock, EVMBlockResponse, Quantity, RPCError } from './types'
 
