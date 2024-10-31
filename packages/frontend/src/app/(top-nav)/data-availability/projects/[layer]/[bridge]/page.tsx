@@ -30,7 +30,7 @@ export async function generateMetadata(props: Props) {
   }
   return getProjectMetadata({
     project: {
-      name: `${layer.display.name} with ${bridge.display.name}`,
+      name: layer.display.name,
       description: layer.display.description,
     },
     metadata: {
