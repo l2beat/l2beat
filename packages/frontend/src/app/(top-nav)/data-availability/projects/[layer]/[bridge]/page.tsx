@@ -6,8 +6,8 @@ import { MobileProjectNavigation } from '~/components/projects/navigation/mobile
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 import { ProjectDetails } from '~/components/projects/project-details'
 import { getDaProjectEntry } from '~/server/features/data-availability/project/get-da-project-entry'
-import { DaProjectSummary } from '../_components/da-project-summary'
 import { getProjectMetadata } from '~/utils/metadata'
+import { DaProjectSummary } from '../_components/da-project-summary'
 
 interface Props {
   params: Promise<{

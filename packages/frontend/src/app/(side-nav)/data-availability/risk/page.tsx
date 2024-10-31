@@ -6,9 +6,9 @@ import {
 } from '~/components/core/directory-tabs'
 import { MainPageHeader } from '~/components/main-page-header'
 import { getDaRiskEntries } from '~/server/features/data-availability/risks/get-da-risk-entries'
+import { getDefaultMetadata } from '~/utils/metadata'
 import { groupBySystem } from '../_utils/group-by-system'
 import { DaRiskTable } from './_components/table/da-risk-table'
-import { getDefaultMetadata } from '~/utils/metadata'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
