@@ -16,6 +16,7 @@ import { useOnClickOutside } from '~/hooks/use-on-click-outside'
 import { useRouterWithProgressBar } from '../progress-bar'
 import { type SearchBarProject } from './get-search-bar-projects'
 import { useSearchBarContext } from './search-bar-context'
+import { type SearchBarPage, searchBarPages } from './search-bar-pages'
 
 interface Props {
   allProjects: SearchBarProject[]
@@ -48,7 +49,9 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
             .filter((p) => {
               return (
                 p.name.toLowerCase().includes(value.toLowerCase()) ||
-                p.matchers.some((m) => m.includes(value.toLowerCase()))
+                p.matchers.some((m) =>
+                  m.toLowerCase().includes(value.toLowerCase()),
+                )
               )
             })
             .sort((a, b) => {
@@ -71,6 +74,18 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
             })
             .slice(0, 15),
     [value, allProjects, recentlyAdded],
+  )
+
+  const filteredPages = useMemo(
+    () =>
+      searchBarPages.filter(
+        (p) =>
+          p.name.toLowerCase().includes(value.toLowerCase()) ||
+          p.matchers?.some((m) =>
+            m.toLowerCase().includes(value.toLowerCase()),
+          ),
+      ),
+    [value],
   )
 
   const onEscapeKeyDown = (e?: KeyboardEvent) => {
@@ -108,6 +123,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
               heading={value === '' ? 'Recently added projects' : 'Projects'}
             >
               {filteredProjects.map((project) => {
+                const label = typeToLabel(project.type)
                 return (
                   <CommandItem
                     key={project.id}
@@ -126,9 +142,36 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                       height={20}
                     />
                     {project.name}
-                    <div className="ml-auto text-xs text-secondary">
-                      {typeToLabel(project.type)}
-                    </div>
+                    {label && (
+                      <div className="ml-auto text-xs text-secondary">
+                        {label}
+                      </div>
+                    )}
+                  </CommandItem>
+                )
+              })}
+            </CommandGroup>
+          )}
+          {value !== '' && filteredPages.length > 0 && (
+            <CommandGroup heading="Pages">
+              {filteredPages.map((page) => {
+                const label = typeToLabel(page.type)
+                return (
+                  <CommandItem
+                    key={page.href}
+                    className="cursor-pointer gap-2 rounded-lg"
+                    onSelect={() => {
+                      setOpen(false)
+                      setValue('')
+                      router.push(page.href)
+                    }}
+                  >
+                    {page.name}
+                    {label && (
+                      <div className="ml-auto text-xs text-secondary">
+                        {label}
+                      </div>
+                    )}
                   </CommandItem>
                 )
               })}
@@ -140,7 +183,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
   )
 }
 
-function typeToLabel(type: SearchBarProject['type']) {
+function typeToLabel(type: SearchBarProject['type'] | SearchBarPage['type']) {
   switch (type) {
     case 'layer2':
       return 'Layer 2'
@@ -152,6 +195,12 @@ function typeToLabel(type: SearchBarProject['type']) {
       return 'DA'
     case 'zk-catalog':
       return 'ZK Catalog'
+    case 'bridges':
+      return 'Bridges'
+    case 'scaling':
+      return 'Scaling'
+    case undefined:
+      return undefined
     default:
       assertUnreachable(type)
   }
