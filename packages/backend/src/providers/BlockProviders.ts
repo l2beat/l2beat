@@ -113,13 +113,13 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
         // TODO: handle multiple urls
         const rpcClient = new RpcClient2({
           url: project.config.url,
+          chain: project.id,
           http: http2,
           rateLimiter: new RateLimiter({
             callsPerMinute: project.config.callsPerMinute,
           }),
           retryHandler,
           logger,
-          chain: project.id,
         })
 
         evmClients.push(rpcClient)

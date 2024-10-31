@@ -1,9 +1,8 @@
-import { Logger } from '@l2beat/backend-tools'
+import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import {
   assert,
   EthereumAddress,
   Hash256,
-  RateLimiter,
   UnixTime,
   getErrorMessage,
 } from '@l2beat/shared-pure'
