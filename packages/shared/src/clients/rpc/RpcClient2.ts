@@ -1,17 +1,19 @@
-import { json, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime, json } from '@l2beat/shared-pure'
 import { generateId } from '../../tools/generateId'
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
-import { ClientCore, ClientCoreDeps as ClientCoreDependencies } from '../ClientCore'
+import {
+  ClientCore,
+  ClientCoreDeps as ClientCoreDependencies,
+} from '../ClientCore'
 import { EVMBlock, EVMBlockResponse, Quantity, RPCError } from './types'
-import { RequestInit } from 'node-fetch'
 
 interface Dependencies extends ClientCoreDependencies {
-  url: string,
+  url: string
   chain: string
   generateId?: () => string
 }
 
-export class RpcClient2 extends ClientCore<[string, (string | number | boolean)[]]> {
+export class RpcClient2 extends ClientCore {
   constructor(private readonly $: Dependencies) {
     super({ ...$ })
   }
@@ -31,9 +33,7 @@ export class RpcClient2 extends ClientCore<[string, (string | number | boolean)[
     )
   }
 
-  /** Calls eth_getBlockByNumber on RPC, includes full transactions bodies.
-   * The query is wrapped with rate limiting and retry handling.
-   */
+  /** Calls eth_getBlockByNumber on RPC, includes full transactions bodies.*/
   async getBlockWithTransactions(
     blockNumber: number | 'latest',
   ): Promise<EVMBlock> {
@@ -49,21 +49,18 @@ export class RpcClient2 extends ClientCore<[string, (string | number | boolean)[
     return { ...block.data.result }
   }
 
-  override prepareRequest(method: string, params: (string | number | boolean)[]): { url: string; init: RequestInit } {
-    return ({
-      url: this.$.url,
-      init: {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          method,
-          params,
-          id: this.$.generateId ? this.$.generateId() : generateId(),
-          jsonrpc: '2.0',
-        }),
-        redirect: 'follow',
-        timeout: 5_000, // Most RPCs respond in ~2s during regular conditions
-      }
+  async query(method: string, params: (string | number | boolean)[]) {
+    return await this.fetch(this.$.url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        method,
+        params,
+        id: this.$.generateId ? this.$.generateId() : generateId(),
+        jsonrpc: '2.0',
+      }),
+      redirect: 'follow',
+      timeout: 5_000, // Most RPCs respond in ~2s during regular conditions
     })
   }
 
@@ -72,12 +69,16 @@ export class RpcClient2 extends ClientCore<[string, (string | number | boolean)[
 
     if (parsedError.success) {
       // TODO: based on error return differently
-      this.$.logger.warn(`Response validation error`, { ...parsedError.data.error })
+      this.$.logger.warn(`Response validation error`, {
+        ...parsedError.data.error,
+      })
       return false
     }
 
     return true
   }
 
-  get chain() { return this.$.chain }
+  get chain() {
+    return this.$.chain
+  }
 }

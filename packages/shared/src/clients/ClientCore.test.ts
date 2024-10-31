@@ -1,74 +1,72 @@
-import { expect, mockObject } from "earl";
-import { HttpClient2 } from "./http/HttpClient2";
-import { json } from "@l2beat/shared-pure";
-import { Logger, RateLimiter } from "@l2beat/backend-tools";
-import { RetryHandler } from "../tools";
-import { ClientCore } from "./ClientCore";
-import { RequestInit } from "node-fetch";
+import { Logger, RateLimiter } from '@l2beat/backend-tools'
+import { json } from '@l2beat/shared-pure'
+import { expect, mockObject } from 'earl'
+import { RetryHandler } from '../tools'
+import { ClientCore } from './ClientCore'
+import { HttpClient2 } from './http/HttpClient2'
 
 describe(ClientCore.name, () => {
-  describe(ClientCore.prototype.query.name, () => {
-    it("Fetches URL with params and returns response", async () => {
-      const { clientCore, http } = mocks();
+  describe(ClientCore.prototype.fetch.name, () => {
+    it('Fetches URL with params and returns response', async () => {
+      const { clientCore, http } = mocks()
 
-      const response = await clientCore.query("https://api.test.com/data", { timeout: 1 });
+      const response = await clientCore.fetch('https://api.test.com/data', {
+        timeout: 1,
+      })
 
-      expect(response).toEqual({ result: 'success' });
-      expect(http.fetch).toHaveBeenOnlyCalledWith("https://api.test.com/data", { timeout: 1 })
-    });
+      expect(response).toEqual({ result: 'success' })
+      expect(http.fetch).toHaveBeenOnlyCalledWith('https://api.test.com/data', {
+        timeout: 1,
+      })
+    })
 
-    it("Applies rate limiting", async () => {
-      const { clientCore, rateLimiter } = mocks();
+    it('Applies rate limiting', async () => {
+      const { clientCore, rateLimiter } = mocks()
 
-      await clientCore.query("https://api.test.com/data", {});
+      await clientCore.fetch('https://api.test.com/data', {})
 
-      expect(rateLimiter.call).toHaveBeenCalledTimes(1);
-    });
+      expect(rateLimiter.call).toHaveBeenCalledTimes(1)
+    })
 
-    it("Retries on error", async () => {
-      const { clientCore, rateLimiter, retryHandler, http } = mocks();
-      http.fetch.rejectsWithOnce(new Error("Network error"));
+    it('Retries on error', async () => {
+      const { clientCore, rateLimiter, retryHandler, http } = mocks()
+      http.fetch.rejectsWithOnce(new Error('Network error'))
 
-      await clientCore.query("https://api.test.com/data", {});
+      await clientCore.fetch('https://api.test.com/data', {})
 
-      expect(rateLimiter.call).toHaveBeenCalledTimes(2);
-      expect(retryHandler.retry).toHaveBeenCalledTimes(1);
-    });
+      expect(rateLimiter.call).toHaveBeenCalledTimes(2)
+      expect(retryHandler.retry).toHaveBeenCalledTimes(1)
+    })
 
-    it("Throws on invalid response", async () => {
-      const { clientCore, http, retryHandler } = mocks();
-      http.fetch.resolvesToOnce(null);
+    it('Throws on invalid response', async () => {
+      const { clientCore, http, retryHandler } = mocks()
+      http.fetch.resolvesToOnce(null)
 
-      await clientCore.query("https://api.test.com/data", {});
+      await clientCore.fetch('https://api.test.com/data', {})
 
-      expect(retryHandler.retry).toHaveBeenCalledTimes(1);
-    });
-  });
-});
-
+      expect(retryHandler.retry).toHaveBeenCalledTimes(1)
+    })
+  })
+})
 
 function mocks() {
   const http = mockObject<HttpClient2>({
     fetch: async () => ({ result: 'success' }) as json,
-  });
+  })
 
   const rateLimiter = mockObject<RateLimiter>({
     call: async (fn) => fn(),
-  });
+  })
 
   const retryHandler = mockObject<RetryHandler>({
     retry: async (fn) => fn(),
-  });
+  })
 
-  const logger = mockObject<Logger>({});
+  const logger = mockObject<Logger>({})
 
-  class TestClientCore extends ClientCore<[url: string, init: RequestInit]> {
+  class TestClientCore extends ClientCore {
     validateResponse(response: unknown): boolean {
-      return !!response;
-    }
-
-    override prepareRequest(url: string, init: RequestInit): { url: string; init: RequestInit; } {
-      return ({ url, init })
+      return !!response
     }
   }
 
@@ -77,7 +75,7 @@ function mocks() {
     rateLimiter,
     retryHandler,
     logger,
-  });
+  })
 
   return {
     clientCore,
@@ -85,5 +83,5 @@ function mocks() {
     rateLimiter,
     retryHandler,
     logger,
-  };
+  }
 }

@@ -49,61 +49,30 @@ describe(RpcClient2.name, () => {
     })
   })
 
-  describe('todo query', () => {
+  describe(RpcClient2.prototype.query.name, () => {
     it('calls http client with correct params and returns data', async () => {
       const http = mockObject<HttpClient2>({
-        fetch: async () => ('data-returned-from-api'),
+        fetch: async () => 'data-returned-from-api',
       })
 
-      const rpc = mockClient({ http })
+      const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
       const result = await rpc.query('rpc_method', ['a', 1, true])
 
       expect(result).toEqual('data-returned-from-api')
       expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL', {
-        body: expect.anything(),
+        body: JSON.stringify({
+          method: 'rpc_method',
+          params: ['a', 1, true],
+          id: 'unique-id',
+          jsonrpc: '2.0',
+        }),
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         redirect: 'follow',
         timeout: 5000,
       })
-
-      //@ts-expect-error
-      expect(http.fetch.calls[0].args[1]?.body).toMatchRegex(
-        /"method":"rpc_method"/,
-      )
-      //@ts-expect-error
-      expect(http.fetch.calls[0].args[1]?.body).toMatchRegex(
-        /"params":\["a",1,true\]/,
-      )
-      //@ts-expect-error
-      expect(http.fetch.calls[0].args[1]?.body).toMatchRegex(/"jsonrpc":"2.0"/)
     })
-  })
-
-  describe(RpcClient2.prototype.prepareRequest.name, () => {
-    it('correctly cretes request', () => {
-      const rpc = mockClient({ generateId: () => 'unique-id' })
-
-      const result = rpc.prepareRequest('rpc_method', ['a', 1, true])
-
-      expect(result).toEqual({
-        url: 'API_URL',
-        init: {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            method: 'rpc_method',
-            params: ['a', 1, true],
-            id: 'unique-id',
-            jsonrpc: '2.0',
-          }),
-          redirect: 'follow',
-          timeout: 5_000,
-        }
-      })
-    })
-
   })
 
   describe(RpcClient2.prototype.validateResponse.name, () => {
@@ -111,9 +80,10 @@ describe(RpcClient2.name, () => {
       const rpc = mockClient({})
       const isValid = rpc.validateResponse({
         error: {
-          "code": -32601,
-          "message": "the method eth_randomMethod does not exist/is not available"
-        }
+          code: -32601,
+          message:
+            'the method eth_randomMethod does not exist/is not available',
+        },
       })
 
       expect(isValid).toEqual(false)
@@ -122,7 +92,7 @@ describe(RpcClient2.name, () => {
     it('returns true otherwise', async () => {
       const rpc = mockClient({})
       const isValid = rpc.validateResponse({
-        result: 'success'
+        result: 'success',
       })
 
       expect(isValid).toEqual(true)
@@ -145,7 +115,7 @@ function mockClient(deps: {
       deps.rateLimiter ?? new RateLimiter({ callsPerMinute: 100_000 }),
     retryHandler: deps.retryHandler ?? RetryHandler.TEST,
     logger: Logger.SILENT,
-    generateId: deps.generateId
+    generateId: deps.generateId,
   })
 }
 

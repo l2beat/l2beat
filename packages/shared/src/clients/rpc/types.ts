@@ -1,5 +1,4 @@
 import { assert } from '@l2beat/shared-pure'
-import { result } from 'lodash'
 import { z } from 'zod'
 
 export const Quantity = {
@@ -35,10 +34,10 @@ export const EVMTransaction = z
   }))
 
 export interface EVMBlock {
-  transactions: EVMTransaction[],
-  timestamp: number,
-  hash: string,
-  number: number,
+  transactions: EVMTransaction[]
+  timestamp: number
+  hash: string
+  number: number
 }
 export const EVMBlockResponse = z.object({
   result: z.object({
@@ -46,7 +45,7 @@ export const EVMBlockResponse = z.object({
     timestamp: Quantity.decode.transform((n) => Number(n)),
     hash: z.string(),
     number: Quantity.decode.transform((n) => Number(n)),
-  })
+  }),
 })
 
 export type RPCError = z.infer<typeof RPCError>

@@ -11,46 +11,39 @@ export interface ClientCoreDeps {
   logger: Logger
 }
 
-export abstract class ClientCore<Args extends unknown[]> {
-  constructor(private readonly deps: ClientCoreDeps) { }
+export abstract class ClientCore {
+  constructor(private readonly deps: ClientCoreDeps) {}
 
   /**
-   * This method will call prepareRequest, perform HTTP fetch, and validate the response.
+   * This method will perform HTTP fetch, and validate the response.
    * Rate limiting and retry handling are built-in.
    *
-   * @param args - Parameters passed to prepareRequest, which must match its signature
+   * @param url Address to which the request will be sent
+   * @param init Params for the request. We are using `node-fetch` RequestInit type
    * @returns Parsed JSON object
    */
-  async query(...args: Args): Promise<json> {
+  async fetch(url: string, init: RequestInit): Promise<json> {
     try {
-      return await this.deps.rateLimiter.call(() => this._query(...args))
+      return await this.deps.rateLimiter.call(() => this._fetch(url, init))
     } catch {
       return await this.deps.retryHandler.retry(() =>
-        this.deps.rateLimiter.call(() => this._query(...args)),
+        this.deps.rateLimiter.call(() => this._fetch(url, init)),
       )
     }
   }
 
-  private async _query(...args: Args): Promise<json> {
-    const request = this.prepareRequest(...args);
+  private async _fetch(url: string, init: RequestInit): Promise<json> {
+    const response = await this.deps.http.fetch(url, init)
 
-    const response = await this.deps.http.fetch(request.url, request.init);
-
-    const isResponseValid = this.validateResponse(response);
+    const isResponseValid = this.validateResponse(response)
 
     if (!isResponseValid) {
-      throw new Error('Response validation failed');
+      throw new Error('Response validation failed')
     }
 
-    return response;
+    return response
   }
 
-  /**
-   * This method should return parameters used for the HTTP fetch.
-   * It must accept the same parameters as query and _query.
-   */
-  abstract prepareRequest(...args: Args): { url: string; init: RequestInit };
-
   /** This method should return false when there are errors in the response, true otherwise */
-  abstract validateResponse(response: json): boolean;
+  abstract validateResponse(response: json): boolean
 }
