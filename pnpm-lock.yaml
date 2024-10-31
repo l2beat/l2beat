@@ -701,6 +701,9 @@ importers:
       tinify:
         specifier: ^1.7.1
         version: 1.7.1
+      tsx:
+        specifier: ^4.9.3
+        version: 4.19.2
       type-fest:
         specifier: ^4.26.1
         version: 4.26.1
