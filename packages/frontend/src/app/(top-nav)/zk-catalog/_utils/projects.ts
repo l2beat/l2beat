@@ -1,7 +1,7 @@
 import {
+  zkCatalogProjects as configZkCatalogProjects,
   layer2s,
   layer3s,
-  zkCatalogProjects as configZkCatalogProjects,
 } from '@l2beat/config'
 
 export const zkCatalogProjects = [
