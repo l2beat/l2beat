@@ -28,7 +28,7 @@ export class BlockProviders {
     readonly degateClient: DegateClient | undefined,
     readonly starkexClient: StarkexClient | undefined,
     private readonly indexerClients: BlockIndexerClient[],
-  ) { }
+  ) {}
 
   getEvmBlockProvider(chain: string) {
     const clients = this.evmClients.filter((r) => r.chain === chain)
@@ -127,7 +127,12 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
         break
       }
       case 'zksync': {
-        zksyncLiteClient = new ZksyncLiteClient(http, logger, project.config.url, project.config.callsPerMinute)
+        zksyncLiteClient = new ZksyncLiteClient(
+          http,
+          logger,
+          project.config.url,
+          project.config.callsPerMinute,
+        )
         break
       }
       case 'starknet': {

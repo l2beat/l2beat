@@ -1,10 +1,6 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
-import {
-  assert,
-  UnixTime,
-  getErrorMessage,
-} from '@l2beat/shared-pure'
+import { assert, UnixTime, getErrorMessage } from '@l2beat/shared-pure'
 
 import { getBlockNumberAtOrBefore } from '../getBlockNumberAtOrBefore'
 import {

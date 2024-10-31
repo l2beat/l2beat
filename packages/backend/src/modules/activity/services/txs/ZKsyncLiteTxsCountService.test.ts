@@ -1,9 +1,9 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { range } from 'lodash'
+import { ZksyncLiteClient } from '../../../../peripherals/zksynclite/ZksyncLiteClient'
 import { activityRecord } from '../../utils/aggregatePerDay.test'
 import { ZKsyncLiteTxsCountService } from './ZKsyncLiteTxsCountService'
-import { ZksyncLiteClient } from '../../../../peripherals/zksynclite/ZksyncLiteClient'
 
 const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
 
