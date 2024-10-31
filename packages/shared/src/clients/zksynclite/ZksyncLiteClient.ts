@@ -56,12 +56,12 @@ export class ZksyncLiteClient extends ClientCore {
   async getTransactionsInBlock(blockNumber: number) {
     const firstPage = await this.getTransactionsPage(blockNumber, 'latest')
 
-    if (firstPage.result.list.length === 0) {
+    if (firstPage.list.length === 0) {
       throw new Error('Transactions list empty!')
     }
 
-    let transactions = firstPage.result.list
-    const count = firstPage.result.pagination.count
+    let transactions = firstPage.list
+    const count = firstPage.pagination.count
     while (count - transactions.length > 0) {
       const lastTx = transactions.at(-1)
       assert(lastTx, 'Transactions list empty!')
@@ -71,11 +71,11 @@ export class ZksyncLiteClient extends ClientCore {
         lastTx.txHash,
       )
 
-      if (nextPage.result.list[0].txHash !== lastTx.txHash) {
+      if (nextPage.list[0].txHash !== lastTx.txHash) {
         throw new Error('Invalid Zksync first transaction')
       }
 
-      transactions = transactions.concat(nextPage.result.list.slice(1))
+      transactions = transactions.concat(nextPage.list.slice(1))
     }
 
     const filteredTransactions = transactions.filter(
@@ -86,11 +86,9 @@ export class ZksyncLiteClient extends ClientCore {
   }
 
   private async getTransactionsPage(blockNumber: number, from: string) {
-    const PAGE_LIMIT = 100
-
     const result = await this.query(`blocks/${blockNumber}/transactions`, {
       from,
-      limit: PAGE_LIMIT.toString(),
+      limit: '100', // our current heuristic, can be changed if needed
       direction: 'older',
     })
 
@@ -100,7 +98,7 @@ export class ZksyncLiteClient extends ClientCore {
       throw new TypeError('Invalid Zksync transactions schema')
     }
 
-    return parsed.data
+    return parsed.data.result
   }
 
   async query(path: string, params?: Record<string, string>) {

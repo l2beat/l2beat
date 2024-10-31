@@ -93,6 +93,20 @@ describe(ZksyncLiteClient.name, () => {
     })
   })
 
+  describe(ZksyncLiteClient.prototype.query.name, () => {
+    it('calls with correct params and returns response', async () => {
+      const http = mockObject<HttpClient2>({
+        fetch: async () => ({ result: 'success' }),
+      })
+      const zksyncClient = mockClient({ http })
+
+      const result = await zksyncClient.query('path/to/resource', { a: 'a', b: 'b' })
+
+      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL/path/to/resource?a=a&b=b', { timeout: 20_000 })
+      expect(result).toEqual({ result: 'success' })
+    })
+  })
+
   describe(ZksyncLiteClient.prototype.validateResponse.name, () => {
     it('retruns false when error is present', () => {
       const zksyncClient = mockClient({})
