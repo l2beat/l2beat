@@ -93,7 +93,6 @@ export function useScalingFilter() {
       if (entry.id === ProjectId.ETHEREUM) {
         return true
       }
-      console.log(scalingFilters.daLayer)
 
       const checks = [
         scalingFilters.rollupsOnly !== false
