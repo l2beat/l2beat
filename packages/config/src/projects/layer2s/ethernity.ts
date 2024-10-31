@@ -19,7 +19,7 @@ export const ethernity: Layer2 = upcomingL2({
       documentation: [
         'https://drive.google.com/file/d/1o74ZBmYMIUa8QUwvLOK7KhoXP9-LCsPf/view',
       ],
-      explorers: ['https://ethplorer.io/'],
+      explorers: ['https://ernscan.io/ '],
       repositories: [],
       socialMedia: [
         'https://x.com/EthernityChain',
