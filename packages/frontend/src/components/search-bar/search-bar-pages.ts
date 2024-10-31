@@ -132,9 +132,3 @@ export const searchBarPages = withIndex([
 function withIndex(arr: SearchBarPage[]) {
   return arr.map((e, i) => ({ ...e, index: i }))
 }
-
-export const searchBarTypeOrderValue: SearchBarPage['type'][] = [
-  'da',
-  'bridges',
-  'scaling',
-]

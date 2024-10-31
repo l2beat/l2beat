@@ -16,11 +16,7 @@ import {
 import { useOnClickOutside } from '~/hooks/use-on-click-outside'
 import { useRouterWithProgressBar } from '../progress-bar'
 import { useSearchBarContext } from './search-bar-context'
-import {
-  type SearchBarPage,
-  searchBarPages,
-  searchBarTypeOrderValue,
-} from './search-bar-pages'
+import { type SearchBarPage, searchBarPages } from './search-bar-pages'
 import { type SearchBarProject } from './search-bar-projects'
 interface Props {
   allProjects: SearchBarProject[]
@@ -65,13 +61,6 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
       fuzzysort
         .go(value, searchBarPages, {
           keys: ['name', (e) => e.tags?.join() ?? ''],
-          scoreFn: (match) => {
-            const orderValue = searchBarTypeOrderValue.indexOf(match.obj.type)
-            if (orderValue === -1) {
-              return match.score
-            }
-            return match.score * orderValue
-          },
         })
         .flatMap((match) => match.obj)
         .sort((a, b) => a.index - b.index),
