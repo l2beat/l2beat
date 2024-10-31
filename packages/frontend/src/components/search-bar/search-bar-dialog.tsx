@@ -9,6 +9,7 @@ import {
   CommandEmpty,
   CommandGroup,
   CommandInput,
+  CommandInputActionButton,
   CommandItem,
   CommandList,
 } from '~/components/core/command'
@@ -99,8 +100,11 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
           placeholder="Search for projects"
           value={value}
           onValueChange={setValue}
-          reset={() => onEscapeKeyDown()}
-        />
+        >
+          <CommandInputActionButton onClick={() => onEscapeKeyDown()}>
+            {value !== '' ? 'Clear' : 'Close'}
+          </CommandInputActionButton>
+        </CommandInput>
         <CommandList className="max-h-screen md:h-[270px] md:max-h-[270px] [@supports(height:100dvh)]:max-h-dvh">
           <CommandEmpty>No results found.</CommandEmpty>
           {filteredProjects.length > 0 && (
