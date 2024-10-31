@@ -82,7 +82,7 @@ describe(RpcClient2.name, () => {
   })
 
   describe(RpcClient2.prototype.prepareRequest.name, () => {
-    it('a', () => {
+    it('correctly cretes request', () => {
       const rpc = mockClient({ generateId: () => 'unique-id' })
 
       const result = rpc.prepareRequest('rpc_method', ['a', 1, true])

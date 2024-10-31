@@ -52,5 +52,5 @@ export abstract class ClientCore<Args extends unknown[]> {
   abstract prepareRequest(...args: Args): { url: string; init: RequestInit };
 
   /** This method should return false when there are errors in the response, true otherwise */
-  abstract validateResponse(response: unknown): boolean;
+  abstract validateResponse(response: json): boolean;
 }

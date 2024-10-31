@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { json, UnixTime } from '@l2beat/shared-pure'
 import { generateId } from '../../tools/generateId'
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 import { ClientCore, ClientCoreDeps as ClientCoreDependencies } from '../ClientCore'
@@ -67,7 +67,7 @@ export class RpcClient2 extends ClientCore<[string, (string | number | boolean)[
     })
   }
 
-  override validateResponse(response: unknown): boolean {
+  override validateResponse(response: json): boolean {
     const parsedError = RPCError.safeParse(response)
 
     if (parsedError.success) {

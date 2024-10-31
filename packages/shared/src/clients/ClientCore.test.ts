@@ -62,13 +62,13 @@ function mocks() {
 
   const logger = mockObject<Logger>({});
 
-  class TestClientCore extends ClientCore {
+  class TestClientCore extends ClientCore<[url: string, init: RequestInit]> {
     validateResponse(response: unknown): boolean {
       return !!response;
     }
 
-    override prepareRequest(...args: unknown[]): { url: string; init: RequestInit; } {
-      return ({ url: 's', init: {} })
+    override prepareRequest(url: string, init: RequestInit): { url: string; init: RequestInit; } {
+      return ({ url, init })
     }
   }
 
