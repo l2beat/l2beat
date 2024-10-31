@@ -42,14 +42,14 @@ export function NodeView(props: NodeViewProps) {
         backgroundColor: oklchColorToCSS(props.node.color),
       }}
       className={clsx(
-        'absolute rounded-md border-2 border-black',
-        props.selected && 'outline outline-2 outline-blue-400',
+        'absolute rounded-md border-2 border-latte',
+        props.selected && 'outline outline-3 outline-sun',
       )}
     >
       <div
         className={clsx(
           'flex h-[28px] w-full justify-between px-2 leading-[28px]',
-          props.node.fields.length > 0 && 'border-black border-b-2',
+          props.node.fields.length > 0 && 'border-latte border-b-2',
         )}
       >
         <div className="truncate">{props.node.name}</div>
@@ -91,7 +91,7 @@ function NodeField(props: { field: Field; color: OklchColor }) {
         <div
           className={clsx(
             'absolute h-[12px] w-[12px]',
-            'rounded-full border-2 border-black bg-white',
+            'rounded-full border-2 border-milk bg-coffee',
           )}
           style={{
             left:

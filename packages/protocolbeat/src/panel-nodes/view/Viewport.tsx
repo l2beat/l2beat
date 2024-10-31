@@ -51,7 +51,7 @@ export function Viewport() {
   return (
     <div
       ref={containerRef}
-      className="relative h-full w-full overflow-hidden rounded-lg bg-white"
+      className="relative h-full w-full overflow-hidden bg-coffee"
     >
       <ScalableView ref={viewRef}>
         <NodesAndConnections />

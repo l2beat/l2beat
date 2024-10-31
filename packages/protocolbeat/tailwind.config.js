@@ -9,6 +9,7 @@ module.exports = {
         coffee: 'rgb(29 23 21)',
         latte: 'rgb(89 76 67)',
         autumn: 'rgb(127 61 12)',
+        sun: 'rgb(200 200 12)',
       },
       fontFamily: {
         ui: ['system-ui', 'sans-serif'],

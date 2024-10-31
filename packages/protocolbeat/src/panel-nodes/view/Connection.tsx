@@ -45,8 +45,8 @@ export function Connection({ from, to, isHighlighted }: ConnectionProps) {
   ]
 
   const stroke = isHighlighted
-    ? 'stroke-blue-500 stroke-[3]'
-    : 'stroke-slate-400 stroke-2'
+    ? 'stroke-sun stroke-[3]'
+    : 'stroke-latte stroke-2'
 
   return (
     <svg

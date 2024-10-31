@@ -18,9 +18,9 @@ export function ResizeHandle(props: {
       data-node-operation={RESIZE_DATA_HANDLE}
       onDoubleClick={handleDoubleClick}
     >
-      <hr className="pointer-events-none w-[23px] border-t-black group-hover:border-t-gray-500" />
-      <hr className="pointer-events-none w-[17px] border-t-black group-hover:border-t-gray-500" />
-      <hr className="pointer-events-none w-[11px] border-t-black group-hover:border-t-gray-500" />
+      <hr className="pointer-events-none w-[23px] border-t-latte" />
+      <hr className="pointer-events-none w-[17px] border-t-latte" />
+      <hr className="pointer-events-none w-[11px] border-t-latte" />
     </div>
   )
 }

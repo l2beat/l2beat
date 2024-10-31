@@ -9,33 +9,36 @@ export interface ScalableViewProps {
 
 export const ScalableView = forwardRef(
   (props: ScalableViewProps, ref: ForwardedRef<HTMLDivElement>) => {
-    const transform = useStore((state) => state.transform)
+    const { scale, offsetX, offsetY } = useStore((state) => state.transform)
+
+    const size = scale < 0.25 ? 180 : scale < 0.8 ? 60 : 20
+
     return (
       <div
         ref={ref}
         className="relative h-full w-full origin-[0_0] select-none"
         style={{
-          transform: `translate(${transform.offsetX}px, ${transform.offsetY}px) scale(${transform.scale})`,
+          transform: `translate(${offsetX}px, ${offsetY}px) scale(${scale})`,
         }}
       >
         {/* infinite grid */}
         <div
-          className={clsx(
-            'absolute h-full w-full',
-            transform.scale < 0.5 && 'hidden',
-          )}
+          className={clsx('absolute h-full w-full')}
           style={{
-            left:
-              (-transform.offsetX +
-                modulo(transform.offsetX, 20 * transform.scale)) /
-              transform.scale,
-            top:
-              (-transform.offsetY +
-                modulo(transform.offsetY, 20 * transform.scale)) /
-              transform.scale,
+            left: (-offsetX + modulo(offsetX, size * scale)) / scale,
+            top: (-offsetY + modulo(offsetY, size * scale)) / scale,
           }}
         >
-          <div className="pointer-events-none absolute top-[-220%] left-[-220%] h-[440%] w-[440%] bg-[url(/grid.svg)] bg-center" />
+          <div
+            className="pointer-events-none absolute bg-[url(/grid.svg)] bg-left-top"
+            style={{
+              backgroundSize: size,
+              top: -20 + '%',
+              left: -20 + '%',
+              height: 100 / scale + 20 + '%',
+              width: 200 / scale + 20 + '%',
+            }}
+          />
         </div>
 
         {props.children}
