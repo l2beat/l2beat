@@ -1,3 +1,327 @@
+Generated with discovered.json: 0x4fc859e86b3cef67b0c30c93f2d08aeae71c0874
+
+# Diff at Thu, 31 Oct 2024 05:16:45 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@35a03ca692bdeb6d3ac713174a7a196c73e4a9de block: 20941326
+- current block number: 21083353
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract LivenessModule (0x0454092516c9A4d636d3CAfA1e82161376C8a748) {
+    +++ description: used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+      receivedPermissions.1:
+-        {"permission":"guard","target":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C","via":[{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"}]}
+      receivedPermissions.0.target:
+-        "0x49048044D57e1C92A77f79988d21Fa8fAF74E97e"
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E) {
+    +++ description: None
+      directlyReceivedPermissions.9:
++        {"permission":"upgrade","target":"0xdB9091e48B1C42992A1213e6916184f9eBDbfEDf"}
+      directlyReceivedPermissions.8:
++        {"permission":"upgrade","target":"0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8"}
+      directlyReceivedPermissions.7:
++        {"permission":"upgrade","target":"0x73a79Fab69143498Ed3712e519A88a918e1f4072"}
+      directlyReceivedPermissions.6.target:
+-        "0x73a79Fab69143498Ed3712e519A88a918e1f4072"
++        "0x608d94945A64503E642E6370Ec598e519a2C1E53"
+      directlyReceivedPermissions.5.target:
+-        "0x608d94945A64503E642E6370Ec598e519a2C1E53"
++        "0x49048044D57e1C92A77f79988d21Fa8fAF74E97e"
+      directlyReceivedPermissions.4.target:
+-        "0x56315b90c40730925ec5485cf004d835058518A0"
++        "0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e"
+      directlyReceivedPermissions.3.target:
+-        "0x49048044D57e1C92A77f79988d21Fa8fAF74E97e"
++        "0x3E8a0B63f57e975c268d610ece93da5f78c01321"
+    }
+```
+
+```diff
+    contract SuperchainGuardianMultisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) {
+    +++ description: None
+      directlyReceivedPermissions.1:
+-        {"permission":"guard","target":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C"}
+      directlyReceivedPermissions.0.target:
+-        "0x49048044D57e1C92A77f79988d21Fa8fAF74E97e"
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+    }
+```
+
+```diff
+    contract BaseMultisig2 (0x14536667Cd30e52C0b458BaACcB9faDA7046E056) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"configure","target":"0x73a79Fab69143498Ed3712e519A88a918e1f4072","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."}
+      receivedPermissions.0.permission:
+-        "challenge"
++        "configure"
+      receivedPermissions.0.target:
+-        "0x56315b90c40730925ec5485cf004d835058518A0"
++        "0x73a79Fab69143498Ed3712e519A88a918e1f4072"
+      receivedPermissions.0.via:
+-        [{"address":"0x6F8C5bA3F59ea3E76300E3BEcDC231D656017824"}]
+      receivedPermissions.0.description:
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      directlyReceivedPermissions:
+-        [{"permission":"act","target":"0x6F8C5bA3F59ea3E76300E3BEcDC231D656017824"}]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x49048044D57e1C92A77f79988d21Fa8fAF74E97e) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals.
+      template:
+-        "opstack/OptimismPortal"
++        "opstack/OptimismPortal2"
+      sourceHashes.1:
+-        "0xe35fb7bc0433439337b3eadda3d6fb7991918162f62a337a695e8c7f948cdd35"
++        "0x41be46bdb67af1b7af90e1bd70a1fcd31a3352282beb83b846a5189675c37ac1"
+      description:
+-        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
++        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals."
+      issuedPermissions.3:
+-        {"permission":"upgrade","target":"0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c","via":[{"address":"0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E","delay":0}]}
+      issuedPermissions.2:
+-        {"permission":"guard","target":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03","via":[{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2","delay":0}]}
+      issuedPermissions.1:
+-        {"permission":"guard","target":"0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A","via":[{"address":"0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B","delay":0},{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2","delay":0}]}
+      issuedPermissions.0.permission:
+-        "guard"
++        "upgrade"
+      issuedPermissions.0.target:
+-        "0x0454092516c9A4d636d3CAfA1e82161376C8a748"
++        "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c"
+      issuedPermissions.0.via.1:
+-        {"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2","delay":0}
+      issuedPermissions.0.via.0.address:
+-        "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"
++        "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"
+      values.$implementation:
+-        "0x2D778797049FE9259d947D1ED8e5442226dFB589"
++        "0xe2F826324b2faf99E513D16D266c3F80aE87832B"
+      values.$pastUpgrades.4:
++        ["2024-10-30T15:41:23.000Z","0x2476bda1e2cc0f2a501876532cacf1d267fc9be8f07271b75e512e3b6c927639",["0xe2F826324b2faf99E513D16D266c3F80aE87832B"]]
+      values.$pastUpgrades.3:
++        ["2024-10-30T15:41:23.000Z","0x2476bda1e2cc0f2a501876532cacf1d267fc9be8f07271b75e512e3b6c927639",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$upgradeCount:
+-        3
++        5
+      values.GUARDIAN:
+-        "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
+      values.L2_ORACLE:
+-        "0x56315b90c40730925ec5485cf004d835058518A0"
+      values.l2Oracle:
+-        "0x56315b90c40730925ec5485cf004d835058518A0"
+      values.SYSTEM_CONFIG:
+-        "0x73a79Fab69143498Ed3712e519A88a918e1f4072"
+      values.version:
+-        "2.5.0"
++        "3.10.0"
+      values.disputeGameFactory:
++        "0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e"
+      values.disputeGameFinalityDelaySeconds:
++        302400
+      values.proofMaturityDelaySeconds:
++        604800
+      values.respectedGameType:
++        0
+      values.respectedGameTypeUpdatedAt:
++        1730302883
+      derivedName:
+-        "OptimismPortal"
++        "OptimismPortal2"
+      fieldMeta:
++        {"paused":{"severity":"HIGH","description":"Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."}}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L2OutputOracle (0x56315b90c40730925ec5485cf004d835058518A0)
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+```
+
+```diff
+-   Status: DELETED
+    contract Challenger1of2 (0x6F8C5bA3F59ea3E76300E3BEcDC231D656017824)
+    +++ description: None
+```
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xdf9a11b46747139bfe0135df8a65a2728a2dbd60a689e2398c45627915cdd752"
++        "0xbbb92920a096eced30e3ce67bbc443f134b217e8847433fbb192ecb9fdddcbc2"
+      values.$implementation:
+-        "0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1"
++        "0xF56D96B2535B932656d3c04Ebf51baBff241D886"
+      values.$pastUpgrades.4:
++        ["2024-10-30T15:41:23.000Z","0x2476bda1e2cc0f2a501876532cacf1d267fc9be8f07271b75e512e3b6c927639",["0xF56D96B2535B932656d3c04Ebf51baBff241D886"]]
+      values.$pastUpgrades.3:
++        ["2024-10-30T15:41:23.000Z","0x2476bda1e2cc0f2a501876532cacf1d267fc9be8f07271b75e512e3b6c927639",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$upgradeCount:
+-        3
++        5
+      values.L2_OUTPUT_ORACLE_SLOT:
+-        "0xe52a667f71ec761b9b381c7b76ca9b852adf7e8905da0e0ad49986a0a6871815"
+      values.l2OutputOracle:
+-        "0x56315b90c40730925ec5485cf004d835058518A0"
+      values.version:
+-        "1.12.0"
++        "2.2.0"
+      values.DISPUTE_GAME_FACTORY_SLOT:
++        "0x52322a25d9f59ea17656545543306b7aef62bc0cc53a0e65ccfa0c75b97aa906"
+      values.disputeGameFactory:
++        "0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e"
+      values.maximumGasLimit:
++        200000000
+    }
+```
+
+```diff
+    contract BaseAdminMultisig (0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c) {
+    +++ description: None
+      receivedPermissions.9:
++        {"permission":"upgrade","target":"0xdB9091e48B1C42992A1213e6916184f9eBDbfEDf","via":[{"address":"0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}]}
+      receivedPermissions.8:
++        {"permission":"upgrade","target":"0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8","via":[{"address":"0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}]}
+      receivedPermissions.7:
++        {"permission":"upgrade","target":"0x73a79Fab69143498Ed3712e519A88a918e1f4072","via":[{"address":"0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}]}
+      receivedPermissions.6.target:
+-        "0x73a79Fab69143498Ed3712e519A88a918e1f4072"
++        "0x608d94945A64503E642E6370Ec598e519a2C1E53"
+      receivedPermissions.5.target:
+-        "0x608d94945A64503E642E6370Ec598e519a2C1E53"
++        "0x49048044D57e1C92A77f79988d21Fa8fAF74E97e"
+      receivedPermissions.4.target:
+-        "0x56315b90c40730925ec5485cf004d835058518A0"
++        "0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e"
+      receivedPermissions.3.target:
+-        "0x49048044D57e1C92A77f79988d21Fa8fAF74E97e"
++        "0x3E8a0B63f57e975c268d610ece93da5f78c01321"
+    }
+```
+
+```diff
+    contract FoundationMultisig_2 (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions.2:
+-        {"permission":"guard","target":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C","via":[{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"}]}
+      receivedPermissions.1:
+-        {"permission":"guard","target":"0x49048044D57e1C92A77f79988d21Fa8fAF74E97e","via":[{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"}]}
+      receivedPermissions.0.permission:
+-        "challenge"
++        "guard"
+      receivedPermissions.0.target:
+-        "0x56315b90c40730925ec5485cf004d835058518A0"
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      receivedPermissions.0.via.1:
++        {"address":"0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"}
+      receivedPermissions.0.via.0.address:
+-        "0x6F8C5bA3F59ea3E76300E3BEcDC231D656017824"
++        "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
+      directlyReceivedPermissions.1:
+-        {"permission":"act","target":"0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"}
+      directlyReceivedPermissions.0.target:
+-        "0x6F8C5bA3F59ea3E76300E3BEcDC231D656017824"
++        "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"
+    }
+```
+
+```diff
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"guard","target":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C","via":[{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"}]}
+      receivedPermissions.0.target:
+-        "0x49048044D57e1C92A77f79988d21Fa8fAF74E97e"
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (0x16e83cE5Ce29BF90AD9Da06D2fE6a15d5f344ce4)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (0x19009dEBF8954B610f207D5925EEDe827805986e)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH (0x3E8a0B63f57e975c268d610ece93da5f78c01321)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
++   Status: CREATED
+    contract DisputeGameFactory (0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e)
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+```
+
+```diff
++   Status: CREATED
+    contract PreimageOracle (0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277)
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH (0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (0xCd3c0194db74C23807D4B90A5181e1B28cF7007C)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
++   Status: CREATED
+    contract AnchorStateRegistry (0xdB9091e48B1C42992A1213e6916184f9eBDbfEDf)
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+```
+
+## Source code changes
+
+```diff
+.../AnchorStateRegistry/AnchorStateRegistry.sol    |  448 +++
+ .../ethereum/.flat/AnchorStateRegistry/Proxy.p.sol |  200 +
+ .../.flat@20941326/Challenger1of2.sol => /dev/null |  299 --
+ .../DelayedWETH.sol                                |  651 ++++
+ .../Proxy.p.sol                                    |  200 +
+ .../DelayedWETH.sol                                |  651 ++++
+ .../Proxy.p.sol                                    |  200 +
+ .../DisputeGameFactory/DisputeGameFactory.sol      | 1550 ++++++++
+ .../ethereum/.flat/DisputeGameFactory/Proxy.p.sol  |  200 +
+ .../base/ethereum/.flat/FaultDisputeGame.sol       | 3959 +++++++++++++++++++
+ .../L2OutputOracle/L2OutputOracle.sol => /dev/null |  679 ----
+ .../L2OutputOracle/Proxy.p.sol => /dev/null        |  211 -
+ .../null => discovery/base/ethereum/.flat/MIPS.sol | 1517 ++++++++
+ .../OptimismPortal/OptimismPortal2.sol}            |  512 ++-
+ .../ethereum/.flat/PermissionedDisputeGame.sol     | 4074 ++++++++++++++++++++
+ .../base/ethereum/.flat/PreimageOracle.sol         | 1353 +++++++
+ .../SystemConfig/SystemConfig.sol                  |   48 +-
+ 17 files changed, 15355 insertions(+), 1397 deletions(-)
+```
+
 Generated with discovered.json: 0x933ced072deabf4fc55361a61d965c3db9dd62ef
 
 # Diff at Tue, 29 Oct 2024 13:04:56 GMT:
