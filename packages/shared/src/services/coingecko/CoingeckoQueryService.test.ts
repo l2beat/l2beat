@@ -1,3 +1,4 @@
+import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import {
   CoingeckoId,
   EthereumAddress,
@@ -625,12 +626,14 @@ describe.skip(CoingeckoQueryService.name + ' e2e tests', function () {
   const MAX_THRESHOLD_MINUTES = 25
   const EXPECTED_HOURLY_FAULT_RATIO = 0.15
 
-  const httpClient = new HttpClient2()
-  const coingeckoClient = new CoingeckoClient(
-    httpClient,
-    undefined,
-    RetryHandler.TEST,
-  )
+  const http = new HttpClient2()
+  const coingeckoClient = new CoingeckoClient({
+    apiKey: undefined,
+    http,
+    retryHandler: RetryHandler.TEST,
+    logger: Logger.SILENT,
+    rateLimiter: new RateLimiter({ callsPerMinute: 10 }),
+  })
   const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
 
   it('hourly', async () => {

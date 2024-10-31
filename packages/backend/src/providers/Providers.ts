@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/backend-tools'
+import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import { CoingeckoClient, HttpClient2, RetryHandler } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { Config } from '../config'
@@ -21,11 +21,15 @@ export class Providers {
     readonly config: Config,
     readonly logger: Logger,
   ) {
-    this.coingeckoClient = new CoingeckoClient(
-      new HttpClient2(),
-      config.coingeckoApiKey,
-      RetryHandler.RELIABLE_API(logger),
-    )
+    this.coingeckoClient = new CoingeckoClient({
+      apiKey: config.coingeckoApiKey,
+      http: new HttpClient2(),
+      logger,
+      rateLimiter: new RateLimiter({
+        callsPerMinute: config.coingeckoApiKey ? 400 : 10,
+      }),
+      retryHandler: RetryHandler.RELIABLE_API(logger),
+    })
     this.block = config.activity
       ? initBlockProviders(config.activity)
       : undefined

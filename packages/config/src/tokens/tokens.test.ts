@@ -10,6 +10,7 @@ import {
 import { expect } from 'earl'
 import { Contract, providers, utils } from 'ethers'
 
+import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import { chains } from '../chains'
 import { bridges } from '../projects'
 import { config } from '../test/config'
@@ -157,11 +158,13 @@ describe('tokens', () => {
       this.timeout(10000)
 
       const http = new HttpClient2()
-      const coingeckoClient = new CoingeckoClient(
+      const coingeckoClient = new CoingeckoClient({
+        apiKey: config.coingeckoApiKey,
         http,
-        config.coingeckoApiKey,
-        RetryHandler.TEST,
-      )
+        retryHandler: RetryHandler.TEST,
+        logger: Logger.SILENT,
+        rateLimiter: new RateLimiter({ callsPerMinute: 10 }),
+      })
 
       const coinsList = await coingeckoClient.getCoinList({
         includePlatform: true,

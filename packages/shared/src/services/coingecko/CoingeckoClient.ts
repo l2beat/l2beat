@@ -1,8 +1,10 @@
-import { CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-
-import { RateLimiter } from '@l2beat/backend-tools'
-import { HttpClient2 } from '../../clients'
-import { RetryHandler } from '../../tools'
+import {
+  CoingeckoId,
+  EthereumAddress,
+  UnixTime,
+  json,
+} from '@l2beat/shared-pure'
+import { ClientCore, ClientCoreDependencies } from '../../clients/ClientCore'
 import {
   CoinListEntry,
   CoinListPlatformEntry,
@@ -11,25 +13,23 @@ import {
   CoinMarketChartRangeData,
   CoinMarketChartRangeResult,
   CoinMetadata,
+  CoingeckoError,
   CoinsMarketResultData,
 } from './model'
 
 const API_URL = 'https://api.coingecko.com/api/v3'
 const PRO_API_URL = 'https://pro-api.coingecko.com/api/v3'
 
-export class CoingeckoClient {
+interface Dependencies extends ClientCoreDependencies {
+  apiKey: string | undefined
+}
+
+export class CoingeckoClient extends ClientCore {
   private readonly timeoutMs = 10_000
   private readonly newIds = new Map<string, CoingeckoId>()
 
-  constructor(
-    private readonly httpClient: HttpClient2,
-    private readonly apiKey: string | undefined,
-    private readonly retryHandler: RetryHandler,
-  ) {
-    const rateLimiter = new RateLimiter({
-      callsPerMinute: apiKey ? 400 : 10,
-    })
-    this.query = rateLimiter.wrap(this.query.bind(this))
+  constructor(private readonly $: Dependencies) {
+    super({ ...$ })
   }
 
   async getCoinList(options?: {
@@ -149,21 +149,37 @@ export class CoingeckoClient {
   }
 
   async query(endpoint: string, params: Record<string, string>) {
-    const queryParams = this.apiKey
-      ? { ...params, x_cg_pro_api_key: this.apiKey }
+    const queryParams = this.$.apiKey
+      ? { ...params, x_cg_pro_api_key: this.$.apiKey }
       : params
     const query = new URLSearchParams(queryParams).toString()
-    let url = `${this.apiKey ? PRO_API_URL : API_URL}${endpoint}`
+    let url = `${this.$.apiKey ? PRO_API_URL : API_URL}${endpoint}`
     if (query) {
       url += `?${query}`
     }
     try {
-      return await this.httpClient.fetch(url, { timeout: this.timeoutMs })
+      return await this.$.http.fetch(url, { timeout: this.timeoutMs })
     } catch {
-      return await this.retryHandler.retry(() =>
-        this.httpClient.fetch(url, { timeout: this.timeoutMs }),
+      return await this.$.retryHandler.retry(() =>
+        this.$.http.fetch(url, { timeout: this.timeoutMs }),
       )
     }
+  }
+
+  override validateResponse(response: json): {
+    success: boolean
+    message?: string
+  } {
+    const parsedError = CoingeckoError.safeParse(response)
+
+    if (parsedError.success) {
+      this.$.logger.warn(`Response validation error`, {
+        error: parsedError.data.error,
+      })
+      return { success: false, message: parsedError.data.error }
+    }
+
+    return { success: true }
   }
 }
 
