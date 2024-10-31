@@ -41,9 +41,7 @@ export const fraxtalDA: DaLayer = {
         When reading from the inbox, the op-node verifies that the commitment hash is a valid IPFS CID. If the data corresponding to the hash is missing from IPFS, the op-node will halt, preventing further derivation of the L2 chain. 
     `,
   },
-  bridges: [
-    fraxtalDABridge,
-  ],
+  bridges: [fraxtalDABridge],
   usedIn: [...toUsedInProject([fraxtal])],
   risks: {
     economicSecurity: DaEconomicSecurityRisk.Unknown,

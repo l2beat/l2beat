@@ -21,7 +21,7 @@ export const fraxtalDABridge = {
     name: 'DA Bridge',
     slug: 'da',
     description:
-    'The DA bridge relies on the honesty of the sequencer for L2 chain derivation, it not possible to verify blob inclusion onchain against the commitments.',
+      'The DA bridge stores IPFS hash commitments posted by the sequencer. It not possible to verify blob inclusion against the data commitments onchain.',
     links: {
       websites: ['https://redstone.xyz/'],
       apps: ['https://redstone.xyz/deposit'],
@@ -74,8 +74,8 @@ export const fraxtalDABridge = {
   },
   usedIn: toUsedInProject([redstone]),
   risks: {
-    committeeSecurity: DaCommitteeSecurityRisk.NoCommiteeSecurity(),
-    upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay
-    relayerFailure: DaRelayerFailureRisk.NoMechanism,
+    committeeSecurity: DaCommitteeSecurityRisk.NoBridge,
+    upgradeability: DaUpgradeabilityRisk.NoBridge,
+    relayerFailure: DaRelayerFailureRisk.NoBridge,
   },
 } satisfies DaBridge

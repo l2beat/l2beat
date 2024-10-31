@@ -86,7 +86,7 @@ export function DAC(template: TemplateVars): DacDaLayer {
   `
 
   const bridgeDisplay: DacBridge['display'] = {
-    name: "DA Bridge",
+    name: 'DA Bridge',
     slug: 'dac',
     description: bridgeDescription,
     warning: template.warning,
