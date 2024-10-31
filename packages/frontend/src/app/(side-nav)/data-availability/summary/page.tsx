@@ -9,6 +9,13 @@ import { getDaSummaryEntries } from '~/server/features/data-availability/summary
 import { groupBySystem } from '../_utils/group-by-system'
 import { DaSummaryCustomTable } from './_components/table/da-summary-custom-table'
 import { DaSummaryPublicTable } from './_components/table/da-summary-public-table'
+import { getDefaultMetadata } from '~/utils/metadata'
+
+export const metadata = getDefaultMetadata({
+  openGraph: {
+    url: '/data-availability/summary',
+  },
+})
 
 export default async function Page() {
   const items = await getDaSummaryEntries()

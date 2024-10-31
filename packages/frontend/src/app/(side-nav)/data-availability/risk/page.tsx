@@ -8,6 +8,13 @@ import { MainPageHeader } from '~/components/main-page-header'
 import { getDaRiskEntries } from '~/server/features/data-availability/risks/get-da-risk-entries'
 import { groupBySystem } from '../_utils/group-by-system'
 import { DaRiskTable } from './_components/table/da-risk-table'
+import { getDefaultMetadata } from '~/utils/metadata'
+
+export const metadata = getDefaultMetadata({
+  openGraph: {
+    url: '/data-availability/risk',
+  },
+})
 
 export default async function Page() {
   const items = await getDaRiskEntries()

@@ -7,12 +7,38 @@ import { projectDetailsToNavigationSections } from '~/components/projects/naviga
 import { ProjectDetails } from '~/components/projects/project-details'
 import { getDaProjectEntry } from '~/server/features/data-availability/project/get-da-project-entry'
 import { DaProjectSummary } from '../_components/da-project-summary'
+import { getProjectMetadata } from '~/utils/metadata'
 
 interface Props {
   params: Promise<{
     layer: string
     bridge: string
   }>
+}
+
+export async function generateMetadata(props: Props) {
+  const params = await props.params
+  const layer = daLayers.find((layer) => layer.display.slug === params.layer)
+  if (!layer) {
+    notFound()
+  }
+  const bridge = layer.bridges.find(
+    (bridge) => bridge.display.slug === params.bridge,
+  )
+  if (!bridge) {
+    notFound()
+  }
+  return getProjectMetadata({
+    project: {
+      name: `${layer.display.name} with ${bridge.display.name}`,
+      description: layer.display.description,
+    },
+    metadata: {
+      openGraph: {
+        url: `/data-availability/projects/${layer.display.slug}/${bridge.display.slug}`,
+      },
+    },
+  })
 }
 
 export default async function Page(props: Props) {
