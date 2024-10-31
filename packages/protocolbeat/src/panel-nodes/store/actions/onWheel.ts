@@ -13,35 +13,45 @@ export function onWheel(
   container: HTMLElement,
 ): Partial<State> {
   event.preventDefault()
-  const { deltaY } = getWheelDelta(event)
+  const { deltaX, deltaY } = getWheelDelta(event)
   const { offsetX, offsetY, scale } = state.transform
 
-  const rect = container.getBoundingClientRect()
+  if (event.ctrlKey || event.metaKey) {
+    const rect = container.getBoundingClientRect()
 
-  let desiredChange = -deltaY * ZOOM_SENSITIVITY
-  if (event.ctrlKey && !state.input.ctrlPressed) {
-    // NOTE(radomski): This is a magic value but there is no other way to
-    // handle this nicely in a compact way. The `onwheel` event triggers
-    // for mouse scrolling, touchpad scrolling AND touchpad pinching.
-    // Pinching is the only case where the numbers are reaaaaaaaly small
-    // for some reason. We multiply this by 8 to get a delta that feels
-    // more natural.
-    //
-    // You know that the event is a pinch event when the `ctrlKey` is set.
-    // Yes. Really. I'm not joking.
-    desiredChange = desiredChange * 8
-  }
+    let desiredChange = -deltaY * ZOOM_SENSITIVITY
+    if (event.ctrlKey && !state.input.ctrlPressed) {
+      // NOTE(radomski): This is a magic value but there is no other way to
+      // handle this nicely in a compact way. The `onwheel` event triggers
+      // for mouse scrolling, touchpad scrolling AND touchpad pinching.
+      // Pinching is the only case where the numbers are reaaaaaaaly small
+      // for some reason. We multiply this by 8 to get a delta that feels
+      // more natural.
+      //
+      // You know that the event is a pinch event when the `ctrlKey` is set.
+      // Yes. Really. I'm not joking.
+      desiredChange = desiredChange * 8
+    }
 
-  let newScale = scale * (1 + desiredChange)
-  newScale = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, newScale))
-  const change = newScale / scale - 1
+    let newScale = scale * (1 + desiredChange)
+    newScale = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, newScale))
+    const change = newScale / scale - 1
 
-  return {
-    transform: {
-      offsetX: offsetX + (rect.left - event.clientX) * change,
-      offsetY: offsetY + (rect.top - event.clientY) * change,
-      scale: scale * (1 + change),
-    },
+    return {
+      transform: {
+        offsetX: offsetX + (rect.left - event.clientX) * change,
+        offsetY: offsetY + (rect.top - event.clientY) * change,
+        scale: scale * (1 + change),
+      },
+    }
+  } else {
+    return {
+      transform: {
+        offsetX: offsetX - deltaX,
+        offsetY: offsetY - deltaY,
+        scale,
+      },
+    }
   }
 }
 

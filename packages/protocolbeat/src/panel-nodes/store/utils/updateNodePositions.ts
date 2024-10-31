@@ -1,10 +1,5 @@
 import type { Box, Connection, State } from '../State'
-import {
-  BORDER_WIDTH,
-  FIELD_HEIGHT,
-  HEADER_HEIGHT,
-  RESIZE_HANDLE_HEIGHT,
-} from './constants'
+import { FIELD_HEIGHT, HEADER_HEIGHT, RESIZE_HANDLE_HEIGHT } from './constants'
 
 export function updateNodePositions(state: State): State {
   let dx = state.input.mouseX - state.input.mouseStartX
@@ -24,7 +19,6 @@ export function updateNodePositions(state: State): State {
       width: node.box.width,
       height:
         HEADER_HEIGHT +
-        BORDER_WIDTH +
         node.fields.length * FIELD_HEIGHT +
         RESIZE_HANDLE_HEIGHT,
       x: start ? start.x + dx : node.box.x,
@@ -53,7 +47,7 @@ export function updateNodePositions(state: State): State {
             ...field,
             box: {
               x: box.x,
-              y: box.y + HEADER_HEIGHT + BORDER_WIDTH + index * FIELD_HEIGHT,
+              y: box.y + HEADER_HEIGHT + index * FIELD_HEIGHT,
               width: box.width,
               height: FIELD_HEIGHT,
             },
@@ -75,12 +69,11 @@ function processConnection(
   from: { x: number; y: number; width: number },
   to: { x: number; y: number; width: number },
 ): Omit<Connection, 'nodeId'> {
-  const fromY =
-    from.y + HEADER_HEIGHT + BORDER_WIDTH + FIELD_HEIGHT * (index + 0.5)
+  const fromY = from.y + HEADER_HEIGHT + FIELD_HEIGHT * (index + 0.5)
   const toY = to.y + HEADER_HEIGHT / 2
 
-  const left = from.x - BORDER_WIDTH / 2
-  const right = from.x + from.width - BORDER_WIDTH * 1.5
+  const left = from.x
+  const right = from.x + from.width
 
   const leftToLeft = Math.abs(to.x - left)
   const leftToRight = Math.abs(to.x + to.width - left)

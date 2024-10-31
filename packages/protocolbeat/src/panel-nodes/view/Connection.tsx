@@ -44,10 +44,6 @@ export function Connection({ from, to, isHighlighted }: ConnectionProps) {
     to.y,
   ]
 
-  const stroke = isHighlighted
-    ? 'stroke-sun stroke-[3]'
-    : 'stroke-latte stroke-2'
-
   return (
     <svg
       viewBox={`${minX} ${minY} ${width} ${height}`}
@@ -55,7 +51,13 @@ export function Connection({ from, to, isHighlighted }: ConnectionProps) {
       className="pointer-events-none absolute"
       style={{ left: minX, top: minY, width, height }}
     >
-      <path d={path.join(' ')} strokeLinecap="round" className={stroke} />
+      <path
+        d={path.join(' ')}
+        strokeLinecap="round"
+        className={
+          isHighlighted ? 'stroke-[3] stroke-sun' : 'stroke-2 stroke-cream'
+        }
+      />
     </svg>
   )
 }

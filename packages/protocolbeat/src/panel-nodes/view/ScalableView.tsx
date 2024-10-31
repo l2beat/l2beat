@@ -36,7 +36,7 @@ export const ScalableView = forwardRef(
               top: -20 + '%',
               left: -20 + '%',
               height: 100 / scale + 20 + '%',
-              width: 200 / scale + 20 + '%',
+              width: 100 / scale + 20 + '%',
             }}
           />
         </div>

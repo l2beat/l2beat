@@ -4,7 +4,11 @@ import { useCallback, useRef } from 'react'
 import type { Field, Node } from '../store/State'
 import { useStore } from '../store/store'
 import { OklchColor, oklchColorToCSS } from '../store/utils/color'
-import { NODE_WIDTH } from '../store/utils/constants'
+import {
+  FIELD_HEIGHT,
+  HEADER_HEIGHT,
+  NODE_WIDTH,
+} from '../store/utils/constants'
 import { ResizeHandle } from './ResizeHandle'
 
 export interface NodeViewProps {
@@ -39,18 +43,23 @@ export function NodeView(props: NodeViewProps) {
         top: props.node.box.y,
         width: props.node.box.width,
         height: props.node.box.height,
-        backgroundColor: oklchColorToCSS(props.node.color),
       }}
       className={clsx(
-        'absolute rounded-md border-2 border-latte',
+        'absolute rounded bg-black',
         props.selected && 'outline outline-3 outline-sun',
       )}
     >
       <div
         className={clsx(
-          'flex h-[28px] w-full justify-between px-2 leading-[28px]',
-          props.node.fields.length > 0 && 'border-latte border-b-2',
+          'mb-1 flex w-full justify-between rounded-t px-2 font-bold text-sm',
+          props.node.fields.length > 0 && 'border border-milk',
+          props.node.color.l > 0.5 ? 'text-black' : 'text-milk',
         )}
+        style={{
+          height: HEADER_HEIGHT - 4,
+          lineHeight: HEADER_HEIGHT - 4 - 2 + 'px',
+          backgroundColor: oklchColorToCSS(props.node.color),
+        }}
       >
         <div className="truncate">{props.node.name}</div>
       </div>
@@ -62,7 +71,10 @@ export function NodeView(props: NodeViewProps) {
   )
 }
 
-function NodeField(props: { field: Field; color: OklchColor }) {
+function NodeField(props: {
+  field: Field
+  color: OklchColor
+}) {
   const isHighlighted = useStore((state) =>
     state.selected.includes(props.field.target),
   )
@@ -70,19 +82,18 @@ function NodeField(props: { field: Field; color: OklchColor }) {
     state.hidden.includes(props.field.target),
   )
 
-  const highlightedColor: OklchColor = {
-    l: 0.65,
-    c: Math.max(props.color.c, 0.1),
-    h: (props.color.h + 180) % 360,
-  }
+  const isLeft = props.field.connection.from.direction === 'left'
+
   return (
     <div className="relative">
       <div
-        className="h-[24px] w-full truncate rounded-full px-2 leading-[24px]"
+        className={clsx(
+          'w-full truncate rounded-full px-2 text-sm',
+          isHighlighted && 'bg-sun text-black',
+        )}
         style={{
-          backgroundColor: isHighlighted
-            ? oklchColorToCSS(highlightedColor)
-            : undefined,
+          height: FIELD_HEIGHT,
+          lineHeight: FIELD_HEIGHT + 'px',
         }}
       >
         {props.field.name}
@@ -90,17 +101,13 @@ function NodeField(props: { field: Field; color: OklchColor }) {
       {!targetHidden && (
         <div
           className={clsx(
-            'absolute h-[12px] w-[12px]',
-            'rounded-full border-2 border-milk bg-coffee',
+            'absolute h-[10px] w-[10px] rounded-full',
+            isHighlighted ? 'bg-sun' : 'bg-cream',
           )}
           style={{
-            left:
-              props.field.connection.from.direction === 'left' ? -7 : undefined,
-            right:
-              props.field.connection.from.direction === 'right'
-                ? -7
-                : undefined,
-            top: 6,
+            left: isLeft ? -5 : undefined,
+            right: isLeft ? undefined : -5,
+            top: FIELD_HEIGHT / 2 - 5,
           }}
         />
       )}

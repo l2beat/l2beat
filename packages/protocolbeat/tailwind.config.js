@@ -6,7 +6,7 @@ module.exports = {
       colors: {
         milk: '#F0D8BD',
         cream: 'rgb(169 135 99)',
-        coffee: 'rgb(29 23 21)',
+        coffee: 'rgb(40 36 34)',
         latte: 'rgb(89 76 67)',
         autumn: 'rgb(127 61 12)',
         sun: 'rgb(200 200 12)',

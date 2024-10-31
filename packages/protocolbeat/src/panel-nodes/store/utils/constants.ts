@@ -12,8 +12,7 @@ export const BACKSPACE_KEY = 'Backspace'
 
 export const IS_MACOS = navigator.userAgent.toLowerCase().includes('mac os')
 
-export const HEADER_HEIGHT = 28
-export const BORDER_WIDTH = 2
+export const HEADER_HEIGHT = 32
 export const FIELD_HEIGHT = 24
 export const RESIZE_HANDLE_HEIGHT = 15
 

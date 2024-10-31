@@ -50,7 +50,7 @@ export function ColorButton() {
       {open && (
         <div
           ref={ref}
-          className="-translate-x-1/2 absolute bottom-14 left-1/2 w-full"
+          className="-translate-x-1/2 absolute bottom-14 left-1/2 w-max"
         >
           <ColorPicker onColorChange={changeColor} />
         </div>
@@ -65,37 +65,22 @@ export interface ColorPickerProps {
 
 export function ColorPicker({ onColorChange }: ColorPickerProps) {
   const colors: OklchColor[] = [
-    { l: 1.0, c: 0, h: 90 },
-    { l: 0.2, c: 0.2, h: 22 },
-    { l: 0.2, c: 0.2, h: 35 },
-    { l: 0.2, c: 0.2, h: 142 },
-    { l: 0.2, c: 0.2, h: 267 },
-    { l: 0.2, c: 0.2, h: 320 },
-    { l: 0.2, c: 0.2, h: 350 },
-
-    { l: 0.4, c: 0, h: 90 },
-    { l: 0.3, c: 0.18, h: 22 },
-    { l: 0.3, c: 0.18, h: 35 },
-    { l: 0.3, c: 0.18, h: 142 },
-    { l: 0.3, c: 0.18, h: 267 },
-    { l: 0.3, c: 0.18, h: 320 },
-    { l: 0.3, c: 0.18, h: 350 },
-
-    { l: 0.2, c: 0, h: 90 },
-    { l: 0.4, c: 0.14, h: 22 },
-    { l: 0.4, c: 0.14, h: 35 },
-    { l: 0.4, c: 0.14, h: 142 },
-    { l: 0.4, c: 0.14, h: 267 },
-    { l: 0.4, c: 0.14, h: 320 },
-    { l: 0.4, c: 0.14, h: 350 },
+    { l: 0.3, c: 0.02, h: 39.29 },
+    { l: 0.34, c: 0.06, h: 270 },
+    { l: 0.31, c: 0.15, h: 266 },
+    { l: 0.35, c: 0.06, h: 160 },
+    { l: 0.29, c: 0.06, h: 129 },
+    { l: 0.45, c: 0.08, h: 208 },
+    { l: 0.33, c: 0.2, h: 318 },
+    { l: 0, c: 0, h: 90 },
   ]
 
   return (
-    <div className="grid grid-cols-7 place-items-center gap-3">
+    <div className="grid w-max grid-cols-7 place-items-center gap-3">
       {colors.map((c, i) => (
         <div
           style={{ backgroundColor: oklchColorToCSS(c) }}
-          className="h-12 w-12 rounded shadow-xl hover:ring active:opacity-50"
+          className="h-12 w-12 rounded border border-latte shadow-xl hover:ring"
           key={i}
           onClick={() => onColorChange(c)}
         ></div>
