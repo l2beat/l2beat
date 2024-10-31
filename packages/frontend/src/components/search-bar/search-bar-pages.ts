@@ -6,6 +6,7 @@ export type SearchBarPage = {
   tags?: string[]
   href: string
 }
+
 export const searchBarPages: SearchBarPage[] = [
   {
     type: 'scaling',
@@ -127,3 +128,15 @@ export const searchBarPages: SearchBarPage[] = [
     tags: ['pages'],
   },
 ]
+
+export const searchBarTypeOrderValue: SearchBarPage['type'][] = [
+  'da',
+  'bridges',
+  'scaling',
+]
+
+export function sortPagesByType(a: SearchBarPage, b: SearchBarPage) {
+  const aIndex = searchBarTypeOrderValue.indexOf(a.type)
+  const bIndex = searchBarTypeOrderValue.indexOf(b.type)
+  return aIndex - bIndex
+}

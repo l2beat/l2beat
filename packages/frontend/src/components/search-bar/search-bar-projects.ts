@@ -21,17 +21,16 @@ export interface SearchBarProject {
   tags: string[]
   createdAt: number
   type: 'layer2' | 'layer3' | 'bridge' | 'da' | 'zk-catalog'
+  filePrepared?: Fuzzysort.Prepared
 }
 
-export function getSearchBarProjects() {
-  return toSearchBarProjects([
-    ...layer2s,
-    ...layer3s,
-    ...bridges,
-    ...(env.NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT ? daLayers : []),
-    ...zkCatalogProjects,
-  ])
-}
+export const searchBarProjects = toSearchBarProjects([
+  ...layer2s,
+  ...layer3s,
+  ...bridges,
+  ...(env.NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT ? daLayers : []),
+  ...zkCatalogProjects,
+])
 
 function toSearchBarProjects(
   projects: (Layer2 | Layer3 | Bridge | DaLayer | ZkCatalogProject)[],

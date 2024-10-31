@@ -1,7 +1,7 @@
 'use client'
 
 import { assertUnreachable } from '@l2beat/shared-pure'
-import Fuse from 'fuse.js'
+import fuzzysort from 'fuzzysort'
 import Image from 'next/image'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import {
@@ -15,9 +15,13 @@ import {
 } from '~/components/core/command'
 import { useOnClickOutside } from '~/hooks/use-on-click-outside'
 import { useRouterWithProgressBar } from '../progress-bar'
-import { type SearchBarProject } from './get-search-bar-projects'
 import { useSearchBarContext } from './search-bar-context'
-import { type SearchBarPage, searchBarPages } from './search-bar-pages'
+import {
+  type SearchBarPage,
+  searchBarPages,
+  searchBarTypeOrderValue,
+} from './search-bar-pages'
+import { type SearchBarProject } from './search-bar-projects'
 interface Props {
   allProjects: SearchBarProject[]
   recentlyAdded: SearchBarProject[]
@@ -41,31 +45,34 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [setOpen])
 
-  const allProjectsFuse = useMemo(
-    () =>
-      new Fuse(allProjects, {
-        keys: ['name', 'tags'],
-        threshold: 0.3,
-      }),
-    [allProjects],
-  )
-
   const filteredProjects = useMemo(
     () =>
       value === ''
         ? recentlyAdded
-        : allProjectsFuse.search(value).map((r) => r.item),
-    [value, recentlyAdded, allProjectsFuse],
-  )
-
-  const pagesFuse = useMemo(
-    () => new Fuse(searchBarPages, { keys: ['name', 'tags'] }),
-    [],
+        : fuzzysort
+            .go(value, allProjects, {
+              limit: 15,
+              keys: ['name', (e) => e.tags.join()],
+            })
+            .map((match) => match.obj),
+    [value, recentlyAdded, allProjects],
   )
 
   const filteredPages = useMemo(
-    () => pagesFuse.search(value).map((r) => r.item),
-    [value, pagesFuse],
+    () =>
+      fuzzysort
+        .go(value, searchBarPages, {
+          keys: ['name', (e) => e.tags?.join() ?? ''],
+          scoreFn: (match) => {
+            const orderValue = searchBarTypeOrderValue.indexOf(match.obj.type)
+            if (orderValue === -1) {
+              return match.score
+            }
+            return match.score * orderValue
+          },
+        })
+        .flatMap((match) => match.obj),
+    [value],
   )
 
   const onEscapeKeyDown = (e?: KeyboardEvent) => {

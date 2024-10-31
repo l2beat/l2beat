@@ -12,8 +12,8 @@ import { ProgressBar } from '../components/progress-bar'
 import { roboto } from '../fonts'
 import '../styles/globals.css'
 import HalloweenCursor from '~/components/halloween-cursor'
-import { getSearchBarProjects } from '~/components/search-bar/get-search-bar-projects'
 import { SearchBarContextProvider } from '~/components/search-bar/search-bar-context'
+import { searchBarProjects } from '~/components/search-bar/search-bar-projects'
 
 export const metadata: Metadata = getDefaultMetadata()
 
@@ -24,7 +24,6 @@ export default async function RootLayout({
 }>) {
   const terms = getCollection('glossary')
 
-  const searchBarProjects = getSearchBarProjects()
   return (
     // We suppress the hydration warning here because we're using:
     // - next-themes's ThemeProvider
