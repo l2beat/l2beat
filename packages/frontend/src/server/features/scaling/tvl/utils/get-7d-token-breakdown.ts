@@ -1,14 +1,12 @@
 import { bridges, layer2s, layer3s } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
+import { unstable_noStore as noStore } from 'next/cache'
 import { env } from '~/env'
 import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
 import { getTokenBreakdown } from './get-token-breakdown'
 import { type TvlProject, getTvlProjects } from './get-tvl-projects'
 import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
+import { cache } from '~/utils/cache'
 
 export function get7dTokenBreakdown(
   ...parameters: Parameters<typeof getCached7dTokenBreakdown>

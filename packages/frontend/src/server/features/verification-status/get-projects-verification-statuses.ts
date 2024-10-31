@@ -1,11 +1,9 @@
 import { readFileSync } from 'fs'
 import path from 'path'
 import { ProjectsVerificationStatuses } from '@l2beat/shared-pure'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
+import { unstable_noStore as noStore } from 'next/cache'
 import { env } from '~/env'
+import { cache } from '~/utils/cache'
 
 export function getProjectsVerificationStatuses() {
   noStore()

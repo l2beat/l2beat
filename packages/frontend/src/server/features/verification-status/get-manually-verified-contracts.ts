@@ -10,11 +10,9 @@ import {
   parseManuallyVerifiedContracts,
 } from '@l2beat/config'
 import { type ManuallyVerifiedContracts } from '@l2beat/shared-pure'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
+import { unstable_noStore as noStore } from 'next/cache'
 import { env } from '~/env'
+import { cache } from '~/utils/cache'
 
 type Project = Layer2 | Layer3 | Bridge | DaLayer
 

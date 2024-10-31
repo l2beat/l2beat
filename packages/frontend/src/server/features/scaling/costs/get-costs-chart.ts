@@ -1,9 +1,6 @@
 import type { AggregatedL2CostRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
+import { unstable_noStore as noStore } from 'next/cache'
 import { z } from 'zod'
 import { env } from '~/env'
 import { db } from '~/server/database'
@@ -16,6 +13,7 @@ import {
 } from './utils/get-costs-projects'
 import { getCostsTargetTimestamp } from './utils/get-costs-target-timestamp'
 import { CostsTimeRange, rangeToResolution } from './utils/range'
+import { cache } from '~/utils/cache'
 
 export const CostsChartParams = z.object({
   range: CostsTimeRange,

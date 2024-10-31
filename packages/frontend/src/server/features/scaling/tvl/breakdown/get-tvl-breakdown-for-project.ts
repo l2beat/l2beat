@@ -5,13 +5,11 @@ import {
   EthereumAddress,
   UnixTime,
 } from '@l2beat/shared-pure'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
+import { unstable_noStore as noStore } from 'next/cache'
 import { env } from '~/env'
 import { getConfigMapping } from '../utils/get-config-mapping'
 import { getTvlBreakdown } from './get-tvl-breakdown'
+import { cache } from '~/utils/cache'
 
 export type ProjectTvlBreakdown = Awaited<
   ReturnType<ReturnType<typeof getTvlBreakdown>>

@@ -1,8 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
+import { unstable_noStore as noStore } from 'next/cache'
 import { env } from '~/env'
 import { db } from '~/server/database'
 import { getRangeWithMax } from '~/utils/range/range'
@@ -14,6 +11,7 @@ import {
   createActivityProjectsFilter,
 } from './utils/project-filter-utils'
 import { type ActivityTimeRange } from './utils/range'
+import { cache } from '~/utils/cache'
 
 /**
  * A function that computes values for chart data of the activity over time.

@@ -4,7 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "CACHE=false next dev --turbopack",
+    "dev:cache": "CACHE=true next dev --turbopack",
     "dev:mock": "MOCK=true pnpm dev",
     "build": "next build",
     "build:dependencies": "cd ../.. && pnpm build:dependencies",

@@ -16,14 +16,12 @@ import {
   notUndefined,
 } from '@l2beat/shared-pure'
 import { uniqBy } from 'lodash'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
+import { unstable_noStore as noStore } from 'next/cache'
 import { env } from '~/env'
 import { getLatestAmountForConfigurations } from '../breakdown/get-latest-amount-for-configurations'
 import { getLatestPriceForConfigurations } from '../breakdown/get-latest-price-for-configurations'
 import { getConfigMapping } from '../utils/get-config-mapping'
+import { cache } from '~/utils/cache'
 
 export type ProjectTokens = Record<ProjectTokenSource, ProjectToken[]>
 export type ProjectToken = {

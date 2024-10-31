@@ -1,13 +1,11 @@
 import { type ValueRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { type Dictionary } from 'lodash'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
+import { unstable_noStore as noStore } from 'next/cache'
 import { z } from 'zod'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
+import { cache } from '~/utils/cache'
 import { getEthPrices } from './utils/get-eth-prices'
 import { getTvlProjects } from './utils/get-tvl-projects'
 import { getTvlTargetTimestamp } from './utils/get-tvl-target-timestamp'
@@ -50,6 +48,11 @@ export async function getTvlChartData(
 export type TvlChartData = Awaited<ReturnType<typeof getCachedTvlChartData>>
 export const getCachedTvlChartData = cache(
   async ({ range, excludeAssociatedTokens, filter }: TvlChartDataParams) => {
+    console.log('getCachedTvlChartData', {
+      range,
+      excludeAssociatedTokens,
+      filter,
+    })
     const projectsFilter = createTvlProjectsFilter(filter)
     const tvlProjects = getTvlProjects().filter(projectsFilter)
 

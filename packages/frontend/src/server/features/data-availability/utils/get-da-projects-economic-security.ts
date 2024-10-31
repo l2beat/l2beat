@@ -2,12 +2,10 @@ import { daLayers } from '@l2beat/config'
 import { daEconomicSecurityMeta } from '@l2beat/config/build/src/projects/other/da-beat/types/DaEconomicSecurity'
 import { UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { compact, keyBy, round } from 'lodash'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
+import { unstable_noStore as noStore } from 'next/cache'
 import { env } from '~/env'
 import { db } from '~/server/database'
+import { cache } from '~/utils/cache'
 import { type EconomicSecurityData } from '../project/utils/get-da-project-economic-security'
 
 export async function getDaProjectsEconomicSecurity(): Promise<

@@ -2,10 +2,8 @@ import { type DaLayer } from '@l2beat/config'
 import { daEconomicSecurityMeta } from '@l2beat/config/build/src/projects/other/da-beat/types/DaEconomicSecurity'
 import { UnixTime } from '@l2beat/shared-pure'
 import { round } from 'lodash'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
+import { unstable_noStore as noStore } from 'next/cache'
+import { cache } from '~/utils/cache'
 import { env } from '~/env'
 import { db } from '~/server/database'
 

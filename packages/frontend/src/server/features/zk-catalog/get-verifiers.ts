@@ -1,12 +1,10 @@
 import { getVerifiersFromConfig } from '@l2beat/config/build/src/projects/other/zk-catalog'
 import { UnixTime, branded } from '@l2beat/shared-pure'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
+import { unstable_noStore as noStore } from 'next/cache'
 import { z } from 'zod'
 import { env } from '~/env'
 import { db } from '~/server/database'
+import { cache } from '~/utils/cache'
 
 export async function getVerifiers() {
   if (env.MOCK) {

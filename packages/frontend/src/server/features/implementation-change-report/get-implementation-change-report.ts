@@ -7,13 +7,11 @@ import {
   type ImplementationChangeReportApiResponse,
   UnixTime,
 } from '@l2beat/shared-pure'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
+import { unstable_noStore as noStore } from 'next/cache'
 import { env } from '~/env'
 import { db } from '~/server/database'
 import { getOnDiskData } from './get-on-disk-data'
+import { cache } from '~/utils/cache'
 
 export function getImplementationChangeReport() {
   if (env.MOCK) {

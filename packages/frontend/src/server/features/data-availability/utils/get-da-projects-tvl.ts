@@ -1,12 +1,10 @@
 import { layer2s, layer3s } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
+import { unstable_noStore as noStore } from 'next/cache'
 import { env } from '~/env'
 import { db } from '~/server/database'
+import { cache } from '~/utils/cache'
 
 export async function getDaProjectsTvl(projectIds: ProjectId[]) {
   if (env.MOCK) {
