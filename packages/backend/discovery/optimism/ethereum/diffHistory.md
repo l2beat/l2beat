@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x8387a3e97d24d35e28910cdd6e5f7b3fd390375b
+
+# Diff at Thu, 31 Oct 2024 12:01:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f409157dbd8c6fad51290f20e7bd5692f0556969 block: 21027355
+- current block number: 21085481
+
+## Description
+
+Config related (dispute game shapes).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21027355 (main branch discovery), not current.
+
+```diff
+    contract PermissionedDisputeGame (0x050ed6F6273c7D836a111E42153BC00D0380b87d) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      template:
++        "opstack/PermissionedDisputeGame"
+      description:
++        "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger."
+    }
+```
+
+```diff
+    contract PreimageOracle (0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277) {
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+      template:
++        "opstack/PreimageOracle"
+      description:
++        "The PreimageOracle contract is used to load the required data from L1 for a dispute game."
+    }
+```
+
+```diff
+    contract FaultDisputeGame (0xA6f3DFdbf4855a43c529bc42EDE96797252879af) {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      template:
++        "opstack/FaultDisputeGame"
+      description:
++        "Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root."
+    }
+```
+
+```diff
+    contract OptimismPortal (0xbEb5Fc579115071764c7423A4f12eDde41f106Ed) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals.
+      template:
++        "opstack/OptimismPortal2"
+      description:
++        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals."
+    }
+```
+
 Generated with discovered.json: 0x9eb2d05d3472d7651e9c0dd368e51ead6e18c373
 
 # Diff at Wed, 23 Oct 2024 09:21:39 GMT:

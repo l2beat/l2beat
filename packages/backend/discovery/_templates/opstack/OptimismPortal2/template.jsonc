@@ -1,0 +1,13 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OptimismPortal",
+  "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals.",
+  "ignoreMethods": ["isOutputFinalized"],
+  "ignoreInWatchMode": ["params"],
+  "fields": {
+    "paused": {
+      "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused.",
+      "severity": "HIGH"
+    }
+  }
+}
