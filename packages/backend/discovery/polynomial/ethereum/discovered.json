@@ -1,7 +1,7 @@
 {
   "name": "polynomial",
   "chain": "ethereum",
-  "blockNumber": 20769371,
+  "blockNumber": 21078675,
   "configHash": "0x04318f42e060d115a003b02e8e7426c1b68702225a43f5b45840ee74038f90ca",
   "contracts": [
     {
@@ -50,7 +50,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 100000,
-          "prevBlockNum": 20685011
+          "prevBlockNum": 21078466
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x58b51fb9FeeD00DD846f91D265Eba3cdd855A413",
@@ -285,6 +285,7 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
           "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
           "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
@@ -297,8 +298,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 50,
+        "multisigThreshold": "4 of 8 (50%)",
+        "nonce": 56,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -355,7 +356,7 @@
           "isSomeTxsLengthEqualToCelestiaDAExample": false,
           "isSequencerSendingBlobTx": true
         },
-        "overhead": 188,
+        "overhead": 0,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "resourceConfig": {
           "maxResourceLimit": 20000000,
@@ -365,7 +366,7 @@
           "systemTxMaxGas": 1000000,
           "maximumBaseFee": "340282366920938463463374607431768211455"
         },
-        "scalar": 684000,
+        "scalar": "452312848583266388373324160190187140051835877600158453279847299935117588608",
         "sequencerInbox": "0x0bd57e83B5E0f9eCD84d559bB58e1EcFEEdD2565",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
         "unsafeBlockSigner": "0x11e2785DCc88FBD03EA71Df324CbbB0A529B88a2",
@@ -512,10 +513,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 4255200,
-        "latestOutputIndex": 196,
-        "nextBlockNumber": 4276800,
-        "nextOutputIndex": 197,
+        "latestBlockNumber": 6112800,
+        "latestOutputIndex": 282,
+        "nextBlockNumber": 6134400,
+        "nextOutputIndex": 283,
         "PROPOSER": "0x5DA28F0186051a9F7b9eE2553FFdc165EB0A6714",
         "startingBlockNumber": 0,
         "startingTimestamp": 1718038175,
@@ -553,6 +554,7 @@
         }
       ]
     },
+    { "address": "0xA0737fea60F0601A192E3d2c98865A883ab0bda2" },
     { "address": "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038" },
     { "address": "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4" },
     { "address": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C" },

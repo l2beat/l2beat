@@ -133,8 +133,8 @@ export const xai: Layer3 = orbitStackL3({
     }),
     discovery.getContractDetails('SentryReferee', {
       description:
-        'The referree contract allows to create new challenges (state root reports) from the permissioned challenger, collects assertions from sentry nodes, and distributes esXAI rewards for operating a sentry node. \
-        The referee contract is also a whitelisted address in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. Additional staking through this contract is disabled. Stakers can continue to get staking rewards here or withdraw their assets.',
+        "The referee contract manages the Xai Sentry protocol. Sentry nodes that are tasked to watch the state transitions on Xai receive esXAI rewards for their service. These watchers participate in a game with a central 'challenger' by posting their assertions to make sure they are actually watching. In case of a malicious state transition, sentries are supposed to raise an alarm offchain. \
+        The referee contract is also a whitelisted address in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. New staking through this contract is disabled in favor of the new v2 staking. V1 Stakers can continue to get staking rewards here or withdraw/migrate their assets.",
       ...stakingUpgradeability,
     }),
     discovery.getContractDetails('PoolFactory', {
