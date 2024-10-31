@@ -1,7 +1,6 @@
 import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
 import { compact } from 'lodash'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
-import { projects } from '~/app/(top-nav)/zk-catalog/_utils/projects'
 import { env } from '~/env'
 import { groupByMainCategories } from '~/utils/group-by-main-categories'
 import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
@@ -129,9 +128,7 @@ function getScalingSummaryEntry(
     }
   }
 
-  const baseLayer = projects
-    .filter((layer) => layer.type === 'layer2')
-    .find((p) => p.id === project.hostChain)
+  const baseLayer = layer2s.find((p) => p.id === project.hostChain)
 
   const projectRisks = getL2Risks(project.riskView)
   const baseLayerRisks = baseLayer ? getL2Risks(baseLayer.riskView) : undefined

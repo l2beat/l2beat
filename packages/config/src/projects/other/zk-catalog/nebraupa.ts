@@ -1,8 +1,9 @@
-import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { PROOFS } from './common/proofSystems'
 import { ZkCatalogProject } from './types'
 
 export const nebraupa: ZkCatalogProject = {
+  createdAt: new UnixTime(1725284553), // 2024-09-02T13:42:33Z
   display: {
     slug: 'nebra-upa',
     name: 'Nebra UPA',

@@ -1,8 +1,9 @@
-import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { PROOFS } from './common/proofSystems'
 import { ZkCatalogProject } from './types'
 
 export const soulwallet: ZkCatalogProject = {
+  createdAt: new UnixTime(1723627600), // 2024-08-14T09:26:40Z
   display: {
     slug: 'soulwallet',
     name: 'Soul Wallet',
