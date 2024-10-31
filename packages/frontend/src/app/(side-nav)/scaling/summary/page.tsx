@@ -29,10 +29,6 @@ export default async function Page() {
       excludeAssociatedTokens: false,
       filter: { type: 'layer2' },
     }),
-    api.tvl.total.prefetch({
-      excludeAssociatedTokens: false,
-      filter: { type: 'layer2' },
-    }),
     api.activity.chart.prefetch({
       range: TIME_RANGE,
       filter: { type: 'all' },

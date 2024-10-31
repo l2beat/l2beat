@@ -41,6 +41,16 @@ export function useTvlChartRenderParams({ data, milestones, unit }: Params) {
       }) ?? [],
     [data, mappedMilestones, unit],
   )
+  const total = useMemo(() => {
+    const lastColumn = columns.at(-1)
+    if (!lastColumn) {
+      return undefined
+    }
+    return {
+      usd: lastColumn.data.usdValue,
+      eth: lastColumn.data.ethValue,
+    }
+  }, [columns])
 
   const firstValue = useMemo(() => columns[0]?.values[0]?.value, [columns])
   const lastValue = useMemo(
@@ -71,6 +81,7 @@ export function useTvlChartRenderParams({ data, milestones, unit }: Params) {
     chartRange,
     valuesStyle,
     formatYAxisLabel,
+    total,
   }
 }
 
