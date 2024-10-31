@@ -1,18 +1,31 @@
-import { EthereumAddress, UnixTime, ProjectId, formatSeconds } from '@l2beat/shared-pure'
-import { HARDCODED } from '../../discovery/values/hardcoded'
-import { BigNumber } from 'ethers'
-import { addSentimentToDataAvailability, DERIVATION, OPERATOR, RISK_VIEW } from '../../common'
-import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { Badge } from '../badges'
-import { Layer2 } from './types'
 import {
   ContractParameters,
   get$Implementations,
 } from '@l2beat/discovery-types'
-import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
+import {
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+  formatSeconds,
+} from '@l2beat/shared-pure'
+import { BigNumber } from 'ethers'
+import { formatEther } from 'ethers/lib/utils'
+import {
+  DERIVATION,
+  EXITS,
+  FORCE_TRANSACTIONS,
+  OPERATOR,
+  RISK_VIEW,
+  TECHNOLOGY_DATA_AVAILABILITY,
+  addSentimentToDataAvailability,
+} from '../../common'
 import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { HARDCODED } from '../../discovery/values/hardcoded'
+import { Badge } from '../badges'
+import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { getStage } from './common/stages/getStage'
-
+import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('base')
 
@@ -25,12 +38,7 @@ function safeGetImplementation(contract: ContractParameters): string {
 }
 
 const l1Upgradeability = {
-  upgradableBy: ['SuperchainProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
-
-const l2Upgradability = {
-  upgradableBy: ['L2ProxyAdmin'],
+  upgradableBy: ['ProxyAdmin'],
   upgradeDelay: 'No delay',
 }
 
@@ -108,7 +116,7 @@ const permissionlessGameFullCost = (() => {
     cost =
       cost +
       (permissionlessDisputeGameBonds / scaleFactor) *
-      exponentialBondsFactor ** i
+        exponentialBondsFactor ** i
   }
   return BigNumber.from(cost).mul(BigNumber.from(scaleFactor))
 })()
@@ -172,24 +180,24 @@ export const base: Layer2 = {
       )} after it has been posted.`,
     },
     finality: { finalizationPeriod: maxClockDuration },
-
   },
   config: {
     escrows: [
       discovery.getEscrowDetails({
         // OptimismPortal
-        address: EthereumAddress(''),
+        address: EthereumAddress('0x49048044D57e1C92A77f79988d21Fa8fAF74E97e'),
         tokens: ['ETH'],
       }),
       discovery.getEscrowDetails({
         // L1StandardBridge
-        address: EthereumAddress(''),
+        address: EthereumAddress('0x3154Cf16ccdb4C6d922629664174b904d80F2C35'),
         tokens: '*',
-        excludedTokens: ['rsETH']
+        excludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'rsETH'], // TODO: check
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress(''),
+        address: EthereumAddress('0x9de443AdC5A411E83F1878Ef24C3F52C61571e72'),
         tokens: ['wstETH'],
+        source: 'external',
         description:
           'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
       }),
@@ -208,40 +216,78 @@ export const base: Layer2 = {
       lag: 0,
       stateUpdate: 'disabled',
     },
+    trackedTxs: [
+      {
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
+        query: {
+          formula: 'transfer',
+          from: sequencerAddress,
+          to: sequencerInbox,
+          sinceTimestamp: genesisTimestamp,
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x56315b90c40730925ec5485cf004d835058518A0',
+          ),
+          selector: '0x9aaab648',
+          functionSignature:
+            'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
+          sinceTimestamp: new UnixTime(1686793895),
+          untilTimestamp: new UnixTime(1730303471), // before proofs
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: disputeGameFactory.address,
+          selector: '0x82ecf2f6',
+          functionSignature:
+            'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
+          sinceTimestamp: new UnixTime(1730303471), // after proofs
+        },
+      },
+    ],
   },
-  trackedTxs: [
-    {
-      uses: [
-        { type: 'liveness', subtype: 'batchSubmission' },
-        { type: 'l2costs', subtype: 'batchSubmission' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: EthereumAddress(''),
-        selector: '',
-        functionSignature: '',
-        sinceTimestamp: new UnixTime(),
-      }
+  chainConfig: {
+    name: 'base',
+    blockscoutV2ApiUrl: 'https://base.blockscout.com/api/v2',
+    chainId: 8453,
+    explorerUrl: 'https://basescan.org',
+    explorerApi: {
+      url: 'https://api.basescan.org/api',
+      type: 'etherscan',
     },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'stateUpdates' },
-        { type: 'l2costs', subtype: 'stateUpdates' },
-      ],
-      query: {}, // before proofs
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'stateUpdates' },
-        { type: 'l2costs', subtype: 'stateUpdates' },
-      ],
-      query: {}, // after proofs
-    },
-  ],
+    // ~ Timestamp of block number 0 on Base
+    // https://basescan.org/block/0
+    minTimestampForTvl: UnixTime.fromDate(new Date('2023-06-15T12:35:47Z')),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 5022,
+        version: '3',
+      },
+    ],
+    coingeckoPlatform: 'base',
+  },
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (blobs or calldata)'],
     bridge: { type: 'Enshrined' },
-    mode: 'Transaction data (compressed)'
+    mode: 'Transaction data (compressed)',
   }),
   riskView: {
     stateValidation: {
@@ -249,8 +295,10 @@ export const base: Layer2 = {
       sources: [
         {
           contract: 'DisputeGameFactory',
-          references: [''] // TODO: add references
-        }
+          references: [
+            'https://etherscan.io/address/0xc641a33cab81c559f2bd4b21ea34c290e2440c2b#code',
+          ],
+        },
       ],
       secondLine: `${formatSeconds(maxClockDuration)} challenge period`,
     },
@@ -259,7 +307,7 @@ export const base: Layer2 = {
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
         HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
-      )
+      ),
     },
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
@@ -277,21 +325,146 @@ export const base: Layer2 = {
         },
       ],
       references: [
-        { // see optimism.ts
+        {
+          text: 'DisputeGameFactory.sol - Etherscan source code, create() function',
+          href: 'https://etherscan.io/address/0xc641A33cab81C559F2bd4b21EA34C290E2440C2B#code',
         },
         {
+          text: 'FaultDisputeGame.sol - Etherscan source code, attack() function',
+          href: 'https://etherscan.io/address/0xCd3c0194db74C23807D4B90A5181e1B28cF7007C#code',
         },
       ],
     },
-    dataAvailability: {},
+    dataAvailability: {
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
+      references: [
+        {
+          text: 'Derivation: Batch submission - OP Mainnet specs',
+          href: 'https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission',
+        },
+        {
+          text: 'BatchInbox - Etherscan address',
+          href: `https://etherscan.io/address/${sequencerInbox.toString()}`,
+        },
+        {
+          text: 'OptimismPortal.sol - Etherscan source code, depositTransaction function',
+          href: `https://etherscan.io/address/${safeGetImplementation(
+            portal,
+          )}#code`,
+        },
+      ],
+    },
     operator: OPERATOR.CENTRALIZED_SEQUENCER,
-    forceTransactions: {},
-    exitMechanisms: [],
-    otherConsiderations: [],
+    forceTransactions: {
+      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
+      references: [
+        {
+          text: 'Sequencing Window - OP Mainnet Specs',
+          href: 'https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window',
+        },
+        {
+          text: 'OptimismPortal.sol - Etherscan source code, depositTransaction function',
+          href: `https://etherscan.io/address/${safeGetImplementation(
+            portal,
+          )}#code`,
+        },
+      ],
+    },
+    exitMechanisms: [
+      {
+        name: 'Regular exits',
+        description: `The user initiates the withdrawal by submitting a regular transaction on this chain. When a state root containing such transaction is settled, the funds become available for withdrawal on L1 after ${formatSeconds(
+          disputeGameFinalityDelaySeconds,
+        )}. Withdrawal inclusion can be proven before state root settlement, but a ${formatSeconds(
+          proofMaturityDelaySeconds,
+        )} period has to pass before it becomes actionable. The process of state root settlement takes a challenge period of at least ${formatSeconds(
+          maxClockDuration,
+        )} to complete. Finally the user submits an L1 transaction to claim the funds. This transaction requires a merkle proof.`,
+        risks: [],
+        references: [
+          {
+            text: 'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
+            href: `https://etherscan.io/address/${safeGetImplementation(
+              portal,
+            )}#code`,
+          },
+          {
+            text: 'OptimismPortal.sol - Etherscan source code, finalizeWithdrawalTransaction function',
+            href: `https://etherscan.io/address/${safeGetImplementation(
+              portal,
+            )}#code`,
+          },
+        ],
+      },
+      {
+        ...EXITS.FORCED('all-withdrawals'),
+        references: [
+          {
+            text: 'Forced withdrawal from an OP Stack blockchain',
+            href: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
+          },
+        ],
+      },
+    ],
+    otherConsiderations: [
+      {
+        name: 'EVM compatible smart contracts are supported',
+        description:
+          'OP stack chains are pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on L2.',
+        risks: [],
+        references: [
+          {
+            text: 'Introducing EVM Equivalence',
+            href: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
+          },
+        ],
+      },
+    ],
   },
   stateDerivation: DERIVATION.OPSTACK('BASE'),
   stateValidation: {
-    // see optimism.ts
+    description:
+      'Updates to the system state can be proposed and challenged by anyone who has sufficient funds. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.',
+    categories: [
+      {
+        title: 'State root proposals',
+        description: `Proposers submit state roots as children of the latest confirmed state root (called anchor state), by calling the \`create\` function in the DisputeGameFactory. A state root can have multiple conflicting children. Each proposal requires a stake, currently set to ${formatEther(
+          permissionlessDisputeGameBonds,
+        )} ETH, that can be slashed if the proposal is proven incorrect via a fraud proof. Stakes can be withdrawn only after the proposal has been confirmed. A state root gets confirmed if the challenge period has passed and it is not countered.`,
+        references: [
+          {
+            text: 'OP stack specification: Fault Dispute Game',
+            href: 'https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#fault-dispute-game',
+          },
+        ],
+      },
+      {
+        title: 'Challenges',
+        description: `Challenges are opened to disprove invalid state roots using bisection games. Each bisection move requires a stake that increases expontentially with the depth of the bisection, with a factor of ${exponentialBondsFactor}. The maximum depth is ${permissionlessGameMaxDepth}, and reaching it therefore requires a cumulative stake of ${parseFloat(
+          formatEther(permissionlessGameFullCost),
+        ).toFixed(
+          2,
+        )} ETH from depth 0. Actors can participate in any challenge by calling the \`defend\` or \`attack\` functions, depending whether they agree or disagree with the latest claim and want to move the bisection game forward. Actors that disagree with the top-level claim are called challengers, and actors that agree are called defenders. Each actor might be involved in multiple (sub-)challenges at the same time, meaning that the protocol operates with [full concurrency](https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a). Challengers and defenders alternate in the bisection game, and they pass each other a clock that starts with ${formatSeconds(
+          maxClockDuration,
+        )}. If a clock expires, the claim is considered defeated if it was countered, or it gets confirmed if uncountered. Since honest parties can inherit clocks from malicious parties that play both as challengers and defenders (see [freeloader claims](https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#freeloader-claims)), if a clock gets inherited with less than ${formatSeconds(
+          permissionlessGameClockExtension,
+        )}, it generally gets extended by ${formatSeconds(
+          permissionlessGameClockExtension,
+        )} with the exception of ${formatSeconds(
+          permissionlessGameClockExtension * 2,
+        )} right before depth ${permissionlessGameSplitDepth}, and ${formatSeconds(
+          oracleChallengePeriod,
+        )} right before the last depth. The maximum clock extension that a top level claim can get is therefore ${formatSeconds(
+          permissionlessGameMaxClockExtension,
+        )}. Since unconfirmed state roots are independent of one another, users can decide to exit with a subsequent confirmed state root if the previous one is delayed. Winners get the entire losers' stake, meaning that sybils can potentially play against each other at no cost. The final instruction found via the bisection game is then executed onchain in the MIPS one step prover contract who determines the winner. The protocol does not enforce valid bisections, meaning that actors can propose correct initial claims and then provide incorrect midpoints. The protocol can be subject to resource exhaustion attacks ([Spearbit 5.1.3](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_08_report-cb-fault-proofs-non-mips.pdf)).`,
+        references: [
+          {
+            text: 'Fraud Proof Wars: OPFP',
+            href: 'https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a',
+          },
+        ],
+      },
+    ],
   },
   stage: getStage(
     {
@@ -312,14 +485,20 @@ export const base: Layer2 = {
         proofSystemOverriddenOnlyInCaseOfABug: false,
         fraudProofSystemIsPermissionless: true,
         delayWith30DExitWindow: false,
-      }
+      },
     },
     {
-      rollupNodeLink: '' // TODO: add link
-    }
+      rollupNodeLink: 'https://github.com/base-org/node',
+    },
   ),
-  isNodeAvailable: true,
   milestones: [
+    {
+      name: 'Fault proofs!',
+      link: 'https://base.mirror.xyz/eOsedW4tm8MU5OhdGK107A9wsn-aU7MAb8f3edgX5Tk',
+      date: '2024-10-30T00:00:00Z',
+      description: 'Base upgrades to OP stack fault proofs for state proving.',
+      type: 'general',
+    },
     {
       name: 'Chain stall',
       link: 'https://status.base.org/incidents/n3q0q4z24b7h',
@@ -343,30 +522,137 @@ export const base: Layer2 = {
       type: 'general',
     },
   ],
-  nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'rsETH'],
-  nonTemplateEscrows: [
-  ],
-  chainConfig: {
-    name: 'base',
-    blockscoutV2ApiUrl: 'https://base.blockscout.com/api/v2',
-    chainId: 8453,
-    explorerUrl: 'https://basescan.org',
-    explorerApi: {
-      url: 'https://api.basescan.org/api',
-      type: 'etherscan',
+  permissions: [
+    {
+      name: 'Sequencer',
+      accounts: [discovery.formatPermissionedAccount(sequencerAddress)],
+      description: 'Central actor allowed to submit transaction batches to L1.',
     },
-    // ~ Timestamp of block number 0 on Base
-    // https://basescan.org/block/0
-    minTimestampForTvl: UnixTime.fromDate(new Date('2023-06-15T12:35:47Z')),
-    multicallContracts: [
+    ...discovery.getMultisigPermission(
+      'SuperchainGuardianMultisig',
+      'Can pause withdrawals or blacklist dispute games in case of an emergency. It is controlled by the OP stack Security Council multisig, but a module allows the OP Foundation Multisig to act through it. The Security Council can disable the module if the Foundation acts maliciously.',
+    ),
+    discovery.contractAsPermissioned(
+      discovery.getContract('ProxyAdmin'),
+      'Admin of OptimismPortal, L1StandardBridge, L1ERC721Bridge, OptimismMintableERC20Factory, DelayedWETH, DisputeGameFactory, AnchorStateRegistry and SystemConfig contracts.',
+    ),
+    ...discovery.getMultisigPermission(
+      'BaseAdminMultisig',
+      'Can upgrade all implementations of the system including the bridge, potentially gaining access to all funds.',
+    ),
+    ...discovery.getMultisigPermission(
+      'BaseMultisig1',
+      'Member of BaseAdminMultisig, which can upgrade all system contracts.',
+    ),
+    ...discovery.getMultisigPermission(
+      'BaseMultisig2',
+      'Can change configuration of SystemConfig - it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.',
+    ),
+    ...discovery.getMultisigPermission(
+      'SuperchainProxyAdminOwner',
+      'Can upgrade the SuperchainConfig implementation.',
+    ),
+    ...discovery.getMultisigPermission(
+      'SecurityCouncilMultisig',
+      `This is the OP stack SecurityCouncil. Member of the SuperchainProxyAdminOwner. It implements a LivenessModule used to remove inactive (${livenessInterval}) members while making sure that the threshold remains above 75%. If the number of members falls below 8, the Foundation takes ownership of the Security Council.`,
+      [
+        {
+          text: 'Security Council members - Optimism Collective forum',
+          href: 'https://gov.optimism.io/t/security-council-vote-2-initial-member-ratification/7118',
+        },
+      ],
+    ),
+    ...discovery.getMultisigPermission(
+      'FoundationMultisig_1',
+      'Member of the SuperchainProxyAdminOwner. Controlled by the OP Foundation.',
+    ),
+    ...discovery.getMultisigPermission(
+      'FoundationMultisig_2',
+      'Member of the BaseAdminMultisig. Can delete proposed state roots as Challenger (acting via Challenger1of2). Can pause withdrawals and deposits as Guardian (acting via SuperchainGuardianMultisig, DeputyGuardianModule). Controlled by OP Foundation.',
+    ),
+  ],
+  contracts: {
+    addresses: [
+      discovery.getContractDetails('OptimismPortal', {
+        description: `The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals. The current game type is ${gameTypes[respectedGameType]}.`,
+        ...l1Upgradeability,
+      }),
+      discovery.getContractDetails('L1CrossDomainMessenger', {
+        description:
+          'The L1CrossDomainMessenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract’s replay function.',
+        ...l1Upgradeability,
+      }),
+      discovery.getContractDetails('L1StandardBridge', {
+        description:
+          'The L1StandardBridge contract is the main entry point to deposit ERC20 tokens from L1 to L2.',
+        ...l1Upgradeability,
+      }),
+      discovery.getContractDetails('L1ERC721Bridge', {
+        description:
+          'The L1ERC721Bridge contract is used to bridge ERC-721 tokens from L1 to L2.',
+        ...l1Upgradeability,
+      }),
+      discovery.getContractDetails('SystemConfig', {
+        description:
+          'It contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address.',
+        ...l1Upgradeability,
+      }),
+      discovery.getContractDetails('DisputeGameFactory', {
+        description:
+          'The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.',
+        ...l1Upgradeability,
+      }),
+      discovery.getContractDetails(
+        'FaultDisputeGame',
+        'Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.',
+      ),
+      discovery.getContractDetails(
+        'PermissionedDisputeGame',
+        'Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.',
+      ),
+      discovery.getContractDetails('MIPS', {
+        description:
+          'The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.',
+      }),
+      discovery.getContractDetails('AnchorStateRegistry', {
+        description:
+          'Contains the latest confirmed state root that can be used as a starting point in a dispute game.',
+        ...l1Upgradeability,
+      }),
+      discovery.getContractDetails('PreimageOracle', {
+        description:
+          'The PreimageOracle contract is used to load the required data from L1 for a dispute game.',
+      }),
+      discovery.getContractDetails('DelayedWETH_PermissionlessGames', {
+        description:
+          'Contract designed to hold the bonded ETH for each permissionless dispute game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds. It is owned by the SuperchainProxyAdminOwner multisig.',
+        ...l1Upgradeability,
+      }),
+      discovery.getContractDetails('DelayedWETH_PermissionedGames', {
+        description:
+          'Contract designed to hold the bonded ETH for each permissioned dispute game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds. It is owned by the SuperchainProxyAdminOwner multisig.',
+        ...l1Upgradeability,
+      }),
+      discovery.getContractDetails('SuperchainConfig', {
+        description:
+          'The SuperchainConfig contract is used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.',
+        ...l1Upgradeability,
+      }),
+      discovery.getContractDetails('DeputyGuardianModule', {
+        description:
+          'The DeputyGuardianModule is a Gnosis Safe module that allows the OP Foundation to act through the GuardianMultisig, which is owned by the Security Council. It is used to pause withdrawals in case of an emergency, blacklist games, disable the proof system, and update the anchor state. The Security Council can disable the module if the Foundation acts maliciously.',
+        ...l1Upgradeability,
+      }),
+      discovery.getContractDetails('LivenessModule', {
+        description: `The LivenessModule is a Gnosis Safe nodule used to remove Security Council members that have been inactive for ${livenessInterval} while making sure that the threshold remains above 75%. If the number of members falls below 8, the FoundationMultisig_1 takes ownership of the multisig.`,
+        ...l1Upgradeability,
+      }),
+    ],
+    risks: [
       {
-        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
-        batchSize: 150,
-        sinceBlock: 5022,
-        version: '3',
+        category: 'Funds can be stolen if',
+        text: `a contract receives a malicious code upgrade. Both regular and emergency upgrades must be approved by both the Security Council and the Foundation. There is no delay on regular upgrades.`,
       },
     ],
-    coingeckoPlatform: 'base',
   },
-  usesBlobs: true,
-})
+}

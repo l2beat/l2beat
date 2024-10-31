@@ -1,8 +1,8 @@
 {
   "name": "base",
   "chain": "ethereum",
-  "blockNumber": 21085504,
-  "configHash": "0x236328a9ce9e8498b0e2503281ce924238efcc19edc4114adfda70f65542279c",
+  "blockNumber": 21086136,
+  "configHash": "0x5b9df1da7d405d515197429d4f6d57c7114195863df166056a3c6416c0af7bc2",
   "contracts": [
     {
       "name": "LivenessModule",
@@ -343,7 +343,7 @@
       }
     },
     {
-      "name": "DelayedWETH",
+      "name": "DelayedWETH_PermissionedGames",
       "address": "0x3E8a0B63f57e975c268d610ece93da5f78c01321",
       "template": "opstack/DelayedWETH",
       "sourceHashes": [
@@ -351,6 +351,7 @@
         "0xfff6f4cca21febd4323222e2ca87ec8b78edfdeeca942468fbf331e537815484"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "DelayedWETH",
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
       "issuedPermissions": [
         {
@@ -385,7 +386,8 @@
         "symbol": "WETH",
         "totalSupply": 0,
         "version": "1.1.0"
-      }
+      },
+      "derivedName": "DelayedWETH"
     },
     {
       "name": "GnosisSafe",
@@ -449,7 +451,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 28,
+        "gameCount": 30,
         "gameImpls": [
           "0xCd3c0194db74C23807D4B90A5181e1B28cF7007C",
           "0x19009dEBF8954B610f207D5925EEDe827805986e",
@@ -524,8 +526,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 491310,
-          "prevBlockNum": 21085503
+          "prevBoughtGas": 492334,
+          "prevBlockNum": 21086124
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -944,7 +946,7 @@
         ],
         "$upgradeCount": 4,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292916461",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292916517",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1254,7 +1256,7 @@
       "derivedName": "L1ERC20TokenBridge"
     },
     {
-      "name": "DelayedWETH",
+      "name": "DelayedWETH_PermissionlessGames",
       "address": "0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8",
       "template": "opstack/DelayedWETH",
       "sourceHashes": [
@@ -1262,6 +1264,7 @@
         "0xfff6f4cca21febd4323222e2ca87ec8b78edfdeeca942468fbf331e537815484"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "DelayedWETH",
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
       "issuedPermissions": [
         {
@@ -1294,9 +1297,10 @@
         "name": "Wrapped Ether",
         "owner": "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
         "symbol": "WETH",
-        "totalSupply": "2025013000000000000",
+        "totalSupply": "2185013000000000000",
         "version": "1.1.0"
-      }
+      },
+      "derivedName": "DelayedWETH"
     },
     {
       "name": "SecurityCouncilMultisig",

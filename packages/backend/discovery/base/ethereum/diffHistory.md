@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xbc7e0be20f338a20a903982f616e349190255e88
+Generated with discovered.json: 0x0b7e351f21dc557c02e7032b4e8fa7bbfc1bb974
 
-# Diff at Thu, 31 Oct 2024 12:05:59 GMT:
+# Diff at Thu, 31 Oct 2024 14:12:49 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@f409157dbd8c6fad51290f20e7bd5692f0556969 block: 20941326
-- current block number: 21085504
+- current block number: 21086136
 
 ## Description
 
@@ -265,7 +265,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract DelayedWETH (0x3E8a0B63f57e975c268d610ece93da5f78c01321)
+    contract DelayedWETH_PermissionedGames (0x3E8a0B63f57e975c268d610ece93da5f78c01321)
     +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
 ```
 
@@ -283,7 +283,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract DelayedWETH (0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8)
+    contract DelayedWETH_PermissionlessGames (0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8)
     +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
 ```
 
@@ -305,10 +305,10 @@ Provide description of changes. This section will be preserved.
 .../AnchorStateRegistry/AnchorStateRegistry.sol    |  448 +++
  .../ethereum/.flat/AnchorStateRegistry/Proxy.p.sol |  200 +
  .../.flat@20941326/Challenger1of2.sol => /dev/null |  299 --
+ .../DelayedWETH_PermissionedGames/DelayedWETH.sol  |  651 ++++
+ .../DelayedWETH_PermissionedGames/Proxy.p.sol      |  200 +
  .../DelayedWETH.sol                                |  651 ++++
- .../Proxy.p.sol                                    |  200 +
- .../DelayedWETH.sol                                |  651 ++++
- .../Proxy.p.sol                                    |  200 +
+ .../DelayedWETH_PermissionlessGames/Proxy.p.sol    |  200 +
  .../DisputeGameFactory/DisputeGameFactory.sol      | 1550 ++++++++
  .../ethereum/.flat/DisputeGameFactory/Proxy.p.sol  |  200 +
  .../base/ethereum/.flat/FaultDisputeGame.sol       | 3959 +++++++++++++++++++
