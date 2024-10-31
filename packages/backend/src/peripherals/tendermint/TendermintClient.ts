@@ -1,5 +1,6 @@
+import { RateLimiter } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
-import { assert, RateLimiter } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import { TendermintValidatorsResponseBodySchema } from './schemas'
 
 interface TendermintClientOpts {
