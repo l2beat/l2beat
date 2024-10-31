@@ -10,12 +10,17 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-      - name: Setup Node
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          run_install: false
+      - name: Install Node.js
         uses: actions/setup-node@v4
-      - name: Install dependencies
-        run: pnpm install
+        with:
+          node-version: 22
+          cache: 'pnpm'
+      - run: pnpm install
       - name: Apply migrations to STAGING
         run: pnpm prisma migrate deploy --schema=packages/database/prisma/schema.prisma
         env:
