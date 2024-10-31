@@ -25,8 +25,8 @@ export default async function Page({
       const search = (searchParams.search as string).toLowerCase()
       return (
         network.name.toLowerCase().includes(search) ||
-        network.chainId?.toString().includes(search) ||
-        network.coingeckoId?.toLowerCase().includes(search)
+        !!network.chainId?.toString().includes(search) ||
+        !!network.coingeckoId?.toLowerCase().includes(search)
       )
     })
     .sort((a, b) => (a.chainId ?? 0) - (b.chainId ?? 0))

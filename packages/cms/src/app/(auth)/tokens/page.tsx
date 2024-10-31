@@ -44,8 +44,8 @@ export default async function Page({
       const meta = tokenMeta[token.id]
       return (
         token.address.toLowerCase().includes(search) ||
-        meta?.name?.toLowerCase().includes(search) ||
-        meta?.symbol?.toLowerCase().includes(search)
+        !!meta?.name?.toLowerCase().includes(search) ||
+        !!meta?.symbol?.toLowerCase().includes(search)
       )
     })
 

@@ -25,8 +25,8 @@ export default async function Page({
       const search = (searchParams.search as string).toLowerCase()
       return (
         link.name.toLowerCase().includes(search) ||
-        link.managedBy?.toLowerCase().includes(search) ||
-        link.type?.toLowerCase().includes(search)
+        !!link.managedBy?.toLowerCase().includes(search) ||
+        !!link.type?.toLowerCase().includes(search)
       )
     })
   const count = allLinks.length
