@@ -12,7 +12,7 @@ export interface ClientCoreDependencies {
 }
 
 export abstract class ClientCore {
-  constructor(private readonly deps: ClientCoreDependencies) {}
+  constructor(private readonly deps: ClientCoreDependencies) { }
 
   /**
    * This method will perform HTTP fetch, and validate the response.
@@ -34,8 +34,6 @@ export abstract class ClientCore {
 
   private async _fetch(url: string, init: RequestInit): Promise<json> {
     const response = await this.deps.http.fetch(url, init)
-
-    console.log(response)
 
     const isResponseValid = this.validateResponse(response)
 
