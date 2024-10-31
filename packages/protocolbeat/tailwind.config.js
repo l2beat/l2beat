@@ -12,7 +12,7 @@ module.exports = {
         sun: 'rgb(200 200 12)',
       },
       fontFamily: {
-        ui: ['system-ui', 'sans-serif'],
+        sans: ['system-ui', 'sans-serif'],
         mono: [
           'ui-monospace',
           'Menlo',

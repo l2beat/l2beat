@@ -26,7 +26,7 @@ export function ValuesPanel() {
   const selected = findSelected(response.data.chains, selectedAddress)
 
   return (
-    <div className="h-full w-full overflow-x-hidden font-ui">
+    <div className="h-full w-full overflow-x-hidden">
       {!selected && <div>Select a contract</div>}
       {selected && <ProjectContract contract={selected} />}
     </div>

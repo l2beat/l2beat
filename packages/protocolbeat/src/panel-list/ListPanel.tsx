@@ -33,7 +33,7 @@ export function ListPanel() {
     return <div>Error</div>
   }
   return (
-    <div className="h-full w-full overflow-x-hidden font-ui">
+    <div className="h-full w-full overflow-x-hidden">
       <ol>
         {response.data.chains.map((chain, i) => (
           <ListItemChain key={i} chain={chain} first={i === 0} />

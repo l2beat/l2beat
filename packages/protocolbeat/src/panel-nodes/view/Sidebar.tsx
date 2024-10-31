@@ -18,9 +18,9 @@ function SidebarForSingleNode({ node }: { node: Node }) {
   const sourceLink = `https://vscode.blockscan.com/ethereum/${node.address}`
 
   return (
-    <div className="flex w-[400px] flex-col gap-2 overflow-y-auto bg-white p-2 drop-shadow-xl">
+    <div className="flex w-[400px] flex-col gap-2 overflow-y-auto border-latte border-l bg-coffee p-2 drop-shadow-xl">
       <h2 className="font-bold text-xl">{node.name}</h2>
-      <p className="text-gray-500 text-sm">
+      <p className="text-cream text-sm">
         <a
           href={etherscanLink}
           target="_blank"
@@ -42,7 +42,7 @@ function SidebarForSingleNode({ node }: { node: Node }) {
         ) : null}
       </p>
 
-      <p className="text-gray-500">Details:</p>
+      <p className="text-cream">Details:</p>
       <pre className="overflow-auto text-sm">
         <code>{JSON.stringify(node.data, null, 2)}</code>
       </pre>
