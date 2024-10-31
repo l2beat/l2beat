@@ -22,10 +22,14 @@ jobs:
           cache: 'pnpm'
       - run: pnpm install
       - name: Apply migrations to STAGING
-        run: pnpm prisma migrate deploy --schema=packages/database/prisma/schema.prisma
+        run: |
+          cd packages/database
+          pnpm prisma migrate deploy
         env:
           PRISMA_DB_URL: ${{ secrets.STAGING_DATABASE_URL }}
       - name: Apply migrations to PRODUCTION
-        run: pnpm prisma migrate deploy --schema=packages/database/prisma/schema.prisma
+        run: |
+          cd packages/database
+          pnpm prisma migrate deploy
         env:
           PRISMA_DB_URL: ${{ secrets.PRODUCTION_DATABASE_URL }}
