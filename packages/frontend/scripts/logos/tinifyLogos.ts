@@ -1,10 +1,10 @@
 import crypto from 'crypto'
 import { readFileSync, readdirSync, writeFileSync } from 'fs'
 import path from 'path'
+import { fileURLToPath } from 'url'
 import dotenv from 'dotenv'
 import tinify from 'tinify'
 import { z } from 'zod'
-import { fileURLToPath } from 'url'
 
 const TinifiedLogos = z.record(z.string(), z.string())
 
