@@ -34,7 +34,7 @@ export function MobileProjectNavigation({ sections }: Props) {
   return (
     <OverflowWrapper
       ref={overflowContainer}
-      className="bg-white dark:bg-neutral-900"
+      className="flex justify-center bg-white dark:bg-neutral-900"
     >
       <div className="flex items-center">
         <a
@@ -48,7 +48,9 @@ export function MobileProjectNavigation({ sections }: Props) {
           Summary
         </a>
         {sections.map((section) => {
-          const selected = section.id === currentSection?.id
+          const selected =
+            section.id === currentSection?.id ||
+            section.subsections?.some((s) => s.id === currentSection?.id)
 
           return (
             <a

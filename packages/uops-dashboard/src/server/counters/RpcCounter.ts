@@ -22,6 +22,7 @@ import {
   isErc4337,
   isGnosisSafe,
 } from '@l2beat/shared'
+import { assert } from '@l2beat/shared-pure'
 import { generateId } from '../../utils/generateId'
 import { rankBlocks } from '../../utils/rankBlocks'
 import { traverseOperationTree } from '../../utils/traverseOperationTree'
@@ -105,6 +106,8 @@ export class RpcCounter implements Counter {
         tx,
       )
 
+      assert(tx.type, 'Tx type should be defined')
+
       return {
         from: tx.from,
         type: this.getTransactionType(tx.type, tx.to),
@@ -115,6 +118,8 @@ export class RpcCounter implements Counter {
         includesUnknown,
       }
     }
+
+    assert(tx.type !== undefined, 'Tx type should be defined')
 
     return {
       from: tx.from,
@@ -241,7 +246,7 @@ export class RpcCounter implements Counter {
     }
   }
 
-  getTransactionType(type: number, to: string | null): string {
+  getTransactionType(type: number, to?: string | null): string {
     switch (to?.toLowerCase()) {
       case ENTRY_POINT_ADDRESS_0_6_0:
         return 'ERC-4337 Entry Point 0.6.0'

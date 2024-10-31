@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { layer2s, layer3s } from '@l2beat/config'
 import { ImageResponse } from 'next/og'
 import { NextResponse } from 'next/server'

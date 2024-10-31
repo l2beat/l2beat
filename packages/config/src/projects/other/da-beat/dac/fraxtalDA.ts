@@ -8,7 +8,7 @@ import { toUsedInProject } from '../utils/to-used-in-project'
 export const fraxtalDA: DaLayer = {
   id: 'dac',
   type: 'DaLayer',
-  kind: 'DAC',
+  kind: 'No DAC',
   systemCategory: 'custom',
   display: {
     name: 'FraxtalDA',
@@ -37,6 +37,9 @@ export const fraxtalDA: DaLayer = {
     FraxtalDA relies on a single DA endpoint to manage data posting between the three different locations. 
 
     ![FraxtalDA](/images/da-layer-technology/fraxtalDA/FraxtalDA.png#center)
+
+    The sequencer attests to data availability by posting an IPFS hash to an on-chain inbox contract on Ethereum. L2 nodes derive the L2 chain from the L1 by reading transactions commitments from this sequencer inbox.
+        When reading from the inbox, the op-node verifies that the commitment hash is a valid IPFS CID. If the data corresponding to the hash is missing from IPFS, the op-node will halt, preventing further derivation of the L2 chain. 
     `,
   },
   bridges: [
@@ -44,9 +47,9 @@ export const fraxtalDA: DaLayer = {
       createdAt: new UnixTime(1726754891), // 2024-09-19T14:08:11Z
       layer: 'FraxtalDA',
       description:
-        'The risk profile in this page refers to scaling solutions that do not integrate with a data availability bridge.',
+        'The risk profile in this page refers to L2s that do not integrate with a data availability bridge.',
       technology: {
-        description: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.\n`,
+        description: `There is no committee attesting to the availability of the data. For L2 chain derivation, the system relies on sequencer commitments to an L1 onchain inbox. See DA layer technology section for more details.\n`,
       },
     }),
   ],

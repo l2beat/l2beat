@@ -43,6 +43,9 @@ export const env = createEnv({
     NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT: featureFlag.default('false'),
     NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION: featureFlag.default('false'),
     NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS: featureFlag.default('false'),
+    NEXT_PUBLIC_FEATURE_FLAG_INTERNAL_TOOLS: featureFlag.default(
+      process.env.NODE_ENV === 'development' ? 'true' : 'false',
+    ),
     NEXT_PUBLIC_GITCOIN_ROUND_LIVE: featureFlag.default('false'),
     NEXT_PUBLIC_PLAUSIBLE_DOMAIN: z.string().default('localhost'),
     NEXT_PUBLIC_PLAUSIBLE_ENABLED: coerceBoolean.optional(),
@@ -75,6 +78,8 @@ export const env = createEnv({
       process.env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION,
     NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS:
       process.env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS,
+    NEXT_PUBLIC_FEATURE_FLAG_INTERNAL_TOOLS:
+      process.env.NEXT_PUBLIC_FEATURE_FLAG_INTERNAL_TOOLS,
     NEXT_PUBLIC_GITCOIN_ROUND_LIVE: process.env.FEATURE_FLAG_GITCOIN_OPTION,
     NEXT_PUBLIC_PLAUSIBLE_DOMAIN: process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN,
     NEXT_PUBLIC_PLAUSIBLE_ENABLED: process.env.NEXT_PUBLIC_PLAUSIBLE_ENABLED,

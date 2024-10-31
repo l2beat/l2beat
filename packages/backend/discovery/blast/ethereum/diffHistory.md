@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x6a18532f23d39cf86a9419b1ed5eb74d33af4a40
+Generated with discovered.json: 0x654059fa7af8ba369109b23366a10be3d7eeddaf
 
-# Diff at Mon, 28 Oct 2024 14:00:50 GMT:
+# Diff at Tue, 29 Oct 2024 13:05:01 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@846d03afee15838cf7b18315c02ebdb6a2071f6c block: 20921743
-- current block number: 21064588
+- comparing to: main@7b3fc9dc9074e1d423b48522c3f0273c86aab54a block: 20921743
+- current block number: 20921743
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Discovery rerun on the same block number with only config-related changes.
 
 ## Config/verification related changes
 
@@ -17,162 +17,10 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 20921743 (main branch discovery), not current.
 
 ```diff
-    contract OptimismPortal (0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb) {
-    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
-      issuedPermissions.1.target:
--        "0x364289230b8cc7d9120eF962AF37ebCFe23cE883"
-+        "0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05"
-      issuedPermissions.1.via.0:
-+        {"address":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883","delay":0}
-    }
-```
-
-```diff
-    contract ProxyAdmin (0x364289230b8cc7d9120eF962AF37ebCFe23cE883) {
-    +++ description: None
-      receivedPermissions:
--        [{"permission":"configure","target":"0xE064B565Cf2A312a3e66Fe4118890583727380C0","description":"set and change address mappings."},{"permission":"upgrade","target":"0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb"},{"permission":"upgrade","target":"0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115"},{"permission":"upgrade","target":"0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9"},{"permission":"upgrade","target":"0x697402166Fbf2F22E970df8a6486Ef171dbfc524","description":"upgrading bridge implementation allows to access all funds and change every system component."},{"permission":"upgrade","target":"0x6B916DcCa661d23794e78509723A6f4348564847"},{"permission":"upgrade","target":"0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76"},{"permission":"upgrade","target":"0x98078db053902644191f93988341E31289E1C8FE"},{"permission":"upgrade","target":"0xa230285d5683C74935aD14c446e137c8c8828438"},{"permission":"upgrade","target":"0xa45A0c7C47DB8C6e99b2d7C4939F7f7Cf69C8975"}]
-      template:
-+        "global/ProxyAdmin"
-      directlyReceivedPermissions:
-+        [{"permission":"configure","target":"0xE064B565Cf2A312a3e66Fe4118890583727380C0","description":"set and change address mappings."},{"permission":"upgrade","target":"0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb"},{"permission":"upgrade","target":"0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115"},{"permission":"upgrade","target":"0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9"},{"permission":"upgrade","target":"0x697402166Fbf2F22E970df8a6486Ef171dbfc524","description":"upgrading bridge implementation allows to access all funds and change every system component."},{"permission":"upgrade","target":"0x6B916DcCa661d23794e78509723A6f4348564847"},{"permission":"upgrade","target":"0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76"},{"permission":"upgrade","target":"0x98078db053902644191f93988341E31289E1C8FE"},{"permission":"upgrade","target":"0xa230285d5683C74935aD14c446e137c8c8828438"},{"permission":"upgrade","target":"0xa45A0c7C47DB8C6e99b2d7C4939F7f7Cf69C8975"}]
-    }
-```
-
-```diff
-    contract L1BlastBridge (0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115) {
-    +++ description: Custom bridge gateway for Blast that allows the Operators to reinvest L1 tokens while they are bridged to the L2.
-      issuedPermissions.0.target:
--        "0x364289230b8cc7d9120eF962AF37ebCFe23cE883"
-+        "0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05"
-      issuedPermissions.0.via.0:
-+        {"address":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883","delay":0}
-    }
-```
-
-```diff
-    contract BlastMultisig (0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05) {
-    +++ description: None
-      receivedPermissions.12:
-+        {"permission":"upgrade","target":"0xa45A0c7C47DB8C6e99b2d7C4939F7f7Cf69C8975","via":[{"address":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883"}]}
-      receivedPermissions.11:
-+        {"permission":"upgrade","target":"0xa230285d5683C74935aD14c446e137c8c8828438","via":[{"address":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883"}]}
-      receivedPermissions.10:
-+        {"permission":"upgrade","target":"0x98078db053902644191f93988341E31289E1C8FE","via":[{"address":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883"}]}
-      receivedPermissions.9:
-+        {"permission":"upgrade","target":"0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76","via":[{"address":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883"}]}
-      receivedPermissions.8:
-+        {"permission":"upgrade","target":"0x6B916DcCa661d23794e78509723A6f4348564847","via":[{"address":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883"}]}
-      receivedPermissions.7:
-+        {"permission":"upgrade","target":"0x697402166Fbf2F22E970df8a6486Ef171dbfc524","description":"upgrading bridge implementation allows to access all funds and change every system component.","via":[{"address":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883"}]}
-      receivedPermissions.6:
-+        {"permission":"upgrade","target":"0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9","via":[{"address":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883"}]}
-      receivedPermissions.5:
-+        {"permission":"upgrade","target":"0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115","via":[{"address":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883"}]}
-      receivedPermissions.4:
-+        {"permission":"upgrade","target":"0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb","via":[{"address":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883"}]}
-      receivedPermissions.3:
-+        {"permission":"guard","target":"0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb"}
-      receivedPermissions.2.permission:
--        "guard"
-+        "configure"
-      receivedPermissions.2.target:
--        "0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb"
-+        "0xE064B565Cf2A312a3e66Fe4118890583727380C0"
-      receivedPermissions.2.description:
-+        "set and change address mappings."
-      receivedPermissions.2.via:
-+        [{"address":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883"}]
-      directlyReceivedPermissions:
-+        [{"permission":"act","target":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883"}]
-    }
-```
-
-```diff
-    contract SystemConfig (0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9) {
-    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
-      issuedPermissions.2.target:
--        "0x364289230b8cc7d9120eF962AF37ebCFe23cE883"
-+        "0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05"
-      issuedPermissions.2.via.0:
-+        {"address":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883","delay":0}
-    }
-```
-
-```diff
-    contract L1StandardBridge (0x697402166Fbf2F22E970df8a6486Ef171dbfc524) {
-    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
-      issuedPermissions.0.target:
--        "0x364289230b8cc7d9120eF962AF37ebCFe23cE883"
-+        "0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05"
-      issuedPermissions.0.via.0:
-+        {"address":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883","delay":0,"description":"upgrading bridge implementation allows to access all funds and change every system component."}
-    }
-```
-
-```diff
-    contract OptimismMintableERC20Factory (0x6B916DcCa661d23794e78509723A6f4348564847) {
-    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
-      issuedPermissions.0.target:
--        "0x364289230b8cc7d9120eF962AF37ebCFe23cE883"
-+        "0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05"
-      issuedPermissions.0.via.0:
-+        {"address":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883","delay":0}
-    }
-```
-
-```diff
     contract L2OutputOracle (0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76) {
     +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
-      issuedPermissions.2.target:
--        "0x364289230b8cc7d9120eF962AF37ebCFe23cE883"
-+        "0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05"
-      issuedPermissions.2.via.0:
-+        {"address":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883","delay":0}
-    }
-```
-
-```diff
-    contract ETHYieldManager (0x98078db053902644191f93988341E31289E1C8FE) {
-    +++ description: Contract managing Yield Providers for ETH.
-      issuedPermissions.0.target:
--        "0x364289230b8cc7d9120eF962AF37ebCFe23cE883"
-+        "0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05"
-      issuedPermissions.0.via.0:
-+        {"address":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883","delay":0}
-    }
-```
-
-```diff
-    contract USDYieldManager (0xa230285d5683C74935aD14c446e137c8c8828438) {
-    +++ description: Contract escrowing stablecoins and managing Yield Providers for stablecoins (like for example DAI).
-      issuedPermissions.0.target:
--        "0x364289230b8cc7d9120eF962AF37ebCFe23cE883"
-+        "0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05"
-      issuedPermissions.0.via.0:
-+        {"address":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883","delay":0}
-    }
-```
-
-```diff
-    contract L1ERC721Bridge (0xa45A0c7C47DB8C6e99b2d7C4939F7f7Cf69C8975) {
-    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
-      issuedPermissions.0.target:
--        "0x364289230b8cc7d9120eF962AF37ebCFe23cE883"
-+        "0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05"
-      issuedPermissions.0.via.0:
-+        {"address":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883","delay":0}
-    }
-```
-
-```diff
-    contract AddressManager (0xE064B565Cf2A312a3e66Fe4118890583727380C0) {
-    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
-      issuedPermissions.0.target:
--        "0x364289230b8cc7d9120eF962AF37ebCFe23cE883"
-+        "0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05"
-      issuedPermissions.0.via.0:
-+        {"address":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883","delay":0,"description":"set and change address mappings."}
+      fieldMeta:
++        {"FINALIZATION_PERIOD_SECONDS":{"description":"Challenge period (Number of seconds until a state root is finalized)."}}
     }
 ```
 

@@ -14,29 +14,49 @@ describe(OpStackStateUpdateAnalyzer.name, () => {
           data: mockCallData(348523048),
         }),
       })
-      const l2Timestamp = 1706143081
-      const l1Timestamp = 1708352483
-      const l2provider = mockL2RpcClient(l2Timestamp)
+      const l2BlockTime = 2
+      const prevoiusL2Timestamp = 1706141000
+      const currentL2Timestamp = 1706141020
+      const previousL1Timestamp = 1708351003
+      const currentL1Timestamp = 1708352483
+      const l2provider = mockL2RpcClient(
+        prevoiusL2Timestamp,
+        currentL2Timestamp,
+      )
 
       const calculator = new OpStackStateUpdateAnalyzer(
         provider,
         mockObject<Database>(),
         ProjectId('zora'),
+        l2BlockTime,
         l2provider,
       )
-      const results = await calculator.analyze({
-        txHash: '0x121',
-        timestamp: new UnixTime(l1Timestamp),
-      })
+      const results = await calculator.analyze(
+        { txHash: '0x123', timestamp: new UnixTime(previousL1Timestamp) },
+        { txHash: '0x456', timestamp: new UnixTime(currentL1Timestamp) },
+      )
 
-      expect(results).toEqualUnsorted([l1Timestamp - l2Timestamp])
+      expect(results).toEqualUnsorted([
+        { timestamp: 1706141002, blockNumber: 101 },
+        { timestamp: 1706141004, blockNumber: 102 },
+        { timestamp: 1706141006, blockNumber: 103 },
+        { timestamp: 1706141008, blockNumber: 104 },
+        { timestamp: 1706141010, blockNumber: 105 },
+        { timestamp: 1706141012, blockNumber: 106 },
+        { timestamp: 1706141014, blockNumber: 107 },
+        { timestamp: 1706141016, blockNumber: 108 },
+        { timestamp: 1706141018, blockNumber: 109 },
+        { timestamp: 1706141020, blockNumber: 110 },
+      ])
     })
   })
 })
 
-function mockL2RpcClient(timestamp: number) {
+function mockL2RpcClient(prevTimestamp: number, currentTimestamp: number) {
   return mockObject<RpcClient>({
-    getBlock: mockFn().resolvesToOnce({ timestamp }),
+    getBlock: mockFn()
+      .resolvesToOnce({ timestamp: prevTimestamp, number: 100 })
+      .resolvesToOnce({ timestamp: currentTimestamp, number: 110 }),
   })
 }
 

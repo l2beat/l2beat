@@ -29,51 +29,55 @@ export const hychainDac = AnytrustDAC({
   bridge: {
     createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     contracts: {
-      addresses: [
-        discovery.getContractDetails(
-          'SequencerInbox',
-          'Main entry point for the Sequencer submitting transaction batches.',
-        ),
-      ],
+      addresses: {
+        ethereum: [
+          discovery.getContractDetails(
+            'SequencerInbox',
+            'Main entry point for the Sequencer submitting transaction batches.',
+          ),
+        ],
+      },
       risks: [],
     },
 
-    permissions: [
-      // Members: DAC uses BLS sigs, not EOAs
-      {
-        name: 'Sequencers',
-        accounts: discovery.getPermissionsByRole('sequence'),
-        description:
-          'Central actors allowed to submit transaction batches to the DA bridge (Sequencer Inbox.',
-        chain: discovery.chain,
-      },
-      {
-        name: 'RollupOwner',
-        accounts: discovery.getAccessControlRolePermission(
-          'UpgradeExecutor',
-          'EXECUTOR_ROLE',
+    permissions: {
+      ethereum: [
+        // Members: DAC uses BLS sigs, not EOAs
+        {
+          name: 'Sequencers',
+          accounts: discovery.getPermissionsByRole('sequence'),
+          description:
+            'Central actors allowed to submit transaction batches to the DA bridge (Sequencer Inbox.',
+          chain: discovery.chain,
+        },
+        {
+          name: 'RollupOwner',
+          accounts: discovery.getAccessControlRolePermission(
+            'UpgradeExecutor',
+            'EXECUTOR_ROLE',
+          ),
+          description:
+            'Multisig that can upgrade authorized batch posters (relayers) via the UpgradeExecutor contract.',
+        },
+        {
+          name: 'UpgradeExecutor',
+          accounts: [
+            {
+              address: EthereumAddress(
+                discovery.getContractValue<string>('RollupProxy', 'owner'),
+              ),
+              type: 'Contract',
+            },
+          ],
+          description:
+            'The UpgradeExecutor can change the Committee members by updating the valid keyset.',
+        },
+        ...discovery.getMultisigPermission(
+          'HychainMultisig',
+          `Multisig that can upgrade the DA bridge and other rollup's smart contracts (via UpgradeExecutor).`,
         ),
-        description:
-          'Multisig that can upgrade authorized batch posters (relayers) via the UpgradeExecutor contract.',
-      },
-      {
-        name: 'UpgradeExecutor',
-        accounts: [
-          {
-            address: EthereumAddress(
-              discovery.getContractValue<string>('RollupProxy', 'owner'),
-            ),
-            type: 'Contract',
-          },
-        ],
-        description:
-          'The UpgradeExecutor can change the Committee members by updating the valid keyset.',
-      },
-      ...discovery.getMultisigPermission(
-        'HychainMultisig',
-        `Multisig that can upgrade the DA bridge and other rollup's smart contracts (via UpgradeExecutor).`,
-      ),
-    ],
+      ],
+    },
     chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignatures,
     membersCount: membersCount,

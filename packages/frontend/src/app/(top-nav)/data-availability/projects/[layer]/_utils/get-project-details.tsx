@@ -7,8 +7,8 @@ import {
 import { mapBridgeRisksToRosetteValues } from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
 import { type ProjectDetailsSection } from '~/components/projects/sections/types'
 import { type RosetteValue } from '~/components/rosette/types'
-import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
-import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
+import { getMultiChainContractsSection } from '~/utils/project/contracts-and-permissions/get-multichain-contract-section'
+import { getMultichainPermissionsSection } from '~/utils/project/contracts-and-permissions/get-multichain-permissions-section'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/to-technology-risk'
 import { getDaOtherConsiderationsSection } from './get-da-other-considerations-section'
 import { getDaProjectRiskSummarySection } from './get-da-project-risk-summary-section'
@@ -33,14 +33,12 @@ export function getProjectDetails({
   grissiniValues,
 }: Params) {
   const permissionsSection =
-    daBridge.type !== 'NoBridge' && daBridge.type !== 'Enshrined'
-      ? getPermissionsSection(
+    daBridge.type !== 'Enshrined'
+      ? getMultichainPermissionsSection(
           {
-            id: daBridge.id,
-            type: daLayer.type,
-            isUnderReview: !!daBridge.isUnderReview,
+            id: daLayer.id,
+            isUnderReview: !!daLayer.isUnderReview,
             permissions: daBridge.permissions,
-            nativePermissions: undefined,
           },
           contractsVerificationStatuses,
           manuallyVerifiedContracts,
@@ -48,16 +46,14 @@ export function getProjectDetails({
       : undefined
 
   const contractsSection =
-    daBridge.type !== 'NoBridge' && daBridge.type !== 'Enshrined'
-      ? getContractsSection(
+    daBridge.type !== 'Enshrined'
+      ? getMultiChainContractsSection(
           {
             id: daBridge.id,
-            type: daLayer.type,
             isVerified,
             slug: daBridge.display.slug,
             contracts: daBridge.contracts,
-            isUnderReview: daBridge.isUnderReview,
-            escrows: undefined,
+            isUnderReview: daLayer.isUnderReview,
           },
           contractsVerificationStatuses,
           manuallyVerifiedContracts,
@@ -132,7 +128,7 @@ export function getProjectDetails({
 
   if (permissionsSection) {
     daBridgeItems.push({
-      type: 'PermissionsSection',
+      type: 'MultichainPermissionsSection',
       props: {
         ...permissionsSection,
         permissionedEntities: getPermissionedEntities(daBridge),
@@ -144,7 +140,7 @@ export function getProjectDetails({
 
   if (contractsSection) {
     daBridgeItems.push({
-      type: 'ContractsSection',
+      type: 'MultichainContractsSection',
       props: {
         ...contractsSection,
         id: 'da-bridge-contracts',

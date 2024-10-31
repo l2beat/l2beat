@@ -1,3 +1,78 @@
+Generated with discovered.json: 0x4f6d8330a55807ba11f8c05abd22893b6a04624c
+
+# Diff at Wed, 30 Oct 2024 13:24:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0a8a53530022c6c5edd257c3682a3e7f80d0c550 block: 20970978
+- current block number: 21078732
+
+## Description
+
+Zora MS: Signer added.
+
+## Watched changes
+
+```diff
+    contract ZoraMultisig (0xC72aE5c7cc9a332699305E29F68Be66c73b60542) {
+    +++ description: None
+      values.$members.8:
++        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+      values.$members.7:
+-        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
++        "0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c"
+      values.$members.6:
+-        "0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c"
++        "0xD05e9Ab3B6A7F10ec1374bc352854ABA51643E81"
+      values.$members.5:
+-        "0xD05e9Ab3B6A7F10ec1374bc352854ABA51643E81"
++        "0xc08C1b8fD69A22a448fC014bEe4A700d70726dA7"
+      values.$members.4:
+-        "0xc08C1b8fD69A22a448fC014bEe4A700d70726dA7"
++        "0xe7d71aea6FB8248d4fD4D5d5098D201674B531dB"
+      values.$members.3:
+-        "0xe7d71aea6FB8248d4fD4D5d5098D201674B531dB"
++        "0xf2989961Bf987bdD6c86CD6B845B6fACa194a8e4"
+      values.$members.2:
+-        "0xf2989961Bf987bdD6c86CD6B845B6fACa194a8e4"
++        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+      values.$members.1:
+-        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
++        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.$members.0:
+-        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
++        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
+      values.multisigThreshold:
+-        "2 of 8 (25%)"
++        "2 of 9 (22%)"
+    }
+```
+
+Generated with discovered.json: 0x7004a08b4cb90d632ac23c801787f51b67311caf
+
+# Diff at Tue, 29 Oct 2024 13:21:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7b3fc9dc9074e1d423b48522c3f0273c86aab54a block: 20970978
+- current block number: 20970978
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20970978 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x9E6204F750cD866b299594e2aC9eA824E2e5f95c) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      fieldMeta:
++        {"FINALIZATION_PERIOD_SECONDS":{"description":"Challenge period (Number of seconds until a state root is finalized)."}}
+    }
+```
+
 Generated with discovered.json: 0xde2bf8d4e112d4711db3c568d5bb78d580201993
 
 # Diff at Mon, 21 Oct 2024 12:50:57 GMT:

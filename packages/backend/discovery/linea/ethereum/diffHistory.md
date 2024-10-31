@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x36a3a62508cac2618869c642a34cd0abe5d19e63
+
+# Diff at Wed, 30 Oct 2024 14:01:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0a8a53530022c6c5edd257c3682a3e7f80d0c550 block: 20997821
+- current block number: 21078909
+
+## Description
+
+Minor (2 lines) upgrade to the assembly part of `_computePublicInput()`.
+
+The old discovery value depending on `BlockFinalized` is removed as it was empty and the event was deprecated in the contracts some time ago.
+
+## Watched changes
+
+```diff
+    contract zkEVM (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x9107909af0d0c9abd3904984ff1b8b0824d489b8b1ac2902b805ce7d417e2e9f"
++        "0x6eace22f38b33b52c0608ca553753365c7aaa2ac2e9efba018e6f2c4864b9e40"
+      values.$implementation:
+-        "0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562"
++        "0x1825242411792536469Cbb5843fd27Ce3e9e583A"
+      values.$pastUpgrades.7:
++        ["2024-10-29T15:35:47.000Z","0x0970f422c80627f28916f9c5583ff6298070893debd191ead0cf39778e4bae14",["0x1825242411792536469Cbb5843fd27Ce3e9e583A"]]
+      values.$upgradeCount:
+-        7
++        8
+    }
+```
+
+## Source code changes
+
+```diff
+.../ethereum/{.flat@20997821 => .flat}/zkEVM/LineaRollup.sol     | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20997821 (main branch discovery), not current.
+
+```diff
+    contract zkEVM (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: None
+      values.provenNonCompressedBlocksWithoutProof:
+-        []
+    }
+```
+
 Generated with discovered.json: 0xd2a3b998732812ae4b169116d1e878b0136cc29e
 
 # Diff at Mon, 21 Oct 2024 11:07:14 GMT:

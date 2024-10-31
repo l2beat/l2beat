@@ -16,7 +16,8 @@ export async function generateStaticParams() {
   }))
 }
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata(props: Props) {
+  const params = await props.params
   const project = bridges.find((layer) => layer.display.slug === params.slug)
   if (!project) {
     notFound()
@@ -35,12 +36,13 @@ export async function generateMetadata({ params }: Props) {
 }
 
 interface Props {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
-export default async function Page({ params }: Props) {
+export default async function Page(props: Props) {
+  const params = await props.params
   const project = bridges.find((p) => p.display.slug === params.slug)
 
   if (!project) {

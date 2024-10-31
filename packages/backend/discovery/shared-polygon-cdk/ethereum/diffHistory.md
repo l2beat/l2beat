@@ -1,3 +1,75 @@
+Generated with discovered.json: 0xb4eda61fe08c1533e7db7c7c6b9356c723381097
+
+# Diff at Wed, 30 Oct 2024 12:25:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0a8a53530022c6c5edd257c3682a3e7f80d0c550 block: 21041949
+- current block number: 21078440
+
+## Description
+
+Execution of the previously queued Polygon Servicing Upgrade (see also the diff description from the time of queueing for context)
+
+### PolygonRollupManager.sol
+- `updateRollupByRollupAdmin()` upgrades the rollup implementation to an existing (higher) RollupType, callable by the chain-specific RollupAdmin (new role). The new RollupType must first be added by Polygon Gov.
+- `rollbackBatches()` allows the RollupAdmins and the central _UPDATE_ROLLUP_ROLE to delete batches that are not yet verified. (`if (targetBatch >= lastBatchSequenced || targetBatch < rollup.lastVerifiedBatch) revert;`)
+
+### GlobalExitRootV2.sol
+Libraries removed and other minor changes.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x0457cd9bbeaa5adb6ffff74ca828707e8797cdd25b13768eb37dcc7a120ce3c6"
++        "0x970ba596f805bae56173fc8c6865317fd90b24c1871f324ff19f0fc8a8b81069"
+      values.$implementation:
+-        "0x3b82Da772c825283d85d5d6717A77C6Ff582053b"
++        "0x103388f5661d224F4aFb555C7E4a8FB52d0b752d"
+      values.$pastUpgrades.4:
++        ["2024-10-30T11:11:59.000Z","0x8c1be5b5d844d6e04b2c224cd810cda091d70e6d5c2e5e0464993f7df1ab8403",["0x103388f5661d224F4aFb555C7E4a8FB52d0b752d"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.rollupTypeCount:
+-        5
++        7
++++ description: struct consensusImplementation, verifier, forkID, rollupCompatibilityID, bool obsolete, genesisBlock
+      values.rollupTypes.6:
++        ["0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F","0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"]
++++ description: struct consensusImplementation, verifier, forkID, rollupCompatibilityID, bool obsolete, genesisBlock
+      values.rollupTypes.5:
++        ["0x7253F329302b1b5E774Ac641EA3743E9E3244f2E","0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"]
+    }
+```
+
+```diff
+    contract GlobalExitRootV2 (0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x23dd296130348943833ff04807c22fab6b51e87b4d0d59ba0e35e802e3e1f079"
++        "0x5cd6999aa568aa00dc997f5d179426b88bf3797f4618bc4cce28b6cf5f8e76d6"
+      values.$implementation:
+-        "0x2E38cD55163137483E30580Cb468C2dFf1d85077"
++        "0x9Bdda421219900454E94e01d641fE64c60D8f4C8"
+      values.$pastUpgrades.2:
++        ["2024-10-30T11:11:59.000Z","0x8c1be5b5d844d6e04b2c224cd810cda091d70e6d5c2e5e0464993f7df1ab8403",["0x9Bdda421219900454E94e01d641fE64c60D8f4C8"]]
+      values.$upgradeCount:
+-        2
++        3
+    }
+```
+
+## Source code changes
+
+```diff
+.../PolygonZkEVMGlobalExitRootV2.sol               | 384 ++++++++++++++++++++-
+ .../PolygonRollupManager/PolygonRollupManager.sol  | 377 +++++++++++++-------
+ 2 files changed, 637 insertions(+), 124 deletions(-)
+```
+
 Generated with discovered.json: 0xca1719de677e2f2abafafab996d933d449087f93
 
 # Diff at Fri, 25 Oct 2024 10:11:50 GMT:

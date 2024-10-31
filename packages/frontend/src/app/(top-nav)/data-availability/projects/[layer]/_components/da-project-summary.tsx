@@ -37,16 +37,16 @@ export function DaProjectSummary({ project }: Props) {
       <div className="flex gap-10">
         <div className="w-full">
           {/* Separators */}
-          <div className="flex flex-row gap-10">
-            <HorizontalSeparator className="!my-6 flex-1 max-md:-mx-4 max-md:w-screen" />
-            <HorizontalSeparator className="!my-6 hidden w-[264px] lg:block" />
+          <div className="hidden flex-row gap-10 md:flex">
+            <HorizontalSeparator className="!mb-6 !mt-3.5 flex-1 max-md:-mx-4 max-md:w-screen" />
+            <HorizontalSeparator className="!mb-6 !mt-3.5 hidden w-[264px] lg:block" />
           </div>
           {/* Details row */}
-          <div className="flex flex-col gap-10">
+          <div className="flex flex-col gap-6 md:gap-10">
             {/* Left side (links and stats) */}
             <div className="flex flex-row items-end gap-10">
               <div className="flex-1">
-                <div className="space-y-4">
+                <div className="flex flex-col gap-4">
                   <div className="max-md:hidden">
                     <DesktopProjectLinks projectLinks={project.header.links} />
                   </div>
@@ -55,7 +55,7 @@ export function DaProjectSummary({ project }: Props) {
               </div>
               {/* Right side (DA Layer Grissini details) */}
               <div className="hidden lg:block">
-                <div className="flex flex-col space-y-4 pt-3">
+                <div className="flex flex-col gap-4 pt-3">
                   <div className="whitespace-pre text-xs text-gray-500 dark:text-gray-600">
                     {project.name} risks
                   </div>
@@ -67,24 +67,24 @@ export function DaProjectSummary({ project }: Props) {
             </div>
             <div className="flex flex-col-reverse md:flex-col">
               {/* Table row */}
-              <div className="flex flex-row items-end gap-10 py-8 md:py-0">
+              <div className="flex flex-row items-end gap-10 py-8 max-md:pt-6 md:py-0">
                 {/* Left side (table with title and banner) */}
                 <div className="flex flex-1 flex-col gap-4">
                   <div className="whitespace-pre text-xs uppercase text-gray-500 dark:text-gray-600">
                     Select a bridge
                   </div>
-                  <div className="hidden flex-row items-center gap-2 rounded-md border border-blue-500 bg-blue-400 px-3 py-2 text-xs font-semibold text-blue-700 dark:text-blue-700 md:flex lg:px-6">
+                  <div className="hidden flex-row items-center gap-2 rounded-md border border-blue-500 bg-blue-400 px-3 py-2 text-xs font-medium text-blue-700 dark:text-blue-700 md:flex lg:px-6">
                     <InfoIcon className="size-4 shrink-0 fill-current dark:fill-current" />
                     Please select one of the available DA bridges to view its
                     risks and detailed analysis.
                   </div>
-                  <div className="flex flex-col md:h-[278px]">
+                  <div className="flex flex-col lg:h-[278px] lg:overflow-y-scroll">
                     <div className="hidden flex-row gap-4 rounded-t-lg border-surface-tertiary bg-surface-secondary px-4 py-2 text-xs font-semibold uppercase text-secondary dark:bg-zinc-800 md:flex md:border-b">
                       <div className="w-12"></div>
                       <div className="flex-1">DA Bridge</div>
                       <div className="flex-1 text-center">DA Risks</div>
                       <div className="flex-1 pr-12 text-right">TVS</div>
-                      <div className="flex-1">Used by</div>
+                      <div className="flex-[1.5] lg:flex-1">Used by</div>
                     </div>
                     <div className="flex flex-1 flex-col gap-2 overflow-y-auto rounded-lg bg-zinc-100 dark:bg-zinc-900 md:gap-0 md:bg-none dark:md:bg-none">
                       {project.bridges.map((bridge, index) => (
@@ -116,7 +116,7 @@ export function DaProjectSummary({ project }: Props) {
                           <div className="flex flex-1 items-center justify-end pr-1 text-sm font-bold text-primary md:pr-12">
                             {formatCurrency(bridge.tvs, 'usd')}
                           </div>
-                          <div className="hidden flex-1 flex-row items-center md:flex">
+                          <div className="hidden flex-[1.5] flex-row items-center md:flex lg:flex-1">
                             {bridge.usedIn.length > 0 ? (
                               <ProjectsUsedIn
                                 className="h-5 flex-wrap justify-start"
@@ -124,7 +124,9 @@ export function DaProjectSummary({ project }: Props) {
                                 maxProjects={4}
                               />
                             ) : (
-                              'Nobody 😔'
+                              <span className="text-sm font-medium">
+                                Nobody 😔
+                              </span>
                             )}
                           </div>
                         </div>

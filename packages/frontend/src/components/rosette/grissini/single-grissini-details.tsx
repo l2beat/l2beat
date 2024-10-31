@@ -31,7 +31,7 @@ export function SingleGrissiniDetails({
         <div
           className={cn(
             'text-lg font-bold leading-none',
-            sentimentToTextColor(sentiment),
+            sentimentToTextColor(sentiment, { vibrant: true }),
           )}
         >
           {value}

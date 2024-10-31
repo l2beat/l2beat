@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x933ced072deabf4fc55361a61d965c3db9dd62ef
+
+# Diff at Tue, 29 Oct 2024 13:04:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7b3fc9dc9074e1d423b48522c3f0273c86aab54a block: 20941326
+- current block number: 20941326
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20941326 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x56315b90c40730925ec5485cf004d835058518A0) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      fieldMeta:
++        {"FINALIZATION_PERIOD_SECONDS":{"description":"Challenge period (Number of seconds until a state root is finalized)."}}
+    }
+```
+
 Generated with discovered.json: 0x7c8c059bca25f29b19dcdbe53f5f29767adb942a
 
 # Diff at Mon, 21 Oct 2024 12:42:59 GMT:

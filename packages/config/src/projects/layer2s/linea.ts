@@ -306,7 +306,7 @@ export const linea: Layer2 = {
         {
           contract: 'zkEVM',
           references: [
-            'https://etherscan.io/address/0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562#code',
+            'https://etherscan.io/address/0x1825242411792536469Cbb5843fd27Ce3e9e583A#code',
           ],
         },
       ],
@@ -320,7 +320,7 @@ export const linea: Layer2 = {
         {
           contract: 'zkEVM',
           references: [
-            'https://etherscan.io/address/0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562#code',
+            'https://etherscan.io/address/0x1825242411792536469Cbb5843fd27Ce3e9e583A#code',
           ],
         },
       ],
@@ -372,7 +372,7 @@ export const linea: Layer2 = {
       references: [
         {
           text: 'ZkEvmV2.sol - Etherscan source code, _verifyProof() function',
-          href: 'https://etherscan.io/address/0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562#code',
+          href: 'https://etherscan.io/address/0x1825242411792536469Cbb5843fd27Ce3e9e583A#code',
         },
       ],
     },
@@ -381,7 +381,7 @@ export const linea: Layer2 = {
       references: [
         {
           text: 'LineaRollup.sol - Etherscan source code, submitData() function',
-          href: 'https://etherscan.io/address/0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562#code',
+          href: 'https://etherscan.io/address/0x1825242411792536469Cbb5843fd27Ce3e9e583A#code',
         },
       ],
     },
@@ -400,7 +400,7 @@ export const linea: Layer2 = {
       references: [
         {
           text: 'LineaRollup.sol - Etherscan source code, onlyRole(OPERATOR_ROLE) modifier',
-          href: 'https://etherscan.io/address/0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562#code',
+          href: 'https://etherscan.io/address/0x1825242411792536469Cbb5843fd27Ce3e9e583A#code',
         },
       ],
     },
@@ -416,7 +416,7 @@ export const linea: Layer2 = {
         references: [
           {
             text: 'L1MessageService.sol - Etherscan source code, claimMessageWithProof() function',
-            href: 'https://etherscan.io/address/0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562#code',
+            href: 'https://etherscan.io/address/0x1825242411792536469Cbb5843fd27Ce3e9e583A#code',
           },
         ],
       },
@@ -477,7 +477,7 @@ export const linea: Layer2 = {
         references: [
           {
             text: 'LineaRollup.sol - Etherscan source code, state injections: stateRoot and l2MerkleRoot are part of the validity proof input.',
-            href: 'https://etherscan.io/address/0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562#code',
+            href: 'https://etherscan.io/address/0x1825242411792536469Cbb5843fd27Ce3e9e583A#code',
           },
         ],
       }),
