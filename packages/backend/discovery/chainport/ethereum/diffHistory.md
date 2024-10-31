@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x63b695297e8904480f6039481c9d4530cf84b525
+
+# Diff at Wed, 30 Oct 2024 13:20:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0a8a53530022c6c5edd257c3682a3e7f80d0c550 block: 20934226
+- current block number: 21078715
+
+## Description
+
+New proposal 'Upgrade Side Bridge'.
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
++++ description: The amount of proposals ever created. Goes up by 1 for each proposal.
++++ severity: MEDIUM
+      values.proposalCount:
+-        60
++        61
+    }
+```
+
 Generated with discovered.json: 0xebf41eee0bf1fbc215ab5534baf1d7c7f172c0ad
 
 # Diff at Mon, 21 Oct 2024 11:05:06 GMT:

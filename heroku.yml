@@ -4,5 +4,5 @@ build:
 run:
   web:
     command: 
-    - yarn start
+    - npm run start
     image: backend

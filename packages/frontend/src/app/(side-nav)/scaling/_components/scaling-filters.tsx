@@ -8,11 +8,17 @@ import { useScalingFilterValues } from './scaling-filter-context'
 
 interface Props {
   items: CommonScalingEntry[]
+  additionalFilters?: React.ReactNode
   showRollupsOnly?: boolean
   className?: string
 }
 
-export function ScalingFilters({ items, showRollupsOnly, className }: Props) {
+export function ScalingFilters({
+  items,
+  additionalFilters,
+  showRollupsOnly,
+  className,
+}: Props) {
   const state = useScalingFilterValues()
   const hostChainOptions = uniq(
     items.map((item) => item.hostChain ?? 'Ethereum'),
@@ -25,6 +31,7 @@ export function ScalingFilters({ items, showRollupsOnly, className }: Props) {
 
   const hostChainFilter = (
     <TableFilter
+      key="scaling-host-chain"
       title="Host Chain"
       options={hostChainOptions}
       value={state.hostChain}
@@ -35,7 +42,7 @@ export function ScalingFilters({ items, showRollupsOnly, className }: Props) {
   return (
     <BaseScalingFilters
       items={items}
-      additionalFilters={hostChainFilter}
+      additionalFilters={[hostChainFilter, additionalFilters]}
       showRollupsOnly={showRollupsOnly}
       className={className}
     />

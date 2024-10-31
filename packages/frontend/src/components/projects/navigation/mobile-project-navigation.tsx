@@ -48,7 +48,9 @@ export function MobileProjectNavigation({ sections }: Props) {
           Summary
         </a>
         {sections.map((section) => {
-          const selected = section.id === currentSection?.id
+          const selected =
+            section.id === currentSection?.id ||
+            section.subsections?.some((s) => s.id === currentSection?.id)
 
           return (
             <a

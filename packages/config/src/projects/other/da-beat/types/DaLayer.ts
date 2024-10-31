@@ -32,7 +32,7 @@ export type BlockchainDaLayer = CommonDaLayer & {
 }
 
 export type DacDaLayer = CommonDaLayer & {
-  kind: 'DAC' | 'DA Service'
+  kind: 'DAC' | 'DA Service' | 'No DAC'
   bridges: (DacBridge | NoDaBridge)[]
 }
 
@@ -46,6 +46,8 @@ export type CommonDaLayer = {
   challengeMechanism?: DaChallengeMechanism
   /** Fallback */
   fallback?: ScalingDaLayerOption
+  /** Number of operators in the data availability layer. */
+  numberOfOperators?: number
   /** Display information for the data availability layer. */
   display: DaLayerDisplay
   /** Is the DA layer upcoming? */

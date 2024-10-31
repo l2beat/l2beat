@@ -13,6 +13,13 @@ export const bridge1WithDups: Bridge = {
     description: 'Bridge1 description',
     links: {},
   },
+  riskView: {
+    validatedBy: {
+      value: 'Bridge1 Validator',
+      sentiment: 'good',
+      description: 'Bridge1 Validator',
+    },
+  },
   config: {
     escrows: [],
   },

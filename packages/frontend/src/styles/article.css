@@ -11,6 +11,11 @@
   @apply font-roboto-serif;
 }
 
+.article.extended-char-set p,
+.article.extended-char-set li {
+  @apply font-roboto-serif-ext;
+}
+
 .article h2 {
   @apply text-2xl font-bold md:text-3xl mt-12 mb-6;
 }

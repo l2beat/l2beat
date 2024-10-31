@@ -31,10 +31,6 @@ export default async function Page() {
         range: await getCookie('scalingTvlChartRange'),
         excludeAssociatedTokens: false,
       }),
-      api.tvl.total.prefetch({
-        filter: { type: 'layer2' },
-        excludeAssociatedTokens: false,
-      }),
     ])
 
   const entries = getScalingTvlEntries({

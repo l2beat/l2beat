@@ -97,7 +97,7 @@ export function PolygoncdkDAC(template: TemplateVars): DacDaLayer {
     A separate contract, the PolygonCommittee contract, is used to manage the committee members list and verify the signatures before accepting the DA commitment.
    `)
   const bridgeDisplay: DacBridge['display'] = {
-    name,
+    name: 'DA Bridge',
     slug: 'dac',
     description: bridgeDescription,
     warning: template.warning,
@@ -113,7 +113,16 @@ export function PolygoncdkDAC(template: TemplateVars): DacDaLayer {
     display: bridgeDisplay,
     technology: {
       description: bridgeTechnology,
-      risks: template.bridge.technology?.risks,
+      risks: [
+        {
+          category: 'Funds can be lost if',
+          text: `a malicious committee signs a data availability attestation for an unavailable transaction batch.`,
+        },
+        {
+          category: 'Funds can be lost if',
+          text: `the bridge contract or its dependencies receive a malicious code upgrade. There is no delay on code upgrades.`,
+        },
+      ],
     },
     risks: {
       committeeSecurity:

@@ -64,7 +64,7 @@ export const blobstreamArbitrum = CELESTIA_BLOBSTREAM({
     risks: [
       {
         category: 'Funds can be lost if',
-        text: 'the DA bridge accepts an incorrect or malicious data commitment provided by a dishonest majority of Celestia validators.',
+        text: 'the DA bridge accepts an incorrect or malicious data commitment provided by 2/3 of Celestia validators.',
       },
     ],
   },

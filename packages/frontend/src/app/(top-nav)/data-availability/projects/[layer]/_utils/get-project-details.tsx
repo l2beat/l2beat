@@ -32,13 +32,19 @@ export function getProjectDetails({
   implementationChangeReport,
   grissiniValues,
 }: Params) {
+  const relatedScalingProject =
+    daBridge.type === 'DAC' && daBridge.usedIn.length === 1
+      ? daBridge.usedIn[0]
+      : undefined
+
   const permissionsSection =
-    daBridge.type !== 'NoBridge' && daBridge.type !== 'Enshrined'
+    daBridge.type !== 'Enshrined'
       ? getMultichainPermissionsSection(
           {
             id: daLayer.id,
             isUnderReview: !!daLayer.isUnderReview,
             permissions: daBridge.permissions,
+            dacUsedIn: relatedScalingProject,
           },
           contractsVerificationStatuses,
           manuallyVerifiedContracts,
@@ -46,7 +52,7 @@ export function getProjectDetails({
       : undefined
 
   const contractsSection =
-    daBridge.type !== 'NoBridge' && daBridge.type !== 'Enshrined'
+    daBridge.type !== 'Enshrined'
       ? getMultiChainContractsSection(
           {
             id: daBridge.id,
@@ -54,6 +60,7 @@ export function getProjectDetails({
             slug: daBridge.display.slug,
             contracts: daBridge.contracts,
             isUnderReview: daLayer.isUnderReview,
+            dacUsedIn: relatedScalingProject,
           },
           contractsVerificationStatuses,
           manuallyVerifiedContracts,

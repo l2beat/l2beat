@@ -160,6 +160,7 @@ export const kroma: Layer2 = {
         address: EthereumAddress('0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e'),
         sinceTimestamp: new UnixTime(1700122827),
         tokens: ['USDC'],
+        source: 'external',
         description: 'Main entry point for users depositing USDC.',
       }),
     ],

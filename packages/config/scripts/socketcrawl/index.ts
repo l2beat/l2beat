@@ -5,7 +5,7 @@ import pLimit from 'p-limit'
 import { ProjectDiscovery } from '../../src/discovery/ProjectDiscovery'
 /**
  *
- * TLDR: Run socket discovery, then this with 'yarn socket-crawl' and copy the results to the config.jsonc and socket.ts files.
+ * TLDR: Run socket discovery, then this with 'pnpm socket-crawl' and copy the results to the config.jsonc and socket.ts files.
  *
  * This script reads the socket plugs list from discovery and creates two files of the discovery results:
  * 1) socket-crawl-result.json: The discovery results grouped by sibling chain slug and ranked by TVL, including non-standard plugs and vaults and vault owners

@@ -12,20 +12,25 @@ jobs:
       HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
         with:
-          node-version: 18.x
-          cache: 'yarn'
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: yarn --frozen-lockfile
+        run: pnpm install
         working-directory: packages/backend
 
       - name: Build packages
-        run: yarn build:dependencies
+        run: pnpm build:dependencies
         working-directory: packages/backend
 
       - name: Install Heroku CLI
@@ -41,7 +46,7 @@ jobs:
         working-directory: packages/backend
 
       - name: Run staging smoke test
-        run: yarn test:config
+        run: pnpm test:config
         working-directory: packages/backend
 
       - name: Pull production configuration
@@ -54,5 +59,5 @@ jobs:
         working-directory: packages/backend
 
       - name: Run production smoke test
-        run: yarn test:config
+        run: pnpm test:config
         working-directory: packages/backend

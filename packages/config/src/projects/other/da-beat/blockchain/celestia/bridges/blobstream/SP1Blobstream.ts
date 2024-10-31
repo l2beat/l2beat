@@ -96,7 +96,7 @@ export const SP1Blobstream = CELESTIA_BLOBSTREAM({
     risks: [
       {
         category: 'Funds can be lost if',
-        text: 'the DA bridge accepts an incorrect or malicious data commitment provided by a dishonest majority of Celestia validators.',
+        text: 'the DA bridge accepts an incorrect or malicious data commitment provided by 2/3 of Celestia validators.',
       },
       {
         category: 'Funds can be frozen if',
@@ -202,6 +202,7 @@ export const SP1Blobstream = CELESTIA_BLOBSTREAM({
           'Blobstream',
           'GUARDIAN_ROLE',
         ),
+        fromRole: true,
       },
     ],
     arbitrum: [
@@ -245,7 +246,7 @@ export const SP1Blobstream = CELESTIA_BLOBSTREAM({
   },
   risks: {
     committeeSecurity:
-      DaCommitteeSecurityRisk.RobustAndDiverseCommittee('Validators set'),
+      DaCommitteeSecurityRisk.RobustAndDiverseCommittee('Validator set'),
     upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(0), // TIMELOCK_ROLE is 4/6 multisig
     relayerFailure: DaRelayerFailureRisk.NoMechanism,
   },

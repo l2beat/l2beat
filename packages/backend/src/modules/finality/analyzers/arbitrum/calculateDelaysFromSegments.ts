@@ -1,16 +1,31 @@
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
 
 import { RlpSerializable } from '../../utils/rlpDecode'
+import type { L2Block } from '../types/BaseAnalyzer'
 import { byteArrToNumber } from './utils'
+
+// NOTE(radomski): Unless we're going to be computing the state update delay
+// for Arbitrum this is not required. Even in the case in which we start work
+// on state update delays for Orbit chains the approach might not require
+// having correct block numbers.
+//
+// https://docs.arbitrum.io/how-arbitrum-works/inside-arbitrum-nitro#sequencing-followed-by-deterministic-execution
+// The problem with block numbers on arbitrum is that state and L2 blocks are
+// processed after the tx is submitted to L1. Because the submitted
+// transactions does not yet have a clearly assigned block we only know the
+// timestamp of it for sure.
+//
+// For now, we only use it for liveness which only requires computing a delay
+// between L1 and L2 when it comes to inclusion of data. L2 block numbers are
+// not used there.
+const WE_DONT_KNOW_IT_BUT_ITS_NOT_REQUIRED = 0xdead
 
 export function calculateDelaysFromSegments(
   segments: RlpSerializable[],
-  submissionTimestamp: number,
-) {
+): L2Block[] {
   let timestamp = 0
-  let txCount = 0
-  let maxDelay = 0
-  let accDelay = 0n
+  const blocks: L2Block[] = []
+
   for (const segment of segments) {
     assert(segment instanceof Uint8Array, 'Expected segment to be Uint8Array')
     const action = decodeSegment(segment)
@@ -20,29 +35,19 @@ export function calculateDelaysFromSegments(
         timestamp += action.timestamp
         break
       case 'AddTransactions': {
-        txCount += action.txCount
-        const delay = submissionTimestamp - timestamp
-        assert(delay >= 0, 'Delay should be positive')
-        if (maxDelay === 0) {
-          maxDelay = delay
-        }
-        accDelay += BigInt(action.txCount) * BigInt(delay)
+        assert(timestamp >= 0, 'Timestamp should be positive')
+        blocks.push({
+          timestamp: timestamp,
+          blockNumber: WE_DONT_KNOW_IT_BUT_ITS_NOT_REQUIRED,
+        })
         break
       }
       default:
         assertUnreachable(action)
     }
   }
-  const minDelay = submissionTimestamp - timestamp
-  assert(maxDelay >= 0, 'Max delay should be positive')
-  assert(maxDelay >= minDelay, 'Max delay should be greater than min delay')
-  const avgDelayBigInt = accDelay / BigInt(txCount)
-  assert(
-    avgDelayBigInt <= Number.MAX_SAFE_INTEGER,
-    'Average delay is too large',
-  )
-  const avgDelay = Number(avgDelayBigInt)
-  return { avgDelay, minDelay, maxDelay }
+
+  return blocks
 }
 
 // Arbitrum segment kinds:

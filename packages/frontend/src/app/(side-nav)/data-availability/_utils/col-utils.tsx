@@ -2,10 +2,9 @@ import { type CellContext, type ColumnDef } from '@tanstack/react-table'
 import { type DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 
-export function spanByBridges<
-  T extends DaSummaryEntry | DaRiskEntry,
-  C = unknown,
->(ctx: CellContext<T, C>) {
+export function spanByBridges<T extends DaSummaryEntry | DaRiskEntry>(
+  ctx: CellContext<T, unknown>,
+) {
   return ctx.row.original.bridges.length
 }
 
