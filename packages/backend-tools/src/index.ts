@@ -1,3 +1,4 @@
+export * from './elastic-search/ElasticSearchTransport'
 export * from './env'
 export * from './logger/LogFormatterEcs'
 export * from './logger/LogFormatterJson'
