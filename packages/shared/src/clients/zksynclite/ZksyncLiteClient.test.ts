@@ -52,7 +52,7 @@ describe(ZksyncLiteClient.name, () => {
       expect(result).toEqual(expected)
     })
 
-    it('throws for transaction mismatch', async () => {
+    it('throws on first transaction in batch mismatch', async () => {
       const transactions1 = Array.from({ length: 100 }, () => fakeTransaction())
       const transactions2 = Array.from({ length: 68 }, () => fakeTransaction())
       transactions2.unshift(fakeTransaction('not-tx-hash'))

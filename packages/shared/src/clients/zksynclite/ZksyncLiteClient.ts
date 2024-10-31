@@ -25,7 +25,6 @@ export class ZksyncLiteClient extends ClientCore {
 
   async getLatestBlock() {
     const result = await this.query('blocks/lastFinalized')
-
     const parsed = ZksyncLiteBlocksResult.safeParse(result)
 
     if (!parsed.success) {
@@ -91,7 +90,6 @@ export class ZksyncLiteClient extends ClientCore {
       limit: '100', // our current heuristic, can be changed if needed
       direction: 'older',
     })
-
     const parsed = ZksyncLiteTransactionResult.safeParse(result)
 
     if (!parsed.success) {
