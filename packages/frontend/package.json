@@ -17,7 +17,7 @@
     "typecheck": "tsc --noEmit",
     "storybook": "storybook dev -p 6006 --no-open",
     "storybook:build": "storybook build",
-    "tinify-logos": "node --loader esbuild-register/loader -r esbuild-register scripts/logos/tinifyLogos.ts"
+    "tinify-logos": "tsx scripts/logos/tinifyLogos.ts"
   },
   "dependencies": {
     "@l2beat/backend": "workspace:*",
