@@ -5,11 +5,11 @@ module.exports = {
     extend: {
       colors: {
         milk: '#F0D8BD',
-        cream: 'rgb(169 135 99)',
-        coffee: 'rgb(40 36 34)',
-        latte: 'rgb(89 76 67)',
-        autumn: 'rgb(127 61 12)',
-        sun: 'rgb(200 200 12)',
+        cream: '#A98763',
+        coffee: '#282422',
+        latte: '#594C43',
+        autumn: '#7f3D0C',
+        sun: '#C8C80C',
       },
       fontFamily: {
         sans: ['system-ui', 'sans-serif'],

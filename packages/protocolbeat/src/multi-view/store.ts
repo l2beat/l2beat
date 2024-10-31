@@ -28,7 +28,6 @@ export type Action = {
   order: (id: PanelId, before: boolean) => void
   drop: () => void
   loadLayout: (n: number) => void
-  saveLayout: (n: number) => void
 }
 
 const DEFAULT_LAYOUT: Panel[] = [
@@ -96,14 +95,15 @@ export const useMultiViewStore = create<State & Action>((set) => ({
         id: to,
         size: fromPanel.size,
       }
+      const panels = state.panels.map((panel) =>
+        panel.id === from
+          ? { ...toPanel, size: fromPanel.size }
+          : panel.id === to
+            ? { ...fromPanel, size: toPanel.size }
+            : panel,
+      )
       return {
-        panels: state.panels.map((panel) =>
-          panel.id === from
-            ? { ...toPanel, size: fromPanel.size }
-            : panel.id === to
-              ? { ...fromPanel, size: toPanel.size }
-              : panel,
-        ),
+        ...withLayouts(state, panels),
         fullScreen: state.fullScreen === from ? to : state.fullScreen,
       }
     }),
@@ -115,8 +115,9 @@ export const useMultiViewStore = create<State & Action>((set) => ({
       if (!nextPanelId) {
         return state
       }
+      const panels = state.panels.concat([{ id: nextPanelId, size: 1 }])
       return {
-        panels: state.panels.concat([{ id: nextPanelId, size: 1 }]),
+        ...withLayouts(state, panels),
         active: nextPanelId,
       }
     }),
@@ -135,7 +136,7 @@ export const useMultiViewStore = create<State & Action>((set) => ({
       return {
         fullScreen:
           state.fullScreen === targetId ? undefined : state.fullScreen,
-        panels: panels,
+        ...withLayouts(state, panels),
         active:
           state.active === targetId
             ? panels[panels.length - 1]?.id
@@ -163,15 +164,14 @@ export const useMultiViewStore = create<State & Action>((set) => ({
       const panelSize = totalSize * fraction
       const nextSize = totalSize * (1 - fraction)
 
-      return {
-        panels: state.panels.map((p) =>
-          p === panel
-            ? { ...p, size: panelSize }
-            : p === next
-              ? { ...p, size: nextSize }
-              : p,
-        ),
-      }
+      const panels = state.panels.map((p) =>
+        p === panel
+          ? { ...p, size: panelSize }
+          : p === next
+            ? { ...p, size: nextSize }
+            : p,
+      )
+      return withLayouts(state, panels)
     }),
   mouseMove: (x, y) => set(() => ({ mouse: { x, y } })),
   pickUp: (id) => set(() => ({ pickedUp: id })),
@@ -196,7 +196,7 @@ export const useMultiViewStore = create<State & Action>((set) => ({
           panels.push(panel)
         }
       }
-      return { panels }
+      return withLayouts(state, panels)
     }),
   drop: () => set(() => ({ pickedUp: undefined })),
   loadLayout: (n) =>
@@ -209,13 +209,21 @@ export const useMultiViewStore = create<State & Action>((set) => ({
       localStorage.setItem('multi-app/selectedLayout', JSON.stringify(n))
       return { panels: layout, selectedLayout: n }
     }),
-  saveLayout: (n) =>
-    set((state) => {
-      const layouts = state.layouts.map((layout, i) =>
-        i === n ? state.panels : layout,
-      )
-      // SIDE EFFECT!
-      localStorage.setItem('multi-app/layouts', JSON.stringify(layouts))
-      return { layouts }
-    }),
 }))
+
+function withLayouts(state: State, panels: State['panels']): Partial<State> {
+  return {
+    panels,
+    layouts: state.layouts.map((layout, i) =>
+      i === state.selectedLayout ? panels : layout,
+    ),
+  }
+}
+
+let timeout: ReturnType<typeof setTimeout>
+useMultiViewStore.subscribe((state) => {
+  clearTimeout(timeout)
+  timeout = setTimeout(() => {
+    localStorage.setItem('multi-app/layouts', JSON.stringify(state.layouts))
+  }, 50)
+})

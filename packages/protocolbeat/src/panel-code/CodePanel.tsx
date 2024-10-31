@@ -65,6 +65,16 @@ function CodeView({ code }: { code: string }) {
     if (!monacoEl.current) {
       return
     }
+    monaco.editor.defineTheme('default', {
+      base: 'vs-dark',
+      inherit: true,
+      rules: [],
+      colors: {
+        'editor.foreground': '#F0D8BD',
+        'editor.background': '#282422',
+      },
+    })
+    monaco.editor.setTheme('default')
     const editor = monaco.editor.create(monacoEl.current, {
       language: 'sol',
       minimap: { enabled: false },

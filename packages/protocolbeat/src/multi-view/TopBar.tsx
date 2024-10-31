@@ -5,7 +5,6 @@ export function TopBar(props: { project: string }) {
   const layouts = useMultiViewStore((state) => state.layouts)
   const selectedLayout = useMultiViewStore((state) => state.selectedLayout)
   const loadLayout = useMultiViewStore((state) => state.loadLayout)
-  const saveLayout = useMultiViewStore((state) => state.saveLayout)
   const addPanel = useMultiViewStore((state) => state.addPanel)
   return (
     <div className="flex h-10 items-center justify-between px-2">
@@ -22,7 +21,6 @@ export function TopBar(props: { project: string }) {
             </button>
           ))}
         </div>
-        <button onClick={() => saveLayout(selectedLayout)}>Save Layout</button>
         <button onClick={() => addPanel()}>Add Panel</button>
       </div>
     </div>
