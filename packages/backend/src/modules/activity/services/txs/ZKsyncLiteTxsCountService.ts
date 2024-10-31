@@ -1,8 +1,8 @@
 import { ActivityRecord } from '@l2beat/database'
-import { ZksyncLiteClient } from '../../../../peripherals/zksynclite/ZksyncLiteClient'
 import { ProjectId } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 import { aggregatePerDay } from '../../utils/aggregatePerDay'
+import { ZksyncLiteClient } from '../../../../peripherals/zksynclite/ZksyncLiteClient'
 
 export class ZKsyncLiteTxsCountService {
   constructor(
