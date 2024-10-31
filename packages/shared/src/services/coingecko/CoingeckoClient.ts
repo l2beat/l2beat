@@ -157,13 +157,7 @@ export class CoingeckoClient extends ClientCore {
     if (query) {
       url += `?${query}`
     }
-    try {
-      return await this.$.http.fetch(url, { timeout: this.timeoutMs })
-    } catch {
-      return await this.$.retryHandler.retry(() =>
-        this.$.http.fetch(url, { timeout: this.timeoutMs }),
-      )
-    }
+    return await this.fetch(url, { timeout: this.timeoutMs })
   }
 
   override validateResponse(response: json): {
