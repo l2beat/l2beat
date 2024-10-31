@@ -3,10 +3,12 @@ import {
   type DaLayer,
   type Layer2,
   type Layer3,
+  type ZkCatalogProject,
   bridges,
   daLayers,
   layer2s,
   layer3s,
+  zkCatalogProjects,
 } from '@l2beat/config'
 import { env } from '~/env'
 
@@ -18,7 +20,7 @@ export interface SearchBarProject {
   href: string
   matchers: string[]
   createdAt: number
-  type: 'layer2' | 'layer3' | 'bridge' | 'da'
+  type: 'layer2' | 'layer3' | 'bridge' | 'da' | 'zk-catalog'
 }
 
 export function getSearchBarProjects() {
@@ -27,11 +29,12 @@ export function getSearchBarProjects() {
     ...layer3s,
     ...bridges,
     ...(env.NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT ? daLayers : []),
+    ...zkCatalogProjects,
   ])
 }
 
 function toSearchBarProjects(
-  projects: (Layer2 | Layer3 | Bridge | DaLayer)[],
+  projects: (Layer2 | Layer3 | Bridge | DaLayer | ZkCatalogProject)[],
 ): SearchBarProject[] {
   return projects.flatMap((project): SearchBarProject | SearchBarProject[] => {
     if (project.type === 'DaLayer') {
@@ -50,7 +53,20 @@ function toSearchBarProjects(
       }))
     }
 
-    return {
+    if (project.type === 'zk-catalog') {
+      return {
+        id: `zk-catalog-${project.display.slug}`,
+        type: 'zk-catalog' as const,
+        isUpcoming: false,
+        name: project.display.name,
+        iconUrl: `/icons/${project.display.slug}.png`,
+        href: `/zk-catalog/${project.display.slug}`,
+        matchers: [project.display.slug],
+        createdAt: project.createdAt.toNumber(),
+      }
+    }
+
+    const common = {
       id: project.id,
       type: project.type,
       isUpcoming: !!project.isUpcoming,
@@ -60,6 +76,24 @@ function toSearchBarProjects(
       matchers: [project.display.slug],
       createdAt: project.createdAt.toNumber(),
     }
+
+    if (project.type === 'bridge') {
+      return common
+    }
+
+    return [
+      common,
+      ...(project.stateValidation?.proofVerification && !project.isUpcoming
+        ? [
+            {
+              ...common,
+              id: `zk-catalog-${project.id}`,
+              type: 'zk-catalog' as const,
+              href: `/zk-catalog/${project.display.slug}`,
+            },
+          ]
+        : []),
+    ]
   })
 }
 
