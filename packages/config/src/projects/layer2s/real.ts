@@ -67,6 +67,7 @@ export const real: Layer2 = orbitStackL2({
     discovery.getEscrowDetails({
       address: EthereumAddress('0x679D4C1cC6855C57726BEA1784F578315d6431f6'),
       tokens: ['stETH'],
+      source: 'external',
       description:
         'This contract escrows the stETH that was deposited to mint reETH.',
     }),

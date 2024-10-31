@@ -1,9 +1,4 @@
-import {
-  assert,
-  ProjectId,
-  TrackedTxsConfigSubtype,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { assert, ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { BigNumber, utils } from 'ethers'
 import { z } from 'zod'
 
@@ -11,6 +6,7 @@ import { Database } from '@l2beat/database'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { StarknetClient } from '../../../peripherals/starknet/StarknetClient'
 import { BaseAnalyzer } from './types/BaseAnalyzer'
+import type { L2Block, Transaction } from './types/BaseAnalyzer'
 
 const ZBigNumber = z.instanceof(BigNumber).transform((n) => n.toBigInt())
 
@@ -19,7 +15,7 @@ const StarknetStateUpdate = z.object({
 })
 type StarknetStateUpdate = z.infer<typeof StarknetStateUpdate>
 
-export class StarknetFinalityAnalyzer extends BaseAnalyzer {
+export class StarknetT2IAnalyzer extends BaseAnalyzer {
   constructor(
     provider: RpcClient,
     db: Database,
@@ -32,13 +28,11 @@ export class StarknetFinalityAnalyzer extends BaseAnalyzer {
     return 'stateUpdates'
   }
 
-  async analyze(transaction: {
-    txHash: string
-    timestamp: UnixTime
-  }): Promise<number[]> {
+  async analyze(
+    _previousTransaction: Transaction,
+    transaction: Transaction,
+  ): Promise<L2Block[]> {
     const tx = await this.provider.getTransaction(transaction.txHash)
-    const l1Timestamp = transaction.timestamp
-
     const decodedTransactionData = decodeTransaction(tx.data)
 
     const l2BlockNumber = extractBlockNumber(decodedTransactionData)
@@ -46,7 +40,7 @@ export class StarknetFinalityAnalyzer extends BaseAnalyzer {
     const { timestamp: l2Timestamp } =
       await this.l2Provider.getBlock(l2BlockNumber)
 
-    return [l1Timestamp.toNumber() - l2Timestamp]
+    return [{ blockNumber: l2BlockNumber, timestamp: l2Timestamp }]
   }
 }
 

@@ -1,18 +1,15 @@
 import { Logger } from '@l2beat/backend-tools'
-import {
-  ProjectId,
-  TrackedTxsConfigSubtype,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 
 import { Database } from '@l2beat/database'
 import { BlobClient } from '@l2beat/shared'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
 import { BaseAnalyzer } from '../types/BaseAnalyzer'
+import type { L2Block, Transaction } from '../types/BaseAnalyzer'
 import { calculateDelaysFromSegments } from './calculateDelaysFromSegments'
 import { getSegments } from './getSegments'
 
-export class ArbitrumFinalityAnalyzer extends BaseAnalyzer {
+export class ArbitrumT2IAnalyzer extends BaseAnalyzer {
   constructor(
     private readonly blobClient: BlobClient,
     private readonly logger: Logger,
@@ -28,23 +25,18 @@ export class ArbitrumFinalityAnalyzer extends BaseAnalyzer {
     return 'batchSubmissions'
   }
 
-  async analyze(transaction: {
-    txHash: string
-    timestamp: UnixTime
-  }): Promise<number[]> {
+  async analyze(
+    _previousTransaction: Transaction,
+    transaction: Transaction,
+  ): Promise<L2Block[]> {
     this.logger.debug('Getting finality', { transaction })
-    const submissionTimestamp = transaction.timestamp
     // get blobs relevant to the transaction
     const { blobs } = await this.blobClient.getRelevantBlobs(transaction.txHash)
 
     const segments = getSegments(blobs)
-    const delays = calculateDelaysFromSegments(
-      segments,
-      submissionTimestamp.toNumber(),
-    )
     // https://linear.app/l2beat/issue/L2B-4752/refactor-finalityindexer-logic-to-allow-analyzers-different
     // TODO: refactor FinalityIndexer to enable calculating finality
     // more accurately
-    return [delays.minDelay, delays.avgDelay, delays.maxDelay]
+    return calculateDelaysFromSegments(segments)
   }
 }

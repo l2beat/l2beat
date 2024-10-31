@@ -4,48 +4,52 @@ import { utils } from 'ethers'
 
 import { Database } from '@l2beat/database'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
-import { ScrollFinalityAnalyzer } from './ScrollFinalityAnalyzer'
+import { ScrollT2IAnalyzer } from './ScrollT2IAnalyzer'
+import { L2Block } from './types/BaseAnalyzer'
 
-describe(ScrollFinalityAnalyzer.name, () => {
-  describe(ScrollFinalityAnalyzer.prototype.analyze.name, () => {
+describe(ScrollT2IAnalyzer.name, () => {
+  describe(ScrollT2IAnalyzer.prototype.analyze.name, () => {
     it('should return timestamp differences between l1 and l2 blocks', async () => {
       const TX_HASH = '0x123'
       const L1_TIMESTAMP = 1700001000
-      const L2_TIMESTAMPS = [
-        1700000000, 1700000003, 1700000006, 1700000009, 1700000012,
+      const L2_BLOCKS: L2Block[] = [
+        { blockNumber: 123, timestamp: 1700000000 },
+        { blockNumber: 124, timestamp: 1700000003 },
+        { blockNumber: 125, timestamp: 1700000006 },
+        { blockNumber: 126, timestamp: 1700000009 },
+        { blockNumber: 127, timestamp: 1700000012 },
       ]
 
       const projectId = ProjectId('scroll')
       const rpcClient = mockObject<RpcClient>({
         getTransaction: mockFn().resolvesTo({
-          data: mockCommitBatchWithBlobProof(L2_TIMESTAMPS),
+          data: mockCommitBatchWithBlobProof(L2_BLOCKS),
         }),
       })
 
-      const analyzer = new ScrollFinalityAnalyzer(
+      const analyzer = new ScrollT2IAnalyzer(
         rpcClient,
         mockObject<Database>(),
         projectId,
       )
 
-      const result = await analyzer.analyze({
-        txHash: TX_HASH,
-        timestamp: new UnixTime(L1_TIMESTAMP),
-      })
+      const tx = { txHash: TX_HASH, timestamp: new UnixTime(L1_TIMESTAMP) }
+      const previousTx = tx // not used
+      const result = await analyzer.analyze(previousTx, tx)
 
-      expect(result).toEqual(
-        L2_TIMESTAMPS.map((L2_TIMESTAMP) => L1_TIMESTAMP - L2_TIMESTAMP),
-      )
+      expect(result).toEqual(L2_BLOCKS)
     })
   })
 })
 
-function mockCommitBatchWithBlobProof(l2Timestamps: number[]): string {
+function mockCommitBatchWithBlobProof(l2Blocks: L2Block[]): string {
   const signature =
     'commitBatchWithBlobProof(uint8 _version,bytes _parentBatchHeader,bytes[] _chunks,bytes _skippedL1MessageBitmap,bytes _blobDataProof)'
   const iface = new utils.Interface([`function ${signature}`])
 
-  const mockChunks = l2Timestamps.map((timestamp) => createMockChunk(timestamp))
+  const mockChunks = l2Blocks.map((b) =>
+    createMockChunk(b.blockNumber, b.timestamp),
+  )
 
   const mockData = [
     1,
@@ -58,7 +62,7 @@ function mockCommitBatchWithBlobProof(l2Timestamps: number[]): string {
   return iface.encodeFunctionData('commitBatchWithBlobProof', mockData)
 }
 
-function createMockChunk(timestamp: number): string {
+function createMockChunk(blockNumber: number, timestamp: number): string {
   const BLOCKS_IN_CHUNK = 1
   const BLOCK_CONTEXT_SIZE = 60
 
@@ -70,12 +74,15 @@ function createMockChunk(timestamp: number): string {
   const blockContext = new Uint8Array(BLOCK_CONTEXT_SIZE)
   const view = new DataView(blockContext.buffer)
 
+  // Set block number at the correct position (0th byte, 8 bytes long)
+  view.setBigUint64(0, BigInt(blockNumber), false)
+
   // Set timestamp at the correct position (8th byte, 8 bytes long)
   view.setBigUint64(8, BigInt(timestamp), false)
 
   // Fill the rest of the block context with dummy data
   for (let i = 0; i < BLOCK_CONTEXT_SIZE; i++) {
-    if (i < 8 || i >= 16) {
+    if (i >= 16) {
       blockContext[i] = i % 256
     }
   }

@@ -1,22 +1,18 @@
 import { Logger } from '@l2beat/backend-tools'
-import {
-  assert,
-  ProjectId,
-  TrackedTxsConfigSubtype,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { assert, ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 
 import { Database } from '@l2beat/database'
 import { BlobClient } from '@l2beat/shared'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
 import { BaseAnalyzer } from '../types/BaseAnalyzer'
+import type { L2Block, Transaction } from '../types/BaseAnalyzer'
 import { ChannelBank } from './ChannelBank'
 import { getRollupData } from './blobToData'
 import { SpanBatchDecoderOpts, decodeSpanBatch } from './decodeSpanBatch'
 import { getFrames } from './getFrames'
 import { getBatchFromChannel } from './utils'
 
-export class OpStackTimeToInclusionAnalyzer extends BaseAnalyzer {
+export class OpStackT2IAnalyzer extends BaseAnalyzer {
   private readonly channelBank: ChannelBank
 
   constructor(
@@ -36,13 +32,12 @@ export class OpStackTimeToInclusionAnalyzer extends BaseAnalyzer {
     return 'batchSubmissions'
   }
 
-  async analyze(transaction: {
-    txHash: string
-    timestamp: UnixTime
-  }): Promise<number[]> {
+  async analyze(
+    _previousTransactions: Transaction,
+    transaction: Transaction,
+  ): Promise<L2Block[]> {
     try {
       this.logger.debug('Getting finality', { transaction })
-      const l1Timestamp = transaction.timestamp
       // get blobs relevant to the transaction
       const { blobs, blockNumber } = await this.blobClient.getRelevantBlobs(
         transaction.txHash,
@@ -63,9 +58,10 @@ export class OpStackTimeToInclusionAnalyzer extends BaseAnalyzer {
         const blocksWithTimestamps = decodeSpanBatch(encodedBatch, this.opts)
         assert(blocksWithTimestamps.length > 0, 'No blocks in the batch')
 
-        const delays = blocksWithTimestamps.map(
-          (block) => l1Timestamp.toNumber() - block.timestamp,
-        )
+        const delays = blocksWithTimestamps.map((block) => ({
+          blockNumber: block.blockNumber,
+          timestamp: block.timestamp,
+        }))
         result.push(...delays)
       }
 

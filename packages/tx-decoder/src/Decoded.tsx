@@ -4,7 +4,8 @@ import { get4ByteSignatures } from './api/FourByte'
 import { getOpenChainSignatures } from './api/OpenChain'
 import { SimpleValue } from './components/SimpleValue'
 import { ValueHeading } from './components/ValueHeading'
-import { Value, decode, decodeCustom } from './decode'
+import { Value } from './decode/DecodedResult'
+import { decode } from './decode/decode'
 
 interface DecodedProps {
   encoded: `0x${string}`
@@ -40,7 +41,7 @@ export function Decoded(props: DecodedProps) {
     signatures.push(...q2.data.map((x) => `function ${x}`))
   }
   const decoded = customAbi
-    ? decodeCustom(props.encoded, customAbi)
+    ? decode(props.encoded, [customAbi])
     : decode(props.encoded, signatures)
 
   const error = q1.error ?? q2.error
@@ -63,7 +64,7 @@ export function Decoded(props: DecodedProps) {
         <span className="font-bold text-lg">{name}</span>{' '}
         <span className="pl-2 font-mono text-sm">{info}</span>
       </h2>
-      {(!decoded || decoded.type === 'error') && (
+      {decoded.type === 'error' && (
         <div>
           <div className="mb-2 flex gap-2">
             <input
@@ -77,8 +78,19 @@ export function Decoded(props: DecodedProps) {
             >
               Decode
             </button>
+            <select
+              className="rounded-sm border-zinc-900 border-b-4 bg-zinc-800 px-2.5 py-1 active:mt-1 active:border-b-0"
+              value={customAbi}
+              onChange={(e) => setCustomAbi(e.target.value)}
+            >
+              <option value="">Use plugin</option>
+              <option value="plugin:multisend">multiSend</option>
+              <option value="(address, address, uint256, uint256, uint256, bytes)">
+                scheduleBatch
+              </option>
+            </select>
           </div>
-          {decoded?.type === 'error' ? (
+          {customAbi ? (
             <div className="text-red-600 text-xs">
               Cannot decode with provided ABI. See console for details.
             </div>

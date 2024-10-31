@@ -4,10 +4,10 @@ import { expect, mockFn, mockObject } from 'earl'
 import { Database } from '@l2beat/database'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { StarknetClient } from '../../../peripherals/starknet/StarknetClient'
-import { StarknetFinalityAnalyzer } from './StarknetFinalityAnalyzer'
+import { StarknetT2IAnalyzer } from './StarknetT2IAnalyzer'
 
-describe(StarknetFinalityAnalyzer.name, () => {
-  describe(StarknetFinalityAnalyzer.prototype.analyze.name, () => {
+describe(StarknetT2IAnalyzer.name, () => {
+  describe(StarknetT2IAnalyzer.prototype.analyze.name, () => {
     it('should return timestamp differences between l1 and l2 blocks', async () => {
       const TX_HASH =
         '0x8063b9ceea01ba171e08f3ac2771f30ca1784ed3bf08c326102d13da22651005'
@@ -21,7 +21,7 @@ describe(StarknetFinalityAnalyzer.name, () => {
 
       const l2Client = mockObject<StarknetClient>({
         getBlock: mockFn().resolvesTo({
-          timestamp: new UnixTime(L2_TIMESTAMP),
+          timestamp: L2_TIMESTAMP,
         }),
       })
 
@@ -32,19 +32,23 @@ describe(StarknetFinalityAnalyzer.name, () => {
         }),
       })
 
-      const analyzer = new StarknetFinalityAnalyzer(
+      const analyzer = new StarknetT2IAnalyzer(
         rpcClient,
         mockObject<Database>({}),
         projectId,
         l2Client,
       )
 
-      const result = await analyzer.analyze({
-        txHash: TX_HASH,
-        timestamp: new UnixTime(L1_TIMESTAMP),
-      })
+      const tx = { txHash: TX_HASH, timestamp: new UnixTime(L1_TIMESTAMP) }
+      const previousTx = tx // not used
+      const result = await analyzer.analyze(previousTx, tx)
 
-      expect(result).toEqual([L1_TIMESTAMP - L2_TIMESTAMP])
+      expect(result).toEqual([
+        {
+          blockNumber: 766901,
+          timestamp: L2_TIMESTAMP,
+        },
+      ])
       expect(l2Client.getBlock).toHaveBeenNthCalledWith(1, L2_BLOCK)
     })
   })

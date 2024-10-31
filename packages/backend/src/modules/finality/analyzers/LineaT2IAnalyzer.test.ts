@@ -4,10 +4,10 @@ import { utils } from 'ethers'
 
 import { Database } from '@l2beat/database'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
-import { LineaFinalityAnalyzer } from './LineaFinalityAnalyzer'
+import { LineaT2IAnalyzer } from './LineaT2IAnalyzer'
 
-describe(LineaFinalityAnalyzer.name, () => {
-  describe(LineaFinalityAnalyzer.prototype.analyze.name, () => {
+describe(LineaT2IAnalyzer.name, () => {
+  describe(LineaT2IAnalyzer.prototype.analyze.name, () => {
     it('correctly decode and returns correct data for calldata example', async () => {
       const provider = mockObject<RpcClient>({
         getTransaction: mockFn().resolvesTo({
@@ -17,20 +17,25 @@ describe(LineaFinalityAnalyzer.name, () => {
       const l2provider = mockL2RpcClient(TIMESTAMPS1)
       const l1Timestamp = 1708352483
 
-      const calculator = new LineaFinalityAnalyzer(
+      const calculator = new LineaT2IAnalyzer(
         provider,
         mockObject<Database>(),
         ProjectId('linea'),
         l2provider,
       )
-      const results = await calculator.analyze({
-        txHash: '0x121',
-        timestamp: new UnixTime(l1Timestamp),
-      })
+      const tx = { txHash: '0x121', timestamp: new UnixTime(l1Timestamp) }
+      const previousTx = tx // not used
+      const results = await calculator.analyze(previousTx, tx)
 
       expect(results).toEqualUnsorted([
-        l1Timestamp - Math.min(...TIMESTAMPS1),
-        l1Timestamp - Math.max(...TIMESTAMPS1),
+        {
+          blockNumber: 2371262,
+          timestamp: Math.min(...TIMESTAMPS1),
+        },
+        {
+          blockNumber: 2371336,
+          timestamp: Math.max(...TIMESTAMPS1),
+        },
       ])
     })
 
@@ -43,20 +48,25 @@ describe(LineaFinalityAnalyzer.name, () => {
       const l2provider = mockL2RpcClient(TIMESTAMPS1)
       const l1Timestamp = 1708352483
 
-      const calculator = new LineaFinalityAnalyzer(
+      const calculator = new LineaT2IAnalyzer(
         provider,
         mockObject<Database>(),
         ProjectId('linea'),
         l2provider,
       )
-      const results = await calculator.analyze({
-        txHash: '0x121',
-        timestamp: new UnixTime(l1Timestamp),
-      })
+      const tx = { txHash: '0x121', timestamp: new UnixTime(l1Timestamp) }
+      const previousTx = tx // not used
+      const results = await calculator.analyze(previousTx, tx)
 
       expect(results).toEqualUnsorted([
-        l1Timestamp - Math.min(...TIMESTAMPS1),
-        l1Timestamp - Math.max(...TIMESTAMPS1),
+        {
+          blockNumber: 2371262,
+          timestamp: Math.min(...TIMESTAMPS1),
+        },
+        {
+          blockNumber: 2371336,
+          timestamp: Math.max(...TIMESTAMPS1),
+        },
       ])
     })
   })

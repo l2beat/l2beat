@@ -2,7 +2,6 @@ import {
   assert,
   ProjectId,
   TrackedTxsConfigSubtype,
-  UnixTime,
   notUndefined,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
@@ -12,10 +11,11 @@ import { Database } from '@l2beat/database'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
 import { byteArrFromHexStr } from '../opStack/utils'
 import { BaseAnalyzer } from '../types/BaseAnalyzer'
+import type { L2Block, Transaction } from '../types/BaseAnalyzer'
 import { decodeBatch } from './batch'
 import { toTransactionHash } from './hash'
 
-export class PolygonZkEvmFinalityAnalyzer extends BaseAnalyzer {
+export class PolygonZkEvmT2IAnalyzer extends BaseAnalyzer {
   constructor(
     provider: RpcClient,
     db: Database,
@@ -29,13 +29,11 @@ export class PolygonZkEvmFinalityAnalyzer extends BaseAnalyzer {
     return 'batchSubmissions'
   }
 
-  async analyze(transaction: {
-    txHash: string
-    timestamp: UnixTime
-  }): Promise<number[]> {
+  async analyze(
+    _previousTransaction: Transaction,
+    transaction: Transaction,
+  ): Promise<L2Block[]> {
     const tx = await this.provider.getTransaction(transaction.txHash)
-    const l1Timestamp = transaction.timestamp
-
     const hashes = extractTransactionData(tx.data)
       .map(byteArrFromHexStr)
       // Might be memory intensive - if so, consider batching/sequential processing
@@ -65,12 +63,16 @@ export class PolygonZkEvmFinalityAnalyzer extends BaseAnalyzer {
     const maxBlockNumber = Math.max(...blockNumbers)
     const minBlockNumber = Math.min(...blockNumbers)
 
-    const blocks = await Promise.all([
-      this.l2Provider.getBlock(minBlockNumber),
-      this.l2Provider.getBlock(maxBlockNumber),
+    return await Promise.all([
+      {
+        blockNumber: minBlockNumber,
+        timestamp: (await this.l2Provider.getBlock(minBlockNumber)).timestamp,
+      },
+      {
+        blockNumber: maxBlockNumber,
+        timestamp: (await this.l2Provider.getBlock(maxBlockNumber)).timestamp,
+      },
     ])
-
-    return blocks.map((block) => l1Timestamp.toNumber() - block.timestamp)
   }
 }
 

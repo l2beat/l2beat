@@ -1,8 +1,9 @@
-import { TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
+import { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { z } from 'zod'
 
 import { BaseAnalyzer } from './types/BaseAnalyzer'
+import type { L2Block, Transaction } from './types/BaseAnalyzer'
 
 const ScrollBatchCommit = z.object({
   version: z.number(),
@@ -11,29 +12,23 @@ const ScrollBatchCommit = z.object({
   skippedL1MessageBitmap: z.string(),
 })
 
-export class ScrollFinalityAnalyzer extends BaseAnalyzer {
+export class ScrollT2IAnalyzer extends BaseAnalyzer {
   override getTrackedTxSubtype(): TrackedTxsConfigSubtype {
     return 'batchSubmissions'
   }
 
-  async analyze(transaction: {
-    txHash: string
-    timestamp: UnixTime
-  }): Promise<number[]> {
+  async analyze(
+    _previousTransaction: Transaction,
+    transaction: Transaction,
+  ): Promise<L2Block[]> {
     const tx = await this.provider.getTransaction(transaction.txHash)
-    const l1Timestamp = transaction.timestamp
-
     const decodedTransactionData = decodeTransaction(tx.data)
 
     const rawBlockContexts = decodedTransactionData.chunks
       .map(toBlockContexts)
       .flat()
 
-    const l2Timestamps = rawBlockContexts.map(decodeBlockContext)
-
-    return l2Timestamps.map(
-      (l2Timestamp) => l1Timestamp.toNumber() - l2Timestamp,
-    )
+    return rawBlockContexts.map(decodeBlockContext)
   }
 }
 
@@ -78,14 +73,23 @@ function toBlockContexts(chunk: string) {
 }
 
 /**
- * @see https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/BatchHeaderV0Codec.sol
- * @see https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/BatchHeaderV1Codec.sol
+ * @see https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/ChunkCodecV0.sol
+ * @see https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/ChunkCodecV1.sol
  */
-function decodeBlockContext(rawBlockContext: string) {
+function decodeBlockContext(rawBlockContext: string): L2Block {
+  const BLOCK_NUMBER_START = 0 * 2 // 0th byte inclusive
+  const BLOCK_NUMBER_END = 8 * 2 // 8th byte exclusive
   const TIMESTAMP_START = 8 * 2 // 8th byte inclusive
   const TIMESTAMP_END = 16 * 2 // 16th byte exclusive
 
+  const hexBlockNumber = rawBlockContext.slice(
+    BLOCK_NUMBER_START,
+    BLOCK_NUMBER_END,
+  )
   const hexTimestamp = rawBlockContext.slice(TIMESTAMP_START, TIMESTAMP_END)
 
-  return parseInt(hexTimestamp, 16)
+  return {
+    blockNumber: parseInt(hexBlockNumber, 16),
+    timestamp: parseInt(hexTimestamp, 16),
+  }
 }

@@ -46,7 +46,8 @@ jobs:
 
       - name: Check if prisma migration is updated
         run: |-
+          cd packages/database
           pnpm prisma migrate diff --exit-code \
-            --from-migrations packages/database/prisma/migrations \
-            --to-schema-datamodel packages/database/prisma/schema.prisma \
+            --from-migrations prisma/migrations \
+            --to-schema-datamodel prisma/schema.prisma \
             --shadow-database-url ${{env.DATABASE_URL}}

@@ -4,10 +4,10 @@ import { expect, mockFn, mockObject } from 'earl'
 import { Database } from '@l2beat/database'
 import { LoopringClient } from '../../../peripherals/loopring/LoopringClient'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
-import { LoopringFinalityAnalyzer } from './LoopringFinalityAnalyzer'
+import { LoopringT2IAnalyzer } from './LoopringT2IAnalyzer'
 
-describe(LoopringFinalityAnalyzer.name, () => {
-  describe(LoopringFinalityAnalyzer.prototype.analyze.name, () => {
+describe(LoopringT2IAnalyzer.name, () => {
+  describe(LoopringT2IAnalyzer.prototype.analyze.name, () => {
     it('should return timestamp differences between l1 and l2 blocks', async () => {
       const projectId = ProjectId('loopring')
       const rpcClient = mockObject<RpcClient>({
@@ -23,19 +23,26 @@ describe(LoopringFinalityAnalyzer.name, () => {
         }),
       })
 
-      const analyzer = new LoopringFinalityAnalyzer(
+      const analyzer = new LoopringT2IAnalyzer(
         rpcClient,
         mockObject<Database>(),
         projectId,
         loopringClient,
       )
 
-      const result = await analyzer.analyze({
+      const tx = {
         txHash: MOCK_DATA.txHash,
         timestamp: new UnixTime(MOCK_DATA.l1Timestamp),
-      })
+      }
+      const previousTx = tx // not used
+      const result = await analyzer.analyze(previousTx, tx)
 
-      expect(result).toEqual([MOCK_DATA.l1Timestamp - MOCK_DATA.blockCreatedAt])
+      expect(result).toEqual([
+        {
+          blockNumber: 41025,
+          timestamp: MOCK_DATA.blockCreatedAt,
+        },
+      ])
     })
   })
 })
