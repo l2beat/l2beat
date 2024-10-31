@@ -20,7 +20,7 @@ export function Field({ name, value, level }: FieldProps) {
     if (value.addressType !== 'Unknown') {
       inlineDisplay = (
         <button
-          className="inline-block w-min whitespace-nowrap text-left font-mono text-blue-400 text-xs"
+          className="inline-block w-min whitespace-nowrap text-left font-mono text-blue-400 text-xs underline"
           onClick={() => select([value.address])}
         >
           <AddressIcon
