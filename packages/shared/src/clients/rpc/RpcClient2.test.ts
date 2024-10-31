@@ -78,7 +78,7 @@ describe(RpcClient2.name, () => {
   describe(RpcClient2.prototype.validateResponse.name, () => {
     it('returns false when response includes errors', async () => {
       const rpc = mockClient({})
-      const isValid = rpc.validateResponse({
+      const validationInfo = rpc.validateResponse({
         error: {
           code: -32601,
           message:
@@ -86,16 +86,16 @@ describe(RpcClient2.name, () => {
         },
       })
 
-      expect(isValid).toEqual(false)
+      expect(validationInfo.success).toEqual(false)
     })
 
     it('returns true otherwise', async () => {
       const rpc = mockClient({})
-      const isValid = rpc.validateResponse({
+      const validationInfo = rpc.validateResponse({
         result: 'success',
       })
 
-      expect(isValid).toEqual(true)
+      expect(validationInfo.success).toEqual(true)
     })
   })
 })
