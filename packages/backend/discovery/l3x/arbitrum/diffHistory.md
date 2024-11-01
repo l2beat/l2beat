@@ -1,6 +1,6 @@
 Generated with discovered.json: 0x8188661e38f47a0a1c0961ccb5d0382069048511
 
-# Diff at Fri, 01 Nov 2024 14:58:23 GMT:
+# Diff at Fri, 01 Nov 2024 17:21:54 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@cd1f0e71bb08ce16b2084a11b768538e8aa6ba8c block: 267470320
@@ -18,7 +18,7 @@ Discovery refresh to apply template.
       values.sequencerVersion:
 -        "0x88"
       errors:
-+        {"sequencerVersion":"missing response (requestBody=\"{\\\"method\\\":\\\"eth_getLogs\\\",\\\"params\\\":[{\\\"fromBlock\\\":\\\"0x101702a1\\\",\\\"toBlock\\\":\\\"0x10170689\\\",\\\"address\\\":\\\"0xb9450b512fd3454e9c1a2593c5df9e71344b5653\\\",\\\"topics\\\":[\\\"0x7394f4a19a13c7b92b5bb71033245305946ef78452f7b4986ac1390b5df4ebd7\\\"]}],\\\"id\\\":56,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", serverError={\"errno\":-60,\"code\":\"ETIMEDOUT\",\"syscall\":\"connect\",\"address\":\"2606:4700::6813:9e0e\",\"port\":443}, url=\"https://arb-mainnet.g.alchemy.com/v2/vDE81dGkASEBA0Fiwu7bhA31ucQRe3ka\", code=SERVER_ERROR, version=web/5.7.1)"}
++        {"0x88"}
     }
 ```
 
