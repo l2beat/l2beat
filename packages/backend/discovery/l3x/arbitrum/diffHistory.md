@@ -12,15 +12,6 @@ Discovery refresh to apply template.
 
 ## Watched changes
 
-```diff
-    contract SequencerInbox (0xB9450b512Fd3454e9C1a2593C5DF9E71344b5653) {
-    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
-      values.sequencerVersion:
--        "0x88"
-      errors:
-+        {"0x88"}
-    }
-```
 
 ## Config/verification related changes
 

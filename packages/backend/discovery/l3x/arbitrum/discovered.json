@@ -670,9 +670,6 @@
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
-      "errors": {
-        "sequencerVersion": "0x88"
-      },
       "fieldMeta": {
         "maxTimeVariation": {
           "description": "Struct: delayBlocks, futureBlocks, delaySeconds, futureSeconds. onlyRollupOwner settable. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
