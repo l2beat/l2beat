@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x4607f54dcb911836af9c396e3547bef2302856e3
+Generated with discovered.json: 0x32b53920d26d2a0f4039d0b0715e94e76053591d
 
-# Diff at Fri, 01 Nov 2024 12:07:40 GMT:
+# Diff at Fri, 01 Nov 2024 12:23:43 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@cd1f0e71bb08ce16b2084a11b768538e8aa6ba8c block: 21085481
@@ -31,6 +31,15 @@ discovery. Values are for block 21085481 (main branch discovery), not current.
       receivedPermissions.7.description:
 -        "upgrading bridge implementation allows to access all funds and change every system component."
 +        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract OptimismFoundationMultisig_1 (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      name:
+-        "FoundationMultisig_1"
++        "OptimismFoundationMultisig_1"
     }
 ```
 
