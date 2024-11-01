@@ -1,17 +1,19 @@
 {
   "name": "l3x",
   "chain": "arbitrum",
-  "blockNumber": 267470320,
+  "blockNumber": 269947457,
   "configHash": "0xcb63d2f74ca8c4d8478f616e8ac910bb3d06acfe8ff2028779eb69207326b2e3",
   "contracts": [
     {
       "name": "Outbox",
       "address": "0x1526DAacDAf3EE81E5ae087E0DA8677E8c677CE5",
+      "template": "orbitstack/Outbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0x28eec040eca7563195b19e22e11429d0f977820bfb60ac52e567ffde3c92cf77"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -278,11 +280,13 @@
     {
       "name": "Bridge",
       "address": "0x59E088d827CB7983Cd0CC64312E472D7cc8a4F44",
+      "template": "orbitstack/Bridge",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0xb920455f1e366c7a89719abdd8d8174e4e7d353f2d4b7dea11b0571bf9526eae"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -322,11 +326,11 @@
           "0xc40e1DdDDc4837e63Bfb21EF34d3Ca4A6c78fD15"
         ],
         "allowedOutboxList": ["0x1526DAacDAf3EE81E5ae087E0DA8677E8c677CE5"],
-        "delayedMessageCount": 345,
+        "delayedMessageCount": 359,
         "rollup": "0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e",
         "sequencerInbox": "0xB9450b512Fd3454e9C1a2593C5DF9E71344b5653",
-        "sequencerMessageCount": 200,
-        "sequencerReportedSubMessageCount": 626
+        "sequencerMessageCount": 208,
+        "sequencerReportedSubMessageCount": 644
       },
       "derivedName": "Bridge"
     },
@@ -520,12 +524,12 @@
         "confirmPeriodBlocks": 7200,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 199,
+        "firstUnresolvedNode": 208,
         "inbox": "0x80de5c4ccDfb7b6a250A9588C2d80F62a2B7d13F",
         "isERC20Enabled": false,
         "lastStakeBlock": 19779928,
-        "latestConfirmed": 198,
-        "latestNodeCreated": 199,
+        "latestConfirmed": 207,
+        "latestNodeCreated": 207,
         "loserStakeEscrow": "0x5e31608B400F45846043E93747D72A1a02c5a2f5",
         "minimumAssertionPeriod": 75,
         "outbox": "0x1526DAacDAf3EE81E5ae087E0DA8677E8c677CE5",
@@ -639,7 +643,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 200,
+        "batchCount": 208,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xd987004738Ae33732ecf68613b1b7aFd1df7C11c"],
         "bridge": "0x59E088d827CB7983Cd0CC64312E472D7cc8a4F44",
@@ -661,11 +665,13 @@
         "maxTimeVariation": [5760, 48, 86400, 3600],
         "reader4844": "0x0000000000000000000000000000000000000000",
         "rollup": "0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e",
-        "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 344,
+        "totalDelayedMessagesRead": 358,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
+      },
+      "errors": {
+        "sequencerVersion": "missing response (requestBody=\"{\\\"method\\\":\\\"eth_getLogs\\\",\\\"params\\\":[{\\\"fromBlock\\\":\\\"0x101702a1\\\",\\\"toBlock\\\":\\\"0x10170689\\\",\\\"address\\\":\\\"0xb9450b512fd3454e9c1a2593c5df9e71344b5653\\\",\\\"topics\\\":[\\\"0x7394f4a19a13c7b92b5bb71033245305946ef78452f7b4986ac1390b5df4ebd7\\\"]}],\\\"id\\\":56,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", serverError={\"errno\":-60,\"code\":\"ETIMEDOUT\",\"syscall\":\"connect\",\"address\":\"2606:4700::6813:9e0e\",\"port\":443}, url=\"https://arb-mainnet.g.alchemy.com/v2/vDE81dGkASEBA0Fiwu7bhA31ucQRe3ka\", code=SERVER_ERROR, version=web/5.7.1)"
       },
       "fieldMeta": {
         "maxTimeVariation": {
@@ -1479,12 +1485,14 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
+    "orbitstack/Bridge": "0x6e309bce5a8758ba24f800f3c0135c502fd5cc22724da5165d8368377eb6c9c8",
     "orbitstack/ChallengeManager": "0xc4fbc82c5001579bb1f880d92a3510cda3dc4a65e284fc300363ce048c2fb6d7",
     "orbitstack/OneStepProofEntry": "0xf3bff5da86f9bbb5f9ac93a0f2239f0769d051b67a44be2e52c322799e3b8d4f",
     "orbitstack/OneStepProver0": "0x80f18705038deef096683a89d16549bf343ada57cac1f2750df2f06fbbaed5ca",
     "orbitstack/OneStepProverHostIo": "0xacacb7603847a3f0212fdf80c653040278214c00451f763907e270d1f19efec0",
     "orbitstack/OneStepProverMath": "0x8dd8aebb517eb6eaf15437ddbb90dff66f2b14d9d6b5390dd87fbdab15168188",
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
+    "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
     "orbitstack/RollupProxy": "0x9de477a7ec4abe22558d85184e1ff68cebea26c903f45220337156ae3acf3dc5",
     "orbitstack/SequencerInbox": "0x80eed651d83fd6cd84047260bf02ec5e3a5f21b36049e1e45f34bd0a452e02f9",
     "orbitstack/UpgradeExecutor": "0xa25e02367a436cebea22481663da914bbf1fd9492d903659cc6ec9ddbaccb241"

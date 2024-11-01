@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x8188661e38f47a0a1c0961ccb5d0382069048511
+
+# Diff at Fri, 01 Nov 2024 14:58:23 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@cd1f0e71bb08ce16b2084a11b768538e8aa6ba8c block: 267470320
+- current block number: 269947457
+
+## Description
+
+Discovery refresh to apply template.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0xB9450b512Fd3454e9C1a2593C5DF9E71344b5653) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.sequencerVersion:
+-        "0x88"
+      errors:
++        {"sequencerVersion":"missing response (requestBody=\"{\\\"method\\\":\\\"eth_getLogs\\\",\\\"params\\\":[{\\\"fromBlock\\\":\\\"0x101702a1\\\",\\\"toBlock\\\":\\\"0x10170689\\\",\\\"address\\\":\\\"0xb9450b512fd3454e9c1a2593c5df9e71344b5653\\\",\\\"topics\\\":[\\\"0x7394f4a19a13c7b92b5bb71033245305946ef78452f7b4986ac1390b5df4ebd7\\\"]}],\\\"id\\\":56,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", serverError={\"errno\":-60,\"code\":\"ETIMEDOUT\",\"syscall\":\"connect\",\"address\":\"2606:4700::6813:9e0e\",\"port\":443}, url=\"https://arb-mainnet.g.alchemy.com/v2/vDE81dGkASEBA0Fiwu7bhA31ucQRe3ka\", code=SERVER_ERROR, version=web/5.7.1)"}
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 267470320 (main branch discovery), not current.
+
+```diff
+    contract Outbox (0x1526DAacDAf3EE81E5ae087E0DA8677E8c677CE5) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      template:
++        "orbitstack/Outbox"
+      description:
++        "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1."
+    }
+```
+
+```diff
+    contract Bridge (0x59E088d827CB7983Cd0CC64312E472D7cc8a4F44) {
+    +++ description: Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      template:
++        "orbitstack/Bridge"
+      description:
++        "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
+    }
+```
+
 Generated with discovered.json: 0x3617be0a7f20aec1d2982d14a83f44a66e5e5681
 
 # Diff at Tue, 29 Oct 2024 13:22:03 GMT:
