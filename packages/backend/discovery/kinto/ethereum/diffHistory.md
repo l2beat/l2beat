@@ -1,3 +1,67 @@
+Generated with discovered.json: 0x27cdedceb3fca63f6099702e7287b627b0de52fa
+
+# Diff at Fri, 01 Nov 2024 13:51:01 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@cd1f0e71bb08ce16b2084a11b768538e8aa6ba8c block: 21077256
+- current block number: 21093205
+
+## Description
+
+Challenge undergoing awaiting oneStepProver resolution. Also updated discovery for template.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ description: Emitted on createChallenge() in RollupUserLogic.
+      values.challenges.0:
++        {"challengeIndex":1,"asserter":"0x64Cf65036a76E3827e448cadbc53D31EefDCE04a","challenger":"0x2bfDA59220413DEd39dD0E443620b5277EcE6348","challengedNode":2161}
+      values.lastStakeBlock:
+-        18788889
++        21084338
+      values.stakerCount:
+-        1
++        3
+    }
+```
+
+```diff
+    contract ChallengeManager (0x6228e2FB8C561f1a5A963039Bc38Eb6D539A1A7F) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      values.totalChallengesCreated:
+-        0
++        1
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21077256 (main branch discovery), not current.
+
+```diff
+    contract Outbox (0x655761AD5FC251F414D6993A73184B0669F278c8) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      template:
++        "orbitstack/Outbox"
+      description:
++        "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1."
+    }
+```
+
+```diff
+    contract Bridge (0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB) {
+    +++ description: Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      template:
++        "orbitstack/Bridge"
+      description:
++        "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
+    }
+```
+
 Generated with discovered.json: 0x52d0651024635a16526a05f5d48aebc82c5b2ed9
 
 # Diff at Wed, 30 Oct 2024 08:26:36 GMT:
