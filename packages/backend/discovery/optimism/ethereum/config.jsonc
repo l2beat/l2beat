@@ -43,6 +43,15 @@
     "0x82511d494B5C942BE57498a70Fdd7184Ee33B975": "DelayedWETH_PermissionlessGames",
     "0x9F9b897e37de5052cD70Db6D08474550DDb07f39": "DelayedWETH_PermissionedGames"
   },
+  "types": {
+    "DisputeGameMap": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "0": "FaultDisputeGame",
+        "1": "PermissionedDisputeGame"
+      }
+    }
+  },
   "overrides": {
     "SynthetixBridgeEscrow": {
       "ignoreRelatives": ["owner"]
