@@ -556,6 +556,13 @@ export const arbitrum: Layer2 = orbitStackL2({
   },
   milestones: [
     {
+      name: 'Frontend Enhancement Contribution',
+      link: 'https://x.com/samdotola/status/1852199869621969240',
+      date: '2024-11-01T12:00:00Z',
+      description: 'Improved UI for better user experience.',
+      type: 'general',
+    },
+    {
       name: 'Exit window extension to 7 days',
       link: 'https://www.tally.xyz/gov/arbitrum/proposal/27888300053486667232765715922683646778055572080881341292116987136155397805421?govId=eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9',
       date: '2024-10-25T00:00:00Z',
