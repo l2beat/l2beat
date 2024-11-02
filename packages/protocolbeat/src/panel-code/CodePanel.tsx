@@ -4,6 +4,7 @@ import type { editor as editorType } from 'monaco-editor'
 import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getCode, getProject } from '../api/api'
+import { toShortenedAddress } from '../common/toShortenedAddress'
 import { IconCodeFile } from '../icons/IconCodeFile'
 import { useMultiViewStore } from '../multi-view/store'
 import { usePanelStore } from '../store/store'
@@ -29,16 +30,27 @@ export function CodePanel() {
     setCurrent(0)
   }, [codeResponse.data])
 
-  if (projectResponse.isPending || codeResponse.isPending) {
-    return <div>Loading</div>
-  }
   if (projectResponse.isError || codeResponse.isError) {
     return <div>Error</div>
   }
+
+  const response = codeResponse.data?.sources ?? []
+  const sources =
+    response.length === 0
+      ? [
+          {
+            name: selectedAddress
+              ? toShortenedAddress(selectedAddress)
+              : 'Loading',
+            code: codeResponse.isPending ? '// Loading' : '// No code',
+          },
+        ]
+      : response
+
   return (
     <div className="flex h-full w-full flex-col">
-      <div className="flex h-8 gap-1 border-b border-b-latte px-1 pt-1">
-        {codeResponse.data.sources.map((x, i) => (
+      <div className="flex gap-1 border-b border-b-latte px-1 pt-1">
+        {sources.map((x, i) => (
           <button
             key={i}
             onClick={() => setCurrent(i)}
@@ -52,9 +64,7 @@ export function CodePanel() {
           </button>
         ))}
       </div>
-      <CodeView
-        code={codeResponse.data.sources[current]?.code ?? '// No code'}
-      />
+      <CodeView code={sources[current]?.code ?? '// No code'} />
     </div>
   )
 }

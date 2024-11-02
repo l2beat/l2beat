@@ -99,8 +99,6 @@ function useSynchronizeSelection() {
     const eq = (a: readonly string[], b: readonly string[]) =>
       a.length === b.length && a.every((x, i) => b[i] === x)
 
-    console.log('trigger')
-
     if (selectedNodes.length > 0 && !eq(lastSelection, selectedNodes)) {
       rememberSelection(selectedNodes)
       selectGlobal(selectedNodes[0])
