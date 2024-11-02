@@ -28,7 +28,7 @@ export function NodeView(props: NodeViewProps) {
       className={clsx(
         'absolute bg-black',
         fullHeight ? 'rounded-2xl' : 'rounded',
-        props.selected && 'outline outline-3 outline-sun',
+        props.selected && 'outline outline-4 outline-sun',
       )}
     >
       <div
