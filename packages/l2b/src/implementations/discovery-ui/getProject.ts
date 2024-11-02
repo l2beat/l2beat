@@ -1,5 +1,6 @@
 import { ConfigReader } from '@l2beat/discovery'
 import { ContractParameters, DiscoveryOutput } from '@l2beat/discovery-types'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { parseFieldValue } from './parseFieldValue'
 import { toAddress } from './toAddress'
 import {
@@ -10,7 +11,6 @@ import {
   Field,
   FieldValue,
 } from './types'
-import { EthereumAddress } from '@l2beat/shared-pure'
 
 export function getProject(configReader: ConfigReader, project: string) {
   const chains = configReader.readAllChainsForProject(project)

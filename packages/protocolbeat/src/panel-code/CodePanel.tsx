@@ -49,7 +49,7 @@ export function CodePanel() {
 
   return (
     <div className="flex h-full w-full flex-col">
-      <div className="flex gap-1 border-b border-b-latte px-1 pt-1">
+      <div className="flex gap-1 overflow-x-auto border-b border-b-latte px-1 pt-1">
         {sources.map((x, i) => (
           <button
             key={i}
