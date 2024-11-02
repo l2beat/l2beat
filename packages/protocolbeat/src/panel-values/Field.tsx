@@ -21,7 +21,7 @@ export function Field({ name, value, level }: FieldProps) {
       inlineDisplay = (
         <button
           className="inline-block w-min whitespace-nowrap text-left font-mono text-blue-400 text-xs underline"
-          onClick={() => select([value.address])}
+          onClick={() => select(value.address)}
         >
           <AddressIcon
             type={value.addressType}

@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getProject } from '../api/api'
-import { Field as ApiField, FieldValue } from '../api/types'
+import { Field as ApiField, ApiProjectResponse, FieldValue } from '../api/types'
 import { usePanelStore } from '../store/store'
 import { NodesApp } from './NodesApp'
 import { Field, Node } from './store/State'
@@ -18,29 +18,35 @@ export function NodesPanel() {
     queryKey: ['projects', project],
     queryFn: () => getProject(project),
   })
+
+  useSynchronizeSelection()
+  useLoadNodes(response.data, project)
+
+  if (response.isLoading) {
+    return <div>Loading</div>
+  }
+  if (response.isError) {
+    return <div>Error</div>
+  }
+
+  return (
+    <div className="h-full w-full overflow-x-hidden">
+      <NodesApp panelMode />
+    </div>
+  )
+}
+
+function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
   const clear = useNodeStore((state) => state.clear)
   const loadNodes = useNodeStore((state) => state.loadNodes)
 
-  const panelSelected = usePanelStore((state) => state.selected)
-  const panelSelect = usePanelStore((state) => state.select)
-  const nodesSelected = useStore((state) => state.selected)
-  const nodesSelect = useStore((state) => state.selectAndFocus)
-
-  useEffect(() => {
-    nodesSelect(panelSelected)
-  }, [panelSelected, nodesSelect])
-
-  useEffect(() => {
-    panelSelect(nodesSelected)
-  }, [nodesSelected, panelSelect])
-
   useEffect(() => {
     clear()
-    if (!response.data) {
+    if (!data) {
       return
     }
     const nodes: Node[] = []
-    for (const chain of response.data.chains) {
+    for (const chain of data.chains) {
       for (const contract of [
         ...chain.initialContracts,
         ...chain.discoveredContracts,
@@ -79,20 +85,37 @@ export function NodesPanel() {
       }
     }
     loadNodes(project, nodes)
-  }, [project, response.data, loadNodes])
+  }, [project, data, clear, loadNodes])
+}
 
-  if (response.isLoading) {
-    return <div>Loading</div>
-  }
-  if (response.isError) {
-    return <div>Error</div>
-  }
+function useSynchronizeSelection() {
+  const [lastSelection, rememberSelection] = useState<readonly string[]>([])
+  const selectedGlobal = usePanelStore((state) => state.selected)
+  const selectGlobal = usePanelStore((state) => state.select)
+  const selectedNodes = useStore((state) => state.selected)
+  const selectNodes = useStore((state) => state.selectAndFocus)
 
-  return (
-    <div className="h-full w-full overflow-x-hidden">
-      <NodesApp panelMode />
-    </div>
-  )
+  useEffect(() => {
+    const eq = (a: readonly string[], b: readonly string[]) =>
+      a.length === b.length && a.every((x, i) => b[i] === x)
+
+    console.log('trigger')
+
+    if (selectedNodes.length > 0 && !eq(lastSelection, selectedNodes)) {
+      rememberSelection(selectedNodes)
+      selectGlobal(selectedNodes[0])
+    } else if (selectedGlobal && !lastSelection.includes(selectedGlobal)) {
+      rememberSelection([selectedGlobal])
+      selectNodes([selectedGlobal])
+    }
+  }, [
+    lastSelection,
+    rememberSelection,
+    selectedGlobal,
+    selectGlobal,
+    selectedNodes,
+    selectNodes,
+  ])
 }
 
 function toNodeFields(input: ApiField[]): Field[] {

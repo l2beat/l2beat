@@ -15,7 +15,7 @@ export function ValuesPanel() {
     queryKey: ['projects', project],
     queryFn: () => getProject(project),
   })
-  const selectedAddress = usePanelStore((state) => state.selected[0])
+  const selectedAddress = usePanelStore((state) => state.selected)
 
   if (response.isPending) {
     return <div>Loading</div>

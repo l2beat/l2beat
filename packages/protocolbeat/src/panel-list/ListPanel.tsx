@@ -139,9 +139,7 @@ function ListItemContracts(props: {
 }
 
 function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
-  const isSelected = usePanelStore((state) =>
-    state.selected.includes(entry.address),
-  )
+  const isSelected = usePanelStore((state) => state.selected === entry.address)
   const select = usePanelStore((state) => state.select)
   return (
     <li
@@ -150,7 +148,7 @@ function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
         isSelected && 'bg-sun text-black',
         !isSelected && 'bg-coffee hover:bg-autumn',
       )}
-      onClick={() => select([entry.address])}
+      onClick={() => select(entry.address)}
     >
       <div className="mr-[7px] h-[22px] border-latte border-l" />
       <AddressIcon type={entry.type} />

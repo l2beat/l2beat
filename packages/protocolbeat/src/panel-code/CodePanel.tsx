@@ -18,7 +18,7 @@ export function CodePanel() {
     queryKey: ['projects', project],
     queryFn: () => getProject(project),
   })
-  const selectedAddress = usePanelStore((state) => state.selected[0])
+  const selectedAddress = usePanelStore((state) => state.selected)
   const codeResponse = useQuery({
     queryKey: ['projects', project, 'code', selectedAddress],
     enabled: selectedAddress !== undefined,
@@ -37,7 +37,7 @@ export function CodePanel() {
   }
   return (
     <div className="flex h-full w-full flex-col">
-      <div className="flex gap-1 border-b border-b-latte px-1 pt-1">
+      <div className="flex h-8 gap-1 border-b border-b-latte px-1 pt-1">
         {codeResponse.data.sources.map((x, i) => (
           <button
             key={i}
