@@ -8,13 +8,21 @@ export function TopBar(props: { project: string }) {
   const addPanel = useMultiViewStore((state) => state.addPanel)
   return (
     <div className="flex h-10 items-center justify-between px-2">
-      <div>DISCOVERY {props.project}</div>
+      <div className="flex items-center gap-2">
+        <a href="/ui">
+          <img className="-top-[3px] relative h-[20px]" src="/logo.svg"></img>
+        </a>
+        <p>{props.project}</p>
+      </div>
       <div className="flex gap-2">
         <div className="grid grid-cols-6">
           {layouts.map((_, i) => (
             <button
               key={i}
-              className={clsx('w-4', selectedLayout === i && 'bg-autumn')}
+              className={clsx(
+                'w-4',
+                selectedLayout === i && 'bg-sun text-black ',
+              )}
               onClick={() => loadLayout(i)}
             >
               {i + 1}

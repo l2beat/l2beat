@@ -111,7 +111,7 @@ function ListItemContracts(props: {
     <>
       <button
         onClick={() => setOpen((open) => !open)}
-        className="flex h-[22px] w-full cursor-pointer select-none items-center gap-1 pl-2 font-medium text-cream text-sm hover:bg-autumn"
+        className="flex h-[22px] w-full cursor-pointer select-none items-center gap-1 pl-2 font-medium text-cream text-sm hover:bg-autumn hover:text-milk"
       >
         {open && (
           <>
