@@ -3,7 +3,7 @@ import {
   CLICKED_LEFT_MOUSE_BUTTON,
   CLICKED_MIDDLE_MOUSE_BUTTON,
 } from '../utils/constants'
-import { boxContains } from '../utils/containment'
+import { boxContains, isResizable } from '../utils/containment'
 import { toViewCoordinates } from '../utils/coordinates'
 import { reverseIter } from '../utils/reverseIter'
 import { updateNodePositions } from '../utils/updateNodePositions'
@@ -33,6 +33,23 @@ export function onMouseDown(
 
     for (const node of reverseIter(state.nodes)) {
       if (boxContains(node.box, x, y)) {
+        if (isResizable(node.box, state.transform.scale, x)) {
+          return {
+            input: {
+              ...state.input,
+              lmbPressed: true,
+              // this is needed to fix alt tab during shift dragging
+              shiftPressed: event.shiftKey,
+              mouseStartX: x,
+              mouseStartY: y,
+              mouseX: x,
+              mouseY: y,
+            },
+            mouseMoveAction: 'resize-node',
+            resizingNode: node.id,
+          }
+        }
+
         const includes = state.selected.includes(node.id)
 
         let selected: readonly string[]

@@ -21,11 +21,7 @@ export interface State {
     readonly mouseX: number
     readonly mouseY: number
   }
-  readonly resizingNode?: {
-    readonly id: string
-    readonly initialWidth: number
-    readonly startX: number
-  }
+  readonly resizingNode?: string
   readonly mouseUpAction?: DeselectOne | DeselectAllBut
   readonly mouseMoveAction?:
     | 'drag'

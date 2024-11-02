@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { useEffect, useRef } from 'react'
 import { useStore } from '../store/store'
 import { MouseSelection } from './MouseSelection'
@@ -14,6 +15,7 @@ export function Viewport() {
   const onMouseMove = useStore((state) => state.onMouseMove)
   const onMouseUp = useStore((state) => state.onMouseUp)
   const onWheel = useStore((state) => state.onWheel)
+  const isResizing = useStore((state) => state.resizingNode !== undefined)
 
   useEffect(() => {
     function handleWheel(event: WheelEvent) {
@@ -51,7 +53,10 @@ export function Viewport() {
   return (
     <div
       ref={containerRef}
-      className="relative h-full w-full overflow-hidden bg-coffee"
+      className={clsx(
+        'relative h-full w-full overflow-hidden bg-coffee',
+        isResizing && 'cursor-col-resize',
+      )}
     >
       <ScalableView ref={viewRef}>
         <NodesAndConnections />

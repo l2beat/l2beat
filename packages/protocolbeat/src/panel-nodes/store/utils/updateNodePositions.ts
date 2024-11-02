@@ -1,5 +1,5 @@
 import type { Box, Connection, State } from '../State'
-import { FIELD_HEIGHT, HEADER_HEIGHT, BOTTOM_PADDING } from './constants'
+import { BOTTOM_PADDING, FIELD_HEIGHT, HEADER_HEIGHT } from './constants'
 
 export function updateNodePositions(state: State): State {
   let dx = state.input.mouseX - state.input.mouseStartX
