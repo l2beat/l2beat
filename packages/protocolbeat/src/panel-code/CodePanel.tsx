@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
-import * as monaco from 'monaco-editor'
+import clsx from 'clsx'
+import type { editor as editorType } from 'monaco-editor'
 import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getCode, getProject } from '../api/api'
 import { useMultiViewStore } from '../multi-view/store'
 import { usePanelStore } from '../store/store'
-import './monaco-workers'
-import clsx from 'clsx'
+import { create } from './editor'
 
 export function CodePanel() {
   const { project } = useParams()
@@ -57,7 +57,7 @@ export function CodePanel() {
 function CodeView({ code }: { code: string }) {
   const monacoEl = useRef(null)
   const [editor, setEditor] = useState<
-    monaco.editor.IStandaloneCodeEditor | undefined
+    editorType.IStandaloneCodeEditor | undefined
   >(undefined)
   const panels = useMultiViewStore((state) => state.panels)
 
@@ -65,21 +65,8 @@ function CodeView({ code }: { code: string }) {
     if (!monacoEl.current) {
       return
     }
-    monaco.editor.defineTheme('default', {
-      base: 'vs-dark',
-      inherit: true,
-      rules: [],
-      colors: {
-        'editor.foreground': '#F0D8BD',
-        'editor.background': '#282422',
-      },
-    })
-    monaco.editor.setTheme('default')
-    const editor = monaco.editor.create(monacoEl.current, {
-      language: 'sol',
-      minimap: { enabled: false },
-      readOnly: true,
-    })
+
+    const editor = create(monacoEl.current)
     setEditor(editor)
 
     function onResize() {
