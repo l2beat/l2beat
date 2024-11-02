@@ -31,7 +31,8 @@ export function loadNodes(
     missing++
     const y = box?.y ?? 0
     const width = box?.width ?? NODE_WIDTH
-    const color = saved?.colors?.[node.id] ?? node.color
+    const savedColor = saved?.colors?.[node.id]
+    const color = typeof savedColor === 'number' ? savedColor : node.color
     // height will be updated by updatePositions
     return { ...node, color, box: { x, y, width, height: 0 } }
   })
@@ -67,7 +68,7 @@ function idToUnknown(id: string): Node {
     address,
     name,
     box: { x: 0, y: 0, width: 0, height: 0 },
-    color: { l: 0.67, c: 0.166, h: 22 },
+    color: 0,
     fields: [],
     data: null,
   }

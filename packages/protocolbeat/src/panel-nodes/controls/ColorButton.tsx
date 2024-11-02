@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useStore } from '../store/store'
-import { OklchColor, oklchColorToCSS } from '../store/utils/color'
+import { oklchColorToCSS } from '../store/utils/color'
+import { SELECTABLE_COLORS } from '../view/colors'
 import { ControlButton } from './ControlButton'
 
 export function ColorButton() {
@@ -37,7 +38,7 @@ export function ColorButton() {
     }
   }, [ref, open, setOpen])
 
-  function changeColor(color: OklchColor) {
+  function changeColor(color: number) {
     colorSelected(color)
     setOpen(false)
   }
@@ -60,30 +61,24 @@ export function ColorButton() {
 }
 
 export interface ColorPickerProps {
-  onColorChange: (color: OklchColor) => void
+  onColorChange: (color: number) => void
 }
 
 export function ColorPicker({ onColorChange }: ColorPickerProps) {
-  const colors: OklchColor[] = [
-    { l: 0.3, c: 0.02, h: 39.29 },
-    { l: 0.34, c: 0.06, h: 270 },
-    { l: 0.31, c: 0.15, h: 266 },
-    { l: 0.35, c: 0.06, h: 160 },
-    { l: 0.29, c: 0.06, h: 129 },
-    { l: 0.45, c: 0.08, h: 208 },
-    { l: 0.33, c: 0.2, h: 318 },
-    { l: 0, c: 0, h: 90 },
-  ]
-
   return (
     <div className="grid w-max grid-cols-7 place-items-center gap-3">
-      {colors.map((c, i) => (
-        <div
+      <button
+        style={{ backgroundColor: 'white' }}
+        className="h-12 w-12 rounded border border-latte shadow-xl hover:ring"
+        onClick={() => onColorChange(0)}
+      />
+      {SELECTABLE_COLORS.map((c, i) => (
+        <button
           style={{ backgroundColor: oklchColorToCSS(c) }}
           className="h-12 w-12 rounded border border-latte shadow-xl hover:ring"
           key={i}
-          onClick={() => onColorChange(c)}
-        ></div>
+          onClick={() => onColorChange(i + 1)}
+        />
       ))}
     </div>
   )

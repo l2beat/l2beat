@@ -1,5 +1,3 @@
-import { OklchColor } from './utils/color'
-
 export interface State {
   readonly projectId: string
   readonly nodes: readonly Node[]
@@ -41,7 +39,7 @@ export interface Node {
   readonly name: string
   readonly fields: Field[]
   readonly box: Box
-  readonly color: OklchColor
+  readonly color: number
   readonly data: unknown
 }
 

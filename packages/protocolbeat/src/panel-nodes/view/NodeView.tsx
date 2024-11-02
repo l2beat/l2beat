@@ -2,8 +2,8 @@ import clsx from 'clsx'
 
 import type { Field, Node } from '../store/State'
 import { useStore } from '../store/store'
-import { OklchColor, oklchColorToCSS } from '../store/utils/color'
 import { FIELD_HEIGHT, HEADER_HEIGHT } from '../store/utils/constants'
+import { getColor } from './colors'
 
 export interface NodeViewProps {
   node: Node
@@ -11,6 +11,7 @@ export interface NodeViewProps {
 }
 
 export function NodeView(props: NodeViewProps) {
+  const { color, isDark } = getColor(props.node.id, props.node.color)
   return (
     <div
       style={{
@@ -27,24 +28,18 @@ export function NodeView(props: NodeViewProps) {
       <div
         className={clsx(
           'mb-1 flex w-full justify-between rounded-t px-2 font-bold text-sm',
-          props.node.fields.length > 0 && 'border border-milk',
-          props.node.color.l > 0.5 ? 'text-black' : 'text-milk',
+          isDark ? 'text-milk' : 'text-black',
         )}
         style={{
           height: HEADER_HEIGHT - 4,
-          lineHeight: HEADER_HEIGHT - 4 - 2 + 'px',
-          backgroundColor: oklchColorToCSS(props.node.color),
+          lineHeight: HEADER_HEIGHT - 4 + 'px',
+          backgroundColor: color,
         }}
       >
         <div className="truncate">{props.node.name}</div>
       </div>
       {props.node.fields.map((field, i) => (
-        <NodeField
-          key={i}
-          field={field}
-          color={props.node.color}
-          selected={props.selected}
-        />
+        <NodeField key={i} field={field} selected={props.selected} />
       ))}
     </div>
   )
@@ -52,7 +47,6 @@ export function NodeView(props: NodeViewProps) {
 
 function NodeField(props: {
   field: Field
-  color: OklchColor
   selected: boolean
 }) {
   const isHighlighted = useStore((state) =>

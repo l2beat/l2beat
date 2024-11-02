@@ -8,7 +8,6 @@ import { NodesApp } from './NodesApp'
 import { Field, Node } from './store/State'
 import { useStore as useNodeStore, useStore } from './store/store'
 import { NODE_WIDTH } from './store/utils/constants'
-import { getChainColor } from './store/utils/discoveryToNodes'
 
 export function NodesPanel() {
   const { project } = useParams()
@@ -42,7 +41,6 @@ export function NodesPanel() {
     }
     const nodes: Node[] = []
     for (const chain of response.data.chains) {
-      const baseColor = getChainColor(chain.name)
       for (const contract of [
         ...chain.initialContracts,
         ...chain.discoveredContracts,
@@ -52,7 +50,7 @@ export function NodesPanel() {
           name: contract.name ?? 'Unknown',
           address: contract.address.split(':')[1] as string,
           box: { x: 0, y: 0, width: NODE_WIDTH, height: 0 },
-          color: baseColor,
+          color: 0,
           data: null,
           fields: toNodeFields(contract.fields),
         }
@@ -64,7 +62,7 @@ export function NodesPanel() {
           name: eoa.name ?? eoa.address,
           address: eoa.address.split(':')[1] as string,
           box: { x: 0, y: 0, width: NODE_WIDTH, height: 0 },
-          color: baseColor,
+          color: 0,
           data: null,
           fields: [],
         }

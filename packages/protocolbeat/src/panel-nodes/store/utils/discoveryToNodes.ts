@@ -1,7 +1,5 @@
 import { Field, Node } from '../State'
-import { OklchColor, White } from './color'
 import type { DiscoveryContract, DiscoveryOutput } from './paseDiscovery'
-import { stringHash } from './stringHash'
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
@@ -21,17 +19,8 @@ function isChainAddress(value: string): boolean {
   )
 }
 
-export function getChainColor(chain: string): OklchColor {
-  if (chain === 'ethereum') {
-    return White
-  }
-
-  return { l: 0.75, c: 0.12, h: stringHash(chain) % 360 }
-}
-
 export function discoveryToNodes(discovery: DiscoveryOutput): Node[] {
   const chain = discovery.chain
-  const baseColor = getChainColor(chain)
 
   const contractNodes = discovery.contracts.map((contract): Node => {
     const implementations = getAsStringArray(contract.values?.$implementation)
@@ -40,7 +29,7 @@ export function discoveryToNodes(discovery: DiscoveryOutput): Node[] {
       address: contract.address,
       name: emojifyContractName(contract),
       box: { x: 0, y: 0, width: 0, height: 0 },
-      color: baseColor,
+      color: 0,
       fields: mapFields(contract.values, chain, implementations),
       data: contract,
     }
@@ -52,7 +41,7 @@ export function discoveryToNodes(discovery: DiscoveryOutput): Node[] {
       address: eoa.address,
       name: `🧍 EOA ${eoa.address}`,
       box: { x: 0, y: 0, width: 0, height: 0 },
-      color: baseColor,
+      color: 0,
       fields: [],
       data: eoa,
     }),
