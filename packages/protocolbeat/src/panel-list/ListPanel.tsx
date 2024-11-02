@@ -146,7 +146,7 @@ function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
   return (
     <li
       className={clsx(
-        'flex h-[22px] cursor-pointer select-none items-center gap-1 pl-4 text-sm',
+        'flex h-[22px] cursor-pointer select-none items-center gap-1 whitespace-pre pl-4 text-sm',
         isSelected && 'bg-sun text-black',
         !isSelected && 'bg-coffee hover:bg-autumn',
       )}

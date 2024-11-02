@@ -65,6 +65,7 @@ function CodeView({ code }: { code: string }) {
     editorType.IStandaloneCodeEditor | undefined
   >(undefined)
   const panels = useMultiViewStore((state) => state.panels)
+  const pickedUp = useMultiViewStore((state) => state.pickedUp)
 
   useEffect(() => {
     if (!monacoEl.current) {
@@ -92,7 +93,7 @@ function CodeView({ code }: { code: string }) {
 
   useEffect(() => {
     editor?.layout()
-  }, [editor, panels])
+  }, [editor, panels, pickedUp])
 
   return <div className="h-full w-full" ref={monacoEl} />
 }
