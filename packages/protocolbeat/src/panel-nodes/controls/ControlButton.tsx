@@ -10,7 +10,7 @@ export function ControlButton(props: {
     <button
       disabled={props.disabled}
       className={clsx(
-        'whitespace-pre border border-latte px-2 py-1 text-xs',
+        'whitespace-pre border border-latte bg-coffee px-2 py-1 text-xs',
         !props.disabled && '',
         props.disabled && 'text-cream',
       )}

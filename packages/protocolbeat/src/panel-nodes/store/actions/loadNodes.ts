@@ -66,6 +66,7 @@ function idToUnknown(id: string): Node {
   return {
     id,
     address,
+    addressType: 'Unknown',
     name,
     box: { x: 0, y: 0, width: 0, height: 0 },
     color: 0,

@@ -45,10 +45,16 @@ export function NodesPanel() {
         ...chain.initialContracts,
         ...chain.discoveredContracts,
       ]) {
+        const [prefix, address] = contract.address.split(':') as [
+          string,
+          string,
+        ]
+        const fallback = `${prefix}:${address.slice(0, 6)}…${address.slice(-4)}`
         const node: Node = {
           id: contract.address,
-          name: contract.name ?? 'Unknown',
-          address: contract.address.split(':')[1] as string,
+          name: contract.name ?? fallback,
+          addressType: contract.type,
+          address,
           box: { x: 0, y: 0, width: NODE_WIDTH, height: 0 },
           color: 0,
           data: null,
@@ -57,10 +63,13 @@ export function NodesPanel() {
         nodes.push(node)
       }
       for (const eoa of chain.eoas) {
+        const [prefix, address] = eoa.address.split(':') as [string, string]
+        const fallback = `EOA ${prefix}:${address.slice(0, 6)}…${address.slice(-4)}`
         const node: Node = {
           id: eoa.address,
-          name: eoa.name ?? eoa.address,
-          address: eoa.address.split(':')[1] as string,
+          name: eoa.name ?? fallback,
+          addressType: 'EOA',
+          address,
           box: { x: 0, y: 0, width: NODE_WIDTH, height: 0 },
           color: 0,
           data: null,

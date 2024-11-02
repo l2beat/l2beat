@@ -1,3 +1,4 @@
+import { ApiAddressType } from '../../../api/types'
 import { oklchColorToCSS } from './oklch'
 
 export const SELECTABLE_COLORS: { color: string; isDark: boolean }[] = [
@@ -15,14 +16,22 @@ export const SELECTABLE_COLORS: { color: string; isDark: boolean }[] = [
   { color: 'black', isDark: true },
 ]
 
-export function getColor(
-  id: string,
-  n: number,
-): { color: string; isDark: boolean } {
-  if (n === 0) {
+export function getColor({
+  id,
+  color,
+  addressType,
+}: {
+  id: string
+  color: number
+  addressType: ApiAddressType
+}): { color: string; isDark: boolean } {
+  if (color === 0) {
+    if (addressType === 'Unknown') {
+      return { color: '#be1d1d', isDark: false } // error red
+    }
     return getChainColor(id.split(':')[0] ?? '')
   }
-  return SELECTABLE_COLORS[n - 1] ?? { color: 'white', isDark: false }
+  return SELECTABLE_COLORS[color - 1] ?? { color: 'white', isDark: false }
 }
 
 export function getChainColor(chain: string): {

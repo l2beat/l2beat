@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 
+import { AddressIcon } from '../../common/AddressIcon'
 import type { Field, Node } from '../store/State'
 import { useStore } from '../store/store'
 import { FIELD_HEIGHT, HEADER_HEIGHT } from '../store/utils/constants'
@@ -11,7 +12,11 @@ export interface NodeViewProps {
 }
 
 export function NodeView(props: NodeViewProps) {
-  const { color, isDark } = getColor(props.node.id, props.node.color)
+  const { color, isDark } = getColor(props.node)
+
+  const fullHeight =
+    props.node.addressType === 'EOA' && props.node.fields.length === 0
+
   return (
     <div
       style={{
@@ -21,22 +26,24 @@ export function NodeView(props: NodeViewProps) {
         height: props.node.box.height,
       }}
       className={clsx(
-        'absolute rounded bg-black',
+        'absolute bg-black',
+        fullHeight ? 'rounded-2xl' : 'rounded',
         props.selected && 'outline outline-3 outline-sun',
       )}
     >
       <div
         className={clsx(
-          'mb-1 flex w-full justify-between rounded-t px-2 font-semibold text-sm',
+          'mb-1 flex w-full items-center gap-1 px-2 font-medium text-sm',
+          fullHeight ? 'rounded-2xl' : 'rounded-t',
           isDark ? 'text-milk' : 'text-black',
         )}
         style={{
-          height: HEADER_HEIGHT - 4,
-          lineHeight: HEADER_HEIGHT - 4 + 'px',
+          height: fullHeight ? HEADER_HEIGHT : HEADER_HEIGHT - 4,
           backgroundColor: color,
         }}
       >
-        <div className="truncate">{props.node.name || 'Unknown'}</div>
+        <AddressIcon type={props.node.addressType} />
+        <div className="truncate">{props.node.name}</div>
       </div>
       {props.node.fields.map((field, i) => (
         <NodeField key={i} field={field} selected={props.selected} />

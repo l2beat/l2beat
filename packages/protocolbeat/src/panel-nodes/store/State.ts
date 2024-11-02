@@ -1,3 +1,5 @@
+import { ApiAddressType } from '../../api/types'
+
 export interface State {
   readonly projectId: string
   readonly nodes: readonly Node[]
@@ -36,6 +38,7 @@ export interface State {
 export interface Node {
   readonly id: string
   readonly address: string
+  readonly addressType: ApiAddressType
   readonly name: string
   readonly fields: Field[]
   readonly box: Box

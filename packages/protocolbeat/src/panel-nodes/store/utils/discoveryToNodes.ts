@@ -1,3 +1,4 @@
+import { ApiAddressType } from '../../../api/types'
 import { Field, Node } from '../State'
 import type { DiscoveryContract, DiscoveryOutput } from './paseDiscovery'
 
@@ -24,10 +25,12 @@ export function discoveryToNodes(discovery: DiscoveryOutput): Node[] {
 
   const contractNodes = discovery.contracts.map((contract): Node => {
     const implementations = getAsStringArray(contract.values?.$implementation)
+    const { addressType, name } = getDisplay(contract, implementations)
     return {
       id: encodeChainAddress(chain, contract.address),
       address: contract.address,
-      name: emojifyContractName(contract),
+      addressType,
+      name,
       box: { x: 0, y: 0, width: 0, height: 0 },
       color: 0,
       fields: mapFields(contract.values, chain, implementations),
@@ -39,7 +42,8 @@ export function discoveryToNodes(discovery: DiscoveryOutput): Node[] {
     (eoa): Node => ({
       id: encodeChainAddress(chain, eoa.address),
       address: eoa.address,
-      name: `🧍 EOA ${eoa.address}`,
+      addressType: 'EOA',
+      name: `EOA ${eoa.address.slice(0, 6)}…${eoa.address.slice(-4)}`,
       box: { x: 0, y: 0, width: 0, height: 0 },
       color: 0,
       fields: [],
@@ -108,20 +112,33 @@ function isAddress(value: string): boolean {
   )
 }
 
-function emojifyContractName(contract: DiscoveryContract): string {
+function getDisplay(
+  contract: DiscoveryContract,
+  implementations: string[],
+): {
+  addressType: ApiAddressType
+  name: string
+} {
+  const name =
+    contract.name ||
+    `${contract.address.slice(0, 6)}…${contract.address.slice(-4)}`
+  if (implementations.length > 1) {
+    return {
+      addressType: 'Diamond',
+      name,
+    }
+  }
   if (contract.proxyType === 'gnosis safe') {
     const threshold = contract.values?.['$threshold'] as number
     const members = (contract.values?.['$members'] as string[]).length
     const percentage = ((threshold / members) * 100).toFixed(0)
 
-    return `🔐 ${contract.name} [${threshold}/${members} @ ${percentage}%]`
+    return {
+      addressType: 'Multisig',
+      name: `${name} [${threshold}/${members} @ ${percentage}%]`,
+    }
   }
-
-  if (contract.values?.$immutable !== true) {
-    return '🔗 ' + contract.name
-  }
-
-  return contract.name
+  return { addressType: 'Contract', name }
 }
 
 export function getAsStringArray(value: unknown): string[] {
