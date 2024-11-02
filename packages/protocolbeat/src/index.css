@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 :focus-visible {
-  outline: 2px solid #d0ad0b;
+  outline: 2px solid #bad80a;
 }

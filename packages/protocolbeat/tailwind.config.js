@@ -9,7 +9,7 @@ module.exports = {
         coffee: '#282422',
         latte: '#594C43',
         autumn: '#7f3D0C',
-        sun: '#D0AD0B',
+        sun: '#BAD80A',
       },
       fontFamily: {
         sans: ['system-ui', 'sans-serif'],
