@@ -9,7 +9,7 @@ export function MouseSelection() {
 
   return (
     <div
-      className="absolute border border-blue-600 bg-blue-100 bg-opacity-30"
+      className="absolute border border-sun bg-sun bg-opacity-20"
       style={{
         left: selection.x,
         top: selection.y,

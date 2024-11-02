@@ -1,4 +1,4 @@
-import { ComponentType, useEffect, useRef } from 'react'
+import { ComponentType, useEffect, useRef, useState } from 'react'
 import { BottomBar } from './BottomBar'
 import { Panel } from './Panel'
 import { TopBar } from './TopBar'
@@ -22,6 +22,15 @@ export function MultiView(props: MultiViewProps) {
   const drop = useMultiViewStore((state) => state.drop)
   const order = useMultiViewStore((state) => state.order)
   const setActivePanel = useMultiViewStore((state) => state.setActivePanel)
+  const [sizes, setSizes] = useState<number[]>([])
+
+  function getPanelElements() {
+    const container = panelContainerRef.current
+    if (!container) {
+      return []
+    }
+    return [...container.children].filter((x) => x.id.startsWith('panel-'))
+  }
 
   useEffect(() => {
     let left = 0
@@ -37,12 +46,12 @@ export function MultiView(props: MultiViewProps) {
         | { panelId: PanelId; left: number; right: number }
         | undefined = undefined
       let hovered: PanelId | undefined
-      for (let i = 0; i < container.children.length; i++) {
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        const panel = container.children[i]!
+
+      const panels = getPanelElements()
+      for (const [i, panel] of panels.entries()) {
         const box = panel.getBoundingClientRect()
         if (
-          i !== container.children.length - 1 &&
+          i !== panels.length - 1 &&
           e.clientY > box.top &&
           e.clientY < box.bottom &&
           e.clientX >= box.right - RESIZE_AREA / 2 &&
@@ -51,8 +60,7 @@ export function MultiView(props: MultiViewProps) {
           toResize = {
             panelId: panel.id.slice('panel-'.length) as PanelId,
             left: box.left,
-            right:
-              container.children[i + 1]?.getBoundingClientRect().right ?? 0,
+            right: panels[i + 1]?.getBoundingClientRect().right ?? 0,
           }
         }
         if (
@@ -91,11 +99,7 @@ export function MultiView(props: MultiViewProps) {
       document.body.classList.toggle('select-none', !!pickedUp)
 
       if (pickedUp) {
-        const container = panelContainerRef.current
-        if (!container) {
-          return
-        }
-        const panels = [...container.children]
+        const panels = getPanelElements()
         for (const panel of panels) {
           const box = panel.getBoundingClientRect()
           if (e.clientX >= box.left && e.clientX < box.right) {
@@ -136,6 +140,25 @@ export function MultiView(props: MultiViewProps) {
     }
   }, [])
 
+  useEffect(() => {
+    onResize()
+    function onResize() {
+      const panels = getPanelElements()
+      const sizes: number[] = []
+      for (const panel of panels) {
+        const { right } = panel.getBoundingClientRect()
+        sizes.push(right)
+      }
+      sizes.pop()
+      setSizes(sizes)
+    }
+
+    window.addEventListener('resize', onResize)
+    return () => {
+      window.removeEventListener('resize', onResize)
+    }
+  }, [panels])
+
   return (
     <div className="flex h-full w-full flex-col">
       <TopBar project={props.project} />
@@ -150,6 +173,14 @@ export function MultiView(props: MultiViewProps) {
                 .join(' '),
         }}
       >
+        {sizes.map((size, i) => (
+          <div
+            className="absolute top-0 z-20 h-full"
+            style={{ width: RESIZE_AREA, left: `${size - RESIZE_AREA / 2}px` }}
+            onMouseDown={(e) => e.preventDefault()}
+            key={i}
+          />
+        ))}
         {panels.map((panel) => {
           return (
             <Panel key={panel.id} id={panel.id} body={props.panelBodyElement} />
