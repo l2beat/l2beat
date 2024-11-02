@@ -14,7 +14,7 @@ export const IS_MACOS = navigator.userAgent.toLowerCase().includes('mac os')
 
 export const HEADER_HEIGHT = 32
 export const FIELD_HEIGHT = 24
-export const RESIZE_HANDLE_HEIGHT = 15
+export const BOTTOM_PADDING = 8
 
 export const NODE_WIDTH = 200
 export const NODE_SPACING = 25
