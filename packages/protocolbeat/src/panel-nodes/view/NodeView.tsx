@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import type { Field, Node } from '../store/State'
 import { useStore } from '../store/store'
 import { FIELD_HEIGHT, HEADER_HEIGHT } from '../store/utils/constants'
-import { getColor } from './colors'
+import { getColor } from './colors/colors'
 
 export interface NodeViewProps {
   node: Node
@@ -27,7 +27,7 @@ export function NodeView(props: NodeViewProps) {
     >
       <div
         className={clsx(
-          'mb-1 flex w-full justify-between rounded-t px-2 font-bold text-sm',
+          'mb-1 flex w-full justify-between rounded-t px-2 font-semibold text-sm',
           isDark ? 'text-milk' : 'text-black',
         )}
         style={{
@@ -36,7 +36,7 @@ export function NodeView(props: NodeViewProps) {
           backgroundColor: color,
         }}
       >
-        <div className="truncate">{props.node.name}</div>
+        <div className="truncate">{props.node.name || 'Unknown'}</div>
       </div>
       {props.node.fields.map((field, i) => (
         <NodeField key={i} field={field} selected={props.selected} />
