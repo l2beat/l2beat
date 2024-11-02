@@ -1,16 +1,53 @@
-Generated with discovered.json: 0x27cdedceb3fca63f6099702e7287b627b0de52fa
+Generated with discovered.json: 0x1678709304c14f7d103f4788317c363a2345037b
 
-# Diff at Fri, 01 Nov 2024 13:51:01 GMT:
+# Diff at Sat, 02 Nov 2024 07:22:30 GMT:
 
-- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@cd1f0e71bb08ce16b2084a11b768538e8aa6ba8c block: 21077256
-- current block number: 21093205
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@93f317513d51e26ce3003e34f6a9147b7f41eb7a block: 21077256
+- current block number: 21098438
 
 ## Description
 
-Challenge undergoing awaiting oneStepProver resolution. Also updated discovery for template.
+Challenge undergoing awaiting oneStepProver resolution. Also updated discovery for template. Kinto on telegram confirmed that this challenge was the result of ankr (the 0x2bfDA validator) did not upgrade their software in time for the HF 7 and thus challenged a correct state.
+
+The ExecutorMultisig is being transformed into a SecurityCouncil with 5 public external members. It is currently 6/9 and would need one less Kinto-owned signer to meet the requirements.
 
 ## Watched changes
+
+```diff
+    contract ExecutorMultisig (0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d) {
+    +++ description: None
+      values.$members.8:
++        "0x94561e98DD5E55271f91A103e4979aa6C493745E"
+      values.$members.7:
++        "0x356000Cec4fC967f8FC372381D983426760A0391"
+      values.$members.6:
++        "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
+      values.$members.5:
++        "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"
+      values.$members.4:
+-        "0x94561e98DD5E55271f91A103e4979aa6C493745E"
++        "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8"
+      values.$members.3:
+-        "0x356000Cec4fC967f8FC372381D983426760A0391"
++        "0x082CBA3929aD00EbB6d81ebE57B0BD24fBF3Fc6B"
+      values.$members.2:
+-        "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
++        "0xe52957E92a372d5a3B544F4C329b606f1A1b4bD2"
+      values.$members.1:
+-        "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"
++        "0x5FB5040dfC5B8b9Ea40dFBd881188Ec85cDC0621"
+      values.$members.0:
+-        "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8"
++        "0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1"
+      values.$threshold:
+-        3
++        6
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "6 of 9 (67%)"
+    }
+```
 
 ```diff
     contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
@@ -34,6 +71,20 @@ Challenge undergoing awaiting oneStepProver resolution. Also updated discovery f
 -        0
 +        1
     }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../kinto/ethereum/.flat/GnosisSafe/GnosisSafe.sol | 953 +++++++++++++++++++++
+ .../.flat/GnosisSafe/GnosisSafeProxy.p.sol         |  35 +
+ 2 files changed, 988 insertions(+)
 ```
 
 ## Config/verification related changes
