@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x18fff08f29a1039a108f5b01efac0a09aa4fe59b
+
+# Diff at Fri, 01 Nov 2024 12:23:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cd1f0e71bb08ce16b2084a11b768538e8aa6ba8c block: 21078724
+- current block number: 21078724
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21078724 (main branch discovery), not current.
+
+```diff
+    contract L1StandardBridge (0x2658723Bf70c7667De6B25F99fcce13A16D25d08) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      issuedPermissions.0.via.1.description:
+-        "upgrading bridge implementation allows to access all funds and change every system component."
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x26C7bFB430d68Bf74d2d52497836d4336b555dE7) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      description:
+-        "This is NOT the shared SuperchainConfig of the OP stack Superchain. This SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
++        "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
+    }
+```
+
+```diff
+    contract GelatoMultisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      receivedPermissions.7.description:
+-        "upgrading bridge implementation allows to access all funds and change every system component."
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xeC432c4F1d0E12737f3a42a459B84848Af979b2d) {
+    +++ description: None
+      directlyReceivedPermissions.3.description:
+-        "upgrading bridge implementation allows to access all funds and change every system component."
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
 Generated with discovered.json: 0x1595c2bb52291e5edea61159da4d34466d89e118
 
 # Diff at Wed, 30 Oct 2024 13:22:20 GMT:

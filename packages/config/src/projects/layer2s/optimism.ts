@@ -575,7 +575,7 @@ export const optimism: Layer2 = {
       'Address allowed to pause withdrawals or blacklist dispute games in case of an emergency. It is controlled by the Security Council multisig, but a module allows the Foundation to act through it. The Security Council can disable the module if the Foundation acts maliciously.',
     ),
     ...discovery.getMultisigPermission(
-      'FoundationMultisig_1',
+      'OptimismFoundationMultisig_1',
       'Member of the SuperchainProxyAdminOwner.',
     ),
     ...discovery.getMultisigPermission(
@@ -689,7 +689,7 @@ export const optimism: Layer2 = {
         ...l1Upgradeability,
       }),
       discovery.getContractDetails('LivenessModule', {
-        description: `The LivenessModule is a Gnosis Safe nodule used to remove Security Council members that have been inactive for ${livenessInterval} while making sure that the threshold remains above 75%. If the number of members falls below 8, the FoundationMultisig_1 takes ownership of the multisig.`,
+        description: `The LivenessModule is a Gnosis Safe nodule used to remove Security Council members that have been inactive for ${livenessInterval} while making sure that the threshold remains above 75%. If the number of members falls below 8, the OptimismFoundationMultisig_1 takes ownership of the multisig.`,
         ...l1Upgradeability,
       }),
     ],

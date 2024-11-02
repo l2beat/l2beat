@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x65906c7c347cb5e30d2d21640fe2f39d38c07d42
+
+# Diff at Fri, 01 Nov 2024 12:10:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cd1f0e71bb08ce16b2084a11b768538e8aa6ba8c block: 21078663
+- current block number: 21078663
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21078663 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99) {
+    +++ description: None
+      directlyReceivedPermissions.5.description:
+-        "upgrading bridge implementation allows to access all funds and change every system component."
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      receivedPermissions.6.description:
+-        "upgrading bridge implementation allows to access all funds and change every system component."
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x6d0f65D59b55B0FEC5d2d15365154DcADC140BF3) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      issuedPermissions.0.via.0.description:
+-        "upgrading bridge implementation allows to access all funds and change every system component."
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
 Generated with discovered.json: 0x28bbd08240db50cb4e0d4ff54c61b9b0b87601ac
 
 # Diff at Wed, 30 Oct 2024 13:10:09 GMT:
