@@ -1,17 +1,14 @@
-Generated with discovered.json: 0x8188661e38f47a0a1c0961ccb5d0382069048511
+Generated with discovered.json: 0x4ff3d1afef0c5ac638090bb4a5ca7df1de532773
 
-# Diff at Fri, 01 Nov 2024 17:21:54 GMT:
+# Diff at Sat, 02 Nov 2024 07:30:05 GMT:
 
-- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@cd1f0e71bb08ce16b2084a11b768538e8aa6ba8c block: 267470320
-- current block number: 269947457
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@93f317513d51e26ce3003e34f6a9147b7f41eb7a block: 267470320
+- current block number: 270183736
 
 ## Description
 
 Discovery refresh to apply template.
-
-## Watched changes
-
 
 ## Config/verification related changes
 

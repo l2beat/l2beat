@@ -1,7 +1,7 @@
 {
   "name": "l3x",
   "chain": "arbitrum",
-  "blockNumber": 269947457,
+  "blockNumber": 270183736,
   "configHash": "0xcb63d2f74ca8c4d8478f616e8ac910bb3d06acfe8ff2028779eb69207326b2e3",
   "contracts": [
     {
@@ -665,6 +665,7 @@
         "maxTimeVariation": [5760, 48, 86400, 3600],
         "reader4844": "0x0000000000000000000000000000000000000000",
         "rollup": "0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e",
+        "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
         "totalDelayedMessagesRead": 358,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
