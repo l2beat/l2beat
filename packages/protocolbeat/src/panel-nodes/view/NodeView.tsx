@@ -39,7 +39,12 @@ export function NodeView(props: NodeViewProps) {
         <div className="truncate">{props.node.name}</div>
       </div>
       {props.node.fields.map((field, i) => (
-        <NodeField key={i} field={field} color={props.node.color} />
+        <NodeField
+          key={i}
+          field={field}
+          color={props.node.color}
+          selected={props.selected}
+        />
       ))}
     </div>
   )
@@ -48,6 +53,7 @@ export function NodeView(props: NodeViewProps) {
 function NodeField(props: {
   field: Field
   color: OklchColor
+  selected: boolean
 }) {
   const isHighlighted = useStore((state) =>
     state.selected.includes(props.field.target),
@@ -76,7 +82,7 @@ function NodeField(props: {
         <div
           className={clsx(
             'absolute h-[10px] w-[10px] rounded-full',
-            isHighlighted ? 'bg-sun' : 'bg-cream',
+            isHighlighted || props.selected ? 'bg-sun' : 'bg-cream',
           )}
           style={{
             left: isLeft ? -5 : undefined,
