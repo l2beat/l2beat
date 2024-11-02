@@ -147,20 +147,16 @@ function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
     <li
       className={clsx(
         'flex h-[22px] cursor-pointer select-none items-center gap-1 pl-4 text-sm',
-        isSelected && 'bg-autumn',
+        isSelected && 'bg-sun text-black',
         !isSelected && 'bg-coffee hover:bg-autumn',
       )}
       onClick={() => select([entry.address])}
     >
       <div className="mr-[7px] h-[22px] border-latte border-l" />
       <AddressIcon type={entry.type} />
-      {entry.name ? (
-        <span className="overflow-hidden text-ellipsis">{entry.name}</span>
-      ) : (
-        <span className="overflow-hidden text-ellipsis font-mono text-xs">
-          {toShortenedAddress(entry.address)}
-        </span>
-      )}
+      <span className="overflow-hidden text-ellipsis tabular-nums">
+        {entry.name ?? toShortenedAddress(entry.address)}
+      </span>
     </li>
   )
 }

@@ -4,6 +4,7 @@ import type { editor as editorType } from 'monaco-editor'
 import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getCode, getProject } from '../api/api'
+import { IconCodeFile } from '../icons/IconCodeFile'
 import { useMultiViewStore } from '../multi-view/store'
 import { usePanelStore } from '../store/store'
 import { create } from './editor'
@@ -36,13 +37,17 @@ export function CodePanel() {
   }
   return (
     <div className="flex h-full w-full flex-col">
-      <div className="flex gap-1">
+      <div className="flex gap-1 border-b border-b-latte px-1 pt-1">
         {codeResponse.data.sources.map((x, i) => (
           <button
             key={i}
             onClick={() => setCurrent(i)}
-            className={clsx(current === i && 'bg-blue-400')}
+            className={clsx(
+              'flex h-6 items-center gap-1 px-2 text-sm',
+              current === i && 'bg-sun text-black',
+            )}
           >
+            <IconCodeFile />
             {x.name}
           </button>
         ))}

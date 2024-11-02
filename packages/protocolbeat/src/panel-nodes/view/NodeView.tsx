@@ -69,7 +69,7 @@ function NodeField(props: {
     <div className="relative">
       <div
         className={clsx(
-          'w-full truncate rounded-full px-2 text-sm',
+          'w-full truncate rounded-full px-2 font-mono text-xs',
           isHighlighted && 'bg-sun text-black',
         )}
         style={{
