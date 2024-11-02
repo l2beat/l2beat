@@ -1,7 +1,7 @@
 {
   "name": "stack",
   "chain": "base",
-  "blockNumber": 21842266,
+  "blockNumber": 21872215,
   "configHash": "0x0b84e0eae36c9b147a964b5ac6d273826fe44395a32b11dc3458e5ac44323a5b",
   "contracts": [
     {
@@ -414,10 +414,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 1,
-        "latestBlockNumber": 20779200,
-        "latestOutputIndex": 480,
-        "nextBlockNumber": 20822400,
-        "nextOutputIndex": 481,
+        "latestBlockNumber": 20822400,
+        "latestOutputIndex": 481,
+        "nextBlockNumber": 20865600,
+        "nextOutputIndex": 482,
         "PROPOSER": "0x28750b59d304e6ce7d3866eF9a0DbFBCfaE56A6E",
         "startingBlockNumber": 0,
         "startingTimestamp": 1709680111,
