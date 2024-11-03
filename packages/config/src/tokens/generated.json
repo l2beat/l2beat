@@ -3195,6 +3195,20 @@
       "supply": "zero"
     },
     {
+      "name": "Pencils Protocol Token",
+      "coingeckoId": "penpad-token",
+      "address": "0x5FC429110A64bC51b57Ca86dCE1714FD0fBec303",
+      "symbol": "DAPP",
+      "decimals": 18,
+      "deploymentTimestamp": 1726245827,
+      "coingeckoListingTimestamp": 1727395200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36569/large/Pencils_Protocol_Profile_Pic.png?1722658792",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Pendle",
       "coingeckoId": "pendle",
       "address": "0x808507121B80c02388fAd14726482e061B8da827",
