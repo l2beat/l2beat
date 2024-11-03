@@ -18,6 +18,7 @@ export function MultiView(props: MultiViewProps) {
   const panels = useMultiViewStore((state) => state.panels)
   const fullScreen = useMultiViewStore((state) => state.fullScreen)
   const resize = useMultiViewStore((state) => state.resize)
+  const resizeAll = useMultiViewStore((state) => state.resizeAll)
   const mouseMove = useMultiViewStore((state) => state.mouseMove)
   const drop = useMultiViewStore((state) => state.drop)
   const order = useMultiViewStore((state) => state.order)
@@ -178,6 +179,7 @@ export function MultiView(props: MultiViewProps) {
             className="absolute top-0 z-20 h-full"
             style={{ width: RESIZE_AREA, left: `${size - RESIZE_AREA / 2}px` }}
             onMouseDown={(e) => e.preventDefault()}
+            onDoubleClick={resizeAll}
             key={i}
           />
         ))}

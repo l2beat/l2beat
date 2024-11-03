@@ -23,6 +23,7 @@ export type Action = {
   removePanel: (id?: PanelId) => void
   toggleFullScren: (id?: PanelId) => void
   resize: (id: PanelId, fraction: number) => void
+  resizeAll: () => void
   mouseMove: (x: number, y: number) => void
   pickUp: (id: PanelId) => void
   order: (id: PanelId, before: boolean) => void
@@ -173,6 +174,13 @@ export const useMultiViewStore = create<State & Action>((set) => ({
       )
       return withLayouts(state, panels)
     }),
+  resizeAll: () =>
+    set((state) => ({
+      panels: state.panels.map((panel) => ({
+        ...panel,
+        size: panel.id === 'list' ? 0.5 : 1,
+      })),
+    })),
   mouseMove: (x, y) => set(() => ({ mouse: { x, y } })),
   pickUp: (id) => set(() => ({ pickedUp: id })),
   order: (id, before) =>
