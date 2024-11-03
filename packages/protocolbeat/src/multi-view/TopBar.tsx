@@ -30,7 +30,9 @@ export function TopBar(props: { project: string }) {
             </button>
           ))}
         </div>
-        <button onClick={() => addPanel()}>Add Panel</button>
+        <button className="text-sm" onClick={() => addPanel()}>
+          Add Panel
+        </button>
       </div>
     </div>
   )

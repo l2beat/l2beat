@@ -54,7 +54,9 @@ export function BottomBar() {
 
   return (
     <div className="flex h-8 select-none items-center justify-between border-coffee-600 border-t px-2 text-sm">
-      <div>Bottom Bar</div>
+      <div className="text-xs">
+        Copyright {new Date().getUTCFullYear()} L2BEAT
+      </div>
       <div className="flex gap-2">
         <button onClick={() => setHintOpen((open) => !open)}>
           Help <Keys keys={['F1']} />
