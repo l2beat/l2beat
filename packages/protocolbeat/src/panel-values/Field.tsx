@@ -1,8 +1,10 @@
 import { clsx } from 'clsx'
-import { ReactNode } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { AddressFieldValue, FieldValue } from '../api/types'
 import { AddressIcon } from '../common/AddressIcon'
 import { toShortenedAddress } from '../common/toShortenedAddress'
+import { IconCopy } from '../icons/IconCopy'
+import { IconTick } from '../icons/IconTick'
 import { usePanelStore } from '../store/store'
 
 export interface FieldProps {
@@ -110,27 +112,61 @@ export function Field({ name, value, level }: FieldProps) {
 
 export function AddressDisplay({ value }: { value: AddressFieldValue }) {
   const select = usePanelStore((state) => state.select)
+  const [copied, setCopied] = useState(false)
+
+  useEffect(() => {
+    if (copied) {
+      const address = value.address.split(':')[1]
+      if (address) {
+        void navigator.clipboard.writeText(address)
+      }
+      const timeout = setTimeout(() => setCopied(false), 1000)
+      return () => clearTimeout(timeout)
+    }
+  }, [value, copied, setCopied])
+
+  const copy = (
+    <button
+      className="block h-4 w-4"
+      onClick={(e) => {
+        e.preventDefault()
+        setCopied(true)
+      }}
+    >
+      {!copied && (
+        <IconCopy className="relative top-[3px] block text-coffee-600" />
+      )}
+      {copied && (
+        <IconTick className="relative top-[3px] block text-aux-green" />
+      )}
+    </button>
+  )
+
   if (value.addressType !== 'Unknown') {
     return (
-      <button
-        className="inline-block w-min whitespace-nowrap text-left font-mono text-aux-blue text-xs underline"
-        onClick={() => select(value.address)}
-      >
-        <AddressIcon
-          type={value.addressType}
-          className="-top-px relative mr-1 inline-block"
-        />
-        <strong>
-          {value.name ?? (value.addressType === 'EOA' ? 'EOA' : 'Unknown')}
-        </strong>{' '}
-        {toShortenedAddress(value.address)}
-      </button>
+      <p className="inline-flex w-min items-baseline gap-1 whitespace-nowrap text-left font-mono text-xs">
+        <button
+          className="inline-flex items-baseline gap-1 text-aux-blue"
+          onClick={() => select(value.address)}
+        >
+          <AddressIcon
+            className="relative top-[3px] block"
+            type={value.addressType}
+          />
+          <strong>
+            {value.name ?? (value.addressType === 'EOA' ? 'EOA' : 'Unknown')}
+          </strong>
+          {toShortenedAddress(value.address)}
+        </button>
+        {copy}
+      </p>
     )
   } else {
     return (
-      <p className="whitespace-nowrap font-mono text-coffee-400 text-xs">
+      <p className="inline-flex items-baseline gap-1 whitespace-nowrap font-mono text-coffee-400 text-xs">
         <strong>{value.name ?? 'Unknown'}</strong>{' '}
         {toShortenedAddress(value.address)}
+        {copy}
       </p>
     )
   }
