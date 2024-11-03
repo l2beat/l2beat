@@ -98,7 +98,7 @@ function Display({
         </Folder>
       )}
       {'abis' in selected && selected.abis.length > 0 && (
-        <Folder title="ABI">
+        <Folder title="ABI" collapsed>
           <ol className="pl-2">
             {selected.abis.map((abi) => (
               <li key={abi.address}>
@@ -115,8 +115,12 @@ function Display({
   )
 }
 
-function Folder(props: { title: string; children: ReactNode }) {
-  const [open, setOpen] = useState(true)
+function Folder(props: {
+  title: string
+  children: ReactNode
+  collapsed?: boolean
+}) {
+  const [open, setOpen] = useState(!props.collapsed)
 
   return (
     <div>
