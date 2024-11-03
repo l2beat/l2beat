@@ -1,6 +1,4 @@
-// Make sure it follows packages/protocolbeat/src/api/types.ts
-// If you find that you are changing this file often consider moving both
-// of those files into a single shared package.
+// This file is symlinked to protocolbeat frontend! Do not import anything here
 
 export type ApiProjectsResponse = ApiProjectEntry[]
 
