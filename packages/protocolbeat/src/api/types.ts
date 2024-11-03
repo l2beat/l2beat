@@ -96,6 +96,12 @@ export interface UnknownFieldValue {
 
 export interface ApiProjectContract extends ApiAddressEntry {
   fields: Field[]
+  abis: ApiAbi[]
+}
+
+export interface ApiAbi {
+  address: string
+  entries: string[]
 }
 
 export interface ApiCodeResponse {

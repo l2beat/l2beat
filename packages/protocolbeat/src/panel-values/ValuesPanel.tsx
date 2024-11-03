@@ -97,6 +97,20 @@ function Display({
           </ol>
         </Folder>
       )}
+      {'abis' in selected && selected.abis.length > 0 && (
+        <Folder title="ABI">
+          <ol className="pl-2">
+            {selected.abis.map((abi) => (
+              <li key={abi.address}>
+                <p>{abi.address}</p>
+                <pre className="font-mono text-xs leading-[18px]">
+                  <code>{abi.entries.join('\n') || '// No abi'}</code>
+                </pre>
+              </li>
+            ))}
+          </ol>
+        </Folder>
+      )}
     </>
   )
 }

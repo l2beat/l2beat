@@ -1,5 +1,9 @@
 import { ConfigReader } from '@l2beat/discovery'
-import { ContractParameters, DiscoveryOutput } from '@l2beat/discovery-types'
+import {
+  ContractParameters,
+  DiscoveryOutput,
+  get$Implementations,
+} from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { parseFieldValue } from './parseFieldValue'
 import { toAddress } from './toAddress'
@@ -31,20 +35,22 @@ export function getProject(configReader: ConfigReader, project: string) {
         .map((x): ApiProjectContract => {
           const discovered = discovery.contracts.find((y) => y.address === x)
           if (!discovered) {
+            // NOTE: This shouldn't happen
             return {
               name: undefined,
               type: 'Contract',
               address: toAddress(chain, x),
               referencedBy: [],
               fields: [],
+              abis: [],
             }
           }
-          return contractFromDiscovery(chain, meta, discovered)
+          return contractFromDiscovery(chain, meta, discovered, discovery.abis)
         })
         .sort(orderAddressEntries),
       discoveredContracts: discovery.contracts
         .filter((x) => !config.initialAddresses.includes(x.address))
-        .map((x) => contractFromDiscovery(chain, meta, x))
+        .map((x) => contractFromDiscovery(chain, meta, x, discovery.abis))
         .sort(orderAddressEntries),
       eoas: discovery.eoas
         .filter((x) => x.address !== EthereumAddress.ZERO)
@@ -81,6 +87,7 @@ function contractFromDiscovery(
   chain: string,
   meta: Record<string, { name?: string; type: ApiAddressType }>,
   contract: ContractParameters,
+  abis: DiscoveryOutput['abis'],
 ): ApiProjectContract {
   const fields: Field[] = Object.entries(contract.values ?? {}).map(
     ([name, value]) => ({
@@ -88,12 +95,17 @@ function contractFromDiscovery(
       value: fixAddresses(parseFieldValue(value, meta), chain),
     }),
   )
+  const implementations = get$Implementations(contract.values)
   return {
     name: contract.name || undefined,
     type: getContractType(contract),
     referencedBy: [],
     address: toAddress(chain, contract.address),
     fields,
+    abis: [contract.address, ...implementations].map((address) => ({
+      address: toAddress(chain, address),
+      entries: abis[address] ?? [],
+    })),
   }
 }
 
