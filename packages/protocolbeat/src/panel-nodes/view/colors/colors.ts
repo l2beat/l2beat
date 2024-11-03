@@ -1,6 +1,6 @@
 import { ApiAddressType } from '../../../api/types'
-import { oklchColorToCSS } from './oklch'
 import colors from '../../../colors.json'
+import { oklchColorToCSS } from './oklch'
 
 export const SELECTABLE_COLORS: { color: string; isDark: boolean }[] = [
   { color: colors.aux.red, isDark: false },

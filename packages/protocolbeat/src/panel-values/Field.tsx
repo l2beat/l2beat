@@ -1,6 +1,6 @@
 import { clsx } from 'clsx'
 import { ReactNode } from 'react'
-import { FieldValue } from '../api/types'
+import { AddressFieldValue, FieldValue } from '../api/types'
 import { AddressIcon } from '../common/AddressIcon'
 import { toShortenedAddress } from '../common/toShortenedAddress'
 import { usePanelStore } from '../store/store'
@@ -14,33 +14,9 @@ export interface FieldProps {
 export function Field({ name, value, level }: FieldProps) {
   let inlineDisplay: ReactNode = null
   let blockDisplay: ReactNode = null
-  const select = usePanelStore((state) => state.select)
 
   if (value.type === 'address') {
-    if (value.addressType !== 'Unknown') {
-      inlineDisplay = (
-        <button
-          className="inline-block w-min whitespace-nowrap text-left font-mono text-aux-blue text-xs underline"
-          onClick={() => select(value.address)}
-        >
-          <AddressIcon
-            type={value.addressType}
-            className="-top-px relative mr-1 inline-block"
-          />
-          <strong>
-            {value.name ?? (value.addressType === 'EOA' ? 'EOA' : 'Unknown')}
-          </strong>{' '}
-          {toShortenedAddress(value.address)}
-        </button>
-      )
-    } else {
-      inlineDisplay = (
-        <p className="whitespace-nowrap font-mono text-coffee-400 text-xs">
-          <strong>{value.name ?? 'Unknown'}</strong>{' '}
-          {toShortenedAddress(value.address)}
-        </p>
-      )
-    }
+    inlineDisplay = <AddressDisplay value={value} />
   } else if (value.type === 'hex') {
     if (value.value.length <= 66) {
       inlineDisplay = (
@@ -128,4 +104,32 @@ export function Field({ name, value, level }: FieldProps) {
       {blockDisplay}
     </li>
   )
+}
+
+export function AddressDisplay({ value }: { value: AddressFieldValue }) {
+  const select = usePanelStore((state) => state.select)
+  if (value.addressType !== 'Unknown') {
+    return (
+      <button
+        className="inline-block w-min whitespace-nowrap text-left font-mono text-aux-blue text-xs underline"
+        onClick={() => select(value.address)}
+      >
+        <AddressIcon
+          type={value.addressType}
+          className="-top-px relative mr-1 inline-block"
+        />
+        <strong>
+          {value.name ?? (value.addressType === 'EOA' ? 'EOA' : 'Unknown')}
+        </strong>{' '}
+        {toShortenedAddress(value.address)}
+      </button>
+    )
+  } else {
+    return (
+      <p className="whitespace-nowrap font-mono text-coffee-400 text-xs">
+        <strong>{value.name ?? 'Unknown'}</strong>{' '}
+        {toShortenedAddress(value.address)}
+      </p>
+    )
+  }
 }

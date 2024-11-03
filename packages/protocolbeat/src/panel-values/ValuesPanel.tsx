@@ -1,10 +1,17 @@
 import { useQuery } from '@tanstack/react-query'
+import { ReactNode, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getProject } from '../api/api'
-import { ApiProjectChain, ApiProjectContract } from '../api/types'
+import {
+  ApiAddressEntry,
+  ApiProjectChain,
+  ApiProjectContract,
+} from '../api/types'
 import { AddressIcon } from '../common/AddressIcon'
+import { IconChevronDown } from '../icons/IconChevronDown'
+import { IconChevronRight } from '../icons/IconChevronRight'
 import { usePanelStore } from '../store/store'
-import { Field } from './Field'
+import { AddressDisplay, Field } from './Field'
 
 export function ValuesPanel() {
   const { project } = useParams()
@@ -27,9 +34,9 @@ export function ValuesPanel() {
   const selected = findSelected(response.data.chains, selectedAddress)
 
   return (
-    <div className="h-full w-full overflow-x-auto p-2">
+    <div className="h-full w-full overflow-x-auto">
       {!selected && <div>Select a contract</div>}
-      {selected && <ProjectContract contract={selected} />}
+      {selected && <Display selected={selected} />}
     </div>
   )
 }
@@ -49,29 +56,65 @@ function findSelected(chains: ApiProjectChain[], address: string | undefined) {
         return contract
       }
     }
+    for (const eoa of chain.eoas) {
+      if (eoa.address === address) {
+        return eoa
+      }
+    }
   }
 }
 
-function ProjectContract({
-  contract,
-}: {
-  contract: ApiProjectContract
-}) {
+function Display({
+  selected,
+}: { selected: ApiProjectContract | ApiAddressEntry }) {
   return (
     <>
-      <div id={contract.address} className="mb-2 text-lg">
+      <div id={selected.address} className="mb-2 px-2 text-lg">
         <p className="flex items-center gap-1 font-bold">
-          <AddressIcon type={contract.type} />{' '}
-          {contract.name ??
-            (contract.type === 'Unverified' ? 'Unverified' : 'Unknown')}
+          <AddressIcon type={selected.type} />{' '}
+          {selected.name ??
+            (selected.type === 'Unverified' ? 'Unverified' : 'Unknown')}
         </p>
-        <p className="font-mono text-xs">{contract.address}</p>
+        <p className="font-mono text-xs">{selected.address}</p>
       </div>
-      <ol>
-        {contract.fields.map((field, i) => (
-          <Field key={i} name={field.name} value={field.value} level={0} />
-        ))}
-      </ol>
+      {selected.referencedBy.length > 0 && (
+        <Folder title="Referenced by">
+          <ol className="pl-2">
+            {selected.referencedBy.map((value) => (
+              <li key={value.address}>
+                <AddressDisplay value={value} />
+              </li>
+            ))}
+          </ol>
+        </Folder>
+      )}
+      {'fields' in selected && selected.fields.length > 0 && (
+        <Folder title="Fields">
+          <ol className="pl-2">
+            {selected.fields.map((field, i) => (
+              <Field key={i} name={field.name} value={field.value} level={0} />
+            ))}
+          </ol>
+        </Folder>
+      )}
     </>
+  )
+}
+
+function Folder(props: { title: string; children: ReactNode }) {
+  const [open, setOpen] = useState(true)
+
+  return (
+    <div>
+      <button
+        onClick={() => setOpen((open) => !open)}
+        className="flex h-[22px] w-full cursor-pointer select-none items-center gap-1 font-bold text-xs uppercase"
+      >
+        {open && <IconChevronDown />}
+        {!open && <IconChevronRight />}
+        {props.title}
+      </button>
+      {open && props.children}
+    </div>
   )
 }

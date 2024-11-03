@@ -33,6 +33,7 @@ export type ApiAddressType =
 export interface ApiAddressEntry {
   name?: string
   type: ApiAddressType
+  referencedBy: AddressFieldValue[]
   address: string
 }
 

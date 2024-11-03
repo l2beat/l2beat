@@ -46,7 +46,7 @@ function ListItemChain(props: { chain: ApiProjectChain; first: boolean }) {
   }
 
   return (
-    <li className={clsx(!props.first && 'mt-2 border-t border-t-coffee-600')}>
+    <li className={clsx(!props.first && 'border-t border-t-coffee-600')}>
       <button
         onClick={() => setOpen((open) => !open)}
         className="flex h-[22px] w-full cursor-pointer select-none items-center gap-1 font-bold text-xs uppercase hover:bg-autumn-600"

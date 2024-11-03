@@ -4,8 +4,10 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { parseFieldValue } from './parseFieldValue'
 import { toAddress } from './toAddress'
 import {
+  AddressFieldValue,
   ApiAddressEntry,
   ApiAddressType,
+  ApiProjectChain,
   ApiProjectContract,
   ApiProjectResponse,
   Field,
@@ -23,7 +25,7 @@ export function getProject(configReader: ConfigReader, project: string) {
   const response: ApiProjectResponse = { chains: [] }
   for (const { chain, config, discovery } of data) {
     const meta = getMeta(discovery)
-    response.chains.push({
+    const chainInfo = {
       name: chain,
       initialContracts: config.initialAddresses
         .map((x): ApiProjectContract => {
@@ -33,6 +35,7 @@ export function getProject(configReader: ConfigReader, project: string) {
               name: undefined,
               type: 'Contract',
               address: toAddress(chain, x),
+              referencedBy: [],
               fields: [],
             }
           }
@@ -47,14 +50,17 @@ export function getProject(configReader: ConfigReader, project: string) {
         .filter((x) => x.address !== EthereumAddress.ZERO)
         .map(
           (x): ApiAddressEntry => ({
-            name: x.name,
+            name: x.name || undefined,
             type: 'EOA',
+            referencedBy: [],
             address: toAddress(chain, x.address),
           }),
         )
         .sort(orderAddressEntries),
-    })
+    }
+    response.chains.push(chainInfo)
   }
+  populateReferencedBy(response.chains)
   return response
 }
 
@@ -63,10 +69,10 @@ function orderAddressEntries(a: ApiAddressEntry, b: ApiAddressEntry) {
     return a.name.localeCompare(b.name)
   }
   if (a.name) {
-    return 1
+    return -1
   }
   if (b.name) {
-    return -1
+    return 1
   }
   return a.address.localeCompare(b.address)
 }
@@ -83,8 +89,9 @@ function contractFromDiscovery(
     }),
   )
   return {
-    name: contract.name !== '' ? contract.name : undefined,
+    name: contract.name || undefined,
     type: getContractType(contract),
+    referencedBy: [],
     address: toAddress(chain, contract.address),
     fields,
   }
@@ -119,11 +126,14 @@ function getMeta(discovery: DiscoveryOutput) {
   const meta: Record<string, { name?: string; type: ApiAddressType }> = {}
   for (const contract of discovery.contracts) {
     const address = contract.address.toString()
-    meta[address] = { name: contract.name, type: getContractType(contract) }
+    meta[address] = {
+      name: contract.name || undefined,
+      type: getContractType(contract),
+    }
   }
   for (const eoa of discovery.eoas) {
     const address = eoa.address.toString()
-    meta[address] = { name: eoa.name, type: 'EOA' }
+    meta[address] = { name: eoa.name || undefined, type: 'EOA' }
   }
   meta[EthereumAddress.ZERO] = { name: 'ZERO', type: 'Unknown' }
   return meta
@@ -152,4 +162,59 @@ function getContractType(
     return 'Diamond'
   }
   return 'Contract'
+}
+
+function populateReferencedBy(chains: ApiProjectChain[]) {
+  const referencedBy = new Map<string, AddressFieldValue[]>()
+  for (const chain of chains) {
+    for (const contract of [
+      ...chain.initialContracts,
+      ...chain.discoveredContracts,
+    ]) {
+      const field: AddressFieldValue = {
+        type: 'address',
+        name: contract.name,
+        address: contract.address,
+        addressType: contract.type,
+      }
+      const relatives = getAddresses(
+        contract.fields.map((x) => x.value),
+      ).filter((x, i, a) => a.indexOf(x) === i)
+      for (const relative of relatives) {
+        if (relative === contract.address) {
+          continue
+        }
+        const refs = referencedBy.get(relative)
+        if (refs) {
+          refs.push(field)
+        } else {
+          referencedBy.set(relative, [field])
+        }
+      }
+    }
+  }
+  for (const chain of chains) {
+    for (const entry of [
+      ...chain.initialContracts,
+      ...chain.discoveredContracts,
+      ...chain.eoas,
+    ]) {
+      const refs = referencedBy.get(entry.address)
+      entry.referencedBy = refs ?? []
+    }
+  }
+}
+
+function getAddresses(values: FieldValue[]) {
+  const addresses: string[] = []
+  for (const value of values) {
+    if (value.type === 'address') {
+      addresses.push(value.address)
+    } else if (value.type === 'array') {
+      addresses.push(...getAddresses(value.values))
+    } else if (value.type === 'object') {
+      addresses.push(...getAddresses(Object.values(value.value)))
+    }
+  }
+  return addresses
 }
