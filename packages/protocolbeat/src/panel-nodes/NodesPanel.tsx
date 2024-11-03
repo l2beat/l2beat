@@ -137,7 +137,7 @@ function getNodeFields(
   banned: string[],
 ): Field[] {
   if (value.type === 'object') {
-    return Object.entries(value).flatMap(([key, value]) =>
+    return Object.entries(value.value).flatMap(([key, value]) =>
       getNodeFields(`${path}.${key}`, value, banned),
     )
   } else if (value.type === 'array') {
