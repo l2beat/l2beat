@@ -11,7 +11,8 @@ import { AddressIcon } from '../common/AddressIcon'
 import { IconChevronDown } from '../icons/IconChevronDown'
 import { IconChevronRight } from '../icons/IconChevronRight'
 import { usePanelStore } from '../store/store'
-import { AddressDisplay, Field } from './Field'
+import { AddressDisplay } from './AddressDisplay'
+import { Field } from './Field'
 
 export function ValuesPanel() {
   const { project } = useParams()
