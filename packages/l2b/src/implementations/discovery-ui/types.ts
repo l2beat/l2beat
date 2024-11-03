@@ -49,6 +49,7 @@ export type FieldValue =
   | ArrayFieldValue
   | ObjectFieldValue
   | UnknownFieldValue
+  | ErrorFieldValue
 
 export interface AddressFieldValue {
   type: 'address'
@@ -90,6 +91,11 @@ export interface ObjectFieldValue {
 export interface UnknownFieldValue {
   type: 'unknown'
   value: string
+}
+
+export interface ErrorFieldValue {
+  type: 'error'
+  error: string
 }
 
 export interface ApiProjectContract extends ApiAddressEntry {

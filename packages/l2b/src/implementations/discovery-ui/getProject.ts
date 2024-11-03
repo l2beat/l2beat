@@ -89,12 +89,18 @@ function contractFromDiscovery(
   contract: ContractParameters,
   abis: DiscoveryOutput['abis'],
 ): ApiProjectContract {
-  const fields: Field[] = Object.entries(contract.values ?? {}).map(
-    ([name, value]) => ({
+  const fields: Field[] = Object.entries(contract.values ?? {})
+    .map(([name, value]) => ({
       name,
       value: fixAddresses(parseFieldValue(value, meta), chain),
-    }),
-  )
+    }))
+    .concat(
+      Object.entries(contract.errors ?? {}).map(([name, error]) => ({
+        name,
+        value: { type: 'error', error },
+      })),
+    )
+    .sort((a, b) => a.name.localeCompare(b.name))
   const implementations = get$Implementations(contract.values)
   return {
     name: contract.name || undefined,

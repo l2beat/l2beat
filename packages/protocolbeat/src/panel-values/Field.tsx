@@ -93,6 +93,8 @@ export function Field({ name, value, level }: FieldProps) {
     )
   } else if (value.type === 'unknown') {
     inlineDisplay = value.value
+  } else if (value.type === 'error') {
+    inlineDisplay = `Error: ${value.error}`
   }
 
   return (
