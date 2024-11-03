@@ -1,3 +1,64 @@
+Generated with discovered.json: 0xf9abdf0fb5b79268848f074c01ed1522fbed89b4
+
+# Diff at Sun, 03 Nov 2024 17:29:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@950c85bf556f084c302d2b03100375cf3c7ed376 block: 21098438
+- current block number: 21108610
+
+## Description
+
+Kinto stage 1 upgrade:
+
+### Security Council
+The multisig at `0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d` has the EXECUTOR_ROLE and meets the minimum requirements for a Security Council. Members are published [here](https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/security-council) (5 external members, including Caldera).
+- Kinto Foundation: `0x08E674c4538caE03B6c05405881dDCd95DcaF5a8`
+- Mamori Labs: `0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B`, `0x94561e98DD5E55271f91A103e4979aa6C493745E`
+- Caldera: `0x356000Cec4fC967f8FC372381D983426760A0391`
+- Hypernative: `0x082CBA3929aD00EbB6d81ebE57B0BD24fBF3Fc6B`
+- Venn/Ironblocks: `0xe52957E92a372d5a3B544F4C329b606f1A1b4bD2`
+- Turnkey: `0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1`
+- Certora: `0x5FB5040dfC5B8b9Ea40dFBd881188Ec85cDC0621`
+
+### Validators
+There are 5 validators in total, ran by:
+- Caldera: `0x64Cf65036a76E3827e448cadbc53D31EefDCE04a` (main proposer)
+- Mamori Labs: `0x944eB0a2829A859959586b10D54229278534a696`
+- Ankr: `0x2bfDA59220413DEd39dD0E443620b5277EcE6348` (started a challenge due to late software update)
+- Hypernative: `0x58028fFbc25aE2e12b96276bDB125955F41D41f3`
+- Venn: `0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f`
+
+## Watched changes
+
+```diff
+    contract ExecutorMultisig (0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d) {
+    +++ description: None
+      values.$members.8:
+-        "0x94561e98DD5E55271f91A103e4979aa6C493745E"
+      values.$members.7:
+-        "0x356000Cec4fC967f8FC372381D983426760A0391"
++        "0x94561e98DD5E55271f91A103e4979aa6C493745E"
+      values.$members.6:
+-        "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
++        "0x356000Cec4fC967f8FC372381D983426760A0391"
+      values.multisigThreshold:
+-        "6 of 9 (67%)"
++        "6 of 8 (75%)"
+    }
+```
+
+```diff
+    contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.lastStakeBlock:
+-        21084338
++        21107949
+      values.stakerCount:
+-        3
++        4
+    }
+```
+
 Generated with discovered.json: 0x1678709304c14f7d103f4788317c363a2345037b
 
 # Diff at Sat, 02 Nov 2024 07:22:30 GMT:
