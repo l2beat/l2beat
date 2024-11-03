@@ -49,14 +49,14 @@ export function CodePanel() {
 
   return (
     <div className="flex h-full w-full flex-col">
-      <div className="flex gap-1 overflow-x-auto border-b border-b-latte px-1 pt-1">
+      <div className="flex gap-1 overflow-x-auto border-b border-b-coffee-600 px-1 pt-1">
         {sources.map((x, i) => (
           <button
             key={i}
             onClick={() => setCurrent(i)}
             className={clsx(
               'flex h-6 items-center gap-1 px-2 text-sm',
-              current === i && 'bg-sun text-black',
+              current === i && 'bg-autumn-300 text-black',
             )}
           >
             <IconCodeFile />

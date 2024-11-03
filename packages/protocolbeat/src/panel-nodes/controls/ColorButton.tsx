@@ -71,13 +71,13 @@ export function ColorPicker({ onColorChange }: ColorPickerProps) {
           background:
             'conic-gradient(#9ED110, #50B517, #179067, #476EAF, #9f49ac, #CC42A2, #FF3BA7, #FF5800, #FF8100, #FEAC00, #FFCC00, #EDE604, #9ED110)',
         }}
-        className="h-12 w-12 rounded border border-latte shadow-xl hover:ring"
+        className="h-12 w-12 rounded border border-coffee-600 shadow-xl hover:ring"
         onClick={() => onColorChange(0)}
       />
       {SELECTABLE_COLORS.map((c, i) => (
         <button
           style={{ backgroundColor: c.color }}
-          className="h-12 w-12 rounded border border-latte shadow-xl hover:ring"
+          className="h-12 w-12 rounded border border-coffee-600 shadow-xl hover:ring"
           key={i}
           onClick={() => onColorChange(i + 1)}
         />

@@ -22,7 +22,7 @@ export function TopBar(props: { project: string }) {
               key={i}
               className={clsx(
                 'w-4',
-                selectedLayout === i && 'bg-sun text-black ',
+                selectedLayout === i && 'bg-autumn-300 text-black ',
               )}
               onClick={() => loadLayout(i)}
             >

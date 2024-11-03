@@ -15,11 +15,11 @@ export function PanelHeader(props: { id: PanelId }) {
   const removePanel = useMultiViewStore((state) => state.removePanel)
 
   return (
-    <div className="group flex h-[36px] select-none border-latte border-y bg-coffee px-[7px] py-1">
+    <div className="group flex h-[36px] select-none border-coffee-600 border-y bg-coffee-800 px-[7px] py-1">
       <select
         className={clsx(
-          'border-b bg-coffee font-bold text-xs uppercase',
-          isActive ? 'border-milk' : 'border-coffee',
+          'border-b bg-coffee-800 font-bold text-xs uppercase',
+          isActive ? 'border-coffee-200' : 'border-coffee-800',
         )}
         value={props.id}
         onChange={(e) => changePanel(props.id, e.target.value as PanelId)}

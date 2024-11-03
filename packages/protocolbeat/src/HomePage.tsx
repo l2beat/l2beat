@@ -14,7 +14,7 @@ export function HomePage() {
         <img className="w-[400px]" src="/logo.svg" alt="DSCVRY" />
       </h1>
       <input
-        className="mx-auto mb-8 block w-[464px] border border-latte bg-coffee px-4 py-2 placeholder:text-cream"
+        className="mx-auto mb-8 block w-[464px] border border-coffee-600 bg-coffee-800 px-4 py-2 placeholder:text-coffee-400"
         placeholder="Filter projects"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
@@ -57,7 +57,7 @@ function AllProjects(props: { search: string }) {
   if (filtered.length === 0) {
     return (
       <>
-        <p className="mb-2 border-latte border-b pb-2 pl-6 font-semibold text-sm uppercase">
+        <p className="mb-2 border-coffee-600 border-b pb-2 pl-6 font-semibold text-sm uppercase">
           Projects
         </p>
         <p className="pl-6">No matching projects</p>
@@ -69,7 +69,7 @@ function AllProjects(props: { search: string }) {
     <>
       {favoriteList.length > 0 && (
         <>
-          <p className="mb-2 border-latte border-b pb-2 pl-6 font-semibold text-sm uppercase">
+          <p className="mb-2 border-coffee-600 border-b pb-2 pl-6 font-semibold text-sm uppercase">
             Favorites
           </p>
           <ProjectList
@@ -81,7 +81,7 @@ function AllProjects(props: { search: string }) {
       )}
       {otherList.length > 0 && (
         <>
-          <p className="mb-2 border-latte border-b pb-2 pl-6 font-semibold text-sm uppercase">
+          <p className="mb-2 border-coffee-600 border-b pb-2 pl-6 font-semibold text-sm uppercase">
             Projects
           </p>
           <ProjectList entries={otherList} toggleFavorite={toggleFavorite} />
@@ -105,14 +105,14 @@ function ProjectList(props: {
             onClick={() => props.toggleFavorite(entry.name)}
           >
             {props.favorites ? (
-              <IconStarFull className="text-sun" />
+              <IconStarFull className="text-autumn-300" />
             ) : (
               <IconStarEmpty />
             )}
           </button>
           <Link to={`/ui/p/${entry.name}`}>
             <span className="-mb-0.5 block">{entry.name}</span>
-            <span className="block text-cream text-xs uppercase">
+            <span className="block text-coffee-400 text-xs uppercase">
               {getChains(entry.chains)}
             </span>
           </Link>

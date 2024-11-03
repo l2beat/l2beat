@@ -28,18 +28,18 @@ export function NodeView(props: NodeViewProps) {
       className={clsx(
         'absolute bg-black',
         fullHeight ? 'rounded-2xl' : 'rounded',
-        props.selected && 'outline outline-4 outline-sun',
+        props.selected && 'outline outline-4 outline-autumn-300',
       )}
     >
       <div
         className={clsx(
           'mb-1 flex w-full items-center gap-1 px-2 font-medium text-sm',
           fullHeight ? 'rounded-2xl' : 'rounded-t',
-          isDark ? 'text-milk' : 'text-black',
+          isDark ? 'text-coffee-200' : 'text-black',
         )}
         style={{
           height: fullHeight ? HEADER_HEIGHT : HEADER_HEIGHT - 4,
-          backgroundColor: color,
+          background: color,
         }}
       >
         <AddressIcon type={props.node.addressType} />
@@ -70,7 +70,7 @@ function NodeField(props: {
       <div
         className={clsx(
           'w-full truncate rounded-full px-2 font-mono text-xs',
-          isHighlighted && 'bg-sun text-black',
+          isHighlighted && 'bg-autumn-300 text-black',
         )}
         style={{
           height: FIELD_HEIGHT,
@@ -83,7 +83,7 @@ function NodeField(props: {
         <div
           className={clsx(
             'absolute h-[10px] w-[10px] rounded-full',
-            isHighlighted || props.selected ? 'bg-sun' : 'bg-cream',
+            isHighlighted || props.selected ? 'bg-autumn-300' : 'bg-coffee-400',
           )}
           style={{
             left: isLeft ? -5 : undefined,

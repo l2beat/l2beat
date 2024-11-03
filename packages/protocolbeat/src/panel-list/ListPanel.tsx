@@ -46,10 +46,10 @@ function ListItemChain(props: { chain: ApiProjectChain; first: boolean }) {
   }
 
   return (
-    <li className={clsx(!props.first && 'mt-2 border-t border-t-latte')}>
+    <li className={clsx(!props.first && 'mt-2 border-t border-t-coffee-600')}>
       <button
         onClick={() => setOpen((open) => !open)}
-        className="flex h-[22px] w-full cursor-pointer select-none items-center gap-1 font-bold text-xs uppercase hover:bg-autumn"
+        className="flex h-[22px] w-full cursor-pointer select-none items-center gap-1 font-bold text-xs uppercase hover:bg-autumn-600"
       >
         {open && <IconChevronDown />}
         {!open && <IconChevronRight />}
@@ -111,7 +111,7 @@ function ListItemContracts(props: {
     <>
       <button
         onClick={() => setOpen((open) => !open)}
-        className="flex h-[22px] w-full cursor-pointer select-none items-center gap-1 pl-2 font-medium text-cream text-sm hover:bg-autumn hover:text-milk"
+        className="flex h-[22px] w-full cursor-pointer select-none items-center gap-1 pl-2 font-medium text-coffee-400 text-sm hover:bg-autumn-600 hover:text-coffee-200"
       >
         {open && (
           <>
@@ -145,12 +145,12 @@ function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
     <li
       className={clsx(
         'flex h-[22px] cursor-pointer select-none items-center gap-1 whitespace-pre pl-4 text-sm',
-        isSelected && 'bg-sun text-black',
-        !isSelected && 'bg-coffee hover:bg-autumn',
+        isSelected && 'bg-autumn-300 text-black',
+        !isSelected && 'bg-coffee-800 hover:bg-autumn-600',
       )}
       onClick={() => select(entry.address)}
     >
-      <div className="mr-[7px] h-[22px] border-latte border-l" />
+      <div className="mr-[7px] h-[22px] border-coffee-600 border-l" />
       <AddressIcon type={entry.type} />
       <span className="overflow-hidden text-ellipsis tabular-nums">
         {entry.name ?? toShortenedAddress(entry.address)}

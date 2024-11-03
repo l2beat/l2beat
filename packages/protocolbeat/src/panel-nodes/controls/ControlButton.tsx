@@ -10,9 +10,9 @@ export function ControlButton(props: {
     <button
       disabled={props.disabled}
       className={clsx(
-        'whitespace-pre border border-latte bg-coffee px-2 py-1 text-xs',
+        'whitespace-pre border border-coffee-600 bg-coffee-800 px-2 py-1 text-xs',
         !props.disabled && '',
-        props.disabled && 'text-cream',
+        props.disabled && 'text-coffee-400',
       )}
       onClick={props.onClick}
     >

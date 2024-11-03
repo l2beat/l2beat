@@ -55,7 +55,9 @@ export function Connection({ from, to, isHighlighted }: ConnectionProps) {
         d={path.join(' ')}
         strokeLinecap="round"
         className={
-          isHighlighted ? 'stroke-[3] stroke-sun' : 'stroke-2 stroke-cream'
+          isHighlighted
+            ? 'stroke-[3] stroke-autumn-300'
+            : 'stroke-2 stroke-coffee-400'
         }
       />
     </svg>

@@ -1,53 +1,29 @@
 import type { editor } from 'monaco-editor'
+import colors from '../colors.json'
 
 export const theme: editor.IStandaloneThemeData = {
   base: 'vs-dark',
   inherit: true,
   rules: [
-    { token: '', foreground: '#F0D8BD' },
-    {
-      token: 'comment',
-      foreground: '#A98763',
-    },
-    {
-      token: 'comment.keyword',
-      foreground: '#8b8be8',
-    },
-    {
-      token: 'keyword',
-      foreground: '#fe8019',
-    },
-    {
-      token: 'keyword.typename',
-      foreground: '#fb4a35',
-    },
-    {
-      token: 'delimiter',
-      foreground: '#A98763',
-    },
-    {
-      token: 'operator',
-      foreground: '#EBDBB2',
-      fontStyle: 'bold',
-    },
-    {
-      token: 'number',
-      foreground: '#83a599',
-    },
-    {
-      token: 'string',
-      foreground: '#fabd30',
-    },
+    { token: '', foreground: colors.coffee['200'] },
+    { token: 'comment', foreground: colors.coffee['400'] },
+    { token: 'comment.keyword', foreground: colors.aux.blue },
+    { token: 'keyword', foreground: colors.aux.orange },
+    { token: 'keyword.typename', foreground: colors.aux.red },
+    { token: 'delimiter', foreground: colors.coffee['400'] },
+    { token: 'operator', foreground: colors.aux.green, fontStyle: 'bold' },
+    { token: 'number', foreground: colors.aux.teal },
+    { token: 'string', foreground: colors.aux.yellow },
   ],
   colors: {
-    'editor.foreground': '#F0D8BD',
-    'editor.background': '#1d1816',
-    'editor.selectionBackground': '#423731',
-    'editor.inactiveSelectionBackground': '#2e2824',
-    'editorLineNumber.foreground': '#594C43',
-    'editor.lineHighlightBackground': '#2e2824',
-    'editor.lineHighlightBorder': '#2e2824',
-    'editorIndentGuide.background1': '#282422',
-    'editorIndentGuide.activeBackground1': '#594C43',
+    'editor.foreground': colors.coffee['200'],
+    'editor.background': colors.coffee['900'],
+    'editor.selectionBackground': colors.coffee['700'],
+    'editor.inactiveSelectionBackground': colors.coffee['800'],
+    'editorLineNumber.foreground': colors.coffee['600'],
+    'editor.lineHighlightBackground': colors.coffee['800'],
+    'editor.lineHighlightBorder': colors.coffee['800'],
+    'editorIndentGuide.background1': colors.coffee['800'],
+    'editorIndentGuide.activeBackground1': colors.coffee['600'],
   },
 }

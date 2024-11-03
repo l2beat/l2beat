@@ -54,7 +54,7 @@ export function Viewport() {
     <div
       ref={containerRef}
       className={clsx(
-        'relative h-full w-full overflow-hidden bg-coffee',
+        'relative h-full w-full overflow-hidden bg-coffee-800',
         isResizing && 'cursor-col-resize',
       )}
     >

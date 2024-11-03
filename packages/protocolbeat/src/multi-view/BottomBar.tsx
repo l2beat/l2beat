@@ -7,7 +7,7 @@ function Keys(props: { keys: string[] }) {
       {props.keys.map((key, i) => (
         <kbd
           key={i}
-          className="rounded border-latte border-b-2 bg-milk px-1 text-coffee leading-tight"
+          className="rounded border-coffee-600 border-b-2 bg-coffee-200 px-1 text-coffee-800 leading-tight"
         >
           {key}
         </kbd>
@@ -53,7 +53,7 @@ export function BottomBar() {
   const altKey = navigator.platform.includes('Mac') ? 'Opt' : 'Alt'
 
   return (
-    <div className="flex h-8 items-center justify-between border-latte border-t px-2 text-sm">
+    <div className="flex h-8 items-center justify-between border-coffee-600 border-t px-2 text-sm">
       <div>Bottom Bar</div>
       <div className="flex gap-2">
         <button onClick={() => setHintOpen((open) => !open)}>
@@ -61,7 +61,7 @@ export function BottomBar() {
         </button>
       </div>
       {hintOpen && (
-        <div className="fixed right-2 bottom-10 border border-latte bg-coffee p-4">
+        <div className="fixed right-2 bottom-10 border border-coffee-600 bg-coffee-800 p-4">
           <p>Keyboard Shortcuts</p>
           <ul>
             <li>

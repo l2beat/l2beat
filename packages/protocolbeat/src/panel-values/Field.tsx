@@ -20,7 +20,7 @@ export function Field({ name, value, level }: FieldProps) {
     if (value.addressType !== 'Unknown') {
       inlineDisplay = (
         <button
-          className="inline-block w-min whitespace-nowrap text-left font-mono text-blue-400 text-xs underline"
+          className="inline-block w-min whitespace-nowrap text-left font-mono text-aux-blue text-xs underline"
           onClick={() => select(value.address)}
         >
           <AddressIcon
@@ -35,7 +35,7 @@ export function Field({ name, value, level }: FieldProps) {
       )
     } else {
       inlineDisplay = (
-        <p className="whitespace-nowrap font-mono text-cream text-xs">
+        <p className="whitespace-nowrap font-mono text-coffee-400 text-xs">
           <strong>{value.name ?? 'Unknown'}</strong>{' '}
           {toShortenedAddress(value.address)}
         </p>
@@ -44,7 +44,9 @@ export function Field({ name, value, level }: FieldProps) {
   } else if (value.type === 'hex') {
     if (value.value.length <= 66) {
       inlineDisplay = (
-        <div className="flex font-mono text-cream text-xs">{value.value}</div>
+        <div className="flex font-mono text-coffee-400 text-xs">
+          {value.value}
+        </div>
       )
     } else {
       const parts: string[] = []
@@ -52,7 +54,7 @@ export function Field({ name, value, level }: FieldProps) {
         parts.push(value.value.slice(i, i + 64))
       }
       inlineDisplay = (
-        <div className="flex font-mono text-cream text-xs">
+        <div className="flex font-mono text-coffee-400 text-xs">
           <span>0x</span>
           <div>
             {parts.map((part, i) => (
@@ -75,20 +77,20 @@ export function Field({ name, value, level }: FieldProps) {
   } else if (value.type === 'number') {
     const fmt = Intl.NumberFormat('en-US')
     inlineDisplay = (
-      <p className="overflow-hidden break-words font-mono text-orange-400">
+      <p className="overflow-hidden break-words font-mono text-aux-orange">
         {fmt.format(BigInt(value.value))}
       </p>
     )
   } else if (value.type === 'boolean') {
     inlineDisplay = (
-      <p className="font-bold font-mono text-orange-400 text-xs uppercase">
+      <p className="font-bold font-mono text-aux-orange text-xs uppercase">
         {value.value.toString()}
       </p>
     )
   } else if (value.type === 'array') {
     inlineDisplay = (
       <span>
-        [ <span className="text-cream">length: </span>
+        [ <span className="text-coffee-400">length: </span>
         {value.values.length} ]
       </span>
     )
@@ -102,7 +104,7 @@ export function Field({ name, value, level }: FieldProps) {
   } else if (value.type === 'object') {
     inlineDisplay = (
       <span>
-        {'{'} <span className="text-cream">members: </span>
+        {'{'} <span className="text-coffee-400">members: </span>
         {Object.keys(value.value).length} {'}'}
       </span>
     )

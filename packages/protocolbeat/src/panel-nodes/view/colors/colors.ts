@@ -1,19 +1,20 @@
 import { ApiAddressType } from '../../../api/types'
 import { oklchColorToCSS } from './oklch'
+import colors from '../../../colors.json'
 
 export const SELECTABLE_COLORS: { color: string; isDark: boolean }[] = [
-  { color: '#930021', isDark: true }, // red
-  { color: '#d25b0b', isDark: false }, // orange
-  { color: '#f2c20d', isDark: false }, // yellow
-  { color: '#35b180', isDark: false }, // mint
-  { color: '#459135', isDark: false }, // green
+  { color: colors.aux.red, isDark: false },
+  { color: colors.aux.orange, isDark: false },
+  { color: colors.aux.yellow, isDark: false },
+  { color: colors.aux.teal, isDark: false },
+  { color: colors.aux.green, isDark: false },
 
-  { color: '#1c92a8', isDark: false }, // cyan
-  { color: '#032395', isDark: true }, // blue
-  { color: '#5e185b', isDark: true }, // purple
-  { color: '#e27991', isDark: false }, // pink
-  { color: 'white', isDark: false },
-  { color: 'black', isDark: true },
+  { color: colors.aux.cyan, isDark: false },
+  { color: colors.aux.blue, isDark: false },
+  { color: colors.aux.purple, isDark: false },
+  { color: colors.aux.pink, isDark: false },
+  { color: colors.white, isDark: false },
+  { color: colors.black, isDark: true },
 ]
 
 export function getColor({
@@ -27,7 +28,7 @@ export function getColor({
 }): { color: string; isDark: boolean } {
   if (color === 0) {
     if (addressType === 'Unknown') {
-      return { color: '#be1d1d', isDark: false } // error red
+      return { color: colors.aux.red, isDark: false }
     }
     return getChainColor(id.split(':')[0] ?? '')
   }
@@ -39,16 +40,22 @@ export function getChainColor(chain: string): {
   isDark: boolean
 } {
   if (chain === 'eth' || chain === 'ethereum') {
-    return { color: 'rgb(139 139 232)', isDark: false }
+    return { color: colors.aux.blue, isDark: false }
   }
   if (chain === 'oeth' || chain === 'optimism') {
-    return { color: 'rgb(161 0 18)', isDark: true }
+    return { color: colors.aux.orange, isDark: false }
   }
   if (chain === 'arb1' || chain === 'arbitrum') {
-    return { color: 'rgb(44 26 159)', isDark: true }
+    return { color: colors.aux.teal, isDark: false }
   }
   if (chain === 'base') {
-    return { color: 'rgb(97 19 92)', isDark: true }
+    return { color: colors.aux.pink, isDark: false }
+  }
+  if (chain === 'bnb' || chain === 'bsc') {
+    return { color: colors.aux.yellow, isDark: false }
+  }
+  if (chain === 'scr' || chain === 'scroll') {
+    return { color: colors.coffee['200'], isDark: false }
   }
 
   return {
