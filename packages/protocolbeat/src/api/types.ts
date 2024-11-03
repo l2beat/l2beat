@@ -17,7 +17,6 @@ export interface ApiProjectChain {
   name: string
   initialContracts: ApiProjectContract[]
   discoveredContracts: ApiProjectContract[]
-  ignoredContracts: ApiAddressEntry[]
   eoas: ApiAddressEntry[]
 }
 

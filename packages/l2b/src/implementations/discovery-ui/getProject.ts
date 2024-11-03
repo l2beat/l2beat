@@ -25,33 +25,50 @@ export function getProject(configReader: ConfigReader, project: string) {
     const meta = getMeta(discovery)
     response.chains.push({
       name: chain,
-      initialContracts: config.initialAddresses.map((x) => {
-        const discovered = discovery.contracts.find((y) => y.address === x)
-        if (!discovered) {
-          return {
-            name: undefined,
-            type: 'Contract',
-            address: toAddress(chain, x),
-            fields: [],
+      initialContracts: config.initialAddresses
+        .map((x): ApiProjectContract => {
+          const discovered = discovery.contracts.find((y) => y.address === x)
+          if (!discovered) {
+            return {
+              name: undefined,
+              type: 'Contract',
+              address: toAddress(chain, x),
+              fields: [],
+            }
           }
-        }
-        return contractFromDiscovery(chain, meta, discovered)
-      }),
+          return contractFromDiscovery(chain, meta, discovered)
+        })
+        .sort(orderAddressEntries),
       discoveredContracts: discovery.contracts
         .filter((x) => !config.initialAddresses.includes(x.address))
-        .map((x) => contractFromDiscovery(chain, meta, x)),
-      // TODO: implement
-      ignoredContracts: [],
+        .map((x) => contractFromDiscovery(chain, meta, x))
+        .sort(orderAddressEntries),
       eoas: discovery.eoas
         .filter((x) => x.address !== EthereumAddress.ZERO)
-        .map((x) => ({
-          name: x.name,
-          type: 'EOA',
-          address: toAddress(chain, x.address),
-        })),
+        .map(
+          (x): ApiAddressEntry => ({
+            name: x.name,
+            type: 'EOA',
+            address: toAddress(chain, x.address),
+          }),
+        )
+        .sort(orderAddressEntries),
     })
   }
   return response
+}
+
+function orderAddressEntries(a: ApiAddressEntry, b: ApiAddressEntry) {
+  if (a.name && b.name) {
+    return a.name.localeCompare(b.name)
+  }
+  if (a.name) {
+    return 1
+  }
+  if (b.name) {
+    return -1
+  }
+  return a.address.localeCompare(b.address)
 }
 
 function contractFromDiscovery(

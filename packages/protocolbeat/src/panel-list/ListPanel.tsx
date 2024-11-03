@@ -69,12 +69,6 @@ function ListItemChain(props: { chain: ApiProjectChain; first: boolean }) {
           />
           <ListItemContracts
             startClosed
-            title="Ignored"
-            onFocus={onFocus}
-            entries={props.chain.ignoredContracts}
-          />
-          <ListItemContracts
-            startClosed
             title="EOAs"
             onFocus={onFocus}
             entries={props.chain.eoas}

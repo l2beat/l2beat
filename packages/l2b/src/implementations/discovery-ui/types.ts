@@ -1,4 +1,4 @@
-// Make sure it follows packages/protocolbeat/src/discovery-ui/api/types.ts
+// Make sure it follows packages/protocolbeat/src/api/types.ts
 // If you find that you are changing this file often consider moving both
 // of those files into a single shared package.
 
@@ -17,7 +17,6 @@ export interface ApiProjectChain {
   name: string
   initialContracts: ApiProjectContract[]
   discoveredContracts: ApiProjectContract[]
-  ignoredContracts: ApiAddressEntry[]
   eoas: ApiAddressEntry[]
 }
 
