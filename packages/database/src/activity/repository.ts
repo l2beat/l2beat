@@ -90,8 +90,8 @@ export class ActivityRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getMaxUopsCountForProjects() {
-    const subquery = this.db
+  async getMaxCountsForProjects() {
+    const uopsSubquery = this.db
       .selectFrom('Activity')
       .select([
         'projectId',
@@ -105,7 +105,7 @@ export class ActivityRepository extends BaseRepository {
 
     const rows = await this.db
       .selectFrom('Activity as t1')
-      .innerJoin(subquery, (join) =>
+      .innerJoin(uopsSubquery, (join) =>
         join
           .onRef('t1.projectId', '=', 't2.projectId')
           .onRef(
@@ -114,10 +114,22 @@ export class ActivityRepository extends BaseRepository {
             't2.max_uops_count',
           ),
       )
+      .innerJoin('Activity as count_table', (join) =>
+        join
+          .onRef('t1.projectId', '=', 'count_table.projectId')
+          .onRef('count_table.count', '=', (eb) =>
+            eb
+              .selectFrom('Activity as max_count')
+              .select(eb.fn.max('count').as('max_count'))
+              .whereRef('max_count.projectId', '=', 't1.projectId'),
+          ),
+      )
       .select([
         't1.projectId',
         (eb) => eb.fn.coalesce('t1.uopsCount', 't1.count').as('max_uops_count'),
-        't1.timestamp',
+        't1.timestamp as uops_timestamp',
+        'count_table.count as max_count',
+        'count_table.timestamp as count_timestamp',
       ])
       .execute()
 
@@ -126,7 +138,9 @@ export class ActivityRepository extends BaseRepository {
         row.projectId,
         {
           uopsCount: Number(row.max_uops_count),
-          timestamp: UnixTime.fromDate(row.timestamp),
+          uopsTimestamp: UnixTime.fromDate(row.uops_timestamp),
+          count: Number(row.max_count),
+          countTimestamp: UnixTime.fromDate(row.count_timestamp),
         },
       ]),
     )
