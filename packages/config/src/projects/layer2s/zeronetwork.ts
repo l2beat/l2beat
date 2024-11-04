@@ -102,8 +102,8 @@ export const zeronetwork: Layer2 = zkStackL2({
   milestones: [
     {
       name: 'Mainnet launch',
-      link: 'https://zero.network/blog',
-      date: '2024-01-01T00:00:00Z', // TODO: Update
+      link: 'https://zero.network/blog', // TODO: Update
+      date: '2024-11-12T00:00:00Z',
       description: 'ZERϴ launches their mainnet.',
       type: 'general',
     },
