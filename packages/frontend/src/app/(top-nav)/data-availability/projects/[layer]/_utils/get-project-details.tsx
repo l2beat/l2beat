@@ -158,9 +158,12 @@ export function getProjectDetails({
 
   const items: ProjectDetailsSection[] = []
 
-  if (riskSummarySection.riskGroups.length > 0) {
+  if (
+    riskSummarySection.layer.risks.concat(riskSummarySection.bridge.risks)
+      .length > 0
+  ) {
     items.push({
-      type: 'RiskSummarySection',
+      type: 'DaRiskSummarySection',
       props: {
         id: 'risk-summary',
         title: 'Risk summary',
