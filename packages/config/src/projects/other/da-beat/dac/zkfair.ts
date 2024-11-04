@@ -17,7 +17,7 @@ const bridgeDelay = discovery.getContractValue<number>(
 )
 
 const bridgeUpgradeability = {
-  upgradableBy: ['DACProxyAdminOwner'],
+  upgradableBy: ['TimelockExecutor'],
   upgradeDelay: `${formatSeconds(bridgeDelay)} delay.`,
 }
 
@@ -52,6 +52,9 @@ export const zkfairDac = PolygoncdkDAC({
               'Validium committee contract that allows the admin to setup the members of the committee and stores the required amount of signatures threshold.',
             ...bridgeUpgradeability,
           }),
+          discovery.getContractDetails('Timelock', {
+            description: `Contract upgrades have to go through a ${formatSeconds(bridgeDelay)} timelock unless the Emergency State is activated. It is controlled by the TimelockExecutor.`,
+          }),
         ],
       },
       risks: [],
@@ -71,13 +74,21 @@ export const zkfairDac = PolygoncdkDAC({
           'Owner of the ZKFairValidium contract, can set core system parameters like replacing the sequencer (relayer), activate forced transactions, update the DA mode and change DAC members by upgrading the ZKFairValidiumDAC contract.',
         ),
         {
-          name: 'DACProxyAdminOwner',
+          name: 'DAC Owner',
+          accounts: [
+            discovery.getPermissionedAccount('ZKFairValidiumDAC', 'owner'),
+          ],
+          description:
+            'The owner of the ZKFairValidiumDAC contract, can update the committee member set at any time.',
+        },
+        {
+          name: 'Timelock Executor',
           accounts: discovery.getAccessControlRolePermission(
             'Timelock',
             'EXECUTOR_ROLE',
           ),
           description:
-            'Controls the ZKFairValidiumDAC and ZKFairValidium contracts. Can upgrade the DA bridge contract implementation and committee members.',
+            'Controls the ZKFairValidiumDAC and ZKFairValidium contracts through the Timelock. Can upgrade the DA bridge contract implementation and committee members.',
         },
       ],
     },

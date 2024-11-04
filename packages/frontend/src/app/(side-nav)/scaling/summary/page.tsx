@@ -2,7 +2,6 @@ import { ScalingSummaryActivityChart } from '~/components/chart/activity/scaling
 import { ScalingSummaryTvlChart } from '~/components/chart/tvl/scaling-summary-tvl-chart'
 import { MainPageCard } from '~/components/main-page-card'
 import { MainPageHeader } from '~/components/main-page-header'
-import { SpiderWeb } from '~/components/spider-web'
 import { getScalingSummaryEntries } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
@@ -41,12 +40,10 @@ export default async function Page() {
     <HydrateClient>
       <MainPageHeader>Summary</MainPageHeader>
       <div className="grid grid-cols-2 gap-4 max-lg:hidden">
-        <MainPageCard className="relative">
-          <SpiderWeb className="absolute left-0 top-0" />
+        <MainPageCard>
           <ScalingSummaryTvlChart unit={UNIT} timeRange={TIME_RANGE} />
         </MainPageCard>
-        <MainPageCard className="relative">
-          <SpiderWeb className="absolute left-0 top-0" />
+        <MainPageCard>
           <ScalingSummaryActivityChart timeRange={TIME_RANGE} />
         </MainPageCard>
       </div>

@@ -75,12 +75,6 @@
     definingMetric: Infinity
     description: "All of the data needed for proof construction is published on Ethereum L1."
     sentiment: "good"
-    sources: [
-      {
-        contract: "OptimismPortal"
-        references: []
-      }
-    ]
     value: "Onchain"
   }
   destinationToken: {
@@ -93,12 +87,6 @@
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
     secondLine: undefined
     sentiment: "bad"
-    sources: [
-      {
-        contract: "OptimismPortal"
-        references: []
-      }
-    ]
     value: "None"
   }
   proposerFailure: {
@@ -122,7 +110,6 @@
   stateValidation: {
     definingMetric: -Infinity
     description: "Currently the system permits invalid state roots. More details in project overview."
-    secondLine: "7d challenge period"
     sentiment: "bad"
     value: "None"
   }

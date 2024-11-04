@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x9144934da41b40db2e02ed034baa431319b36f9f
+
+# Diff at Fri, 01 Nov 2024 14:16:06 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@cd1f0e71bb08ce16b2084a11b768538e8aa6ba8c block: 21064298
+- current block number: 21093326
+
+## Description
+
+New validator, increased security council quorum.
+
+## Watched changes
+
+```diff
+    contract ValidatorManager (0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363) {
+    +++ description: Manages the set of Proposers (Validators in Kroma) and selects the next proposer with the permission to submit the output root. It is also the entry point for other contracts, such as the L2OutputOracle and the Colosseum, which distribute output rewards and slash challenge losers. It makes successive calls to the AssetManager to apply changes to the proposers' assets.
+      values.nextValidator:
+-        "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6"
++        "0x16876e5c608cec36968517A9Eb345269D308D94a"
+    }
+```
+
+```diff
+    contract SecurityCouncil (0x3de211088dF516da72efe68D386b561BEE256Ec4) {
+    +++ description: None
+      values.quorum:
+-        7
++        8
+    }
+```
+
+```diff
+    contract SecurityCouncilToken (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c) {
+    +++ description: None
+      values.tokenOwners.9:
++        "0x16876e5c608cec36968517A9Eb345269D308D94a"
+      values.tokens.9:
++        13
+      values.totalSupply:
+-        9
++        10
+    }
+```
+
 Generated with discovered.json: 0x617e6c6d66c82472234945840af020ab950dfe07
 
 # Diff at Fri, 25 Oct 2024 09:44:05 GMT:
