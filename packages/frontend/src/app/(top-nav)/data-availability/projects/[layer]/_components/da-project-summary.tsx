@@ -132,7 +132,7 @@ export function DaProjectSummary({ project }: Props) {
                               />
                             ) : (
                               <span className="text-sm font-medium">
-                                Nobody 😔
+                                No L2 😔
                               </span>
                             )}
                           </div>
