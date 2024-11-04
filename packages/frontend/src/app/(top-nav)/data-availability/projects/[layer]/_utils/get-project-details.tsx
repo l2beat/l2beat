@@ -185,6 +185,7 @@ export function getProjectDetails({
   if (daBridgeItems.length > 0) {
     items.push({
       type: 'Group',
+      sideNavTitle: daBridge.type === 'NoBridge' ? 'DA Bridge' : undefined,
       props: {
         id: 'da-bridge',
         title: daBridge.display.name,
