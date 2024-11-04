@@ -3,7 +3,7 @@ import { externalLinks } from '~/consts/external-links'
 import { env } from '~/env'
 import { HiringBadge } from '../badge/hiring-badge'
 import { DarkThemeToggle } from '../dark-theme-toggle'
-import { HalloweenLogo } from '../halloween-logo'
+import { Logo } from '../logo'
 import { SocialLinks } from '../social-links'
 import { MobileNavTriggerClose } from './mobile-nav-trigger'
 import { NavLinkGroup } from './nav-link-group'
@@ -24,7 +24,7 @@ export async function NavSidebar({ groups, logoLink, legacyNav }: Props) {
     <NavSideBarWrapper legacyNav={legacyNav}>
       <div className="flex h-[38px] flex-row items-center justify-between">
         <Link href={logoLink}>
-          <HalloweenLogo className="block h-[41px] w-auto" animated />
+          <Logo className="block h-8 w-auto" />
         </Link>
         <div className="flex flex-row items-center gap-4">
           <DarkThemeToggle />
