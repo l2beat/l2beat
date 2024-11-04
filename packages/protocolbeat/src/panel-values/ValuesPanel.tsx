@@ -70,13 +70,32 @@ function Display({
 }: { selected: ApiProjectContract | ApiAddressEntry }) {
   return (
     <>
-      <div id={selected.address} className="mb-2 px-2 text-lg">
+      <div id={selected.address} className="mb-2 px-5 text-lg">
         <p className="flex items-center gap-1 font-bold">
           <AddressIcon type={selected.type} />{' '}
           {selected.name ??
             (selected.type === 'Unverified' ? 'Unverified' : 'Unknown')}
         </p>
-        <p className="font-mono text-xs">{selected.address}</p>
+        {'template' in selected && selected.template && (
+          <p className="font-mono text-aux-orange text-xs">
+            template/{selected.template}
+          </p>
+        )}
+        <p className="font-mono text-xs">
+          <AddressDisplay
+            simplified
+            value={{
+              type: 'address',
+              address: selected.address,
+              addressType: selected.type,
+            }}
+          />
+        </p>
+        {selected.description && (
+          <p className="pt-1 pb-1 font-serif text-sm italic">
+            {selected.description}
+          </p>
+        )}
       </div>
       {selected.referencedBy.length > 0 && (
         <Folder title="Referenced by">

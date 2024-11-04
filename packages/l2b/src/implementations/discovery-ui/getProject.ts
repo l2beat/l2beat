@@ -66,6 +66,7 @@ export function getProject(configReader: ConfigReader, project: string) {
           (x): ApiAddressEntry => ({
             name: x.name || undefined,
             type: 'EOA',
+            description: x.description,
             referencedBy: [],
             address: toAddress(chain, x.address),
           }),
@@ -139,6 +140,7 @@ function contractFromDiscovery(
     name: contract.name || undefined,
     type: getContractType(contract),
     template: contract.template,
+    description: contract.description,
     referencedBy: [],
     address: toAddress(chain, contract.address),
     fields,

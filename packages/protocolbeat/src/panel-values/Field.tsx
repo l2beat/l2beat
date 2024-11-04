@@ -20,6 +20,11 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
           </span>
         ))}
       </div>
+      {field.description && (
+        <div className="-mt-0.5 px-5 pb-1 font-serif italic">
+          {field.description}
+        </div>
+      )}
       <div className="bg-coffee-900 px-5 py-0.5">
         <FieldValueDisplay topLevel value={field.value} />
       </div>
