@@ -20,8 +20,8 @@ export const fraxtalDABridge = {
   display: {
     name: 'No Bridge',
     slug: 'da',
-    description:
-      'The SequencerInbox only stores IPFS hash commitments posted by the sequencer. It is not possible to verify blob inclusion against the data commitments onchain.',
+    description: `The SequencerInbox only stores IPFS hash commitments posted by the sequencer. It is not possible to verify blob inclusion against the data commitments onchain.
+      Projects not integrating with a functional DA bridge rely only on the data availability attestation of the sequencer.`,
     links: {
       websites: ['https://redstone.xyz/'],
       apps: ['https://redstone.xyz/deposit'],

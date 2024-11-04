@@ -28,7 +28,7 @@ const NoBridge = {
   type: 'NoBridge',
   value: 'N/A',
   sentiment: 'bad',
-  description: `Projects using this layer without a functional bridge rely entirely on the sequencer's honesty (i.e., not publishing unavailable or invalid data). Without the bridge, users cannot react in time to malicious actions by the sequencer.`,
+  description: `Without the bridge, users cannot react in time to malicious actions by the sequencer.`,
 } as const
 
 const ONE_DAY_SECONDS = 24 * 60 * 60
