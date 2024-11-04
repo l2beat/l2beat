@@ -12,6 +12,7 @@ import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { DesktopProjectLinks } from '~/components/projects/links/desktop-project-links'
 import { MobileProjectLinks } from '~/components/projects/links/mobile-project-links'
 import { ProjectHeader } from '~/components/projects/project-header'
+import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
 import { GrissiniDetails } from '~/components/rosette/grissini/grissini-details'
 import { GrissiniIcon } from '~/components/rosette/grissini/grissini-icon'
 import { NoBridgeGrissiniDetailsPlaceholder } from '~/components/rosette/grissini/no-bridge-grissini-details-placeholder'
@@ -78,7 +79,7 @@ export function DaProjectSummary({ project }: Props) {
                     Please select one of the available DA bridges to view its
                     risks and detailed analysis.
                   </div>
-                  <div className="flex flex-col lg:h-[278px] lg:overflow-y-scroll">
+                  <div className="flex flex-col lg:h-[278px]">
                     <div className="hidden flex-row gap-4 rounded-t-lg border-surface-tertiary bg-surface-secondary px-4 py-2 text-xs font-semibold uppercase text-secondary dark:bg-zinc-800 md:flex md:border-b">
                       <div className="w-12"></div>
                       <div className="flex-1">DA Bridge</div>
@@ -86,14 +87,17 @@ export function DaProjectSummary({ project }: Props) {
                       <div className="flex-1 pr-12 text-right">TVS</div>
                       <div className="flex-[1.5] lg:flex-1">Used by</div>
                     </div>
-                    <div className="flex flex-1 flex-col gap-2 overflow-y-auto rounded-lg bg-zinc-100 dark:bg-zinc-900 md:gap-0 md:bg-none dark:md:bg-none">
+                    <div className="flex flex-1 flex-col gap-2 overflow-y-auto rounded-lg bg-zinc-100 dark:bg-zinc-900 md:gap-0 md:rounded-t-none md:bg-none dark:md:bg-none">
                       {project.bridges.map((bridge, index) => (
                         <div
                           key={bridge.id}
                           className={cn(
-                            'flex min-h-[56px] flex-row gap-4 rounded-lg border-surface-tertiary bg-surface-secondary px-4 py-2 md:rounded-none md:border-b md:bg-transparent',
+                            'flex min-h-[56px] flex-row gap-4 rounded-lg border-surface-tertiary bg-surface-secondary px-4 py-2 dark:bg-zinc-800 md:rounded-none md:border-b md:bg-transparent',
+                            index === project.bridges.length - 1 &&
+                              'md:border-b-0',
                             // Hide 3rd and further bridges on mobile (will be shown in a drawer)
-                            index > 2 && 'md:hidden',
+                            index > 2 && 'max-md:hidden',
+                            index === 0 && 'md:rounded-t-none',
                           )}
                         >
                           <div className="flex items-center px-1 md:px-3">
@@ -111,7 +115,10 @@ export function DaProjectSummary({ project }: Props) {
                             {bridge.name}
                           </div>
                           <div className="flex flex-1 items-center justify-center">
-                            <GrissiniIcon values={bridge.grissiniValues} />
+                            <GrissiniCell
+                              values={bridge.grissiniValues}
+                              hasNoBridge={bridge.type === 'NoBridge'}
+                            />
                           </div>
                           <div className="flex flex-1 items-center justify-end pr-1 text-sm font-bold text-primary md:pr-12">
                             {formatCurrency(bridge.tvs, 'usd')}
@@ -119,7 +126,7 @@ export function DaProjectSummary({ project }: Props) {
                           <div className="hidden flex-[1.5] flex-row items-center md:flex lg:flex-1">
                             {bridge.usedIn.length > 0 ? (
                               <ProjectsUsedIn
-                                className="h-5 flex-wrap justify-start"
+                                className="h-5 justify-start"
                                 usedIn={bridge.usedIn}
                                 maxProjects={4}
                               />
@@ -170,6 +177,7 @@ export function DaProjectSummary({ project }: Props) {
                                   <div>
                                     <GrissiniIcon
                                       values={bridge.grissiniValues}
+                                      hasNoBridge={bridge.type === 'NoBridge'}
                                     />
                                   </div>
                                 </div>

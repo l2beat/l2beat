@@ -102,6 +102,8 @@ export function getProjectDetails({
         slug: daLayer.display.slug,
       },
       content: daLayer.technology.description,
+      mdClassName:
+        'da-beat text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
       risks: daLayer.technology.risks?.map(toTechnologyRisk),
     },
   })
@@ -116,6 +118,7 @@ export function getProjectDetails({
       isUnderReview: !!daLayer.isUnderReview,
       isVerified,
       grissiniValues: mapBridgeRisksToRosetteValues(daBridge.risks),
+      hideRisks: daBridge.type === 'NoBridge',
     },
   })
 
@@ -129,6 +132,8 @@ export function getProjectDetails({
         slug: `${daLayer.display.slug}-${daBridge.display.slug}`,
       },
       content: daBridge.technology.description,
+      mdClassName:
+        'da-beat text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
       risks: daBridge.technology.risks?.map(toTechnologyRisk),
     },
   })
@@ -185,6 +190,7 @@ export function getProjectDetails({
   if (daBridgeItems.length > 0) {
     items.push({
       type: 'Group',
+      sideNavTitle: daBridge.type === 'NoBridge' ? 'DA Bridge' : undefined,
       props: {
         id: 'da-bridge',
         title: daBridge.display.name,

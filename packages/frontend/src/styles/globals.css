@@ -15,9 +15,9 @@
     --surface-primary: #fafafa;
     --surface-secondary: #e6e7ec;
     --surface-tertiary: #ccd0da;
+    --surface-table-group: #eeeff4;
     --icon-secondary: #5f6470;
     --overlay: #181b2d99;
-    --divider: #ccd0da;
     --divider: #ccd0da;
   }
 
@@ -26,13 +26,13 @@
     --primary-invert: #131215;
     --secondary: #868b98;
     --brand: #db8bf7;
-    --background: #090a0b;
-    --surface-primary: #1f2025;
+    --background: #000000;
+    --surface-primary: #17191f;
     --surface-secondary: #393c43;
     --surface-tertiary: #464a52;
+    --surface-table-group: #22262f;
     --icon-secondary: #5f6470;
     --overlay: #00000099;
-    --divider: #333333;
     --divider: #333333;
   }
 }

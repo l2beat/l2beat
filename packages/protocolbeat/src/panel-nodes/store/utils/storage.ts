@@ -14,11 +14,14 @@ const NodeLocations = z.record(
 
 const NodeColors = z.record(
   z.string(),
-  z.object({
-    l: z.number(),
-    c: z.number(),
-    h: z.number(),
-  }),
+  z.union([
+    z.object({
+      l: z.number(),
+      c: z.number(),
+      h: z.number(),
+    }),
+    z.number(),
+  ]),
 )
 
 const StoredNodeLayout = z.object({
