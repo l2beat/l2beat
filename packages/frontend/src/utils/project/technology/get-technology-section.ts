@@ -1,6 +1,7 @@
 import { daLayers } from '@l2beat/config'
 import { type Bridge, type Layer2, type Layer3 } from '@l2beat/config'
 import { compact } from 'lodash'
+import { env } from '~/env'
 import { getTechnologySectionProps } from './get-technology-section-props'
 import { makeTechnologyChoice } from './make-technology-section'
 
@@ -28,7 +29,9 @@ export function getScalingTechnologySection(project: Layer2 | Layer3) {
         project.technology.dataAvailability,
         {
           relatedProjectBanner:
-            relatedDaProjects.length < 2 && relatedDaProjects[0]
+            env.NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT &&
+            relatedDaProjects.length < 2 &&
+            relatedDaProjects[0]
               ? {
                   text: 'Learn more about the DA layer here:',
                   project: {

@@ -3,13 +3,13 @@ import {
   type HostChainRisksWarningProps,
 } from '~/components/host-chain-risks-warning'
 import { Markdown } from '~/components/markdown/markdown'
+import { type ProjectDetailsRelatedProjectBannerProps } from '~/components/project-details-related-project-banner'
 import { UnderReviewCallout } from '../under-review-callout'
 import { TechnologyIncompleteNote } from './contracts/technology-incomplete-note'
 import { ProjectSection } from './project-section'
 import { type Reference, ReferenceList } from './reference-list'
 import { RiskList, type TechnologyRisk } from './risk-list'
 import { type ProjectSectionProps } from './types'
-import { type ProjectDetailsRelatedProjectBannerProps } from '~/components/project-details-related-project-banner'
 
 export interface TechnologySectionProps extends ProjectSectionProps {
   items: TechnologyChoice[]
