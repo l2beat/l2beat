@@ -1,8 +1,4 @@
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
-import {
-  HostChainRisksWarning,
-  type HostChainRisksWarningProps,
-} from '~/components/host-chain-risks-warning'
 import { WarningBar } from '~/components/warning-bar'
 import { ShieldIcon } from '~/icons/shield'
 import { UnverifiedIcon } from '~/icons/unverified'
@@ -22,7 +18,6 @@ export interface DaRiskSummarySectionProps extends ProjectSectionProps {
   warning: string | undefined
   isVerified: boolean | undefined
   redWarning: string | undefined
-  hostChainWarning?: HostChainRisksWarningProps
 }
 
 export function DaRiskSummarySection({
@@ -31,7 +26,6 @@ export function DaRiskSummarySection({
   isVerified,
   redWarning,
   warning,
-  hostChainWarning,
   ...sectionProps
 }: DaRiskSummarySectionProps) {
   if (layer.risks.concat(bridge.risks).length === 0) {
@@ -39,7 +33,6 @@ export function DaRiskSummarySection({
   }
   return (
     <ProjectSection {...sectionProps}>
-      {hostChainWarning && <HostChainRisksWarning {...hostChainWarning} />}
       {isVerified === false && (
         <WarningBar
           text="This project includes unverified contracts."
@@ -66,19 +59,19 @@ export function DaRiskSummarySection({
         />
       )}
       {layer.risks.length > 0 && (
-        <div className="flex flex-col gap-2">
-          <span className=" text-xs font-medium uppercase">
+        <div className="flex flex-col gap-2 ">
+          <span className="text-xs font-medium uppercase text-zinc-500 dark:text-gray-50">
             {layer.name} risks
           </span>
           <EnumeratedRisks risks={layer.risks} />
         </div>
       )}
       {layer.risks.length > 0 && bridge.risks.length > 0 && (
-        <HorizontalSeparator />
+        <HorizontalSeparator className="my-4 border-divider md:my-6" />
       )}
       {bridge.risks.length > 0 && (
         <div className="flex flex-col gap-2">
-          <span className="text-xs font-medium uppercase">
+          <span className="text-xs font-medium uppercase text-zinc-500 dark:text-gray-50">
             {bridge.name} risks
           </span>
           <EnumeratedRisks risks={bridge.risks} />
