@@ -67,16 +67,10 @@
     value: "None"
   }
   proposerFailure: {
-    definingMetric: -Infinity
-    description: "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen."
-    sentiment: "bad"
-    sources: [
-      {
-        contract: "L2OutputOracle"
-        references: []
-      }
-    ]
-    value: "Cannot withdraw"
+    definingMetric: 575476
+    description: "Anyone can become a Proposer after 6d 15h of inactivity from the currently whitelisted Proposers."
+    sentiment: "good"
+    value: "Self propose"
   }
   sequencerFailure: {
     definingMetric: 86443200
@@ -85,11 +79,11 @@
     value: "Self sequence"
   }
   stateValidation: {
-    definingMetric: -Infinity
-    description: "Currently the system permits invalid state roots. More details in project overview."
-    secondLine: "7d challenge period"
+    definingMetric: 1
+    description: "No actor outside of the single Proposer can submit fraud proofs. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks. There is a 5d 14h challenge period."
+    secondLine: "5d 14h challenge period"
     sentiment: "bad"
-    value: "None"
+    value: "Fraud proofs (INT)"
   }
   validatedBy: {
     description: "Smart contracts on base validate all bridge transfers. Additionally, the security of the system depends on the security of the base layer."

@@ -1,3 +1,94 @@
+Generated with discovered.json: 0x40b86b67d96176fd4c5553a5a5f24e7d666cf169
+
+# Diff at Fri, 01 Nov 2024 12:09:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cd1f0e71bb08ce16b2084a11b768538e8aa6ba8c block: 21078654
+- current block number: 21078654
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21078654 (main branch discovery), not current.
+
+```diff
+    contract L1StandardBridge (0x1bBde518ad01BaABFE30020407A7630FB17B545d) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      issuedPermissions.0.via.0.description:
+-        "upgrading bridge implementation allows to access all funds and change every system component."
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x20D697b63d7747cF78C94ad9ee75C1436781E27E) {
+    +++ description: None
+      directlyReceivedPermissions.1.description:
+-        "upgrading bridge implementation allows to access all funds and change every system component."
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions.2.description:
+-        "upgrading bridge implementation allows to access all funds and change every system component."
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+Generated with discovered.json: 0x6e4ace80f91fe6cf8f01de0c3e9aca726ba0c528
+
+# Diff at Wed, 30 Oct 2024 13:08:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0a8a53530022c6c5edd257c3682a3e7f80d0c550 block: 20914127
+- current block number: 21078654
+
+## Description
+
+Conduit MS: Signer added.
+
+## Watched changes
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.7:
++        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+      values.$members.6:
+-        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
++        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+      values.$members.5:
+-        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
++        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+      values.$members.4:
+-        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
++        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+      values.$members.3:
+-        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
++        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.$members.2:
+-        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
++        "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
+      values.$members.1:
+-        "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
++        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
+      values.$members.0:
+-        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
++        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
+      values.multisigThreshold:
+-        "4 of 7 (57%)"
++        "4 of 8 (50%)"
+    }
+```
+
 Generated with discovered.json: 0x7c297cb5ecfc6ac48fa9cd8b36a67d9ac75d8b18
 
 # Diff at Tue, 29 Oct 2024 13:08:28 GMT:

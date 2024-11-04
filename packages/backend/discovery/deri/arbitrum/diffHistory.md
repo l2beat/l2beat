@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x6660dec548dc5efdd73a072e6bdd44b2097c10bc
+
+# Diff at Fri, 01 Nov 2024 14:55:04 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@cd1f0e71bb08ce16b2084a11b768538e8aa6ba8c block: 267469917
+- current block number: 269947184
+
+## Description
+
+Discovery refresh to apply template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 267469917 (main branch discovery), not current.
+
+```diff
+    contract Outbox (0xA597e0212971e65f53f288Ff1fFd26A6C8201f83) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      template:
++        "orbitstack/Outbox"
+      description:
++        "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1."
+    }
+```
+
+```diff
+    contract Bridge (0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0) {
+    +++ description: Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      template:
++        "orbitstack/Bridge"
+      description:
++        "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
+    }
+```
+
 Generated with discovered.json: 0xd202c230b55617b045d2aff7aec69019563525ad
 
 # Diff at Tue, 29 Oct 2024 13:21:58 GMT:

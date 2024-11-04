@@ -1,3 +1,87 @@
+Generated with discovered.json: 0x94612007fb78aadd0f27b4b86a33d4d2757f5a52
+
+# Diff at Fri, 01 Nov 2024 14:59:16 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@cd1f0e71bb08ce16b2084a11b768538e8aa6ba8c block: 269235285
+- current block number: 269948275
+
+## Description
+
+Discovery refresh to apply template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 269235285 (main branch discovery), not current.
+
+```diff
+    contract Bridge (0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6) {
+    +++ description: Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      template:
++        "orbitstack/Bridge"
+      description:
++        "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
+    }
+```
+
+```diff
+    contract Outbox (0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      template:
++        "orbitstack/Outbox"
+      description:
++        "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1."
+    }
+```
+
+Generated with discovered.json: 0xb81b85611a1ab787ea3500bc1eb6779e3639a650
+
+# Diff at Wed, 30 Oct 2024 13:14:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0a8a53530022c6c5edd257c3682a3e7f80d0c550 block: 267471118
+- current block number: 269235285
+
+## Description
+
+Conduit MS2: Signer added.
+
+## Watched changes
+
+```diff
+    contract ConduitMultisig2 (0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      values.$members.7:
++        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+      values.$members.6:
+-        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
++        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+      values.$members.5:
+-        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
++        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+      values.$members.4:
+-        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
++        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+      values.$members.3:
+-        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
++        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.$members.2:
+-        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
++        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
+      values.$members.1:
+-        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
++        "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
+      values.$members.0:
+-        "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
++        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
+      values.multisigThreshold:
+-        "2 of 7 (29%)"
++        "2 of 8 (25%)"
+    }
+```
+
 Generated with discovered.json: 0x125bda7be00a464a23f17fd1a3b3ca87c795fccb
 
 # Diff at Tue, 29 Oct 2024 13:22:12 GMT:

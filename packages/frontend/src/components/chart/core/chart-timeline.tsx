@@ -67,10 +67,13 @@ function TimelineLabel({ x, children }: { x: number; children: ReactNode }) {
 
 function getActualRange(columns: ChartColumn[]) {
   const timestamps = columns.map((column) => column.data.timestamp)
-  const minTimestamp = Math.min(...timestamps)
-  const maxTimestamp = Math.max(...timestamps)
+  const minTimestamp = new UnixTime(Math.min(...timestamps))
+  const maxTimestamp = new UnixTime(Math.max(...timestamps))
 
-  const actualRangeInDays = (maxTimestamp - minTimestamp) / UnixTime.DAY
+  const actualRangeInDays =
+    (maxTimestamp.toStartOf('day').toNumber() -
+      minTimestamp.toStartOf('day').toNumber()) /
+    UnixTime.DAY
   return actualRangeInDays
 }
 

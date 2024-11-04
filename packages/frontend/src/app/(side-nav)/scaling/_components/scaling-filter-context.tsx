@@ -88,12 +88,12 @@ type ScalingEntry =
   | ScalingArchivedEntry
 export function useScalingFilter() {
   const scalingFilters = useScalingFilterValues()
-
   const filter = useCallback(
     (entry: ScalingEntry) => {
       if (entry.id === ProjectId.ETHEREUM) {
         return true
       }
+
       const checks = [
         scalingFilters.rollupsOnly !== false
           ? entry.category?.includes('Rollup')
@@ -122,9 +122,11 @@ export function useScalingFilter() {
               entry.hostChain === scalingFilters.hostChain
           : undefined,
         scalingFilters.daLayer !== undefined
-          ? entry.entryType === 'data-availability'
-            ? entry.dataAvailability.layer.value === scalingFilters.daLayer
-            : undefined
+          ? 'dataAvailability' in entry &&
+            entry.dataAvailability &&
+            'layer' in entry.dataAvailability
+            ? entry.dataAvailability.layer?.value === scalingFilters.daLayer
+            : false
           : undefined,
         // Badges
         scalingFilters.badgeRaaS

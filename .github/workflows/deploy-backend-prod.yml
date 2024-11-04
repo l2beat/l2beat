@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install heroku CLI
         run: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
       - name: Login to heroku container registry

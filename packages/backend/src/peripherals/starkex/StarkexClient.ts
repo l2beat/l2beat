@@ -1,6 +1,6 @@
-import { Logger } from '@l2beat/backend-tools'
+import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
-import { RateLimiter, getErrorMessage, json } from '@l2beat/shared-pure'
+import { getErrorMessage, json } from '@l2beat/shared-pure'
 
 import { parseStarkexApiResponse } from './parseStarkexApiResponse'
 

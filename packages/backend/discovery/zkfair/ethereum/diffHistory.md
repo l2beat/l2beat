@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x2b2e54ebaa715689032be51ee9755e657a59162b
+
+# Diff at Thu, 31 Oct 2024 15:07:02 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@3e423ff90004af2f328c2540ca5589b925f023a3 block: 20711816
+- current block number: 21086404
+
+## Description
+
+Swapped ZkFairAdmin and BridgeAdmin roles, probably a labelling issue.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20711816 (main branch discovery), not current.
+
+```diff
+    contract ZKFairAdmin (0x0110B1B231aA3b96a94c900eb3056297526AB725) {
+    +++ description: None
+      name:
+-        "BridgeAdminMultiSig"
++        "ZKFairAdmin"
+    }
+```
+
+```diff
+    contract BridgeAdminMultiSig (0xcd14BE1959928BB8c160D11817E2BE2129e2F25F) {
+    +++ description: None
+      name:
+-        "ZKFairAdmin"
++        "BridgeAdminMultiSig"
+    }
+```
+
 Generated with discovered.json: 0x30b1d000eea9b02da87a03cf07edc7fed1f6ac40
 
 # Diff at Mon, 21 Oct 2024 12:50:32 GMT:

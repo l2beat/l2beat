@@ -1,3 +1,118 @@
+Generated with discovered.json: 0x1678709304c14f7d103f4788317c363a2345037b
+
+# Diff at Sat, 02 Nov 2024 07:22:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@93f317513d51e26ce3003e34f6a9147b7f41eb7a block: 21077256
+- current block number: 21098438
+
+## Description
+
+Challenge undergoing awaiting oneStepProver resolution. Also updated discovery for template. Kinto on telegram confirmed that this challenge was the result of ankr (the 0x2bfDA validator) did not upgrade their software in time for the HF 7 and thus challenged a correct state.
+
+The ExecutorMultisig is being transformed into a SecurityCouncil with 5 public external members. It is currently 6/9 and would need one less Kinto-owned signer to meet the requirements.
+
+## Watched changes
+
+```diff
+    contract ExecutorMultisig (0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d) {
+    +++ description: None
+      values.$members.8:
++        "0x94561e98DD5E55271f91A103e4979aa6C493745E"
+      values.$members.7:
++        "0x356000Cec4fC967f8FC372381D983426760A0391"
+      values.$members.6:
++        "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
+      values.$members.5:
++        "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"
+      values.$members.4:
+-        "0x94561e98DD5E55271f91A103e4979aa6C493745E"
++        "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8"
+      values.$members.3:
+-        "0x356000Cec4fC967f8FC372381D983426760A0391"
++        "0x082CBA3929aD00EbB6d81ebE57B0BD24fBF3Fc6B"
+      values.$members.2:
+-        "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
++        "0xe52957E92a372d5a3B544F4C329b606f1A1b4bD2"
+      values.$members.1:
+-        "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"
++        "0x5FB5040dfC5B8b9Ea40dFBd881188Ec85cDC0621"
+      values.$members.0:
+-        "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8"
++        "0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1"
+      values.$threshold:
+-        3
++        6
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "6 of 9 (67%)"
+    }
+```
+
+```diff
+    contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ description: Emitted on createChallenge() in RollupUserLogic.
+      values.challenges.0:
++        {"challengeIndex":1,"asserter":"0x64Cf65036a76E3827e448cadbc53D31EefDCE04a","challenger":"0x2bfDA59220413DEd39dD0E443620b5277EcE6348","challengedNode":2161}
+      values.lastStakeBlock:
+-        18788889
++        21084338
+      values.stakerCount:
+-        1
++        3
+    }
+```
+
+```diff
+    contract ChallengeManager (0x6228e2FB8C561f1a5A963039Bc38Eb6D539A1A7F) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      values.totalChallengesCreated:
+-        0
++        1
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../kinto/ethereum/.flat/GnosisSafe/GnosisSafe.sol | 953 +++++++++++++++++++++
+ .../.flat/GnosisSafe/GnosisSafeProxy.p.sol         |  35 +
+ 2 files changed, 988 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21077256 (main branch discovery), not current.
+
+```diff
+    contract Outbox (0x655761AD5FC251F414D6993A73184B0669F278c8) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      template:
++        "orbitstack/Outbox"
+      description:
++        "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1."
+    }
+```
+
+```diff
+    contract Bridge (0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB) {
+    +++ description: Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      template:
++        "orbitstack/Bridge"
+      description:
++        "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
+    }
+```
+
 Generated with discovered.json: 0x52d0651024635a16526a05f5d48aebc82c5b2ed9
 
 # Diff at Wed, 30 Oct 2024 08:26:36 GMT:

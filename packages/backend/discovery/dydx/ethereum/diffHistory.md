@@ -1,3 +1,35 @@
+Generated with discovered.json: 0xbd229300f517fe0ac8341ca1290ca1a2f48b2191
+
+# Diff at Thu, 31 Oct 2024 10:41:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f409157dbd8c6fad51290f20e7bd5692f0556969 block: 19825321
+- current block number: 21085080
+
+## Description
+
+The escape hatch is open and the according verifier operational. Link to escape hatch added to header warn.
+
+## Watched changes
+
+```diff
+    contract PerpetualEscapeVerifier (0x626211C1e9BC633f4D342Af99f4E8bc93f11F3DD) {
+    +++ description: None
+      values.hasRegisteredFact:
+-        false
++        true
+    }
+```
+
+```diff
+    contract StarkPerpetual (0xD54f502e184B6B739d7D27a6410a67dc462D69c8) {
+    +++ description: None
+      values.isFrozen:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x7780590b4658612b530c90e48534c4a9252e1135
 
 # Diff at Mon, 21 Oct 2024 11:05:42 GMT:

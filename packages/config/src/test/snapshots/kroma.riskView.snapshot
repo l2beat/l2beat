@@ -36,6 +36,7 @@
     value: "None"
   }
   proposerFailure: {
+    definingMetric: 0
     description: "Anyone can be a Proposer and propose new roots to the L1 bridge."
     sentiment: "good"
     sources: [

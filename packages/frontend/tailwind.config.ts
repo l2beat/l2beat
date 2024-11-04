@@ -261,6 +261,13 @@ const config: Config = {
           'Roboto',
           'Arial',
         ],
+        'roboto-serif-ext': [
+          'var(--font-roboto-serif-ext)',
+          'var(--font-roboto-serif)',
+          'Roboto Serif',
+          'Roboto',
+          'Arial',
+        ],
         lora: ['Lora', 'serif'],
       },
       spacing: {

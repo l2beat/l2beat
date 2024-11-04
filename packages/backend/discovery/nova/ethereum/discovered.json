@@ -1,7 +1,7 @@
 {
   "name": "nova",
   "chain": "ethereum",
-  "blockNumber": 21041841,
+  "blockNumber": 21093343,
   "configHash": "0x6a8f2d1a2d446e46fe9be27d5ca63d265672094144fccb0f6045d099780a2662",
   "contracts": [
     {
@@ -119,7 +119,7 @@
           ]
         ],
         "$upgradeCount": 6,
-        "batchCount": 136763,
+        "batchCount": 140131,
         "batchPosterManager": "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
@@ -150,7 +150,7 @@
         "reader4844": "0xb5f6951AB2504442c3F6dD37fF1E1D1d253C5097",
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerVersion": "0x88",
-        "totalDelayedMessagesRead": 381963,
+        "totalDelayedMessagesRead": 385348,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -963,11 +963,11 @@
           "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
         ],
         "allowedOutboxList": ["0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
-        "delayedMessageCount": 381967,
+        "delayedMessageCount": 385351,
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerMessageCount": 136763,
-        "sequencerReportedSubMessageCount": 78788297
+        "sequencerMessageCount": 140131,
+        "sequencerReportedSubMessageCount": 79274374
       }
     },
     {
@@ -1370,8 +1370,8 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC",
           "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75",
-          "0xA821c8c245d1F3A257e3B0DEC99268cA05144422",
           "0x5a09A94eE8198D3c474d723337aa58023810022C",
           "0x5DD2205C3aac13E592F0a3D85188c948D1781df1",
           "0x8F10e3413586c4a8DCfcE19D009872b19e9cd8E3",
@@ -1608,12 +1608,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 19912,
+        "firstUnresolvedNode": 20084,
         "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "isERC20Enabled": false,
         "lastStakeBlock": 17257726,
-        "latestConfirmed": 19911,
-        "latestNodeCreated": 20064,
+        "latestConfirmed": 20083,
+        "latestNodeCreated": 20235,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
@@ -1768,6 +1768,7 @@
     { "address": "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75" },
     { "address": "0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe" },
     { "address": "0x8F10e3413586c4a8DCfcE19D009872b19e9cd8E3" },
+    { "address": "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC" },
     {
       "address": "0x9de97C570c1214f6c0ba08c2321d6a5F20D85a47",
       "receivedPermissions": [
@@ -1785,7 +1786,6 @@
       ]
     },
     { "address": "0xa723C008e76E379c55599D2E4d93879BeaFDa79C" },
-    { "address": "0xA821c8c245d1F3A257e3B0DEC99268cA05144422" },
     {
       "address": "0xAB1A39332e934300eBCc57B5f95cA90631a347FF",
       "receivedPermissions": [
