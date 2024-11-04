@@ -15,6 +15,7 @@
     --surface-primary: #fafafa;
     --surface-secondary: #e6e7ec;
     --surface-tertiary: #ccd0da;
+    --surface-table-group: #eeeff4;
   }
 
   .dark {
@@ -26,6 +27,7 @@
     --surface-primary: #17191f;
     --surface-secondary: #393c43;
     --surface-tertiary: #464a52;
+    --surface-table-group: #272a2f;
   }
 }
 
