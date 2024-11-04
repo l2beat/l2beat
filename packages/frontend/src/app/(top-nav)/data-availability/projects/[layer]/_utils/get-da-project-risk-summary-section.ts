@@ -14,7 +14,7 @@ export function getDaProjectRiskSummarySection(
 ): Omit<DaRiskSummarySectionProps, keyof ProjectSectionProps> {
   const bridgeSections = [
     {
-      id: 'contracts',
+      id: 'da-bridge-contracts',
       value:
         bridge.type === 'OnChainBridge' || bridge.type === 'DAC'
           ? bridge.contracts
