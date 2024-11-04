@@ -57,7 +57,7 @@ export function GrissiniIcon({ values, className, hasNoBridge }: Props) {
 
 function ExclamationIcon() {
   return (
-    <svg width="7" height="24" viewBox="-0.3 0 7 24">
+    <svg width="7" height="24" viewBox="-0.8 0 8 24">
       <path
         d="M3.26318 24C4.92004 24 6.26318 22.6569 6.26318 21C6.26318 19.3431 4.92004 18 3.26318 18C1.60633 18 0.263184 19.3431 0.263184 21C0.263184 22.6569 1.60633 24 3.26318 24Z"
         fill="#FF0000"

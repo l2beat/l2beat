@@ -12,6 +12,7 @@ import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { DesktopProjectLinks } from '~/components/projects/links/desktop-project-links'
 import { MobileProjectLinks } from '~/components/projects/links/mobile-project-links'
 import { ProjectHeader } from '~/components/projects/project-header'
+import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
 import { GrissiniDetails } from '~/components/rosette/grissini/grissini-details'
 import { GrissiniIcon } from '~/components/rosette/grissini/grissini-icon'
 import { NoBridgeGrissiniDetailsPlaceholder } from '~/components/rosette/grissini/no-bridge-grissini-details-placeholder'
@@ -111,7 +112,7 @@ export function DaProjectSummary({ project }: Props) {
                             {bridge.name}
                           </div>
                           <div className="flex flex-1 items-center justify-center">
-                            <GrissiniIcon
+                            <GrissiniCell
                               values={bridge.grissiniValues}
                               hasNoBridge={bridge.type === 'NoBridge'}
                             />
