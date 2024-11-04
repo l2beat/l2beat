@@ -12,7 +12,7 @@ import { IconChevronDown } from '../icons/IconChevronDown'
 import { IconChevronRight } from '../icons/IconChevronRight'
 import { usePanelStore } from '../store/store'
 import { AddressDisplay } from './AddressDisplay'
-import { Field } from './Field'
+import { FieldDisplay } from './Field'
 
 export function ValuesPanel() {
   const { project } = useParams()
@@ -70,17 +70,36 @@ function Display({
 }: { selected: ApiProjectContract | ApiAddressEntry }) {
   return (
     <>
-      <div id={selected.address} className="mb-2 px-2 text-lg">
+      <div id={selected.address} className="mb-2 px-5 text-lg">
         <p className="flex items-center gap-1 font-bold">
           <AddressIcon type={selected.type} />{' '}
           {selected.name ??
             (selected.type === 'Unverified' ? 'Unverified' : 'Unknown')}
         </p>
-        <p className="font-mono text-xs">{selected.address}</p>
+        {'template' in selected && selected.template && (
+          <p className="font-mono text-aux-orange text-xs">
+            template/{selected.template}
+          </p>
+        )}
+        <p className="font-mono text-xs">
+          <AddressDisplay
+            simplified
+            value={{
+              type: 'address',
+              address: selected.address,
+              addressType: selected.type,
+            }}
+          />
+        </p>
+        {selected.description && (
+          <p className="pt-1 pb-1 font-serif text-sm italic">
+            {selected.description}
+          </p>
+        )}
       </div>
       {selected.referencedBy.length > 0 && (
         <Folder title="Referenced by">
-          <ol className="pl-2">
+          <ol className="bg-coffee-900 py-0.5 pl-5">
             {selected.referencedBy.map((value) => (
               <li key={value.address}>
                 <AddressDisplay value={value} />
@@ -91,16 +110,16 @@ function Display({
       )}
       {'fields' in selected && selected.fields.length > 0 && (
         <Folder title="Fields">
-          <ol className="pl-2">
+          <ol>
             {selected.fields.map((field, i) => (
-              <Field key={i} name={field.name} value={field.value} level={0} />
+              <FieldDisplay key={i} field={field} />
             ))}
           </ol>
         </Folder>
       )}
       {'abis' in selected && selected.abis.length > 0 && (
         <Folder title="ABI" collapsed>
-          <ol className="pl-2">
+          <ol className="px-2">
             {selected.abis.map((abi) => (
               <li key={abi.address}>
                 <p>{abi.address}</p>
@@ -124,7 +143,7 @@ function Folder(props: {
   const [open, setOpen] = useState(!props.collapsed)
 
   return (
-    <div>
+    <div className="border-coffee-600 border-t">
       <button
         onClick={() => setOpen((open) => !open)}
         className="flex h-[22px] w-full cursor-pointer select-none items-center gap-1 font-bold text-xs uppercase"

@@ -1,9 +1,10 @@
-import { ConfigReader } from '@l2beat/discovery'
+import { ConfigReader, getChainShortName } from '@l2beat/discovery'
 import {
   ContractParameters,
   DiscoveryOutput,
   get$Implementations,
 } from '@l2beat/discovery-types'
+import { DiscoveryContract } from '@l2beat/discovery/dist/discovery/config/RawDiscoveryConfig'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { parseFieldValue } from './parseFieldValue'
 import { toAddress } from './toAddress'
@@ -22,42 +23,50 @@ export function getProject(configReader: ConfigReader, project: string) {
   const chains = configReader.readAllChainsForProject(project)
   const data = chains.map((chain) => ({
     chain,
-    config: configReader.readConfig(project, chain),
+    config: configReader.readConfig(project, chain, { skipTemplates: false }),
     discovery: configReader.readDiscovery(project, chain),
   }))
 
   const response: ApiProjectResponse = { chains: [] }
   for (const { chain, config, discovery } of data) {
     const meta = getMeta(discovery)
+    const contracts = discovery.contracts
+      .map((contract) => {
+        const overrides =
+          config.overrides.get(contract.address) ??
+          config.overrides.get(config.names[contract.address] ?? '')
+        const template = contract.template
+          ? configReader.templateService.loadContractTemplate(contract.template)
+          : undefined
+        return contractFromDiscovery(
+          chain,
+          meta,
+          contract,
+          overrides,
+          template,
+          discovery.abis,
+        )
+      })
+      .sort(orderAddressEntries)
+    const initialAddresses = config.initialAddresses.map(
+      (address) => `${getChainShortName(chain)}:${address}`,
+    )
+
     const chainInfo = {
       name: chain,
-      initialContracts: config.initialAddresses
-        .map((x): ApiProjectContract => {
-          const discovered = discovery.contracts.find((y) => y.address === x)
-          if (!discovered) {
-            // NOTE: This shouldn't happen
-            return {
-              name: undefined,
-              type: 'Contract',
-              address: toAddress(chain, x),
-              referencedBy: [],
-              fields: [],
-              abis: [],
-            }
-          }
-          return contractFromDiscovery(chain, meta, discovered, discovery.abis)
-        })
-        .sort(orderAddressEntries),
-      discoveredContracts: discovery.contracts
-        .filter((x) => !config.initialAddresses.includes(x.address))
-        .map((x) => contractFromDiscovery(chain, meta, x, discovery.abis))
-        .sort(orderAddressEntries),
+      initialContracts: contracts.filter((x) =>
+        initialAddresses.includes(x.address),
+      ),
+      discoveredContracts: contracts.filter(
+        (x) => !initialAddresses.includes(x.address),
+      ),
       eoas: discovery.eoas
         .filter((x) => x.address !== EthereumAddress.ZERO)
         .map(
           (x): ApiAddressEntry => ({
             name: x.name || undefined,
             type: 'EOA',
+            description: x.description,
             referencedBy: [],
             address: toAddress(chain, x.address),
           }),
@@ -87,24 +96,51 @@ function contractFromDiscovery(
   chain: string,
   meta: Record<string, { name?: string; type: ApiAddressType }>,
   contract: ContractParameters,
+  overrides: DiscoveryContract | undefined,
+  template: DiscoveryContract | undefined,
   abis: DiscoveryOutput['abis'],
 ): ApiProjectContract {
+  const getFieldInfo = (name: string): Omit<Field, 'name' | 'value'> => {
+    const oField = overrides?.fields?.[name]
+    const tField = template?.fields?.[name]
+    return {
+      description: oField?.description ?? tField?.description,
+      handler: oField?.handler ?? tField?.handler,
+      ignoreInWatchMode:
+        overrides?.ignoreInWatchMode?.includes(name) ||
+        template?.ignoreInWatchMode?.includes(name),
+      ignoreRelatives:
+        overrides?.ignoreRelatives?.includes(name) ||
+        template?.ignoreRelatives?.includes(name),
+      severity: oField?.severity ?? tField?.severity,
+    }
+  }
+
   const fields: Field[] = Object.entries(contract.values ?? {})
-    .map(([name, value]) => ({
-      name,
-      value: fixAddresses(parseFieldValue(value, meta), chain),
-    }))
-    .concat(
-      Object.entries(contract.errors ?? {}).map(([name, error]) => ({
+    .map(
+      ([name, value]): Field => ({
         name,
-        value: { type: 'error', error },
-      })),
+        value: fixAddresses(parseFieldValue(value, meta), chain),
+        ...getFieldInfo(name),
+      }),
+    )
+    .concat(
+      Object.entries(contract.errors ?? {}).map(
+        ([name, error]): Field => ({
+          name,
+          value: { type: 'error', error },
+          ...getFieldInfo(name),
+        }),
+      ),
     )
     .sort((a, b) => a.name.localeCompare(b.name))
   const implementations = get$Implementations(contract.values)
+
   return {
     name: contract.name || undefined,
     type: getContractType(contract),
+    template: contract.template,
+    description: contract.description,
     referencedBy: [],
     address: toAddress(chain, contract.address),
     fields,
