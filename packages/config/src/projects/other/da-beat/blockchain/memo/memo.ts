@@ -62,7 +62,7 @@ export const memo: DaLayer = {
     risks: [
       {
         category: 'Funds can be lost if',
-        text: `Memo storage nodes do make the data available.`,
+        text: `Memo storage nodes do not make the data available.`,
       },
     ],
   },
