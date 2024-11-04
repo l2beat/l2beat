@@ -59,12 +59,12 @@ export const memo: DaLayer = {
     L2s can upload transaction data to Meeda through the MemoDA RPC, and the Meeda operator will generate an aggregated KZG polynomial commitment based on the transaction data. 
     Nodes can request transaction data on Meeda based on the commitment value of the transaction data.
   `,
-  risks: [
-    {
-      category: 'Funds can be lost if',
-      text: `Memo storage nodes do make the data available.`,
-    },
-  ],
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: `Memo storage nodes do make the data available.`,
+      },
+    ],
   },
   bridges: [
     NO_BRIDGE({

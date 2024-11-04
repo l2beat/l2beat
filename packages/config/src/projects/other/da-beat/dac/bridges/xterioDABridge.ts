@@ -4,8 +4,8 @@ import { xterio } from '../../../../layer2s/xterio'
 import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../../types'
 import { DaBridge } from '../../types/DaBridge'
 import { DaRelayerFailureRisk } from '../../types/DaRelayerFailureRisk'
-import { toUsedInProject } from '../../utils/to-used-in-project'
 import { DacTransactionDataType } from '../../types/DacTransactionDataType'
+import { toUsedInProject } from '../../utils/to-used-in-project'
 
 const discovery = new ProjectDiscovery('xterio')
 
