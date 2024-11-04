@@ -4,6 +4,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build", "db:generate-types"],
+      "env": ["DATABASE_URL"],
       "outputs": ["build/**", ".next/**", "!.next/cache/**", "dist/**"]
     },
     "db:generate-types": {
