@@ -2,7 +2,7 @@
 
 import { type DialogProps } from '@radix-ui/react-dialog'
 import { Slot } from '@radix-ui/react-slot'
-import { Command as CommandPrimitive, useCommandState } from 'cmdk'
+import { Command as CommandPrimitive } from 'cmdk'
 import * as React from 'react'
 import { SearchIcon } from '~/icons/search'
 import { cn } from '~/utils/cn'
@@ -60,12 +60,9 @@ const CommandDialog = ({
 const CommandInput = ({
   ref,
   className,
-  reset,
+  children,
   ...props
-}: React.ComponentProps<typeof CommandPrimitive.Input> & {
-  reset?: () => void
-}) => {
-  const search = useCommandState((state) => state.search)
+}: React.ComponentProps<typeof CommandPrimitive.Input>) => {
   return (
     <div
       className="flex items-center border-b border-gray-400 px-3 sidebar:!border-surface-tertiary dark:border-gray-650"
@@ -80,19 +77,27 @@ const CommandInput = ({
         )}
         {...props}
       />
-      {reset && (
-        <button
-          className={linkVariants({ underline: false, className: 'text-xs' })}
-          onClick={reset}
-        >
-          {search !== '' ? 'Clear' : 'Close'}
-        </button>
-      )}
+      {children}
     </div>
   )
 }
 
 CommandInput.displayName = CommandPrimitive.Input.displayName
+
+const CommandInputActionButton = ({
+  children,
+  onClick,
+}: {
+  children: React.ReactNode
+  onClick: (() => void) | undefined
+}) => (
+  <button
+    className={linkVariants({ underline: false, className: 'text-xs' })}
+    onClick={onClick}
+  >
+    {children}
+  </button>
+)
 
 const CommandList = ({
   ref,
@@ -178,6 +183,7 @@ export {
   Command,
   CommandDialog,
   CommandInput,
+  CommandInputActionButton,
   CommandList,
   CommandEmpty,
   CommandGroup,

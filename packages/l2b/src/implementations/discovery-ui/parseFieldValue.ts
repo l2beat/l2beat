@@ -1,13 +1,18 @@
-import { FieldValue } from './types'
+import { ApiAddressType, FieldValue } from './types'
 
 export function parseFieldValue(
   value: unknown,
-  names: Record<string, string> = {},
+  meta: Record<string, { name?: string; type: ApiAddressType }> = {},
 ): FieldValue {
   if (typeof value === 'string') {
     if (/^0x[a-f\d]*$/i.test(value)) {
       if (value.length === 42) {
-        return { type: 'address', name: names[value], address: value }
+        return {
+          type: 'address',
+          name: meta[value]?.name,
+          addressType: meta[value]?.type ?? 'Unknown',
+          address: value,
+        }
       } else {
         return { type: 'hex', value }
       }
@@ -29,7 +34,7 @@ export function parseFieldValue(
   if (Array.isArray(value)) {
     return {
       type: 'array',
-      values: value.map((v) => parseFieldValue(v, names)),
+      values: value.map((v) => parseFieldValue(v, meta)),
     }
   }
 
@@ -39,7 +44,7 @@ export function parseFieldValue(
       value: Object.fromEntries(
         Object.entries(value).map(([key, value]) => [
           key,
-          parseFieldValue(value, names),
+          parseFieldValue(value, meta),
         ]),
       ),
     }

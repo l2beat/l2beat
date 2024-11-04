@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useStore } from '../store/store'
-import { OklchColor, oklchColorToCSS } from '../store/utils/color'
+import { SELECTABLE_COLORS } from '../view/colors/colors'
 import { ControlButton } from './ControlButton'
 
 export function ColorButton() {
@@ -37,7 +37,7 @@ export function ColorButton() {
     }
   }, [ref, open, setOpen])
 
-  function changeColor(color: OklchColor) {
+  function changeColor(color: number) {
     colorSelected(color)
     setOpen(false)
   }
@@ -48,7 +48,10 @@ export function ColorButton() {
         Color
       </ControlButton>
       {open && (
-        <div ref={ref} className="absolute bottom-20">
+        <div
+          ref={ref}
+          className="-translate-x-1/2 absolute bottom-14 left-1/2 w-max"
+        >
           <ColorPicker onColorChange={changeColor} />
         </div>
       )}
@@ -57,45 +60,27 @@ export function ColorButton() {
 }
 
 export interface ColorPickerProps {
-  onColorChange: (color: OklchColor) => void
+  onColorChange: (color: number) => void
 }
 
 export function ColorPicker({ onColorChange }: ColorPickerProps) {
-  const colors: OklchColor[] = [
-    { l: 1.0, c: 0, h: 90 },
-    { l: 0.6, c: 0.2, h: 22 },
-    { l: 0.6, c: 0.2, h: 35 },
-    { l: 0.6, c: 0.2, h: 142 },
-    { l: 0.6, c: 0.2, h: 267 },
-    { l: 0.6, c: 0.2, h: 320 },
-    { l: 0.6, c: 0.2, h: 350 },
-
-    { l: 0.8, c: 0, h: 90 },
-    { l: 0.7, c: 0.18, h: 22 },
-    { l: 0.7, c: 0.18, h: 35 },
-    { l: 0.7, c: 0.18, h: 142 },
-    { l: 0.7, c: 0.18, h: 267 },
-    { l: 0.7, c: 0.18, h: 320 },
-    { l: 0.7, c: 0.18, h: 350 },
-
-    { l: 0.6, c: 0, h: 90 },
-    { l: 0.8, c: 0.14, h: 22 },
-    { l: 0.8, c: 0.14, h: 35 },
-    { l: 0.8, c: 0.14, h: 142 },
-    { l: 0.8, c: 0.14, h: 267 },
-    { l: 0.8, c: 0.14, h: 320 },
-    { l: 0.8, c: 0.14, h: 350 },
-  ]
-
   return (
-    <div className="grid grid-cols-7 place-items-center gap-3">
-      {colors.map((c, i) => (
-        <div
-          style={{ backgroundColor: oklchColorToCSS(c) }}
-          className="h-12 w-12 rounded border shadow-xl hover:ring active:opacity-50"
+    <div className="grid w-max grid-cols-6 place-items-center gap-3">
+      <button
+        style={{
+          background:
+            'conic-gradient(#9ED110, #50B517, #179067, #476EAF, #9f49ac, #CC42A2, #FF3BA7, #FF5800, #FF8100, #FEAC00, #FFCC00, #EDE604, #9ED110)',
+        }}
+        className="h-12 w-12 rounded border border-coffee-600 shadow-xl hover:ring"
+        onClick={() => onColorChange(0)}
+      />
+      {SELECTABLE_COLORS.map((c, i) => (
+        <button
+          style={{ backgroundColor: c.color }}
+          className="h-12 w-12 rounded border border-coffee-600 shadow-xl hover:ring"
           key={i}
-          onClick={() => onColorChange(c)}
-        ></div>
+          onClick={() => onColorChange(i + 1)}
+        />
       ))}
     </div>
   )

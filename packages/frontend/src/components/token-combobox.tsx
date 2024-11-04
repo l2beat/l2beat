@@ -15,6 +15,7 @@ import {
   CommandEmpty,
   CommandGroup,
   CommandInput,
+  CommandInputActionButton,
   CommandItem,
   CommandList,
   CommandSeparator,
@@ -62,11 +63,7 @@ export function TokenCombobox({
       </PopoverTrigger>
       <PopoverContent className="p-0" align="start">
         <Command shouldFilter={false}>
-          <CommandInput
-            placeholder="Start typing to find more..."
-            className="min-w-48"
-            reset={value ? () => setValue(undefined) : undefined}
-          />
+          <Input value={value} setValue={setValue} />
           <CommandList>
             <CommandEmpty>
               <p>Can&apos;t find a token you&apos;re looking for?</p>
@@ -102,6 +99,21 @@ export function TokenCombobox({
         </Command>
       </PopoverContent>
     </Popover>
+  )
+}
+
+function Input({ value, setValue }: Pick<Props, 'value' | 'setValue'>) {
+  return (
+    <CommandInput
+      placeholder="Start typing to find more..."
+      className="min-w-48"
+    >
+      <CommandInputActionButton
+        onClick={value !== undefined ? () => setValue(undefined) : undefined}
+      >
+        {value !== undefined ? 'Clear' : undefined}
+      </CommandInputActionButton>
+    </CommandInput>
   )
 }
 
