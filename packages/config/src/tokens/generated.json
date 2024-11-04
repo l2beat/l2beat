@@ -2747,6 +2747,20 @@
       "supply": "zero"
     },
     {
+      "name": "Moonflow",
+      "coingeckoId": "moonflow",
+      "address": "0x4a52Fa1a1115814c59C643F53f14199b8fb11cEa",
+      "symbol": "MOON",
+      "decimals": 18,
+      "deploymentTimestamp": 1723714163,
+      "coingeckoListingTimestamp": 1706313600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34862/large/profile_pic_test_%281%29.jpg?1716085666",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Mountain Protocol USD",
       "coingeckoId": "mountain-protocol-usdm",
       "address": "0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C",
@@ -4581,20 +4595,6 @@
       "supply": "zero"
     },
     {
-      "name": "Veno yield bearing ETH",
-      "coingeckoId": "veno-eth",
-      "address": "0x76bf2D1e6dFda645c0c17440B17Eccc181dfC351",
-      "symbol": "ybETH",
-      "decimals": 18,
-      "deploymentTimestamp": 1721279435,
-      "coingeckoListingTimestamp": 1724198400,
-      "category": "ether",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/39776/large/Screenshot_2024-08-19_at_5.07.51%E2%80%AFPM.png?1724058891",
-      "chainId": 1,
-      "source": "canonical",
-      "supply": "zero"
-    },
-    {
       "name": "VENT",
       "coingeckoId": "vent-finance",
       "address": "0x5F0bc16D50F72d10b719dBF6845DE2E599eb5624",
@@ -6243,6 +6243,48 @@
       "chainId": 324,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "Veno ETH",
+      "coingeckoId": "veno-eth",
+      "address": "0x271602A97027ee1dd03b1E6e5dB153eB659A80b1",
+      "symbol": "vETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1722573165,
+      "coingeckoListingTimestamp": 1724198400,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39776/large/Screenshot_2024-08-19_at_5.07.51%E2%80%AFPM.png?1724058891",
+      "chainId": 388,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Veno.finance"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Veno USD",
+      "coingeckoId": "veno-usd",
+      "address": "0x5b91e29Ae5A71d9052620Acb813d5aC25eC7a4A2",
+      "symbol": "vUSD",
+      "decimals": 18,
+      "deploymentTimestamp": 1722941848,
+      "coingeckoListingTimestamp": 1724198400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39775/large/Screenshot_2024-08-19_at_5.09.13%E2%80%AFPM.png?1724058679",
+      "chainId": 388,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Veno.finance"
+          }
+        ]
+      }
     },
     {
       "name": "Ether",

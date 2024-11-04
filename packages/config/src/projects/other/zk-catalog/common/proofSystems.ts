@@ -37,10 +37,10 @@ function PLONKSNARK(
 }
 
 const PROGRAM: Omit<SubVerifier, 'name'> = {
-  proofSystem: '-',
-  mainArithmetization: '-',
-  mainPCS: '-',
-  trustedSetup: '-',
+  proofSystem: 'N/A',
+  mainArithmetization: 'N/A',
+  mainPCS: 'N/A',
+  trustedSetup: 'None',
 }
 
 const PLONKY3: Omit<SubVerifier, 'name'> = {

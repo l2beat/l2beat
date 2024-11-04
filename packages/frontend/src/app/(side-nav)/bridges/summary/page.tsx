@@ -1,7 +1,6 @@
 import { BridgesTvlChart } from '~/components/chart/tvl/bridges-tvl-chart'
 import { MainPageCard } from '~/components/main-page-card'
 import { MainPageHeader } from '~/components/main-page-header'
-import { SpiderWeb } from '~/components/spider-web'
 import { getBridgesSummaryEntries } from '~/server/features/bridges/get-bridges-summary-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'
@@ -20,11 +19,7 @@ export default async function Page() {
   const [entries] = await Promise.all([
     getBridgesSummaryEntries(),
     api.tvl.chart.prefetch({
-      range: getCookie('bridgesSummaryChartRange'),
-      filter: { type: 'bridge' },
-      excludeAssociatedTokens: false,
-    }),
-    api.tvl.total.prefetch({
+      range: await getCookie('bridgesSummaryChartRange'),
       filter: { type: 'bridge' },
       excludeAssociatedTokens: false,
     }),
@@ -36,8 +31,7 @@ export default async function Page() {
         <BridgesFilterContextProvider>
           <MainPageHeader>Summary</MainPageHeader>
           <BridgesMvpWarning className="md:mb-3" sidebar />
-          <MainPageCard className="relative">
-            <SpiderWeb className="absolute left-0 top-0 hidden md:block" />
+          <MainPageCard>
             <BridgesTvlChart />
           </MainPageCard>
           <MainPageCard className="md:mt-6">

@@ -9,7 +9,7 @@
       {
         contract: "zkEVM"
         references: [
-          "https://etherscan.io/address/0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562#code"
+          "https://etherscan.io/address/0x1825242411792536469Cbb5843fd27Ce3e9e583A#code"
         ]
       }
     ]
@@ -46,7 +46,7 @@
       {
         contract: "zkEVM"
         references: [
-          "https://etherscan.io/address/0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562#code"
+          "https://etherscan.io/address/0x1825242411792536469Cbb5843fd27Ce3e9e583A#code"
         ]
       }
     ]

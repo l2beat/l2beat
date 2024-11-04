@@ -1,3 +1,749 @@
+Generated with discovered.json: 0xe7e90a499af3938f4e531c636fdd913309ac02ef
+
+# Diff at Wed, 30 Oct 2024 14:23:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0a8a53530022c6c5edd257c3682a3e7f80d0c550 block: 20985761
+- current block number: 21079011
+
+## Description
+
+Transporter discovery is working again after a pause: ManyChainMS changes and new pools handled by shape matches.
+
+## Watched changes
+
+```diff
+    contract BurnMintTokenPool (0x1175E4CFd6a73A4c1F1f2c1400a08D88554FA62e) {
+    +++ description: None
+      values.getOffRamps.1:
++        "0xcfd0637093193ac909f74F9de95c2d4B92Df23c4"
+    }
+```
+
+```diff
+    contract ManyChainMultiSig (0x117ec8aD107976e1dBCc21717ff78407Bc36aADc) {
+    +++ description: None
+      values.getConfig.signers.47:
++        {"addr":"0xECDd1737E54530D7b05Ad309B9B365CDc0084FD0","index":47,"group":12}
+      values.getConfig.signers.46:
++        {"addr":"0xE062e7D123AC8dF480C56147f911144F55C10f88","index":46,"group":10}
+      values.getConfig.signers.45.addr:
+-        "0xECDd1737E54530D7b05Ad309B9B365CDc0084FD0"
++        "0xd844665361adBa29CD1259ebDe9b547ECe2ab0E7"
+      values.getConfig.signers.44.addr:
+-        "0xE062e7D123AC8dF480C56147f911144F55C10f88"
++        "0xd3E2da792E806556517124f03F12e557045951E7"
+      values.getConfig.signers.44.group:
+-        10
++        6
+      values.getConfig.signers.43.addr:
+-        "0xd844665361adBa29CD1259ebDe9b547ECe2ab0E7"
++        "0xd3094f770579AFd66711847cE9E9C42D10BA2264"
+      values.getConfig.signers.43.group:
+-        12
++        4
+      values.getConfig.signers.42.addr:
+-        "0xd3E2da792E806556517124f03F12e557045951E7"
++        "0xc90788d9168f83dec518Ab7c0445Ad1Ec53554D7"
+      values.getConfig.signers.42.group:
+-        6
++        5
+      values.getConfig.signers.41.addr:
+-        "0xd3094f770579AFd66711847cE9E9C42D10BA2264"
++        "0xC19Beb494BA0bC57e5F967706A24bAFb6Da7BCD7"
+      values.getConfig.signers.41.group:
+-        4
++        12
+      values.getConfig.signers.40.addr:
+-        "0xc90788d9168f83dec518Ab7c0445Ad1Ec53554D7"
++        "0xAe735fd5e74887064DFf99C637f291caE5485A75"
+      values.getConfig.signers.40.group:
+-        5
++        11
+      values.getConfig.signers.39.addr:
+-        "0xC19Beb494BA0bC57e5F967706A24bAFb6Da7BCD7"
++        "0xA8030F40032E88552519EDFc448523d677B29661"
+      values.getConfig.signers.38.addr:
+-        "0xAe735fd5e74887064DFf99C637f291caE5485A75"
++        "0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"
+      values.getConfig.signers.38.group:
+-        11
++        8
+      values.getConfig.signers.37.addr:
+-        "0xA8030F40032E88552519EDFc448523d677B29661"
++        "0xa35B7219521134cAF52DccAD44d604335b64a4fB"
+      values.getConfig.signers.37.group:
+-        12
++        4
+      values.getConfig.signers.36.addr:
+-        "0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"
++        "0xA3177f64efE98422E782bC17BE7971F01187B7cF"
+      values.getConfig.signers.36.group:
+-        8
++        1
+      values.getConfig.signers.35.addr:
+-        "0xa35B7219521134cAF52DccAD44d604335b64a4fB"
++        "0x9E318D85D42F7e5b8B4fb2fB2d706C4c04D1549e"
+      values.getConfig.signers.35.group:
+-        4
++        12
+      values.getConfig.signers.34.addr:
+-        "0xA3177f64efE98422E782bC17BE7971F01187B7cF"
++        "0x9E2FD656eFffF4cbAc9fd45C017D4DD8fBC550E5"
+      values.getConfig.signers.34.group:
+-        1
++        8
+      values.getConfig.signers.33.addr:
+-        "0x9E318D85D42F7e5b8B4fb2fB2d706C4c04D1549e"
++        "0x9d0D65cd6e46B86f88fF021d8f5EE58fe8ce2882"
+      values.getConfig.signers.32.addr:
+-        "0x9d0D65cd6e46B86f88fF021d8f5EE58fe8ce2882"
++        "0x9453E18f03A36E2A2c70598De520bD24434D2d1D"
+      values.getConfig.signers.32.group:
+-        12
++        6
+      values.getConfig.signers.31.addr:
+-        "0x9453E18f03A36E2A2c70598De520bD24434D2d1D"
++        "0x925d7Ea0ADe586DBFd56a942bb297286cE428C79"
+      values.getConfig.signers.31.group:
+-        6
++        1
+      values.getConfig.signers.30.addr:
+-        "0x925d7Ea0ADe586DBFd56a942bb297286cE428C79"
++        "0x9079410666ED02725ee9d148398Cee26397c2A36"
+      values.getConfig.signers.29.addr:
+-        "0x9079410666ED02725ee9d148398Cee26397c2A36"
++        "0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374"
+      values.getConfig.signers.29.group:
+-        1
++        5
+      values.getConfig.signers.28.addr:
+-        "0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374"
++        "0x776D5B14ef1D5C58B0d48b53114f2Aa0faccB307"
+      values.getConfig.signers.28.group:
+-        5
++        11
+      values.getConfig.signers.27.addr:
+-        "0x776D5B14ef1D5C58B0d48b53114f2Aa0faccB307"
++        "0x745B9329ccF53556e3C5f1fD1E4e9D0E91Ad2514"
+      values.getConfig.signers.26.addr:
+-        "0x745B9329ccF53556e3C5f1fD1E4e9D0E91Ad2514"
++        "0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5"
+      values.getConfig.signers.26.group:
+-        11
++        6
+      values.getConfig.signers.25.addr:
+-        "0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5"
++        "0x7052cB84079905400ea52B635cAb6a275fDA8823"
+      values.getConfig.signers.25.group:
+-        6
++        10
+      values.getConfig.signers.24.addr:
+-        "0x7052cB84079905400ea52B635cAb6a275fDA8823"
++        "0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4"
+      values.getConfig.signers.24.group:
+-        10
++        8
+      values.getConfig.signers.23.addr:
+-        "0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4"
++        "0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae"
+      values.getConfig.signers.23.group:
+-        8
++        7
+      values.getConfig.signers.22.addr:
+-        "0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae"
++        "0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7"
+      values.getConfig.signers.22.group:
+-        7
++        1
+      values.getConfig.signers.21.addr:
+-        "0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7"
++        "0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8"
+      values.getConfig.signers.21.group:
+-        1
++        2
+      values.getConfig.signers.20.addr:
+-        "0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8"
++        "0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6"
+      values.getConfig.signers.19.addr:
+-        "0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6"
++        "0x570F41d83b1031d382F641B9a532A8D7CBd7a695"
+      values.getConfig.signers.19.group:
+-        2
++        1
+      values.getConfig.signers.18.addr:
+-        "0x570F41d83b1031d382F641B9a532A8D7CBd7a695"
++        "0x56B167deCD5fC4E3Bbc07B3B4e1F30e74534F9dd"
+      values.getConfig.signers.18.group:
+-        1
++        8
+      values.getConfig.signers.17.addr:
+-        "0x56B167deCD5fC4E3Bbc07B3B4e1F30e74534F9dd"
++        "0x4e509C60b3e916644dE441298595FeD12C4AC926"
+      values.getConfig.signers.17.group:
+-        8
++        1
+      values.getConfig.signers.16.addr:
+-        "0x4e509C60b3e916644dE441298595FeD12C4AC926"
++        "0x48A094F7A354d8faD7263EA2a82391d105DF6628"
+      values.getConfig.signers.16.group:
+-        1
++        3
+      values.getConfig.signers.15.addr:
+-        "0x48A094F7A354d8faD7263EA2a82391d105DF6628"
++        "0x480496c0884D61F2f56707Adb11697F8018898c2"
+      values.getConfig.signers.15.group:
+-        3
++        10
+      values.getConfig.signers.14.addr:
+-        "0x480496c0884D61F2f56707Adb11697F8018898c2"
++        "0x43640F208956c7D49e04F40FF95dF818643B76aA"
+      values.getConfig.signers.14.group:
+-        10
++        1
+      values.getConfig.signers.13.addr:
+-        "0x43640F208956c7D49e04F40FF95dF818643B76aA"
++        "0x41eAdbc688797a02bfaBE48472995833489ce69D"
+      values.getConfig.signers.13.group:
+-        1
++        10
+      values.getConfig.signers.12.addr:
+-        "0x41eAdbc688797a02bfaBE48472995833489ce69D"
++        "0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3"
+      values.getConfig.signers.12.group:
+-        10
++        3
+      values.getConfig.signers.11.addr:
+-        "0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3"
++        "0x36FdBDA6085d4DFA63Da90839432dDe9373970F0"
+      values.getConfig.signers.11.group:
+-        3
++        11
+      values.getConfig.signers.10.addr:
+-        "0x36FdBDA6085d4DFA63Da90839432dDe9373970F0"
++        "0x2CD36141d4AEFb8e57209770b965043Ed3129D9F"
+      values.getConfig.signers.10.group:
+-        11
++        8
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (0x123ed44f3B863a684437Ebf18F8a744c250Ee5cA) {
+    +++ description: None
+      values.getOffRamps.4:
++        "0x5Be290d68db372cc487B1356649D906efC4f58Ca"
+    }
+```
+
+```diff
+    contract LockReleaseTokenPool (0x21377fe476Fb8587CbAFd47155093597Fa4df45E) {
+    +++ description: None
+      values.getOffRamps.2:
++        "0x0D736853812A12F085DE867aDF4eA4ABA9521Fc0"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (0x2dd317E7e36544C5222818F228d607c209517470) {
+    +++ description: None
+      values.getOffRamps.4:
++        "0xE58eDBb7Fdd5f2DD5cfAD2667e5D570E1a0a6A84"
+    }
+```
+
+```diff
+    contract LockReleaseTokenPool (0x50f6631B377be52E132DF35a2F05eA54fda882ac) {
+    +++ description: None
+      values.getOffRamps.4:
++        "0xc2ef2f272D2C09b0a8523cEf32C96D3A7f379979"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (0x57D3bb46aF4A9b210FAE046796013090D428475F) {
+    +++ description: None
+      values.getOffRamps.4:
++        "0xc1D8f275f651E1CAe3A6D971d0836cDAcD25d91a"
+    }
+```
+
+```diff
+    contract LockReleaseTokenPool (0x73aEB5ECA03Ad587B8Fdcc2B61f9fb4D2e3D90c1) {
+    +++ description: None
+      values.getOffRamps.2:
++        "0xAFcC997D86713FeC802Cc665122d64a5130bDd1D"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (0x78196436aF11b948c7036424B1ceA711fAdAd288) {
+    +++ description: None
+      values.getOffRamps.1:
++        "0x9F02c16190691CC4ceCD53A9267Bd24e37B6d06C"
+    }
+```
+
+```diff
+    contract Router (0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.offRamps.32:
++        {"sourceChainSelector":"base","offRamp":"0x6B4B6359Dd5B47Cdb030E5921456D2a0625a9EbD"}
+      values.offRamps.31:
++        {"sourceChainSelector":"bnb","offRamp":"0x66d84fedED0e51aeB47ceD1BB2fc0221Ae8D7C12"}
+      values.offRamps.30:
++        {"sourceChainSelector":"metis","offRamp":"0x330349112e13232131Da51f9f3b153d825f65e61"}
+      values.offRamps.29:
++        {"sourceChainSelector":"mode","offRamp":"0xb57D52F7Cb7BBD19a117585bbaf712108E56dd8f"}
+      values.offRamps.28:
++        {"sourceChainSelector":"avalanche","offRamp":"0xd98E80C79a15E4dbaF4C40B6cCDF690fe619BFBb"}
+      values.offRamps.27:
++        {"sourceChainSelector":"arbitrum","offRamp":"0xdf615eF8D4C64d0ED8Fd7824BBEd2f6a10245aC9"}
+      values.offRamps.26:
++        {"sourceChainSelector":"polygon","offRamp":"0x718672076D6d51E4c76142B37bC99E4945d704a3"}
+      values.offRamps.25:
++        {"sourceChainSelector":"optimism","offRamp":"0x562a2025E60AA19Aa03Ea41D70ea1FD3286d1D3B"}
+      values.offRamps.24:
++        {"sourceChainSelector":"gnosis","offRamp":"0x70C705ff3eCAA04c8c61d581a59a168a1c49c2ec"}
+      values.offRamps.23:
++        {"sourceChainSelector":"wemix","offRamp":"0xc1EcCE580B2C96f4fd202fB7c2a259ECe19a1bF2"}
+      values.offRamps.22:
++        {"sourceChainSelector":"blast","offRamp":"0xF4468E56179e6EF59d6f5B133D9355AAD91Ea9ae"}
+      values.offRamps.21:
++        {"sourceChainSelector":"1562403441176082196","offRamp":"0x6868FefbEFDc2B2FB75E6ED216dB1BeC02563D69"}
+      values.offRamps.20:
++        {"sourceChainSelector":"1556008542357238666","offRamp":"0x5B859E596C4285bf489E1bFa222b97dB431da7eC"}
+      values.onRamps.5142893604156789321:
+-        "0xCbE7e5DA76dC99Ac317adF6d99137005FDA4E2C4"
++        "0xdEFeADd30D5BFD403d86245b43e39a73d76423cC"
+      values.onRamps.1562403441176082196:
+-        "0xD54C93A99CBCb8D865E13DA321B540171795A89f"
++        "0x9B14AE850653dD0E30fBC93ab7f77D0d638a365B"
+      values.onRamps.1556008542357238666:
++        "0x70B2b3430c41bA19E20F57Cae23c3C619CbCA65D"
+    }
+```
+
+```diff
+    contract LockReleaseTokenPool (0x8291a8E8dCF429e2FA7d032bF3E583ee959F3B06) {
+    +++ description: None
+      values.getOffRamps.2:
++        "0xeAD31B98179e2637Bb052a970Ac92Cbb2E26461d"
+    }
+```
+
+```diff
+    contract PriceRegistry (0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad) {
+    +++ description: None
+      values.getPriceUpdaters.32:
++        "0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3"
+      values.getPriceUpdaters.31:
++        "0xDaC3A82Cc5e7C137bF28e6EF4F68f29D66205ffe"
+      values.getPriceUpdaters.30:
++        "0xA9f9bF2b643348c0884f2eBA4F712E833DA9a2b8"
+      values.getPriceUpdaters.29:
++        "0x57b548C9c213EA2bcf60193E3D7fd2d2b53Fb9b3"
+      values.getPriceUpdaters.28:
++        "0x83F3DA5aa2C7534d694B0acde7624573c830250D"
+      values.getPriceUpdaters.27:
++        "0x9B9Ec8E26955c034828bBD78E22ab258d983dCdb"
+      values.getPriceUpdaters.26:
++        "0x9D93D536Ced80871Bf3DA5Bb47bAedE62c794f8A"
+      values.getPriceUpdaters.25:
++        "0x01346721418045A6c07b71052e452eF8615e9084"
+      values.getPriceUpdaters.24:
++        "0x0f89C7c0586536B618e0469402e1c8234bc52959"
+      values.getPriceUpdaters.23:
++        "0x0d26BaE784c8986502E072F4e73B6168e2052045"
+      values.getPriceUpdaters.22:
++        "0xA4755Cd68CA2092447c8c842659a2931f9110320"
+      values.getPriceUpdaters.21:
++        "0x52275dC17f9eD92230C8C4d57fD36d128701f694"
+      values.getPriceUpdaters.20:
++        "0xd8F93Aff87dC2AEEe0D0b0dF347baDA861BFf802"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (0x9797E886EDe987AEf6A62885dFD6CcA885D828E6) {
+    +++ description: None
+      values.getOffRamps.3:
++        "0x485858BA818aab8744f2932A4982bfB0E7Db0005"
+    }
+```
+
+```diff
+    contract LockReleaseTokenPool (0xc43c01026128Aa758A65D12dB6a72CE4DD778dF2) {
+    +++ description: None
+      values.getOffRamps.2:
++        "0x89c9038906887A69bD9C20f81B1B4C309F9A6D04"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (0xcd196D3905AfA0eCB4e0e62C2D7d6c52f9C73526) {
+    +++ description: None
+      values.getOffRamps.4:
++        "0x67F4e731f446Ff76716E7E3c955CD5A75C1B1787"
+    }
+```
+
+```diff
+    contract LockReleaseTokenPool (0xdCa0A2341ed5438E06B9982243808A76B9ADD6d0) {
+    +++ description: None
+      values.getOffRamps.2:
++        "0x75a852478792E5a99bc4cdd0aDBd97129B0d9799"
+    }
+```
+
+```diff
+    contract RMN (0xdCD48419bD5Cd9d1b097695F2af4Ee125aADF84F) {
+    +++ description: None
+      values.getPermaBlessedCommitStores.1:
++        "0xd8F93Aff87dC2AEEe0D0b0dF347baDA861BFf802"
+    }
+```
+
+```diff
+    contract LockReleaseTokenPoolAndProxy (0xE31009Ac8385147A74463F686Dd148e99d291739) {
+    +++ description: None
+      values.getSupportedChains.9:
++        "7264351850409363825"
+      values.getSupportedChains.8:
++        "3734403246176062136"
+      values.getSupportedChains.7:
++        "4051577828743386545"
+      values.getSupportedChains.6:
++        "15971525489660198786"
+      values.getSupportedChains.5:
++        "8805746078405598895"
+      values.getSupportedChains.4:
++        "6433500567565415381"
+      values.getSupportedChains.3:
++        "5142893604156789321"
+      values.getSupportedChains.2:
++        "4411394078118774322"
+      values.getSupportedChains.1:
++        "1562403441176082196"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (0xeaE89E53B8317CaB04165F5323285252D5669B73) {
+    +++ description: None
+      values.getOffRamps.2:
++        "0xCE8342b8eFd4D804B97Df92bC6bb930099098fDE"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (0x01346721418045A6c07b71052e452eF8615e9084)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (0x0d26BaE784c8986502E072F4e73B6168e2052045)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPoolAndProxy (0x0D736853812A12F085DE867aDF4eA4ABA9521Fc0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (0x0f89C7c0586536B618e0469402e1c8234bc52959)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOffRamp (0x330349112e13232131Da51f9f3b153d825f65e61)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPoolAndProxy (0x485858BA818aab8744f2932A4982bfB0E7Db0005)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (0x52275dC17f9eD92230C8C4d57fD36d128701f694)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOffRamp (0x562a2025E60AA19Aa03Ea41D70ea1FD3286d1D3B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (0x57b548C9c213EA2bcf60193E3D7fd2d2b53Fb9b3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOffRamp (0x5B859E596C4285bf489E1bFa222b97dB431da7eC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPoolAndProxy (0x5Be290d68db372cc487B1356649D906efC4f58Ca)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOffRamp (0x66d84fedED0e51aeB47ceD1BB2fc0221Ae8D7C12)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPoolAndProxy (0x67F4e731f446Ff76716E7E3c955CD5A75C1B1787)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOffRamp (0x6868FefbEFDc2B2FB75E6ED216dB1BeC02563D69)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOffRamp (0x6B4B6359Dd5B47Cdb030E5921456D2a0625a9EbD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0x70B2b3430c41bA19E20F57Cae23c3C619CbCA65D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOffRamp (0x70C705ff3eCAA04c8c61d581a59a168a1c49c2ec)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOffRamp (0x718672076D6d51E4c76142B37bC99E4945d704a3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPoolAndProxy (0x75a852478792E5a99bc4cdd0aDBd97129B0d9799)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (0x83F3DA5aa2C7534d694B0acde7624573c830250D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPoolAndProxy (0x89c9038906887A69bD9C20f81B1B4C309F9A6D04)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0x9B14AE850653dD0E30fBC93ab7f77D0d638a365B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (0x9B9Ec8E26955c034828bBD78E22ab258d983dCdb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (0x9D93D536Ced80871Bf3DA5Bb47bAedE62c794f8A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPoolAndProxy (0x9F02c16190691CC4ceCD53A9267Bd24e37B6d06C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (0xA4755Cd68CA2092447c8c842659a2931f9110320)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (0xA9f9bF2b643348c0884f2eBA4F712E833DA9a2b8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPoolAndProxy (0xAFcC997D86713FeC802Cc665122d64a5130bDd1D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOffRamp (0xb57D52F7Cb7BBD19a117585bbaf712108E56dd8f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPoolAndProxy (0xc1D8f275f651E1CAe3A6D971d0836cDAcD25d91a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOffRamp (0xc1EcCE580B2C96f4fd202fB7c2a259ECe19a1bF2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPoolAndProxy (0xc2ef2f272D2C09b0a8523cEf32C96D3A7f379979)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPoolAndProxy (0xCE8342b8eFd4D804B97Df92bC6bb930099098fDE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPoolAndProxy (0xcfd0637093193ac909f74F9de95c2d4B92Df23c4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (0xd8F93Aff87dC2AEEe0D0b0dF347baDA861BFf802)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOffRamp (0xd98E80C79a15E4dbaF4C40B6cCDF690fe619BFBb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (0xDaC3A82Cc5e7C137bF28e6EF4F68f29D66205ffe)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0xdEFeADd30D5BFD403d86245b43e39a73d76423cC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOffRamp (0xdf615eF8D4C64d0ED8Fd7824BBEd2f6a10245aC9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPoolAndProxy (0xE58eDBb7Fdd5f2DD5cfAD2667e5D570E1a0a6A84)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPoolAndProxy (0xeAD31B98179e2637Bb052a970Ac92Cbb2E26461d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOffRamp (0xF4468E56179e6EF59d6f5B133D9355AAD91Ea9ae)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...-0x485858BA818aab8744f2932A4982bfB0E7Db0005.sol | 1531 +++++++++
+ ...-0x5Be290d68db372cc487B1356649D906efC4f58Ca.sol | 1531 +++++++++
+ ...-0x67F4e731f446Ff76716E7E3c955CD5A75C1B1787.sol | 1531 +++++++++
+ ...-0x9F02c16190691CC4ceCD53A9267Bd24e37B6d06C.sol | 1531 +++++++++
+ ...-0xCE8342b8eFd4D804B97Df92bC6bb930099098fDE.sol | 1531 +++++++++
+ ...-0xE58eDBb7Fdd5f2DD5cfAD2667e5D570E1a0a6A84.sol | 1531 +++++++++
+ ...-0xc1D8f275f651E1CAe3A6D971d0836cDAcD25d91a.sol | 1531 +++++++++
+ ...-0xcfd0637093193ac909f74F9de95c2d4B92Df23c4.sol | 1531 +++++++++
+ ...-0x01346721418045A6c07b71052e452eF8615e9084.sol | 1297 ++++++++
+ ...-0x0d26BaE784c8986502E072F4e73B6168e2052045.sol | 1297 ++++++++
+ ...-0x0f89C7c0586536B618e0469402e1c8234bc52959.sol | 1297 ++++++++
+ ...-0x52275dC17f9eD92230C8C4d57fD36d128701f694.sol | 1297 ++++++++
+ ...-0x57b548C9c213EA2bcf60193E3D7fd2d2b53Fb9b3.sol | 1297 ++++++++
+ ...-0x83F3DA5aa2C7534d694B0acde7624573c830250D.sol | 1297 ++++++++
+ ...-0x9B9Ec8E26955c034828bBD78E22ab258d983dCdb.sol | 1297 ++++++++
+ ...-0x9D93D536Ced80871Bf3DA5Bb47bAedE62c794f8A.sol | 1297 ++++++++
+ ...-0xA4755Cd68CA2092447c8c842659a2931f9110320.sol | 1297 ++++++++
+ ...-0xA9f9bF2b643348c0884f2eBA4F712E833DA9a2b8.sol | 1297 ++++++++
+ ...-0xDaC3A82Cc5e7C137bF28e6EF4F68f29D66205ffe.sol | 1297 ++++++++
+ ...-0xd8F93Aff87dC2AEEe0D0b0dF347baDA861BFf802.sol | 1297 ++++++++
+ ...-0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3.sol | 1297 ++++++++
+ ...-0x330349112e13232131Da51f9f3b153d825f65e61.sol | 3430 ++++++++++++++++++++
+ ...-0x562a2025E60AA19Aa03Ea41D70ea1FD3286d1D3B.sol | 3430 ++++++++++++++++++++
+ ...-0x5B859E596C4285bf489E1bFa222b97dB431da7eC.sol | 3430 ++++++++++++++++++++
+ ...-0x66d84fedED0e51aeB47ceD1BB2fc0221Ae8D7C12.sol | 3430 ++++++++++++++++++++
+ ...-0x6868FefbEFDc2B2FB75E6ED216dB1BeC02563D69.sol | 3430 ++++++++++++++++++++
+ ...-0x6B4B6359Dd5B47Cdb030E5921456D2a0625a9EbD.sol | 3430 ++++++++++++++++++++
+ ...-0x70C705ff3eCAA04c8c61d581a59a168a1c49c2ec.sol | 3430 ++++++++++++++++++++
+ ...-0x718672076D6d51E4c76142B37bC99E4945d704a3.sol | 3430 ++++++++++++++++++++
+ ...-0xF4468E56179e6EF59d6f5B133D9355AAD91Ea9ae.sol | 3430 ++++++++++++++++++++
+ ...-0xb57D52F7Cb7BBD19a117585bbaf712108E56dd8f.sol | 3430 ++++++++++++++++++++
+ ...-0xc1EcCE580B2C96f4fd202fB7c2a259ECe19a1bF2.sol | 3430 ++++++++++++++++++++
+ ...-0xd98E80C79a15E4dbaF4C40B6cCDF690fe619BFBb.sol | 3430 ++++++++++++++++++++
+ ...-0xdf615eF8D4C64d0ED8Fd7824BBEd2f6a10245aC9.sol | 3430 ++++++++++++++++++++
+ ...-0x70B2b3430c41bA19E20F57Cae23c3C619CbCA65D.sol | 2982 +++++++++++++++++
+ ...-0x9B14AE850653dD0E30fBC93ab7f77D0d638a365B.sol | 2982 +++++++++++++++++
+ ...-0xdEFeADd30D5BFD403d86245b43e39a73d76423cC.sol | 2982 +++++++++++++++++
+ ...0x0D736853812A12F085DE867aDF4eA4ABA9521Fc0.sol} |    0
+ ...-0x75a852478792E5a99bc4cdd0aDBd97129B0d9799.sol | 1617 +++++++++
+ ...-0x89c9038906887A69bD9C20f81B1B4C309F9A6D04.sol | 1617 +++++++++
+ ...-0xAFcC997D86713FeC802Cc665122d64a5130bDd1D.sol | 1617 +++++++++
+ ...-0xE31009Ac8385147A74463F686Dd148e99d291739.sol | 1617 +++++++++
+ ...-0xc2ef2f272D2C09b0a8523cEf32C96D3A7f379979.sol | 1617 +++++++++
+ ...-0xeAD31B98179e2637Bb052a970Ac92Cbb2E26461d.sol | 1617 +++++++++
+ 44 files changed, 92347 insertions(+)
+```
+
 Generated with discovered.json: 0xf0bd69eafb17a03db5b8b32c2da64258665273ba
 
 # Diff at Mon, 21 Oct 2024 12:50:00 GMT:

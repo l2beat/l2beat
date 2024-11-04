@@ -348,7 +348,8 @@ export class BatchingAndCachingProvider {
 
     let logs: providers.Log[] = []
     try {
-      logs = await this.provider.getLogs(
+      logs = await getAllLogs(
+        this.provider,
         first.address,
         [topics],
         0,
@@ -551,4 +552,33 @@ function parseCacheEntry(entry: string) {
     }
     return value
   })
+}
+
+async function getAllLogs(
+  provider: LowLevelProvider,
+  address: EthereumAddress,
+  topics: (string | string[] | null)[],
+  fromBlock: number,
+  toBlock: number,
+): Promise<providers.Log[]> {
+  if (fromBlock === toBlock) {
+    return await provider.getLogs(address, topics, fromBlock, toBlock)
+  }
+  try {
+    return await provider.getLogs(address, topics, fromBlock, toBlock)
+  } catch (e) {
+    if (
+      e instanceof Error &&
+      e.message.includes('Log response size exceeded')
+    ) {
+      const midPoint = fromBlock + Math.floor((toBlock - fromBlock) / 2)
+      const [a, b] = await Promise.all([
+        getAllLogs(provider, address, topics, fromBlock, midPoint),
+        getAllLogs(provider, address, topics, midPoint + 1, toBlock),
+      ])
+      return a.concat(b)
+    } else {
+      throw e
+    }
+  }
 }

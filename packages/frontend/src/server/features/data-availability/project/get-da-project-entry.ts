@@ -1,4 +1,5 @@
 import { type DaBridge, type DaLayer, getDaProjectKey } from '@l2beat/config'
+import { type UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
 import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
@@ -86,16 +87,20 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
       slug: bridge.display.slug,
       grissiniValues: mapBridgeRisksToRosetteValues(bridge.risks),
       tvs: getSumFor(bridge.usedIn.map((project) => project.id)),
-      usedIn: bridge.usedIn,
       type: daBridge.type,
+      usedIn: bridge.usedIn.sort(
+        (a, b) => getSumFor([b.id]) - getSumFor([a.id]),
+      ),
     })),
     header: getHeader({
       daLayerGrissiniValues: grissiniValues,
       daBridgeGrissiniValues: mapBridgeRisksToRosetteValues(daBridge.risks),
       daLayer,
-      daBridge,
       tvs: layerTvs,
       economicSecurity,
+      usedIn: daLayer.usedIn.sort(
+        (a, b) => getSumFor([b.id]) - getSumFor([a.id]),
+      ),
     }),
     projectDetails,
   }
@@ -105,31 +110,29 @@ interface HeaderParams {
   daLayerGrissiniValues: RosetteValue[]
   daBridgeGrissiniValues: RosetteValue[]
   daLayer: DaLayer
-  daBridge: DaBridge
   tvs: number
   economicSecurity: EconomicSecurityData | undefined
+  usedIn: UsedInProject[]
 }
 
 function getHeader({
   daLayerGrissiniValues,
   daBridgeGrissiniValues,
   daLayer,
-  daBridge,
   tvs,
   economicSecurity,
+  usedIn,
 }: HeaderParams) {
   return {
     daLayerGrissiniValues,
     daBridgeGrissiniValues,
-    links: getDataAvailabilityProjectLinks(
-      daLayer.display.links,
-      daBridge.display.links,
-    ),
+    links: getDataAvailabilityProjectLinks(daLayer),
     tvs,
     economicSecurity,
     durationStorage:
       daLayer.kind === 'PublicBlockchain' ? daLayer.pruningWindow : undefined,
-    usedIn: daLayer.usedIn,
+    numberOfOperators: daLayer.numberOfOperators,
+    usedIn,
   }
 }
 

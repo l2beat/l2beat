@@ -9,10 +9,10 @@ if [ "$1" == "all" ]; then
 
   for chain in $chains
   do
-    yarn discover:raw $chain "$@"
-    yarn update-diff-history $chain "$@"
+    pnpm discover:raw $chain "$@"
+    pnpm update-diff-history $chain "$@"
   done
 else
-  yarn discover:raw "$@"
-  yarn update-diff-history "$@"
+  pnpm discover:raw "$@"
+  pnpm update-diff-history "$@"
 fi

@@ -7,6 +7,8 @@ import { EtherscanUnsupportedMethods } from '../utils/IEtherscanClient'
 export interface ChainConfig {
   name: string
   chainId: number
+  // See: https://github.com/safe-global/safe-core-sdk/blob/9b64da33bc55615349d527909d4b792e05bb9826/packages/protocol-kit/src/utils/eip-3770/config.ts
+  shortName: string
   explorer: {
     type: 'etherscan' | 'blockscout'
     url: string
@@ -19,6 +21,7 @@ export const chains: ChainConfig[] = [
   {
     name: 'ethereum',
     chainId: 1,
+    shortName: 'eth',
     multicall: getMulticall3Config(14353601),
     explorer: {
       type: 'etherscan',
@@ -28,6 +31,7 @@ export const chains: ChainConfig[] = [
   {
     name: 'arbitrum',
     chainId: 42161,
+    shortName: 'arb1',
     multicall: getMulticall3Config(7654707),
     explorer: {
       type: 'etherscan',
@@ -37,6 +41,7 @@ export const chains: ChainConfig[] = [
   {
     name: 'nova',
     chainId: 42170,
+    shortName: 'arb-nova',
     multicall: getMulticall3Config(1746963),
     explorer: {
       type: 'etherscan',
@@ -46,6 +51,7 @@ export const chains: ChainConfig[] = [
   {
     name: 'optimism',
     chainId: 10,
+    shortName: 'oeth',
     multicall: getMulticall3Config(4286263),
     explorer: {
       type: 'etherscan',
@@ -55,6 +61,7 @@ export const chains: ChainConfig[] = [
   {
     name: 'polygonpos',
     chainId: 137,
+    shortName: 'matic',
     multicall: getMulticall3Config(25770160),
     explorer: {
       type: 'etherscan',
@@ -64,6 +71,7 @@ export const chains: ChainConfig[] = [
   {
     name: 'bsc',
     chainId: 56,
+    shortName: 'bnb',
     multicall: getMulticall3Config(15921452),
     explorer: {
       type: 'etherscan',
@@ -73,6 +81,7 @@ export const chains: ChainConfig[] = [
   {
     name: 'avalanche',
     chainId: 43114,
+    shortName: 'avax',
     multicall: getMulticall3Config(11907934),
     explorer: {
       type: 'etherscan',
@@ -82,6 +91,7 @@ export const chains: ChainConfig[] = [
   {
     name: 'celo',
     chainId: 42220,
+    shortName: 'celo',
     multicall: getMulticall3Config(13112599),
     explorer: {
       type: 'etherscan',
@@ -94,6 +104,7 @@ export const chains: ChainConfig[] = [
   {
     name: 'linea',
     chainId: 59144,
+    shortName: 'linea',
     multicall: getMulticall3Config(42),
     explorer: {
       type: 'etherscan',
@@ -103,6 +114,7 @@ export const chains: ChainConfig[] = [
   {
     name: 'base',
     chainId: 8453,
+    shortName: 'base',
     multicall: getMulticall3Config(5022),
     explorer: {
       type: 'etherscan',
@@ -112,6 +124,7 @@ export const chains: ChainConfig[] = [
   {
     name: 'polygonzkevm',
     chainId: 1101,
+    shortName: 'zkevm',
     multicall: getMulticall3Config(57746),
     explorer: {
       type: 'etherscan',
@@ -121,6 +134,7 @@ export const chains: ChainConfig[] = [
   {
     name: 'gnosis',
     chainId: 100,
+    shortName: 'gno',
     multicall: getMulticall3Config(21022491),
     explorer: {
       type: 'etherscan',
@@ -133,6 +147,7 @@ export const chains: ChainConfig[] = [
   {
     name: 'zksync2',
     chainId: 324,
+    shortName: 'zksync',
     multicall: getMulticall3Config(
       3908235,
       EthereumAddress('0xF9cda624FBC7e059355ce98a31693d299FACd963'),
@@ -145,6 +160,7 @@ export const chains: ChainConfig[] = [
   {
     name: 'sepolia',
     chainId: 11155111,
+    shortName: 'sep',
     multicall: getMulticall3Config(751532),
     explorer: {
       type: 'etherscan',
@@ -154,6 +170,7 @@ export const chains: ChainConfig[] = [
   {
     name: 'scroll',
     chainId: 534352,
+    shortName: 'scr',
     multicall: getMulticall3Config(14),
     explorer: {
       type: 'etherscan',
@@ -163,6 +180,7 @@ export const chains: ChainConfig[] = [
   {
     name: 'mantle',
     chainId: 5000,
+    shortName: 'mantle',
     multicall: getMulticall3Config(304717),
     explorer: {
       type: 'etherscan',
@@ -172,6 +190,7 @@ export const chains: ChainConfig[] = [
   {
     name: 'metis',
     chainId: 1088,
+    shortName: 'metis-andromeda',
     multicall: getMulticall3Config(2338552),
     explorer: {
       type: 'etherscan',
@@ -181,6 +200,7 @@ export const chains: ChainConfig[] = [
   {
     name: 'bobanetwork',
     chainId: 288,
+    shortName: 'boba',
     multicall: getMulticall3Config(446859),
     explorer: {
       type: 'etherscan',
@@ -190,6 +210,7 @@ export const chains: ChainConfig[] = [
   {
     name: 'mode',
     chainId: 34443,
+    shortName: 'mode',
     multicall: getMulticall3Config(2465882),
     explorer: {
       type: 'etherscan',
@@ -199,6 +220,7 @@ export const chains: ChainConfig[] = [
   {
     name: 'zora',
     chainId: 7777777,
+    shortName: 'zora',
     multicall: getMulticall3Config(5882),
     explorer: {
       type: 'blockscout',
@@ -208,6 +230,7 @@ export const chains: ChainConfig[] = [
   {
     name: 'mantapacific',
     chainId: 169,
+    shortName: 'manta',
     multicall: getMulticall3Config(332890),
     explorer: {
       type: 'blockscout',
@@ -217,6 +240,7 @@ export const chains: ChainConfig[] = [
   {
     name: 'blast',
     chainId: 81457,
+    shortName: 'blastmainnet',
     multicall: getMulticall3Config(88189),
     explorer: {
       type: 'etherscan',

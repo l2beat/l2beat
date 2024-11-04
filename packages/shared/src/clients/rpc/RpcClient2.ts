@@ -1,40 +1,21 @@
-import { Logger, RateLimiter } from '@l2beat/backend-tools'
-import { UnixTime } from '@l2beat/shared-pure'
-import { RetryHandler } from '../../tools/RetryHandler'
+import { UnixTime, json } from '@l2beat/shared-pure'
 import { generateId } from '../../tools/generateId'
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
-import { HttpClient2 } from '../http/HttpClient2'
-import { EVMBlock, Quantity, RpcResponse } from './types'
+import {
+  ClientCore,
+  ClientCoreDependencies as ClientCoreDependencies,
+} from '../ClientCore'
+import { EVMBlock, EVMBlockResponse, Quantity, RPCError } from './types'
 
-interface RpcClient2Deps {
+interface Dependencies extends ClientCoreDependencies {
   url: string
-  http: HttpClient2
-  rateLimiter: RateLimiter
-  retryHandler: RetryHandler
-  logger: Logger
+  chain: string
+  generateId?: () => string
 }
 
-export class RpcClient2 {
-  constructor(private readonly $: RpcClient2Deps) {
-    this.$.logger = this.$.logger.for(this)
-  }
-
-  /** Calls eth_getBlockByNumber on RPC, includes full transactions bodies.
-   * The query is wrapped with rate limiting and retry handling.
-   */
-  async getBlockWithTransactions(
-    blockNumber: number | 'latest',
-  ): Promise<EVMBlock> {
-    const method = 'eth_getBlockByNumber'
-    const encodedNumber =
-      blockNumber === 'latest' ? 'latest' : Quantity.encode(BigInt(blockNumber))
-    const blockResponse = await this.query(method, [encodedNumber, true])
-
-    const block = EVMBlock.safeParse(blockResponse)
-    if (!block.success) {
-      throw new Error(`Block ${blockNumber}: Error during parsing`)
-    }
-    return block.data
+export class RpcClient2 extends ClientCore {
+  constructor(private readonly $: Dependencies) {
+    super({ ...$ })
   }
 
   async getLatestBlockNumber() {
@@ -44,7 +25,6 @@ export class RpcClient2 {
 
   async getBlockNumberAtOrBefore(timestamp: UnixTime, start = 0) {
     const end = await this.getLatestBlockNumber()
-
     return await getBlockNumberAtOrBefore(
       timestamp,
       start,
@@ -53,40 +33,52 @@ export class RpcClient2 {
     )
   }
 
-  async query(method: string, params: (string | number | boolean)[]) {
-    try {
-      return await this.$.rateLimiter.call(() => this._query(method, params))
-    } catch {
-      return await this.$.retryHandler.retry(() =>
-        this.$.rateLimiter.call(() => this._query(method, params)),
-      )
+  /** Calls eth_getBlockByNumber on RPC, includes full transactions bodies.*/
+  async getBlockWithTransactions(
+    blockNumber: number | 'latest',
+  ): Promise<EVMBlock> {
+    const method = 'eth_getBlockByNumber'
+    const encodedNumber =
+      blockNumber === 'latest' ? 'latest' : Quantity.encode(BigInt(blockNumber))
+    const blockResponse = await this.query(method, [encodedNumber, true])
+
+    const block = EVMBlockResponse.safeParse(blockResponse)
+    if (!block.success) {
+      throw new Error(`Block ${blockNumber}: Error during parsing`)
     }
+    return { ...block.data.result }
   }
 
-  async _query(method: string, params: (string | number | boolean)[]) {
-    const response = await this.$.http.fetch(
-      this.$.url,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          method,
-          params,
-          id: generateId(),
-          jsonrpc: '2.0',
-        }),
-        redirect: 'follow',
-      },
-      5_000, // Most RPCs respond in ~2s during regular conditions
-    )
+  async query(method: string, params: (string | number | boolean)[]) {
+    return await this.fetch(this.$.url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        method,
+        params,
+        id: this.$.generateId ? this.$.generateId() : generateId(),
+        jsonrpc: '2.0',
+      }),
+      redirect: 'follow',
+      timeout: 5_000, // Most RPCs respond in ~2s during regular conditions
+    })
+  }
 
-    // this parsing is needed for APIs which return 200 and error in the body
-    const parsed = RpcResponse.safeParse(response)
-    // TODO: add per-provider parsing heuristics
-    if (!parsed.success) {
-      this.$.logger.error(JSON.stringify(response))
-      throw new Error('Error during parsing of rpc response')
+  override validateResponse(response: json): boolean {
+    const parsedError = RPCError.safeParse(response)
+
+    if (parsedError.success) {
+      // TODO: based on error return differently
+      this.$.logger.warn(`Response validation error`, {
+        ...parsedError.data.error,
+      })
+      return false
     }
-    return parsed.data.result
+
+    return true
+  }
+
+  get chain() {
+    return this.$.chain
   }
 }

@@ -2,7 +2,6 @@ import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import { ScalingCostsChart } from '~/components/chart/costs/scaling-costs-chart'
 import { MainPageCard } from '~/components/main-page-card'
 import { MainPageHeader } from '~/components/main-page-header'
-import { SpiderWeb } from '~/components/spider-web'
 import { getScalingCostsEntries } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'
@@ -21,7 +20,7 @@ export const metadata = getDefaultMetadata({
 
 export default async function Page() {
   const entries = await getScalingCostsEntries()
-  const range = getCookie('scalingCostsChartRange')
+  const range = await getCookie('scalingCostsChartRange')
   await api.costs.chart.prefetch({ range, filter: { type: 'all' } })
   await api.costs.table.prefetch({ range })
 
@@ -32,8 +31,7 @@ export default async function Page() {
           <CostsUnitContextProvider>
             <CostsMetricContextProvider>
               <MainPageHeader>Onchain costs</MainPageHeader>
-              <MainPageCard className="relative">
-                <SpiderWeb className="absolute left-0 top-0 hidden md:block" />
+              <MainPageCard>
                 <ScalingCostsChart
                   entries={
                     entries.type === 'recategorised'

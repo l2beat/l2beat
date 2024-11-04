@@ -26,6 +26,7 @@ const zkVerifierAddress = EthereumAddress.random()
 const zksMock: ZkCatalogProject[] = [
   {
     type: 'zk-catalog',
+    createdAt: UnixTime.now(),
     display: mockObject<Layer2Display>({
       name: 'zk-mock',
     }),

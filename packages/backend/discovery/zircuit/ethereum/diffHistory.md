@@ -1,3 +1,56 @@
+Generated with discovered.json: 0x09f3f25dd9125f5444f20f332977639589728e0e
+
+# Diff at Fri, 01 Nov 2024 12:11:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cd1f0e71bb08ce16b2084a11b768538e8aa6ba8c block: 20827058
+- current block number: 20827058
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20827058 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257) {
+    +++ description: None
+      receivedPermissions.3.description:
+-        "upgrading bridge implementation allows to access all funds and change every system component."
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+Generated with discovered.json: 0xe57302eb0fb8026c2ea303740cc2c0df47e41c4d
+
+# Diff at Tue, 29 Oct 2024 13:21:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7b3fc9dc9074e1d423b48522c3f0273c86aab54a block: 20827058
+- current block number: 20827058
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20827058 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x92Ef6Af472b39F1b363da45E35530c24619245A4) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      fieldMeta:
++        {"FINALIZATION_PERIOD_SECONDS":{"description":"Challenge period (Number of seconds until a state root is finalized)."}}
+    }
+```
+
 Generated with discovered.json: 0x0283b722ef661fc771dad94496d924f326b0465a
 
 # Diff at Mon, 21 Oct 2024 12:50:29 GMT:

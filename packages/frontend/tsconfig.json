@@ -30,7 +30,8 @@
     /* Path aliases */
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./src/*"]
+      "~/*": ["./src/*"],
+      "react": ["./node_modules/@types/react"]
     }
   },
   "include": [
@@ -42,5 +43,5 @@
     "**/*.js",
     ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "storybook-static"]
 }

@@ -28,7 +28,7 @@ describe(HttpClient2.name, () => {
       nock('https://api').get('/').delay(3).reply(200, { data: 'some data' })
 
       await expect(
-        async () => await http.fetch('https://api', {}, 2),
+        async () => await http.fetch('https://api', { timeout: 2 }),
       ).toBeRejected()
     })
   })

@@ -74,7 +74,7 @@ you need to talk to devs to handle this case.
 2. Add `ACTIVITY_ENABLED=true` to your `.env` file. Also add `STARKEX_API_KEY` which is required. If
    you are using private RPC, you also need to add `ACTIVITY_<PROJECT_ID>_URL`.
 
-3. Run `yarn start:dev` in the `packages/backend` directory and wait till whole activity is synced.
+3. Run `pnpm start:dev` in the `packages/backend` directory and wait till whole activity is synced.
 
-4. Go to `packages/frontend`, set `DATABASE_URL` to your local database url and run `yarn dev` to start frontend and check if activity is
+4. Go to `packages/frontend`, set `DATABASE_URL` to your local database url and run `pnpm dev` to start frontend and check if activity is
    displayed correctly.

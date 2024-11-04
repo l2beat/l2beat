@@ -14,10 +14,8 @@ import {
 } from '~/components/core/command'
 import { useOnClickOutside } from '~/hooks/use-on-click-outside'
 import { useRouterWithProgressBar } from '../progress-bar'
-import {
-  type SearchBarProject,
-  useSearchBarContext,
-} from './search-bar-context'
+import { type SearchBarProject } from './get-search-bar-projects'
+import { useSearchBarContext } from './search-bar-context'
 
 interface Props {
   allProjects: SearchBarProject[]
@@ -56,11 +54,20 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
             .sort((a, b) => {
               // Sort filtered pages: exact matches first, then partial matches
               const searchTerm = value.toLowerCase()
-              return (
-                (a.name.toLowerCase().startsWith(searchTerm) ? -1 : 1) ||
-                (a.name.toLowerCase().includes(searchTerm) ? -1 : 1) ||
-                a.name.localeCompare(b.name)
-              )
+              const aName = a.name.toLowerCase()
+              const bName = b.name.toLowerCase()
+
+              if (aName.startsWith(searchTerm) && !bName.startsWith(searchTerm))
+                return -1
+              if (!aName.startsWith(searchTerm) && bName.startsWith(searchTerm))
+                return 1
+
+              if (aName.includes(searchTerm) && !bName.includes(searchTerm))
+                return -1
+              if (!aName.includes(searchTerm) && bName.includes(searchTerm))
+                return 1
+
+              return a.name.localeCompare(b.name)
             })
             .slice(0, 15),
     [value, allProjects, recentlyAdded],
@@ -143,6 +150,8 @@ function typeToLabel(type: SearchBarProject['type']) {
       return 'Bridge'
     case 'da':
       return 'DA'
+    case 'zk-catalog':
+      return 'ZK Catalog'
     default:
       assertUnreachable(type)
   }

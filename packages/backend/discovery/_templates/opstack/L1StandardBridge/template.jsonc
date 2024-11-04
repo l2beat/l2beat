@@ -9,7 +9,7 @@
         "permissions": [
           {
             "type": "upgrade",
-            "description": "upgrading bridge implementation allows to access all funds and change every system component."
+            "description": "upgrading the bridge implementation can give access to all funds escrowed therein."
           }
         ]
       }
