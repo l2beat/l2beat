@@ -1,9 +1,11 @@
 import { type ScalingProjectTechnologyChoice } from '@l2beat/config'
 import { type TechnologyChoice } from '../../../components/projects/sections/technology-section'
+import { type ProjectDetailsRelatedProjectBannerProps } from '~/components/project-details-related-project-banner'
 
 export function makeTechnologyChoice(
   id: string,
   item: ScalingProjectTechnologyChoice,
+  options: { relatedProjectBanner?: ProjectDetailsRelatedProjectBannerProps, } = {}
 ): TechnologyChoice {
   const risks = item.risks.map((risk) => ({
     text: `${risk.category} ${risk.text}`,
@@ -18,5 +20,6 @@ export function makeTechnologyChoice(
     isUnderReview: !!item.isUnderReview,
     references: item.references,
     risks,
+    ...options
   }
 }

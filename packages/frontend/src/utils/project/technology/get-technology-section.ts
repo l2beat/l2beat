@@ -1,9 +1,16 @@
+import { daLayers } from '@l2beat/config'
 import { type Bridge, type Layer2, type Layer3 } from '@l2beat/config'
 import { compact } from 'lodash'
 import { getTechnologySectionProps } from './get-technology-section-props'
 import { makeTechnologyChoice } from './make-technology-section'
 
 export function getScalingTechnologySection(project: Layer2 | Layer3) {
+  const relatedDaProjects = daLayers.filter(
+    (layer) =>
+      layer.usedIn.some((usedIn) => usedIn.id === project.id) &&
+      layer.bridges.length > 0,
+  )
+
   const items = compact([
     project.technology.stateCorrectness &&
       makeTechnologyChoice(
@@ -19,6 +26,19 @@ export function getScalingTechnologySection(project: Layer2 | Layer3) {
       makeTechnologyChoice(
         'data-availability',
         project.technology.dataAvailability,
+        {
+          relatedProjectBanner:
+            relatedDaProjects.length < 2 && relatedDaProjects[0]
+              ? {
+                  text: 'Learn more about the DA layer here:',
+                  project: {
+                    name: relatedDaProjects[0].display.name,
+                    slug: `${relatedDaProjects[0].display.slug}/${relatedDaProjects[0].bridges[0]?.display.slug}`,
+                    type: 'data-availability',
+                  },
+                }
+              : undefined,
+        },
       ),
   ])
 
