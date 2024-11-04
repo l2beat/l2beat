@@ -9,7 +9,7 @@ interface Props {
   count: number
   ethereumCount: number
   showEthereum: boolean
-  metric: ActivityMetric
+  metric?: ActivityMetric
   singleProject?: boolean
 }
 
@@ -25,7 +25,7 @@ export function ActivityChartHover(props: Props) {
       <div className="flex w-full items-center justify-between gap-2">
         <div className="flex items-center gap-1">
           <span className="text-sm text-gray-700 dark:text-gray-50 ">
-            {`Average ${props.metric === 'uops' ? 'UOPS' : 'TPS'}`}
+            {`Average ${props.metric === 'tps' ? 'TPS' : 'UOPS'}`}
           </span>
         </div>
       </div>
@@ -59,9 +59,7 @@ export function ActivityChartHover(props: Props) {
       <div className="mt-2 flex w-full items-center justify-between gap-2">
         <div className="flex items-center gap-1">
           <span className="text-sm text-gray-700 dark:text-gray-50 ">
-            {props.metric === 'uops'
-              ? 'Operations count'
-              : 'Transactions count'}
+            {props.metric === 'tps' ? 'Transactions count' : 'Operations count'}
           </span>
         </div>
       </div>

@@ -83,11 +83,12 @@ function Header({ stats }: { stats: ActivityChartStats | undefined }) {
         {stats !== undefined ? (
           <>
             <div className="whitespace-nowrap text-right text-xl font-bold">
-              {formatUops(countPerSecond(stats.latestProjectsTxCount))} UOPS
+              {formatUops(countPerSecond(stats.uops.latestProjectsTxCount))}{' '}
+              UOPS
             </div>
             <div className="flex items-center gap-1">
               <span className="whitespace-nowrap text-right text-xs text-secondary">
-                Scaling factor: {stats.scalingFactor.toFixed(2)}x
+                Scaling factor: {stats.uops.scalingFactor.toFixed(2)}x
               </span>
               <ScalingFactorTooltip className="size-3" />
             </div>

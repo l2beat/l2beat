@@ -12,7 +12,7 @@ interface Params {
   milestones: Milestone[]
   data: ActivityChartData | undefined
   showMainnet: boolean
-  metric: ActivityMetric
+  metric?: ActivityMetric
 }
 
 export function useActivityChartRenderParams({
@@ -28,7 +28,7 @@ export function useActivityChartRenderParams({
 
   const formatYAxisLabel = useCallback(
     (value: number) =>
-      `${formatUops(value, { morePrecision: true })} ${metric === 'uops' ? 'UOPS' : 'TPS'}`,
+      `${formatUops(value, { morePrecision: true })} ${metric === 'tps' ? 'TPS' : 'UOPS'}`,
     [metric],
   )
 
