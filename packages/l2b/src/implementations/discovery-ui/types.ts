@@ -38,6 +38,11 @@ export interface ApiAddressEntry {
 export interface Field {
   name: string
   value: FieldValue
+  ignoreInWatchMode?: boolean
+  ignoreRelatives?: boolean
+  handler?: { type: string } & Record<string, unknown>
+  description?: string
+  severity?: 'HIGH' | 'MEDIUM' | 'LOW'
 }
 
 export type FieldValue =
@@ -99,6 +104,7 @@ export interface ErrorFieldValue {
 }
 
 export interface ApiProjectContract extends ApiAddressEntry {
+  template?: string
   fields: Field[]
   abis: ApiAbi[]
 }
