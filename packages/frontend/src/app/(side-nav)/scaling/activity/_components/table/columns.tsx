@@ -17,6 +17,10 @@ export type ScalingActivityTableEntry = ScalingActivityEntry & {
     change: number
     pastDayCount: number
     summedCount: number
+    maxCount: {
+      value: number
+      timestamp: number
+    }
   }
 }
 
@@ -44,16 +48,16 @@ export const getScalingActivityColumns = (
       tooltip: `${metric === 'uops' ? 'User operations' : 'Transactions'} per second averaged over the past day.`,
     },
   }),
-  columnHelper.accessor('data.maxUops.value', {
-    header: 'Max UOPS',
+  columnHelper.accessor('data.maxCount.value', {
+    header: `Max ${metric === 'uops' ? 'UOPS' : 'TPS'}`,
     sortUndefined: 'last',
     cell: (ctx) => {
       const data = ctx.row.original.data
       return (
         <SyncStatusWrapper syncStatus={data.syncStatus}>
           <MaxUopsCell
-            maxUops={data.maxUops.value}
-            timestamp={data.maxUops.timestamp}
+            maxUops={data.maxCount.value}
+            timestamp={data.maxCount.timestamp}
           />
         </SyncStatusWrapper>
       )

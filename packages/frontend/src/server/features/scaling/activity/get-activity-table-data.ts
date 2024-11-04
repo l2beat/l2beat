@@ -35,7 +35,7 @@ const getCachedActivityTableData = cache(
       [ProjectId.ETHEREUM, ...projects.map((p) => p.id)],
       range,
     )
-    const maxUopsCounts = await db.activity.getMaxUopsCountForProjects()
+    const maxCounts = await db.activity.getMaxCountsForProjects()
 
     const grouped = groupBy(records, (r) => r.projectId)
 
@@ -47,10 +47,10 @@ const getCachedActivityTableData = cache(
           return [projectId, undefined]
         }
 
-        const maxUopsCount = maxUopsCounts[projectId]
+        const maxCount = maxCounts[projectId]
         assert(
-          maxUopsCount !== undefined,
-          `Max UOPS count for project ${projectId} not found`,
+          maxCount !== undefined,
+          `Max count for project ${projectId} not found`,
         )
 
         return [
@@ -60,15 +60,19 @@ const getCachedActivityTableData = cache(
               change: getTpsWeeklyChange(records),
               pastDayCount: getLastDayTps(records),
               summedCount: sumTpsCount(records),
+              maxCount: {
+                value: countPerSecond(maxCount.count),
+                timestamp: maxCount.countTimestamp.toNumber(),
+              },
             },
             uops: {
               change: getUopsWeeklyChange(records),
               pastDayCount: getLastDayUops(records),
               summedCount: sumUopsCount(records),
-            },
-            maxUops: {
-              value: countPerSecond(maxUopsCount.uopsCount),
-              timestamp: maxUopsCount.timestamp.toNumber(),
+              maxCount: {
+                value: countPerSecond(maxCount.uopsCount),
+                timestamp: maxCount.uopsTimestamp.toNumber(),
+              },
             },
             ratio: getLastDayRatio(records),
             syncStatus: getSyncStatus(lastRecord.timestamp),
@@ -107,15 +111,19 @@ function getMockActivityTableData(): ActivityTableData {
           change: Math.random(),
           pastDayCount: 19,
           summedCount: 1500,
+          maxCount: {
+            value: 30,
+            timestamp: UnixTime.now().toNumber(),
+          },
         },
         uops: {
           change: Math.random(),
           pastDayCount: 20,
           summedCount: 1550,
-        },
-        maxUops: {
-          value: 30,
-          timestamp: UnixTime.now().toNumber(),
+          maxCount: {
+            value: 30,
+            timestamp: UnixTime.now().add(-1, 'days').toNumber(),
+          },
         },
         ratio: 1.1,
         syncStatus: getSyncStatus(UnixTime.now()),
