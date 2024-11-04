@@ -92,7 +92,7 @@ export function DaProjectSummary({ project }: Props) {
                         <div
                           key={bridge.id}
                           className={cn(
-                            'flex min-h-[56px] flex-row gap-4 rounded-lg border-surface-tertiary bg-surface-secondary px-4 py-2 md:rounded-none md:border-b md:bg-transparent',
+                            'flex min-h-[56px] flex-row gap-4 rounded-lg border-surface-tertiary bg-surface-secondary px-4 py-2 dark:bg-zinc-800 md:rounded-none md:border-b md:bg-transparent',
                             index === project.bridges.length - 1 &&
                               'md:border-b-0',
                             // Hide 3rd and further bridges on mobile (will be shown in a drawer)
