@@ -78,7 +78,7 @@ export function DaProjectSummary({ project }: Props) {
                     Please select one of the available DA bridges to view its
                     risks and detailed analysis.
                   </div>
-                  <div className="flex flex-col lg:h-[278px] lg:overflow-y-scroll">
+                  <div className="flex flex-col lg:h-[278px]">
                     <div className="hidden flex-row gap-4 rounded-t-lg border-surface-tertiary bg-surface-secondary px-4 py-2 text-xs font-semibold uppercase text-secondary dark:bg-zinc-800 md:flex md:border-b">
                       <div className="w-12"></div>
                       <div className="flex-1">DA Bridge</div>
@@ -93,7 +93,7 @@ export function DaProjectSummary({ project }: Props) {
                           className={cn(
                             'flex min-h-[56px] flex-row gap-4 rounded-lg border-surface-tertiary bg-surface-secondary px-4 py-2 md:rounded-none md:border-b md:bg-transparent',
                             // Hide 3rd and further bridges on mobile (will be shown in a drawer)
-                            index > 2 && 'md:hidden',
+                              index > 2 && 'max-md:hidden',
                           )}
                         >
                           <div className="flex items-center px-1 md:px-3">
@@ -119,7 +119,7 @@ export function DaProjectSummary({ project }: Props) {
                           <div className="hidden flex-[1.5] flex-row items-center md:flex lg:flex-1">
                             {bridge.usedIn.length > 0 ? (
                               <ProjectsUsedIn
-                                className="h-5 flex-wrap justify-start"
+                                  className="h-5 justify-start"
                                 usedIn={bridge.usedIn}
                                 maxProjects={4}
                               />
