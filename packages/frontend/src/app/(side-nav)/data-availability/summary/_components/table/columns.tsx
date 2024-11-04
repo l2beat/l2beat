@@ -125,6 +125,10 @@ const membersColumn = columnHelper.display({
       return <NaBadge />
     }
 
+    if (firstBridge.hideMembers) {
+      return <NaBadge />
+    }
+
     return <DacMembersCell {...firstBridge} />
   },
 })
