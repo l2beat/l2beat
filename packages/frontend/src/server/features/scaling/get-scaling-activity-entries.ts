@@ -89,16 +89,23 @@ function getScalingProjectActivityEntry(
     }),
     entryType: 'activity' as const,
     dataSource: project.display.activityDataSource,
+    dataAvailability: {
+      layer: project.dataAvailability?.layer,
+    },
     data,
   }
 }
 
-function getEthereumEntry(data: ActivityProjectTableData) {
+function getEthereumEntry(
+  data: ActivityProjectTableData,
+): ScalingActivityEntry {
   return {
     ...getCommonScalingEntry({ project: 'ethereum' }),
     entryType: 'activity' as const,
-
     dataSource: 'Blockchain RPC' as const,
+    dataAvailability: {
+      layer: undefined,
+    },
     data,
   }
 }

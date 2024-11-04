@@ -22,9 +22,9 @@
   "dependencies": {
     "@bull-board/api": "^5.17.1",
     "@bull-board/express": "^5.17.1",
-    "@l2beat/backend-tools": "*",
-    "@l2beat/database": "*",
-    "@l2beat/shared-pure": "*",
+    "@l2beat/backend-tools": "workspace:*",
+    "@l2beat/database": "workspace:*",
+    "@l2beat/shared-pure": "workspace:*",
     "@types/express": "^4.17.21",
     "bullmq": "^5.7.8",
     "dotenv": "^16.4.5",

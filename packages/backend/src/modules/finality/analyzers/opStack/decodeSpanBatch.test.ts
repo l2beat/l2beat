@@ -11,7 +11,7 @@ describe(decodeSpanBatch.name, () => {
     const buff = readFileSync(path.join(__dirname, 'stub/batch_base.json'))
     const stub = JSON.parse(buff.toString()) as {
       batch: string
-      decoded: { timestamp: number; txCount: number }[]
+      decoded: { timestamp: number; blockNumber: number; txCount: number }[]
     }
 
     const batch = byteArrFromHexStr(stub.batch)

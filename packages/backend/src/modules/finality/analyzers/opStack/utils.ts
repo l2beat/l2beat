@@ -90,7 +90,7 @@ async function decompressToByteArrayZlib(compressedData: Uint8Array) {
       chunks.push(value)
       totalSize += value.length
     } catch (err) {
-      if (err instanceof Error && err.message === 'unexpected end of file')
+      if (err instanceof Error && 'code' in err && err.code === 'Z_BUF_ERROR')
         break
       throw err
     }

@@ -31,7 +31,7 @@ describe('checkVerifiedContracts:addresses', () => {
     for (const contract of contracts) {
       if (verified[contract.toString()] === undefined) {
         throw new Error(
-          `Not all contracts have been checked for verification.\nGo to packages/config and run yarn check-verified-contracts\n The missing contract's address is ${contract.toString()} on ${chain}`,
+          `Not all contracts have been checked for verification.\nGo to packages/config and run pnpm check-verified-contracts\n The missing contract's address is ${contract.toString()} on ${chain}`,
         )
       }
     }

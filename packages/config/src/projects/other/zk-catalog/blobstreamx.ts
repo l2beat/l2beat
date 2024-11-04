@@ -1,8 +1,9 @@
-import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { PROOFS } from './common/proofSystems'
 import { ZkCatalogProject } from './types'
 
 export const blobstreamx: ZkCatalogProject = {
+  createdAt: new UnixTime(1720012036), // 2024-07-03T13:07:16Z
   display: {
     slug: 'blobstreamx',
     name: 'BlobstreamX',

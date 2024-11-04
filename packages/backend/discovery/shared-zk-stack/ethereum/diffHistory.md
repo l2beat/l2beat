@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xde45bfbb66b4c0ba71900ab28b3dcd0ed29ac97c
+
+# Diff at Wed, 30 Oct 2024 08:32:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@133f6bdd684278299c8df162b697d52fa91f3aef block: 21064368
+- current block number: 21077285
+
+## Description
+
+Sophon tenth batch committed, project PR is ready, waiting for them.
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
++++ description: If non-zero, the first batch has been posted.
++++ severity: MEDIUM
+      values.sophonTenthBatchTS:
+-        0
++        1730241371
+    }
+```
+
 Generated with discovered.json: 0x49be4a26135f66dff4b13920e7b71330ccc21716
 
 # Diff at Mon, 28 Oct 2024 13:16:57 GMT:

@@ -7,6 +7,7 @@ import { EM_DASH } from '~/consts/characters'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { DaFallbackCell } from '../../../_components/da-fallback-cell'
+import { DaLayerCell } from '../../../_components/da-layer-cell'
 import { DacMembersCell } from '../../../_components/dac-members-cell'
 import { virtual, withSpanByBridges } from '../../../_utils/col-utils'
 import {
@@ -17,8 +18,16 @@ import { DaEconomicSecurityCell } from './da-economic-security-cell'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
 
-export const [indexColumn, logoColumn, daLayerColumn] =
-  getDaCommonProjectColumns(columnHelper)
+export const [indexColumn, logoColumn] = getDaCommonProjectColumns(columnHelper)
+
+export const daLayerColumn = columnHelper.accessor('name', {
+  header: 'DA Layer',
+  cell: (ctx) => <DaLayerCell entry={ctx.row.original} />,
+  meta: {
+    tooltip:
+      'The data availability layer where the data (transaction data or state diffs) is posted.',
+  },
+})
 
 export const daRisksColumn = columnHelper.display({
   id: 'da-risks',
@@ -123,12 +132,20 @@ const challengeMechanismColumn = columnHelper.accessor('challengeMechanism', {
     </TwoRowCell>
   ),
   enableSorting: false,
+  meta: {
+    tooltip:
+      'Shows if there is a mechanism that enables users to dispute the availability or accuracy of data committed by the DA provider',
+  },
 })
 
 const fallbackColumn = columnHelper.accessor('fallback', {
   header: 'Fallback',
   cell: (ctx) => <DaFallbackCell entry={ctx.row.original} />,
   enableSorting: false,
+  meta: {
+    tooltip:
+      'Is there a mechanism that allows data to be posted to an alternative DA layer in case of downtime or unavailability of the primary layer? If so, where is the data posted?',
+  },
 })
 
 export const customColumns = [

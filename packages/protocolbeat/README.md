@@ -1,3 +1,3 @@
 # @protocol-beat/frontend
 
-Run `yarn dev` to start the development server.
+Run `pnpm dev` to start the development server.

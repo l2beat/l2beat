@@ -32,7 +32,7 @@ async function main() {
 function parseCliArguments(): ProjectChain {
   const [chain, project] = process.argv.slice(2)
   if (!chain || !project) {
-    console.log('Usage: yarn analyze-project <chain> <project>')
+    console.log('Usage: pnpm analyze-project <chain> <project>')
     process.exit(1)
   }
   return { chain, project }
