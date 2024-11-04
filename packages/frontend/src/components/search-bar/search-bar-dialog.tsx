@@ -105,14 +105,14 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
               {filteredProjects.map((project) => {
                 const label = typeToLabel(project.type)
                 return (
-                  <CommandItem
+                  <SearchBarItem
                     key={project.id}
-                    className="cursor-pointer gap-2 rounded-lg"
                     onSelect={() => {
                       setOpen(false)
                       setValue('')
                       router.push(project.href)
                     }}
+                    label={label}
                   >
                     <Image
                       src={project.iconUrl}
@@ -122,12 +122,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                       height={20}
                     />
                     {project.name}
-                    {label && (
-                      <div className="ml-auto text-xs text-secondary">
-                        {label}
-                      </div>
-                    )}
-                  </CommandItem>
+                  </SearchBarItem>
                 )
               })}
             </CommandGroup>
@@ -137,22 +132,17 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
               {filteredPages.map((page) => {
                 const label = typeToLabel(page.type)
                 return (
-                  <CommandItem
+                  <SearchBarItem
                     key={page.href}
-                    className="cursor-pointer gap-2 rounded-lg"
                     onSelect={() => {
                       setOpen(false)
                       setValue('')
                       router.push(page.href)
                     }}
+                    label={label}
                   >
                     {page.name}
-                    {label && (
-                      <div className="ml-auto text-xs text-secondary">
-                        {label}
-                      </div>
-                    )}
-                  </CommandItem>
+                  </SearchBarItem>
                 )
               })}
             </CommandGroup>
@@ -160,6 +150,22 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
         </CommandList>
       </Command>
     </CommandDialog>
+  )
+}
+
+function SearchBarItem({
+  onSelect,
+  children,
+  label,
+}: { onSelect: () => void; children: React.ReactNode; label?: string }) {
+  return (
+    <CommandItem
+      className="cursor-pointer gap-2 rounded-lg"
+      onSelect={onSelect}
+    >
+      {children}
+      {label && <div className="ml-auto text-xs text-secondary">{label}</div>}
+    </CommandItem>
   )
 }
 
