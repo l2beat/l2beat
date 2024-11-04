@@ -3,7 +3,10 @@ import {
   type HostChainRisksWarningProps,
 } from '~/components/host-chain-risks-warning'
 import { Markdown } from '~/components/markdown/markdown'
-import { type ProjectDetailsRelatedProjectBannerProps } from '~/components/project-details-related-project-banner'
+import {
+  ProjectDetailsRelatedProjectBanner,
+  type ProjectDetailsRelatedProjectBannerProps,
+} from '~/components/project-details-related-project-banner'
 import { UnderReviewCallout } from '../under-review-callout'
 import { TechnologyIncompleteNote } from './contracts/technology-incomplete-note'
 import { ProjectSection } from './project-section'
@@ -51,6 +54,12 @@ export function TechnologySection({
               <RiskList risks={item.risks} />
               <ReferenceList references={item.references} />{' '}
             </>
+          )}
+          {item.relatedProjectBanner && (
+            <ProjectDetailsRelatedProjectBanner
+              className="mt-4 md:mt-6"
+              {...item.relatedProjectBanner}
+            />
           )}
         </div>
       ))}
