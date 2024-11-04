@@ -7,7 +7,10 @@ import { ChartProvider } from '~/components/chart/core/chart-provider'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
 import { type CostsUnit } from '~/server/features/scaling/costs/types'
-import { type CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
+import {
+  type CostsTimeRange,
+  rangeToResolution,
+} from '~/server/features/scaling/costs/utils/range'
 import { api } from '~/trpc/react'
 import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
 import { useChartLoading } from '../core/chart-loading-context'
@@ -45,7 +48,11 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
         range={range}
         isLoading={isLoading}
         renderHoverContents={(data) => (
-          <CostsChartHover data={data} unit={unit} />
+          <CostsChartHover
+            data={data}
+            unit={unit}
+            resolution={rangeToResolution(range)}
+          />
         )}
       >
         <ChartControlsWrapper>

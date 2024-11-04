@@ -11,7 +11,7 @@ export function TvlChartHover({ data }: { data: TvlChartPointData }) {
   const formattedUsd = formatCurrency(data.usdValue, 'usd')
   const formattedEth = formatCurrency(data.ethValue, 'eth')
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex min-w-44 flex-col gap-1">
       <div className="mb-1 whitespace-nowrap">
         {formatTimestamp(data.timestamp, {
           mode: 'datetime',

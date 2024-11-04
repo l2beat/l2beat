@@ -16,7 +16,7 @@ import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scal
 import { type CostsUnit } from '~/server/features/scaling/costs/types'
 import { type CostsProjectsFilter } from '~/server/features/scaling/costs/utils/get-costs-projects'
 import {
-  type CostsTimeRange,
+  type CostsResolution,
   rangeToResolution,
 } from '~/server/features/scaling/costs/utils/range'
 import { api } from '~/trpc/react'
@@ -38,6 +38,8 @@ export function ScalingCostsChart({ milestones, entries }: Props) {
 
   const includeFilters = useScalingFilter()
   const filters = useScalingFilterValues()
+
+  const resolution = rangeToResolution(range)
 
   const filteredEntries = useMemo(
     () => entries.filter((item) => includeFilters(item)),
@@ -76,10 +78,10 @@ export function ScalingCostsChart({ milestones, entries }: Props) {
         range={range}
         isLoading={isLoading}
         renderHoverContents={(data) => (
-          <CostsChartHover data={data} unit={unit} />
+          <CostsChartHover data={data} unit={unit} resolution={resolution} />
         )}
       >
-        <Header range={range} chartRange={chartRange} />
+        <Header resolution={resolution} chartRange={chartRange} />
         <Chart />
         <ChartControlsWrapper>
           <UnitControls unit={unit} setUnit={setUnit} />
@@ -94,10 +96,9 @@ export function ScalingCostsChart({ milestones, entries }: Props) {
 }
 
 function Header({
-  range,
+  resolution,
   chartRange,
-}: { range: CostsTimeRange; chartRange: [number, number] | undefined }) {
-  const resolution = rangeToResolution(range)
+}: { resolution: CostsResolution; chartRange: [number, number] | undefined }) {
   return (
     <header>
       <h1 className="text-xl font-bold first-letter:capitalize md:text-2xl">

@@ -1,11 +1,11 @@
 {
   "name": "zkfair",
   "chain": "ethereum",
-  "blockNumber": 20711816,
-  "configHash": "0xb7055c80cbad157609938410529e9cd3df380055c0f402a834c492918f2cba62",
+  "blockNumber": 21086404,
+  "configHash": "0xd74248aed79841020ff4350caff450dfaf0264620ed10fd3d2d712c5d10a19d0",
   "contracts": [
     {
-      "name": "BridgeAdminMultiSig",
+      "name": "ZKFairAdmin",
       "address": "0x0110B1B231aA3b96a94c900eb3056297526AB725",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -376,7 +376,7 @@
       }
     },
     {
-      "name": "ZKFairAdmin",
+      "name": "BridgeAdminMultiSig",
       "address": "0xcd14BE1959928BB8c160D11817E2BE2129e2F25F",
       "template": "GnosisSafe",
       "sourceHashes": [

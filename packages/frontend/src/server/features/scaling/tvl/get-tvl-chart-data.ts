@@ -76,7 +76,6 @@ function getChartData(
   ethPrices: Record<number, number>,
   options: {
     excludeAssociatedTokens: boolean
-
     forTotal: boolean
   },
 ) {
