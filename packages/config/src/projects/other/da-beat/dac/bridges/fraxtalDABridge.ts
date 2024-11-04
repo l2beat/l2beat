@@ -18,10 +18,10 @@ export const fraxtalDABridge = {
   createdAt: new UnixTime(1723022143), // 2024-04-03T10:08:59Z
   type: 'NoBridge',
   display: {
-    name: 'DA Bridge',
+    name: 'No Bridge',
     slug: 'da',
     description:
-      'The DA bridge only stores IPFS hash commitments posted by the sequencer. It is not possible to verify blob inclusion against the data commitments onchain.',
+      'The SequencerInbox only stores IPFS hash commitments posted by the sequencer. It is not possible to verify blob inclusion against the data commitments onchain.',
     links: {
       websites: ['https://redstone.xyz/'],
       apps: ['https://redstone.xyz/deposit'],
@@ -39,13 +39,13 @@ export const fraxtalDABridge = {
       ethereum: [
         {
           address: EthereumAddress(sequencerInbox),
-          name: 'DA Bridge (EOA)',
+          name: 'SequencerInbox',
           description:
-            'This DA bridge address is used to store transaction batch hashes as data availability commitments.',
+            'This address is used to store transaction batch hashes as data availability commitments.',
         },
         discovery.getContractDetails('ProxyAdmin', {
           description:
-            'The ProxyAdmin contract is the owner of SystemConfig and can change the address of the DA bridge for the system.',
+            'The ProxyAdmin contract is the owner of SystemConfig and can change the address of the SequencerInbox for the system.',
         }),
       ],
     },
@@ -62,7 +62,7 @@ export const fraxtalDABridge = {
           discovery.getPermissionedAccount('SystemConfig', 'batcherHash'),
         ],
         description:
-          'Central actor allowed to relay DA commitments to the DA bridge.',
+          'Central actor allowed to relay DA commitments to the SequencerInbox.',
       },
       {
         name: 'SystemConfig owner',
