@@ -20,8 +20,7 @@ export function ProjectsUsedIn({ usedIn, className, maxProjects = 5 }: Props) {
       <Tooltip>
         <TooltipTrigger>No L2 😔</TooltipTrigger>
         <TooltipContent>
-          There are no scaling projects listed on L2BEAT that use this DA layer
-          and bridge.
+          There are no scaling projects listed on L2BEAT that use this solution.
         </TooltipContent>
       </Tooltip>
     )
