@@ -1,4 +1,4 @@
-// This file is symlinked to protocolbeat frontend! Do not import anything here
+// This file is duplicated in protocolbeat and l2b!
 
 export type ApiProjectsResponse = ApiProjectEntry[]
 

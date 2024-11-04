@@ -1,1 +1,113 @@
-/Users/piotr/Documents/work/l2beat/packages/l2b/src/implementations/discovery-ui/types.ts
+// This file is duplicated in protocolbeat and l2b!
+
+export type ApiProjectsResponse = ApiProjectEntry[]
+
+export interface ApiProjectEntry {
+  name: string
+  chains: string[]
+}
+
+export interface ApiProjectResponse {
+  chains: ApiProjectChain[]
+}
+
+export interface ApiProjectChain {
+  name: string
+  initialContracts: ApiProjectContract[]
+  discoveredContracts: ApiProjectContract[]
+  eoas: ApiAddressEntry[]
+}
+
+export type ApiAddressType =
+  | 'EOA'
+  | 'Unverified'
+  | 'Token'
+  | 'Multisig'
+  | 'Diamond'
+  | 'Timelock'
+  | 'Contract'
+  | 'Unknown'
+
+export interface ApiAddressEntry {
+  name?: string
+  type: ApiAddressType
+  referencedBy: AddressFieldValue[]
+  address: string
+}
+
+export interface Field {
+  name: string
+  value: FieldValue
+}
+
+export type FieldValue =
+  | AddressFieldValue
+  | HexFieldValue
+  | StringFieldValue
+  | NumberFieldValue
+  | BooleanFieldValue
+  | ArrayFieldValue
+  | ObjectFieldValue
+  | UnknownFieldValue
+  | ErrorFieldValue
+
+export interface AddressFieldValue {
+  type: 'address'
+  name?: string
+  addressType: ApiAddressType
+  address: string
+}
+
+export interface HexFieldValue {
+  type: 'hex'
+  value: string
+}
+
+export interface StringFieldValue {
+  type: 'string'
+  value: string
+}
+
+export interface NumberFieldValue {
+  type: 'number'
+  value: string
+}
+
+export interface BooleanFieldValue {
+  type: 'boolean'
+  value: boolean
+}
+
+export interface ArrayFieldValue {
+  type: 'array'
+  values: FieldValue[]
+}
+
+export interface ObjectFieldValue {
+  type: 'object'
+  value: Record<string, FieldValue>
+}
+
+export interface UnknownFieldValue {
+  type: 'unknown'
+  value: string
+}
+
+export interface ErrorFieldValue {
+  type: 'error'
+  error: string
+}
+
+export interface ApiProjectContract extends ApiAddressEntry {
+  fields: Field[]
+  abis: ApiAbi[]
+}
+
+export interface ApiAbi {
+  address: string
+  entries: string[]
+}
+
+export interface ApiCodeResponse {
+  sources: { name: string; code: string }[]
+}
