@@ -18,10 +18,7 @@ export const env = createEnv({
    * Server-only environment variables.
    */
   server: {
-    DATABASE_URL: z
-      .string()
-      .url()
-      .default('postgresql://postgres:password@localhost:5432/l2beat_local'),
+    DATABASE_URL: z.string().url(),
     ETHEREUM_RPC_URL: z.string().url().default('https://cloudflare-eth.com'),
     MOCK: coerceBoolean.default('false'),
     NODE_ENV: z
