@@ -16,7 +16,7 @@ export type RecategorisedScalingEntry<
 export function groupByMainCategories<
   T extends { category: string | undefined; isOther?: boolean },
 >(projects: T[]) {
-  if (env.FEATURE_FLAG_OTHER_PROJECTS === true) {
+  if (env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS === true) {
     const [others, rest] = partition(projects, (project) => project.isOther)
     const [rollups, validiumsAndOptimiums] = partition(
       rest,

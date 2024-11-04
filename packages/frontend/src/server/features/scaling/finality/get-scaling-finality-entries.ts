@@ -42,7 +42,7 @@ export async function getScalingFinalityEntries() {
     })
     .filter(notUndefined)
 
-  if (env.FEATURE_FLAG_RECATEGORISATION) {
+  if (env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION) {
     return {
       type: 'recategorised' as const,
       entries: groupByMainCategories(orderByStageAndTvl(entries, tvl)),

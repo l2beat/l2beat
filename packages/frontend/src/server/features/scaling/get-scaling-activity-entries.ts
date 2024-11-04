@@ -49,7 +49,7 @@ export async function getScalingActivityEntries() {
     .filter(notUndefined)
     .sort((a, b) => b.data.pastDayTps - a.data.pastDayTps)
 
-  if (env.FEATURE_FLAG_RECATEGORISATION) {
+  if (env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION) {
     const recategorisedEntries = groupByMainCategories(
       orderByStageAndPastDayTps(entries),
     )
