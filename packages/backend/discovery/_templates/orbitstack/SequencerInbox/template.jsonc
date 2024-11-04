@@ -7,13 +7,30 @@
   "ignoreRelatives": ["reader4844"],
   "fields": {
     "maxTimeVariation": {
-      "description": "Struct: delayBlocks, futureBlocks, delaySeconds, futureSeconds. onlyRollupOwner settable. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
+      "description": "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed.",
+      "returnType": "(uint256 delayBlocks, uint256 futureBlocks, uint256 delaySeconds, uint256 futureSeconds)"
     },
     "sequencerVersion": {
       "handler": {
         "type": "arbitrumSequencerVersion"
       }
     },
+    "postsBlobs": {
+      "handler": {
+        "type": "orbitPostsBlobs"
+      }
+    },
+    // TODO: can only be used as soon as 0x00 is ignored for permissions
+    // "batchPosterManager": {
+    //   "target": {
+    //     "permissions": [
+    //       {
+    //         "type": "configure",
+    //         "description": "can add/remove batchPosters (Sequencers)."
+    //       }
+    //     ]
+    //   }
+    // },
     "batchPosters": {
       "target": {
         "permissions": [

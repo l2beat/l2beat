@@ -2,7 +2,7 @@
   "name": "degen",
   "chain": "base",
   "blockNumber": 21842198,
-  "configHash": "0x9937bc707ee19031c0ba28b31fb87bc85aee657bc36259c7bfd3a25dc757d067",
+  "configHash": "0x920b8029b1011a8f28d3016f6841e9e6b1948fb7c4421d3790536ece94e84c49",
   "contracts": [
     {
       "name": "Inbox",
@@ -164,6 +164,7 @@
           "delaySeconds": 86400000,
           "futureSeconds": 3600
         },
+        "postsBlobs": false,
         "reader4844": "0xB48E4A4B8EC04c9F1819302FD370f5B3797c638C",
         "rollup": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
         "sequencerVersion": "0x88",
@@ -174,7 +175,7 @@
       },
       "fieldMeta": {
         "maxTimeVariation": {
-          "description": "Struct: delayBlocks, futureBlocks, delaySeconds, futureSeconds. onlyRollupOwner settable. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
+          "description": "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
         }
       },
       "derivedName": "SequencerInbox"
@@ -291,6 +292,12 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
+          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "via": [{ "address": "0xaA3A7A2ec2477A61082E1C41a2c6710587917028" }]
+        },
         {
           "permission": "upgrade",
           "target": "0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7",
@@ -414,6 +421,11 @@
           "target": "0xFB48D385Fa3da33762B350e1d705b9E46054E677"
         },
         {
+          "permission": "configure",
+          "target": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
+          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+        },
+        {
           "permission": "upgrade",
           "target": "0xD34F3a11F10DB069173b32d84F02eDA578709143"
         }
@@ -495,6 +507,17 @@
           "permission": "challenge",
           "target": "0x1BCdC0eCc1e4A31E5dB0542f81895d8319A757Ca",
           "via": []
+        },
+        {
+          "permission": "configure",
+          "target": "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104",
+          "via": [
+            {
+              "address": "0xaA3A7A2ec2477A61082E1C41a2c6710587917028",
+              "delay": 0,
+              "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+            }
+          ]
         },
         {
           "permission": "propose",
@@ -1469,8 +1492,8 @@
     "orbitstack/OneStepProverMath": "0x8dd8aebb517eb6eaf15437ddbb90dff66f2b14d9d6b5390dd87fbdab15168188",
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
-    "orbitstack/RollupProxy": "0x9de477a7ec4abe22558d85184e1ff68cebea26c903f45220337156ae3acf3dc5",
-    "orbitstack/SequencerInbox": "0x80eed651d83fd6cd84047260bf02ec5e3a5f21b36049e1e45f34bd0a452e02f9",
+    "orbitstack/RollupProxy": "0x896aca243cf3d45ddf79cc142d37874406a6e07e5572f1450df6adccd0d627ac",
+    "orbitstack/SequencerInbox": "0x746f38463ee5aff9c2f6051c828002565b57c702a6be447c979d1996dd6bd673",
     "orbitstack/UpgradeExecutor": "0xa25e02367a436cebea22481663da914bbf1fd9492d903659cc6ec9ddbaccb241"
   }
 }

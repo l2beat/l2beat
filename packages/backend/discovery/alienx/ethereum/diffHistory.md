@@ -1,3 +1,143 @@
+Generated with discovered.json: 0x71025f01e4c383d230c5fae81e7fcb4d1cf17314
+
+# Diff at Mon, 04 Nov 2024 07:52:51 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@950c85bf556f084c302d2b03100375cf3c7ed376 block: 21092323
+- current block number: 21092323
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21092323 (main branch discovery), not current.
+
+```diff
+    contract AlienXMultisig (0x32f6CAE58A89aA7c91D736Bb1100E377C570bb27) {
+    +++ description: None
+      receivedPermissions.10:
++        {"permission":"upgrade","target":"0xeA685ba6f0C3ec5e7891C17CfFBD009EbAdC9E49","via":[{"address":"0x123C1E324BC742295B4278B41C4E33831C77655C"},{"address":"0xD4972734Ed659c03ca3e476e06Fc6f016397dfD4"}]}
+      receivedPermissions.9.target:
+-        "0xeA685ba6f0C3ec5e7891C17CfFBD009EbAdC9E49"
++        "0xD4972734Ed659c03ca3e476e06Fc6f016397dfD4"
+      receivedPermissions.8.target:
+-        "0xD4972734Ed659c03ca3e476e06Fc6f016397dfD4"
++        "0xCA2AA2AA53C2225849Cc711FD472E4D2bFcD634b"
+      receivedPermissions.7.target:
+-        "0xCA2AA2AA53C2225849Cc711FD472E4D2bFcD634b"
++        "0xb7d188eb30e7984f93Bec34Ee8b45A148bd594C6"
+      receivedPermissions.6.target:
+-        "0xb7d188eb30e7984f93Bec34Ee8b45A148bd594C6"
++        "0x7b0159484f5cb4F3D4bb496A2eD7A01F409e70D1"
+      receivedPermissions.5.target:
+-        "0x7b0159484f5cb4F3D4bb496A2eD7A01F409e70D1"
++        "0x6fa8b24c85409A4fcb541c9964766862aA007f39"
+      receivedPermissions.5.via.1:
+-        {"address":"0xD4972734Ed659c03ca3e476e06Fc6f016397dfD4"}
+      receivedPermissions.5.via.0.address:
+-        "0x123C1E324BC742295B4278B41C4E33831C77655C"
++        "0xD4972734Ed659c03ca3e476e06Fc6f016397dfD4"
+      receivedPermissions.4.target:
+-        "0x6fa8b24c85409A4fcb541c9964766862aA007f39"
++        "0x69aB55146Bc52A0b31F74dBDc527b8B7e9c7C27c"
+      receivedPermissions.4.via.1:
++        {"address":"0xD4972734Ed659c03ca3e476e06Fc6f016397dfD4"}
+      receivedPermissions.4.via.0.address:
+-        "0xD4972734Ed659c03ca3e476e06Fc6f016397dfD4"
++        "0x123C1E324BC742295B4278B41C4E33831C77655C"
+      receivedPermissions.3.target:
+-        "0x69aB55146Bc52A0b31F74dBDc527b8B7e9c7C27c"
++        "0x5625d2a46fc582b3e6dE5288D9C5690B20EBdb8D"
+      receivedPermissions.2.target:
+-        "0x5625d2a46fc582b3e6dE5288D9C5690B20EBdb8D"
++        "0x19a6Ffc45dDe55D93c99114ddC3b277025e5fDf3"
+      receivedPermissions.1.target:
+-        "0x19a6Ffc45dDe55D93c99114ddC3b277025e5fDf3"
++        "0x01c1Be00BA202332a1A9244D2C36f51B8C2aA84b"
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      receivedPermissions.0.target:
+-        "0x01c1Be00BA202332a1A9244D2C36f51B8C2aA84b"
++        "0x6fa8b24c85409A4fcb541c9964766862aA007f39"
+      receivedPermissions.0.via.1:
+-        {"address":"0xD4972734Ed659c03ca3e476e06Fc6f016397dfD4"}
+      receivedPermissions.0.via.0.address:
+-        "0x123C1E324BC742295B4278B41C4E33831C77655C"
++        "0xD4972734Ed659c03ca3e476e06Fc6f016397dfD4"
+      receivedPermissions.0.description:
++        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract L1ERC20Gateway (0x5625d2a46fc582b3e6dE5288D9C5690B20EBdb8D) {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      template:
++        "orbitstack/ERC20Gateway"
+      displayName:
++        "ERC20Gateway"
+      description:
++        "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract."
+    }
+```
+
+```diff
+    contract RollupProxy (0x6fa8b24c85409A4fcb541c9964766862aA007f39) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.3:
++        {"permission":"upgrade","target":"0x32f6CAE58A89aA7c91D736Bb1100E377C570bb27","via":[{"address":"0xD4972734Ed659c03ca3e476e06Fc6f016397dfD4","delay":0}]}
+      issuedPermissions.2.permission:
+-        "upgrade"
++        "propose"
+      issuedPermissions.2.target:
+-        "0x32f6CAE58A89aA7c91D736Bb1100E377C570bb27"
++        "0x32AD06477129F4470294Fbaf11C0FC682d92E4A3"
+      issuedPermissions.2.via.0:
+-        {"address":"0xD4972734Ed659c03ca3e476e06Fc6f016397dfD4","delay":0}
+      issuedPermissions.1.permission:
+-        "propose"
++        "configure"
+      issuedPermissions.1.target:
+-        "0x32AD06477129F4470294Fbaf11C0FC682d92E4A3"
++        "0x32f6CAE58A89aA7c91D736Bb1100E377C570bb27"
+      issuedPermissions.1.via.0:
++        {"address":"0xD4972734Ed659c03ca3e476e06Fc6f016397dfD4","delay":0,"description":"can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."}
+    }
+```
+
+```diff
+    contract SequencerInbox (0xb7d188eb30e7984f93Bec34Ee8b45A148bd594C6) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
++++ description: Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed.
+      values.maxTimeVariation:
+-        [17280,48,86400,3600]
++        {"delayBlocks":17280,"futureBlocks":48,"delaySeconds":86400,"futureSeconds":3600}
+      values.postsBlobs:
++        false
+      fieldMeta.maxTimeVariation.description:
+-        "Struct: delayBlocks, futureBlocks, delaySeconds, futureSeconds. onlyRollupOwner settable. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
++        "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xD4972734Ed659c03ca3e476e06Fc6f016397dfD4) {
+    +++ description: Central contract defining the access control for upgrading the system contract implementations.
+      directlyReceivedPermissions.2:
++        {"permission":"upgrade","target":"0x6fa8b24c85409A4fcb541c9964766862aA007f39"}
+      directlyReceivedPermissions.1.permission:
+-        "upgrade"
++        "configure"
+      directlyReceivedPermissions.1.description:
++        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
 Generated with discovered.json: 0xcfc7df214e60980531b8c905d428d75fb426b21a
 
 # Diff at Fri, 01 Nov 2024 10:53:17 GMT:
