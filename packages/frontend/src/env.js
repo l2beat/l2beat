@@ -39,6 +39,7 @@ export const env = createEnv({
    * Environment variables exposed to the client (should be prefixed with `NEXT_PUBLIC_`)
    */
   client: {
+    NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT: featureFlag.default('false'),
     NEXT_PUBLIC_FEATURE_FLAG_ASSET_RISKS: featureFlag.default('false'),
     NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION: featureFlag.default('false'),
     NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS: featureFlag.default('false'),
@@ -50,10 +51,6 @@ export const env = createEnv({
     NEXT_PUBLIC_PLAUSIBLE_ENABLED: coerceBoolean.optional(),
     NEXT_PUBLIC_SHOW_HIRING_BADGE: featureFlag.default('false'),
     NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID: z.string().optional(),
-  },
-
-  shared: {
-    FEATURE_FLAG_DA_BEAT: featureFlag.default('false'),
   },
 
   /**
@@ -73,6 +70,8 @@ export const env = createEnv({
     EXCLUDED_ACTIVITY_PROJECTS: process.env.EXCLUDED_ACTIVITY_PROJECTS,
     EXCLUDED_TVL_PROJECTS: process.env.EXCLUDED_TVL_PROJECTS,
     // Client
+    NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT:
+      process.env.NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT,
     NEXT_PUBLIC_FEATURE_FLAG_ASSET_RISKS:
       process.env.NEXT_PUBLIC_FEATURE_FLAG_ASSET_RISKS,
     NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION:
@@ -87,8 +86,6 @@ export const env = createEnv({
     NEXT_PUBLIC_SHOW_HIRING_BADGE: process.env.FEATURE_FLAG_HIRING,
     NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID:
       process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID,
-    // Shared
-    FEATURE_FLAG_DA_BEAT: process.env.FEATURE_FLAG_DA_BEAT,
   },
 
   /**

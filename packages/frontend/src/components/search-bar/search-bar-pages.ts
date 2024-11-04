@@ -86,7 +86,7 @@ export const searchBarPages = withIndex([
     tags: ['pages', 'bridges'],
     href: '/bridges/archived',
   },
-  ...(env.FEATURE_FLAG_DA_BEAT
+  ...(env.NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT
     ? [
         {
           type: 'da' as const,

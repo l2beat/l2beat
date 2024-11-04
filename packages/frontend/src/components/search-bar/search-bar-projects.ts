@@ -28,7 +28,7 @@ export const searchBarProjects = toSearchBarProjects([
   ...layer2s,
   ...layer3s,
   ...bridges,
-  ...(env.FEATURE_FLAG_DA_BEAT ? daLayers : []),
+  ...(env.NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT ? daLayers : []),
   ...zkCatalogProjects,
 ])
 

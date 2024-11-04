@@ -108,7 +108,7 @@ export async function NavLayout({
         },
       ],
     },
-    env.FEATURE_FLAG_DA_BEAT && {
+    env.NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT && {
       type: 'multiple',
       title: 'Data Availability',
       match: 'data-availability',
