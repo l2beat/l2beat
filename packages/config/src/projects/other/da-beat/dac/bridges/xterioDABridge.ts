@@ -1,10 +1,11 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
 import { xterio } from '../../../../layer2s/xterio'
 import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../../types'
 import { DaBridge } from '../../types/DaBridge'
 import { DaRelayerFailureRisk } from '../../types/DaRelayerFailureRisk'
 import { toUsedInProject } from '../../utils/to-used-in-project'
+import { DacTransactionDataType } from '../../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('xterio')
 
@@ -16,7 +17,8 @@ const sequencerInbox = discovery.getContractValue<string>(
 export const xterioDABridge = {
   id: 'xterioDABridge',
   createdAt: new UnixTime(1723022143), // 2024-04-03T10:08:59Z
-  type: 'NoBridge',
+  type: 'DAC',
+  chain: ChainId.ETHEREUM,
   display: {
     name: 'DA Bridge',
     slug: 'da',
@@ -93,6 +95,10 @@ export const xterioDABridge = {
       },
     ],
   },
+  requiredMembers: 0,
+  membersCount: 0,
+  hideMembers: true,
+  transactionDataType: DacTransactionDataType.TransactionData,
   usedIn: toUsedInProject([xterio]),
   risks: {
     committeeSecurity: DaCommitteeSecurityRisk.NoCommiteeSecurity(),
