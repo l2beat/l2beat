@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { ReactNode } from 'react'
 import { FieldValue } from '../api/types'
 import { AddressDisplay } from './AddressDisplay'
@@ -46,9 +47,16 @@ export function FieldValueDisplay({
     const QUOT_CLOSE = '\u201D'
     inlineDisplay = (
       <p className="break-words font-serif">
-        <strong className="select-none">{QUOT_OPEN}</strong>
+        <strong
+          className={clsx(
+            'select-none text-coffee-600',
+            topLevel && '-ml-[6px] inline-block',
+          )}
+        >
+          {QUOT_OPEN}
+        </strong>
         {value.value}
-        <strong className="select-none">{QUOT_CLOSE}</strong>
+        <strong className="select-none text-coffee-600">{QUOT_CLOSE}</strong>
       </p>
     )
   } else if (value.type === 'number') {
@@ -80,7 +88,7 @@ export function FieldValueDisplay({
     const entries = Object.entries(value.value)
     if (entries.length !== 0) {
       blockDisplay = (
-        <ul className="list-disc pl-4 marker:text-coffee-600">
+        <ul className="list-disc pl-4 marker:font-mono marker:text-coffee-600 marker:text-xs">
           {entries.map(([key, value], i) => (
             <FieldValueDisplay key={i} name={key} value={value} />
           ))}
@@ -100,7 +108,7 @@ export function FieldValueDisplay({
       <li className="text-sm">
         {name && (
           <div className="grid grid-cols-[auto_1fr] items-baseline gap-x-2">
-            <p className="w-max">{name}:</p>
+            <p className="w-max font-mono text-xs">{name}:</p>
             {inlineDisplay}
           </div>
         )}
