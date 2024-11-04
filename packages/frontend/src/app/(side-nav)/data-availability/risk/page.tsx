@@ -1,3 +1,4 @@
+import { CountBadge } from '~/components/badge/count-badge'
 import {
   DirectoryTabs,
   DirectoryTabsContent,
@@ -19,8 +20,12 @@ export default async function Page() {
       <div className="flex flex-col gap-6">
         <DirectoryTabs defaultValue="public">
           <DirectoryTabsList>
-            <DirectoryTabsTrigger value="public">Public</DirectoryTabsTrigger>
-            <DirectoryTabsTrigger value="custom">Custom</DirectoryTabsTrigger>
+            <DirectoryTabsTrigger value="public">
+              Public <CountBadge>{publicSystems.length}</CountBadge>
+            </DirectoryTabsTrigger>
+            <DirectoryTabsTrigger value="custom">
+              Custom <CountBadge>{customSystems.length}</CountBadge>
+            </DirectoryTabsTrigger>
           </DirectoryTabsList>
           <DirectoryTabsContent value="public">
             <DaRiskTable items={publicSystems} />
