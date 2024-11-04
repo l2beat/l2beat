@@ -29,7 +29,7 @@ const config = {
   async webpackFinal(config) {
     config.resolve.alias = {
       react: getAbsolutePath('react'),
-      "react-dom": getAbsolutePath("react-dom")
+      'react-dom': getAbsolutePath('react-dom'),
     }
     return config
   },
