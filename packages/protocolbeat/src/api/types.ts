@@ -11,6 +11,17 @@ export interface ApiProjectResponse {
   chains: ApiProjectChain[]
 }
 
+export interface ApiPreviewResponse {
+  permissions: ApiPreviewPermission[]
+}
+
+export interface ApiPreviewPermission {
+  addresses: string[]
+  name: string
+  description: string
+  multisigParticipants: string[] | undefined
+}
+
 export interface ApiProjectChain {
   name: string
   initialContracts: ApiProjectContract[]

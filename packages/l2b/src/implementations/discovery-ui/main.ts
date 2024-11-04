@@ -2,6 +2,7 @@ import { join } from 'path'
 import { ConfigReader } from '@l2beat/discovery'
 import express from 'express'
 import { getCode } from './getCode'
+import { getPreview } from './getPreview'
 import { getProject } from './getProject'
 import { getProjects } from './getProjects'
 
@@ -20,6 +21,11 @@ export function runDiscoveryUi() {
 
   app.get('/api/projects/:project', (req, res) => {
     const response = getProject(configReader, req.params.project)
+    res.json(response)
+  })
+
+  app.get('/api/projects/:project/preview', (req, res) => {
+    const response = getPreview(req.params.project)
     res.json(response)
   })
 
