@@ -1,6 +1,6 @@
 import { InfoIcon } from '~/icons/info'
 import { type ActivityChartStats } from '~/server/features/scaling/activity/get-activity-chart-stats'
-import { countToUops } from '~/server/features/scaling/activity/utils/count-to-uops'
+import { countPerSecond } from '~/server/features/scaling/activity/utils/count-per-second'
 import { cn } from '~/utils/cn'
 import { formatUops } from '~/utils/number-format/format-uops'
 import { Skeleton } from '../../core/skeleton'
@@ -27,7 +27,7 @@ export function ActivityChartHeader({ stats, range }: Props) {
         {stats !== undefined ? (
           <p className="text-right font-bold group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0">
             <span className="text-xl md:text-2xl">
-              {formatUops(countToUops(stats.latestProjectsTxCount))} UOPS
+              {formatUops(countPerSecond(stats.latestProjectsTxCount))} UOPS
             </span>
           </p>
         ) : (

@@ -7,12 +7,15 @@ import {
 } from 'next/cache'
 import { env } from '~/env'
 import { db } from '~/server/database'
-import { countToUops } from './utils/count-to-uops'
+import { countPerSecond } from './utils/count-per-second'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
+import { getLastDayTps, getLastDayUops } from './utils/get-last-day'
 import { getLastDayRatio } from './utils/get-last-day-ratio'
-import { getLastDayUops } from './utils/get-last-day-uops'
-import { getUopsWeeklyChange } from './utils/get-uops-weekly-change'
-import { sumActivityCount } from './utils/sum-activity-count'
+import {
+  getTpsWeeklyChange,
+  getUopsWeeklyChange,
+} from './utils/get-weekly-change'
+import { sumTpsCount, sumUopsCount } from './utils/sum-activity-count'
 
 export async function getActivityTableData(projects: (Layer2 | Layer3)[]) {
   if (env.MOCK) {
@@ -53,13 +56,20 @@ const getCachedActivityTableData = cache(
         return [
           projectId,
           {
-            change: getUopsWeeklyChange(records),
-            pastDayUops: getLastDayUops(records),
+            tps: {
+              change: getTpsWeeklyChange(records),
+              pastDayCount: getLastDayTps(records),
+              summedCount: sumTpsCount(records),
+            },
+            uops: {
+              change: getUopsWeeklyChange(records),
+              pastDayCount: getLastDayUops(records),
+              summedCount: sumUopsCount(records),
+            },
             maxUops: {
-              value: countToUops(maxUopsCount.uopsCount),
+              value: countPerSecond(maxUopsCount.uopsCount),
               timestamp: maxUopsCount.timestamp.toNumber(),
             },
-            summedCount: sumActivityCount(records),
             ratio: getLastDayRatio(records),
             syncStatus: getSyncStatus(lastRecord.timestamp),
           },
@@ -93,14 +103,21 @@ function getMockActivityTableData(): ActivityTableData {
     projects.map((project) => [
       project.id,
       {
-        change: Math.random(),
-        pastDayUops: 20,
+        tps: {
+          change: Math.random(),
+          pastDayCount: 19,
+          summedCount: 1500,
+        },
+        uops: {
+          change: Math.random(),
+          pastDayCount: 20,
+          summedCount: 1550,
+        },
         maxUops: {
           value: 30,
           timestamp: UnixTime.now().toNumber(),
         },
         ratio: 1.1,
-        summedCount: 1500,
         syncStatus: getSyncStatus(UnixTime.now()),
       },
     ]),

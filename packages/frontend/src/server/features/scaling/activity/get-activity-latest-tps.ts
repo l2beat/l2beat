@@ -9,7 +9,7 @@ import { env } from '~/env'
 import { db } from '~/server/database'
 import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
-import { getLastDayUops } from './utils/get-last-day-uops'
+import { getLastDayUops } from './utils/get-last-day'
 
 export async function getActivityLatestUops(projects: (Layer2 | Layer3)[]) {
   if (env.MOCK) {

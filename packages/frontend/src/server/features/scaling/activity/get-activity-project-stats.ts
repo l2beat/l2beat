@@ -6,9 +6,9 @@ import {
 import { env } from '~/env'
 import { db } from '~/server/database'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
-import { getLastDayUops } from './utils/get-last-day-uops'
-import { getUopsWeeklyChange } from './utils/get-uops-weekly-change'
-import { sumActivityCount } from './utils/sum-activity-count'
+import { getLastDayUops } from './utils/get-last-day'
+import { getUopsWeeklyChange } from './utils/get-weekly-change'
+import { sumUopsCount } from './utils/sum-activity-count'
 
 export async function getActivityProjectStats(projectId: ProjectId) {
   if (env.MOCK) {
@@ -28,7 +28,7 @@ const getCachedActivityProjectStats = cache(
     if (counts.length === 0) {
       return
     }
-    const summed = sumActivityCount(counts)
+    const summed = sumUopsCount(counts)
 
     return {
       txCount: summed,

@@ -7,6 +7,7 @@ import { HydrateClient, api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
+import { ActivityMetricContextProvider } from './_components/activity-metric-context'
 import { ActivityTimeRangeContextProvider } from './_components/activity-time-range-context'
 import { ScalingActivityTables } from './_components/scaling-activity-tables'
 
@@ -33,18 +34,20 @@ export default async function Page() {
     <HydrateClient>
       <ScalingFilterContextProvider>
         <ActivityTimeRangeContextProvider>
-          <MainPageHeader>Activity</MainPageHeader>
-          <MainPageCard>
-            <ActivityChart
-              milestones={HOMEPAGE_MILESTONES}
-              entries={
-                entries.type === 'recategorised'
-                  ? entries.entries.rollups
-                  : entries.entries
-              }
-            />
-          </MainPageCard>
-          <ScalingActivityTables {...entries} />
+          <ActivityMetricContextProvider>
+            <MainPageHeader>Activity</MainPageHeader>
+            <MainPageCard>
+              <ActivityChart
+                milestones={HOMEPAGE_MILESTONES}
+                entries={
+                  entries.type === 'recategorised'
+                    ? entries.entries.rollups
+                    : entries.entries
+                }
+              />
+            </MainPageCard>
+            <ScalingActivityTables {...entries} />
+          </ActivityMetricContextProvider>
         </ActivityTimeRangeContextProvider>
       </ScalingFilterContextProvider>
     </HydrateClient>

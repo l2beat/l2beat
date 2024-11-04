@@ -7,7 +7,9 @@ export function orderByStageAndPastDayUops<
     name: string
     stage: StageConfig
     data: {
-      pastDayUops: number
+      uops: {
+        pastDayCount: number
+      }
     }
   },
 >(projects: T[]): T[] {
@@ -25,8 +27,8 @@ export function orderByStageAndPastDayUops<
       return 1
     }
 
-    const aTps = a.data.pastDayUops
-    const bTps = b.data.pastDayUops
+    const aTps = a.data.uops.pastDayCount
+    const bTps = b.data.uops.pastDayCount
     if (aTps !== bTps) {
       return bTps - aTps
     }

@@ -1,4 +1,4 @@
-import { countToUops } from '~/server/features/scaling/activity/utils/count-to-uops'
+import { countPerSecond } from '~/server/features/scaling/activity/utils/count-per-second'
 import { formatTimestamp } from '~/utils/dates'
 import { formatInteger } from '~/utils/number-format/format-integer'
 import { formatUops } from '~/utils/number-format/format-uops'
@@ -34,7 +34,7 @@ export function ActivityChartHover(props: Props) {
           <span>{props.singleProject ? 'Project' : 'Projects'}</span>
         </div>
         <span className="whitespace-nowrap font-bold tabular-nums">
-          {formatUops(countToUops(props.count), {
+          {formatUops(countPerSecond(props.count), {
             morePrecision: !!props.singleProject,
           })}
         </span>
@@ -47,7 +47,7 @@ export function ActivityChartHover(props: Props) {
             <span>Ethereum</span>
           </div>
           <span className="whitespace-nowrap font-bold tabular-nums">
-            {formatUops(countToUops(props.ethereumCount), {
+            {formatUops(countPerSecond(props.ethereumCount), {
               morePrecision: !!props.singleProject,
             })}
           </span>

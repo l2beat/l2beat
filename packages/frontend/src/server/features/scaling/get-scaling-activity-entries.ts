@@ -47,7 +47,7 @@ export async function getScalingActivityEntries() {
       )
     })
     .filter(notUndefined)
-    .sort((a, b) => b.data.pastDayUops - a.data.pastDayUops)
+    .sort((a, b) => b.data.uops.pastDayCount - a.data.uops.pastDayCount)
 
   if (env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION) {
     const recategorisedEntries = groupByMainCategories(
@@ -67,7 +67,7 @@ export async function getScalingActivityEntries() {
 
   return {
     entries: [ethereumEntry, ...entries].sort(
-      (a, b) => b.data.pastDayUops - a.data.pastDayUops,
+      (a, b) => b.data.uops.pastDayCount - a.data.uops.pastDayCount,
     ),
   }
 }

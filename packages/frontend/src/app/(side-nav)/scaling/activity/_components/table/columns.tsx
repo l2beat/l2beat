@@ -9,21 +9,31 @@ import { formatInteger } from '~/utils/number-format/format-integer'
 import { formatUops } from '~/utils/number-format/format-uops'
 import { formatUopsRatio } from '~/utils/number-format/format-uops-ratio'
 import { SyncStatusWrapper } from '../../../finality/_components/table/sync-status-wrapper'
+import { type ActivityMetric } from '../activity-metric-context'
 import { MaxUopsCell } from './max-uops-cell'
 
-const columnHelper = createColumnHelper<ScalingActivityEntry>()
+export type ScalingActivityTableEntry = ScalingActivityEntry & {
+  data: {
+    change: number
+    pastDayCount: number
+    summedCount: number
+  }
+}
+
+const columnHelper = createColumnHelper<ScalingActivityTableEntry>()
 
 export const getScalingActivityColumns = (
+  metric: ActivityMetric,
   opts?: CommonProjectColumnsOptions,
 ) => [
   ...getScalingCommonProjectColumns(columnHelper, opts),
-  columnHelper.accessor('data.pastDayUops', {
-    header: 'Past day UOPS',
+  columnHelper.accessor('data.pastDayCount', {
+    header: `Past day ${metric === 'uops' ? 'UOPS' : 'TPS'}`,
     cell: (ctx) => {
       const data = ctx.row.original.data
       return (
         <SyncStatusWrapper syncStatus={data.syncStatus}>
-          <PrimaryValueCell>{formatUops(data.pastDayUops)}</PrimaryValueCell>
+          <PrimaryValueCell>{formatUops(data.pastDayCount)}</PrimaryValueCell>
         </SyncStatusWrapper>
       )
     },
@@ -31,7 +41,7 @@ export const getScalingActivityColumns = (
     meta: {
       align: 'right',
       headClassName: 'max-w-[60px]',
-      tooltip: 'User operations per second averaged over the past day.',
+      tooltip: `${metric === 'uops' ? 'User operations' : 'Transactions'} per second averaged over the past day.`,
     },
   }),
   columnHelper.accessor('data.maxUops.value', {

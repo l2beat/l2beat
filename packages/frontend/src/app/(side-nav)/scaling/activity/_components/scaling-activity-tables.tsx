@@ -9,9 +9,15 @@ import {
 import { MainPageCard } from '~/components/main-page-card'
 import { getStageSortedRowModel } from '~/components/table/sorting/get-stage-sorting-row-model'
 import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling-activity-entries'
+import { cn } from '~/utils/cn'
 import { type RecategorisedScalingEntry } from '~/utils/group-by-main-categories'
 import { ScalingActivityFilters } from '../../_components/scaling-activity-filters'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
+import {
+  type ActivityMetric,
+  useActivityMetricContext,
+} from './activity-metric-context'
+import { ActivityMetricControls } from './activity-type-controls'
 import { ScalingActivityTable } from './table/scaling-activity-table'
 
 type Props = RecategorisedScalingEntry<ScalingActivityEntry>
@@ -82,8 +88,31 @@ export function ScalingActivityTables(props: Props) {
   const filteredEntries = props.entries.filter(includeFilters)
   return (
     <MainPageCard className="space-y-3 md:mt-6 md:space-y-6">
-      <ScalingActivityFilters items={filteredEntries} />
+      <Controls entries={filteredEntries} />
       <ScalingActivityTable entries={filteredEntries} />
     </MainPageCard>
+  )
+}
+
+function Controls({
+  entries,
+  className,
+}: { entries: ScalingActivityEntry[]; className?: string }) {
+  const { metric, setMetric } = useActivityMetricContext()
+
+  const onMetricChange = (metric: ActivityMetric) => {
+    setMetric(metric)
+  }
+
+  return (
+    <div
+      className={cn(
+        'flex flex-col gap-2 lg:flex-row lg:justify-between',
+        className,
+      )}
+    >
+      <ScalingActivityFilters items={entries} />
+      <ActivityMetricControls value={metric} onValueChange={onMetricChange} />
+    </div>
   )
 }
