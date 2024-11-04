@@ -136,7 +136,7 @@ export function OfficeHoursIllustration(props: SvgIconProps) {
           gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="#fff" />
-          <stop offset="1" stopColor="#fff" stop-opacity="0" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="d"
@@ -147,7 +147,7 @@ export function OfficeHoursIllustration(props: SvgIconProps) {
           gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="#fff" />
-          <stop offset="1" stopColor="#fff" stop-opacity="0" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="e"
@@ -158,7 +158,7 @@ export function OfficeHoursIllustration(props: SvgIconProps) {
           gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="#fff" />
-          <stop offset="1" stopColor="#fff" stop-opacity="0" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="f"
@@ -169,7 +169,7 @@ export function OfficeHoursIllustration(props: SvgIconProps) {
           gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="#fff" />
-          <stop offset="1" stopColor="#fff" stop-opacity="0" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="g"
@@ -180,7 +180,7 @@ export function OfficeHoursIllustration(props: SvgIconProps) {
           gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="#fff" />
-          <stop offset="1" stopColor="#fff" stop-opacity="0" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="h"
@@ -191,7 +191,7 @@ export function OfficeHoursIllustration(props: SvgIconProps) {
           gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="#fff" />
-          <stop offset="1" stopColor="#fff" stop-opacity="0" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="i"
@@ -202,7 +202,7 @@ export function OfficeHoursIllustration(props: SvgIconProps) {
           gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="#fff" />
-          <stop offset="1" stopColor="#fff" stop-opacity="0" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="j"
@@ -213,7 +213,7 @@ export function OfficeHoursIllustration(props: SvgIconProps) {
           gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="#fff" />
-          <stop offset="1" stopColor="#fff" stop-opacity="0" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0" />
         </linearGradient>
         <clipPath id="k">
           <path

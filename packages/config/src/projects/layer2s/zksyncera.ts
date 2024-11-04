@@ -55,6 +55,7 @@ const validatorsOld = () => {
 }
 
 export const zksyncera: Layer2 = zkStackL2({
+  createdAt: new UnixTime(1671115151), // 2022-12-15T14:39:11Z
   discovery,
   discovery_ZKstackGovL2,
   validatorsEvents: {
@@ -138,6 +139,7 @@ export const zksyncera: Layer2 = zkStackL2({
       address: EthereumAddress('0x41527B2d03844dB6b0945f25702cB958b6d55989'),
       sinceTimestamp: new UnixTime(1698058151),
       tokens: ['wstETH'],
+      source: 'external',
       description:
         'Bridge for depositing wrapped stETH (Lido) to ZKsync Era. These deposits and withdrawals do not go through the new shared BridgeHub.',
       upgradableBy: ['Lido (Lido Agent)'],

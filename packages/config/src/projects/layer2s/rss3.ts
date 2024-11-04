@@ -8,6 +8,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('rss3')
 
 export const rss3: Layer2 = opStackL2({
+  createdAt: new UnixTime(1705391231), // 2024-01-16T07:47:11Z
   badges: [Badge.DA.NearDA],
   daProvider: {
     name: 'NearDA',
@@ -87,7 +88,6 @@ export const rss3: Layer2 = opStackL2({
       url: 'https://scan.rss3.io/api',
       type: 'blockscout',
     },
-    minTimestampForTvl: UnixTime.fromDate(new Date('2024-03-08T00:41:59Z')),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -103,7 +103,6 @@ export const rss3: Layer2 = opStackL2({
     stateUpdate: 'disabled',
   },
   genesisTimestamp: new UnixTime(1709858519),
-  l1StandardBridgeTokens: ['RSS3'],
   isNodeAvailable: false,
   discoveryDrivenData: true,
   milestones: [

@@ -6,6 +6,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('optopia')
 
 export const optopia: Layer2 = opStackL2({
+  createdAt: new UnixTime(1722451042), // 2024-07-31T18:37:22Z
   discovery,
   additionalPurposes: ['AI'],
   display: {

@@ -6,10 +6,10 @@ export class HttpClient2 {
    * Use this method only when you expect server to return valid JSON.
    * Default timeout is 10_000ms
    */
-  async fetch(url: string, init: RequestInit, timeoutMs = 10_000) {
+  async fetch(url: string, init: RequestInit) {
     const res = await fetch(url, {
       ...init,
-      timeout: timeoutMs,
+      timeout: init.timeout ?? 10_000,
     })
 
     if (!res.ok) {

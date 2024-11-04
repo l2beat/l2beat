@@ -53,6 +53,7 @@ const upgradeDelay = 0
 export const scroll: Layer2 = {
   type: 'layer2',
   id: ProjectId('scroll'),
+  createdAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
   badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs],
   display: {
     name: 'Scroll',
@@ -151,10 +152,12 @@ export const scroll: Layer2 = {
     coingeckoPlatform: 'scroll',
   },
   config: {
+    associatedTokens: ['SCR'],
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9'),
         tokens: '*',
+        excludedTokens: ['rsETH'],
         ...upgradesScrollMultisig,
       }),
       discovery.getEscrowDetails({
@@ -163,29 +166,34 @@ export const scroll: Layer2 = {
         ...upgradesScrollMultisig,
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xb2b10a289A229415a124EFDeF310C10cb004B6ff'),
+        address: EthereumAddress('0xb2b10a289A229415a124EFDeF310C10cb004B6ff'), // custom gateway
         tokens: '*',
+        source: 'external',
         ...upgradesScrollMultisig,
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B'),
         tokens: ['USDC'],
+        source: 'external',
         ...upgradesScrollMultisig,
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x67260A8B73C5B77B55c1805218A42A7A6F98F515'),
         tokens: ['DAI'],
+        source: 'external',
         ...upgradesScrollMultisig,
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x6625C6332c9F91F2D27c304E729B86db87A3f504'),
         tokens: ['wstETH'],
+        source: 'external',
         description:
           'Custom token escrow with third-party governance, using the canonical bridge only for messaging.',
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xA033Ff09f2da45f0e9ae495f525363722Df42b2a'),
         tokens: ['pufETH'],
+        source: 'external',
         description:
           'Custom token escrow with third-party governance, using the canonical bridge only for messaging.',
       }),

@@ -18,7 +18,7 @@
     "0x000d8C5A70B8805DF02f409F2715d05B9A63E871": "GnosisSafeAdminMember",
     "0xb591cE747CF19cF30e11d656EB94134F523A9e77": "L1ERC20Gateway",
     "0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35": "L1GatewayRouter",
-    "0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E": "ExecutorMultisig",
+    "0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E": "XaiMultisig",
     "0xfD41041180571C5D371BEA3D9550E55653671198": "SentryReferee",
     "0xbc14d8563b248B79689ECbc43bBa53290e0b6b66": "NodeLicenseRegistry",
     "0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5": "PoolFactory",
@@ -66,6 +66,13 @@
       }
     },
     "SentryReferee": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      },
       "ignoreMethods": [
         "challenges",
         "getBoostFactor",

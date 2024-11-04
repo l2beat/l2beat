@@ -9,6 +9,7 @@ const discovery = new ProjectDiscovery('sollet')
 export const sollet: Bridge = {
   type: 'bridge',
   id: ProjectId('sollet'),
+  createdAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
   isArchived: true,
   display: {
     name: 'Sollet',
@@ -53,7 +54,6 @@ export const sollet: Bridge = {
         {
           category: 'Users can be censored if',
           text: "contract owner doesn't sign withdrawal requests.",
-          isCritical: true,
         },
         {
           category: 'Funds can be frozen if',
@@ -62,7 +62,6 @@ export const sollet: Bridge = {
         {
           category: 'Funds can be stolen if',
           text: 'contract owner withdraws funds belonging to depositors.',
-          isCritical: true,
         },
       ],
     },

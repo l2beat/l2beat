@@ -1,4 +1,9 @@
-import { assert, EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import {
+  assert,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -44,6 +49,7 @@ const discoveredExecutorConfig: [number, string] = discovery.getContractValue(
 export const stargatev2: Bridge = {
   type: 'bridge',
   id: ProjectId('stargatev2'),
+  createdAt: new UnixTime(1718620600), // 2024-06-17T10:36:40Z
   display: {
     name: 'Stargate v2 (LayerZero v2)',
     shortName: 'Stargate v2',
@@ -150,12 +156,10 @@ export const stargatev2: Bridge = {
           {
             category: 'Users can be censored if',
             text: 'both whitelisted DVNs or the LayerZero Executor fail to facilitate the transaction.',
-            isCritical: true,
           },
           {
             category: 'Funds can be stolen if',
             text: 'both whitelisted DVNs collude to submit a fraudulent message.',
-            isCritical: true,
           },
         ],
       }
@@ -343,7 +347,6 @@ export const stargatev2: Bridge = {
       {
         category: 'Funds can be stolen if',
         text: 'the OApp owner changes the configuration of the OApp to malicious DVNs and executors.',
-        isCritical: true,
       },
       {
         category: 'Funds can be frozen if',

@@ -4,10 +4,10 @@ https://discord.com/developers/docs/getting-started#configuring-a-bot
 */
 
 import { HttpClient } from '@l2beat/shared'
-import { RateLimiter } from '@l2beat/shared-pure'
 import { RequestInit } from 'node-fetch'
 import { Counter } from 'prom-client'
 
+import { RateLimiter } from '@l2beat/backend-tools'
 import { DiscordConfig } from '../../config/Config'
 
 export const MAX_MESSAGE_LENGTH = 2000

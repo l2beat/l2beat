@@ -38,6 +38,7 @@ const challengePeriod = discovery.getContractValue<number>(
 
 export const fuel: Layer2 = {
   id: ProjectId('fuel'),
+  createdAt: new UnixTime(1729589660), // 2024-10-22T09:34:20Z
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (blobs)'],
     bridge: { type: 'Enshrined' },
@@ -47,7 +48,7 @@ export const fuel: Layer2 = {
     name: 'Fuel Ignition',
     slug: 'fuel',
     description:
-      'Fuel plans to build the fastest execution layer for the modular blockchain stack.',
+      'Fuel Ignition is a high-performance Ethereum L2 built on FuelVM and the Sway language.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
     links: {
@@ -61,12 +62,13 @@ export const fuel: Layer2 = {
       repositories: ['https://github.com/FuelLabs/'],
       socialMedia: [
         'https://twitter.com/fuel_network',
-        'https://discord.com/invite/fuelnetwork',
+        'https://discord.gg/fuel-network',
         'https://forum.fuel.network/',
         'https://t.me/fuelcommunity',
         'https://youtube.com/channel/UCam2Sj3SvFSAIfDbP-4jWZQ',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
   },
   badges: [Badge.VM.FuelVM, Badge.DA.EthereumBlobs],
   type: 'layer2',
@@ -117,6 +119,11 @@ export const fuel: Layer2 = {
         },
       },
     ],
+    transactionApi: {
+      type: 'fuel',
+      defaultUrl: 'https://mainnet.fuel.network/v1/graphql',
+      defaultCallsPerMinute: 120,
+    },
   },
   riskView: {
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
@@ -130,26 +137,30 @@ export const fuel: Layer2 = {
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: 'UnderReview',
+
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        stateVerificationOnL1: false,
+        fraudProofSystemAtLeast5Outsiders: null,
+        usersCanExitWithoutCooperation: false,
+        usersHave7DaysToExit: false,
+        securityCouncilProperlySetUp: false,
+      },
+      stage2: {
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+      },
     },
-    stage1: {
-      stateVerificationOnL1: false,
-      fraudProofSystemAtLeast5Outsiders: null,
-      usersCanExitWithoutCooperation: false,
-      usersHave7DaysToExit: false,
-      securityCouncilProperlySetUp: false,
-    },
-    stage2: {
-      fraudProofSystemIsPermissionless: null,
-      delayWith30DExitWindow: false,
-      proofSystemOverriddenOnlyInCaseOfABug: false,
-    },
-  }),
+    { rollupNodeLink: 'https://github.com/FuelLabs/network-watchtower' },
+  ),
   technology: {
     stateCorrectness: {
       name: 'Fraud proofs are in development',
@@ -303,4 +314,13 @@ export const fuel: Layer2 = {
       },
     ],
   },
+  milestones: [
+    {
+      name: 'Fuel Ignition Mainnet is Live',
+      date: '2024-10-16T00:00:00Z',
+      link: 'https://x.com/fuel_network/status/1846536888003313786',
+      description: 'Fuel Ignition announces its official launch.',
+      type: 'general',
+    },
+  ],
 }

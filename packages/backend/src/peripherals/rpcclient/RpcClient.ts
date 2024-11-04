@@ -56,7 +56,7 @@ export class RpcClient {
     )
   }
 
-  async getBlock(blockNumber: number) {
+  async getBlock(blockNumber: number): Promise<providers.Block> {
     // eth_getBlockByNumber
     return await this.provider.getBlock(blockNumber)
   }

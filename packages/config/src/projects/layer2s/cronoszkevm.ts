@@ -14,6 +14,7 @@ const shared = new ProjectDiscovery('shared-zk-stack')
 const bridge = shared.getContract('L1SharedBridge')
 
 export const cronoszkevm: Layer2 = zkStackL2({
+  createdAt: new UnixTime(1722430938), // 2024-07-31T13:02:18Z
   discovery,
   discovery_ZKstackGovL2,
   validatorsEvents: {
@@ -92,7 +93,7 @@ export const cronoszkevm: Layer2 = zkStackL2({
   nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
     shared.getEscrowDetails({
       address: bridge.address,
-      tokens: ['ybETH', 'CRO', 'USDC', 'WBTC', 'zkCRO'],
+      tokens: ['CRO', 'USDC', 'WBTC', 'zkCRO', 'FUL', 'FRTN', 'MOON'],
       description:
         'Shared bridge for depositing tokens to Cronos zkEVM and other ZK stack chains.',
       sharedEscrow: {

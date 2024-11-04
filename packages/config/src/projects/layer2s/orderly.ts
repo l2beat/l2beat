@@ -9,6 +9,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('orderly')
 
 export const orderly: Layer2 = opStackL2({
+  createdAt: new UnixTime(1707309065), // 2024-02-07T12:31:05Z
   daProvider: CELESTIA_DA_PROVIDER,
   badges: [Badge.DA.Celestia, Badge.Infra.Superchain, Badge.RaaS.Conduit],
   additionalPurposes: ['Exchange'],
@@ -120,6 +121,13 @@ export const orderly: Layer2 = opStackL2({
   isNodeAvailable: false,
   discoveryDrivenData: true,
   milestones: [
+    {
+      name: 'ORDER Token Airdrop',
+      link: 'https://orderly.network/blog/orderly-network-staking-unstake-ORDER/',
+      date: '2024-08-26T00:00:00.00Z',
+      description: 'ORDER token launched as a governance token.',
+      type: 'general',
+    },
     {
       name: 'Orderly Network Mainnet Launch',
       link: 'https://twitter.com/OrderlyNetwork/status/1749419001913237526',

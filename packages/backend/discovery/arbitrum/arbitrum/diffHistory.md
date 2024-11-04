@@ -1,3 +1,73 @@
+Generated with discovered.json: 0xcc61b3b0ced6635fe8338a8f293d52208f2152cd
+
+# Diff at Fri, 01 Nov 2024 14:44:43 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@cd1f0e71bb08ce16b2084a11b768538e8aa6ba8c block: 267453071
+- current block number: 269944713
+
+## Description
+
+Changed security council members. 
+
+## Watched changes
+
+```diff
+    contract L2SecurityCouncilEmergency (0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641) {
+    +++ description: None
+      values.$members.1:
+-        "0xA821c8c245d1F3A257e3B0DEC99268cA05144422"
++        "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75"
+      values.$members.0:
+-        "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75"
++        "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
+    }
+```
+
+```diff
+    contract L2SecurityCouncilPropose (0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941) {
+    +++ description: None
+      values.$members.1:
+-        "0xA821c8c245d1F3A257e3B0DEC99268cA05144422"
++        "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75"
+      values.$members.0:
+-        "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75"
++        "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
+    }
+```
+
+Generated with discovered.json: 0x6ff68a50e2e898ef57cdadae011ae82ed87712a5
+
+# Diff at Fri, 25 Oct 2024 08:48:14 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@bcba81a42870e55c451475b8615b372a538b8463 block: 264777898
+- current block number: 267453071
+
+## Description
+
+Timelock extended to 8 days. Exit window is now 7 days.
+
+## Watched changes
+
+```diff
+    contract ConstitutionHash (0x1D62fFeB72e4c360CcBbacf7c965153b00260417) {
+    +++ description: None
+      values.constitutionHash:
+-        "0x7cc34e90dde73cfe0b4a041e79b5638e99f0d9547001e42b466c32a18ed6789d"
++        "0x28faf2acba9b3ff80ec484e3d5646931eeef40568b1b7c38dbe52b890bfd7938"
+    }
+```
+
+```diff
+    contract L2Timelock (0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0) {
+    +++ description: None
+      values.getMinDelay:
+-        259200
++        691200
+    }
+```
+
 Generated with discovered.json: 0x9126898633ba31c4b13e0a40b10ec8a79f561861
 
 # Diff at Mon, 21 Oct 2024 11:12:57 GMT:

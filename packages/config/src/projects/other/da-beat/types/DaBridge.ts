@@ -1,9 +1,9 @@
-import { ChainId } from '@l2beat/shared-pure'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import {
-  ScalingProjectContracts,
   ScalingProjectPermission,
   ScalingProjectTechnologyChoice,
 } from '../../../../common'
+import { DaBridgeContracts } from './DaBridgeContracts'
 import { DaCommitteeSecurityRisk } from './DaCommitteeSecurityRisk'
 import { DaLinks } from './DaLinks'
 import { DaRelayerFailureRisk } from './DaRelayerFailureRisk'
@@ -20,6 +20,18 @@ export type DaBridge =
 
 export type NoDaBridge = CommonDaBridge & {
   type: 'NoBridge'
+  /**
+   * Data about related permissions - preferably from discovery.
+   * It makes less sense to have permissions for NoBridge, but it's here in case we need to
+   * add some complementary information.
+   */
+  permissions: Record<string, ScalingProjectPermission[]> | 'UnderReview'
+  /**
+   * Data about the contracts used in the bridge - preferably from discovery.
+   * It makes less sense to have contracts for NoBridge, but it's here in case we need to
+   * add some complementary information.
+   */
+  contracts: DaBridgeContracts
 }
 
 export type EnshrinedBridge = CommonDaBridge & {
@@ -31,15 +43,13 @@ export type OnChainDaBridge = CommonDaBridge & {
   /** The chain name the data availability bridge lives on. */
   chain: string
   /** Data about related permissions - preferably from discovery. */
-  permissions: ScalingProjectPermission[]
-  /** Data about related permissions on chains other than Ethereum - preferably from discovery. */
-  nativePermissions?: Record<string, ScalingProjectPermission[]> | 'UnderReview'
+  permissions: Record<string, ScalingProjectPermission[]> | 'UnderReview'
   /** Data about the validation type of the bridge */
   validation: {
     type: string
   }
   /** Data about the contracts used in the bridge - preferably from discovery. */
-  contracts: ScalingProjectContracts
+  contracts: DaBridgeContracts
 }
 
 export type DacBridge = CommonDaBridge & {
@@ -55,14 +65,16 @@ export type DacBridge = CommonDaBridge & {
   /** The type of data. */
   transactionDataType: DacTransactionDataType
   /** Data about related permissions - preferably from discovery. */
-  permissions: ScalingProjectPermission[]
+  permissions: Record<string, ScalingProjectPermission[]>
   /** Data about the contracts used in the bridge - preferably from discovery. */
-  contracts: ScalingProjectContracts
+  contracts: DaBridgeContracts
 }
 
 type CommonDaBridge = {
   /** Unique identifier of the data availability bridge. */
   id: string
+  /** Date of creation of the file (not the project) */
+  createdAt: UnixTime
   display: DaBridgeDisplay
   /** Is the DA bridge under review? */
   isUnderReview?: boolean

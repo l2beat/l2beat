@@ -37,6 +37,7 @@ type Optionals = {
     description?: DacBridge['display']['description']
   } & Pick<
     DacBridge,
+    | 'createdAt'
     | 'chain'
     | 'membersCount'
     | 'knownMembers'
@@ -52,7 +53,7 @@ type Optionals = {
   /** Optional red warning, defaults to undefined */
   redWarning?: DacBridge['display']['redWarning']
   /** Optional challenge mechanism, defaults to undefined */
-  hasChallengeMechanism?: DacDaLayer['hasChallengeMechanism']
+  challengeMechanism?: DacDaLayer['challengeMechanism']
   /** Optional fallback, defaults to undefined */
   fallback?: DacDaLayer['fallback']
 }
@@ -96,7 +97,7 @@ export function PolygoncdkDAC(template: TemplateVars): DacDaLayer {
     A separate contract, the PolygonCommittee contract, is used to manage the committee members list and verify the signatures before accepting the DA commitment.
    `)
   const bridgeDisplay: DacBridge['display'] = {
-    name,
+    name: 'DA Bridge',
     slug: 'dac',
     description: bridgeDescription,
     warning: template.warning,
@@ -112,14 +113,23 @@ export function PolygoncdkDAC(template: TemplateVars): DacDaLayer {
     display: bridgeDisplay,
     technology: {
       description: bridgeTechnology,
-      risks: template.bridge.technology?.risks,
+      risks: [
+        {
+          category: 'Funds can be lost if',
+          text: `a malicious committee signs a data availability attestation for an unavailable transaction batch.`,
+        },
+        {
+          category: 'Funds can be lost if',
+          text: `the bridge contract or its dependencies receive a malicious code upgrade. There is no delay on code upgrades.`,
+        },
+      ],
     },
     risks: {
       committeeSecurity:
         template.risks?.committeeSecurity ?? DaCommitteeSecurityRisk.Auto(),
       // TODO: make it required and remove the default
       upgradeability:
-        template.risks?.upgradeability ?? DaUpgradeabilityRisk.Immutable,
+        template.risks?.upgradeability ?? DaUpgradeabilityRisk.LowOrNoDelay(0),
       relayerFailure:
         template.risks?.relayerFailure ?? DaRelayerFailureRisk.NoMechanism,
     },
@@ -160,8 +170,9 @@ export function PolygoncdkDAC(template: TemplateVars): DacDaLayer {
     kind: 'DAC',
     type: 'DaLayer',
     systemCategory: 'custom',
-    fallback: template.fallback,
-    hasChallengeMechanism: template.hasChallengeMechanism,
+    fallback: template.fallback, // Currently none?
+    // https://github.com/0xPolygon/cdk-validium-node/blame/0a1743e0009a3225858c24328459d44ddb44a3ae/docs/diff/diff.md#L101
+    challengeMechanism: template.challengeMechanism,
     display: layerDisplay,
     technology: {
       description: layerTechnology,

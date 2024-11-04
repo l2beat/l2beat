@@ -20,7 +20,7 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
 
     this.logger.info('Fetching blocks', { from, to: adjustedTo })
 
-    const counts = await this.$.txsCountProvider.getTxsCount(from, adjustedTo)
+    const counts = await this.$.txsCountService.getTxsCount(from, adjustedTo)
     const currentMap = await this.getDatabaseEntries(counts)
 
     const dataToSave = counts.map(
@@ -34,9 +34,10 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
       }) => {
         const currentRecord = currentMap.get(timestamp.toNumber())
         const count = (currentRecord?.count ?? 0) + countValue
-        const uopsCount = uopsCountValue
-          ? (currentRecord?.uopsCount ?? 0) + uopsCountValue
-          : uopsCountValue
+        const uopsCount =
+          uopsCountValue !== null
+            ? (currentRecord?.uopsCount ?? 0) + uopsCountValue
+            : (currentRecord?.uopsCount ?? null)
 
         return {
           projectId,

@@ -19,7 +19,7 @@ export class Peripherals {
 
   constructor(
     public readonly database: Database,
-    private readonly httpClient: HttpClient,
+    public readonly httpClient: HttpClient,
     private readonly logger: Logger,
   ) {}
 

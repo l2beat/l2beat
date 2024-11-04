@@ -8,6 +8,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('blast')
 
 export const blast: Layer2 = opStackL2({
+  createdAt: new UnixTime(1700555008), // 2023-11-21T08:23:28Z
   discovery,
   display: {
     name: 'Blast',
@@ -99,11 +100,13 @@ export const blast: Layer2 = opStackL2({
       description:
         'Pre-launch Blast Vault that keeps stETH. Funds from this Vault can be migrated to Blast bridge.',
       tokens: ['stETH'],
+      source: 'external',
     }),
     discovery.getEscrowDetails({
       address: EthereumAddress('0x98078db053902644191f93988341E31289E1C8FE'),
       name: 'Interest-bearing ETH Vault',
       tokens: ['ETH', 'stETH'],
+      source: 'external',
       description:
         'Escrow for ETH that is invested into a yield-bearing contracts such as stETH.',
     }),

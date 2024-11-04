@@ -10,6 +10,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('lyra')
 
 export const lyra: Layer2 = opStackL2({
+  createdAt: new UnixTime(1702978961), // 2023-12-19T09:42:41Z
   daProvider: CELESTIA_DA_PROVIDER,
   badges: [Badge.DA.Celestia, Badge.Infra.Superchain, Badge.RaaS.Conduit],
   associatedTokens: ['LYRA'],
@@ -75,7 +76,7 @@ export const lyra: Layer2 = opStackL2({
     },
   ],
   nonTemplateEscrows: [
-    // manually added with `yarn socket-convert` script and latest json: https://github.com/SocketDotTech/socket-plugs/blob/295ef847031ae5260361d67a5b15b9a44fe033f7/deployments/superbridge/prod_lyra_addresses.json
+    // manually added with `pnpm socket-convert` script and latest json: https://github.com/SocketDotTech/socket-plugs/blob/295ef847031ae5260361d67a5b15b9a44fe033f7/deployments/superbridge/prod_lyra_addresses.json
     {
       address: EthereumAddress('0x7E1d17b580dD4F89037DB331430eAEe8B8e50c91'),
       sinceTimestamp: new UnixTime(1724140259),

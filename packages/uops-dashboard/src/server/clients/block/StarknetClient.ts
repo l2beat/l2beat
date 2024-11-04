@@ -78,6 +78,7 @@ export class StarknetClient implements BlockClient {
         hash: tx.transaction_hash,
         data: tx.calldata ?? [],
         type: tx.type,
+        from: tx.sender_address ?? '',
       })),
     }
   }
@@ -97,6 +98,7 @@ const StarknetTransaction = z.object({
   type: z.string(),
   calldata: z.array(z.string()).optional(),
   transaction_hash: z.string(),
+  sender_address: z.string().optional(),
 })
 
 type StarknetApiTransaction = z.infer<typeof StarknetTransaction>

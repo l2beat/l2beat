@@ -1,8 +1,8 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 21013457,
-  "configHash": "0xc2d869d7866ba5fdf516cc57c66c0b72cc5e85e14fe1fb91e68e1497018a7cc9",
+  "blockNumber": 21077285,
+  "configHash": "0x1f18f06484ff07fc83113ea85d1c997d67ca5e172ff416a6e13723cb0b7f251d",
   "contracts": [
     {
       "name": "GnosisSafe",
@@ -103,11 +103,13 @@
     {
       "name": "Safe",
       "address": "0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9",
+      "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
         "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1728943067,
       "values": {
         "$immutable": false,
@@ -122,17 +124,9 @@
         "$threshold": 3,
         "domainSeparator": "0x89a4b461d7d0ebc4cbf656eccda8c499236d20a7445adf4d25e2bbc6f9882190",
         "getChainId": 1,
-        "getOwners": [
-          "0xA167ca2984F7e08EFd4DDf9c5a4A21D66c07813E",
-          "0xc858a504d6c267fe2d462D240b68A7D939B1fEC9",
-          "0xF322467cec88d3CDFa9376B19bD5AD40da665277",
-          "0x3Bc72A56F9036B94ad14BF082bF93731e0545255",
-          "0x3Ec90fA056A39e7281a5b4c8c044B86667D770e1"
-        ],
-        "getThreshold": 3,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 0,
+        "nonce": 1,
         "VERSION": "1.4.1"
       }
     },
@@ -189,6 +183,11 @@
             "chainId": 543210,
             "stateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
             "chainGovernance": "0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3"
+          },
+          {
+            "chainId": 2741,
+            "stateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+            "chainGovernance": "0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661"
           }
         ],
         "CronosDiamond": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
@@ -250,7 +249,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 156,
+        "nonce": 160,
         "VERSION": "1.3.0"
       },
       "fieldMeta": {
@@ -361,14 +360,14 @@
         "owner": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "revertedBlocks": [],
-        "sophonFirstBatchTS": 0,
+        "sophonTenthBatchTS": 1730241371,
         "sophonValidatorsAdded": [
           "0x4cc87B0A504047967CeD9A955431B3229237e7de",
           "0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f"
         ],
         "sophonValidatorsRemoved": [],
         "stateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "zeronetworkFirstBatchTS": 0,
+        "zeronetworkTenthBatchTS": 1729719755,
         "zeronetworkValidatorsAdded": [
           "0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F",
           "0x479B7c95b9509E1A834C994fc94e3581aA8A73B9"
@@ -381,50 +380,16 @@
         "zksyncValidatorsRemoved": []
       },
       "fieldMeta": {
-        "zeronetworkFirstBatchTS": {
+        "zeronetworkTenthBatchTS": {
           "severity": "MEDIUM",
           "description": "If non-zero, the first batch has been posted."
         },
-        "sophonFirstBatchTS": {
+        "sophonTenthBatchTS": {
           "severity": "MEDIUM",
           "description": "If non-zero, the first batch has been posted."
         }
       },
       "derivedName": "ValidatorTimelock"
-    },
-    {
-      "name": "Safe",
-      "address": "0x5e6C5551C1b0626e9061fD4Daca6DA866Fd405aC",
-      "sourceHashes": [
-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
-      ],
-      "proxyType": "gnosis safe",
-      "sinceTimestamp": 1729020743,
-      "values": {
-        "$immutable": false,
-        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
-        "$members": [
-          "0xf2BFa7c00aDDF7765B40e83Fc4207b16EBD6db89",
-          "0xD767A6058c34E88Dc4Ce49114C362C8FAc265A76",
-          "0x2AF852529DDF5D3cF3130423b56DF8Db50A11b6B",
-          "0x090268B1b2170eB5964402321aDa988D7c75a90e"
-        ],
-        "$threshold": 2,
-        "domainSeparator": "0xeaad2122e1e351c5b711b3112c69d1e63f2ff89cc5dbfeb7a2df0291b4518337",
-        "getChainId": 1,
-        "getOwners": [
-          "0xf2BFa7c00aDDF7765B40e83Fc4207b16EBD6db89",
-          "0xD767A6058c34E88Dc4Ce49114C362C8FAc265A76",
-          "0x2AF852529DDF5D3cF3130423b56DF8Db50A11b6B",
-          "0x090268B1b2170eB5964402321aDa988D7c75a90e"
-        ],
-        "getThreshold": 2,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 3,
-        "VERSION": "1.4.1"
-      }
     },
     {
       "name": "GnosisSafe",
@@ -448,6 +413,35 @@
         "multisigThreshold": "1 of 1 (100%)",
         "nonce": 0,
         "VERSION": "1.3.0"
+      }
+    },
+    {
+      "name": "Safe",
+      "address": "0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1729784015,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "0xe7ea5B62F939611D11C0Ce7606B001207870C704",
+          "0xB9f0C247cF1aB4a7F36974CB0A64244Ed4D017FE",
+          "0x41c1d613dbE28dAab73b7Dc0003Da124924a56f0",
+          "0x80B9ee57A93d7Ff0B588682d3df0713489dC1b74"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x601992af611ef8a8fceda6a206c8c3ca2aefc6d3b38faea7968180c999ae8c79",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 4 (50%)",
+        "nonce": 4,
+        "VERSION": "1.4.1"
       }
     },
     {
@@ -483,6 +477,27 @@
         }
       },
       "derivedName": "ProtocolUpgradeHandler"
+    },
+    {
+      "name": "ChainAdmin",
+      "address": "0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661",
+      "template": "shared-zk-stack/ChainAdmin",
+      "sourceHashes": [
+        "0xefb240f5e06f5ffb38c7e98e9738ecf10381c49716281a3da9d5a1d17438eb4c"
+      ],
+      "sinceTimestamp": 1729083287,
+      "values": {
+        "$immutable": true,
+        "owner": "0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063",
+        "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "tokenMultiplierSetter": "0x0000000000000000000000000000000000000000",
+        "upgradeTimestamps": []
+      },
+      "fieldMeta": {
+        "upgradeTimestamps": {
+          "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
+        }
+      }
     },
     {
       "name": "ZkFoundationMultisig",
@@ -633,12 +648,13 @@
         "admin": "0x2cf3bD6a9056b39999F3883955E183F655345063",
         "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
         "genesisUpgrade": "0x3dDD7ED2AeC0758310A4C6596522FCAeD108DdA2",
-        "getAllHyperchainChainIDs": [324, 388, 50104, 543210],
+        "getAllHyperchainChainIDs": [324, 388, 50104, 543210, 2741],
         "getAllHyperchains": [
           "0x32400084C286CF3E17e7B677ea9583e60a000324",
           "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
           "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
-          "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"
+          "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9",
+          "0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9"
         ],
         "getChainAdmin": [],
         "getSemverProtocolVersion": [0, 24, 2],
@@ -662,8 +678,8 @@
       "sinceTimestamp": 1729084139,
       "values": {
         "$immutable": true,
-        "owner": "0x5e6C5551C1b0626e9061fD4Daca6DA866Fd405aC",
-        "pendingOwner": "0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9",
+        "owner": "0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9",
+        "pendingOwner": "0x0000000000000000000000000000000000000000",
         "tokenMultiplierSetter": "0x0000000000000000000000000000000000000000",
         "upgradeTimestamps": []
       },
@@ -814,8 +830,8 @@
       "sinceTimestamp": 1729079339,
       "values": {
         "$immutable": true,
-        "owner": "0x5e6C5551C1b0626e9061fD4Daca6DA866Fd405aC",
-        "pendingOwner": "0xe4644b6d106A18062344c0A853666bc0B8f052d1",
+        "owner": "0xe4644b6d106A18062344c0A853666bc0B8f052d1",
+        "pendingOwner": "0x0000000000000000000000000000000000000000",
         "tokenMultiplierSetter": "0xe14828E4405239dD331F194F1B7883eeD73bCBF3",
         "upgradeTimestamps": []
       },
@@ -828,11 +844,13 @@
     {
       "name": "Safe",
       "address": "0xe4644b6d106A18062344c0A853666bc0B8f052d1",
+      "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
         "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1729249919,
       "values": {
         "$immutable": false,
@@ -848,25 +866,15 @@
         "$threshold": 3,
         "domainSeparator": "0x4ee440c593310d163ce5ee409e8b60941e58aa6b74d5cf7b249e342d0e5189fd",
         "getChainId": 1,
-        "getOwners": [
-          "0x3b6036d410cA018661324766680674921a8b2d89",
-          "0x20719Abd2E63518e68D30a295388cAd6B542dCEf",
-          "0x14574dfC6B7aF658c5033BA95673864947956521",
-          "0x90E10C37d8d9e854e7775B0069728642A1F88610",
-          "0x7f413262Cb811B034d077d9184b5Efda6943f2c3",
-          "0xd89b0f620E0C72BD82e0447dE07FB0A0Abe01F69"
-        ],
-        "getThreshold": 3,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 0,
+        "nonce": 1,
         "VERSION": "1.4.1"
       }
     }
   ],
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x090268B1b2170eB5964402321aDa988D7c75a90e" },
     { "address": "0x0B2E7ffbcD1E3e6f5034555Fb638889FE7564709" },
     { "address": "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99" },
     { "address": "0x0e621b0A275A207211e161Ee997aA80661Bc1bcf" },
@@ -876,7 +884,6 @@
     { "address": "0x160669864cDe95c190364ad01eDfbAA32E9DA430" },
     { "address": "0x20719Abd2E63518e68D30a295388cAd6B542dCEf" },
     { "address": "0x227230CD05e89f41E67df3E5fC61B18411d147A9" },
-    { "address": "0x2AF852529DDF5D3cF3130423b56DF8Db50A11b6B" },
     { "address": "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc" },
     { "address": "0x3527439923a63F8C13CF72b8Fe80a77f6e572092" },
     { "address": "0x3620B9e7c75E09cCC37458c7B6EE6c23D8Ee4f0f" },
@@ -885,6 +892,7 @@
     { "address": "0x3Bc72A56F9036B94ad14BF082bF93731e0545255" },
     { "address": "0x3Ec90fA056A39e7281a5b4c8c044B86667D770e1" },
     { "address": "0x3F0009D00cc78979d00Eb635490F23E8d6aCc481" },
+    { "address": "0x41c1d613dbE28dAab73b7Dc0003Da124924a56f0" },
     { "address": "0x441e5c8910Ef39996B2D01499509861228cbc2d1" },
     { "address": "0x479B7c95b9509E1A834C994fc94e3581aA8A73B9" },
     { "address": "0x4cc87B0A504047967CeD9A955431B3229237e7de" },
@@ -895,6 +903,7 @@
     { "address": "0x71d84c3404a6ae258E6471d4934B96a2033F9438" },
     { "address": "0x7f413262Cb811B034d077d9184b5Efda6943f2c3" },
     { "address": "0x7fEA26A181A792B5107ee0a31e434F5dBcbBe0B7" },
+    { "address": "0x80B9ee57A93d7Ff0B588682d3df0713489dC1b74" },
     { "address": "0x8b0c64CcaB94d4618Ef834F396F622f61F2b013D" },
     { "address": "0x90E10C37d8d9e854e7775B0069728642A1F88610" },
     { "address": "0xA167ca2984F7e08EFd4DDf9c5a4A21D66c07813E" },
@@ -902,15 +911,15 @@
     { "address": "0xACBD581D1BedB2F71d2F5F01f881586e0623d591" },
     { "address": "0xb799FF3DeF706045B5061B22d748E8F52737415d" },
     { "address": "0xb9d48DaF26F3CBE01A959F09f98E8a2eC8204122" },
+    { "address": "0xB9f0C247cF1aB4a7F36974CB0A64244Ed4D017FE" },
     { "address": "0xc858a504d6c267fe2d462D240b68A7D939B1fEC9" },
     { "address": "0xd5966E3dd25f6086b6aD7D7Fa3292d11b988da95" },
-    { "address": "0xD767A6058c34E88Dc4Ce49114C362C8FAc265A76" },
     { "address": "0xd89b0f620E0C72BD82e0447dE07FB0A0Abe01F69" },
     { "address": "0xD9b0579e2B8387fE153201631EBC4be9dEFA1A6d" },
     { "address": "0xe14828E4405239dD331F194F1B7883eeD73bCBF3" },
     { "address": "0xE4F4FdaD61f192EBe9a32b2d2fB47A5802891e14" },
     { "address": "0xe79af29d618141Ffef951B240b250d47030D56d7" },
-    { "address": "0xf2BFa7c00aDDF7765B40e83Fc4207b16EBD6db89" },
+    { "address": "0xe7ea5B62F939611D11C0Ce7606B001207870C704" },
     { "address": "0xF322467cec88d3CDFa9376B19bD5AD40da665277" },
     { "address": "0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f" },
     { "address": "0xFAdb20191Ab38362C50f52909817B74214CA79AE" },
@@ -1099,10 +1108,10 @@
       "function transferOwnership(address newOwner)",
       "function validators(uint256 _chainId, address _validator) view returns (bool)"
     ],
-    "0x5e6C5551C1b0626e9061fD4Daca6DA866Fd405aC": [
+    "0x6D26874130A174839b9cd8CB87Ed4E09D0c1a5f0": [
       "constructor(address _singleton)"
     ],
-    "0x6D26874130A174839b9cd8CB87Ed4E09D0c1a5f0": [
+    "0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063": [
       "constructor(address _singleton)"
     ],
     "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897": [
@@ -1151,6 +1160,28 @@
       "function updateSecurityCouncil(address _newSecurityCouncil)",
       "function upgradeState(bytes32 _id) view returns (uint8)",
       "function upgradeStatus(bytes32 upgradeId) view returns (uint48 creationTimestamp, uint48 securityCouncilApprovalTimestamp, bool guardiansApproval, bool guardiansExtendedLegalVeto, bool executed)"
+    ],
+    "0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661": [
+      "constructor(address _initialOwner, address _initialTokenMultiplierSetter)",
+      "error NoCallsProvided()",
+      "error Unauthorized(address caller)",
+      "error ZeroAddress()",
+      "event CallExecuted(tuple(address target, uint256 value, bytes data) _call, bool _success, bytes _returnData)",
+      "event NewTokenMultiplierSetter(address _oldTokenMultiplierSetter, address _newTokenMultiplierSetter)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event UpdateUpgradeTimestamp(uint256 indexed _protocolVersion, uint256 _upgradeTimestamp)",
+      "function acceptOwnership()",
+      "function multicall(tuple(address target, uint256 value, bytes data)[] _calls, bool _requireSuccess) payable",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function protocolVersionToUpgradeTimestamp(uint256 protocolVersion) view returns (uint256 upgradeTimestamp)",
+      "function renounceOwnership()",
+      "function setTokenMultiplier(address _chainContract, uint128 _nominator, uint128 _denominator)",
+      "function setTokenMultiplierSetter(address _tokenMultiplierSetter)",
+      "function setUpgradeTimestamp(uint256 _protocolVersion, uint256 _upgradeTimestamp)",
+      "function tokenMultiplierSetter() view returns (address)",
+      "function transferOwnership(address newOwner)"
     ],
     "0xb56A8225A745756DD215faf22E4796f373561AcD": [
       "constructor(address _l1WethAddress, address _bridgehub, uint256 _eraChainId, address _eraDiamondProxy)",

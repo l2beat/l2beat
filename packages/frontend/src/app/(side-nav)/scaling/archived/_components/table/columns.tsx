@@ -1,10 +1,9 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/pizza-rosette-cell'
-import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { TypeExplanationTooltip } from '~/components/table/cells/type-cell'
 import { TypeCell } from '~/components/table/cells/type-cell'
-import { getCommonProjectColumns } from '~/components/table/common-project-columns'
+import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { EM_DASH } from '~/consts/characters'
 import { type ScalingArchivedEntry } from '~/server/features/scaling/archived/get-scaling-archived-entries'
 import { formatTvlTableNumber } from '~/utils/number-format/format-tvl-number'
@@ -12,13 +11,11 @@ import { formatTvlTableNumber } from '~/utils/number-format/format-tvl-number'
 const columnHelper = createColumnHelper<ScalingArchivedEntry>()
 
 export const scalingArchivedColumns = [
-  ...getCommonProjectColumns(columnHelper),
-  columnHelper.accessor('name', {
-    cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
-  }),
-  columnHelper.accessor('risks', {
+  ...getScalingCommonProjectColumns(columnHelper),
+  columnHelper.display({
+    header: 'Risks',
     cell: (ctx) => {
-      const risks = ctx.getValue()
+      const risks = ctx.row.original.risks
       if (!risks) {
         return EM_DASH
       }
@@ -30,7 +27,6 @@ export const scalingArchivedColumns = [
         />
       )
     },
-    enableSorting: false,
     meta: {
       cellClassName: 'justify-center',
     },
@@ -44,10 +40,9 @@ export const scalingArchivedColumns = [
       tooltip: <TypeExplanationTooltip />,
     },
   }),
-  columnHelper.accessor('purposes', {
+  columnHelper.display({
     header: 'Purpose',
-    cell: (ctx) => ctx.getValue().join(', '),
-    enableSorting: false,
+    cell: (ctx) => ctx.row.original.purposes.join(', '),
   }),
   columnHelper.accessor('totalTvl', {
     id: 'total',

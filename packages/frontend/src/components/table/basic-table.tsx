@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, type ProjectId } from '@l2beat/shared-pure'
 import {
   type Column,
   type Header,
@@ -7,7 +7,6 @@ import {
   flexRender,
 } from '@tanstack/react-table'
 import { range } from 'lodash'
-import { type CSSProperties } from 'react'
 import React from 'react'
 import { cn } from '~/utils/cn'
 import { SortingArrows } from './sorting/sorting-arrows'
@@ -21,8 +20,15 @@ import {
   TableRow,
 } from './table'
 import { TableEmptyState } from './table-empty-state'
+import { getCommonPinningStyles } from './utils/common-pinning-styles'
+import {
+  getRowType,
+  getRowTypeClassNames,
+  getRowTypeClassNamesWithoutOpacity,
+} from './utils/row-type'
 
-interface BasicEntry {
+export interface BasicTableEntry {
+  id: ProjectId | string
   slug: string
   isVerified?: boolean
   redWarning?: string | undefined
@@ -31,9 +37,9 @@ interface BasicEntry {
   href?: string
 }
 
-interface Props<T extends BasicEntry> {
+export interface BasicTableProps<T extends BasicTableEntry> {
   table: TanstackTable<T>
-  className?: string
+  children?: React.ReactNode
   /**
    * Custom sub component render function
    */
@@ -49,56 +55,21 @@ interface Props<T extends BasicEntry> {
   rowColoringMode?: 'default' | 'ethereum-only'
 }
 
-function getCommonPinningStyles<T>(
-  column: Column<T>,
-): CSSProperties | undefined {
-  const isPinned = column.getIsPinned()
-  if (!isPinned) return undefined
-  const isLastPinned = column.getIsLastColumn('left')
-    ? 'left'
-    : column.getIsLastColumn('right')
-      ? 'right'
-      : undefined
-
-  return {
-    left: isPinned === 'left' ? `${column.getStart('left')}px` : undefined,
-    right: isPinned === 'right' ? `${column.getAfter('right')}px` : undefined,
-    position: 'sticky',
-    width: column.getSize(),
-    maskImage:
-      isLastPinned &&
-      `linear-gradient(to ${
-        isLastPinned === 'left' ? 'right' : 'left'
-      }, transparent 0, black 0px, black calc(100% - 10px), transparent 100%)`,
-    zIndex: 1,
-  }
-}
-
-export function BasicTable<T extends BasicEntry>({
-  table,
-  className,
-  renderSubComponent,
-  rawSubComponent,
-  rowColoringMode = 'default',
-}: Props<T>) {
-  if (table.getRowCount() === 0) {
+export function BasicTable<T extends BasicTableEntry>(
+  props: BasicTableProps<T>,
+) {
+  if (props.table.getRowCount() === 0) {
     return <TableEmptyState />
   }
-  const headerGroups = table.getHeaderGroups()
+  const headerGroups = props.table.getHeaderGroups()
   const maxDepth = headerGroups.length - 1
   assert(maxDepth <= 1, 'Only 1 level of headers is supported')
 
   const groupedHeader = maxDepth === 1 ? headerGroups[0] : undefined
   const actualHeader = maxDepth === 1 ? headerGroups[1]! : headerGroups[0]!
 
-  const columnLength =
-    actualHeader.headers.length +
-    (groupedHeader
-      ? groupedHeader.headers.filter((h) => !h.isPlaceholder).length
-      : 0)
-
   return (
-    <Table className={className}>
+    <Table>
       {groupedHeader && <ColGroup headers={groupedHeader.headers} />}
       <TableHeader>
         {groupedHeader &&
@@ -129,7 +100,9 @@ export function BasicTable<T extends BasicEntry>({
                           header.getContext(),
                         )}
                     </th>
-                    {!header.isPlaceholder && <ColumnFiller as="th" />}
+                    {!header.isPlaceholder && (
+                      <BasicTableColumnFiller as="th" />
+                    )}
                   </React.Fragment>
                 )
               })}
@@ -137,7 +110,7 @@ export function BasicTable<T extends BasicEntry>({
           )}
         <TableHeaderRow>
           {actualHeader.headers.map((header) => {
-            const groupParams = getGroupParams(header.column)
+            const groupParams = getBasicTableGroupParams(header.column)
             return (
               <React.Fragment key={`${actualHeader.id}-${header.id}`}>
                 <TableHead
@@ -179,86 +152,98 @@ export function BasicTable<T extends BasicEntry>({
                     )
                   )}
                 </TableHead>
-                {groupParams?.isLastInGroup && <ColumnFiller as="th" />}
+                {groupParams?.isLastInGroup && (
+                  <BasicTableColumnFiller as="th" />
+                )}
               </React.Fragment>
             )
           })}
         </TableHeaderRow>
         <TableHeaderRow>
           <th
-            colSpan={columnLength}
+            colSpan={100}
             className="mx-0.5 h-0.5 rounded-full bg-surface-tertiary"
           />
         </TableHeaderRow>
       </TableHeader>
       <TableBody>
-        {table.getRowModel().rows.map((row) => {
-          const rowType = getRowType(row.original, rowColoringMode)
-          return (
-            <React.Fragment key={row.id}>
-              <TableRow
-                className={cn(
-                  getRowTypeClassNames(rowType),
-                  row.getIsExpanded() &&
-                    renderSubComponent?.({ row }) &&
-                    '!border-none',
-                )}
-              >
-                {row.getVisibleCells().map((cell) => {
-                  const { meta } = cell.column.columnDef
-                  const groupParams = getGroupParams(cell.column)
-                  const href = getHref(row.original.href, meta?.hash)
-
-                  return (
-                    <React.Fragment key={`${row.id}-${cell.id}`}>
-                      <TableCell
-                        href={href}
-                        align={meta?.align}
-                        className={cn(
-                          cell.column.getIsPinned() &&
-                            getRowTypeClassNamesWithoutOpacity(rowType),
-                          groupParams?.isFirstInGroup && 'pl-6',
-                          groupParams?.isLastInGroup && '!pr-6',
-                          cell.column.getCanSort() && meta?.align === undefined
-                            ? groupParams?.isFirstInGroup
-                              ? 'pl-10'
-                              : 'pl-4'
-                            : undefined,
-
-                          meta?.cellClassName,
-                        )}
-                        style={getCommonPinningStyles(cell.column)}
-                      >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </TableCell>
-                      {groupParams?.isLastInGroup && (
-                        <ColumnFiller as="td" href={href} />
-                      )}
-                    </React.Fragment>
-                  )
-                })}
-              </TableRow>
-              {row.getIsExpanded() &&
-                renderSubComponent &&
-                (rawSubComponent ? (
-                  renderSubComponent({ row })
-                ) : (
-                  <tr className="border-b">
-                    {/* 2nd row is a custom 1 cell row */}
-                    <td colSpan={row.getVisibleCells().length}>
-                      {renderSubComponent({ row })}
-                    </td>
-                  </tr>
-                ))}
-            </React.Fragment>
-          )
-        })}
+        {props.children ??
+          props.table
+            .getRowModel()
+            .rows.map((row) => (
+              <BasicTableRow row={row} key={row.id} {...props} />
+            ))}
         {groupedHeader && <RowFiller headers={groupedHeader.headers} />}
       </TableBody>
     </Table>
+  )
+}
+
+export function BasicTableRow<T extends BasicTableEntry>({
+  row,
+  className,
+  ...props
+}: BasicTableProps<T> & { row: Row<T>; className?: string }) {
+  const rowType = getRowType(row.original, props.rowColoringMode)
+
+  return (
+    <>
+      <TableRow
+        className={cn(
+          getRowTypeClassNames(rowType),
+          row.getIsExpanded() &&
+            props.renderSubComponent?.({ row }) &&
+            '!border-none',
+          className,
+        )}
+      >
+        {row.getVisibleCells().map((cell) => {
+          const { meta } = cell.column.columnDef
+          const groupParams = getBasicTableGroupParams(cell.column)
+          const href = getBasicTableHref(row.original.href, meta?.hash)
+
+          return (
+            <React.Fragment key={`${row.id}-${cell.id}`}>
+              <TableCell
+                href={href}
+                align={meta?.align}
+                className={cn(
+                  cell.column.getIsPinned() &&
+                    getRowTypeClassNamesWithoutOpacity(rowType),
+                  groupParams?.isFirstInGroup && 'pl-6',
+                  groupParams?.isLastInGroup && '!pr-6',
+                  cell.column.getCanSort() && meta?.align === undefined
+                    ? groupParams?.isFirstInGroup
+                      ? 'pl-10'
+                      : 'pl-4'
+                    : undefined,
+
+                  meta?.cellClassName,
+                )}
+                style={getCommonPinningStyles(cell.column)}
+              >
+                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+              </TableCell>
+              {groupParams?.isLastInGroup && (
+                <BasicTableColumnFiller as="td" href={href} />
+              )}
+            </React.Fragment>
+          )
+        })}
+      </TableRow>
+      {row.getIsExpanded() &&
+        props.renderSubComponent &&
+        (props.rawSubComponent ? (
+          props.renderSubComponent({ row })
+        ) : (
+          <tr className="border-b">
+            {/* 2nd row is a custom 1 cell row */}
+            <td colSpan={row.getVisibleCells().length}>
+              {props.renderSubComponent({ row })}
+            </td>
+          </tr>
+        ))}
+    </>
   )
 }
 
@@ -273,7 +258,7 @@ function ColGroup<T, V>(props: { headers: Header<T, V>[] }) {
             <col key={`${header.id}-${i}`} />
           ))}
         </colgroup>
-        {!header.isPlaceholder && <ColumnFiller as="colgroup" />}
+        {!header.isPlaceholder && <BasicTableColumnFiller as="colgroup" />}
       </React.Fragment>
     )
   })
@@ -308,7 +293,7 @@ type ColumnFillerProps =
       href: string | undefined
     }
 
-function ColumnFiller(props: ColumnFillerProps) {
+export function BasicTableColumnFiller(props: ColumnFillerProps) {
   if (props.as === 'td') {
     return (
       <td>
@@ -321,7 +306,7 @@ function ColumnFiller(props: ColumnFillerProps) {
   return <Comp className="w-4" />
 }
 
-function getGroupParams<T>(column: Column<T>) {
+export function getBasicTableGroupParams<T>(column: Column<T>) {
   if (!column.parent) return undefined
 
   const leafColumns = column.parent.getLeafColumns()
@@ -337,63 +322,13 @@ function getGroupParams<T>(column: Column<T>) {
   }
 }
 
-function getHref(href: string | undefined, hash: string | undefined) {
+export function getBasicTableHref(
+  href: string | undefined,
+  hash: string | undefined,
+) {
   if (!hash) {
     return href
   }
 
   return `${href}#${hash}`
-}
-
-type RowType = ReturnType<typeof getRowType>
-function getRowType(
-  entry: BasicEntry,
-  rowColoringMode: Props<BasicEntry>['rowColoringMode'],
-) {
-  if (entry.slug === 'ethereum') {
-    return 'ethereum'
-  }
-  if (rowColoringMode === 'ethereum-only') {
-    return undefined
-  }
-
-  if (entry.isVerified === false || entry.redWarning) {
-    return 'unverified'
-  }
-  if (entry.showProjectUnderReview) {
-    return 'under-review'
-  }
-  if (entry.hasImplementationChanged) {
-    return 'implementation-changed'
-  }
-}
-
-/*
-  NOTICE: It is important that this functions return the same colors
-*/
-export function getRowTypeClassNames(rowType: RowType) {
-  switch (rowType) {
-    case 'ethereum':
-      return 'bg-blue-400 hover:bg-blue-400 border-b border-b-blue-600 dark:bg-blue-900 dark:border-b-blue-500 dark:hover:bg-blue-900'
-    case 'unverified':
-      return 'bg-red-100/70 dark:bg-red-900/70 hover:bg-red-100/90 dark:hover:bg-red-900/90'
-    case 'under-review':
-    case 'implementation-changed':
-      return 'bg-yellow-200/10 hover:!bg-yellow-200/20'
-    default:
-      return 'dark:hover:bg-white/[0.1] hover:bg-black/[0.05] hover:shadow-sm'
-  }
-}
-export function getRowTypeClassNamesWithoutOpacity(rowType: RowType | null) {
-  switch (rowType) {
-    case 'ethereum':
-      return 'bg-blue-400 group-hover/row:bg-blue-400 dark:bg-blue-900 dark:border-b-blue-500 dark:group-hover/row:bg-blue-900'
-    case 'unverified':
-      return 'bg-[#FEE4E4] dark:bg-[#391617] group-hover/row:bg-[#FDDDDD] dark:group-hover/row:bg-[#401213]'
-    case 'under-review':
-    case 'implementation-changed':
-      return 'bg-[#faf5e6] dark:bg-[#363122] group-hover/row:!bg-[#FBEFC9] dark:group-hover/row:!bg-[#4C411F]'
-    default:
-      return 'bg-surface-primary group-hover/row:shadow-sm group-hover/row:bg-[#EEEEEE] dark:group-hover/row:bg-[#35363A]'
-  }
 }

@@ -71,6 +71,7 @@ const longTimelockUpgradeability = {
 export const dydx: Layer2 = {
   type: 'layer2',
   id: ProjectId('dydx'),
+  createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
     Badge.VM.AppChain,
     Badge.Stack.StarkEx,
@@ -83,7 +84,7 @@ export const dydx: Layer2 = {
     warning:
       'This page describes dYdX v3, which is an L2 built on Ethereum. Recently deployed dYdX v4 is a separate blockchain based on Cosmos SDK, unrelated to Ethereum and is using different technology. No information on this page applies to dYdX v4.',
     headerWarning:
-      'dYdX v3 is planned to shut down on October 28th at 12:05 P.M. UTC. [Read more](https://dydx.exchange/blog/v3-product-sunset)',
+      'dYdX v3 shut down on October 28th and is currently processing withdrawals in escape-hatch mode. [Read more](https://dydx.exchange/blog/v3-product-sunset) or [use the escape-hatch](https://explorer.dydx.exchange/tutorials/escapehatch).',
     description:
       'dYdX v3 aims to build a powerful and professional exchange for trading crypto assets where users can truly own their trades and, eventually, the exchange itself.',
     purposes: ['Exchange'],

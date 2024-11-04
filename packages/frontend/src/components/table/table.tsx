@@ -3,84 +3,80 @@ import * as React from 'react'
 import { cn } from '~/utils/cn'
 import { TableTooltip } from './table-tooltip'
 
-const Table = React.forwardRef<
-  HTMLTableElement,
-  React.HTMLAttributes<HTMLTableElement>
->(({ className, ...props }, ref) => {
+const Table = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLTableElement>) => {
   return (
     <div className="max-md:-mr-4">
       <div className={cn('relative w-full overflow-auto pb-3 max-md:pr-4')}>
         <table
-          ref={ref}
           className={cn('w-full border-collapse text-left', className)}
           cellSpacing={0}
+          cellPadding={0}
           {...props}
         />
       </div>
     </div>
   )
-})
+}
 Table.displayName = 'Table'
 
-const TableHeader = React.forwardRef<
-  HTMLTableSectionElement,
-  React.HTMLAttributes<HTMLTableSectionElement>
->(({ className, ...props }, ref) => (
+const TableHeader = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLTableSectionElement>) => (
   <thead
-    ref={ref}
     className={cn(
       'group/header whitespace-pre py-2 align-bottom text-xs font-medium uppercase text-zinc-500 dark:text-n-zinc-300',
       className,
     )}
     {...props}
   />
-))
+)
 TableHeader.displayName = 'TableHeader'
 
-const TableBody = React.forwardRef<
-  HTMLTableSectionElement,
-  React.HTMLAttributes<HTMLTableSectionElement>
->(({ className, ...props }, ref) => (
-  <tbody
-    ref={ref}
-    className={cn('[&_tr:last-child]:border-0', className)}
-    {...props}
-  />
-))
+const TableBody = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLTableSectionElement>) => (
+  <tbody className={cn('[&_tr:last-child]:border-0', className)} {...props} />
+)
 TableBody.displayName = 'TableBody'
 
-const TableHeaderRow = React.forwardRef<
-  HTMLTableRowElement,
-  React.HTMLAttributes<HTMLTableRowElement>
->(({ className, ...props }, ref) => (
-  <tr ref={ref} className={className} {...props} />
-))
+const TableHeaderRow = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLTableRowElement>) => (
+  <tr className={className} {...props} />
+)
 TableHeaderRow.displayName = 'TableHeaderRow'
 
-const TableRow = React.forwardRef<
-  HTMLTableRowElement,
-  React.HTMLAttributes<HTMLTableRowElement>
->(({ className, ...props }, ref) => (
+const TableRow = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLTableRowElement>) => (
   <TableHeaderRow
-    ref={ref}
     className={cn(
       'group/row border-b border-b-gray-200 hover:shadow-sm dark:border-b-gray-850',
       className,
     )}
     {...props}
   />
-))
+)
 TableRow.displayName = 'TableRow'
 
-const TableHead = React.forwardRef<
-  HTMLTableCellElement,
-  React.ThHTMLAttributes<HTMLTableCellElement> & {
-    tooltip?: React.ReactNode
-    align?: 'right' | 'center'
-  }
->(({ className, children, tooltip, align, ...props }, ref) => (
+const TableHead = ({
+  className,
+  children,
+  tooltip,
+  align,
+  ...props
+}: React.ThHTMLAttributes<HTMLTableCellElement> & {
+  tooltip?: React.ReactNode
+  align?: 'right' | 'center'
+}) => (
   <th
-    ref={ref}
     className={cn(
       'h-10 py-2 text-left align-bottom text-[13px] font-medium uppercase',
       'pr-3 first:pl-2 last:pr-2 md:pr-4',
@@ -99,18 +95,20 @@ const TableHead = React.forwardRef<
       {tooltip ? <TableTooltip>{tooltip}</TableTooltip> : null}
     </div>
   </th>
-))
+)
 TableHead.displayName = 'TableHead'
 
-const TableCell = React.forwardRef<
-  HTMLTableCellElement,
-  React.TdHTMLAttributes<HTMLTableCellElement> & {
-    href?: string
-    align?: 'right' | 'center'
-  }
->(({ className, children, href, align, ...props }, ref) => (
+const TableCell = ({
+  className,
+  children,
+  href,
+  align,
+  ...props
+}: React.TdHTMLAttributes<HTMLTableCellElement> & {
+  href?: string
+  align?: 'right' | 'center'
+}) => (
   <td
-    ref={ref}
     className={cn(
       'group h-9 whitespace-pre p-0 align-middle text-xs md:h-14 md:text-sm',
       !href && [
@@ -138,7 +136,7 @@ const TableCell = React.forwardRef<
       children
     )}
   </td>
-))
+)
 TableCell.displayName = 'TableCell'
 
 export {

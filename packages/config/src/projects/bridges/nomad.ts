@@ -19,6 +19,7 @@ const challengeWindowSeconds = discovery.getContractValue<number>(
 export const nomad: Bridge = {
   type: 'bridge',
   id: ProjectId('nomad'),
+  createdAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
   isArchived: true,
   display: {
     name: 'Nomad',
@@ -92,7 +93,6 @@ export const nomad: Bridge = {
         {
           category: 'Funds can be stolen if',
           text: 'destination token contract is maliciously upgraded.',
-          isCritical: true,
         },
       ],
       isIncomplete: true,

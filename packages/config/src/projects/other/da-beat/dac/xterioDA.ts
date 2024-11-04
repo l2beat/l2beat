@@ -1,9 +1,10 @@
 import { formatSeconds } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
-import { NO_BRIDGE } from '../templates/no-bridge-template'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
+import { DaChallengeMechanism } from '../types/DaChallengeMechanism'
 import { DaLayer } from '../types/DaLayer'
 import { linkByDA } from '../utils/link-by-da'
+import { xterioDABridge } from './bridges/xterioDABridge'
 
 const discovery = new ProjectDiscovery('xterio')
 
@@ -24,7 +25,7 @@ const daResolveWindow = formatSeconds(
 export const xterioDA: DaLayer = {
   id: 'xterio-da',
   type: 'DaLayer',
-  kind: 'DAC',
+  kind: 'No DAC',
   systemCategory: 'custom',
   display: {
     name: 'XterioDA',
@@ -44,9 +45,12 @@ export const xterioDA: DaLayer = {
       ],
     },
   },
-  hasChallengeMechanism: true,
+  challengeMechanism: DaChallengeMechanism.DaChallenges,
   technology: {
     description: `
+    ## Architecture
+    ![XterioDA layer](/images/da-layer-technology/xterioda/architecture.png#center)
+
     ## Data Availability Challenges
     Xterio relies on DA challenges for data availability. 
     The DA Provider submits an input commitment on Ethereum, and users can request the data behind the commitment off-chain from the DA Provider.
@@ -57,22 +61,12 @@ export const xterioDA: DaLayer = {
     If instead, after a challenge, the preimage data is not published, the chain reorgs to the last fully derivable state.
   `,
   },
-  bridges: [
-    NO_BRIDGE({
-      layer: 'XterioDA',
-      description:
-        'The risk profile in this page refers to scaling solutions that do not integrate with a data availability bridge.',
-      technology: {
-        description: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.
-        However, there is a mechanism that allows users to challenge unavailability of data. \n`,
-      },
-    }),
-  ],
+  bridges: [xterioDABridge],
   usedIn: linkByDA({
     layer: (layer) => layer === 'XterioDA',
   }),
   risks: {
-    economicSecurity: DaEconomicSecurityRisk.Unknown,
+    economicSecurity: DaEconomicSecurityRisk.DAChallengesNoFunds,
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
   },
 }

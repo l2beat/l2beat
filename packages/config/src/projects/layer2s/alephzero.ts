@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL2 } from './templates/orbitStack'
@@ -6,6 +7,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('alephzero')
 
 export const alephzero: Layer2 = orbitStackL2({
+  createdAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
   discovery,
   badges: [Badge.DA.DAC, Badge.RaaS.Gelato],
   additionalPurposes: ['Privacy'],
@@ -26,23 +28,13 @@ export const alephzero: Layer2 = orbitStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  nonTemplatePermissions: [
-    {
-      name: 'AdminEOA',
-      accounts: discovery.getAccessControlRolePermission(
-        'UpgradeExecutor',
-        'EXECUTOR_ROLE',
-      ),
-      description:
-        'Can upgrade any project implementation via UpgradeExecutor, potentially gaining access to all funds.',
-    },
-  ],
   associatedTokens: ['AZERO'],
   nativeToken: 'AZERO',
   rpcUrl: 'https://rpc.alephzero.raas.gelato.cloud',
-  bridge: discovery.getContract('Bridge'),
+  bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+  discoveryDrivenData: true,
   milestones: [
     {
       name: 'Mainnet launch',

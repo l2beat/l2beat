@@ -7,6 +7,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('lisk')
 
 export const lisk: Layer2 = opStackL2({
+  createdAt: new UnixTime(1695904849), // 2023-09-28T12:40:49Z
   discovery,
   genesisTimestamp: new UnixTime(1714728793),
   associatedTokens: ['LSK'],
@@ -42,7 +43,7 @@ export const lisk: Layer2 = opStackL2({
     minTimestamp: new UnixTime(1714746983), // first blob
     l2BlockTimeSeconds: 2,
     lag: 0,
-    stateUpdate: 'disabled',
+    stateUpdate: 'analyze',
   },
   // not ready yet, check this PR https://github.com/ethereum-optimism/superchain-registry/pull/234 or the prepared links in `DERIVATION.OPSTACK('LISK')`
   // stateDerivation: DERIVATION.OPSTACK('LISK'),

@@ -9,6 +9,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('bobanetwork')
 
 export const bobanetwork: Layer2 = opStackL2({
+  createdAt: new UnixTime(1632469722), // 2021-09-24T07:48:42Z
   discovery,
   display: {
     name: 'Boba Network',
@@ -52,7 +53,7 @@ export const bobanetwork: Layer2 = opStackL2({
   // Explicitly set since we are getting weird results from the finality calculation
   finality: undefined,
   genesisTimestamp: new UnixTime(1713303530), // boba network anchorage upgrade + 3 timestamp
-  associatedTokens: ['BOBA', 'OMG'],
+  associatedTokens: ['BOBA'],
   isNodeAvailable: 'UnderReview',
   discoveryDrivenData: true,
   nonTemplateTrackedTxs: [

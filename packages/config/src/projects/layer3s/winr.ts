@@ -7,6 +7,7 @@ import { Layer3 } from '../layer3s'
 const discovery = new ProjectDiscovery('winr', 'arbitrum')
 
 export const winr: Layer3 = orbitStackL3({
+  createdAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
   discovery,
   badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum, Badge.RaaS.Conduit],
   additionalPurposes: ['Gaming'],
@@ -43,7 +44,7 @@ export const winr: Layer3 = orbitStackL3({
       tokens: '*',
     },
     {
-      // socket superbridge, converted with `yarn socket-convert` (https://github.com/WINRLabs/winr-token-bridge/blob/main/deployments/superbridge/prod_winr_prod_mainnet_addresses.json)
+      // socket superbridge, converted with `pnpm socket-convert` (https://github.com/WINRLabs/winr-token-bridge/blob/main/deployments/superbridge/prod_winr_prod_mainnet_addresses.json)
       address: EthereumAddress('0x8E83aED64a0Ad5d7d3A57B6172F14FcA5bfADE56'),
       sinceTimestamp: new UnixTime(1722608545),
       source: 'external',

@@ -15,7 +15,7 @@ describe('checkVerifiedContracts:projects', () => {
     for (const project of projectNames) {
       if (verified[project] === undefined) {
         throw new Error(
-          `Not all projects have been checked for verification.\nGo to packages/config and run yarn check-verified-contracts\nThe missing project is ${project}`,
+          `Not all projects have been checked for verification.\nGo to packages/config and run pnpm check-verified-contracts\nThe missing project is ${project}`,
         )
       }
     }

@@ -39,6 +39,7 @@ export const aztecV1: Layer2 = {
   isArchived: true,
   type: 'layer2',
   id: ProjectId('aztec'),
+  createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   display: {
     name: 'Zk.Money v1 (Aztec v1)',
     slug: 'aztecv1',

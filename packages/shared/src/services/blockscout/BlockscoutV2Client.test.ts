@@ -99,7 +99,7 @@ describe(BlockscoutV2Client.name, () => {
 
       const blockscoutClient = new BlockscoutV2Client(httpClient, API_URL)
       await expect(blockscoutClient.call('mod', 'id', 'act')).toBeRejectedWith(
-        `Unexpected token m in JSON at position 0`,
+        `Unexpected token 'm', "mytestresp" is not valid JSON`,
       )
     })
 

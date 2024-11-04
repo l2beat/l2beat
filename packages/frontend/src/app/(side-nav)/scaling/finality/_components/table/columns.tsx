@@ -1,13 +1,12 @@
 import { formatSeconds } from '@l2beat/shared-pure'
 import { type Row, createColumnHelper } from '@tanstack/react-table'
 import { Badge } from '~/components/badge/badge'
-import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import {
   TypeCell,
   TypeExplanationTooltip,
 } from '~/components/table/cells/type-cell'
-import { getCommonProjectColumns } from '~/components/table/common-project-columns'
-import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/types'
+import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
+import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/get-scaling-finality-entries'
 import { FinalityDurationCell } from './finality-duration-cell'
 
 const sortFinality =
@@ -25,10 +24,7 @@ const sortFinality =
 const columnHelper = createColumnHelper<ScalingFinalityEntry>()
 
 export const scalingFinalityColumns = [
-  ...getCommonProjectColumns(columnHelper),
-  columnHelper.accessor('name', {
-    cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
-  }),
+  ...getScalingCommonProjectColumns(columnHelper),
   columnHelper.accessor('category', {
     header: 'Type',
     cell: (ctx) => (
@@ -76,7 +72,7 @@ export const scalingFinalityColumns = [
     cell: (ctx) => {
       const { data } = ctx.row.original
       return data?.stateUpdateDelay ? (
-        data.stateUpdateDelay.averageInSeconds === 0 ? (
+        data.stateUpdateDelay.averageInSeconds <= 0 ? (
           'None'
         ) : (
           <FinalityDurationCell

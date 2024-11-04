@@ -1,16 +1,24 @@
-import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { Bridge } from '../../projects'
 
 export const bridge2WithDups: Bridge = {
   type: 'bridge',
   id: ProjectId('bridge2'),
+  createdAt: new UnixTime(1688643599), // 2023-07-06T11:39:59Z
   display: {
     name: 'Bridge2',
     slug: 'bridge2',
     category: 'Token Bridge',
     description: 'Bridge2 description',
     links: {},
+  },
+  riskView: {
+    validatedBy: {
+      value: 'Bridge1 Validator',
+      sentiment: 'good',
+      description: 'Bridge1 Validator',
+    },
   },
   config: {
     escrows: [],

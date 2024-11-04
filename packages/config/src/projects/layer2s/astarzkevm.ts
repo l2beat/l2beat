@@ -30,6 +30,7 @@ const upgradeability = {
 }
 
 export const astarzkevm: Layer2 = polygonCDKStack({
+  createdAt: new UnixTime(1690815262), // 2023-07-31T14:54:22Z
   badges: [Badge.DA.DAC, Badge.RaaS.Gelato],
   daProvider: {
     name: 'DAC',

@@ -6,7 +6,7 @@ import { mockDatabase } from '../../../test/database'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import { BlockActivityIndexer } from './BlockActivityIndexer'
-import { ActivityIndexerDeps, TxsCountProvider } from './types'
+import { ActivityIndexerDeps, TxsCountService } from './types'
 
 const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
 
@@ -17,18 +17,18 @@ describe(BlockActivityIndexer.name, () => {
 
   describe(BlockActivityIndexer.prototype.update.name, () => {
     it('make update based on batchSize', async () => {
-      const txsCountProvider = mockObject<TxsCountProvider>({
+      const txsCountService = mockObject<TxsCountService>({
         getTxsCount: mockFn().resolvesTo([]),
       })
 
       const indexer = createIndexer({
-        txsCountProvider,
+        txsCountService,
         batchSize: 50,
       })
 
       const newSafeHeight = await indexer.update(0, 100)
 
-      expect(txsCountProvider.getTxsCount).toHaveBeenCalledWith(0, 50)
+      expect(txsCountService.getTxsCount).toHaveBeenCalledWith(0, 50)
       expect(newSafeHeight).toEqual(50)
     })
 
@@ -41,7 +41,7 @@ describe(BlockActivityIndexer.name, () => {
         upsertMany: mockFn().resolvesTo(undefined),
       })
 
-      const txsCountProvider = mockObject<TxsCountProvider>({
+      const txsCountService = mockObject<TxsCountService>({
         getTxsCount: mockFn().resolvesTo([
           activityRecord('a', START, 5, 5, 9, 10),
           activityRecord('a', START.add(1, 'days'), 4, 5, 13, 15),
@@ -50,14 +50,14 @@ describe(BlockActivityIndexer.name, () => {
       })
 
       const indexer = createIndexer({
-        txsCountProvider,
+        txsCountService,
         db: mockDatabase({ activity: activityRepository }),
         batchSize: 100,
       })
 
       const newSafeHeight = await indexer.update(0, 10)
 
-      expect(txsCountProvider.getTxsCount).toHaveBeenCalledWith(0, 10)
+      expect(txsCountService.getTxsCount).toHaveBeenCalledWith(0, 10)
       expect(activityRepository.upsertMany).toHaveBeenCalledWith([
         activityRecord('a', START, 12, 12, 0, 10),
         activityRecord('a', START.add(1, 'days'), 7, 9, 11, 15),
@@ -66,7 +66,7 @@ describe(BlockActivityIndexer.name, () => {
       expect(newSafeHeight).toEqual(10)
     })
 
-    it('it calculates ratio to 2 decimals', async () => {
+    it('handle cases with block with 0 txs', async () => {
       const activityRepository = mockObject<Database['activity']>({
         getByProjectAndTimeRange: mockFn().resolvesTo([
           activityRecord('a', START, 7, 10, 0, 8),
@@ -74,27 +74,27 @@ describe(BlockActivityIndexer.name, () => {
         upsertMany: mockFn().resolvesTo(undefined),
       })
 
-      const txsCountProvider = mockObject<TxsCountProvider>({
+      const txsCountService = mockObject<TxsCountService>({
         getTxsCount: mockFn().resolvesTo([
-          activityRecord('a', START, 5, 12, 9, 10),
+          activityRecord('a', START, 0, 0, 9, 10),
         ]),
       })
 
       const indexer = createIndexer({
-        txsCountProvider,
+        txsCountService,
         db: mockDatabase({ activity: activityRepository }),
         batchSize: 100,
       })
 
       const newSafeHeight = await indexer.update(0, 10)
 
-      expect(txsCountProvider.getTxsCount).toHaveBeenCalledWith(0, 10)
+      expect(txsCountService.getTxsCount).toHaveBeenCalledWith(0, 10)
       expect(activityRepository.upsertMany).toHaveBeenCalledWith([
         {
           projectId: ProjectId('a'),
           timestamp: START,
-          count: 12,
-          uopsCount: 22,
+          count: 7,
+          uopsCount: 10,
           start: 0,
           end: 10,
         },
@@ -253,7 +253,7 @@ function createIndexer(
   return new BlockActivityIndexer({
     logger: Logger.SILENT,
     parents: [],
-    txsCountProvider: mockObject<TxsCountProvider>({
+    txsCountService: mockObject<TxsCountService>({
       getTxsCount: mockFn().resolvesTo([]),
     }),
     db: mockDatabase({

@@ -30,6 +30,7 @@ const config: Config = {
       light: '300',
       normal: '400',
       medium: '500',
+      semibold: '600',
       bold: '700',
       black: '900',
     },
@@ -176,6 +177,9 @@ const config: Config = {
       'surface-primary': 'var(--surface-primary)',
       'surface-secondary': 'var(--surface-secondary)',
       'surface-tertiary': 'var(--surface-tertiary)',
+      'icon-secondary': 'var(--icon-secondary)',
+      overlay: 'var(--overlay)',
+      divider: 'var(--divider)',
     },
     screens: {
       xs: '400px',
@@ -257,6 +261,13 @@ const config: Config = {
           'Roboto',
           'Arial',
         ],
+        'roboto-serif-ext': [
+          'var(--font-roboto-serif-ext)',
+          'var(--font-roboto-serif)',
+          'Roboto Serif',
+          'Roboto',
+          'Arial',
+        ],
         lora: ['Lora', 'serif'],
       },
       spacing: {
@@ -274,6 +285,9 @@ const config: Config = {
   plugins: [
     plugin(function ({ addVariant }) {
       addVariant('sidebar', '.sidebar &')
+    }),
+    plugin(function ({ addVariant }) {
+      addVariant('main-page-card', '.main-page-card &')
     }),
     require('tailwindcss-animate'),
     require('@tailwindcss/container-queries'),

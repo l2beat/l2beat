@@ -12,15 +12,16 @@ import { StarknetClient } from '../../peripherals/starknet/StarknetClient'
 import { ApplicationModule } from '../ApplicationModule'
 import { TrackedTxsIndexer } from '../tracked-txs/TrackedTxsIndexer'
 import { FinalityIndexer } from './FinalityIndexer'
-import { LineaFinalityAnalyzer } from './analyzers/LineaFinalityAnalyzer'
-import { LoopringFinalityAnalyzer } from './analyzers/LoopringFinalityAnalyzer'
-import { ScrollFinalityAnalyzer } from './analyzers/ScrollFinalityAnalyzer'
-import { StarknetFinalityAnalyzer } from './analyzers/StarknetFinalityAnalyzer'
-import { ZkSyncLiteFinalityAnalyzer } from './analyzers/ZkSyncLiteFinalityAnalyzer'
-import { ArbitrumFinalityAnalyzer } from './analyzers/arbitrum/ArbitrumFinalityAnalyzer'
-import { OpStackFinalityAnalyzer } from './analyzers/opStack/OpStackFinalityAnalyzer'
-import { PolygonZkEvmFinalityAnalyzer } from './analyzers/polygon-zkevm/PolygonZkevmFinalityAnalyzer'
-import { zkSyncEraFinalityAnalyzer } from './analyzers/zkSyncEraFinalityAnalyzer'
+import { LineaT2IAnalyzer } from './analyzers/LineaT2IAnalyzer'
+import { LoopringT2IAnalyzer } from './analyzers/LoopringT2IAnalyzer'
+import { ScrollT2IAnalyzer } from './analyzers/ScrollT2IAnalyzer'
+import { StarknetT2IAnalyzer } from './analyzers/StarknetT2IAnalyzer'
+import { ZkSyncLiteT2IAnalyzer } from './analyzers/ZkSyncLiteT2IAnalyzer'
+import { ArbitrumT2IAnalyzer } from './analyzers/arbitrum/ArbitrumT2IAnalyzer'
+import { OpStackStateUpdateAnalyzer } from './analyzers/opStack/OpStackStateUpdateAnalyzer'
+import { OpStackT2IAnalyzer } from './analyzers/opStack/OpStackT2IAnalyzer'
+import { PolygonZkEvmT2IAnalyzer } from './analyzers/polygon-zkevm/PolygonZkevmT2IAnalyzer'
+import { zkSyncEraT2IAnalyzer } from './analyzers/zkSyncEraT2IAnalyzer'
 import { FinalityConfig } from './types/FinalityConfig'
 
 export function createFinalityModule(
@@ -98,7 +99,7 @@ function initializeConfigurations(
           return {
             projectId: configuration.projectId,
             analyzers: {
-              timeToInclusion: new LineaFinalityAnalyzer(
+              timeToInclusion: new LineaT2IAnalyzer(
                 ethereumRPC,
                 peripherals.database,
                 configuration.projectId,
@@ -112,7 +113,7 @@ function initializeConfigurations(
           return {
             projectId: configuration.projectId,
             analyzers: {
-              timeToInclusion: new zkSyncEraFinalityAnalyzer(
+              timeToInclusion: new zkSyncEraT2IAnalyzer(
                 ethereumRPC,
                 peripherals.database,
                 configuration.projectId,
@@ -125,7 +126,7 @@ function initializeConfigurations(
           return {
             projectId: configuration.projectId,
             analyzers: {
-              timeToInclusion: new OpStackFinalityAnalyzer(
+              timeToInclusion: new OpStackT2IAnalyzer(
                 blobClient,
                 logger,
                 ethereumRPC,
@@ -136,6 +137,13 @@ function initializeConfigurations(
                   genesisTimestamp: configuration.genesisTimestamp,
                 },
               ),
+              stateUpdate: new OpStackStateUpdateAnalyzer(
+                ethereumRPC,
+                peripherals.database,
+                configuration.projectId,
+                configuration.l2BlockTimeSeconds,
+                getL2Rpc(configuration, peripherals, RpcClient),
+              ),
             },
             minTimestamp: configuration.minTimestamp,
             stateUpdateMode: configuration.stateUpdate,
@@ -144,7 +152,7 @@ function initializeConfigurations(
           return {
             projectId: configuration.projectId,
             analyzers: {
-              timeToInclusion: new ArbitrumFinalityAnalyzer(
+              timeToInclusion: new ArbitrumT2IAnalyzer(
                 blobClient,
                 logger,
                 ethereumRPC,
@@ -159,7 +167,7 @@ function initializeConfigurations(
           return {
             projectId: configuration.projectId,
             analyzers: {
-              timeToInclusion: new ScrollFinalityAnalyzer(
+              timeToInclusion: new ScrollT2IAnalyzer(
                 ethereumRPC,
                 peripherals.database,
                 configuration.projectId,
@@ -172,7 +180,7 @@ function initializeConfigurations(
           return {
             projectId: configuration.projectId,
             analyzers: {
-              timeToInclusion: new ZkSyncLiteFinalityAnalyzer(
+              timeToInclusion: new ZkSyncLiteT2IAnalyzer(
                 ethereumRPC,
                 peripherals.database,
                 configuration.projectId,
@@ -185,7 +193,7 @@ function initializeConfigurations(
           return {
             projectId: configuration.projectId,
             analyzers: {
-              timeToInclusion: new StarknetFinalityAnalyzer(
+              timeToInclusion: new StarknetT2IAnalyzer(
                 ethereumRPC,
                 peripherals.database,
                 configuration.projectId,
@@ -201,7 +209,7 @@ function initializeConfigurations(
           return {
             projectId: configuration.projectId,
             analyzers: {
-              timeToInclusion: new LoopringFinalityAnalyzer(
+              timeToInclusion: new LoopringT2IAnalyzer(
                 ethereumRPC,
                 peripherals.database,
                 configuration.projectId,
@@ -215,7 +223,7 @@ function initializeConfigurations(
           return {
             projectId: configuration.projectId,
             analyzers: {
-              timeToInclusion: new LoopringFinalityAnalyzer(
+              timeToInclusion: new LoopringT2IAnalyzer(
                 ethereumRPC,
                 peripherals.database,
                 configuration.projectId,
@@ -229,7 +237,7 @@ function initializeConfigurations(
           return {
             projectId: configuration.projectId,
             analyzers: {
-              timeToInclusion: new PolygonZkEvmFinalityAnalyzer(
+              timeToInclusion: new PolygonZkEvmT2IAnalyzer(
                 ethereumRPC,
                 peripherals.database,
                 configuration.projectId,

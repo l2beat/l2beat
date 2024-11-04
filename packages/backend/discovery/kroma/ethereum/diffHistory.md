@@ -1,3 +1,211 @@
+Generated with discovered.json: 0x9144934da41b40db2e02ed034baa431319b36f9f
+
+# Diff at Fri, 01 Nov 2024 14:16:06 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@cd1f0e71bb08ce16b2084a11b768538e8aa6ba8c block: 21064298
+- current block number: 21093326
+
+## Description
+
+New validator, increased security council quorum.
+
+## Watched changes
+
+```diff
+    contract ValidatorManager (0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363) {
+    +++ description: Manages the set of Proposers (Validators in Kroma) and selects the next proposer with the permission to submit the output root. It is also the entry point for other contracts, such as the L2OutputOracle and the Colosseum, which distribute output rewards and slash challenge losers. It makes successive calls to the AssetManager to apply changes to the proposers' assets.
+      values.nextValidator:
+-        "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6"
++        "0x16876e5c608cec36968517A9Eb345269D308D94a"
+    }
+```
+
+```diff
+    contract SecurityCouncil (0x3de211088dF516da72efe68D386b561BEE256Ec4) {
+    +++ description: None
+      values.quorum:
+-        7
++        8
+    }
+```
+
+```diff
+    contract SecurityCouncilToken (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c) {
+    +++ description: None
+      values.tokenOwners.9:
++        "0x16876e5c608cec36968517A9Eb345269D308D94a"
+      values.tokens.9:
++        13
+      values.totalSupply:
+-        9
++        10
+    }
+```
+
+Generated with discovered.json: 0x617e6c6d66c82472234945840af020ab950dfe07
+
+# Diff at Fri, 25 Oct 2024 09:44:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e7501f424c0cea9b5438386ee76e509448999836 block: 20912649
+- current block number: 21041809
+
+## Description
+
+This [upgrade to the L2OutpuOracle and related contracts](https://github.com/kroma-network/kroma/releases/tag/v2.0.0) introduces a TERMINATE_OUTPUT_INDEX to the ValidatorPool, after which all validator management will be switched over to a new ValidatorManager contract. This new contract allows for bonds in KRO (Kroma token) and delegation.
+
+The switch is expected to occur from output index 10107 or after Wed Oct 30 2024 05:20:00 UTC.
+
+## Watched changes
+
+```diff
+    contract L2OutputOracle (0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x23bd4269751ee622a2c70f6ff77812e48b54e0f5b236f7b143e78d31fd26ce19"
++        "0x3e082acc764e6210a6d92e75bffb677ec096ac9d382eef70ea3152f9eeb72791"
+      values.$implementation:
+-        "0x14126FFa3889a026A79F0f99FaE80B3dc9E38095"
++        "0x4B68F22d96a04F6d80e284C20A648f8Da2fD569b"
+      values.$pastUpgrades.1:
++        ["2024-10-24T04:28:47.000Z","0xb2a500d332d7b3348b8ffa91aba9b8a5a3bc018b44225a1b6e99605c56c6564e",["0x4B68F22d96a04F6d80e284C20A648f8Da2fD569b"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.version:
+-        "1.0.0"
++        "1.1.0"
+      values.nextFinalizeOutputIndex:
++        9822
+      values.nextOutputMinL2Timestamp:
++        1729847989
+      values.VALIDATOR_MANAGER:
++        "0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x665c23A5722B6A237fa6Be2B49c0A94504db1edd) {
+    +++ description: None
+      receivedPermissions.14:
++        {"permission":"upgrade","target":"0xFdFF462845953D90719A78Fd12a2d103541d2103"}
+      receivedPermissions.13:
++        {"permission":"upgrade","target":"0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"}
+      receivedPermissions.12.target:
+-        "0xFdFF462845953D90719A78Fd12a2d103541d2103"
++        "0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      receivedPermissions.11.target:
+-        "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
++        "0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3"
+      receivedPermissions.10.target:
+-        "0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "0x827962404D7104202C5aaa6b929115C8211d9596"
+      receivedPermissions.9.target:
+-        "0x827962404D7104202C5aaa6b929115C8211d9596"
++        "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a"
+      receivedPermissions.8.target:
+-        "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a"
++        "0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7"
+      receivedPermissions.7.target:
+-        "0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7"
++        "0x46d07221dfC313afe1BF104F4bB1f185301D65B9"
+      receivedPermissions.6.target:
+-        "0x46d07221dfC313afe1BF104F4bB1f185301D65B9"
++        "0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746"
+      receivedPermissions.5.target:
+-        "0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746"
++        "0x3de211088dF516da72efe68D386b561BEE256Ec4"
+      receivedPermissions.4.target:
+-        "0x3de211088dF516da72efe68D386b561BEE256Ec4"
++        "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35"
+      receivedPermissions.3.target:
+-        "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35"
++        "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de"
+      receivedPermissions.2.target:
+-        "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de"
++        "0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363"
+    }
+```
+
+```diff
+    contract Colosseum (0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x044a9955ffcea5b68400e934c9bd2a7e7f856ad28b98727c0cf762a44a428601"
++        "0x00a929674c752e3543c7d0b26d1965574c3f956dd892502eb782e8087e12af45"
+      values.$implementation:
+-        "0xb87eaB624EE684C1799f1E8b24936A1c90759eEc"
++        "0xAB54b3e775f645cf4486039bfA4dA539E70c9f99"
+      values.$pastUpgrades.3:
++        ["2024-10-24T04:28:47.000Z","0xb2a500d332d7b3348b8ffa91aba9b8a5a3bc018b44225a1b6e99605c56c6564e",["0xAB54b3e775f645cf4486039bfA4dA539E70c9f99"]]
+      values.$upgradeCount:
+-        3
++        4
+    }
+```
+
+```diff
+    contract ValidatorPool (0xFdFF462845953D90719A78Fd12a2d103541d2103) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x22ee68d5248870b98295dbc19fb66375ddbb2b23f040c2c6d8cc43a946f9940f"
++        "0xac308f84cc546d491c72f2e9d4309c3e67334cd61b5300e0eb259d2950e20511"
+      values.$implementation:
+-        "0x8EDc4cCa2aF96f5D5141d55333043a65c3f59Ec4"
++        "0xE36776FFA20a9206dcD742C981402a3f3d81938d"
+      values.$pastUpgrades.3:
++        ["2024-10-24T04:28:47.000Z","0xb2a500d332d7b3348b8ffa91aba9b8a5a3bc018b44225a1b6e99605c56c6564e",["0xE36776FFA20a9206dcD742C981402a3f3d81938d"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.version:
+-        "1.0.1"
++        "1.1.0"
+      values.TERMINATE_OUTPUT_INDEX:
++        10106
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorManager (0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363)
+    +++ description: Manages the set of Proposers (Validators in Kroma) and selects the next proposer with the permission to submit the output root. It is also the entry point for other contracts, such as the L2OutputOracle and the Colosseum, which distribute output rewards and slash challenge losers. It makes successive calls to the AssetManager to apply changes to the proposers' assets.
+```
+
+```diff
++   Status: CREATED
+    contract AssetManager (0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3)
+    +++ description: Manages the delegation and undelegation of KRO tokens and Kroma Guardian House (KGH) NFTs for Proposers (Kroma Validators) and distributes rewards.
+```
+
+```diff
++   Status: CREATED
+    contract  (0xacA91C74748090f861E25D142B6fCB265c6171c8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract KromaRewardVaultMultisig (0xe57E217d8ed498992452791622711B866403E950)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/AssetManager/AssetManager.sol   | 1778 +++++++++++++++
+ .../kroma/ethereum/.flat/AssetManager/Proxy.p.sol  |  211 ++
+ .../Colosseum/Colosseum.sol                        |  554 +++--
+ .../.flat/KromaRewardVaultMultisig/GnosisSafe.sol  |  953 ++++++++
+ .../KromaRewardVaultMultisig/GnosisSafeProxy.p.sol |   35 +
+ .../L2OutputOracle/L2OutputOracle.sol              |  652 ++----
+ .../ethereum/.flat/ValidatorManager/Proxy.p.sol    |  211 ++
+ .../.flat/ValidatorManager/ValidatorManager.sol    | 2301 ++++++++++++++++++++
+ .../ValidatorPool/ValidatorPool.sol                |   69 +-
+ 9 files changed, 5982 insertions(+), 782 deletions(-)
+```
+
 Generated with discovered.json: 0x434a34a25191acb813b1ed81b407a2f0bf6eef41
 
 # Diff at Mon, 21 Oct 2024 11:06:54 GMT:

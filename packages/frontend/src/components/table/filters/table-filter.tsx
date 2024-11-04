@@ -1,6 +1,5 @@
 'use client'
 import { assert } from '@l2beat/shared-pure'
-import { type Dispatch, type SetStateAction, useState } from 'react'
 import {
   Select,
   SelectContent,
@@ -9,6 +8,7 @@ import {
   SelectValue,
 } from '~/components/core/select'
 import { CloseIcon } from '~/icons/close'
+import { cn } from '~/utils/cn'
 
 const UNDEFINED_VALUE = 'undefined-value'
 
@@ -25,13 +25,11 @@ interface Props<T extends string> {
 }
 
 export function TableFilter<T extends string>(props: Props<T>) {
-  const [open, setOpen] = useState(false)
-
   if (props.value) {
     return <SelectedValue {...props} />
   }
 
-  return <TableFilterSelect {...props} open={open} setOpen={setOpen} />
+  return <TableFilterSelect {...props} />
 }
 
 function SelectedValue<T extends string>({
@@ -44,7 +42,10 @@ function SelectedValue<T extends string>({
   return (
     <button
       onClick={() => onValueChange(undefined)}
-      className="flex h-8 cursor-pointer select-none items-center justify-center gap-1.5 whitespace-pre rounded-lg bg-gray-200 px-2.5 text-sm font-medium text-brand outline-none transition-colors hover:bg-gray-400 sidebar:!bg-surface-secondary sidebar:hover:!bg-surface-tertiary dark:bg-zinc-700 dark:hover:bg-slate-600"
+      className={cn(
+        'flex h-8 cursor-pointer select-none items-center justify-center gap-1.5 whitespace-pre rounded-lg px-2.5 text-sm font-medium text-brand outline-none transition-colors',
+        'sidebar:bg-surface-primary sidebar:hover:bg-surface-tertiary sidebar:main-page-card:bg-surface-secondary',
+      )}
     >
       <span>{option.label}</span>
       <div className="inline-flex size-3 items-center justify-center rounded-sm bg-current">
@@ -55,16 +56,11 @@ function SelectedValue<T extends string>({
 }
 
 function TableFilterSelect<T extends string>({
-  open,
-  setOpen,
   title,
   options,
   value,
   onValueChange,
-}: Props<T> & {
-  open: boolean
-  setOpen: Dispatch<SetStateAction<boolean>>
-}) {
+}: Props<T>) {
   // Select component does not support undefined values
   // so we need to replace them with a special value
   // that will be handled by the onValueChange handler
@@ -73,8 +69,6 @@ function TableFilterSelect<T extends string>({
   return (
     <Select
       value={value ?? ''}
-      open={open}
-      onOpenChange={setOpen}
       onValueChange={(v) => {
         const mappedValue = (v === UNDEFINED_VALUE ? undefined : v) as
           | T

@@ -63,6 +63,7 @@ const escrowUSDCMaxTotalBalanceString = formatMaxTotalBalanceString(
 export const paradex: Layer2 = {
   type: 'layer2',
   id: ProjectId('paradex'),
+  createdAt: new UnixTime(1698756386), // 2023-10-31T12:46:26Z
   badges: [
     Badge.VM.CairoVM,
     Badge.DA.EthereumBlobs,
@@ -102,6 +103,7 @@ export const paradex: Layer2 = {
       discovery.getEscrowDetails({
         address: EthereumAddress('0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3'),
         tokens: ['USDC'],
+        source: 'external',
         upgradableBy: ['USDC Escrow owner'],
         upgradeDelay: formatSeconds(escrowUSDCDelaySeconds),
         description:

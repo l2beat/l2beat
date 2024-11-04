@@ -1,8 +1,8 @@
 {
   "name": "optimism",
   "chain": "ethereum",
-  "blockNumber": 20948093,
-  "configHash": "0x3c6748f4154b3403666ecc1a409d2ec7f2022a49b905a7e173a0e7e665295c30",
+  "blockNumber": 21092690,
+  "configHash": "0x154bc6f68a64bd4ec3f59be157abc1ec4c131e7e346fd38525908dc28e7ef8d3",
   "contracts": [
     {
       "name": "LivenessModule",
@@ -48,9 +48,11 @@
     {
       "name": "PermissionedDisputeGame",
       "address": "0x050ed6F6273c7D836a111E42153BC00D0380b87d",
+      "template": "opstack/PermissionedDisputeGame",
       "sourceHashes": [
         "0x6aa2de634fc13396d9ea0b7d9d0869633db9d2bfc5b834f530fdc61ab1184bf6"
       ],
+      "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
       "sinceTimestamp": 1724975159,
       "values": {
         "$immutable": true,
@@ -275,7 +277,7 @@
         "batchInbox": "0xFF00000000000000000000000000000000000010",
         "DISPUTE_GAME_FACTORY_SLOT": "0x52322a25d9f59ea17656545543306b7aef62bc0cc53a0e65ccfa0c75b97aa906",
         "disputeGameFactory": "0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
-        "gasLimit": 30000000,
+        "gasLimit": 60000000,
         "L1_CROSS_DOMAIN_MESSENGER_SLOT": "0x383f291819e6d54073bc9a648251d97421076bdd101933c0c022219ce9580636",
         "L1_ERC_721_BRIDGE_SLOT": "0x46adcbebc6be8ce551740c29c47c8798210f23f7f4086c41752944352568d5a7",
         "L1_STANDARD_BRIDGE_SLOT": "0x9904ba90dde5696cda05c9e0dab5cbaa0fea005ace4d11218a02ac668dad6376",
@@ -402,7 +404,7 @@
         ],
         "$upgradeCount": 10,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292758516",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292762220",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -448,7 +450,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 43,
+        "nonce": 44,
         "VERSION": "1.3.0"
       }
     },
@@ -501,7 +503,7 @@
         {
           "permission": "upgrade",
           "target": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
-          "description": "upgrading bridge implementation allows to access all funds and change every system component."
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein."
         },
         {
           "permission": "upgrade",
@@ -574,7 +576,7 @@
         {
           "permission": "upgrade",
           "target": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
-          "description": "upgrading bridge implementation allows to access all funds and change every system component.",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
           "via": [{ "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }]
         },
         {
@@ -887,13 +889,13 @@
         "name": "Wrapped Ether",
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "symbol": "WETH",
-        "totalSupply": "20502782000000000000",
+        "totalSupply": "20415188000000000000",
         "version": "1.1.0"
       },
       "derivedName": "DelayedWETH"
     },
     {
-      "name": "FoundationMultisig_1",
+      "name": "OptimismFoundationMultisig_1",
       "address": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -920,7 +922,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 9,
+        "nonce": 10,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1035,7 +1037,7 @@
             {
               "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
               "delay": 0,
-              "description": "upgrading bridge implementation allows to access all funds and change every system component."
+              "description": "upgrading the bridge implementation can give access to all funds escrowed therein."
             }
           ]
         }
@@ -1105,7 +1107,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 95,
+        "nonce": 96,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
@@ -1113,9 +1115,11 @@
     {
       "name": "PreimageOracle",
       "address": "0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277",
+      "template": "opstack/PreimageOracle",
       "sourceHashes": [
         "0xda65cfcdd58c88318ad76812d92be7f0d10716f389549846646b82ceecf47b2b"
       ],
+      "description": "The PreimageOracle contract is used to load the required data from L1 for a dispute game.",
       "sinceTimestamp": 1724975087,
       "values": {
         "$immutable": true,
@@ -1197,9 +1201,11 @@
     {
       "name": "FaultDisputeGame",
       "address": "0xA6f3DFdbf4855a43c529bc42EDE96797252879af",
+      "template": "opstack/FaultDisputeGame",
       "sourceHashes": [
         "0x6a8cfd738d026b64f2e5aaaf5faac411dcdc8c0d8ef834587d82144340812a2c"
       ],
+      "description": "Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.",
       "sinceTimestamp": 1724975147,
       "values": {
         "$immutable": true,
@@ -1244,11 +1250,13 @@
     {
       "name": "OptimismPortal",
       "address": "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
+      "template": "opstack/OptimismPortal2",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
         "0x41be46bdb67af1b7af90e1bd70a1fcd31a3352282beb83b846a5189675c37ac1"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1310,11 +1318,12 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 491310,
-          "prevBlockNum": 20948084
+          "prevBoughtGas": 491822,
+          "prevBlockNum": 21092671
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
+        "RespectedGameString": "FaultDisputeGame",
         "respectedGameType": 0,
         "respectedGameTypeUpdatedAt": 1726070915,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
@@ -1327,7 +1336,13 @@
           "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."
         }
       },
-      "derivedName": "OptimismPortal2"
+      "derivedName": "OptimismPortal2",
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": { "0": "FaultDisputeGame", "1": "PermissionedDisputeGame" }
+        }
+      ]
     },
     {
       "name": "SecurityCouncilMultisig",
@@ -1463,7 +1478,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 2989,
+        "gameCount": 3471,
         "gameImpls": [
           "0xA6f3DFdbf4855a43c529bc42EDE96797252879af",
           "0x050ed6F6273c7D836a111E42153BC00D0380b87d",
@@ -2461,11 +2476,15 @@
     "opstack/AnchorStateRegistry": "0xd777a643e82bcaa34c6605409142defa095bd558d37580cb92153eb68d721b3b",
     "opstack/DelayedWETH": "0x68c3c46b77dde7a7af0ae6477fe17a8531050e799e7ee4c01be128dee3c59447",
     "opstack/DisputeGameFactory": "0x02f89510f08edb9ae5191064b00ab809feddc1544be93f761bbf30427ef5ae5b",
+    "opstack/FaultDisputeGame": "0x13c00629d1406189585916b7c064866ef28d46eca1386f94420d952f0b5e4199",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
-    "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
+    "opstack/L1StandardBridge": "0x9111ef1dcd42452953522f42115f0396e80b8ffacbe0ee0e3f62763880a6b6cc",
     "opstack/MIPS": "0x2c304ef99a23cb31331231c111188b04a54bacddeaac088b13abd2c81ff74217",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
+    "opstack/OptimismPortal2": "0xdb11d2f7a8ea7a7cf25298feb8edc6f567ae5eca0d6f3acde5323cd958b9a50f",
+    "opstack/PermissionedDisputeGame": "0xa1884f80a601b59449ceecf3d0038d91830a8a382dd8da199c2081e4cb5596b5",
+    "opstack/PreimageOracle": "0x523c74a9550e7030e60a4508d1775811a97958c35b5093d36b8cba6981360a35",
     "opstack/SuperchainConfig": "0x76190197170f60e32f3e466ca757cb0bde1055ea134384678dd0911e7a5338ef"
   }
 }

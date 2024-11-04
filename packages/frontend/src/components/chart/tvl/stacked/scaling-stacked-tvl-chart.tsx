@@ -48,18 +48,13 @@ export function ScalingStackedTvlChart({ milestones, entries }: Props) {
     }
   }, [entries, filters, includeFilter])
 
-  const { data: total } = api.tvl.total.useQuery({
-    filter,
-    excludeAssociatedTokens,
-  })
-
   const { data, isLoading } = api.tvl.chart.useQuery({
     range: timeRange,
     excludeAssociatedTokens,
     filter,
   })
 
-  const { columns, chartRange, valuesStyle, change } =
+  const { columns, chartRange, valuesStyle, change, total } =
     useStackedTvlChartRenderParams({
       milestones,
       unit,

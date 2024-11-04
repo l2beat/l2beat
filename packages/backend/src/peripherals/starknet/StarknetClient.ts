@@ -1,6 +1,7 @@
 import { HttpClient } from '@l2beat/shared'
-import { assert, RateLimiter, UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 
+import { RateLimiter } from '@l2beat/backend-tools'
 import { getBlockNumberAtOrBefore } from '../getBlockNumberAtOrBefore'
 import {
   StarknetGetBlockResponseBodySchema,
@@ -90,6 +91,7 @@ export class StarknetClient {
       headers: {
         ['Content-Type']: 'application/json',
       },
+      timeout: 30_000,
       body: JSON.stringify({
         jsonrpc: '2.0',
         method: 'starknet_getBlockWithTxs',

@@ -1,4 +1,195 @@
-Generated with discovered.json: 0xec61257d6878ad38ef92103f21864d22598fe4cc
+Generated with discovered.json: 0x906aeb1d7539d9f36a62ed135fb39ae48737ab89
+
+# Diff at Fri, 01 Nov 2024 12:24:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cd1f0e71bb08ce16b2084a11b768538e8aa6ba8c block: 21041870
+- current block number: 21041870
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21041870 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x1075B29e5F7a911128C77F3989702E150C988904) {
+    +++ description: None
+      directlyReceivedPermissions.3.description:
+-        "upgrading bridge implementation allows to access all funds and change every system component."
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x3e5FaB39eD4eFB4fc29A5201059AE819f2f0418A) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      description:
+-        "This is NOT the shared SuperchainConfig of the OP stack Superchain. This SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
++        "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x4cbab69108Aa72151EDa5A3c164eA86845f18438) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      issuedPermissions.0.via.0.description:
+-        "upgrading bridge implementation allows to access all funds and change every system component."
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract RSS3Multisig (0x8AC80fa0993D95C9d6B8Cb494E561E6731038941) {
+    +++ description: None
+      receivedPermissions.3.description:
+-        "upgrading bridge implementation allows to access all funds and change every system component."
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+Generated with discovered.json: 0xcc7cea3db76aab44e75a63ca463e7f1b8e9fdf41
+
+# Diff at Tue, 29 Oct 2024 13:17:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7b3fc9dc9074e1d423b48522c3f0273c86aab54a block: 21041870
+- current block number: 21041870
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21041870 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0xE6f24d2C32B3109B18ed33cF08eFb490b1e09C10) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      fieldMeta:
++        {"FINALIZATION_PERIOD_SECONDS":{"description":"Challenge period (Number of seconds until a state root is finalized)."}}
+    }
+```
+
+Generated with discovered.json: 0x701e6a346f897333eefd6ceae8172660a88a4fc3
+
+# Diff at Fri, 25 Oct 2024 09:55:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e7501f424c0cea9b5438386ee76e509448999836 block: 21027285
+- current block number: 21041870
+
+## Description
+
+Config related.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21027285 (main branch discovery), not current.
+
+```diff
+    contract WithdrawalOverwriterMultisig (0xC4f81F990b47c12144e74A901162A2cFDf4b5a9d) {
+    +++ description: None
+      values.getOwners:
+-        ["0xF209b7Bbadf8d9518a822aEaa7119B38b17377A7","0xf877475092Dc23AD9d367B27D48645d56564D310","0xEE52b76e6A9F6eA669F8A99bb63b113819cDCbEF","0x70f8b7f14eA00209A70a926134B86E5eb9f4317f","0xc06d32F7C20f100C7b8657dE2b24f201A46BC3DD"]
+      values.getThreshold:
+-        3
+      template:
++        "GnosisSafe"
+    }
+```
+
+Generated with discovered.json: 0xb96a6f6354ef4f3a4167d998bf12ffa82449c437
+
+# Diff at Wed, 23 Oct 2024 09:07:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2734bfe28641dfdb3277a5800faf0a057c08a58f block: 20920298
+- current block number: 21027285
+
+## Description
+
+OptimismPortal upgrade: An 'operator' address is introduced that can call a new `finalizeWithdrawalTransaction()` with additional arbitrary calldata that then replaces the calldata of the transaction being finalized. This allows arbitrary rerouting of funds or using legitimate withdrawals to make arbitrary (malicious) calls.
+
+## Watched changes
+
+```diff
+    contract OptimismPortal (0x6A12432491bbbE8d3babf75F759766774C778Db4) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This fork of the OptimismPortal also allows an 'operator' address to overwrite the calldata of withdrawals on finalization, potentially stealing the withdrawn funds or calling arbitrary contracts.
+      template:
+-        "opstack/OptimismPortal"
+      sourceHashes.1:
+-        "0x347fa20f8dfc82ef7433b3eb7915a248528d908fc77907c0d879f96a00106732"
++        "0x84fc56b8558ed12594b26997990b30e8da2a496417a7d467aa0e31e5281f9168"
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0x8AC80fa0993D95C9d6B8Cb494E561E6731038941","via":[{"address":"0x1075B29e5F7a911128C77F3989702E150C988904","delay":0}]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "guard"
+      issuedPermissions.1.target:
+-        "0x8AC80fa0993D95C9d6B8Cb494E561E6731038941"
++        "0x7ef00577fAAa44D0491970D6516eB7b90EC3c80E"
+      issuedPermissions.1.via.0:
+-        {"address":"0x1075B29e5F7a911128C77F3989702E150C988904","delay":0}
+      issuedPermissions.0.permission:
+-        "guard"
++        "configure"
+      issuedPermissions.0.target:
+-        "0x7ef00577fAAa44D0491970D6516eB7b90EC3c80E"
++        "0xC4f81F990b47c12144e74A901162A2cFDf4b5a9d"
+      values.$implementation:
+-        "0xc5b17F1DF579D033DB17174B837fe4D2dF05b050"
++        "0x491825c073DaE5b31b0AAE4c01f2EBEa254c838b"
+      values.$pastUpgrades.1:
++        ["2024-10-22T16:54:35.000Z","0x8a4278f30ca52243ebf1afe80f5ec3edcb73f34f9e826f8523c30029bbd7fbd8",["0x491825c073DaE5b31b0AAE4c01f2EBEa254c838b"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.operator:
++        "0xC4f81F990b47c12144e74A901162A2cFDf4b5a9d"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract WithdrawalOverwriterMultisig (0xC4f81F990b47c12144e74A901162A2cFDf4b5a9d)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../OptimismPortal/OptimismPortal.sol              |   92 +-
+ .../.flat/WithdrawalOverwriterMultisig/Safe.sol    | 1088 ++++++++++++++++++++
+ .../WithdrawalOverwriterMultisig/SafeProxy.p.sol   |   37 +
+ 3 files changed, 1213 insertions(+), 4 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20920298 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (0x6A12432491bbbE8d3babf75F759766774C778Db4) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This fork of the OptimismPortal also allows an 'operator' address to overwrite the calldata of withdrawals on finalization, potentially stealing the withdrawn funds or calling arbitrary contracts.
+      description:
+-        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
++        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This fork of the OptimismPortal also allows an 'operator' address to overwrite the calldata of withdrawals on finalization, potentially stealing the withdrawn funds or calling arbitrary contracts."
+    }
+```
+
+Generated with discovered.json: 0x57905eb79d2acfebb39b6a28309330bf11266da6
 
 # Diff at Mon, 21 Oct 2024 12:47:58 GMT:
 

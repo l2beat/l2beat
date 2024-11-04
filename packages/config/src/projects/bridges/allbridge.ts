@@ -9,6 +9,7 @@ const discovery = new ProjectDiscovery('allbridge')
 export const allbridge: Bridge = {
   type: 'bridge',
   id: ProjectId('allbridge'),
+  createdAt: new UnixTime(1675164709), // 2023-01-31T11:31:49Z
   display: {
     name: 'Allbridge',
     slug: 'allbridge',
@@ -152,22 +153,18 @@ export const allbridge: Bridge = {
         {
           category: 'Users can be censored if',
           text: 'the circle oracle network fails to facilitate a transfer via the Circle CCTP.',
-          isCritical: true,
         },
         {
           category: 'Users can be censored if',
           text: 'the Wormhole guardians and / or Allbridge validators decide to stop processing certain transactions.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: 'the Wormhole guardians and / or Allbridge validators allow to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
           text: 'the Wormhole guardians and / or Allbridge validators sign a fraudulent message allowing themselves to withdraw all locked funds.',
-          isCritical: true,
         },
       ],
     },
@@ -180,7 +177,7 @@ export const allbridge: Bridge = {
       sentiment: 'warning',
     },
     sourceUpgradeability: {
-      value: 'YES',
+      value: 'Yes',
       description: `Allbridge contracts are immutable but all critical parameters can be changed by an EOA`,
       sentiment: 'bad',
     },

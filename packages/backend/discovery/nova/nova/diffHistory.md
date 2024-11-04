@@ -1,3 +1,137 @@
+Generated with discovered.json: 0xffa05eb2c6df489485d9307a65f2cec154152be5
+
+# Diff at Fri, 01 Nov 2024 15:12:36 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@cd1f0e71bb08ce16b2084a11b768538e8aa6ba8c block: 78789563
+- current block number: 79276078
+
+## Description
+
+Updated member of Security Council.
+
+## Watched changes
+
+```diff
+    contract L2SecurityCouncilEmergency (0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3) {
+    +++ description: None
+      values.$members.1:
+-        "0xA821c8c245d1F3A257e3B0DEC99268cA05144422"
++        "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75"
+      values.$members.0:
+-        "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75"
++        "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
+    }
+```
+
+Generated with discovered.json: 0x33173eae3aea9bab68cf91f8a03cb57bb9f8da4d
+
+# Diff at Fri, 25 Oct 2024 10:09:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e7501f424c0cea9b5438386ee76e509448999836 block: 77458757
+- current block number: 78789563
+
+## Description
+
+Config related.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 77458757 (main branch discovery), not current.
+
+```diff
+    contract L2GatewayRouter (0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xada790b026097BfB36a5ed696859b97a96CEd92C"
++        "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
+      issuedPermissions.0.via.0:
++        {"address":"0xada790b026097BfB36a5ed696859b97a96CEd92C","delay":0}
+    }
+```
+
+```diff
+    contract L2WethGateway (0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xada790b026097BfB36a5ed696859b97a96CEd92C"
++        "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
+      issuedPermissions.0.via.0:
++        {"address":"0xada790b026097BfB36a5ed696859b97a96CEd92C","delay":0}
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482) {
+    +++ description: None
+      receivedPermissions.5:
++        {"permission":"upgrade","target":"0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD","via":[{"address":"0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"}]}
+      receivedPermissions.4:
++        {"permission":"upgrade","target":"0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257","via":[{"address":"0xada790b026097BfB36a5ed696859b97a96CEd92C"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","target":"0xbf544970E6BD77b21C6492C281AB60d0770451F4","via":[{"address":"0xada790b026097BfB36a5ed696859b97a96CEd92C"}]}
+      receivedPermissions.2:
++        {"permission":"upgrade","target":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482","via":[{"address":"0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"}]}
+      receivedPermissions.1.target:
+-        "0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD"
++        "0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD"
+      receivedPermissions.1.via.0.address:
+-        "0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"
++        "0xada790b026097BfB36a5ed696859b97a96CEd92C"
+      receivedPermissions.0.target:
+-        "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
++        "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
+      receivedPermissions.0.via.0.address:
+-        "0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"
++        "0xada790b026097BfB36a5ed696859b97a96CEd92C"
+      directlyReceivedPermissions.2:
++        {"permission":"act","target":"0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"}
+      directlyReceivedPermissions.1.target:
+-        "0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"
++        "0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3"
+      directlyReceivedPermissions.0.target:
+-        "0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3"
++        "0xada790b026097BfB36a5ed696859b97a96CEd92C"
+    }
+```
+
+```diff
+    contract L2GatewaysProxyAdmin (0xada790b026097BfB36a5ed696859b97a96CEd92C) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"},{"permission":"upgrade","target":"0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD"},{"permission":"upgrade","target":"0xbf544970E6BD77b21C6492C281AB60d0770451F4"},{"permission":"upgrade","target":"0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"},{"permission":"upgrade","target":"0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD"},{"permission":"upgrade","target":"0xbf544970E6BD77b21C6492C281AB60d0770451F4"},{"permission":"upgrade","target":"0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257"}]
+    }
+```
+
+```diff
+    contract L2ARBGateway (0xbf544970E6BD77b21C6492C281AB60d0770451F4) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xada790b026097BfB36a5ed696859b97a96CEd92C"
++        "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
+      issuedPermissions.0.via.0:
++        {"address":"0xada790b026097BfB36a5ed696859b97a96CEd92C","delay":0}
+    }
+```
+
+```diff
+    contract L2ERC20Gateway (0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xada790b026097BfB36a5ed696859b97a96CEd92C"
++        "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
+      issuedPermissions.0.via.0:
++        {"address":"0xada790b026097BfB36a5ed696859b97a96CEd92C","delay":0}
+    }
+```
+
 Generated with discovered.json: 0x61b0e61d8c773f7bdf5cd2f5500c2475b9533ec2
 
 # Diff at Mon, 21 Oct 2024 11:15:23 GMT:

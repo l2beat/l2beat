@@ -8,7 +8,7 @@
     "0x5871A7f88b0f3F5143Bf599Fd45F8C0Dc237E881",
     "0x1041D127b2d4BC700F0F563883bC689502606918"
   ],
-  // there is a script yarn stargatev2-pools that can help write config.jsonc ignore values
+  // there is a script pnpm stargatev2-pools that can help write config.jsonc ignore values
   // for chains that have a basic discovery with the TokenMessaging contract set up.
   "names": {
     "0x65bb797c2B9830d891D87288F029ed8dACc19705": "Stargate Multisig",

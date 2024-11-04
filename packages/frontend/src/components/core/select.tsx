@@ -8,38 +8,73 @@ import { CheckIcon } from '~/icons/check'
 import { ChevronIcon } from '~/icons/chevron'
 import { cn } from '~/utils/cn'
 
-const Select = SelectPrimitive.Root
+const SelectContext = React.createContext<
+  React.Dispatch<React.SetStateAction<boolean>> | undefined
+>(undefined)
+
+function useSelectContext() {
+  const context = React.useContext(SelectContext)
+  if (!context) {
+    throw new Error('useSelectContext must be used within a SelectContext')
+  }
+
+  return context
+}
+
+function Select(props: React.ComponentProps<typeof SelectPrimitive.Root>) {
+  const [isOpen, setIsOpen] = React.useState(false)
+  return (
+    <SelectContext.Provider value={setIsOpen}>
+      <SelectPrimitive.Root open={isOpen} onOpenChange={setIsOpen} {...props} />
+    </SelectContext.Provider>
+  )
+}
 
 const SelectGroup = SelectPrimitive.Group
 
 const SelectValue = SelectPrimitive.Value
 
-const SelectTrigger = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
-  <SelectPrimitive.Trigger
-    ref={ref}
-    className={cn(
-      'group/trigger flex min-h-8 select-none items-center justify-between gap-1.5 whitespace-nowrap rounded-lg px-3 py-1 shadow-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
-      'bg-gray-200 text-sm font-medium leading-none data-[state=open]:hover:bg-gray-400 sidebar:!bg-surface-secondary sidebar:data-[state=open]:hover:!bg-surface-tertiary dark:bg-zinc-700 dark:data-[state=open]:hover:bg-slate-600',
-      'transition-colors',
-      className,
-    )}
-    {...props}
-  >
-    {children}
-    <SelectPrimitive.Icon asChild>
-      <ChevronIcon className="size-3 fill-current stroke-[1.8px] transition-transform group-data-[state=open]/trigger:rotate-180" />
-    </SelectPrimitive.Icon>
-  </SelectPrimitive.Trigger>
-))
+const SelectTrigger = ({
+  ref,
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof SelectPrimitive.Trigger>) => {
+  const setIsOpen = useSelectContext()
+  return (
+    <SelectPrimitive.Trigger
+      ref={ref}
+      onPointerDown={(e) => {
+        if (e.pointerType === 'touch') e.preventDefault()
+      }}
+      onPointerUp={(e) => {
+        if (e.pointerType === 'touch') {
+          setIsOpen((prevState) => !prevState)
+        }
+      }}
+      className={cn(
+        'group/trigger flex min-h-8 select-none items-center justify-between gap-1.5 whitespace-nowrap rounded-lg px-3 py-1 shadow-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
+        'bg-gray-200 text-sm font-medium leading-none data-[state=open]:hover:bg-gray-400 dark:bg-zinc-700 dark:data-[state=open]:hover:bg-slate-600',
+        'sidebar:!bg-surface-primary sidebar:data-[state=open]:hover:!bg-surface-secondary sidebar:main-page-card:!bg-surface-secondary sidebar:main-page-card:data-[state=open]:hover:!bg-surface-tertiary',
+        'z-20 transition-colors',
+        className,
+      )}
+      {...props}
+    >
+      {children}
+      <SelectPrimitive.Icon asChild>
+        <ChevronIcon className="size-3 fill-current stroke-[1.8px] transition-transform group-data-[state=open]/trigger:rotate-180" />
+      </SelectPrimitive.Icon>
+    </SelectPrimitive.Trigger>
+  )
+}
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName
 
-const SelectScrollUpButton = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.ScrollUpButton>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>
->(({ className, ...props }, ref) => (
+const SelectScrollUpButton = ({
+  ref,
+  className,
+  ...props
+}: React.ComponentProps<typeof SelectPrimitive.ScrollUpButton>) => (
   <SelectPrimitive.ScrollUpButton
     ref={ref}
     className={cn(
@@ -50,13 +85,14 @@ const SelectScrollUpButton = React.forwardRef<
   >
     <ChevronIcon className="size-3 rotate-180 fill-black dark:fill-white" />
   </SelectPrimitive.ScrollUpButton>
-))
+)
 SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName
 
-const SelectScrollDownButton = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.ScrollDownButton>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>
->(({ className, ...props }, ref) => (
+const SelectScrollDownButton = ({
+  ref,
+  className,
+  ...props
+}: React.ComponentProps<typeof SelectPrimitive.ScrollDownButton>) => (
   <SelectPrimitive.ScrollDownButton
     ref={ref}
     className={cn(
@@ -67,14 +103,17 @@ const SelectScrollDownButton = React.forwardRef<
   >
     <ChevronIcon className="size-3 fill-black dark:fill-white" />
   </SelectPrimitive.ScrollDownButton>
-))
+)
 SelectScrollDownButton.displayName =
   SelectPrimitive.ScrollDownButton.displayName
 
-const SelectContent = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
->(({ className, children, position = 'popper', ...props }, ref) => (
+const SelectContent = ({
+  ref,
+  className,
+  children,
+  position = 'popper',
+  ...props
+}: React.ComponentProps<typeof SelectPrimitive.Content>) => (
   <SelectPrimitive.Portal>
     <SelectPrimitive.Content
       ref={ref}
@@ -101,25 +140,28 @@ const SelectContent = React.forwardRef<
       <SelectScrollDownButton />
     </SelectPrimitive.Content>
   </SelectPrimitive.Portal>
-))
+)
 SelectContent.displayName = SelectPrimitive.Content.displayName
 
-const SelectLabel = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Label>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Label>
->(({ className, ...props }, ref) => (
+const SelectLabel = ({
+  ref,
+  className,
+  ...props
+}: React.ComponentProps<typeof SelectPrimitive.Label>) => (
   <SelectPrimitive.Label
     ref={ref}
     className={cn('py-1.5 pl-8 pr-2 text-sm font-medium', className)}
     {...props}
   />
-))
+)
 SelectLabel.displayName = SelectPrimitive.Label.displayName
 
-const SelectItem = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
->(({ className, children, ...props }, ref) => (
+const SelectItem = ({
+  ref,
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof SelectPrimitive.Item>) => (
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
@@ -135,19 +177,20 @@ const SelectItem = React.forwardRef<
     </span>
     <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
   </SelectPrimitive.Item>
-))
+)
 SelectItem.displayName = SelectPrimitive.Item.displayName
 
-const SelectSeparator = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Separator>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>
->(({ className, ...props }, ref) => (
+const SelectSeparator = ({
+  ref,
+  className,
+  ...props
+}: React.ComponentProps<typeof SelectPrimitive.Separator>) => (
   <SelectPrimitive.Separator
     ref={ref}
     className={cn('-mx-1 my-1 h-px bg-gray-200 dark:bg-zinc-700', className)}
     {...props}
   />
-))
+)
 SelectSeparator.displayName = SelectPrimitive.Separator.displayName
 
 export {

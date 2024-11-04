@@ -7,6 +7,7 @@ import type {
 } from '@/types'
 
 import {
+  EIP712_methods,
   ENTRY_POINT_ADDRESS_0_6_0,
   ENTRY_POINT_ADDRESS_0_7_0,
   ERC4337_methods,
@@ -17,9 +18,11 @@ import {
   SAFE_EXEC_TRANSACTION_SELECTOR,
   SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
   SAFE_methods,
+  isEip712,
   isErc4337,
   isGnosisSafe,
 } from '@l2beat/shared'
+import { assert } from '@l2beat/shared-pure'
 import { generateId } from '../../utils/generateId'
 import { rankBlocks } from '../../utils/rankBlocks'
 import { traverseOperationTree } from '../../utils/traverseOperationTree'
@@ -59,6 +62,7 @@ export class RpcCounter implements Counter {
 
       const currentSmartAccountUsage =
         this.generateSmartAccountUsageForBlock(current)
+
       for (const [signature, count] of currentSmartAccountUsage) {
         const currentCount = smartAccountUsage.get(signature) ?? 0
         smartAccountUsage.set(signature, currentCount + count)
@@ -87,20 +91,26 @@ export class RpcCounter implements Counter {
   }
 
   mapTransaction(tx: EVMTransaction): CountedTransaction {
-    const methods = ERC4337_methods.concat(SAFE_methods)
+    const methods = ERC4337_methods.concat(SAFE_methods).concat(EIP712_methods)
 
-    if (isErc4337(tx) || isGnosisSafe(tx)) {
+    if (isErc4337(tx) || isGnosisSafe(tx) || isEip712(tx)) {
       const countedOperation = this.countUserOperations(
         tx.data as string,
         tx.to ?? '',
         methods,
+        generateId,
       )
 
-      const { includesBatch, includesUnknown } =
-        this.checkOperations(countedOperation)
+      const { includesBatch, includesUnknown } = this.checkOperations(
+        countedOperation,
+        tx,
+      )
+
+      assert(tx.type, 'Tx type should be defined')
 
       return {
-        type: this.getTransactionType(tx.to),
+        from: tx.from,
+        type: this.getTransactionType(tx.type, tx.to),
         hash: tx.hash,
         operationsCount: countedOperation.count,
         details: countedOperation,
@@ -109,8 +119,11 @@ export class RpcCounter implements Counter {
       }
     }
 
+    assert(tx.type !== undefined, 'Tx type should be defined')
+
     return {
-      type: 'unknown',
+      from: tx.from,
+      type: this.getTransactionType(tx.type, tx.to),
       hash: tx.hash,
       operationsCount: 1,
       includesBatch: false,
@@ -121,6 +134,7 @@ export class RpcCounter implements Counter {
     calldata: string,
     to: string,
     methods: Method[],
+    generateId: () => string,
   ): CountedOperation {
     const countOperationsRecursive = (
       operation: Operation,
@@ -182,7 +196,10 @@ export class RpcCounter implements Counter {
     return rootOperation
   }
 
-  checkOperations(countedOperation: CountedOperation): {
+  checkOperations(
+    countedOperation: CountedOperation,
+    tx: EVMTransaction,
+  ): {
     includesBatch: boolean
     includesUnknown: boolean
   } {
@@ -193,7 +210,12 @@ export class RpcCounter implements Counter {
       countedOperation,
       batchOperations,
       (operation, batchOperations) => {
-        if (operation.level > 0 && operation.children.length > 1) {
+        // for EIP-712 batching can occur starting form level 0
+        // for all the other cases it should start from level 1
+        if (
+          (isEip712(tx) || operation.level > 0) &&
+          operation.children.length > 1
+        ) {
           batchOperations.push(operation.id)
         }
 
@@ -224,7 +246,7 @@ export class RpcCounter implements Counter {
     }
   }
 
-  getTransactionType(to?: string): string {
+  getTransactionType(type: number, to?: string | null): string {
     switch (to?.toLowerCase()) {
       case ENTRY_POINT_ADDRESS_0_6_0:
         return 'ERC-4337 Entry Point 0.6.0'
@@ -234,9 +256,20 @@ export class RpcCounter implements Counter {
         return 'Safe: Multi Send Call Only 1.3.0'
       case SAFE_EXEC_TRANSACTION_SELECTOR:
         return 'Safe: Singleton 1.3.0'
-      default:
-        return 'unknown'
     }
+
+    switch (type) {
+      case 0:
+        return 'Legacy'
+      case 1:
+        return 'EIP-2930'
+      case 2:
+        return 'EIP-1559'
+      case 113:
+        return 'EIP-712'
+    }
+
+    return 'unknown'
   }
 
   generateSmartAccountUsageForBlock(block: CountedBlock): Map<string, number> {

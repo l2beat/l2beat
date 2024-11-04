@@ -17,4 +17,4 @@ DEV_REMOTE_DB_URL_READ_ONLY=
 ```
 ./tvl-restore.sh
 ```
-4. There is also command in the backend `yarn tvl-restore`
+4. There is also command in the backend `pnpm tvl-restore`

@@ -1,23 +1,6 @@
 import { assert } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
-export const RpcResponse = z.object({
-  result: z.union([z.string(), z.number(), z.record(z.string(), z.any())]),
-})
-
-export type EVMTransaction = z.infer<typeof EVMTransaction>
-export const EVMTransaction = z
-  .object({
-    hash: z.string(),
-    to: z.string(),
-    input: z.string().transform((input) => ({ data: input })),
-  })
-  .transform(({ hash, to, input }) => ({
-    hash,
-    to,
-    data: input.data,
-  }))
-
 export const Quantity = {
   decode: z.preprocess((s) => {
     const res = z.string().parse(s)
@@ -32,11 +15,43 @@ export const Quantity = {
   encode: (n: bigint) => `0x${n.toString(16)}`,
 }
 
-export type EVMBlock = z.infer<typeof EVMBlock>
-export const EVMBlock = z.object({
-  // TODO: add support for including txs body
-  transactions: z.array(EVMTransaction),
-  timestamp: Quantity.decode.transform((n) => Number(n)),
-  hash: z.string(),
-  number: Quantity.decode.transform((n) => Number(n)),
+export type EVMTransaction = z.infer<typeof EVMTransaction>
+export const EVMTransaction = z
+  .object({
+    hash: z.string(),
+    from: z.string(),
+    /** Address of the receiver, null when its a contract creation transaction. */
+    to: z.union([z.string(), z.null()]).optional(),
+    input: z.string(),
+    type: Quantity.decode.transform((n) => Number(n)).optional(),
+  })
+  .transform(({ hash, from, to, input, type }) => ({
+    hash,
+    from,
+    to,
+    data: input,
+    type,
+  }))
+
+export interface EVMBlock {
+  transactions: EVMTransaction[]
+  timestamp: number
+  hash: string
+  number: number
+}
+export const EVMBlockResponse = z.object({
+  result: z.object({
+    transactions: z.array(EVMTransaction),
+    timestamp: Quantity.decode.transform((n) => Number(n)),
+    hash: z.string(),
+    number: Quantity.decode.transform((n) => Number(n)),
+  }),
+})
+
+export type RPCError = z.infer<typeof RPCError>
+export const RPCError = z.object({
+  error: z.object({
+    code: z.number(),
+    message: z.string(),
+  }),
 })

@@ -52,7 +52,7 @@ async function main() {
     )
     if (keyInYN('Do you want to continue?')) {
       for (const { config } of toRefresh) {
-        execSync(`yarn discover "${config.chain}" "${config.name}" --dev`, {
+        execSync(`pnpm discover "${config.chain}" "${config.name}" --dev`, {
           stdio: 'inherit',
         })
       }

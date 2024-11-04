@@ -143,6 +143,7 @@ const permissionlessGameMaxClockExtension =
 export const optimism: Layer2 = {
   type: 'layer2',
   id: ProjectId('optimism'),
+  createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
     Badge.VM.EVM,
     Badge.DA.EthereumBlobs,
@@ -204,10 +205,12 @@ export const optimism: Layer2 = {
         // L1StandardBridge
         address: EthereumAddress('0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1'),
         tokens: '*',
+        excludedTokens: ['rsETH'],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65'),
         sinceTimestamp: new UnixTime(1625675779),
+        source: 'external',
         tokens: ['DAI'],
         description: 'DAI Vault for custom DAI Gateway managed by MakerDAO.',
       }),
@@ -216,6 +219,7 @@ export const optimism: Layer2 = {
         address: EthereumAddress('0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f'),
         sinceTimestamp: new UnixTime(1620680982),
         tokens: ['SNX'],
+        source: 'external',
         description: 'SNX Vault for custom SNX Gateway managed by Synthetix.',
       }),
       {
@@ -223,6 +227,7 @@ export const optimism: Layer2 = {
         address: EthereumAddress('0x045e507925d2e05D114534D0810a1abD94aca8d6'),
         sinceTimestamp: new UnixTime(1610668212),
         tokens: ['SNX'],
+        source: 'external',
         isHistorical: true,
         chain: 'ethereum',
       },
@@ -231,12 +236,14 @@ export const optimism: Layer2 = {
         address: EthereumAddress('0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068'),
         sinceTimestamp: new UnixTime(1620680934),
         tokens: ['SNX'],
+        source: 'external',
         isHistorical: true,
         chain: 'ethereum',
       },
       discovery.getEscrowDetails({
         address: EthereumAddress('0x76943C0D61395d8F2edF9060e1533529cAe05dE6'),
         tokens: ['wstETH'],
+        source: 'external',
         description:
           'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
       }),
@@ -568,7 +575,7 @@ export const optimism: Layer2 = {
       'Address allowed to pause withdrawals or blacklist dispute games in case of an emergency. It is controlled by the Security Council multisig, but a module allows the Foundation to act through it. The Security Council can disable the module if the Foundation acts maliciously.',
     ),
     ...discovery.getMultisigPermission(
-      'FoundationMultisig_1',
+      'OptimismFoundationMultisig_1',
       'Member of the SuperchainProxyAdminOwner.',
     ),
     ...discovery.getMultisigPermission(
@@ -682,7 +689,7 @@ export const optimism: Layer2 = {
         ...l1Upgradeability,
       }),
       discovery.getContractDetails('LivenessModule', {
-        description: `The LivenessModule is a Gnosis Safe nodule used to remove Security Council members that have been inactive for ${livenessInterval} while making sure that the threshold remains above 75%. If the number of members falls below 8, the FoundationMultisig_1 takes ownership of the multisig.`,
+        description: `The LivenessModule is a Gnosis Safe nodule used to remove Security Council members that have been inactive for ${livenessInterval} while making sure that the threshold remains above 75%. If the number of members falls below 8, the OptimismFoundationMultisig_1 takes ownership of the multisig.`,
         ...l1Upgradeability,
       }),
     ],

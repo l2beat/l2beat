@@ -7,7 +7,8 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('worldchain')
 
 export const world: Layer2 = opStackL2({
-  badges: [Badge.RaaS.Alchemy], // not superchain
+  createdAt: new UnixTime(1729586060), // 2024-10-22T08:34:20Z
+  badges: [Badge.RaaS.Alchemy, Badge.Infra.Superchain],
   additionalPurposes: ['Identity'],
   display: {
     name: 'World Chain',
@@ -46,6 +47,7 @@ export const world: Layer2 = opStackL2({
     discovery.getEscrowDetails({
       address: EthereumAddress('0x153A69e4bb6fEDBbAaF463CB982416316c84B2dB'),
       name: 'External USDC Vault',
+      source: 'external',
       description: 'Custom external escrow for USDC bridged to Worldchain.',
       tokens: ['USDC'],
     }),

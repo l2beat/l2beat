@@ -1,8 +1,8 @@
 {
   "name": "worldchain",
   "chain": "ethereum",
-  "blockNumber": 20995261,
-  "configHash": "0xd9e8a4bf7695647472a58433bf0bbd7a8d8cc6cd794cf1ec2ce42075c902b2bd",
+  "blockNumber": 21040685,
+  "configHash": "0xad1e5bb1d4e4a62e256a89a10ecc12c340d628c23b3bb273fcb8fa9c2a4fa4de",
   "contracts": [
     {
       "name": "L1OpUSDCBridgeAdapter",
@@ -110,10 +110,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 4975200,
-        "latestOutputIndex": 2763,
-        "nextBlockNumber": 4977000,
-        "nextOutputIndex": 2764,
+        "latestBlockNumber": 5248800,
+        "latestOutputIndex": 2915,
+        "nextBlockNumber": 5250600,
+        "nextOutputIndex": 2916,
         "proposer": "0x2307278fC8aB0005974A6DeD2FA6d1187333a223",
         "PROPOSER": "0x2307278fC8aB0005974A6DeD2FA6d1187333a223",
         "startingBlockNumber": 0,
@@ -121,6 +121,11 @@
         "SUBMISSION_INTERVAL": 1800,
         "submissionInterval": 1800,
         "version": "1.8.0"
+      },
+      "fieldMeta": {
+        "FINALIZATION_PERIOD_SECONDS": {
+          "description": "Challenge period (Number of seconds until a state root is finalized)."
+        }
       }
     },
     {
@@ -185,7 +190,7 @@
             {
               "address": "0xd7405BE7f3e63b094Af6C7C23D5eE33Fd82F872D",
               "delay": 0,
-              "description": "upgrading bridge implementation allows to access all funds and change every system component."
+              "description": "upgrading the bridge implementation can give access to all funds escrowed therein."
             }
           ]
         }
@@ -373,7 +378,7 @@
         "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "This is NOT the shared SuperchainConfig of the OP stack Superchain. This SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
+      "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
       "categories": ["Upgrades&Governance"],
       "issuedPermissions": [
         {
@@ -412,7 +417,7 @@
       }
     },
     {
-      "name": "WorldchainMultisig",
+      "name": "AlchemyMultisig",
       "address": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -440,7 +445,7 @@
         {
           "permission": "upgrade",
           "target": "0x470458C91978D2d929704489Ad730DC3E3001113",
-          "description": "upgrading bridge implementation allows to access all funds and change every system component.",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
           "via": [{ "address": "0xd7405BE7f3e63b094Af6C7C23D5eE33Fd82F872D" }]
         },
         {
@@ -538,8 +543,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 491310,
-          "prevBlockNum": 20995219
+          "prevBoughtGas": 1301449,
+          "prevBlockNum": 21040669
         },
         "paused": false,
         "superchainConfig": "0xa231f8be37e583f276f93dF516D88a043bfe47E3",
@@ -571,7 +576,7 @@
         {
           "permission": "upgrade",
           "target": "0x470458C91978D2d929704489Ad730DC3E3001113",
-          "description": "upgrading bridge implementation allows to access all funds and change every system component."
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein."
         },
         {
           "permission": "upgrade",
@@ -623,7 +628,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292623127",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292623968",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1156,11 +1161,11 @@
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
-    "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
-    "opstack/L2OutputOracle": "0xfc8737561d85bab2fe5e39a7a02436a0cb0e7f96d7a7adc2ee3ea486b391c2fc",
+    "opstack/L1StandardBridge": "0x9111ef1dcd42452953522f42115f0396e80b8ffacbe0ee0e3f62763880a6b6cc",
+    "opstack/L2OutputOracle": "0x2da233df369518b2564031e603ae272763f51cec1bc780ab0a814e46046b47a2",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
     "opstack/OptimismPortal": "0x5fb419891d613086f39879ae360e765fdb6d154ef5ea5b2f5f98a4443a1b4839",
-    "opstack/SuperchainConfigFake": "0x53a7342e3ad0ea230608a115aa098bc297d88c30ea6560b549c25853b184cc7b",
+    "opstack/SuperchainConfigFake": "0x49e6353b6089be214c9fc1f021124f840323a29f519b5240594dd16c3a775ca8",
     "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3"
   }
 }

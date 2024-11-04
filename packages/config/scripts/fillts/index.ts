@@ -8,7 +8,7 @@ dotenv.config()
 const args = process.argv.slice(2)
 if (args.length !== 2) {
   console.error(
-    'Usage in packages/config/ dir: yarn fill-ts <input_file> <output_file>',
+    'Usage in packages/config/ dir: pnpm fill-ts <input_file> <output_file>',
   )
   console.error(
     'Also make sure to have address: field one line before and chain: field two lines after sinceTimestamp: in your file, lol',

@@ -236,6 +236,7 @@ const escrowEKUBOMaxTotalBalanceString = formatMaxTotalBalanceString(
 export const starknet: Layer2 = {
   type: 'layer2',
   id: ProjectId('starknet'),
+  createdAt: new UnixTime(1642687633), // 2022-01-20T14:07:13Z
   display: {
     name: 'Starknet',
     slug: 'starknet',
@@ -294,6 +295,7 @@ export const starknet: Layer2 = {
         address: EthereumAddress('0x0437465dfb5B79726e35F08559B0cBea55bb585C'),
         sinceTimestamp: new UnixTime(1652101033),
         tokens: ['DAI'],
+        source: 'external',
         description:
           'DAI Vault for custom DAI Gateway managed by MakerDAO.' +
           ' ' +
@@ -334,6 +336,7 @@ export const starknet: Layer2 = {
           ' ' +
           escrowWSTETHMaxTotalBalanceString,
         upgradableBy: ['BridgeMultisig'],
+        source: 'external',
         upgradeDelay: formatSeconds(escrowWSTETHDelaySeconds),
       }),
       discovery.getEscrowDetails({
