@@ -6,6 +6,7 @@ import { Providers } from '../../providers/Providers'
 import { BlockTimestampProvider } from '../tvl/services/BlockTimestampProvider'
 import { TxsCountService } from './indexers/types'
 import { DegateTxsCountService } from './services/txs/DegateTxsCountService'
+import { FuelTxsCountService } from './services/txs/FuelTxsCountService'
 import { LoopringTxsCountService } from './services/txs/LoopringTxsCountService'
 import { RpcTxsCountService } from './services/txs/RpcTxsCountService'
 import { StarkexTxsCountService } from './services/txs/StarkexTxsCountService'
@@ -94,6 +95,13 @@ export class ActivityDependencies {
           this.blockProviders.starkexClient,
           project.id,
           project.config.product,
+        )
+      }
+      case 'fuel': {
+        assert(this.blockProviders.fuelClient, 'fuelClient should be defined')
+        return new FuelTxsCountService(
+          this.blockProviders.fuelClient,
+          project.id,
         )
       }
 
