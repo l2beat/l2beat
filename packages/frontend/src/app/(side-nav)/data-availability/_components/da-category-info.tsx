@@ -25,12 +25,12 @@ export function CustomSystemInfo() {
 
 function Info({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-row md:gap-1.5 gap-1 mb-2">
+    <div className="mb-2 flex flex-row gap-1 md:gap-1.5">
       <InfoIcon
         variant="blue"
-        className="flex-shrink-0 md:size-[12px] size-[10px] mt-[1px]"
+        className="mt-px size-[10px] shrink-0 md:size-[12px]"
       />
-      <span className="text-[11px] md:text-[13px] text-zinc-500 dark:text-secondary md:leading-tight leading-snug">
+      <span className="text-[11px] leading-snug text-zinc-500 dark:text-secondary md:text-[13px] md:leading-tight">
         {children}
       </span>
     </div>
