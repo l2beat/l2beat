@@ -12,6 +12,7 @@ import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { DesktopProjectLinks } from '~/components/projects/links/desktop-project-links'
 import { MobileProjectLinks } from '~/components/projects/links/mobile-project-links'
 import { ProjectHeader } from '~/components/projects/project-header'
+import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
 import { GrissiniDetails } from '~/components/rosette/grissini/grissini-details'
 import { GrissiniIcon } from '~/components/rosette/grissini/grissini-icon'
 import { NoBridgeGrissiniDetailsPlaceholder } from '~/components/rosette/grissini/no-bridge-grissini-details-placeholder'
@@ -91,7 +92,7 @@ export function DaProjectSummary({ project }: Props) {
                         <div
                           key={bridge.id}
                           className={cn(
-                            'flex min-h-[56px] flex-row gap-4 rounded-lg border-surface-tertiary bg-surface-secondary px-4 py-2 md:rounded-none md:border-b md:bg-transparent',
+                            'flex min-h-[56px] flex-row gap-4 rounded-lg border-surface-tertiary bg-surface-secondary px-4 py-2 dark:bg-zinc-800 md:rounded-none md:border-b md:bg-transparent',
                             index === project.bridges.length - 1 &&
                               'md:border-b-0',
                             // Hide 3rd and further bridges on mobile (will be shown in a drawer)
@@ -114,7 +115,10 @@ export function DaProjectSummary({ project }: Props) {
                             {bridge.name}
                           </div>
                           <div className="flex flex-1 items-center justify-center">
-                            <GrissiniIcon values={bridge.grissiniValues} />
+                            <GrissiniCell
+                              values={bridge.grissiniValues}
+                              hasNoBridge={bridge.type === 'NoBridge'}
+                            />
                           </div>
                           <div className="flex flex-1 items-center justify-end pr-1 text-sm font-bold text-primary md:pr-12">
                             {formatCurrency(bridge.tvs, 'usd')}
@@ -173,6 +177,7 @@ export function DaProjectSummary({ project }: Props) {
                                   <div>
                                     <GrissiniIcon
                                       values={bridge.grissiniValues}
+                                      hasNoBridge={bridge.type === 'NoBridge'}
                                     />
                                   </div>
                                 </div>

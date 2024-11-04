@@ -87,6 +87,7 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
       slug: bridge.display.slug,
       grissiniValues: mapBridgeRisksToRosetteValues(bridge.risks),
       tvs: getSumFor(bridge.usedIn.map((project) => project.id)),
+      type: bridge.type,
       usedIn: bridge.usedIn.sort(
         (a, b) => getSumFor([b.id]) - getSumFor([a.id]),
       ),
