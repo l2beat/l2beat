@@ -26,6 +26,14 @@ const config = {
     options: {},
   },
 
+  async webpackFinal(config) {
+    config.resolve.alias = {
+      react: getAbsolutePath('react'),
+      "react-dom": getAbsolutePath("react-dom")
+    }
+    return config
+  },
+
   staticDirs: [
     '../public',
     {
