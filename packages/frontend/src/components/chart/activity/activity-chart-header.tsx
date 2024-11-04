@@ -1,3 +1,4 @@
+import { type ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
 import { InfoIcon } from '~/icons/info'
 import { type ActivityChartStats } from '~/server/features/scaling/activity/get-activity-chart-stats'
 import { countPerSecond } from '~/server/features/scaling/activity/utils/count-per-second'
@@ -14,20 +15,22 @@ import { ChartTimeRange } from '../core/chart-time-range'
 interface Props {
   stats: ActivityChartStats | undefined
   range: [number, number] | undefined
+  metric: ActivityMetric
 }
 
-export function ActivityChartHeader({ stats, range }: Props) {
+export function ActivityChartHeader({ stats, range, metric }: Props) {
+  const isTps = metric === 'tps'
   return (
     <header data-role="chart-header">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold max-md:hidden">
-          Daily average user ops per second
+          {`Daily average ${isTps ? 'transactions' : 'user ops'} per second`}
         </h1>
-        <h1 className="text-xl font-bold md:hidden">Daily average UOPS</h1>
+        <h1 className="text-xl font-bold md:hidden">{`Daily average ${isTps ? 'TPS' : 'UOPS'}`}</h1>
         {stats !== undefined ? (
           <p className="text-right font-bold group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0">
             <span className="text-xl md:text-2xl">
-              {formatUops(countPerSecond(stats.latestProjectsTxCount))} UOPS
+              {`${formatUops(countPerSecond(stats.latestProjectsTxCount))} ${isTps ? 'TPS' : 'UOPS'}`}
             </span>
           </p>
         ) : (
@@ -43,7 +46,7 @@ export function ActivityChartHeader({ stats, range }: Props) {
               <span className="max-md:hidden">Scaling factor: </span>
               {stats.scalingFactor.toFixed(2)}x
             </div>
-            <ScalingFactorTooltip />
+            <ScalingFactorTooltip metric={metric} />
           </div>
         ) : (
           <Skeleton className="h-5 w-16 md:h-6 md:w-44" />
@@ -53,7 +56,10 @@ export function ActivityChartHeader({ stats, range }: Props) {
   )
 }
 
-export function ScalingFactorTooltip({ className }: { className?: string }) {
+export function ScalingFactorTooltip({
+  className,
+  metric,
+}: { className?: string; metric?: ActivityMetric }) {
   return (
     <Tooltip>
       <TooltipTrigger>
@@ -64,13 +70,13 @@ export function ScalingFactorTooltip({ className }: { className?: string }) {
           <div className="font-bold">What is scaling factor?</div>
 
           <div>
-            How many more operations are settled by Ethereum if we take into
-            account projects listed below.
+            {`How many more ${metric === 'tps' ? 'transactions' : 'operations'} are settled by Ethereum if we take into
+            account projects listed below.`}
           </div>
           <div className="flex flex-col gap-1">
             <div className="text-xs font-bold">Exact formula:</div>
             <div className="text-xs">
-              (project uops/7d + ETH uops/7d) / ETH uops/7d
+              {`(project ${metric}/7d + ETH ${metric}/7d) / ETH ${metric}/7d`}
             </div>
           </div>
         </div>

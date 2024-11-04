@@ -1,3 +1,4 @@
+import { type ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
 import { countPerSecond } from '~/server/features/scaling/activity/utils/count-per-second'
 import { formatTimestamp } from '~/utils/dates'
 import { formatInteger } from '~/utils/number-format/format-integer'
@@ -8,6 +9,7 @@ interface Props {
   count: number
   ethereumCount: number
   showEthereum: boolean
+  metric: ActivityMetric
   singleProject?: boolean
 }
 
@@ -23,7 +25,7 @@ export function ActivityChartHover(props: Props) {
       <div className="flex w-full items-center justify-between gap-2">
         <div className="flex items-center gap-1">
           <span className="text-sm text-gray-700 dark:text-gray-50 ">
-            Average UOPS
+            {`Average ${props.metric === 'uops' ? 'UOPS' : 'TPS'}`}
           </span>
         </div>
       </div>
@@ -57,7 +59,9 @@ export function ActivityChartHover(props: Props) {
       <div className="mt-2 flex w-full items-center justify-between gap-2">
         <div className="flex items-center gap-1">
           <span className="text-sm text-gray-700 dark:text-gray-50 ">
-            Operations count
+            {props.metric === 'uops'
+              ? 'Operations count'
+              : 'Transactions count'}
           </span>
         </div>
       </div>
