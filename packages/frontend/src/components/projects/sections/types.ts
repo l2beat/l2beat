@@ -1,6 +1,7 @@
 import { type ChartSectionProps } from './chart-section'
 import { type ContractsSectionProps } from './contracts/contracts-section'
 import { type MultiChainContractsSectionProps } from './contracts/multichain-contracts-section'
+import { type DaRiskSummarySectionProps } from './da-risk-summary-section'
 import { type DetailedDescriptionSectionProps } from './detailed-description-section'
 import { type GrissiniRiskAnalysisSectionProps } from './grissini-risk-analysis-section'
 import { type GroupSectionProps } from './group-section'
@@ -68,6 +69,11 @@ export interface ProjectDetailsMilestonesAndIncidentsSection {
 export interface ProjectDetailsRiskSummarySection {
   type: 'RiskSummarySection'
   props: ProjectDetailsProps<RiskSummarySectionProps>
+}
+
+export interface ProjectDetailsDaRiskSummarySection {
+  type: 'DaRiskSummarySection'
+  props: ProjectDetailsProps<DaRiskSummarySectionProps>
 }
 
 export interface ProjectDetailsRiskAnalysisSection {
@@ -152,6 +158,7 @@ export type ProjectDetailsSection = {
   | ProjectDetailsDetailedDescriptionSection
   | ProjectDetailsMilestonesAndIncidentsSection
   | ProjectDetailsRiskSummarySection
+  | ProjectDetailsDaRiskSummarySection
   | ProjectDetailsRiskAnalysisSection
   | L3ProjectDetailsRiskAnalysisSection
   | ProjectDetailsStageSection
