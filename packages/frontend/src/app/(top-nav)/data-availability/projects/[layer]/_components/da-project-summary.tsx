@@ -144,7 +144,7 @@ export function DaProjectSummary({ project }: Props) {
                                 </TooltipTrigger>
                                 <TooltipContent>
                                   There are no scaling projects listed on L2BEAT
-                                  that use this DA layer.
+                                  that use this DA layer and bridge.
                                 </TooltipContent>
                               </Tooltip>
                             )}
