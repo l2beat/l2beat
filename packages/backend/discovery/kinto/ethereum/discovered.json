@@ -1,8 +1,8 @@
 {
   "name": "kinto",
   "chain": "ethereum",
-  "blockNumber": 21108635,
-  "configHash": "0x9ff22378ce7b176dec6e9c6c961cefd9f62d1f45e6742781eaac4c4a553ef594",
+  "blockNumber": 21112607,
+  "configHash": "0xf87d1f39954e836a0728563f510aeabdf8c90caf41333f005806a57e0ef2a877",
   "contracts": [
     {
       "name": "Bridger",
@@ -12,6 +12,7 @@
         "0xe7c2c13ea3945f7f426234c719fd1c436d2f5e0152427b80b30ca059c9f2f4e5"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Bridger gateway that can swap assets to 'L2 final assets' before bridging them to the L2.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -106,7 +107,7 @@
       "derivedName": "Bridger"
     },
     {
-      "name": "ExecutorMultisig",
+      "name": "Kinto SecurityCouncil",
       "address": "0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -247,7 +248,7 @@
     {
       "name": "RollupProxy",
       "address": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-      "template": "orbitstack/RollupProxy_fastConfirm",
+      "template": "orbitstack/RollupProxy",
       "sourceHashes": [
         "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca",
         "0x9349e73cbc2d2b818c1d79711574ba210b56249d8d3845bc78c776caf8f8ff42",
@@ -279,11 +280,6 @@
         {
           "permission": "challenge",
           "target": "0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f",
-          "via": []
-        },
-        {
-          "permission": "configure",
-          "target": "0x0000000000000000000000000000000000000000",
           "via": []
         },
         {
@@ -370,12 +366,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 2153,
+        "firstUnresolvedNode": 2156,
         "inbox": "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
         "isERC20Enabled": false,
         "lastStakeBlock": 21107949,
-        "latestConfirmed": 2152,
-        "latestNodeCreated": 2180,
+        "latestConfirmed": 2155,
+        "latestNodeCreated": 2182,
         "loserStakeEscrow": "0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5",
         "minimumAssertionPeriod": 75,
         "outbox": "0x655761AD5FC251F414D6993A73184B0669F278c8",
@@ -405,9 +401,6 @@
         "zombieLatestStakedNode": []
       },
       "fieldMeta": {
-        "minimumAssertionPeriod": {
-          "description": "Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "
-        },
         "confirmPeriodBlocks": {
           "description": "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
         },
@@ -424,7 +417,6 @@
           "description": "Emitted on createChallenge() in RollupUserLogic."
         }
       },
-      "derivedName": "RollupProxy",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -571,8 +563,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d"]
-      },
-      "derivedName": "UpgradeExecutor"
+      }
     },
     {
       "name": "ChallengeManager",
@@ -627,8 +618,7 @@
         "resultReceiver": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerInbox": "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
         "totalChallengesCreated": 1
-      },
-      "derivedName": "ChallengeManager"
+      }
     },
     {
       "name": "Outbox",
@@ -677,8 +667,7 @@
         "l2ToL1Timestamp": 0,
         "OUTBOX_VERSION": 2,
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11"
-      },
-      "derivedName": "Outbox"
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -729,8 +718,7 @@
       "values": {
         "$immutable": true,
         "owner": "0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a"
-      },
-      "derivedName": "ProxyAdmin"
+      }
     },
     {
       "name": "OneStepProverMemory",
@@ -746,11 +734,14 @@
     {
       "name": "L1ERC20Gateway",
       "address": "0x7870D5398DB488c669B406fBE57b8d05b6A35e42",
+      "template": "orbitstack/ERC20Gateway",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
         "0x12b277cae4866b3d1f1772fcb7f861dc23247452179f0736c9dbe7012f6c14f6"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "ERC20Gateway",
+      "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -836,13 +827,12 @@
           "0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F"
         ],
         "allowedOutboxList": ["0x655761AD5FC251F414D6993A73184B0669F278c8"],
-        "delayedMessageCount": 4191,
+        "delayedMessageCount": 4194,
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerInbox": "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
-        "sequencerMessageCount": 3501,
-        "sequencerReportedSubMessageCount": 247695
-      },
-      "derivedName": "Bridge"
+        "sequencerMessageCount": 3504,
+        "sequencerReportedSubMessageCount": 248512
+      }
     },
     {
       "name": "OneStepProverMath",
@@ -858,11 +848,13 @@
     {
       "name": "Inbox",
       "address": "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
+      "template": "orbitstack/Inbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0x457c34030000c1767f1ef518c365b671181e9e701db9642be8572edc1c44068c"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -954,7 +946,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "TurnkeyMultisig",
       "address": "0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -981,7 +973,8 @@
         "multisigThreshold": "1 of 5 (20%)",
         "nonce": 0,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "OneStepProofEntry",
@@ -1086,7 +1079,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 3501,
+        "batchCount": 3504,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xe27f3f6db6824def1738b2aACe2672aC59046a39"],
         "bridge": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
@@ -1100,22 +1093,15 @@
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "DATA_BLOB_HEADER_FLAG": "0x50",
         "HEADER_LENGTH": 40,
-        "IS_HARDCODED_SEQUENCER_BATCH_POSTER": false,
         "isUsingFeeToken": false,
         "keySetUpdates": 0,
         "maxDataSize": 117964,
-        "maxTimeVariation": {
-          "delayBlocks": 5760,
-          "futureBlocks": 48,
-          "delaySeconds": 86400,
-          "futureSeconds": 3600
-        },
-        "postsBlobs": true,
+        "maxTimeVariation": [5760, 48, 86400, 3600],
         "reader4844": "0x434345973Ebf8249398E1EeB03A62bE418B48a05",
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 4190,
+        "totalDelayedMessagesRead": 4193,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1123,21 +1109,11 @@
         "maxTimeVariation": {
           "description": "Struct: delayBlocks, futureBlocks, delaySeconds, futureSeconds. onlyRollupOwner settable. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
         }
-      },
-      "derivedName": "SequencerInbox"
+      }
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000",
-      "receivedPermissions": [
-        {
-          "permission": "configure",
-          "target": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-          "description": "can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
-        }
-      ]
-    },
+    { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x082CBA3929aD00EbB6d81ebE57B0BD24fBF3Fc6B" },
     { "address": "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8" },
     { "address": "0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5" },
@@ -2007,13 +1983,15 @@
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "orbitstack/Bridge": "0x6e309bce5a8758ba24f800f3c0135c502fd5cc22724da5165d8368377eb6c9c8",
     "orbitstack/ChallengeManager": "0xc4fbc82c5001579bb1f880d92a3510cda3dc4a65e284fc300363ce048c2fb6d7",
+    "orbitstack/ERC20Gateway": "0xf1eafb4b453c67c3928c43ad270e71102bda129c494c4cf3d132be60695af7f9",
+    "orbitstack/Inbox": "0x1938bb9de2d7f328ae3e83f2dd9f5d3c5575b599fc097cf9308bac4d5bb3e89e",
     "orbitstack/OneStepProofEntry": "0xf3bff5da86f9bbb5f9ac93a0f2239f0769d051b67a44be2e52c322799e3b8d4f",
     "orbitstack/OneStepProver0": "0x80f18705038deef096683a89d16549bf343ada57cac1f2750df2f06fbbaed5ca",
     "orbitstack/OneStepProverHostIo": "0xacacb7603847a3f0212fdf80c653040278214c00451f763907e270d1f19efec0",
     "orbitstack/OneStepProverMath": "0x8dd8aebb517eb6eaf15437ddbb90dff66f2b14d9d6b5390dd87fbdab15168188",
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
-    "orbitstack/RollupProxy_fastConfirm": "0x6839b58d7a5b6bd705353c967a69bca2857bc5ea618038b6ca2b6fd8826de260",
+    "orbitstack/RollupProxy": "0x9de477a7ec4abe22558d85184e1ff68cebea26c903f45220337156ae3acf3dc5",
     "orbitstack/SequencerInbox": "0x80eed651d83fd6cd84047260bf02ec5e3a5f21b36049e1e45f34bd0a452e02f9",
     "orbitstack/UpgradeExecutor": "0xa25e02367a436cebea22481663da914bbf1fd9492d903659cc6ec9ddbaccb241"
   }

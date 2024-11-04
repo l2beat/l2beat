@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xf9abdf0fb5b79268848f074c01ed1522fbed89b4
+Generated with discovered.json: 0x9bb49db06aab334d79eadf23a833baf707681c29
 
-# Diff at Sun, 03 Nov 2024 17:29:34 GMT:
+# Diff at Mon, 04 Nov 2024 06:51:52 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@950c85bf556f084c302d2b03100375cf3c7ed376 block: 21098438
-- current block number: 21108610
+- current block number: 21112607
 
 ## Description
 
@@ -31,7 +31,7 @@ There are 5 validators in total, ran by:
 ## Watched changes
 
 ```diff
-    contract ExecutorMultisig (0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d) {
+    contract Kinto SecurityCouncil (0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d) {
     +++ description: None
       values.$members.8:
 -        "0x94561e98DD5E55271f91A103e4979aa6C493745E"
@@ -56,6 +56,113 @@ There are 5 validators in total, ran by:
       values.stakerCount:
 -        3
 +        4
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21098438 (main branch discovery), not current.
+
+```diff
+    contract Bridger (0x0f1b7bd7762662B23486320AA91F30312184f70C) {
+    +++ description: Bridger gateway that can swap assets to 'L2 final assets' before bridging them to the L2.
+      description:
++        "Bridger gateway that can swap assets to 'L2 final assets' before bridging them to the L2."
+    }
+```
+
+```diff
+    contract Kinto SecurityCouncil (0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d) {
+    +++ description: None
+      name:
+-        "ExecutorMultisig"
++        "Kinto SecurityCouncil"
+    }
+```
+
+```diff
+    contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      template:
+-        "orbitstack/RollupProxy_fastConfirm"
++        "orbitstack/RollupProxy"
+      issuedPermissions.11:
+-        {"permission":"upgrade","target":"0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d","via":[{"address":"0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a","delay":0}]}
+      issuedPermissions.10.permission:
+-        "propose"
++        "upgrade"
+      issuedPermissions.10.target:
+-        "0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f"
++        "0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d"
+      issuedPermissions.10.via.0:
++        {"address":"0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a","delay":0}
+      issuedPermissions.9.target:
+-        "0x944eB0a2829A859959586b10D54229278534a696"
++        "0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f"
+      issuedPermissions.8.target:
+-        "0x64Cf65036a76E3827e448cadbc53D31EefDCE04a"
++        "0x944eB0a2829A859959586b10D54229278534a696"
+      issuedPermissions.7.target:
+-        "0x58028fFbc25aE2e12b96276bDB125955F41D41f3"
++        "0x64Cf65036a76E3827e448cadbc53D31EefDCE04a"
+      issuedPermissions.6.target:
+-        "0x2bfDA59220413DEd39dD0E443620b5277EcE6348"
++        "0x58028fFbc25aE2e12b96276bDB125955F41D41f3"
+      issuedPermissions.5.permission:
+-        "configure"
++        "propose"
+      issuedPermissions.5.target:
+-        "0x0000000000000000000000000000000000000000"
++        "0x2bfDA59220413DEd39dD0E443620b5277EcE6348"
+      fieldMeta.minimumAssertionPeriod:
+-        {"description":"Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "}
+    }
+```
+
+```diff
+    contract L1ERC20Gateway (0x7870D5398DB488c669B406fBE57b8d05b6A35e42) {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      template:
++        "orbitstack/ERC20Gateway"
+      displayName:
++        "ERC20Gateway"
+      description:
++        "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract."
+    }
+```
+
+```diff
+    contract Inbox (0xBFfaA85c1756472fFC37e6D172A7eC0538C14474) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      template:
++        "orbitstack/Inbox"
+      description:
++        "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds."
+    }
+```
+
+```diff
+    contract TurnkeyMultisig (0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1) {
+    +++ description: None
+      name:
+-        "GnosisSafe"
++        "TurnkeyMultisig"
+    }
+```
+
+```diff
+    contract SequencerInbox (0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.IS_HARDCODED_SEQUENCER_BATCH_POSTER:
+-        false
++++ description: Struct: delayBlocks, futureBlocks, delaySeconds, futureSeconds. onlyRollupOwner settable. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed.
+      values.maxTimeVariation:
+-        {"delayBlocks":5760,"futureBlocks":48,"delaySeconds":86400,"futureSeconds":3600}
++        [5760,48,86400,3600]
+      values.postsBlobs:
+-        true
     }
 ```
 

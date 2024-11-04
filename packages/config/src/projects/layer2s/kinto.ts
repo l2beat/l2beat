@@ -3,6 +3,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { getStage } from './common/stages/getStage'
 import { orbitStackL2 } from './templates/orbitStack'
 import { Layer2 } from './types'
 
@@ -50,6 +51,44 @@ export const kinto: Layer2 = orbitStackL2({
     minTimestampForTvl: UnixTime.fromDate(new Date('2024-05-21T00:00:01Z')),
   },
   usesBlobs: true,
+  discoveryDrivenData: true,
+  isNodeAvailable: true,
+  bridge: discovery.getContract('Bridge'),
+  rollupProxy: discovery.getContract('RollupProxy'),
+  sequencerInbox: discovery.getContract('SequencerInbox'),
+  transactionApi: {
+    type: 'rpc',
+    defaultUrl: 'https://rpc.kinto-rpc.com',
+    defaultCallsPerMinute: 600,
+    assessCount: subtractOne,
+    startBlock: 1,
+  },
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: true,
+        usersHave7DaysToExit: true,
+        usersCanExitWithoutCooperation: true,
+        securityCouncilProperlySetUp: true,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+        fraudProofSystemIsPermissionless: false,
+        delayWith30DExitWindow: false,
+      },
+    },
+    {
+      rollupNodeLink:
+        'https://docs.kinto.xyz/kinto-the-safe-l2/building-on-kinto/running-kinto-nodes',
+    },
+  ),
   trackedTxs: [
     {
       uses: [
@@ -605,33 +644,6 @@ export const kinto: Layer2 = orbitStackL2({
       },
       tokens: ['XAUt'],
       chain: 'ethereum',
-    },
-  ],
-  isNodeAvailable: false,
-  bridge: discovery.getContract('Bridge'),
-  rollupProxy: discovery.getContract('RollupProxy'),
-  sequencerInbox: discovery.getContract('SequencerInbox'),
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://rpc.kinto-rpc.com',
-    defaultCallsPerMinute: 600,
-    assessCount: subtractOne,
-    startBlock: 1,
-  },
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'ExecutorMultisig',
-      'Multisig that can execute upgrades via the UpgradeExecutor.',
-    ),
-    ...discovery.getMultisigPermission(
-      'BridgerOwnerMultisig',
-      'Multisig that can upgrade the Bridger gateway contract. It also owns the Socket contracts used as escrows for bridged assets.',
-    ),
-    {
-      name: 'Bridger Sender Account',
-      description:
-        'EOA privileged to call `depositBySig()` on the Bridger gateway to deposit assets to the L2 using pre-signed transactions from users.',
-      accounts: [discovery.getPermissionedAccount('Bridger', 'senderAccount')],
     },
   ],
   milestones: [
