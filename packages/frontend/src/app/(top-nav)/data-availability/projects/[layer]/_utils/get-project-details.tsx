@@ -102,7 +102,8 @@ export function getProjectDetails({
         slug: daLayer.display.slug,
       },
       content: daLayer.technology.description,
-      mdClassName: 'text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
+      mdClassName:
+        'da-beat text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
       risks: daLayer.technology.risks?.map(toTechnologyRisk),
     },
   })
@@ -131,7 +132,8 @@ export function getProjectDetails({
         slug: `${daLayer.display.slug}-${daBridge.display.slug}`,
       },
       content: daBridge.technology.description,
-      mdClassName: 'text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
+      mdClassName:
+        'da-beat text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
       risks: daBridge.technology.risks?.map(toTechnologyRisk),
     },
   })
