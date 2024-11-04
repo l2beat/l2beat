@@ -105,6 +105,7 @@ export function getProjectDetails({
       mdClassName:
         'da-beat text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
       risks: daLayer.technology.risks?.map(toTechnologyRisk),
+      references: daLayer.technology.references,
     },
   })
 
@@ -135,6 +136,7 @@ export function getProjectDetails({
       mdClassName:
         'da-beat text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
       risks: daBridge.technology.risks?.map(toTechnologyRisk),
+      references: daBridge.technology.references,
     },
   })
 
