@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:focus-visible {
+  @apply outline outline-2 outline-autumn-300;
+}
+
+::selection {
+  @apply bg-coffee-700;
+}

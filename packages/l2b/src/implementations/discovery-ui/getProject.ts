@@ -1,9 +1,17 @@
 import { ConfigReader } from '@l2beat/discovery'
-import { ContractParameters, DiscoveryOutput } from '@l2beat/discovery-types'
+import {
+  ContractParameters,
+  DiscoveryOutput,
+  get$Implementations,
+} from '@l2beat/discovery-types'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { parseFieldValue } from './parseFieldValue'
 import { toAddress } from './toAddress'
 import {
+  AddressFieldValue,
   ApiAddressEntry,
+  ApiAddressType,
+  ApiProjectChain,
   ApiProjectContract,
   ApiProjectResponse,
   Field,
@@ -20,56 +28,90 @@ export function getProject(configReader: ConfigReader, project: string) {
 
   const response: ApiProjectResponse = { chains: [] }
   for (const { chain, config, discovery } of data) {
-    const names = getNames(discovery)
-    response.chains.push({
+    const meta = getMeta(discovery)
+    const chainInfo = {
       name: chain,
-      initialContracts: config.initialAddresses.map((x) => {
-        const discovered = discovery.contracts.find((y) => y.address === x)
-        if (!discovered) {
-          return {
-            name: undefined,
-            type: 'Contract',
-            address: toAddress(chain, x),
-            fields: [],
+      initialContracts: config.initialAddresses
+        .map((x): ApiProjectContract => {
+          const discovered = discovery.contracts.find((y) => y.address === x)
+          if (!discovered) {
+            // NOTE: This shouldn't happen
+            return {
+              name: undefined,
+              type: 'Contract',
+              address: toAddress(chain, x),
+              referencedBy: [],
+              fields: [],
+              abis: [],
+            }
           }
-        }
-        return contractFromDiscovery(chain, names, discovered)
-      }),
+          return contractFromDiscovery(chain, meta, discovered, discovery.abis)
+        })
+        .sort(orderAddressEntries),
       discoveredContracts: discovery.contracts
         .filter((x) => !config.initialAddresses.includes(x.address))
-        .map((x) => contractFromDiscovery(chain, names, x)),
-      // TODO: implement
-      ignoredContracts: [],
+        .map((x) => contractFromDiscovery(chain, meta, x, discovery.abis))
+        .sort(orderAddressEntries),
       eoas: discovery.eoas
-        .filter(
-          (x) => x.address !== '0x0000000000000000000000000000000000000000',
+        .filter((x) => x.address !== EthereumAddress.ZERO)
+        .map(
+          (x): ApiAddressEntry => ({
+            name: x.name || undefined,
+            type: 'EOA',
+            referencedBy: [],
+            address: toAddress(chain, x.address),
+          }),
         )
-        .map((x) => ({
-          name: x.name,
-          type: 'EOA',
-          address: toAddress(chain, x.address),
-        })),
-    })
+        .sort(orderAddressEntries),
+    }
+    response.chains.push(chainInfo)
   }
+  populateReferencedBy(response.chains)
   return response
+}
+
+function orderAddressEntries(a: ApiAddressEntry, b: ApiAddressEntry) {
+  if (a.name && b.name) {
+    return a.name.localeCompare(b.name)
+  }
+  if (a.name) {
+    return -1
+  }
+  if (b.name) {
+    return 1
+  }
+  return a.address.localeCompare(b.address)
 }
 
 function contractFromDiscovery(
   chain: string,
-  names: Record<string, string>,
+  meta: Record<string, { name?: string; type: ApiAddressType }>,
   contract: ContractParameters,
+  abis: DiscoveryOutput['abis'],
 ): ApiProjectContract {
-  const fields: Field[] = Object.entries(contract.values ?? {}).map(
-    ([name, value]) => ({
+  const fields: Field[] = Object.entries(contract.values ?? {})
+    .map(([name, value]) => ({
       name,
-      value: fixAddresses(parseFieldValue(value, names), chain),
-    }),
-  )
+      value: fixAddresses(parseFieldValue(value, meta), chain),
+    }))
+    .concat(
+      Object.entries(contract.errors ?? {}).map(([name, error]) => ({
+        name,
+        value: { type: 'error', error },
+      })),
+    )
+    .sort((a, b) => a.name.localeCompare(b.name))
+  const implementations = get$Implementations(contract.values)
   return {
-    name: contract.name !== '' ? contract.name : undefined,
+    name: contract.name || undefined,
     type: getContractType(contract),
+    referencedBy: [],
     address: toAddress(chain, contract.address),
     fields,
+    abis: [contract.address, ...implementations].map((address) => ({
+      address: toAddress(chain, address),
+      entries: abis[address] ?? [],
+    })),
   }
 }
 
@@ -78,7 +120,7 @@ function fixAddresses(value: FieldValue, chain: string): FieldValue {
     return {
       type: 'object',
       value: Object.fromEntries(
-        Object.entries(value).map(([key, value]) => [
+        Object.entries(value.value).map(([key, value]) => [
           key,
           fixAddresses(value, chain),
         ]),
@@ -91,20 +133,28 @@ function fixAddresses(value: FieldValue, chain: string): FieldValue {
     }
   } else if (value.type === 'address') {
     return {
-      type: 'address',
-      name: value.name,
+      ...value,
       address: toAddress(chain, value.address),
     }
   }
   return value
 }
 
-function getNames(discovery: DiscoveryOutput) {
-  const names: Record<string, string> = {}
+function getMeta(discovery: DiscoveryOutput) {
+  const meta: Record<string, { name?: string; type: ApiAddressType }> = {}
   for (const contract of discovery.contracts) {
-    names[contract.address.toString()] = contract.name
+    const address = contract.address.toString()
+    meta[address] = {
+      name: contract.name || undefined,
+      type: getContractType(contract),
+    }
   }
-  return names
+  for (const eoa of discovery.eoas) {
+    const address = eoa.address.toString()
+    meta[address] = { name: eoa.name || undefined, type: 'EOA' }
+  }
+  meta[EthereumAddress.ZERO] = { name: 'ZERO', type: 'Unknown' }
+  return meta
 }
 
 function getContractType(
@@ -130,4 +180,59 @@ function getContractType(
     return 'Diamond'
   }
   return 'Contract'
+}
+
+function populateReferencedBy(chains: ApiProjectChain[]) {
+  const referencedBy = new Map<string, AddressFieldValue[]>()
+  for (const chain of chains) {
+    for (const contract of [
+      ...chain.initialContracts,
+      ...chain.discoveredContracts,
+    ]) {
+      const field: AddressFieldValue = {
+        type: 'address',
+        name: contract.name,
+        address: contract.address,
+        addressType: contract.type,
+      }
+      const relatives = getAddresses(
+        contract.fields.map((x) => x.value),
+      ).filter((x, i, a) => a.indexOf(x) === i)
+      for (const relative of relatives) {
+        if (relative === contract.address) {
+          continue
+        }
+        const refs = referencedBy.get(relative)
+        if (refs) {
+          refs.push(field)
+        } else {
+          referencedBy.set(relative, [field])
+        }
+      }
+    }
+  }
+  for (const chain of chains) {
+    for (const entry of [
+      ...chain.initialContracts,
+      ...chain.discoveredContracts,
+      ...chain.eoas,
+    ]) {
+      const refs = referencedBy.get(entry.address)
+      entry.referencedBy = refs ?? []
+    }
+  }
+}
+
+function getAddresses(values: FieldValue[]) {
+  const addresses: string[] = []
+  for (const value of values) {
+    if (value.type === 'address') {
+      addresses.push(value.address)
+    } else if (value.type === 'array') {
+      addresses.push(...getAddresses(value.values))
+    } else if (value.type === 'object') {
+      addresses.push(...getAddresses(Object.values(value.value)))
+    }
+  }
+  return addresses
 }

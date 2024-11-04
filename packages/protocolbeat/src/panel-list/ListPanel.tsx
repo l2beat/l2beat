@@ -4,17 +4,12 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getProject } from '../api/api'
 import { ApiAddressEntry, ApiProjectChain } from '../api/types'
+import { AddressIcon } from '../common/AddressIcon'
+import { toShortenedAddress } from '../common/toShortenedAddress'
 import { IconChevronDown } from '../icons/IconChevronDown'
 import { IconChevronRight } from '../icons/IconChevronRight'
-import { IconContract } from '../icons/IconContract'
-import { IconContractUnverified } from '../icons/IconContractUnverified'
-import { IconDiamond } from '../icons/IconDiamond'
-import { IconEoa } from '../icons/IconEoa'
 import { IconFolder } from '../icons/IconFolder'
 import { IconFolderOpened } from '../icons/IconFolderOpened'
-import { IconMultisig } from '../icons/IconMultisig'
-import { IconTimelock } from '../icons/IconTimelock'
-import { IconToken } from '../icons/IconToken'
 import { usePanelStore } from '../store/store'
 
 export function ListPanel() {
@@ -33,17 +28,17 @@ export function ListPanel() {
     return <div>Error</div>
   }
   return (
-    <div className="h-full w-full overflow-x-hidden font-ui">
+    <div className="h-full w-full overflow-x-hidden">
       <ol>
         {response.data.chains.map((chain, i) => (
-          <ListItemChain key={i} chain={chain} />
+          <ListItemChain key={i} chain={chain} first={i === 0} />
         ))}
       </ol>
     </div>
   )
 }
 
-function ListItemChain(props: { chain: ApiProjectChain }) {
+function ListItemChain(props: { chain: ApiProjectChain; first: boolean }) {
   const [open, setOpen] = useState(true)
 
   function onFocus() {
@@ -51,10 +46,10 @@ function ListItemChain(props: { chain: ApiProjectChain }) {
   }
 
   return (
-    <li>
+    <li className={clsx(!props.first && 'border-t border-t-coffee-600')}>
       <button
         onClick={() => setOpen((open) => !open)}
-        className="flex h-[22px] w-full cursor-pointer select-none items-center gap-1 font-bold text-xs uppercase hover:bg-slate-400"
+        className="flex h-[22px] w-full cursor-pointer select-none items-center gap-1 font-bold text-xs uppercase hover:bg-autumn-600"
       >
         {open && <IconChevronDown />}
         {!open && <IconChevronRight />}
@@ -71,12 +66,6 @@ function ListItemChain(props: { chain: ApiProjectChain }) {
             title="Discovered"
             onFocus={onFocus}
             entries={props.chain.discoveredContracts}
-          />
-          <ListItemContracts
-            startClosed
-            title="Ignored"
-            onFocus={onFocus}
-            entries={props.chain.ignoredContracts}
           />
           <ListItemContracts
             startClosed
@@ -116,7 +105,7 @@ function ListItemContracts(props: {
     <>
       <button
         onClick={() => setOpen((open) => !open)}
-        className="flex h-[22px] w-full cursor-pointer select-none items-center gap-1 pl-2 text-sm hover:bg-slate-400"
+        className="flex h-[22px] w-full cursor-pointer select-none items-center gap-1 pl-2 font-medium text-coffee-400 text-sm hover:bg-autumn-600 hover:text-coffee-200"
       >
         {open && (
           <>
@@ -144,47 +133,22 @@ function ListItemContracts(props: {
 }
 
 function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
-  const isSelected = usePanelStore((state) =>
-    state.selected.includes(entry.address),
-  )
+  const isSelected = usePanelStore((state) => state.selected === entry.address)
   const select = usePanelStore((state) => state.select)
   return (
     <li
       className={clsx(
-        'flex h-[22px] cursor-pointer select-none items-center gap-1 pl-4 text-sm',
-        isSelected && 'bg-blue-200 hover:bg-blue-400',
-        !isSelected && 'bg-slate-200 hover:bg-slate-400',
+        'flex h-[22px] cursor-pointer select-none items-center gap-1 whitespace-pre pl-4 text-sm',
+        isSelected && 'bg-autumn-300 text-black',
+        !isSelected && 'bg-coffee-800 hover:bg-autumn-600',
       )}
-      onClick={() => select([entry.address])}
+      onClick={() => select(entry.address)}
     >
-      <div className="mr-[7px] h-[22px] border-black border-l" />
+      <div className="mr-[7px] h-[22px] border-coffee-600 border-l" />
       <AddressIcon type={entry.type} />
-      {entry.name ? (
-        <span className="overflow-hidden text-ellipsis">{entry.name}</span>
-      ) : (
-        <span className="overflow-hidden text-ellipsis font-mono text-xs">
-          {toShortenedAddress(entry.address)}
-        </span>
-      )}
+      <span className="overflow-hidden text-ellipsis tabular-nums">
+        {entry.name ?? toShortenedAddress(entry.address)}
+      </span>
     </li>
   )
-}
-
-function toShortenedAddress(input: string) {
-  const [chain, address] = input.split(':') as [string, string]
-  return `${chain}:${address.slice(0, 6)}…${address.slice(-4)}`
-}
-
-function AddressIcon(props: { type: ApiAddressEntry['type'] }) {
-  const Icon = {
-    EOA: IconEoa,
-    Unverified: IconContractUnverified,
-    Token: IconToken,
-    Multisig: IconMultisig,
-    Timelock: IconTimelock,
-    Diamond: IconDiamond,
-    Contract: IconContract,
-  }[props.type]
-
-  return <Icon />
 }
