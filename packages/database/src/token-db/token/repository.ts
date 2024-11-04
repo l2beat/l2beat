@@ -5,6 +5,22 @@ import { joinDeployment, joinNetwork, joinTokenMeta } from './join'
 import { selectToken, selectTokenWithPrefix } from './select'
 
 export class TokenRepository extends BaseRepository {
+  async insert(record: UpsertableTokenRecord): Promise<{ id: string }> {
+    return await this.db
+      .insertInto('Token')
+      .values(upsertableToRow(record))
+      .returning('Token.id')
+      .executeTakeFirstOrThrow()
+  }
+
+  async update(id: string, record: UpsertableTokenRecord): Promise<void> {
+    await this.db
+      .updateTable('Token')
+      .set(record)
+      .where('Token.id', '=', id)
+      .execute()
+  }
+
   async upsert(record: UpsertableTokenRecord): Promise<{ id: string }> {
     const row = upsertableToRow(record)
     return await this.db
@@ -200,6 +216,10 @@ export class TokenRepository extends BaseRepository {
       .where('Token.id', 'in', ids)
       .execute()
     return rows
+  }
+
+  async delete(id: string): Promise<void> {
+    await this.db.deleteFrom('Token').where('Token.id', '=', id).execute()
   }
 
   async deleteAll(): Promise<bigint> {

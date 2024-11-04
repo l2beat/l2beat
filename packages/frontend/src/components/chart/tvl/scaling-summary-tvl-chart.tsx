@@ -19,17 +19,13 @@ export function ScalingSummaryTvlChart({
   unit,
   timeRange,
 }: { unit: ChartUnit; timeRange: TvlChartRange }) {
-  const { data: total } = api.tvl.total.useQuery({
-    excludeAssociatedTokens: false,
-    filter: { type: 'layer2' },
-  })
   const { data, isLoading } = api.tvl.chart.useQuery({
     range: timeRange,
     excludeAssociatedTokens: false,
     filter: { type: 'layer2' },
   })
 
-  const { formatYAxisLabel, valuesStyle, columns, change } =
+  const { formatYAxisLabel, valuesStyle, columns, change, total } =
     useTvlChartRenderParams({ data, unit: unit, milestones: [] })
 
   return (
