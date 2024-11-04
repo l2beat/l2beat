@@ -3072,6 +3072,35 @@
   ],
   "mantle": [
     {
+      "symbol": "COOK",
+      "address": "0x9F0C013016E8656bC256f948CD4B79ab25c7b94D",
+      "source": "external",
+      "supply": "circulatingSupply", // the OFT adapter is on ethereum but vesting is on mantle
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "cmETH",
+      "address": "0xE6829d9a7eE3040e1276Fa75293Bde931859e8fA",
+      "category": "ether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "CATI",
       "address": "0x1Bdd8878252DaddD3Af2ba30628813271294eDc0",
       "source": "native",
