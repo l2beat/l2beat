@@ -30,7 +30,7 @@ export function ActivityChartHeader({ stats, range, metric }: Props) {
         {stats !== undefined ? (
           <p className="text-right font-bold group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0">
             <span className="text-xl md:text-2xl">
-              {`${formatUops(countPerSecond(stats.latestProjectsTxCount))} ${isTps ? 'TPS' : 'UOPS'}`}
+              {`${formatUops(countPerSecond(stats[metric].latestProjectsTxCount))} ${isTps ? 'TPS' : 'UOPS'}`}
             </span>
           </p>
         ) : (
@@ -44,7 +44,7 @@ export function ActivityChartHeader({ stats, range, metric }: Props) {
           <div className="flex items-center gap-1.5 text-right text-secondary group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0 lg:w-auto">
             <div>
               <span className="max-md:hidden">Scaling factor: </span>
-              {stats.scalingFactor.toFixed(2)}x
+              {stats[metric].scalingFactor.toFixed(2)}x
             </div>
             <ScalingFactorTooltip metric={metric} />
           </div>
