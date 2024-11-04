@@ -86,14 +86,17 @@ export function DaProjectSummary({ project }: Props) {
                       <div className="flex-1 pr-12 text-right">TVS</div>
                       <div className="flex-[1.5] lg:flex-1">Used by</div>
                     </div>
-                    <div className="flex flex-1 flex-col gap-2 overflow-y-auto rounded-lg bg-zinc-100 dark:bg-zinc-900 md:gap-0 md:bg-none dark:md:bg-none">
+                    <div className="flex flex-1 flex-col gap-2 overflow-y-auto rounded-lg bg-zinc-100 dark:bg-zinc-900 md:gap-0 md:rounded-t-none md:bg-none dark:md:bg-none">
                       {project.bridges.map((bridge, index) => (
                         <div
                           key={bridge.id}
                           className={cn(
                             'flex min-h-[56px] flex-row gap-4 rounded-lg border-surface-tertiary bg-surface-secondary px-4 py-2 md:rounded-none md:border-b md:bg-transparent',
+                            index === project.bridges.length - 1 &&
+                              'md:border-b-0',
                             // Hide 3rd and further bridges on mobile (will be shown in a drawer)
-                              index > 2 && 'max-md:hidden',
+                            index > 2 && 'max-md:hidden',
+                            index === 0 && 'md:rounded-t-none',
                           )}
                         >
                           <div className="flex items-center px-1 md:px-3">
@@ -119,7 +122,7 @@ export function DaProjectSummary({ project }: Props) {
                           <div className="hidden flex-[1.5] flex-row items-center md:flex lg:flex-1">
                             {bridge.usedIn.length > 0 ? (
                               <ProjectsUsedIn
-                                  className="h-5 justify-start"
+                                className="h-5 justify-start"
                                 usedIn={bridge.usedIn}
                                 maxProjects={4}
                               />
