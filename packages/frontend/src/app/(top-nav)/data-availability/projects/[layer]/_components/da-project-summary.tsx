@@ -9,6 +9,11 @@ import {
   DrawerTrigger,
 } from '~/components/core/drawer'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/tooltip'
 import { DesktopProjectLinks } from '~/components/projects/links/desktop-project-links'
 import { MobileProjectLinks } from '~/components/projects/links/mobile-project-links'
 import { ProjectHeader } from '~/components/projects/project-header'
@@ -131,9 +136,17 @@ export function DaProjectSummary({ project }: Props) {
                                 maxProjects={4}
                               />
                             ) : (
-                              <span className="text-sm font-medium">
-                                No L2 😔
-                              </span>
+                              <Tooltip>
+                                <TooltipTrigger>
+                                  <span className="text-sm font-medium">
+                                    No L2 😔
+                                  </span>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  There are no scaling projects listed on L2BEAT
+                                  that use this DA layer and bridge
+                                </TooltipContent>
+                              </Tooltip>
                             )}
                           </div>
                         </div>
