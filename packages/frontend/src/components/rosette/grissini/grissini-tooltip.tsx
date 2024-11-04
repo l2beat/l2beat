@@ -2,7 +2,11 @@ import { UnderReviewBadge } from '../../badge/under-review-badge'
 import { type GrissiniCellProps } from './grissini-cell'
 import { GrissiniDetails } from './grissini-details'
 
-export function GrissiniTooltip({ values, isUnderReview }: GrissiniCellProps) {
+export function GrissiniTooltip({
+  values,
+  isUnderReview,
+  hasNoBridge,
+}: GrissiniCellProps) {
   if (isUnderReview) {
     return (
       <div className="w-[300px]">
@@ -16,6 +20,21 @@ export function GrissiniTooltip({ values, isUnderReview }: GrissiniCellProps) {
           <br />
           L2BEAT Team is working to research & validate content before
           publishing.
+        </p>
+      </div>
+    )
+  }
+
+  if (hasNoBridge) {
+    return (
+      <div className="w-[300px]">
+        <span className="text-base font-bold">
+          <span className="mr-2">Risk analysis</span>
+        </span>
+
+        <p className="text-wrap">
+          Without a DA Bridge, Ethereum has no proof of data availability for
+          this project.
         </p>
       </div>
     )
