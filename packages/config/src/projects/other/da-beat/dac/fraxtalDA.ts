@@ -43,12 +43,12 @@ export const fraxtalDA: DaLayer = {
     references: [
       {
         text: 'FraxtalDA Documentation',
-        href: 'https://docs.frax.com/fraxtal/network/data-availability'
+        href: 'https://docs.frax.com/fraxtal/network/data-availability',
       },
       {
         text: 'Fraxtal DA Follower - Source Code',
-        href: 'https://github.com/FraxFinance/fraxtal-da-follower/blob/791e849b41465e1e00377f57c8f0c49d4b13caa8/main.go'
-      }
+        href: 'https://github.com/FraxFinance/fraxtal-da-follower/blob/791e849b41465e1e00377f57c8f0c49d4b13caa8/main.go',
+      },
     ],
     risks: [
       {
