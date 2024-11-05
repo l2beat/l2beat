@@ -4,6 +4,29 @@
   "name": "kinto",
   "initialAddresses": [
     "0xB609316dec60d2bB1B8f50DDc54a7D169F442158",
-    "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"
-  ]
+    "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b", // appRegistry
+    "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a", // kintoadmin smartwallet
+    "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7" // kintoID
+  ],
+  "overrides": {
+    "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7": {
+      "ignoreMethods": ["proxiableUUID", "tokenByIndex"],
+      "fields": {
+        "accesscontrol": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
+    },
+    "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b": {
+      "ignoreMethods": [
+        "proxiableUUID",
+        "reservedContracts",
+        "systemContracts",
+        "tokenByIndex",
+        "tokenIdToApp"
+      ]
+    }
+  }
 }
