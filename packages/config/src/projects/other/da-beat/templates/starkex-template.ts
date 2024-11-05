@@ -182,6 +182,12 @@ export function StarkexDAC(template: TemplateVars): DacDaLayer {
     technology: {
       description: layerTechnology,
       risks: template.layer?.technology?.risks,
+      references: [
+        {
+          text: 'StarkEx Committee Service - Source Code',
+          href: 'https://github.com/starkware-libs/starkex-data-availability-committee',
+        },
+      ],
     },
     usedIn,
     bridges: [dacBridge],
