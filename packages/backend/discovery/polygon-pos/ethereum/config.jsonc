@@ -17,8 +17,7 @@
     "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE": "StateSender",
     "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908": "StakeManager",
     "0xef49Ea6996073752b6840CDA34773FFA78F78166": "StakeManagerExtension",
-    "0xf98864DA30a5bd657B13e70A57f5718aBf7BAB31": "ValidatorShareImpl",
-    "0x053FA9b934b83E1E0ffc7e98a41aAdc3640bB462": "ValidatorShare",
+    "0x7e94d6cAbb20114b22a088d828772645f68CC67B": "ValidatorShare",
     "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77": "RootChainManager",
     "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf": "ERC20Predicate", // PREDICATES[0] -----v
     "0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD": "ERC721Predicate",
@@ -138,9 +137,6 @@
       "ignoreMethods": ["exists"]
     },
     "ValidatorShare": {
-      "ignoreMethods": ["getRewardPerShare"]
-    },
-    "ValidatorShareImpl": {
       "ignoreMethods": ["getRewardPerShare"]
     },
     "Timelock": {
