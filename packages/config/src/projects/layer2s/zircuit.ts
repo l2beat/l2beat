@@ -47,10 +47,7 @@ export const zircuit: Layer2 = opStackL2({
       'Zircuit is a universal Rollup that aims to use zk proofs in the future. It is based on the Optimism Bedrock architecture, employing AI to identify and stop malicious transactions at the sequencer level.',
     links: {
       websites: ['https://zircuit.com/'],
-      apps: [
-        'https://bridge.zircuit.com/',
-        'https://app.zircuit.com/',
-      ],
+      apps: ['https://bridge.zircuit.com/', 'https://app.zircuit.com/'],
       documentation: ['https://docs.zircuit.com/'],
       explorers: ['https://explorer.zircuit.com/'],
       repositories: ['https://github.com/zircuit-labs'],
