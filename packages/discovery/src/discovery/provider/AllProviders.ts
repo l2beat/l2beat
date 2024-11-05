@@ -81,7 +81,10 @@ export class AllProviders {
 
   get(chain: string, blockNumber: number): IProvider {
     const config = this.config.get(chain)
-    assert(config !== undefined, `Unknown chain: ${chain}`)
+    assert(
+      config !== undefined,
+      `Chain [${chain}] has not been configured or is missing .env variables.`,
+    )
 
     const lowLevelProvider =
       this.lowLevelProviders.get(chain) ??
