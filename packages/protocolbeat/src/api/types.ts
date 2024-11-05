@@ -24,7 +24,7 @@ export interface ApiPreviewPermission {
 }
 
 export interface ApiPreviewContract {
-  addresses: string[]
+  addresses: AddressFieldValue[]
   name: string
   description: string
 }

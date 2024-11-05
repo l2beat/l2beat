@@ -64,7 +64,9 @@ export function PreviewPanel() {
           <div className="text-sm">
             <ul className="list-disc pl-5 italic">
               {contract.addresses.map((address, idx) => (
-                <li key={idx}>{address}</li>
+                <li key={idx}>
+                  <AddressDisplay value={address} />
+                </li>
               ))}
             </ul>
           </div>

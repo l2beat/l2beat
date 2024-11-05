@@ -25,7 +25,7 @@ export function runDiscoveryUi() {
   })
 
   app.get('/api/projects/:project/preview', (req, res) => {
-    const response = getPreview(req.params.project)
+    const response = getPreview(configReader, req.params.project)
     res.json(response)
   })
 
