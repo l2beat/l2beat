@@ -84,7 +84,7 @@ export const celestia: DaLayer = {
       {
         category: 'Funds can be lost if',
         text: 'a dishonest supermajority of Celestia validators finalizes an unavailable block, and the light nodes on the network cannot collectively reconstruct the block.',
-      }
+      },
     ],
   },
   bridges: [
