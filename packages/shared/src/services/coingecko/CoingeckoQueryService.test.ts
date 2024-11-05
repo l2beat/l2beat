@@ -632,7 +632,7 @@ describe.skip(CoingeckoQueryService.name + ' e2e tests', function () {
     http,
     retryHandler: RetryHandler.TEST,
     logger: Logger.SILENT,
-    rateLimiter: new RateLimiter({ callsPerMinute: 10 }),
+    rateLimiter: RateLimiter.COINGECKO(),
   })
   const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
 

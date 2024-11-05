@@ -172,9 +172,7 @@ function getCoingeckoClient() {
   const env = getEnv()
   const coingeckoApiKey = env.optionalString('COINGECKO_API_KEY')
   const http = new HttpClient2()
-  const rateLimiter = new RateLimiter({
-    callsPerMinute: coingeckoApiKey ? 400 : 10,
-  })
+  const rateLimiter = RateLimiter.COINGECKO(coingeckoApiKey)
   const coingeckoClient = new CoingeckoClient({
     http,
     rateLimiter,

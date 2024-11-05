@@ -25,9 +25,7 @@ export class Providers {
       apiKey: config.coingeckoApiKey,
       http: new HttpClient2(),
       logger,
-      rateLimiter: new RateLimiter({
-        callsPerMinute: config.coingeckoApiKey ? 400 : 10,
-      }),
+      rateLimiter: RateLimiter.COINGECKO(config.coingeckoApiKey),
       retryHandler: RetryHandler.RELIABLE_API(logger),
     })
     this.block = config.activity

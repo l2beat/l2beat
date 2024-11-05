@@ -163,7 +163,7 @@ describe('tokens', () => {
         http,
         retryHandler: RetryHandler.TEST,
         logger: Logger.SILENT,
-        rateLimiter: new RateLimiter({ callsPerMinute: 10 }),
+        rateLimiter: RateLimiter.COINGECKO(),
       })
 
       const coinsList = await coingeckoClient.getCoinList({
