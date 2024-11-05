@@ -6,6 +6,7 @@ import type { OAuth2Tokens } from 'arctic'
 import { z } from 'zod'
 import { env } from '~/env'
 import { setSession } from '~/server/auth/cookie'
+import { AuthError } from '~/lib/auth-errors'
 
 const claimsSchema = z.object({
   sub: z.string(),
@@ -35,7 +36,7 @@ export async function GET(request: Request): Promise<Response> {
     return new Response(null, {
       status: 302,
       headers: {
-        Location: '/auth?error=invalid-request',
+        Location: `/auth?error=${AuthError.InvalidRequest}`,
       },
     })
   }
@@ -43,7 +44,7 @@ export async function GET(request: Request): Promise<Response> {
     return new Response(null, {
       status: 302,
       headers: {
-        Location: '/auth?error=invalid-state',
+        Location: `/auth?error=${AuthError.InvalidState}`,
       },
     })
   }
@@ -56,7 +57,7 @@ export async function GET(request: Request): Promise<Response> {
     return new Response(null, {
       status: 302,
       headers: {
-        Location: '/auth?error=invalid-request',
+        Location: `/auth?error=${AuthError.InvalidRequest}`,
       },
     })
   }
@@ -68,7 +69,7 @@ export async function GET(request: Request): Promise<Response> {
     return new Response(null, {
       status: 302,
       headers: {
-        Location: '/auth?error=domain',
+        Location: `/auth?error=${AuthError.Domain}`,
       },
     })
   }
@@ -77,7 +78,7 @@ export async function GET(request: Request): Promise<Response> {
     return new Response(null, {
       status: 302,
       headers: {
-        Location: '/auth?error=invalid-config',
+        Location: `/auth?error=${AuthError.InvalidConfig}`,
       },
     })
   }

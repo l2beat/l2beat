@@ -9,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from '~/components/ui/card'
+import { AuthErrorMessages } from '~/lib/auth-errors'
 import { getSession } from '~/server/auth/cookie'
 
 export default async function Page({
@@ -34,7 +35,11 @@ export default async function Page({
         </CardContent>
         {searchParams.error && (
           <CardFooter>
-            <p className="text-red-500">Error: {searchParams.error}</p>
+            <p className="text-red-500">
+              Error:{' '}
+              {AuthErrorMessages[searchParams.error] ??
+                'An unknown error occurred.'}
+            </p>
           </CardFooter>
         )}
       </Card>
