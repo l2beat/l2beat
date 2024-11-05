@@ -1,5 +1,6 @@
 import { SingleGrissiniDetails } from '~/components/rosette/grissini/single-grissini-details'
 import { type RosetteValue } from '~/components/rosette/types'
+import { cn } from '~/utils/cn'
 import { Markdown } from '../../markdown/markdown'
 import { ProjectSection } from './project-section'
 import { type ProjectSectionProps } from './types'
@@ -7,10 +8,12 @@ import { type ProjectSectionProps } from './types'
 export interface GrissiniRiskAnalysisSectionProps extends ProjectSectionProps {
   isVerified: boolean | undefined
   grissiniValues: RosetteValue[]
+  hideRisks?: boolean
 }
 
 export function GrissiniRiskAnalysisSection({
   grissiniValues,
+  hideRisks = false,
   ...sectionProps
 }: GrissiniRiskAnalysisSectionProps) {
   const isUnderReview =
@@ -22,13 +25,21 @@ export function GrissiniRiskAnalysisSection({
     <ProjectSection
       {...sectionProps}
       isUnderReview={isUnderReview}
-      className="space-y-6"
+      className={cn(hideRisks ? 'space-y-0' : 'space-y-6')}
     >
       {Object.values(grissiniValues).map((value, key) => (
         <div key={key} className="flex flex-col gap-2">
-          <SingleGrissiniDetails {...value} />
+          <SingleGrissiniDetails
+            {...value}
+            className={hideRisks ? 'hidden' : ''}
+          />
           {value.description && (
-            <Markdown className="mt-1.5 leading-snug text-gray-850 dark:text-gray-400">
+            <Markdown
+              className={cn(
+                'leading-snug text-gray-850 dark:text-gray-400 md:text-lg',
+                hideRisks ? 'mt-0' : 'mt-1.5',
+              )}
+            >
               {value.description}
             </Markdown>
           )}

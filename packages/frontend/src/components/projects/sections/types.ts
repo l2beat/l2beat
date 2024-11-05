@@ -153,6 +153,7 @@ export interface ProjectDetailsGrissiniRiskAnalysisSection {
 
 export type ProjectDetailsSection = {
   excludeFromNavigation?: boolean
+  sideNavTitle?: string
 } & (
   | ProjectDetailsChartSection
   | ProjectDetailsDetailedDescriptionSection

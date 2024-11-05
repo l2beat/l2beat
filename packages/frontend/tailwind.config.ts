@@ -177,6 +177,7 @@ const config: Config = {
       'surface-primary': 'var(--surface-primary)',
       'surface-secondary': 'var(--surface-secondary)',
       'surface-tertiary': 'var(--surface-tertiary)',
+      'surface-table-group': 'var(--surface-table-group)',
       'icon-secondary': 'var(--icon-secondary)',
       overlay: 'var(--overlay)',
       divider: 'var(--divider)',

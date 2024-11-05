@@ -46,6 +46,7 @@ export function BigGrissiniRosette(props: BigGrissiniProps) {
       >
         <GrissiniIcon
           values={props.values}
+          hasNoBridge={props.hasNoBridge}
           className={cn(props.isUpcoming && 'opacity-30')}
         />
         {props.isUpcoming && (
@@ -65,7 +66,10 @@ export function BigGrissiniRosette(props: BigGrissiniProps) {
           )}
         >
           <TooltipTrigger>
-            <GrissiniIcon values={props.values} />
+            <GrissiniIcon
+              values={props.values}
+              hasNoBridge={props.hasNoBridge}
+            />
           </TooltipTrigger>
         </div>
         <GrissiniTooltipContent />
