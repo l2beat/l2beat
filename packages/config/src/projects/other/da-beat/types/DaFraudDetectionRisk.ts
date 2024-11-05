@@ -22,7 +22,7 @@ function CelestiaDasWithNoBlobsReconstruction(erasureCoding: boolean) {
     type: 'CelestiaDasWithNoBlobsReconstruction',
     value: 'DAS',
     sentiment: erasureCoding ? 'warning' : 'bad',
-    description: `The DA layer uses data availability sampling (DAS) to protect against data withholding attacks. However, light nodes cannot always reconstruct the block collectively if some of it is withheld. This issue arises if the minimum number of light nodes required for block reconstruction is unavailable, or if a selective share disclosure attack extends the block reconstruction time beyond the erasure-coding fraud proof window.`,
+    description: `The DA layer uses data availability sampling (DAS) to protect against data withholding attacks. However, under certain conditions (i.e., a selective share disclosure attack against full nodes), the block reconstruction time may extend beyond the erasure-coding fraud proof window, preventing light nodes from detecting an incorrectly erasure coded block.`,
     secondLine: '',
   } as const
 }
