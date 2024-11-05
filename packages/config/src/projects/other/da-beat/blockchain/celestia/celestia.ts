@@ -83,12 +83,8 @@ export const celestia: DaLayer = {
       },
       {
         category: 'Funds can be lost if',
-        text: 'a dishonest supermajority of Celestia validators finalizes an unavailable block, and the number of light nodes on the network is not enough to ensure block reconstruction.',
-      },
-      {
-        category: 'Funds can be lost if',
-        text: 'a dishonest supermajority of Celestia validators finalizes an unavailable block, and full nodes block reconstruction time is longer than the erasure-coding fraud proof window.',
-      },
+        text: 'a dishonest supermajority of Celestia validators finalizes an unavailable block, and the light nodes on the network cannot collectively reconstruct the block.',
+      }
     ],
   },
   bridges: [
