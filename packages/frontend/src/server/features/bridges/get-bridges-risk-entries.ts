@@ -40,10 +40,7 @@ function getBridgesRiskEntry(
   isVerified: boolean,
 ) {
   const hasImplementationChanged =
-    projectsChangeReport.hasImplementationChangedOnChain(
-      project.id.toString(),
-      'ethereum',
-    )
+    projectsChangeReport.hasImplementationChanged(project.id.toString())
   const hasHighSeverityFieldChanged =
     projectsChangeReport.hasHighSeverityFieldChanged(project.id.toString())
 

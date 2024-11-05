@@ -58,10 +58,7 @@ function getBridges(params: Params) {
 
     const isVerified = !!projectsVerificationStatuses[bridge.id.toString()]
     const hasImplementationChanged =
-      projectsChangeReport.hasImplementationChangedOnChain(
-        bridge.id.toString(),
-        'ethereum',
-      )
+      projectsChangeReport.hasImplementationChanged(bridge.id.toString())
     const hasHighSeverityFieldChanged =
       projectsChangeReport.hasHighSeverityFieldChanged(bridge.id.toString())
 

@@ -22,10 +22,7 @@ export async function getBridgesArchivedEntries() {
     const tvl = tvl7dBreakdown.projects[bridge.id.toString()]
     const isVerified = !!projectsVerificationStatuses[bridge.id.toString()]
     const hasImplementationChanged =
-      projectsChangeReport.hasImplementationChangedOnChain(
-        bridge.id.toString(),
-        'ethereum',
-      )
+      projectsChangeReport.hasImplementationChanged(bridge.id.toString())
     const hasHighSeverityFieldChanged =
       projectsChangeReport.hasHighSeverityFieldChanged(bridge.id.toString())
     return {

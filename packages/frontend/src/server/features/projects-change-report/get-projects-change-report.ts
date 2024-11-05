@@ -40,13 +40,6 @@ async function getProjectsChangeReportWithFns() {
         (c) => c.implementations.length > 0,
       )
     },
-    hasImplementationChangedOnChain: function (
-      projectId: string,
-      chain: string,
-    ) {
-      const changes = this.projects[projectId]?.[chain]
-      return !!changes && changes.implementations.length > 0
-    },
     hasHighSeverityFieldChanged: function (projectId: string) {
       const ethereumChanges = this.projects[projectId]?.ethereum
       return (
@@ -148,7 +141,6 @@ function getProjectsChangeReportMock(): ProjectsChangeReport {
   return {
     projects: {},
     hasImplementationChanged: () => false,
-    hasImplementationChangedOnChain: () => false,
     hasHighSeverityFieldChanged: () => false,
   }
 }

@@ -31,10 +31,7 @@ export async function getBridgesProjectEntry(project: Bridge) {
 
   const isVerified = !!projectsVerificationStatuses[project.id]
   const hasImplementationChanged =
-    projectsChangeReport.hasImplementationChangedOnChain(
-      project.id.toString(),
-      'ethereum',
-    )
+    projectsChangeReport.hasImplementationChanged(project.id.toString())
   // TODO: Check if we should check only on Ethereum
   const hasHighSeverityFieldChanged =
     projectsChangeReport.hasHighSeverityFieldChanged(project.id)
