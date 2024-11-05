@@ -258,7 +258,7 @@ export const eigenDAbridge = {
       },
       {
         category: 'Funds can be frozen if',
-        text: 'the permissioned relayers are unable to submit DA commitments to the Vector contract.',
+        text: 'the permissioned relayers are unable to submit DA commitments to the bridge contract.',
       },
       {
         category: 'Funds can be frozen if',
