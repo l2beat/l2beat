@@ -10,7 +10,8 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "build:dependencies": "cd ../.. && pnpm build:dependencies",
-    "dev": "nodemon --exec \"node -r esbuild-register\" src/cli.ts",
+    "dev": "node -r esbuild-register src/cli.ts",
+    "dev:watch": "node --watch -r esbuild-register src/cli.ts",
     "l2bup": "pnpm build:dependencies && pnpm build && npm install -g .",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist",
@@ -45,7 +46,6 @@
     "@types/mock-fs": "^4.13.4",
     "@types/node-fetch": "^2.6.11",
     "@types/readline-sync": "^1.4.8",
-    "mock-fs": "^5.2.0",
-    "nodemon": "^3.1.7"
+    "mock-fs": "^5.2.0"
   }
 }
