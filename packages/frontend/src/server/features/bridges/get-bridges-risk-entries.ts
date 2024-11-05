@@ -1,6 +1,6 @@
 import { type Bridge, bridges } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
-import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
+import { getProjectsChangeReport } from '../projects-change-report/get-projects-change-report'
 import { getProjectsLatestTvlUsd } from '../scaling/tvl/utils/get-latest-tvl-usd'
 import { orderByTvl } from '../scaling/tvl/utils/order-by-tvl'
 import { isAnySectionUnderReview } from '../scaling/utils/is-any-section-under-review'
@@ -8,11 +8,11 @@ import { getProjectsVerificationStatuses } from '../verification-status/get-proj
 import { getDestination } from './get-destination'
 
 export async function getBridgeRiskEntries() {
-  const [tvl, projectsVerificationStatuses, implementationChangeReport] =
+  const [tvl, projectsVerificationStatuses, projectsChangeReport] =
     await Promise.all([
       getProjectsLatestTvlUsd(),
       getProjectsVerificationStatuses(),
-      getImplementationChangeReport(),
+      getProjectsChangeReport(),
     ])
 
   const included = bridges.filter(
@@ -21,8 +21,11 @@ export async function getBridgeRiskEntries() {
 
   const entries = included
     .map((project) => {
-      const changes = implementationChangeReport.projects[project.id.toString()]
-      const hasImplementationChanged = !!changes?.ethereum
+      const hasImplementationChanged =
+        projectsChangeReport.hasImplementationChangedOnChain(
+          project.id.toString(),
+          'ethereum',
+        )
 
       const isVerified = !!projectsVerificationStatuses[project.id.toString()]
 

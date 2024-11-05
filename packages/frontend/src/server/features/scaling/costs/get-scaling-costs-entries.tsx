@@ -1,7 +1,7 @@
 import { type Layer2 } from '@l2beat/config'
 import { env } from '~/env'
 import { groupByMainCategories } from '~/utils/group-by-main-categories'
-import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
+import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCostsProjects } from '../costs/utils/get-costs-projects'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
@@ -10,10 +10,10 @@ import { orderByTvl } from '../tvl/utils/order-by-tvl'
 import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
 
 export async function getScalingCostsEntries() {
-  const [tvl, implementationChange, projectsVerificationStatuses] =
+  const [tvl, projectsChangeReport, projectsVerificationStatuses] =
     await Promise.all([
       getProjectsLatestTvlUsd(),
-      getImplementationChangeReport(),
+      getProjectsChangeReport(),
       getProjectsVerificationStatuses(),
     ])
   const projects = getCostsProjects()
@@ -21,7 +21,7 @@ export async function getScalingCostsEntries() {
   const entries = projects.map((project) => {
     const isVerified = !!projectsVerificationStatuses[project.id.toString()]
     const hasImplementationChanged =
-      !!implementationChange.projects[project.id.toString()]
+      projectsChangeReport.hasImplementationChanged(project.id)
     return getScalingCostEntry(project, isVerified, hasImplementationChanged)
   })
 

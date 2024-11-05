@@ -7,7 +7,7 @@ import {
 import { compact } from 'lodash'
 import { env } from '~/env'
 import { getProjectLinks } from '~/utils/project/get-project-links'
-import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
+import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getContractsVerificationStatuses } from '../../verification-status/get-contracts-verification-statuses'
 import { getManuallyVerifiedContracts } from '../../verification-status/get-manually-verified-contracts'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
@@ -29,19 +29,19 @@ export async function getScalingProjectEntry(project: ScalingProject) {
     projectsVerificationStatuses,
     contractsVerificationStatuses,
     manuallyVerifiedContracts,
-    implementationChangeReport,
+    projectsChangeReport,
     header,
   ] = await Promise.all([
     getProjectsVerificationStatuses(),
     getContractsVerificationStatuses(project),
     getManuallyVerifiedContracts(project),
-    getImplementationChangeReport(),
+    getProjectsChangeReport(),
     getHeader(project),
   ])
 
   const isVerified = !!projectsVerificationStatuses[project.id]
   const isImplementationUnderReview =
-    !!implementationChangeReport.projects[project.id]
+    projectsChangeReport.hasImplementationChanged(project.id)
 
   const common = {
     type: project.type,
@@ -62,7 +62,7 @@ export async function getScalingProjectEntry(project: ScalingProject) {
       isVerified,
       contractsVerificationStatuses,
       manuallyVerifiedContracts,
-      implementationChangeReport,
+      projectsChangeReport,
       rosetteValues,
     })
 
@@ -92,7 +92,7 @@ export async function getScalingProjectEntry(project: ScalingProject) {
     rosetteValues,
     isHostChainVerified,
     manuallyVerifiedContracts,
-    implementationChangeReport,
+    projectsChangeReport,
     contractsVerificationStatuses,
     combinedRosetteValues: stackedRosetteValues,
     hostChainRosetteValues: baseLayerRosetteValues,

@@ -1,7 +1,7 @@
 import { type Bridge, type ScalingProjectRiskViewEntry } from '@l2beat/config'
 import compact from 'lodash/compact'
 import { getProjectLinks } from '~/utils/project/get-project-links'
-import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
+import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getTvlProjectStats } from '../../scaling/tvl/get-tvl-project-stats'
 import { getAssociatedTokenWarning } from '../../scaling/tvl/utils/get-associated-token-warning'
 import { getContractsVerificationStatuses } from '../../verification-status/get-contracts-verification-statuses'
@@ -18,19 +18,22 @@ export async function getBridgesProjectEntry(project: Bridge) {
     projectsVerificationStatuses,
     contractsVerificationStatuses,
     manuallyVerifiedContracts,
-    implementationChangeReport,
+    projectsChangeReport,
     header,
   ] = await Promise.all([
     getProjectsVerificationStatuses(),
     getContractsVerificationStatuses(project),
     getManuallyVerifiedContracts(project),
-    getImplementationChangeReport(),
+    getProjectsChangeReport(),
     getHeader(project),
   ])
 
   const isVerified = !!projectsVerificationStatuses[project.id]
-  const changes = implementationChangeReport.projects[project.id]
-  const isImplementationUnderReview = !!changes?.ethereum
+  const isImplementationUnderReview =
+    projectsChangeReport.hasImplementationChangedOnChain(
+      project.id.toString(),
+      'ethereum',
+    )
 
   return {
     type: project.type,
@@ -46,7 +49,7 @@ export async function getBridgesProjectEntry(project: Bridge) {
       isVerified,
       contractsVerificationStatuses,
       manuallyVerifiedContracts,
-      implementationChangeReport,
+      projectsChangeReport,
     ),
   }
 }

@@ -5,18 +5,18 @@ import {
 } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { groupByMainCategories } from '~/utils/group-by-main-categories'
-import { type ImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
+import { type ProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { orderByTvl } from '../tvl/utils/order-by-tvl'
 import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
 import { type SevenDayTvlBreakdown } from './utils/get-7d-tvl-breakdown'
 
 export function getScalingTvlEntries({
-  implementationChangeReport,
+  projectsChangeReport,
   projectsVerificationStatuses,
   tvl,
 }: {
-  implementationChangeReport: ImplementationChangeReport
+  projectsChangeReport: ProjectsChangeReport
   projectsVerificationStatuses: ProjectsVerificationStatuses
   tvl: SevenDayTvlBreakdown
 }) {
@@ -28,7 +28,7 @@ export function getScalingTvlEntries({
     .map((project) => {
       const isVerified = !!projectsVerificationStatuses[project.id.toString()]
       const hasImplementationChanged =
-        !!implementationChangeReport.projects[project.id.toString()]
+        projectsChangeReport.hasImplementationChanged(project.id)
 
       const latestTvl = tvl.projects[project.id.toString()]
 

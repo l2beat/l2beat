@@ -2,7 +2,7 @@ import { type Layer2, type Layer3 } from '@l2beat/config'
 import { assert, ProjectId, notUndefined } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { groupByMainCategories } from '~/utils/group-by-main-categories'
-import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
+import { getProjectsChangeReport } from '../projects-change-report/get-projects-change-report'
 import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 import {
   type ActivityProjectTableData,
@@ -16,15 +16,12 @@ type ActivityProject = Layer2 | Layer3
 
 export async function getScalingActivityEntries() {
   const projects = getActivityProjects()
-  const [
-    projectsVerificationStatuses,
-    implementationChangeReport,
-    activityData,
-  ] = await Promise.all([
-    getProjectsVerificationStatuses(),
-    getImplementationChangeReport(),
-    getActivityTableData(projects),
-  ])
+  const [projectsVerificationStatuses, projectsChangeReport, activityData] =
+    await Promise.all([
+      getProjectsVerificationStatuses(),
+      getProjectsChangeReport(),
+      getActivityTableData(projects),
+    ])
 
   const ethereumData = activityData[ProjectId.ETHEREUM]
   assert(ethereumData !== undefined, 'Ethereum data not found')
@@ -34,7 +31,7 @@ export async function getScalingActivityEntries() {
     .map((project) => {
       const isVerified = !!projectsVerificationStatuses[project.id]
       const hasImplementationChanged =
-        !!implementationChangeReport.projects[project.id]
+        projectsChangeReport.hasImplementationChanged(project.id)
       const data = activityData[project.id]
       if (!data) {
         return undefined

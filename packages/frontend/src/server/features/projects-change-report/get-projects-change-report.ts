@@ -4,7 +4,7 @@ import { get$Implementations } from '@l2beat/discovery-types'
 import {
   assert,
   ChainId,
-  type ImplementationChangeReportApiResponse,
+  type EthereumAddress,
   UnixTime,
 } from '@l2beat/shared-pure'
 import {
@@ -15,23 +15,60 @@ import { env } from '~/env'
 import { db } from '~/server/database'
 import { getOnDiskData } from './get-on-disk-data'
 
-export function getImplementationChangeReport() {
+export async function getProjectsChangeReport() {
   if (env.MOCK) {
-    return getImplementationChangeReportMock()
+    return getProjectsChangeReportMock()
   }
   noStore()
-  return getCachedImplementationChangeReport()
+
+  return getProjectsChangeReportWithFns()
 }
 
-export type ImplementationChangeReport = Awaited<
-  ReturnType<typeof getCachedImplementationChangeReport>
+export type ProjectsChangeReport = Awaited<
+  ReturnType<typeof getProjectsChangeReportWithFns>
 >
-const getCachedImplementationChangeReport = cache(
+async function getProjectsChangeReportWithFns() {
+  const result = await getCachedProjectsChangeReport()
+  return {
+    projects: result,
+    hasImplementationChanged: function (projectId: string) {
+      const chainChanges = this.projects[projectId]
+      if (!chainChanges) {
+        return false
+      }
+      return Object.values(chainChanges).some(
+        (c) => c.implementations.length > 0,
+      )
+    },
+    hasImplementationChangedOnChain: function (
+      projectId: string,
+      chain: string,
+    ) {
+      const changes = this.projects[projectId]?.[chain]
+      return !!changes && changes.implementations.length > 0
+    },
+    isAnyChangeSeverityHigh: function (projectId: string) {
+      const ethereumChanges = this.projects[projectId]?.ethereum
+      return !!ethereumChanges?.isAnyChangeSeverityHigh
+    },
+  }
+}
+
+type ProjectChangeReport = Record<
+  string,
+  {
+    implementations: {
+      containingContract: EthereumAddress
+      newImplementations: EthereumAddress[]
+    }[]
+    isAnyChangeSeverityHigh: boolean
+  }
+>
+
+const getCachedProjectsChangeReport = cache(
   async () => {
     const onDisk = getOnDiskData()
-    const result: ImplementationChangeReportApiResponse = {
-      projects: {},
-    }
+    const result: Record<string, ProjectChangeReport> = {}
 
     const newDiscoveries = await db.updateMonitor.getAll()
     for (const chain of onDisk.chains) {
@@ -55,15 +92,20 @@ const getCachedImplementationChangeReport = cache(
         const implementationChanges = diffs.filter((diff) =>
           diff.diff?.some((f) => f.key && f.key === 'values.$implementation'),
         )
+        const isAnyChangeSeverityHigh = diffs.some((diff) =>
+          diff.diff?.some((f) => f.severity === 'HIGH'),
+        )
 
-        if (implementationChanges.length === 0) {
+        if (implementationChanges.length === 0 && !isAnyChangeSeverityHigh) {
           continue
         }
-
-        result.projects[project] ??= {}
+        result[project] ??= {}
+        result[project][chain] ??= {
+          implementations: [],
+          isAnyChangeSeverityHigh,
+        }
 
         for (const diff of implementationChanges) {
-          result.projects[project][chain] ??= []
           assert(latestContracts, 'latestContracts is undefined')
           const diffedContract = latestContracts.find(
             (c) => c.address === diff.address,
@@ -71,22 +113,27 @@ const getCachedImplementationChangeReport = cache(
           assert(diffedContract, 'diffedContract is undefined')
           const newImplementations = get$Implementations(diffedContract.values)
 
-          result.projects[project][chain].push({
+          result[project][chain].implementations.push({
             containingContract: diff.address,
             newImplementations,
           })
         }
       }
     }
-
+    console.log('result', result)
     return result
   },
-  [`implementationChangeReport-${env.VERCEL_GIT_COMMIT_SHA}`],
+  [`projectsChangeReportX-${env.VERCEL_GIT_COMMIT_SHA}`],
   { revalidate: UnixTime.HOUR },
 )
 
-function getImplementationChangeReportMock(): ImplementationChangeReport {
-  return { projects: {} }
+function getProjectsChangeReportMock(): ProjectsChangeReport {
+  return {
+    projects: {},
+    hasImplementationChanged: () => false,
+    hasImplementationChangedOnChain: () => false,
+    isAnyChangeSeverityHigh: () => false,
+  }
 }
 
 function chainNameToId(chainName: string): ChainId {

@@ -1,7 +1,7 @@
 import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
 import { env } from '~/env'
 import { groupByMainCategories } from '~/utils/group-by-main-categories'
-import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
+import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
@@ -12,10 +12,10 @@ export type ScalingRiskEntries = Awaited<
   ReturnType<typeof getScalingRiskEntries>
 >
 export async function getScalingRiskEntries() {
-  const [tvl, implementationChangeReport, projectsVerificationStatuses] =
+  const [tvl, projectsChangeReport, projectsVerificationStatuses] =
     await Promise.all([
       getProjectsLatestTvlUsd(),
-      getImplementationChangeReport(),
+      getProjectsChangeReport(),
       getProjectsVerificationStatuses(),
     ])
 
@@ -27,7 +27,7 @@ export async function getScalingRiskEntries() {
     getScalingRiskEntry(
       project,
       !!projectsVerificationStatuses[project.id.toString()],
-      !!implementationChangeReport.projects[project.id.toString()],
+      projectsChangeReport.hasImplementationChanged(project.id),
     ),
   )
 

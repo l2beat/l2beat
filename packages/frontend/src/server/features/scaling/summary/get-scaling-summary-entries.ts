@@ -3,7 +3,7 @@ import { compact } from 'lodash'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
 import { env } from '~/env'
 import { groupByMainCategories } from '~/utils/group-by-main-categories'
-import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
+import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import {
   type ActivityLatestTpsData,
@@ -26,12 +26,12 @@ export async function getScalingSummaryEntries() {
     (project) => !project.isUpcoming && !project.isArchived,
   )
   const [
-    implementationChangeReport,
+    projectsChangeReport,
     projectsVerificationStatuses,
     tvl,
     projectsActivity,
   ] = await Promise.all([
-    getImplementationChangeReport(),
+    getProjectsChangeReport(),
     getProjectsVerificationStatuses(),
     get7dTokenBreakdown({ type: 'layer2' }),
     getActivityLatestTps(projects),
@@ -40,7 +40,7 @@ export async function getScalingSummaryEntries() {
   const entries = projects.map((project) => {
     const isVerified = !!projectsVerificationStatuses[project.id.toString()]
     const hasImplementationChanged =
-      !!implementationChangeReport.projects[project.id.toString()]
+      projectsChangeReport.hasImplementationChanged(project.id)
 
     const latestTvl = tvl.projects[project.id.toString()]
     const activity = projectsActivity[project.id.toString()]

@@ -1,5 +1,5 @@
 import { bridges } from '@l2beat/config'
-import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
+import { getProjectsChangeReport } from '../projects-change-report/get-projects-change-report'
 import { get7dTokenBreakdown } from '../scaling/tvl/utils/get-7d-token-breakdown'
 import { orderByTvl } from '../scaling/tvl/utils/order-by-tvl'
 import { isAnySectionUnderReview } from '../scaling/utils/is-any-section-under-review'
@@ -10,21 +10,21 @@ export type BridgesArchivedEntry = Awaited<
 >[number]
 export async function getBridgesArchivedEntries() {
   const archivedBridges = bridges.filter((bridge) => bridge.isArchived)
-  const [
-    tvl7dBreakdown,
-    implementationChangeReport,
-    projectsVerificationStatuses,
-  ] = await Promise.all([
-    get7dTokenBreakdown({ type: 'bridge' }),
-    getImplementationChangeReport(),
-    getProjectsVerificationStatuses(),
-  ])
+  const [tvl7dBreakdown, projectsChangeReport, projectsVerificationStatuses] =
+    await Promise.all([
+      get7dTokenBreakdown({ type: 'bridge' }),
+      getProjectsChangeReport(),
+      getProjectsVerificationStatuses(),
+    ])
 
   const entries = archivedBridges.map((bridge) => {
     const tvl = tvl7dBreakdown.projects[bridge.id.toString()]
     const isVerified = !!projectsVerificationStatuses[bridge.id.toString()]
     const hasImplementationChanged =
-      !!implementationChangeReport.projects[bridge.id.toString()]
+      projectsChangeReport.hasImplementationChangedOnChain(
+        bridge.id.toString(),
+        'ethereum',
+      )
     return {
       id: bridge.id,
       slug: bridge.display.slug,
