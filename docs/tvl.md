@@ -34,11 +34,11 @@ All this is achieved via proper configuration files in our repository.
    - If the chain is missing in the file, you have to add it, see the next section for details
    - The required fields are `symbol`, `address`, `source`, `supply`. The optional fields are `category`, `bridgedUsing` & `coingeckoId`.
    - If the token is externally bridged, you have to add a `bridgedUsing` object, containing at least the `bridge` = the bridge name. If we have it on our website, you can also add a `slug`.
-   - If the chain is not available when you run `yarn coingecko:platforms`, you need to also specify the `coingeckoId`.
+   - If the chain is not available when you run `pnpm coingecko:platforms`, you need to also specify the `coingeckoId`.
 
 3. Save the file
 4. Set environmental variables `<CHAIN>_RPC_URL` for the chains of the newly added tokens
-5. Run `yarn tokens` within `packages/config`
+5. Run `pnpm tokens` within `packages/config`
 
    **Never edit generated.json unless you know what you are doing.**
 
@@ -56,4 +56,4 @@ Go to the .ts file of the chain those are added to in `config\src\layer2s`,
   - `explorerApi{}`, containing `url` and `type`
   - `multicallContracts[]` - could be empty if not deployed
   - `minTimestampForTvl` - the timestamp of the first/second block on the chain
-  - `coingeckoPlatform` - the name of the platform on Coingecko. Check `yarn coingecko:platforms`.
+  - `coingeckoPlatform` - the name of the platform on Coingecko. Check `pnpm coingecko:platforms`.

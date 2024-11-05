@@ -16,7 +16,8 @@ export const avail: DaLayer = {
   display: {
     name: 'Avail',
     slug: 'avail',
-    description: 'Avail is a data availability network.',
+    description:
+      'Avail is a public blockchain and data availability network combining erasure coding, KZG polynomial commitments, and data availability sampling.',
     links: {
       websites: ['https://www.availproject.org/'],
       documentation: ['https://docs.availproject.org/'],
@@ -74,14 +75,28 @@ export const avail: DaLayer = {
     App-specific data can be reconstructed by app clients, which request and assemble missing cells from the network to complete the data reconstruction process.
 
     `,
+    references: [
+      {
+        text: 'Avail Documentation',
+        href: 'https://docs.availproject.org/docs/learn-about-avail/consensus/npos',
+      },
+      {
+        text: 'Avail Light Client - Source Code',
+        href: 'https://github.com/availproject/avail-light/blob/main/core/src/light_client.rs',
+      },
+      {
+        text: 'Avail App Client - Source Code',
+        href: 'https://github.com/availproject/avail-light/blob/a9e1741a6c7579d6ab1988eb409808b33f999180/core/src/app_client.rs',
+      },
+    ],
     risks: [
       {
         category: 'Funds can be lost if',
-        text: `a dishonest majority of Avail validators finalize an unavailable block, and there aren't light nodes on the network verifying data availability, or they fail at social signaling unavailable data.`,
+        text: `a dishonest majority of Avail validators finalizes an unavailable block, and there aren't light nodes on the network verifying data availability, or they fail at social signaling unavailable data.`,
       },
       {
         category: 'Funds can be lost if',
-        text: 'a dishonest majority of Avail validators finalize an unavailable block, and the number of light nodes on the network is not enough to ensure block reconstruction.',
+        text: 'a dishonest majority of Avail validators finalizes an unavailable block, and the number of light nodes on the network is not enough to ensure block reconstruction.',
       },
     ],
   },
@@ -90,7 +105,7 @@ export const avail: DaLayer = {
       createdAt: new UnixTime(1725372159), // 2024-09-03T14:02:39Z
       layer: 'Avail',
       description:
-        'The risk profile in this page refers to scaling solutions that do not integrate with a data availability bridge.',
+        'The risk profile in this page refers to L2s that do not integrate with a data availability bridge.',
       technology: {
         description: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.\n`,
       },

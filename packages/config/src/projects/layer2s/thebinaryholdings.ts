@@ -38,7 +38,7 @@ export const thebinaryholdings: Layer2 = opStackL2({
     minTimestamp: new UnixTime(1719397465),
     l2BlockTimeSeconds: 2,
     lag: 0,
-    stateUpdate: 'analyze',
+    stateUpdate: 'disabled', // TODO(radomski): gives negatives results, investigate
   },
   isNodeAvailable: 'UnderReview',
   milestones: [],

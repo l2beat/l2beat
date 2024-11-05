@@ -275,10 +275,6 @@ export const zkfair: Layer2 = {
     ],
   },
   permissions: [
-    ...discovery.getMultisigPermission(
-      'ZKFairAdmin',
-      'Admin of the ZKFairValidium, can set core system parameters like timeouts, sequencer and aggregator as well as deactivate emergency state. They can also upgrade the ZKFairValidium contracts, but are restricted by a 10d delay unless rollup is put in the Emergency State.',
-    ),
     {
       name: 'Sequencer',
       accounts: [
@@ -294,6 +290,10 @@ export const zkfair: Layer2 = {
       ],
       description: `The trusted proposer (called Aggregator) provides the ZKFairValidium contract with ZK proofs of the new system state. In case they are unavailable a mechanism for users to submit proofs on their own exists, but is behind a ${trustedAggregatorTimeoutString} delay for proving and a ${pendingStateTimeoutString} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
     },
+    ...discovery.getMultisigPermission(
+      'ZKFairAdmin',
+      'Admin of the ZKFairValidium, can set core system parameters like timeouts, sequencer and aggregator as well as deactivate emergency state.',
+    ),
     ...discovery.getMultisigPermission(
       'ZKFairOwner',
       'The ZkFair Owner is a multisig that can be used to trigger the emergency state which pauses bridge functionality, restricts advancing system state and removes the upgradeability delay.',
@@ -327,6 +327,15 @@ export const zkfair: Layer2 = {
       description:
         'The owner of the Data Availability Committee, can update the member set at any time.',
     },
+    {
+      name: 'TimelockExecutor',
+      accounts: discovery.getAccessControlRolePermission(
+        'Timelock',
+        'EXECUTOR_ROLE',
+      ),
+      description:
+        'Controls the upgrades to the ZKFairValidiumDAC and ZKFairValidium contracts through the Timelock. ',
+    },
   ],
   contracts: {
     addresses: [
@@ -352,6 +361,9 @@ export const zkfair: Layer2 = {
         description:
           'Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time.',
         ...timelockUpgrades,
+      }),
+      discovery.getContractDetails('Timelock', {
+        description: `Contract upgrades have to go through a ${upgradeDelayString} timelock unless the Emergency State is activated. It is controlled by the TimelockExecutor.`,
       }),
     ],
     references: [

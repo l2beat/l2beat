@@ -1,3 +1,52 @@
+Generated with discovered.json: 0xf7289bb1bf13ba75be6254a4e759e751bd0a6f53
+
+# Diff at Fri, 01 Nov 2024 10:58:18 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@cd1f0e71bb08ce16b2084a11b768538e8aa6ba8c block: 21041942
+- current block number: 21092345
+
+## Description
+
+Multisig members change and threshold increase, also added a pending owner. Waiting for the new owner to accept the ownership transfer.
+
+## Watched changes
+
+```diff
+    contract AuthorityMultisig (0x4720342419C1D316B948690d12C86D5b485C64E0) {
+    +++ description: None
+      values.$members.4:
++        "0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA"
+      values.$members.3:
+-        "0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA"
++        "0x757210F15AB48f0F8d328984fc321CfA6BB5BFc2"
+      values.$members.2:
+-        "0x757210F15AB48f0F8d328984fc321CfA6BB5BFc2"
++        "0x950815d0e585095B06111CD101440fb1E95AB2a5"
+      values.$members.1:
+-        "0x950815d0e585095B06111CD101440fb1E95AB2a5"
++        "0xCD2fA978D163c0068167dDff8b6951f0E626e6A4"
+      values.$members.0:
+-        "0xCD2fA978D163c0068167dDff8b6951f0E626e6A4"
++        "0xBb534A6Bd0440727cb5883D037DEd7358059D547"
+      values.$threshold:
+-        2
++        3
+      values.multisigThreshold:
+-        "2 of 4 (50%)"
++        "3 of 5 (60%)"
+    }
+```
+
+```diff
+    contract Treasury (0xD7E4b67E735733aC98a88F13d087D8aac670E644) {
+    +++ description: None
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "0x4720342419C1D316B948690d12C86D5b485C64E0"
+    }
+```
+
 Generated with discovered.json: 0x295923dcc511c729fda3a20b1db66baad067c07f
 
 # Diff at Fri, 25 Oct 2024 10:10:21 GMT:

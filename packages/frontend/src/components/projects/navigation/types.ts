@@ -21,7 +21,7 @@ export function projectDetailsToNavigationSections(
 
       return {
         id: section.props.id,
-        title: section.props.title,
+        title: section.sideNavTitle ?? section.props.title,
         subsections:
           section.type === 'Group'
             ? section.props.items

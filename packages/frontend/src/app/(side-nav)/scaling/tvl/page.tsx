@@ -2,7 +2,6 @@ import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import { ScalingStackedTvlChart } from '~/components/chart/tvl/stacked/scaling-stacked-tvl-chart'
 import { MainPageCard } from '~/components/main-page-card'
 import { MainPageHeader } from '~/components/main-page-header'
-import { SpiderWeb } from '~/components/spider-web'
 import { getImplementationChangeReport } from '~/server/features/implementation-change-report/get-implementation-change-report'
 import { getScalingTvlEntries } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
 import { get7dTvlBreakdown } from '~/server/features/scaling/tvl/utils/get-7d-tvl-breakdown'
@@ -31,10 +30,6 @@ export default async function Page() {
         range: await getCookie('scalingTvlChartRange'),
         excludeAssociatedTokens: false,
       }),
-      api.tvl.total.prefetch({
-        filter: { type: 'layer2' },
-        excludeAssociatedTokens: false,
-      }),
     ])
 
   const entries = getScalingTvlEntries({
@@ -48,8 +43,7 @@ export default async function Page() {
       <ScalingFilterContextProvider>
         <ScalingAssociatedTokensContextProvider>
           <MainPageHeader>Value Locked</MainPageHeader>
-          <MainPageCard className="relative">
-            <SpiderWeb className="absolute left-0 top-0 hidden md:block" />
+          <MainPageCard>
             <ScalingStackedTvlChart
               milestones={HOMEPAGE_MILESTONES}
               entries={

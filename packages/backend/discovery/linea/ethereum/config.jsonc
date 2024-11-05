@@ -84,15 +84,6 @@
             ] // L2_L1_PAUSE_TYPE
           }
         },
-        "provenNonCompressedBlocksWithoutProof": {
-          "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "BlockFinalized",
-            "valueKey": "blockNumber",
-            "flagKey": "finalizedWithProof",
-            "invert": true
-          }
-        },
         "provenCompressedBlocksWithoutProof": {
           "handler": {
             "type": "arrayFromOneEvent",

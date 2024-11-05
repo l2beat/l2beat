@@ -1,3 +1,99 @@
+Generated with discovered.json: 0xe3bca518a262a0c8e4eb026f155ce5e1db853d79
+
+# Diff at Tue, 29 Oct 2024 13:22:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7b3fc9dc9074e1d423b48522c3f0273c86aab54a block: 268780411
+- current block number: 268839192
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 268780411 (main branch discovery), not current.
+
+```diff
+    contract ChallengeManager (0x1f269F38196484ef81e58C0144AaD2c5F6394bB4) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      template:
++        "orbitstack/ChallengeManager"
+      description:
++        "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor."
+    }
+```
+
+```diff
+    contract OneStepProverMath (0x29E1631710Fa96920eB2F65EaD4B1F270daB59cB) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverMath"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
+    contract OneStepProverMemory (0x2D81591AfB19e1a1C1c932303790370c7257f454) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverMemory"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
+    contract Outbox (0x575d32f7ff0C72921645e302cb14d2757E300786) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      description:
+-        "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) which eventually resolve in execution on L1."
++        "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1."
+    }
+```
+
+```diff
+    contract OneStepProver0 (0x5C864714456935f05cd74D78CFE05Bcc726CddEe) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProver0"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
+    contract OneStepProofEntry (0x5D1E3dC946fC8F2DD6C96C018e5a120CC2b76368) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProofEntry"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
+    contract RollupProxy (0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      fieldMeta.confirmPeriodBlocks.description:
+-        "Challenge period. (Number of blocks until a node is confirmed)."
++        "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (0xE13987CcaFD999397021222630DEC78BaAa9fE15) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverHostIo"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
 Generated with discovered.json: 0x815af2d018bac5737f00eb53371bd2d1d8c86551
 
 # Diff at Tue, 29 Oct 2024 08:53:44 GMT:

@@ -9,8 +9,10 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "build:dependencies": "cd ../.. && yarn build:dependencies",
-    "l2bup": "yarn build:dependencies && yarn build && npm install -g .",
+    "build:dependencies": "cd ../.. && pnpm build:dependencies",
+    "dev": "node -r esbuild-register src/cli.ts",
+    "dev:watch": "node --watch -r esbuild-register src/cli.ts",
+    "l2bup": "pnpm build:dependencies && pnpm build && npm install -g .",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist",
     "format": "biome format .",
@@ -20,23 +22,30 @@
     "test": "mocha"
   },
   "dependencies": {
-    "@l2beat/backend-tools": "*",
-    "@l2beat/config": "*",
-    "@l2beat/discovery-types": "*",
-    "@l2beat/protocolbeat": "*",
-    "@l2beat/shared": "*",
-    "@l2beat/shared-pure": "*",
+    "@l2beat/backend-tools": "workspace:*",
+    "@l2beat/config": "workspace:*",
+    "@l2beat/discovery": "workspace:*",
+    "@l2beat/discovery-types": "workspace:*",
+    "@l2beat/protocolbeat": "workspace:*",
+    "@l2beat/shared": "workspace:*",
+    "@l2beat/shared-pure": "workspace:*",
     "@mradomski/fast-solidity-parser": "0.1.1",
-    "@types/express": "^5.0.0",
+    "ansi-to-html": "^0.7.2",
     "chalk": "^4.1.2",
     "cmd-ts": "^0.13.0",
     "ethers": "^5.7.2",
     "express": "^4.21.1",
     "graphviz-wasm": "^3.0.2",
-    "viem": "^2.18.6"
+    "node-fetch": "^2.6.7",
+    "readline-sync": "^1.4.10",
+    "viem": "^2.18.6",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/express": "^5.0.0",
     "@types/mock-fs": "^4.13.4",
+    "@types/node-fetch": "^2.6.11",
+    "@types/readline-sync": "^1.4.8",
     "mock-fs": "^5.2.0"
   }
 }

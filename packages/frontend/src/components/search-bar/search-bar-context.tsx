@@ -3,6 +3,7 @@
 import { createContext, useContext, useState } from 'react'
 import { useBreakpoint } from '~/hooks/use-is-mobile'
 import { SearchBarDialog } from './search-bar-dialog'
+import { type SearchBarProject } from './search-bar-projects'
 
 type SearchBarContextValue = {
   open: boolean
@@ -14,17 +15,6 @@ const SearchBarContext = createContext<SearchBarContextValue | null>(null)
 interface Props {
   children: React.ReactNode
   projects: SearchBarProject[]
-}
-
-export interface SearchBarProject {
-  id: string
-  isUpcoming: boolean
-  name: string
-  iconUrl: string
-  href: string
-  matchers: string[]
-  createdAt: number
-  type: 'layer2' | 'layer3' | 'bridge' | 'da'
 }
 
 export function SearchBarContextProvider({ children, projects }: Props) {

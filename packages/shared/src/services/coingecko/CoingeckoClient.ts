@@ -1,11 +1,10 @@
 import {
   CoingeckoId,
   EthereumAddress,
-  RateLimiter,
   UnixTime,
+  json,
 } from '@l2beat/shared-pure'
-
-import { HttpClient } from '../HttpClient'
+import { ClientCore, ClientCoreDependencies } from '../../clients/ClientCore'
 import {
   CoinListEntry,
   CoinListPlatformEntry,
@@ -14,31 +13,23 @@ import {
   CoinMarketChartRangeData,
   CoinMarketChartRangeResult,
   CoinMetadata,
+  CoingeckoError,
   CoinsMarketResultData,
 } from './model'
 
 const API_URL = 'https://api.coingecko.com/api/v3'
 const PRO_API_URL = 'https://pro-api.coingecko.com/api/v3'
 
-export class CoingeckoClient {
+interface Dependencies extends ClientCoreDependencies {
+  apiKey: string | undefined
+}
+
+export class CoingeckoClient extends ClientCore {
   private readonly timeoutMs = 10_000
   private readonly newIds = new Map<string, CoingeckoId>()
 
-  constructor(
-    private readonly httpClient: HttpClient,
-    private readonly apiKey: string | undefined,
-  ) {
-    const rateLimiter = new RateLimiter({
-      callsPerMinute: apiKey ? 400 : 10,
-    })
-    this.query = rateLimiter.wrap(this.query.bind(this))
-  }
-
-  static create(
-    services: { httpClient: HttpClient },
-    options: { apiKey: string | undefined },
-  ) {
-    return new CoingeckoClient(services.httpClient, options.apiKey)
+  constructor(private readonly $: Dependencies) {
+    super({ ...$ })
   }
 
   async getCoinList(options?: {
@@ -86,7 +77,11 @@ export class CoingeckoClient {
       if (!isCoingeckoIdError(e)) {
         throw e
       }
+      this.$.logger.error(`CoingeckoId change detected: ${coinId}`)
       const id = await this.getNewCoingeckoId(coinId, address)
+      this.$.logger.info(
+        `Successfully fetched new CoingeckoId: ${coinId} -> ${id}`,
+      )
       return await this.callMarketChartRange(id, vs_currency, from, to)
     }
   }
@@ -158,22 +153,31 @@ export class CoingeckoClient {
   }
 
   async query(endpoint: string, params: Record<string, string>) {
-    const queryParams = this.apiKey
-      ? { ...params, x_cg_pro_api_key: this.apiKey }
+    const queryParams = this.$.apiKey
+      ? { ...params, x_cg_pro_api_key: this.$.apiKey }
       : params
     const query = new URLSearchParams(queryParams).toString()
-    let url = `${this.apiKey ? PRO_API_URL : API_URL}${endpoint}`
+    let url = `${this.$.apiKey ? PRO_API_URL : API_URL}${endpoint}`
     if (query) {
       url += `?${query}`
     }
-    const res = await this.httpClient.fetch(url, { timeout: this.timeoutMs })
-    if (!res.ok) {
-      const body = await res.text()
-      throw new Error(
-        `Server responded with non-2XX result: ${res.status} ${res.statusText} ${body}`,
-      )
+    return await this.fetch(url, { timeout: this.timeoutMs })
+  }
+
+  override validateResponse(response: json): {
+    success: boolean
+    message?: string
+  } {
+    const parsedError = CoingeckoError.safeParse(response)
+
+    if (parsedError.success) {
+      this.$.logger.warn(`Response validation error`, {
+        error: parsedError.data.error,
+      })
+      return { success: false, message: parsedError.data.error }
     }
-    return res.json() as unknown
+
+    return { success: true }
   }
 }
 

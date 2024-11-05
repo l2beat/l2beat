@@ -28,7 +28,7 @@ display: {
 3. Add a detailed description - this is done by creating a markdown file in `packages/frontend/src/content/zkCatalogDescriptions`. If you want to add any images, make sure to add them in `packages/frontend/src/static/images/zk-catalog`.
 4. Update the index.ts file in `packages/config/src/projects/other/zk-catalog` to include the project
 5. Add a PNG logo in `packages/frontend/src/static/icons`
-6. Run `yarn tinify-logos` in the `frontend` package
+6. Run `pnpm tinify-logos` in the `frontend` package
 
-In both cases make sure to run `yarn test` in the `config` package.
+In both cases make sure to run `pnpm test` in the `config` package.
 Then submit a PR.

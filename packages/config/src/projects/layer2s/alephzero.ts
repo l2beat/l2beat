@@ -28,23 +28,13 @@ export const alephzero: Layer2 = orbitStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  nonTemplatePermissions: [
-    {
-      name: 'AdminEOA',
-      accounts: discovery.getAccessControlRolePermission(
-        'UpgradeExecutor',
-        'EXECUTOR_ROLE',
-      ),
-      description:
-        'Can upgrade any project implementation via UpgradeExecutor, potentially gaining access to all funds.',
-    },
-  ],
   associatedTokens: ['AZERO'],
   nativeToken: 'AZERO',
   rpcUrl: 'https://rpc.alephzero.raas.gelato.cloud',
-  bridge: discovery.getContract('Bridge'),
+  bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+  discoveryDrivenData: true,
   milestones: [
     {
       name: 'Mainnet launch',

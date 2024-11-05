@@ -3,7 +3,6 @@ import { donatuz } from '../../../layer3s/donatuz'
 import { NO_BRIDGE } from '../templates/no-bridge-template'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
 import { DaLayer } from '../types/DaLayer'
-import { linkByDA } from '../utils/link-by-da'
 import { toUsedInProject } from '../utils/to-used-in-project'
 import { eigenDAbridge } from './bridges/eigenDABridge'
 
@@ -45,14 +44,14 @@ export const eigenDA: DaLayer = {
 
     ### Operators Stake Update  
     
-    EigenDA operators' stake for quorum verification is fetched from the EigenDA StakeRegistry contract. To keep the stake in sync with changes in share balances in the EigenLayer DelegationManager (e.g., due to tokens delegated/undelegated to operators), the permissionless updateOperatorStake() function on the RegistryCoordinator contract needs to be called periodically. This function updates the operators' quorum weight in the StakeRegistry contract based on the operators' shares in the EigenLayer DelegationManager contract.
+    EigenDA operators' stake for quorum verification is fetched from the EigenDA StakeRegistry contract. To keep the stake in sync with changes in share balances in the EigenLayer DelegationManager (e.g., due to tokens delegated/undelegated to operators), the permissionless updateOperators() function on the RegistryCoordinator contract needs to be called periodically. This function updates the operators' quorum weight in the StakeRegistry contract based on the operators' shares in the EigenLayer DelegationManager contract.
     ![EigenDA operator stake sync](/images/da-layer-technology/eigenda/stakesync.png#center)
 
     ### Operators Blob Storage and Retrieval 
 
     The process of storing a blob on EigenDA works as follows. A sequencer submits blobs to the EigenDA Disperser, which erasure codes the blobs into chunks and generates KZG commitments and proofs for each chunk, certifying the correctness of the data. The disperser then sends the chunks, KZG commitments, and KZG proofs to the operators.
     Multiple operators are responsible for storing chunks of the encoded data blobs and their associated KZG commitment and proof.
-    Once the chunks, KZG commitments, and KZG proofs are sent to the operators, each of them generates a signature certifying that they have stored the data. These signatures are then sent to the Disperser which aggregates them and uploads them to Ethereum by sending a transaction to the EigenDAServiceManager (the DA bridge).
+    Once the chunks, KZG commitments, and KZG proofs are sent to the operators, each of them generates a signature certifying that they have stored the data. These signatures are then sent to the Disperser which aggregates them and submits them to Ethereum by sending a transaction to the EigenDAServiceManager (the DA bridge).
     
     ![EigenDA storing/retrieving](/images/da-layer-technology/eigenda/storing-retrieving.png#center)
 
@@ -60,14 +59,24 @@ export const eigenDA: DaLayer = {
     The Disperser collects the operators' signatures and submits them to the EigenDAServiceManager contract via the confirmBatch() function. This submission includes a call to the BLSRegistry contract to verify signatures and check whether the required quorum of operators' stake has been achieved.
     Threshold BLS signatures are not used. Instead, the threshold check is performed on the signers' total stake fetched by the StakeRegistry, and the stake threshold percentage to reach is provided in the batch header input data.
 
-    The EigenDARollupUtils.sol library's verifyBlob() function can then used by scaling solutions to verify that a data blob is included within a confirmed batch in the EigenDAServiceManager. 
-
+    The EigenDARollupUtils.sol library's verifyBlob() function can then be used by L2s to verify that a data blob is included within a confirmed batch in the EigenDAServiceManager. 
+    This function is not used by the EigenDAServiceManager contract itself, but rather by L2 systems to prove inclusion of the blob in the EigenDAServiceManager contract, and that their trust assumptions (i.e., batch confirmation threshold) were as expected.
   `,
-    risks: [
+    references: [
       {
-        category: 'Funds can be lost if',
-        text: 'the disperser posts an invalid commitment and EigenDA operators do not make the data available for verification.',
+        text: 'EigenDA - Documentation',
+        href: 'https://docs.eigenda.xyz/overview',
       },
+      {
+        text: 'EigenDA Disperser - Source Code',
+        href: 'https://github.com/Layr-Labs/eigenda/blob/2ed86a0c1dd730b56c8235031c19e08a9837bde8/disperser/batcher/batcher.go',
+      },
+      {
+        text: 'EigenDA Rollup Utils - Source Code',
+        href: 'https://github.com/Layr-Labs/eigenda-utils/blob/c4cbc9ec078aeca3e4a04bd278e2fb136bf3e6de/src/libraries/EigenDARollupUtils.sol',
+      },
+    ],
+    risks: [
       {
         category: 'Users can be censored if',
         text: 'the disperser does not distribute data to EigenDA operators.',
@@ -79,7 +88,7 @@ export const eigenDA: DaLayer = {
       createdAt: new UnixTime(1724426960), // 2024-08-23T15:29:20Z
       layer: 'EigenDA',
       description:
-        'The risk profile in this page refers to scaling solutions that do not integrate with a data availability bridge.',
+        'The risk profile in this page refers to L2s that do not integrate with a data availability bridge.',
       technology: {
         description: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.\n`,
       },
@@ -87,9 +96,7 @@ export const eigenDA: DaLayer = {
     }),
     eigenDAbridge,
   ],
-  usedIn: linkByDA({
-    layer: (layer) => layer === 'EigenDA',
-  }),
+  usedIn: [...toUsedInProject([donatuz])],
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('EIGEN'),
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,

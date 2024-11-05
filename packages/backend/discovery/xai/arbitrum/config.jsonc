@@ -66,6 +66,13 @@
       }
     },
     "SentryReferee": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      },
       "ignoreMethods": [
         "challenges",
         "getBoostFactor",

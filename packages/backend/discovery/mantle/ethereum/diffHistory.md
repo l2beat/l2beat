@@ -1,3 +1,74 @@
+Generated with discovered.json: 0xe53857c87cf6112b4a07960caadccfe172c5ded2
+
+# Diff at Fri, 01 Nov 2024 12:09:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cd1f0e71bb08ce16b2084a11b768538e8aa6ba8c block: 20928041
+- current block number: 20928041
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20928041 (main branch discovery), not current.
+
+```diff
+    contract MantleSecurityMultisig (0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) {
+    +++ description: None
+      receivedPermissions.10.description:
+-        "upgrading bridge implementation allows to access all funds and change every system component."
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      issuedPermissions.0.via.0.description:
+-        "upgrading bridge implementation allows to access all funds and change every system component."
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xca35F8338054739D138884685e08b39EE2217794) {
+    +++ description: None
+      directlyReceivedPermissions.3.description:
+-        "upgrading bridge implementation allows to access all funds and change every system component."
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+Generated with discovered.json: 0xbf3b2b0c55f88708809475a0471e27cc05254127
+
+# Diff at Tue, 29 Oct 2024 13:11:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7b3fc9dc9074e1d423b48522c3f0273c86aab54a block: 20928041
+- current block number: 20928041
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20928041 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      fieldMeta:
++        {"FINALIZATION_PERIOD_SECONDS":{"description":"Challenge period (Number of seconds until a state root is finalized)."}}
+    }
+```
+
 Generated with discovered.json: 0x9e2908657b6c49ed5d1c53be5fdf4ab31f42c7ee
 
 # Diff at Mon, 21 Oct 2024 12:45:54 GMT:

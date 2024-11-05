@@ -16,12 +16,19 @@ interface Props {
 
 export function ProjectsUsedIn({ usedIn, className, maxProjects = 5 }: Props) {
   if (usedIn.length === 0) {
-    return <div>Nobody 😔</div>
+    return (
+      <Tooltip>
+        <TooltipTrigger>No L2 😔</TooltipTrigger>
+        <TooltipContent>
+          There are no scaling projects listed on L2BEAT that use this solution.
+        </TooltipContent>
+      </Tooltip>
+    )
   }
 
   const cappedProjects = usedIn.slice(0, maxProjects)
 
-  const restCount = usedIn.slice(maxProjects).length
+  const rest = usedIn.slice(maxProjects)
 
   return (
     <div
@@ -47,10 +54,19 @@ export function ProjectsUsedIn({ usedIn, className, maxProjects = 5 }: Props) {
           </Tooltip>
         )
       })}
-      {!!restCount && (
-        <span className="text-2xs text-zinc-800 dark:text-gray-50">
-          + {restCount} more
-        </span>
+      {rest.length > 0 && (
+        <Tooltip>
+          <TooltipTrigger>
+            <span className="text-2xs text-zinc-800 dark:text-gray-50">
+              + {rest.length} more
+            </span>
+          </TooltipTrigger>
+          <TooltipContent className="flex flex-col">
+            {rest.map((project) => (
+              <span key={project.slug}>{project.name}</span>
+            ))}
+          </TooltipContent>
+        </Tooltip>
       )}
     </div>
   )

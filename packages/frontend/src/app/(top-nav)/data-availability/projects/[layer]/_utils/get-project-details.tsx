@@ -32,13 +32,19 @@ export function getProjectDetails({
   implementationChangeReport,
   grissiniValues,
 }: Params) {
+  const relatedScalingProject =
+    daBridge.type === 'DAC' && daBridge.usedIn.length === 1
+      ? daBridge.usedIn[0]
+      : undefined
+
   const permissionsSection =
-    daBridge.type !== 'NoBridge' && daBridge.type !== 'Enshrined'
+    daBridge.type !== 'Enshrined'
       ? getMultichainPermissionsSection(
           {
             id: daLayer.id,
             isUnderReview: !!daLayer.isUnderReview,
             permissions: daBridge.permissions,
+            dacUsedIn: relatedScalingProject,
           },
           contractsVerificationStatuses,
           manuallyVerifiedContracts,
@@ -46,7 +52,7 @@ export function getProjectDetails({
       : undefined
 
   const contractsSection =
-    daBridge.type !== 'NoBridge' && daBridge.type !== 'Enshrined'
+    daBridge.type !== 'Enshrined'
       ? getMultiChainContractsSection(
           {
             id: daBridge.id,
@@ -54,6 +60,7 @@ export function getProjectDetails({
             slug: daBridge.display.slug,
             contracts: daBridge.contracts,
             isUnderReview: daLayer.isUnderReview,
+            dacUsedIn: relatedScalingProject,
           },
           contractsVerificationStatuses,
           manuallyVerifiedContracts,
@@ -95,7 +102,10 @@ export function getProjectDetails({
         slug: daLayer.display.slug,
       },
       content: daLayer.technology.description,
+      mdClassName:
+        'da-beat text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
       risks: daLayer.technology.risks?.map(toTechnologyRisk),
+      references: daLayer.technology.references,
     },
   })
 
@@ -109,6 +119,7 @@ export function getProjectDetails({
       isUnderReview: !!daLayer.isUnderReview,
       isVerified,
       grissiniValues: mapBridgeRisksToRosetteValues(daBridge.risks),
+      hideRisks: daBridge.type === 'NoBridge',
     },
   })
 
@@ -122,7 +133,10 @@ export function getProjectDetails({
         slug: `${daLayer.display.slug}-${daBridge.display.slug}`,
       },
       content: daBridge.technology.description,
+      mdClassName:
+        'da-beat text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
       risks: daBridge.technology.risks?.map(toTechnologyRisk),
+      references: daBridge.technology.references,
     },
   })
 
@@ -151,9 +165,12 @@ export function getProjectDetails({
 
   const items: ProjectDetailsSection[] = []
 
-  if (riskSummarySection.riskGroups.length > 0) {
+  if (
+    riskSummarySection.layer.risks.concat(riskSummarySection.bridge.risks)
+      .length > 0
+  ) {
     items.push({
-      type: 'RiskSummarySection',
+      type: 'DaRiskSummarySection',
       props: {
         id: 'risk-summary',
         title: 'Risk summary',
@@ -175,6 +192,7 @@ export function getProjectDetails({
   if (daBridgeItems.length > 0) {
     items.push({
       type: 'Group',
+      sideNavTitle: daBridge.type === 'NoBridge' ? 'DA Bridge' : undefined,
       props: {
         id: 'da-bridge',
         title: daBridge.display.name,

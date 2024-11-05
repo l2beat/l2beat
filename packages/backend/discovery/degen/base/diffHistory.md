@@ -1,3 +1,88 @@
+Generated with discovered.json: 0x124f2385a608dd0e8880924c429847ee14ab79cc
+
+# Diff at Fri, 01 Nov 2024 15:09:45 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@cd1f0e71bb08ce16b2084a11b768538e8aa6ba8c block: 21530732
+- current block number: 21842198
+
+## Description
+
+ConduitMultisig3 added member and kept threshold, now 3/6.
+
+## Watched changes
+
+```diff
+    contract ConduitMultisig3 (0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104) {
+    +++ description: None
+      values.$members.5:
++        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.$members.4:
+-        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
++        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+      values.$members.3:
+-        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
++        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+      values.$members.2:
+-        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
++        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+      values.$members.1:
+-        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
++        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+      values.$members.0:
+-        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
++        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 6 (50%)"
+    }
+```
+
+Generated with discovered.json: 0x3559c0c70bb9e8a9924d95a4512a39a2918000f9
+
+# Diff at Tue, 29 Oct 2024 13:22:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7b3fc9dc9074e1d423b48522c3f0273c86aab54a block: 21530732
+- current block number: 21530732
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21530732 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0xD34F3a11F10DB069173b32d84F02eDA578709143) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      fieldMeta.confirmPeriodBlocks.description:
+-        "Challenge period. (Number of blocks until a node is confirmed)."
++        "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
+    }
+```
+
+```diff
+    contract Outbox (0xe63ddb12FBb6211a73F12a4367b10dA0834B82da) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      description:
+-        "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) which eventually resolve in execution on L1."
++        "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1."
+    }
+```
+
+```diff
+    contract Bridge (0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C) {
+    +++ description: Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      description:
+-        "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for bridge messaging."
++        "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
+    }
+```
+
 Generated with discovered.json: 0xd228425e32287c5b2cc6cdf139743af99f345e69
 
 # Diff at Tue, 29 Oct 2024 08:55:18 GMT:

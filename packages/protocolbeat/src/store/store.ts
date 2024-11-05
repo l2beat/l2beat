@@ -1,14 +1,14 @@
 import { create } from 'zustand'
 
 export interface State {
-  readonly selected: readonly string[]
+  readonly selected: string | undefined
 }
 
 export interface Actions {
-  select: (selected: readonly string[]) => void
+  select: (selected: string | undefined) => void
 }
 
 export const usePanelStore = create<State & Actions>((set) => ({
-  selected: [],
+  selected: undefined,
   select: (selected) => set(() => ({ selected })),
 }))

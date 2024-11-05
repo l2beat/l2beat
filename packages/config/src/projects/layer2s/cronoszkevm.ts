@@ -93,7 +93,7 @@ export const cronoszkevm: Layer2 = zkStackL2({
   nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
     shared.getEscrowDetails({
       address: bridge.address,
-      tokens: ['ybETH', 'CRO', 'USDC', 'WBTC', 'zkCRO', 'FUL', 'FRTN'],
+      tokens: ['CRO', 'USDC', 'WBTC', 'zkCRO', 'FUL', 'FRTN', 'MOON'],
       description:
         'Shared bridge for depositing tokens to Cronos zkEVM and other ZK stack chains.',
       sharedEscrow: {

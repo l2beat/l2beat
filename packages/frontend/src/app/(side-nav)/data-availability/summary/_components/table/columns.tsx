@@ -1,4 +1,4 @@
-import { createColumnHelper } from '@tanstack/react-table'
+import { type Row, createColumnHelper } from '@tanstack/react-table'
 import { NaBadge } from '~/components/badge/na-badge'
 import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
 import { TwoRowCell } from '~/components/table/cells/two-row-cell'
@@ -7,6 +7,7 @@ import { EM_DASH } from '~/consts/characters'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { DaFallbackCell } from '../../../_components/da-fallback-cell'
+import { DaLayerCell } from '../../../_components/da-layer-cell'
 import { DacMembersCell } from '../../../_components/dac-members-cell'
 import { virtual, withSpanByBridges } from '../../../_utils/col-utils'
 import {
@@ -17,8 +18,16 @@ import { DaEconomicSecurityCell } from './da-economic-security-cell'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
 
-export const [indexColumn, logoColumn, daLayerColumn] =
-  getDaCommonProjectColumns(columnHelper)
+export const [indexColumn, logoColumn] = getDaCommonProjectColumns(columnHelper)
+
+export const daLayerColumn = columnHelper.accessor('name', {
+  header: 'DA Layer',
+  cell: (ctx) => <DaLayerCell entry={ctx.row.original} />,
+  meta: {
+    tooltip:
+      'The data availability layer where the data (transaction data or state diffs) is posted.',
+  },
+})
 
 export const daRisksColumn = columnHelper.display({
   id: 'da-risks',
@@ -45,7 +54,12 @@ const daBridgeRisksColumn = columnHelper.display({
 
     const risks = mapBridgeRisksToRosetteValues(firstBridge.risks)
 
-    return <GrissiniCell values={risks} />
+    return (
+      <GrissiniCell
+        values={risks}
+        hasNoBridge={firstBridge.type === 'NoBridge'}
+      />
+    )
   },
   enableSorting: false,
   meta: {
@@ -65,7 +79,6 @@ const tvsColumn = columnHelper.accessor('tvs', {
       </div>
     )
   },
-  enableSorting: false,
   meta: {
     tooltip:
       'Total value secured (TVS) is the total value locked of all projects using this layer.',
@@ -91,6 +104,7 @@ const slashableStakeColumn = columnHelper.accessor('economicSecurity', {
       </div>
     )
   },
+  sortingFn: sortSlashableStake,
   meta: {
     align: 'right',
     tooltip:
@@ -111,6 +125,10 @@ const membersColumn = columnHelper.display({
       return <NaBadge />
     }
 
+    if (firstBridge.hideMembers) {
+      return <NaBadge />
+    }
+
     return <DacMembersCell {...firstBridge} />
   },
 })
@@ -123,12 +141,20 @@ const challengeMechanismColumn = columnHelper.accessor('challengeMechanism', {
     </TwoRowCell>
   ),
   enableSorting: false,
+  meta: {
+    tooltip:
+      'Shows if there is a mechanism that enables users to dispute the availability or accuracy of data committed by the DA provider',
+  },
 })
 
 const fallbackColumn = columnHelper.accessor('fallback', {
   header: 'Fallback',
   cell: (ctx) => <DaFallbackCell entry={ctx.row.original} />,
   enableSorting: false,
+  meta: {
+    tooltip:
+      'Is there a mechanism that allows data to be posted to an alternative DA layer in case of downtime or unavailability of the primary layer? If so, where is the data posted?',
+  },
 })
 
 export const customColumns = [
@@ -203,3 +229,25 @@ export const publicSystemsColumns = [
   bridgeColumn,
   bridgeGroup,
 ]
+
+function sortSlashableStake(
+  rowA: Row<DaSummaryEntry>,
+  rowB: Row<DaSummaryEntry>,
+) {
+  const rowAValue = slashableStakeToValue(rowA.original)
+  const rowBValue = slashableStakeToValue(rowB.original)
+
+  return rowBValue - rowAValue
+}
+
+function slashableStakeToValue(entry: DaSummaryEntry) {
+  if (entry.risks.economicSecurity.type === 'Unknown') {
+    return 0
+  }
+
+  if (!entry.economicSecurity || entry.economicSecurity.status !== 'Synced') {
+    return 0
+  }
+
+  return entry.economicSecurity.economicSecurity
+}
