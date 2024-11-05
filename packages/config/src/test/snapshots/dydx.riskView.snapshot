@@ -21,10 +21,10 @@
     value: "Canonical"
   }
   exitWindow: {
-    definingMetric: 172800
+    definingMetric: 777600
     description: "There is a 9d exit window (or 2d if shortened by the Priority Controller)."
     secondLine: undefined
-    sentiment: "bad"
+    sentiment: "warning"
     value: "9d"
   }
   proposerFailure: {

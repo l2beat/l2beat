@@ -206,9 +206,7 @@ export const dydx: Layer2 = {
       ],
     },
     exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(maxPriorityDelay, 0, {
-        upgradeDelay2: minPriorityDelay,
-      }),
+      ...RISK_VIEW.EXIT_WINDOW(maxPriorityDelay, 0),
       description: `There is a ${formatSeconds(
         maxPriorityDelay,
       )} exit window (or ${formatSeconds(
