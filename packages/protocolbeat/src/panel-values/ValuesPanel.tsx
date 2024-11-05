@@ -11,6 +11,7 @@ import { AddressIcon } from '../common/AddressIcon'
 import { IconChevronDown } from '../icons/IconChevronDown'
 import { IconChevronRight } from '../icons/IconChevronRight'
 import { usePanelStore } from '../store/store'
+import { AbiDisplay } from './AbiDisplay'
 import { AddressDisplay } from './AddressDisplay'
 import { FieldDisplay } from './Field'
 
@@ -81,7 +82,7 @@ function Display({
             template/{selected.template}
           </p>
         )}
-        <p className="font-mono text-xs">
+        <div className="font-mono text-xs">
           <AddressDisplay
             simplified
             value={{
@@ -90,7 +91,7 @@ function Display({
               addressType: selected.type,
             }}
           />
-        </p>
+        </div>
         {selected.description && (
           <p className="pt-1 pb-1 font-serif text-sm italic">
             {selected.description}
@@ -119,16 +120,7 @@ function Display({
       )}
       {'abis' in selected && selected.abis.length > 0 && (
         <Folder title="ABI" collapsed>
-          <ol className="px-2">
-            {selected.abis.map((abi) => (
-              <li key={abi.address}>
-                <p>{abi.address}</p>
-                <pre className="font-mono text-xs leading-[18px]">
-                  <code>{abi.entries.join('\n') || '// No abi'}</code>
-                </pre>
-              </li>
-            ))}
-          </ol>
+          <AbiDisplay abis={selected.abis} />
         </Folder>
       )}
     </>
