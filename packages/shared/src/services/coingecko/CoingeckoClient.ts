@@ -77,7 +77,11 @@ export class CoingeckoClient extends ClientCore {
       if (!isCoingeckoIdError(e)) {
         throw e
       }
+      this.$.logger.error(`CoingeckoId change detected: ${coinId}`)
       const id = await this.getNewCoingeckoId(coinId, address)
+      this.$.logger.info(
+        `Successfully fetched new CoingeckoId: ${coinId} -> ${id}`,
+      )
       return await this.callMarketChartRange(id, vs_currency, from, to)
     }
   }
