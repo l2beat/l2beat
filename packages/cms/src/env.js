@@ -30,7 +30,7 @@ export const env = createEnv({
    * Environment variables exposed to the client (should be prefixed with `NEXT_PUBLIC_`)
    */
   client: {
-    NEXT_PUBLIC_VERCEL_URL: z.string().url().optional(),
+    NEXT_PUBLIC_VERCEL_URL: z.string().optional(),
   },
 
   /**
