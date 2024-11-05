@@ -1,3 +1,203 @@
+Generated with discovered.json: 0x6bc8292f5b020163c8b5587c4141fe8dc2dddbc5
+
+# Diff at Mon, 04 Nov 2024 07:56:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@950c85bf556f084c302d2b03100375cf3c7ed376 block: 21098438
+- current block number: 21112607
+
+## Description
+
+Kinto Decentralization upgrade:
+
+### Stage 1 TODO:
+Guarantee a KintoWallet user on L2 to be able to exit their funds. Context:
+- kinto-geth [censors all EOA->contract calls on L2](https://github.com/KintoXYZ/kinto-go-ethereum/blob/kinto/core/kinto.go#L23C53-L23C95) and forces users into smartWallet usage
+- KintoWallet is upgradeable: `isKYC` flag can be changed by actors more centralized than SC
+- KintoWallet verifies `isKYC` on every transaction
+
+### Security Council
+The multisig at `0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d` has the EXECUTOR_ROLE and meets the minimum requirements for a Security Council. Members are published [here](https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/security-council) (5 external members, including Caldera).
+- Kinto Foundation: `0x08E674c4538caE03B6c05405881dDCd95DcaF5a8`
+- Mamori Labs: `0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B`, `0x94561e98DD5E55271f91A103e4979aa6C493745E`
+- Caldera: `0x356000Cec4fC967f8FC372381D983426760A0391`
+- Hypernative: `0x082CBA3929aD00EbB6d81ebE57B0BD24fBF3Fc6B`
+- Venn/Ironblocks: `0xe52957E92a372d5a3B544F4C329b606f1A1b4bD2`
+- Turnkey: `0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1`
+- Certora: `0x5FB5040dfC5B8b9Ea40dFBd881188Ec85cDC0621`
+
+### Validators
+There are 5 validators in total, published [here](https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/kinto-validators) and ran by:
+- Caldera: `0x64Cf65036a76E3827e448cadbc53D31EefDCE04a` (main proposer)
+- Mamori Labs: `0x944eB0a2829A859959586b10D54229278534a696`
+- Ankr: `0x2bfDA59220413DEd39dD0E443620b5277EcE6348` (started a challenge due to late software update)
+- Hypernative: `0x58028fFbc25aE2e12b96276bDB125955F41D41f3`
+- Venn: `0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f`
+
+## Watched changes
+
+```diff
+    contract Kinto SecurityCouncil (0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d) {
+    +++ description: None
+      values.$members.8:
+-        "0x94561e98DD5E55271f91A103e4979aa6C493745E"
+      values.$members.7:
+-        "0x356000Cec4fC967f8FC372381D983426760A0391"
++        "0x94561e98DD5E55271f91A103e4979aa6C493745E"
+      values.$members.6:
+-        "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
++        "0x356000Cec4fC967f8FC372381D983426760A0391"
+      values.multisigThreshold:
+-        "6 of 9 (67%)"
++        "6 of 8 (75%)"
+    }
+```
+
+```diff
+    contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.lastStakeBlock:
+-        21084338
++        21107949
+      values.stakerCount:
+-        3
++        4
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21098438 (main branch discovery), not current.
+
+```diff
+    contract Bridger (0x0f1b7bd7762662B23486320AA91F30312184f70C) {
+    +++ description: Bridger gateway that can swap assets to 'L2 final assets' before bridging them to the L2.
+      description:
++        "Bridger gateway that can swap assets to 'L2 final assets' before bridging them to the L2."
+    }
+```
+
+```diff
+    contract Kinto SecurityCouncil (0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d) {
+    +++ description: None
+      name:
+-        "ExecutorMultisig"
++        "Kinto SecurityCouncil"
+      receivedPermissions.10:
++        {"permission":"upgrade","target":"0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a","via":[{"address":"0x74C717C01425eb475A5fC55d2A4a9045fC9800df"},{"address":"0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a"}]}
+      receivedPermissions.9.target:
+-        "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a"
++        "0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60"
+      receivedPermissions.8.target:
+-        "0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60"
++        "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474"
+      receivedPermissions.7.target:
+-        "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474"
++        "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB"
+      receivedPermissions.6.target:
+-        "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB"
++        "0x7870D5398DB488c669B406fBE57b8d05b6A35e42"
+      receivedPermissions.5.target:
+-        "0x7870D5398DB488c669B406fBE57b8d05b6A35e42"
++        "0x655761AD5FC251F414D6993A73184B0669F278c8"
+      receivedPermissions.4.target:
+-        "0x655761AD5FC251F414D6993A73184B0669F278c8"
++        "0x6228e2FB8C561f1a5A963039Bc38Eb6D539A1A7F"
+      receivedPermissions.3.target:
+-        "0x6228e2FB8C561f1a5A963039Bc38Eb6D539A1A7F"
++        "0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a"
+      receivedPermissions.2.target:
+-        "0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a"
++        "0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F"
+      receivedPermissions.1.target:
+-        "0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F"
++        "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11"
+      receivedPermissions.1.via.1:
+-        {"address":"0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a"}
+      receivedPermissions.1.via.0.address:
+-        "0x74C717C01425eb475A5fC55d2A4a9045fC9800df"
++        "0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a"
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      receivedPermissions.0.description:
++        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      template:
+-        "orbitstack/RollupProxy_fastConfirm"
++        "orbitstack/RollupProxy"
+      issuedPermissions.5.target:
+-        "0x0000000000000000000000000000000000000000"
++        "0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d"
+      issuedPermissions.5.via.0:
++        {"address":"0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a","delay":0,"description":"can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."}
+      fieldMeta.minimumAssertionPeriod:
+-        {"description":"Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a) {
+    +++ description: Central contract defining the access control for upgrading the system contract implementations.
+      directlyReceivedPermissions.2:
++        {"permission":"upgrade","target":"0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11"}
+      directlyReceivedPermissions.1.permission:
+-        "upgrade"
++        "configure"
+      directlyReceivedPermissions.1.description:
++        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract L1ERC20Gateway (0x7870D5398DB488c669B406fBE57b8d05b6A35e42) {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      template:
++        "orbitstack/ERC20Gateway"
+      displayName:
++        "ERC20Gateway"
+      description:
++        "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract."
+    }
+```
+
+```diff
+    contract Inbox (0xBFfaA85c1756472fFC37e6D172A7eC0538C14474) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      template:
++        "orbitstack/Inbox"
+      description:
++        "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds."
+    }
+```
+
+```diff
+    contract TurnkeyMultisig (0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1) {
+    +++ description: None
+      name:
+-        "GnosisSafe"
++        "TurnkeyMultisig"
+    }
+```
+
+```diff
+    contract SequencerInbox (0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.IS_HARDCODED_SEQUENCER_BATCH_POSTER:
+-        false
+      fieldMeta.maxTimeVariation.description:
+-        "Struct: delayBlocks, futureBlocks, delaySeconds, futureSeconds. onlyRollupOwner settable. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
++        "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
+    }
+```
+
 Generated with discovered.json: 0x1678709304c14f7d103f4788317c363a2345037b
 
 # Diff at Sat, 02 Nov 2024 07:22:30 GMT:

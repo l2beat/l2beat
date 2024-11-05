@@ -30,6 +30,7 @@ export const env = createEnv({
    * Environment variables exposed to the client (should be prefixed with `NEXT_PUBLIC_`)
    */
   client: {
+    NEXT_PUBLIC_BASE_URL: z.string().optional(),
     NEXT_PUBLIC_VERCEL_URL: z.string().optional(),
   },
 
@@ -44,6 +45,7 @@ export const env = createEnv({
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     GOOGLE_ALLOWED_DOMAINS: process.env.GOOGLE_ALLOWED_DOMAINS,
+    NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
     NEXT_PUBLIC_VERCEL_URL: process.env.NEXT_PUBLIC_VERCEL_URL,
     JWT_SECRET: process.env.JWT_SECRET,
   },

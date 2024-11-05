@@ -1,3 +1,36 @@
+Generated with discovered.json: 0x990e94088380ddf6010a3cfce46d87a0c9893ce1
+
+# Diff at Mon, 04 Nov 2024 07:52:26 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@950c85bf556f084c302d2b03100375cf3c7ed376 block: 21071352
+- current block number: 21071352
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21071352 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0xF75206c49c1694594E3e69252E519434f1579876) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
++++ description: Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed.
+      values.maxTimeVariation:
+-        [28800,300,345600,3600]
++        {"delayBlocks":28800,"futureBlocks":300,"delaySeconds":345600,"futureSeconds":3600}
+      values.postsBlobs:
++        false
+      fieldMeta.maxTimeVariation.description:
+-        "Struct: delayBlocks, futureBlocks, delaySeconds, futureSeconds. onlyRollupOwner settable. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
++        "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
+    }
+```
+
 Generated with discovered.json: 0x1f7fd3e5b6bbd027934d96f7eef325916030dadc
 
 # Diff at Tue, 29 Oct 2024 13:03:25 GMT:

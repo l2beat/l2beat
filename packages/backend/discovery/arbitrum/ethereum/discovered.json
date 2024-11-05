@@ -1,8 +1,8 @@
 {
   "name": "arbitrum",
   "chain": "ethereum",
-  "blockNumber": 21122427,
-  "configHash": "0x52f100cdb507ec96293a37c8e7824070528daf5da680a3275c2eaaf85cea2501",
+  "blockNumber": 21092328,
+  "configHash": "0xcebe17a977d541b70983d3103b398bb4bef7ee95cea65dd096f3894e688cc414",
   "contracts": [
     {
       "name": "Outbox",
@@ -289,6 +289,11 @@
         }
       ],
       "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+        },
         {
           "permission": "upgrade",
           "target": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -755,6 +760,11 @@
         {
           "permission": "challenge",
           "target": "0xF8D3E1cF58386c92B27710C6a0D8A54c76BC6ab5",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "target": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
           "via": []
         },
         {
@@ -4620,6 +4630,6 @@
     "orbitstack/OneStepProverHostIo": "0xacacb7603847a3f0212fdf80c653040278214c00451f763907e270d1f19efec0",
     "orbitstack/OneStepProverMath": "0x8dd8aebb517eb6eaf15437ddbb90dff66f2b14d9d6b5390dd87fbdab15168188",
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
-    "orbitstack/RollupProxy": "0x9de477a7ec4abe22558d85184e1ff68cebea26c903f45220337156ae3acf3dc5"
+    "orbitstack/RollupProxy": "0x896aca243cf3d45ddf79cc142d37874406a6e07e5572f1450df6adccd0d627ac"
   }
 }

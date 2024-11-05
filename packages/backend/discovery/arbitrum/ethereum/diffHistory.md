@@ -1,4 +1,142 @@
-Generated with discovered.json: 0xfc971c5f57d05f9f0df46d8524173f7a702fca30
+Generated with discovered.json: 0x10c88f92efa5730be4e392c27cb54d7ebbbe65f9
+
+# Diff at Mon, 04 Nov 2024 07:54:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@950c85bf556f084c302d2b03100375cf3c7ed376 block: 21092328
+- current block number: 21092328
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21092328 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (0x3ffFbAdAF827559da092217e474760E2b2c3CeDd) {
+    +++ description: None
+      receivedPermissions.11:
++        {"permission":"upgrade","target":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","via":[{"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"}]}
+      receivedPermissions.10.target:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0xe5896783a2F463446E1f624e64Aa6836BE4C6f58"
+      receivedPermissions.10.via.0.address:
+-        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
++        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+      receivedPermissions.9.target:
+-        "0xe5896783a2F463446E1f624e64Aa6836BE4C6f58"
++        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+      receivedPermissions.8.target:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
+      receivedPermissions.7.target:
+-        "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
++        "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a"
+      receivedPermissions.6.target:
+-        "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a"
++        "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
+      receivedPermissions.6.via:
+-        [{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}]
+      receivedPermissions.5.target:
+-        "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
++        "0x57Bd336d579A51938619271a7Cc137a46D0501B1"
+      receivedPermissions.5.via:
++        [{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}]
+      receivedPermissions.4.target:
+-        "0x57Bd336d579A51938619271a7Cc137a46D0501B1"
++        "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"
+      receivedPermissions.3.target:
+-        "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      receivedPermissions.3.via.0.address:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
+      receivedPermissions.2.target:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6"
+      receivedPermissions.2.via.0.address:
+-        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
++        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+      receivedPermissions.1.target:
+-        "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6"
++        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      receivedPermissions.0.target:
+-        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
++        "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
+      receivedPermissions.0.via:
+-        [{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}]
+      receivedPermissions.0.description:
++        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract RollupProxy (0x5eF0D09d1E6204141B4d37530808eD19f60FBa35) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.29:
++        {"permission":"upgrade","target":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","via":[]}
+      issuedPermissions.28.permission:
+-        "upgrade"
++        "propose"
+      issuedPermissions.28.target:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0xF8D3E1cF58386c92B27710C6a0D8A54c76BC6ab5"
+      issuedPermissions.27.target:
+-        "0xF8D3E1cF58386c92B27710C6a0D8A54c76BC6ab5"
++        "0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b"
+      issuedPermissions.26.target:
+-        "0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b"
++        "0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E"
+      issuedPermissions.25.target:
+-        "0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E"
++        "0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d"
+      issuedPermissions.24.target:
+-        "0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d"
++        "0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0"
+      issuedPermissions.23.target:
+-        "0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0"
++        "0xAB1A39332e934300eBCc57B5f95cA90631a347FF"
+      issuedPermissions.22.target:
+-        "0xAB1A39332e934300eBCc57B5f95cA90631a347FF"
++        "0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5"
+      issuedPermissions.21.target:
+-        "0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5"
++        "0x7CF3d537733F6Ba4183A833c9B021265716cE9d0"
+      issuedPermissions.20.target:
+-        "0x7CF3d537733F6Ba4183A833c9B021265716cE9d0"
++        "0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398"
+      issuedPermissions.19.target:
+-        "0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398"
++        "0x6Fb914de4653eC5592B7c15F4d9466Cbd03F2104"
+      issuedPermissions.18.target:
+-        "0x6Fb914de4653eC5592B7c15F4d9466Cbd03F2104"
++        "0x610Aa279989F440820e14248BD3879B148717974"
+      issuedPermissions.17.target:
+-        "0x610Aa279989F440820e14248BD3879B148717974"
++        "0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78"
+      issuedPermissions.16.target:
+-        "0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78"
++        "0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c"
+      issuedPermissions.15.target:
+-        "0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c"
++        "0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4"
+      issuedPermissions.14.permission:
+-        "propose"
++        "configure"
+      issuedPermissions.14.target:
+-        "0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+    }
+```
+
+Generated with discovered.json: 0x48e1458ea67abceee5b44143d3117f3296961bac
 
 # Diff at Fri, 01 Nov 2024 10:54:45 GMT:
 

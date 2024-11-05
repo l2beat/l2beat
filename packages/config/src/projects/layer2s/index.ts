@@ -83,6 +83,7 @@ import { metis } from './metis'
 import { millicent } from './millicent'
 import { mint } from './mint'
 import { mode } from './mode'
+import { moonveil } from './moonveil'
 import { morph } from './morph'
 import { move } from './move'
 import { myria } from './myria'
@@ -260,6 +261,7 @@ export const layer2s: Layer2[] = [
   mint,
   millicent,
   mode,
+  moonveil,
   morph,
   move,
   myria,
