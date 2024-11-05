@@ -1,7 +1,6 @@
-import { fraxtal } from '../../../layer2s/fraxtal'
+
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
 import { DaLayer } from '../types/DaLayer'
-import { toUsedInProject } from '../utils/to-used-in-project'
 import { fraxtalDABridge } from './bridges/fraxtalDABridge'
 
 export const fraxtalDA: DaLayer = {

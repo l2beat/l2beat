@@ -3,7 +3,6 @@ import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
 import { DaChallengeMechanism } from '../types/DaChallengeMechanism'
 import { DaLayer } from '../types/DaLayer'
-import { linkByDA } from '../utils/link-by-da'
 import { xterioDABridge } from './bridges/xterioDABridge'
 
 const discovery = new ProjectDiscovery('xterio')
