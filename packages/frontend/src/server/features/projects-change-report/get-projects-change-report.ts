@@ -1,5 +1,5 @@
 import { chains } from '@l2beat/config'
-import { diffDiscovery } from '@l2beat/discovery'
+import { type FieldDiff, diffDiscovery } from '@l2beat/discovery'
 import { get$Implementations } from '@l2beat/discovery-types'
 import {
   assert,
@@ -47,9 +47,11 @@ async function getProjectsChangeReportWithFns() {
       const changes = this.projects[projectId]?.[chain]
       return !!changes && changes.implementations.length > 0
     },
-    isAnyChangeSeverityHigh: function (projectId: string) {
+    hasHighSeverityFieldChanged: function (projectId: string) {
       const ethereumChanges = this.projects[projectId]?.ethereum
-      return !!ethereumChanges?.isAnyChangeSeverityHigh
+      return (
+        !!ethereumChanges && ethereumChanges.fieldHighSeverityChanges.length > 0
+      )
     },
   }
 }
@@ -61,7 +63,10 @@ type ProjectChangeReport = Record<
       containingContract: EthereumAddress
       newImplementations: EthereumAddress[]
     }[]
-    isAnyChangeSeverityHigh: boolean
+    fieldHighSeverityChanges: {
+      address: EthereumAddress
+      fields: FieldDiff[]
+    }[]
   }
 >
 
@@ -92,17 +97,21 @@ const getCachedProjectsChangeReport = cache(
         const implementationChanges = diffs.filter((diff) =>
           diff.diff?.some((f) => f.key && f.key === 'values.$implementation'),
         )
-        const isAnyChangeSeverityHigh = diffs.some((diff) =>
+        const fieldHighSeverityChanges = diffs.filter((diff) =>
           diff.diff?.some((f) => f.severity === 'HIGH'),
         )
 
-        if (implementationChanges.length === 0 && !isAnyChangeSeverityHigh) {
+        if (
+          implementationChanges.length === 0 &&
+          fieldHighSeverityChanges.length === 0
+        ) {
           continue
         }
+
         result[project] ??= {}
         result[project][chain] ??= {
           implementations: [],
-          isAnyChangeSeverityHigh,
+          fieldHighSeverityChanges: [],
         }
 
         for (const diff of implementationChanges) {
@@ -118,12 +127,20 @@ const getCachedProjectsChangeReport = cache(
             newImplementations,
           })
         }
+
+        for (const diff of fieldHighSeverityChanges) {
+          const fieldDiffs = diff.diff?.filter((f) => f.severity === 'HIGH')
+          if (!fieldDiffs) continue
+          result[project][chain].fieldHighSeverityChanges.push({
+            address: diff.address,
+            fields: fieldDiffs,
+          })
+        }
       }
     }
-    console.log('result', result)
     return result
   },
-  [`projectsChangeReportX-${env.VERCEL_GIT_COMMIT_SHA}`],
+  [`projectsChangeReport-${env.VERCEL_GIT_COMMIT_SHA}`],
   { revalidate: UnixTime.HOUR },
 )
 
@@ -132,7 +149,7 @@ function getProjectsChangeReportMock(): ProjectsChangeReport {
     projects: {},
     hasImplementationChanged: () => false,
     hasImplementationChangedOnChain: () => false,
-    isAnyChangeSeverityHigh: () => false,
+    hasHighSeverityFieldChanged: () => false,
   }
 }
 
