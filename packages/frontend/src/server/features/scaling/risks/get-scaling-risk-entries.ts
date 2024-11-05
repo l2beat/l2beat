@@ -1,7 +1,10 @@
 import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
 import { env } from '~/env'
 import { groupByMainCategories } from '~/utils/group-by-main-categories'
-import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
+import {
+  type ProjectsChangeReport,
+  getProjectsChangeReport,
+} from '../../projects-change-report/get-projects-change-report'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
@@ -27,7 +30,7 @@ export async function getScalingRiskEntries() {
     getScalingRiskEntry(
       project,
       !!projectsVerificationStatuses[project.id.toString()],
-      projectsChangeReport.hasImplementationChanged(project.id),
+      projectsChangeReport,
     ),
   )
 
@@ -45,7 +48,7 @@ export type ScalingRiskEntry = ReturnType<typeof getScalingRiskEntry>
 function getScalingRiskEntry(
   project: Layer2 | Layer3,
   isVerified: boolean,
-  hasImplementationChanged: boolean,
+  projectsChangeReport: ProjectsChangeReport,
 ) {
   const riskView =
     project.type === 'layer3' ? project.stackedRiskView : project.riskView
@@ -54,7 +57,11 @@ function getScalingRiskEntry(
     ...getCommonScalingEntry({
       project,
       isVerified,
-      hasImplementationChanged,
+      hasImplementationChanged: projectsChangeReport.hasImplementationChanged(
+        project.id,
+      ),
+      hasHighSeverityFieldChanged:
+        projectsChangeReport.hasHighSeverityFieldChanged(project.id),
     }),
     risks: riskView,
   }

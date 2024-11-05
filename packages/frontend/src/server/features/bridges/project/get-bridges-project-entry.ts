@@ -1,6 +1,7 @@
 import { type Bridge, type ScalingProjectRiskViewEntry } from '@l2beat/config'
 import compact from 'lodash/compact'
 import { getProjectLinks } from '~/utils/project/get-project-links'
+import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getTvlProjectStats } from '../../scaling/tvl/get-tvl-project-stats'
 import { getAssociatedTokenWarning } from '../../scaling/tvl/utils/get-associated-token-warning'
@@ -29,20 +30,26 @@ export async function getBridgesProjectEntry(project: Bridge) {
   ])
 
   const isVerified = !!projectsVerificationStatuses[project.id]
-  const isImplementationUnderReview =
+  const hasImplementationChanged =
     projectsChangeReport.hasImplementationChangedOnChain(
       project.id.toString(),
       'ethereum',
     )
+  // TODO: Check if we should check only on Ethereum
+  const hasHighSeverityFieldChanged =
+    projectsChangeReport.hasHighSeverityFieldChanged(project.id)
 
   return {
     type: project.type,
     name: project.display.name,
     slug: project.display.slug,
-    isUnderReview: !!project.isUnderReview,
+    underReviewStatus: getUnderReviewStatus({
+      isUnderReview: !!project.isUnderReview,
+      hasImplementationChanged,
+      hasHighSeverityFieldChanged,
+    }),
     isArchived: !!project.isArchived,
     isUpcoming: !!project.isUpcoming,
-    isImplementationUnderReview,
     header,
     projectDetails: await getBridgeProjectDetails(
       project,

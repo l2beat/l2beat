@@ -9,7 +9,10 @@ import { getFinality } from './get-finality'
 import { type FinalityData, type FinalityProjectData } from './schema'
 
 import { groupByMainCategories } from '~/utils/group-by-main-categories'
-import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
+import {
+  type ProjectsChangeReport,
+  getProjectsChangeReport,
+} from '../../projects-change-report/get-projects-change-report'
 import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
 import { getFinalityConfigurations } from './utils/get-finality-configurations'
 
@@ -30,15 +33,13 @@ export async function getScalingFinalityEntries() {
 
   const entries = includedProjects
     .map((project) => {
-      const hasImplementationChanged =
-        projectsChangeReport.hasImplementationChanged(project.id)
       const isVerified = !!projectsVerificationStatuses[project.id.toString()]
 
       return getScalingFinalityEntry(
         project,
         finality[project.id.toString()],
         isVerified,
-        hasImplementationChanged,
+        projectsChangeReport,
       )
     })
     .filter(notUndefined)
@@ -107,14 +108,18 @@ function getScalingFinalityEntry(
   project: Layer2,
   finalityProjectData: FinalityProjectData | undefined,
   isVerified: boolean,
-  hasImplementationChanged?: boolean,
+  projectsChangeReport: ProjectsChangeReport,
 ) {
   return {
     entryType: 'finality' as const,
     ...getCommonScalingEntry({
       project,
       isVerified,
-      hasImplementationChanged: hasImplementationChanged ?? false,
+      hasImplementationChanged: projectsChangeReport.hasImplementationChanged(
+        project.id,
+      ),
+      hasHighSeverityFieldChanged:
+        projectsChangeReport.hasHighSeverityFieldChanged(project.id),
     }),
     dataAvailabilityMode: project.dataAvailability?.mode,
     data: getFinalityData(finalityProjectData, project),

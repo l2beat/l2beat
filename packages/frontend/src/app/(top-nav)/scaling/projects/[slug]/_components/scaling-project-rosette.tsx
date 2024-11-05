@@ -16,7 +16,7 @@ export function ScalingProjectRosette({ project }: Props) {
       <BigPizzaRosette
         className="mt-auto max-lg:hidden"
         values={project.header.rosetteValues}
-        isUnderReview={project.isUnderReview}
+        isUnderReview={project.underReviewStatus === 'config'}
         isUpcoming={project.isUpcoming}
       />
     )
@@ -52,7 +52,9 @@ function L3ScalingProjectRosette({
           // Offset for labels
           className="mb-3"
           isDisabled={
-            project.isUnderReview || project.isUpcoming || !hostChainRisks
+            project.underReviewStatus === 'config' ||
+            project.isUpcoming ||
+            !hostChainRisks
           }
         />
       )}
@@ -61,13 +63,13 @@ function L3ScalingProjectRosette({
   )
 
   // L3 - general under review/upcoming
-  if (project.isUnderReview || project.isUpcoming) {
+  if (project.underReviewStatus === 'config' || project.isUpcoming) {
     return (
       <Wrapper>
         {/* Under review/upcoming thus no risks so we let the basic rosette fallback to question mark */}
         <BigPizzaRosette
           values={project.header.rosetteValues}
-          isUnderReview={project.isUnderReview}
+          isUnderReview={project.underReviewStatus === 'config'}
           isUpcoming={project.isUpcoming}
         />
       </Wrapper>

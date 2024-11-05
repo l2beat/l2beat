@@ -9,6 +9,7 @@ import {
 import { range } from 'lodash'
 import React from 'react'
 import { cn } from '~/utils/cn'
+import { type UnderReviewStatus } from '~/utils/project/under-review'
 import { SortingArrows } from './sorting/sorting-arrows'
 import {
   Table,
@@ -32,8 +33,7 @@ export interface BasicTableEntry {
   slug: string
   isVerified?: boolean
   redWarning?: string | undefined
-  showProjectUnderReview?: boolean
-  hasImplementationChanged?: boolean
+  underReviewStatus?: UnderReviewStatus
   href?: string
 }
 

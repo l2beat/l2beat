@@ -39,16 +39,14 @@ export async function getScalingSummaryEntries() {
 
   const entries = projects.map((project) => {
     const isVerified = !!projectsVerificationStatuses[project.id.toString()]
-    const hasImplementationChanged =
-      projectsChangeReport.hasImplementationChanged(project.id)
-
     const latestTvl = tvl.projects[project.id.toString()]
     const activity = projectsActivity[project.id.toString()]
 
     return getScalingSummaryEntry(
       project,
       isVerified,
-      hasImplementationChanged,
+      projectsChangeReport.hasImplementationChanged(project.id),
+      projectsChangeReport.hasHighSeverityFieldChanged(project.id),
       latestTvl,
       activity,
     )
@@ -77,6 +75,7 @@ function getScalingSummaryEntry(
   project: Layer2 | Layer3,
   isVerified: boolean,
   hasImplementationChanged: boolean,
+  hasHighSeverityFieldChanged: boolean,
   latestTvl: LatestTvl['projects'][string] | undefined,
   activity: ActivityLatestTpsData[string] | undefined,
 ) {
@@ -97,6 +96,7 @@ function getScalingSummaryEntry(
       project,
       isVerified,
       hasImplementationChanged,
+      hasHighSeverityFieldChanged,
     }),
     dataAvailability: project.dataAvailability,
     mainPermissions: project.display.mainPermissions,

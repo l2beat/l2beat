@@ -1,7 +1,10 @@
 import { type Layer2 } from '@l2beat/config'
 import { env } from '~/env'
 import { groupByMainCategories } from '~/utils/group-by-main-categories'
-import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
+import {
+  type ProjectsChangeReport,
+  getProjectsChangeReport,
+} from '../../projects-change-report/get-projects-change-report'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCostsProjects } from '../costs/utils/get-costs-projects'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
@@ -20,9 +23,7 @@ export async function getScalingCostsEntries() {
 
   const entries = projects.map((project) => {
     const isVerified = !!projectsVerificationStatuses[project.id.toString()]
-    const hasImplementationChanged =
-      projectsChangeReport.hasImplementationChanged(project.id)
-    return getScalingCostEntry(project, isVerified, hasImplementationChanged)
+    return getScalingCostEntry(project, isVerified, projectsChangeReport)
   })
 
   if (env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION) {
@@ -39,13 +40,17 @@ export type ScalingCostsEntry = ReturnType<typeof getScalingCostEntry>
 function getScalingCostEntry(
   project: Layer2,
   isVerified: boolean,
-  hasImplementationChanged: boolean,
+  projectsChangeReport: ProjectsChangeReport,
 ) {
   return {
     ...getCommonScalingEntry({
       project,
       isVerified,
-      hasImplementationChanged,
+      hasImplementationChanged: projectsChangeReport.hasImplementationChanged(
+        project.id,
+      ),
+      hasHighSeverityFieldChanged:
+        projectsChangeReport.hasHighSeverityFieldChanged(project.id),
     }),
     entryType: 'costs' as const,
     costsWarning: project.display.costsWarning,

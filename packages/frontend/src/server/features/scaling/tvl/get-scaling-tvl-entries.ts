@@ -27,15 +27,12 @@ export function getScalingTvlEntries({
   const entries = projects
     .map((project) => {
       const isVerified = !!projectsVerificationStatuses[project.id.toString()]
-      const hasImplementationChanged =
-        projectsChangeReport.hasImplementationChanged(project.id)
-
       const latestTvl = tvl.projects[project.id.toString()]
 
       return getScalingTvlEntry(
         project,
         isVerified,
-        hasImplementationChanged,
+        projectsChangeReport,
         latestTvl,
       )
     })
@@ -67,14 +64,18 @@ export type ScalingTvlEntry = Awaited<ReturnType<typeof getScalingTvlEntry>>
 function getScalingTvlEntry(
   project: Layer2 | Layer3,
   isVerified: boolean,
-  hasImplementationChanged: boolean,
+  projectsChangeReport: ProjectsChangeReport,
   latestTvl: SevenDayTvlBreakdown['projects'][string] | undefined,
 ) {
   return {
     ...getCommonScalingEntry({
       project,
       isVerified,
-      hasImplementationChanged,
+      hasImplementationChanged: projectsChangeReport.hasImplementationChanged(
+        project.id,
+      ),
+      hasHighSeverityFieldChanged:
+        projectsChangeReport.hasHighSeverityFieldChanged(project.id),
     }),
     href: `/scaling/projects/${project.display.slug}/tvl-breakdown`,
     entryType: 'scaling' as const,

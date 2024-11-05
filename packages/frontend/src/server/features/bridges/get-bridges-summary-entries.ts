@@ -1,6 +1,7 @@
 import { bridges } from '@l2beat/config'
 import { type ProjectsVerificationStatuses } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
+import { getUnderReviewStatus } from '~/utils/project/under-review'
 import {
   type ProjectsChangeReport,
   getProjectsChangeReport,
@@ -61,6 +62,8 @@ function getBridges(params: Params) {
         bridge.id.toString(),
         'ethereum',
       )
+    const hasHighSeverityFieldChanged =
+      projectsChangeReport.hasHighSeverityFieldChanged(bridge.id.toString())
 
     return {
       id: bridge.id,
@@ -77,8 +80,11 @@ function getBridges(params: Params) {
           ? bridge.technology.destination
           : [bridge.display.name],
       ),
-      hasImplementationChanged,
-      showProjectUnderReview: isAnySectionUnderReview(bridge),
+      underReviewStatus: getUnderReviewStatus({
+        isUnderReview: isAnySectionUnderReview(bridge),
+        hasImplementationChanged,
+        hasHighSeverityFieldChanged,
+      }),
       tvl: {
         breakdown: bridgeTvl?.breakdown,
         change: bridgeTvl?.change,

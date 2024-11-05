@@ -8,6 +8,10 @@ import { ShieldIcon } from '~/icons/shield'
 import { UnderReviewIcon } from '~/icons/under-review'
 import { UnverifiedIcon } from '~/icons/unverified'
 import { type SyncStatus } from '~/types/sync-status'
+import {
+  type UnderReviewStatus,
+  getUnderReviewText,
+} from '~/utils/project/under-review'
 import { NotSyncedIcon } from '../../badge/not-synced-badge'
 import { PrimaryValueCell } from './primary-value-cell'
 
@@ -18,8 +22,7 @@ export interface ProjectCellProps {
     isVerified?: boolean
     headerWarning?: string
     redWarning?: string
-    showProjectUnderReview?: boolean
-    hasImplementationChanged?: boolean
+    underReviewStatus?: UnderReviewStatus
     data?: { syncStatus?: SyncStatus }
     hostChain?: string
   }
@@ -51,17 +54,13 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
             <TooltipContent>{project.redWarning}</TooltipContent>
           </Tooltip>
         )}
-        {(!!project.showProjectUnderReview ||
-          !!project.hasImplementationChanged) && (
+        {project.underReviewStatus && (
           <Tooltip>
             <TooltipTrigger>
               <UnderReviewIcon className="size-3.5 md:size-4" />
             </TooltipTrigger>
             <TooltipContent>
-              {getUnderReviewText(
-                project.showProjectUnderReview,
-                project.hasImplementationChanged,
-              )}
+              {getUnderReviewText(project.underReviewStatus)}
             </TooltipContent>
           </Tooltip>
         )}
@@ -88,21 +87,4 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
       )}
     </div>
   )
-}
-
-// TODO: Move it somewhere else later
-function getUnderReviewText(
-  isUnderReview: boolean | undefined,
-  hasImplementationChanged: boolean | undefined,
-) {
-  switch (true) {
-    case isUnderReview && hasImplementationChanged:
-      return 'There are implementation changes and part of the information might be outdated. The project is under review.'
-    case isUnderReview:
-      return 'This project is under review.'
-    case hasImplementationChanged:
-      return 'There are implementation changes and part of the information might be outdated.'
-    default:
-      return ''
-  }
 }

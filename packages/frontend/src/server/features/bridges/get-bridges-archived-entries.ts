@@ -1,4 +1,5 @@
 import { bridges } from '@l2beat/config'
+import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../projects-change-report/get-projects-change-report'
 import { get7dTokenBreakdown } from '../scaling/tvl/utils/get-7d-token-breakdown'
 import { orderByTvl } from '../scaling/tvl/utils/order-by-tvl'
@@ -25,6 +26,8 @@ export async function getBridgesArchivedEntries() {
         bridge.id.toString(),
         'ethereum',
       )
+    const hasHighSeverityFieldChanged =
+      projectsChangeReport.hasHighSeverityFieldChanged(bridge.id.toString())
     return {
       id: bridge.id,
       slug: bridge.display.slug,
@@ -32,8 +35,11 @@ export async function getBridgesArchivedEntries() {
       name: bridge.display.name,
       shortName: bridge.display.shortName,
       isVerified,
-      hasImplementationChanged,
-      showProjectUnderReview: isAnySectionUnderReview(bridge),
+      underReviewStatus: getUnderReviewStatus({
+        isUnderReview: isAnySectionUnderReview(bridge),
+        hasImplementationChanged,
+        hasHighSeverityFieldChanged,
+      }),
       warning: bridge.display.warning,
       validatedBy: bridge.riskView?.validatedBy,
       category: bridge.display.category,

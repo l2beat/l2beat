@@ -7,6 +7,7 @@ import {
 import { compact } from 'lodash'
 import { env } from '~/env'
 import { getProjectLinks } from '~/utils/project/get-project-links'
+import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getContractsVerificationStatuses } from '../../verification-status/get-contracts-verification-statuses'
 import { getManuallyVerifiedContracts } from '../../verification-status/get-manually-verified-contracts'
@@ -40,17 +41,22 @@ export async function getScalingProjectEntry(project: ScalingProject) {
   ])
 
   const isVerified = !!projectsVerificationStatuses[project.id]
-  const isImplementationUnderReview =
+  const hasImplementationChanged =
     projectsChangeReport.hasImplementationChanged(project.id)
+  const hasHighSeverityFieldChanged =
+    projectsChangeReport.hasHighSeverityFieldChanged(project.id)
 
   const common = {
     type: project.type,
     name: project.display.name,
     slug: project.display.slug,
-    isUnderReview: !!project.isUnderReview,
+    underReviewStatus: getUnderReviewStatus({
+      isUnderReview: !!project.isUnderReview,
+      hasImplementationChanged,
+      hasHighSeverityFieldChanged,
+    }),
     isArchived: !!project.isArchived,
     isUpcoming: !!project.isUpcoming,
-    isImplementationUnderReview,
     header,
   }
 

@@ -30,8 +30,6 @@ interface BasicEntry {
   slug: string
   isVerified?: boolean
   redWarning?: string | undefined
-  showProjectUnderReview?: boolean
-  hasImplementationChanged?: boolean
   href?: string
   childrenRows?: React.ReactNode[]
 }
