@@ -17,10 +17,10 @@ export interface ApiPreviewResponse {
 }
 
 export interface ApiPreviewPermission {
-  addresses: string[]
+  addresses: AddressFieldValue[]
   name: string
   description: string
-  multisigParticipants: string[] | undefined
+  multisigParticipants: AddressFieldValue[] | undefined
 }
 
 export interface ApiPreviewContract {

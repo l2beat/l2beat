@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 import { getPreview } from '../api/api'
+import { AddressDisplay } from '../panel-values/AddressDisplay'
 
 export function PreviewPanel() {
   const { project } = useParams()
@@ -26,7 +27,9 @@ export function PreviewPanel() {
           <div className="text-sm">
             <ul className="list-disc pl-5 italic">
               {permission.addresses.map((address, idx) => (
-                <li key={idx}>{address}</li>
+                <li key={idx}>
+                  <AddressDisplay value={address} />
+                </li>
               ))}
             </ul>
           </div>
@@ -35,7 +38,9 @@ export function PreviewPanel() {
               <div>Participants:</div>
               <ul className="list-disc pl-5 italic">
                 {permission.multisigParticipants.map((address, idx) => (
-                  <li key={idx}>{address}</li>
+                  <li key={idx}>
+                    <AddressDisplay value={address} />
+                  </li>
                 ))}
               </ul>
             </div>
