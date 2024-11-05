@@ -1,7 +1,7 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 21122629,
+  "blockNumber": 21122769,
   "configHash": "0xa1eba30575250d1234b2f6ca1d685302ebb9c453cef1a3c4a56b30f5ef2a6df5",
   "contracts": [
     {
@@ -167,7 +167,7 @@
             "lastSynecdAt": 1730819339
           },
           {
-            "numBlocks": 531690,
+            "numBlocks": 531753,
             "lastVerifiedBlockId": 530533,
             "provingPaused": false,
             "__reservedB1": 0,
@@ -203,7 +203,7 @@
             "lastSynecdAt": 1730819339
           },
           "slotB": {
-            "numBlocks": 531690,
+            "numBlocks": 531753,
             "lastVerifiedBlockId": 530533,
             "provingPaused": false,
             "__reservedB1": 0,
@@ -279,7 +279,7 @@
         ],
         "$upgradeCount": 5,
         "addressManager": "0x0000000000000000000000000000000000000000",
-        "clock": 1730823935,
+        "clock": 1730825627,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
