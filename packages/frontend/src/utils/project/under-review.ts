@@ -40,7 +40,7 @@ export function getUnderReviewText(status: UnderReviewStatus) {
     case 'high-severity-field-change':
       return 'There are important field changes and part of the information might be outdated.'
     case 'implementation-and-field-change':
-      return 'There are implementation changes and important field changes, and part of the information might be outdated.'
+      return 'There are implementation and important field changes, so part of the information might be outdated.'
     default:
       assertUnreachable(status)
   }
