@@ -1,5 +1,6 @@
 name: Migrate DB
 on:
+  workflow_dispatch:
   push:
     paths:
       - packages/database/prisma/migrations/**
@@ -8,6 +9,7 @@ on:
 
 jobs:
   deploy:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
