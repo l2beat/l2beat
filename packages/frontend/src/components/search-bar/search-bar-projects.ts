@@ -18,20 +18,19 @@ export interface SearchBarProject {
   name: string
   iconUrl: string
   href: string
-  matchers: string[]
+  tags: string[]
   createdAt: number
   type: 'layer2' | 'layer3' | 'bridge' | 'da' | 'zk-catalog'
+  filePrepared?: Fuzzysort.Prepared
 }
 
-export function getSearchBarProjects() {
-  return toSearchBarProjects([
-    ...layer2s,
-    ...layer3s,
-    ...bridges,
-    ...(env.NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT ? daLayers : []),
-    ...zkCatalogProjects,
-  ])
-}
+export const searchBarProjects = toSearchBarProjects([
+  ...layer2s,
+  ...layer3s,
+  ...bridges,
+  ...(env.NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT ? daLayers : []),
+  ...zkCatalogProjects,
+])
 
 function toSearchBarProjects(
   projects: (Layer2 | Layer3 | Bridge | DaLayer | ZkCatalogProject)[],
@@ -48,7 +47,7 @@ function toSearchBarProjects(
             : `${project.display.name} with ${bridge.display.name}`,
         iconUrl: `/icons/${project.display.slug}.png`,
         href: `/data-availability/projects/${project.display.slug}/${bridge.display.slug}`,
-        matchers: [project.display.slug, bridge.display.slug],
+        tags: [project.display.slug, bridge.display.slug],
         createdAt: bridge.createdAt.toNumber(),
       }))
     }
@@ -61,7 +60,7 @@ function toSearchBarProjects(
         name: project.display.name,
         iconUrl: `/icons/${project.display.slug}.png`,
         href: `/zk-catalog/${project.display.slug}`,
-        matchers: [project.display.slug],
+        tags: [project.display.slug],
         createdAt: project.createdAt.toNumber(),
       }
     }
@@ -73,7 +72,7 @@ function toSearchBarProjects(
       name: project.display.name,
       iconUrl: `/icons/${project.display.slug}.png`,
       href: getHref(project),
-      matchers: [project.display.slug],
+      tags: [project.display.slug],
       createdAt: project.createdAt.toNumber(),
     }
 

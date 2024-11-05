@@ -1,5 +1,4 @@
 import type { State } from '../State'
-import { OklchColor } from '../utils/color'
 import type { NodeLocations } from '../utils/storage'
 import { updateNodePositions } from '../utils/updateNodePositions'
 
@@ -23,7 +22,7 @@ export function clear(): Partial<State> {
   }
 }
 
-export function colorSelected(state: State, color: OklchColor): Partial<State> {
+export function colorSelected(state: State, color: number): Partial<State> {
   const nodes = state.nodes.map((node) =>
     state.selected.includes(node.id) ? { ...node, color } : node,
   )

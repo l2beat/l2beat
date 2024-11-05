@@ -62,6 +62,8 @@ export type DacBridge = CommonDaBridge & {
   knownMembers?: { external: boolean; name: string; href: string }[]
   /** Minimum number of members required to sign and attest the data. */
   requiredMembers: number
+  /** TEMP: Members field will turn into N/A badge if this is true */
+  hideMembers?: boolean
   /** The type of data. */
   transactionDataType: DacTransactionDataType
   /** Data about related permissions - preferably from discovery. */

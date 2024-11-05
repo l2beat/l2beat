@@ -37,11 +37,6 @@ function safeGetImplementation(contract: ContractParameters): string {
   return implementation.toString()
 }
 
-const l1Upgradeability = {
-  upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
-
 const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
   'OptimismPortal',
   'proofMaturityDelaySeconds',
@@ -74,18 +69,6 @@ const disputeGameFactory = discovery.getContract('DisputeGameFactory')
 
 const genesisTimestamp = new UnixTime(1686074603)
 const portal = discovery.getContract('OptimismPortal')
-
-const livenessInterval = discovery.getContractValue<string>(
-  'LivenessModule',
-  'livenessInterval',
-)
-
-const respectedGameType = discovery.getContractValue<number>(
-  'OptimismPortal',
-  'respectedGameType',
-)
-
-const gameTypes = ['FaultDisputeGame', 'PermissionedDisputeGame']
 
 const permissionlessDisputeGameBonds = discovery.getContractValue<number[]>(
   'DisputeGameFactory',
@@ -522,131 +505,9 @@ export const base: Layer2 = {
       type: 'general',
     },
   ],
-  permissions: [
-    {
-      name: 'Sequencer',
-      accounts: [discovery.formatPermissionedAccount(sequencerAddress)],
-      description: 'Central actor allowed to submit transaction batches to L1.',
-    },
-    ...discovery.getMultisigPermission(
-      'SuperchainGuardianMultisig',
-      'Can pause withdrawals or blacklist dispute games in case of an emergency. It is controlled by the OP stack Security Council multisig, who can disable the DeputyGuardian module if the Foundation acts maliciously.',
-    ),
-    discovery.contractAsPermissioned(
-      discovery.getContract('ProxyAdmin'),
-      'Admin of OptimismPortal, L1StandardBridge, L1ERC721Bridge, OptimismMintableERC20Factory, DelayedWETH, DisputeGameFactory, AnchorStateRegistry and SystemConfig contracts.',
-    ),
-    ...discovery.getMultisigPermission(
-      'BaseAdminMultisig',
-      'Can upgrade all implementations of the system including the bridge, potentially gaining access to all funds.',
-    ),
-    ...discovery.getMultisigPermission(
-      'BaseMultisig1',
-      'Member of BaseAdminMultisig, which can upgrade all system contracts.',
-    ),
-    ...discovery.getMultisigPermission(
-      'BaseMultisig2',
-      'Can change configuration of SystemConfig - it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.',
-    ),
-    ...discovery.getMultisigPermission(
-      'SuperchainProxyAdminOwner',
-      'Can upgrade the SuperchainConfig implementation.',
-    ),
-    ...discovery.getMultisigPermission(
-      'SecurityCouncilMultisig',
-      `This is the shared SecurityCouncil of all Superchain member chains, and one of the signers of the SuperchainProxyAdminOwner 2/2.`,
-      [
-        {
-          text: 'Security Council members - Optimism Collective forum',
-          href: 'https://gov.optimism.io/t/security-council-vote-2-initial-member-ratification/7118',
-        },
-      ],
-    ),
-    ...discovery.getMultisigPermission(
-      'FoundationMultisig_1',
-      'Member of the SuperchainProxyAdminOwner. Controlled by the OP Foundation.',
-    ),
-    ...discovery.getMultisigPermission(
-      'FoundationMultisig_2',
-      'Member of the BaseAdminMultisig. Can delete proposed state roots as Challenger (acting via Challenger1of2). Can pause withdrawals and deposits as Guardian (acting via SuperchainGuardianMultisig, DeputyGuardianModule). Controlled by OP Foundation.',
-    ),
-  ],
+  permissions: discovery.getDiscoveredPermissions(),
   contracts: {
-    addresses: [
-      discovery.getContractDetails('OptimismPortal', {
-        description: `The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals. The current game type is ${gameTypes[respectedGameType]}.`,
-        ...l1Upgradeability,
-      }),
-      discovery.getContractDetails('L1CrossDomainMessenger', {
-        description:
-          'The L1CrossDomainMessenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract’s replay function.',
-        ...l1Upgradeability,
-      }),
-      discovery.getContractDetails('L1StandardBridge', {
-        description:
-          'The L1StandardBridge contract is the main entry point to deposit ERC20 tokens from L1 to L2.',
-        ...l1Upgradeability,
-      }),
-      discovery.getContractDetails('L1ERC721Bridge', {
-        description:
-          'The L1ERC721Bridge contract is used to bridge ERC-721 tokens from L1 to L2.',
-        ...l1Upgradeability,
-      }),
-      discovery.getContractDetails('SystemConfig', {
-        description:
-          'It contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address.',
-        ...l1Upgradeability,
-      }),
-      discovery.getContractDetails('DisputeGameFactory', {
-        description:
-          'The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.',
-        ...l1Upgradeability,
-      }),
-      discovery.getContractDetails(
-        'FaultDisputeGame',
-        'Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.',
-      ),
-      discovery.getContractDetails(
-        'PermissionedDisputeGame',
-        'Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.',
-      ),
-      discovery.getContractDetails('MIPS', {
-        description:
-          'The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.',
-      }),
-      discovery.getContractDetails('AnchorStateRegistry', {
-        description:
-          'Contains the latest confirmed state root that can be used as a starting point in a dispute game.',
-        ...l1Upgradeability,
-      }),
-      discovery.getContractDetails('PreimageOracle', {
-        description:
-          'The PreimageOracle contract is used to load the required data from L1 for a dispute game.',
-      }),
-      discovery.getContractDetails('DelayedWETH_PermissionlessGames', {
-        description:
-          'Contract designed to hold the bonded ETH for each permissionless dispute game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds. It is owned by the SuperchainProxyAdminOwner multisig.',
-        ...l1Upgradeability,
-      }),
-      discovery.getContractDetails('DelayedWETH_PermissionedGames', {
-        description:
-          'Contract designed to hold the bonded ETH for each permissioned dispute game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds. It is owned by the SuperchainProxyAdminOwner multisig.',
-        ...l1Upgradeability,
-      }),
-      discovery.getContractDetails('SuperchainConfig', {
-        description:
-          'The SuperchainConfig contract is used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.',
-      }),
-      discovery.getContractDetails('DeputyGuardianModule', {
-        description:
-          'The DeputyGuardianModule is a Gnosis Safe module that allows the OP Foundation to act through the GuardianMultisig, which is owned by the Security Council. It is used to pause withdrawals in case of an emergency, blacklist games, disable the proof system, and update the anchor state. The Security Council can disable the module if the Foundation acts maliciously.',
-        ...l1Upgradeability,
-      }),
-      discovery.getContractDetails('LivenessModule', {
-        description: `The LivenessModule is a Gnosis Safe nodule used to remove Security Council members that have been inactive for ${livenessInterval} while making sure that the threshold remains above 75%. If the number of members falls below 8, the FoundationMultisig_1 takes ownership of the multisig.`,
-        ...l1Upgradeability,
-      }),
-    ],
+    addresses: discovery.getDiscoveredContracts(),
     risks: [
       {
         category: 'Funds can be stolen if',

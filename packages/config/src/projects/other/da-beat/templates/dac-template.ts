@@ -43,6 +43,7 @@ type Optionals = {
     | 'membersCount'
     | 'knownMembers'
     | 'requiredMembers'
+    | 'hideMembers'
     | 'permissions'
     | 'contracts'
     | 'transactionDataType'

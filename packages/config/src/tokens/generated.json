@@ -6645,6 +6645,50 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "cmETH",
+      "coingeckoId": "mantle-restaked-eth",
+      "address": "0xE6829d9a7eE3040e1276Fa75293Bde931859e8fA",
+      "symbol": "cmETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1722582882,
+      "coingeckoListingTimestamp": 1730073600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51114/large/symbol.png?1730117724",
+      "chainId": 5000,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "COOK",
+      "coingeckoId": "meth-protocol",
+      "address": "0x9F0C013016E8656bC256f948CD4B79ab25c7b94D",
+      "symbol": "COOK",
+      "decimals": 18,
+      "deploymentTimestamp": 1724749606,
+      "coingeckoListingTimestamp": 1730160000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50969/large/Logomark-Gradient_Official.png?1729620221",
+      "chainId": 5000,
+      "source": "external",
+      "supply": "circulatingSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "Ether",
       "coingeckoId": "wrapped-ether-mantle-bridge",
       "address": "0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111",

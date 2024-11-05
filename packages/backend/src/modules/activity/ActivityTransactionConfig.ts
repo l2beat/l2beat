@@ -27,5 +27,6 @@ export type ActivityTransactionConfig =
   | SimpleActivityTransactionConfig<'zksync'>
   | SimpleActivityTransactionConfig<'loopring'>
   | SimpleActivityTransactionConfig<'degate'>
+  | SimpleActivityTransactionConfig<'fuel'>
   | RpcActivityTransactionConfig
   | StarkexActivityTransactionConfig

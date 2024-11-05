@@ -213,7 +213,10 @@ export class LowLevelProvider {
   }
 
   async getBlobs(txHash: string): Promise<BlobsInBlock> {
-    assert(this.blobClient, 'BlobClient is not available')
+    assert(
+      this.blobClient,
+      'BlobClient is not available, configure the .env to include beacon url.',
+    )
     return await this.blobClient.getRelevantBlobs(txHash)
   }
 }

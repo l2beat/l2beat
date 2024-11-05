@@ -67,9 +67,9 @@ export const near: DaLayer = {
   ![Near Chunks](/images/da-layer-technology/near/nearChunks.png#center)\n
   
 
-  Becoming a block producer requires locking (staking) a certain amount of tokens, currently 25,500 NEAR. Staking operates through a threshold PoS mechanism, where a user’s stake must exceed the protocol's seat price—determined by the total NEAR tokens staked by other validators—in order to become a validator. The largest stakers at the beginning of a particular epoch are selected as block producers for that epoch. Each block producer is randomly assigned a certain number of shards to manage.
+  Becoming a block producer requires locking (staking) a certain amount of tokens, currently around 11,000 NEAR. Staking operates through a threshold PoS mechanism, where a user’s stake must exceed the protocol's seat price—determined by the total NEAR tokens staked by other validators—in order to become a validator. The largest stakers at the beginning of a particular epoch are selected as block producers for that epoch. Each block producer is randomly assigned a certain number of shards to manage.  
   Before the epoch starts, the block producer downloads the state of the shard(s) they are assigned to (they have 1 epoch to complete this download). Throughout the epoch, they collect transactions that affect their assigned shard(s) and apply them to the state. NEAR nodes have an automatic 'garbage collection' routine that deletes the state of previous shards after five epochs, freeing up unused storage.
-  Within an epoch (12 hours), the main chain block and shard block production schedule is determined by a randomness seed generated at the beginning of the epoch. For each block height, a main chain block producer is assigned.
+  Within an epoch (12 hours), the main chain block and shard block production schedule is determined by a randomness seed generated at the beginning of the epoch. For each block height, a main chain block producer is assigned.  
   Validators participate in several validation rounds within the epoch. For each round, one validator in each shard is chosen to be the chunk producer, and one validator from the entire set is chosen to be the block producer. Validators can serve as both block and chunk producers, but they maintain separate stakes for these roles.
   The shard block producer is responsible for producing the part of the block related to their shard, known as a chunk. The chunk contains the list of transactions for the shard to be included in the block, as well as the Merkle root of the resulting state. Each main chain block contains either one or zero chunks per shard, depending on whether the shard can keep up with the main chain block production speed.
   
@@ -96,12 +96,40 @@ export const near: DaLayer = {
   
 
   ### Finality
-  Finality is determined by the Nightshade Finality Gadget (NFG). A block is considered final after two consecutive blocks are built on the same fork, making the block that is two blocks behind (t-2) final. Reverting a finalized block would require slashing at least one-third of the total stake.
+  Finality is determined by a modified Doomslug finality gadget. A block is considered final after two consecutive blocks are built on the same fork, making the block that is two blocks behind (t-2) final. Reverting a finalized block would require slashing at least one-third of the total stake.
 
   ## L2s Data Availability
   A rollup can utilize a dedicated Data Availability (DA) smart contract on a NEAR shard, known as a Blob Store contract, where it posts data as standard NEAR transactions. All transactions are converted into Receipts, and depending on their actions, some receipts may be processed over two blocks.
   Regarding data retrieval, full nodes prune Receipts after 3 epochs (approximately 36 hours). Once the pruning window expires, the data remains accessible only through archive nodes.
   `,
+    references: [
+      {
+        text: 'Near Nightshade Consensus',
+        href: 'https://pages.near.org/downloads/Nightshade.pdf',
+      },
+      {
+        text: 'Near Doomslug Finality Gadget',
+        href: 'https://discovery-domain.org/papers/doomslug.pdf',
+      },
+      {
+        text: 'Near documentation',
+        href: 'https://dev.near.org/documentation/',
+      },
+      {
+        text: 'Near Core - Architecture',
+        href: 'https://near.github.io/nearcore/',
+      },
+      {
+        text: 'Blob Store contract - Nuffle Labs',
+        href: 'https://github.com/Nuffle-Labs/data-availability/blob/5026b81aa5d941aaf4dd1b23bc219b9150e84405/contracts/blob-store/src/lib.rs',
+      },
+    ],
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: `a dishonest majority of Near validators finalizes an unavailable block.`,
+      },
+    ],
   },
   bridges: [
     NO_BRIDGE({

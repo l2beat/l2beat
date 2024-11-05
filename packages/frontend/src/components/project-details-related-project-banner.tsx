@@ -1,29 +1,37 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { cn } from '~/utils/cn'
 
 export type ProjectDetailsRelatedProjectBannerProps = {
   text: string
   project: {
     name: string
-    type: 'scaling' | 'bridges'
+    type: 'scaling' | 'bridges' | 'data-availability'
     slug: string
   }
+  className?: string
 }
 
 export function ProjectDetailsRelatedProjectBanner({
   text,
   project,
+  className,
 }: ProjectDetailsRelatedProjectBannerProps) {
   const href = `/${project.type}/projects/${project.slug}` as const
 
   return (
-    <div className="flex w-full items-center rounded-lg bg-gray-200 px-4 py-2 text-xs font-medium dark:bg-zinc-800">
+    <div
+      className={cn(
+        'flex w-full items-center rounded-lg bg-gray-200 px-4 py-2 text-xs font-medium dark:bg-zinc-800',
+        className,
+      )}
+    >
       <div>
         {text}{' '}
         <span className="inline-block">
           <Image
             className="mr-1 inline-block size-5"
-            src={`/icons/${project.slug}.png`}
+            src={`/icons/${project.slug.split('/')[0]}.png`}
             width={20}
             height={20}
             alt={`${project.name} logo`}

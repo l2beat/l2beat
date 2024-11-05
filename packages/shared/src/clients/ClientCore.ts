@@ -35,15 +35,18 @@ export abstract class ClientCore {
   private async _fetch(url: string, init: RequestInit): Promise<json> {
     const response = await this.deps.http.fetch(url, init)
 
-    const isResponseValid = this.validateResponse(response)
+    const validationInfo = this.validateResponse(response)
 
-    if (!isResponseValid) {
-      throw new Error('Response validation failed')
+    if (!validationInfo.success) {
+      throw new Error(validationInfo.message ?? 'Response validation failed')
     }
 
     return response
   }
 
   /** This method should return false when there are errors in the response, true otherwise */
-  abstract validateResponse(response: json): boolean
+  abstract validateResponse(response: json): {
+    success: boolean
+    message?: string
+  }
 }
