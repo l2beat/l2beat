@@ -27,6 +27,7 @@ export const redstoneDA: DaLayer = {
   type: 'DaLayer',
   kind: 'No DAC',
   systemCategory: 'custom',
+  fallback: 'Ethereum (calldata)',
   display: {
     name: 'RedstoneDA',
     slug: 'redstone',

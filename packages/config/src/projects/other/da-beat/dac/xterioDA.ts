@@ -27,6 +27,7 @@ export const xterioDA: DaLayer = {
   type: 'DaLayer',
   kind: 'No DAC',
   systemCategory: 'custom',
+  fallback: 'Ethereum (calldata)',
   display: {
     name: 'XterioDA',
     slug: 'xterio',
