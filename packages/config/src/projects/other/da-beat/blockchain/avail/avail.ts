@@ -75,6 +75,20 @@ export const avail: DaLayer = {
     App-specific data can be reconstructed by app clients, which request and assemble missing cells from the network to complete the data reconstruction process.
 
     `,
+    references: [
+      {
+        text: 'Avail Documentation',
+        href: 'https://docs.availproject.org/docs/learn-about-avail/consensus/npos',
+      },
+      {
+        text: 'Avail Light Client - Source Code',
+        href: 'https://github.com/availproject/avail-light/blob/main/core/src/light_client.rs',
+      },
+      {
+        text: 'Avail App Client - Source Code',
+        href: 'https://github.com/availproject/avail-light/blob/a9e1741a6c7579d6ab1988eb409808b33f999180/core/src/app_client.rs',
+      },
+    ],
     risks: [
       {
         category: 'Funds can be lost if',

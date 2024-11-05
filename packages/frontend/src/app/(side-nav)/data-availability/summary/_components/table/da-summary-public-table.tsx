@@ -80,7 +80,10 @@ function BridgeCells({
         href={bridge.href}
         className="flex items-center justify-center pl-4"
       >
-        <GrissiniCell values={bridgeRisks} />
+        <GrissiniCell
+          values={bridgeRisks}
+          hasNoBridge={bridge.type === 'NoBridge'}
+        />
       </TableCell>
       <TableCell className="text-right text-sm font-medium">
         {formatCurrency(bridge.tvs, 'usd')}

@@ -33,10 +33,27 @@ export function getCode(
   } else {
     const dir = readdirSync(join(root, name))
     return {
-      sources: dir.map((file) => ({
-        name: file,
-        code: readFileSync(join(root, name, file), 'utf-8'),
-      })),
+      sources: dir
+        .map((file) => ({
+          name: file,
+          code: readFileSync(join(root, name, file), 'utf-8'),
+        }))
+        .sort((a, b) => compareFiles(a.name, b.name)),
     }
   }
+}
+
+function compareFiles(a: string, b: string) {
+  return fileNameToOrder(a) - fileNameToOrder(b)
+}
+
+function fileNameToOrder(name: string) {
+  const ending = name.match(/\.(\w+)\.sol/)?.[1]
+  if (!ending) {
+    return 1
+  }
+  if (ending === 'p') {
+    return 0
+  }
+  return /^\d+$/.test(ending) ? parseInt(ending) : 2
 }

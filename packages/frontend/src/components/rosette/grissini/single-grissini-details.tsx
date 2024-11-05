@@ -4,25 +4,27 @@ import {
   sentimentToTextColor,
   sentimentToTransparentBgColor,
 } from '~/utils/sentiment'
-import { type RosetteValue } from '../types'
 import { SingleGrissini } from './single-grissini'
 
 export interface SingleGrissiniDetailsProps {
   name: string
   sentiment: Sentiment
   value: string
+  className?: string
 }
 
 export function SingleGrissiniDetails({
   name,
   sentiment,
   value,
-}: RosetteValue) {
+  className,
+}: SingleGrissiniDetailsProps) {
   return (
     <div
       className={cn(
         'flex h-[5.125rem] flex-row items-stretch rounded-[4px]',
         sentimentToTransparentBgColor(sentiment),
+        className,
       )}
     >
       <SingleGrissini sentiment={sentiment} className="h-full" />

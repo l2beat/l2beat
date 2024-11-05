@@ -2,8 +2,8 @@
 
 import { createContext, useContext, useState } from 'react'
 import { useBreakpoint } from '~/hooks/use-is-mobile'
-import { type SearchBarProject } from './get-search-bar-projects'
 import { SearchBarDialog } from './search-bar-dialog'
+import { type SearchBarProject } from './search-bar-projects'
 
 type SearchBarContextValue = {
   open: boolean
