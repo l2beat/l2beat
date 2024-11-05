@@ -1,7 +1,6 @@
 import { CircleUser, Coins, Menu, Network, SendToBack } from 'lucide-react'
 import Link from 'next/link'
 
-import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { Button } from '~/components/ui/button'
 import {
@@ -16,6 +15,7 @@ import { Sheet, SheetContent, SheetTrigger } from '~/components/ui/sheet'
 import { NavMenuItem } from './_components/nav-menu-item'
 import { Search } from './_components/search'
 import { ThemeToggle } from './_components/theme-toggle'
+import { deleteSession, getSession } from '~/server/auth/cookie'
 
 const menu = [
   {
@@ -35,21 +35,23 @@ const menu = [
   },
 ]
 
-export default function Layout({ children }: { children: React.ReactNode }) {
-  if (cookies().get('auth_session')?.value !== 'authenticated') {
+export default async function Layout({
+  children,
+}: { children: React.ReactNode }) {
+  if (!(await getSession())) {
     redirect('/auth')
   }
 
   // biome-ignore lint/suspicious/useAwait: server action must be async
   async function logout() {
     'use server'
-    cookies().set('auth_session', 'unauthenticated', { expires: new Date(0) })
+    deleteSession()
     redirect('/auth')
   }
 
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-      <div className="hidden border-r bg-muted/40 md:block">
+      <div className="bg-muted/40 hidden border-r md:block">
         <div className="flex h-full max-h-screen flex-col gap-2">
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
             <Link href="/" className="flex items-center gap-2 font-semibold">
@@ -73,7 +75,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
       </div>
       <div className="flex min-h-full flex-col">
-        <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
+        <header className="bg-muted/40 flex h-14 items-center gap-4 border-b px-4 lg:h-[60px] lg:px-6">
           <Sheet>
             <SheetTrigger asChild>
               <Button
@@ -125,7 +127,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <main className="flex w-full flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
             {children}
           </main>
-          <footer className="border-t p-4 text-center text-sm text-muted-foreground lg:p-6">
+          <footer className="text-muted-foreground border-t p-4 text-center text-sm lg:p-6">
             &copy; {new Date().getFullYear()} L2BEAT. All rights reserved.
           </footer>
         </div>
