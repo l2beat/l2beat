@@ -29,7 +29,7 @@ export default async function Page({
         </CardHeader>
         <CardContent>
           <Link href="/api/auth" prefetch={false}>
-            <Button className="w-full">Sign in with Google</Button>
+            <Button className="w-full">Sign in with L2BEAT</Button>
           </Link>
         </CardContent>
         {searchParams.error && (
