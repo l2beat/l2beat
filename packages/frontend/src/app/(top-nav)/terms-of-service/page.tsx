@@ -5,7 +5,7 @@ import { FullPageHeader } from '~/components/full-page-header'
 import { Article } from '~/components/markdown/article'
 import { ScrollToTopButton } from '~/components/scroll-to-top-button'
 import { getCollectionEntry } from '~/content/get-collection'
-import { roboto_serif } from '~/fonts'
+import { roboto_serif, roboto_serif_ext } from '~/fonts'
 import { cn } from '~/utils/cn'
 import { formatPublicationDate } from '~/utils/dates'
 import { getDefaultMetadata } from '~/utils/metadata'
@@ -35,13 +35,14 @@ export default function Page() {
       <Header lastUpdated={page.data.lastUpdated} />
       <ContentWrapper
         className={cn(
+          roboto_serif_ext.variable,
           roboto_serif.variable,
           'mt-12 max-w-[816px] md:mt-16 lg:mt-20',
         )}
         asChild
       >
         <main>
-          <Article>{page.content}</Article>
+          <Article className="extended-char-set">{page.content}</Article>
         </main>
       </ContentWrapper>
       <ScrollToTopButton />

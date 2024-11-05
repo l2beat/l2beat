@@ -1,8 +1,9 @@
-import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { PROOFS } from './common/proofSystems'
 import { ZkCatalogProject } from './types'
 
 export const risczero: ZkCatalogProject = {
+  createdAt: new UnixTime(1721807619), // 2024-07-24T07:53:39Z
   display: {
     slug: 'risczero',
     name: 'RISC Zero',

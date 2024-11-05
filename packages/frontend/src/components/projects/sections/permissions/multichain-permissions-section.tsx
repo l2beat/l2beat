@@ -1,3 +1,5 @@
+import { type UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
+import { ProjectDetailsRelatedProjectBanner } from '~/components/project-details-related-project-banner'
 import { ContractEntry, type TechnologyContract } from '../contract-entry'
 import { PermissionedEntityEntry } from '../permissioned-entity-entry'
 import { ProjectSection } from '../project-section'
@@ -6,11 +8,13 @@ import { type ProjectSectionProps } from '../types'
 export interface MultichainPermissionsSectionProps extends ProjectSectionProps {
   permissions: Record<string, TechnologyContract[]>
   permissionedEntities?: { name: string; href: string }[]
+  dacUsedIn?: UsedInProject
 }
 
 export function MultichainPermissionsSection({
   permissions,
   permissionedEntities,
+  dacUsedIn,
   ...sectionProps
 }: MultichainPermissionsSectionProps) {
   return (
@@ -48,6 +52,12 @@ export function MultichainPermissionsSection({
           )
         })}
       </div>
+      {dacUsedIn && (
+        <ProjectDetailsRelatedProjectBanner
+          text="Check all permissions for the scaling project here:"
+          project={{ ...dacUsedIn, type: 'scaling' }}
+        />
+      )}
     </ProjectSection>
   )
 }

@@ -1,5 +1,7 @@
 'use client'
+import { type UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
 import partition from 'lodash/partition'
+import { ProjectDetailsRelatedProjectBanner } from '~/components/project-details-related-project-banner'
 import { type DiagramParams } from '~/utils/project/get-diagram-params'
 import { ContractEntry, type TechnologyContract } from '../contract-entry'
 import { ProjectSection } from '../project-section'
@@ -21,6 +23,7 @@ export interface MultiChainContractsSectionProps {
   isIncomplete?: boolean
   isUnderReview?: boolean
   nested?: boolean
+  dacUsedIn?: UsedInProject
 }
 
 export function MultiChainContractsSection(
@@ -108,6 +111,12 @@ export function MultiChainContractsSection(
         </>
       )}
       <ReferenceList references={props.references} />
+      {props.dacUsedIn && (
+        <ProjectDetailsRelatedProjectBanner
+          text="Check all contracts for the scaling project here:"
+          project={{ ...props.dacUsedIn, type: 'scaling' }}
+        />
+      )}
     </ProjectSection>
   )
 }

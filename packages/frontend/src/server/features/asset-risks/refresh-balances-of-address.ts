@@ -44,7 +44,7 @@ export async function refreshBalancesOfAddress(address: Address) {
   await Promise.allSettled(
     Object.entries(tokensByNetwork).map(async ([networkId, tokens]) => {
       const network = networks.find((n) => n.id === networkId)
-      if (!network) {
+      if (!network || !network.chainId) {
         return []
       }
 

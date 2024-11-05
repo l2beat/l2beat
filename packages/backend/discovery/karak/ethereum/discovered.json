@@ -107,7 +107,7 @@
         {
           "permission": "upgrade",
           "target": "0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3",
-          "description": "upgrading bridge implementation allows to access all funds and change every system component."
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein."
         },
         {
           "permission": "upgrade",
@@ -173,7 +173,7 @@
         {
           "permission": "upgrade",
           "target": "0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3",
-          "description": "upgrading bridge implementation allows to access all funds and change every system component.",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
           "via": [{ "address": "0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C" }]
         },
         {
@@ -412,7 +412,7 @@
             {
               "address": "0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C",
               "delay": 0,
-              "description": "upgrading bridge implementation allows to access all funds and change every system component."
+              "description": "upgrading the bridge implementation can give access to all funds escrowed therein."
             }
           ]
         }
@@ -922,7 +922,7 @@
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
-    "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
+    "opstack/L1StandardBridge": "0x9111ef1dcd42452953522f42115f0396e80b8ffacbe0ee0e3f62763880a6b6cc",
     "opstack/L2OutputOracle": "0x2da233df369518b2564031e603ae272763f51cec1bc780ab0a814e46046b47a2",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
     "opstack/OptimismPortal": "0x5fb419891d613086f39879ae360e765fdb6d154ef5ea5b2f5f98a4443a1b4839",

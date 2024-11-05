@@ -10,8 +10,8 @@ import { MainPageCard } from '~/components/main-page-card'
 import { getStageSortedRowModel } from '~/components/table/sorting/get-stage-sorting-row-model'
 import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling-activity-entries'
 import { type RecategorisedScalingEntry } from '~/utils/group-by-main-categories'
+import { ScalingActivityFilters } from '../../_components/scaling-activity-filters'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
-import { ScalingFilters } from '../../_components/scaling-filters'
 import { ScalingActivityTable } from './table/scaling-activity-table'
 
 type Props = RecategorisedScalingEntry<ScalingActivityEntry>
@@ -28,7 +28,7 @@ export function ScalingActivityTables(props: Props) {
     }
     return (
       <>
-        <ScalingFilters
+        <ScalingActivityFilters
           items={[
             ...filteredEntries.rollups,
             ...filteredEntries.validiumsAndOptimiums,
@@ -82,7 +82,7 @@ export function ScalingActivityTables(props: Props) {
   const filteredEntries = props.entries.filter(includeFilters)
   return (
     <MainPageCard className="space-y-3 md:mt-6 md:space-y-6">
-      <ScalingFilters items={filteredEntries} />
+      <ScalingActivityFilters items={filteredEntries} />
       <ScalingActivityTable entries={filteredEntries} />
     </MainPageCard>
   )

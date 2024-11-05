@@ -16,7 +16,14 @@ interface Props {
 
 export function ProjectsUsedIn({ usedIn, className, maxProjects = 5 }: Props) {
   if (usedIn.length === 0) {
-    return <div>Nobody 😔</div>
+    return (
+      <Tooltip>
+        <TooltipTrigger>No L2 😔</TooltipTrigger>
+        <TooltipContent>
+          There are no scaling projects listed on L2BEAT that use this solution.
+        </TooltipContent>
+      </Tooltip>
+    )
   }
 
   const cappedProjects = usedIn.slice(0, maxProjects)
