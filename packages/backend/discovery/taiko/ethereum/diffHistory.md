@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x5a07acc42fb9ecb7099b8cc07f5071a689fc8a27
+Generated with discovered.json: 0xa464fbdd6d0814d823e863650c9eccecd4e19504
 
-# Diff at Tue, 05 Nov 2024 15:42:55 GMT:
+# Diff at Tue, 05 Nov 2024 16:26:03 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@5e6ce51851b57187ccdd52c4944a82e2a8ab1e88 block: 21027555
-- current block number: 21122415
+- current block number: 21122629
 
 ## Description
 
@@ -12,6 +12,8 @@ Taiko ['Ontake' upgrade](https://taiko.mirror.xyz/OJA4SwCqHjF32Zz0GkNJvnHWlsRYzd
 - batching (for proposing and proving)
 - new verifier slots (SP1, Risc0) (0x00 atm)
 - new Block struct in preconf preparations (preconfRegistry set to 0x00)
+- integration of the TierProvider into the MainnetTierRouter
+- new TIER_SGX challengePeriod of 4h (down from 1d)
 
 ## Watched changes
 
@@ -46,6 +48,12 @@ Taiko ['Ontake' upgrade](https://taiko.mirror.xyz/OJA4SwCqHjF32Zz0GkNJvnHWlsRYzd
 -        "0x6E997f1F22C40ba37F633B08f3b07E10Ed43155a"
 +        "0x8f1C1D58C858e9a9eeCc587d7D51AECfd16b5542"
     }
+```
+
+```diff
+-   Status: DELETED
+    contract TierProviderV2 (0x3a1A900680BaADb889202faf12915F7E47B71ddd)
+    +++ description: None
 ```
 
 ```diff
@@ -256,8 +264,9 @@ Taiko ['Ontake' upgrade](https://taiko.mirror.xyz/OJA4SwCqHjF32Zz0GkNJvnHWlsRYzd
  .../SignalService/MainnetSignalService.sol         |  526 ++--
  .../TaikoBridge/MainnetBridge.sol                  |  371 ++-
  .../TaikoL1Contract/MainnetTaikoL1.sol             | 3040 +++++++++++---------
+ .../.flat@21027555/TierProviderV2.sol => /dev/null |  160 --
  .../.flat@21027555/TierRouter.sol => /dev/null     |   16 -
- 12 files changed, 4490 insertions(+), 3020 deletions(-)
+ 13 files changed, 4490 insertions(+), 3180 deletions(-)
 ```
 
 ## Config/verification related changes
@@ -289,6 +298,33 @@ discovery. Values are for block 21027555 (main branch discovery), not current.
 +        "0x0000000000000000000000000000000000000000"
       values.verifier_TIER_ZKVM_SP1:
 +        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract TierProviderV2 (0x3a1A900680BaADb889202faf12915F7E47B71ddd) {
+    +++ description: None
+      name:
+-        "TierProvider"
++        "TierProviderV2"
+      values.active_tiers:
+-        [["0x746965725f736778000000000000000000000000000000000000000000000000"],["0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000"],["0x746965725f677561726469616e00000000000000000000000000000000000000"]]
+      values.TIER_GUARDIAN:
+-        {"verifierName":"0x746965725f677561726469616e00000000000000000000000000000000000000","validityBond":0,"contestBond":0,"cooldownWindow":1440,"provingWindow":2880,"maxBlocksToVerifyPerProof":0}
+      values.TIER_GUARDIAN_MINORITY:
+-        {"verifierName":"0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000","validityBond":"250000000000000000000","contestBond":"1640000000000000000000","cooldownWindow":240,"provingWindow":2880,"maxBlocksToVerifyPerProof":0}
+      values.TIER_OPTIMISTIC:
+-        {"verifierName":"0x0000000000000000000000000000000000000000000000000000000000000000","validityBond":"125000000000000000000","contestBond":"250000000000000000000","cooldownWindow":1440,"provingWindow":15,"maxBlocksToVerifyPerProof":0}
+      values.TIER_SGX:
+-        {"verifierName":"0x746965725f736778000000000000000000000000000000000000000000000000","validityBond":"125000000000000000000","contestBond":"820000000000000000000","cooldownWindow":1440,"provingWindow":60,"maxBlocksToVerifyPerProof":0}
+      values.TIER_SGX_ZKVM:
+-        {"verifierName":"0x746965725f7367785f7a6b766d00000000000000000000000000000000000000","validityBond":"250000000000000000000","contestBond":"1640000000000000000000","cooldownWindow":1440,"provingWindow":240,"maxBlocksToVerifyPerProof":0}
+      values.getMinTier:
++        [200,200,200,200,200]
+      fieldMeta:
+-        {"TIER_SGX":{"description":"verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"},"TIER_GUARDIAN_MINORITY":{"description":"tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"},"TIER_GUARDIAN":{"description":"tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"},"TIER_OPTIMISTIC":{"description":"tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"},"TIER_SGX_ZKVM":{"description":"tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"}}
+      errors:
++        {"getMinTier":"Too many values. Update configuration to explore fully"}
     }
 ```
 

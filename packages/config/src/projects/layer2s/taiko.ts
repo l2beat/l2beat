@@ -43,7 +43,7 @@ const TIER_SGX = discovery.getContractValue<{
   cooldownWindow: number
   provingWindow: number
   maxBlocksToVerifyPerProof: number
-}>('TierProvider', 'TIER_SGX')
+}>('MainnetTierRouter', 'TIER_SGX')
 
 const TIER_MINORITY_GUARDIAN = discovery.getContractValue<{
   verifierName: string
@@ -52,7 +52,7 @@ const TIER_MINORITY_GUARDIAN = discovery.getContractValue<{
   cooldownWindow: number
   provingWindow: number
   maxBlocksToVerifyPerProof: number
-}>('TierProvider', 'TIER_GUARDIAN_MINORITY')
+}>('MainnetTierRouter', 'TIER_GUARDIAN_MINORITY')
 
 const GuardianMinorityProverMinSigners = discovery.getContractValue<string[]>(
   'GuardianMinorityProver',
@@ -261,12 +261,12 @@ export const taiko: Layer2 = {
         If no one challenges the original SGX proof, it finalizes after ${SGXcooldownWindow} (the cooldown window).`,
       references: [
         {
-          text: 'TierProviderV2.sol - Etherscan source code, tier ids',
-          href: 'https://etherscan.io/address/0x3a1A900680BaADb889202faf12915F7E47B71ddd#code',
+          text: 'MainnetTierRouter.sol - Etherscan source code, tier ids',
+          href: 'https://etherscan.io/address/0x8f1C1D58C858e9a9eeCc587d7D51AECfd16b5542#code#F1#L26',
         },
         {
           text: 'TaikoL1.sol - Etherscan source code, liveness bond',
-          href: 'https://etherscan.io/address/0xf0E6d34937701622cA887a75c150cC23d4FFDf2F#code',
+          href: 'https://etherscan.io/address/0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17#code',
         },
       ],
       risks: [
@@ -292,7 +292,7 @@ export const taiko: Layer2 = {
       references: [
         {
           text: 'TaikoL1.sol - Etherscan source code, proposeBlock function',
-          href: 'https://etherscan.io/address/0xf0E6d34937701622cA887a75c150cC23d4FFDf2F#code',
+          href: 'https://etherscan.io/address/0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17#code',
         },
       ],
       risks: [],
@@ -329,10 +329,7 @@ export const taiko: Layer2 = {
       }),
       discovery.getContractDetails('MainnetTierRouter', {
         description:
-          'Contract allowing for granular control of which TierProvider to apply to a specific block. Currently, the TierProvider is hardcoded as an address for all blocks. Can be changed through L1RollupAddressManager.',
-      }),
-      discovery.getContractDetails('TierProvider', {
-        description: 'Contract managing the multi-tier proof system.',
+          'Contract managing and routing the multi-tier proof system.',
       }),
       discovery.getContractDetails('SgxVerifier', {
         description: 'Verifier contract for SGX proven blocks.',
