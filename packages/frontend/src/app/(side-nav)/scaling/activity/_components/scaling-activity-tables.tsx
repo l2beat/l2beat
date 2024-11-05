@@ -13,10 +13,7 @@ import { cn } from '~/utils/cn'
 import { type RecategorisedScalingEntry } from '~/utils/group-by-main-categories'
 import { ScalingActivityFilters } from '../../_components/scaling-activity-filters'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
-import {
-  type ActivityMetric,
-  useActivityMetricContext,
-} from './activity-metric-context'
+import { useActivityMetricContext } from './activity-metric-context'
 import { ActivityMetricControls } from './activity-type-controls'
 import { ScalingActivityTable } from './table/scaling-activity-table'
 
@@ -34,12 +31,12 @@ export function ScalingActivityTables(props: Props) {
     }
     return (
       <>
-        <ScalingActivityFilters
-          items={[
+        <Controls
+          className="mt-4"
+          entries={[
             ...filteredEntries.rollups,
             ...filteredEntries.validiumsAndOptimiums,
           ]}
-          className="mt-4"
         />
         <DirectoryTabs defaultValue="rollups">
           <DirectoryTabsList>
@@ -100,10 +97,6 @@ function Controls({
 }: { entries: ScalingActivityEntry[]; className?: string }) {
   const { metric, setMetric } = useActivityMetricContext()
 
-  const onMetricChange = (metric: ActivityMetric) => {
-    setMetric(metric)
-  }
-
   return (
     <div
       className={cn(
@@ -112,7 +105,7 @@ function Controls({
       )}
     >
       <ScalingActivityFilters items={entries} />
-      <ActivityMetricControls value={metric} onValueChange={onMetricChange} />
+      <ActivityMetricControls value={metric} onValueChange={setMetric} />
     </div>
   )
 }
