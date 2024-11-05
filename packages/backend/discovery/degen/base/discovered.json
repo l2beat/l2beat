@@ -1,7 +1,7 @@
 {
   "name": "degen",
   "chain": "base",
-  "blockNumber": 21530732,
+  "blockNumber": 21842198,
   "configHash": "0x9937bc707ee19031c0ba28b31fb87bc85aee657bc36259c7bfd3a25dc757d067",
   "contracts": [
     {
@@ -139,7 +139,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 31670,
+        "batchCount": 31684,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xa3582189403F67a9CDB1CE0Ac066c954FFd3f205"],
         "bridge": "0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C",
@@ -168,7 +168,7 @@
         "rollup": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 143532,
+        "totalDelayedMessagesRead": 143932,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -365,6 +365,7 @@
         "$immutable": false,
         "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
         "$members": [
+          "0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
           "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
@@ -375,8 +376,8 @@
         "domainSeparator": "0x4fb7ea8ecabb8e9a869e85ce3babbe085732a2a3b9a239f476713291832d96f2",
         "getChainId": 8453,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 9,
+        "multisigThreshold": "3 of 6 (50%)",
+        "nonce": 10,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -543,12 +544,12 @@
         "confirmPeriodBlocks": 241920,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1513,
+        "firstUnresolvedNode": 1528,
         "inbox": "0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7",
         "isERC20Enabled": false,
         "lastStakeBlock": 12468814,
-        "latestConfirmed": 1512,
-        "latestNodeCreated": 1524,
+        "latestConfirmed": 1527,
+        "latestNodeCreated": 1538,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xe63ddb12FBb6211a73F12a4367b10dA0834B82da",
@@ -718,12 +719,12 @@
           "0x766DD3A13d17C6D175975C89225bde89F052dBc4"
         ],
         "allowedOutboxList": ["0xe63ddb12FBb6211a73F12a4367b10dA0834B82da"],
-        "delayedMessageCount": 143543,
+        "delayedMessageCount": 143962,
         "nativeToken": "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed",
         "rollup": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
         "sequencerInbox": "0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221",
-        "sequencerMessageCount": 31670,
-        "sequencerReportedSubMessageCount": 24383602
+        "sequencerMessageCount": 31684,
+        "sequencerReportedSubMessageCount": 24422729
       },
       "derivedName": "ERC20Bridge"
     },
@@ -802,6 +803,7 @@
     { "address": "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f" },
     { "address": "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe" },
     { "address": "0x690f4e2f19717A06E1C146B2dCE68c2d23e36f4c" },
+    { "address": "0xA0737fea60F0601A192E3d2c98865A883ab0bda2" },
     { "address": "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038" },
     {
       "address": "0xa3582189403F67a9CDB1CE0Ac066c954FFd3f205",

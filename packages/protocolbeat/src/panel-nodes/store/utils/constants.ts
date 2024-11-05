@@ -12,17 +12,16 @@ export const BACKSPACE_KEY = 'Backspace'
 
 export const IS_MACOS = navigator.userAgent.toLowerCase().includes('mac os')
 
-export const HEADER_HEIGHT = 28
-export const BORDER_WIDTH = 2
-export const FIELD_HEIGHT = 24
-export const RESIZE_HANDLE_HEIGHT = 15
+export const HEADER_HEIGHT = 32
+export const FIELD_HEIGHT = 18
+export const BOTTOM_PADDING = 8
 
 export const NODE_WIDTH = 200
 export const NODE_SPACING = 25
 
 export const ZOOM_SENSITIVITY = 0.002
-export const MAX_ZOOM = 10
-export const MIN_ZOOM = 0.03
+export const MAX_ZOOM = 1
+export const MIN_ZOOM = 0.1
 
 export const SCROLL_LINE_HEIGHT = 20
 export const SCROLL_PAGE_HEIGHT = 800

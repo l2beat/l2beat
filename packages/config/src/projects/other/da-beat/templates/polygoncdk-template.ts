@@ -97,7 +97,7 @@ export function PolygoncdkDAC(template: TemplateVars): DacDaLayer {
     A separate contract, the PolygonCommittee contract, is used to manage the committee members list and verify the signatures before accepting the DA commitment.
    `)
   const bridgeDisplay: DacBridge['display'] = {
-    name,
+    name: 'DA Bridge',
     slug: 'dac',
     description: bridgeDescription,
     warning: template.warning,
@@ -177,6 +177,12 @@ export function PolygoncdkDAC(template: TemplateVars): DacDaLayer {
     technology: {
       description: layerTechnology,
       risks: template.layer?.technology?.risks,
+      references: [
+        {
+          text: 'Polygon CDK Validium Documentation',
+          href: 'https://docs.polygon.technology/cdk/architecture/cdk-validium/#data-availability-committee-dac',
+        },
+      ],
     },
     usedIn,
     bridges: [dacBridge],

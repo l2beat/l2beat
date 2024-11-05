@@ -177,6 +177,7 @@ const config: Config = {
       'surface-primary': 'var(--surface-primary)',
       'surface-secondary': 'var(--surface-secondary)',
       'surface-tertiary': 'var(--surface-tertiary)',
+      'surface-table-group': 'var(--surface-table-group)',
       'icon-secondary': 'var(--icon-secondary)',
       overlay: 'var(--overlay)',
       divider: 'var(--divider)',
@@ -256,6 +257,13 @@ const config: Config = {
       fontFamily: {
         sans: ['var(--font-roboto)', 'Roboto', 'Arial', 'sans-serif'],
         'roboto-serif': [
+          'var(--font-roboto-serif)',
+          'Roboto Serif',
+          'Roboto',
+          'Arial',
+        ],
+        'roboto-serif-ext': [
+          'var(--font-roboto-serif-ext)',
           'var(--font-roboto-serif)',
           'Roboto Serif',
           'Roboto',

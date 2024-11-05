@@ -65,8 +65,11 @@ function mocks() {
   const logger = mockObject<Logger>({})
 
   class TestClientCore extends ClientCore {
-    validateResponse(response: unknown): boolean {
-      return !!response
+    validateResponse(response: unknown): {
+      success: boolean
+      message?: string
+    } {
+      return { success: !!response }
     }
   }
 

@@ -40,7 +40,7 @@ export const mantleDABridge = {
   createdAt: new UnixTime(1723022143), // 2024-08-07T09:15:43Z
   type: 'DAC',
   display: {
-    name: 'Mantle DAC',
+    name: 'DA Bridge',
     slug: 'dac',
     description:
       'There is a Mantle DA bridge on Ethereum storing data availability commitments.',

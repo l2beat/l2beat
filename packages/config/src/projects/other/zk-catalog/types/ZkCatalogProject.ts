@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { ProofVerification } from '../../../types'
 
 export interface ZkCatalogProject {
@@ -6,5 +7,6 @@ export interface ZkCatalogProject {
     slug: string
     name: string
   }
+  createdAt: UnixTime
   proofVerification: ProofVerification
 }

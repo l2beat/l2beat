@@ -1,8 +1,9 @@
-import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { PROOFS } from './common/proofSystems'
 import { ZkCatalogProject } from './types'
 
 export const SP1Vector: ZkCatalogProject = {
+  createdAt: new UnixTime(1726155706), // 2024-09-12T15:41:46Z
   display: {
     slug: 'SP1Vector',
     name: 'SP1Vector',

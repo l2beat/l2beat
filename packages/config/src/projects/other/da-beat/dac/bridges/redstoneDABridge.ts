@@ -18,9 +18,10 @@ export const redstoneDABridge = {
   id: 'redstoneDABridge',
   createdAt: new UnixTime(1723022143), // 2024-04-03T10:08:59Z
   type: 'DAC',
+  chain: ChainId.ETHEREUM,
   display: {
-    name: 'Redstone DA',
-    slug: 'dac',
+    name: 'DA Bridge',
+    slug: 'da',
     description:
       'There is EOA on Ethereum acting as a DA bridge to receive data availability commitments.',
     links: {
@@ -93,10 +94,10 @@ export const redstoneDABridge = {
       },
     ],
   },
-  chain: ChainId.ETHEREUM,
+  requiredMembers: 0,
+  membersCount: 0,
+  hideMembers: true,
   transactionDataType: DacTransactionDataType.TransactionData,
-  requiredMembers: 1,
-  membersCount: 1,
   usedIn: toUsedInProject([redstone]),
   risks: {
     committeeSecurity: DaCommitteeSecurityRisk.NoCommiteeSecurity(),

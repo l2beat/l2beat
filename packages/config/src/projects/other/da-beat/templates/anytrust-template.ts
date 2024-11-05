@@ -99,7 +99,7 @@ export function AnytrustDAC(template: TemplateVars): DacDaLayer {
     The sequencer distributes the data and collects signatures from Committee members offchain. Only the DACert is posted by the sequencer to the L2 chain inbox (the DA bridge), achieving L3 transaction ordering finality in a single onchain transaction.
     `)
   const bridgeDisplay: DacBridge['display'] = {
-    name,
+    name: 'DA Bridge',
     slug: 'dac',
     description: bridgeDescription,
     warning: template.warning,
@@ -184,6 +184,12 @@ export function AnytrustDAC(template: TemplateVars): DacDaLayer {
     display: layerDisplay,
     technology: {
       description: layerTechnology,
+      references: [
+        {
+          text: 'Inside AnyTrust - Arbitrum Docs',
+          href: 'https://docs.arbitrum.io/how-arbitrum-works/inside-anytrust',
+        },
+      ],
       risks: template.layer?.technology?.risks,
     },
     usedIn,

@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x48e1458ea67abceee5b44143d3117f3296961bac
+
+# Diff at Fri, 01 Nov 2024 10:54:45 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@cd1f0e71bb08ce16b2084a11b768538e8aa6ba8c block: 21069878
+- current block number: 21092328
+
+## Description
+
+Multisig member change.
+
+## Watched changes
+
+```diff
+    contract SecurityCouncil (0xF06E95eF589D9c38af242a8AAee8375f14023F85) {
+    +++ description: None
+      values.$members.1:
+-        "0xA821c8c245d1F3A257e3B0DEC99268cA05144422"
++        "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75"
+      values.$members.0:
+-        "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75"
++        "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
+    }
+```
+
 Generated with discovered.json: 0x2ee8d3e3fd17932ee217727c61e81da24bc8cfc7
 
 # Diff at Tue, 29 Oct 2024 13:04:06 GMT:

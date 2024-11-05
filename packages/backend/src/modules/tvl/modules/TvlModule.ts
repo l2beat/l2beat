@@ -3,11 +3,9 @@ import { ConfigMapping } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import { Config } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
+import { Providers } from '../../../providers/Providers'
 import { Clock } from '../../../tools/Clock'
-import { IndexerService } from '../../../tools/uif/IndexerService'
 import { ApplicationModule } from '../../ApplicationModule'
-import { HourlyIndexer } from '../indexers/HourlyIndexer'
-import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { TvlCleaner } from '../utils/TvlCleaner'
 import { initAggLayerModule } from './AggLayerModule'
 import { initBlockTimestampModule } from './BlockTimestampModule'
@@ -16,11 +14,13 @@ import { initCirculatingSupplyModule } from './CirculatingSupplyModule'
 import { initElasticChainModule } from './ElasticChainModule'
 import { initPremintedModule } from './PremintedModule'
 import { initPriceModule } from './PriceModule'
+import { TvlDependencies } from './TvlDependencies'
 
 export function initTvlModule(
   config: Config,
   logger: Logger,
   peripherals: Peripherals,
+  providers: Providers,
   clock: Clock,
 ): ApplicationModule | undefined {
   if (!config.tvl) {
@@ -28,9 +28,14 @@ export function initTvlModule(
     return
   }
 
-  const indexerService = new IndexerService(peripherals.database)
+  const dependencies = new TvlDependencies(
+    peripherals.database,
+    clock,
+    logger,
+    providers,
+  )
 
-  const syncOptimizer = new SyncOptimizer(clock)
+  const syncOptimizer = dependencies.getSyncOptimizer()
 
   const configMapping = new ConfigMapping(
     config.tvl.prices,
@@ -51,45 +56,28 @@ export function initTvlModule(
     ],
   )
 
-  const hourlyIndexer = new HourlyIndexer(logger, clock)
+  const hourlyIndexer = dependencies.getHourlyIndexer()
 
   assert(config.tvl.prices.length > 0, 'Tokens should be configured')
 
-  const priceModule = initPriceModule(
-    config.tvl,
-    logger,
-    peripherals,
-    syncOptimizer,
-    indexerService,
-    hourlyIndexer,
-  )
+  const priceModule = initPriceModule(config.tvl, dependencies)
 
   const circulatingSupplyModule = initCirculatingSupplyModule(
     config.tvl,
-    logger,
-    peripherals,
-    syncOptimizer,
-    indexerService,
     configMapping,
-    hourlyIndexer,
     priceModule.descendant,
+    dependencies,
   )
 
   const blockTimestampModule = initBlockTimestampModule(
     config.tvl,
-    logger,
-    peripherals,
-    syncOptimizer,
-    indexerService,
-    hourlyIndexer,
+    dependencies,
   )
 
   const chainModule = initChainModule(
     config.tvl,
-    logger,
     peripherals,
-    syncOptimizer,
-    indexerService,
+    dependencies,
     configMapping,
     priceModule.descendant,
     blockTimestampModule?.blockTimestampIndexers,
@@ -97,10 +85,8 @@ export function initTvlModule(
 
   const premintedModule = initPremintedModule(
     config.tvl,
-    logger,
     peripherals,
-    syncOptimizer,
-    indexerService,
+    dependencies,
     configMapping,
     priceModule.descendant,
     blockTimestampModule?.blockTimestampIndexers,
@@ -108,10 +94,8 @@ export function initTvlModule(
 
   const aggLayerModule = initAggLayerModule(
     config.tvl,
-    logger,
     peripherals,
-    syncOptimizer,
-    indexerService,
+    dependencies,
     configMapping,
     priceModule.descendant,
     blockTimestampModule?.blockTimestampIndexers,
@@ -119,10 +103,8 @@ export function initTvlModule(
 
   const elasticChainModule = initElasticChainModule(
     config.tvl,
-    logger,
     peripherals,
-    syncOptimizer,
-    indexerService,
+    dependencies,
     configMapping,
     priceModule.descendant,
     blockTimestampModule?.blockTimestampIndexers,

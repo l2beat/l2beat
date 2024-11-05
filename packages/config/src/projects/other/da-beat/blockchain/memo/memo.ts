@@ -53,12 +53,36 @@ export const memo: DaLayer = {
     If no light node challenges the commitment within the specified validity period, the proof of availability is considered successful. <br/>
 
     Submitting a fraud proof is expected to require multiple rounds of interaction, with pledges and rewards for both the challenger and the challenged.
-    The proving smart contracts ([FileProof](https://scan.metamemo.one:8080/address/0x58C3Ab98546879a859EDBa3252A9d38E43C9cbee/), [ControlFileProof](https://scan.metamemo.one:8080/address/0x6eEc7578dBAD9dcc1CA159A9Df0A73233548b89a/), [ProxyFileProof](https://scan.metamemo.one:8080/address/0x0c7B5A9Ce5e33B4fa1BcFaF9e8722B1c1c23243B/)) are deployed to the Memo chain and their code is not public, so the logic and security of the proving contracts is not verifiable.
+    The proving smart contracts (FileProof, ControlFileProof, ProxyFileProof) are deployed to the Memo chain and their code is not public, so the logic and security of the proving contracts is not verifiable.
 
     ## L2s Data Availability
     L2s can upload transaction data to Meeda through the MemoDA RPC, and the Meeda operator will generate an aggregated KZG polynomial commitment based on the transaction data. 
     Nodes can request transaction data on Meeda based on the commitment value of the transaction data.
   `,
+    references: [
+      {
+        text: 'Meeda Documentation - Architecture',
+        href: 'https://memolabs.gitbook.io/meeda/readme/overview-of-meeda/whats-meeda',
+      },
+      {
+        text: 'Meeda FileProof contract - Metamemo Scan',
+        href: 'https://scan.metamemo.one:8080/address/0x58C3Ab98546879a859EDBa3252A9d38E43C9cbee/',
+      },
+      {
+        text: 'Meeda ControlFileProof contract - Metamemo Scan',
+        href: 'https://scan.metamemo.one:8080/address/0x6eEc7578dBAD9dcc1CA159A9Df0A73233548b89a/',
+      },
+      {
+        text: 'Meeda ProxyFileProof contract - Metamemo Scan',
+        href: 'https://scan.metamemo.one:8080/address/0x0c7B5A9Ce5e33B4fa1BcFaF9e8722B1c1c23243B/',
+      },
+    ],
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: `Memo storage nodes do not make the data available.`,
+      },
+    ],
   },
   bridges: [
     NO_BRIDGE({

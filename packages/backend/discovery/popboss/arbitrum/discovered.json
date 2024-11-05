@@ -1,7 +1,7 @@
 {
   "name": "popboss",
   "chain": "arbitrum",
-  "blockNumber": 269235372,
+  "blockNumber": 269949668,
   "configHash": "0x1642d8ff04264b25f2d5c295eff42ebbd253db07e5aaf4cbc539f42e31d801ac",
   "contracts": [
     {
@@ -138,12 +138,12 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 130,
+        "firstUnresolvedNode": 134,
         "inbox": "0xEe30EfcaF812d10e1EFE25E9458f76a39DAD3239",
         "isERC20Enabled": false,
         "lastStakeBlock": 20332772,
-        "latestConfirmed": 129,
-        "latestNodeCreated": 140,
+        "latestConfirmed": 133,
+        "latestNodeCreated": 145,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xa4270256B160C3Ebec2d6914a906c7EC38D8d072",
@@ -270,11 +270,13 @@
     {
       "name": "Bridge",
       "address": "0x53D82686BC9827fEc03bcEe661B37b855A18EcA9",
+      "template": "orbitstack/Bridge",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0xb920455f1e366c7a89719abdd8d8174e4e7d353f2d4b7dea11b0571bf9526eae"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -314,11 +316,11 @@
           "0x6e988B94C12194A925D7802FE75891364C312477"
         ],
         "allowedOutboxList": ["0xa4270256B160C3Ebec2d6914a906c7EC38D8d072"],
-        "delayedMessageCount": 4146,
+        "delayedMessageCount": 4296,
         "rollup": "0x330F8fEB25f3427cABA32446728C36ae67f2135b",
         "sequencerInbox": "0x6eE94AD8057Fd7Ba4d47bb6278a261c8a9FD4E3f",
-        "sequencerMessageCount": 4000,
-        "sequencerReportedSubMessageCount": 19253253
+        "sequencerMessageCount": 4147,
+        "sequencerReportedSubMessageCount": 19921101
       },
       "derivedName": "Bridge"
     },
@@ -415,7 +417,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 4000,
+        "batchCount": 4147,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x75EFAE926BcB72433C70fbfA76588F16338397De"],
         "bridge": "0x53D82686BC9827fEc03bcEe661B37b855A18EcA9",
@@ -439,7 +441,7 @@
         "rollup": "0x330F8fEB25f3427cABA32446728C36ae67f2135b",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 4145,
+        "totalDelayedMessagesRead": 4295,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -548,7 +550,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 8 (25%)",
-        "nonce": 38,
+        "nonce": 41,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -567,11 +569,13 @@
     {
       "name": "Outbox",
       "address": "0xa4270256B160C3Ebec2d6914a906c7EC38D8d072",
+      "template": "orbitstack/Outbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0x28eec040eca7563195b19e22e11429d0f977820bfb60ac52e567ffde3c92cf77"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1391,12 +1395,14 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
+    "orbitstack/Bridge": "0x6e309bce5a8758ba24f800f3c0135c502fd5cc22724da5165d8368377eb6c9c8",
     "orbitstack/ChallengeManager": "0xc4fbc82c5001579bb1f880d92a3510cda3dc4a65e284fc300363ce048c2fb6d7",
     "orbitstack/OneStepProofEntry": "0xf3bff5da86f9bbb5f9ac93a0f2239f0769d051b67a44be2e52c322799e3b8d4f",
     "orbitstack/OneStepProver0": "0x80f18705038deef096683a89d16549bf343ada57cac1f2750df2f06fbbaed5ca",
     "orbitstack/OneStepProverHostIo": "0xacacb7603847a3f0212fdf80c653040278214c00451f763907e270d1f19efec0",
     "orbitstack/OneStepProverMath": "0x8dd8aebb517eb6eaf15437ddbb90dff66f2b14d9d6b5390dd87fbdab15168188",
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
+    "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
     "orbitstack/RollupProxy": "0x9de477a7ec4abe22558d85184e1ff68cebea26c903f45220337156ae3acf3dc5",
     "orbitstack/SequencerInbox": "0x80eed651d83fd6cd84047260bf02ec5e3a5f21b36049e1e45f34bd0a452e02f9",
     "orbitstack/UpgradeExecutor": "0xa25e02367a436cebea22481663da914bbf1fd9492d903659cc6ec9ddbaccb241"

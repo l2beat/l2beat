@@ -100,7 +100,7 @@ export function StarkexDAC(template: TemplateVars): DacDaLayer {
     Before the state update is accepted, the StarkEx contract verifies the transaction public inputs by calling the isValid() function, which verifies the hash derived from state update inputs matches the hash stored by the Committee Verifier contract.
     `)
   const bridgeDisplay: DacBridge['display'] = {
-    name,
+    name: 'DA Bridge',
     slug: 'dac',
     description: bridgeDescription,
     warning: template.warning,
@@ -182,6 +182,12 @@ export function StarkexDAC(template: TemplateVars): DacDaLayer {
     technology: {
       description: layerTechnology,
       risks: template.layer?.technology?.risks,
+      references: [
+        {
+          text: 'StarkEx Committee Service - Source Code',
+          href: 'https://github.com/starkware-libs/starkex-data-availability-committee',
+        },
+      ],
     },
     usedIn,
     bridges: [dacBridge],

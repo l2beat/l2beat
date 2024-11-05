@@ -1,9 +1,8 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import { fraxtal } from '../../../layer2s/fraxtal'
-import { NO_BRIDGE } from '../templates/no-bridge-template'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
 import { DaLayer } from '../types/DaLayer'
 import { toUsedInProject } from '../utils/to-used-in-project'
+import { fraxtalDABridge } from './bridges/fraxtalDABridge'
 
 export const fraxtalDA: DaLayer = {
   id: 'dac',
@@ -41,18 +40,24 @@ export const fraxtalDA: DaLayer = {
     The sequencer attests to data availability by posting an IPFS hash to an on-chain inbox contract on Ethereum. L2 nodes derive the L2 chain from the L1 by reading transactions commitments from this sequencer inbox.
         When reading from the inbox, the op-node verifies that the commitment hash is a valid IPFS CID. If the data corresponding to the hash is missing from IPFS, the op-node will halt, preventing further derivation of the L2 chain. 
     `,
-  },
-  bridges: [
-    NO_BRIDGE({
-      createdAt: new UnixTime(1726754891), // 2024-09-19T14:08:11Z
-      layer: 'FraxtalDA',
-      description:
-        'The risk profile in this page refers to L2s that do not integrate with a data availability bridge.',
-      technology: {
-        description: `There is no committee attesting to the availability of the data. For L2 chain derivation, the system relies on sequencer commitments to an L1 onchain inbox. See DA layer technology section for more details.\n`,
+    references: [
+      {
+        text: 'FraxtalDA Documentation',
+        href: 'https://docs.frax.com/fraxtal/network/data-availability',
       },
-    }),
-  ],
+      {
+        text: 'Fraxtal DA Follower - Source Code',
+        href: 'https://github.com/FraxFinance/fraxtal-da-follower/blob/791e849b41465e1e00377f57c8f0c49d4b13caa8/main.go',
+      },
+    ],
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: `the sequencer posts an invalid data availability commitment.`,
+      },
+    ],
+  },
+  bridges: [fraxtalDABridge],
   usedIn: [...toUsedInProject([fraxtal])],
   risks: {
     economicSecurity: DaEconomicSecurityRisk.Unknown,
