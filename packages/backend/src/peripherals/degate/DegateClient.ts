@@ -9,7 +9,7 @@ import { DegateError, DegateResponse } from './schemas'
 
 type Block = number | 'latest'
 
-interface Dependencies extends ClientCoreDependencies {
+export interface Dependencies extends ClientCoreDependencies {
   url: string
 }
 
@@ -19,12 +19,12 @@ export class DegateClient extends ClientCore {
   }
 
   async getLatestBlockNumber() {
-    const block = await this.call('latest')
+    const block = await this.query('latest')
     return block.blockId
   }
 
   async getBlock(blockNumber: number) {
-    return await this.call(blockNumber)
+    return await this.query(blockNumber)
   }
 
   async getBlockNumberAtOrBefore(timestamp: UnixTime, start = 0) {
@@ -41,7 +41,7 @@ export class DegateClient extends ClientCore {
     )
   }
 
-  private async call(block: Block) {
+  async query(block: Block) {
     const query = new URLSearchParams({ id: block.toString() })
     const url = `${this.$.url}/block/getBlock?${query.toString()}`
 
