@@ -54,6 +54,7 @@ export async function getDaSummaryEntries() {
               membersCount: daBridge.membersCount,
               requiredMembers: daBridge.requiredMembers,
               knownMembers: daBridge.knownMembers,
+              hideMembers: daBridge.hideMembers,
             }
           }
 

@@ -54,7 +54,12 @@ const daBridgeRisksColumn = columnHelper.display({
 
     const risks = mapBridgeRisksToRosetteValues(firstBridge.risks)
 
-    return <GrissiniCell values={risks} />
+    return (
+      <GrissiniCell
+        values={risks}
+        hasNoBridge={firstBridge.type === 'NoBridge'}
+      />
+    )
   },
   enableSorting: false,
   meta: {
@@ -117,6 +122,10 @@ const membersColumn = columnHelper.display({
     }
 
     if (firstBridge.type !== 'DAC') {
+      return <NaBadge />
+    }
+
+    if (firstBridge.hideMembers) {
       return <NaBadge />
     }
 

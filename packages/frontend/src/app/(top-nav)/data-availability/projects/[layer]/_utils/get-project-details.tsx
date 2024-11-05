@@ -102,7 +102,10 @@ export function getProjectDetails({
         slug: daLayer.display.slug,
       },
       content: daLayer.technology.description,
+      mdClassName:
+        'da-beat text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
       risks: daLayer.technology.risks?.map(toTechnologyRisk),
+      references: daLayer.technology.references,
     },
   })
 
@@ -116,6 +119,7 @@ export function getProjectDetails({
       isUnderReview: !!daLayer.isUnderReview,
       isVerified,
       grissiniValues: mapBridgeRisksToRosetteValues(daBridge.risks),
+      hideRisks: daBridge.type === 'NoBridge',
     },
   })
 
@@ -129,7 +133,10 @@ export function getProjectDetails({
         slug: `${daLayer.display.slug}-${daBridge.display.slug}`,
       },
       content: daBridge.technology.description,
+      mdClassName:
+        'da-beat text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
       risks: daBridge.technology.risks?.map(toTechnologyRisk),
+      references: daBridge.technology.references,
     },
   })
 
