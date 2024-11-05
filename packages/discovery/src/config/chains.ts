@@ -247,4 +247,20 @@ export const chains: ChainConfig[] = [
       url: 'https://api.blastscan.io/api',
     },
   },
+  {
+    name: 'kinto',
+    chainId: 7887,
+    shortName: 'kinto',
+    multicall: getMulticall3Config(
+      218560,
+      EthereumAddress('0x2cc0188fA85FD8Ce748C7Df6066873fdcfaD95e9'),
+    ),
+    explorer: {
+      type: 'blockscout',
+      url: 'https://explorer.kinto.xyz',
+      unsupported: {
+        getContractCreation: true,
+      },
+    },
+  },
 ] as const satisfies ChainConfig[]
