@@ -41,9 +41,9 @@ export function getRowTypeClassNamesWithoutOpacity(rowType: RowType | null) {
     case 'ethereum':
       return 'bg-blue-400 group-hover/row:bg-blue-400 dark:bg-blue-900 dark:group-hover/row:bg-blue-900'
     case 'unverified':
-      return 'bg-[#FEE4E4] dark:bg-[#391617] group-hover/row:bg-[#FDDDDD] dark:group-hover/row:bg-[#401213]'
+      return 'bg-[#FEE4E4] dark:bg-[#371315] group-hover/row:bg-[#FDDDDD] dark:group-hover/row:bg-[#3F1112]'
     case 'under-review':
-      return 'bg-[#faf5e6] dark:bg-[#363122] group-hover/row:!bg-[#FBEFC9] dark:group-hover/row:!bg-[#4C411F]'
+      return 'bg-[#faf5e6] dark:bg-[#2F2A1D] group-hover/row:!bg-[#FBEFC9] dark:group-hover/row:!bg-[#453B1A]'
     default:
       return 'bg-surface-primary group-hover/row:shadow-sm group-hover/row:bg-[#EEEEEE] dark:group-hover/row:bg-[#35363A]'
   }
