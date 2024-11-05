@@ -2,7 +2,7 @@
   "name": "kinto",
   "chain": "kinto",
   "blockNumber": 249001,
-  "configHash": "0x550bb012d1435f565657f8b43531ca118340b2c83470e6a2bac093d920e0f7fe",
+  "configHash": "0x2d6fa1dad8d40e7a8f6a260555b71aeb0d8bf01a1e614cc0ab175c025ec2de0d",
   "contracts": [
     {
       "name": "RandomWallet",
