@@ -2,5 +2,8 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "kinto",
   "name": "kinto",
-  "initialAddresses": ["0xB609316dec60d2bB1B8f50DDc54a7D169F442158"]
+  "initialAddresses": [
+    "0xB609316dec60d2bB1B8f50DDc54a7D169F442158",
+    "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"
+  ]
 }
