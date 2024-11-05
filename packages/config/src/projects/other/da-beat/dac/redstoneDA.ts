@@ -82,9 +82,6 @@ export const redstoneDA: DaLayer = {
     ],
   },
   bridges: [redstoneDABridge],
-  usedIn: linkByDA({
-    layer: (layer) => layer === 'RedstoneDA',
-  }),
   risks: {
     economicSecurity: DaEconomicSecurityRisk.DAChallengesNoFunds,
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,

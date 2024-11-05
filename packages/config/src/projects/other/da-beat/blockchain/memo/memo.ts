@@ -3,7 +3,6 @@ import { NO_BRIDGE } from '../../templates/no-bridge-template'
 import { DaEconomicSecurityRisk } from '../../types/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
 import { DaLayer } from '../../types/DaLayer'
-import { linkByDA } from '../../utils/link-by-da'
 
 export const memo: DaLayer = {
   id: 'memo',
@@ -90,9 +89,6 @@ export const memo: DaLayer = {
       layer: 'MEMO',
     }),
   ],
-  usedIn: linkByDA({
-    layer: (layer) => layer === 'MEMO',
-  }),
   pruningWindow: 0,
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('MEMO'),

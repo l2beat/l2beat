@@ -58,7 +58,6 @@ export const fraxtalDA: DaLayer = {
     ],
   },
   bridges: [fraxtalDABridge],
-  usedIn: [...toUsedInProject([fraxtal])],
   risks: {
     economicSecurity: DaEconomicSecurityRisk.Unknown,
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,

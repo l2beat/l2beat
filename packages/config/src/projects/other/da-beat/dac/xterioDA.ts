@@ -83,9 +83,6 @@ export const xterioDA: DaLayer = {
     ],
   },
   bridges: [xterioDABridge],
-  usedIn: linkByDA({
-    layer: (layer) => layer === 'XterioDA',
-  }),
   risks: {
     economicSecurity: DaEconomicSecurityRisk.DAChallengesNoFunds,
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,

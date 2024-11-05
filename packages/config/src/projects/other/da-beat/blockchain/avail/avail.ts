@@ -5,7 +5,6 @@ import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
 import { DaLayer } from '../../types/DaLayer'
 import { DasErasureCodingProof } from '../../types/DasErasureCodingProof'
 import { DasErasureCodingScheme } from '../../types/DasErasureCodingScheme'
-import { linkByDA } from '../../utils/link-by-da'
 import { vector } from './bridges/vector'
 
 export const avail: DaLayer = {
@@ -112,9 +111,6 @@ export const avail: DaLayer = {
     }),
     vector,
   ],
-  usedIn: linkByDA({
-    layer: (layer) => layer === 'Avail',
-  }),
   /*
     Node params sources:
   */
