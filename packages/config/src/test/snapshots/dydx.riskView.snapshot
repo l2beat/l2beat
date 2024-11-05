@@ -21,11 +21,11 @@
     value: "Canonical"
   }
   exitWindow: {
-    definingMetric: -432000
-    description: "There is no exit window. Upgrades have a 9d delay, (or 2d if shortened by the Priority Controller), but withdrawals can be censored for up to 14d."
+    definingMetric: 172800
+    description: "There is a 9d exit window (or 2d if shortened by the Priority Controller)."
     secondLine: undefined
     sentiment: "bad"
-    value: "None"
+    value: "9d"
   }
   proposerFailure: {
     definingMetric: Infinity
