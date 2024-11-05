@@ -9,6 +9,9 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('kinto')
 
+// Validators: https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/kinto-validators
+// SC: https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/security-council
+
 export const kinto: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1695735468), // 2023-09-26T13:37:48Z
   discovery,
@@ -74,7 +77,7 @@ export const kinto: Layer2 = orbitStackL2({
       stage1: {
         stateVerificationOnL1: true,
         fraudProofSystemAtLeast5Outsiders: true,
-        usersHave7DaysToExit: true,
+        usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,
       },
