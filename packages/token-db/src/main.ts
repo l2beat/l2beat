@@ -159,4 +159,5 @@ await Promise.all([
   canonical.start(),
   deployment.start(),
   onChainMetadata.start(),
+  tokenMetaAggregator.start(),
 ])

@@ -476,6 +476,7 @@ export const PROPOSER_SELF_PROPOSE_ROOTS: ScalingProjectRiskViewEntry = {
   description:
     'Anyone can be a Proposer and propose new roots to the L1 bridge.',
   sentiment: 'good',
+  definingMetric: 0,
 }
 
 export function EXIT_WINDOW(

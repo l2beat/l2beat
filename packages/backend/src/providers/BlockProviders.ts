@@ -2,6 +2,7 @@ import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import {
   BlockIndexerClient,
   BlockProvider,
+  FuelClient,
   HttpClient,
   HttpClient2,
   RetryHandler,
@@ -27,6 +28,7 @@ export class BlockProviders {
     readonly loopringClient: LoopringClient | undefined,
     readonly degateClient: DegateClient | undefined,
     readonly starkexClient: StarkexClient | undefined,
+    readonly fuelClient: FuelClient | undefined,
     private readonly indexerClients: BlockIndexerClient[],
   ) {}
 
@@ -69,6 +71,11 @@ export class BlockProviders {
         const blockClients = [this.degateClient]
         return new BlockTimestampProvider({ indexerClients, blockClients })
       }
+      case 'fuel': {
+        assert(this.fuelClient, 'fuelClient should be defined')
+        const blockClients = [this.fuelClient]
+        return new BlockTimestampProvider({ indexerClients, blockClients })
+      }
       case 'starkex': {
         throw new Error('Starkex should not be handled with this method')
       }
@@ -84,6 +91,7 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
   let loopringClient: LoopringClient | undefined
   let degateClient: DegateClient | undefined
   let starkexClient: StarkexClient | undefined
+  let fuelClient: FuelClient | undefined
 
   const evmClients: RpcClient2[] = []
   const indexerClients: BlockIndexerClient[] = []
@@ -113,13 +121,13 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
         // TODO: handle multiple urls
         const rpcClient = new RpcClient2({
           url: project.config.url,
+          chain: project.id,
           http: http2,
           rateLimiter: new RateLimiter({
             callsPerMinute: project.config.callsPerMinute,
           }),
           retryHandler,
           logger,
-          chain: project.id,
         })
 
         evmClients.push(rpcClient)
@@ -159,6 +167,18 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
         })
         break
       }
+      case 'fuel': {
+        fuelClient = new FuelClient({
+          url: project.config.url,
+          http: http2,
+          rateLimiter: new RateLimiter({
+            callsPerMinute: project.config.callsPerMinute,
+          }),
+          retryHandler: RetryHandler.RELIABLE_API(logger),
+          logger,
+        })
+        break
+      }
       default:
         assertUnreachable(project.config)
     }
@@ -172,6 +192,7 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
     loopringClient,
     degateClient,
     starkexClient,
+    fuelClient,
     indexerClients,
   )
 }

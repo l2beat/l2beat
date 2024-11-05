@@ -1,9 +1,5 @@
-import { Logger } from '@l2beat/backend-tools'
-import {
-  EthereumAddress,
-  RateLimiter,
-  getErrorMessage,
-} from '@l2beat/shared-pure'
+import { Logger, RateLimiter } from '@l2beat/backend-tools'
+import { EthereumAddress, getErrorMessage } from '@l2beat/shared-pure'
 import { HttpClient } from '../HttpClient'
 import {
   BlockscoutGetInternalTransactionsResponse,

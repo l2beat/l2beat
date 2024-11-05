@@ -1,4 +1,4 @@
-import { OklchColor } from './utils/color'
+import { ApiAddressType } from '../../api/types'
 
 export interface State {
   readonly projectId: string
@@ -21,11 +21,7 @@ export interface State {
     readonly mouseX: number
     readonly mouseY: number
   }
-  readonly resizingNode?: {
-    readonly id: string
-    readonly initialWidth: number
-    readonly startX: number
-  }
+  readonly resizingNode?: string
   readonly mouseUpAction?: DeselectOne | DeselectAllBut
   readonly mouseMoveAction?:
     | 'drag'
@@ -42,10 +38,11 @@ export interface State {
 export interface Node {
   readonly id: string
   readonly address: string
+  readonly addressType: ApiAddressType
   readonly name: string
   readonly fields: Field[]
   readonly box: Box
-  readonly color: OklchColor
+  readonly color: number
   readonly data: unknown
 }
 

@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x8483bbf95a3ed8086bc55eb5f4385fe61e98fd9b
+
+# Diff at Fri, 01 Nov 2024 15:08:38 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@cd1f0e71bb08ce16b2084a11b768538e8aa6ba8c block: 267471405
+- current block number: 269950572
+
+## Description
+
+Discovery refresh to apply template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 267471405 (main branch discovery), not current.
+
+```diff
+    contract Outbox (0x91591BB66075BCfF94AA128B003134165C3Ab83a) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      template:
++        "orbitstack/Outbox"
+      description:
++        "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1."
+    }
+```
+
 Generated with discovered.json: 0x799ea2de949f357bd146de637e52bdec75f9af48
 
 # Diff at Tue, 29 Oct 2024 13:22:22 GMT:

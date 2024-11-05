@@ -28,6 +28,7 @@ export function getFullySyncedCostsRange(
   return [start, end]
 }
 
+export type CostsResolution = ReturnType<typeof rangeToResolution>
 export function rangeToResolution(value: CostsTimeRange) {
   const days = rangeToDays(value)
   if (days < 30) {

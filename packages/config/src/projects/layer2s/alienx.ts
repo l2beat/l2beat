@@ -35,7 +35,7 @@ export const alienx: Layer2 = orbitStackL2({
       address: EthereumAddress('0x5625d2a46fc582b3e6dE5288D9C5690B20EBdb8D'),
       tokens: '*',
       description:
-        'DApp Contract storing bounties fundsMain entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
+        'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
     }),
   ],
   rpcUrl: 'https://rpc.alienxchain.io/http',

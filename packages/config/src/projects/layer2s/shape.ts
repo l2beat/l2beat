@@ -12,8 +12,6 @@ export const shape: Layer2 = opStackL2({
   discovery,
   usesBlobs: true,
   display: {
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     name: 'Shape',
     slug: 'shape',
     description:

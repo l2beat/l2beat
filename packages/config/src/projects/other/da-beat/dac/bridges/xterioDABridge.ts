@@ -1,10 +1,9 @@
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
 import { xterio } from '../../../../layer2s/xterio'
 import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../../types'
 import { DaBridge } from '../../types/DaBridge'
 import { DaRelayerFailureRisk } from '../../types/DaRelayerFailureRisk'
-import { DacTransactionDataType } from '../../types/DacTransactionDataType'
 import { toUsedInProject } from '../../utils/to-used-in-project'
 
 const discovery = new ProjectDiscovery('xterio')
@@ -17,10 +16,10 @@ const sequencerInbox = discovery.getContractValue<string>(
 export const xterioDABridge = {
   id: 'xterioDABridge',
   createdAt: new UnixTime(1723022143), // 2024-04-03T10:08:59Z
-  type: 'DAC',
+  type: 'NoBridge',
   display: {
-    name: 'Xterio DA',
-    slug: 'dac',
+    name: 'DA Bridge',
+    slug: 'da',
     description:
       'There is EOA on Ethereum acting as a DA bridge to receive data availability commitments.',
     links: {
@@ -94,10 +93,6 @@ export const xterioDABridge = {
       },
     ],
   },
-  chain: ChainId.ETHEREUM,
-  transactionDataType: DacTransactionDataType.TransactionData,
-  requiredMembers: 1,
-  membersCount: 1,
   usedIn: toUsedInProject([xterio]),
   risks: {
     committeeSecurity: DaCommitteeSecurityRisk.NoCommiteeSecurity(),

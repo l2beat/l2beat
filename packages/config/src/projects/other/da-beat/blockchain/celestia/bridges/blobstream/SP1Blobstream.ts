@@ -202,6 +202,7 @@ export const SP1Blobstream = CELESTIA_BLOBSTREAM({
           'Blobstream',
           'GUARDIAN_ROLE',
         ),
+        fromRole: true,
       },
     ],
     arbitrum: [

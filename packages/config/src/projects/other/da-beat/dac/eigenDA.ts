@@ -3,7 +3,6 @@ import { donatuz } from '../../../layer3s/donatuz'
 import { NO_BRIDGE } from '../templates/no-bridge-template'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
 import { DaLayer } from '../types/DaLayer'
-import { linkByDA } from '../utils/link-by-da'
 import { toUsedInProject } from '../utils/to-used-in-project'
 import { eigenDAbridge } from './bridges/eigenDABridge'
 
@@ -83,9 +82,7 @@ export const eigenDA: DaLayer = {
     }),
     eigenDAbridge,
   ],
-  usedIn: linkByDA({
-    layer: (layer) => layer === 'EigenDA',
-  }),
+  usedIn: [...toUsedInProject([donatuz])],
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('EIGEN'),
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,

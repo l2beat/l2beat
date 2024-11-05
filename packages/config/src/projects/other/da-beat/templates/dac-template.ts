@@ -43,6 +43,7 @@ type Optionals = {
     | 'membersCount'
     | 'knownMembers'
     | 'requiredMembers'
+    | 'hideMembers'
     | 'permissions'
     | 'contracts'
     | 'transactionDataType'
@@ -86,7 +87,7 @@ export function DAC(template: TemplateVars): DacDaLayer {
   `
 
   const bridgeDisplay: DacBridge['display'] = {
-    name,
+    name: 'DA Bridge',
     slug: 'dac',
     description: bridgeDescription,
     warning: template.warning,

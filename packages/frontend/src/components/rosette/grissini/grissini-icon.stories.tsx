@@ -99,3 +99,32 @@ export const Italian: Story = {
     ],
   },
 }
+
+export const NoBridge: Story = {
+  args: {
+    values: [
+      {
+        name: '',
+        sentiment: 'good',
+        value: '',
+        description: undefined,
+        warning: undefined,
+      },
+      {
+        name: '',
+        sentiment: 'good',
+        value: '',
+        description: undefined,
+        warning: undefined,
+      },
+      {
+        name: '',
+        sentiment: 'good',
+        value: '',
+        description: undefined,
+        warning: undefined,
+      },
+    ],
+    hasNoBridge: true,
+  },
+}

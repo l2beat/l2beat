@@ -1,5 +1,5 @@
 import { createDatabase } from '@l2beat/database'
-import { UpsertableNetworkRecord } from '@l2beat/database/src/token-db/network/entity.js'
+import { type UpsertableNetworkRecord } from '@l2beat/database'
 import { notUndefined } from '@l2beat/shared-pure'
 import intersectionWith from 'lodash/intersectionWith.js'
 import { nanoid } from 'nanoid'

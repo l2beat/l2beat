@@ -4,6 +4,10 @@ import { ChildIndexer, Retries } from '@l2beat/uif'
 import { mean } from 'lodash'
 
 import { Database, FinalityRecord } from '@l2beat/database'
+import {
+  batchToTimeToInclusionDelays,
+  batchesToStateUpdateDelays,
+} from './analyzers/types/BaseAnalyzer'
 import { FinalityConfig } from './types/FinalityConfig'
 
 const UPDATE_RETRY_STRATEGY = Retries.exponentialBackOff({
@@ -96,19 +100,21 @@ export class FinalityIndexer extends ChildIndexer {
 
     const from = to.add(-1, 'days')
 
-    const inclusionDelays = await timeToInclusion.analyzeInterval(from, to)
-
-    if (!inclusionDelays) {
+    const t2iBatches = await timeToInclusion.analyzeInterval(from, to)
+    if (!t2iBatches) {
       return
     }
 
-    const averageTimeToInclusion = Math.round(mean(inclusionDelays))
+    const t2iDelay = t2iBatches.flatMap((batch) =>
+      batchToTimeToInclusionDelays(batch),
+    )
+    const averageTimeToInclusion = Math.round(mean(t2iDelay))
     const baseResult = {
       projectId: configuration.projectId,
       timestamp: to,
 
-      minimumTimeToInclusion: Math.min(...inclusionDelays),
-      maximumTimeToInclusion: Math.max(...inclusionDelays),
+      minimumTimeToInclusion: Math.min(...t2iDelay),
+      maximumTimeToInclusion: Math.max(...t2iDelay),
       averageTimeToInclusion,
     }
 
@@ -124,12 +130,12 @@ export class FinalityIndexer extends ChildIndexer {
       `State update analyzer is not defined for ${configuration.projectId}, update module or set state update mode to 'disabled'`,
     )
 
-    const stateUpdateDelays = await stateUpdate.analyzeInterval(from, to)
-
-    if (!stateUpdateDelays) {
+    const suBatches = await stateUpdate.analyzeInterval(from, to)
+    if (!suBatches) {
       return
     }
 
+    const stateUpdateDelays = batchesToStateUpdateDelays(t2iBatches, suBatches)
     return {
       ...baseResult,
       averageStateUpdate:

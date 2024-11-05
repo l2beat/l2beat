@@ -1,6 +1,11 @@
 {
   "ethereum": [
     {
+      "symbol": "MOON",
+      "coingeckoId": "moonflow",
+      "address": "0x4a52Fa1a1115814c59C643F53f14199b8fb11cEa"
+    },
+    {
       "symbol": "LsETH",
       "category": "ether",
       "address": "0x8c1BEd5b9a0928467c9B1341Da1D7BD5e10b6549"
@@ -1225,12 +1230,6 @@
     {
       "symbol": "SRM",
       "address": "0x476c5E26a75bd202a9683ffD34359C0CC15be0fF"
-    },
-    {
-      "symbol": "ybETH",
-      "category": "ether",
-      "address": "0x76bf2D1e6dFda645c0c17440B17Eccc181dfC351",
-      "coingeckoId": "veno-eth" // ybETH price currently is not on CG
     },
     {
       "symbol": "STARL",
@@ -3073,6 +3072,35 @@
   ],
   "mantle": [
     {
+      "symbol": "COOK",
+      "address": "0x9F0C013016E8656bC256f948CD4B79ab25c7b94D",
+      "source": "external",
+      "supply": "circulatingSupply", // the OFT adapter is on ethereum but vesting is on mantle
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "cmETH",
+      "address": "0xE6829d9a7eE3040e1276Fa75293Bde931859e8fA",
+      "category": "ether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "CATI",
       "address": "0x1Bdd8878252DaddD3Af2ba30628813271294eDc0",
       "source": "native",
@@ -4477,6 +4505,36 @@
       "supply": "totalSupply",
       "excludeFromTotal": true,
       "coingeckoId": "tether"
+    }
+  ],
+  "cronoszkevm": [
+    {
+      "symbol": "vUSD",
+      "address": "0x5b91e29Ae5A71d9052620Acb813d5aC25eC7a4A2",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Veno.finance"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "vETH",
+      "address": "0x271602A97027ee1dd03b1E6e5dB153eB659A80b1",
+      "category": "ether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Veno.finance"
+          }
+        ]
+      }
     }
   ]
 }
