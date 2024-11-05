@@ -7,13 +7,13 @@ import {
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
+import { getCommonScalingEntry } from '../get-common-scaling-entry'
+import { orderByStageAndPastDayTps } from '../utils/order-by-stage-and-past-day-tps'
 import {
   type ActivityProjectTableData,
   getActivityTableData,
 } from './get-activity-table-data'
 import { getActivityProjects } from './utils/get-activity-projects'
-import { getCommonScalingEntry } from '../get-common-scaling-entry'
-import { orderByStageAndPastDayTps } from '../utils/order-by-stage-and-past-day-tps'
 
 type ActivityProject = Layer2 | Layer3
 
