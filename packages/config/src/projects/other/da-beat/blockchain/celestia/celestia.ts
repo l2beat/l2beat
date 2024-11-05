@@ -129,8 +129,7 @@ export const celestia: DaLayer = {
   pruningWindow: 86400 * 30, // 30 days in seconds
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
-    fraudDetection:
-      DaFraudDetectionRisk.CelestiaDasWithNoBlobsReconstruction(true),
+    fraudDetection: DaFraudDetectionRisk.DasWithNoBlobsReconstruction(true),
   },
   economicSecurity: {
     type: 'Celestia',
