@@ -113,7 +113,7 @@ export function LogoGenerator({ projects }: Props) {
           />
         </div>
       </div>
-      <div className="mt-10 flex flex-wrap gap-1">
+      <div className="mt-6 flex flex-wrap gap-1 bg-pure-white p-4">
         {firstGroup.map((project) => (
           <Image
             key={project.slug}
@@ -129,27 +129,29 @@ export function LogoGenerator({ projects }: Props) {
           />
         ))}
       </div>
-      <div className="mt-10 flex flex-wrap gap-1">
-        {secondGroup.map((project) => (
-          <Image
-            key={project.slug}
-            src={`/icons/${project.slug}.png`}
-            alt={project.name}
-            width={128}
-            height={128}
-            className="cursor-pointer"
-            style={{ borderRadius, width: size, height: size }}
-            onClick={() =>
-              setSecondGroupValue((exclude) => {
-                const slugs = exclude
-                  .split(',')
-                  .filter((s) => s.trim() !== project.slug)
-                return slugs.join(',')
-              })
-            }
-          />
-        ))}
-      </div>
+      {secondGroup.length !== 0 && (
+        <div className="mt-6 flex flex-wrap gap-1 bg-pure-white p-4">
+          {secondGroup.map((project) => (
+            <Image
+              key={project.slug}
+              src={`/icons/${project.slug}.png`}
+              alt={project.name}
+              width={128}
+              height={128}
+              className="cursor-pointer"
+              style={{ borderRadius, width: size, height: size }}
+              onClick={() =>
+                setSecondGroupValue((exclude) => {
+                  const slugs = exclude
+                    .split(',')
+                    .filter((s) => s.trim() !== project.slug)
+                  return slugs.join(',')
+                })
+              }
+            />
+          ))}
+        </div>
+      )}
     </div>
   )
 }

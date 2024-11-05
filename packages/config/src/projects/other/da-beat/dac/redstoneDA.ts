@@ -27,6 +27,7 @@ export const redstoneDA: DaLayer = {
   type: 'DaLayer',
   kind: 'No DAC',
   systemCategory: 'custom',
+  fallback: 'Ethereum (calldata)',
   display: {
     name: 'RedstoneDA',
     slug: 'redstone',
@@ -59,6 +60,16 @@ export const redstoneDA: DaLayer = {
     The system is not secure if the malicious sequencer is able to outspend the altruistic challengers. 
     If instead, after a challenge, the preimage data is not published, the chain reorgs to the last fully derivable state.
   `,
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: `the sequencer posts an invalid data availability commitment and there are no challengers.`,
+      },
+      {
+        category: 'Funds can be lost if',
+        text: `the sequencer posts an invalid data availability commitment, and he is able to outspend the challengers.`,
+      },
+    ],
   },
   bridges: [redstoneDABridge],
   usedIn: linkByDA({

@@ -1,6 +1,4 @@
-// Make sure it follows packages/protocolbeat/src/discovery-ui/api/types.ts
-// If you find that you are changing this file often consider moving both
-// of those files into a single shared package.
+// This file is duplicated in protocolbeat and l2b!
 
 export type ApiProjectsResponse = ApiProjectEntry[]
 
@@ -17,26 +15,35 @@ export interface ApiProjectChain {
   name: string
   initialContracts: ApiProjectContract[]
   discoveredContracts: ApiProjectContract[]
-  ignoredContracts: ApiAddressEntry[]
   eoas: ApiAddressEntry[]
 }
 
+export type ApiAddressType =
+  | 'EOA'
+  | 'Unverified'
+  | 'Token'
+  | 'Multisig'
+  | 'Diamond'
+  | 'Timelock'
+  | 'Contract'
+  | 'Unknown'
+
 export interface ApiAddressEntry {
   name?: string
-  type:
-    | 'EOA'
-    | 'Unverified'
-    | 'Token'
-    | 'Multisig'
-    | 'Diamond'
-    | 'Timelock'
-    | 'Contract'
+  description?: string
+  type: ApiAddressType
+  referencedBy: AddressFieldValue[]
   address: string
 }
 
 export interface Field {
   name: string
   value: FieldValue
+  ignoreInWatchMode?: boolean
+  ignoreRelatives?: boolean
+  handler?: { type: string } & Record<string, unknown>
+  description?: string
+  severity?: 'HIGH' | 'MEDIUM' | 'LOW'
 }
 
 export type FieldValue =
@@ -48,10 +55,12 @@ export type FieldValue =
   | ArrayFieldValue
   | ObjectFieldValue
   | UnknownFieldValue
+  | ErrorFieldValue
 
 export interface AddressFieldValue {
   type: 'address'
   name?: string
+  addressType: ApiAddressType
   address: string
 }
 
@@ -90,8 +99,20 @@ export interface UnknownFieldValue {
   value: string
 }
 
+export interface ErrorFieldValue {
+  type: 'error'
+  error: string
+}
+
 export interface ApiProjectContract extends ApiAddressEntry {
+  template?: string
   fields: Field[]
+  abis: ApiAbi[]
+}
+
+export interface ApiAbi {
+  address: string
+  entries: string[]
 }
 
 export interface ApiCodeResponse {

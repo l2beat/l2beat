@@ -3,7 +3,7 @@ import {
   type DaLayer,
   type ScalingProjectRisk,
 } from '@l2beat/config'
-import { type RiskSummarySectionProps } from '~/components/projects/sections/risk-summary-section'
+import { type DaRiskSummarySectionProps } from '~/components/projects/sections/da-risk-summary-section'
 import { type ProjectSectionProps } from '~/components/projects/sections/types'
 import { groupRisks } from '~/utils/project/risk-summary/group-risks'
 
@@ -11,18 +11,14 @@ export function getDaProjectRiskSummarySection(
   layer: DaLayer,
   bridge: DaBridge,
   isVerified: boolean,
-): Omit<RiskSummarySectionProps, keyof ProjectSectionProps> {
-  const sections = [
+): Omit<DaRiskSummarySectionProps, keyof ProjectSectionProps> {
+  const bridgeSections = [
     {
-      id: 'contracts',
+      id: 'da-bridge-contracts',
       value:
         bridge.type === 'OnChainBridge' || bridge.type === 'DAC'
           ? bridge.contracts
           : { risks: [] },
-    },
-    {
-      id: 'da-layer-technology',
-      value: layer.technology,
     },
     {
       id: 'da-bridge-technology',
@@ -30,16 +26,38 @@ export function getDaProjectRiskSummarySection(
     },
   ]
 
-  const risks: (ScalingProjectRisk & { referencedId: string })[] = []
+  const layerSections = [
+    {
+      id: 'da-layer-technology',
+      value: layer.technology,
+    },
+  ]
 
-  for (const { id, value } of sections) {
+  const layerRisks: (ScalingProjectRisk & { referencedId: string })[] = []
+
+  for (const { id, value } of layerSections) {
     if (value.risks) {
-      risks.push(...value.risks.map((x) => ({ ...x, referencedId: id })))
+      layerRisks.push(...value.risks.map((x) => ({ ...x, referencedId: id })))
+    }
+  }
+
+  const bridgeRisks: (ScalingProjectRisk & { referencedId: string })[] = []
+
+  for (const { id, value } of bridgeSections) {
+    if (value.risks) {
+      bridgeRisks.push(...value.risks.map((x) => ({ ...x, referencedId: id })))
     }
   }
 
   return {
-    riskGroups: groupRisks(risks),
+    layer: {
+      name: layer.display.name,
+      risks: groupRisks(layerRisks),
+    },
+    bridge: {
+      name: bridge.display.name,
+      risks: groupRisks(bridgeRisks),
+    },
     warning: bridge.display.warning,
     isVerified,
     redWarning: undefined,

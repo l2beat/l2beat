@@ -1,5 +1,4 @@
 import { Node } from '../State'
-import { OklchColor } from '../utils/color'
 import type { NodeLocations } from '../utils/storage'
 
 export interface Actions {
@@ -11,7 +10,7 @@ export interface Actions {
   onWheel: (event: WheelEvent, view: HTMLElement) => void
 
   loadNodes: (projectId: string, nodes: Node[]) => void
-  colorSelected: (color: OklchColor) => void
+  colorSelected: (color: number) => void
   layout: (locations: NodeLocations) => void
   hideSelected: () => void
   showHidden: () => void
