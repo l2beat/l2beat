@@ -14,3 +14,8 @@ export const DegateResponse = z.object({
   code: DegateCode,
   data: DegateData,
 })
+
+export const DegateError = z.object({
+  code: z.number().gt(0),
+  message: z.string(),
+})
