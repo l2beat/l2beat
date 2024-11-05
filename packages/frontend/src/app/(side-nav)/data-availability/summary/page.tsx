@@ -7,6 +7,10 @@ import {
 } from '~/components/core/directory-tabs'
 import { MainPageHeader } from '~/components/main-page-header'
 import { getDaSummaryEntries } from '~/server/features/data-availability/summary/get-da-summary-entries'
+import {
+  CustomSystemInfo,
+  PublicSystemInfo,
+} from '../_components/da-category-info'
 import { groupBySystem } from '../_utils/group-by-system'
 import { DaSummaryCustomTable } from './_components/table/da-summary-custom-table'
 import { DaSummaryPublicTable } from './_components/table/da-summary-public-table'
@@ -29,9 +33,11 @@ export default async function Page() {
             </DirectoryTabsTrigger>
           </DirectoryTabsList>
           <DirectoryTabsContent value="public">
+            <PublicSystemInfo />
             <DaSummaryPublicTable items={publicSystems} />
           </DirectoryTabsContent>
           <DirectoryTabsContent value="custom">
+            <CustomSystemInfo />
             <DaSummaryCustomTable items={customSystems} />
           </DirectoryTabsContent>
         </DirectoryTabs>

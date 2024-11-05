@@ -7,6 +7,10 @@ import {
 } from '~/components/core/directory-tabs'
 import { MainPageHeader } from '~/components/main-page-header'
 import { getDaRiskEntries } from '~/server/features/data-availability/risks/get-da-risk-entries'
+import {
+  CustomSystemInfo,
+  PublicSystemInfo,
+} from '../_components/da-category-info'
 import { groupBySystem } from '../_utils/group-by-system'
 import { DaRiskTable } from './_components/table/da-risk-table'
 
@@ -28,9 +32,11 @@ export default async function Page() {
             </DirectoryTabsTrigger>
           </DirectoryTabsList>
           <DirectoryTabsContent value="public">
+            <PublicSystemInfo />
             <DaRiskTable items={publicSystems} />
           </DirectoryTabsContent>
           <DirectoryTabsContent value="custom">
+            <CustomSystemInfo />
             <DaRiskTable items={customSystems} excludeBridge />
           </DirectoryTabsContent>
         </DirectoryTabs>
