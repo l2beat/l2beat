@@ -327,7 +327,7 @@ export const taiko: Layer2 = {
           'This contract manages the rollup addresses list, allowing to set the address for a specific chainId-name pair.',
         ...upgradesTaikoMultisig,
       }),
-      discovery.getContractDetails('TierRouter', {
+      discovery.getContractDetails('MainnetTierRouter', {
         description:
           'Contract allowing for granular control of which TierProvider to apply to a specific block. Currently, the TierProvider is hardcoded as an address for all blocks. Can be changed through L1RollupAddressManager.',
       }),
