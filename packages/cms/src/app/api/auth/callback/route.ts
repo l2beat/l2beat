@@ -17,9 +17,6 @@ const claimsSchema = z.object({
   picture: z.string().optional(),
 })
 
-// 12 hours
-const expiresAt = new Date(Date.now() + 1000 * 60 * 60 * 12)
-
 export async function GET(request: Request): Promise<Response> {
   const url = new URL(request.url)
   const code = url.searchParams.get('code')
@@ -82,6 +79,9 @@ export async function GET(request: Request): Promise<Response> {
       },
     })
   }
+
+  // 12 hours
+  const expiresAt = new Date(Date.now() + 1000 * 60 * 60 * 12)
 
   await setSession(
     {
