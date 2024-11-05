@@ -13,7 +13,7 @@ const claimsSchema = z.object({
   email: z.string().email(),
   email_verified: z.boolean(),
   name: z.string(),
-  picture: z.string(),
+  picture: z.string().optional(),
 })
 
 // 12 hours
