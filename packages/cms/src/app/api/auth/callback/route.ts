@@ -1,6 +1,6 @@
-import { google } from '~/server/auth/google'
-import { cookies } from 'next/headers'
 import { decodeIdToken } from 'arctic'
+import { cookies } from 'next/headers'
+import { google } from '~/server/auth/google'
 
 import type { OAuth2Tokens } from 'arctic'
 import { z } from 'zod'

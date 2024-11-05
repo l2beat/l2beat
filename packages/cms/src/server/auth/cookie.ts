@@ -1,7 +1,7 @@
+import * as jose from 'jose'
 import { cookies } from 'next/headers'
 import { env } from '~/env'
-import { sessionSchema, type Session } from './session'
-import * as jose from 'jose'
+import { type Session, sessionSchema } from './session'
 
 export async function setSession(
   session: Session,

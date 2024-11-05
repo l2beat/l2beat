@@ -20,7 +20,10 @@ export const env = createEnv({
       .optional()
       .default('l2beat.com')
       .transform((v) => v.split(',').map((v) => v.trim())),
-    JWT_SECRET: z.string().regex(/^[a-f0-9]{64}$/).optional()
+    JWT_SECRET: z
+      .string()
+      .regex(/^[a-f0-9]{64}$/)
+      .optional(),
   },
 
   /**
