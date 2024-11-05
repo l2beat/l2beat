@@ -75,7 +75,7 @@ export function FieldValueDisplay({
   } else if (value.type === 'array') {
     if (value.values.length !== 0) {
       blockDisplay = (
-        <ol className="list-decimal pl-4 marker:text-coffee-600">
+        <ol start={0} className="list-decimal pl-4 marker:text-coffee-600">
           {value.values.map((value, i) => (
             <FieldValueDisplay key={i} value={value} />
           ))}
@@ -103,25 +103,25 @@ export function FieldValueDisplay({
     inlineDisplay = `Error: ${value.error}`
   }
 
-  if (!topLevel) {
+  if (topLevel) {
     return (
-      <li className="text-sm">
-        {name && (
-          <div className="grid grid-cols-[auto_1fr] items-baseline gap-x-2">
-            <p className="w-max font-mono text-xs">{name}:</p>
-            {inlineDisplay}
-          </div>
-        )}
-        {!name && inlineDisplay && <div>{inlineDisplay}</div>}
+      <>
+        {inlineDisplay && <div>{inlineDisplay}</div>}
         {blockDisplay}
-      </li>
+      </>
     )
   }
 
   return (
-    <div>
-      {inlineDisplay && <div>{inlineDisplay}</div>}
+    <li className="text-sm">
+      {name && (
+        <div className="grid grid-cols-[auto_1fr] items-baseline gap-x-2">
+          <p className="w-max font-mono text-xs">{name}:</p>
+          {inlineDisplay}
+        </div>
+      )}
+      {!name && inlineDisplay && <div>{inlineDisplay}</div>}
       {blockDisplay}
-    </div>
+    </li>
   )
 }
