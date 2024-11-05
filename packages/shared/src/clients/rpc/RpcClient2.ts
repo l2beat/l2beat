@@ -64,7 +64,10 @@ export class RpcClient2 extends ClientCore {
     })
   }
 
-  override validateResponse(response: json): boolean {
+  override validateResponse(response: json): {
+    success: boolean
+    message?: string
+  } {
     const parsedError = RPCError.safeParse(response)
 
     if (parsedError.success) {
@@ -72,10 +75,10 @@ export class RpcClient2 extends ClientCore {
       this.$.logger.warn(`Response validation error`, {
         ...parsedError.data.error,
       })
-      return false
+      return { success: false }
     }
 
-    return true
+    return { success: true }
   }
 
   get chain() {

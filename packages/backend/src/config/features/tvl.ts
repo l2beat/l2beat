@@ -51,7 +51,6 @@ export function getTvlConfig(
     amounts: getTvlAmountsConfig(projects),
     prices: getTvlPricesConfig(minTimestampOverride),
     chains: chainConfigs,
-    coingeckoApiKey: env.optionalString(['COINGECKO_API_KEY']),
     chainConverter,
     maxTimestampsToAggregateAtOnce: env.integer(
       'MAX_TIMESTAMPS_TO_AGGREGATE_AT_ONCE',

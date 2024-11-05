@@ -1,4 +1,3 @@
-import { Logger } from '@l2beat/backend-tools'
 import { ConfigMapping, createAmountId } from '@l2beat/config'
 import {
   assert,
@@ -11,15 +10,13 @@ import { ChainTvlConfig, TvlConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
-import { IndexerService } from '../../../tools/uif/IndexerService'
 import { BlockTimestampIndexer } from '../indexers/BlockTimestampIndexer'
 import { DescendantIndexer } from '../indexers/DescendantIndexer'
 import { ElasticChainIndexer } from '../indexers/ElasticChainIndexer'
 import { ValueIndexer } from '../indexers/ValueIndexer'
 import { ElasticChainAmountConfig } from '../indexers/types'
 import { ElasticChainService } from '../services/ElasticChainService'
-import { ValueService } from '../services/ValueService'
-import { SyncOptimizer } from '../utils/SyncOptimizer'
+import { TvlDependencies } from './TvlDependencies'
 
 interface ElasticChainModule {
   start: () => Promise<void> | void
@@ -27,14 +24,48 @@ interface ElasticChainModule {
 
 export function initElasticChainModule(
   config: TvlConfig,
-  logger: Logger,
   peripherals: Peripherals,
-  syncOptimizer: SyncOptimizer,
-  indexerService: IndexerService,
+  dependencies: TvlDependencies,
   configMapping: ConfigMapping,
   descendantPriceIndexer: DescendantIndexer,
   blockTimestampIndexers?: Map<string, BlockTimestampIndexer>,
 ): ElasticChainModule | undefined {
+  const { dataIndexers, valueIndexers } = createIndexers(
+    config,
+    peripherals,
+    dependencies,
+    configMapping,
+    descendantPriceIndexer,
+    blockTimestampIndexers,
+  )
+  if (dataIndexers.length === 0) return undefined
+
+  return {
+    start: async () => {
+      for (const dataIndexer of dataIndexers) {
+        await dataIndexer.start()
+      }
+
+      for (const valueIndexer of valueIndexers) {
+        await valueIndexer.start()
+      }
+    },
+  }
+}
+
+function createIndexers(
+  config: TvlConfig,
+  peripherals: Peripherals,
+  dependencies: TvlDependencies,
+  configMapping: ConfigMapping,
+  descendantPriceIndexer: DescendantIndexer,
+  blockTimestampIndexers?: Map<string, BlockTimestampIndexer>,
+) {
+  const logger = dependencies.logger
+  const indexerService = dependencies.getIndexerService()
+  const syncOptimizer = dependencies.getSyncOptimizer()
+  const valueService = dependencies.getValueService()
+
   const dataIndexers: ElasticChainIndexer[] = []
   const valueIndexers: ValueIndexer[] = []
 
@@ -54,11 +85,25 @@ export function initElasticChainModule(
       continue
     }
 
-    const { elasticChainService, valueService } = createPeripherals(
-      peripherals,
-      chainConfig,
-      elasticChainAmountEntries,
-    )
+    const rpcClient = peripherals.getClient(RpcClient, {
+      url: chainConfig.config.providerUrl,
+      callsPerMinute: chainConfig.config.providerCallsPerMinute,
+      chain: chainConfig.chain,
+    })
+
+    const bridgeAddress = elasticChainAmountEntries.find(
+      (e) => e.type === 'elasticChainL2Token',
+    )?.l2BridgeAddress
+    assert(bridgeAddress, 'Bridge address not found')
+
+    const elasticChainService = new ElasticChainService({
+      rpcClient: rpcClient,
+      multicallClient: new MulticallClient(
+        rpcClient,
+        chainConfig.config.multicallConfig,
+      ),
+      bridgeAddress,
+    })
 
     const blockTimestampIndexer =
       blockTimestampIndexers && blockTimestampIndexers.get(chain)
@@ -121,19 +166,7 @@ export function initElasticChainModule(
     }
   }
 
-  if (dataIndexers.length === 0) return undefined
-
-  return {
-    start: async () => {
-      for (const dataIndexer of dataIndexers) {
-        await dataIndexer.start()
-      }
-
-      for (const valueIndexer of valueIndexers) {
-        await valueIndexer.start()
-      }
-    },
-  }
+  return { dataIndexers, valueIndexers }
 }
 
 function toConfigurations(
@@ -153,41 +186,6 @@ function toConfigurations(
     }),
   )
   return elasticChainAmountConfigurations
-}
-
-function createPeripherals(
-  peripherals: Peripherals,
-  chainConfig: ChainTvlConfig,
-  entries: ElasticChainAmountConfig[],
-) {
-  assert(chainConfig.config)
-
-  const rpcClient = peripherals.getClient(RpcClient, {
-    url: chainConfig.config.providerUrl,
-    callsPerMinute: chainConfig.config.providerCallsPerMinute,
-    chain: chainConfig.chain,
-  })
-
-  const bridgeAddress = entries.find(
-    (e) => e.type === 'elasticChainL2Token',
-  )?.l2BridgeAddress
-  assert(bridgeAddress, 'Bridge address not found')
-
-  const elasticChainService = new ElasticChainService({
-    rpcClient: rpcClient,
-    multicallClient: new MulticallClient(
-      rpcClient,
-      chainConfig.config.multicallConfig,
-    ),
-    bridgeAddress,
-  })
-
-  const valueService = new ValueService(peripherals.database)
-
-  return {
-    elasticChainService,
-    valueService,
-  }
 }
 
 function serializeConfiguration(

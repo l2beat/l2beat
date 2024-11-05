@@ -1,3 +1,4 @@
+import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import {
   CoingeckoId,
   EthereumAddress,
@@ -5,8 +6,8 @@ import {
   getHourlyTimestamps,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-
-import { HttpClient } from '../HttpClient'
+import { HttpClient2 } from '../../clients'
+import { RetryHandler } from '../../tools'
 import { CoingeckoClient } from './CoingeckoClient'
 import {
   CoingeckoQueryService,
@@ -625,8 +626,14 @@ describe.skip(CoingeckoQueryService.name + ' e2e tests', function () {
   const MAX_THRESHOLD_MINUTES = 25
   const EXPECTED_HOURLY_FAULT_RATIO = 0.15
 
-  const httpClient = new HttpClient()
-  const coingeckoClient = new CoingeckoClient(httpClient, undefined)
+  const http = new HttpClient2()
+  const coingeckoClient = new CoingeckoClient({
+    apiKey: undefined,
+    http,
+    retryHandler: RetryHandler.TEST,
+    logger: Logger.SILENT,
+    rateLimiter: RateLimiter.COINGECKO(),
+  })
   const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
 
   it('hourly', async () => {

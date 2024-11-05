@@ -63,4 +63,11 @@ export class RetryHandler {
     maxRetries: 1,
     maxRetryDelayMs: Infinity,
   })
+
+  static SCRIPT = new RetryHandler({
+    logger: Logger.SILENT,
+    initialRetryDelayMs: 1,
+    maxRetries: 3,
+    maxRetryDelayMs: Infinity,
+  })
 }

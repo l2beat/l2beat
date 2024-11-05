@@ -1,4 +1,3 @@
-import { Logger } from '@l2beat/backend-tools'
 import {
   AGGLAYER_L2BRIDGE_ADDRESS,
   ConfigMapping,
@@ -16,15 +15,13 @@ import { ChainTvlConfig, TvlConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
-import { IndexerService } from '../../../tools/uif/IndexerService'
 import { AggLayerIndexer } from '../indexers/AggLayerIndexer'
 import { BlockTimestampIndexer } from '../indexers/BlockTimestampIndexer'
 import { DescendantIndexer } from '../indexers/DescendantIndexer'
 import { ValueIndexer } from '../indexers/ValueIndexer'
 import { AggLayerAmountConfig } from '../indexers/types'
 import { AggLayerService } from '../services/AggLayerService'
-import { ValueService } from '../services/ValueService'
-import { SyncOptimizer } from '../utils/SyncOptimizer'
+import { TvlDependencies } from './TvlDependencies'
 
 interface AggLayerModule {
   start: () => Promise<void> | void
@@ -32,14 +29,48 @@ interface AggLayerModule {
 
 export function initAggLayerModule(
   config: TvlConfig,
-  logger: Logger,
   peripherals: Peripherals,
-  syncOptimizer: SyncOptimizer,
-  indexerService: IndexerService,
+  dependencies: TvlDependencies,
   configMapping: ConfigMapping,
   descendantPriceIndexer: DescendantIndexer,
   blockTimestampIndexers?: Map<string, BlockTimestampIndexer>,
 ): AggLayerModule | undefined {
+  const { dataIndexers, valueIndexers } = createIndexers(
+    config,
+    peripherals,
+    dependencies,
+    configMapping,
+    descendantPriceIndexer,
+    blockTimestampIndexers,
+  )
+  if (dataIndexers.length === 0) return undefined
+
+  return {
+    start: async () => {
+      for (const dataIndexer of dataIndexers) {
+        await dataIndexer.start()
+      }
+
+      for (const valueIndexer of valueIndexers) {
+        await valueIndexer.start()
+      }
+    },
+  }
+}
+
+function createIndexers(
+  config: TvlConfig,
+  peripherals: Peripherals,
+  dependencies: TvlDependencies,
+  configMapping: ConfigMapping,
+  descendantPriceIndexer: DescendantIndexer,
+  blockTimestampIndexers?: Map<string, BlockTimestampIndexer>,
+) {
+  const logger = dependencies.logger
+  const indexerService = dependencies.getIndexerService()
+  const syncOptimizer = dependencies.getSyncOptimizer()
+  const valueService = dependencies.getValueService()
+
   const dataIndexers: AggLayerIndexer[] = []
   const valueIndexers: ValueIndexer[] = []
 
@@ -61,10 +92,20 @@ export function initAggLayerModule(
       continue
     }
 
-    const { aggLayerService, valueService } = createPeripherals(
-      peripherals,
-      chainConfig,
-    )
+    const rpcClient = peripherals.getClient(RpcClient, {
+      url: chainConfig.config.providerUrl,
+      callsPerMinute: chainConfig.config.providerCallsPerMinute,
+      chain: chainConfig.chain,
+    })
+
+    const aggLayerService = new AggLayerService({
+      rpcClient: rpcClient,
+      multicallClient: new MulticallClient(
+        rpcClient,
+        chainConfig.config.multicallConfig,
+      ),
+      bridgeAddress: AGGLAYER_L2BRIDGE_ADDRESS,
+    })
 
     const blockTimestampIndexer =
       blockTimestampIndexers && blockTimestampIndexers.get(chain)
@@ -124,19 +165,7 @@ export function initAggLayerModule(
     }
   }
 
-  if (dataIndexers.length === 0) return undefined
-
-  return {
-    start: async () => {
-      for (const dataIndexer of dataIndexers) {
-        await dataIndexer.start()
-      }
-
-      for (const valueIndexer of valueIndexers) {
-        await valueIndexer.start()
-      }
-    },
-  }
+  return { dataIndexers, valueIndexers }
 }
 
 function toConfigurations(
@@ -154,35 +183,6 @@ function toConfigurations(
     maxHeight: a.untilTimestamp?.toNumber() ?? null,
   }))
   return aggLayerAmountConfigurations
-}
-
-function createPeripherals(
-  peripherals: Peripherals,
-  chainConfig: ChainTvlConfig,
-) {
-  assert(chainConfig.config)
-
-  const rpcClient = peripherals.getClient(RpcClient, {
-    url: chainConfig.config.providerUrl,
-    callsPerMinute: chainConfig.config.providerCallsPerMinute,
-    chain: chainConfig.chain,
-  })
-
-  const aggLayerService = new AggLayerService({
-    rpcClient: rpcClient,
-    multicallClient: new MulticallClient(
-      rpcClient,
-      chainConfig.config.multicallConfig,
-    ),
-    bridgeAddress: AGGLAYER_L2BRIDGE_ADDRESS,
-  })
-
-  const valueService = new ValueService(peripherals.database)
-
-  return {
-    aggLayerService,
-    valueService,
-  }
 }
 
 function serializeConfiguration(

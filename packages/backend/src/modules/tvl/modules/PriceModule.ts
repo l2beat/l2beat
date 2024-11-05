@@ -1,16 +1,10 @@
-import { Logger } from '@l2beat/backend-tools'
 import { createPriceId } from '@l2beat/config'
-import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
 import { CoingeckoId, CoingeckoPriceConfigEntry } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { TvlConfig } from '../../../config/Config'
-import { Peripherals } from '../../../peripherals/Peripherals'
-import { IndexerService } from '../../../tools/uif/IndexerService'
 import { DescendantIndexer } from '../indexers/DescendantIndexer'
-import { HourlyIndexer } from '../indexers/HourlyIndexer'
 import { PriceIndexer } from '../indexers/PriceIndexer'
-import { PriceService } from '../services/PriceService'
-import { SyncOptimizer } from '../utils/SyncOptimizer'
+import { TvlDependencies } from './TvlDependencies'
 
 interface PriceModule {
   start: () => Promise<void> | void
@@ -19,23 +13,28 @@ interface PriceModule {
 
 export function initPriceModule(
   config: TvlConfig,
-  logger: Logger,
-  peripherals: Peripherals,
-  syncOptimizer: SyncOptimizer,
-  indexerService: IndexerService,
-  hourlyIndexer: HourlyIndexer,
+  dependencies: TvlDependencies,
 ): PriceModule {
-  const coingeckoClient = peripherals.getClient(CoingeckoClient, {
-    apiKey: config.coingeckoApiKey,
-  })
-  const coingeckoQueryService = new CoingeckoQueryService(
-    coingeckoClient,
-    logger.tag('prices'),
-  )
+  const { indexers, descendant } = createPriceIndexers(config, dependencies)
 
-  const priceService = new PriceService({
-    coingeckoQueryService,
-  })
+  return {
+    start: async () => {
+      for (const indexer of indexers) {
+        await indexer.start()
+      }
+
+      await descendant.start()
+    },
+    descendant,
+  }
+}
+
+function createPriceIndexers(config: TvlConfig, dependencies: TvlDependencies) {
+  const indexerService = dependencies.getIndexerService()
+  const syncOptimizer = dependencies.getSyncOptimizer()
+  const priceService = dependencies.getPriceService()
+  const hourlyIndexer = dependencies.getHourlyIndexer()
+  const logger = dependencies.logger
 
   const byCoingeckoId = groupBy(config.prices, (price) => price.coingeckoId)
 
@@ -55,7 +54,7 @@ export function initPriceModule(
         priceService,
         serializeConfiguration,
         syncOptimizer,
-        db: peripherals.database,
+        db: dependencies.database,
       }),
   )
 
@@ -69,16 +68,7 @@ export function initPriceModule(
     ),
   })
 
-  return {
-    start: async () => {
-      for (const indexer of indexers) {
-        await indexer.start()
-      }
-
-      await descendant.start()
-    },
-    descendant,
-  }
+  return { indexers, descendant }
 }
 
 function serializeConfiguration(value: CoingeckoPriceConfigEntry): string {
