@@ -1,0 +1,26 @@
+{
+  "name": "kinto",
+  "chain": "kinto",
+  "blockNumber": 248977,
+  "configHash": "0x735ace7e6fe79368d398bb8d6b4f8606f8ceb540c418ed3881104eec08a7c326",
+  "contracts": [
+    {
+      "name": "SafeBeaconProxy",
+      "address": "0xB609316dec60d2bB1B8f50DDc54a7D169F442158",
+      "sourceHashes": [
+        "0xff405d9c0bcff574a67674ea1d4810d1e62b5c37cbf8ef803dcfbc5117b8055c"
+      ],
+      "values": { "$immutable": true }
+    }
+  ],
+  "eoas": [],
+  "abis": {
+    "0xB609316dec60d2bB1B8f50DDc54a7D169F442158": [
+      "constructor(address beacon, bytes data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ]
+  },
+  "usedTemplates": {}
+}

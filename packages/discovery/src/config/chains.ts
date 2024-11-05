@@ -257,10 +257,7 @@ export const chains: ChainConfig[] = [
     ),
     explorer: {
       type: 'blockscout',
-      url: 'https://explorer.kinto.xyz',
-      unsupported: {
-        getContractCreation: true,
-      },
+      url: 'https://explorer.kinto.xyz/api',
     },
   },
 ] as const satisfies ChainConfig[]
