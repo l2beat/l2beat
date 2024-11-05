@@ -64,7 +64,7 @@ export async function GET(request: Request): Promise<Response> {
   // Not checking for errors, because if the token is invalid, we might as well fail with 500
   const claims = claimsSchema.parse(decodeIdToken(tokens.idToken()))
 
-  if (claims.hd && !env.GOOGLE_ALLOWED_DOMAINS.includes(claims.hd)) {
+  if (!claims.hd || !env.GOOGLE_ALLOWED_DOMAINS.includes(claims.hd)) {
     return new Response(null, {
       status: 302,
       headers: {
