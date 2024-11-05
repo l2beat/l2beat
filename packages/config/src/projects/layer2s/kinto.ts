@@ -659,6 +659,14 @@ export const kinto: Layer2 = orbitStackL2({
       type: 'general',
     },
     {
+      name: 'First ever Challenge on mainnet',
+      link: '',
+      date: '2024-10-31T00:00:00Z',
+      description:
+        'The first correctly resolved fault proof challenge of a mainnet Orbit stack rollup.',
+      type: 'general',
+    },
+    {
       name: 'Mainnet full launch',
       link: 'https://medium.com/mamori-finance/%EF%B8%8F-engen-is-over-kinto-is-launching-d9f2dd49fb2e',
       date: '2024-05-22T00:00:00Z',
