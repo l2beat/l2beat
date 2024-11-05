@@ -651,6 +651,14 @@ export const kinto: Layer2 = orbitStackL2({
   ],
   milestones: [
     {
+      name: 'Security Council Governance',
+      link: 'https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/security-council',
+      date: '2024-11-03T00:00:00Z',
+      description:
+        'Kinto gives the ownership of all L1 system contracts to a Security Council that is properly set up.',
+      type: 'general',
+    },
+    {
       name: 'Mainnet full launch',
       link: 'https://medium.com/mamori-finance/%EF%B8%8F-engen-is-over-kinto-is-launching-d9f2dd49fb2e',
       date: '2024-05-22T00:00:00Z',
