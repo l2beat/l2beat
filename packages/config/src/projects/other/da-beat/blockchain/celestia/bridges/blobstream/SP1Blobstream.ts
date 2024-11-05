@@ -85,14 +85,24 @@ export const SP1Blobstream = CELESTIA_BLOBSTREAM({
     
      The Blobstream bridge is a data availability bridge that facilitates data availability commitments to be bridged between Celestia and Ethereum.
      The Blobstream bridge is composed of three main components: the **Blobstream** contract, the **Succinct Gateway** contracts, and the **Verifier** contracts.  <br /> 
-     By default, Blobstream operates asynchronously, handling requests in a fulfillment-based manner. First, zero-knowledge proofs of Celestia block ranges are requested for proving. Requests can be submitted either off-chain through the Succinct API, or onchain through the [requestCall()](https://etherscan.io/address/0x6c7a05e0AE641c6559fD76ac56641778B6eCd776#code#F1#L148) method of the Succinct Gateway smart contract.
+     By default, Blobstream operates asynchronously, handling requests in a fulfillment-based manner. First, zero-knowledge proofs of Celestia block ranges are requested for proving. Requests can be submitted either off-chain through the Succinct API, or onchain through the requestCall() method of the Succinct Gateway smart contract.
      Alternatively, it is possible to run an SP1 Blobstream operator with local proving, allowing for self-generating the proofs.
-     Once a proving request is received, the off-chain prover generates the proof and [relays it](https://github.com/succinctlabs/sp1-blobstream/blob/b35c92bfcfc9a1711ea014cc871d6dd610dd5392/script/bin/operator.rs#L164) to Blobstream contract. The Blobstream contract verifies the proof with the corresponding verifier contract and, if successful, stores the data commitment in storage. <br /> 
+     Once a proving request is received, the off-chain prover generates the proof and relays it to Blobstream contract. The Blobstream contract verifies the proof with the corresponding verifier contract and, if successful, stores the data commitment in storage. <br /> 
 
-     [Verifying a header range](https://github.com/succinctlabs/sp1-blobstream/blob/b35c92bfcfc9a1711ea014cc871d6dd610dd5392/script/bin/operator.rs#L136) includes verifying tendermint consensus (header signatures are 2/3 of stake) and verifying the data commitment root.
+     Verifying a header range includes verifying tendermint consensus (header signatures are 2/3 of stake) and verifying the data commitment root.
       By default, Blobstream on Ethereum is updated by the Succinct operator at a regular cadence of ${ethereumUpdateInterval} hour.
       For Blobstream on Arbitrum, the update interval is ${arbitrumUpdateInterval} hour, and for Blobstream on Base, the update interval is ${baseUpdateInterval} hour.
     `,
+    references: [
+      {
+        text: 'SP1 Blobstream Operator',
+        href: 'https://github.com/succinctlabs/sp1-blobstream/blob/b35c92bfcfc9a1711ea014cc871d6dd610dd5392/script/bin/operator.rs',
+      },
+      {
+        text: 'Succinct Gateway - Etherscan',
+        href: 'https://etherscan.io/address/0x6c7a05e0AE641c6559fD76ac56641778B6eCd776#code#F1#L148',
+      },
+    ],
     risks: [
       {
         category: 'Funds can be lost if',

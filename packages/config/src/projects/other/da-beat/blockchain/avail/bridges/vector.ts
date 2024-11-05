@@ -82,12 +82,22 @@ export const vector = {
     
      The Vector bridge is a data availability bridge that facilitates data availability commitments to be bridged between Avail and ${chainName}.
      The SP1 Vector bridge is composed of three main components: the **Vector** contract, the **Succinct Gateway** contracts, and the **Verifier** contracts.  <br /> 
-     By default, Vector operates asynchronously, handling requests in a fulfillment-based manner. First, zero-knowledge proofs of Avail block ranges are [requested for proving](https://github.com/succinctlabs/sp1-vector/blob/a9689768ff4052e0933cc575b79001d4bcfa0cd5/script/bin/operator.rs#L130). Requests can be submitted either off-chain through the Succinct API, or onchain through the [requestCall()](https://etherscan.io/address/0x6c7a05e0AE641c6559fD76ac56641778B6eCd776#code#F1#L148) method of the Succinct Gateway smart contract.
+     By default, Vector operates asynchronously, handling requests in a fulfillment-based manner. First, zero-knowledge proofs of Avail block ranges are requested for proving. Requests can be submitted either off-chain through the Succinct API, or onchain through the requestCall() method of the Succinct Gateway smart contract.
      Alternatively, it is possible to run an SP1 Vector operator with local proving, allowing for self-generating the proofs.
-     Once a proving request is received, the off-chain prover generates the proof and [relays it](https://github.com/succinctlabs/sp1-vector/blob/a9689768ff4052e0933cc575b79001d4bcfa0cd5/script/bin/operator.rs#L412) to the Vector contract. The Vector contract verifies the proof with the corresponding verifier contract and, if successful, stores the data commitment in storage. <br /> 
+     Once a proving request is received, the off-chain prover generates the proof and relays it to the Vector contract. The Vector contract verifies the proof with the corresponding verifier contract and, if successful, stores the data commitment in storage. <br /> 
 
     By default, Vector on ${chainName} is updated by the Succinct operator at a cadence of approximately ${updateInterval} hours.
     `,
+    references: [
+      {
+        text: 'SP1 Vector Operator',
+        href: 'https://github.com/succinctlabs/sp1-vector/blob/a9689768ff4052e0933cc575b79001d4bcfa0cd5/script/bin/operator.rs',
+      },
+      {
+        text: 'Succinct Gateway - Etherscan',
+        href: 'https://etherscan.io/address/0x6c7a05e0AE641c6559fD76ac56641778B6eCd776#code#F1#L148',
+      },
+    ],
     risks: [
       {
         category: 'Funds can be lost if',
