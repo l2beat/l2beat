@@ -592,7 +592,13 @@
         "isUsingFeeToken": true,
         "keySetUpdates": 2,
         "maxDataSize": 117964,
-        "maxTimeVariation": [28800, 300, 345600, 3600],
+        "maxTimeVariation": {
+          "delayBlocks": 28800,
+          "futureBlocks": 300,
+          "delaySeconds": 345600,
+          "futureSeconds": 3600
+        },
+        "postsBlobs": false,
         "reader4844": "0x7Deda2425eC2d4EA0DF689A78de2fBF002075576",
         "rollup": "0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
         "sequencerVersion": "0x88",
@@ -603,7 +609,7 @@
       },
       "fieldMeta": {
         "maxTimeVariation": {
-          "description": "Struct: delayBlocks, futureBlocks, delaySeconds, futureSeconds. onlyRollupOwner settable. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
+          "description": "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
         }
       }
     },
@@ -1482,7 +1488,7 @@
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
     "orbitstack/RollupProxy_fastConfirm": "0x6839b58d7a5b6bd705353c967a69bca2857bc5ea618038b6ca2b6fd8826de260",
-    "orbitstack/SequencerInbox": "0x80eed651d83fd6cd84047260bf02ec5e3a5f21b36049e1e45f34bd0a452e02f9",
+    "orbitstack/SequencerInbox": "0x746f38463ee5aff9c2f6051c828002565b57c702a6be447c979d1996dd6bd673",
     "orbitstack/UpgradeExecutor": "0xa25e02367a436cebea22481663da914bbf1fd9492d903659cc6ec9ddbaccb241"
   }
 }

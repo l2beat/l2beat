@@ -1,3 +1,131 @@
+Generated with discovered.json: 0x3b5cd715cdfa8d6670b8848393b012b77f51ab75
+
+# Diff at Mon, 04 Nov 2024 08:09:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@950c85bf556f084c302d2b03100375cf3c7ed376 block: 269950572
+- current block number: 269950572
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 269950572 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (0x139C5A235632EDdad741ff380112B3161d31a21C) {
+    +++ description: Central contract defining the access control for upgrading the system contract implementations.
+      directlyReceivedPermissions.2:
++        {"permission":"upgrade","target":"0x2e988Ea0873C9d712628F0bf38DAFdE754927C89"}
+      directlyReceivedPermissions.1.permission:
+-        "upgrade"
++        "configure"
+      directlyReceivedPermissions.1.description:
++        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract RollupProxy (0x2e988Ea0873C9d712628F0bf38DAFdE754927C89) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.3:
++        {"permission":"upgrade","target":"0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF","via":[{"address":"0x139C5A235632EDdad741ff380112B3161d31a21C","delay":0}]}
+      issuedPermissions.2.permission:
+-        "upgrade"
++        "propose"
+      issuedPermissions.2.target:
+-        "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"
++        "0xeCebCfC101c3a1c4dB99902cE1Df914dCAd50a65"
+      issuedPermissions.2.via.0:
+-        {"address":"0x139C5A235632EDdad741ff380112B3161d31a21C","delay":0}
+      issuedPermissions.1.permission:
+-        "propose"
++        "configure"
+      issuedPermissions.1.target:
+-        "0xeCebCfC101c3a1c4dB99902cE1Df914dCAd50a65"
++        "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"
+      issuedPermissions.1.via.0:
++        {"address":"0x139C5A235632EDdad741ff380112B3161d31a21C","delay":0,"description":"can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."}
+    }
+```
+
+```diff
+    contract L1ERC20Gateway (0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6) {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      template:
++        "orbitstack/ERC20Gateway"
+      displayName:
++        "ERC20Gateway"
+      description:
++        "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract."
+    }
+```
+
+```diff
+    contract Caldera Multisig (0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) {
+    +++ description: None
+      receivedPermissions.11:
++        {"permission":"upgrade","target":"0xa9064FebD91E9Ab4c49C8989926Cada18bc9C8FF","via":[{"address":"0x003e70B041abb993006C03E56c8515622a02928C"},{"address":"0x139C5A235632EDdad741ff380112B3161d31a21C"}]}
+      receivedPermissions.10.target:
+-        "0xa9064FebD91E9Ab4c49C8989926Cada18bc9C8FF"
++        "0xA436f1867adD490BF1530c636f2FB090758bB6B3"
+      receivedPermissions.9.target:
+-        "0xA436f1867adD490BF1530c636f2FB090758bB6B3"
++        "0x91591BB66075BCfF94AA128B003134165C3Ab83a"
+      receivedPermissions.8.target:
+-        "0x91591BB66075BCfF94AA128B003134165C3Ab83a"
++        "0x8bE956aB42274056ef4471BEb211b33e258b7324"
+      receivedPermissions.7.target:
+-        "0x8bE956aB42274056ef4471BEb211b33e258b7324"
++        "0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6"
+      receivedPermissions.6.target:
+-        "0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6"
++        "0x3bC4894370dE0Aa304ed717c2e01866c46F1CEa6"
+      receivedPermissions.5.target:
+-        "0x3bC4894370dE0Aa304ed717c2e01866c46F1CEa6"
++        "0x37e60F80d921dc5E7f501a7130F31f6548dBa564"
+      receivedPermissions.4.target:
+-        "0x37e60F80d921dc5E7f501a7130F31f6548dBa564"
++        "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89"
+      receivedPermissions.4.via.1:
+-        {"address":"0x139C5A235632EDdad741ff380112B3161d31a21C"}
+      receivedPermissions.4.via.0.address:
+-        "0x003e70B041abb993006C03E56c8515622a02928C"
++        "0x139C5A235632EDdad741ff380112B3161d31a21C"
+      receivedPermissions.3.target:
+-        "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89"
++        "0x2623C144B4d167f70893f6A8968B98c89a6C5F97"
+      receivedPermissions.3.via.1:
++        {"address":"0x139C5A235632EDdad741ff380112B3161d31a21C"}
+      receivedPermissions.3.via.0.address:
+-        "0x139C5A235632EDdad741ff380112B3161d31a21C"
++        "0x003e70B041abb993006C03E56c8515622a02928C"
+      receivedPermissions.2.target:
+-        "0x2623C144B4d167f70893f6A8968B98c89a6C5F97"
++        "0x255f80Ef2F09FCE0944faBb292b8510F01316Cf0"
+      receivedPermissions.1.target:
+-        "0x255f80Ef2F09FCE0944faBb292b8510F01316Cf0"
++        "0x139C5A235632EDdad741ff380112B3161d31a21C"
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      receivedPermissions.0.target:
+-        "0x139C5A235632EDdad741ff380112B3161d31a21C"
++        "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89"
+      receivedPermissions.0.via.1:
+-        {"address":"0x139C5A235632EDdad741ff380112B3161d31a21C"}
+      receivedPermissions.0.via.0.address:
+-        "0x003e70B041abb993006C03E56c8515622a02928C"
++        "0x139C5A235632EDdad741ff380112B3161d31a21C"
+      receivedPermissions.0.description:
++        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
 Generated with discovered.json: 0x8483bbf95a3ed8086bc55eb5f4385fe61e98fd9b
 
 # Diff at Fri, 01 Nov 2024 15:08:38 GMT:

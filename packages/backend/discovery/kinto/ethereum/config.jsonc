@@ -9,36 +9,17 @@
     "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
   ],
   "names": {
-    "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11": "RollupProxy",
-    "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB": "Bridge",
-    "0x6228e2FB8C561f1a5A963039Bc38Eb6D539A1A7F": "ChallengeManager",
-    "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a": "SequencerInbox",
-    "0x655761AD5FC251F414D6993A73184B0669F278c8": "Outbox",
-    "0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a": "UpgradeExecutor",
-    "0x74C717C01425eb475A5fC55d2A4a9045fC9800df": "ProxyAdmin",
-    "0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d": "ExecutorMultisig",
+    "0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d": "Kinto SecurityCouncil",
     "0x0f1b7bd7762662B23486320AA91F30312184f70C": "Bridger",
-    "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82": "BridgerOwnerMultisig"
+    "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82": "BridgerOwnerMultisig",
+    "0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1": "TurnkeyMultisig"
   },
   "overrides": {
-    "ChallengeManager": {
-      "ignoreMethods": ["challenges"]
-    },
-    "RollupProxy": {
-      "extends": "orbitstack/RollupProxy_fastConfirm"
-    },
-    "Outbox": {
-      "ignoreMethods": ["spent", "isSpent"]
-    },
-    "Bridge": {
-      "ignoreMethods": ["sequencerInboxAccs", "delayedInboxAccs"],
-      "ignoreInWatchMode": [
-        "delayedMessageCount",
-        "sequencerMessageCount",
-        "sequencerReportedSubMessageCount"
-      ]
+    "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11": {
+      "extends": "orbitstack/RollupProxy" // hack: prevents fastconfirmer permission to be resolved to 0x00 on FE
     },
     "Bridger": {
+      "description": "Bridger gateway that can swap assets to 'L2 final assets' before bridging them to the L2.",
       "ignoreRelatives": [
         "DAI",
         "ETH",
@@ -66,77 +47,6 @@
         "domainSeparator",
         "__depositCount"
       ]
-    },
-    "SequencerInbox": {
-      "ignoreMethods": ["inboxAccs"],
-      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
-      "fields": {
-        // getting sequencers from the contract is too complex at the moment
-        // so we hardcode it in config .ts
-        // this field will notify us in case of changes
-        "IS_HARDCODED_SEQUENCER_BATCH_POSTER": {
-          "handler": {
-            "type": "call",
-            "method": "function isBatchPoster(address) external view returns (bool)",
-            "args": ["0x5eAD389b57d533A94a0eacd570Dc1CC59C25F2D4"]
-          }
-        },
-        "sequencerVersion": {
-          "handler": {
-            "type": "arbitrumSequencerVersion"
-          }
-        },
-        "postsBlobs": {
-          "handler": {
-            "type": "orbitPostsBlobs"
-          }
-        },
-        // when this changes, it means the sequencers have changed
-        "setIsBatchPosterCount": {
-          "handler": {
-            "type": "eventCount",
-            "topics": [
-              // event OwnerFunctionCalled(uint256 indexed id);
-              "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
-              // id == 6 is emitted inside setValidator()
-              "0x0000000000000000000000000000000000000000000000000000000000000001"
-            ]
-          }
-        },
-        "batchPosters": {
-          "target": {
-            "permissions": [{ "type": "sequence" }]
-          },
-          "handler": {
-            "type": "arbitrumActors",
-            "actorType": "batchPoster"
-          }
-        },
-        "maxTimeVariation": {
-          "returnType": "(uint256 delayBlocks, uint256 futureBlocks, uint256 delaySeconds, uint256 futureSeconds)"
-        },
-        "keySetUpdates": {
-          "handler": {
-            "type": "eventCount",
-            "topics": [
-              // SetValidKeyset(bytes32,bytes)
-              "0xabca9b7986bc22ad0160eb0cb88ae75411eacfba4052af0b457a9335ef655722"
-            ]
-          }
-        }
-      }
-    },
-    "UpgradeExecutor": {
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
-        }
-      }
-    },
-    "BridgerOwnerMultisig": {
-      "ignoreInWatchMode": ["nonce"]
     }
   }
 }
