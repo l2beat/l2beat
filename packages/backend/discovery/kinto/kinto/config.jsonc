@@ -27,6 +27,22 @@
         "tokenByIndex",
         "tokenIdToApp"
       ]
+    "0xB609316dec60d2bB1B8f50DDc54a7D169F442158"
+    // "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"
+  ],
+  "names": {
+    "0xB609316dec60d2bB1B8f50DDc54a7D169F442158": "RandomWallet",
+    "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b": "KintoAppRegistry"
+  },
+  "overrides": {
+    "RandomWallet": {
+      "fields": {
+        "constructorArgs": {
+          "handler": {
+            "type": "constructorArgs"
+          }
+        }
+      }
     }
   }
 }

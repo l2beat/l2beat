@@ -1,9 +1,13 @@
-Generated with discovered.json: 0x9666ca0571f5b47ca6e0f3d1f21e9204586224e6
+Generated with discovered.json: 0xc5883ad5017314dfe5fb45f5617cbf33e4674648
 
 # Diff at Tue, 05 Nov 2024 08:28:57 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current block number: 248977
+# Diff at Tue, 05 Nov 2024 08:39:10 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- current block number: 249001
 
 ## Description
 
@@ -13,6 +17,6 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract SafeBeaconProxy (0xB609316dec60d2bB1B8f50DDc54a7D169F442158)
+    contract RandomWallet (0xB609316dec60d2bB1B8f50DDc54a7D169F442158)
     +++ description: None
 ```

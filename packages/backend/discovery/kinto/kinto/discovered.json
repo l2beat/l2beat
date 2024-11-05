@@ -1,16 +1,20 @@
 {
   "name": "kinto",
   "chain": "kinto",
-  "blockNumber": 248977,
-  "configHash": "0x735ace7e6fe79368d398bb8d6b4f8606f8ceb540c418ed3881104eec08a7c326",
+  "blockNumber": 249001,
+  "configHash": "0x550bb012d1435f565657f8b43531ca118340b2c83470e6a2bac093d920e0f7fe",
   "contracts": [
     {
-      "name": "SafeBeaconProxy",
+      "name": "RandomWallet",
       "address": "0xB609316dec60d2bB1B8f50DDc54a7D169F442158",
       "sourceHashes": [
         "0xff405d9c0bcff574a67674ea1d4810d1e62b5c37cbf8ef803dcfbc5117b8055c"
       ],
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "errors": {
+        "constructorArgs": "data out-of-bounds (length=0, offset=32, code=BUFFER_OVERRUN, version=abi/5.7.0)"
+      },
+      "derivedName": "SafeBeaconProxy"
     }
   ],
   "eoas": [],
