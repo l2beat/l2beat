@@ -75,7 +75,7 @@ export function FieldValueDisplay({
   } else if (value.type === 'array') {
     if (value.values.length !== 0) {
       blockDisplay = (
-        <ol className="list-decimal pl-4 marker:text-coffee-600">
+        <ol start={0} className="list-decimal pl-4 marker:text-coffee-600">
           {value.values.map((value, i) => (
             <FieldValueDisplay key={i} value={value} />
           ))}
