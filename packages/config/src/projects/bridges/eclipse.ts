@@ -130,7 +130,7 @@ export const eclipse: Bridge = {
       name: 'WithdrawerEOA',
       accounts: [
         discovery.getAccessControlRolePermission(
-          'UpgradeExecutor',
+          'CanonicalBridge',
           'WITHDRAW_AUTHORITY_ROLE',
         )[1],
       ],
@@ -140,7 +140,7 @@ export const eclipse: Bridge = {
       name: 'PauserEOA',
       accounts: [
         discovery.getAccessControlRolePermission(
-          'UpgradeExecutor',
+          'CanonicalBridge',
           'PAUSER_ROLE',
         )[1],
       ],
