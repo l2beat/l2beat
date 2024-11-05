@@ -1,5 +1,9 @@
-import { bridges, layer2s, layer3s } from '@l2beat/config'
-import { ApiPreviewPermission, ApiPreviewResponse } from './types'
+import { bridges, isSingleAddress, layer2s, layer3s } from '@l2beat/config'
+import {
+  ApiPreviewContract,
+  ApiPreviewPermission,
+  ApiPreviewResponse,
+} from './types'
 
 const allProjects = [...layer2s, ...layer3s, ...bridges]
 
@@ -14,6 +18,9 @@ export function getPreview(projectId: string): ApiPreviewResponse | undefined {
       ? []
       : project.permissions
 
+  const contracts =
+    project.contracts === undefined ? [] : project.contracts.addresses
+
   return {
     permissions: permissions.map(
       (p): ApiPreviewPermission => ({
@@ -21,6 +28,15 @@ export function getPreview(projectId: string): ApiPreviewResponse | undefined {
         name: p.name,
         description: p.description,
         multisigParticipants: p.participants?.map((p) => p.address.toString()),
+      }),
+    ),
+    contracts: contracts.map(
+      (c): ApiPreviewContract => ({
+        addresses: isSingleAddress(c)
+          ? [c.address.toString()]
+          : c.multipleAddresses.map((a) => a.toString()),
+        name: c.name,
+        description: c.description ?? '',
       }),
     ),
   }

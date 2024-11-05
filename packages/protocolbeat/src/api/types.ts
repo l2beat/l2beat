@@ -13,6 +13,7 @@ export interface ApiProjectResponse {
 
 export interface ApiPreviewResponse {
   permissions: ApiPreviewPermission[]
+  contracts: ApiPreviewContract[]
 }
 
 export interface ApiPreviewPermission {
@@ -20,6 +21,12 @@ export interface ApiPreviewPermission {
   name: string
   description: string
   multisigParticipants: string[] | undefined
+}
+
+export interface ApiPreviewContract {
+  addresses: string[]
+  name: string
+  description: string
 }
 
 export interface ApiProjectChain {

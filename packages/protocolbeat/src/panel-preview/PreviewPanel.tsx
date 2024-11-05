@@ -17,38 +17,66 @@ export function PreviewPanel() {
     return <div>Preview unavailable</div>
   }
 
-  return (
-    <div className="flex h-full w-full select-none flex-col">
-      <div className="flex flex-col gap-1 overflow-x-auto border-b border-b-coffee-600 px-1 pt-1">
-        <h2 className="p-2 font-bold text-2xl text-blue-600">Permissions:</h2>
-        {response.permissions.map((permission, index) => (
-            <div key={index} className="flex flex-col gap-2 p-2">
-            <h3 className="font-bold">{permission.name}</h3>
+  const permissionsPreview = (
+    <div>
+      <h2 className="p-2 font-bold text-2xl text-blue-600">Permissions:</h2>
+      {response.permissions.map((permission, index) => (
+        <div key={index} className="flex flex-col gap-2 p-2">
+          <h3 className="font-bold">{permission.name}</h3>
+          <div className="text-sm">
+            <ul className="list-disc pl-5 italic">
+              {permission.addresses.map((address, idx) => (
+                <li key={idx}>{address}</li>
+              ))}
+            </ul>
+          </div>
+          {permission.multisigParticipants && (
             <div className="text-sm">
+              <div>Participants:</div>
               <ul className="list-disc pl-5 italic">
-                {permission.addresses.map((address, idx) => (
+                {permission.multisigParticipants.map((address, idx) => (
                   <li key={idx}>{address}</li>
                 ))}
               </ul>
             </div>
-            {permission.multisigParticipants && (
-              <div className="text-sm">
-                <div>Participants:</div>
-                <ul className="list-disc pl-5 italic">
-                  {permission.multisigParticipants.map((address, idx) => (
-                    <li key={idx}>{address}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            <p>
-              {permission.description.split('\n').map((a) => (
-                <div>{a}</div>
+          )}
+          <p>
+            {permission.description.split('\n').map((a) => (
+              <div>{a}</div>
+            ))}
+          </p>
+        </div>
+      ))}
+    </div>
+  )
+
+  const contractsPreview = (
+    <div className="mt-2 border-t">
+      <h2 className="p-2 font-bold text-2xl text-blue-600">Contracts:</h2>
+      {response.contracts.map((contract, index) => (
+        <div key={index} className="flex flex-col gap-2 p-2">
+          <h3 className="font-bold">{contract.name}</h3>
+          <div className="text-sm">
+            <ul className="list-disc pl-5 italic">
+              {contract.addresses.map((address, idx) => (
+                <li key={idx}>{address}</li>
               ))}
-            </p>
+            </ul>
           </div>
-        ))}
-      </div>
+          <p>
+            {contract.description.split('\n').map((a, idx) => (
+              <div key={idx}>{a}</div>
+            ))}
+          </p>
+        </div>
+      ))}
+    </div>
+  )
+
+  return (
+    <div className="flex h-full w-full select-none flex-col">
+      {permissionsPreview}
+      {contractsPreview}
     </div>
   )
 }
