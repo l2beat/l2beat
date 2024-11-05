@@ -5,8 +5,8 @@ import { google } from '~/server/auth/google'
 import type { OAuth2Tokens } from 'arctic'
 import { z } from 'zod'
 import { env } from '~/env'
-import { setSession } from '~/server/auth/cookie'
 import { AuthError } from '~/lib/auth-errors'
+import { setSession } from '~/server/auth/cookie'
 
 const claimsSchema = z.object({
   sub: z.string(),
