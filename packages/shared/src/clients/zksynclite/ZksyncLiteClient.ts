@@ -106,16 +106,16 @@ export class ZksyncLiteClient extends ClientCore {
     return await this.fetch(url, { timeout: 20_000 })
   }
 
-  override validateResponse(response: json): boolean {
+  override validateResponse(response: json) {
     const parsedError = ZksyncLiteError.safeParse(response)
 
     if (parsedError.success) {
       this.$.logger.warn(`Response validation error`, {
         ...parsedError.data.error,
       })
-      return false
+      return { success: false }
     }
 
-    return true
+    return { success: true }
   }
 }

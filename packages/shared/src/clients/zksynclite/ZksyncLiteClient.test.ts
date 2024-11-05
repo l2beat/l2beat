@@ -119,7 +119,7 @@ describe(ZksyncLiteClient.name, () => {
           message: 'bad error',
         }
       })
-      expect(result).toEqual(false)
+      expect(result).toEqual({ success: false })
     })
   })
 })
