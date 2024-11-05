@@ -102,6 +102,12 @@ export const near: DaLayer = {
   A rollup can utilize a dedicated Data Availability (DA) smart contract on a NEAR shard, known as a [Blob Store contract](https://github.com/Nuffle-Labs/data-availability/blob/5026b81aa5d941aaf4dd1b23bc219b9150e84405/contracts/blob-store/src/lib.rs), where it posts data as standard NEAR transactions. All transactions are converted into [Receipts](https://near.github.io/nearcore/architecture/how/tx_receipts.html), and depending on their actions, some receipts may be processed over two blocks.
   Regarding data retrieval, full nodes prune Receipts after 3 epochs (approximately 36 hours). Once the pruning window expires, the data remains accessible only through archive nodes.
   `,
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: `a dishonest majority of Near validators finalizes an unavailable block.`,
+      },
+    ],
   },
   bridges: [
     NO_BRIDGE({
