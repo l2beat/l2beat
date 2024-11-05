@@ -8,7 +8,13 @@ Generated with discovered.json: 0x6bc8292f5b020163c8b5587c4141fe8dc2dddbc5
 
 ## Description
 
-Kinto stage 1 upgrade:
+Kinto Decentralization upgrade:
+
+### Stage 1 TODO:
+Guarantee a KintoWallet user on L2 to be able to exit their funds. Context:
+- kinto-geth [censors all EOA->contract calls on L2](https://github.com/KintoXYZ/kinto-go-ethereum/blob/kinto/core/kinto.go#L23C53-L23C95) and forces users into smartWallet usage
+- KintoWallet is upgradeable: `isKYC` flag can be changed by actors more centralized than SC
+- KintoWallet verifies `isKYC` on every transaction
 
 ### Security Council
 The multisig at `0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d` has the EXECUTOR_ROLE and meets the minimum requirements for a Security Council. Members are published [here](https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/security-council) (5 external members, including Caldera).
@@ -21,7 +27,7 @@ The multisig at `0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d` has the EXECUTOR_RO
 - Certora: `0x5FB5040dfC5B8b9Ea40dFBd881188Ec85cDC0621`
 
 ### Validators
-There are 5 validators in total, ran by:
+There are 5 validators in total, published [here](https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/kinto-validators) and ran by:
 - Caldera: `0x64Cf65036a76E3827e448cadbc53D31EefDCE04a` (main proposer)
 - Mamori Labs: `0x944eB0a2829A859959586b10D54229278534a696`
 - Ankr: `0x2bfDA59220413DEd39dD0E443620b5277EcE6348` (started a challenge due to late software update)
