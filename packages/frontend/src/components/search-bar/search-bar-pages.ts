@@ -1,5 +1,3 @@
-import { env } from '~/env'
-
 export type SearchBarPage = {
   type?: 'scaling' | 'bridges' | 'da'
   name: string
@@ -86,22 +84,18 @@ export const searchBarPages = withIndex([
     tags: ['pages', 'bridges'],
     href: '/bridges/archived',
   },
-  ...(env.NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT
-    ? [
-        {
-          type: 'da' as const,
-          name: 'Summary',
-          tags: ['pages', 'da', 'data', 'availability'],
-          href: '/data-availability/summary',
-        },
-        {
-          type: 'da' as const,
-          name: 'Risk Analysis',
-          tags: ['pages', 'da', 'data', 'availability', 'risks'],
-          href: '/data-availability/risk',
-        },
-      ]
-    : []),
+  {
+    type: 'da',
+    name: 'Summary',
+    tags: ['pages', 'da', 'data', 'availability'],
+    href: '/data-availability/summary',
+  },
+  {
+    type: 'da',
+    name: 'Risk Analysis',
+    tags: ['pages', 'da', 'data', 'availability', 'risks'],
+    href: '/data-availability/risk',
+  },
   {
     name: 'ZK Catalog',
     href: '/zk-catalog',
