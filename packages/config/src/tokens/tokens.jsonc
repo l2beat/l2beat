@@ -1,6 +1,10 @@
 {
   "ethereum": [
     {
+      "symbol": "FLT",
+      "address": "0x236501327e701692a281934230AF0b6BE8Df3353"
+    },
+    {
       "symbol": "MOON",
       "coingeckoId": "moonflow",
       "address": "0x4a52Fa1a1115814c59C643F53f14199b8fb11cEa"

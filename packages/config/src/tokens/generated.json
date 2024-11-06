@@ -1683,6 +1683,20 @@
       "supply": "zero"
     },
     {
+      "name": "Fluence",
+      "coingeckoId": "fluence-2",
+      "address": "0x236501327e701692a281934230AF0b6BE8Df3353",
+      "symbol": "FLT",
+      "decimals": 18,
+      "deploymentTimestamp": 1708029539,
+      "coingeckoListingTimestamp": 1711065600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36339/large/IMG_3928.png?1727165842",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "FORE Protocol",
       "coingeckoId": "fore-protocol",
       "address": "0xB2ee0aDBe0EF1281025d0676511bB1df14600f4D",
@@ -9520,6 +9534,7 @@
       "chainId": 111188,
       "source": "external",
       "supply": "totalSupply",
+      "excludeFromTotal": true,
       "bridgedUsing": {
         "bridges": [
           {
@@ -9527,8 +9542,7 @@
             "slug": "omnichain"
           }
         ]
-      },
-      "excludeFromTotal": true
+      }
     },
     {
       "name": "Bridged USDC (Stargate)",
