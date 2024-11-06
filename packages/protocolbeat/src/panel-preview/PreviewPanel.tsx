@@ -1,10 +1,15 @@
 import { useQuery } from '@tanstack/react-query'
+import clsx from 'clsx'
 import { useParams } from 'react-router-dom'
 import { getPreview } from '../api/api'
+import { AddressFieldValue, } from '../api/types'
 import { AddressDisplay } from '../panel-values/AddressDisplay'
+import { usePanelStore } from '../store/store'
 
 export function PreviewPanel() {
   const { project } = useParams()
+  const selectedAddress = usePanelStore((state) => state.selected)
+
   if (!project) {
     throw new Error('Cannot use component outside of project page!')
   }
@@ -26,6 +31,17 @@ export function PreviewPanel() {
     )
   }
 
+  const includesAddress = (
+    addresses: AddressFieldValue[],
+    address?: string,
+  ) => {
+    console.log(
+      address,
+      addresses.map((address) => address.address),
+    )
+    return addresses.map((address) => address.address).includes(address ?? '')
+  }
+
   const permissionsPreview = response.permissionsPerChain.map(
     ({ chain, permissions }) => (
       <div>
@@ -33,8 +49,22 @@ export function PreviewPanel() {
           Permissions on {chain}:
         </h2>
         {permissions.map((permission, index) => (
-          <div key={index} className="flex flex-col gap-2 p-2">
-            <h3 className="font-bold">{permission.name}</h3>
+          <div
+            key={index}
+            className={clsx(
+              'flex flex-col gap-2 p-2',
+              includesAddress(permission.addresses, selectedAddress) &&
+                'border border-autumn-300',
+            )}
+          >
+            <h3
+              className={clsx(
+                'font-bold',
+                includesAddress(permission.addresses, selectedAddress) && '',
+              )}
+            >
+              {permission.name}
+            </h3>
             <div className="text-sm">
               <ul className="list-disc pl-5 italic">
                 {permission.addresses.map((address, idx) => (
@@ -74,7 +104,14 @@ export function PreviewPanel() {
           Contracts on {chain}:
         </h2>
         {contracts.map((contract, index) => (
-          <div key={index} className="flex flex-col gap-2 p-2">
+          <div
+            key={index}
+            className={clsx(
+              'flex flex-col gap-2 p-2',
+              includesAddress(contract.addresses, selectedAddress) &&
+                'border border-autumn-300',
+            )}
+          >
             <h3 className="font-bold">{contract.name}</h3>
             <div className="text-sm">
               <ul className="list-disc pl-5 italic">
