@@ -36,7 +36,7 @@ export class ActivityDependencies {
 
     switch (project.config.type) {
       case 'rpc': {
-        const provider = this.blockProviders.getEvmBlockProvider(chain)
+        const provider = this.blockProviders.getBlockProvider(chain)
 
         return new RpcTxsCountService(
           provider,
@@ -46,12 +46,11 @@ export class ActivityDependencies {
         )
       }
       case 'zksync': {
-        assert(
-          this.blockProviders.zksyncLiteClient,
-          'zksyncLiteClient should be defined',
-        )
+        const provider = this.blockProviders.getBlockProvider(chain)
+
+        // TODO: unify into one BlockTxsCountService
         return new ZKsyncLiteTxsCountService(
-          this.blockProviders.zksyncLiteClient,
+          provider,
           project.id,
         )
       }

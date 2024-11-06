@@ -1,24 +1,24 @@
 import { ActivityRecord } from '@l2beat/database'
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 import { aggregatePerDay } from '../../utils/aggregatePerDay'
-import { ZksyncLiteClient } from '@l2beat/shared'
+import { BlockProvider } from '@l2beat/shared'
 
 export class ZKsyncLiteTxsCountService {
   constructor(
-    private readonly zkSyncClient: ZksyncLiteClient,
+    private readonly blockProvider: BlockProvider,
     private readonly projectId: ProjectId,
-  ) {}
+  ) { }
 
   async getTxsCount(from: number, to: number): Promise<ActivityRecord[]> {
     const queries = range(from, to + 1).map(async (blockNumber) => {
-      const transactions =
-        await this.zkSyncClient.getTransactionsInBlock(blockNumber)
+      const block =
+        await this.blockProvider.getBlockWithTransactions(blockNumber)
 
-      return transactions.map((t) => ({
+      return block.transactions.map((t) => ({
         txsCount: 1,
         uopsCount: null,
-        timestamp: t.createdAt,
+        timestamp: new UnixTime(block.timestamp),
         number: blockNumber,
       }))
     })
