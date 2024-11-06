@@ -64,10 +64,7 @@ export const scroll: Layer2 = {
     category: 'ZK Rollup',
     links: {
       websites: ['https://scroll.io'],
-      apps: [
-        'https://scroll.io/bridge',
-        'https://scroll.io/canvas',
-      ],
+      apps: ['https://scroll.io/bridge', 'https://scroll.io/canvas'],
       documentation: ['https://docs.scroll.io/en/home/'],
       explorers: [
         'https://scrollscan.com/',
