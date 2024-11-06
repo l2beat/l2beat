@@ -106,9 +106,9 @@ export function EditTokenPage({
     () =>
       token?.meta && {
         aggregate: token.meta.filter((m) => m.source === 'Aggregate'),
-        manual: token.meta.find((m) => m.source === 'Manual'),
+        overrides: token.meta.find((m) => m.source === 'Overrides'),
         rest: token.meta.filter(
-          (m) => m.source !== 'Aggregate' && m.source !== 'Manual',
+          (m) => m.source !== 'Aggregate' && m.source !== 'Overrides',
         ),
       },
     [token?.meta],
@@ -126,11 +126,11 @@ export function EditTokenPage({
             externalBridgeId: r.externalBridgeId ?? '',
           })) ?? [],
       customMeta: {
-        name: tokenMeta?.manual?.name ?? '',
-        symbol: tokenMeta?.manual?.symbol ?? '',
-        decimals: tokenMeta?.manual?.decimals?.toString() ?? '',
-        logoUrl: tokenMeta?.manual?.logoUrl ?? '',
-        contractName: tokenMeta?.manual?.contractName ?? '',
+        name: tokenMeta?.overrides?.name ?? '',
+        symbol: tokenMeta?.overrides?.symbol ?? '',
+        decimals: tokenMeta?.overrides?.decimals?.toString() ?? '',
+        logoUrl: tokenMeta?.overrides?.logoUrl ?? '',
+        contractName: tokenMeta?.overrides?.contractName ?? '',
       },
     },
     resolver: zodResolver(tokenFormSchema),
@@ -297,7 +297,7 @@ export function EditTokenPage({
                             .map((network) => (
                               <SelectItem key={network.id} value={network.id}>
                                 {network.name}{' '}
-                                <span className="text-xs text-muted-foreground">
+                                <span className="text-muted-foreground text-xs">
                                   ({network.id})
                                 </span>
                               </SelectItem>
@@ -474,7 +474,7 @@ export function EditTokenPage({
             </CardHeader>
             <CardContent>
               {backedBy.fields.length === 0 ? (
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   This token is not backed by any other token.
                 </p>
               ) : (
@@ -508,7 +508,7 @@ export function EditTokenPage({
                                           value={token.tokenId}
                                         >
                                           {token.name ?? 'Unknown'}{' '}
-                                          <span className="text-xs text-muted-foreground">
+                                          <span className="text-muted-foreground text-xs">
                                             ({token.tokenId})
                                           </span>
                                         </SelectItem>
@@ -546,7 +546,7 @@ export function EditTokenPage({
                                             value={bridge.id}
                                           >
                                             {bridge.name}{' '}
-                                            <span className="text-xs text-muted-foreground">
+                                            <span className="text-muted-foreground text-xs">
                                               ({bridge.id})
                                             </span>
                                           </SelectItem>
@@ -597,7 +597,7 @@ export function EditTokenPage({
                 </CardHeader>
                 <CardContent>
                   {backing.length === 0 ? (
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                       This token is not backing any other token.
                     </p>
                   ) : (
