@@ -3,17 +3,29 @@
   "chain": "kinto",
   "name": "kinto",
   "initialAddresses": [
-    "0xB609316dec60d2bB1B8f50DDc54a7D169F442158"
+    // "0xB609316dec60d2bB1B8f50DDc54a7D169F442158"
     // "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b", // appRegistry
-    // "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a", // kintoadmin smartwallet
+     "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a", // kintoadmin smartwallet
+     "0x87f0eE85bF3198654900a422832157abBba30828", // KintoWallet beacon
     // "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7" // kintoID
   ],
   "names": {
     "0xB609316dec60d2bB1B8f50DDc54a7D169F442158": "RandomWallet",
     "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b": "KintoAppRegistry",
-    "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7": "KintoID"
+    "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7": "KintoID",
+    "0x87f0eE85bF3198654900a422832157abBba30828": "KintoWalletBeacon",
+    "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a": "KintoAdminMultisig"
   },
   "overrides": {
+    "0x0000000000000000000000000000000000000070":{
+      "ignoreDiscovery": true
+    },
+    "0x00000000000000000000000000000000000000ff":{
+      "ignoreDiscovery": true
+    },
+    "KintoWalletBeacon":{
+
+    },
     "RandomWallet": {
       "fields": {
         "constructorArgs": {
@@ -40,7 +52,8 @@
         "systemContracts",
         "tokenByIndex",
         "tokenIdToApp"
-      ]
+      ],
+      "ignoreRelatives": ["systemApps"]
     }
   }
 }
