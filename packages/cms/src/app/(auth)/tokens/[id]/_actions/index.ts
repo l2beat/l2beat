@@ -89,10 +89,14 @@ export const deleteToken = actionClient
   .action(async ({ parsedInput }) => {
     const { id } = parsedInput
     revalidatePath('/', 'layout')
-    try {
-      await db.token.delete(id)
-      return { success: { id } }
-    } catch (e) {
-      return { failure: `Failed to delete token: ${e as string}` }
-    }
+    return await db.transaction(async () => {
+      try {
+        await db.tokenBridge.deleteByTokenId(id)
+        await db.tokenMeta.deleteByTokenId(id)
+        await db.token.delete(id)
+        return { success: { id } }
+      } catch (e) {
+        return { failure: `Failed to delete token: ${e as string}` }
+      }
+    })
   })
