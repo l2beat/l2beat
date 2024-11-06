@@ -64,7 +64,10 @@ export const scroll: Layer2 = {
     category: 'ZK Rollup',
     links: {
       websites: ['https://scroll.io'],
-      apps: ['https://scroll.io/bridge'],
+      apps: [
+        'https://scroll.io/bridge',
+        'https://scroll.io/canvas',
+      ],
       documentation: ['https://docs.scroll.io/en/home/'],
       explorers: [
         'https://scrollscan.com/',
@@ -72,6 +75,7 @@ export const scroll: Layer2 = {
         'https://scroll.l2scan.co/',
         'https://okx.com/web3/explorer/scroll',
         'https://scroll.nftscan.com/',
+        'https://scroll.blockscout.com/',
       ],
       repositories: [
         'https://github.com/scroll-tech/scroll',
@@ -88,6 +92,7 @@ export const scroll: Layer2 = {
         'https://discord.gg/scroll',
         'https://twitter.com/Scroll_ZKP',
         'https://youtube.com/@Scroll_ZKP',
+        'https://linkedin.com/company/scroll-io',
       ],
       rollupCodes: 'https://rollup.codes/scroll',
     },
