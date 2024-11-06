@@ -48,9 +48,9 @@ export const fluence: Layer2 = orbitStackL2({
   milestones: [
     {
       name: 'Mainnet launch',
-      link: 'https://alephzero.org/blog/aleph-zero-evm-mainnet/',
-      date: '2024-08-12T00:00:00Z',
-      description: 'Aleph Zero EVM L2 is open for all users.',
+      link: 'https://blog.fluence.network/welcome-to-fluence-staking-stake-shape-the-cloudless-future/',
+      date: '2024-09-20T00:00:00Z',
+      description: 'Fluence launches FLT staking on Layer 2.',
       type: 'general',
     },
   ],
