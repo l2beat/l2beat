@@ -1,12 +1,12 @@
-import { assert, UnixTime, getErrorMessage, json, Block } from '@l2beat/shared-pure'
+import { assert, Block, UnixTime, json } from '@l2beat/shared-pure'
 
+import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
+import { ClientCore, ClientCoreDependencies } from '../ClientCore'
 import {
   ZksyncLiteBlocksResult,
   ZksyncLiteError,
   ZksyncLiteTransactionResult,
 } from './types'
-import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
-import { ClientCore, ClientCoreDependencies } from '../ClientCore'
 
 interface Dependencies extends ClientCoreDependencies {
   url: string
@@ -52,9 +52,7 @@ export class ZksyncLiteClient extends ClientCore {
     )
   }
 
-  async getBlockWithTransactions(
-    tag: number | 'latest',
-  ): Promise<Block> {
+  async getBlockWithTransactions(tag: number | 'latest'): Promise<Block> {
     const blockNumber = tag === 'latest' ? await this.getLatestBlock() : tag
 
     const transactions = await this.getTransactionsInBlock(blockNumber)
@@ -62,12 +60,10 @@ export class ZksyncLiteClient extends ClientCore {
     return {
       number: blockNumber,
       hash: 'UNSUPPORTED',
-      timestamp: Math.min(
-        ...transactions.map((t) => t.createdAt.toNumber()),
-      ),
-      transactions: transactions.map(t => ({
-        hash: t.txHash
-      }))
+      timestamp: Math.min(...transactions.map((t) => t.createdAt.toNumber())),
+      transactions: transactions.map((t) => ({
+        hash: t.txHash,
+      })),
     }
   }
 

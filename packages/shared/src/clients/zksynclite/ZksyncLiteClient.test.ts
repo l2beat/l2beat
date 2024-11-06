@@ -1,7 +1,6 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { Response } from 'node-fetch'
 
 import { RetryHandler } from '../../tools'
 import { HttpClient2 } from '../http/HttpClient2'
@@ -46,9 +45,10 @@ describe(ZksyncLiteClient.name, () => {
       const zksyncClient = mockClient({ http })
 
       const result = await zksyncClient.getTransactionsInBlock(42)
-      const expected = transactions1
-        .concat(transactions2)
-        .map((tx) => ({ ...tx, createdAt: UnixTime.fromDate(new Date(tx.createdAt)) }))
+      const expected = transactions1.concat(transactions2).map((tx) => ({
+        ...tx,
+        createdAt: UnixTime.fromDate(new Date(tx.createdAt)),
+      }))
       expect(result).toEqual(expected)
     })
 
@@ -59,17 +59,15 @@ describe(ZksyncLiteClient.name, () => {
 
       const http = mockObject<HttpClient2>({
         fetch: mockFn()
-          .resolvesToOnce(
-            { result: { list: transactions1, pagination: { count: 169 } }, }
-          )
-          .resolvesToOnce(
-            {
-              result: {
-                list: transactions2,
-                pagination: { count: 169 },
-              }
-            }
-          ),
+          .resolvesToOnce({
+            result: { list: transactions1, pagination: { count: 169 } },
+          })
+          .resolvesToOnce({
+            result: {
+              list: transactions2,
+              pagination: { count: 169 },
+            },
+          }),
       })
 
       const zksyncClient = mockClient({ http })
@@ -100,9 +98,15 @@ describe(ZksyncLiteClient.name, () => {
       })
       const zksyncClient = mockClient({ http })
 
-      const result = await zksyncClient.query('path/to/resource', { a: 'a', b: 'b' })
+      const result = await zksyncClient.query('path/to/resource', {
+        a: 'a',
+        b: 'b',
+      })
 
-      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL/path/to/resource?a=a&b=b', { timeout: 20_000 })
+      expect(http.fetch).toHaveBeenOnlyCalledWith(
+        'API_URL/path/to/resource?a=a&b=b',
+        { timeout: 20_000 },
+      )
       expect(result).toEqual({ result: 'success' })
     })
   })
@@ -117,7 +121,7 @@ describe(ZksyncLiteClient.name, () => {
           errorType: 'error',
           code: 1,
           message: 'bad error',
-        }
+        },
       })
       expect(result).toEqual({ success: false })
     })

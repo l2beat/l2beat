@@ -221,7 +221,7 @@ export class RpcCounter implements Counter {
 
         if (
           operation.contractAddress?.toLowerCase() !==
-          ENTRY_POINT_ADDRESS_0_6_0 &&
+            ENTRY_POINT_ADDRESS_0_6_0 &&
           operation.contractAddress?.toLowerCase() !== ENTRY_POINT_ADDRESS_0_7_0
         ) {
           return
@@ -287,9 +287,9 @@ export class RpcCounter implements Counter {
           // for now we assume that only ERC-4337 Entry Points can call smart accounts
           if (
             operation.contractAddress?.toLowerCase() !==
-            ENTRY_POINT_ADDRESS_0_6_0 &&
+              ENTRY_POINT_ADDRESS_0_6_0 &&
             operation.contractAddress?.toLowerCase() !==
-            ENTRY_POINT_ADDRESS_0_7_0
+              ENTRY_POINT_ADDRESS_0_7_0
           ) {
             return
           }

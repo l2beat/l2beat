@@ -27,7 +27,7 @@ describe(RpcClient2.name, () => {
           params: ['0x64', true],
           id: 'unique-id',
           jsonrpc: '2.0',
-        })
+        }),
       )
     })
   })
@@ -48,7 +48,7 @@ describe(RpcClient2.name, () => {
           params: ['latest', true],
           id: 'unique-id',
           jsonrpc: '2.0',
-        })
+        }),
       )
     })
   })

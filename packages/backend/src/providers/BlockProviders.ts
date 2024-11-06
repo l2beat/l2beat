@@ -10,13 +10,13 @@ import {
   ZksyncLiteClient,
 } from '@l2beat/shared'
 import { assert, ProjectId, assertUnreachable } from '@l2beat/shared-pure'
+import { groupBy } from 'lodash'
 import { ActivityConfig } from '../config/Config'
 import { BlockTimestampProvider } from '../modules/tvl/services/BlockTimestampProvider'
 import { DegateClient } from '../peripherals/degate'
 import { LoopringClient } from '../peripherals/loopring/LoopringClient'
 import { StarkexClient } from '../peripherals/starkex/StarkexClient'
 import { StarknetClient } from '../peripherals/starknet/StarknetClient'
-import { groupBy } from 'lodash'
 
 export class BlockProviders {
   blockProviders: Map<string, BlockProvider> = new Map()
@@ -32,15 +32,17 @@ export class BlockProviders {
     readonly fuelClient: FuelClient | undefined,
     private readonly indexerClients: BlockIndexerClient[],
   ) {
-    const byChain = groupBy(clients, c => c.chain)
-    for (let [chain, clients] of Object.entries(byChain)) {
+    const byChain = groupBy(clients, (c) => c.chain)
+    for (const [chain, clients] of Object.entries(byChain)) {
       const block = new BlockProvider(clients)
       this.blockProviders.set(chain, block)
 
-      const indexerClients = this.indexerClients.filter((c) => c.chain === chain)
+      const indexerClients = this.indexerClients.filter(
+        (c) => c.chain === chain,
+      )
       const timestamp = new BlockTimestampProvider({
         blockClients: clients,
-        indexerClients
+        indexerClients,
       })
       this.timestampProviders.set(chain, timestamp)
     }
@@ -60,7 +62,8 @@ export class BlockProviders {
     const indexerClients = this.indexerClients.filter((c) => c.chain === chain)
 
     switch (project.config.type) {
-      case 'rpc': case 'zksync': {
+      case 'rpc':
+      case 'zksync': {
         const blockClients = this.clients.filter((r) => r.chain === chain)
         assert(blockClients.length > 0, `No configured clients for ${chain}`)
         return new BlockTimestampProvider({ indexerClients, blockClients })
@@ -151,7 +154,7 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
             callsPerMinute: project.config.callsPerMinute,
           }),
           retryHandler: RetryHandler.RELIABLE_API(logger),
-          logger
+          logger,
         })
         break
       }
@@ -198,8 +201,7 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
 
   return new BlockProviders(
     config,
-    //TODO type
-    [...evmClients, zksyncLiteClient!],
+    [...evmClients, ...(zksyncLiteClient ? [zksyncLiteClient] : [])],
     starknetClient,
     loopringClient,
     degateClient,

@@ -21,7 +21,10 @@ export const EVMTransaction = z
     hash: z.string(),
     from: z.string(),
     /** Address of the receiver, null when its a contract creation transaction. */
-    to: z.union([z.string(), z.null()]).transform((to) => to === null ? undefined : to).optional(),
+    to: z
+      .union([z.string(), z.null()])
+      .transform((to) => (to === null ? undefined : to))
+      .optional(),
     input: z.string(),
     type: Quantity.decode.transform((n) => String(n)).optional(),
   })
@@ -32,7 +35,6 @@ export const EVMTransaction = z
     data: input,
     type,
   }))
-
 
 export const EVMBlockResponse = z.object({
   result: z.object({

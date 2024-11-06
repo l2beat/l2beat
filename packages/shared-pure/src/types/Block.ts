@@ -1,4 +1,4 @@
-import { Transaction } from "./Transaction"
+import { Transaction } from './Transaction'
 
 export interface Block {
   number: number
