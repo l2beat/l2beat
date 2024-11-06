@@ -5,18 +5,15 @@ import { BlockProviders } from '../../providers/BlockProviders'
 import { Providers } from '../../providers/Providers'
 import { BlockTimestampProvider } from '../tvl/services/BlockTimestampProvider'
 import { TxsCountService } from './indexers/types'
+import { BlockTxsCountService } from './services/txs/BlockTxsCountService'
 import { DegateTxsCountService } from './services/txs/DegateTxsCountService'
 import { FuelTxsCountService } from './services/txs/FuelTxsCountService'
 import { LoopringTxsCountService } from './services/txs/LoopringTxsCountService'
-import { RpcTxsCountService } from './services/txs/RpcTxsCountService'
 import { StarkexTxsCountService } from './services/txs/StarkexTxsCountService'
 import { StarknetTxsCountService } from './services/txs/StarknetTxsCountService'
-import { ZKsyncLiteTxsCountService } from './services/txs/ZKsyncLiteTxsCountService'
-import { RpcUopsAnalyzer } from './services/uops/analyzers/RpcUopsAnalyzer'
 import { StarknetUopsAnalyzer } from './services/uops/analyzers/StarknetUopsAnalyzer'
 
 export class ActivityDependencies {
-  private readonly rpcUopsAnalyzer: RpcUopsAnalyzer
   private readonly starknetUopsAnalyzer: StarknetUopsAnalyzer
   private readonly blockProviders: BlockProviders
 
@@ -25,7 +22,6 @@ export class ActivityDependencies {
     readonly database: Database,
     providers: Providers,
   ) {
-    this.rpcUopsAnalyzer = new RpcUopsAnalyzer()
     this.starknetUopsAnalyzer = new StarknetUopsAnalyzer()
     this.blockProviders = providers.getBlockProviders()
   }
@@ -35,24 +31,18 @@ export class ActivityDependencies {
     assert(project, `Project ${chain} not found`)
 
     switch (project.config.type) {
-      case 'rpc': {
-        const provider = this.blockProviders.getBlockProvider(chain)
-
-        return new RpcTxsCountService(
-          provider,
-          project.id,
-          this.rpcUopsAnalyzer,
-          project.config.assessCount,
-        )
-      }
+      case 'rpc':
       case 'zksync': {
         const provider = this.blockProviders.getBlockProvider(chain)
 
-        // TODO: unify into one BlockTxsCountService
-        return new ZKsyncLiteTxsCountService(
+        return new BlockTxsCountService({
           provider,
-          project.id,
-        )
+          projectId: project.id,
+          assessCount:
+            project.config.type === 'zksync'
+              ? undefined
+              : project.config.assessCount,
+        })
       }
       case 'starknet': {
         assert(

@@ -10,24 +10,25 @@ export class StarknetTxsCountService {
     private readonly starknetClient: StarknetClient,
     private readonly projectId: ProjectId,
     private readonly uopsAnalyzer: StarknetUopsAnalyzer,
-  ) { }
+  ) {}
 
   async getTxsCount(from: number, to: number): Promise<ActivityRecord[]> {
     const queries = range(from, to + 1).map(async (blockNumber) => {
       const blockResponse =
         await this.starknetClient.getBlockWithTransactions(blockNumber)
 
-      // TODO: move to provider
+      // TODO: move to client
       const block: Block = {
         number: blockResponse.block_number,
         hash: blockResponse.block_hash,
-        transactions: blockResponse.transactions.map(t => ({
+        timestamp: blockResponse.timestamp,
+        transactions: blockResponse.transactions.map((t) => ({
           hash: t.transaction_hash,
           from: t.sender_address,
           type: t.type,
           data: t.calldata,
-          to: 'UNSUPPORTED'
-        }))
+          to: 'UNSUPPORTED',
+        })),
       }
 
       const { uopsLength, transactionsLength } =
@@ -37,7 +38,7 @@ export class StarknetTxsCountService {
         txsCount: transactionsLength,
         uopsCount: uopsLength,
         timestamp: new UnixTime(blockResponse.timestamp),
-        number: blockResponse.number,
+        number: block.number,
       }
     })
 
