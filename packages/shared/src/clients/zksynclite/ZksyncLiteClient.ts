@@ -1,4 +1,4 @@
-import { assert, UnixTime, getErrorMessage, json } from '@l2beat/shared-pure'
+import { assert, UnixTime, getErrorMessage, json, Block } from '@l2beat/shared-pure'
 
 import {
   ZksyncLiteBlocksResult,
@@ -50,6 +50,25 @@ export class ZksyncLiteClient extends ClientCore {
         }
       },
     )
+  }
+
+  async getBlockWithTransactions(
+    tag: number | 'latest',
+  ): Promise<Block> {
+    const blockNumber = tag === 'latest' ? await this.getLatestBlock() : tag
+
+    const transactions = await this.getTransactionsInBlock(blockNumber)
+
+    return {
+      number: blockNumber,
+      hash: 'UNSUPPORTED',
+      timestamp: Math.min(
+        ...transactions.map((t) => t.createdAt.toNumber()),
+      ),
+      transactions: transactions.map(t => ({
+        hash: t.txHash
+      }))
+    }
   }
 
   async getTransactionsInBlock(blockNumber: number) {
