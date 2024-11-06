@@ -9,6 +9,8 @@ Generated with discovered.json: 0x3066c53e89b862d405c03441ebec8345132d993d
 
 Standard OP stack Rollup with L2OutputOracle and FaultDisputeGame deployed in parallel (only L2OutputOracle used).
 
+Also eoa admin. :()
+
 0.99 debank l2 code similarity.
 
 ## Initial discovery
