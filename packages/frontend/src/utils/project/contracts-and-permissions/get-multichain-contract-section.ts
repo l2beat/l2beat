@@ -186,7 +186,7 @@ function makeTechnologyContract(
     c.fieldHighSeverityChanges.map((i) => i.address.toString()),
   )
 
-  const implementationHasChanged = implementationChangeAddresses.some(
+  const implementationChanged = implementationChangeAddresses.some(
     (changedAddress) =>
       addresses.map((a) => a.address).includes(changedAddress),
   )
@@ -226,7 +226,7 @@ function makeTechnologyContract(
       usedInProjects,
       references: concat(item.references ?? [], additionalReferences),
       chain,
-      implementationChanged: implementationHasChanged,
+      implementationChanged,
       highSeverityFieldChanged,
       upgradeableBy: item.upgradableBy,
       upgradeDelay: item.upgradeDelay,
@@ -241,7 +241,7 @@ function makeTechnologyContract(
     usedInProjects: [],
     references: additionalReferences,
     chain,
-    implementationChanged: implementationHasChanged,
+    implementationChanged,
     highSeverityFieldChanged,
   }
 }
