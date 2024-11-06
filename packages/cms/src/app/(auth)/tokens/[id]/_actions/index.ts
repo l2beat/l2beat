@@ -30,7 +30,7 @@ export const insertToken = actionClient
         await db.tokenMeta.upsert({
           tokenId: id,
           externalId: '',
-          source: 'Override',
+          source: 'Overrides',
           symbol: customMeta?.symbol ?? null,
           name: customMeta?.name ?? null,
           logoUrl: customMeta?.logoUrl ?? null,
@@ -70,7 +70,7 @@ export const updateToken = actionClient
         await db.tokenMeta.upsert({
           tokenId: id,
           externalId: '',
-          source: 'Override',
+          source: 'Overrides',
           symbol: customMeta?.symbol ?? null,
           name: customMeta?.name ?? null,
           logoUrl: customMeta?.logoUrl ?? null,
