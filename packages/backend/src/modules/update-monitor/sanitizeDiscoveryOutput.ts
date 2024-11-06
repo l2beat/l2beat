@@ -1,3 +1,4 @@
+import { neuterErrors } from '@l2beat/discovery'
 import { DiscoveryOutput } from '@l2beat/discovery-types'
 
 export function sanitizeDiscoveryOutput(discovery: DiscoveryOutput) {
