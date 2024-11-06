@@ -191,8 +191,13 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
-          "via": []
+          "target": "0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8",
+          "via": [
+            {
+              "address": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
+              "delay": 0
+            }
+          ]
         }
       ],
       "ignoreInWatchMode": ["clock", "totalSupply"],
@@ -356,10 +361,11 @@
     {
       "name": "ZkTokenProxyAdmin",
       "address": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
+      "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
       ],
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "target": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E"
@@ -374,7 +380,22 @@
     }
   ],
   "eoas": [
-    { "address": "0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8" },
+    {
+      "address": "0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "via": [{ "address": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC"
+        }
+      ]
+    },
     { "address": "0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D" },
     { "address": "0xe788e09324F8bb3cc64f009973693f751C33b999" }
   ],
@@ -782,6 +803,7 @@
     ]
   },
   "usedTemplates": {
+    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "shared-zk-stack/ZkGovernor": "0xe15d64e5edc29411af258c9d294f406eed6ab8e538f5a7818a7d9c2e6784c2e2"
   }
 }
