@@ -1,5 +1,5 @@
 import { ActivityRecord } from '@l2beat/database'
-import { Block, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 import { StarknetClient } from '../../../../peripherals/starknet/StarknetClient'
 import { aggregatePerDay } from '../../utils/aggregatePerDay'
@@ -14,30 +14,16 @@ export class StarknetTxsCountService {
 
   async getTxsCount(from: number, to: number): Promise<ActivityRecord[]> {
     const queries = range(from, to + 1).map(async (blockNumber) => {
-      const blockResponse =
+      const block =
         await this.starknetClient.getBlockWithTransactions(blockNumber)
 
-      // TODO: move to client
-      const block: Block = {
-        number: blockResponse.block_number,
-        hash: blockResponse.block_hash,
-        timestamp: blockResponse.timestamp,
-        transactions: blockResponse.transactions.map((t) => ({
-          hash: t.transaction_hash,
-          from: t.sender_address,
-          type: t.type,
-          data: t.calldata,
-          to: 'UNSUPPORTED',
-        })),
-      }
-
-      const { uopsLength, transactionsLength } =
-        this.uopsAnalyzer.analyzeBlock(block)
+      const txsCount = block.transactions.length
+      const uopsCount = this.uopsAnalyzer.calculateUops(block)
 
       return {
-        txsCount: transactionsLength,
-        uopsCount: uopsLength,
-        timestamp: new UnixTime(blockResponse.timestamp),
+        txsCount: txsCount,
+        uopsCount: uopsCount,
+        timestamp: new UnixTime(block.timestamp),
         number: block.number,
       }
     })

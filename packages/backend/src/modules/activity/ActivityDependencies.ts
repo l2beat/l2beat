@@ -38,6 +38,7 @@ export class ActivityDependencies {
         return new BlockTxsCountService({
           provider,
           projectId: project.id,
+          type: project.config.type,
           assessCount:
             project.config.type === 'zksync'
               ? undefined
