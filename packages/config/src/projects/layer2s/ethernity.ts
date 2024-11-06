@@ -38,6 +38,8 @@ export const ethernity: Layer2 = opStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
+  associatedTokens: ['ERN'],
+  discoveryDrivenData: true,
   isNodeAvailable: true,
   usesBlobs: true,
   rpcUrl: 'https://mainnet.ethernitychain.io',
