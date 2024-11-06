@@ -1,81 +1,65 @@
+import { Block } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { StarknetTransaction } from '../../../../../peripherals/starknet/schemas'
 import { StarknetUopsAnalyzer } from './StarknetUopsAnalyzer'
 
 describe(StarknetUopsAnalyzer.name, () => {
   const analyzer = new StarknetUopsAnalyzer()
 
-  describe(StarknetUopsAnalyzer.prototype.analyzeBlock.name, () => {
+  describe(StarknetUopsAnalyzer.prototype.calculateUops.name, () => {
     it('gets the operations count', () => {
-      const block = {
+      const block = mockObject<Block>({
         number: 3001,
         transactions: [
-          mockObject<StarknetTransaction>({
-            type: 'DEPLOY_ACCOUNT',
-            calldata: undefined,
-          }),
-          mockObject<StarknetTransaction>({
-            type: 'INVOKE',
-            calldata: ['0x1', '0x12123'],
-          }),
-          mockObject<StarknetTransaction>({
-            type: 'INVOKE',
-            calldata: ['0x2', '0x12123'],
-          }),
-          mockObject<StarknetTransaction>({
-            type: 'INVOKE',
-            calldata: ['0x3', '0x12123'],
-          }),
+          mockTx('DEPLOY_ACCOUNT'),
+          mockTx('INVOKE', ['0x1', '0x12123']),
+          mockTx('INVOKE', ['0x2', '0x12123']),
+          mockTx('INVOKE', ['0x3', '0x12123']),
         ],
-      }
-      const { transactionsLength, uopsLength } = analyzer.analyzeBlock(block)
+      })
+      const uops = analyzer.calculateUops(block)
 
-      expect(transactionsLength).toEqual(4)
-      expect(uopsLength).toEqual(7)
+      expect(uops).toEqual(7)
     })
   })
 
   describe(StarknetUopsAnalyzer.prototype.getOperationsCount.name, () => {
     it('should handle DEPLOY_ACCOUNT transaction', () => {
-      const tx = mockObject<StarknetTransaction>({
-        type: 'DEPLOY_ACCOUNT',
-      })
+      const tx = mockTx('DEPLOY_ACCOUNT')
+
       const result = analyzer.getOperationsCount(tx, 3001)
       expect(result).toEqual(1)
     })
 
     it('should handle block number lower than 3000', () => {
-      const tx = mockObject<StarknetTransaction>({
-        type: 'abc',
-      })
+      const tx = mockTx('abc')
       const result = analyzer.getOperationsCount(tx, 100)
       expect(result).toEqual(1)
     })
 
     it('should handle tx other than INVOKE', () => {
-      const tx = mockObject<StarknetTransaction>({
-        type: 'abc',
-      })
+      const tx = mockTx('abc')
       const result = analyzer.getOperationsCount(tx, 3001)
       expect(result).toEqual(1)
     })
 
     it('should handle tx INVOKE without calldata', () => {
-      const tx = mockObject<StarknetTransaction>({
-        type: 'INVOKE',
-        calldata: undefined,
-      })
+      const tx = mockTx('INVOKE')
       const result = analyzer.getOperationsCount(tx, 3001)
       expect(result).toEqual(1)
     })
 
     it('should handle tx INVOKE with calldata', () => {
-      const tx = mockObject<StarknetTransaction>({
-        type: 'INVOKE',
-        calldata: ['0x3', '0x12123'],
-      })
+      const tx = mockTx('INVOKE', ['0x3', '0x12123'])
       const result = analyzer.getOperationsCount(tx, 3001)
       expect(result).toEqual(3)
     })
   })
 })
+
+function mockTx(type: string, data?: string[]) {
+  return {
+    type,
+    data,
+    hash: '0x0',
+  }
+}

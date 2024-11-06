@@ -7,7 +7,7 @@ import {
 import { getProjectDetails } from '~/app/(top-nav)/data-availability/projects/[layer]/_utils/get-project-details'
 import { type RosetteValue } from '~/components/rosette/types'
 import { getDataAvailabilityProjectLinks } from '~/utils/project/get-project-links'
-import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
+import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getContractsVerificationStatuses } from '../../verification-status/get-contracts-verification-statuses'
 import { getManuallyVerifiedContracts } from '../../verification-status/get-manually-verified-contracts'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
@@ -36,14 +36,14 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
     projectsVerificationStatuses,
     contractsVerificationStatuses,
     manuallyVerifiedContracts,
-    implementationChangeReport,
+    projectsChangeReport,
   ] = await Promise.all([
     getDaProjectEconomicSecurity(daLayer),
     getDaProjectsTvl(uniqueProjectsInUse),
     getProjectsVerificationStatuses(),
     getContractsVerificationStatuses(daLayer),
     getManuallyVerifiedContracts(daLayer),
-    getImplementationChangeReport(),
+    getProjectsChangeReport(),
   ])
 
   const layerTvs =
@@ -62,7 +62,7 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
     isVerified,
     contractsVerificationStatuses,
     manuallyVerifiedContracts,
-    implementationChangeReport,
+    projectsChangeReport,
     grissiniValues,
   })
 
@@ -98,9 +98,9 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
       daLayer,
       tvs: layerTvs,
       economicSecurity,
-      usedIn: daLayer.usedIn.sort(
-        (a, b) => getSumFor([b.id]) - getSumFor([a.id]),
-      ),
+      usedIn: daLayer.bridges
+        .flatMap((bridge) => bridge.usedIn)
+        .sort((a, b) => getSumFor([b.id]) - getSumFor([a.id])),
     }),
     projectDetails,
   }

@@ -9508,6 +9508,29 @@
       }
     },
     {
+      "name": "USD Coin",
+      "coingeckoId": "bridged-usdc-re-al",
+      "address": "0xc518A88c67CECA8B3f24c4562CB71deeB2AF86B7",
+      "symbol": "USDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1721155859,
+      "coingeckoListingTimestamp": 1728259200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50540/large/usd-coin-usdc-logo-200x200.png?1728269501",
+      "chainId": 111188,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      },
+      "excludeFromTotal": true
+    },
+    {
       "name": "Bridged USDC (Stargate)",
       "coingeckoId": "usd-coin",
       "address": "0x19e26B0638bf63aa9fa4d14c6baF8D52eBE86C5C",

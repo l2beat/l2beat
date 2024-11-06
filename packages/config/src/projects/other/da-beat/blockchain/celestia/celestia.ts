@@ -5,7 +5,6 @@ import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
 import { DaLayer } from '../../types/DaLayer'
 import { DasErasureCodingProof } from '../../types/DasErasureCodingProof'
 import { DasErasureCodingScheme } from '../../types/DasErasureCodingScheme'
-import { linkByDA } from '../../utils/link-by-da'
 import { blobstream } from './bridges/blobstream'
 
 export const celestia: DaLayer = {
@@ -106,11 +105,7 @@ export const celestia: DaLayer = {
       },
       {
         category: 'Funds can be lost if',
-        text: 'a dishonest supermajority of Celestia validators finalizes an unavailable block, and the number of light nodes on the network is not enough to ensure block reconstruction.',
-      },
-      {
-        category: 'Funds can be lost if',
-        text: 'a dishonest supermajority of Celestia validators finalizes an unavailable block, and full nodes block reconstruction time is longer than the erasure-coding fraud proof window.',
+        text: 'a dishonest supermajority of Celestia validators finalizes an unavailable block, and the light nodes on the network cannot collectively reconstruct the block.',
       },
     ],
   },
@@ -126,9 +121,6 @@ export const celestia: DaLayer = {
     }),
     ...blobstream,
   ],
-  usedIn: linkByDA({
-    layer: (layer) => layer === 'Celestia',
-  }),
   /*
     Node params sources:
     - unbondingPeriod, finality (time_iota_ms): https://celestiaorg.github.io/celestia-app/specs/params.html
@@ -152,8 +144,7 @@ export const celestia: DaLayer = {
   pruningWindow: 86400 * 30, // 30 days in seconds
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
-    fraudDetection:
-      DaFraudDetectionRisk.CelestiaDasWithNoBlobsReconstruction(true),
+    fraudDetection: DaFraudDetectionRisk.DasWithNoBlobsReconstruction(true),
   },
   economicSecurity: {
     type: 'Celestia',

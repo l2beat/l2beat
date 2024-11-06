@@ -16,6 +16,9 @@ void main().catch((e) => {
   console.log(e)
 })
 
+// Hello future reader. Please set this to a project you errored on e.g. zklinknova/blast
+const from: string | undefined = undefined
+
 async function main() {
   const refreshAll = process.argv.includes('--all')
   const chainConfigs = await Promise.all(
@@ -25,7 +28,16 @@ async function main() {
       .flatMap((chain) => configReader.readAllConfigsForChain(chain)),
   )
   const toRefresh: { config: DiscoveryConfig; reason: string }[] = []
+  let foundFrom = false
   for (const config of chainConfigs) {
+    if (from !== undefined) {
+      if (!foundFrom && `${config.name}/${config.chain}` === from) {
+        foundFrom = true
+      }
+      if (!foundFrom) {
+        continue
+      }
+    }
     const discovery = configReader.readDiscovery(config.name, config.chain)
     const needsRefreshReason = refreshAll
       ? '--all flag was provided'

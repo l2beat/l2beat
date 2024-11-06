@@ -1,6 +1,9 @@
 import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
-import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
+import {
+  type ProjectsChangeReport,
+  getProjectsChangeReport,
+} from '../../projects-change-report/get-projects-change-report'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import {
@@ -10,9 +13,9 @@ import {
 import { orderByTvl } from '../tvl/utils/order-by-tvl'
 
 export async function getScalingArchivedEntries() {
-  const [implementationChangeReport, projectsVerificationStatuses, tvl] =
+  const [projectsChangeReport, projectsVerificationStatuses, tvl] =
     await Promise.all([
-      getImplementationChangeReport(),
+      getProjectsChangeReport(),
       getProjectsVerificationStatuses(),
       get7dTokenBreakdown({ type: 'layer2' }),
     ])
@@ -23,7 +26,7 @@ export async function getScalingArchivedEntries() {
     getScalingArchivedEntry(
       project,
       !!projectsVerificationStatuses[project.id.toString()],
-      !!implementationChangeReport.projects[project.id.toString()],
+      projectsChangeReport,
       tvl.projects[project.id.toString()],
     ),
   )
@@ -40,7 +43,7 @@ export type ScalingArchivedEntry = ReturnType<typeof getScalingArchivedEntry>
 export function getScalingArchivedEntry(
   project: Layer2 | Layer3,
   isVerified: boolean,
-  hasImplementationChanged: boolean,
+  projectsChangeReport: ProjectsChangeReport,
   latestTvl: LatestTvl['projects'][string] | undefined,
 ) {
   return {
@@ -48,7 +51,11 @@ export function getScalingArchivedEntry(
     ...getCommonScalingEntry({
       project,
       isVerified,
-      hasImplementationChanged,
+      hasImplementationChanged: projectsChangeReport.hasImplementationChanged(
+        project.id,
+      ),
+      hasHighSeverityFieldChanged:
+        projectsChangeReport.hasHighSeverityFieldChanged(project.id),
     }),
     risks: project.type === 'layer2' ? getL2Risks(project.riskView) : undefined,
     totalTvl: latestTvl?.breakdown.total,

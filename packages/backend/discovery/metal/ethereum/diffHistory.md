@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xbe4574b40bbfa4fbca5d402e27fcbc7bff3f69bf
+
+# Diff at Tue, 05 Nov 2024 14:13:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5e6ce51851b57187ccdd52c4944a82e2a8ab1e88 block: 21078663
+- current block number: 21121967
+
+## Description
+
+Config related.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21078663 (main branch discovery), not current.
+
+```diff
+    contract OptimismFoundationMultisig_1 (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      name:
+-        "FoundationMultisig_1"
++        "OptimismFoundationMultisig_1"
+    }
+```
+
+```diff
+    contract OptimismFoundationMultisig_2 (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      name:
+-        "FoundationMultisig_2"
++        "OptimismFoundationMultisig_2"
+    }
+```
+
 Generated with discovered.json: 0x65906c7c347cb5e30d2d21640fe2f39d38c07d42
 
 # Diff at Fri, 01 Nov 2024 12:10:01 GMT:

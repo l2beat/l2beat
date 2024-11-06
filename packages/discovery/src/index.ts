@@ -20,6 +20,7 @@ export { DiscoveryEngine } from './discovery/engine/DiscoveryEngine'
 export { flattenDiscoveredSources } from './discovery/output/flattenDiscoveredSource'
 export { HandlerExecutor } from './discovery/handlers/HandlerExecutor'
 export { diffContracts, type FieldDiff } from './discovery/output/diffContracts'
+export { neuterErrors } from './discovery/output/errors'
 export {
   diffDiscovery,
   type DiscoveryDiff,

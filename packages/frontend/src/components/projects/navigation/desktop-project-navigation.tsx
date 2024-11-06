@@ -29,7 +29,7 @@ import { type ProjectNavigationSection } from './types'
 
 interface Project {
   title: string
-  showProjectUnderReview?: boolean
+  isUnderReview?: boolean
   slug: string
 }
 interface ProjectNavigationProps {
@@ -87,7 +87,7 @@ export function DesktopProjectNavigation({
               {project.title}
             </span>
           </div>
-          {project.showProjectUnderReview && (
+          {project.isUnderReview && (
             <UnderReviewCallout small className="mt-2" />
           )}
           {projectVariants && (

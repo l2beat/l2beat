@@ -1,12 +1,12 @@
 import { type DaBridge, type DaLayer } from '@l2beat/config'
 import {
   type ContractsVerificationStatuses,
-  type ImplementationChangeReportApiResponse,
   type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
 import { mapBridgeRisksToRosetteValues } from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
 import { type ProjectDetailsSection } from '~/components/projects/sections/types'
 import { type RosetteValue } from '~/components/rosette/types'
+import { type ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
 import { getMultiChainContractsSection } from '~/utils/project/contracts-and-permissions/get-multichain-contract-section'
 import { getMultichainPermissionsSection } from '~/utils/project/contracts-and-permissions/get-multichain-permissions-section'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/to-technology-risk'
@@ -19,7 +19,7 @@ interface Params {
   isVerified: boolean
   contractsVerificationStatuses: ContractsVerificationStatuses
   manuallyVerifiedContracts: ManuallyVerifiedContracts
-  implementationChangeReport: ImplementationChangeReportApiResponse
+  projectsChangeReport: ProjectsChangeReport
   grissiniValues: RosetteValue[]
 }
 
@@ -29,7 +29,7 @@ export function getProjectDetails({
   isVerified,
   contractsVerificationStatuses,
   manuallyVerifiedContracts,
-  implementationChangeReport,
+  projectsChangeReport,
   grissiniValues,
 }: Params) {
   const relatedScalingProject =
@@ -64,7 +64,7 @@ export function getProjectDetails({
           },
           contractsVerificationStatuses,
           manuallyVerifiedContracts,
-          implementationChangeReport,
+          projectsChangeReport,
         )
       : undefined
 

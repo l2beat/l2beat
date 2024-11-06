@@ -1,8 +1,8 @@
 {
   "name": "kinto",
   "chain": "ethereum",
-  "blockNumber": 21112607,
-  "configHash": "0xef5a613e7835c942bc1814ce5c0c74b1eaa6e4f64160655a2762424049583c48",
+  "blockNumber": 21123028,
+  "configHash": "0xd475e7d334a91367fcf86d3c9cb7b5aad64d80a3dba84e7556b2d9eae71a934b",
   "contracts": [
     {
       "name": "Bridger",
@@ -383,12 +383,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 2156,
+        "firstUnresolvedNode": 2161,
         "inbox": "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
         "isERC20Enabled": false,
         "lastStakeBlock": 21107949,
-        "latestConfirmed": 2155,
-        "latestNodeCreated": 2182,
+        "latestConfirmed": 2160,
+        "latestNodeCreated": 2188,
         "loserStakeEscrow": "0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5",
         "minimumAssertionPeriod": 75,
         "outbox": "0x655761AD5FC251F414D6993A73184B0669F278c8",
@@ -398,9 +398,9 @@
         "rollupEventInbox": "0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F",
         "sequencerInbox": "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
         "setValidatorCount": 4,
-        "stakerCount": 4,
+        "stakerCount": 3,
         "stakeToken": "0x0000000000000000000000000000000000000000",
-        "totalWithdrawableFunds": 0,
+        "totalWithdrawableFunds": "50000000000000000",
         "VALIDATOR_AFK_BLOCKS": 45818,
         "validators": [
           "0x2bfDA59220413DEd39dD0E443620b5277EcE6348",
@@ -413,9 +413,9 @@
         "validatorWalletCreator": "0x9CAd81628aB7D8e239F1A5B497313341578c5F71",
         "validatorWhitelistDisabled": false,
         "wasmModuleRoot": "0x58a9512cf4096461f866446387e845c6573856ef603bba4e24cb1d89630a675c",
-        "zombieAddress": [],
-        "zombieCount": 0,
-        "zombieLatestStakedNode": []
+        "zombieAddress": ["0x2bfDA59220413DEd39dD0E443620b5277EcE6348"],
+        "zombieCount": 1,
+        "zombieLatestStakedNode": [2167]
       },
       "fieldMeta": {
         "confirmPeriodBlocks": {
@@ -849,11 +849,11 @@
           "0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F"
         ],
         "allowedOutboxList": ["0x655761AD5FC251F414D6993A73184B0669F278c8"],
-        "delayedMessageCount": 4194,
+        "delayedMessageCount": 4204,
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerInbox": "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
-        "sequencerMessageCount": 3504,
-        "sequencerReportedSubMessageCount": 248512
+        "sequencerMessageCount": 3513,
+        "sequencerReportedSubMessageCount": 249174
       }
     },
     {
@@ -1047,7 +1047,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 191,
+        "nonce": 193,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1101,7 +1101,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 3504,
+        "batchCount": 3513,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xe27f3f6db6824def1738b2aACe2672aC59046a39"],
         "bridge": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
@@ -1129,7 +1129,7 @@
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 4193,
+        "totalDelayedMessagesRead": 4203,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1142,10 +1142,17 @@
   ],
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x082CBA3929aD00EbB6d81ebE57B0BD24fBF3Fc6B" },
-    { "address": "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8" },
+    {
+      "name": "Hypernative EOA",
+      "address": "0x082CBA3929aD00EbB6d81ebE57B0BD24fBF3Fc6B"
+    },
+    {
+      "name": "Kinto Foundation EOA",
+      "address": "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8"
+    },
     { "address": "0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5" },
     {
+      "name": "Ankr EOA",
       "address": "0x2bfDA59220413DEd39dD0E443620b5277EcE6348",
       "receivedPermissions": [
         {
@@ -1161,9 +1168,13 @@
       ]
     },
     { "address": "0x340487b92808B84c2bd97C87B590EE81267E04a7" },
-    { "address": "0x356000Cec4fC967f8FC372381D983426760A0391" },
+    {
+      "name": "Caldera EOA",
+      "address": "0x356000Cec4fC967f8FC372381D983426760A0391"
+    },
     { "address": "0x4a3BB34aDE10127752015A6aF6136da15fde636A" },
     {
+      "name": "Hypernative EOA 2",
       "address": "0x58028fFbc25aE2e12b96276bDB125955F41D41f3",
       "receivedPermissions": [
         {
@@ -1179,8 +1190,12 @@
       ]
     },
     { "address": "0x5D973Ea995d14799E528B14472346bfDE21eAe2e" },
-    { "address": "0x5FB5040dfC5B8b9Ea40dFBd881188Ec85cDC0621" },
     {
+      "name": "Certora EOA",
+      "address": "0x5FB5040dfC5B8b9Ea40dFBd881188Ec85cDC0621"
+    },
+    {
+      "name": "Caldera EOA 2",
       "address": "0x64Cf65036a76E3827e448cadbc53D31EefDCE04a",
       "receivedPermissions": [
         {
@@ -1199,6 +1214,7 @@
     { "address": "0x89A01e3B2C3A16c3960EADc2ceFcCf2D3AA3F82e" },
     { "address": "0x8A577165f8ef813296043d5f75fF2F2F2349afFd" },
     {
+      "name": "Mamori Labs EOA 3",
       "address": "0x944eB0a2829A859959586b10D54229278534a696",
       "receivedPermissions": [
         {
@@ -1213,10 +1229,16 @@
         }
       ]
     },
-    { "address": "0x94561e98DD5E55271f91A103e4979aa6C493745E" },
+    {
+      "name": "Mamori Labs EOA 2",
+      "address": "0x94561e98DD5E55271f91A103e4979aa6C493745E"
+    },
     { "address": "0xA07eeCA8dc436Be2DfBCb4F0C3aD1424c1876185" },
     { "address": "0xad40f1440544475f4B70573a106F41dF1860598b" },
-    { "address": "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B" },
+    {
+      "name": "Mamori Labs EOA 1",
+      "address": "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"
+    },
     { "address": "0xc31C4549356d46c37021393EeEb6f704B38061eC" },
     { "address": "0xCb5BCC84741b379BFa0968b841C5de1fC9240CBd" },
     { "address": "0xD253b62108d1831aEd298Fc2434A5A8e4E418053" },
@@ -1232,6 +1254,7 @@
       ]
     },
     {
+      "name": "Venn EOA 2",
       "address": "0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f",
       "receivedPermissions": [
         {
@@ -1246,7 +1269,10 @@
         }
       ]
     },
-    { "address": "0xe52957E92a372d5a3B544F4C329b606f1A1b4bD2" }
+    {
+      "name": "Venn/Ironblocks EOA",
+      "address": "0xe52957E92a372d5a3B544F4C329b606f1A1b4bD2"
+    }
   ],
   "abis": {
     "0x0f1b7bd7762662B23486320AA91F30312184f70C": [

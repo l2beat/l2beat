@@ -434,14 +434,20 @@
   ],
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x0A4aB40Cc78D34052e1A8F5Bb5BaEb0174aBDe12" },
+    {
+      "name": "Rolluper",
+      "address": "0x0A4aB40Cc78D34052e1A8F5Bb5BaEb0174aBDe12"
+    },
     { "address": "0x50E6298795C412B26e54FdD87825Bc6ffa94B80d" },
     { "address": "0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44" },
     { "address": "0x83d4814307088732528A53D8DF75fd6F2f5be398" },
     { "address": "0x85e500dF81F10B539E16Dd717e24C41465D10D82" },
     { "address": "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348" },
     { "address": "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93" },
-    { "address": "0xeBec1D162f8467C0070C190A347Bbc3bFf6d14F8" }
+    {
+      "name": "Operator",
+      "address": "0xeBec1D162f8467C0070C190A347Bbc3bFf6d14F8"
+    }
   ],
   "abis": {
     "0x09E01425780094a9754B2bd8A3298f73ce837CF9": [

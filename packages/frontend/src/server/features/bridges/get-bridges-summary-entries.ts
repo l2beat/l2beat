@@ -1,10 +1,11 @@
 import { bridges } from '@l2beat/config'
-import {
-  type ImplementationChangeReportApiResponse,
-  type ProjectsVerificationStatuses,
-} from '@l2beat/shared-pure'
+import { type ProjectsVerificationStatuses } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
-import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
+import { getUnderReviewStatus } from '~/utils/project/under-review'
+import {
+  type ProjectsChangeReport,
+  getProjectsChangeReport,
+} from '../projects-change-report/get-projects-change-report'
 import {
   type LatestTvl,
   get7dTokenBreakdown,
@@ -16,35 +17,29 @@ import { getProjectsVerificationStatuses } from '../verification-status/get-proj
 import { getDestination } from './get-destination'
 
 export async function getBridgesSummaryEntries() {
-  const [
-    tvl7dBreakdown,
-    implementationChangeReport,
-    projectsVerificationStatuses,
-  ] = await Promise.all([
-    get7dTokenBreakdown({ type: 'bridge' }),
-    getImplementationChangeReport(),
-    getProjectsVerificationStatuses(),
-  ])
+  const [tvl7dBreakdown, projectsChangeReport, projectsVerificationStatuses] =
+    await Promise.all([
+      get7dTokenBreakdown({ type: 'bridge' }),
+      getProjectsChangeReport(),
+      getProjectsVerificationStatuses(),
+    ])
 
   return getBridges({
     tvl7dBreakdown,
-    implementationChangeReport,
+    projectsChangeReport,
     projectsVerificationStatuses,
   })
 }
 
 interface Params {
   tvl7dBreakdown: LatestTvl
-  implementationChangeReport: ImplementationChangeReportApiResponse
+  projectsChangeReport: ProjectsChangeReport
   projectsVerificationStatuses: ProjectsVerificationStatuses
 }
 
 function getBridges(params: Params) {
-  const {
-    tvl7dBreakdown,
-    implementationChangeReport,
-    projectsVerificationStatuses,
-  } = params
+  const { tvl7dBreakdown, projectsChangeReport, projectsVerificationStatuses } =
+    params
   const activeBridges = bridges.filter(
     (bridge) => !bridge.isArchived && !bridge.isUpcoming,
   )
@@ -62,8 +57,10 @@ function getBridges(params: Params) {
         : undefined
 
     const isVerified = !!projectsVerificationStatuses[bridge.id.toString()]
-    const changes = implementationChangeReport.projects[bridge.id.toString()]
-    const hasImplementationChanged = !!changes?.ethereum
+    const hasImplementationChanged =
+      projectsChangeReport.hasImplementationChanged(bridge.id.toString())
+    const hasHighSeverityFieldChanged =
+      projectsChangeReport.hasHighSeverityFieldChanged(bridge.id.toString())
 
     return {
       id: bridge.id,
@@ -80,8 +77,11 @@ function getBridges(params: Params) {
           ? bridge.technology.destination
           : [bridge.display.name],
       ),
-      hasImplementationChanged,
-      showProjectUnderReview: isAnySectionUnderReview(bridge),
+      underReviewStatus: getUnderReviewStatus({
+        isUnderReview: isAnySectionUnderReview(bridge),
+        hasImplementationChanged,
+        hasHighSeverityFieldChanged,
+      }),
       tvl: {
         breakdown: bridgeTvl?.breakdown,
         change: bridgeTvl?.change,

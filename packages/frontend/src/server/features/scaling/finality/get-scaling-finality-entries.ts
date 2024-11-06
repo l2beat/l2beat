@@ -1,7 +1,6 @@
 import { type Layer2, layer2s } from '@l2beat/config'
 import { UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { env } from '~/env'
-import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
@@ -10,6 +9,10 @@ import { getFinality } from './get-finality'
 import { type FinalityData, type FinalityProjectData } from './schema'
 
 import { groupByMainCategories } from '~/utils/group-by-main-categories'
+import {
+  type ProjectsChangeReport,
+  getProjectsChangeReport,
+} from '../../projects-change-report/get-projects-change-report'
 import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
 import { getFinalityConfigurations } from './utils/get-finality-configurations'
 
@@ -18,26 +21,25 @@ export type ScalingFinalityEntries = Awaited<
 >
 export async function getScalingFinalityEntries() {
   const configurations = getFinalityConfigurations()
-  const [finality, tvl, icReport, projectVerification] = await Promise.all([
-    getFinality(configurations),
-    getProjectsLatestTvlUsd(),
-    getImplementationChangeReport(),
-    getProjectsVerificationStatuses(),
-  ])
+  const [finality, tvl, projectsChangeReport, projectsVerificationStatuses] =
+    await Promise.all([
+      getFinality(configurations),
+      getProjectsLatestTvlUsd(),
+      getProjectsChangeReport(),
+      getProjectsVerificationStatuses(),
+    ])
 
   const includedProjects = getIncludedProjects(layer2s, finality)
 
   const entries = includedProjects
     .map((project) => {
-      const hasImplementationChanged =
-        !!icReport.projects[project.id.toString()]
-      const isVerified = !!projectVerification[project.id.toString()]
+      const isVerified = !!projectsVerificationStatuses[project.id.toString()]
 
       return getScalingFinalityEntry(
         project,
         finality[project.id.toString()],
         isVerified,
-        hasImplementationChanged,
+        projectsChangeReport,
       )
     })
     .filter(notUndefined)
@@ -106,14 +108,18 @@ function getScalingFinalityEntry(
   project: Layer2,
   finalityProjectData: FinalityProjectData | undefined,
   isVerified: boolean,
-  hasImplementationChanged?: boolean,
+  projectsChangeReport: ProjectsChangeReport,
 ) {
   return {
     entryType: 'finality' as const,
     ...getCommonScalingEntry({
       project,
       isVerified,
-      hasImplementationChanged: hasImplementationChanged ?? false,
+      hasImplementationChanged: projectsChangeReport.hasImplementationChanged(
+        project.id,
+      ),
+      hasHighSeverityFieldChanged:
+        projectsChangeReport.hasHighSeverityFieldChanged(project.id),
     }),
     dataAvailabilityMode: project.dataAvailability?.mode,
     data: getFinalityData(finalityProjectData, project),

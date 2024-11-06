@@ -1,3 +1,36 @@
+Generated with discovered.json: 0x07e8c632515ec118c973e23cff33a07ec4c18e27
+
+# Diff at Tue, 05 Nov 2024 17:46:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e08cb5c139f2a262ed7108b412a045efba3a7db3 block: 21112607
+- current block number: 21123028
+
+## Description
+
+The challenge launched by the ankr validator [has timed out](https://etherscan.io/tx/0xfed67894cc32ef8e161ca5449ae804d81ba3a9a439584495cc695e9446f8f07a) in favor of the asserter `0x64cf65036a76e3827e448cadbc53d31eefdce04a`, against ankr challenger. The 0.1 stake of the challenger is split 50/50 between the winning staker and the loserStakeEscrow `0x09d34b74cd8b1c4394a3cd9630e1ba027e6ed4f5`. The ankr staker has to re-stake at least 0.05 ETH to participate again.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.stakerCount:
+-        4
++        3
+      values.totalWithdrawableFunds:
+-        0
++        "50000000000000000"
+      values.zombieAddress.0:
++        "0x2bfDA59220413DEd39dD0E443620b5277EcE6348"
+      values.zombieCount:
+-        0
++        1
+      values.zombieLatestStakedNode.0:
++        2167
+    }
+```
+
 Generated with discovered.json: 0x6bc8292f5b020163c8b5587c4141fe8dc2dddbc5
 
 # Diff at Mon, 04 Nov 2024 07:56:50 GMT:

@@ -3,7 +3,6 @@ import { NO_BRIDGE } from '../../templates/no-bridge-template'
 import { DaEconomicSecurityRisk } from '../../types/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
 import { DaLayer } from '../../types/DaLayer'
-import { linkByDA } from '../../utils/link-by-da'
 
 export const near: DaLayer = {
   id: 'near',
@@ -140,9 +139,6 @@ export const near: DaLayer = {
       },
     }),
   ],
-  usedIn: linkByDA({
-    layer: (layer) => layer === 'NearDA',
-  }),
   pruningWindow: 43200 * 3, // minimum 3 epochs (12 hours each), claimed in practice around 5 epochs (due to nodes garbage collection)
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
