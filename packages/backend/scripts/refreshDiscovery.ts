@@ -16,6 +16,8 @@ void main().catch((e) => {
   console.log(e)
 })
 
+const from = 'zklinknova/blast'
+
 async function main() {
   const refreshAll = process.argv.includes('--all')
   const chainConfigs = await Promise.all(
@@ -25,7 +27,14 @@ async function main() {
       .flatMap((chain) => configReader.readAllConfigsForChain(chain)),
   )
   const toRefresh: { config: DiscoveryConfig; reason: string }[] = []
+  let foundFrom = false
   for (const config of chainConfigs) {
+    if (!foundFrom && `${config.name}/${config.chain}` === from) {
+      foundFrom = true
+    }
+    if (!foundFrom) {
+      continue
+    }
     const discovery = configReader.readDiscovery(config.name, config.chain)
     const needsRefreshReason = refreshAll
       ? '--all flag was provided'
