@@ -660,7 +660,7 @@ export const kinto: Layer2 = orbitStackL2({
     },
     {
       name: 'First ever Challenge on mainnet',
-      link: '',
+      link: 'https://x.com/vincfurc/status/1853891918037463521',
       date: '2024-10-31T00:00:00Z',
       description:
         'The first correctly resolved fault proof challenge of a mainnet Orbit stack rollup.',
