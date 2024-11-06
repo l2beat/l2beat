@@ -1,5 +1,6 @@
 import { CountedBlock, StatResults } from '@/types'
-import { Block, StarknetTransaction, Transaction } from '@l2beat/shared'
+import { StarknetTransaction } from '@l2beat/shared'
+import { Block, Transaction } from '@l2beat/shared-pure'
 import { Counter } from './counter'
 
 export class StarknetCounter implements Counter {

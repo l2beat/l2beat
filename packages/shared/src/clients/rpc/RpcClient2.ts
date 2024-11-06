@@ -1,17 +1,11 @@
-import { Bytes, UnixTime, json } from '@l2beat/shared-pure'
+import { Block, Bytes, UnixTime, json } from '@l2beat/shared-pure'
 import { generateId } from '../../tools/generateId'
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 import {
   ClientCore,
   ClientCoreDependencies as ClientCoreDependencies,
 } from '../ClientCore'
-import {
-  CallParameters,
-  EVMBlock,
-  EVMBlockResponse,
-  Quantity,
-  RPCError,
-} from './types'
+import { CallParameters, EVMBlockResponse, Quantity, RPCError } from './types'
 
 interface Dependencies extends ClientCoreDependencies {
   url: string
@@ -21,7 +15,7 @@ interface Dependencies extends ClientCoreDependencies {
 
 export class RpcClient2 extends ClientCore {
   constructor(private readonly $: Dependencies) {
-    super({ ...$ })
+    super($)
   }
 
   async getLatestBlockNumber() {
@@ -42,7 +36,7 @@ export class RpcClient2 extends ClientCore {
   /** Calls eth_getBlockByNumber on RPC, includes full transactions bodies.*/
   async getBlockWithTransactions(
     blockNumber: number | 'latest',
-  ): Promise<EVMBlock> {
+  ): Promise<Block> {
     const method = 'eth_getBlockByNumber'
     const encodedNumber =
       blockNumber === 'latest' ? 'latest' : Quantity.encode(BigInt(blockNumber))
