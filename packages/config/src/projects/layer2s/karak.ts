@@ -19,13 +19,14 @@ export const karak: Layer2 = opStackL2({
     description: 'Karak is a general-purpose Optimium.',
     links: {
       websites: ['https://karak.network/'],
-      apps: ['https://karak.network/karak-xp/'],
+      apps: ['https://app.karak.network', 'https://karak.network/bridge'],
       documentation: ['https://docs.karak.network/'],
       explorers: ['https://explorer.karak.network/'],
-      repositories: [],
+      repositories: ['https://github.com/karak-network'],
       socialMedia: [
         'https://twitter.com/Karak_Network',
         'https://t.me/Karak_Network',
+        'https://discord.com/invite/karak',
       ],
     },
     activityDataSource: 'Blockchain RPC',
