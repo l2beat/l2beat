@@ -2,6 +2,7 @@ import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import {
   BlockIndexerClient,
   BlockProvider,
+  DegateClient,
   FuelClient,
   HttpClient,
   HttpClient2,
@@ -9,11 +10,15 @@ import {
   RpcClient2,
   ZksyncLiteClient,
 } from '@l2beat/shared'
-import { assert, ProjectId, assertUnreachable } from '@l2beat/shared-pure'
+import {
+  assert,
+  ProjectId,
+  assertUnreachable,
+  notUndefined,
+} from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { ActivityConfig } from '../config/Config'
 import { BlockTimestampProvider } from '../modules/tvl/services/BlockTimestampProvider'
-import { DegateClient } from '../peripherals/degate'
 import { LoopringClient } from '../peripherals/loopring/LoopringClient'
 import { StarkexClient } from '../peripherals/starkex/StarkexClient'
 import { StarknetClient } from '../peripherals/starknet/StarknetClient'
@@ -24,10 +29,9 @@ export class BlockProviders {
 
   constructor(
     private readonly config: ActivityConfig,
-    private readonly clients: (RpcClient2 | ZksyncLiteClient)[],
+    private readonly clients: (RpcClient2 | ZksyncLiteClient | DegateClient)[],
     readonly starknetClient: StarknetClient | undefined,
     readonly loopringClient: LoopringClient | undefined,
-    readonly degateClient: DegateClient | undefined,
     readonly starkexClient: StarkexClient | undefined,
     readonly fuelClient: FuelClient | undefined,
     private readonly indexerClients: BlockIndexerClient[],
@@ -63,7 +67,8 @@ export class BlockProviders {
 
     switch (project.config.type) {
       case 'rpc':
-      case 'zksync': {
+      case 'zksync':
+      case 'degate': {
         const blockClients = this.clients.filter((r) => r.chain === chain)
         assert(blockClients.length > 0, `No configured clients for ${chain}`)
         return new BlockTimestampProvider({ indexerClients, blockClients })
@@ -76,11 +81,6 @@ export class BlockProviders {
       case 'loopring': {
         assert(this.loopringClient, 'loopringClient should be defined')
         const blockClients = [this.loopringClient]
-        return new BlockTimestampProvider({ indexerClients, blockClients })
-      }
-      case 'degate': {
-        assert(this.degateClient, 'degateClient should be defined')
-        const blockClients = [this.degateClient]
         return new BlockTimestampProvider({ indexerClients, blockClients })
       }
       case 'fuel': {
@@ -171,8 +171,14 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
         break
       }
       case 'degate': {
-        degateClient = new DegateClient(http, logger, project.config.url, {
-          callsPerMinute: project.config.callsPerMinute,
+        degateClient = new DegateClient({
+          http,
+          logger,
+          rateLimiter: new RateLimiter({
+            callsPerMinute: project.config.callsPerMinute,
+          }),
+          retryHandler: RetryHandler.RELIABLE_API(logger),
+          url: project.config.url,
         })
         break
       }
@@ -199,12 +205,13 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
     }
   }
 
+  const otherClients = [zksyncLiteClient, degateClient].filter(notUndefined)
+
   return new BlockProviders(
     config,
-    [...evmClients, ...(zksyncLiteClient ? [zksyncLiteClient] : [])],
+    [...evmClients, ...otherClients],
     starknetClient,
     loopringClient,
-    degateClient,
     starkexClient,
     fuelClient,
     indexerClients,

@@ -1,11 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
 import { assert, assertUnreachable, notUndefined } from '@l2beat/shared-pure'
 
-import { BlobClient } from '@l2beat/shared'
+import { BlobClient, DegateClient } from '@l2beat/shared'
 import { Config } from '../../config'
 import { FinalityProjectConfig } from '../../config/features/finality'
 import { ClientClass, Peripherals } from '../../peripherals/Peripherals'
-import { DegateClient } from '../../peripherals/degate'
 import { LoopringClient } from '../../peripherals/loopring/LoopringClient'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { StarknetClient } from '../../peripherals/starknet/StarknetClient'

@@ -1,11 +1,7 @@
 import { Block, UnixTime, json } from '@l2beat/shared-pure'
-
-import {
-  ClientCore,
-  ClientCoreDependencies,
-} from '@l2beat/shared/build/clients/ClientCore'
-import { getBlockNumberAtOrBefore } from '../getBlockNumberAtOrBefore'
-import { DegateError, DegateResponse } from './schemas'
+import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
+import { ClientCore, ClientCoreDependencies } from '../ClientCore'
+import { DegateError, DegateResponse } from './types'
 
 type BlockTag = number | 'latest'
 
@@ -81,5 +77,9 @@ export class DegateClient extends ClientCore {
     }
 
     return { success: true }
+  }
+
+  get chain() {
+    return 'degate'
   }
 }

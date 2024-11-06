@@ -2,7 +2,7 @@ import { assert, ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { BigNumber, utils } from 'ethers'
 
 import { Database } from '@l2beat/database'
-import { DegateClient } from '../../../peripherals/degate'
+import { DegateClient } from '@l2beat/shared'
 import { LoopringClient } from '../../../peripherals/loopring/LoopringClient'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { BaseAnalyzer } from './types/BaseAnalyzer'

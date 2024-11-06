@@ -6,7 +6,6 @@ import { Providers } from '../../providers/Providers'
 import { BlockTimestampProvider } from '../tvl/services/BlockTimestampProvider'
 import { TxsCountService } from './indexers/types'
 import { BlockTxsCountService } from './services/txs/BlockTxsCountService'
-import { DegateTxsCountService } from './services/txs/DegateTxsCountService'
 import { FuelTxsCountService } from './services/txs/FuelTxsCountService'
 import { LoopringTxsCountService } from './services/txs/LoopringTxsCountService'
 import { StarkexTxsCountService } from './services/txs/StarkexTxsCountService'
@@ -35,7 +34,8 @@ export class ActivityDependencies {
 
     switch (project.config.type) {
       case 'rpc':
-      case 'zksync': {
+      case 'zksync':
+      case 'degate': {
         const provider = this.blockProviders.getBlockProvider(chain)
 
         return new BlockTxsCountService({
@@ -43,9 +43,9 @@ export class ActivityDependencies {
           projectId: project.id,
           type: project.config.type,
           assessCount:
-            project.config.type === 'zksync'
-              ? undefined
-              : project.config.assessCount,
+            project.config.type === 'rpc'
+              ? project.config.assessCount
+              : undefined,
           rpcUopsAnalyzer: this.rpcUopsAnalyzer,
         })
       }
@@ -67,16 +67,6 @@ export class ActivityDependencies {
         )
         return new LoopringTxsCountService(
           this.blockProviders.loopringClient,
-          project.id,
-        )
-      }
-      case 'degate': {
-        assert(
-          this.blockProviders.degateClient,
-          'degateClient should be defined',
-        )
-        return new DegateTxsCountService(
-          this.blockProviders.degateClient,
           project.id,
         )
       }
