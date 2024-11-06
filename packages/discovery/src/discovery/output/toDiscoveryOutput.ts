@@ -29,7 +29,7 @@ export function toDiscoveryOutput(
   }
 }
 
-export function collectUsedTemplatesWithHashes(
+function collectUsedTemplatesWithHashes(
   results: Analysis[],
 ): Record<string, Hash256> {
   const entries: [string, Hash256][] = results

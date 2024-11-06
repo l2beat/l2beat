@@ -18,9 +18,7 @@ export async function getTvlProjectStats(project: Layer2 | Layer3 | Bridge) {
   return getCachedTvlProjectStats(project)
 }
 
-export type TvlProjectStats = Awaited<
-  ReturnType<typeof getCachedTvlProjectStats>
->
+type TvlProjectStats = Awaited<ReturnType<typeof getCachedTvlProjectStats>>
 const getCachedTvlProjectStats = cache(
   async (project: Layer2 | Layer3 | Bridge) => {
     const tvlProject = toTvlProject(project)

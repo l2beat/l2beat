@@ -15,7 +15,7 @@ export function calculateValue({
   return usdValue
 }
 
-export function getBigIntPrice(price: number, decimals: number): bigint {
+function getBigIntPrice(price: number, decimals: number): bigint {
   const priceString = price.toFixed(decimals)
   const [integerPart, fractionalPart = ''] = priceString.split('.')
   const priceWithoutDecimal = integerPart + fractionalPart.padEnd(decimals, '0')

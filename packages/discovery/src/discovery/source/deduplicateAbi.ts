@@ -15,7 +15,7 @@ export function deduplicateAbi(abis: string[]): string[] {
   return [...result.values()].sort()
 }
 
-export function getSignature(fragment: utils.Fragment): string {
+function getSignature(fragment: utils.Fragment): string {
   if (fragment.type === 'constructor') {
     return 'constructor'
   }

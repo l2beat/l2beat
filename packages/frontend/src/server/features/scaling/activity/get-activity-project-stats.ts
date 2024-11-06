@@ -18,7 +18,7 @@ export async function getActivityProjectStats(projectId: ProjectId) {
   return getCachedActivityProjectStats(projectId)
 }
 
-export type ActivityProjectStats = Awaited<
+type ActivityProjectStats = Awaited<
   ReturnType<typeof getCachedActivityProjectStats>
 >
 const getCachedActivityProjectStats = cache(

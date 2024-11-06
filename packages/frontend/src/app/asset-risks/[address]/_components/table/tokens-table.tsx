@@ -95,7 +95,7 @@ export function TokensTable() {
   )
 }
 
-export function TableColumnHeader({
+function TableColumnHeader({
   column,
   sorting,
   setSorting,

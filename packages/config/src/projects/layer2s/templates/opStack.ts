@@ -60,7 +60,7 @@ export const CELESTIA_DA_PROVIDER: DAProvider = {
   bridge: { type: 'None' },
 }
 
-export interface DAProvider {
+interface DAProvider {
   name: DataAvailabilityLayer
   fallback?: DataAvailabilityLayer
   riskView: ScalingProjectRiskViewEntry
@@ -68,7 +68,7 @@ export interface DAProvider {
   bridge: DataAvailabilityBridge
 }
 
-export interface OpStackConfigCommon {
+interface OpStackConfigCommon {
   createdAt: UnixTime
   daProvider?: DAProvider
   discovery: ProjectDiscovery
@@ -127,7 +127,7 @@ export interface OpStackConfigL3 extends OpStackConfigCommon {
   nativeToken?: string
 }
 
-export function opStackCommon(
+function opStackCommon(
   templateVars: OpStackConfigCommon,
 ): Omit<
   Layer2,

@@ -1,16 +1,12 @@
 import { UnixTime, stringAs } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
-export type ZksyncLiteSuccessResponse = z.infer<
-  typeof ZksyncLiteSuccessResponse
->
 const ZksyncLiteSuccessResponse = z.object({
   status: z.literal('success'),
   error: z.null(),
   result: z.unknown(),
 })
 
-export type ZksyncLiteErrorResponse = z.infer<typeof ZksyncLiteErrorResponse>
 const ZksyncLiteErrorResponse = z.object({
   status: z.literal('error'),
   error: z.object({

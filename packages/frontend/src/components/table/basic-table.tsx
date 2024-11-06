@@ -293,7 +293,7 @@ type ColumnFillerProps =
       href: string | undefined
     }
 
-export function BasicTableColumnFiller(props: ColumnFillerProps) {
+function BasicTableColumnFiller(props: ColumnFillerProps) {
   if (props.as === 'td') {
     return (
       <td>

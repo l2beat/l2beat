@@ -81,7 +81,7 @@ export function DaProjectStats({ project }: Props) {
   )
 }
 
-export interface ProjectStat {
+interface ProjectStat {
   title: string
   value: ReactNode
   tooltip?: string

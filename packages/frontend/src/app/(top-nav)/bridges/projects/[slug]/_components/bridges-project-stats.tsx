@@ -106,7 +106,7 @@ export function BridgesProjectStats({ project }: Props) {
   )
 }
 
-export interface ProjectStat {
+interface ProjectStat {
   title: string
   value: ReactNode
   tooltip?: string

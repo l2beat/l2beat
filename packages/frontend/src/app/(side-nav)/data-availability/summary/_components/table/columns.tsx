@@ -20,7 +20,7 @@ const columnHelper = createColumnHelper<DaSummaryEntry>()
 
 export const [indexColumn, logoColumn] = getDaCommonProjectColumns(columnHelper)
 
-export const daLayerColumn = columnHelper.accessor('name', {
+const daLayerColumn = columnHelper.accessor('name', {
   header: 'DA Layer',
   cell: (ctx) => <DaLayerCell entry={ctx.row.original} />,
   meta: {
@@ -29,7 +29,7 @@ export const daLayerColumn = columnHelper.accessor('name', {
   },
 })
 
-export const daRisksColumn = columnHelper.display({
+const daRisksColumn = columnHelper.display({
   id: 'da-risks',
   header: 'DA Risks',
   cell: (ctx) => {
@@ -179,7 +179,7 @@ const daLayerGroup = columnHelper.group({
   ],
 })
 
-export const bridgeColumn = virtual(
+const bridgeColumn = virtual(
   columnHelper.display({
     id: 'bridge',
     header: 'Bridge',

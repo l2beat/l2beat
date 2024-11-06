@@ -16,20 +16,3 @@ export function TableData(props: {
     </td>
   )
 }
-
-export function TableHead(props: {
-  children?: ReactNode
-  rowSpan?: number
-  colSpan?: number
-  style?: React.CSSProperties
-}) {
-  return (
-    <th
-      rowSpan={props.rowSpan}
-      colSpan={props.colSpan}
-      style={{ padding: '2px 12px', textAlign: 'left', ...props.style }}
-    >
-      {props.children}
-    </th>
-  )
-}

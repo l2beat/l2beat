@@ -1,5 +1,5 @@
 import { MulticallContractConfig } from '@l2beat/config'
-import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import { Bytes } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import {
@@ -7,14 +7,6 @@ import {
   MulticallRequest,
   MulticallResponse,
 } from './types'
-
-/** @deprecated Don't use this in future code, rely on configuration instead */
-export const ETHEREUM_MULTICALL_V1_ADDRESS = EthereumAddress(
-  '0xeefBa1e63905eF1D7ACbA5a8513c70307C1cE441',
-)
-
-/** @deprecated Don't use this in future code, rely on configuration instead */
-export const ETHEREUM_MULTICALL_V1_BLOCK = 7929876
 
 export function toMulticallConfigEntry(
   config: MulticallContractConfig,
@@ -107,7 +99,7 @@ export function decodeMulticallV2(result: Bytes) {
   })
 }
 
-export function encodeOptimismMulticall(requests: MulticallRequest[]) {
+function encodeOptimismMulticall(requests: MulticallRequest[]) {
   const hexCalldata = multicallInterface.encodeFunctionData('multicall', [
     requests.map((request) => [
       request.address.toString(),
@@ -118,7 +110,7 @@ export function encodeOptimismMulticall(requests: MulticallRequest[]) {
   return Bytes.fromHex(hexCalldata)
 }
 
-export function decodeOptimismMulticall(response: Bytes): MulticallResponse[] {
+function decodeOptimismMulticall(response: Bytes): MulticallResponse[] {
   const decodedResponse = multicallInterface.decodeFunctionResult(
     'multicall',
     response.toString(),

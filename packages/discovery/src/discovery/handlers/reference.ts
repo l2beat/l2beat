@@ -78,20 +78,3 @@ export function resolveReferenceFromValues(
   }
   return result
 }
-
-export interface ScopeVariables {
-  blockNumber: number
-  chainName: string
-  contractAddress: string
-}
-
-export function generateScopeVariables(
-  provider: IProvider,
-  currentContractAddress: EthereumAddress,
-): ScopeVariables {
-  return {
-    blockNumber: provider.blockNumber,
-    chainName: provider.chain,
-    contractAddress: currentContractAddress.toString(),
-  }
-}

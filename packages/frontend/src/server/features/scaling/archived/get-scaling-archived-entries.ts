@@ -37,7 +37,7 @@ export async function getScalingArchivedEntries() {
 
 export type ScalingArchivedEntry = ReturnType<typeof getScalingArchivedEntry>
 
-export function getScalingArchivedEntry(
+function getScalingArchivedEntry(
   project: Layer2 | Layer3,
   isVerified: boolean,
   hasImplementationChanged: boolean,
