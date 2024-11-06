@@ -59,15 +59,16 @@ export class OrbitPostsBlobsHandler implements Handler {
   ): Promise<providers.Log[] | undefined> {
     let currentBlockNumber = blockNumber
     const blockStep = 1000
+    let multiplier = 1
     const fetchedEvents: providers.Log[] = []
     while (currentBlockNumber > 0) {
       const events = await provider.raw(
         `arbitrum_sequencer_batches.${address}.${Math.max(
           0,
-          currentBlockNumber - blockStep,
+          currentBlockNumber - blockStep * multiplier,
         )}.${currentBlockNumber}`,
         async ({ eventProvider }) => {
-          const fromBlock = Math.max(0, currentBlockNumber - blockStep)
+          const fromBlock = Math.max(0, currentBlockNumber - blockStep * multiplier)
           return await rpcWithRetries(
             async () => {
               return await eventProvider.getLogs({
@@ -82,7 +83,13 @@ export class OrbitPostsBlobsHandler implements Handler {
           )
         },
       )
-      currentBlockNumber -= blockStep
+      currentBlockNumber -= blockStep * multiplier
+
+      if(events.length === 0) {
+        multiplier += 1
+      } else {
+        multiplier = 1
+      }
 
       fetchedEvents.push(...events)
       if (fetchedEvents.length >= 10) {
