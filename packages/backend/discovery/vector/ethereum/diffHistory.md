@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x17e3f29f3916d42155d9374428d10c5e6c6b7eb2
+
+# Diff at Tue, 05 Nov 2024 16:10:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5e6ce51851b57187ccdd52c4944a82e2a8ab1e88 block: 21022907
+- current block number: 21122554
+
+## Description
+
+Verifier program verification key changed, verifier implementation is the same.
+
+## Watched changes
+
+```diff
+    contract Vector (0x02993cdC11213985b9B13224f3aF289F03bf298d) {
+    +++ description: None
+      values.vectorXProgramVkey:
+-        "0x0003c5cf9260fcef3df6c79870952e1ce2f57595ac042ea868c9cbbcab548cf8"
++        "0x00285180a989ed2d6aa8194220690d0d45f2907535d3d3c09e4cb29f6dbe3d4d"
+    }
+```
+
 Generated with discovered.json: 0xcccd51fbb01c8fd230c5f00ddbeb7a651eae76f6
 
 # Diff at Tue, 22 Oct 2024 18:27:40 GMT:

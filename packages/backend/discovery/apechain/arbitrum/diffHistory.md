@@ -1,3 +1,125 @@
+Generated with discovered.json: 0x7bf0b52d291db056a359381c3bd5955bccabbe97
+
+# Diff at Mon, 04 Nov 2024 08:01:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@950c85bf556f084c302d2b03100375cf3c7ed376 block: 267469765
+- current block number: 267469765
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 267469765 (main branch discovery), not current.
+
+```diff
+    contract ApeChainMultisig (0x2B1FbeE3c7D278bFD9E179893FF304fE49FA7DDF) {
+    +++ description: None
+      receivedPermissions.8:
++        {"permission":"upgrade","target":"0xf383814AE1eD316ed7d6FeA28810C77E8a15A49F","via":[{"address":"0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507"},{"address":"0xe032d15909e90f9A36901abB08944653e9E87d72"}]}
+      receivedPermissions.7.target:
+-        "0xf383814AE1eD316ed7d6FeA28810C77E8a15A49F"
++        "0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C"
+      receivedPermissions.6.target:
+-        "0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C"
++        "0xe032d15909e90f9A36901abB08944653e9E87d72"
+      receivedPermissions.5.target:
+-        "0xe032d15909e90f9A36901abB08944653e9E87d72"
++        "0xAB2182C8c9a9d853Cf06A77967D2b3971A453ee1"
+      receivedPermissions.4.target:
+-        "0xAB2182C8c9a9d853Cf06A77967D2b3971A453ee1"
++        "0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8"
+      receivedPermissions.3.target:
+-        "0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8"
++        "0x4F405BA65291063d8A524c2bDf55d4e67405c2aF"
+      receivedPermissions.2.target:
+-        "0x4F405BA65291063d8A524c2bDf55d4e67405c2aF"
++        "0x374de579AE15aD59eD0519aeAf1A23F348Df259c"
+      receivedPermissions.2.via.1:
+-        {"address":"0xe032d15909e90f9A36901abB08944653e9E87d72"}
+      receivedPermissions.2.via.0.address:
+-        "0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507"
++        "0xe032d15909e90f9A36901abB08944653e9E87d72"
+      receivedPermissions.1.target:
+-        "0x374de579AE15aD59eD0519aeAf1A23F348Df259c"
++        "0x1B98e4ED82Ee1a91A65a38C690e2266364064D15"
+      receivedPermissions.1.via.1:
++        {"address":"0xe032d15909e90f9A36901abB08944653e9E87d72"}
+      receivedPermissions.1.via.0.address:
+-        "0xe032d15909e90f9A36901abB08944653e9E87d72"
++        "0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507"
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      receivedPermissions.0.target:
+-        "0x1B98e4ED82Ee1a91A65a38C690e2266364064D15"
++        "0x374de579AE15aD59eD0519aeAf1A23F348Df259c"
+      receivedPermissions.0.via.1:
+-        {"address":"0xe032d15909e90f9A36901abB08944653e9E87d72"}
+      receivedPermissions.0.via.0.address:
+-        "0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507"
++        "0xe032d15909e90f9A36901abB08944653e9E87d72"
+      receivedPermissions.0.description:
++        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract RollupProxy (0x374de579AE15aD59eD0519aeAf1A23F348Df259c) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.3:
++        {"permission":"upgrade","target":"0x2B1FbeE3c7D278bFD9E179893FF304fE49FA7DDF","via":[{"address":"0xe032d15909e90f9A36901abB08944653e9E87d72","delay":0}]}
+      issuedPermissions.2.permission:
+-        "upgrade"
++        "propose"
+      issuedPermissions.2.target:
+-        "0x2B1FbeE3c7D278bFD9E179893FF304fE49FA7DDF"
++        "0xAcB7D670bb95144B88a5Cd1883B87bC5021FD10a"
+      issuedPermissions.2.via.0:
+-        {"address":"0xe032d15909e90f9A36901abB08944653e9E87d72","delay":0}
+      issuedPermissions.1.permission:
+-        "propose"
++        "configure"
+      issuedPermissions.1.target:
+-        "0xAcB7D670bb95144B88a5Cd1883B87bC5021FD10a"
++        "0x2B1FbeE3c7D278bFD9E179893FF304fE49FA7DDF"
+      issuedPermissions.1.via.0:
++        {"address":"0xe032d15909e90f9A36901abB08944653e9E87d72","delay":0,"description":"can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xe032d15909e90f9A36901abB08944653e9E87d72) {
+    +++ description: Central contract defining the access control for upgrading the system contract implementations.
+      directlyReceivedPermissions.2:
++        {"permission":"upgrade","target":"0x374de579AE15aD59eD0519aeAf1A23F348Df259c"}
+      directlyReceivedPermissions.1.permission:
+-        "upgrade"
++        "configure"
+      directlyReceivedPermissions.1.description:
++        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract SequencerInbox (0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
++++ description: Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed.
+      values.maxTimeVariation:
+-        [21600,300,259200,3600]
++        {"delayBlocks":21600,"futureBlocks":300,"delaySeconds":259200,"futureSeconds":3600}
+      values.postsBlobs:
++        false
+      fieldMeta.maxTimeVariation.description:
+-        "Struct: delayBlocks, futureBlocks, delaySeconds, futureSeconds. onlyRollupOwner settable. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
++        "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
+    }
+```
+
 Generated with discovered.json: 0x85e26b018da19de74dbfdc844443b962fbbdb130
 
 # Diff at Tue, 29 Oct 2024 13:21:54 GMT:

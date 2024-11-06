@@ -1,5 +1,5 @@
 import { PriceRecord } from '@l2beat/database'
-import { CoingeckoQueryService } from '@l2beat/shared'
+import { CoingeckoQueryService, PriceProvider } from '@l2beat/shared'
 import {
   assert,
   CoingeckoId,
@@ -9,7 +9,7 @@ import {
 import { Configuration } from '../../../tools/uif/multi/types'
 
 export interface PriceServiceDependencies {
-  readonly coingeckoQueryService: CoingeckoQueryService
+  readonly priceProvider: PriceProvider
 }
 
 export class PriceService {
@@ -26,7 +26,7 @@ export class PriceService {
       'Configuration error: coingeckoId mismatch',
     )
 
-    const prices = await this.$.coingeckoQueryService.getUsdPriceHistoryHourly(
+    const prices = await this.$.priceProvider.getUsdPriceHistoryHourly(
       coingeckoId,
       from,
       to,

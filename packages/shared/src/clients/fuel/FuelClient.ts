@@ -102,7 +102,10 @@ export class FuelClient extends ClientCore {
     })
   }
 
-  override validateResponse(response: json): boolean {
+  override validateResponse(response: json): {
+    success: boolean
+    message?: string
+  } {
     const parsedError = FuelError.safeParse(response)
 
     if (parsedError.success) {
@@ -110,9 +113,9 @@ export class FuelClient extends ClientCore {
       this.$.logger.warn(`Response validation error`, {
         ...parsedError.data.errors,
       })
-      return false
+      return { success: false }
     }
 
-    return true
+    return { success: true }
   }
 }

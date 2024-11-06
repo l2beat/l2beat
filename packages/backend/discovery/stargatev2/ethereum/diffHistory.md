@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x17bcc71bcb0f9f1253d487abedae99e93902cf58
+
+# Diff at Tue, 05 Nov 2024 14:06:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5e6ce51851b57187ccdd52c4944a82e2a8ab1e88 block: 21027597
+- current block number: 21121935
+
+## Description
+
+A new unverified send- or receive library is added by the LayerZeroMultisig, but not yet used for the monitored OApps, nor as default, nor is it described in the docs.
+
+This is a good example of an attack we would not notice because we cannot monitor all OApps and if someone is using this new library for any of them.
+
+Also, the unverified LayerZero Executor is upgraded.
+
+## Watched changes
+
+```diff
+    contract LayerZero Executor (0x173272739Bd7Aa6e4e214714048a9fE699453059) {
+    +++ description: None
+      values.$implementation:
+-        "0xDaC2d26317C42ae3CB21357B73404120E1dA4232"
++        "0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805"
+      values.$pastUpgrades.2:
++        ["2024-11-01T19:07:23.000Z","0x8714871659f7ff2feb7968256c3baf39e5cdbe9160f36649f8a530a536456ed5",["0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805"]]
+      values.$upgradeCount:
+-        2
++        3
+    }
+```
+
+```diff
+    contract EndpointV2 (0x1a44076050125825900e736c501f859c50fE728c) {
+    +++ description: Its configuration and MessageLib to use is set for each OApp and destination by the OApp owner.
++++ description: MessageLibs registered for this Endpoint, enforcing the OApp owner's custom security stack.
++++ severity: HIGH
+      values.getRegisteredLibraries.3:
++        "0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract  (0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xb5f91a650c3a7dffc12a394c10ca27113e365112
 
 # Diff at Wed, 23 Oct 2024 10:10:27 GMT:

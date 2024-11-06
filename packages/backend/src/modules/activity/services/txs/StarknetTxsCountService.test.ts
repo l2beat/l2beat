@@ -1,8 +1,7 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, Transaction, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { range } from 'lodash'
 import { StarknetClient } from '../../../../peripherals/starknet/StarknetClient'
-import { StarknetTransaction } from '../../../../peripherals/starknet/schemas'
 import { activityRecord } from '../../utils/aggregatePerDay.test'
 import { StarknetUopsAnalyzer } from '../uops/analyzers/StarknetUopsAnalyzer'
 import { StarknetTxsCountService } from './StarknetTxsCountService'
@@ -73,15 +72,12 @@ function mockStarknetClient(
   })
 }
 
-function createTransaction(count: number, uopsCount: number) {
+function createTransaction(count: number, uopsCount: number): Transaction[] {
   const uopsPerTx = Math.floor(uopsCount / count)
   const remainingUops = uopsCount % count
-  return range(count).map((i) =>
-    mockObject<StarknetTransaction>({
-      calldata: [
-        '0x' + (i < remainingUops ? uopsPerTx + 1 : uopsPerTx).toString(16),
-      ],
-      type: 'INVOKE',
-    }),
-  )
+  return range(count).map((i) => ({
+    data: ['0x' + (i < remainingUops ? uopsPerTx + 1 : uopsPerTx).toString(16)],
+    type: 'INVOKE',
+    hash: '0x0',
+  }))
 }

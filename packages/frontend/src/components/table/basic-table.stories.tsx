@@ -6,6 +6,7 @@ import {
   getSortedRowModel,
 } from '@tanstack/react-table'
 import { useTable } from '~/hooks/use-table'
+import { type UnderReviewStatus } from '~/utils/project/under-review'
 import { BasicTable } from './basic-table'
 import { ProjectNameCell } from './cells/project-name-cell'
 import { getCommonProjectColumns } from './utils/common-project-columns/common-project-columns'
@@ -15,8 +16,7 @@ interface StorybookEntry {
   slug: string
   isVerified?: boolean
   redWarning?: string | undefined
-  showProjectUnderReview?: boolean
-  hasImplementationChanged?: boolean
+  underReviewStatus?: UnderReviewStatus
   href?: string
   name: string
   data: {
@@ -91,7 +91,7 @@ const basicTableData: StorybookEntry[] = [
     id: ProjectId('zksync-era'),
     slug: 'zksync-era',
     name: 'zkSync Era',
-    showProjectUnderReview: true,
+    underReviewStatus: 'config',
     data: {
       a: 13,
       b: 11,
@@ -120,7 +120,7 @@ const basicTableData: StorybookEntry[] = [
     id: ProjectId('linea'),
     slug: 'linea',
     name: 'Linea',
-    hasImplementationChanged: true,
+    underReviewStatus: 'implementation-change',
     data: {
       a: 10,
       b: 33,

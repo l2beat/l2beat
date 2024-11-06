@@ -8,13 +8,12 @@ import { type UsedInProject } from '@l2beat/config/build/src/projects/other/da-b
 import {
   type ContractsVerificationStatuses,
   type EthereumAddress,
-  type ImplementationChangeReportApiResponse,
-  type ImplementationChangeReportProjectData,
   type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
 import { concat } from 'lodash'
 import { type MultiChainContractsSectionProps } from '~/components/projects/sections/contracts/multichain-contracts-section'
 import { type ProjectSectionProps } from '~/components/projects/sections/types'
+import { type ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
@@ -46,7 +45,7 @@ export function getMultiChainContractsSection(
   projectParams: ProjectParams,
   contractsVerificationStatuses: ContractsVerificationStatuses,
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
-  implementationChange: ImplementationChangeReportApiResponse | undefined,
+  projectsChangeReport: ProjectsChangeReport | undefined,
 ): MultiChainContractsSection | undefined {
   const hasAnyContracts = Object.values(projectParams.contracts.addresses).some(
     (contracts) => contracts.length > 0,
@@ -66,15 +65,15 @@ export function getMultiChainContractsSection(
               contract,
               contractsVerificationStatuses,
             )
-            const implementationChangeForProject =
-              implementationChange?.projects[projectParams.id]
+            const projectChangeReport =
+              projectsChangeReport?.projects[projectParams.id]
             return makeTechnologyContract(
               contract,
               projectParams,
               isUnverified,
               contractsVerificationStatuses,
               manuallyVerifiedContracts,
-              implementationChangeForProject,
+              projectChangeReport,
             )
           }),
         ]
@@ -112,7 +111,7 @@ function makeTechnologyContract(
   isUnverified: boolean,
   contractsVerificationStatuses: ContractsVerificationStatuses,
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
-  implementationChange: ImplementationChangeReportProjectData | undefined,
+  projectChangeReport: ProjectsChangeReport['projects'][string] | undefined,
 ): TechnologyContract {
   const chain = item.chain ?? 'ethereum'
 
@@ -178,14 +177,14 @@ function makeTechnologyContract(
     }
   }
 
-  const changedAddresses = (
-    implementationChange !== undefined
-      ? Object.values(implementationChange)
-      : []
-  ).flat()
+  const changes =
+    projectChangeReport !== undefined ? Object.values(projectChangeReport) : []
+  const changedAddresses = changes.flatMap((change) =>
+    change.implementations.map((impl) => impl.containingContract.toString()),
+  )
 
-  const implementationHasChanged = changedAddresses.some((ca) =>
-    addresses.map((a) => a.address).includes(ca.containingContract.toString()),
+  const implementationHasChanged = changedAddresses.some((change) =>
+    addresses.map((a) => a.address).includes(change),
   )
 
   const additionalReferences: Reference[] = []

@@ -109,12 +109,15 @@ export class FinalityIndexer extends ChildIndexer {
       batchToTimeToInclusionDelays(batch),
     )
     const averageTimeToInclusion = Math.round(mean(t2iDelay))
+    const minimumTimeToInclusion = minimum(t2iDelay)
+    const maximumTimeToInclusion = maximum(t2iDelay)
+
     const baseResult = {
       projectId: configuration.projectId,
       timestamp: to,
 
-      minimumTimeToInclusion: Math.min(...t2iDelay),
-      maximumTimeToInclusion: Math.max(...t2iDelay),
+      minimumTimeToInclusion,
+      maximumTimeToInclusion,
       averageTimeToInclusion,
     }
 
@@ -191,4 +194,28 @@ export class FinalityIndexer extends ChildIndexer {
   override async invalidate(targetHeight: number): Promise<number> {
     return await Promise.resolve(targetHeight)
   }
+}
+
+function minimum(values: number[]): number {
+  if (values.length === 0) {
+    return 0
+  }
+
+  let result = Infinity
+  for (const v of values) {
+    result = Math.min(result, v)
+  }
+  return result
+}
+
+function maximum(values: number[]): number {
+  if (values.length === 0) {
+    return 0
+  }
+
+  let result = -Infinity
+  for (const v of values) {
+    result = Math.max(result, v)
+  }
+  return result
 }

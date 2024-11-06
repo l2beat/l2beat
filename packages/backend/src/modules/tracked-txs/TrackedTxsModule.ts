@@ -1,10 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
 import { notUndefined } from '@l2beat/shared-pure'
 
-import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
+import { CoingeckoQueryService } from '@l2beat/shared'
 import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
+import { Providers } from '../../providers/Providers'
 import { Clock } from '../../tools/Clock'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import {
@@ -25,6 +26,7 @@ export function createTrackedTxsModule(
   config: Config,
   logger: Logger,
   peripherals: Peripherals,
+  providers: Providers,
   clock: Clock,
 ): ApplicationModuleWithIndexer<TrackedTxsIndexer> | undefined {
   if (!config.trackedTxsConfig) {
@@ -86,10 +88,7 @@ export function createTrackedTxsModule(
     config.trackedTxsConfig.uses.l2costs &&
     config.trackedTxsConfig.uses.l2costs.aggregatorEnabled
   ) {
-    const coingeckoClient = peripherals.getClient(CoingeckoClient, {
-      apiKey: config.trackedTxsConfig.uses.l2costs.coingeckoApiKey,
-    })
-
+    const coingeckoClient = providers.coingeckoClient
     const coingeckoQueryService = new CoingeckoQueryService(
       coingeckoClient,
       logger.tag('trackedTxs'),

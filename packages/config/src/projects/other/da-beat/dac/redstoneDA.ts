@@ -3,7 +3,6 @@ import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
 import { DaChallengeMechanism } from '../types/DaChallengeMechanism'
 import { DaLayer } from '../types/DaLayer'
-import { linkByDA } from '../utils/link-by-da'
 import { redstoneDABridge } from './bridges/redstoneDABridge'
 
 const discovery = new ProjectDiscovery('redstone')
@@ -58,8 +57,18 @@ export const redstoneDA: DaLayer = {
     A challenge can be resolved by publishing the preimage data within an additional ${daResolveWindow}.
     In such case, a portion of the challenger bond is burned, with the exact amount estimated as the cost incurred by the resolver to publish the full data, meaning that the resolver and challenger will approximately lose the same amount of funds.
     The system is not secure if the malicious sequencer is able to outspend the altruistic challengers. 
-    If instead, after a challenge, the preimage data is not published, the chain reorgs to the last fully derivable state.
+    If instead, after a challenge, the preimage data is not published, the chain reorgs to the last fully derivable state. 
   `,
+    references: [
+      {
+        text: 'Alt-DA Specification',
+        href: 'https://github.com/ethereum-optimism/specs/blob/main/specs/experimental/alt-da.md',
+      },
+      {
+        text: 'Security Considerations - Ethresear.ch ',
+        href: 'https://ethresear.ch/t/universal-plasma-and-da-challenges/18629',
+      },
+    ],
     risks: [
       {
         category: 'Funds can be lost if',
@@ -72,9 +81,6 @@ export const redstoneDA: DaLayer = {
     ],
   },
   bridges: [redstoneDABridge],
-  usedIn: linkByDA({
-    layer: (layer) => layer === 'RedstoneDA',
-  }),
   risks: {
     economicSecurity: DaEconomicSecurityRisk.DAChallengesNoFunds,
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
