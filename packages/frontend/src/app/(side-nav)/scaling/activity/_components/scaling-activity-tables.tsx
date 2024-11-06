@@ -8,7 +8,7 @@ import {
 } from '~/components/core/directory-tabs'
 import { MainPageCard } from '~/components/main-page-card'
 import { getStageSortedRowModel } from '~/components/table/sorting/get-stage-sorting-row-model'
-import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling-activity-entries'
+import { type ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
 import { type RecategorisedScalingEntry } from '~/utils/group-by-main-categories'
 import { ScalingActivityFilters } from '../../_components/scaling-activity-filters'
 import { useScalingFilter } from '../../_components/scaling-filter-context'

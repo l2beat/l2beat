@@ -72,7 +72,7 @@ export default async function Page(props: Props) {
               project={{
                 title: daProjectEntry.name,
                 slug: daLayer.display.slug,
-                showProjectUnderReview: daProjectEntry.isUnderReview,
+                isUnderReview: daProjectEntry.isUnderReview,
               }}
               sections={navigationSections}
               projectVariants={daLayer.bridges.map((bridge) => ({

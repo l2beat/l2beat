@@ -60,7 +60,6 @@ export const mantleDA: DaLayer = {
     `,
   },
   bridges: [mantleDABridge],
-  usedIn: [...mantleDABridge.usedIn],
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('MNT'),
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,

@@ -4,7 +4,6 @@ export type DaFraudDetectionRisk =
   | typeof NoFraudDetection
   | typeof ErasureCodingProof
   | ReturnType<typeof DasWithBlobsReconstruction>
-  | ReturnType<typeof CelestiaDasWithNoBlobsReconstruction>
   | ReturnType<typeof DasWithNoBlobsReconstruction>
 
 function DasWithBlobsReconstruction(erasureCoding: boolean) {
@@ -17,22 +16,12 @@ function DasWithBlobsReconstruction(erasureCoding: boolean) {
   } as const
 }
 
-function CelestiaDasWithNoBlobsReconstruction(erasureCoding: boolean) {
-  return {
-    type: 'CelestiaDasWithNoBlobsReconstruction',
-    value: 'DAS',
-    sentiment: erasureCoding ? 'warning' : 'bad',
-    description: `The DA layer uses data availability sampling (DAS) to protect against data withholding attacks. However, light nodes cannot always reconstruct the block collectively if some of it is withheld. This issue arises if the minimum number of light nodes required for block reconstruction is unavailable, or if a selective share disclosure attack extends the block reconstruction time beyond the erasure-coding fraud proof window.`,
-    secondLine: '',
-  } as const
-}
-
 function DasWithNoBlobsReconstruction(erasureCoding: boolean) {
   return {
     type: 'DasWithNoBlobsReconstruction',
     value: 'DAS',
     sentiment: erasureCoding ? 'warning' : 'bad',
-    description: `The DA layer uses data availability sampling (DAS) to protect against data withholding attacks. However, there is no mechanism in place to reconstruct the data if some of it is withheld or the minimum number of light nodes required to perform DAS is not available. This means that the data may be lost if a block producer withholds data or if there are not enough honest light nodes to perform DAS.`,
+    description: `The DA layer uses data availability sampling (DAS) to protect against data withholding attacks. However, the block reconstruction protocol, which enables the minimum number of light nodes to collectively reconstruct the block, is still under development.`,
     secondLine: '',
   } as const
 }
@@ -56,6 +45,5 @@ export const DaFraudDetectionRisk = {
   NoFraudDetection,
   ErasureCodingProof,
   DasWithBlobsReconstruction,
-  CelestiaDasWithNoBlobsReconstruction,
   DasWithNoBlobsReconstruction,
 } satisfies DaRiskViewOptions

@@ -206,16 +206,12 @@ export const dydx: Layer2 = {
       ],
     },
     exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(maxPriorityDelay, freezeGracePeriod, {
-        upgradeDelay2: minPriorityDelay,
-      }),
-      description: `There is no exit window. Upgrades have a ${formatSeconds(
+      ...RISK_VIEW.EXIT_WINDOW(maxPriorityDelay, 0),
+      description: `There is a ${formatSeconds(
         maxPriorityDelay,
-      )} delay, (or ${formatSeconds(
+      )} exit window (or ${formatSeconds(
         minPriorityDelay,
-      )} if shortened by the Priority Controller), but withdrawals can be censored for up to ${formatSeconds(
-        freezeGracePeriod,
-      )}.`,
+      )} if shortened by the Priority Controller).`,
     },
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL(freezeGracePeriod),

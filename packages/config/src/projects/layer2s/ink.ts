@@ -17,7 +17,7 @@ export const ink: Layer2 = upcomingL2({
       websites: ['https://inkonchain.com/en-US'],
       apps: [],
       documentation: [],
-      explorers: [],
+      explorers: ['https://explorer-sepolia.inkonchain.com'],
       repositories: ['https://github.com/inkonchain'],
       socialMedia: [
         'https://x.com/inkonchain',

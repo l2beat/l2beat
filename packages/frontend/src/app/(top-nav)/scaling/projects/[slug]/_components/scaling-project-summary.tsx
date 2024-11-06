@@ -9,7 +9,7 @@ import { UnderReviewBar } from '~/components/projects/under-review-bar'
 import { UpcomingBar } from '~/components/projects/upcoming-bar'
 import { WarningBar } from '~/components/warning-bar'
 import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
-import { getUnderReviewText } from '~/utils/project/get-under-review-text'
+import { getUnderReviewText } from '~/utils/project/under-review'
 import { ScalingProjectRosette } from './scaling-project-rosette'
 import { ScalingProjectStats } from './scaling-project-stats'
 import { ValueLockedSummary } from './value-locked-summary'
@@ -30,12 +30,9 @@ export function ScalingProjectSummary({ project }: Props) {
             <ProjectHeader title={project.name} slug={project.slug} />
             {project.isArchived && <ArchivedBar />}
             {project.isUpcoming && <UpcomingBar />}
-            {(project.isUnderReview || project.isImplementationUnderReview) && (
+            {project.underReviewStatus && (
               <UnderReviewBar
-                text={getUnderReviewText(
-                  project.isUnderReview,
-                  project.isImplementationUnderReview,
-                )}
+                text={getUnderReviewText(project.underReviewStatus)}
               />
             )}
             {project.header.warning && (

@@ -77,7 +77,7 @@ export default async function Page(props: Props) {
               project={{
                 title: projectEntry.name,
                 slug: projectEntry.slug,
-                showProjectUnderReview: projectEntry.isUnderReview,
+                isUnderReview: !!projectEntry.underReviewStatus,
               }}
               sections={navigationSections}
             />

@@ -2,7 +2,7 @@
   "name": "playblock",
   "chain": "nova",
   "blockNumber": 76950926,
-  "configHash": "0xe07671128ff5247420a6f370f0af70e6edfe9ed1318fc842dcbea50d75ce0326",
+  "configHash": "0x1b026e3626530a435459f36a8cac4e127d792dedd592c7578c1cd0c7b6ecf123",
   "contracts": [
     {
       "name": "RollupProxy",
@@ -16,6 +16,17 @@
           "permission": "challenge",
           "target": "0x76a197539eF9670c75F36997b8f1DeA593A1b827",
           "via": []
+        },
+        {
+          "permission": "configure",
+          "target": "0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a",
+          "via": [
+            {
+              "address": "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9",
+              "delay": 0,
+              "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+            }
+          ]
         },
         {
           "permission": "propose",
@@ -158,6 +169,11 @@
         }
       ],
       "directlyReceivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
+          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+        },
         {
           "permission": "upgrade",
           "target": "0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0"
@@ -515,6 +531,7 @@
           "delaySeconds": 86400,
           "futureSeconds": 3600
         },
+        "postsBlobs": false,
         "rollup": "0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
@@ -522,7 +539,7 @@
       },
       "fieldMeta": {
         "maxTimeVariation": {
-          "description": "Struct: delayBlocks, futureBlocks, delaySeconds, futureSeconds. onlyRollupOwner settable. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
+          "description": "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
         }
       },
       "derivedName": "SequencerInbox"
@@ -571,6 +588,12 @@
     {
       "address": "0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a",
       "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
+          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "via": [{ "address": "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }]
+        },
         {
           "permission": "upgrade",
           "target": "0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
@@ -1130,8 +1153,8 @@
     "orbitstack/OneStepProverMath": "0x8dd8aebb517eb6eaf15437ddbb90dff66f2b14d9d6b5390dd87fbdab15168188",
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
-    "orbitstack/RollupProxy": "0x9de477a7ec4abe22558d85184e1ff68cebea26c903f45220337156ae3acf3dc5",
-    "orbitstack/SequencerInbox": "0x80eed651d83fd6cd84047260bf02ec5e3a5f21b36049e1e45f34bd0a452e02f9",
+    "orbitstack/RollupProxy": "0x896aca243cf3d45ddf79cc142d37874406a6e07e5572f1450df6adccd0d627ac",
+    "orbitstack/SequencerInbox": "0x746f38463ee5aff9c2f6051c828002565b57c702a6be447c979d1996dd6bd673",
     "orbitstack/UpgradeExecutor": "0xa25e02367a436cebea22481663da914bbf1fd9492d903659cc6ec9ddbaccb241"
   }
 }
