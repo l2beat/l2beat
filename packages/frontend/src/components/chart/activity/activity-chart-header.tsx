@@ -29,7 +29,7 @@ export function ActivityChartHeader({ stats, range }: Props) {
     <header data-role="chart-header">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <h1 className="text-2xl font-bold">Daily average</h1>
+          <h1 className="text-xl font-bold md:text-2xl">Daily average</h1>
           <ActivityMetricControls value={metric} onValueChange={setMetric} />
           <SwitchInfoTooltip />
         </div>
