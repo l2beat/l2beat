@@ -63,7 +63,7 @@ export class LoopringClient extends ClientCore {
       this.$.logger.warn(`Response validation error`, {
         error: parsedError.data.resultInfo.message,
       })
-      return { success: false }
+      return { success: false, message: parsedError.data.resultInfo.message }
     }
 
     return { success: true }
