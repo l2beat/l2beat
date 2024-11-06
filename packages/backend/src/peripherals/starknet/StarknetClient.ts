@@ -107,12 +107,9 @@ export class StarknetClient {
     const text = await response.text()
     const json: unknown = JSON.parse(text)
 
-    const { result: block } =
+    const blockResponse =
       StarknetGetBlockWithTxsResponseBodySchema.parse(json)
-    return {
-      number: block.block_number,
-      timestamp: block.timestamp,
-      transactions: block.transactions,
-    }
+
+    return blockResponse.result
   }
 }

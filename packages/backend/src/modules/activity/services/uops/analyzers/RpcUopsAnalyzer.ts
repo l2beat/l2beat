@@ -1,4 +1,4 @@
-import { sum } from 'lodash'
+import { isArray, sum } from 'lodash'
 
 import {
   ERC4337_methods,
@@ -8,15 +8,12 @@ import {
   isErc4337,
   isGnosisSafe,
 } from '@l2beat/shared'
-import {
-  EVMBlock,
-  EVMTransaction,
-} from '@l2beat/shared/build/clients/rpc/types'
 import type { AnalyzedBlock, Analyzer } from '../types'
+import { assert, Block, Transaction } from '@l2beat/shared-pure'
 
 export class RpcUopsAnalyzer implements Analyzer {
-  analyzeBlock(rpcBlock: EVMBlock): AnalyzedBlock {
-    const uops = rpcBlock.transactions.map((tx: EVMTransaction) =>
+  analyzeBlock(rpcBlock: Block): AnalyzedBlock {
+    const uops = rpcBlock.transactions.map((tx: Transaction) =>
       this.mapTransaction(tx),
     )
     return {
@@ -25,10 +22,11 @@ export class RpcUopsAnalyzer implements Analyzer {
     }
   }
 
-  mapTransaction(tx: EVMTransaction): number {
+  mapTransaction(tx: Transaction): number {
     const methods = ERC4337_methods.concat(SAFE_methods)
 
     if (isErc4337(tx) || isGnosisSafe(tx)) {
+      assert(tx.data && !isArray(tx.data), `EVM Transaction should have data: ${tx.hash}`)
       return this.countUserOperations(tx.data, methods)
     }
 

@@ -18,6 +18,7 @@ const StarknetTransaction = z.object({
   type: z.string(),
   calldata: z.array(z.string()).optional(),
   transaction_hash: z.string(),
+  sender_address: z.string().optional(),
 })
 
 export type StarknetGetBlockWithTxsResponseBodySchema = z.infer<
@@ -29,6 +30,7 @@ export const StarknetGetBlockWithTxsResponseBodySchema = z.object({
   result: z.object({
     block_number: z.number().int(),
     timestamp: z.number().int(),
+    block_hash: z.string(),
     transactions: z.array(StarknetTransaction),
   }),
 })
