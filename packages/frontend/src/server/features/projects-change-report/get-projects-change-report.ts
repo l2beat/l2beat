@@ -1,7 +1,12 @@
 import { chains } from '@l2beat/config'
 import { type FieldDiff, diffDiscovery } from '@l2beat/discovery'
 import { get$Implementations } from '@l2beat/discovery-types'
-import { assert, ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainId,
+  type EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   unstable_cache as cache,
   unstable_noStore as noStore,
@@ -104,31 +109,17 @@ const getCachedProjectsChangeReport = cache(
             discoveryDiff.diff?.some((f) => f.severity === 'HIGH'),
         )
 
-        // if (
-        //   implementationChanges.length === 0 &&
-        //   fieldHighSeverityChanges.length === 0
-        // ) {
-        //   continue
-        // }
+        if (
+          implementationChanges.length === 0 &&
+          fieldHighSeverityChanges.length === 0
+        ) {
+          continue
+        }
 
         result[project] ??= {}
         result[project][onDiskChain] ??= {
-          implementations: [
-            {
-              containingContract: EthereumAddress(
-                '0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a',
-              ),
-              newImplementations: [EthereumAddress.random()],
-            },
-          ],
-          fieldHighSeverityChanges: [
-            {
-              address: EthereumAddress(
-                '0xE6841D92B0C345144506576eC13ECf5103aC7f49',
-              ),
-              fields: [],
-            },
-          ],
+          implementations: [],
+          fieldHighSeverityChanges: [],
         }
 
         for (const implementationChange of implementationChanges) {
@@ -158,7 +149,7 @@ const getCachedProjectsChangeReport = cache(
     }
     return result
   },
-  [`projectsChangeReportXD-${env.VERCEL_GIT_COMMIT_SHA}`],
+  [`projectsChangeReport-${env.VERCEL_GIT_COMMIT_SHA}`],
   { revalidate: UnixTime.HOUR },
 )
 
