@@ -1,4 +1,4 @@
-import { UnixTime, json } from '@l2beat/shared-pure'
+import { Block, UnixTime, json } from '@l2beat/shared-pure'
 
 import {
   ClientCore,
@@ -7,7 +7,7 @@ import {
 import { getBlockNumberAtOrBefore } from '../getBlockNumberAtOrBefore'
 import { DegateError, DegateResponse } from './schemas'
 
-type Block = number | 'latest'
+type BlockTag = number | 'latest'
 
 export interface Dependencies extends ClientCoreDependencies {
   url: string
@@ -27,6 +27,20 @@ export class DegateClient extends ClientCore {
     return await this.query(blockNumber)
   }
 
+  async getBlockWithTransactions(blockNumber: number): Promise<Block> {
+    const block = await this.query(blockNumber)
+
+    return {
+      hash: 'UNSUPPORTED',
+      number: block.blockId,
+      timestamp: block.createdAt.toNumber(),
+      transactions: block.transactions.map((t) => ({
+        hash: 'UNSUPPORTED',
+        type: t.txType,
+      })),
+    }
+  }
+
   async getBlockNumberAtOrBefore(timestamp: UnixTime, start = 0) {
     const end = await this.getLatestBlockNumber()
 
@@ -41,7 +55,7 @@ export class DegateClient extends ClientCore {
     )
   }
 
-  async query(block: Block) {
+  async query(block: BlockTag) {
     const query = new URLSearchParams({ id: block.toString() })
     const url = `${this.$.url}/block/getBlock?${query.toString()}`
 

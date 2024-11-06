@@ -34,7 +34,7 @@ describe(DegateClient.name, () => {
       expect(result).toEqual({
         blockId: 42,
         createdAt: new UnixTime(1),
-        transactions: 1,
+        transactions: [{ txType: 'foo' }],
       })
     })
 
@@ -68,6 +68,24 @@ describe(DegateClient.name, () => {
         url: 'https://example.com',
       })
       await expect(degateClient.getBlock(1)).toBeRejectedWith(Error, 'foo')
+    })
+  })
+
+  describe(DegateClient.prototype.getBlockWithTransactions.name, () => {
+    it('gets block with txs', async () => {
+      const http = mockObject<HttpClient2>({
+        fetch: async () => mockBlock(10),
+      })
+      const degateClient = mockClient({
+        http,
+      })
+      const result = await degateClient.getBlockWithTransactions(42)
+      expect(result).toEqual({
+        hash: 'UNSUPPORTED',
+        number: 10,
+        timestamp: 1,
+        transactions: [{ hash: 'UNSUPPORTED', type: 'foo' }],
+      })
     })
   })
 
