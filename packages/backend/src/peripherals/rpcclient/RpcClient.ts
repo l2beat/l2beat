@@ -1,8 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
-import { Bytes, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { Block, Bytes, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
-import { EVMBlock } from '@l2beat/shared'
 import { getBlockNumberAtOrBefore } from '../getBlockNumberAtOrBefore'
 import { RateLimitedProvider } from './RateLimitedProvider'
 import { BlockTag, CallParameters } from './types'
@@ -61,11 +60,17 @@ export class RpcClient {
     return await this.provider.getBlock(blockNumber)
   }
 
-  async getBlockWithTransactions(blockNumber: number) {
+  async getBlockWithTransactions(blockNumber: number): Promise<Block> {
     // eth_getBlockByNumber with transactions
-    return (await this.provider.getBlockWithTransactions(
-      blockNumber,
-    )) as EVMBlock
+    const block = await this.provider.getBlockWithTransactions(blockNumber)
+
+    return {
+      ...block,
+      transactions: block.transactions.map((t) => ({
+        ...t,
+        type: t.type ? t.type.toString() : undefined,
+      })),
+    }
   }
 
   async getTransaction(txHash: string) {
