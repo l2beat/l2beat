@@ -17,7 +17,7 @@ export const insertBridge = actionClient
       const id = await db.externalBridge.insert(parsedInput)
       return { success: { id } }
     } catch (e) {
-      return { failure: `Failed to insert bridge: ${JSON.stringify(e)}` }
+      return { failure: `Failed to insert bridge: ${e as string}` }
     }
   })
 
@@ -30,7 +30,7 @@ export const updateBridge = actionClient
       await db.externalBridge.update(id, data)
       return { success: { id } }
     } catch (e) {
-      return { failure: `Failed to update bridge: ${JSON.stringify(e)}` }
+      return { failure: `Failed to update bridge: ${e as string}` }
     }
   })
 
@@ -43,6 +43,6 @@ export const deleteBridge = actionClient
       await db.externalBridge.delete(id)
       return { success: { id } }
     } catch (e) {
-      return { failure: `Failed to delete bridge: ${JSON.stringify(e)}` }
+      return { failure: `Failed to delete bridge: ${e as string}` }
     }
   })
