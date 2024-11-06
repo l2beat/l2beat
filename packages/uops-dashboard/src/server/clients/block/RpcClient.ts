@@ -1,8 +1,9 @@
-import { Block, EVMBlock } from '@l2beat/shared'
+import { EVMBlock } from '@l2beat/shared'
 import { providers } from 'ethers'
 import { Chain } from '../../../chains'
 import { getApiKey, getApiUrl } from '../apiUrls'
 import { BlockClient } from './BlockClient'
+import { Block } from '@l2beat/shared-pure'
 
 // TODO: To be replaced by BlockProvider from @l2beat/shared
 export class RpcClient implements BlockClient {

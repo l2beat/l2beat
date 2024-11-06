@@ -1,12 +1,12 @@
 import { Chain } from '@/chains'
-import { Block } from '@l2beat/shared'
 import { z } from 'zod'
 import { getApiUrl } from '../apiUrls'
 import { BlockClient } from './BlockClient'
+import { Block } from '@l2beat/shared-pure'
 
 // TODO: To be replaced by BlockProvider from @l2beat/shared
 export class StarknetClient implements BlockClient {
-  constructor(private readonly chain: Chain) {}
+  constructor(private readonly chain: Chain) { }
 
   async getBlockNumber(): Promise<number> {
     const params = ['latest']
