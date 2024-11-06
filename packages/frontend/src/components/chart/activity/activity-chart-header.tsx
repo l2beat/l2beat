@@ -29,8 +29,9 @@ export function ActivityChartHeader({ stats, range }: Props) {
     <header data-role="chart-header">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <h1 className="text-xl font-bold">Daily average</h1>
+          <h1 className="text-2xl font-bold">Daily average</h1>
           <ActivityMetricControls value={metric} onValueChange={setMetric} />
+          <SwitchInfoTooltip />
         </div>
         {stats !== undefined ? (
           <p className="text-right font-bold group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0">
@@ -58,6 +59,22 @@ export function ActivityChartHeader({ stats, range }: Props) {
         )}
       </div>
     </header>
+  )
+}
+
+function SwitchInfoTooltip() {
+  return (
+    <Tooltip>
+      <TooltipTrigger>
+        <InfoIcon className="size-3.5 fill-blue-700" />
+      </TooltipTrigger>
+      <TooltipContent>
+        <div className="font-semibold">
+          Select <span className="italic">User Ops</span> Per Second or
+          <span className="italic">Transactions</span> Per Second
+        </div>
+      </TooltipContent>
+    </Tooltip>
   )
 }
 
