@@ -1,4 +1,8 @@
-import { type ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
+import {
+  type ActivityMetric,
+  useActivityMetricContext,
+} from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
+import { ActivityMetricControls } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-controls'
 import { InfoIcon } from '~/icons/info'
 import { type ActivityChartStats } from '~/server/features/scaling/activity/get-activity-chart-stats'
 import { countPerSecond } from '~/server/features/scaling/activity/utils/count-per-second'
@@ -15,18 +19,19 @@ import { ChartTimeRange } from '../core/chart-time-range'
 interface Props {
   stats: ActivityChartStats | undefined
   range: [number, number] | undefined
-  metric: ActivityMetric
 }
 
-export function ActivityChartHeader({ stats, range, metric }: Props) {
+export function ActivityChartHeader({ stats, range }: Props) {
+  const { metric, setMetric } = useActivityMetricContext()
+
   const isTps = metric === 'tps'
   return (
     <header data-role="chart-header">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold max-md:hidden">
-          {`Daily average ${isTps ? 'transactions' : 'user ops'} per second`}
-        </h1>
-        <h1 className="text-xl font-bold md:hidden">{`Daily average ${isTps ? 'TPS' : 'UOPS'}`}</h1>
+        <div className="flex items-center gap-2">
+          <h1 className="text-xl font-bold">Daily average</h1>
+          <ActivityMetricControls value={metric} onValueChange={setMetric} />
+        </div>
         {stats !== undefined ? (
           <p className="text-right font-bold group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0">
             <span className="text-xl md:text-2xl">

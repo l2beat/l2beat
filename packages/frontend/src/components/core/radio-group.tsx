@@ -10,7 +10,7 @@ const RadioGroup = ({
   variant,
   ...props
 }: React.ComponentProps<typeof RadioGroupPrimitive.Root> & {
-  variant?: 'highlighted'
+  variant?: 'highlighted' | 'gradient'
 }) => {
   return (
     <RadioGroupPrimitive.Root
@@ -39,6 +39,7 @@ const RadioGroupItem = ({
         'rounded-md px-2 text-sm disabled:cursor-not-allowed disabled:opacity-50',
         'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand',
         'group-data-[variant=highlighted]/radio-group:data-[state=checked]:bg-brand group-data-[variant=highlighted]/radio-group:data-[state=checked]:text-white',
+        'group-data-[variant=gradient]/radio-group:data-[state=checked]:bg-gradient-to-r group-data-[variant=gradient]/radio-group:data-[state=checked]:from-purple-100 group-data-[variant=gradient]/radio-group:data-[state=checked]:to-pink-100 group-data-[variant=gradient]/radio-group:data-[state=checked]:text-white',
         'data-[state=checked]:bg-pure-white dark:data-[state=checked]:bg-black',
         className,
       )}

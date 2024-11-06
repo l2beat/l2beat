@@ -83,7 +83,7 @@ export function ActivityChart({ milestones, entries }: Props) {
       useLogScale={scale === 'log'}
     >
       <section className="flex flex-col gap-4">
-        <ActivityChartHeader stats={stats} range={chartRange} metric={metric} />
+        <ActivityChartHeader stats={stats} range={chartRange} />
         <Chart />
         <ChartControlsWrapper>
           <div className="flex gap-2 md:gap-4">
