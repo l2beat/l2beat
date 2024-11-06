@@ -2,22 +2,21 @@ import {
   ProjectDiscovery,
   ScalingProjectContract,
   ScalingProjectPermission,
-  ScalingProjectPermissionedAccount,
   bridges,
   isSingleAddress,
   layer2s,
   layer3s,
 } from '@l2beat/config'
 import { ConfigReader } from '@l2beat/discovery'
+import { ContractsMeta, getMeta } from './getMeta'
 import { toAddress } from './toAddress'
 import {
-  ApiAddressType,
+  AddressFieldValue,
   ApiPreviewContract,
   ApiPreviewPermission,
   ApiPreviewResponse,
 } from './types'
 
-type ContractNames = { [address: string]: string }
 const allProjects = [...layer2s, ...layer3s, ...bridges]
 
 export function getPreview(
@@ -29,10 +28,10 @@ export function getPreview(
 
   const project = allProjects.find((p) => p.id === projectId)
   if (!project) {
-    return getError('unknown-project')
+    return errorResponse('unknown-project')
   }
-  if (!('discoveryDrivenData' in project)) {
-    return getError('not-discovery-driven')
+  if (!('discoveryDrivenData' in project) || !project.discoveryDrivenData) {
+    return errorResponse('not-discovery-driven')
   }
 
   // sort chains, keeping the host chain first
@@ -43,40 +42,37 @@ export function getPreview(
     return a.localeCompare(b)
   })
 
-  const permissions: {
+  const permissionsPerChain: {
     chain: string
     permissions: ScalingProjectPermission[]
   }[] = []
-  const contracts: { chain: string; contracts: ScalingProjectContract[] }[] = []
+  const contractsPerChain: {
+    chain: string
+    contracts: ScalingProjectContract[]
+  }[] = []
 
-  const namesPerChain: { [chain: string]: ContractNames } = {}
+  const metaPerChain: { [chain: string]: ContractsMeta } = {}
   projectChains.forEach((chain) => {
     const discovery = configReader.readDiscovery(projectId, chain)
+    metaPerChain[chain] = getMeta(discovery)
     const processor = new ProjectDiscovery(projectId, chain)
-    const names: ContractNames = {}
-    discovery.contracts.forEach((c) => {
-      names[c.address] = c.name
-    })
-    namesPerChain[chain] = names
-    permissions.push({
+    permissionsPerChain.push({
       chain,
       permissions: processor.getDiscoveredPermissions(),
     })
-    contracts.push({ chain, contracts: processor.getDiscoveredContracts() })
+    contractsPerChain.push({
+      chain,
+      contracts: processor.getDiscoveredContracts(),
+    })
   })
 
   return {
     status: 'success',
-    permissionsPerChain: getPermissionsPreview(permissions, namesPerChain),
-    contractsPerChain: getContractsPreview(contracts, namesPerChain),
-  }
-}
-
-function getError(status: ApiPreviewResponse['status']): ApiPreviewResponse {
-  return {
-    status,
-    permissionsPerChain: [],
-    contractsPerChain: [],
+    permissionsPerChain: getPermissionsPreview(
+      permissionsPerChain,
+      metaPerChain,
+    ),
+    contractsPerChain: getContractsPreview(contractsPerChain, metaPerChain),
   }
 }
 
@@ -85,45 +81,35 @@ function getPermissionsPreview(
     chain: string
     permissions: ScalingProjectPermission[]
   }[],
-  namesPerChain: { [chain: string]: ContractNames },
+  metaPerChain: { [chain: string]: ContractsMeta },
 ): { chain: string; permissions: ApiPreviewPermission[] }[] {
   return permissionsPerChain.map(({ chain, permissions }) => ({
     chain,
     permissions: permissions.map((p) => ({
-      addresses: p.accounts.map((a) => ({
-        type: 'address',
-        name: namesPerChain[chain][a.address],
-        address: toAddress(chain, a.address),
-        addressType: toApiAddressType(a.type),
-      })),
+      addresses: p.accounts.map((a) =>
+        toAddressFieldValue(a.address, chain, metaPerChain),
+      ),
       name: p.name,
       description: p.description,
-      multisigParticipants: p.participants?.map((x) => ({
-        type: 'address',
-        name: namesPerChain[chain][x.address],
-        address: toAddress(chain, x.address),
-        addressType: toApiAddressType(x.type),
-      })),
+      multisigParticipants: p.participants?.map((x) =>
+        toAddressFieldValue(x.address, chain, metaPerChain),
+      ),
     })),
   }))
 }
 
 function getContractsPreview(
   contractsPerChain: { chain: string; contracts: ScalingProjectContract[] }[],
-  namesPerChain: { [chain: string]: ContractNames },
+  metaPerChain: { [chain: string]: ContractsMeta },
 ): { chain: string; contracts: ApiPreviewContract[] }[] {
   return contractsPerChain.map(({ chain, contracts }) => ({
     chain,
     contracts: contracts.map((c) => {
       const addresses = isSingleAddress(c) ? [c.address] : c.multipleAddresses
-
       return {
-        addresses: addresses.map((a) => ({
-          type: 'address',
-          name: namesPerChain[chain][a],
-          address: toAddress(chain, a),
-          addressType: 'Contract',
-        })),
+        addresses: addresses.map((a) =>
+          toAddressFieldValue(a, chain, metaPerChain),
+        ),
         name: c.name,
         description: c.description ?? '',
       }
@@ -131,8 +117,25 @@ function getContractsPreview(
   }))
 }
 
-function toApiAddressType(
-  type: ScalingProjectPermissionedAccount['type'],
-): ApiAddressType {
-  return type === 'MultiSig' ? 'Multisig' : type
+function toAddressFieldValue(
+  address: string,
+  chain: string,
+  meta: { [chain: string]: ContractsMeta },
+): AddressFieldValue {
+  return {
+    type: 'address',
+    name: meta[chain][address].name,
+    address: toAddress(chain, address),
+    addressType: meta[chain][address].type,
+  }
+}
+
+function errorResponse(
+  status: ApiPreviewResponse['status'],
+): ApiPreviewResponse {
+  return {
+    status,
+    permissionsPerChain: [],
+    contractsPerChain: [],
+  }
 }
