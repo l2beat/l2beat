@@ -6,10 +6,7 @@ import {
   TypeExplanationTooltip,
 } from '~/components/table/cells/type-cell'
 import { sortByDacMembers } from '~/components/table/sorting/functions/sort-by-dac-members'
-import {
-  sortBySentiment,
-  sortBySentimentAndAlphabetically,
-} from '~/components/table/sorting/functions/sort-by-sentiment'
+import { sortBySentiment } from '~/components/table/sorting/functions/sort-by-sentiment'
 import { sortTwoRowCell } from '~/components/table/sorting/functions/sort-two-row-cell'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
@@ -54,11 +51,20 @@ export const columns = [
       )
     },
     sortDescFirst: true,
-    sortingFn: (a, b) =>
-      sortBySentimentAndAlphabetically(
+    sortingFn: (a, b) => {
+      const sentimentResult = sortBySentiment(
         a.original.dataAvailability.layer,
         b.original.dataAvailability.layer,
-      ),
+      )
+      if (sentimentResult !== 0) {
+        return sentimentResult
+      }
+
+      return sortTwoRowCell(
+        a.original.dataAvailability.layer,
+        b.original.dataAvailability.layer,
+      )
+    },
   }),
   columnHelper.accessor('dataAvailability.bridge.value', {
     header: 'DA Bridge',
