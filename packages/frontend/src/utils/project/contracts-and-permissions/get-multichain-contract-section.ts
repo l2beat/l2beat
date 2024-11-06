@@ -179,12 +179,20 @@ function makeTechnologyContract(
 
   const changes =
     projectChangeReport !== undefined ? Object.values(projectChangeReport) : []
-  const changedAddresses = changes.flatMap((change) =>
-    change.implementations.map((impl) => impl.containingContract.toString()),
+  const implementationChangeAddresses = changes.flatMap((c) =>
+    c.implementations.map((i) => i.containingContract.toString()),
+  )
+  const highSeverityFieldChangeAddresses = changes.flatMap((c) =>
+    c.fieldHighSeverityChanges.map((i) => i.address.toString()),
   )
 
-  const implementationHasChanged = changedAddresses.some((change) =>
-    addresses.map((a) => a.address).includes(change),
+  const implementationHasChanged = implementationChangeAddresses.some(
+    (changedAddress) =>
+      addresses.map((a) => a.address).includes(changedAddress),
+  )
+  const highSeverityFieldChanged = highSeverityFieldChangeAddresses.some(
+    (changedAddress) =>
+      addresses.map((a) => a.address).includes(changedAddress),
   )
 
   const additionalReferences: Reference[] = []
@@ -218,7 +226,8 @@ function makeTechnologyContract(
       usedInProjects,
       references: concat(item.references ?? [], additionalReferences),
       chain,
-      implementationHasChanged,
+      implementationChanged: implementationHasChanged,
+      highSeverityFieldChanged,
       upgradeableBy: item.upgradableBy,
       upgradeDelay: item.upgradeDelay,
       upgradeConsiderations: item.upgradeConsiderations,
@@ -232,7 +241,8 @@ function makeTechnologyContract(
     usedInProjects: [],
     references: additionalReferences,
     chain,
-    implementationHasChanged,
+    implementationChanged: implementationHasChanged,
+    highSeverityFieldChanged,
   }
 }
 
