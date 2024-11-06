@@ -2,8 +2,9 @@ import { assert } from '@l2beat/shared-pure'
 import { TokenMetaRecord, UpsertableTokenMetaRecord } from './entity'
 
 export function getAggregatedTokenMeta(
-  regularRecords: TokenMetaRecord[],
+  records: TokenMetaRecord[],
 ): UpsertableTokenMetaRecord {
+  const regularRecords = records.filter((r) => r.source !== 'Aggregate')
   assert(regularRecords[0], 'No regular records provided')
 
   return {
