@@ -1,8 +1,9 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
+import { orbitStackL2 } from './templates/orbitStack'
 
-export const ethernity: Layer2 = upcomingL2({
+export const ethernity: Layer2 = orbitStackL2({
   id: 'ethernity',
   createdAt: new UnixTime(1718182472), // 2024-06-12T08:54:32Z
   display: {
