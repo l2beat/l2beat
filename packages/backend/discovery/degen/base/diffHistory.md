@@ -1,14 +1,45 @@
-Generated with discovered.json: 0xb852465c13c977ddb6913795c3f2186e2365eee8
+Generated with discovered.json: 0x9999c42a4fc957a8715e91a613aa9bdfcbbb80ea
 
-# Diff at Mon, 04 Nov 2024 08:12:16 GMT:
+# Diff at Tue, 05 Nov 2024 16:03:28 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@950c85bf556f084c302d2b03100375cf3c7ed376 block: 21842198
-- current block number: 21842198
+- comparing to: main@5e6ce51851b57187ccdd52c4944a82e2a8ab1e88 block: 21842198
+- current block number: 22016603
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Single signer added to ConduitMultisig3 (3/7).
+
+## Watched changes
+
+```diff
+    contract ConduitMultisig3 (0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104) {
+    +++ description: None
+      values.$members.6:
++        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.$members.5:
+-        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
++        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+      values.$members.4:
+-        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
++        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+      values.$members.3:
+-        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
++        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+      values.$members.2:
+-        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
++        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+      values.$members.1:
+-        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
++        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
+      values.$members.0:
+-        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
++        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 7 (43%)"
+    }
+```
 
 ## Config/verification related changes
 
