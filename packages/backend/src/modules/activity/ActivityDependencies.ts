@@ -11,9 +11,11 @@ import { FuelTxsCountService } from './services/txs/FuelTxsCountService'
 import { LoopringTxsCountService } from './services/txs/LoopringTxsCountService'
 import { StarkexTxsCountService } from './services/txs/StarkexTxsCountService'
 import { StarknetTxsCountService } from './services/txs/StarknetTxsCountService'
+import { RpcUopsAnalyzer } from './services/uops/analyzers/RpcUopsAnalyzer'
 import { StarknetUopsAnalyzer } from './services/uops/analyzers/StarknetUopsAnalyzer'
 
 export class ActivityDependencies {
+  private readonly rpcUopsAnalyzer: RpcUopsAnalyzer
   private readonly starknetUopsAnalyzer: StarknetUopsAnalyzer
   private readonly blockProviders: BlockProviders
 
@@ -22,6 +24,7 @@ export class ActivityDependencies {
     readonly database: Database,
     providers: Providers,
   ) {
+    this.rpcUopsAnalyzer = new RpcUopsAnalyzer()
     this.starknetUopsAnalyzer = new StarknetUopsAnalyzer()
     this.blockProviders = providers.getBlockProviders()
   }
@@ -43,6 +46,7 @@ export class ActivityDependencies {
             project.config.type === 'zksync'
               ? undefined
               : project.config.assessCount,
+          rpcUopsAnalyzer: this.rpcUopsAnalyzer,
         })
       }
       case 'starknet': {

@@ -10,7 +10,7 @@ interface Dependencies {
   provider: BlockProvider
   projectId: ProjectId
   type: 'rpc' | 'zksync'
-  rpcUopsAnalyzer?: RpcUopsAnalyzer
+  rpcUopsAnalyzer: RpcUopsAnalyzer
   assessCount?: AssessCount
 }
 
