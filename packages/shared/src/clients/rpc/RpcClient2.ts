@@ -1,11 +1,11 @@
-import { Bytes, UnixTime, json } from '@l2beat/shared-pure'
+import { Block, Bytes, UnixTime, json } from '@l2beat/shared-pure'
 import { generateId } from '../../tools/generateId'
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 import {
   ClientCore,
   ClientCoreDependencies as ClientCoreDependencies,
 } from '../ClientCore'
-import { EVMBlockResponse, Quantity, RPCError } from './types'
+import { CallParameters, EVMBlockResponse, Quantity, RPCError } from './types'
 
 interface Dependencies extends ClientCoreDependencies {
   url: string
