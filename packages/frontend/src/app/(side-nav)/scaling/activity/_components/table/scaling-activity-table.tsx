@@ -10,7 +10,7 @@ import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/basic-table'
 import { RollupsTable } from '~/components/table/rollups-table'
 import { useTable } from '~/hooks/use-table'
-import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling-activity-entries'
+import { type ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
 import {
   type ActivityMetric,
   useActivityMetricContext,

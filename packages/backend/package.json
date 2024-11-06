@@ -29,7 +29,7 @@
     "update-diff-history": "ts-node --transpile-only scripts/updateDiffHistory.ts",
     "refresh-discovery": "ts-node --transpile-only scripts/refreshDiscovery.ts",
     "analyze-project": "ts-node --transpile-only scripts/analyzeProject.ts",
-    "restore-tvl": "cd ./scripts/tvl-restore && ./tvl-restore.sh && cd -",
+    "restore-tvl": "pnpm --filter ../database restore-tvl",
     "db:inspect": "pnpm prisma studio",
     "dev": "pnpm build:dependencies && pnpm start:dev"
   },

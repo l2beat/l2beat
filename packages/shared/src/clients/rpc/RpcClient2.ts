@@ -1,11 +1,17 @@
-import { UnixTime, json } from '@l2beat/shared-pure'
+import { Bytes, UnixTime, json } from '@l2beat/shared-pure'
 import { generateId } from '../../tools/generateId'
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 import {
   ClientCore,
   ClientCoreDependencies as ClientCoreDependencies,
 } from '../ClientCore'
-import { EVMBlock, EVMBlockResponse, Quantity, RPCError } from './types'
+import {
+  CallParameters,
+  EVMBlock,
+  EVMBlockResponse,
+  Quantity,
+  RPCError,
+} from './types'
 
 interface Dependencies extends ClientCoreDependencies {
   url: string
@@ -49,7 +55,33 @@ export class RpcClient2 extends ClientCore {
     return { ...block.data.result }
   }
 
-  async query(method: string, params: (string | number | boolean)[]) {
+  async call(
+    callParams: CallParameters,
+    blockNumber: number | 'latest',
+  ): Promise<Bytes> {
+    const method = 'eth_call'
+    const encodedNumber =
+      blockNumber === 'latest' ? 'latest' : Quantity.encode(BigInt(blockNumber))
+
+    const callObject: Record<string, string> = {
+      to: callParams.to.toString(),
+    }
+    if (callParams.from) {
+      callObject.from = callParams.from.toString()
+    }
+    if (callParams.data) {
+      callObject.data = callParams.data.toString()
+    }
+
+    const params = [callObject, encodedNumber]
+    const bytes = (await this.query(method, params)) as string
+    return Bytes.fromHex(bytes)
+  }
+
+  async query(
+    method: string,
+    params: (string | number | boolean | Record<string, string>)[],
+  ) {
     return await this.fetch(this.$.url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -64,7 +96,10 @@ export class RpcClient2 extends ClientCore {
     })
   }
 
-  override validateResponse(response: json): boolean {
+  override validateResponse(response: json): {
+    success: boolean
+    message?: string
+  } {
     const parsedError = RPCError.safeParse(response)
 
     if (parsedError.success) {
@@ -72,10 +107,10 @@ export class RpcClient2 extends ClientCore {
       this.$.logger.warn(`Response validation error`, {
         ...parsedError.data.error,
       })
-      return false
+      return { success: false }
     }
 
-    return true
+    return { success: true }
   }
 
   get chain() {

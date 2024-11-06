@@ -4,6 +4,7 @@ import { cn } from '~/utils/cn'
 import { ChartSection } from './sections/chart-section'
 import { ContractsSection } from './sections/contracts/contracts-section'
 import { MultiChainContractsSection } from './sections/contracts/multichain-contracts-section'
+import { DaRiskSummarySection } from './sections/da-risk-summary-section'
 import { DetailedDescriptionSection } from './sections/detailed-description-section'
 import { GrissiniRiskAnalysisSection } from './sections/grissini-risk-analysis-section'
 import { GroupSection } from './sections/group-section'
@@ -66,6 +67,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'RiskSummarySection':
             return (
               <RiskSummarySection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'DaRiskSummarySection':
+            return (
+              <DaRiskSummarySection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}

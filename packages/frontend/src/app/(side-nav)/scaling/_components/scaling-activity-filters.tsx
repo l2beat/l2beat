@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { TableFilter } from '~/components/table/filters/table-filter'
-import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling-activity-entries'
+import { type ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
 import { cn } from '~/utils/cn'
 import { useScalingFilterValues } from './scaling-filter-context'
 import { ScalingFilters } from './scaling-filters'

@@ -1,8 +1,8 @@
 {
   "name": "kroma",
   "chain": "ethereum",
-  "blockNumber": 21093326,
-  "configHash": "0xfbe2bd7b523e0e89fb983ff6dc8d9f84e179c23764ad55ae8f40416d7b711370",
+  "blockNumber": 21121964,
+  "configHash": "0x6c2712ac1d4fef52bb9881f83a79190df0d538e581aaa885af6ddb9fd2f6a9f2",
   "contracts": [
     {
       "name": "L2OutputOracle",
@@ -47,12 +47,12 @@
         "COLOSSEUM": "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 18293400,
-        "latestOutputIndex": 10163,
-        "nextBlockNumber": 18295200,
-        "nextFinalizeOutputIndex": 9989,
-        "nextOutputIndex": 10164,
-        "nextOutputMinL2Timestamp": 1730470789,
+        "latestBlockNumber": 18466200,
+        "latestOutputIndex": 10259,
+        "nextBlockNumber": 18468000,
+        "nextFinalizeOutputIndex": 10089,
+        "nextOutputIndex": 10260,
+        "nextOutputMinL2Timestamp": 1730816389,
         "startingBlockNumber": 0,
         "startingTimestamp": 1693880387,
         "SUBMISSION_INTERVAL": 1800,
@@ -159,7 +159,8 @@
       ],
       "ignoreInWatchMode": [
         "activatedValidatorCount",
-        "activatedValidatorTotalWeight"
+        "activatedValidatorTotalWeight",
+        "nextValidator"
       ],
       "sinceTimestamp": 1729473911,
       "values": {
@@ -173,8 +174,8 @@
           ]
         ],
         "$upgradeCount": 1,
-        "activatedValidatorCount": 12,
-        "activatedValidatorTotalWeight": "10500672120356410000000009",
+        "activatedValidatorCount": 13,
+        "activatedValidatorTotalWeight": "9112971769826357000000019",
         "ASSET_MANAGER": "0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3",
         "BASE_REWARD": "400000000000000000000",
         "BOOSTED_REWARD_DENOM": 100,
@@ -187,7 +188,7 @@
         "MAX_OUTPUT_FINALIZATIONS": 10,
         "MIN_ACTIVATE_AMOUNT": "10000000000000000000000",
         "MIN_REGISTER_AMOUNT": "10000000000000000000000",
-        "nextValidator": "0x16876e5c608cec36968517A9Eb345269D308D94a",
+        "nextValidator": "0x5ddcf494A8b6EeE4904934E829109cCF584EAF80",
         "ROUND_DURATION_SECONDS": 1800,
         "SOFT_JAIL_PERIOD_SECONDS": 259200,
         "TRUSTED_VALIDATOR": "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
@@ -229,7 +230,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 200000,
-          "prevBlockNum": 21093248
+          "prevBlockNum": 21121510
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35",
@@ -391,7 +392,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 0,
-        "messageNonce": 4159,
+        "messageNonce": 4195,
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -819,9 +820,9 @@
             "feeVault": "0x8898EF6f9838A0Ec088F174A77F8a094fB788C4e",
             "defaultFeeAmount": 2000000000000000
           },
-          "spSnap": { "evalValue": "854176178689916190954" },
+          "spSnap": { "evalValue": "822748942301757293159" },
           "assets": ["0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee"],
-          "snaps": [{ "evalValue": "854176178689916190954" }]
+          "snaps": [{ "evalValue": "822748942301757293159" }]
         },
         "owner": "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f",
         "paused": false,
@@ -1009,7 +1010,7 @@
         ],
         "$upgradeCount": 2,
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 21093326,
+        "clock": 21121964,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -1107,7 +1108,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "clock": 21093326,
+        "clock": 21121964,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "DOMAIN_SEPARATOR": "0x1630586f33defc933258f4512df143dd6bf7adb1b4d039178e748d4cac4813b8",
         "eip712Domain": {
@@ -1240,7 +1241,7 @@
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "symbol": "spETH",
-        "totalSupply": "812270176357000760301"
+        "totalSupply": "782087628326927724414"
       },
       "derivedName": "SPETH"
     },
@@ -1306,7 +1307,7 @@
         "TAX_NUMERATOR": 20,
         "TERMINATE_OUTPUT_INDEX": 10106,
         "TRUSTED_VALIDATOR": "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
-        "validatorCount": 48,
+        "validatorCount": 40,
         "VAULT_REWARD_GAS_LIMIT": 100000,
         "version": "1.1.0"
       },

@@ -5,7 +5,6 @@ import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
 import { DaLayer } from '../../types/DaLayer'
 import { DasErasureCodingProof } from '../../types/DasErasureCodingProof'
 import { DasErasureCodingScheme } from '../../types/DasErasureCodingScheme'
-import { linkByDA } from '../../utils/link-by-da'
 import { blobstream } from './bridges/blobstream'
 
 export const celestia: DaLayer = {
@@ -64,6 +63,7 @@ export const celestia: DaLayer = {
     To ensure data availability, Celestia light nodes perform sampling on the 2k x 2k data matrix. Each light node randomly selects a set of unique coordinates within the extended matrix and requests the corresponding data shares and Merkle proofs from full nodes.
     Currently, a Celestia light node must perform a minimum of 16 samples before declaring that a block is available.
     This sampling rate ensures that given the minimum number of unavailable shares, a light client will sample at least one unavailable share with a 99% probability.\n
+    For more details on DAS probabilistic analysis, see the Fraud and Data Availability Proofs paper.\n
     
     ![DAS](/images/da-layer-technology/celestia/das.png#center)
 
@@ -76,6 +76,28 @@ export const celestia: DaLayer = {
     Applications can then retrieve the data by querying the Celestia blockchain for the data root of the blob and the namespace of the application. The data can be reconstructed by querying the Celestia network for the shares of the data matrix and reconstructing the data using the erasure coding scheme.
 
     `,
+    references: [
+      {
+        text: 'Celestia Specifications',
+        href: 'https://celestiaorg.github.io/celestia-app/specs/index.html',
+      },
+      {
+        text: 'Celestia Core - CometBFT',
+        href: 'https://github.com/celestiaorg/celestia-core',
+      },
+      {
+        text: 'Celestia Node - Data Retrieval',
+        href: 'https://github.com/celestiaorg/celestia-node/blob/9ff58570ef86e505b718abfc755fd18643a2284c/share/eds/retriever.go#L60',
+      },
+      {
+        text: 'Bad Encoding Fraud Proofs',
+        href: 'https://github.com/celestiaorg/celestia-node/blob/main/docs/adr/adr-006-fraud-service.md',
+      },
+      {
+        text: 'Fraud and Data Availability Proofs paper',
+        href: 'https://arxiv.org/pdf/1809.09044',
+      },
+    ],
     risks: [
       {
         category: 'Funds can be lost if',
@@ -83,11 +105,7 @@ export const celestia: DaLayer = {
       },
       {
         category: 'Funds can be lost if',
-        text: 'a dishonest supermajority of Celestia validators finalizes an unavailable block, and the number of light nodes on the network is not enough to ensure block reconstruction.',
-      },
-      {
-        category: 'Funds can be lost if',
-        text: 'a dishonest supermajority of Celestia validators finalizes an unavailable block, and full nodes block reconstruction time is longer than the erasure-coding fraud proof window.',
+        text: 'a dishonest supermajority of Celestia validators finalizes an unavailable block, and the light nodes on the network cannot collectively reconstruct the block.',
       },
     ],
   },
@@ -95,17 +113,14 @@ export const celestia: DaLayer = {
     NO_BRIDGE({
       createdAt: new UnixTime(1721138888), // 2024-07-16T14:08:08Z
       layer: 'Celestia',
-      description:
-        'The risk profile in this page refers to L2s that do not integrate with a data availability bridge.',
+      description: `The risk profile in this page refers to L2s that do not integrate with a data availability bridge.
+        Projects not integrating with a functional DA bridge rely only on the data availability attestation of the sequencer.`,
       technology: {
         description: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.\n`,
       },
     }),
     ...blobstream,
   ],
-  usedIn: linkByDA({
-    layer: (layer) => layer === 'Celestia',
-  }),
   /*
     Node params sources:
     - unbondingPeriod, finality (time_iota_ms): https://celestiaorg.github.io/celestia-app/specs/params.html
@@ -129,8 +144,7 @@ export const celestia: DaLayer = {
   pruningWindow: 86400 * 30, // 30 days in seconds
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
-    fraudDetection:
-      DaFraudDetectionRisk.CelestiaDasWithNoBlobsReconstruction(true),
+    fraudDetection: DaFraudDetectionRisk.DasWithNoBlobsReconstruction(true),
   },
   economicSecurity: {
     type: 'Celestia',

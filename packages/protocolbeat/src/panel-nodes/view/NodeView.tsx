@@ -1,11 +1,10 @@
 import clsx from 'clsx'
-import { useCallback, useRef } from 'react'
 
+import { AddressIcon } from '../../common/AddressIcon'
 import type { Field, Node } from '../store/State'
 import { useStore } from '../store/store'
-import { OklchColor, oklchColorToCSS } from '../store/utils/color'
-import { NODE_WIDTH } from '../store/utils/constants'
-import { ResizeHandle } from './ResizeHandle'
+import { FIELD_HEIGHT, HEADER_HEIGHT } from '../store/utils/constants'
+import { getColor } from './colors/colors'
 
 export interface NodeViewProps {
   node: Node
@@ -13,56 +12,50 @@ export interface NodeViewProps {
 }
 
 export function NodeView(props: NodeViewProps) {
-  const ref = useRef<HTMLDivElement>(null)
+  const { color, isDark } = getColor(props.node)
 
-  const updateNodeLocations = useStore((state) => state.layout)
-  // Using ref instead of inline event listener
-  // to prevent side-menu from flashing on hidden node
-
-  const onDoubleClick = useCallback(() => {
-    if (!ref.current) {
-      return
-    }
-
-    const newBox = getLocationByChildWidth(ref.current)
-
-    updateNodeLocations({
-      [props.node.id]: newBox,
-    })
-  }, [])
+  const fullHeight =
+    props.node.addressType === 'EOA' && props.node.fields.length === 0
 
   return (
     <div
-      ref={ref}
       style={{
         left: props.node.box.x,
         top: props.node.box.y,
         width: props.node.box.width,
         height: props.node.box.height,
-        backgroundColor: oklchColorToCSS(props.node.color),
       }}
       className={clsx(
-        'absolute rounded-md border-2 border-black',
-        props.selected && 'outline outline-2 outline-blue-400',
+        'absolute bg-black',
+        fullHeight ? 'rounded-2xl' : 'rounded',
+        props.selected && 'outline outline-4 outline-autumn-300',
       )}
     >
       <div
         className={clsx(
-          'flex h-[28px] w-full justify-between px-2 leading-[28px]',
-          props.node.fields.length > 0 && 'border-black border-b-2',
+          'mb-1 flex w-full items-center gap-1 px-2 font-medium text-sm',
+          fullHeight ? 'rounded-2xl' : 'rounded-t',
+          isDark ? 'text-coffee-200' : 'text-black',
         )}
+        style={{
+          height: fullHeight ? HEADER_HEIGHT : HEADER_HEIGHT - 4,
+          background: color,
+        }}
       >
+        <AddressIcon type={props.node.addressType} />
         <div className="truncate">{props.node.name}</div>
       </div>
       {props.node.fields.map((field, i) => (
-        <NodeField key={i} field={field} color={props.node.color} />
+        <NodeField key={i} field={field} selected={props.selected} />
       ))}
-      <ResizeHandle nodeId={props.node.id} onDoubleClick={onDoubleClick} />
     </div>
   )
 }
 
-function NodeField(props: { field: Field; color: OklchColor }) {
+function NodeField(props: {
+  field: Field
+  selected: boolean
+}) {
   const isHighlighted = useStore((state) =>
     state.selected.includes(props.field.target),
   )
@@ -70,19 +63,18 @@ function NodeField(props: { field: Field; color: OklchColor }) {
     state.hidden.includes(props.field.target),
   )
 
-  const highlightedColor: OklchColor = {
-    l: 0.65,
-    c: Math.max(props.color.c, 0.1),
-    h: (props.color.h + 180) % 360,
-  }
+  const isLeft = props.field.connection.from.direction === 'left'
+
   return (
     <div className="relative">
       <div
-        className="h-[24px] w-full truncate rounded-full px-2 leading-[24px]"
+        className={clsx(
+          'w-full truncate rounded-full px-2 font-mono text-xs',
+          isHighlighted && 'bg-autumn-300 text-black',
+        )}
         style={{
-          backgroundColor: isHighlighted
-            ? oklchColorToCSS(highlightedColor)
-            : undefined,
+          height: FIELD_HEIGHT,
+          lineHeight: FIELD_HEIGHT + 'px',
         }}
       >
         {props.field.name}
@@ -90,61 +82,16 @@ function NodeField(props: { field: Field; color: OklchColor }) {
       {!targetHidden && (
         <div
           className={clsx(
-            'absolute h-[12px] w-[12px]',
-            'rounded-full border-2 border-black bg-white',
+            'absolute h-[10px] w-[10px] rounded-full',
+            isHighlighted || props.selected ? 'bg-autumn-300' : 'bg-coffee-400',
           )}
           style={{
-            left:
-              props.field.connection.from.direction === 'left' ? -7 : undefined,
-            right:
-              props.field.connection.from.direction === 'right'
-                ? -7
-                : undefined,
-            top: 6,
+            left: isLeft ? -5 : undefined,
+            right: isLeft ? undefined : -5,
+            top: FIELD_HEIGHT / 2 - 5,
           }}
         />
       )}
     </div>
   )
-}
-
-/**
- * Render children with out parent constraints to compute actual width we should expand into
- */
-function getAbsoluteWidth(element: Element) {
-  // deep clone to have potential descendants
-  const clone = element.cloneNode(true) as HTMLElement
-  clone.style.width = 'auto'
-  clone.style.position = 'absolute'
-  clone.style.visibility = 'hidden'
-  clone.style.pointerEvents = 'none'
-  clone.style.transform = 'translateZ(0)'
-
-  document.body.appendChild(clone)
-
-  const { offsetWidth: width } = clone
-
-  document.body.removeChild(clone)
-
-  return width
-}
-
-function getLocationByChildWidth(element: HTMLElement) {
-  const AUTO_EXPAND_ADDITIONAL_SPACE = 20
-
-  const absoluteWidths = Array.from(element.children).map((children) =>
-    getAbsoluteWidth(children),
-  )
-
-  const newWidth = Math.max(...absoluteWidths, NODE_WIDTH)
-
-  const newWidthWithOffset = newWidth + AUTO_EXPAND_ADDITIONAL_SPACE
-
-  const newBox = {
-    x: element.offsetLeft,
-    y: element.offsetTop,
-    width: newWidthWithOffset,
-  }
-
-  return newBox
 }

@@ -177,8 +177,13 @@ export function PolygoncdkDAC(template: TemplateVars): DacDaLayer {
     technology: {
       description: layerTechnology,
       risks: template.layer?.technology?.risks,
+      references: [
+        {
+          text: 'Polygon CDK Validium Documentation',
+          href: 'https://docs.polygon.technology/cdk/architecture/cdk-validium/#data-availability-committee-dac',
+        },
+      ],
     },
-    usedIn,
     bridges: [dacBridge],
     risks: {
       economicSecurity:

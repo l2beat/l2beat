@@ -1,4 +1,4 @@
-import { createColumnHelper } from '@tanstack/react-table'
+import { type Row, createColumnHelper } from '@tanstack/react-table'
 import { NaBadge } from '~/components/badge/na-badge'
 import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
 import { TwoRowCell } from '~/components/table/cells/two-row-cell'
@@ -54,7 +54,12 @@ const daBridgeRisksColumn = columnHelper.display({
 
     const risks = mapBridgeRisksToRosetteValues(firstBridge.risks)
 
-    return <GrissiniCell values={risks} />
+    return (
+      <GrissiniCell
+        values={risks}
+        hasNoBridge={firstBridge.type === 'NoBridge'}
+      />
+    )
   },
   enableSorting: false,
   meta: {
@@ -74,7 +79,6 @@ const tvsColumn = columnHelper.accessor('tvs', {
       </div>
     )
   },
-  enableSorting: false,
   meta: {
     tooltip:
       'Total value secured (TVS) is the total value locked of all projects using this layer.',
@@ -100,6 +104,7 @@ const slashableStakeColumn = columnHelper.accessor('economicSecurity', {
       </div>
     )
   },
+  sortingFn: sortSlashableStake,
   meta: {
     align: 'right',
     tooltip:
@@ -117,6 +122,10 @@ const membersColumn = columnHelper.display({
     }
 
     if (firstBridge.type !== 'DAC') {
+      return <NaBadge />
+    }
+
+    if (firstBridge.hideMembers) {
       return <NaBadge />
     }
 
@@ -220,3 +229,25 @@ export const publicSystemsColumns = [
   bridgeColumn,
   bridgeGroup,
 ]
+
+function sortSlashableStake(
+  rowA: Row<DaSummaryEntry>,
+  rowB: Row<DaSummaryEntry>,
+) {
+  const rowAValue = slashableStakeToValue(rowA.original)
+  const rowBValue = slashableStakeToValue(rowB.original)
+
+  return rowBValue - rowAValue
+}
+
+function slashableStakeToValue(entry: DaSummaryEntry) {
+  if (entry.risks.economicSecurity.type === 'Unknown') {
+    return 0
+  }
+
+  if (!entry.economicSecurity || entry.economicSecurity.status !== 'Synced') {
+    return 0
+  }
+
+  return entry.economicSecurity.economicSecurity
+}

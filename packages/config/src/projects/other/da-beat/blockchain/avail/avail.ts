@@ -5,7 +5,6 @@ import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
 import { DaLayer } from '../../types/DaLayer'
 import { DasErasureCodingProof } from '../../types/DasErasureCodingProof'
 import { DasErasureCodingScheme } from '../../types/DasErasureCodingScheme'
-import { linkByDA } from '../../utils/link-by-da'
 import { vector } from './bridges/vector'
 
 export const avail: DaLayer = {
@@ -75,6 +74,20 @@ export const avail: DaLayer = {
     App-specific data can be reconstructed by app clients, which request and assemble missing cells from the network to complete the data reconstruction process.
 
     `,
+    references: [
+      {
+        text: 'Avail Documentation',
+        href: 'https://docs.availproject.org/docs/learn-about-avail/consensus/npos',
+      },
+      {
+        text: 'Avail Light Client - Source Code',
+        href: 'https://github.com/availproject/avail-light/blob/main/core/src/light_client.rs',
+      },
+      {
+        text: 'Avail App Client - Source Code',
+        href: 'https://github.com/availproject/avail-light/blob/a9e1741a6c7579d6ab1988eb409808b33f999180/core/src/app_client.rs',
+      },
+    ],
     risks: [
       {
         category: 'Funds can be lost if',
@@ -82,7 +95,7 @@ export const avail: DaLayer = {
       },
       {
         category: 'Funds can be lost if',
-        text: 'a dishonest majority of Avail validators finalizes an unavailable block, and the number of light nodes on the network is not enough to ensure block reconstruction.',
+        text: 'a dishonest majority of Avail validators finalizes an unavailable block, and the light nodes on the network cannot collectively reconstruct the block.',
       },
     ],
   },
@@ -98,9 +111,6 @@ export const avail: DaLayer = {
     }),
     vector,
   ],
-  usedIn: linkByDA({
-    layer: (layer) => layer === 'Avail',
-  }),
   /*
     Node params sources:
   */

@@ -1,4 +1,4 @@
-import { CoingeckoQueryService } from '@l2beat/shared'
+import { CoingeckoQueryService, PriceProvider } from '@l2beat/shared'
 import {
   CoingeckoId,
   CoingeckoPriceConfigEntry,
@@ -20,7 +20,7 @@ describe(PriceService.name, () => {
         configuration('c', 100, 400),
       ]
 
-      const coingeckoQueryService = mockObject<CoingeckoQueryService>({
+      const priceProvider = mockObject<PriceProvider>({
         getUsdPriceHistoryHourly: async () => [
           coingeckoResponse(100),
           coingeckoResponse(200),
@@ -28,7 +28,9 @@ describe(PriceService.name, () => {
         ],
       })
 
-      const priceService = new PriceService({ coingeckoQueryService })
+      const priceService = new PriceService({
+        priceProvider,
+      })
 
       const prices = await priceService.fetchPrices(
         from,
@@ -37,9 +39,12 @@ describe(PriceService.name, () => {
         configurations,
       )
 
-      expect(
-        coingeckoQueryService.getUsdPriceHistoryHourly,
-      ).toHaveBeenOnlyCalledWith(coingeckoId, from, to, undefined)
+      expect(priceProvider.getUsdPriceHistoryHourly).toHaveBeenOnlyCalledWith(
+        coingeckoId,
+        from,
+        to,
+        undefined,
+      )
 
       // all for "a" - maxHeight === null
       // two for "b" - maxHeight < to
@@ -63,7 +68,7 @@ describe(PriceService.name, () => {
       const to = 100
 
       const service = new PriceService({
-        coingeckoQueryService: mockObject<CoingeckoQueryService>({}),
+        priceProvider: mockObject<PriceProvider>({}),
       })
 
       const result = service.getAdjustedTo(from, to)

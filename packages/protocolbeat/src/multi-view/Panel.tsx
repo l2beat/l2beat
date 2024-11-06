@@ -16,7 +16,7 @@ export function Panel(props: {
   return (
     <div
       className={clsx(
-        'flex flex-col border-black border-r',
+        'flex flex-col border-coffee-600 border-r',
         hidden && 'hidden',
       )}
       id={`panel-${props.id}`}
@@ -33,7 +33,11 @@ export function Panel(props: {
       >
         <props.body kind={props.id} />
       </div>
-      {isPickedUp && <div className="flex-1 bg-slate-100" />}
+      {isPickedUp && (
+        <div className="flex-1 bg-coffee-800 p-4">
+          <div className="h-full w-full border border-coffee-200" />
+        </div>
+      )}
     </div>
   )
 }
@@ -44,7 +48,7 @@ function HoverHeader(props: { children: ReactNode }) {
   return (
     <div
       style={{ left: mouse.x - 100, top: mouse.y - 18 }}
-      className="fixed h-[36px] w-[200px] cursor-move select-none border-black border-x"
+      className="fixed z-10 h-[36px] w-[200px] cursor-move select-none border-coffee-600 border-x"
     >
       {props.children}
     </div>

@@ -3,7 +3,6 @@ import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
 import { DaChallengeMechanism } from '../types/DaChallengeMechanism'
 import { DaLayer } from '../types/DaLayer'
-import { linkByDA } from '../utils/link-by-da'
 import { xterioDABridge } from './bridges/xterioDABridge'
 
 const discovery = new ProjectDiscovery('xterio')
@@ -27,6 +26,7 @@ export const xterioDA: DaLayer = {
   type: 'DaLayer',
   kind: 'No DAC',
   systemCategory: 'custom',
+  fallback: 'Ethereum (calldata)',
   display: {
     name: 'XterioDA',
     slug: 'xterio',
@@ -60,11 +60,28 @@ export const xterioDA: DaLayer = {
     The system is not secure if the malicious sequencer is able to outspend the altruistic challengers. 
     If instead, after a challenge, the preimage data is not published, the chain reorgs to the last fully derivable state.
   `,
+    references: [
+      {
+        text: 'Alt-DA Specification',
+        href: 'https://github.com/ethereum-optimism/specs/blob/main/specs/experimental/alt-da.md',
+      },
+      {
+        text: 'Security Considerations - Ethresear.ch ',
+        href: 'https://ethresear.ch/t/universal-plasma-and-da-challenges/18629',
+      },
+    ],
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: `the sequencer posts an invalid data availability certificate and there are no challengers.`,
+      },
+      {
+        category: 'Funds can be lost if',
+        text: `the sequencer posts an invalid data availability certificate, and he is able to outspend the challengers.`,
+      },
+    ],
   },
   bridges: [xterioDABridge],
-  usedIn: linkByDA({
-    layer: (layer) => layer === 'XterioDA',
-  }),
   risks: {
     economicSecurity: DaEconomicSecurityRisk.DAChallengesNoFunds,
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,

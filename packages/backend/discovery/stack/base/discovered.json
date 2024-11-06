@@ -1,7 +1,7 @@
 {
   "name": "stack",
   "chain": "base",
-  "blockNumber": 21872215,
+  "blockNumber": 22016633,
   "configHash": "0x0b84e0eae36c9b147a964b5ac6d273826fe44395a32b11dc3458e5ac44323a5b",
   "contracts": [
     {
@@ -307,6 +307,7 @@
         "$immutable": false,
         "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
         "$members": [
+          "0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
           "0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
           "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
@@ -318,8 +319,8 @@
         "domainSeparator": "0x4fb7ea8ecabb8e9a869e85ce3babbe085732a2a3b9a239f476713291832d96f2",
         "getChainId": 8453,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 10,
+        "multisigThreshold": "3 of 7 (43%)",
+        "nonce": 11,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -414,10 +415,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 1,
-        "latestBlockNumber": 20822400,
-        "latestOutputIndex": 481,
-        "nextBlockNumber": 20865600,
-        "nextOutputIndex": 482,
+        "latestBlockNumber": 21124800,
+        "latestOutputIndex": 488,
+        "nextBlockNumber": 21168000,
+        "nextOutputIndex": 489,
         "PROPOSER": "0x28750b59d304e6ce7d3866eF9a0DbFBCfaE56A6E",
         "startingBlockNumber": 0,
         "startingTimestamp": 1709680111,
@@ -458,6 +459,7 @@
       ]
     },
     { "address": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C" },
+    { "address": "0xF3313C48BD8E17b823d5498D62F37019dFEA647D" },
     { "address": "0xf64605AEe9402BC964f37Fd5d355F7420099bb6E" }
   ],
   "abis": {

@@ -4,6 +4,7 @@ import {
   HELD_MIDDLE_MOUSE_BUTTON_MASK,
   NODE_WIDTH,
 } from '../utils/constants'
+import { boxContains, intersects, isResizable } from '../utils/containment'
 import { toViewCoordinates } from '../utils/coordinates'
 import { toContainerCoordinates } from '../utils/toContainerCoordinates'
 import { updateNodePositions } from '../utils/updateNodePositions'
@@ -14,7 +15,16 @@ export function onMouseMove(
   container: HTMLElement,
 ): Partial<State> {
   if (!state.input.lmbPressed && !state.input.mmbPressed) {
-    return state
+    const { x, y } = toViewCoordinates(event, container, state.transform)
+
+    const node = state.nodes.find((node) => boxContains(node.box, x, y))
+    if (node && isResizable(node.box, state.transform.scale, x)) {
+      return {
+        resizingNode: node.id,
+      }
+    }
+
+    return { resizingNode: undefined }
   }
 
   const isLeftMouse =
@@ -27,30 +37,25 @@ export function onMouseMove(
         return { ...state, mouseUpAction: undefined }
       }
       case 'resize-node': {
-        if (!state.resizingNode) {
+        const node = state.nodes.find((node) => node.id === state.resizingNode)
+        if (!node) {
           break
         }
+        const { x, y } = toViewCoordinates(event, container, state.transform)
+        const newWidth = Math.max(NODE_WIDTH, x - node.box.x)
 
-        const { scale } = state.transform
-
-        const dx = event.clientX - state.resizingNode.startX
-
-        const newWidth = Math.max(
-          state.resizingNode.initialWidth + dx / scale,
-          NODE_WIDTH,
-        )
-
-        const nodes = state.nodes.map((node) =>
-          node.id === state.resizingNode?.id
+        const nodes = state.nodes.map((other) =>
+          other.id === node.id
             ? {
                 ...node,
                 box: { ...node.box, width: newWidth },
               }
-            : node,
+            : other,
         )
 
         return updateNodePositions({
           ...state,
+          input: { ...state.input, mouseX: x, mouseY: y },
           nodes,
         })
       }
@@ -105,13 +110,4 @@ export function onMouseMove(
   }
 
   return {}
-}
-
-function intersects(a: Box, b: Box) {
-  return !(
-    a.x + a.width < b.x ||
-    b.x + b.width < a.x ||
-    a.y + a.height < b.y ||
-    b.y + b.height < a.y
-  )
 }

@@ -9,6 +9,11 @@ const config: Config = {
     flowbite.content(),
   ],
   theme: {
+    colors: {
+      'brand-red': '#F9347B',
+      'brand-red-dark': '#BD114F',
+      'brand-black': '#222222',
+    },
     extend: {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

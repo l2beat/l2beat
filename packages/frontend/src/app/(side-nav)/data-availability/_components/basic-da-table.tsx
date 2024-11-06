@@ -30,8 +30,6 @@ interface BasicEntry {
   slug: string
   isVerified?: boolean
   redWarning?: string | undefined
-  showProjectUnderReview?: boolean
-  hasImplementationChanged?: boolean
   href?: string
   childrenRows?: React.ReactNode[]
 }
@@ -245,7 +243,7 @@ function ColGroup<T, V>(props: { headers: Header<T, V>[] }) {
     return (
       <React.Fragment key={header.id}>
         <colgroup
-          className={cn(!header.isPlaceholder && 'bg-surface-secondary')}
+          className={cn(!header.isPlaceholder && 'bg-surface-table-group')}
         >
           {range(header.colSpan).map((i) => (
             <col key={`${header.id}-${i}`} />

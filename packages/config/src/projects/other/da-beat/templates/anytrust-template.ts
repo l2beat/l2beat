@@ -184,9 +184,14 @@ export function AnytrustDAC(template: TemplateVars): DacDaLayer {
     display: layerDisplay,
     technology: {
       description: layerTechnology,
+      references: [
+        {
+          text: 'Inside AnyTrust - Arbitrum Docs',
+          href: 'https://docs.arbitrum.io/how-arbitrum-works/inside-anytrust',
+        },
+      ],
       risks: template.layer?.technology?.risks,
     },
-    usedIn,
     bridges: [dacBridge],
     risks: {
       economicSecurity:

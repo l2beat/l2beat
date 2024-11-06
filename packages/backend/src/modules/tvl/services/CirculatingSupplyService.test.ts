@@ -1,6 +1,9 @@
 import { createAmountId } from '@l2beat/config'
 import { AmountRecord } from '@l2beat/database'
-import { CoingeckoQueryService } from '@l2beat/shared'
+import {
+  CirculatingSupplyProvider,
+  CoingeckoQueryService,
+} from '@l2beat/shared'
 import {
   CirculatingSupplyEntry,
   CoingeckoId,
@@ -15,7 +18,7 @@ describe(CirculatingSupplyService.name, () => {
   describe(CirculatingSupplyService.prototype.fetchCirculatingSupplies
     .name, () => {
     it('fetches circulating supplies and returns them as big integers', async () => {
-      const coingeckoQueryService = mockObject<CoingeckoQueryService>({
+      const circulatingSupplyProvider = mockObject<CirculatingSupplyProvider>({
         getCirculatingSupplies: async () => [
           coingeckoResponse(100),
           coingeckoResponse(200),
@@ -24,7 +27,7 @@ describe(CirculatingSupplyService.name, () => {
       })
 
       const service = new CirculatingSupplyService({
-        coingeckoQueryService,
+        circulatingSupplyProvider: circulatingSupplyProvider,
       })
 
       const from = new UnixTime(100)
@@ -52,7 +55,7 @@ describe(CirculatingSupplyService.name, () => {
       ])
 
       expect(
-        coingeckoQueryService.getCirculatingSupplies,
+        circulatingSupplyProvider.getCirculatingSupplies,
       ).toHaveBeenOnlyCalledWith(coingeckoId, { from, to }, undefined)
     })
   })
@@ -62,11 +65,11 @@ describe(CirculatingSupplyService.name, () => {
       const from = 0
       const to = 100
 
-      const service = new CirculatingSupplyService({
-        coingeckoQueryService: mockObject<CoingeckoQueryService>({}),
+      const circulatingSupplyProvider = new CirculatingSupplyService({
+        circulatingSupplyProvider: mockObject<CirculatingSupplyProvider>({}),
       })
 
-      const result = service.getAdjustedTo(from, to)
+      const result = circulatingSupplyProvider.getAdjustedTo(from, to)
 
       const expected = CoingeckoQueryService.getAdjustedTo(
         new UnixTime(from),

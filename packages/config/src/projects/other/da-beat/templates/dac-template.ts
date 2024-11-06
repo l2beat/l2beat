@@ -43,6 +43,7 @@ type Optionals = {
     | 'membersCount'
     | 'knownMembers'
     | 'requiredMembers'
+    | 'hideMembers'
     | 'permissions'
     | 'contracts'
     | 'transactionDataType'
@@ -150,7 +151,6 @@ export function DAC(template: TemplateVars): DacDaLayer {
       risks: template.layer?.technology?.risks,
     },
     bridges: [dacBridge],
-    usedIn,
     risks: {
       economicSecurity:
         template.risks?.economicSecurity ?? DaEconomicSecurityRisk.Unknown,

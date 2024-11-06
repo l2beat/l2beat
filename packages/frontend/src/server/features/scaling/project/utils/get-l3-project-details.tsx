@@ -1,12 +1,12 @@
 import { type Layer2, type Layer3 } from '@l2beat/config'
 import {
   type ContractsVerificationStatuses,
-  type ImplementationChangeReportApiResponse,
   type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
 import { type ProjectDetailsSection } from '~/components/projects/sections/types'
 import { toRosetteTuple } from '~/components/rosette/individual/to-rosette-tuple'
 import { type RosetteValue } from '~/components/rosette/types'
+import { type ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
 import {
   isActivityChartDataEmpty,
   isTvlChartDataEmpty,
@@ -28,7 +28,7 @@ interface Params {
   isHostChainVerified: boolean
   contractsVerificationStatuses: ContractsVerificationStatuses
   manuallyVerifiedContracts: ManuallyVerifiedContracts
-  implementationChangeReport: ImplementationChangeReportApiResponse
+  projectsChangeReport: ProjectsChangeReport
   rosetteValues: RosetteValue[]
   hostChain?: Layer2
   hostChainRosetteValues?: RosetteValue[]
@@ -44,7 +44,7 @@ export async function getL3ProjectDetails({
   combinedRosetteValues,
   hostChainRosetteValues,
   manuallyVerifiedContracts,
-  implementationChangeReport,
+  projectsChangeReport,
   contractsVerificationStatuses,
 }: Params) {
   const permissionsSection = project.permissions
@@ -75,7 +75,7 @@ export async function getL3ProjectDetails({
     },
     contractsVerificationStatuses,
     manuallyVerifiedContracts,
-    implementationChangeReport,
+    projectsChangeReport,
   )
 
   const hostChainRisksSummary = hostChain

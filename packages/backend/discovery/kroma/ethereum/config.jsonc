@@ -46,7 +46,8 @@
       "description": "Manages the set of Proposers (Validators in Kroma) and selects the next proposer with the permission to submit the output root. It is also the entry point for other contracts, such as the L2OutputOracle and the Colosseum, which distribute output rewards and slash challenge losers. It makes successive calls to the AssetManager to apply changes to the proposers' assets.",
       "ignoreInWatchMode": [
         "activatedValidatorCount",
-        "activatedValidatorTotalWeight"
+        "activatedValidatorTotalWeight",
+        "nextValidator"
       ]
     },
     "spETH": {

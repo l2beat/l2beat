@@ -40,7 +40,6 @@ export const env = createEnv({
    */
   client: {
     NEXT_PUBLIC_FEATURE_FLAG_ASSET_RISKS: featureFlag.default('false'),
-    NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT: featureFlag.default('false'),
     NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION: featureFlag.default('false'),
     NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS: featureFlag.default('false'),
     NEXT_PUBLIC_FEATURE_FLAG_INTERNAL_TOOLS: featureFlag.default(
@@ -72,8 +71,6 @@ export const env = createEnv({
     // Client
     NEXT_PUBLIC_FEATURE_FLAG_ASSET_RISKS:
       process.env.NEXT_PUBLIC_FEATURE_FLAG_ASSET_RISKS,
-    NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT:
-      process.env.NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT,
     NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION:
       process.env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION,
     NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS:

@@ -1,14 +1,13 @@
 import { useQuery } from '@tanstack/react-query'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getProject } from '../api/api'
-import { Field as ApiField, FieldValue } from '../api/types'
+import { Field as ApiField, ApiProjectResponse, FieldValue } from '../api/types'
 import { usePanelStore } from '../store/store'
 import { NodesApp } from './NodesApp'
 import { Field, Node } from './store/State'
 import { useStore as useNodeStore, useStore } from './store/store'
 import { NODE_WIDTH } from './store/utils/constants'
-import { getChainColor } from './store/utils/discoveryToNodes'
 
 export function NodesPanel() {
   const { project } = useParams()
@@ -19,60 +18,9 @@ export function NodesPanel() {
     queryKey: ['projects', project],
     queryFn: () => getProject(project),
   })
-  const clear = useNodeStore((state) => state.clear)
-  const loadNodes = useNodeStore((state) => state.loadNodes)
 
-  const panelSelected = usePanelStore((state) => state.selected)
-  const panelSelect = usePanelStore((state) => state.select)
-  const nodesSelected = useStore((state) => state.selected)
-  const nodesSelect = useStore((state) => state.selectAndFocus)
-
-  useEffect(() => {
-    nodesSelect(panelSelected)
-  }, [panelSelected, nodesSelect])
-
-  useEffect(() => {
-    panelSelect(nodesSelected)
-  }, [nodesSelected, panelSelect])
-
-  useEffect(() => {
-    clear()
-    if (!response.data) {
-      return
-    }
-    const nodes: Node[] = []
-    for (const chain of response.data.chains) {
-      const baseColor = getChainColor(chain.name)
-      for (const contract of [
-        ...chain.initialContracts,
-        ...chain.discoveredContracts,
-      ]) {
-        const node: Node = {
-          id: contract.address,
-          name: contract.name ?? 'Unknown',
-          address: contract.address.split(':')[1] as string,
-          box: { x: 0, y: 0, width: NODE_WIDTH, height: 0 },
-          color: baseColor,
-          data: null,
-          fields: toNodeFields(contract.fields),
-        }
-        nodes.push(node)
-      }
-      for (const eoa of chain.eoas) {
-        const node: Node = {
-          id: eoa.address,
-          name: eoa.name ?? eoa.address,
-          address: eoa.address.split(':')[1] as string,
-          box: { x: 0, y: 0, width: NODE_WIDTH, height: 0 },
-          color: baseColor,
-          data: null,
-          fields: [],
-        }
-        nodes.push(node)
-      }
-    }
-    loadNodes(project, nodes)
-  }, [project, response.data, loadNodes])
+  useSynchronizeSelection()
+  useLoadNodes(response.data, project)
 
   if (response.isLoading) {
     return <div>Loading</div>
@@ -82,10 +30,90 @@ export function NodesPanel() {
   }
 
   return (
-    <div className="h-full w-full overflow-x-hidden font-ui">
+    <div className="h-full w-full overflow-x-hidden">
       <NodesApp panelMode />
     </div>
   )
+}
+
+function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
+  const clear = useNodeStore((state) => state.clear)
+  const loadNodes = useNodeStore((state) => state.loadNodes)
+
+  useEffect(() => {
+    clear()
+    if (!data) {
+      return
+    }
+    const nodes: Node[] = []
+    for (const chain of data.chains) {
+      for (const contract of [
+        ...chain.initialContracts,
+        ...chain.discoveredContracts,
+      ]) {
+        const [prefix, address] = contract.address.split(':') as [
+          string,
+          string,
+        ]
+        const fallback = `${prefix}:${address.slice(0, 6)}…${address.slice(-4)}`
+        const node: Node = {
+          id: contract.address,
+          name: contract.name ?? fallback,
+          addressType: contract.type,
+          address,
+          box: { x: 0, y: 0, width: NODE_WIDTH, height: 0 },
+          color: 0,
+          data: null,
+          fields: toNodeFields(contract.fields),
+        }
+        nodes.push(node)
+      }
+      for (const eoa of chain.eoas) {
+        const [prefix, address] = eoa.address.split(':') as [string, string]
+        const fallback = `EOA ${prefix}:${address.slice(0, 6)}…${address.slice(-4)}`
+        const node: Node = {
+          id: eoa.address,
+          name: eoa.name ?? fallback,
+          addressType: 'EOA',
+          address,
+          box: { x: 0, y: 0, width: NODE_WIDTH, height: 0 },
+          color: 0,
+          data: null,
+          fields: [],
+        }
+        nodes.push(node)
+      }
+    }
+    loadNodes(project, nodes)
+  }, [project, data, clear, loadNodes])
+}
+
+function useSynchronizeSelection() {
+  const [lastSelection, rememberSelection] = useState<readonly string[]>([])
+  const selectedGlobal = usePanelStore((state) => state.selected)
+  const selectGlobal = usePanelStore((state) => state.select)
+  const selectedNodes = useStore((state) => state.selected)
+  const selectNodes = useStore((state) => state.selectAndFocus)
+
+  useEffect(() => {
+    const eq = (a: readonly string[], b: readonly string[]) =>
+      a.length === b.length && a.every((x, i) => b[i] === x)
+
+    if (selectedNodes.length > 0 && !eq(lastSelection, selectedNodes)) {
+      rememberSelection(selectedNodes)
+      selectGlobal(selectedNodes[0])
+    } else if (selectedGlobal && !lastSelection.includes(selectedGlobal)) {
+      rememberSelection([selectedGlobal])
+      selectNodes([selectedGlobal])
+    }
+  }, [
+    lastSelection,
+    rememberSelection,
+    selectedGlobal,
+    selectGlobal,
+    selectedNodes,
+    selectNodes,
+  ])
 }
 
 function toNodeFields(input: ApiField[]): Field[] {
@@ -109,7 +137,7 @@ function getNodeFields(
   banned: string[],
 ): Field[] {
   if (value.type === 'object') {
-    return Object.entries(value).flatMap(([key, value]) =>
+    return Object.entries(value.value).flatMap(([key, value]) =>
       getNodeFields(`${path}.${key}`, value, banned),
     )
   } else if (value.type === 'array') {

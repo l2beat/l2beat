@@ -1,8 +1,8 @@
 import { CircleUser, Coins, Menu, Network, SendToBack } from 'lucide-react'
 import Link from 'next/link'
 
-import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Button } from '~/components/ui/button'
 import {
   DropdownMenu,
@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu'
 import { Sheet, SheetContent, SheetTrigger } from '~/components/ui/sheet'
+import { deleteSession, getSession } from '~/server/auth/cookie'
 import { NavMenuItem } from './_components/nav-menu-item'
 import { Search } from './_components/search'
 import { ThemeToggle } from './_components/theme-toggle'
@@ -35,15 +36,18 @@ const menu = [
   },
 ]
 
-export default function Layout({ children }: { children: React.ReactNode }) {
-  if (cookies().get('auth_session')?.value !== 'authenticated') {
+export default async function Layout({
+  children,
+}: { children: React.ReactNode }) {
+  const session = await getSession()
+  if (!session) {
     redirect('/auth')
   }
 
   // biome-ignore lint/suspicious/useAwait: server action must be async
   async function logout() {
     'use server'
-    cookies().set('auth_session', 'unauthenticated', { expires: new Date(0) })
+    deleteSession()
     redirect('/auth')
   }
 
@@ -110,8 +114,27 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
+              <DropdownMenuLabel>
+                <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+                  <Avatar className="size-8 rounded-full">
+                    {session.picture && (
+                      <AvatarImage src={session.picture} alt={session.name} />
+                    )}
+                    <AvatarFallback className="rounded-full">
+                      {session.name
+                        .split(' ')
+                        .map((n) => n[0])
+                        .join('')}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="grid flex-1 text-left text-sm leading-tight">
+                    <span className="truncate font-semibold">
+                      {session.name}
+                    </span>
+                    <span className="truncate text-xs">{session.email}</span>
+                  </div>
+                </div>
+              </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <form action={logout}>
                 <DropdownMenuItem asChild>

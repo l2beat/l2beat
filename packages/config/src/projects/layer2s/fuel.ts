@@ -68,6 +68,7 @@ export const fuel: Layer2 = {
         'https://youtube.com/channel/UCam2Sj3SvFSAIfDbP-4jWZQ',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
   },
   badges: [Badge.VM.FuelVM, Badge.DA.EthereumBlobs],
   type: 'layer2',
@@ -118,6 +119,11 @@ export const fuel: Layer2 = {
         },
       },
     ],
+    transactionApi: {
+      type: 'fuel',
+      defaultUrl: 'https://mainnet.fuel.network/v1/graphql',
+      defaultCallsPerMinute: 120,
+    },
   },
   riskView: {
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
