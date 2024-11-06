@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 export const Quantity = {
@@ -47,6 +47,12 @@ export const EVMBlockResponse = z.object({
     number: Quantity.decode.transform((n) => Number(n)),
   }),
 })
+
+export interface CallParameters {
+  from?: EthereumAddress
+  to: EthereumAddress
+  data?: Bytes
+}
 
 export type RPCError = z.infer<typeof RPCError>
 export const RPCError = z.object({

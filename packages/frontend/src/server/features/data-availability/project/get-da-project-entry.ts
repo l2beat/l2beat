@@ -98,9 +98,9 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
       daLayer,
       tvs: layerTvs,
       economicSecurity,
-      usedIn: daLayer.usedIn.sort(
-        (a, b) => getSumFor([b.id]) - getSumFor([a.id]),
-      ),
+      usedIn: daLayer.bridges
+        .flatMap((bridge) => bridge.usedIn)
+        .sort((a, b) => getSumFor([b.id]) - getSumFor([a.id])),
     }),
     projectDetails,
   }

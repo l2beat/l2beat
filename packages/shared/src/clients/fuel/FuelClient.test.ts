@@ -89,7 +89,7 @@ describe(FuelClient.name, () => {
         ],
       } as FuelError)
 
-      expect(isValid).toEqual(false)
+      expect(isValid).toEqual({ success: false })
     })
 
     it('returns true otherwise', async () => {
@@ -98,7 +98,7 @@ describe(FuelClient.name, () => {
         data: 'success',
       })
 
-      expect(isValid).toEqual(true)
+      expect(isValid).toEqual({ success: true })
     })
   })
 })

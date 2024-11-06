@@ -227,7 +227,7 @@ export const eigenDAbridge = {
     ![EigenDA architecture once stored](/images/da-bridge-technology/eigenda/architecture1.png#center)
 
     The EigenDAServiceManager acts as a DA bridge smart contract verifying data availability claims from operators via signature verification.
-    The checkSignature function checks that the signature of all signers plus non-signers is equal to the registered quorum aggregated public key from the BLS registry. The quorum aggregated public key gets updated every time an operator is registered.
+    The checkSignatures() function checks that the signature of all signers plus non-signers is equal to the registered quorum aggregated public key from the BLS registry. The quorum aggregated public key gets updated every time an operator is registered.
     The bridge requires a threshold of signatures to be met before the data commitment is accepted. 
     To verify the threshold is met, the function takes the total stake at the reference block for the quorum from the StakeRegistry, and it subtracts the stake of non signers to get the signed stake.
     Finally, it checks that the signed stake over the total stake is more than the required stake threshold.
@@ -241,6 +241,16 @@ export const eigenDAbridge = {
     Ejectors can eject maximum ${ejectableStakePercent}% of the total stake in a ${formatSeconds(ejectionRateLimitWindow[0])} window for the ETH quorum, and the same stake percentage over a ${formatSeconds(ejectionRateLimitWindow[1])} window for the EIGEN quorum.
     An ejected operator can rejoin the quorum after ${formatSeconds(ejectionCooldown)}. 
   `,
+    references: [
+      {
+        text: 'EigenDA Registry Coordinator - Etherscan',
+        href: 'https://etherscan.io/address/0xdcabf0be991d4609096cce316df08d091356e03f',
+      },
+      {
+        text: 'EigenDA Service Manager - Etherscan',
+        href: 'https://etherscan.io/address/0x58fDE694Db83e589ABb21A6Fe66cb20Ce5554a07',
+      },
+    ],
     risks: [
       {
         category: 'Funds can be lost if',
@@ -248,7 +258,7 @@ export const eigenDAbridge = {
       },
       {
         category: 'Funds can be frozen if',
-        text: 'the permissioned relayers are unable to submit DA commitments to the Vector contract.',
+        text: 'the permissioned relayers are unable to submit DA commitments to the bridge contract.',
       },
       {
         category: 'Funds can be frozen if',

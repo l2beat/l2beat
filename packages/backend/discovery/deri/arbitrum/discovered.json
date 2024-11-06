@@ -2,7 +2,7 @@
   "name": "deri",
   "chain": "arbitrum",
   "blockNumber": 269947184,
-  "configHash": "0xcaa488a4979b0f436a803541f18af8dadcdc4ea160cb5f29cdf8259deb0a6030",
+  "configHash": "0xe6e3dd30fd944b3d28fe12af53739198c0adf97b0c78f9320bae0da801ff5910",
   "contracts": [
     {
       "name": "UpgradeExecutor",
@@ -34,6 +34,11 @@
         {
           "permission": "act",
           "target": "0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"
+        },
+        {
+          "permission": "configure",
+          "target": "0x846387C3D6001F74170455B1074D01f05eB3067a",
+          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
         },
         {
           "permission": "upgrade",
@@ -259,6 +264,17 @@
           "permission": "challenge",
           "target": "0xD217853C6A59e51dC1a48CEF21d9E53FCaA8a3f0",
           "via": []
+        },
+        {
+          "permission": "configure",
+          "target": "0x46A78349aBA0369D18292a285DE6d5FC5CC2de5c",
+          "via": [
+            {
+              "address": "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9",
+              "delay": 0,
+              "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+            }
+          ]
         },
         {
           "permission": "propose",
@@ -506,11 +522,14 @@
     {
       "name": "L1ERC20Gateway",
       "address": "0xB155C77a440DA7c282993a89FeA609598293017A",
+      "template": "orbitstack/ERC20Gateway",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
         "0x12b277cae4866b3d1f1772fcb7f861dc23247452179f0736c9dbe7012f6c14f6"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "ERC20Gateway",
+      "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -782,6 +801,12 @@
     {
       "address": "0x46A78349aBA0369D18292a285DE6d5FC5CC2de5c",
       "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x846387C3D6001F74170455B1074D01f05eB3067a",
+          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "via": [{ "address": "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }]
+        },
         {
           "permission": "upgrade",
           "target": "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9",
@@ -1533,12 +1558,13 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "orbitstack/Bridge": "0x6e309bce5a8758ba24f800f3c0135c502fd5cc22724da5165d8368377eb6c9c8",
+    "orbitstack/ERC20Gateway": "0xf1eafb4b453c67c3928c43ad270e71102bda129c494c4cf3d132be60695af7f9",
     "orbitstack/OneStepProofEntry": "0xf3bff5da86f9bbb5f9ac93a0f2239f0769d051b67a44be2e52c322799e3b8d4f",
     "orbitstack/OneStepProver0": "0x80f18705038deef096683a89d16549bf343ada57cac1f2750df2f06fbbaed5ca",
     "orbitstack/OneStepProverMath": "0x8dd8aebb517eb6eaf15437ddbb90dff66f2b14d9d6b5390dd87fbdab15168188",
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
-    "orbitstack/RollupProxy": "0x9de477a7ec4abe22558d85184e1ff68cebea26c903f45220337156ae3acf3dc5",
+    "orbitstack/RollupProxy": "0x896aca243cf3d45ddf79cc142d37874406a6e07e5572f1450df6adccd0d627ac",
     "orbitstack/UpgradeExecutor": "0xa25e02367a436cebea22481663da914bbf1fd9492d903659cc6ec9ddbaccb241"
   }
 }

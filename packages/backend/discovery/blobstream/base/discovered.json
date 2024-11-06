@@ -1,7 +1,7 @@
 {
   "name": "blobstream",
   "chain": "base",
-  "blockNumber": 20544837,
+  "blockNumber": 22016709,
   "configHash": "0x9b907e4fc32177873443c0f64c40e269ec7a3143880ec39a0f92196346fa326f",
   "contracts": [
     {
@@ -84,7 +84,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 8,
+        "nonce": 9,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -196,7 +196,7 @@
             "members": ["0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"]
           }
         },
-        "blobstreamProgramVkey": "0x0038c5c5568fe5e1ae267efb1298a7792d1cda00bccc2d1d4bfa4c1511e06380",
+        "blobstreamProgramVkey": "0x00a6ea49173d4b0b544a24a5a7474e76d1fda8f0f7e541cbb294d2b7249d7bcb",
         "checkRelayer": true,
         "DATA_COMMITMENT_MAX": 1000,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -205,10 +205,10 @@
         "GUARDIAN_ROLE": "0x55435dd261a4b9b3364963f7738a7a662ad9c84396d64be3365284bb7f0a5041",
         "headerRangeFunctionId_deprecated": "0x46132c86ed84fdc655528f80f9291dd3116b04902036b96925edc78bbf52b8ca",
         "isRelayerApproved": true,
-        "latestBlock": 2474640,
+        "latestBlock": 2723760,
         "nextHeaderFunctionId_depcrecated": "0x2ce8ca4f509cb09415b5a6ca6afa265571dac0b9f6ddb46f487e017fec71cf25",
         "relayers": ["0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"],
-        "state_proofNonce": 4692,
+        "state_proofNonce": 5384,
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "verifier": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "VERSION": "1.1.0"
@@ -252,7 +252,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 4,
+        "nonce": 6,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

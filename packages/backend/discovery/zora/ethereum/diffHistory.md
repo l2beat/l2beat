@@ -1,3 +1,79 @@
+Generated with discovered.json: 0xf276d73318b359d7629a080c14b833c05ff56860
+
+# Diff at Tue, 05 Nov 2024 15:44:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5e6ce51851b57187ccdd52c4944a82e2a8ab1e88 block: 21078732
+- current block number: 21122420
+
+## Description
+
+Zora MS one signer added (2/10).
+
+## Watched changes
+
+```diff
+    contract ZoraMultisig (0xC72aE5c7cc9a332699305E29F68Be66c73b60542) {
+    +++ description: None
+      values.$members.9:
++        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+      values.$members.8:
+-        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
++        "0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c"
+      values.$members.7:
+-        "0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c"
++        "0xD05e9Ab3B6A7F10ec1374bc352854ABA51643E81"
+      values.$members.6:
+-        "0xD05e9Ab3B6A7F10ec1374bc352854ABA51643E81"
++        "0xc08C1b8fD69A22a448fC014bEe4A700d70726dA7"
+      values.$members.5:
+-        "0xc08C1b8fD69A22a448fC014bEe4A700d70726dA7"
++        "0xe7d71aea6FB8248d4fD4D5d5098D201674B531dB"
+      values.$members.4:
+-        "0xe7d71aea6FB8248d4fD4D5d5098D201674B531dB"
++        "0xf2989961Bf987bdD6c86CD6B845B6fACa194a8e4"
+      values.$members.3:
+-        "0xf2989961Bf987bdD6c86CD6B845B6fACa194a8e4"
++        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+      values.$members.2:
+-        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
++        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.$members.1:
+-        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
++        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
+      values.$members.0:
+-        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
++        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
+      values.multisigThreshold:
+-        "2 of 9 (22%)"
++        "2 of 10 (20%)"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21078732 (main branch discovery), not current.
+
+```diff
+    contract OptimismFoundationMultisig_1 (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      name:
+-        "FoundationMultisig_1"
++        "OptimismFoundationMultisig_1"
+    }
+```
+
+```diff
+    contract OptimismFoundationMultisig_2 (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      name:
+-        "FoundationMultisig_2"
++        "OptimismFoundationMultisig_2"
+    }
+```
+
 Generated with discovered.json: 0xf052d4d3276cfe95ec5076b228ad5504f85af869
 
 # Diff at Fri, 01 Nov 2024 12:11:06 GMT:

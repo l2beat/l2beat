@@ -14,7 +14,6 @@ import { DaFraudDetectionRisk } from './DaFraudDetectionRisk'
 import { DaLinks } from './DaLinks'
 import { DaTechnology } from './DaTechnology'
 import { DataAvailabilitySampling } from './DataAvailabilitySampling'
-import { UsedInProject } from './UsedInProject'
 
 export type DaLayer = BlockchainDaLayer | DacDaLayer
 
@@ -56,8 +55,6 @@ export type CommonDaLayer = {
   isUnderReview?: boolean
   /** The technology used by the data availability layer. */
   technology: DaTechnology
-  /** List of projects given da layer is being used in. */
-  usedIn: UsedInProject[]
   /** Risks associated with the data availability layer. */
   risks: DaLayerRisks
   /** Other considerations */

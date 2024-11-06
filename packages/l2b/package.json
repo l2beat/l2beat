@@ -11,6 +11,7 @@
     "build": "tsc -p tsconfig.build.json",
     "build:dependencies": "cd ../.. && pnpm build:dependencies",
     "dev": "node -r esbuild-register src/cli.ts",
+    "dev:watch": "node --watch -r esbuild-register src/cli.ts",
     "l2bup": "pnpm build:dependencies && pnpm build && npm install -g .",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist",

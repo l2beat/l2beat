@@ -1,3 +1,70 @@
+Generated with discovered.json: 0x97965cbba2e42c4375e66782bdd075c787c004ae
+
+# Diff at Mon, 04 Nov 2024 08:01:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@950c85bf556f084c302d2b03100375cf3c7ed376 block: 269947184
+- current block number: 269947184
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 269947184 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9) {
+    +++ description: Central contract defining the access control for upgrading the system contract implementations.
+      directlyReceivedPermissions.2:
++        {"permission":"upgrade","target":"0x846387C3D6001F74170455B1074D01f05eB3067a"}
+      directlyReceivedPermissions.1.permission:
+-        "upgrade"
++        "configure"
+      directlyReceivedPermissions.1.description:
++        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract RollupProxy (0x846387C3D6001F74170455B1074D01f05eB3067a) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.3:
++        {"permission":"upgrade","target":"0x46A78349aBA0369D18292a285DE6d5FC5CC2de5c","via":[{"address":"0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9","delay":0}]}
+      issuedPermissions.2.permission:
+-        "upgrade"
++        "propose"
+      issuedPermissions.2.target:
+-        "0x46A78349aBA0369D18292a285DE6d5FC5CC2de5c"
++        "0xD217853C6A59e51dC1a48CEF21d9E53FCaA8a3f0"
+      issuedPermissions.2.via.0:
+-        {"address":"0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9","delay":0}
+      issuedPermissions.1.permission:
+-        "propose"
++        "configure"
+      issuedPermissions.1.target:
+-        "0xD217853C6A59e51dC1a48CEF21d9E53FCaA8a3f0"
++        "0x46A78349aBA0369D18292a285DE6d5FC5CC2de5c"
+      issuedPermissions.1.via.0:
++        {"address":"0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9","delay":0,"description":"can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."}
+    }
+```
+
+```diff
+    contract L1ERC20Gateway (0xB155C77a440DA7c282993a89FeA609598293017A) {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      template:
++        "orbitstack/ERC20Gateway"
+      displayName:
++        "ERC20Gateway"
+      description:
++        "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract."
+    }
+```
+
 Generated with discovered.json: 0x6660dec548dc5efdd73a072e6bdd44b2097c10bc
 
 # Diff at Fri, 01 Nov 2024 14:55:04 GMT:

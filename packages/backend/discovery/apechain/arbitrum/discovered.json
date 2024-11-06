@@ -2,7 +2,7 @@
   "name": "apechain",
   "chain": "arbitrum",
   "blockNumber": 267469765,
-  "configHash": "0xabe775cd9ff7b45db5219f27ea4d65ba935dedc6310c59923accaff7a504b1c5",
+  "configHash": "0xfa7ad270600d6b1b7d248d15bfbe955219c38602c14cf3254e322c6da8f4b101",
   "contracts": [
     {
       "name": "Inbox",
@@ -101,6 +101,12 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x374de579AE15aD59eD0519aeAf1A23F348Df259c",
+          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "via": [{ "address": "0xe032d15909e90f9A36901abB08944653e9E87d72" }]
+        },
         {
           "permission": "upgrade",
           "target": "0x1B98e4ED82Ee1a91A65a38C690e2266364064D15",
@@ -212,6 +218,17 @@
           "permission": "challenge",
           "target": "0xAcB7D670bb95144B88a5Cd1883B87bC5021FD10a",
           "via": []
+        },
+        {
+          "permission": "configure",
+          "target": "0x2B1FbeE3c7D278bFD9E179893FF304fE49FA7DDF",
+          "via": [
+            {
+              "address": "0xe032d15909e90f9A36901abB08944653e9E87d72",
+              "delay": 0,
+              "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+            }
+          ]
         },
         {
           "permission": "propose",
@@ -591,6 +608,11 @@
           "target": "0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507"
         },
         {
+          "permission": "configure",
+          "target": "0x374de579AE15aD59eD0519aeAf1A23F348Df259c",
+          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+        },
+        {
           "permission": "upgrade",
           "target": "0x374de579AE15aD59eD0519aeAf1A23F348Df259c"
         }
@@ -697,7 +719,13 @@
         "isUsingFeeToken": true,
         "keySetUpdates": 1,
         "maxDataSize": 104857,
-        "maxTimeVariation": [21600, 300, 259200, 3600],
+        "maxTimeVariation": {
+          "delayBlocks": 21600,
+          "futureBlocks": 300,
+          "delaySeconds": 259200,
+          "futureSeconds": 3600
+        },
+        "postsBlobs": false,
         "reader4844": "0x0000000000000000000000000000000000000000",
         "rollup": "0x374de579AE15aD59eD0519aeAf1A23F348Df259c",
         "sequencerVersion": "0x88",
@@ -708,7 +736,7 @@
       },
       "fieldMeta": {
         "maxTimeVariation": {
-          "description": "Struct: delayBlocks, futureBlocks, delaySeconds, futureSeconds. onlyRollupOwner settable. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
+          "description": "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
         }
       },
       "derivedName": "SequencerInbox"
@@ -1410,8 +1438,8 @@
     "orbitstack/OneStepProverHostIo": "0xacacb7603847a3f0212fdf80c653040278214c00451f763907e270d1f19efec0",
     "orbitstack/OneStepProverMath": "0x8dd8aebb517eb6eaf15437ddbb90dff66f2b14d9d6b5390dd87fbdab15168188",
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
-    "orbitstack/RollupProxy": "0x9de477a7ec4abe22558d85184e1ff68cebea26c903f45220337156ae3acf3dc5",
-    "orbitstack/SequencerInbox": "0x80eed651d83fd6cd84047260bf02ec5e3a5f21b36049e1e45f34bd0a452e02f9",
+    "orbitstack/RollupProxy": "0x896aca243cf3d45ddf79cc142d37874406a6e07e5572f1450df6adccd0d627ac",
+    "orbitstack/SequencerInbox": "0x746f38463ee5aff9c2f6051c828002565b57c702a6be447c979d1996dd6bd673",
     "orbitstack/UpgradeExecutor": "0xa25e02367a436cebea22481663da914bbf1fd9492d903659cc6ec9ddbaccb241"
   }
 }
