@@ -2,7 +2,7 @@
   "name": "molten",
   "chain": "arbitrum",
   "blockNumber": 267470911,
-  "configHash": "0x28a8aa315a224579b32aa083a3b453dc3e813ea4c777c3ed2da04a97115b70f5",
+  "configHash": "0xd729deffe7eeb7a6e6e4b641be49c9cc18dfd4b3847bd105c92b88314a858c45",
   "contracts": [
     {
       "name": "OneStepProverMemory",
@@ -31,6 +31,17 @@
           "permission": "challenge",
           "target": "0x152FFeF04881BD1390D2A52009f42d56EaC7AA03",
           "via": []
+        },
+        {
+          "permission": "configure",
+          "target": "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF",
+          "via": [
+            {
+              "address": "0x92ff91308F5f1036435f23c2F4F136Bb7475425d",
+              "delay": 0,
+              "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+            }
+          ]
         },
         {
           "permission": "propose",
@@ -360,6 +371,12 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
+          "permission": "configure",
+          "target": "0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
+          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "via": [{ "address": "0x92ff91308F5f1036435f23c2F4F136Bb7475425d" }]
+        },
+        {
           "permission": "upgrade",
           "target": "0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
           "via": [{ "address": "0x92ff91308F5f1036435f23c2F4F136Bb7475425d" }]
@@ -599,6 +616,11 @@
         {
           "permission": "act",
           "target": "0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
+        },
+        {
+          "permission": "configure",
+          "target": "0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
+          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
         },
         {
           "permission": "upgrade",
@@ -1655,7 +1677,7 @@
     "orbitstack/OneStepProverMath": "0x8dd8aebb517eb6eaf15437ddbb90dff66f2b14d9d6b5390dd87fbdab15168188",
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
-    "orbitstack/RollupProxy": "0x9de477a7ec4abe22558d85184e1ff68cebea26c903f45220337156ae3acf3dc5",
+    "orbitstack/RollupProxy": "0x896aca243cf3d45ddf79cc142d37874406a6e07e5572f1450df6adccd0d627ac",
     "orbitstack/UpgradeExecutor": "0xa25e02367a436cebea22481663da914bbf1fd9492d903659cc6ec9ddbaccb241"
   }
 }

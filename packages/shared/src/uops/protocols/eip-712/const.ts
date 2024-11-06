@@ -1,1 +1,1 @@
-export const EIP712_TX_TYPE = 113
+export const EIP712_TX_TYPE = '113'

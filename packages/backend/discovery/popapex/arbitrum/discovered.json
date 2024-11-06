@@ -2,7 +2,7 @@
   "name": "popapex",
   "chain": "arbitrum",
   "blockNumber": 269948275,
-  "configHash": "0x610a10967c241f05169850013f1febf37784c8d1a24332d166099259bff3d56b",
+  "configHash": "0xdac7b4c0b5e641480ff4f5014eb4e784644b5018c855057d2a9586c90dc55371",
   "contracts": [
     {
       "name": "Bridge",
@@ -154,6 +154,11 @@
           "target": "0xCC6f49cff395c4d160C61112522700dcB007c41d"
         },
         {
+          "permission": "configure",
+          "target": "0x65AD139061B3f6DDb16170a07b925337ddf42407",
+          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+        },
+        {
           "permission": "upgrade",
           "target": "0x65AD139061B3f6DDb16170a07b925337ddf42407"
         }
@@ -218,6 +223,17 @@
           "permission": "challenge",
           "target": "0xD09d81aaA88E0e0EfCF91B0C96779E6B164A1A00",
           "via": []
+        },
+        {
+          "permission": "configure",
+          "target": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
+          "via": [
+            {
+              "address": "0x3d0b021E1d2A8747411E3724d5165716B35448f3",
+              "delay": 0,
+              "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+            }
+          ]
         },
         {
           "permission": "propose",
@@ -361,6 +377,12 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x65AD139061B3f6DDb16170a07b925337ddf42407",
+          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "via": [{ "address": "0x3d0b021E1d2A8747411E3724d5165716B35448f3" }]
+        },
         {
           "permission": "upgrade",
           "target": "0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6",
@@ -584,6 +606,7 @@
           "delaySeconds": 86400000,
           "futureSeconds": 3600
         },
+        "postsBlobs": false,
         "rollup": "0x65AD139061B3f6DDb16170a07b925337ddf42407",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
@@ -591,7 +614,7 @@
       },
       "fieldMeta": {
         "maxTimeVariation": {
-          "description": "Struct: delayBlocks, futureBlocks, delaySeconds, futureSeconds. onlyRollupOwner settable. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
+          "description": "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
         }
       },
       "derivedName": "SequencerInbox"
@@ -1373,8 +1396,8 @@
     "orbitstack/OneStepProverMath": "0x8dd8aebb517eb6eaf15437ddbb90dff66f2b14d9d6b5390dd87fbdab15168188",
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
-    "orbitstack/RollupProxy": "0x9de477a7ec4abe22558d85184e1ff68cebea26c903f45220337156ae3acf3dc5",
-    "orbitstack/SequencerInbox": "0x80eed651d83fd6cd84047260bf02ec5e3a5f21b36049e1e45f34bd0a452e02f9",
+    "orbitstack/RollupProxy": "0x896aca243cf3d45ddf79cc142d37874406a6e07e5572f1450df6adccd0d627ac",
+    "orbitstack/SequencerInbox": "0x746f38463ee5aff9c2f6051c828002565b57c702a6be447c979d1996dd6bd673",
     "orbitstack/UpgradeExecutor": "0xa25e02367a436cebea22481663da914bbf1fd9492d903659cc6ec9ddbaccb241"
   }
 }

@@ -17,12 +17,12 @@ export class StarknetTxsCountService {
       const block =
         await this.starknetClient.getBlockWithTransactions(blockNumber)
 
-      const { uopsLength, transactionsLength } =
-        this.uopsAnalyzer.analyzeBlock(block)
+      const txsCount = block.transactions.length
+      const uopsCount = this.uopsAnalyzer.calculateUops(block)
 
       return {
-        txsCount: transactionsLength,
-        uopsCount: uopsLength,
+        txsCount: txsCount,
+        uopsCount: uopsCount,
         timestamp: new UnixTime(block.timestamp),
         number: block.number,
       }

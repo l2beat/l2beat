@@ -5,7 +5,6 @@ import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
 import { DaLayer } from '../../types/DaLayer'
 import { DasErasureCodingProof } from '../../types/DasErasureCodingProof'
 import { DasErasureCodingScheme } from '../../types/DasErasureCodingScheme'
-import { linkByDA } from '../../utils/link-by-da'
 import { vector } from './bridges/vector'
 
 export const avail: DaLayer = {
@@ -96,7 +95,7 @@ export const avail: DaLayer = {
       },
       {
         category: 'Funds can be lost if',
-        text: 'a dishonest majority of Avail validators finalizes an unavailable block, and the number of light nodes on the network is not enough to ensure block reconstruction.',
+        text: 'a dishonest majority of Avail validators finalizes an unavailable block, and the light nodes on the network cannot collectively reconstruct the block.',
       },
     ],
   },
@@ -112,9 +111,6 @@ export const avail: DaLayer = {
     }),
     vector,
   ],
-  usedIn: linkByDA({
-    layer: (layer) => layer === 'Avail',
-  }),
   /*
     Node params sources:
   */

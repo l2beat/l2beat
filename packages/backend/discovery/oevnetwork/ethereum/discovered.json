@@ -91,6 +91,12 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
+          "permission": "configure",
+          "target": "0x3AAfe635FCfA0E5C19C9368ab5eb384277836006",
+          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "via": [{ "address": "0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA" }]
+        },
+        {
           "permission": "upgrade",
           "target": "0x2403Dd9dFa12255Be8f42bc1e644733c9b2d10Dd",
           "via": [
@@ -238,6 +244,17 @@
           "permission": "challenge",
           "target": "0xd4D2F3cB313e59A34089F6635c5c1c6145298640",
           "via": []
+        },
+        {
+          "permission": "configure",
+          "target": "0x2bf43034b9559643e986A2fE3cE015a18247b904",
+          "via": [
+            {
+              "address": "0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA",
+              "delay": 0,
+              "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+            }
+          ]
         },
         {
           "permission": "propose",
@@ -391,6 +408,11 @@
         {
           "permission": "act",
           "target": "0xb6fbC59CF12d77C35d58B82Deee76cfc934F1235"
+        },
+        {
+          "permission": "configure",
+          "target": "0x3AAfe635FCfA0E5C19C9368ab5eb384277836006",
+          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
         },
         {
           "permission": "upgrade",
@@ -674,7 +696,13 @@
         "isUsingFeeToken": false,
         "keySetUpdates": 1,
         "maxDataSize": 117964,
-        "maxTimeVariation": [17280, 48, 86400, 3600],
+        "maxTimeVariation": {
+          "delayBlocks": 17280,
+          "futureBlocks": 48,
+          "delaySeconds": 86400,
+          "futureSeconds": 3600
+        },
+        "postsBlobs": false,
         "reader4844": "0x7Deda2425eC2d4EA0DF689A78de2fBF002075576",
         "rollup": "0x3AAfe635FCfA0E5C19C9368ab5eb384277836006",
         "sequencerVersion": "0x88",
@@ -685,7 +713,7 @@
       },
       "fieldMeta": {
         "maxTimeVariation": {
-          "description": "Struct: delayBlocks, futureBlocks, delaySeconds, futureSeconds. onlyRollupOwner settable. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
+          "description": "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
         }
       }
     },
@@ -1394,8 +1422,8 @@
     "orbitstack/OneStepProverMath": "0x8dd8aebb517eb6eaf15437ddbb90dff66f2b14d9d6b5390dd87fbdab15168188",
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
-    "orbitstack/RollupProxy": "0x9de477a7ec4abe22558d85184e1ff68cebea26c903f45220337156ae3acf3dc5",
-    "orbitstack/SequencerInbox": "0x80eed651d83fd6cd84047260bf02ec5e3a5f21b36049e1e45f34bd0a452e02f9",
+    "orbitstack/RollupProxy": "0x896aca243cf3d45ddf79cc142d37874406a6e07e5572f1450df6adccd0d627ac",
+    "orbitstack/SequencerInbox": "0x746f38463ee5aff9c2f6051c828002565b57c702a6be447c979d1996dd6bd673",
     "orbitstack/UpgradeExecutor": "0xa25e02367a436cebea22481663da914bbf1fd9492d903659cc6ec9ddbaccb241"
   }
 }

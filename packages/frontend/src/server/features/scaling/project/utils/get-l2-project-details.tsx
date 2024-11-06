@@ -1,11 +1,11 @@
 import { type Layer2 } from '@l2beat/config'
 import {
   type ContractsVerificationStatuses,
-  type ImplementationChangeReportApiResponse,
   type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
 import { type ProjectDetailsSection } from '~/components/projects/sections/types'
 import { type RosetteValue } from '~/components/rosette/types'
+import { type ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
 import {
   isActivityChartDataEmpty,
   isTvlChartDataEmpty,
@@ -26,7 +26,7 @@ interface Params {
   isVerified: boolean
   contractsVerificationStatuses: ContractsVerificationStatuses
   manuallyVerifiedContracts: ManuallyVerifiedContracts
-  implementationChangeReport: ImplementationChangeReportApiResponse
+  projectsChangeReport: ProjectsChangeReport
   rosetteValues: RosetteValue[]
 }
 
@@ -35,7 +35,7 @@ export async function getL2ProjectDetails({
   isVerified,
   contractsVerificationStatuses,
   manuallyVerifiedContracts,
-  implementationChangeReport,
+  projectsChangeReport,
   rosetteValues,
 }: Params) {
   const permissionsSection = project.permissions
@@ -65,7 +65,7 @@ export async function getL2ProjectDetails({
     },
     contractsVerificationStatuses,
     manuallyVerifiedContracts,
-    implementationChangeReport,
+    projectsChangeReport,
   )
 
   const riskSummary = getScalingRiskSummarySection(project, isVerified)

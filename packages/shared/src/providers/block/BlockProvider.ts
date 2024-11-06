@@ -1,12 +1,12 @@
-import { assert, UnixTime } from '@l2beat/shared-pure'
-import { EVMBlock, RpcClient2 } from '../../clients'
+import { assert, Block, UnixTime } from '@l2beat/shared-pure'
+import { RpcClient2, ZksyncLiteClient } from '../../clients'
 
 export class BlockProvider {
-  constructor(private readonly clients: RpcClient2[]) {
+  constructor(private readonly clients: (RpcClient2 | ZksyncLiteClient)[]) {
     assert(clients.length > 0, 'Clients cannot be empty')
   }
 
-  async getBlockWithTransactions(x: number): Promise<EVMBlock> {
+  async getBlockWithTransactions(x: number): Promise<Block> {
     for (const [index, client] of this.clients.entries()) {
       try {
         return await client.getBlockWithTransactions(x)

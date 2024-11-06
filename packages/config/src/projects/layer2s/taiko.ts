@@ -43,7 +43,7 @@ const TIER_SGX = discovery.getContractValue<{
   cooldownWindow: number
   provingWindow: number
   maxBlocksToVerifyPerProof: number
-}>('TierProvider', 'TIER_SGX')
+}>('MainnetTierRouter', 'TIER_SGX')
 
 const TIER_MINORITY_GUARDIAN = discovery.getContractValue<{
   verifierName: string
@@ -52,7 +52,7 @@ const TIER_MINORITY_GUARDIAN = discovery.getContractValue<{
   cooldownWindow: number
   provingWindow: number
   maxBlocksToVerifyPerProof: number
-}>('TierProvider', 'TIER_GUARDIAN_MINORITY')
+}>('MainnetTierRouter', 'TIER_GUARDIAN_MINORITY')
 
 const GuardianMinorityProverMinSigners = discovery.getContractValue<string[]>(
   'GuardianMinorityProver',
@@ -166,6 +166,34 @@ export const taiko: Layer2 = {
       },
       {
         uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: TaikoL1ContractAddress,
+          selector: '0x648885fb',
+          functionSignature:
+            'function proposeBlockV2(bytes _params, bytes _txList) returns (tuple meta_)',
+          sinceTimestamp: new UnixTime(1730602883),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: TaikoL1ContractAddress,
+          selector: '0x0c8f4a10',
+          functionSignature:
+            'function proposeBlocksV2(bytes[] _paramsArr, bytes[] _txListArr) returns (tuple[] metaArr_)',
+          sinceTimestamp: new UnixTime(1730602883),
+        },
+      },
+      {
+        uses: [
           { type: 'liveness', subtype: 'stateUpdates' },
           { type: 'l2costs', subtype: 'stateUpdates' },
         ],
@@ -176,6 +204,20 @@ export const taiko: Layer2 = {
           functionSignature:
             'function proveBlock(uint64 _blockId, bytes _input)',
           sinceTimestamp: new UnixTime(1716620627),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: TaikoL1ContractAddress,
+          selector: '0x440b6e18',
+          functionSignature:
+            'function proveBlocks(uint64[] _blockIds, bytes[] _inputs, bytes _batchProof)',
+          sinceTimestamp: new UnixTime(1730602883),
         },
       },
     ],
@@ -261,12 +303,12 @@ export const taiko: Layer2 = {
         If no one challenges the original SGX proof, it finalizes after ${SGXcooldownWindow} (the cooldown window).`,
       references: [
         {
-          text: 'TierProviderV2.sol - Etherscan source code, tier ids',
-          href: 'https://etherscan.io/address/0x3a1A900680BaADb889202faf12915F7E47B71ddd#code',
+          text: 'MainnetTierRouter.sol - Etherscan source code, tier ids',
+          href: 'https://etherscan.io/address/0x8f1C1D58C858e9a9eeCc587d7D51AECfd16b5542#code#F1#L26',
         },
         {
           text: 'TaikoL1.sol - Etherscan source code, liveness bond',
-          href: 'https://etherscan.io/address/0xf0E6d34937701622cA887a75c150cC23d4FFDf2F#code',
+          href: 'https://etherscan.io/address/0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17#code',
         },
       ],
       risks: [
@@ -292,7 +334,7 @@ export const taiko: Layer2 = {
       references: [
         {
           text: 'TaikoL1.sol - Etherscan source code, proposeBlock function',
-          href: 'https://etherscan.io/address/0xf0E6d34937701622cA887a75c150cC23d4FFDf2F#code',
+          href: 'https://etherscan.io/address/0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17#code',
         },
       ],
       risks: [],
@@ -327,12 +369,9 @@ export const taiko: Layer2 = {
           'This contract manages the rollup addresses list, allowing to set the address for a specific chainId-name pair.',
         ...upgradesTaikoMultisig,
       }),
-      discovery.getContractDetails('TierRouter', {
+      discovery.getContractDetails('MainnetTierRouter', {
         description:
-          'Contract allowing for granular control of which TierProvider to apply to a specific block. Currently, the TierProvider is hardcoded as an address for all blocks. Can be changed through L1RollupAddressManager.',
-      }),
-      discovery.getContractDetails('TierProvider', {
-        description: 'Contract managing the multi-tier proof system.',
+          'Contract managing and routing the multi-tier proof system.',
       }),
       discovery.getContractDetails('SgxVerifier', {
         description: 'Verifier contract for SGX proven blocks.',

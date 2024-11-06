@@ -1,3 +1,44 @@
+Generated with discovered.json: 0x7834eee0c00ff2ede2944dbdc6c7a1d9a38b154e
+
+# Diff at Wed, 06 Nov 2024 12:10:20 GMT:
+
+- author: Piotr Szlachciak (<szlachciak.piotr@gmail.com>)
+- comparing to: main@569158b15e3821e66365edc31ada3588122315be block: 44113900
+- current block number: 44113900
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 44113900 (main branch discovery), not current.
+
+```diff
+    contract ZkToken (0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC"
++        "0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8"
+      issuedPermissions.0.via.0:
++        {"address":"0xdB1E46B448e68a5E35CB693a99D59f784aD115CC","delay":0}
+    }
+```
+
+```diff
+    contract ZkTokenProxyAdmin (0xdB1E46B448e68a5E35CB693a99D59f784aD115CC) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E"}]
+    }
+```
+
 Generated with discovered.json: 0x03496e6ab8129e2a79adcf97e5207bd330279a28
 
 # Diff at Mon, 21 Oct 2024 11:15:32 GMT:
