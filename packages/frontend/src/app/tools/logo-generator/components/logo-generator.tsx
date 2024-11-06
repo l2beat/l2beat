@@ -1,8 +1,10 @@
 'use client'
 
+import { TooltipTrigger } from '@radix-ui/react-tooltip'
 import { partition } from 'lodash'
 import Image from 'next/image'
 import { useState } from 'react'
+import { Tooltip, TooltipContent } from '~/components/core/tooltip/tooltip'
 
 interface Props {
   projects: {
@@ -115,40 +117,48 @@ export function LogoGenerator({ projects }: Props) {
       </div>
       <div className="mt-6 flex flex-wrap gap-1 bg-pure-white p-4">
         {firstGroup.map((project) => (
-          <Image
-            key={project.slug}
-            src={`/icons/${project.slug}.png`}
-            alt={project.name}
-            width={128}
-            height={128}
-            className="cursor-pointer"
-            style={{ borderRadius, width: size, height: size }}
-            onClick={() =>
-              setSecondGroupValue((exclude) => exclude + project.slug + ',')
-            }
-          />
+          <Tooltip key={project.slug}>
+            <TooltipTrigger>
+              <Image
+                src={`/icons/${project.slug}.png`}
+                alt={project.name}
+                width={128}
+                height={128}
+                className="cursor-pointer"
+                style={{ borderRadius, width: size, height: size }}
+                onClick={() =>
+                  setSecondGroupValue((exclude) => exclude + project.slug + ',')
+                }
+              />
+            </TooltipTrigger>
+            <TooltipContent>{project.name}</TooltipContent>
+          </Tooltip>
         ))}
       </div>
       {secondGroup.length !== 0 && (
         <div className="mt-6 flex flex-wrap gap-1 bg-pure-white p-4">
           {secondGroup.map((project) => (
-            <Image
-              key={project.slug}
-              src={`/icons/${project.slug}.png`}
-              alt={project.name}
-              width={128}
-              height={128}
-              className="cursor-pointer"
-              style={{ borderRadius, width: size, height: size }}
-              onClick={() =>
-                setSecondGroupValue((exclude) => {
-                  const slugs = exclude
-                    .split(',')
-                    .filter((s) => s.trim() !== project.slug)
-                  return slugs.join(',')
-                })
-              }
-            />
+            <Tooltip key={project.slug}>
+              <TooltipTrigger>
+                <Image
+                  src={`/icons/${project.slug}.png`}
+                  alt={project.name}
+                  width={128}
+                  height={128}
+                  className="cursor-pointer"
+                  style={{ borderRadius, width: size, height: size }}
+                  onClick={() =>
+                    setSecondGroupValue((exclude) => {
+                      const slugs = exclude
+                        .split(',')
+                        .filter((s) => s.trim() !== project.slug)
+                      return slugs.join(',')
+                    })
+                  }
+                />
+              </TooltipTrigger>
+              <TooltipContent>{project.name}</TooltipContent>
+            </Tooltip>
           ))}
         </div>
       )}
