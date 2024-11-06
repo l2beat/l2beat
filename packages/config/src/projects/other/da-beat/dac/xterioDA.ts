@@ -1,10 +1,10 @@
 import { formatSeconds } from '@l2beat/shared-pure'
+import { DA_LAYERS } from '../../../../common'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
 import { DaChallengeMechanism } from '../types/DaChallengeMechanism'
 import { DaLayer } from '../types/DaLayer'
 import { xterioDABridge } from './bridges/xterioDABridge'
-import { DA_LAYERS } from '../../../../common'
 
 const discovery = new ProjectDiscovery('xterio')
 

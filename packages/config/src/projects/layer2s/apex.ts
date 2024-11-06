@@ -6,8 +6,9 @@ import {
 } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
-  DA_MODES,
+  DA_BRIDGES,
   DA_LAYERS,
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
@@ -17,7 +18,6 @@ import {
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
-  DA_BRIDGES,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
