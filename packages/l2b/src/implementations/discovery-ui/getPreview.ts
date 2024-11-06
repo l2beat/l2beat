@@ -1,4 +1,5 @@
 import {
+  ProjectDiscovery,
   ScalingProjectContract,
   ScalingProjectPermission,
   ScalingProjectPermissionedAccount,
@@ -17,52 +18,78 @@ import {
 } from './types'
 
 type ContractNames = { [address: string]: string }
-
 const allProjects = [...layer2s, ...layer3s, ...bridges]
 
 export function getPreview(
   configReader: ConfigReader,
   projectId: string,
-): ApiPreviewResponse | undefined {
+): ApiPreviewResponse {
+  const projectChains: string[] =
+    configReader.readAllChainsForProject(projectId)
+
   const project = allProjects.find((p) => p.id === projectId)
   if (!project) {
-    return undefined
+    return getError('unknown-project')
   }
-  const hostChain = project.type === 'layer3' ? project.hostChain : 'ethereum'
+  if (!('discoveryDrivenData' in project)) {
+    return getError('not-discovery-driven')
+  }
 
-  const projectChains = configReader.readAllChainsForProject(projectId)
+  // sort chains, keeping the host chain first
+  const hostChain = 'hostChain' in project ? project.hostChain : 'ethereum'
+  projectChains.sort((a, b) => {
+    if (a === hostChain) return -1
+    if (b === hostChain) return 1
+    return a.localeCompare(b)
+  })
+
+  const permissions: {
+    chain: string
+    permissions: ScalingProjectPermission[]
+  }[] = []
+  const contracts: { chain: string; contracts: ScalingProjectContract[] }[] = []
+
   const namesPerChain: { [chain: string]: ContractNames } = {}
   projectChains.forEach((chain) => {
     const discovery = configReader.readDiscovery(projectId, chain)
+    const processor = new ProjectDiscovery(projectId, chain)
     const names: ContractNames = {}
     discovery.contracts.forEach((c) => {
-      names[c.address.toString()] = c.name
+      names[c.address] = c.name
     })
     namesPerChain[chain] = names
+    permissions.push({
+      chain,
+      permissions: processor.getDiscoveredPermissions(),
+    })
+    contracts.push({ chain, contracts: processor.getDiscoveredContracts() })
   })
 
-  const permissions =
-    project.permissions === 'UnderReview' || project.permissions === undefined
-      ? []
-      : project.permissions
-
-  const contracts =
-    project.contracts === undefined ? [] : project.contracts.addresses
-
   return {
-    permissions: getPermissionsPreview(permissions, namesPerChain, hostChain),
-    contracts: getContractsPreview(contracts, namesPerChain, hostChain),
+    status: 'success',
+    permissionsPerChain: getPermissionsPreview(permissions, namesPerChain),
+    contractsPerChain: getContractsPreview(contracts, namesPerChain),
+  }
+}
+
+function getError(status: ApiPreviewResponse['status']): ApiPreviewResponse {
+  return {
+    status,
+    permissionsPerChain: [],
+    contractsPerChain: [],
   }
 }
 
 function getPermissionsPreview(
-  permissions: ScalingProjectPermission[],
+  permissionsPerChain: {
+    chain: string
+    permissions: ScalingProjectPermission[]
+  }[],
   namesPerChain: { [chain: string]: ContractNames },
-  hostChain: string,
-): ApiPreviewPermission[] {
-  return permissions.map((p): ApiPreviewPermission => {
-    const chain = p.chain ?? hostChain
-    return {
+): { chain: string; permissions: ApiPreviewPermission[] }[] {
+  return permissionsPerChain.map(({ chain, permissions }) => ({
+    chain,
+    permissions: permissions.map((p) => ({
       addresses: p.accounts.map((a) => ({
         type: 'address',
         name: namesPerChain[chain][a.address],
@@ -77,30 +104,31 @@ function getPermissionsPreview(
         address: toAddress(chain, x.address),
         addressType: toApiAddressType(x.type),
       })),
-    }
-  })
+    })),
+  }))
 }
 
 function getContractsPreview(
-  contracts: ScalingProjectContract[],
+  contractsPerChain: { chain: string; contracts: ScalingProjectContract[] }[],
   namesPerChain: { [chain: string]: ContractNames },
-  hostChain: string,
-): ApiPreviewContract[] {
-  return contracts.map((c): ApiPreviewContract => {
-    const addresses = isSingleAddress(c) ? [c.address] : c.multipleAddresses
+): { chain: string; contracts: ApiPreviewContract[] }[] {
+  return contractsPerChain.map(({ chain, contracts }) => ({
+    chain,
+    contracts: contracts.map((c) => {
+      const addresses = isSingleAddress(c) ? [c.address] : c.multipleAddresses
 
-    const chain = c.chain ?? hostChain
-    return {
-      addresses: addresses.map((a) => ({
-        type: 'address',
-        name: namesPerChain[chain][a],
-        address: toAddress(chain, a),
-        addressType: 'Contract',
-      })),
-      name: c.name,
-      description: c.description ?? '',
-    }
-  })
+      return {
+        addresses: addresses.map((a) => ({
+          type: 'address',
+          name: namesPerChain[chain][a],
+          address: toAddress(chain, a),
+          addressType: 'Contract',
+        })),
+        name: c.name,
+        description: c.description ?? '',
+      }
+    }),
+  }))
 }
 
 function toApiAddressType(

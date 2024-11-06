@@ -12,8 +12,9 @@ export interface ApiProjectResponse {
 }
 
 export interface ApiPreviewResponse {
-  permissions: ApiPreviewPermission[]
-  contracts: ApiPreviewContract[]
+  status: 'success' | 'unknown-project' | 'not-discovery-driven'
+  permissionsPerChain: { chain: string; permissions: ApiPreviewPermission[] }[]
+  contractsPerChain: { chain: string; contracts: ApiPreviewContract[] }[]
 }
 
 export interface ApiPreviewPermission {

@@ -15,69 +15,85 @@ export function PreviewPanel() {
 
   const response = previewResponse.data
   if (response === undefined) {
-    return <div>Preview unavailable</div>
+    return <div className="p-2">Loading...</div>
+  }
+  if (response.status === 'unknown-project') {
+    return <div className="p-2">Unknown project</div>
+  }
+  if (response.status === 'not-discovery-driven') {
+    return (
+      <div className="p-2">Only discovery-driven projects can be previewed</div>
+    )
   }
 
-  const permissionsPreview = (
-    <div>
-      <h2 className="p-2 font-bold text-2xl text-blue-600">Permissions:</h2>
-      {response.permissions.map((permission, index) => (
-        <div key={index} className="flex flex-col gap-2 p-2">
-          <h3 className="font-bold">{permission.name}</h3>
-          <div className="text-sm">
-            <ul className="list-disc pl-5 italic">
-              {permission.addresses.map((address, idx) => (
-                <li key={idx}>
-                  <AddressDisplay value={address} />
-                </li>
-              ))}
-            </ul>
-          </div>
-          {permission.multisigParticipants && (
+  const permissionsPreview = response.permissionsPerChain.map(
+    ({ chain, permissions }) => (
+      <div>
+        <h2 className="p-2 font-bold text-2xl text-blue-600">
+          Permissions on {chain}:
+        </h2>
+        {permissions.map((permission, index) => (
+          <div key={index} className="flex flex-col gap-2 p-2">
+            <h3 className="font-bold">{permission.name}</h3>
             <div className="text-sm">
-              <div>Participants:</div>
               <ul className="list-disc pl-5 italic">
-                {permission.multisigParticipants.map((address, idx) => (
+                {permission.addresses.map((address, idx) => (
                   <li key={idx}>
                     <AddressDisplay value={address} />
                   </li>
                 ))}
               </ul>
             </div>
-          )}
-          <p>
-            {permission.description.split('\n').map((a) => (
-              <div>{a}</div>
-            ))}
-          </p>
-        </div>
-      ))}
-    </div>
+            {permission.multisigParticipants && (
+              <div className="text-sm">
+                <div>Participants:</div>
+                <ul className="list-disc pl-5 italic">
+                  {permission.multisigParticipants.map((address, idx) => (
+                    <li key={idx}>
+                      <AddressDisplay value={address} />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            <p>
+              {permission.description.split('\n').map((a) => (
+                <div>{a}</div>
+              ))}
+            </p>
+          </div>
+        ))}
+      </div>
+    ),
   )
 
-  const contractsPreview = (
-    <div className="mt-2 border-t">
-      <h2 className="p-2 font-bold text-2xl text-blue-600">Contracts:</h2>
-      {response.contracts.map((contract, index) => (
-        <div key={index} className="flex flex-col gap-2 p-2">
-          <h3 className="font-bold">{contract.name}</h3>
-          <div className="text-sm">
-            <ul className="list-disc pl-5 italic">
-              {contract.addresses.map((address, idx) => (
-                <li key={idx}>
-                  <AddressDisplay value={address} />
-                </li>
+  const contractsPreview = response.contractsPerChain.map(
+    ({ chain, contracts }) => (
+      <div className="mt-2 border-t">
+        <h2 className="p-2 font-bold text-2xl text-blue-600">
+          Contracts on {chain}:
+        </h2>
+        {contracts.map((contract, index) => (
+          <div key={index} className="flex flex-col gap-2 p-2">
+            <h3 className="font-bold">{contract.name}</h3>
+            <div className="text-sm">
+              <ul className="list-disc pl-5 italic">
+                {contract.addresses.map((address, idx) => (
+                  <li key={idx}>
+                    <AddressDisplay value={address} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <p>
+              {contract.description.split('\n').map((a, idx) => (
+                <div key={idx}>{a}</div>
               ))}
-            </ul>
+            </p>
           </div>
-          <p>
-            {contract.description.split('\n').map((a, idx) => (
-              <div key={idx}>{a}</div>
-            ))}
-          </p>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+    ),
   )
 
   return (
