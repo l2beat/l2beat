@@ -8,3 +8,10 @@ export const LoopringResponse = z.object({
   createdAt: numberAs((n) => new UnixTime(Math.floor(n / MS_IN_SECOND))),
   transactions: z.array(z.unknown()).transform((arr) => arr.length),
 })
+
+export const LoopringError = z.object({
+  resultInfo: z.object({
+    code: z.number(),
+    message: z.string(),
+  }),
+})
