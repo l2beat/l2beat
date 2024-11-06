@@ -1,7 +1,7 @@
 {
   "name": "ethernity",
   "chain": "ethereum",
-  "blockNumber": 21129314,
+  "blockNumber": 21129680,
   "configHash": "0xa5e54dbff2cd4c716b40697b40717ac1e745ec78d79e2cd81db34101a33f5ce0",
   "contracts": [
     {
@@ -163,10 +163,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 3661200,
-        "latestOutputIndex": 338,
-        "nextBlockNumber": 3672000,
-        "nextOutputIndex": 339,
+        "latestBlockNumber": 3672000,
+        "latestOutputIndex": 339,
+        "nextBlockNumber": 3682800,
+        "nextOutputIndex": 340,
         "proposer": "0xF49212F977986347b73345D382a811e148751eED",
         "PROPOSER": "0xF49212F977986347b73345D382a811e148751eED",
         "startingBlockNumber": 0,

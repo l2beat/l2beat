@@ -1,13 +1,15 @@
-Generated with discovered.json: 0xcf0155ebe679d1e2d99bd11dffce89c95b581713
+Generated with discovered.json: 0x3066c53e89b862d405c03441ebec8345132d993d
 
-# Diff at Wed, 06 Nov 2024 14:50:49 GMT:
+# Diff at Wed, 06 Nov 2024 16:04:17 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 21129314
+- current block number: 21129680
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Standard OP stack Rollup with L2OutputOracle and FaultDisputeGame deployed in parallel (only L2OutputOracle used).
+
+0.99 debank l2 code similarity.
 
 ## Initial discovery
 
