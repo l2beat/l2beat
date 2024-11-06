@@ -64,7 +64,10 @@ import { api } from '~/trpc/react'
 
 const tokenFormSchema = z.object({
   networkId: nanoidSchema,
-  address: z.string().length(42),
+  address: z.union([
+    z.literal('native'),
+    z.string().length(42, "Must be 42 characters long or 'native'"),
+  ]),
   backedBy: z.array(
     z.object({
       sourceTokenId: nanoidSchema,
@@ -294,7 +297,7 @@ export function EditTokenPage({
                             .map((network) => (
                               <SelectItem key={network.id} value={network.id}>
                                 {network.name}{' '}
-                                <span className="text-xs text-muted-foreground">
+                                <span className="text-muted-foreground text-xs">
                                   ({network.id})
                                 </span>
                               </SelectItem>
@@ -471,7 +474,7 @@ export function EditTokenPage({
             </CardHeader>
             <CardContent>
               {backedBy.fields.length === 0 ? (
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   This token is not backed by any other token.
                 </p>
               ) : (
@@ -505,7 +508,7 @@ export function EditTokenPage({
                                           value={token.tokenId}
                                         >
                                           {token.name ?? 'Unknown'}{' '}
-                                          <span className="text-xs text-muted-foreground">
+                                          <span className="text-muted-foreground text-xs">
                                             ({token.tokenId})
                                           </span>
                                         </SelectItem>
@@ -543,7 +546,7 @@ export function EditTokenPage({
                                             value={bridge.id}
                                           >
                                             {bridge.name}{' '}
-                                            <span className="text-xs text-muted-foreground">
+                                            <span className="text-muted-foreground text-xs">
                                               ({bridge.id})
                                             </span>
                                           </SelectItem>
@@ -594,7 +597,7 @@ export function EditTokenPage({
                 </CardHeader>
                 <CardContent>
                   {backing.length === 0 ? (
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                       This token is not backing any other token.
                     </p>
                   ) : (
