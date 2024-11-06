@@ -166,6 +166,34 @@ export const taiko: Layer2 = {
       },
       {
         uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: TaikoL1ContractAddress,
+          selector: '0x648885fb',
+          functionSignature:
+            'function proposeBlockV2(bytes _params, bytes _txList) returns (tuple meta_)',
+          sinceTimestamp: new UnixTime(1730602883),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: TaikoL1ContractAddress,
+          selector: '0x0c8f4a10',
+          functionSignature:
+            'function proposeBlocksV2(bytes[] _paramsArr, bytes[] _txListArr) returns (tuple[] metaArr_)',
+          sinceTimestamp: new UnixTime(1730602883),
+        },
+      },
+      {
+        uses: [
           { type: 'liveness', subtype: 'stateUpdates' },
           { type: 'l2costs', subtype: 'stateUpdates' },
         ],
@@ -176,6 +204,20 @@ export const taiko: Layer2 = {
           functionSignature:
             'function proveBlock(uint64 _blockId, bytes _input)',
           sinceTimestamp: new UnixTime(1716620627),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: TaikoL1ContractAddress,
+          selector: '0x440b6e18',
+          functionSignature:
+            'function proveBlocks(uint64[] _blockIds, bytes[] _inputs, bytes _batchProof)',
+          sinceTimestamp: new UnixTime(1730602883),
         },
       },
     ],
