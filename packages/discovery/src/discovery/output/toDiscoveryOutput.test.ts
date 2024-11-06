@@ -5,6 +5,7 @@ import { Meta } from '@l2beat/discovery-types'
 import { AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
 import { processAnalysis, sortByKeys } from './toDiscoveryOutput'
+import { neuterErrors } from './errors'
 
 const emptyOutputMeta: Meta = {
   description: undefined,
@@ -135,7 +136,7 @@ describe(processAnalysis.name, () => {
           proxyType: CONTRACT_B.proxyType,
           sinceTimestamp: base.deploymentTimestamp.toNumber(),
           values: CONTRACT_B.values,
-          errors: CONTRACT_B.errors,
+          errors: neuterErrors(CONTRACT_B.errors),
           sourceHashes: [],
         },
       ],
@@ -192,7 +193,7 @@ describe(processAnalysis.name, () => {
           name: 'B',
           derivedName: 'Something not B',
           values: CONTRACT_B.values,
-          errors: CONTRACT_B.errors,
+          errors: neuterErrors(CONTRACT_B.errors),
           sinceTimestamp: base.deploymentTimestamp.toNumber(),
           sourceHashes: [],
         },
