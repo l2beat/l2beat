@@ -5,7 +5,6 @@ import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
 import { DaLayer } from '../../types/DaLayer'
 import { DasErasureCodingProof } from '../../types/DasErasureCodingProof'
 import { DasErasureCodingScheme } from '../../types/DasErasureCodingScheme'
-import { linkByDA } from '../../utils/link-by-da'
 import { blobstream } from './bridges/blobstream'
 
 export const celestia: DaLayer = {
@@ -122,9 +121,6 @@ export const celestia: DaLayer = {
     }),
     ...blobstream,
   ],
-  usedIn: linkByDA({
-    layer: (layer) => layer === 'Celestia',
-  }),
   /*
     Node params sources:
     - unbondingPeriod, finality (time_iota_ms): https://celestiaorg.github.io/celestia-app/specs/params.html

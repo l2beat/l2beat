@@ -8,8 +8,9 @@ import { makeTechnologyChoice } from './make-technology-section'
 export function getScalingTechnologySection(project: Layer2 | Layer3) {
   const relatedDaProjects = daLayers.filter(
     (layer) =>
-      layer.usedIn.some((usedIn) => usedIn.id === project.id) &&
-      layer.bridges.length > 0,
+      layer.bridges.some((bridge) =>
+        bridge.usedIn.some((usedIn) => usedIn.id === project.id),
+      ) && layer.bridges.length > 0,
   )
 
   const items = compact([

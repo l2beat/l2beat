@@ -96,7 +96,6 @@ export const eigenDA: DaLayer = {
     }),
     eigenDAbridge,
   ],
-  usedIn: [...toUsedInProject([donatuz])],
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('EIGEN'),
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
