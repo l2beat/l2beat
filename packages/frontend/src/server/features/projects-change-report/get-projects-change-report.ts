@@ -65,33 +65,48 @@ type ProjectChangeReport = Record<
 
 const getCachedProjectsChangeReport = cache(
   async () => {
-    const onDisk = getOnDiskData()
     const result: Record<string, ProjectChangeReport> = {}
 
+    const onDisk = getOnDiskData()
     const newDiscoveries = await db.updateMonitor.getAll()
-    for (const chain of onDisk.chains) {
-      const chainProjects = onDisk.projects[chain]
-      if (!chainProjects) continue
-      const chainDiscovery = onDisk.discoveries[chain]
-      if (!chainDiscovery) continue
 
-      for (const project of chainProjects) {
-        const discovery = chainDiscovery[project]
-        const chainId = chainNameToId(chain)
+    for (const onDiskChain of onDisk.chains) {
+      const onDiskChainProjects = onDisk.projects[onDiskChain]
+      if (!onDiskChainProjects) continue
+      const onDiskChainDiscovery = onDisk.discoveries[onDiskChain]
+      if (!onDiskChainDiscovery) continue
+
+      for (const project of onDiskChainProjects) {
+        const onDiskDiscovery = onDiskChainDiscovery[project]
+        const chainId = chainNameToId(onDiskChain)
 
         const newDiscovery = newDiscoveries.find(
           (d) => d.chainId === chainId && d.projectName === project,
         )
-        const latestContracts = newDiscovery?.discovery?.contracts
-        const diffs =
-          discovery && latestContracts
-            ? diffDiscovery(discovery.contracts, latestContracts)
-            : []
-        const implementationChanges = diffs.filter((diff) =>
-          diff.diff?.some((f) => f.key && f.key === 'values.$implementation'),
+
+        if (!newDiscovery || !onDiskDiscovery) {
+          continue
+        }
+
+        // Skip if the new discovery is older than the on-disk discovery
+        if (onDiskDiscovery.blockNumber > newDiscovery.blockNumber) {
+          continue
+        }
+
+        const latestContracts = newDiscovery.discovery.contracts
+        const discoveryDiffs = diffDiscovery(
+          onDiskDiscovery.contracts,
+          latestContracts,
         )
-        const fieldHighSeverityChanges = diffs.filter((diff) =>
-          diff.diff?.some((f) => f.severity === 'HIGH'),
+
+        const implementationChanges = discoveryDiffs.filter((discoveryDiff) =>
+          discoveryDiff.diff?.some(
+            (f) => f.key && f.key === 'values.$implementation',
+          ),
+        )
+        const fieldHighSeverityChanges = discoveryDiffs.filter(
+          (discoveryDiff) =>
+            discoveryDiff.diff?.some((f) => f.severity === 'HIGH'),
         )
 
         if (
@@ -102,30 +117,31 @@ const getCachedProjectsChangeReport = cache(
         }
 
         result[project] ??= {}
-        result[project][chain] ??= {
+        result[project][onDiskChain] ??= {
           implementations: [],
           fieldHighSeverityChanges: [],
         }
 
-        for (const diff of implementationChanges) {
-          assert(latestContracts, 'latestContracts is undefined')
+        for (const implementationChange of implementationChanges) {
           const diffedContract = latestContracts.find(
-            (c) => c.address === diff.address,
+            (c) => c.address === implementationChange.address,
           )
           assert(diffedContract, 'diffedContract is undefined')
           const newImplementations = get$Implementations(diffedContract.values)
 
-          result[project][chain].implementations.push({
-            containingContract: diff.address,
+          result[project][onDiskChain].implementations.push({
+            containingContract: implementationChange.address,
             newImplementations,
           })
         }
 
-        for (const diff of fieldHighSeverityChanges) {
-          const fieldDiffs = diff.diff?.filter((f) => f.severity === 'HIGH')
+        for (const fieldHighSeverityChange of fieldHighSeverityChanges) {
+          const fieldDiffs = fieldHighSeverityChange.diff?.filter(
+            (f) => f.severity === 'HIGH',
+          )
           if (!fieldDiffs) continue
-          result[project][chain].fieldHighSeverityChanges.push({
-            address: diff.address,
+          result[project][onDiskChain].fieldHighSeverityChanges.push({
+            address: fieldHighSeverityChange.address,
             fields: fieldDiffs,
           })
         }
