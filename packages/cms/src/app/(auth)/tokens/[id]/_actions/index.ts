@@ -13,8 +13,8 @@ export const insertToken = actionClient
     try {
       const { id } = await db.token.insert(data)
       return { success: { id } }
-    } catch {
-      return { failure: 'Failed to insert network' }
+    } catch (e) {
+      return { failure: `Failed to insert token: ${JSON.stringify(e)}` }
     }
   })
 
@@ -26,8 +26,8 @@ export const updateToken = actionClient
     try {
       await db.token.update(id, data)
       return { success: { id } }
-    } catch {
-      return { failure: 'Failed to update network' }
+    } catch (e) {
+      return { failure: `Failed to update token: ${JSON.stringify(e)}` }
     }
   })
 
@@ -39,7 +39,7 @@ export const deleteToken = actionClient
     try {
       await db.token.delete(id)
       return { success: { id } }
-    } catch {
-      return { failure: 'Failed to delete token' }
+    } catch (e) {
+      return { failure: `Failed to delete token: ${JSON.stringify(e)}` }
     }
   })
