@@ -13,6 +13,7 @@ import {
 import {
   CONTRACTS,
   ChainConfig,
+  DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
   DataAvailabilityBridge,
@@ -320,7 +321,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
           })
         : addSentimentToDataAvailability({
             layers: [DA_LAYERS.ETH_CALLDATA],
-            bridge: { type: 'Enshrined' },
+            bridge: DA_BRIDGES.ENSHRINED,
             mode: DA_MODES.TRANSACTION_DATA,
           }),
     riskView: {

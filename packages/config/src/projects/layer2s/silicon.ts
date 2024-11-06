@@ -1,5 +1,10 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { DA_LAYERS, NEW_CRYPTOGRAPHY, RISK_VIEW } from '../../common'
+import {
+  DA_BRIDGES,
+  DA_LAYERS,
+  NEW_CRYPTOGRAPHY,
+  RISK_VIEW,
+} from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { polygonCDKStack } from './templates/polygonCDKStack'
@@ -54,11 +59,10 @@ export const silicon: Layer2 = polygonCDKStack({
   isForcedBatchDisallowed,
   daProvider: {
     layer: DA_LAYERS.DAC,
-    bridge: {
-      type: 'DAC Members',
+    bridge: DA_BRIDGES.DAC_MEMBERS({
       requiredSignatures: requiredSignaturesDAC,
       membersCount: membersCountDAC,
-    },
+    }),
     riskView: {
       ...RISK_VIEW.DATA_EXTERNAL_DAC({
         membersCount: membersCountDAC,

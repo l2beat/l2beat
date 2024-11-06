@@ -9,6 +9,7 @@ import { unionBy } from 'lodash'
 import {
   CONTRACTS,
   ChainConfig,
+  DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
   EXITS,
@@ -682,7 +683,10 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
 
           return addSentimentToDataAvailability({
             layers: [DA_LAYERS.DAC],
-            bridge: { type: 'DAC Members', membersCount, requiredSignatures },
+            bridge: DA_BRIDGES.DAC_MEMBERS({
+              membersCount,
+              requiredSignatures,
+            }),
             mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
           })
         })()
@@ -692,7 +696,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
               ? DA_LAYERS.ETH_BLOBS_OR_CALLLDATA
               : DA_LAYERS.ETH_CALLDATA,
           ],
-          bridge: { type: 'Enshrined' },
+          bridge: DA_BRIDGES.ENSHRINED,
           mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
         }),
     stackedRiskView: getStackedRisks(),
@@ -847,7 +851,10 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
 
           return addSentimentToDataAvailability({
             layers: [DA_LAYERS.DAC],
-            bridge: { type: 'DAC Members', membersCount, requiredSignatures },
+            bridge: DA_BRIDGES.DAC_MEMBERS({
+              membersCount,
+              requiredSignatures,
+            }),
             mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
           })
         })()
@@ -857,7 +864,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
               ? DA_LAYERS.ETH_BLOBS_OR_CALLLDATA
               : DA_LAYERS.ETH_CALLDATA,
           ],
-          bridge: { type: 'Enshrined' },
+          bridge: DA_BRIDGES.ENSHRINED,
           mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
         }),
     riskView: {

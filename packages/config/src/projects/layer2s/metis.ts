@@ -7,6 +7,7 @@ import {
 
 import {
   CONTRACTS,
+  DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
   EXITS,
@@ -106,7 +107,7 @@ export const metis: Layer2 = {
   },
   dataAvailability: addSentimentToDataAvailability({
     layers: [DA_LAYERS.MEMO],
-    bridge: { type: 'None' },
+    bridge: DA_BRIDGES.NONE,
     mode: DA_MODES.TRANSACTION_DATA,
   }),
   riskView: {

@@ -7,6 +7,7 @@ import {
 
 import {
   CONTRACTS,
+  DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
   EXITS,
@@ -156,7 +157,7 @@ export const loopring: Layer2 = {
   },
   dataAvailability: addSentimentToDataAvailability({
     layers: [DA_LAYERS.ETH_CALLDATA],
-    bridge: { type: 'Enshrined' },
+    bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.STATE_DIFFS,
   }),
   riskView: {

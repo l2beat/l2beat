@@ -7,6 +7,7 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
   EXITS,
@@ -318,7 +319,7 @@ export const scroll: Layer2 = {
   },
   dataAvailability: addSentimentToDataAvailability({
     layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
-    bridge: { type: 'Enshrined' },
+    bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
   }),
   riskView: {

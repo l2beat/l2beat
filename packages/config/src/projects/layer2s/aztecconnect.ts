@@ -1,6 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
+  DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
   FORCE_TRANSACTIONS,
@@ -75,7 +76,7 @@ export const aztecconnect: Layer2 = {
   },
   dataAvailability: addSentimentToDataAvailability({
     layers: [DA_LAYERS.ETH_CALLDATA],
-    bridge: { type: 'Enshrined' },
+    bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.STATE_DIFFS,
   }),
   riskView: {

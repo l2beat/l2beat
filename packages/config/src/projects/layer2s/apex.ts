@@ -17,6 +17,7 @@ import {
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
+  DA_BRIDGES,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
@@ -167,7 +168,7 @@ export const apex: Layer2 = {
   },
   dataAvailability: addSentimentToDataAvailability({
     layers: [DA_LAYERS.DAC],
-    bridge: { type: 'DAC Members', ...dacConfig },
+    bridge: DA_BRIDGES.DAC_MEMBERS(dacConfig),
     mode: DA_MODES.STATE_DIFFS,
   }),
   riskView: {

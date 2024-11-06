@@ -12,6 +12,7 @@ import {
 
 import {
   CONTRACTS,
+  DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
   DataAvailabilityBridge,
@@ -59,7 +60,7 @@ export const CELESTIA_DA_PROVIDER: DAProvider = {
   layer: DA_LAYERS.CELESTIA,
   riskView: RISK_VIEW.DATA_CELESTIA(false),
   technology: TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false),
-  bridge: { type: 'None' },
+  bridge: DA_BRIDGES.NONE,
 }
 
 export interface DAProvider {
@@ -544,7 +545,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
                 ? DA_LAYERS.ETH_BLOBS_OR_CALLLDATA
                 : DA_LAYERS.ETH_CALLDATA,
             ],
-            bridge: { type: 'Enshrined' },
+            bridge: DA_BRIDGES.ENSHRINED,
             mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
           }),
     riskView: {
@@ -849,7 +850,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
                 ? DA_LAYERS.ETH_BLOBS_OR_CALLLDATA
                 : DA_LAYERS.ETH_CALLDATA,
             ],
-            bridge: { type: 'Enshrined' },
+            bridge: DA_BRIDGES.ENSHRINED,
             mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
           }),
     config: {

@@ -6,6 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import { formatEther } from 'ethers/lib/utils'
 import {
+  DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
   EXITS,
@@ -43,7 +44,7 @@ export const fuel: Layer2 = {
   createdAt: new UnixTime(1729589660), // 2024-10-22T09:34:20Z
   dataAvailability: addSentimentToDataAvailability({
     layers: [DA_LAYERS.ETH_BLOBS],
-    bridge: { type: 'Enshrined' },
+    bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
   }),
   display: {

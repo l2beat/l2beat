@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
-import { DA_LAYERS } from '../../common'
+import { DA_BRIDGES, DA_LAYERS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
@@ -46,7 +46,7 @@ export const fraxtal: Layer2 = opStackL2({
         },
       ],
     },
-    bridge: { type: 'None' },
+    bridge: DA_BRIDGES.NONE,
   },
   associatedTokens: ['FXS', 'FPIS'],
   discovery,

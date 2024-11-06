@@ -7,6 +7,7 @@ import {
 
 import {
   CONTRACTS,
+  DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
   NEW_CRYPTOGRAPHY,
@@ -113,7 +114,7 @@ export const zkspace: Layer2 = {
   },
   dataAvailability: addSentimentToDataAvailability({
     layers: [DA_LAYERS.ETH_CALLDATA],
-    bridge: { type: 'Enshrined' },
+    bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.STATE_DIFFS,
   }),
   riskView: {

@@ -12,6 +12,7 @@ import {
 import { BigNumber } from 'ethers'
 import { formatEther } from 'ethers/lib/utils'
 import {
+  DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
   DERIVATION,
@@ -342,7 +343,7 @@ export const optimism: Layer2 = {
   },
   dataAvailability: addSentimentToDataAvailability({
     layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
-    bridge: { type: 'Enshrined' },
+    bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
   }),
   riskView: {

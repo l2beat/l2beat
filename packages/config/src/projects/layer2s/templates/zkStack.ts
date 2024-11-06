@@ -9,6 +9,7 @@ import {
 
 import {
   CONTRACTS,
+  DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
   DataAvailabilityBridge,
@@ -333,7 +334,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
           })
         : addSentimentToDataAvailability({
             layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
-            bridge: { type: 'Enshrined' },
+            bridge: DA_BRIDGES.ENSHRINED,
             mode: DA_MODES.STATE_DIFFS_COMPRESSED,
           }),
     riskView: {
