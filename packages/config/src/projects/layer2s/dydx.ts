@@ -8,6 +8,7 @@ import { Badge } from '../badges'
 
 import {
   CONTRACTS,
+  DA_LAYERS,
   DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
@@ -179,7 +180,7 @@ export const dydx: Layer2 = {
     finality: 'coming soon',
   },
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (calldata)'],
+    layers: [DA_LAYERS.ETH_CALLDATA],
     bridge: { type: 'Enshrined' },
     mode: DA_MODES.STATE_DIFFS,
   }),

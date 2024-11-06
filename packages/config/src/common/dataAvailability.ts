@@ -1,8 +1,4 @@
-import {
-  Sentiment,
-  ValueWithSentiment,
-  assertUnreachable,
-} from '@l2beat/shared-pure'
+import { ValueWithSentiment, assertUnreachable } from '@l2beat/shared-pure'
 
 import {
   DataAvailabilityBridge,
@@ -12,7 +8,7 @@ import {
 } from './ScalingProjectDataAvailability'
 
 export interface DataAvailabilityWithSentiment {
-  layer: ValueWithSentiment<string>
+  layer: ValueWithSentiment<string> & { secondLine?: string }
   bridge: ValueWithSentiment<string>
   mode: DataAvailabilityMode
 }
@@ -27,83 +23,19 @@ export function addSentimentToDataAvailability(
   }
 }
 
-const MAIN_LAYER_SENTIMENT: Record<DataAvailabilityLayer, Sentiment> = {
-  'Ethereum (calldata)': 'good',
-  'Ethereum (blobs)': 'good',
-  'Ethereum (blobs or calldata)': 'good',
-  'Mantle DA': 'warning',
-  MEMO: 'warning',
-  DAC: 'warning',
-  Celestia: 'warning',
-  External: 'warning',
-  FraxtalDA: 'warning',
-  RedstoneDA: 'warning',
-  XterioDA: 'warning',
-  EigenDA: 'warning',
-  NearDA: 'warning',
-}
-
-const LAYER_DESCRIPTION: Record<
-  DataAvailabilityLayer,
-  [string, string | null]
-> = {
-  'Ethereum (blobs)': [
-    'The data is posted to Ethereum as calldata.',
-    'In case posting is not possible for some reason, there is a fallback mechanism to Ethereum.',
-  ],
-  'Ethereum (blobs or calldata)': [
-    'The data is posted to Ethereum as calldata or blobs.',
-    'In case posting is not possible for some reason, there is a fallback mechanism to Ethereum.',
-  ],
-  'Ethereum (calldata)': [
-    'The data is posted to Ethereum as calldata.',
-    'In case posting is not possible for some reason, there is a fallback mechanism to Ethereum.',
-  ],
-  DAC: [
-    'The data is posted off chain and a Data Availability Committee (DAC) is responsible for protecting and supplying it.',
-    null,
-  ],
-  Celestia: ['The data is posted to Celestia.', null],
-  MEMO: ['The data is posted to MEMO (a decentralized storage).', null],
-  External: ['The data is posted off chain.', null],
-  'Mantle DA': [
-    'The data is posted to Mantle DA (contracts are forked from EigenDA with significant modifications, most importantly removal of slashing conditions).',
-    null,
-  ],
-  FraxtalDA: [
-    'The data is posted to FraxtalDA which is a separate data availability module developed by the Frax Core Team. Data is posted off chain, and only hashes of blob data are published on an on chain inbox.',
-    null,
-  ],
-  RedstoneDA: [
-    'The data is posted to RedstoneDA which is a separate data availability module developed by the Redstone team. Data is posted off chain, and only hashes of data are published on an on chain inbox.',
-    null,
-  ],
-  XterioDA: [
-    'The data is posted to XterioDA which is a separate data availability module developed by the Xterio team. Data is posted off chain, and only hashes of data are published on an on chain inbox.',
-    null,
-  ],
-  EigenDA: [
-    'The data is posted to EigenDA which is a separate data availability layer developed by the Eigenlayer team. Only hashes of data are published on an on chain inbox.',
-    null,
-  ],
-  NearDA: [
-    'The data is posted to NearDA which is a separate data availability layer on the Near protocol. Only hashes of data are published on an on chain inbox.',
-    null,
-  ],
-}
-
 function addSentimentToLayers(layers: DataAvailabilityLayer[]) {
-  const sentiment = MAIN_LAYER_SENTIMENT[layers[0]]
+  const sentiment = layers[0].sentiment
   return {
-    value: layers.join(' or '),
+    value: layers.map((l) => l.value).join(' or '),
+    secondLine: layers[0].secondLine,
     sentiment,
     description: layers
       .map((layer, i) => {
-        const [main, fallback] = LAYER_DESCRIPTION[layer]
         if (i === 0) {
-          return main
-        } else if (fallback) {
-          return fallback
+          return layer.description
+        }
+        if (layer.fallbackDescription) {
+          return layer.fallbackDescription
         }
         throw new Error(
           `Fallback is missing or too many layers! Revisit this function to fix!`,

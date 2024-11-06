@@ -8,6 +8,7 @@ import { utils } from 'ethers'
 import { Badge } from '../badges'
 
 import {
+  DA_LAYERS,
   DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
@@ -111,7 +112,7 @@ export const degate2: Layer2 = {
     ],
   },
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (calldata)'],
+    layers: [DA_LAYERS.ETH_CALLDATA],
     bridge: { type: 'Enshrined' },
     mode: DA_MODES.STATE_DIFFS,
   }),

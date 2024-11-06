@@ -1,5 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
+import { DA_LAYERS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
@@ -22,7 +23,7 @@ export const mantle: Layer2 = opStackL2({
   createdAt: new UnixTime(1680782525), // 2023-04-06T12:02:05Z
   badges: [Badge.DA.CustomDA],
   daProvider: {
-    name: 'Mantle DA',
+    layer: DA_LAYERS.MANTLE_DA,
     bridge: {
       type: 'Staked Operators',
       requiredSignatures: threshold,

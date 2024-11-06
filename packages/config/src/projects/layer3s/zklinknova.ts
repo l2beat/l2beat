@@ -7,6 +7,7 @@ import {
 import {
   CONTRACTS,
   DA_MODES,
+  DA_LAYERS,
   EXITS,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
@@ -483,7 +484,7 @@ export const zklinknova: Layer3 = {
     ],
   },
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['External'],
+    layers: [DA_LAYERS.EXTERNAL],
     bridge: { type: 'None' },
     mode: DA_MODES.STATE_DIFFS_COMPRESSED,
   }),

@@ -7,6 +7,7 @@ import {
 
 import {
   CONTRACTS,
+  DA_LAYERS,
   DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
@@ -115,7 +116,7 @@ export const reddioex: Layer2 = {
     */
   },
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['DAC'],
+    layers: [DA_LAYERS.DAC],
     bridge: {
       type: 'DAC Members',
       membersCount: committee.accounts.length,

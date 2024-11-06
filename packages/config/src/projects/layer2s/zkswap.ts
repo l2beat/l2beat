@@ -2,6 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
+  DA_LAYERS,
   DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
@@ -63,7 +64,7 @@ export const zkswap: Layer2 = {
     ],
   },
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (calldata)'],
+    layers: [DA_LAYERS.ETH_CALLDATA],
     bridge: { type: 'Enshrined' },
     mode: DA_MODES.STATE_DIFFS,
   }),

@@ -1,5 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { RISK_VIEW } from '../../common'
+import { DA_LAYERS, RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { Upgradeability, zkStackL2 } from './templates/zkStack'
@@ -56,7 +56,7 @@ export const cronoszkevm: Layer2 = zkStackL2({
   },
   diamondContract: discovery.getContract('CronosZkEvm'),
   daProvider: {
-    name: 'External',
+    layer: DA_LAYERS.EXTERNAL,
     bridge: {
       type: 'None',
     },

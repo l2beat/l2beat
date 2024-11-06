@@ -12,6 +12,7 @@ import {
 import { BigNumber } from 'ethers'
 import { formatEther } from 'ethers/lib/utils'
 import {
+  DA_LAYERS,
   DA_MODES,
   DERIVATION,
   EXITS,
@@ -340,7 +341,7 @@ export const optimism: Layer2 = {
     coingeckoPlatform: 'optimistic-ethereum',
   },
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (blobs or calldata)'],
+    layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
     bridge: { type: 'Enshrined' },
     mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
   }),

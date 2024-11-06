@@ -1,6 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
+  DA_LAYERS,
   DA_MODES,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
@@ -73,7 +74,7 @@ export const aztecconnect: Layer2 = {
     ],
   },
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (calldata)'],
+    layers: [DA_LAYERS.ETH_CALLDATA],
     bridge: { type: 'Enshrined' },
     mode: DA_MODES.STATE_DIFFS,
   }),

@@ -9,6 +9,7 @@ import {
 
 import {
   CONTRACTS,
+  DA_LAYERS,
   DA_MODES,
   DataAvailabilityBridge,
   DataAvailabilityLayer,
@@ -44,7 +45,7 @@ import {
 } from '../types'
 
 export interface DAProvider {
-  name: DataAvailabilityLayer
+  layer: DataAvailabilityLayer
   fallback?: DataAvailabilityLayer
   riskView: ScalingProjectRiskViewEntry
   technology: ScalingProjectTechnologyChoice
@@ -325,13 +326,13 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       daProvider !== undefined
         ? addSentimentToDataAvailability({
             layers: daProvider.fallback
-              ? [daProvider.name, daProvider.fallback]
-              : [daProvider.name],
+              ? [daProvider.layer, daProvider.fallback]
+              : [daProvider.layer],
             bridge: daProvider.bridge,
             mode: DA_MODES.STATE_DIFFS_COMPRESSED,
           })
         : addSentimentToDataAvailability({
-            layers: ['Ethereum (blobs or calldata)'],
+            layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
             bridge: { type: 'Enshrined' },
             mode: DA_MODES.STATE_DIFFS_COMPRESSED,
           }),

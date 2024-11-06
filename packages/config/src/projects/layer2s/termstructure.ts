@@ -1,6 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
+  DA_LAYERS,
   DA_MODES,
   addSentimentToDataAvailability,
 } from '../../common'
@@ -50,7 +51,7 @@ export const termstructure: Layer2 = {
   id: ProjectId('termstructure'),
   createdAt: new UnixTime(1709724246), // 2024-03-06T11:24:06Z
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (calldata)'],
+    layers: [DA_LAYERS.ETH_CALLDATA],
     bridge: { type: 'Enshrined' },
     mode: DA_MODES.STATE_DIFFS,
   }),

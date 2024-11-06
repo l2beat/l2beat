@@ -61,7 +61,6 @@ const daBridgeRisksColumn = columnHelper.display({
       />
     )
   },
-  enableSorting: false,
   meta: {
     align: 'center',
   },
@@ -133,24 +132,24 @@ const membersColumn = columnHelper.display({
   },
 })
 
-const challengeMechanismColumn = columnHelper.accessor('challengeMechanism', {
+const challengeMechanismColumn = columnHelper.display({
   header: 'Challenge\nmechanism',
   cell: (ctx) => (
     <TwoRowCell>
-      <TwoRowCell.First>{ctx.getValue()?.value ?? 'None'}</TwoRowCell.First>
+      <TwoRowCell.First>
+        {ctx.row.original.challengeMechanism?.value ?? 'None'}
+      </TwoRowCell.First>
     </TwoRowCell>
   ),
-  enableSorting: false,
   meta: {
     tooltip:
-      'Shows if there is a mechanism that enables users to dispute the availability or accuracy of data committed by the DA provider',
+      'Shows if there is a mechanism that  users to dispute the availability or accuracy of data committed by the DA provider',
   },
 })
 
-const fallbackColumn = columnHelper.accessor('fallback', {
+const fallbackColumn = columnHelper.display({
   header: 'Fallback',
-  cell: (ctx) => <DaFallbackCell entry={ctx.row.original} />,
-  enableSorting: false,
+  cell: (ctx) => <DaFallbackCell fallback={ctx.row.original.fallback} />,
   meta: {
     tooltip:
       'Is there a mechanism that allows data to be posted to an alternative DA layer in case of downtime or unavailability of the primary layer? If so, where is the data posted?',

@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { NEW_CRYPTOGRAPHY, RISK_VIEW } from '../../common'
+import { DA_LAYERS, NEW_CRYPTOGRAPHY, RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { polygonCDKStack } from './templates/polygonCDKStack'
@@ -64,7 +64,7 @@ export const wirex: Layer2 = polygonCDKStack({
   rpcUrl: 'https://pay-chain-rpc.wirexpaychain.com', // tested at over 10k requests per minute with no ratelimit (we default to 1500/min)
   discovery,
   daProvider: {
-    name: 'DAC',
+    layer: DA_LAYERS.DAC,
     bridge: {
       type: 'DAC Members',
       requiredSignatures: requiredSignaturesDAC,

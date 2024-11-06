@@ -38,12 +38,19 @@ export const columns = [
     cell: (ctx) => {
       const data = ctx.row.original.dataAvailability.layer
       return (
-        <SentimentText
-          sentiment={data.sentiment}
-          description={data.description}
-        >
-          {ctx.getValue()}
-        </SentimentText>
+        <TwoRowCell>
+          <TwoRowCell.First>
+            <SentimentText
+              sentiment={data.sentiment}
+              description={data.description}
+            >
+              {ctx.getValue()}
+            </SentimentText>
+          </TwoRowCell.First>
+          {data.secondLine && (
+            <TwoRowCell.Second>{data.secondLine}</TwoRowCell.Second>
+          )}
+        </TwoRowCell>
       )
     },
     sortDescFirst: true,
@@ -95,9 +102,11 @@ export const columns = [
           <TwoRowCell.First>
             {ctx.row.original.dataAvailability.mode.value}
           </TwoRowCell.First>
-          <TwoRowCell.Second>
-            {ctx.row.original.dataAvailability.mode.secondLine}
-          </TwoRowCell.Second>
+          {ctx.row.original.dataAvailability.mode.secondLine && (
+            <TwoRowCell.Second>
+              {ctx.row.original.dataAvailability.mode.secondLine}
+            </TwoRowCell.Second>
+          )}
         </TwoRowCell>
       )
     },

@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
+import { DA_LAYERS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
@@ -11,7 +12,7 @@ export const fraxtal: Layer2 = opStackL2({
   createdAt: new UnixTime(1708511622), // 2024-02-21T10:33:42Z
   badges: [Badge.DA.CustomDA, Badge.Infra.Superchain],
   daProvider: {
-    name: 'FraxtalDA',
+    layer: DA_LAYERS.FRAXTAL_DA,
     riskView: {
       value: 'External',
       description:

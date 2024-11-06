@@ -1,5 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { NEW_CRYPTOGRAPHY, RISK_VIEW } from '../../common'
+import { DA_LAYERS, NEW_CRYPTOGRAPHY, RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { polygonCDKStack } from './templates/polygonCDKStack'
@@ -34,7 +34,7 @@ export const xlayer: Layer2 = polygonCDKStack({
   discovery,
   badges: [Badge.DA.DAC, Badge.Infra.AggLayer],
   daProvider: {
-    name: 'DAC',
+    layer: DA_LAYERS.DAC,
     bridge: {
       type: 'DAC Members',
       requiredSignatures: requiredSignaturesDAC,

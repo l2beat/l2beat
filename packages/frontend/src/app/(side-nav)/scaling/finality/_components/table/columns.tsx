@@ -47,7 +47,9 @@ export const scalingFinalityColumns = [
       return (
         <TwoRowCell>
           <TwoRowCell.First>{daMode.value}</TwoRowCell.First>
-          <TwoRowCell.Second>{daMode.secondLine}</TwoRowCell.Second>
+          {daMode.secondLine && (
+            <TwoRowCell.Second>{daMode.secondLine}</TwoRowCell.Second>
+          )}
         </TwoRowCell>
       )
     },

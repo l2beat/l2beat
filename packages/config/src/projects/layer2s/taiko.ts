@@ -8,6 +8,7 @@ import { utils } from 'ethers'
 import {
   CONTRACTS,
   DATA_ON_CHAIN,
+  DA_LAYERS,
   DA_MODES,
   RISK_VIEW,
   addSentimentToDataAvailability,
@@ -94,7 +95,7 @@ export const taiko: Layer2 = {
   id: ProjectId('taiko'),
   createdAt: new UnixTime(1680768480), // 2023-04-06T08:08:00Z
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (blobs or calldata)'],
+    layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
     bridge: { type: 'Enshrined' },
     mode: DA_MODES.TRANSACTION_DATA,
   }),

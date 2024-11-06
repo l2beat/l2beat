@@ -8,6 +8,7 @@ import {
 
 import {
   CONTRACTS,
+  DA_LAYERS,
   DA_MODES,
   EXITS,
   NEW_CRYPTOGRAPHY,
@@ -237,7 +238,7 @@ export const paradex: Layer2 = {
     },
   },
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (blobs or calldata)'],
+    layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
     bridge: { type: 'Enshrined' },
     mode: DA_MODES.STATE_DIFFS,
   }),

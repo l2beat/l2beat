@@ -7,6 +7,7 @@ import {
 
 import {
   CONTRACTS,
+  DA_LAYERS,
   DA_MODES,
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
@@ -111,7 +112,7 @@ export const zkspace: Layer2 = {
     finality: 'coming soon',
   },
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (calldata)'],
+    layers: [DA_LAYERS.ETH_CALLDATA],
     bridge: { type: 'Enshrined' },
     mode: DA_MODES.STATE_DIFFS,
   }),

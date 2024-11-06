@@ -1,5 +1,6 @@
 import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
 
+import { DA_LAYERS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
@@ -46,7 +47,7 @@ export const redstone: Layer2 = opStackL2({
     activityDataSource: 'Blockchain RPC',
   },
   daProvider: {
-    name: 'RedstoneDA',
+    layer: DA_LAYERS.REDSTONE_DA,
     riskView: {
       value: 'External',
       description:

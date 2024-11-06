@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { NEW_CRYPTOGRAPHY, RISK_VIEW } from '../../common'
+import { DA_LAYERS, NEW_CRYPTOGRAPHY, RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { polygonCDKStack } from './templates/polygonCDKStack'
@@ -53,7 +53,7 @@ export const silicon: Layer2 = polygonCDKStack({
   rollupVerifierContract: discovery.getContract('Verifier'),
   isForcedBatchDisallowed,
   daProvider: {
-    name: 'DAC',
+    layer: DA_LAYERS.DAC,
     bridge: {
       type: 'DAC Members',
       requiredSignatures: requiredSignaturesDAC,

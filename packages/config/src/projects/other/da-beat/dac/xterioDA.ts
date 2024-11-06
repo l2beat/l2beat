@@ -4,6 +4,7 @@ import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
 import { DaChallengeMechanism } from '../types/DaChallengeMechanism'
 import { DaLayer } from '../types/DaLayer'
 import { xterioDABridge } from './bridges/xterioDABridge'
+import { DA_LAYERS } from '../../../../common'
 
 const discovery = new ProjectDiscovery('xterio')
 
@@ -26,7 +27,7 @@ export const xterioDA: DaLayer = {
   type: 'DaLayer',
   kind: 'No DAC',
   systemCategory: 'custom',
-  fallback: 'Ethereum (calldata)',
+  fallback: DA_LAYERS.ETH_CALLDATA,
   display: {
     name: 'XterioDA',
     slug: 'xterio',

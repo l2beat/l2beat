@@ -8,6 +8,7 @@ import {
 import {
   CONTRACTS,
   DA_MODES,
+  DA_LAYERS,
   EXITS,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
@@ -94,7 +95,7 @@ export const canvasconnect: Layer2 = {
     ],
   },
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['DAC'],
+    layers: [DA_LAYERS.DAC],
     bridge: {
       type: 'DAC Members',
       membersCount: committee.accounts.length,

@@ -11,6 +11,7 @@ import {
 import { BigNumber } from 'ethers'
 import { formatEther } from 'ethers/lib/utils'
 import {
+  DA_LAYERS,
   DA_MODES,
   DERIVATION,
   EXITS,
@@ -269,7 +270,7 @@ export const base: Layer2 = {
     coingeckoPlatform: 'base',
   },
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (blobs or calldata)'],
+    layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
     bridge: { type: 'Enshrined' },
     mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
   }),

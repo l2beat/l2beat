@@ -8,6 +8,7 @@ import {
 
 import {
   CONTRACTS,
+  DA_LAYERS,
   DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
@@ -213,7 +214,7 @@ export const kroma: Layer2 = {
     },
   },
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (blobs or calldata)'],
+    layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
     bridge: { type: 'Enshrined' },
     mode: DA_MODES.TRANSACTION_DATA,
   }),
