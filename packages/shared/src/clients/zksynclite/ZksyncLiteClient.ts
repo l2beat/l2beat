@@ -137,4 +137,8 @@ export class ZksyncLiteClient extends ClientCore {
 
     return { success: true }
   }
+
+  get chain() {
+    return 'zksync'
+  }
 }
