@@ -7,7 +7,7 @@ Generated with discovered.json: 0x8e49aa93da332bcc7872bd4ace5e1d57eb67e23e
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Standard orbit stack anytrust 1/2 optimium with naughty eoa admin (0.96 alienx similarity).
 
 ## Initial discovery
 
