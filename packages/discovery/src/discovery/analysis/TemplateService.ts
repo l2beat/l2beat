@@ -96,7 +96,7 @@ export class TemplateService {
   }
 
   getAllShapeHashes(): Record<string, Hash256[]> {
-    if(this.shapeHashes !== undefined) {
+    if (this.shapeHashes !== undefined) {
       return this.shapeHashes
     }
 
