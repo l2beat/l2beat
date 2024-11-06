@@ -64,7 +64,10 @@ import { api } from '~/trpc/react'
 
 const tokenFormSchema = z.object({
   networkId: nanoidSchema,
-  address: z.string().length(42),
+  address: z.union([
+    z.literal('native'),
+    z.string().length(42, "Must be 42 characters long or 'native'"),
+  ]),
   backedBy: z.array(
     z.object({
       sourceTokenId: nanoidSchema,
@@ -103,9 +106,9 @@ export function EditTokenPage({
     () =>
       token?.meta && {
         aggregate: token.meta.filter((m) => m.source === 'Aggregate'),
-        manual: token.meta.find((m) => m.source === 'Manual'),
+        overrides: token.meta.find((m) => m.source === 'Overrides'),
         rest: token.meta.filter(
-          (m) => m.source !== 'Aggregate' && m.source !== 'Manual',
+          (m) => m.source !== 'Aggregate' && m.source !== 'Overrides',
         ),
       },
     [token?.meta],
@@ -123,11 +126,11 @@ export function EditTokenPage({
             externalBridgeId: r.externalBridgeId ?? '',
           })) ?? [],
       customMeta: {
-        name: tokenMeta?.manual?.name ?? '',
-        symbol: tokenMeta?.manual?.symbol ?? '',
-        decimals: tokenMeta?.manual?.decimals?.toString() ?? '',
-        logoUrl: tokenMeta?.manual?.logoUrl ?? '',
-        contractName: tokenMeta?.manual?.contractName ?? '',
+        name: tokenMeta?.overrides?.name ?? '',
+        symbol: tokenMeta?.overrides?.symbol ?? '',
+        decimals: tokenMeta?.overrides?.decimals?.toString() ?? '',
+        logoUrl: tokenMeta?.overrides?.logoUrl ?? '',
+        contractName: tokenMeta?.overrides?.contractName ?? '',
       },
     },
     resolver: zodResolver(tokenFormSchema),
