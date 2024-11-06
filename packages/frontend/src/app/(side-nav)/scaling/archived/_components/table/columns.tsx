@@ -23,7 +23,7 @@ export const scalingArchivedColumns = [
       return (
         <PizzaRosetteCell
           values={risks}
-          isUnderReview={ctx.row.original.isUnderReview}
+          isUnderReview={ctx.row.original.underReviewStatus === 'config'}
         />
       )
     },

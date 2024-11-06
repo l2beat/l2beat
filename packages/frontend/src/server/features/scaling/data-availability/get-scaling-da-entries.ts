@@ -2,7 +2,10 @@ import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { groupByMainCategories } from '~/utils/group-by-main-categories'
-import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
+import {
+  type ProjectsChangeReport,
+  getProjectsChangeReport,
+} from '../../projects-change-report/get-projects-change-report'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
@@ -13,21 +16,19 @@ export async function getScalingDaEntries() {
   const activeProjects = [...layer2s, ...layer3s].filter(
     (p) => !p.isUpcoming && !(p.type === 'layer2' && p.isArchived),
   )
-  const [tvl, projectsVerificationStatuses, implementationChangeReport] =
+  const [tvl, projectsVerificationStatuses, projectsChangeReport] =
     await Promise.all([
       getProjectsLatestTvlUsd(),
       getProjectsVerificationStatuses(),
-      getImplementationChangeReport(),
+      getProjectsChangeReport(),
     ])
 
   const entries = activeProjects
     .map((p) => {
-      const hasImplementationChanged =
-        !!implementationChangeReport.projects[p.id.toString()]
       const isVerified = !!projectsVerificationStatuses[p.id.toString()]
       return getScalingDataAvailabilityEntry(
         p,
-        hasImplementationChanged,
+        projectsChangeReport,
         isVerified,
       )
     })
@@ -45,14 +46,22 @@ export async function getScalingDaEntries() {
 
 function getScalingDataAvailabilityEntry(
   project: Layer2 | Layer3,
-  hasImplementationChanged: boolean,
+  projectsChangeReport: ProjectsChangeReport,
   isVerified: boolean,
 ) {
   if (!project.dataAvailability) return
 
   return {
     entryType: 'data-availability' as const,
-    ...getCommonScalingEntry({ project, isVerified, hasImplementationChanged }),
+    ...getCommonScalingEntry({
+      project,
+      isVerified,
+      hasImplementationChanged: projectsChangeReport.hasImplementationChanged(
+        project.id,
+      ),
+      hasHighSeverityFieldChanged:
+        projectsChangeReport.hasHighSeverityFieldChanged(project.id),
+    }),
     dataAvailability: {
       layer: project.dataAvailability.layer,
       bridge: project.dataAvailability.bridge,

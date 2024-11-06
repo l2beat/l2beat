@@ -16,8 +16,7 @@ export const All: Story = {
       shortName: 'AFP',
       isVerified: false,
       redWarning: 'Red warning message',
-      showProjectUnderReview: true,
-      hasImplementationChanged: true,
+      underReviewStatus: 'config',
       data: {
         syncStatus: {
           isSynced: false,

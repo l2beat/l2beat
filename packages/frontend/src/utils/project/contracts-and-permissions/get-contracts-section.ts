@@ -14,12 +14,11 @@ import {
   assert,
   type ContractsVerificationStatuses,
   type EthereumAddress,
-  type ImplementationChangeReportApiResponse,
-  type ImplementationChangeReportProjectData,
   type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
 import { concat } from 'lodash'
 import { type ProjectSectionProps } from '~/components/projects/sections/types'
+import { type ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
@@ -61,19 +60,18 @@ export function getContractsSection(
   projectParams: ProjectParams,
   contractsVerificationStatuses: ContractsVerificationStatuses,
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
-  implementationChange: ImplementationChangeReportApiResponse | undefined,
+  projectsChangeReport: ProjectsChangeReport,
 ): ContractsSection | undefined {
   if (projectParams.contracts.addresses.length === 0) {
     return undefined
   }
+  const projectChangeReport = projectsChangeReport?.projects[projectParams.id]
 
   const contracts = projectParams.contracts.addresses.map((contract) => {
     const isUnverified = isContractUnverified(
       contract,
       contractsVerificationStatuses,
     )
-    const implementationChangeForProject =
-      implementationChange?.projects[projectParams.id]
 
     return makeTechnologyContract(
       contract,
@@ -81,7 +79,7 @@ export function getContractsSection(
       isUnverified,
       contractsVerificationStatuses,
       manuallyVerifiedContracts,
-      implementationChangeForProject,
+      projectChangeReport,
     )
   })
 
@@ -95,15 +93,14 @@ export function getContractsSection(
               contract,
               contractsVerificationStatuses,
             )
-            const implementationChangeForProject =
-              implementationChange?.projects[projectParams.id]
+
             return makeTechnologyContract(
               contract,
               projectParams,
               isUnverified,
               contractsVerificationStatuses,
               manuallyVerifiedContracts,
-              implementationChangeForProject,
+              projectChangeReport,
             )
           }),
         ]
@@ -121,8 +118,6 @@ export function getContractsSection(
           contractsVerificationStatuses,
         )
         const contract = escrowToProjectContract(escrow)
-        const implementationChangeForProject =
-          implementationChange?.projects[projectParams.id]
 
         return makeTechnologyContract(
           contract,
@@ -130,7 +125,7 @@ export function getContractsSection(
           isUnverified,
           contractsVerificationStatuses,
           manuallyVerifiedContracts,
-          implementationChangeForProject,
+          projectChangeReport,
           true,
         )
       }) ?? []
@@ -183,7 +178,7 @@ function makeTechnologyContract(
   isUnverified: boolean,
   contractsVerificationStatuses: ContractsVerificationStatuses,
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
-  implementationChange: ImplementationChangeReportProjectData | undefined,
+  projectChangeReport: ProjectsChangeReport['projects'][string] | undefined,
   isEscrow?: boolean,
 ): TechnologyContract {
   const chain = getChain(projectParams, item)
@@ -267,14 +262,15 @@ function makeTechnologyContract(
     }
   }
 
-  const changedAddresses = (
-    implementationChange !== undefined
-      ? Object.values(implementationChange)
-      : []
+  const changes = (
+    projectChangeReport !== undefined ? Object.values(projectChangeReport) : []
   ).flat()
+  const changedAddresses = changes.flatMap((c) =>
+    c.implementations.map((i) => i.containingContract.toString()),
+  )
 
-  const implementationHasChanged = changedAddresses.some((ca) =>
-    addresses.map((a) => a.address).includes(ca.containingContract.toString()),
+  const implementationHasChanged = changedAddresses.some((changedAddress) =>
+    addresses.map((a) => a.address).includes(changedAddress),
   )
 
   const additionalReferences: Reference[] = []
