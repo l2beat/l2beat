@@ -4345,6 +4345,7 @@
       "address": "0xc518A88c67CECA8B3f24c4562CB71deeB2AF86B7",
       "source": "external",
       "supply": "totalSupply",
+      "excludeFromTotal": true, // locking oft adapters on L2s
       "bridgedUsing": {
         "bridges": [
           {
