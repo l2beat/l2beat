@@ -9,6 +9,7 @@ import {
 
 import {
   CONTRACTS,
+  DA_MODES,
   DataAvailabilityBridge,
   DataAvailabilityLayer,
   EXITS,
@@ -327,12 +328,12 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
               ? [daProvider.name, daProvider.fallback]
               : [daProvider.name],
             bridge: daProvider.bridge,
-            mode: 'State diffs (compressed)',
+            mode: DA_MODES.STATE_DIFFS_COMPRESSED,
           })
         : addSentimentToDataAvailability({
             layers: ['Ethereum (blobs or calldata)'],
             bridge: { type: 'Enshrined' },
-            mode: 'State diffs (compressed)',
+            mode: DA_MODES.STATE_DIFFS_COMPRESSED,
           }),
     riskView: {
       stateValidation: {

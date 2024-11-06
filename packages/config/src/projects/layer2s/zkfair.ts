@@ -7,6 +7,7 @@ import {
 
 import {
   CONTRACTS,
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
@@ -151,7 +152,7 @@ export const zkfair: Layer2 = {
   dataAvailability: addSentimentToDataAvailability({
     layers: ['DAC'],
     bridge: { type: 'DAC Members', requiredSignatures, membersCount },
-    mode: 'State diffs',
+    mode: DA_MODES.STATE_DIFFS,
   }),
   riskView: {
     stateValidation: {

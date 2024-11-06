@@ -13,6 +13,7 @@ import {
 import {
   CONTRACTS,
   ChainConfig,
+  DA_MODES,
   DataAvailabilityBridge,
   DataAvailabilityLayer,
   EXITS,
@@ -314,12 +315,12 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
               ? [daProvider.name, daProvider.fallback]
               : [daProvider.name],
             bridge: daProvider.bridge,
-            mode: 'Transaction data',
+            mode: DA_MODES.TRANSACTION_DATA,
           })
         : addSentimentToDataAvailability({
             layers: ['Ethereum (calldata)'],
             bridge: { type: 'Enshrined' },
-            mode: 'Transaction data',
+            mode: DA_MODES.TRANSACTION_DATA,
           }),
     riskView: {
       stateValidation: {

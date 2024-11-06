@@ -8,6 +8,7 @@ import { Badge } from '../badges'
 
 import {
   CONTRACTS,
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
@@ -180,7 +181,7 @@ export const dydx: Layer2 = {
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (calldata)'],
     bridge: { type: 'Enshrined' },
-    mode: 'State diffs',
+    mode: DA_MODES.STATE_DIFFS,
   }),
   riskView: {
     stateValidation: {

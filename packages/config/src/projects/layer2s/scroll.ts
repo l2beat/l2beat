@@ -7,6 +7,7 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
@@ -317,7 +318,7 @@ export const scroll: Layer2 = {
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (blobs or calldata)'],
     bridge: { type: 'Enshrined' },
-    mode: 'Transaction data (compressed)',
+    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
   }),
   riskView: {
     stateValidation: {

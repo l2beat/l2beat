@@ -12,6 +12,7 @@ import {
 
 import {
   CONTRACTS,
+  DA_MODES,
   DataAvailabilityBridge,
   DataAvailabilityLayer,
   EXITS,
@@ -534,7 +535,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
               ? [daProvider.name, daProvider.fallback]
               : [daProvider.name],
             bridge: daProvider.bridge,
-            mode: 'Transaction data (compressed)',
+            mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
           })
         : addSentimentToDataAvailability({
             layers: [
@@ -543,7 +544,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
                 : 'Ethereum (calldata)',
             ],
             bridge: { type: 'Enshrined' },
-            mode: 'Transaction data (compressed)',
+            mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
           }),
     riskView: {
       stateValidation: {
@@ -839,7 +840,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
               ? [daProvider.name, daProvider.fallback]
               : [daProvider.name],
             bridge: daProvider.bridge,
-            mode: 'Transaction data (compressed)',
+            mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
           })
         : addSentimentToDataAvailability({
             layers: [
@@ -848,7 +849,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
                 : 'Ethereum (calldata)',
             ],
             bridge: { type: 'Enshrined' },
-            mode: 'Transaction data (compressed)',
+            mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
           }),
     config: {
       associatedTokens: templateVars.associatedTokens,

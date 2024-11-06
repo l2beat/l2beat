@@ -6,6 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
@@ -484,7 +485,7 @@ export const zklinknova: Layer3 = {
   dataAvailability: addSentimentToDataAvailability({
     layers: ['External'],
     bridge: { type: 'None' },
-    mode: 'State diffs (compressed)',
+    mode: DA_MODES.STATE_DIFFS_COMPRESSED,
   }),
   contracts: {
     addresses: [

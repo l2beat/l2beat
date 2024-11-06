@@ -1,5 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
@@ -144,7 +145,7 @@ export const bugbuster: Layer3 = {
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (calldata)'],
     bridge: { type: 'Enshrined' },
-    mode: 'Transaction data',
+    mode: DA_MODES.TRANSACTION_DATA,
   }),
   riskView: {
     stateValidation: {

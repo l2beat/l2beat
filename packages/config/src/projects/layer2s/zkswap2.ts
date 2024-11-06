@@ -2,6 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
+  DA_MODES,
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
   addSentimentToDataAvailability,
@@ -60,7 +61,7 @@ export const zkswap2: Layer2 = {
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (calldata)'],
     bridge: { type: 'Enshrined' },
-    mode: 'State diffs',
+    mode: DA_MODES.STATE_DIFFS,
   }),
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_SN,

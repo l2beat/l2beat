@@ -8,6 +8,7 @@ import { utils } from 'ethers'
 import {
   CONTRACTS,
   DATA_ON_CHAIN,
+  DA_MODES,
   RISK_VIEW,
   addSentimentToDataAvailability,
 } from '../../common'
@@ -95,7 +96,7 @@ export const taiko: Layer2 = {
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (blobs or calldata)'],
     bridge: { type: 'Enshrined' },
-    mode: 'Transaction data',
+    mode: DA_MODES.TRANSACTION_DATA,
   }),
   badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs, Badge.Other.BasedSequencing],
   display: {

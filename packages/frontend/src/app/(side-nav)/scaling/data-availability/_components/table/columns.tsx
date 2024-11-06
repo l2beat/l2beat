@@ -1,5 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { SentimentText } from '~/components/sentiment-text'
+import { TwoRowCell } from '~/components/table/cells/two-row-cell'
 import {
   TypeCell,
   TypeExplanationTooltip,
@@ -9,6 +10,7 @@ import {
   sortBySentiment,
   sortBySentimentAndAlphabetically,
 } from '~/components/table/sorting/functions/sort-by-sentiment'
+import { sortTwoRowCell } from '~/components/table/sorting/functions/sort-two-row-cell'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
 
@@ -85,7 +87,24 @@ export const columns = [
       return (bridgeA?.value ?? '').localeCompare(bridgeB?.value ?? '')
     },
   }),
-  columnHelper.accessor('dataAvailability.mode', {
+  columnHelper.accessor('dataAvailability.mode.value', {
     header: 'Type of data',
+    cell: (ctx) => {
+      return (
+        <TwoRowCell>
+          <TwoRowCell.First>
+            {ctx.row.original.dataAvailability.mode.value}
+          </TwoRowCell.First>
+          <TwoRowCell.Second>
+            {ctx.row.original.dataAvailability.mode.secondLine}
+          </TwoRowCell.Second>
+        </TwoRowCell>
+      )
+    },
+    sortingFn: (a, b) =>
+      sortTwoRowCell(
+        a.original.dataAvailability.mode,
+        b.original.dataAvailability.mode,
+      ),
   }),
 ]

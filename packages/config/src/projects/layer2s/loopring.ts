@@ -7,6 +7,7 @@ import {
 
 import {
   CONTRACTS,
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
@@ -155,7 +156,7 @@ export const loopring: Layer2 = {
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (calldata)'],
     bridge: { type: 'Enshrined' },
-    mode: 'State diffs',
+    mode: DA_MODES.STATE_DIFFS,
   }),
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_SN,

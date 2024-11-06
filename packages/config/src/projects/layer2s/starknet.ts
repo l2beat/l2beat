@@ -10,6 +10,7 @@ import {
 
 import {
   CONTRACTS,
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
@@ -744,7 +745,7 @@ export const starknet: Layer2 = {
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (blobs or calldata)'],
     bridge: { type: 'Enshrined' },
-    mode: 'State diffs',
+    mode: DA_MODES.STATE_DIFFS,
   }),
   riskView: {
     stateValidation: {

@@ -6,6 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import { formatEther } from 'ethers/lib/utils'
 import {
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
@@ -42,7 +43,7 @@ export const fuel: Layer2 = {
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (blobs)'],
     bridge: { type: 'Enshrined' },
-    mode: 'Transaction data (compressed)',
+    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
   }),
   display: {
     name: 'Fuel Ignition',

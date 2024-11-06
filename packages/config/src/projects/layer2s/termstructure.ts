@@ -1,5 +1,9 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { CONTRACTS, addSentimentToDataAvailability } from '../../common'
+import {
+  CONTRACTS,
+  DA_MODES,
+  addSentimentToDataAvailability,
+} from '../../common'
 import { EXITS } from '../../common/exits'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
 import { NEW_CRYPTOGRAPHY } from '../../common/newCryptography'
@@ -48,7 +52,7 @@ export const termstructure: Layer2 = {
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (calldata)'],
     bridge: { type: 'Enshrined' },
-    mode: 'State diffs',
+    mode: DA_MODES.STATE_DIFFS,
   }),
   badges: [
     Badge.VM.AppChain,

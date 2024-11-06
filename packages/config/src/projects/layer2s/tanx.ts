@@ -7,6 +7,7 @@ import {
 
 import {
   CONTRACTS,
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   NUGGETS,
@@ -110,7 +111,7 @@ export const tanx: Layer2 = {
       membersCount: committee.accounts.length,
       requiredSignatures: committee.minSigners,
     },
-    mode: 'State diffs',
+    mode: DA_MODES.STATE_DIFFS,
   }),
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,

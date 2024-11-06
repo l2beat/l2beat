@@ -8,6 +8,7 @@ import {
 
 import {
   CONTRACTS,
+  DA_MODES,
   EXITS,
   NEW_CRYPTOGRAPHY,
   NUGGETS,
@@ -238,7 +239,7 @@ export const paradex: Layer2 = {
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (blobs or calldata)'],
     bridge: { type: 'Enshrined' },
-    mode: 'State diffs',
+    mode: DA_MODES.STATE_DIFFS,
   }),
   riskView: {
     stateValidation: {

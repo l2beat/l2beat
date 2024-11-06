@@ -9,6 +9,7 @@ import { unionBy } from 'lodash'
 import {
   CONTRACTS,
   ChainConfig,
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   KnowledgeNugget,
@@ -681,7 +682,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
           return addSentimentToDataAvailability({
             layers: ['DAC'],
             bridge: { type: 'DAC Members', membersCount, requiredSignatures },
-            mode: 'Transaction data (compressed)',
+            mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
           })
         })()
       : addSentimentToDataAvailability({
@@ -691,7 +692,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
               : 'Ethereum (calldata)',
           ],
           bridge: { type: 'Enshrined' },
-          mode: 'Transaction data (compressed)',
+          mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
         }),
     stackedRiskView: getStackedRisks(),
     riskView,
@@ -846,7 +847,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           return addSentimentToDataAvailability({
             layers: ['DAC'],
             bridge: { type: 'DAC Members', membersCount, requiredSignatures },
-            mode: 'Transaction data (compressed)',
+            mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
           })
         })()
       : addSentimentToDataAvailability({
@@ -856,7 +857,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
               : 'Ethereum (calldata)',
           ],
           bridge: { type: 'Enshrined' },
-          mode: 'Transaction data (compressed)',
+          mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
         }),
     riskView: {
       stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
