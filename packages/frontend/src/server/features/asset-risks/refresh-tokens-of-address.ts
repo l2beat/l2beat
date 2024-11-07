@@ -71,13 +71,24 @@ export async function refreshTokensOfAddress(address: Address) {
             })
 
             const blockNumber = await client.getBlockNumber()
+            const tokens = new Set<TokenRecord>()
+
+            const nativeTokenRecords =
+              tokensByNetwork[network.id]?.filter(
+                (token) => token.address === 'native',
+              ) ?? []
+
+            for (const token of nativeTokenRecords) {
+              tokens.add(token)
+            }
+
             const logs = await getAllLogs(
               client as unknown as PublicClient,
               address,
               0n,
               blockNumber,
             )
-            const tokens = new Set<TokenRecord>()
+
             for (const log of logs) {
               const token = tokensByNetwork[network.id]?.find(
                 (token) => token.address === log.address,

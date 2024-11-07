@@ -61,9 +61,12 @@ export const assetRisksRouter = router({
       const externalBridges = await db.externalBridge.getAll()
       const bridges = await db.tokenBridge.getAll()
       const balances = await db.assetRisksBalance.getAllForUser(user.id)
-      const tokens = await db.token.getByIds(balances.map((b) => b.tokenId))
-      // TODO: Fetch only needed token meta
-      const tokenMeta = await db.tokenMeta.getBySource('Aggregate')
+      const tokenIds = balances.map((b) => b.tokenId)
+      const tokens = await db.token.getByIds(tokenIds)
+      const tokenMeta = await db.tokenMeta.getByTokenIdsAndSource(
+        tokenIds,
+        'Aggregate',
+      )
       // TODO: Fetch info about prices / etc.
 
       const chains = networks.reduce<
