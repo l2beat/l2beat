@@ -431,6 +431,7 @@ describe(pickClosestValues.name, () => {
     const timestamps = getHourlyTimestamps(START, START.add(2, 'hours'))
 
     expect(pickClosestValues(prices, timestamps)).toEqual([
+      { value: 1000, timestamp: START },
       {
         value: 1100,
         timestamp: START.add(1, 'hours'),
