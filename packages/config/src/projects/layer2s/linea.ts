@@ -11,6 +11,9 @@ import { Badge } from '../badges'
 
 import {
   CONTRACTS,
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
@@ -295,9 +298,9 @@ export const linea: Layer2 = {
     coingeckoPlatform: 'linea',
   },
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (blobs or calldata)'],
-    bridge: { type: 'Enshrined' },
-    mode: 'Transaction data (compressed)',
+    layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
   }),
   riskView: {
     stateValidation: {

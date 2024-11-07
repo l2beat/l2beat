@@ -234,7 +234,7 @@ export function encodeErc20TotalSupplyQuery(
   }
 }
 
-export function decodeErc20TotalSupplyQuery(response: Bytes): bigint {
+function decodeErc20TotalSupplyQuery(response: Bytes): bigint {
   const [value] = erc20Interface.decodeFunctionResult(
     'totalSupply',
     response.toString(),

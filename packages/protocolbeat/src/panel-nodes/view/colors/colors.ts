@@ -35,7 +35,7 @@ export function getColor({
   return SELECTABLE_COLORS[color - 1] ?? { color: 'white', isDark: false }
 }
 
-export function getChainColor(chain: string): {
+function getChainColor(chain: string): {
   color: string
   isDark: boolean
 } {
@@ -68,7 +68,7 @@ export function getChainColor(chain: string): {
   }
 }
 
-export function stringHash(str: string): number {
+function stringHash(str: string): number {
   let hash = 0x811c9dc5
   const fnvPrime = 0x01000193
 

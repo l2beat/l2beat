@@ -26,6 +26,7 @@ import { type ScalingRiskEntry } from '~/server/features/scaling/risks/get-scali
 import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
 import { type ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/get-scaling-upcoming-entries'
+import { getDaLayerValue } from '../data-availability/_components/scaling-da-filters'
 
 export type ScalingFilterContextValue = {
   rollupsOnly: boolean
@@ -38,7 +39,7 @@ export type ScalingFilterContextValue = {
   badgeRaaS?: BadgeId
 }
 
-export type MutableScalingFilterContextValue = ScalingFilterContextValue & {
+type MutableScalingFilterContextValue = ScalingFilterContextValue & {
   isEmpty: boolean
   set: (value: Partial<ScalingFilterContextValue>) => void
   reset: () => void
@@ -124,8 +125,10 @@ export function useScalingFilter() {
         scalingFilters.daLayer !== undefined
           ? 'dataAvailability' in entry &&
             entry.dataAvailability &&
-            'layer' in entry.dataAvailability
-            ? entry.dataAvailability.layer?.value === scalingFilters.daLayer
+            'layer' in entry.dataAvailability &&
+            entry.dataAvailability.layer
+            ? getDaLayerValue(entry.dataAvailability.layer) ===
+              scalingFilters.daLayer
             : false
           : undefined,
         // Badges

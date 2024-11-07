@@ -42,7 +42,7 @@ export function getDaBridgeRisks(daBridge: DaBridge) {
   }
 }
 
-export function getEconomicSecurity(
+function getEconomicSecurity(
   daLayer: DaLayer,
   totalValueSecured: number,
   economicSecurity?: EconomicSecurityData,

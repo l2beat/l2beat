@@ -39,7 +39,7 @@ const PANELS = {
   preview: PreviewPanel,
 }
 
-export function Panel(props: { kind: PanelId }) {
+function Panel(props: { kind: PanelId }) {
   const Component = PANELS[props.kind]
   return <Component />
 }

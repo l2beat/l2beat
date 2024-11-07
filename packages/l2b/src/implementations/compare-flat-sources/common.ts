@@ -23,16 +23,6 @@ interface FileId {
   path: string
 }
 
-export function needsToBe(
-  expression: boolean,
-  message: string,
-): asserts expression {
-  if (!expression) {
-    console.log(`${chalk.red('ERROR')}: ${message}`)
-    process.exit(1)
-  }
-}
-
 export async function computeStackSimilarity(
   logger: CliLogger,
   discoveryPath: string,

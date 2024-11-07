@@ -9,6 +9,9 @@ import { unionBy } from 'lodash'
 import {
   CONTRACTS,
   ChainConfig,
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   KnowledgeNugget,
@@ -47,7 +50,7 @@ import {
 import { mergeBadges } from './utils'
 
 const ETHEREUM_EXPLORER_URL = 'https://etherscan.io/address/{0}#code'
-export const EVM_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
+const EVM_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
   {
     name: 'EVM compatible smart contracts are supported',
     description:
@@ -91,7 +94,7 @@ export const WASMVM_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
   },
 ]
 
-export interface OrbitStackConfigCommon {
+interface OrbitStackConfigCommon {
   createdAt: UnixTime
   discovery: ProjectDiscovery
   stateValidationImage?: string
@@ -265,7 +268,7 @@ function defaultStateValidation(
   }
 }
 
-export function orbitStackCommon(
+function orbitStackCommon(
   templateVars: OrbitStackConfigCommon,
   explorerLinkFormat: string,
   blockNumberOpcodeTimeSeconds: number,
@@ -679,19 +682,22 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
           const { membersCount, requiredSignatures } = DAC
 
           return addSentimentToDataAvailability({
-            layers: ['DAC'],
-            bridge: { type: 'DAC Members', membersCount, requiredSignatures },
-            mode: 'Transaction data (compressed)',
+            layers: [DA_LAYERS.DAC],
+            bridge: DA_BRIDGES.DAC_MEMBERS({
+              membersCount,
+              requiredSignatures,
+            }),
+            mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
           })
         })()
       : addSentimentToDataAvailability({
           layers: [
             templateVars.usesBlobs
-              ? 'Ethereum (blobs or calldata)'
-              : 'Ethereum (calldata)',
+              ? DA_LAYERS.ETH_BLOBS_OR_CALLLDATA
+              : DA_LAYERS.ETH_CALLDATA,
           ],
-          bridge: { type: 'Enshrined' },
-          mode: 'Transaction data (compressed)',
+          bridge: DA_BRIDGES.ENSHRINED,
+          mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
         }),
     stackedRiskView: getStackedRisks(),
     riskView,
@@ -844,19 +850,22 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           const { membersCount, requiredSignatures } = DAC
 
           return addSentimentToDataAvailability({
-            layers: ['DAC'],
-            bridge: { type: 'DAC Members', membersCount, requiredSignatures },
-            mode: 'Transaction data (compressed)',
+            layers: [DA_LAYERS.DAC],
+            bridge: DA_BRIDGES.DAC_MEMBERS({
+              membersCount,
+              requiredSignatures,
+            }),
+            mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
           })
         })()
       : addSentimentToDataAvailability({
           layers: [
             templateVars.usesBlobs
-              ? 'Ethereum (blobs or calldata)'
-              : 'Ethereum (calldata)',
+              ? DA_LAYERS.ETH_BLOBS_OR_CALLLDATA
+              : DA_LAYERS.ETH_CALLDATA,
           ],
-          bridge: { type: 'Enshrined' },
-          mode: 'Transaction data (compressed)',
+          bridge: DA_BRIDGES.ENSHRINED,
+          mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
         }),
     riskView: {
       stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {

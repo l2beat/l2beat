@@ -58,7 +58,7 @@ export interface ExtendedTemplate {
   templateHash: Hash256
 }
 
-export interface AnalyzedEOA {
+interface AnalyzedEOA {
   type: 'EOA'
   name?: string
   address: EthereumAddress

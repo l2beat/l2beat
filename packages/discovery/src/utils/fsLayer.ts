@@ -1,6 +1,5 @@
 import { readdirSync } from 'fs'
-import { basename, dirname, resolve } from 'path'
-import { readdir } from 'fs/promises'
+import { basename, dirname } from 'path'
 
 // NOTE(radomski): On some file systems, mainly Apple's AFS and Microsoft's
 // NTFS the path names are not case sensitive. So while you can have a file
@@ -18,16 +17,4 @@ export function fileExistsCaseSensitive(path: string): boolean {
   }
 
   return true
-}
-
-export async function listFilesRecursively(path: string): Promise<string[]> {
-  const entries = await readdir(path, { withFileTypes: true })
-  const files = await Promise.all(
-    entries.map((entry) => {
-      const resolved = resolve(path, entry.name)
-      return entry.isDirectory() ? listFilesRecursively(resolved) : resolved
-    }),
-  )
-
-  return files.flat()
 }

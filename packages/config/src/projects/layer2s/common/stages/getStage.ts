@@ -1,7 +1,6 @@
 import { createGetStage, isSatisfied } from './stage'
 import { ChecklistTemplate } from './types'
 
-export type StageChecklist = Parameters<typeof getStage>[0]
 interface GetStageOptions {
   rollupNodeLink?: string
 }

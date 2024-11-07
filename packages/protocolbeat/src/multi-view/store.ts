@@ -6,7 +6,7 @@ export type PanelId = (typeof PANEL_IDS)[number]
 
 export type Panel = { id: PanelId; size: number }
 
-export type State = {
+type State = {
   mouse: { x: number; y: number }
   panels: Panel[]
   layouts: Panel[][]
@@ -16,7 +16,7 @@ export type State = {
   pickedUp: PanelId | undefined
 }
 
-export type Action = {
+type Action = {
   changePanel: (from: PanelId, to: PanelId) => void
   addPanel: () => void
   setActivePanel: (id: PanelId | undefined) => void

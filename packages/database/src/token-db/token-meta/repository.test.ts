@@ -42,7 +42,7 @@ describeDatabase(TokenMetaRepository.name, (database) => {
     it('returns all token meta records', async () => {
       const record1 = mock({
         tokenId: token[0],
-        source: 'test',
+        source: 'test1',
         externalId: 'ext1',
         name: 'Token 1',
         symbol: 'TKN1',
@@ -52,7 +52,7 @@ describeDatabase(TokenMetaRepository.name, (database) => {
       })
       const record2 = mock({
         tokenId: token[1],
-        source: 'test',
+        source: 'test2',
         externalId: 'ext2',
         name: 'Token 2',
         symbol: 'TKN2',
@@ -65,9 +65,21 @@ describeDatabase(TokenMetaRepository.name, (database) => {
       await repository.upsert(record2)
 
       const result = await repository.getAll()
-      expect(result).toHaveLength(2)
-      expect(result[0]).toEqual(mockOutput(record1))
-      expect(result[1]).toEqual(mockOutput(record2))
+      expect(result).toHaveLength(4)
+      expect(result).toEqualUnsorted([
+        mockOutput(record1),
+        mockOutput({
+          ...record1,
+          source: 'Aggregate',
+          externalId: '',
+        }),
+        mockOutput(record2),
+        mockOutput({
+          ...record2,
+          source: 'Aggregate',
+          externalId: '',
+        }),
+      ])
     })
   })
 
@@ -98,9 +110,16 @@ describeDatabase(TokenMetaRepository.name, (database) => {
       await repository.upsert(record2)
 
       const result = await repository.getByTokenId(token[0])
-      expect(result).toHaveLength(2)
-      expect(result[0]).toEqual(mockOutput(record1))
-      expect(result[1]).toEqual(mockOutput(record2))
+      expect(result).toHaveLength(3)
+      expect(result).toEqualUnsorted([
+        mockOutput(record1),
+        mockOutput(record2),
+        mockOutput({
+          ...record1,
+          source: 'Aggregate',
+          externalId: '',
+        }),
+      ])
     })
   })
 
@@ -120,8 +139,15 @@ describeDatabase(TokenMetaRepository.name, (database) => {
       await repository.upsert(record)
 
       const inserted = await repository.getByTokenId(token[0])
-      expect(inserted).toHaveLength(1)
-      expect(inserted[0]).toEqual(mockOutput(record))
+      expect(inserted).toHaveLength(2)
+      expect(inserted).toEqualUnsorted([
+        mockOutput(record),
+        mockOutput({
+          ...record,
+          source: 'Aggregate',
+          externalId: '',
+        }),
+      ])
     })
 
     it('updates an existing record', async () => {
@@ -147,8 +173,16 @@ describeDatabase(TokenMetaRepository.name, (database) => {
       await repository.upsert(updatedRecord)
 
       const updated = await repository.getByTokenId(token[0])
-      expect(updated).toHaveLength(1)
-      expect(updated[0]).toEqual(mockOutput(updatedRecord))
+
+      expect(updated).toHaveLength(2)
+      expect(updated).toEqualUnsorted([
+        mockOutput(updatedRecord),
+        mockOutput({
+          ...updatedRecord,
+          source: 'Aggregate',
+          externalId: '',
+        }),
+      ])
     })
   })
 
@@ -181,9 +215,21 @@ describeDatabase(TokenMetaRepository.name, (database) => {
       expect(result).toEqual(2)
 
       const inserted = await repository.getAll()
-      expect(inserted).toHaveLength(2)
-      expect(inserted[0]).toEqual(mockOutput(records[0]))
-      expect(inserted[1]).toEqual(mockOutput(records[1]))
+      expect(inserted).toHaveLength(4)
+      expect(inserted).toEqualUnsorted([
+        mockOutput(records[0]),
+        mockOutput({
+          ...records[0],
+          source: 'Aggregate',
+          externalId: '',
+        }),
+        mockOutput(records[1]),
+        mockOutput({
+          ...records[1],
+          source: 'Aggregate',
+          externalId: '',
+        }),
+      ])
     })
 
     it('updates existing records and inserts new ones', async () => {
@@ -221,9 +267,21 @@ describeDatabase(TokenMetaRepository.name, (database) => {
       await repository.upsertMany(updatedAndNewRecords)
 
       const finalRecords = await repository.getAll()
-      expect(finalRecords).toHaveLength(2)
-      expect(finalRecords[0]).toEqual(mockOutput(updatedAndNewRecords[0]))
-      expect(finalRecords[1]).toEqual(mockOutput(updatedAndNewRecords[1]))
+      expect(finalRecords).toHaveLength(4)
+      expect(finalRecords).toEqualUnsorted([
+        mockOutput(updatedAndNewRecords[0]),
+        mockOutput({
+          ...updatedAndNewRecords[0],
+          source: 'Aggregate',
+          externalId: '',
+        }),
+        mockOutput(updatedAndNewRecords[1]),
+        mockOutput({
+          ...updatedAndNewRecords[1],
+          source: 'Aggregate',
+          externalId: '',
+        }),
+      ])
     })
   })
 })

@@ -52,12 +52,12 @@ function getMockVerifiers() {
   }))
 }
 
-export const VerifierStatus = z.object({
+const VerifierStatus = z.object({
   address: z.string(),
   timestamp: branded(z.number().nullable(), (n) =>
     n ? new UnixTime(n) : null,
   ),
 })
-export type VerifierStatus = z.infer<typeof VerifierStatus>
+type VerifierStatus = z.infer<typeof VerifierStatus>
 export const VerifiersStatuses = z.array(VerifierStatus)
 export type VerifiersStatuses = z.infer<typeof VerifiersStatuses>

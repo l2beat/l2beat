@@ -5,6 +5,7 @@ import {
   upsertableToRow,
 } from './entity'
 import { selectTokenMeta } from './select'
+import { getAggregatedTokenMeta } from './utils'
 
 export class TokenMetaRepository extends BaseRepository {
   async getAll(): Promise<TokenMetaRecord[]> {
@@ -20,6 +21,15 @@ export class TokenMetaRepository extends BaseRepository {
       .selectFrom('TokenMeta')
       .select(selectTokenMeta)
       .where('tokenId', '=', tokenId)
+      .execute()
+  }
+
+  async getByTokenIds(tokenIds: string[]): Promise<TokenMetaRecord[]> {
+    if (tokenIds.length === 0) return []
+    return await this.db
+      .selectFrom('TokenMeta')
+      .select(selectTokenMeta)
+      .where('tokenId', 'in', tokenIds)
       .execute()
   }
 
@@ -66,10 +76,13 @@ export class TokenMetaRepository extends BaseRepository {
       .execute()
   }
 
-  async upsert(record: UpsertableTokenMetaRecord): Promise<{ id: string }> {
+  async upsert(
+    record: UpsertableTokenMetaRecord,
+    updateAggregate = true,
+  ): Promise<void> {
     const row = upsertableToRow(record)
 
-    return await this.db
+    await this.db
       .insertInto('TokenMeta')
       .values(row)
       .onConflict((cb) =>
@@ -83,12 +96,19 @@ export class TokenMetaRepository extends BaseRepository {
           updatedAt: eb.ref('excluded.updatedAt'),
         })),
       )
-      .returning('TokenMeta.id')
-      .executeTakeFirstOrThrow()
+      .execute()
+
+    if (updateAggregate) {
+      const aggregatedRecord = getAggregatedTokenMeta(
+        await this.getByTokenId(record.tokenId),
+      )
+      await this.upsert(aggregatedRecord, false)
+    }
   }
 
   async upsertMany(
     records: Omit<TokenMetaRecord, 'id' | 'createdAt' | 'updatedAt'>[],
+    updateAggregate = true,
   ): Promise<number> {
     if (records.length === 0) return 0
 
@@ -111,7 +131,27 @@ export class TokenMetaRepository extends BaseRepository {
         )
         .execute()
     })
+
+    if (updateAggregate) {
+      const updatedTokenIds = [...new Set(records.map((r) => r.tokenId))]
+      const allMetas = await this.getByTokenIds(updatedTokenIds)
+      await this.upsertMany(
+        updatedTokenIds.map((id) =>
+          getAggregatedTokenMeta(allMetas.filter((r) => r.tokenId === id)),
+        ),
+        false,
+      )
+    }
+
     return records.length
+  }
+
+  async deleteByTokenId(tokenId: string): Promise<bigint> {
+    const result = await this.db
+      .deleteFrom('TokenMeta')
+      .where('tokenId', '=', tokenId)
+      .executeTakeFirstOrThrow()
+    return result.numDeletedRows
   }
 
   async deleteAll(): Promise<bigint> {

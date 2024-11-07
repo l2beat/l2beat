@@ -3,7 +3,7 @@ import type { CountedBlock, StatResults } from '@/types'
 import { Logger } from '@l2beat/backend-tools'
 import { HttpClient2, RetryHandler, RpcClient2 } from '@l2beat/shared'
 import { RateLimiter } from '../../../../backend-tools/dist'
-import { getApiUrl } from '../clients/apiUrls'
+import { getApiKey, getApiUrl, getScanUrl } from '../clients/apiUrls'
 import { BlockClient } from '../clients/block/BlockClient'
 import { StarknetClient } from '../clients/block/StarknetClient'
 import { RpcCodeClient } from '../clients/code/RpcCodeClient'
@@ -48,19 +48,28 @@ export class ChainService {
           logger: Logger.SILENT,
           retryHandler: RetryHandler.RELIABLE_API(Logger.SILENT),
         })
+
         this.counter = new RpcCounter()
+
         const signatureClients = [
           new EtherfaceClient(),
           new FourByteClient(),
           new OpenChainClient(),
         ]
-        const contractClient = new ScanClient(chain)
+
+        let contractClient = undefined
+        const scanApiUrl = getScanUrl(chain.id)
+        const scanApiKey = getApiKey(chain.id, 'SCAN')
+        if (scanApiUrl && scanApiKey) {
+          contractClient = new ScanClient(scanApiUrl, scanApiKey)
+        }
+
         const codeClient = new RpcCodeClient(chain)
         this.nameService = new NameService(
           db,
           signatureClients,
-          contractClient,
           codeClient,
+          contractClient,
         )
         break
       }

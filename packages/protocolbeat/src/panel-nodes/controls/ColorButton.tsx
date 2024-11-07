@@ -59,11 +59,11 @@ export function ColorButton() {
   )
 }
 
-export interface ColorPickerProps {
+interface ColorPickerProps {
   onColorChange: (color: number) => void
 }
 
-export function ColorPicker({ onColorChange }: ColorPickerProps) {
+function ColorPicker({ onColorChange }: ColorPickerProps) {
   return (
     <div className="grid w-max grid-cols-6 place-items-center gap-3">
       <button

@@ -14,7 +14,7 @@ import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-
 import { unifyPercentagesAsIntegers } from '~/utils/math'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 
-export interface ValueLockedBreakdown {
+interface ValueLockedBreakdown {
   totalChange: number
   total: number
   canonical: number

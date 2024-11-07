@@ -1,10 +1,9 @@
 import { assert, Block, UnixTime } from '@l2beat/shared-pure'
-import { RpcClient2, ZksyncLiteClient } from '../../clients'
-import { DegateClient } from '../../clients/degate/DegateClient'
+import { FuelClient, RpcClient2, ZksyncLiteClient } from '../../clients'
 
 export class BlockProvider {
   constructor(
-    private readonly clients: (RpcClient2 | ZksyncLiteClient | DegateClient)[],
+    private readonly clients: (RpcClient2 | ZksyncLiteClient | FuelClient)[],
   ) {
     assert(clients.length > 0, 'Clients cannot be empty')
   }
