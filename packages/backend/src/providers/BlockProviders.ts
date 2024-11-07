@@ -67,6 +67,7 @@ export class BlockProviders {
     switch (project.config.type) {
       case 'rpc':
       case 'zksync':
+      case 'degate':
       case 'fuel': {
         const blockClients = this.clients.filter((r) => r.chain === chain)
         assert(blockClients.length > 0, `No configured clients for ${chain}`)
@@ -80,11 +81,6 @@ export class BlockProviders {
       case 'loopring': {
         assert(this.loopringClient, 'loopringClient should be defined')
         const blockClients = [this.loopringClient]
-        return new BlockTimestampProvider({ indexerClients, blockClients })
-      }
-      case 'degate': {
-        assert(this.degateClient, 'degateClient should be defined')
-        const blockClients = [this.degateClient]
         return new BlockTimestampProvider({ indexerClients, blockClients })
       }
       case 'starkex': {

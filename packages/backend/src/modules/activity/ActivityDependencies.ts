@@ -6,7 +6,6 @@ import { Providers } from '../../providers/Providers'
 import { BlockTimestampProvider } from '../tvl/services/BlockTimestampProvider'
 import { TxsCountService } from './indexers/types'
 import { BlockTxsCountService } from './services/txs/BlockTxsCountService'
-import { DegateTxsCountService } from './services/txs/DegateTxsCountService'
 import { LoopringTxsCountService } from './services/txs/LoopringTxsCountService'
 import { StarkexTxsCountService } from './services/txs/StarkexTxsCountService'
 import { StarknetTxsCountService } from './services/txs/StarknetTxsCountService'
@@ -35,6 +34,7 @@ export class ActivityDependencies {
     switch (project.config.type) {
       case 'rpc':
       case 'zksync':
+      case 'degate':
       case 'fuel': {
         const provider = this.blockProviders.getBlockProvider(chain)
 
@@ -43,9 +43,9 @@ export class ActivityDependencies {
           projectId: project.id,
           type: project.config.type,
           assessCount:
-            project.config.type === 'zksync' || project.config.type === 'fuel'
-              ? undefined
-              : project.config.assessCount,
+            project.config.type === 'rpc'
+              ? project.config.assessCount
+              : undefined,
           rpcUopsAnalyzer: this.rpcUopsAnalyzer,
         })
       }

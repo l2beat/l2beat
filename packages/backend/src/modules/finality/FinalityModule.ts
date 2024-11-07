@@ -8,6 +8,7 @@ import { ClientClass, Peripherals } from '../../peripherals/Peripherals'
 import { LoopringClient } from '../../peripherals/loopring/LoopringClient'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { StarknetClient } from '../../peripherals/starknet/StarknetClient'
+import { Providers } from '../../providers/Providers'
 import { ApplicationModule } from '../ApplicationModule'
 import { TrackedTxsIndexer } from '../tracked-txs/TrackedTxsIndexer'
 import { FinalityIndexer } from './FinalityIndexer'
@@ -27,6 +28,7 @@ export function createFinalityModule(
   config: Config,
   logger: Logger,
   peripherals: Peripherals,
+  providers: Providers,
   trackedTxsIndexer: TrackedTxsIndexer | undefined,
 ): ApplicationModule | undefined {
   if (!config.finality) {
@@ -58,6 +60,7 @@ export function createFinalityModule(
     logger,
     config.finality.configurations,
     peripherals,
+    providers.degateClient,
   )
 
   const finalityIndexers = runtimeConfigurations.map(
@@ -90,6 +93,7 @@ function initializeConfigurations(
   logger: Logger,
   configs: FinalityProjectConfig[],
   peripherals: Peripherals,
+  degateClient: DegateClient,
 ): FinalityConfig[] {
   return configs
     .map((configuration): FinalityConfig | undefined => {
@@ -226,7 +230,7 @@ function initializeConfigurations(
                 ethereumRPC,
                 peripherals.database,
                 configuration.projectId,
-                getL2Rpc(configuration, peripherals, DegateClient),
+                degateClient,
               ),
             },
             minTimestamp: configuration.minTimestamp,
