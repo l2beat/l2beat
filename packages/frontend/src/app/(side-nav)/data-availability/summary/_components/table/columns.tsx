@@ -74,7 +74,7 @@ const tvsColumn = columnHelper.accessor('tvs', {
       ctx.row.original.usedIn.length > 0 ? ctx.row.original.tvs : 0
 
     return (
-      <div className="w-full pl-4 text-right text-sm font-medium">
+      <div className="w-full pr-5 text-right text-sm font-medium">
         {formatCurrency(valueToFormat, 'usd')}
       </div>
     )
@@ -92,14 +92,14 @@ const slashableStakeColumn = columnHelper.accessor('economicSecurity', {
     const value = ctx.getValue()
     if (ctx.row.original.risks.economicSecurity.type === 'Unknown') {
       return (
-        <div className="w-full pl-4 text-right text-xs font-medium md:text-sm">
+        <div className="w-full pr-[18px] text-right text-xs font-medium md:text-sm">
           {formatCurrency(0, 'usd')}
         </div>
       )
     }
 
     return (
-      <div className="w-full pl-4 text-right text-xs font-medium md:text-sm">
+      <div className="w-full pr-[18px] text-right text-xs font-medium md:text-sm">
         <DaEconomicSecurityCell value={value} />
       </div>
     )
