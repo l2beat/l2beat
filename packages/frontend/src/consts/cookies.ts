@@ -50,7 +50,7 @@ function knownCookie<T extends ZodTypeAny = ZodTypeAny>(
   return { key, schema, defaultValue }
 }
 
-export type KnownCookie<T extends ZodTypeAny = ZodTypeAny> = ReturnType<
+type KnownCookie<T extends ZodTypeAny = ZodTypeAny> = ReturnType<
   typeof knownCookie<T>
 >
 

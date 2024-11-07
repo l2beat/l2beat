@@ -1,6 +1,6 @@
 import { type Sentiment } from '@l2beat/shared-pure'
 
-export const sentimentOrder: Sentiment[] = ['bad', 'warning', 'neutral', 'good']
+const sentimentOrder: Sentiment[] = ['bad', 'warning', 'neutral', 'good']
 
 export function sortBySentiment<
   TData extends { sentiment: Sentiment; value: string },

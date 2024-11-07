@@ -17,7 +17,7 @@ export function sortStages<TData extends { stage: StageConfig }>(
   return stageOrderValueA > stageOrderValueB ? 1 : -1
 }
 
-export function getStageOrderValue(stageConfig: StageConfig) {
+function getStageOrderValue(stageConfig: StageConfig) {
   const stage = stageConfig.stage
   if (stage === 'NotApplicable' || stage === 'UnderReview') {
     return undefined

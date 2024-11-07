@@ -2,7 +2,7 @@ import { Redis } from 'ioredis'
 import { parseRedisUrl } from 'parse-redis-url-simple'
 import { env } from '../env.js'
 
-export function createRedisConnection() {
+function createRedisConnection() {
   const [redisCredentials] = parseRedisUrl(env.REDIS_URL)
 
   if (!redisCredentials) {

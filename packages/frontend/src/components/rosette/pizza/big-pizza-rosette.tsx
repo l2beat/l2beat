@@ -24,12 +24,6 @@ export interface BigPizzaRosetteProps {
   className?: string
 }
 
-export interface ContentState {
-  risk: RosetteValue
-  side: 'top' | 'bottom'
-  sideOffset: number
-}
-
 export function BigPizzaRosette(props: BigPizzaRosetteProps) {
   const isUnderReview =
     !!props.isUnderReview ||

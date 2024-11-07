@@ -22,7 +22,7 @@ export function getSegments(relevantBlobs: Blob[]): RlpSerializable[] {
 }
 
 const BROTLI_COMPRESSION_TYPE = 0x00
-export function decompressPayload(payload: Uint8Array): Uint8Array {
+function decompressPayload(payload: Uint8Array): Uint8Array {
   const compressionType = payload[0]
   assert(
     compressionType === BROTLI_COMPRESSION_TYPE,
@@ -33,7 +33,7 @@ export function decompressPayload(payload: Uint8Array): Uint8Array {
   return Uint8Array.from(decompressedData)
 }
 
-export function concatWithLengthForRlp(decompressedBytes: Uint8Array) {
+function concatWithLengthForRlp(decompressedBytes: Uint8Array) {
   const totalLength = decompressedBytes.length
   const lengthBytes = numberToByteArr(totalLength)
   const lengthBytesLength = lengthBytes.length

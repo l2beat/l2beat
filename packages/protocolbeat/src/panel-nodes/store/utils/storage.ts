@@ -31,10 +31,9 @@ const StoredNodeLayout = z.object({
 })
 
 export type NodeLocations = z.infer<typeof NodeLocations>
-export type NodeColors = z.infer<typeof NodeColors>
 export type StoredNodeLayout = z.infer<typeof StoredNodeLayout>
 
-export function getLayoutStorageKey(projectId: string): string {
+function getLayoutStorageKey(projectId: string): string {
   return `layout/${projectId}`
 }
 

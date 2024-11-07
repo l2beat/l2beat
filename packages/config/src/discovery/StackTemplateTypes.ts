@@ -1,6 +1,6 @@
 export type StackPermissionsTag = 'admin' | 'owner'
 
-export interface StackPermissionsTagDescription {
+interface StackPermissionsTagDescription {
   direct: string
   referenced?: string
 }

@@ -9,7 +9,7 @@ enum FailureReason {
   Other = 'Other Error',
 }
 
-export interface BatchConfiguration {
+interface BatchConfiguration {
   rpcUrl: string
   method: string
   timeoutMs: number
@@ -18,7 +18,6 @@ export interface BatchConfiguration {
   maxFailureRatio: number
 }
 
-export type Verbosity = 'silent' | 'basic' | 'detailed'
 export type Configuration = BatchConfiguration & {
   lowerBoundary: number
   upperBoundary: number

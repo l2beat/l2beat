@@ -12,7 +12,7 @@ export type DiffingMode = (typeof DIFFING_MODES)[number]
 
 export const DISPLAY_MODES = ['inline', 'side-by-side'] as const
 export type DisplayMode = (typeof DISPLAY_MODES)[number]
-export const displayModeMap: Record<DisplayMode, string> = {
+const displayModeMap: Record<DisplayMode, string> = {
   inline: '--display=inline',
   'side-by-side': '--display=side-by-side-show-both --width=200',
 }

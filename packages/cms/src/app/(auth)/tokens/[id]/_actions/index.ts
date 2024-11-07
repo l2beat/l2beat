@@ -9,6 +9,7 @@ export const insertToken = actionClient
   .schema(insertTokenSchema)
   .action(async ({ parsedInput }) => {
     revalidatePath('/', 'layout')
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { relations, customMeta, ...data } = parsedInput
     return await db.transaction(async () => {
       try {

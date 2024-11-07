@@ -215,7 +215,7 @@ function getBreakdownGroups(values: BreakdownValue[]): BreakdownGroup[] {
   }))
 }
 
-export function unifyPercentagesAsIntegers(percentages: number[]): number[] {
+function unifyPercentagesAsIntegers(percentages: number[]): number[] {
   if (percentages.length < 2) {
     throw new Error(`Array has to contain at least two elements`)
   }

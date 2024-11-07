@@ -10,8 +10,6 @@ export const SHIFT_KEY = 'Shift'
 export const DELETE_KEY = 'Delete'
 export const BACKSPACE_KEY = 'Backspace'
 
-export const IS_MACOS = navigator.userAgent.toLowerCase().includes('mac os')
-
 export const HEADER_HEIGHT = 32
 export const FIELD_HEIGHT = 18
 export const BOTTOM_PADDING = 8

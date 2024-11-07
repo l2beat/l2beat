@@ -158,10 +158,7 @@ export function getSourceOutputPath(
  * If there are more it returns
  * '/proxy', '/implementation-1', '/implementation-2', etc.
  */
-export function getImplementationFolder(
-  i: number,
-  sourcesCount: number,
-): string {
+function getImplementationFolder(i: number, sourcesCount: number): string {
   let name = ''
   if (sourcesCount > 1) {
     name = i === 0 ? 'proxy' : 'implementation'

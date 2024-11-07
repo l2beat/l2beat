@@ -28,7 +28,7 @@ export async function callMethod(
   }
 }
 
-export function applyPickFields(result: utils.Result, pickFields?: string[]) {
+function applyPickFields(result: utils.Result, pickFields?: string[]) {
   if (pickFields) {
     if (!Array.isArray(result)) {
       throw new Error('Cannot pick fields from a non-struct-like return value')

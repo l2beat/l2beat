@@ -24,7 +24,7 @@ export function describeDatabase(name: string, suite: (db: Database) => void) {
   })
 }
 
-export function getTestDatabase() {
+function getTestDatabase() {
   const env = getEnv()
   const connection = env.optionalString('TEST_DB_URL')
   if (!connection) {

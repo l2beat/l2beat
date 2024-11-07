@@ -8,8 +8,7 @@ export interface SeriesStyle {
   line?: SeriesStyleLine
 }
 
-export type PointStyle = SeriesStylePoint
-export type PointShapeDefinition =
+type PointShapeDefinition =
   | {
       type: 'div'
       className: string

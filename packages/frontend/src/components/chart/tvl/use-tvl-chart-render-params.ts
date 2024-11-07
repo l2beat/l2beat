@@ -7,7 +7,7 @@ import { getChartRange } from '../core/utils/get-chart-range-from-columns'
 import { mapMilestones } from '../core/utils/map-milestones'
 import { type ChartUnit } from '../types'
 
-export type TvlDataPoint = readonly [number, number, number, number, number]
+type TvlDataPoint = readonly [number, number, number, number, number]
 
 interface Params {
   data: TvlDataPoint[] | undefined
