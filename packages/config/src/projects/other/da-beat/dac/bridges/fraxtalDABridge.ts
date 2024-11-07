@@ -1,6 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
-import { redstone } from '../../../../layer2s/redstone'
+import { fraxtal } from '../../../../layer2s/fraxtal'
 import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../../types'
 import { DaBridge } from '../../types/DaBridge'
 import { DaRelayerFailureRisk } from '../../types/DaRelayerFailureRisk'
@@ -72,7 +72,7 @@ export const fraxtalDABridge = {
       },
     ],
   },
-  usedIn: toUsedInProject([redstone]),
+  usedIn: toUsedInProject([fraxtal]),
   risks: {
     committeeSecurity: DaCommitteeSecurityRisk.NoBridge,
     upgradeability: DaUpgradeabilityRisk.NoBridge,
