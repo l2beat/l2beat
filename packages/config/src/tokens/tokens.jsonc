@@ -3451,6 +3451,12 @@
       "address": "0x4ea77a86d6e70ffe8bb947fc86d68a7f086f198a",
       "source": "native",
       "supply": "circulatingSupply"
+    },
+      "symbol": "CROAK",
+      "address": "0xacb54d07ca167934f57f829bee2cc665e1a5ebef",
+      "source": "native",
+      "supply": "circulatingSupply",
+      "coingeckoId": "croak_on_linea"
     }
   ],
   "zkfair": [
