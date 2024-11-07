@@ -39,7 +39,7 @@ export type ScalingFilterContextValue = {
   badgeRaaS?: BadgeId
 }
 
-export type MutableScalingFilterContextValue = ScalingFilterContextValue & {
+type MutableScalingFilterContextValue = ScalingFilterContextValue & {
   isEmpty: boolean
   set: (value: Partial<ScalingFilterContextValue>) => void
   reset: () => void

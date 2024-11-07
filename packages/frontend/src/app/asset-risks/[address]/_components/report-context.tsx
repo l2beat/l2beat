@@ -35,5 +35,5 @@ export function useReport() {
   return context
 }
 
-export type Report = ReturnType<typeof useReport>
+type Report = ReturnType<typeof useReport>
 export type Token = Report['tokens'][number]

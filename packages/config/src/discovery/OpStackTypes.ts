@@ -8,7 +8,7 @@ export type OpStackContractName =
   | 'L1StandardBridge'
   | 'L1ERC721Bridge'
 
-export interface OPStackContractTemplate {
+interface OPStackContractTemplate {
   name: OpStackContractName
   coreDescription: string
 }

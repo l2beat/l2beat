@@ -26,12 +26,6 @@ export interface BigPentagonRosetteProps {
   className?: string
 }
 
-export interface ContentState {
-  risk: RosetteValue
-  side: 'top' | 'bottom'
-  sideOffset: number
-}
-
 export function BigPentagonRosette(props: BigPentagonRosetteProps) {
   const isUnderReview =
     !!props.isUnderReview ||

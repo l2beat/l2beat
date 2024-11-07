@@ -1,6 +1,6 @@
 import { BigNumber, BytesLike } from 'ethers'
 
-export type ChangeL2BlockHeader = {
+type ChangeL2BlockHeader = {
   deltaTimestamp: number
   indexL1InfoTree: number
 }
@@ -8,10 +8,6 @@ export type ChangeL2BlockHeader = {
 export type RawPolygonZkEvmBlock = {
   transactions: PolygonZkEvmTransaction[]
 } & ChangeL2BlockHeader
-
-export type BatchRawV2 = {
-  blocks: RawPolygonZkEvmBlock[]
-}
 
 export interface PolygonZkEvmTransaction {
   nonce: BigNumber

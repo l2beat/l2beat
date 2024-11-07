@@ -36,13 +36,13 @@ export async function upsertTokenWithMeta(
 
   const { id: tokenId } = await db.token.upsert(token)
 
-  const { id: tokenMetaId } = await upsertTokenMeta(db, {
+  await upsertTokenMeta(db, {
     source,
     tokenId,
     ...meta,
   })
 
-  return { tokenId, tokenMetaId }
+  return { tokenId }
 }
 
 export async function upsertManyTokenMeta(

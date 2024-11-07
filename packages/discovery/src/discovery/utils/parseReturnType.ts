@@ -5,12 +5,12 @@ import { toFunctionFragment } from '../handlers/utils/toFunctionFragment'
 
 export type Type = BaseType | ArrayType | TupleType
 
-export interface BaseType {
+interface BaseType {
   kind: 'base'
   typeName: string
 }
 
-export interface ArrayType {
+interface ArrayType {
   kind: 'array'
   length: number | 'dynamic'
   childType: Type

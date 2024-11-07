@@ -24,7 +24,7 @@ export function sumValuesPerSource(
   )
 }
 
-export function getValue(
+function getValue(
   value: ValueRecord,
   keyPrefix: 'canonical' | 'external' | 'native',
   options: SumValuesPerSourceOptions,

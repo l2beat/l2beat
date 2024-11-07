@@ -1,4 +1,3 @@
-import { LoggerOptions } from '@l2beat/backend-tools'
 import { DiscoveryChainConfig } from '@l2beat/discovery'
 import {
   AmountConfigEntry,
@@ -38,15 +37,6 @@ export interface Config {
   readonly flags: ResolvedFeatureFlag[]
   readonly verifiers: boolean
   readonly daBeat: DABeatConfig | false
-}
-
-export type LoggerConfig = Pick<LoggerOptions, 'logLevel'> &
-  Partial<LoggerOptions>
-
-export interface LogThrottlerConfig {
-  readonly callsUntilThrottle: number
-  readonly clearIntervalMs: number
-  readonly throttleTimeMs: number
 }
 
 export interface ApiConfig {

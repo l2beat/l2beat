@@ -50,7 +50,7 @@ import {
 import { mergeBadges } from './utils'
 
 const ETHEREUM_EXPLORER_URL = 'https://etherscan.io/address/{0}#code'
-export const EVM_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
+const EVM_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
   {
     name: 'EVM compatible smart contracts are supported',
     description:
@@ -94,7 +94,7 @@ export const WASMVM_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
   },
 ]
 
-export interface OrbitStackConfigCommon {
+interface OrbitStackConfigCommon {
   createdAt: UnixTime
   discovery: ProjectDiscovery
   stateValidationImage?: string
@@ -268,7 +268,7 @@ function defaultStateValidation(
   }
 }
 
-export function orbitStackCommon(
+function orbitStackCommon(
   templateVars: OrbitStackConfigCommon,
   explorerLinkFormat: string,
   blockNumberOpcodeTimeSeconds: number,

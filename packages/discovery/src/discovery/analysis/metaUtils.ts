@@ -150,7 +150,7 @@ export function getMetaFromUpgradeability(
   return result
 }
 
-export function targetConfigToMeta(
+function targetConfigToMeta(
   self: EthereumAddress,
   field: DiscoveryContractField,
   target: DiscoveryContractField['target'],
@@ -212,7 +212,7 @@ export function invertMeta(
   return result
 }
 
-export function toSet<T>(value: T | T[] | undefined): Set<T> | undefined {
+function toSet<T>(value: T | T[] | undefined): Set<T> | undefined {
   if (value === undefined) {
     return undefined
   }
@@ -222,7 +222,7 @@ export function toSet<T>(value: T | T[] | undefined): Set<T> | undefined {
   return new Set([value])
 }
 
-export function mergeSets<T>(
+function mergeSets<T>(
   a: Set<T> | undefined,
   b: Set<T> | undefined,
 ): Set<T> | undefined {
@@ -230,16 +230,6 @@ export function mergeSets<T>(
     return undefined
   }
   return new Set([...(a ?? []), ...(b ?? [])])
-}
-
-export function concatArrays<T>(
-  a: T[] | undefined,
-  b: T[] | undefined,
-): T[] | undefined {
-  if (a === undefined && b === undefined) {
-    return undefined
-  }
-  return [...(a ?? []), ...(b ?? [])]
 }
 
 export function findHighestSeverity(

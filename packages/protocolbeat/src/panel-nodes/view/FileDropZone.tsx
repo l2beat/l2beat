@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 import { useStore } from '../store/store'
 import { discoveryToNodes } from '../store/utils/discoveryToNodes'
-import { encodeProjectId, parseDiscovery } from '../store/utils/paseDiscovery'
+import { encodeProjectId, parseDiscovery } from '../store/utils/parseDiscovery'
 
 export function FileDropZone(props: {
   children: ReactNode

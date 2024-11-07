@@ -109,22 +109,12 @@ export class MulticallClient {
   }
 }
 
-export function toBatches<T>(items: T[], batchSize: number): T[][] {
+function toBatches<T>(items: T[], batchSize: number): T[][] {
   const batches: T[][] = []
   for (let i = 0; i < items.length; i += batchSize) {
     batches.push(items.slice(i, i + batchSize))
   }
   return batches
-}
-
-export function parseEthersError(e: unknown): Error | undefined {
-  const parsed = ethersError.safeParse(e)
-
-  if (parsed.success) {
-    return new Error(JSON.stringify(parsed.data))
-  }
-
-  return undefined
 }
 
 const ethersError = z.object({

@@ -5,13 +5,11 @@ import { BlockProviders } from '../../providers/BlockProviders'
 import { Providers } from '../../providers/Providers'
 import { BlockTimestampProvider } from '../tvl/services/BlockTimestampProvider'
 import { TxsCountService } from './indexers/types'
+import { BlockTxsCountService } from './services/txs/BlockTxsCountService'
 import { DegateTxsCountService } from './services/txs/DegateTxsCountService'
-import { FuelTxsCountService } from './services/txs/FuelTxsCountService'
 import { LoopringTxsCountService } from './services/txs/LoopringTxsCountService'
-import { RpcTxsCountService } from './services/txs/RpcTxsCountService'
 import { StarkexTxsCountService } from './services/txs/StarkexTxsCountService'
 import { StarknetTxsCountService } from './services/txs/StarknetTxsCountService'
-import { ZKsyncLiteTxsCountService } from './services/txs/ZKsyncLiteTxsCountService'
 import { RpcUopsAnalyzer } from './services/uops/analyzers/RpcUopsAnalyzer'
 import { StarknetUopsAnalyzer } from './services/uops/analyzers/StarknetUopsAnalyzer'
 
@@ -35,25 +33,21 @@ export class ActivityDependencies {
     assert(project, `Project ${chain} not found`)
 
     switch (project.config.type) {
-      case 'rpc': {
-        const provider = this.blockProviders.getEvmBlockProvider(chain)
+      case 'rpc':
+      case 'zksync':
+      case 'fuel': {
+        const provider = this.blockProviders.getBlockProvider(chain)
 
-        return new RpcTxsCountService(
+        return new BlockTxsCountService({
           provider,
-          project.id,
-          this.rpcUopsAnalyzer,
-          project.config.assessCount,
-        )
-      }
-      case 'zksync': {
-        assert(
-          this.blockProviders.zksyncLiteClient,
-          'zksyncLiteClient should be defined',
-        )
-        return new ZKsyncLiteTxsCountService(
-          this.blockProviders.zksyncLiteClient,
-          project.id,
-        )
+          projectId: project.id,
+          type: project.config.type,
+          assessCount:
+            project.config.type === 'zksync' || project.config.type === 'fuel'
+              ? undefined
+              : project.config.assessCount,
+          rpcUopsAnalyzer: this.rpcUopsAnalyzer,
+        })
       }
       case 'starknet': {
         assert(
@@ -95,13 +89,6 @@ export class ActivityDependencies {
           this.blockProviders.starkexClient,
           project.id,
           project.config.product,
-        )
-      }
-      case 'fuel': {
-        assert(this.blockProviders.fuelClient, 'fuelClient should be defined')
-        return new FuelTxsCountService(
-          this.blockProviders.fuelClient,
-          project.id,
         )
       }
 

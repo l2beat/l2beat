@@ -36,7 +36,7 @@ export const TokenTvlChartParams = z.object({
 })
 
 export type TokenTvlChartParams = z.infer<typeof TokenTvlChartParams>
-export type TokenParams = z.infer<typeof TokenParams>
+type TokenParams = z.infer<typeof TokenParams>
 
 /**
  * A function that computes values for chart of the token's TVL over time.

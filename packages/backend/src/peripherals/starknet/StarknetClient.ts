@@ -1,5 +1,5 @@
 import { HttpClient } from '@l2beat/shared'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { assert, Block, UnixTime } from '@l2beat/shared-pure'
 
 import { RateLimiter } from '@l2beat/backend-tools'
 import { getBlockNumberAtOrBefore } from '../getBlockNumberAtOrBefore'
@@ -82,7 +82,9 @@ export class StarknetClient {
     }
   }
 
-  async getBlockWithTransactions(blockNumber: number | 'latest') {
+  async getBlockWithTransactions(
+    blockNumber: number | 'latest',
+  ): Promise<Block> {
     const params =
       blockNumber === 'latest' ? ['latest'] : [{ block_number: blockNumber }]
 
@@ -107,12 +109,19 @@ export class StarknetClient {
     const text = await response.text()
     const json: unknown = JSON.parse(text)
 
-    const { result: block } =
-      StarknetGetBlockWithTxsResponseBodySchema.parse(json)
+    const { result } = StarknetGetBlockWithTxsResponseBodySchema.parse(json)
+
     return {
-      number: block.block_number,
-      timestamp: block.timestamp,
-      transactions: block.transactions,
+      number: result.block_number,
+      hash: result.block_hash,
+      timestamp: result.timestamp,
+      transactions: result.transactions.map((t) => ({
+        hash: t.transaction_hash,
+        from: t.sender_address,
+        type: t.type,
+        data: t.calldata,
+        to: 'UNSUPPORTED',
+      })),
     }
   }
 }

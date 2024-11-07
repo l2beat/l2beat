@@ -51,102 +51,102 @@ export type ProjectSectionProps = Omit<
 
 type ProjectDetailsProps<T> = Omit<T, 'sectionOrder'>
 
-export interface ProjectDetailsChartSection {
+interface ProjectDetailsChartSection {
   type: 'ChartSection'
   props: ProjectDetailsProps<ChartSectionProps>
 }
 
-export interface ProjectDetailsDetailedDescriptionSection {
+interface ProjectDetailsDetailedDescriptionSection {
   type: 'DetailedDescriptionSection'
   props: ProjectDetailsProps<DetailedDescriptionSectionProps>
 }
 
-export interface ProjectDetailsMilestonesAndIncidentsSection {
+interface ProjectDetailsMilestonesAndIncidentsSection {
   type: 'MilestonesAndIncidentsSection'
   props: ProjectDetailsProps<MilestonesAndIncidentsSectionProps>
 }
 
-export interface ProjectDetailsRiskSummarySection {
+interface ProjectDetailsRiskSummarySection {
   type: 'RiskSummarySection'
   props: ProjectDetailsProps<RiskSummarySectionProps>
 }
 
-export interface ProjectDetailsDaRiskSummarySection {
+interface ProjectDetailsDaRiskSummarySection {
   type: 'DaRiskSummarySection'
   props: ProjectDetailsProps<DaRiskSummarySectionProps>
 }
 
-export interface ProjectDetailsRiskAnalysisSection {
+interface ProjectDetailsRiskAnalysisSection {
   type: 'RiskAnalysisSection'
   props: ProjectDetailsProps<RiskAnalysisSectionProps>
 }
 
-export interface L3ProjectDetailsRiskAnalysisSection {
+interface L3ProjectDetailsRiskAnalysisSection {
   type: 'L3RiskAnalysisSection'
   props: ProjectDetailsProps<L3RiskAnalysisSectionProps>
 }
 
-export interface ProjectDetailsStageSection {
+interface ProjectDetailsStageSection {
   type: 'StageSection'
   props: ProjectDetailsProps<StageSectionProps>
 }
 
-export interface ProjectDetailsTechnologySection {
+interface ProjectDetailsTechnologySection {
   type: 'TechnologySection'
   props: ProjectDetailsProps<TechnologySectionProps>
 }
 
-export interface ProjectDetailsStateDerivationSection {
+interface ProjectDetailsStateDerivationSection {
   type: 'StateDerivationSection'
   props: ProjectDetailsProps<StateDerivationSectionProps>
 }
 
-export interface ProjectDetailsStateValidationSection {
+interface ProjectDetailsStateValidationSection {
   type: 'StateValidationSection'
   props: ProjectDetailsProps<StateValidationSectionProps>
 }
 
-export interface ProjectDetailsMarkdownSection {
+interface ProjectDetailsMarkdownSection {
   type: 'MarkdownSection'
   props: ProjectDetailsProps<MarkdownSectionProps>
 }
 
-export interface ProjectDetailsPermissionsSection {
+interface ProjectDetailsPermissionsSection {
   type: 'PermissionsSection'
   props: ProjectDetailsProps<PermissionsSectionProps>
 }
 
-export interface ProjectDetailsMultichainPermissionsSection {
+interface ProjectDetailsMultichainPermissionsSection {
   type: 'MultichainPermissionsSection'
   props: ProjectDetailsProps<MultichainPermissionsSectionProps>
 }
 
-export interface ProjectDetailsContractsSection {
+interface ProjectDetailsContractsSection {
   type: 'ContractsSection'
   props: ProjectDetailsProps<ContractsSectionProps>
 }
 
-export interface ProjectDetailsMultiChainContractsSection {
+interface ProjectDetailsMultiChainContractsSection {
   type: 'MultichainContractsSection'
   props: ProjectDetailsProps<MultiChainContractsSectionProps>
 }
 
-export interface ProjectDetailsKnowledgeNuggetsSection {
+interface ProjectDetailsKnowledgeNuggetsSection {
   type: 'KnowledgeNuggetsSection'
   props: ProjectDetailsProps<KnowledgeNuggetsSectionProps>
 }
 
-export interface ProjectDetailsUpcomingDisclaimer {
+interface ProjectDetailsUpcomingDisclaimer {
   type: 'UpcomingDisclaimer'
   excludeFromNavigation: true
 }
 
-export interface ProjectDetailsGroup {
+interface ProjectDetailsGroup {
   type: 'Group'
   props: ProjectDetailsProps<GroupSectionProps>
 }
 
-export interface ProjectDetailsGrissiniRiskAnalysisSection {
+interface ProjectDetailsGrissiniRiskAnalysisSection {
   type: 'GrissiniRiskAnalysisSection'
   props: ProjectDetailsProps<GrissiniRiskAnalysisSectionProps>
 }

@@ -181,7 +181,10 @@
     },
     { "address": "0x502FffBcdcaA61f19deFBb9b60e799F74FB48Bc1" },
     { "address": "0xC37a598468A59D5d6DCeb889847B5824aD61697e" },
-    { "address": "0xc3a27F45015E2c36ce3cC78c662c5f259c26Cf25" },
+    {
+      "name": "Operator",
+      "address": "0xc3a27F45015E2c36ce3cC78c662c5f259c26Cf25"
+    },
     { "address": "0xfceC0b967e4390Eb7Cd4f2318c247eD193fE78E9" },
     { "address": "0xFE4913D959064ee0b026ba0cE3Faccc1c5834a00" }
   ],

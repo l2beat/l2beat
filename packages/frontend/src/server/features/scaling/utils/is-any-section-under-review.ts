@@ -21,7 +21,7 @@ export function isAnySectionUnderReview(
   )
 }
 
-export function isAnyRiskUnderReview(
+function isAnyRiskUnderReview(
   riskView?: ScalingProjectRiskView | BridgeRiskView,
 ) {
   return (

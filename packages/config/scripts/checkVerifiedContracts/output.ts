@@ -8,7 +8,6 @@ export const FileStructure = z.record(z.boolean())
 export type FileStructure = z.infer<typeof FileStructure>
 
 export type VerificationMap = Record<string, boolean>
-export type VerificationMapPerChain = Record<string, VerificationMap>
 
 export const PROJECTS_OUTPUT_PATH = 'src/verification/projects.json'
 export function getOutputPath(chain: string) {

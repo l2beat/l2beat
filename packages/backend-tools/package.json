@@ -39,7 +39,6 @@
   },
   "devDependencies": {
     "@sinonjs/fake-timers": "^11.1.0",
-    "@types/elasticsearch": "^5.0.43",
     "@types/sinonjs__fake-timers": "^8.1.2",
     "@types/uuid": "^9.0.8"
   }

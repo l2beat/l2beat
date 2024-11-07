@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 import { defineCollection } from '../define-collections'
 
-export const OneTimeEvent = z.object({
+const OneTimeEvent = z.object({
   type: z.literal('one-time'),
   highlighted: z.boolean().optional(),
   title: z.string(),
@@ -14,7 +14,7 @@ export const OneTimeEvent = z.object({
   toBeAnnounced: z.boolean().optional(),
 })
 
-export const RecurringEvent = z.object({
+const RecurringEvent = z.object({
   type: z.literal('recurring'),
   title: z.string(),
   subtitle: z.string().optional(),

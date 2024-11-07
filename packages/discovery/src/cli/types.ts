@@ -21,15 +21,3 @@ export const ChainValue: Type<string, string> = {
     })
   },
 }
-
-export const ZeroToOneValue: Type<string, number> = {
-  async from(valueString) {
-    const value = parseFloat(valueString)
-    return new Promise((resolve, reject) => {
-      if (0 > value || value > 1.0) {
-        reject(new Error('Value can only be in the range of [0.0, 1.0]'))
-      }
-      resolve(value)
-    })
-  },
-}

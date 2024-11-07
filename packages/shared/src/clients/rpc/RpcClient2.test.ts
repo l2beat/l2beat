@@ -17,24 +17,24 @@ describe(RpcClient2.name, () => {
       const http = mockObject<HttpClient2>({
         fetch: async () => mockResponse(100),
       })
-      const rpc = mockClient({ http })
+      const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
       const result = await rpc.getBlockWithTransactions(100)
 
       expect(result).toEqual({
-        transactions: [mockTx('0'), mockTx(null)],
+        transactions: [mockTx('0'), mockTx(undefined)],
         timestamp: 100,
         hash: '0xabcdef',
         number: 100,
       })
 
-      //@ts-expect-error
-      expect(http.fetch.calls[0].args[1]?.body).toMatchRegex(
-        /"method":"eth_getBlockByNumber"/,
-      )
-      //@ts-expect-error
-      expect(http.fetch.calls[0].args[1]?.body).toMatchRegex(
-        /"params":\["0x64",true\]/,
+      expect(http.fetch.calls[0].args[1]?.body).toEqual(
+        JSON.stringify({
+          method: 'eth_getBlockByNumber',
+          params: ['0x64', true],
+          id: 'unique-id',
+          jsonrpc: '2.0',
+        }),
       )
     })
   })
@@ -44,14 +44,18 @@ describe(RpcClient2.name, () => {
       const http = mockObject<HttpClient2>({
         fetch: async () => mockResponse(100),
       })
-      const rpc = mockClient({ http })
+      const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
       const result = await rpc.getLatestBlockNumber()
 
       expect(result).toEqual(100)
-      //@ts-expect-error
-      expect(http.fetch.calls[0].args[1]?.body).toMatchRegex(
-        /"params":\["latest",true\]/,
+      expect(http.fetch.calls[0].args[1]?.body).toEqual(
+        JSON.stringify({
+          method: 'eth_getBlockByNumber',
+          params: ['latest', true],
+          id: 'unique-id',
+          jsonrpc: '2.0',
+        }),
       )
     })
   })
@@ -254,14 +258,14 @@ function mockClient(deps: {
 
 const mockResponse = (blockNumber: number) => ({
   result: {
-    transactions: [mockRawTx('0'), mockRawTx(null)],
+    transactions: [mockRawTx('0'), mockRawTx(undefined)],
     timestamp: `0x${blockNumber.toString(16)}`,
     hash: '0xabcdef',
     number: `0x${blockNumber.toString(16)}`,
   },
 })
 
-const mockRawTx = (to: string | null) => ({
+const mockRawTx = (to: string | undefined) => ({
   hash: `0x1`,
   from: '0xf',
   to,
@@ -269,10 +273,10 @@ const mockRawTx = (to: string | null) => ({
   type: '0x2',
 })
 
-const mockTx = (to: string | null) => ({
+const mockTx = (to: string | undefined) => ({
   hash: `0x1`,
   from: '0xf',
   to,
   data: `0x1`,
-  type: 2,
+  type: '2',
 })

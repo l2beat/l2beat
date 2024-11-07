@@ -28,7 +28,7 @@ import { getZkSpaceProxy } from './manual/ZkSpaceProxy'
 import { getZkSyncLiteProxy } from './manual/ZkSyncLiteProxy'
 import { getImmutableProxy } from './manual/immutableProxy'
 
-export type Detector = (
+type Detector = (
   provider: IProvider,
   address: EthereumAddress,
 ) => Promise<ProxyDetails | undefined>
