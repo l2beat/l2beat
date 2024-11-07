@@ -115,7 +115,7 @@ export class DiscoveryEngine {
           } else if (analysis.type === 'Contract') {
             this.logger.log([address, info, analysis.name || '???'].join(' | '))
             if (analysis.proxyType) {
-              this.logger.log(`  P ${analysis.proxyType})`)
+              this.logger.log(`  P ${analysis.proxyType}`)
             }
             if (analysis.extendedTemplate) {
               this.logger.log(
@@ -126,7 +126,7 @@ export class DiscoveryEngine {
               this.logger.log(`  R ${relative}`)
             }
             for (const [key, value] of Object.entries(analysis.errors)) {
-              this.logger.logError(`  E ${key} - ${value}`)
+              this.logger.error(`  E ${key} - ${value}`)
             }
           }
         }),
@@ -169,9 +169,9 @@ export class DiscoveryEngine {
     }
     if (errorCount > 0) {
       this.logger.log('')
-      this.logger.logError(`Errors during discovery: ${errorCount}`)
+      this.logger.error(`Errors during discovery: ${errorCount}`)
       for (const error of errorMsgs) {
-        this.logger.logError(error)
+        this.logger.error(error)
       }
     }
   }

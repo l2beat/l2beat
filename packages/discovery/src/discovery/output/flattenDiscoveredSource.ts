@@ -96,7 +96,7 @@ export function flattenDiscoveredSources(
       assert(analyzedContract.type !== 'EOA', 'This should never happen')
       const contractName = analyzedContract.derivedName ?? analyzedContract.name
 
-      logger.logError(`Failed ${contractName} - ${stringifyError(e)}`)
+      logger.error(`Failed ${contractName} - ${stringifyError(e)}`)
     }
   }
 

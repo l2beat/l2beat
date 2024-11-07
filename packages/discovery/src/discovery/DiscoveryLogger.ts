@@ -17,7 +17,10 @@ export class DiscoveryLogger {
     console.log(message)
   }
 
-  logError(error: string): void {
-    this.log(`${chalk.red(error)}`)
+  error(error: string): void {
+    if (!this.options.enabled) {
+      return
+    }
+    console.error(`${chalk.red(error)}`)
   }
 }
