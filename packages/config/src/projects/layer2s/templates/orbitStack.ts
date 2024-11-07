@@ -273,9 +273,9 @@ function defaultStateValidation(
       title: 'Fast confirmations',
       description: `Whitelisted validators can fast-confirm state-roots after the initial ${formatSeconds(
         minimumAssertionPeriod,
-      )} has passed and skip the ${formatSeconds(
+      )} minimum assertion period has passed on a state root and skip the ${formatSeconds(
         challengePeriod,
-      )} challenge period. This permits withdrawals based on the fast-confirmed state root.`,
+      )} challenge period. This finalizes the fast-confirmed state root an permits withdrawals based on it.`,
       risks: [
         {
           category: 'Funds can be stolen if',
