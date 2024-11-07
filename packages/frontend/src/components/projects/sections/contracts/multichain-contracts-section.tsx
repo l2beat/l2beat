@@ -39,10 +39,7 @@ export function MultiChainContractsSection(
 
   const paritionedContracts = Object.fromEntries(
     Object.entries(props.contracts).map(([chainName, contracts]) => {
-      return [
-        chainName,
-        partition(contracts, (c) => c.implementationHasChanged),
-      ]
+      return [chainName, partition(contracts, (c) => c.implementationChanged)]
     }),
   )
 
