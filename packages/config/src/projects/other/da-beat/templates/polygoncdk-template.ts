@@ -184,7 +184,6 @@ export function PolygoncdkDAC(template: TemplateVars): DacDaLayer {
         },
       ],
     },
-    usedIn,
     bridges: [dacBridge],
     risks: {
       economicSecurity:

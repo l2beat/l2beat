@@ -10,7 +10,7 @@ import { ActivityTimeRangeControls } from '~/app/(side-nav)/scaling/activity/_co
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
-import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling-activity-entries'
+import { type ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
 import { api } from '~/trpc/react'
 import { Checkbox } from '../../core/checkbox'
 import { Chart } from '../core/chart'

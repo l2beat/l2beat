@@ -1708,7 +1708,10 @@
     { "address": "0x0c5cc5155b346453154059aD9d2Ff695dB92f774" },
     { "address": "0x21b8a9F5a4640c3FC13E19C48e776173e1210995" },
     { "address": "0x2ce8B4A516ebBc8B425764a867B742F76C2244c7" },
-    { "address": "0x33B60d5Dd260d453cAC3782b0bDC01ce84672142" },
+    {
+      "name": "L2USDCGatewayFallback",
+      "address": "0x33B60d5Dd260d453cAC3782b0bDC01ce84672142"
+    },
     { "address": "0x356483dC32B004f32Ea0Ce58F7F88879886e9074" },
     { "address": "0x5300000000000000000000000000000000000004" },
     { "address": "0x568993632c34604098e35a184C52aD390c70f754" },

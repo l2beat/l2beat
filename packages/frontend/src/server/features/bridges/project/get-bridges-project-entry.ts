@@ -1,7 +1,8 @@
 import { type Bridge, type ScalingProjectRiskViewEntry } from '@l2beat/config'
 import compact from 'lodash/compact'
 import { getProjectLinks } from '~/utils/project/get-project-links'
-import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
+import { getUnderReviewStatus } from '~/utils/project/under-review'
+import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getTvlProjectStats } from '../../scaling/tvl/get-tvl-project-stats'
 import { getAssociatedTokenWarning } from '../../scaling/tvl/utils/get-associated-token-warning'
 import { getContractsVerificationStatuses } from '../../verification-status/get-contracts-verification-statuses'
@@ -18,35 +19,40 @@ export async function getBridgesProjectEntry(project: Bridge) {
     projectsVerificationStatuses,
     contractsVerificationStatuses,
     manuallyVerifiedContracts,
-    implementationChangeReport,
+    projectsChangeReport,
     header,
   ] = await Promise.all([
     getProjectsVerificationStatuses(),
     getContractsVerificationStatuses(project),
     getManuallyVerifiedContracts(project),
-    getImplementationChangeReport(),
+    getProjectsChangeReport(),
     getHeader(project),
   ])
 
   const isVerified = !!projectsVerificationStatuses[project.id]
-  const changes = implementationChangeReport.projects[project.id]
-  const isImplementationUnderReview = !!changes?.ethereum
+  const hasImplementationChanged =
+    projectsChangeReport.hasImplementationChanged(project.id.toString())
+  const hasHighSeverityFieldChanged =
+    projectsChangeReport.hasHighSeverityFieldChanged(project.id)
 
   return {
     type: project.type,
     name: project.display.name,
     slug: project.display.slug,
-    isUnderReview: !!project.isUnderReview,
+    underReviewStatus: getUnderReviewStatus({
+      isUnderReview: !!project.isUnderReview,
+      hasImplementationChanged,
+      hasHighSeverityFieldChanged,
+    }),
     isArchived: !!project.isArchived,
     isUpcoming: !!project.isUpcoming,
-    isImplementationUnderReview,
     header,
     projectDetails: await getBridgeProjectDetails(
       project,
       isVerified,
       contractsVerificationStatuses,
       manuallyVerifiedContracts,
-      implementationChangeReport,
+      projectsChangeReport,
     ),
   }
 }

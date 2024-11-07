@@ -5,19 +5,18 @@ import {
   ENTRY_POINT_ADDRESS_0_6_0,
   ENTRY_POINT_ADDRESS_0_7_0,
   ERC4337_methods,
-  EVMBlock,
   EVMTransaction,
   SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
   SAFE_methods,
 } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import { Block, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { RpcCounter } from './RpcCounter'
 
 describe(RpcCounter.name, () => {
   describe(RpcCounter.prototype.countForBlock.name, () => {
     it('should return block with counted operations', () => {
-      const mockBlock: EVMBlock = createBlock(1)
+      const mockBlock: Block = createBlock(1)
 
       const expectedResult: CountedBlock = {
         ...mockBlock,
@@ -54,7 +53,7 @@ describe(RpcCounter.name, () => {
       const end = UnixTime.now()
       const start = end.add(-1, 'hours')
 
-      const mockBlocks: EVMBlock[] = [
+      const mockBlocks: Block[] = [
         createBlock(1, start),
         createBlock(2),
         createBlock(3, end),
@@ -133,7 +132,7 @@ describe(RpcCounter.name, () => {
         to: 'tx.to',
         hash: 'tx.hash',
         data: 'tx.data',
-        type: 0,
+        type: '0',
       })
 
       expect(result).toEqual({
@@ -168,7 +167,7 @@ describe(RpcCounter.name, () => {
         to: ENTRY_POINT_ADDRESS_0_6_0,
         hash: 'tx.hash',
         data: 'tx.data',
-        type: 2,
+        type: '2',
       })
 
       expect(result).toEqual({
@@ -205,7 +204,7 @@ describe(RpcCounter.name, () => {
         to: SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
         hash: 'tx.hash',
         data: 'tx.data',
-        type: 2,
+        type: '2',
       })
 
       expect(result).toEqual({
@@ -528,7 +527,7 @@ describe(RpcCounter.name, () => {
       })
 
       const mockTx = mockObject<EVMTransaction>({
-        type: 2,
+        type: '2',
       })
 
       const counter = new RpcCounter()
@@ -591,7 +590,7 @@ describe(RpcCounter.name, () => {
       })
 
       const mockTx = mockObject<EVMTransaction>({
-        type: 2,
+        type: '2',
       })
 
       const counter = new RpcCounter()
@@ -663,7 +662,7 @@ describe(RpcCounter.name, () => {
   })
 })
 
-function createBlock(number: number, timestamp?: UnixTime): EVMBlock {
+function createBlock(number: number, timestamp?: UnixTime): Block {
   return {
     number,
     timestamp: timestamp?.toNumber() ?? UnixTime.now().toNumber(),
@@ -674,14 +673,14 @@ function createBlock(number: number, timestamp?: UnixTime): EVMBlock {
         to: 'tx1.to',
         hash: 'tx1.hash',
         data: 'tx1.data',
-        type: 2,
+        type: '2',
       },
       {
         from: 'tx2.from',
         to: 'tx2.to',
         hash: 'tx2.hash',
         data: 'tx2.data',
-        type: 2,
+        type: '2',
       },
     ],
   }

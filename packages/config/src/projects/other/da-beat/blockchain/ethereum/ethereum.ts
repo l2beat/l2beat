@@ -89,7 +89,6 @@ export const ethereum: DaLayer = {
     `,
   },
   bridges: [enshrinedBridge],
-  usedIn: enshrinedBridge.usedIn,
   consensusAlgorithm: {
     name: 'Gasper',
     description: `Ethereum's consensus protocol combines two separate consensus protocols, LMD GHOST and Casper FFG.

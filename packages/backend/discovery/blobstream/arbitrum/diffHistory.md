@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xdb2b8749d56762083d1f791fd5e7d78856d33900
+
+# Diff at Tue, 05 Nov 2024 16:07:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5e6ce51851b57187ccdd52c4944a82e2a8ab1e88 block: 259634526
+- current block number: 271340080
+
+## Description
+
+Verifier program verification key changed, verifier implementation is the same.
+
+## Watched changes
+
+```diff
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: None
+      values.blobstreamProgramVkey:
+-        "0x0038c5c5568fe5e1ae267efb1298a7792d1cda00bccc2d1d4bfa4c1511e06380"
++        "0x00a6ea49173d4b0b544a24a5a7474e76d1fda8f0f7e541cbb294d2b7249d7bcb"
+    }
+```
+
 Generated with discovered.json: 0x1f792e6a4a7bdeb8d78e2da95b143a25b0d6353c
 
 # Diff at Mon, 21 Oct 2024 11:13:00 GMT:

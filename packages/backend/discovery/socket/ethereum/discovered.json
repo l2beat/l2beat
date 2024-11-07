@@ -1,7 +1,7 @@
 {
   "name": "socket",
   "chain": "ethereum",
-  "blockNumber": 21093405,
+  "blockNumber": 21122046,
   "configHash": "0x1f97925c22ae0d7e5ba013bf6514fd291d4596c36ca353b65430e23b4140de68",
   "contracts": [
     {
@@ -563,7 +563,7 @@
         "capacitorFactory__": "0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a",
         "chainSlug": 1,
         "executionManager__": "0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C",
-        "globalMessageCount": 6808,
+        "globalMessageCount": 6892,
         "hasher__": "0x5C71beE4a6b0D617D8c3d107D331292741789E27",
         "inboundSwitchboards": [
           "0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287",
@@ -692,7 +692,29 @@
           "0x7FBCd72B6368f1771C9F6Ee16502C19b0AADBa1D",
           "0xE3255bb716d8BA81aA97Ff20c75b404D9844CBE1",
           "0xf1807B621efC3B072d1203dD28C880BBEDc56161",
-          "0x92469EEf05a071B0e56275b23597b1b701C15a71"
+          "0x92469EEf05a071B0e56275b23597b1b701C15a71",
+          "0x6dED17643D7acFc0bE0e79ff6C4762F12AA5516E",
+          "0xCE0AB493716d96C0979E0B708BeF1915F3B07e01",
+          "0x3390ca7A0D7C80871B05C3FeBbeEee91307a35ba",
+          "0x7E34B138e507570bDCC9b99230cFaA2745F0222C",
+          "0x5deeAb623C6091A0A59E6d041dAAE9bDeFBfC203",
+          "0x65A9b862671de5Df85EcE387220C6b10a17230f7",
+          "0xC3875afddEde146DCfED7e72b2Ad12B853CA1241",
+          "0xBbA3095f6ACA17ff23Df466833D621cc91Db7675",
+          "0xb9703b625c3B846B58DFdaDBceF77e34a1C59965",
+          "0xf7a4a34d64E8fE4FCCffE2f3C985D43409Aa8c9a",
+          "0x29ACa1443F28DceDEBf99173b37b5C1e814cA548",
+          "0x5366D4acCC96Ed297e30B8702FBC9b85daA3a459",
+          "0xFb0c284CD9929eB5139eB027aD7497097Ba25C87",
+          "0x008244E37A90E090dc4abD70F37195075cbE8453",
+          "0xB1b7BC699cAEcB941e7377065c7CE82039889603",
+          "0x0c39a1b042AbfC68d10B78081AFE3F58a6523A35",
+          "0x76C9129b44c637500c88760ADd2EbEF07472b549",
+          "0x10ed00FDb26Ec6BE0183e6f14D8275d5898B0721",
+          "0x9d13F2b3B694DE6a1cF58edb5044454CAE3B84E4",
+          "0xab722902681A260762084A78A2d8f19CfA6A46Ef",
+          "0x5D5a2999E91A336CA99da0cB636898ccB521f40a",
+          "0xb5d5E523905bB397bCAfB36B252535a255d3E23C"
         ],
         "transmitManager__": "0xeD037aFBffC65a94E9CC592947E851FB2f730341",
         "version": "0x484f1c5889188a0a81068ce8c49d8f7c3b3f1b0c1723b50ebd656a8d4f99e356"
@@ -1113,7 +1135,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 191,
+        "nonce": 193,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

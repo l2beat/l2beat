@@ -1,6 +1,14 @@
 {
   "ethereum": [
     {
+      "symbol": "ERN",
+      "address": "0xBBc2AE13b23d715c30720F079fcd9B4a74093505"
+    },
+    {
+      "symbol": "FLT",
+      "address": "0x236501327e701692a281934230AF0b6BE8Df3353"
+    },
+    {
       "symbol": "MOON",
       "coingeckoId": "moonflow",
       "address": "0x4a52Fa1a1115814c59C643F53f14199b8fb11cEa"
@@ -4339,6 +4347,22 @@
       "source": "native",
       "supply": "totalSupply", // no circulating on CG, but seems to be fully circulating
       "coingeckoId": "uk-real-estate"
+    },
+    {
+      "symbol": "USDC",
+      "address": "0xc518A88c67CECA8B3f24c4562CB71deeB2AF86B7",
+      "source": "external",
+      "supply": "totalSupply",
+      "excludeFromTotal": true, // locking oft adapters on L2s
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      },
+      "coingeckoId": "bridged-usdc-re-al"
     },
     {
       "symbol": "USTB",

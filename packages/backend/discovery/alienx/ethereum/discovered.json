@@ -2,7 +2,7 @@
   "name": "alienx",
   "chain": "ethereum",
   "blockNumber": 21092323,
-  "configHash": "0xc32caa2e265eaf3493d81b7221c6c86510b9ac77df77030a293c881a056720b1",
+  "configHash": "0x3b5a22deb791cd16681dd1fa83936bde4489be7dc4ce448a565c8b92ed832522",
   "contracts": [
     {
       "name": "RollupEventInbox",
@@ -172,6 +172,12 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
+          "permission": "configure",
+          "target": "0x6fa8b24c85409A4fcb541c9964766862aA007f39",
+          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "via": [{ "address": "0xD4972734Ed659c03ca3e476e06Fc6f016397dfD4" }]
+        },
+        {
           "permission": "upgrade",
           "target": "0x01c1Be00BA202332a1A9244D2C36f51B8C2aA84b",
           "via": [
@@ -282,11 +288,14 @@
     {
       "name": "L1ERC20Gateway",
       "address": "0x5625d2a46fc582b3e6dE5288D9C5690B20EBdb8D",
+      "template": "orbitstack/ERC20Gateway",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
         "0x12b277cae4866b3d1f1772fcb7f861dc23247452179f0736c9dbe7012f6c14f6"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "ERC20Gateway",
+      "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -413,6 +422,17 @@
           "permission": "challenge",
           "target": "0x32AD06477129F4470294Fbaf11C0FC682d92E4A3",
           "via": []
+        },
+        {
+          "permission": "configure",
+          "target": "0x32f6CAE58A89aA7c91D736Bb1100E377C570bb27",
+          "via": [
+            {
+              "address": "0xD4972734Ed659c03ca3e476e06Fc6f016397dfD4",
+              "delay": 0,
+              "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+            }
+          ]
         },
         {
           "permission": "propose",
@@ -678,7 +698,13 @@
         "isUsingFeeToken": false,
         "keySetUpdates": 1,
         "maxDataSize": 117964,
-        "maxTimeVariation": [17280, 48, 86400, 3600],
+        "maxTimeVariation": {
+          "delayBlocks": 17280,
+          "futureBlocks": 48,
+          "delaySeconds": 86400,
+          "futureSeconds": 3600
+        },
+        "postsBlobs": false,
         "reader4844": "0x7Deda2425eC2d4EA0DF689A78de2fBF002075576",
         "rollup": "0x6fa8b24c85409A4fcb541c9964766862aA007f39",
         "sequencerVersion": "0x88",
@@ -689,7 +715,7 @@
       },
       "fieldMeta": {
         "maxTimeVariation": {
-          "description": "Struct: delayBlocks, futureBlocks, delaySeconds, futureSeconds. onlyRollupOwner settable. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
+          "description": "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
         }
       },
       "derivedName": "SequencerInbox"
@@ -774,6 +800,11 @@
         {
           "permission": "act",
           "target": "0x123C1E324BC742295B4278B41C4E33831C77655C"
+        },
+        {
+          "permission": "configure",
+          "target": "0x6fa8b24c85409A4fcb541c9964766862aA007f39",
+          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
         },
         {
           "permission": "upgrade",
@@ -1574,14 +1605,15 @@
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "orbitstack/Bridge": "0x6e309bce5a8758ba24f800f3c0135c502fd5cc22724da5165d8368377eb6c9c8",
     "orbitstack/ChallengeManager": "0xc4fbc82c5001579bb1f880d92a3510cda3dc4a65e284fc300363ce048c2fb6d7",
+    "orbitstack/ERC20Gateway": "0xf1eafb4b453c67c3928c43ad270e71102bda129c494c4cf3d132be60695af7f9",
     "orbitstack/OneStepProofEntry": "0xf3bff5da86f9bbb5f9ac93a0f2239f0769d051b67a44be2e52c322799e3b8d4f",
     "orbitstack/OneStepProver0": "0x80f18705038deef096683a89d16549bf343ada57cac1f2750df2f06fbbaed5ca",
     "orbitstack/OneStepProverHostIo": "0xacacb7603847a3f0212fdf80c653040278214c00451f763907e270d1f19efec0",
     "orbitstack/OneStepProverMath": "0x8dd8aebb517eb6eaf15437ddbb90dff66f2b14d9d6b5390dd87fbdab15168188",
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
-    "orbitstack/RollupProxy": "0x9de477a7ec4abe22558d85184e1ff68cebea26c903f45220337156ae3acf3dc5",
-    "orbitstack/SequencerInbox": "0x80eed651d83fd6cd84047260bf02ec5e3a5f21b36049e1e45f34bd0a452e02f9",
+    "orbitstack/RollupProxy": "0x896aca243cf3d45ddf79cc142d37874406a6e07e5572f1450df6adccd0d627ac",
+    "orbitstack/SequencerInbox": "0x746f38463ee5aff9c2f6051c828002565b57c702a6be447c979d1996dd6bd673",
     "orbitstack/UpgradeExecutor": "0xa25e02367a436cebea22481663da914bbf1fd9492d903659cc6ec9ddbaccb241"
   }
 }

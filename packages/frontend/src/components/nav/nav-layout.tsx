@@ -1,6 +1,5 @@
 import compact from 'lodash/compact'
 import { type ReactNode } from 'react'
-import { env } from '~/env'
 import { BridgesIcon } from '~/icons/pages/bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/data-availability'
 import { ScalingIcon } from '~/icons/pages/scaling'
@@ -108,7 +107,7 @@ export async function NavLayout({
         },
       ],
     },
-    env.NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT && {
+    {
       type: 'multiple',
       title: 'Data Availability',
       match: 'data-availability',

@@ -43,7 +43,7 @@ export async function GET() {
               isArchived: entry.isArchived,
               hostChain: entry.hostChain,
               isUpcoming: entry.isUpcoming,
-              isUnderReview: entry.isUnderReview,
+              isUnderReview: !!entry.underReviewStatus,
               badges: entry.badges.map(({ badge, kind }) => ({
                 category: kind,
                 name: badge,

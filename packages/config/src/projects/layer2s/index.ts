@@ -39,6 +39,7 @@ import { edgeless } from './edgeless'
 import { ethernity } from './ethernity'
 import { everclear } from './everclear'
 import { fhenix } from './fhenix'
+import { fluence } from './fluence'
 import { fluent } from './fluent'
 import { form } from './form'
 import { frame } from './frame'
@@ -83,6 +84,7 @@ import { metis } from './metis'
 import { millicent } from './millicent'
 import { mint } from './mint'
 import { mode } from './mode'
+import { moonveil } from './moonveil'
 import { morph } from './morph'
 import { move } from './move'
 import { myria } from './myria'
@@ -215,6 +217,7 @@ export const layer2s: Layer2[] = [
   ethernity,
   everclear,
   fhenix,
+  fluence,
   fluent,
   form,
   frame,
@@ -260,6 +263,7 @@ export const layer2s: Layer2[] = [
   mint,
   millicent,
   mode,
+  moonveil,
   morph,
   move,
   myria,
