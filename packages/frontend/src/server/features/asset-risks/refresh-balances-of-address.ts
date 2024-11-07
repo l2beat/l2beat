@@ -58,22 +58,52 @@ export async function refreshBalancesOfAddress(address: Address) {
         transport: http(),
       })
 
-      const balances = await client.multicall({
-        contracts: tokens.map((token) => ({
-          abi: erc20Abi,
-          address: getAddress(token.address),
-          functionName: 'balanceOf',
-          args: [address],
-        })),
-      })
-
-      await db.assetRisksBalance.upsertMany(
-        tokens.map((token, index) => ({
-          tokenId: token.id,
-          userId: user.id,
-          balance: (balances[index]?.result ?? 0n).toString(),
-        })),
+      const { nativeTokens, contractTokens } = tokens.reduce<{
+        nativeTokens: TokenRecord[]
+        contractTokens: TokenRecord[]
+      }>(
+        (acc, token) => {
+          if (token.address === 'native') {
+            acc.nativeTokens.push(token)
+          } else {
+            acc.contractTokens.push(token)
+          }
+          return acc
+        },
+        { nativeTokens: [], contractTokens: [] },
       )
+
+      if (nativeTokens.length > 0) {
+        const nativeBalance = await client.getBalance({
+          address,
+        })
+        await db.assetRisksBalance.upsertMany(
+          nativeTokens.map((token) => ({
+            tokenId: token.id,
+            userId: user.id,
+            balance: nativeBalance.toString(),
+          })),
+        )
+      }
+
+      if (contractTokens.length > 0) {
+        const balances = await client.multicall({
+          contracts: contractTokens.map((token) => ({
+            abi: erc20Abi,
+            address: getAddress(token.address),
+            functionName: 'balanceOf',
+            args: [address],
+          })),
+        })
+
+        await db.assetRisksBalance.upsertMany(
+          contractTokens.map((token, index) => ({
+            tokenId: token.id,
+            userId: user.id,
+            balance: (balances[index]?.result ?? 0n).toString(),
+          })),
+        )
+      }
     }),
   )
 }
