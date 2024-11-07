@@ -5,7 +5,6 @@ import { http, type Hex, createPublicClient, isAddress } from 'viem'
 import { type ScalingProjectRisk } from '@l2beat/config'
 import { Skeleton } from '~/components/core/skeleton'
 import { getChain } from '~/server/features/asset-risks/utils/chains'
-import { Footer } from '../_components/footer'
 import { ClientsideLogic } from './_components/clientside-logic'
 import { DetailsHeader } from './_components/details-header'
 import { Disclaimer } from './_components/disclaimer'
@@ -79,7 +78,6 @@ export default async function Page(props: Props) {
         </ReportProvider>
         <Disclaimer />
       </div>
-      <Footer />
     </main>
   )
 }

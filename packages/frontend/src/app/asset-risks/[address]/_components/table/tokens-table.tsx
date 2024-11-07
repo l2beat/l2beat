@@ -62,7 +62,7 @@ export function TokensTable() {
   return (
     <Card className="overflow-x-auto rounded-none sm:rounded-xl">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold">Assets</h2>
+        <h2 className="text-2xl font-bold">Assets</h2>
         <FilterInput filter={filter} setFilter={setFilter} />
       </div>
       <div
