@@ -26,10 +26,8 @@ export function Navbar() {
           </div>
           <div className="inline-block md:hidden">
             <WalletDrawer>
-              <DrawerTrigger>
-                <button className="rounded bg-pink-900 px-6 py-2 text-xs font-bold text-white">
-                  Scan assets
-                </button>
+              <DrawerTrigger className="rounded bg-pink-900 px-6 py-2 text-xs font-bold text-white">
+                Scan assets
               </DrawerTrigger>
             </WalletDrawer>
           </div>
