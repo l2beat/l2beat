@@ -11,6 +11,7 @@ import { DetailsHeader } from './_components/details-header'
 import { Disclaimer } from './_components/disclaimer'
 import { ReportProvider } from './_components/report-context'
 import { TokensTable } from './_components/table/tokens-table'
+import { db } from '~/server/database'
 
 export type Risk = SetOptional<ScalingProjectRisk, 'category'>
 
@@ -19,11 +20,16 @@ interface Props {
 }
 
 async function getAddressDisplayName(address: Hex) {
-  const ethereumChain = getChain(1)
-  if (!ethereumChain) return address
+  const network = await db.network.findByChainIdWithConfigs(1)
+  if (!network?.chainId || !network.rpcs?.[0]?.url) return address
+  const chain = getChain({
+    id: network.chainId,
+    name: network.name,
+    rpcUrl: network.rpcs?.[0]?.url,
+  })
 
   const ethereum = createPublicClient({
-    chain: ethereumChain,
+    chain,
     transport: http(),
   })
 
