@@ -4,7 +4,6 @@ import { http, type Hex, createPublicClient, isAddress } from 'viem'
 
 import { type ScalingProjectRisk } from '@l2beat/config'
 import { Skeleton } from '~/components/core/skeleton'
-import { getChain } from '~/server/features/asset-risks/utils/chains'
 import { Footer } from '../_components/footer'
 import { ClientsideLogic } from './_components/clientside-logic'
 import { DetailsHeader } from './_components/details-header'
@@ -12,6 +11,7 @@ import { Disclaimer } from './_components/disclaimer'
 import { ReportProvider } from './_components/report-context'
 import { TokensTable } from './_components/table/tokens-table'
 import { db } from '~/server/database'
+import { mainnet } from 'viem/chains'
 
 export type Risk = SetOptional<ScalingProjectRisk, 'category'>
 
@@ -21,16 +21,10 @@ interface Props {
 
 async function getAddressDisplayName(address: Hex) {
   const network = await db.network.findByChainIdWithConfigs(1)
-  if (!network?.chainId || !network.rpcs?.[0]?.url) return address
-  const chain = getChain({
-    id: network.chainId,
-    name: network.name,
-    rpcUrl: network.rpcs?.[0]?.url,
-  })
 
   const ethereum = createPublicClient({
-    chain,
-    transport: http(),
+    chain: mainnet,
+    transport: http(network?.rpcs?.[0]?.url),
   })
 
   const resolvedEnsDomain = await ethereum.getEnsName({
