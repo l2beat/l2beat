@@ -8,23 +8,21 @@ import { mainnet } from 'viem/chains'
 import { normalize } from 'viem/ens'
 import { LensIcon } from '~/icons/lens'
 import { cn } from '~/utils/cn'
+import { Input } from './input'
 
-const inputVariants = cva(
-  'peer w-full border border-[#32326A] bg-[#1F1F38] font-medium text-white outline-none transition-colors duration-200 placeholder:text-[#74749F] focus:border-[#5959B1]',
-  {
-    variants: {
-      size: {
-        sm: 'h-10 rounded-full py-2 pl-4 pr-10',
-        md: 'h-14 rounded-[28px] py-5 pl-5 pr-10',
-      },
-    },
-    defaultVariants: {
-      size: 'md',
+const walletInputVariants = cva('pr-10', {
+  variants: {
+    size: {
+      sm: 'pl-4',
+      md: 'pl-5',
     },
   },
-)
+  defaultVariants: {
+    size: 'md',
+  },
+})
 
-type Props = VariantProps<typeof inputVariants> & {
+type Props = VariantProps<typeof walletInputVariants> & {
   className?: string
 }
 
@@ -53,7 +51,7 @@ export function WalletInput({ size, className }: Props) {
 
   return (
     <div className="relative">
-      <input
+      <Input
         type="text"
         value={address}
         onChange={(e) => setAddress(e.target.value)}
@@ -62,14 +60,15 @@ export function WalletInput({ size, className }: Props) {
             void handleWallet()
           }
         }}
-        // TODO: Probably use sonner for this
-        placeholder={error ?? 'Input address or ENS name'}
+        placeholder="Input address or ENS name"
+        error={error}
+        size={size}
         className={cn(
-          inputVariants({
+          'peer',
+          walletInputVariants({
             size,
           }),
           className,
-          error && 'placeholder:text-red-600',
         )}
       />
       <button

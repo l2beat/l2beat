@@ -24,10 +24,10 @@ export function DetailsHeader(props: DetailsHeaderProps) {
   return (
     <Card className="flex flex-col gap-4 rounded-none sm:rounded-xl">
       <h1 className="font-oswald text-3xl font-bold">Wallet insights</h1>
-      <p className="text-sm font-medium text-white/80">
+      <p className="text-sm  text-white/80">
         {`A total of ${sum} issues were found with an average of ${averageIssuesPerToken} issues per token. Your most valuable token has ${leastIssues} issues.`}
       </p>
-      <p className="text-sm font-medium text-white/80">
+      <p className="text-sm  text-white/80">
         You can check the risks associated with specific tokens by expanding the
         rows.
       </p>
@@ -41,7 +41,7 @@ export function DetailsHeader(props: DetailsHeaderProps) {
         </div>
         <div className="col-span-2 flex flex-col gap-[5px]">
           <span className="text-xs font-bold text-[#74749F]">Address</span>
-          <span className="text-2xl font-medium leading-none">
+          <span className="text-2xl font-semibold leading-none">
             {props.vanityAddress ?? report.address}
           </span>
         </div>

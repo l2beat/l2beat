@@ -1,5 +1,5 @@
+import { Input } from '~/app/asset-risks/_components/input'
 import { LensIcon } from '~/icons/lens'
-import { cn } from '~/utils/cn'
 
 interface FilterInputProps {
   filter?: string
@@ -9,7 +9,7 @@ interface FilterInputProps {
 export function FilterInput(props: FilterInputProps) {
   return (
     <div className="relative">
-      <input
+      <Input
         value={props.filter}
         onChange={
           props.setFilter
@@ -17,17 +17,12 @@ export function FilterInput(props: FilterInputProps) {
             : undefined
         }
         placeholder="Search for asset"
-        className={cn(
-          'bg-white text-xs text-zinc-500 placeholder:text-zinc-500 dark:bg-zinc-900 dark:text-white',
-          'rounded-lg px-3 py-2',
-          'border border-[#C0C1C7] outline-none focus:border-gray-500',
-          'transition-colors duration-100',
-          'w-[min(50vw,250px)]',
-        )}
+        size="sm"
+        className="peer w-[min(50vw,250px)] text-sm"
       />
-      <div className="absolute right-2.5 top-2.5 cursor-pointer">
-        <LensIcon />
-      </div>
+      <button className="pointer-events-none absolute inset-y-0 right-[18px] peer-focus:[&>svg]:fill-white">
+        <LensIcon className="size-4 fill-[#74749F] transition-colors duration-200" />
+      </button>
     </div>
   )
 }

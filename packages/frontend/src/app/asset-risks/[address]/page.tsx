@@ -68,15 +68,15 @@ export default async function Page(props: Props) {
           address={address}
           placeholder={
             <div className="flex flex-col gap-6">
-              <Skeleton className="h-[335px] w-full rounded-xl" />
-              <Skeleton className="h-[400px] w-full rounded-xl" />
+              <Skeleton className="h-[242px] w-full rounded-xl" />
+              <Skeleton className="h-[calc(100vh_-_410px)] w-full rounded-xl" />
             </div>
           }
         >
           <DetailsHeader vanityAddress={vanityAddress} />
           <TokensTable />
+          <Disclaimer />
         </ReportProvider>
-        <Disclaimer />
       </div>
     </main>
   )
