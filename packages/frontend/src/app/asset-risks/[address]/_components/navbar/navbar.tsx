@@ -1,6 +1,7 @@
 import { DrawerTrigger } from '~/app/asset-risks/_components/drawer'
 import { WalletDrawer } from '../wallet-drawer'
 import { WalletInput } from '~/app/asset-risks/_components/wallet-input'
+import Link from 'next/link'
 
 export function Navbar() {
   return (
@@ -9,9 +10,12 @@ export function Navbar() {
         <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center justify-between px-4 lg:px-8">
           <ul className="flex h-full items-center">
             <li className="mr-4 lg:mr-8">
-              <span className="font-oswald text-[34px] font-semibold uppercase leading-none tracking-[-0.173px]">
+              <Link
+                href="/asset-risks"
+                className="font-oswald text-[34px] font-semibold uppercase leading-none tracking-[-0.173px]"
+              >
                 Insight
-              </span>
+              </Link>
             </li>
           </ul>
           <div className="hidden items-center gap-3 md:flex">
