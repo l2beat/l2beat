@@ -7,6 +7,7 @@ import { db } from '~/server/database'
 import { refreshBalancesOfAddress } from '~/server/features/asset-risks/refresh-balances-of-address'
 import { refreshTokensOfAddress } from '~/server/features/asset-risks/refresh-tokens-of-address'
 import { procedure, router } from '../trpc'
+import { type TokenRecord, type TokenBridgeRecord } from '@l2beat/database'
 
 const projects = [...layer2s, ...layer3s]
 
@@ -61,10 +62,33 @@ export const assetRisksRouter = router({
       const externalBridges = await db.externalBridge.getAll()
       const bridges = await db.tokenBridge.getAll()
       const balances = await db.assetRisksBalance.getAllForUser(user.id)
-      const tokenIds = balances.map((b) => b.tokenId)
-      const tokens = await db.token.getByIds(tokenIds)
+
+      const userTokenIds = balances.map((b) => b.tokenId)
+
+      const tokens: Record<string, TokenRecord> = {}
+      const relations: Record<string, TokenBridgeRecord> = {}
+
+      let tokensToCheck: string[] = userTokenIds
+
+      while (tokensToCheck.length > 0) {
+        const newTokens = await db.token.getByIds(tokensToCheck)
+        for (const token of newTokens) {
+          tokens[token.id] = token
+        }
+        const newRelations =
+          await db.tokenBridge.getByTargetTokenIds(tokensToCheck)
+        tokensToCheck = []
+        for (const relation of newRelations) {
+          if (relations[relation.id]) continue
+          relations[relation.id] = relation
+          if (!tokens[relation.sourceTokenId]) {
+            tokensToCheck.push(relation.sourceTokenId)
+          }
+        }
+      }
+
       const tokenMeta = await db.tokenMeta.getByTokenIdsAndSource(
-        tokenIds,
+        Object.values(tokens).map((t) => t.id),
         'Aggregate',
       )
       // TODO: Fetch info about prices / etc.
@@ -120,7 +144,7 @@ export const assetRisksRouter = router({
         chains,
         bridges,
         externalBridges,
-        tokens: tokens.map((token) => {
+        tokens: Object.values(tokens).map((token) => {
           const balanceRecord = balances.find((b) => b.tokenId === token.id)
           assert(balanceRecord, 'Balance not found')
 
