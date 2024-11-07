@@ -9,7 +9,8 @@ export const ethereum = {
   kind: 'PublicBlockchain',
   systemCategory: 'public',
   display: {
-    name: 'Ethereum (EIP-4844)',
+    // name: 'Ethereum (EIP-4844)',
+    name: 'Ethereum',
     slug: 'ethereum',
     description: `Ethereum is a Proof of Stake (PoS) network that enables the creation and execution of smart contracts and decentralized applications (dApps) using its native cryptocurrency, Ether (ETH).
       EIP-4844 allows for blob-carrying transactions containing large amounts of data on the consensus layer, and whose commitment can be accessed by the EVM on the execution layer.`,
