@@ -6,6 +6,7 @@ export function getChain({
   id,
   name,
   rpcUrl,
+  // TODO: this should probably be stored in the database, next to the network
   mutlicallAddress = '0xca11bde05977b3631167028862be2a173976ca11',
 }: {
   id: number
