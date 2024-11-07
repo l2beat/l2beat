@@ -2,7 +2,13 @@ import {
   ContractParameters,
   get$Implementations,
 } from '@l2beat/discovery-types'
-import { assert, ProjectId, UnixTime, formatSeconds, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  assert,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { unionBy } from 'lodash'
@@ -363,7 +369,12 @@ function orbitStackCommon(
   const challengePeriodSeconds =
     challengePeriodBlocks * blockNumberOpcodeTimeSeconds
 
-  const existFastConfirmer = templateVars.discovery.getContractValue<EthereumAddress>('RollupProxy', 'anyTrustFastConfirmer') !== EthereumAddress.ZERO
+  const fastConfirmer =
+    templateVars.discovery.getContractValueOrUndefined<EthereumAddress>(
+      'RollupProxy',
+      'anyTrustFastConfirmer',
+    ) ?? EthereumAddress.ZERO
+  const existFastConfirmer = fastConfirmer !== EthereumAddress.ZERO
 
   return {
     id: ProjectId(templateVars.discovery.projectName),
