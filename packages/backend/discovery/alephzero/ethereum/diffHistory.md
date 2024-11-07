@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x6aee0a38af8170f95f07dc8569fa9cee48703ad0
+
+# Diff at Thu, 07 Nov 2024 11:04:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e983273bf2ca9304e4b729faaddf20acae0f6c19 block: 21071352
+- current block number: 21071352
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21071352 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x1CA12290D954CFe022323b6A6Df92113ed6b1C98) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.2.via.0.description:
+-        "can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
++        "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+    }
+```
+
+```diff
+    contract AlephZeroMultisig (0xeC475675629B38E42d4aC5d40761618268E7Ed21) {
+    +++ description: None
+      directlyReceivedPermissions.1.description:
+-        "can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
++        "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+    }
+```
+
 Generated with discovered.json: 0x990e94088380ddf6010a3cfce46d87a0c9893ce1
 
 # Diff at Mon, 04 Nov 2024 07:52:26 GMT:
