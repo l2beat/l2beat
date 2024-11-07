@@ -22,7 +22,6 @@ export class CirculatingSupplyService {
       await this.$.circulatingSupplyProvider.getCirculatingSupplies(
         configuration.coingeckoId,
         { from, to },
-        undefined,
       )
 
     return circulatingSupplies.map((circulatingSupply) => {

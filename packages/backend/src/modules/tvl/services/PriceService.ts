@@ -30,7 +30,6 @@ export class PriceService {
       coingeckoId,
       from,
       to,
-      undefined,
     )
 
     return configurations

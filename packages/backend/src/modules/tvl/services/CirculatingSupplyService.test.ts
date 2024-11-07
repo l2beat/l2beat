@@ -56,7 +56,7 @@ describe(CirculatingSupplyService.name, () => {
 
       expect(
         circulatingSupplyProvider.getCirculatingSupplies,
-      ).toHaveBeenOnlyCalledWith(coingeckoId, { from, to }, undefined)
+      ).toHaveBeenOnlyCalledWith(coingeckoId, { from, to })
     })
   })
 

@@ -53,7 +53,6 @@ export class L2CostsPricesIndexer extends ManagedChildIndexer {
       ETHEREUM_COINGECKO_ID,
       from,
       to,
-      undefined,
     )
 
     return prices.map((p) => ({

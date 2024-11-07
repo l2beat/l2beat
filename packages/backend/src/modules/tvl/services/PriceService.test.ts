@@ -43,7 +43,6 @@ describe(PriceService.name, () => {
         coingeckoId,
         from,
         to,
-        undefined,
       )
 
       // all for "a" - maxHeight === null
