@@ -60,10 +60,13 @@ export async function refreshTokensOfAddress(address: Address) {
       await Promise.allSettled(
         networksToCheck.map<Promise<[string, TokenRecord[]]>>(
           async (network) => {
-            if (!network.chainId) return [network.id, []]
+            if (!network.chainId || !network.rpc?.url) return [network.id, []]
 
-            const chain = getChain(network.chainId)
-            if (!chain) return [network.id, []]
+            const chain = getChain({
+              id: network.chainId,
+              name: network.name,
+              rpcUrl: network.rpc.url,
+            })
 
             const client = createPublicClient({
               chain,

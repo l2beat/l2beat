@@ -8,7 +8,7 @@ import {
   parseAbi,
 } from 'viem'
 import { db } from '~/server/database'
-import { createCustomChain } from './utils/chains'
+import { getChain } from './utils/chains'
 
 export async function refreshBalancesOfAddress(address: Address) {
   const user = await db.assetRisksUser.findUserByAddress(address)
@@ -49,11 +49,10 @@ export async function refreshBalancesOfAddress(address: Address) {
         return []
       }
 
-      const chain = createCustomChain({
+      const chain = getChain({
         id: network.chainId,
         name: network.name,
         rpcUrl: network.rpc.url,
-        mutlicallAddress: '0xca11bde05977b3631167028862be2a173976ca11',
       })
 
       const client = createPublicClient({

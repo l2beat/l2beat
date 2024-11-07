@@ -1,34 +1,12 @@
 import 'server-only'
 
-import { type Hex } from 'viem'
-import {
-  type Chain,
-  arbitrum, // 42161
-  base, // 8453
-  blast, // 81457
-  boba, // 288
-  fraxtal, // 252
-  kroma, // 255
-  linea, // 59144
-  mainnet, // 1
-  manta, // 169
-  mantle, // 5000
-  mode, // 34443
-  optimism, // 10
-  polygonZkEvm, // 1101
-  reyaNetwork, // 1729
-  scroll, // 534352
-  zkFair, // 42766
-  zkSync, // 324
-} from 'viem/chains'
+import { type Chain, type Hex } from 'viem'
 
-import { env } from '~/env'
-
-export function createCustomChain({
+export function getChain({
   id,
   name,
   rpcUrl,
-  mutlicallAddress,
+  mutlicallAddress = '0xca11bde05977b3631167028862be2a173976ca11',
 }: {
   id: number
   name: string
@@ -56,47 +34,4 @@ export function createCustomChain({
         : undefined,
     },
   } satisfies Chain
-}
-
-const supportedChains = [
-  mainnet,
-  arbitrum,
-  base,
-  blast,
-  boba,
-  fraxtal,
-  kroma,
-  linea,
-  manta,
-  mantle,
-  mode,
-  optimism,
-  polygonZkEvm,
-  reyaNetwork,
-  scroll,
-  zkFair,
-  zkSync,
-  createCustomChain({
-    id: 957,
-    name: 'Lyra',
-    rpcUrl: 'https://rpc.lyra.finance',
-  }),
-  createCustomChain({
-    id: 2999,
-    name: 'Aevo',
-    rpcUrl: 'https://rpc.aevo.xyz',
-  }),
-]
-
-/**
- * Gets the chain object for the given chain id.
- * @param chainId - Chain id of the target EVM chain.
- * @returns Viem's chain object.
- */
-export function getChain(chainId: number) {
-  const chain = supportedChains.find((chain) => chain.id === chainId)
-  if (!chain) {
-    return null
-  }
-  return chain
 }
