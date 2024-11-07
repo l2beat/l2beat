@@ -2,10 +2,7 @@ import {
   ProjectDiscovery,
   ScalingProjectContract,
   ScalingProjectPermission,
-  bridges,
   isSingleAddress,
-  layer2s,
-  layer3s,
 } from '@l2beat/config'
 import { ConfigReader } from '@l2beat/discovery'
 import { ContractsMeta, getMeta } from './getMeta'
@@ -17,8 +14,6 @@ import {
   ApiPreviewResponse,
 } from './types'
 
-const allProjects = [...layer2s, ...layer3s, ...bridges]
-
 export function getPreview(
   configReader: ConfigReader,
   projectId: string,
@@ -26,16 +21,8 @@ export function getPreview(
   const projectChains: string[] =
     configReader.readAllChainsForProject(projectId)
 
-  const project = allProjects.find((p) => p.id === projectId)
-  if (!project) {
-    return errorResponse('unknown-project')
-  }
-  if (!('discoveryDrivenData' in project) || !project.discoveryDrivenData) {
-    return errorResponse('not-discovery-driven')
-  }
-
   // sort chains, keeping the host chain first
-  const hostChain = 'hostChain' in project ? project.hostChain : 'ethereum'
+  const hostChain = 'ethereum'
   projectChains.sort((a, b) => {
     if (a === hostChain) return -1
     if (b === hostChain) return 1
@@ -67,7 +54,6 @@ export function getPreview(
   })
 
   return {
-    status: 'success',
     permissionsPerChain: getPermissionsPreview(
       permissionsPerChain,
       metaPerChain,
@@ -127,15 +113,5 @@ function toAddressFieldValue(
     name: meta[chain][address].name,
     address: toAddress(chain, address),
     addressType: meta[chain][address].type,
-  }
-}
-
-function errorResponse(
-  status: ApiPreviewResponse['status'],
-): ApiPreviewResponse {
-  return {
-    status,
-    permissionsPerChain: [],
-    contractsPerChain: [],
   }
 }

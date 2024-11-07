@@ -12,7 +12,6 @@ export interface ApiProjectResponse {
 }
 
 export interface ApiPreviewResponse {
-  status: 'success' | 'unknown-project' | 'not-discovery-driven'
   permissionsPerChain: { chain: string; permissions: ApiPreviewPermission[] }[]
   contractsPerChain: { chain: string; contracts: ApiPreviewContract[] }[]
 }

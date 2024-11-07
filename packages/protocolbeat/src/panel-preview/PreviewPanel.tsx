@@ -26,22 +26,14 @@ export function PreviewPanel() {
   if (response === undefined) {
     return <div className="p-2">Loading...</div>
   }
-  if (response.status === 'unknown-project') {
-    return <div className="p-2">Unknown project</div>
-  }
-  if (response.status === 'not-discovery-driven') {
-    return (
-      <div className="p-2">Only discovery-driven projects can be previewed</div>
-    )
-  }
 
   return (
     <div className="flex h-full w-full select-none flex-col text-sm">
-      <AllPermissionsPreview
+      <PermissionsPreview
         permissionsPerChain={response.permissionsPerChain}
         selectedAddress={selectedAddress}
       />
-      <AllContractsPreview
+      <ContractsPreview
         contractsPerChain={response.contractsPerChain}
         selectedAddress={selectedAddress}
       />
@@ -49,79 +41,80 @@ export function PreviewPanel() {
   )
 }
 
-function AllPermissionsPreview(props: {
+function PermissionsPreview(props: {
   permissionsPerChain: { chain: string; permissions: ApiPreviewPermission[] }[]
   selectedAddress: string | undefined
 }) {
   return props.permissionsPerChain.map(({ chain, permissions }) => (
     <div key={chain}>
-      <h2 className="p-2 font-bold text-2xl text-blue-600">
-        Permissions on {chain}:
-      </h2>
+      <SectionHeader title={`Permissions on ${chain}:`} />
       {permissions.map((permission, idx) => (
-        <SinglePermissionPreview
+        <PreviewItem
           key={idx}
-          permission={permission}
-          selectedAddress={props.selectedAddress}
+          name={permission.name}
+          addresses={permission.addresses}
+          multisigParticipants={permission.multisigParticipants}
+          description={permission.description}
+          isHighlighted={includesAddress(
+            permission.addresses,
+            props.selectedAddress,
+          )}
         />
       ))}
     </div>
   ))
 }
 
-function AllContractsPreview(props: {
+function ContractsPreview(props: {
   contractsPerChain: { chain: string; contracts: ApiPreviewContract[] }[]
   selectedAddress: string | undefined
 }) {
   return props.contractsPerChain.map(({ chain, contracts }) => (
-    <div key={chain} className="mt-2 border-t">
-      <h2 className="p-2 font-bold text-2xl text-blue-600">
-        Contracts on {chain}:
-      </h2>
+    <div key={chain} className="mt-2 border-t border-t-coffee-600">
+      <SectionHeader title={`Contracts on ${chain}:`} />
       {contracts.map((contract, idx) => (
-        <SingleContractPreview
+        <PreviewItem
           key={idx}
-          contract={contract}
-          selectedAddress={props.selectedAddress}
+          name={contract.name}
+          addresses={contract.addresses}
+          description={contract.description}
+          isHighlighted={includesAddress(
+            contract.addresses,
+            props.selectedAddress,
+          )}
         />
       ))}
     </div>
   ))
 }
 
-function SinglePermissionPreview(props: {
-  permission: ApiPreviewPermission
-  selectedAddress: string | undefined
+function PreviewItem(props: {
+  name: string
+  addresses: AddressFieldValue[]
+  multisigParticipants?: AddressFieldValue[]
+  description: string
+  isHighlighted: boolean
 }) {
   return (
     <div
       className={clsx(
-        'flex flex-col gap-2 p-2',
-        includesAddress(props.permission.addresses, props.selectedAddress) &&
-          'border border-autumn-300',
+        'mb-1 flex flex-col gap-2 border-l-4 p-2 pl-1',
+        props.isHighlighted ? 'border-autumn-300' : 'border-transparent',
       )}
     >
-      <h3
-        className={clsx(
-          'font-bold',
-          includesAddress(props.permission.addresses, props.selectedAddress) &&
-            '',
-        )}
-      >
-        {props.permission.name}
-      </h3>
+      <h3 className="font-bold">{props.name}</h3>
       <ul className="list-disc pl-5 italic">
-        {props.permission.addresses.map((address, idx) => (
+        {props.addresses.map((address, idx) => (
           <li key={idx}>
             <AddressDisplay value={address} />
           </li>
         ))}
       </ul>
-      {props.permission.multisigParticipants && (
+      {props.multisigParticipants && (
         <div>
           <div className="p-2">Participants:</div>
           <ul className="list-disc pl-5 italic">
-            {props.permission.multisigParticipants.map((address, idx) => (
+            {props.multisigParticipants.map((address, idx) => (
               <li key={idx}>
                 <AddressDisplay value={address} />
               </li>
@@ -129,7 +122,7 @@ function SinglePermissionPreview(props: {
           </ul>
         </div>
       )}
-      {props.permission.description.split('\n').map((a, idx) => (
+      {props.description.split('\n').map((a, idx) => (
         <div key={idx} className="ml-2">
           {a}
         </div>
@@ -138,31 +131,8 @@ function SinglePermissionPreview(props: {
   )
 }
 
-function SingleContractPreview(props: {
-  contract: ApiPreviewContract
-  selectedAddress: string | undefined
-}) {
-  return (
-    <div
-      className={clsx(
-        'flex flex-col gap-2 p-2',
-        includesAddress(props.contract.addresses, props.selectedAddress) &&
-          'border border-autumn-300',
-      )}
-    >
-      <h3 className="font-bold">{props.contract.name}</h3>
-      <ul className="list-disc pl-5 italic">
-        {props.contract.addresses.map((address, idx) => (
-          <li key={idx}>
-            <AddressDisplay value={address} />
-          </li>
-        ))}
-      </ul>
-      {props.contract.description.split('\n').map((a, idx) => (
-        <div key={idx}>{a}</div>
-      ))}
-    </div>
-  )
+function SectionHeader(props: { title: string }) {
+  return <h2 className="p-2 font-bold text-2xl text-blue-600">{props.title}</h2>
 }
 
 function includesAddress(addresses: AddressFieldValue[], address?: string) {
