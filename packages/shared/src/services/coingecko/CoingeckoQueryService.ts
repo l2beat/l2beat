@@ -36,14 +36,11 @@ export class CoingeckoQueryService {
     coingeckoId: CoingeckoId,
     from: UnixTime,
     to: UnixTime,
-    address?: EthereumAddress,
   ): Promise<QueryResultPoint[]> {
-    const queryResult = await this.queryHourlyPricesAndMarketCaps(
-      coingeckoId,
-      { from, to },
-      // TODO: either make it multichain or remove this fallback
-      address,
-    )
+    const queryResult = await this.queryHourlyPricesAndMarketCaps(coingeckoId, {
+      from,
+      to,
+    })
 
     return queryResult.prices
   }
@@ -51,12 +48,10 @@ export class CoingeckoQueryService {
   async getCirculatingSupplies(
     coingeckoId: CoingeckoId,
     range: { from: UnixTime; to: UnixTime },
-    address?: EthereumAddress,
   ): Promise<QueryResultPoint[]> {
     const queryResult = await this.queryHourlyPricesAndMarketCaps(
       coingeckoId,
       range,
-      address,
     )
     return zip(queryResult.prices, queryResult.marketCaps).map(
       ([price, marketCap]) => {
@@ -75,13 +70,11 @@ export class CoingeckoQueryService {
   async queryHourlyPricesAndMarketCaps(
     coingeckoId: CoingeckoId,
     range: { from: UnixTime; to: UnixTime },
-    address?: EthereumAddress,
   ) {
     const queryResult = await this.queryRawHourlyPricesAndMarketCaps(
       coingeckoId,
       range.from,
       range.to,
-      address,
     )
 
     const timestamps = getHourlyTimestamps(range.from, range.to)
@@ -107,7 +100,6 @@ export class CoingeckoQueryService {
     coingeckoId: CoingeckoId,
     from: UnixTime,
     to: UnixTime,
-    address?: EthereumAddress,
   ): Promise<CoinMarketChartRangeData> {
     const [adjustedFrom, adjustedTo] = adjust(from, to)
     const results: CoinMarketChartRangeData[] = []
@@ -132,7 +124,6 @@ export class CoingeckoQueryService {
         'usd',
         currentFrom,
         currentTo,
-        address,
       )
 
       results.push(data)

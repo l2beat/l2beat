@@ -42,7 +42,6 @@ describe(CoingeckoQueryService.name, () => {
           MAX_DAYS_FOR_HOURLY_PRECISION - 14,
           'days',
         ),
-        undefined,
       )
     })
 

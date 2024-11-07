@@ -1,4 +1,4 @@
-import { CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
 import { CoingeckoQueryService, QueryResultPoint } from '../../services'
 
 export class PriceProvider {
@@ -8,14 +8,8 @@ export class PriceProvider {
     coingeckoId: CoingeckoId,
     from: UnixTime,
     to: UnixTime,
-    address?: EthereumAddress,
   ): Promise<QueryResultPoint[]> {
-    return await this.client.getUsdPriceHistoryHourly(
-      coingeckoId,
-      from,
-      to,
-      address,
-    )
+    return await this.client.getUsdPriceHistoryHourly(coingeckoId, from, to)
   }
 
   getAdjustedTo(from: number, to: number): UnixTime {
