@@ -1,11 +1,12 @@
 import { Insertable } from 'kysely'
 import { nanoid } from 'nanoid'
 import { Token } from '../../kysely/generated/types'
+import { StringWithAutocomplete } from '@l2beat/shared-pure'
 
 export interface TokenRecord {
   id: string
   networkId: string
-  address: string
+  address: StringWithAutocomplete<'native'>
   updatedAt: Date
   createdAt: Date
 }
