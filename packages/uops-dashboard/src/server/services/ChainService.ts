@@ -36,9 +36,11 @@ export class ChainService {
       case 'blast':
       case 'ethereum':
       case 'gravity':
+      case 'lyra':
       case 'nova':
       case 'optimism':
       case 'polynomial':
+      case 'silicon':
       case 'taiko':
       case 'xai':
       case 'zksync-era':

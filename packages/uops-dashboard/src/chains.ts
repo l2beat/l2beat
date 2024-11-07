@@ -110,15 +110,17 @@ export const SUPPORTED_CHAINS: Chain[] = [
   //   getTxLink: (txHash: string) => ``,
   //   getContractLink: (address: string) => ``,
   // },
-  // {
-  //   id: 'lyra',
-  //   name: 'Derive',
-  //   suggestedBlocksCount: 100,
-  //   batchSize: 10,
-  //   getBlockLink: (blockNumber: number) => ``,
-  //   getTxLink: (txHash: string) => ``,
-  //   getContractLink: (address: string) => ``,
-  // },
+  {
+    id: 'lyra',
+    name: 'Derive',
+    suggestedBlocksCount: 100,
+    batchSize: 10,
+    getBlockLink: (blockNumber: number) =>
+      `https://explorer.lyra.finance/block/${blockNumber}`,
+    getTxLink: (txHash: string) => `https://explorer.lyra.finance/tx/${txHash}`,
+    getContractLink: (address: string) =>
+      `https://explorer.lyra.finance/address/${address}`,
+  },
   // {
   //   id: 'mantle',
   //   name: 'Mantle',
@@ -162,15 +164,17 @@ export const SUPPORTED_CHAINS: Chain[] = [
     getContractLink: (address: string) =>
       `https://polynomialscan.io//address/${address}`,
   },
-  // {
-  //   id: 'silicon',
-  //   name: 'Silicon',
-  //   suggestedBlocksCount: 100,
-  //   batchSize: 10,
-  //   getBlockLink: (blockNumber: number) => ``,
-  //   getTxLink: (txHash: string) => ``,
-  //   getContractLink: (address: string) => ``,
-  // },
+  {
+    id: 'silicon',
+    name: 'Silicon',
+    suggestedBlocksCount: 100,
+    batchSize: 10,
+    getBlockLink: (blockNumber: number) =>
+      `https://scope.silicon.network/block/${blockNumber}`,
+    getTxLink: (txHash: string) => `https://scope.silicon.network/tx/${txHash}`,
+    getContractLink: (address: string) =>
+      `https://scope.silicon.network/address/${address}`,
+  },
   // {
   //   id: 'scroll',
   //   name: 'Scroll',
