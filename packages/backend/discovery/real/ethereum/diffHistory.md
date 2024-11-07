@@ -8,7 +8,7 @@ Generated with discovered.json: 0xc7b1ff5e59690ffc663e377ed6ac3259f717f0ba
 
 ## Description
 
-Move to discoveryDriven data, add fastConfirmer permission.
+Move to discoveryDriven data, add fastConfirmer permission. Re.al uses a 1/1 fast-confirmer validator with a 12s minimum assertion period.
 
 ## Config/verification related changes
 
