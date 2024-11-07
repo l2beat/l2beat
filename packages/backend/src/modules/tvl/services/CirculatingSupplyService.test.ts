@@ -71,7 +71,7 @@ describe(CirculatingSupplyService.name, () => {
 
       const result = circulatingSupplyProvider.getAdjustedTo(from, to)
 
-      const expected = CoingeckoQueryService.getAdjustedTo(
+      const expected = CoingeckoQueryService.calculateAdjustedTo(
         new UnixTime(from),
         new UnixTime(to),
       )

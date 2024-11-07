@@ -13,7 +13,7 @@ export class PriceProvider {
   }
 
   getAdjustedTo(from: number, to: number): UnixTime {
-    return CoingeckoQueryService.getAdjustedTo(
+    return CoingeckoQueryService.calculateAdjustedTo(
       new UnixTime(from),
       new UnixTime(to),
     )

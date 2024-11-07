@@ -37,6 +37,8 @@ export class TvlDependencies {
     this.priceProviders = providers.getPriceProviders()
     this.priceService = new PriceService({
       priceProvider: this.priceProviders.getPriceProvider(),
+      database,
+      logger,
     })
     this.circulatingSupplyProviders = providers.getCirculatingSupplyProviders()
     this.circulatingSupplyService = new CirculatingSupplyService({

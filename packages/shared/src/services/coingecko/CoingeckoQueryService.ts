@@ -176,7 +176,7 @@ export class CoingeckoQueryService {
     }
   }
 
-  static getAdjustedTo(from: UnixTime, to: UnixTime): UnixTime {
+  static calculateAdjustedTo(from: UnixTime, to: UnixTime): UnixTime {
     const maxDaysForOneCall = CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL
 
     return to.gt(from.add(maxDaysForOneCall, 'days'))

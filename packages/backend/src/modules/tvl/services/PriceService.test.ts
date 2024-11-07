@@ -1,3 +1,5 @@
+import { Logger } from '@l2beat/backend-tools'
+import { Database } from '@l2beat/database'
 import { CoingeckoQueryService, PriceProvider } from '@l2beat/shared'
 import {
   CoingeckoId,
@@ -9,7 +11,7 @@ import { Configuration } from '../../../tools/uif/multi/types'
 import { PriceService } from './PriceService'
 
 describe(PriceService.name, () => {
-  describe(PriceService.prototype.fetchPrices.name, () => {
+  describe(PriceService.prototype.getPrices.name, () => {
     it('fetches prices and joins them with configurations', async () => {
       const from = new UnixTime(100)
       const to = new UnixTime(300)
@@ -30,9 +32,11 @@ describe(PriceService.name, () => {
 
       const priceService = new PriceService({
         priceProvider,
+        database: mockObject<Database>(),
+        logger: Logger.SILENT,
       })
 
-      const prices = await priceService.fetchPrices(
+      const prices = await priceService.getPrices(
         from,
         to,
         coingeckoId,
@@ -61,18 +65,20 @@ describe(PriceService.name, () => {
     })
   })
 
-  describe(PriceService.prototype.getAdjustedTo.name, () => {
+  describe(PriceService.prototype.calculateAdjustedTo.name, () => {
     it('adjust range for coingecko hourly query range', () => {
       const from = 0
       const to = 100
 
       const service = new PriceService({
         priceProvider: mockObject<PriceProvider>({}),
+        database: mockObject<Database>(),
+        logger: Logger.SILENT,
       })
 
-      const result = service.getAdjustedTo(from, to)
+      const result = service.calculateAdjustedTo(from, to)
 
-      const expected = CoingeckoQueryService.getAdjustedTo(
+      const expected = CoingeckoQueryService.calculateAdjustedTo(
         new UnixTime(from),
         new UnixTime(to),
       )
