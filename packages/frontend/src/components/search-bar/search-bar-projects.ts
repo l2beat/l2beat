@@ -10,7 +10,6 @@ import {
   layer3s,
   zkCatalogProjects,
 } from '@l2beat/config'
-import { env } from '~/env'
 
 export interface SearchBarProject {
   id: string
