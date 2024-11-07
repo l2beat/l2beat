@@ -1,9 +1,8 @@
-import { UnixTime, json } from '@l2beat/shared-pure'
+import { Block, UnixTime, json } from '@l2beat/shared-pure'
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 import { ClientCore, ClientCoreDependencies } from '../ClientCore'
 import { tai64ToUnix } from './tai64ToUnix'
 import {
-  FuelBlock,
   FuelBlockResponse,
   FuelError,
   FuelLatestBlockNumberResponse,
@@ -48,19 +47,19 @@ export class FuelClient extends ClientCore {
       timestamp,
       start,
       end,
-      this.getBlock.bind(this),
+      this.getBlockWithTransactions.bind(this),
     )
   }
 
-  async getBlock(blockNumber: number): Promise<FuelBlock> {
+  async getBlockWithTransactions(blockNumber: number): Promise<Block> {
     const query = `query Block($height: U32) {
         block(height: $height) {
             id
             height
             header {
                 time
-                transactionsCount
             }
+            transactionIds
         }
       }`
 
@@ -77,11 +76,13 @@ export class FuelClient extends ClientCore {
     }
 
     return {
-      id: blockResponse.data.data.block.id,
-      height: Number(blockResponse.data.data.block.height),
+      hash: blockResponse.data.data.block.id,
+      number: Number(blockResponse.data.data.block.height),
       timestamp: tai64ToUnix(blockResponse.data.data.block.header.time),
-      transactionsCount: Number(
-        blockResponse.data.data.block.header.transactionsCount,
+      transactions: blockResponse.data.data.block.transactionIds.map(
+        (id: string) => ({
+          hash: id,
+        }),
       ),
     }
   }
@@ -109,7 +110,6 @@ export class FuelClient extends ClientCore {
     const parsedError = FuelError.safeParse(response)
 
     if (parsedError.success) {
-      console.log(JSON.stringify(response))
       this.$.logger.warn(`Response validation error`, {
         ...parsedError.data.errors,
       })
@@ -117,5 +117,9 @@ export class FuelClient extends ClientCore {
     }
 
     return { success: true }
+  }
+
+  get chain() {
+    return 'fuel'
   }
 }
