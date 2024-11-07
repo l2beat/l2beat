@@ -16,6 +16,7 @@ export function useCurrentSection(threshold?: Threshold) {
   const [currentSection, setCurrentSection] = useState<HTMLElement>()
 
   const findCurrentSection = useCallback(() => {
+    console.log('findCurrentSection')
     const sections = Array.from(
       document.querySelectorAll<HTMLElement>('section'),
     )
@@ -30,22 +31,32 @@ export function useCurrentSection(threshold?: Threshold) {
       setCurrentSection(lastSection)
       return
     }
-    const currentSection = sections.find((section) => {
-      const sectionTop = section.offsetTop
-      const sectionHeight = section.offsetHeight
-      const sectionBottom = sectionTop + sectionHeight
 
-      const scrollPos =
-        window.scrollY +
-        getViewportHeightOffset(threshold, breakpoint === 'mobile')
-      const isCurrentSection =
-        scrollPos >= sectionTop && scrollPos < sectionBottom
-      return isCurrentSection
-    })
+    const currentSection = sections
+      .map((section) => {
+        const sectionTop = section.offsetTop
+        const sectionHeight = section.offsetHeight
+        const sectionBottom = sectionTop + sectionHeight
+
+        const scrollPos =
+          window.scrollY +
+          getViewportHeightOffset(threshold, breakpoint === 'mobile')
+
+        return {
+          section,
+          offset:
+            scrollPos < sectionTop
+              ? sectionTop - scrollPos
+              : scrollPos > sectionBottom
+                ? scrollPos - sectionBottom
+                : 0,
+        }
+      })
+      .sort((a, b) => a.offset - b.offset)[0]
 
     if (!currentSection) return
 
-    setCurrentSection(currentSection)
+    setCurrentSection(currentSection.section)
   }, [breakpoint, threshold])
 
   useEffect(() => {
