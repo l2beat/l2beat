@@ -1,8 +1,8 @@
 {
   "name": "b3",
   "chain": "base",
-  "blockNumber": 22065173,
-  "configHash": "0xeb43a0146ab82336d0f0ea42108bb56f9375b522e8d652c1eb7ee3cab3b07072",
+  "blockNumber": 22073466,
+  "configHash": "0xce870384e7408601c9480c0cce46038775413f9cb398c697b222ad4797988d42",
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -238,7 +238,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292643221",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292643315",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -317,7 +317,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292648882",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292648889",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -482,7 +482,7 @@
       }
     },
     {
-      "name": "",
+      "name": "SystemConfig",
       "address": "0xA9Bc65Ff5A3106351fa92B04C91d505BcCd92Cad",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
@@ -510,7 +510,8 @@
           ]
         ],
         "$upgradeCount": 1
-      }
+      },
+      "derivedName": ""
     },
     {
       "name": "AddressManager",

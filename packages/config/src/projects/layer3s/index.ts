@@ -3,6 +3,7 @@ import { animechain } from './animechain'
 import { anomaly } from './anomaly'
 import { apechain } from './apechain'
 import { aviveworld } from './aviveworld'
+import { b3 } from './b3'
 import { bugbuster } from './bugbuster'
 import { cheese } from './cheese'
 import { clique } from './clique'
@@ -52,6 +53,7 @@ export const layer3s: Layer3[] = [
   apechain,
   aviveworld,
   bugbuster,
+  b3,
   cheese,
   clique,
   degen,

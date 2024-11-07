@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xe8b709af0c42bc48f531213421a0ef6b6a639d79
+Generated with discovered.json: 0x9cf0007632804c7c7b0700a835ff02233917d4bf
 
-# Diff at Wed, 06 Nov 2024 19:02:00 GMT:
+# Diff at Wed, 06 Nov 2024 23:38:18 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current block number: 22065173
+- current block number: 22073466
 
 ## Description
 
@@ -85,7 +85,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract  (0xA9Bc65Ff5A3106351fa92B04C91d505BcCd92Cad)
+    contract SystemConfig (0xA9Bc65Ff5A3106351fa92B04C91d505BcCd92Cad)
     +++ description: None
 ```
 
