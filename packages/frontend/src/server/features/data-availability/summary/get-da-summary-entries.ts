@@ -1,4 +1,4 @@
-import { daLayers, getDaProjectKey } from '@l2beat/config'
+import { daLayers, ethereumDaLayer, getDaProjectKey } from '@l2beat/config'
 import { uniq } from 'lodash'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getUniqueProjectsInUse } from '../utils/get-da-projects'
@@ -97,9 +97,28 @@ export async function getDaSummaryEntries() {
     // Sort by total TVS of DA layers
     .sort((a, b) => b.tvs - a.tvs)
 
-  return entries
+  const ethereumEntry = {
+    slug: ethereumDaLayer.display.slug,
+    name: ethereumDaLayer.display.name,
+    kind: ethereumDaLayer.kind,
+    systemCategory: ethereumDaLayer.systemCategory,
+    usedIn: ethereumDaLayer.bridges.flatMap((bridge) => bridge.usedIn),
+    economicSecurity: economicSecurity[ethereumDaLayer.id],
+    bridges: ethereumDaLayer.bridges[0],
+    tvs: getSumFor(
+      ethereumDaLayer.bridges
+        .flatMap((bridge) => bridge.usedIn)
+        .map((usedIn) => usedIn.id),
+    ),
+  }
+
+  return { entries, ethereumEntry }
 }
+
+export type DaSummaryEthereumEntry = Awaited<
+  ReturnType<typeof getDaSummaryEntries>
+>['ethereumEntry']
 
 export type DaSummaryEntry = Awaited<
   ReturnType<typeof getDaSummaryEntries>
->[number]
+>['entries'][number]

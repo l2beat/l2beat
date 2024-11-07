@@ -3,7 +3,7 @@ import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
 import { DaLayer } from '../../types/DaLayer'
 import { enshrinedBridge } from './bridges/enshrinedBridge'
 
-export const ethereum: DaLayer = {
+export const ethereum = {
   id: 'ethereum',
   type: 'DaLayer',
   kind: 'PublicBlockchain',
@@ -88,7 +88,7 @@ export const ethereum: DaLayer = {
     This method allows ZK rollups to prove that the data used in their validity proof is consistent with the blob data committed to Ethereum.
     `,
   },
-  bridges: [enshrinedBridge],
+  bridges: [enshrinedBridge] as const,
   consensusAlgorithm: {
     name: 'Gasper',
     description: `Ethereum's consensus protocol combines two separate consensus protocols, LMD GHOST and Casper FFG.
@@ -108,4 +108,4 @@ export const ethereum: DaLayer = {
   economicSecurity: {
     type: 'Ethereum',
   },
-}
+} satisfies DaLayer
