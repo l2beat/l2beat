@@ -10,7 +10,7 @@ interface Props {
 export function ScalingDaFilters({ items }: Props) {
   const state = useScalingFilterValues()
   const daLayerOptions = uniq(
-    items.flatMap((item) => item.dataAvailability.layer.value),
+    items.map((item) => getDaLayerValue(item.dataAvailability.layer)),
   )
     .sort()
     .map((value) => ({
@@ -28,4 +28,12 @@ export function ScalingDaFilters({ items }: Props) {
   )
 
   return <BaseScalingFilters items={items} additionalFilters={daLayerFilter} />
+}
+
+export function getDaLayerValue(
+  daLayer: ScalingDataAvailabilityEntry['dataAvailability']['layer'],
+) {
+  return daLayer.secondLine
+    ? `${daLayer.value} (${daLayer.secondLine})`
+    : daLayer.value
 }

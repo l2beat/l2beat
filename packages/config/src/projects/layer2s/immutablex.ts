@@ -6,6 +6,9 @@ import {
 } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
@@ -105,13 +108,12 @@ export const immutablex: Layer2 = {
     },
   },
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['DAC'],
-    bridge: {
-      type: 'DAC Members',
+    layers: [DA_LAYERS.DAC],
+    bridge: DA_BRIDGES.DAC_MEMBERS({
       membersCount: committee.accounts.length,
       requiredSignatures: committee.minSigners,
-    },
-    mode: 'State diffs',
+    }),
+    mode: DA_MODES.STATE_DIFFS,
   }),
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,

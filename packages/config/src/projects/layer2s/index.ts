@@ -39,6 +39,7 @@ import { edgeless } from './edgeless'
 import { ethernity } from './ethernity'
 import { everclear } from './everclear'
 import { fhenix } from './fhenix'
+import { fluence } from './fluence'
 import { fluent } from './fluent'
 import { form } from './form'
 import { frame } from './frame'
@@ -93,7 +94,6 @@ import { network3 } from './network3'
 import { neva } from './neva'
 import { nil } from './nil'
 import { nova } from './nova'
-import { odyssey } from './odyssey'
 import { oev } from './oev'
 import { ola } from './ola'
 import { omgnetwork } from './omgnetwork'
@@ -216,6 +216,7 @@ export const layer2s: Layer2[] = [
   ethernity,
   everclear,
   fhenix,
+  fluence,
   fluent,
   form,
   frame,
@@ -271,7 +272,6 @@ export const layer2s: Layer2[] = [
   network3,
   neva,
   nova,
-  odyssey,
   oev,
   ola,
   omgnetwork,

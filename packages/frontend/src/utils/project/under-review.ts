@@ -11,11 +11,12 @@ export type UnderReviewStatus =
   | 'implementation-change'
   | 'high-severity-field-change'
   | 'implementation-and-field-change'
+  | undefined
 export function getUnderReviewStatus({
   isUnderReview,
   hasHighSeverityFieldChanged,
   hasImplementationChanged,
-}: Params): UnderReviewStatus | undefined {
+}: Params): UnderReviewStatus {
   if (isUnderReview) {
     return 'config'
   }
@@ -31,7 +32,7 @@ export function getUnderReviewStatus({
     return 'implementation-change'
   }
 }
-export function getUnderReviewText(status: UnderReviewStatus) {
+export function getUnderReviewText(status: NonNullable<UnderReviewStatus>) {
   switch (status) {
     case 'config':
       return 'This project is under review.'

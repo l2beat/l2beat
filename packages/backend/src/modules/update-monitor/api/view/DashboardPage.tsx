@@ -12,7 +12,7 @@ interface DashboardPageProps {
   projects: Record<string, DashboardProject[]>
 }
 
-export function DashboardPage(props: DashboardPageProps) {
+function DashboardPage(props: DashboardPageProps) {
   return (
     <Page title="Discovery">
       <table style={{ width: '100%' }}>

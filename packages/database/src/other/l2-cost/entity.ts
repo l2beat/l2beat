@@ -1,5 +1,5 @@
 import { TrackedTxId } from '@l2beat/shared'
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { Insertable, Selectable } from 'kysely'
 import { L2Cost } from '../../kysely/generated/types'
 
@@ -31,14 +31,5 @@ export function toRow(record: L2CostRecord): Insertable<L2Cost> {
     configurationId: record.configurationId.toString(),
     gasPrice: record.gasPrice.toString(),
     blobGasPrice: record.blobGasPrice?.toString() ?? null,
-  }
-}
-
-export function toRecordWithProjectId(
-  row: Selectable<L2Cost> & { project_id: string },
-): L2CostRecord & { projectId: ProjectId } {
-  return {
-    ...toRecord(row),
-    projectId: ProjectId(row.project_id),
   }
 }

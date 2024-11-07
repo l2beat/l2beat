@@ -4,7 +4,7 @@ import { Colosseum__factory } from './typechain-gen/factories/Colosseum__factory
 import { L2OutputOracle__factory } from './typechain-gen/factories/contracts/L1/L2OutputOracle__factory'
 import { ValidatorPool__factory } from './typechain-gen/factories/contracts/L1/ValidatorPool__factory'
 
-export const KromaContractAddresses = {
+const KromaContractAddresses = {
   mainnet: {
     validatorPool: '0xFdFF462845953D90719A78Fd12a2d103541d2103',
     l2OutputOracle: '0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6',

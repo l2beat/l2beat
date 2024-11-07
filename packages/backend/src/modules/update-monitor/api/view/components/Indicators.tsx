@@ -8,7 +8,7 @@ interface IndicatorProps {
   background: string
 }
 
-export function Indicator(props: IndicatorProps) {
+function Indicator(props: IndicatorProps) {
   return (
     <span
       style={{

@@ -57,9 +57,7 @@ interface ProjectDetailsSectionHeaderProps {
   className?: string
 }
 
-export function ProjectDetailsSectionHeader(
-  props: ProjectDetailsSectionHeaderProps,
-) {
+function ProjectDetailsSectionHeader(props: ProjectDetailsSectionHeaderProps) {
   const isSubsection =
     props.sectionOrder !== undefined && props.sectionOrder.length > 1
   return (

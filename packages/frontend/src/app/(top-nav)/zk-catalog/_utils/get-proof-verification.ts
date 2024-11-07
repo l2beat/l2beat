@@ -26,7 +26,7 @@ export function getProofVerification(
   }
 }
 
-export function getVerifierLastUsedDaysAgo(
+function getVerifierLastUsedDaysAgo(
   verifier: OnchainVerifier,
   verifiersStatuses: VerifiersStatuses,
 ): number | undefined {

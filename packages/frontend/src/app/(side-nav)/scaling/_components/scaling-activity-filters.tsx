@@ -1,5 +1,8 @@
+import { notUndefined } from '@l2beat/shared-pure'
+import { uniq } from 'lodash'
 import { TableFilter } from '~/components/table/filters/table-filter'
 import { type ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
+import { getDaLayerValue } from '../data-availability/_components/scaling-da-filters'
 import { useScalingFilterValues } from './scaling-filter-context'
 import { ScalingFilters } from './scaling-filters'
 
@@ -9,7 +12,20 @@ interface Props {
 }
 export function ScalingActivityFilters({ items, className }: Props) {
   const state = useScalingFilterValues()
-  const daLayerOptions = getDaLayerOptions(items)
+  const daLayerOptions = uniq(
+    items
+      .map((item) =>
+        item.dataAvailability.layer
+          ? getDaLayerValue(item.dataAvailability.layer)
+          : undefined,
+      )
+      .filter(notUndefined),
+  )
+    .sort()
+    .map((value) => ({
+      label: value,
+      value,
+    }))
 
   const daLayerFilter = (
     <TableFilter
@@ -28,26 +44,4 @@ export function ScalingActivityFilters({ items, className }: Props) {
       className={className}
     />
   )
-}
-
-function getDaLayerOptions(items: ScalingActivityEntry[]) {
-  const daLayerOptions = items.reduce(
-    (acc, item) => {
-      const val = item.dataAvailability?.layer?.value
-      if (!val) {
-        return acc
-      }
-      const obj = acc[val] ?? 0
-      acc[val] = obj + 1
-      return acc
-    },
-    {} as Record<string, number>,
-  )
-
-  return Object.entries(daLayerOptions)
-    .filter(([_, count]) => count >= 2)
-    .map(([value]) => ({
-      label: value,
-      value,
-    }))
 }

@@ -1,6 +1,6 @@
 import { ApiAddressType } from '../../../api/types'
 import { Field, Node } from '../State'
-import type { DiscoveryContract, DiscoveryOutput } from './paseDiscovery'
+import type { DiscoveryContract, DiscoveryOutput } from './parseDiscovery'
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
@@ -141,7 +141,7 @@ function getDisplay(
   return { addressType: 'Contract', name }
 }
 
-export function getAsStringArray(value: unknown): string[] {
+function getAsStringArray(value: unknown): string[] {
   if (typeof value === 'string') {
     return [value]
   }

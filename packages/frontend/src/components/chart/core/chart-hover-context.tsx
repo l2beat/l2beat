@@ -17,7 +17,7 @@ interface Position {
   bottom: (number | null)[]
 }
 
-export interface ChartHoverContextValue<T> {
+interface ChartHoverContextValue<T> {
   setData: (data: T) => void
   position: Position | undefined
   setPosition: (position: Position | undefined) => void

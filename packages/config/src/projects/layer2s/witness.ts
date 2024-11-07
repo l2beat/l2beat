@@ -1,5 +1,10 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { NEW_CRYPTOGRAPHY, RISK_VIEW } from '../../common'
+import {
+  DA_BRIDGES,
+  DA_LAYERS,
+  NEW_CRYPTOGRAPHY,
+  RISK_VIEW,
+} from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { polygonCDKStack } from './templates/polygonCDKStack'
@@ -35,12 +40,11 @@ export const witness: Layer2 = polygonCDKStack({
   badges: [Badge.DA.DAC],
   additionalPurposes: ['IoT', 'Oracles'],
   daProvider: {
-    name: 'DAC',
-    bridge: {
-      type: 'DAC Members',
+    layer: DA_LAYERS.DAC,
+    bridge: DA_BRIDGES.DAC_MEMBERS({
       requiredSignatures: requiredSignaturesDAC,
       membersCount: membersCountDAC,
-    },
+    }),
     riskView: {
       ...RISK_VIEW.DATA_EXTERNAL_DAC({
         membersCount: membersCountDAC,

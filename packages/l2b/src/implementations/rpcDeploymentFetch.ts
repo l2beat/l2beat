@@ -24,7 +24,7 @@ export async function getContractCreationTimestamp(
   return new UnixTime(block.timestamp)
 }
 
-export async function bisectToFindCreationBlock(
+async function bisectToFindCreationBlock(
   provider: providers.JsonRpcProvider,
   address: EthereumAddress,
   minBlockNumber: number,

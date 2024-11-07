@@ -27,7 +27,7 @@ export function getAdmin(
   return provider.getStorageAsAddress(address, ADMIN_SLOT)
 }
 
-export async function getOwner(
+async function getOwner(
   provider: IProvider,
   address: EthereumAddress,
 ): Promise<EthereumAddress> {

@@ -10,7 +10,7 @@ import {
 import { Project } from './types'
 import { withoutDuplicates } from './utils'
 
-export interface AddressOnChain {
+interface AddressOnChain {
   chain: string
   address: EthereumAddress
 }
@@ -55,7 +55,7 @@ export function getUniqueContractsForProject(
   ])
 }
 
-export function getUniqueContractsFromList(
+function getUniqueContractsFromList(
   contracts: ScalingProjectContract[],
 ): AddressOnChain[] {
   const mainAddresses = contracts.flatMap((c) =>

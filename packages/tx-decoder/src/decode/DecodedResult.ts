@@ -1,19 +1,19 @@
 export type DecodedResult = DecodedFunction | DecodedParameters | DecodedError
 
-export interface DecodedFunction {
+interface DecodedFunction {
   type: 'function'
   name: string
   selector: `0x${string}`
   values: Value[]
 }
 
-export interface DecodedParameters {
+interface DecodedParameters {
   type: 'parameters'
   abi: string
   values: Value[]
 }
 
-export interface DecodedError {
+interface DecodedError {
   type: 'error'
   error: string
 }

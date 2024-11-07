@@ -1,6 +1,5 @@
 import 'server-only'
 
-import { layer2s } from '@l2beat/config/build/src/projects/layer2s'
 import { type Hex } from 'viem'
 import {
   type Chain,
@@ -107,16 +106,4 @@ export function getChain(chainId: number) {
     return null
   }
   return chain
-}
-
-export function getChainStage(chainId: number) {
-  const chain = layer2s.find((l2) => l2.chainConfig?.chainId === chainId)
-  if (chainId === 1 || !chain) return
-  if (
-    chain.display.category === 'Validium' ||
-    chain.display.category === 'Optimium'
-  )
-    return chain.display.category
-
-  return chain?.stage?.stage
 }
