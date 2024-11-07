@@ -90,7 +90,8 @@
     [
       "0x5a7d6b2f92c77fad6ccabd7ee0624e64907eaf3e",
       "TransparentUpgradeableProxy"
-    ]
+    ],
+    ["0x283ccfbafddc747b71aec3c1e29fb824156a8f09", "DropERC1155"]
   ],
   "METHODS": [
     ["0xfec93e49", "follow"],
@@ -159,7 +160,9 @@
     ["0x83bd37f9", "swapCompact"],
     ["0x4357855e", "fulfill"],
     ["0xa694fc3a", "stake"],
-    ["0x1aa3a008", "register"]
+    ["0x1aa3a008", "register"],
+    ["0x049104e5", "redeem"],
+    ["0xf242432a", "safeTransferFrom"]
   ],
   "IMPLEMENTATIONS": [
     [

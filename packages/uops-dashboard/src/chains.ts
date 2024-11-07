@@ -1,14 +1,23 @@
 export type ChainId =
-  | 'starknet'
-  | 'base'
-  | 'ethereum'
-  | 'xai'
-  | 'taiko'
+  | 'alephzero'
   | 'arbitrum'
-  | 'immutablex'
+  | 'base'
+  | 'blast'
+  | 'ethereum'
   | 'gravity'
+  | 'immutablex'
+  | 'lyra'
+  | 'taiko'
+  | 'mantle'
+  | 'nova'
   | 'optimism'
+  | 'polynomial'
+  | 'scroll'
+  | 'silicon'
+  | 'starknet'
+  | 'xai'
   | 'zksync-era'
+  | 'zora'
 
 export type Chain = {
   id: ChainId
@@ -23,15 +32,28 @@ export type Chain = {
 
 export const SUPPORTED_CHAINS: Chain[] = [
   {
-    id: 'starknet',
-    name: 'Starknet',
+    id: 'alephzero',
+    name: 'Aleph Zero EVM',
     suggestedBlocksCount: 100,
     batchSize: 10,
     getBlockLink: (blockNumber: number) =>
-      `https://starkscan.co/block/${blockNumber}`,
-    getTxLink: (txHash: string) => `https://starkscan.co/tx/${txHash}`,
+      `https://evm-explorer.alephzero.org//block/${blockNumber}`,
+    getTxLink: (txHash: string) =>
+      `https://evm-explorer.alephzero.org/tx/${txHash}`,
     getContractLink: (address: string) =>
-      `https://starkscan.co/contract/${address}`,
+      `https://evm-explorer.alephzero.org/address/${address}`,
+  },
+  {
+    id: 'arbitrum',
+    name: 'Arbitrum One',
+    suggestedBlocksCount: 100,
+    batchSize: 10,
+    getBlockLink: (blockNumber: number) =>
+      `https://arbiscan.io//block/${blockNumber}`,
+    getTxLink: (txHash: string) =>
+      `https://app.blocksec.com/explorer/tx/arbitrum/${txHash}`,
+    getContractLink: (address: string) =>
+      `https://arbiscan.io/address/${address}`,
   },
   {
     id: 'base',
@@ -46,6 +68,17 @@ export const SUPPORTED_CHAINS: Chain[] = [
       `https://basescan.org/address/${address}`,
   },
   {
+    id: 'blast',
+    name: 'Blast',
+    suggestedBlocksCount: 100,
+    batchSize: 10,
+    getBlockLink: (blockNumber: number) =>
+      `https://blastscan.io/block/${blockNumber}`,
+    getTxLink: (txHash: string) => `https://blastscan.io/tx/${txHash}`,
+    getContractLink: (address: string) =>
+      `https://blastscan.io/address/${address}`,
+  },
+  {
     id: 'ethereum',
     name: 'Ethereum',
     suggestedBlocksCount: 100,
@@ -58,15 +91,105 @@ export const SUPPORTED_CHAINS: Chain[] = [
       `https://etherscan.io/address/${address}`,
   },
   {
-    id: 'xai',
-    name: 'Xai',
+    id: 'gravity',
+    name: 'Gravity',
     suggestedBlocksCount: 100,
     batchSize: 10,
     getBlockLink: (blockNumber: number) =>
-      `https://xaiscan.io//block/${blockNumber}`,
-    getTxLink: (txHash: string) => `https://xaiscan.io/tx/${txHash}`,
+      `https://explorer.gravity.xyz/block/${blockNumber}`,
+    getTxLink: (txHash: string) => `https://explorer.gravity.xyz/tx/${txHash}`,
     getContractLink: (address: string) =>
-      `https://xaiscan.io/address/${address}`,
+      `https://explorer.gravity.xyz/address/${address}`,
+  },
+  // {
+  //   id: 'linea',
+  //   name: 'Linea',
+  //   suggestedBlocksCount: 100,
+  //   batchSize: 10,
+  //   getBlockLink: (blockNumber: number) => ``,
+  //   getTxLink: (txHash: string) => ``,
+  //   getContractLink: (address: string) => ``,
+  // },
+  // {
+  //   id: 'lyra',
+  //   name: 'Derive',
+  //   suggestedBlocksCount: 100,
+  //   batchSize: 10,
+  //   getBlockLink: (blockNumber: number) => ``,
+  //   getTxLink: (txHash: string) => ``,
+  //   getContractLink: (address: string) => ``,
+  // },
+  // {
+  //   id: 'mantle',
+  //   name: 'Mantle',
+  //   suggestedBlocksCount: 100,
+  //   batchSize: 10,
+  //   getBlockLink: (blockNumber: number) => ``,
+  //   getTxLink: (txHash: string) => ``,
+  //   getContractLink: (address: string) => ``,
+  // },
+  {
+    id: 'nova',
+    name: 'Arbitrum Nova',
+    suggestedBlocksCount: 100,
+    batchSize: 10,
+    getBlockLink: (blockNumber: number) =>
+      `https://nova.arbiscan.io/block/${blockNumber}`,
+    getTxLink: (txHash: string) => `https://nova.arbiscan.io/tx/${txHash}`,
+    getContractLink: (address: string) =>
+      `https://nova.arbiscan.io/address/${address}`,
+  },
+  {
+    id: 'optimism',
+    name: 'OP Mainnet',
+    suggestedBlocksCount: 100,
+    batchSize: 10,
+    getBlockLink: (blockNumber: number) =>
+      `https://optimistic.etherscan.io/block/${blockNumber}`,
+    getTxLink: (txHash: string) =>
+      `https://app.blocksec.com/explorer/tx/optimism/${txHash}`,
+    getContractLink: (address: string) =>
+      `https://optimistic.etherscan.io/address/${address}`,
+  },
+  {
+    id: 'polynomial',
+    name: 'Polynomial',
+    suggestedBlocksCount: 100,
+    batchSize: 10,
+    getBlockLink: (blockNumber: number) =>
+      `https://polynomialscan.io//block/${blockNumber}`,
+    getTxLink: (txHash: string) => `https://polynomialscan.io/tx/${txHash}`,
+    getContractLink: (address: string) =>
+      `https://polynomialscan.io//address/${address}`,
+  },
+  // {
+  //   id: 'silicon',
+  //   name: 'Silicon',
+  //   suggestedBlocksCount: 100,
+  //   batchSize: 10,
+  //   getBlockLink: (blockNumber: number) => ``,
+  //   getTxLink: (txHash: string) => ``,
+  //   getContractLink: (address: string) => ``,
+  // },
+  // {
+  //   id: 'scroll',
+  //   name: 'Scroll',
+  //   suggestedBlocksCount: 100,
+  //   batchSize: 10,
+  //   getBlockLink: (blockNumber: number) => ``,
+  //   getTxLink: (txHash: string) => ``,
+  //   getContractLink: (address: string) => ``,
+  // },
+  {
+    id: 'starknet',
+    name: 'Starknet',
+    suggestedBlocksCount: 100,
+    batchSize: 10,
+    getBlockLink: (blockNumber: number) =>
+      `https://starkscan.co/block/${blockNumber}`,
+    getTxLink: (txHash: string) => `https://starkscan.co/tx/${txHash}`,
+    getContractLink: (address: string) =>
+      `https://starkscan.co/contract/${address}`,
   },
   {
     id: 'taiko',
@@ -80,39 +203,15 @@ export const SUPPORTED_CHAINS: Chain[] = [
       `https://taikoscan.io/address/${address}`,
   },
   {
-    id: 'arbitrum',
-    name: 'Arbitrum',
+    id: 'xai',
+    name: 'Xai',
     suggestedBlocksCount: 100,
     batchSize: 10,
     getBlockLink: (blockNumber: number) =>
-      `https://arbiscan.io//block/${blockNumber}`,
-    getTxLink: (txHash: string) =>
-      `https://app.blocksec.com/explorer/tx/arbitrum/${txHash}`,
+      `https://xaiscan.io//block/${blockNumber}`,
+    getTxLink: (txHash: string) => `https://xaiscan.io/tx/${txHash}`,
     getContractLink: (address: string) =>
-      `https://arbiscan.io//address/${address}`,
-  },
-  {
-    id: 'gravity',
-    name: 'Gravity',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
-    getBlockLink: (blockNumber: number) =>
-      `https://explorer.gravity.xyz/block/${blockNumber}`,
-    getTxLink: (txHash: string) => `https://explorer.gravity.xyz/tx/${txHash}`,
-    getContractLink: (address: string) =>
-      `https://explorer.gravity.xyz/address/${address}`,
-  },
-  {
-    id: 'optimism',
-    name: 'Optimism',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
-    getBlockLink: (blockNumber: number) =>
-      `https://optimistic.etherscan.io/block/${blockNumber}`,
-    getTxLink: (txHash: string) =>
-      `https://app.blocksec.com/explorer/tx/optimism/${txHash}`,
-    getContractLink: (address: string) =>
-      `https://optimistic.etherscan.io/address/${address}`,
+      `https://xaiscan.io/address/${address}`,
   },
   {
     id: 'zksync-era',
@@ -125,5 +224,16 @@ export const SUPPORTED_CHAINS: Chain[] = [
       `https://app.blocksec.com/explorer/tx/zksync-era/${txHash}`,
     getContractLink: (address: string) =>
       `https://era.zksync.network//address/${address}`,
+  },
+  {
+    id: 'zora',
+    name: 'Zora',
+    suggestedBlocksCount: 100,
+    batchSize: 10,
+    getBlockLink: (blockNumber: number) =>
+      `https://explorer.zora.energy/block/${blockNumber}`,
+    getTxLink: (txHash: string) => `https://explorer.zora.energy/tx/${txHash}`,
+    getContractLink: (address: string) =>
+      `https://explorer.zora.energy/address/${address}`,
   },
 ]
