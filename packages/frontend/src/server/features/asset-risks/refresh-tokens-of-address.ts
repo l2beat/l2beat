@@ -111,14 +111,20 @@ export async function refreshTokensOfAddress(address: Address) {
       .filter(([_, tokens]) => tokens.length > 0),
   )
 
+  const existingTokenIds = new Set(
+    (await db.assetRisksBalance.getAllForUser(user.id)).map((b) => b.tokenId),
+  )
+
   await db.assetRisksBalance.upsertMany(
-    Object.values(tokens).flatMap((tokens) =>
-      tokens.map((token) => ({
-        userId: user.id,
-        tokenId: token.id,
-        balance: '0',
-      })),
-    ),
+    Object.values(tokens)
+      .flatMap((tokens) =>
+        tokens.map((token) => ({
+          userId: user.id,
+          tokenId: token.id,
+          balance: '0',
+        })),
+      )
+      .filter((b) => !existingTokenIds.has(b.tokenId)),
   )
 }
 
