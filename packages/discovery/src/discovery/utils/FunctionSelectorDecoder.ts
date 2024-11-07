@@ -3,7 +3,6 @@ import { utils } from 'ethers'
 
 import { get$Implementations } from '@l2beat/discovery-types'
 import { ContractSource } from '../../utils/IEtherscanClient'
-import { DiscoveryLogger } from '../DiscoveryLogger'
 import { IProvider } from '../provider/IProvider'
 import { ProxyDetector } from '../proxies/ProxyDetector'
 
@@ -26,7 +25,6 @@ export class FunctionSelectorDecoder {
         const proxy = await this.proxyDetector.detectProxy(
           this.provider,
           address,
-          DiscoveryLogger.SILENT,
         )
 
         if (proxy) {

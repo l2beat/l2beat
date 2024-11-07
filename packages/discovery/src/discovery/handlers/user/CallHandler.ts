@@ -3,7 +3,6 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import * as z from 'zod'
 
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
 import {
@@ -34,7 +33,6 @@ export class CallHandler implements Handler {
     readonly field: string,
     private readonly definition: CallHandlerDefinition,
     abi: string[],
-    readonly logger: DiscoveryLogger,
   ) {
     for (const arg of this.definition.args) {
       const dependency = getReferencedName(arg)
@@ -69,12 +67,6 @@ export class CallHandler implements Handler {
       currentContractAddress,
     )
     const resolved = resolveDependencies(this.definition, referenceInput)
-    this.logger.logExecution(this.field, [
-      'Calling ',
-      `${this.fragment.name}(${resolved.args
-        .map((x) => x.toString())
-        .join(', ')})`,
-    ])
     const callResult = await callMethod(
       provider,
       resolved.address ?? currentContractAddress,

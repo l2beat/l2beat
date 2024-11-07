@@ -3,7 +3,6 @@ import { utils } from 'ethers'
 import * as z from 'zod'
 
 import { getErrorMessage } from '../../../utils/getErrorMessage'
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
 import {
@@ -39,7 +38,6 @@ export class DynamicArrayHandler implements Handler {
   constructor(
     readonly field: string,
     private readonly definition: DynamicArrayHandlerDefinition,
-    readonly logger: DiscoveryLogger,
   ) {
     this.dependencies = getDependencies(definition)
   }
@@ -49,7 +47,6 @@ export class DynamicArrayHandler implements Handler {
     address: EthereumAddress,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
-    this.logger.logExecution(this.field, ['Reading dynamic array storage'])
     const referenceInput = generateReferenceInput(
       previousResults,
       provider,

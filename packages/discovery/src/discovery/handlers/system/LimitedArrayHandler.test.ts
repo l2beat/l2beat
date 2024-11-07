@@ -1,7 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { LimitedArrayHandler } from './LimitedArrayHandler'
 
@@ -25,7 +24,7 @@ describe(LimitedArrayHandler.name, () => {
       },
     })
 
-    const handler = new LimitedArrayHandler(method, 3, DiscoveryLogger.SILENT)
+    const handler = new LimitedArrayHandler(method, 3)
     expect(handler.field).toEqual('owners')
 
     const result = await handler.execute(provider, address)
@@ -58,7 +57,7 @@ describe(LimitedArrayHandler.name, () => {
       },
     })
 
-    const handler = new LimitedArrayHandler(method, 3, DiscoveryLogger.SILENT)
+    const handler = new LimitedArrayHandler(method, 3)
     const result = await handler.execute(provider, address)
     expect(result).toEqual({
       field: 'owners',
@@ -88,7 +87,7 @@ describe(LimitedArrayHandler.name, () => {
       },
     })
 
-    const handler = new LimitedArrayHandler(method, 3, DiscoveryLogger.SILENT)
+    const handler = new LimitedArrayHandler(method, 3)
     const result = await handler.execute(provider, address)
     expect(result).toEqual({
       field: 'owners',
@@ -113,7 +112,6 @@ describe(LimitedArrayHandler.name, () => {
     const handler = new LimitedArrayHandler(
       'function $foo(uint256 index) view returns (uint)',
       2,
-      DiscoveryLogger.SILENT,
     )
     const result = await handler.execute(provider, address)
     expect(result).toEqual({

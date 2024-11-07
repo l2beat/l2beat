@@ -35,12 +35,6 @@ describe(DiscoveryEngine.name, () => {
       [B.toString()]: { ignoreDiscovery: true },
     })
 
-    const discoveryLogger = mockObject<DiscoveryLogger>({
-      log: () => {},
-      logSkip: () => {},
-      logRelatives: () => {},
-    })
-
     const addressAnalyzer = mockObject<AddressAnalyzer>({
       analyze: mockFn(),
     })
@@ -67,7 +61,7 @@ describe(DiscoveryEngine.name, () => {
         relatives: {},
       })
 
-    const engine = new DiscoveryEngine(addressAnalyzer, discoveryLogger)
+    const engine = new DiscoveryEngine(addressAnalyzer, DiscoveryLogger.SILENT)
     const result = await engine.discover(provider, config)
 
     expect(result).toEqual([

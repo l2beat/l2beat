@@ -93,7 +93,6 @@ export class DiscoveryEngine {
             address,
             config.overrides.get(address),
             config.typesFor(address.toString()),
-            DiscoveryLogger.SILENT,
             templates,
           )
           resolved[address.toString()] = analysis

@@ -3,7 +3,6 @@ import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { providers, utils } from 'ethers'
 import { z } from 'zod'
 
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
 import { toContractValue } from '../utils/toContractValue'
@@ -42,7 +41,6 @@ export class LayerZeroMultisigHandler implements Handler {
   constructor(
     readonly field: string,
     abi: string[],
-    readonly logger: DiscoveryLogger,
   ) {
     this.constructorArgsHandler = new ConstructorArgsHandler(
       'constructorArgs',
@@ -51,7 +49,6 @@ export class LayerZeroMultisigHandler implements Handler {
         nameArgs: true,
       },
       abi,
-      logger,
     )
   }
 
@@ -63,13 +60,6 @@ export class LayerZeroMultisigHandler implements Handler {
       provider,
       address,
     )
-
-    this.logger.logExecution(this.field, [
-      'Querying ',
-      UPDATE_SIGNER_EVENT_FRAGMENT.name,
-      ' and ',
-      UPDATE_QUORUM_EVENT_FRAGMENT.name,
-    ])
 
     async function getLogs(topic: string): Promise<providers.Log[]> {
       return await provider.getLogs(address, [ABI.getEventTopic(topic)])
