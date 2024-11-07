@@ -1,4 +1,5 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
+import chalk from 'chalk'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import {
   AddressAnalyzer,
@@ -82,7 +83,13 @@ export class DiscoveryEngine {
           )
           if (skipReason !== undefined) {
             const info = `${++count}/${total}`
-            this.logger.log(`${address} | ${info} | skipped: ${skipReason}`)
+            const entries = [
+              chalk.gray(info),
+              chalk.yellowBright('SKIP'),
+              chalk.gray(address),
+              chalk.gray(skipReason),
+            ]
+            this.logger.log(entries.join(' '))
             return
           }
 
@@ -107,22 +114,37 @@ export class DiscoveryEngine {
 
           const info = `${++count}/${total}`
           if (analysis.type === 'EOA') {
-            this.logger.log(`${address} | ${info} | EOA`)
+            const entries = [chalk.gray(info), address, chalk.blue('EOA')]
+            this.logger.log(entries.join(' '))
           } else if (analysis.type === 'Contract') {
-            this.logger.log([address, info, analysis.name || '???'].join(' | '))
+            const entries = [
+              chalk.gray(info),
+              address,
+              chalk.blue(analysis.name || '???'),
+            ]
+            this.logger.log(entries.join(' '))
+
+            const logs: string[] = []
             if (analysis.proxyType) {
-              this.logger.log(`  P ${analysis.proxyType}`)
+              logs.push(chalk.cyan(`P ${analysis.proxyType}`))
             }
             if (analysis.extendedTemplate) {
-              this.logger.log(
-                `  T ${analysis.extendedTemplate.template} (${analysis.extendedTemplate.reason})`,
+              logs.push(
+                chalk.green(
+                  `T ${analysis.extendedTemplate.template} (${analysis.extendedTemplate.reason})`,
+                ),
               )
             }
             for (const relative of Object.keys(analysis.relatives)) {
-              this.logger.log(`  R ${relative}`)
+              logs.push(chalk.gray(`R ${relative}`))
             }
             for (const [key, value] of Object.entries(analysis.errors)) {
-              this.logger.error(`  E ${key} - ${value}`)
+              logs.push(chalk.red(`E ${key} - ${value}`))
+            }
+            for (const [i, log] of logs.entries()) {
+              const prefix = i === logs.length - 1 ? `└─` : `├─`
+              const indent = ' '.repeat(6)
+              this.logger.log(`${indent}${chalk.gray(prefix)} ${log}`)
             }
           }
         }),
