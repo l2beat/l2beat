@@ -8,6 +8,7 @@ import { apechainDac } from './dac/apechain'
 import { apexDac } from './dac/apex'
 import { arbitrumNovaDac } from './dac/arbitrumnova'
 import { astarZkEvmDac } from './dac/astarzkEVM'
+import { cyberDA } from './dac/cyberDA'
 import { degenDac } from './dac/degen'
 import { edgelessDac } from './dac/edgeless'
 import { eigenDA } from './dac/eigenDA'
@@ -54,6 +55,7 @@ export const daLayers: DaLayer[] = applyProcessor([
   realDac,
   apexDac,
   arbitrumNovaDac,
+  cyberDA,
   reyaDac,
   xlayerDac,
   sorareDac,
