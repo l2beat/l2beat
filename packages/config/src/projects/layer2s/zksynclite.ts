@@ -7,6 +7,9 @@ import {
 
 import {
   CONTRACTS,
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
@@ -156,9 +159,9 @@ export const zksynclite: Layer2 = {
     },
   },
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (calldata)'],
-    bridge: { type: 'Enshrined' },
-    mode: 'State diffs',
+    layers: [DA_LAYERS.ETH_CALLDATA],
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.STATE_DIFFS,
   }),
   riskView: {
     stateValidation: {
