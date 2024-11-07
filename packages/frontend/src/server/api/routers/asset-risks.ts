@@ -144,6 +144,7 @@ export const assetRisksRouter = router({
         chains,
         bridges,
         externalBridges,
+        relations,
         tokens: Object.values(tokens).map((token) => {
           const balanceRecord = balances.find((b) => b.tokenId === token.id)
           assert(balanceRecord, 'Balance not found')
