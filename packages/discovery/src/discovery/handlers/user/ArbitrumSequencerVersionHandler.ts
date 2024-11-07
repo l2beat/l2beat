@@ -157,7 +157,10 @@ export class ArbitrumSequencerVersionHandler implements Handler {
           currentBlockNumber - blockStep * multiplier,
         )}.${currentBlockNumber}`,
         async ({ eventProvider }) => {
-          const fromBlock = Math.max(0, currentBlockNumber - blockStep * multiplier)
+          const fromBlock = Math.max(
+            0,
+            currentBlockNumber - blockStep * multiplier,
+          )
           return await rpcWithRetries(
             async () => {
               return await eventProvider.getLogs({
@@ -174,7 +177,7 @@ export class ArbitrumSequencerVersionHandler implements Handler {
       )
 
       currentBlockNumber -= blockStep * multiplier
-      if(events.length === 0) {
+      if (events.length === 0) {
         multiplier += 1
       } else {
         multiplier = 1
