@@ -1,7 +1,8 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
-import { HttpClient2, RetryHandler } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
+import { RetryHandler } from '../../tools'
+import { HttpClient2 } from '../http/HttpClient2'
 import { DegateClient, Dependencies } from './DegateClient'
 
 describe(DegateClient.name, () => {

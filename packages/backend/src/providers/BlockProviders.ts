@@ -1,5 +1,6 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import {
+  BlockClient,
   BlockIndexerClient,
   BlockProvider,
   DegateClient,
@@ -29,7 +30,7 @@ export class BlockProviders {
 
   constructor(
     private readonly config: ActivityConfig,
-    private readonly clients: (RpcClient2 | ZksyncLiteClient | FuelClient)[],
+    private readonly clients: BlockClient[],
     readonly starknetClient: StarknetClient | undefined,
     readonly loopringClient: LoopringClient | undefined,
     readonly starkexClient: StarkexClient | undefined,
@@ -200,15 +201,13 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
     }
   }
 
-  const otherClients = [zksyncLiteClient, degateClient].filter(notUndefined)
+  const otherClients = [zksyncLiteClient, degateClient, fuelClient].filter(
+    notUndefined,
+  )
 
   return new BlockProviders(
     config,
-    [
-      ...evmClients,
-      ...(zksyncLiteClient ? [zksyncLiteClient] : []),
-      ...(fuelClient ? [fuelClient] : []),
-    ],
+    [...evmClients, ...otherClients],
     starknetClient,
     loopringClient,
     starkexClient,

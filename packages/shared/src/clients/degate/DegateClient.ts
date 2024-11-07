@@ -80,6 +80,6 @@ export class DegateClient extends ClientCore {
   }
 
   get chain() {
-    return 'degate'
+    return 'degate3'
   }
 }
