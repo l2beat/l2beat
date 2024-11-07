@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getPreview } from '../api/api'
 import {
@@ -13,6 +14,7 @@ import { usePanelStore } from '../store/store'
 export function PreviewPanel() {
   const { project } = useParams()
   const selectedAddress = usePanelStore((state) => state.selected)
+  const [showOnlySelected, setShowOnlySelected] = useState(false)
 
   if (!project) {
     throw new Error('Cannot use component outside of project page!')
@@ -29,14 +31,38 @@ export function PreviewPanel() {
 
   return (
     <div className="flex h-full w-full select-none flex-col text-sm">
+      <OptionsPanel
+        showOnlySelected={showOnlySelected}
+        setShowOnlySelected={setShowOnlySelected}
+      />
       <PermissionsPreview
         permissionsPerChain={response.permissionsPerChain}
         selectedAddress={selectedAddress}
+        showOnlySelected={showOnlySelected}
       />
       <ContractsPreview
         contractsPerChain={response.contractsPerChain}
         selectedAddress={selectedAddress}
+        showOnlySelected={showOnlySelected}
       />
+    </div>
+  )
+}
+
+function OptionsPanel(props: {
+  showOnlySelected: boolean
+  setShowOnlySelected: React.Dispatch<React.SetStateAction<boolean>>
+}) {
+  return (
+    <div className="bg-coffee-600 p-0 px-2 text-right">
+      <label>
+        <input
+          type="checkbox"
+          checked={props.showOnlySelected}
+          onChange={(e) => props.setShowOnlySelected(e.target.checked)}
+        />{' '}
+        Show only selected address
+      </label>
     </div>
   )
 }
@@ -44,23 +70,30 @@ export function PreviewPanel() {
 function PermissionsPreview(props: {
   permissionsPerChain: { chain: string; permissions: ApiPreviewPermission[] }[]
   selectedAddress: string | undefined
+  showOnlySelected: boolean
 }) {
   return props.permissionsPerChain.map(({ chain, permissions }) => (
     <div key={chain}>
       <SectionHeader title={`Permissions on ${chain}:`} />
-      {permissions.map((permission, idx) => (
-        <PreviewItem
-          key={idx}
-          name={permission.name}
-          addresses={permission.addresses}
-          multisigParticipants={permission.multisigParticipants}
-          description={permission.description}
-          isHighlighted={includesAddress(
-            permission.addresses,
-            props.selectedAddress,
-          )}
-        />
-      ))}
+      {permissions.map((permission, idx) => {
+        const isSelected = includesAddress(
+          permission.addresses,
+          props.selectedAddress,
+        )
+        if (props.showOnlySelected && !isSelected) {
+          return null
+        }
+        return (
+          <PreviewItem
+            key={idx}
+            name={permission.name}
+            addresses={permission.addresses}
+            multisigParticipants={permission.multisigParticipants}
+            description={permission.description}
+            isHighlighted={isSelected}
+          />
+        )
+      })}
     </div>
   ))
 }
@@ -68,22 +101,29 @@ function PermissionsPreview(props: {
 function ContractsPreview(props: {
   contractsPerChain: { chain: string; contracts: ApiPreviewContract[] }[]
   selectedAddress: string | undefined
+  showOnlySelected: boolean
 }) {
   return props.contractsPerChain.map(({ chain, contracts }) => (
     <div key={chain} className="mt-2 border-t border-t-coffee-600">
       <SectionHeader title={`Contracts on ${chain}:`} />
-      {contracts.map((contract, idx) => (
-        <PreviewItem
-          key={idx}
-          name={contract.name}
-          addresses={contract.addresses}
-          description={contract.description}
-          isHighlighted={includesAddress(
-            contract.addresses,
-            props.selectedAddress,
-          )}
-        />
-      ))}
+      {contracts.map((contract, idx) => {
+        const isSelected = includesAddress(
+          contract.addresses,
+          props.selectedAddress,
+        )
+        if (props.showOnlySelected && !isSelected) {
+          return null
+        }
+        return (
+          <PreviewItem
+            key={idx}
+            name={contract.name}
+            addresses={contract.addresses}
+            description={contract.description}
+            isHighlighted={isSelected}
+          />
+        )
+      })}
     </div>
   ))
 }
