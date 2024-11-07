@@ -1,7 +1,7 @@
+import { StringWithAutocomplete } from '@l2beat/shared-pure'
 import { Insertable } from 'kysely'
 import { nanoid } from 'nanoid'
 import { TokenMeta } from '../../kysely/generated/types'
-import { StringWithAutocomplete } from '@l2beat/shared-pure'
 
 export interface TokenMetaRecord {
   id: string

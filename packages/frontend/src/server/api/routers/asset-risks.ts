@@ -5,7 +5,12 @@ import {
   layer2s,
   layer3s,
 } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
+import {
+  type TokenBridgeRecord,
+  type TokenMetaRecord,
+  type TokenRecord,
+} from '@l2beat/database'
+import { type AssetRisksBalanceRecord } from '@l2beat/database/dist/asset-risks/balance/entity'
 import { TRPCError } from '@trpc/server'
 import { getAddress } from 'viem'
 import { z } from 'zod'
@@ -13,12 +18,6 @@ import { db } from '~/server/database'
 import { refreshBalancesOfAddress } from '~/server/features/asset-risks/refresh-balances-of-address'
 import { refreshTokensOfAddress } from '~/server/features/asset-risks/refresh-tokens-of-address'
 import { procedure, router } from '../trpc'
-import {
-  type TokenRecord,
-  type TokenBridgeRecord,
-  type TokenMetaRecord,
-} from '@l2beat/database'
-import { type AssetRisksBalanceRecord } from '@l2beat/database/dist/asset-risks/balance/entity'
 
 const projectsByChainId = [...layer2s, ...layer3s].reduce<
   Record<number, Layer2 | Layer3>
