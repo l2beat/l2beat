@@ -85,8 +85,8 @@ export class DiscoveryEngine {
             const info = `${++count}/${total}`
             const entries = [
               chalk.gray(info),
-              chalk.yellowBright('SKIP'),
               chalk.gray(address),
+              chalk.yellowBright('SKIP'),
               chalk.gray(skipReason),
             ]
             this.logger.log(entries.join(' '))
