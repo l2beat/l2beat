@@ -1,5 +1,5 @@
 import { posix } from 'path'
-import { formatSI, getThroughput, timed } from '@l2beat/shared'
+import { timed } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { FileContent } from '../../flatten/ParsedFilesManager'
 import { flattenStartingFrom } from '../../flatten/flatten'
@@ -64,8 +64,6 @@ export function flattenDiscoveredSources(
           return output
         })
 
-        const throughput = formatThroughput(input, result.executionTime)
-
         const flatContent = addSolidityVersionComment(
           bundle.source.solidityVersion,
           result.value,
@@ -89,14 +87,11 @@ export function flattenDiscoveredSources(
           `${fileName}${postfix}.sol`,
         )
         flatSources[path] = flatContent
-
-        logger.log(`Flattened ${path} @ ${throughput}`)
       }
     } catch (e) {
       assert(analyzedContract.type !== 'EOA', 'This should never happen')
       const contractName = analyzedContract.derivedName ?? analyzedContract.name
-
-      logger.error(`Failed ${contractName} - ${stringifyError(e)}`)
+      logger.error(`Flattener error at ${contractName}:\n${stringifyError(e)}`)
     }
   }
 
@@ -111,22 +106,6 @@ function addSolidityVersionComment(
   const version = solidityVersion.slice(1).split('+')[0]
   const license = `// SPDX-License-Identifier: Unknown\n`
   return `${license}pragma solidity ${version};\n\n${flatSource}`
-}
-
-function formatThroughput(
-  input: FileContent[],
-  executionTimeMilliseconds: number,
-): string {
-  const sourceLineCount = input.reduce(
-    (acc, { content }) => acc + content.split('\n').length,
-    0,
-  )
-  const throughput = formatSI(
-    getThroughput(sourceLineCount, executionTimeMilliseconds),
-    'lines/s',
-  )
-
-  return throughput
 }
 
 function stringifyError(e: unknown): string {

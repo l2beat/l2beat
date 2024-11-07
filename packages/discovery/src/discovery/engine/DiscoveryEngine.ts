@@ -35,24 +35,6 @@ export class DiscoveryEngine {
     while (Object.keys(toAnalyze).length > 0) {
       removeAlreadyAnalyzed(toAnalyze, Object.values(resolved))
 
-      for (const address of Object.keys(toAnalyze)) {
-        const total = count + Object.keys(toAnalyze).length - 1
-        const info = `${count}/${total}`
-
-        const skipReason = shouldSkip(
-          EthereumAddress(address),
-          config,
-          depth,
-          count,
-        )
-        if (skipReason !== undefined) {
-          this.logger.log(`${address} | ${info} | skipped: ${skipReason}`)
-          delete toAnalyze[address]
-        } else {
-          count++
-        }
-      }
-
       // remove resolved addresses that need to be analyzed again
       for (const address of Object.keys(resolved)) {
         if (address in toAnalyze) {
@@ -79,15 +61,31 @@ export class DiscoveryEngine {
           delete resolved[address]
         }
       }
+
       // filter out addresses from `toAnalyze` that are no longer reachable from initial
-      const leftToAnalyze = Object.entries(toAnalyze).filter(([address]) =>
-        reachableAddresses.has(EthereumAddress(address)),
-      )
+      const leftToAnalyze = Object.entries(toAnalyze)
+        .filter(([address]) => reachableAddresses.has(EthereumAddress(address)))
+        .map(([address, templates]) => ({
+          address: EthereumAddress(address),
+          templates,
+        }))
       toAnalyze = {}
 
+      const total = count + leftToAnalyze.length
       await Promise.all(
-        leftToAnalyze.map(async ([_address, templates]) => {
-          const address = EthereumAddress(_address)
+        leftToAnalyze.map(async ({ address, templates }) => {
+          const skipReason = shouldSkip(
+            EthereumAddress(address),
+            config,
+            depth,
+            count,
+          )
+          if (skipReason !== undefined) {
+            const info = `${++count}/${total}`
+            this.logger.log(`${address} | ${info} | skipped: ${skipReason}`)
+            return
+          }
+
           const analysis = await this.addressAnalyzer.analyze(
             provider,
             address,
@@ -107,9 +105,7 @@ export class DiscoveryEngine {
             }
           }
 
-          const total = count + Object.keys(toAnalyze).length
-          const info = `${count}/${total}`
-
+          const info = `${++count}/${total}`
           if (analysis.type === 'EOA') {
             this.logger.log(`${address} | ${info} | EOA`)
           } else if (analysis.type === 'Contract') {
