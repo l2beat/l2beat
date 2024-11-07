@@ -70,29 +70,24 @@ export class PriceService {
         to,
       )
     } catch (error) {
-      assertLatestHour(coingeckoId, from, to, error)
+      const latestHour = assertLatestHour(coingeckoId, from, to, error)
 
       const fallback = await this.getLatestPriceFromDb(
         coingeckoId,
-        from,
-        to,
+        latestHour,
         configurations,
       )
 
       this.$.logger.error(
         'DB fallback triggered: failed to fetch price from Coingecko',
-        {
-          coingeckoId,
-          from,
-          to,
-        },
+        { coingeckoId, from, to },
       )
 
       return [
         {
           value: fallback.priceUsd,
           timestamp: fallback.timestamp,
-          deltaMs: 0, // unnecessary in this case
+          deltaMs: 0, // not important in this case
         },
       ]
     }
@@ -100,17 +95,16 @@ export class PriceService {
 
   private async getLatestPriceFromDb(
     coingeckoId: CoingeckoId,
-    from: UnixTime,
-    to: UnixTime,
+    latestHour: UnixTime,
     configurations: Configuration<CoingeckoPriceConfigEntry>[],
   ) {
     const records = await this.$.database.price.getByConfigIdsInRange(
       configurations.map((c) => c.id),
-      from,
-      to,
+      latestHour,
+      latestHour,
     )
 
-    const fallback = records.find((r) => r.timestamp.equals(to))
+    const fallback = records.find((r) => r.timestamp.equals(latestHour))
 
     assert(fallback, `DB fallback failed: ${coingeckoId}`)
     return fallback
@@ -133,4 +127,6 @@ function assertLatestHour(
   const diff = to.toNumber() - from.toNumber()
   if (diff >= 3600) throw error
   assert(to.isFull('hour'), `DB fallback failed: ${coingeckoId}`)
+
+  return to
 }
