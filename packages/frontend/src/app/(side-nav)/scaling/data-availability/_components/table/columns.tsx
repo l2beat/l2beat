@@ -1,14 +1,13 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { SentimentText } from '~/components/sentiment-text'
+import { TwoRowCell } from '~/components/table/cells/two-row-cell'
 import {
   TypeCell,
   TypeExplanationTooltip,
 } from '~/components/table/cells/type-cell'
 import { sortByDacMembers } from '~/components/table/sorting/functions/sort-by-dac-members'
-import {
-  sortBySentiment,
-  sortBySentimentAndAlphabetically,
-} from '~/components/table/sorting/functions/sort-by-sentiment'
+import { sortBySentiment } from '~/components/table/sorting/functions/sort-by-sentiment'
+import { sortTwoRowCell } from '~/components/table/sorting/functions/sort-two-row-cell'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
 
@@ -36,20 +35,36 @@ export const columns = [
     cell: (ctx) => {
       const data = ctx.row.original.dataAvailability.layer
       return (
-        <SentimentText
-          sentiment={data.sentiment}
-          description={data.description}
-        >
-          {ctx.getValue()}
-        </SentimentText>
+        <TwoRowCell>
+          <TwoRowCell.First>
+            <SentimentText
+              sentiment={data.sentiment}
+              description={data.description}
+            >
+              {ctx.getValue()}
+            </SentimentText>
+          </TwoRowCell.First>
+          {data.secondLine && (
+            <TwoRowCell.Second>{data.secondLine}</TwoRowCell.Second>
+          )}
+        </TwoRowCell>
       )
     },
     sortDescFirst: true,
-    sortingFn: (a, b) =>
-      sortBySentimentAndAlphabetically(
+    sortingFn: (a, b) => {
+      const sentimentResult = sortBySentiment(
         a.original.dataAvailability.layer,
         b.original.dataAvailability.layer,
-      ),
+      )
+      if (sentimentResult !== 0) {
+        return sentimentResult
+      }
+
+      return sortTwoRowCell(
+        a.original.dataAvailability.layer,
+        b.original.dataAvailability.layer,
+      )
+    },
   }),
   columnHelper.accessor('dataAvailability.bridge.value', {
     header: 'DA Bridge',
@@ -85,7 +100,26 @@ export const columns = [
       return (bridgeA?.value ?? '').localeCompare(bridgeB?.value ?? '')
     },
   }),
-  columnHelper.accessor('dataAvailability.mode', {
+  columnHelper.accessor('dataAvailability.mode.value', {
     header: 'Type of data',
+    cell: (ctx) => {
+      return (
+        <TwoRowCell>
+          <TwoRowCell.First>
+            {ctx.row.original.dataAvailability.mode.value}
+          </TwoRowCell.First>
+          {ctx.row.original.dataAvailability.mode.secondLine && (
+            <TwoRowCell.Second>
+              {ctx.row.original.dataAvailability.mode.secondLine}
+            </TwoRowCell.Second>
+          )}
+        </TwoRowCell>
+      )
+    },
+    sortingFn: (a, b) =>
+      sortTwoRowCell(
+        a.original.dataAvailability.mode,
+        b.original.dataAvailability.mode,
+      ),
   }),
 ]

@@ -12,6 +12,9 @@ import {
 
 import {
   CONTRACTS,
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   DataAvailabilityBridge,
   DataAvailabilityLayer,
   EXITS,
@@ -54,14 +57,14 @@ import {
 import { mergeBadges } from './utils'
 
 export const CELESTIA_DA_PROVIDER: DAProvider = {
-  name: 'Celestia',
+  layer: DA_LAYERS.CELESTIA,
   riskView: RISK_VIEW.DATA_CELESTIA(false),
   technology: TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false),
-  bridge: { type: 'None' },
+  bridge: DA_BRIDGES.NONE,
 }
 
 interface DAProvider {
-  name: DataAvailabilityLayer
+  layer: DataAvailabilityLayer
   fallback?: DataAvailabilityLayer
   riskView: ScalingProjectRiskViewEntry
   technology: ScalingProjectTechnologyChoice
@@ -531,19 +534,19 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
       daProvider !== undefined
         ? addSentimentToDataAvailability({
             layers: daProvider.fallback
-              ? [daProvider.name, daProvider.fallback]
-              : [daProvider.name],
+              ? [daProvider.layer, daProvider.fallback]
+              : [daProvider.layer],
             bridge: daProvider.bridge,
-            mode: 'Transaction data (compressed)',
+            mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
           })
         : addSentimentToDataAvailability({
             layers: [
               templateVars.usesBlobs
-                ? 'Ethereum (blobs or calldata)'
-                : 'Ethereum (calldata)',
+                ? DA_LAYERS.ETH_BLOBS_OR_CALLLDATA
+                : DA_LAYERS.ETH_CALLDATA,
             ],
-            bridge: { type: 'Enshrined' },
-            mode: 'Transaction data (compressed)',
+            bridge: DA_BRIDGES.ENSHRINED,
+            mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
           }),
     riskView: {
       stateValidation: {
@@ -836,19 +839,19 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
       daProvider !== undefined
         ? addSentimentToDataAvailability({
             layers: daProvider.fallback
-              ? [daProvider.name, daProvider.fallback]
-              : [daProvider.name],
+              ? [daProvider.layer, daProvider.fallback]
+              : [daProvider.layer],
             bridge: daProvider.bridge,
-            mode: 'Transaction data (compressed)',
+            mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
           })
         : addSentimentToDataAvailability({
             layers: [
               templateVars.usesBlobs
-                ? 'Ethereum (blobs or calldata)'
-                : 'Ethereum (calldata)',
+                ? DA_LAYERS.ETH_BLOBS_OR_CALLLDATA
+                : DA_LAYERS.ETH_CALLDATA,
             ],
-            bridge: { type: 'Enshrined' },
-            mode: 'Transaction data (compressed)',
+            bridge: DA_BRIDGES.ENSHRINED,
+            mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
           }),
     config: {
       associatedTokens: templateVars.associatedTokens,
