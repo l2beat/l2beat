@@ -29,7 +29,8 @@ export interface TechnologyContract {
   usedInProjects?: UsedInProject[]
   upgradeConsiderations?: string
   references: Reference[]
-  implementationHasChanged?: boolean
+  implementationChanged: boolean
+  highSeverityFieldChanged: boolean
 }
 
 export interface TechnologyContractAddress {
@@ -174,7 +175,7 @@ function getCalloutProps(
     } as const
   }
 
-  if (contract.implementationHasChanged) {
+  if (contract.implementationChanged || contract.highSeverityFieldChanged) {
     return {
       color: undefined,
       icon: (
