@@ -10,7 +10,7 @@ import { cn } from '~/utils/cn'
 
 export function AddressForm() {
   const [address, setAddress] = useState('')
-  const [error, setError] = useState('')
+  const [error, setError] = useState<string | undefined>(undefined)
   const router = useRouter()
   const publicClient = createPublicClient({
     chain: mainnet,
@@ -32,7 +32,7 @@ export function AddressForm() {
   }
 
   return (
-    <div className="flex w-full flex-col">
+    <div className="flex w-full max-w-[560px] flex-col">
       <div className="relative">
         <input
           type="text"
@@ -43,23 +43,21 @@ export function AddressForm() {
               void handleWallet()
             }
           }}
-          placeholder="Input address or ENS name"
+          // TODO: Probably use sonner for this
+          placeholder={error ?? 'Input address or ENS name'}
           className={cn(
-            'h-14 w-full py-5 pl-5 pr-10',
-            'rounded-lg border border-gray-50 outline-none transition-colors duration-100',
-            'font-medium text-gray-500 placeholder:text-gray-50',
-            'focus:border-zinc-500 focus:bg-gray-100 focus:text-zinc-800 focus:placeholder:text-zinc-500',
+            'peer h-14 w-full py-5 pl-5 pr-10',
+            'bg-[#1F1F38] font-medium text-white',
+            error ? 'placeholder:text-red-600' : 'placeholder:text-[#74749F]',
+            'rounded-[28px] border border-[#32326A] outline-none transition-colors duration-200 focus:border-[#5959B1]',
           )}
         />
-        <div
-          className="absolute right-[18px] top-[18px] text-gray-50"
+        <button
+          className="absolute right-[18px] top-[18px] peer-focus:[&>svg]:fill-white"
           onClick={() => handleWallet()}
         >
-          <LensIcon className="fill-gray-50" />
-        </div>
-        {error && (
-          <span className="text-xs font-medium text-red-600">{error}</span>
-        )}
+          <LensIcon className="fill-[#74749F] transition-colors duration-200" />
+        </button>
       </div>
     </div>
   )
