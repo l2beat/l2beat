@@ -1,3 +1,202 @@
+Generated with discovered.json: 0xc7b1ff5e59690ffc663e377ed6ac3259f717f0ba
+
+# Diff at Thu, 07 Nov 2024 11:26:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e983273bf2ca9304e4b729faaddf20acae0f6c19 block: 21093375
+- current block number: 21135466
+
+## Description
+
+Move to discoveryDriven data, add fastConfirmer permission.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21093375 (main branch discovery), not current.
+
+```diff
+    contract RealFastConfirmerMultisig (0x118Ab5501564F1Cfa755d0b3070874a26c1C3A50) {
+    +++ description: None
+      name:
+-        "GnosisSafeL2"
++        "RealFastConfirmerMultisig"
+      directlyReceivedPermissions.2:
++        {"permission":"propose","target":"0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a","description":"can submit state roots to the RollupProxy contract on the host chain."}
+      directlyReceivedPermissions.1.permission:
+-        "propose"
++        "configure"
+      directlyReceivedPermissions.1.description:
+-        "can submit state roots to the RollupProxy contract on the host chain."
++        "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+    }
+```
+
+```diff
+    contract ERC20Bridge (0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03) {
+    +++ description: Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      name:
+-        "Bridge"
++        "ERC20Bridge"
+      displayName:
++        "Bridge"
+    }
+```
+
+```diff
+    contract SwapManager (0x4AC36E1Fa7daBeFEc885f30B163c571080b2c335) {
+    +++ description: Performs swaps via Curve or UniswapV3 to serve instant withdrawals from the reETH RealVault.
+      description:
++        "Performs swaps via Curve or UniswapV3 to serve instant withdrawals from the reETH RealVault."
+    }
+```
+
+```diff
+    contract StrategyManager (0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8) {
+    +++ description: A gateway contract that manages strategies for assets that are deposited to the AssetsVault. From a user PoV this happens when bridging to the L2.
+      description:
++        "A gateway contract that manages strategies for assets that are deposited to the AssetsVault. From a user PoV this happens when bridging to the L2."
+    }
+```
+
+```diff
+    contract ERC20Outbox (0x8592Ca44dE1D354A20F75160F5602E5933D33761) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      name:
+-        "Outbox"
++        "ERC20Outbox"
+      displayName:
++        "Outbox"
+    }
+```
+
+```diff
+    contract GelatoMultisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      receivedPermissions.10:
+-        {"permission":"upgrade","target":"0xfC89B875970122E24C6C5ADd4Dea139443943ea7","via":[{"address":"0xB032ff02cd6425e4b816137207AA8560932180f1"},{"address":"0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"}]}
+      receivedPermissions.9.target:
+-        "0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11"
++        "0xfC89B875970122E24C6C5ADd4Dea139443943ea7"
+      receivedPermissions.8.target:
+-        "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"
++        "0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11"
+      receivedPermissions.7.target:
+-        "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a"
++        "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"
+      receivedPermissions.7.via.1:
++        {"address":"0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"}
+      receivedPermissions.7.via.0.address:
+-        "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"
++        "0xB032ff02cd6425e4b816137207AA8560932180f1"
+      receivedPermissions.6.target:
+-        "0x8592Ca44dE1D354A20F75160F5602E5933D33761"
++        "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a"
+      receivedPermissions.6.via.1:
+-        {"address":"0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"}
+      receivedPermissions.6.via.0.address:
+-        "0xB032ff02cd6425e4b816137207AA8560932180f1"
++        "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"
+      receivedPermissions.5.target:
+-        "0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0"
++        "0x8592Ca44dE1D354A20F75160F5602E5933D33761"
+      receivedPermissions.4.target:
+-        "0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C"
++        "0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0"
+      receivedPermissions.3.target:
+-        "0x490f337Ac108b2a555183f5b5fd2ee84a7F45a18"
++        "0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C"
+      receivedPermissions.2.target:
+-        "0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03"
++        "0x490f337Ac108b2a555183f5b5fd2ee84a7F45a18"
+      receivedPermissions.1.target:
+-        "0x369001149fe80892665a7b0c17fe8Db6BeFC7F5d"
++        "0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03"
+      receivedPermissions.0.permission:
+-        "configure"
++        "upgrade"
+      receivedPermissions.0.target:
+-        "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a"
++        "0x369001149fe80892665a7b0c17fe8Db6BeFC7F5d"
+      receivedPermissions.0.description:
+-        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      receivedPermissions.0.via.1:
++        {"address":"0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"}
+      receivedPermissions.0.via.0.address:
+-        "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"
++        "0xB032ff02cd6425e4b816137207AA8560932180f1"
+    }
+```
+
+```diff
+    contract Bridger (0xbf2F26cadbC10C4d61ac7e424D514d79a12126f8) {
+    +++ description: A Routing contract to the standard orbit stack bridge of the L2.
+      description:
++        "A Routing contract to the standard orbit stack bridge of the L2."
+    }
+```
+
+```diff
+    contract RollupProxy (0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      template:
+-        "orbitstack/RollupProxy"
++        "orbitstack/RollupProxy_fastConfirm"
+      issuedPermissions.2.target:
+-        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
++        "0x4b8Fbc3006F256dd470B070d6c70fAb413Fceb62"
+      issuedPermissions.2.via.0.address:
+-        "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"
++        "0x118Ab5501564F1Cfa755d0b3070874a26c1C3A50"
+      issuedPermissions.2.via.0.description:
+-        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+      fieldMeta.minimumAssertionPeriod:
++        {"description":"Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a) {
+    +++ description: Central contract defining the access control for upgrading the system contract implementations.
+      directlyReceivedPermissions.2:
+-        {"permission":"upgrade","target":"0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a"}
+      directlyReceivedPermissions.1.permission:
+-        "configure"
++        "upgrade"
+      directlyReceivedPermissions.1.description:
+-        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract ERC20Inbox (0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      name:
+-        "Inbox"
++        "ERC20Inbox"
+      displayName:
++        "Inbox"
+    }
+```
+
+```diff
+    contract AssetsVault (0xf985E2c73d74BefF3C8c16EFC4fa5ab4cfb62294) {
+    +++ description: This escrow contract receives ETH that users bridge to Re.al L2. This ETH is then converted to yielding assets using the StrategyManager.
+      description:
++        "This escrow contract receives ETH that users bridge to Re.al L2. This ETH is then converted to yielding assets using the StrategyManager."
+    }
+```
+
+```diff
+    contract RealVault (0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1) {
+    +++ description: This contract is responsible for managing deposit, withdrawal, and settlement processes for the assets backing reETH using the ERC4626 (tokenized vault) standard.
+      description:
++        "This contract is responsible for managing deposit, withdrawal, and settlement processes for the assets backing reETH using the ERC4626 (tokenized vault) standard."
+    }
+```
+
 Generated with discovered.json: 0x138be24d02ed5beac9fd4c3a5f0fd32b6c279e45
 
 # Diff at Mon, 04 Nov 2024 07:59:31 GMT:

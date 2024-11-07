@@ -171,7 +171,6 @@
   "nomad": true,
   "nova": true,
   "nova-dac-layer-nova-dac-bridge": true,
-  "odyssey": true,
   "oevnetwork": true,
   "ola": true,
   "omgnetwork": false,
