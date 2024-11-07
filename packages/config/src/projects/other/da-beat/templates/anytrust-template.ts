@@ -1,4 +1,5 @@
 import { merge } from 'lodash'
+import { DA_LAYERS } from '../../../../common'
 import { Layer2 } from '../../../layer2s'
 import { Layer3 } from '../../../layer3s'
 import {
@@ -179,7 +180,7 @@ export function AnytrustDAC(template: TemplateVars): DacDaLayer {
     kind: 'DAC',
     type: 'DaLayer',
     systemCategory: 'custom',
-    fallback: template.fallback ?? 'Ethereum (blobs)',
+    fallback: template.fallback ?? DA_LAYERS.ETH_BLOBS,
     challengeMechanism: template.challengeMechanism,
     display: layerDisplay,
     technology: {

@@ -7,6 +7,9 @@ import {
 
 import {
   CONTRACTS,
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
@@ -149,9 +152,12 @@ export const zkfair: Layer2 = {
     coingeckoPlatform: 'zkfair',
   },
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['DAC'],
-    bridge: { type: 'DAC Members', requiredSignatures, membersCount },
-    mode: 'State diffs',
+    layers: [DA_LAYERS.DAC],
+    bridge: DA_BRIDGES.DAC_MEMBERS({
+      requiredSignatures,
+      membersCount,
+    }),
+    mode: DA_MODES.STATE_DIFFS,
   }),
   riskView: {
     stateValidation: {

@@ -8,7 +8,7 @@
     "build": "tsc -p tsconfig.build.json",
     "build:dependencies": "cd ../.. && pnpm build:dependencies",
     "clean": "rm -rf build",
-    "discover": "./scripts/discoverAndAddHistory.sh",
+    "discover": "ts-node --transpile-only scripts/discoveryWrapperCli.ts",
     "discover:raw": "discovery discover",
     "discover:dev": "cd ../discovery && pnpm build && cd - && pnpm discover --dev",
     "discover:single": "discovery single-discovery",
@@ -26,7 +26,6 @@
     "test:config": "mocha --config .mocharc-smoke.json",
     "typecheck": "tsc --noEmit",
     "find-common-contracts": "ts-node --transpile-only scripts/findCommonContracts.ts",
-    "update-diff-history": "ts-node --transpile-only scripts/updateDiffHistory.ts",
     "refresh-discovery": "ts-node --transpile-only scripts/refreshDiscovery.ts",
     "analyze-project": "ts-node --transpile-only scripts/analyzeProject.ts",
     "restore-tvl": "pnpm --filter ../database restore-tvl",
@@ -83,6 +82,7 @@
     "@types/stream-json": "^1.7.7",
     "@types/supertest": "^2.0.12",
     "supertest": "^6.2.3",
-    "ts-node-dev": "^2.0.0"
+    "ts-node-dev": "^2.0.0",
+    "cmd-ts": "^0.13.0"
   }
 }

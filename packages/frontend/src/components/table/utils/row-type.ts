@@ -45,6 +45,6 @@ export function getRowTypeClassNamesWithoutOpacity(rowType: RowType | null) {
     case 'under-review':
       return 'bg-[#faf5e6] dark:bg-[#2F2A1D] group-hover/row:!bg-[#FBEFC9] dark:group-hover/row:!bg-[#453B1A]'
     default:
-      return 'bg-surface-primary group-hover/row:shadow-sm group-hover/row:bg-[#EEEEEE] dark:group-hover/row:bg-[#35363A]'
+      return 'bg-surface-primary group-hover/row:shadow-sm group-hover/row:bg-[#EEEEEE] dark:group-hover/row:bg-[#2E2F35]'
   }
 }

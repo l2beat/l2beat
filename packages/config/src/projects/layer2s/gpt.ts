@@ -1,5 +1,10 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { NEW_CRYPTOGRAPHY, RISK_VIEW } from '../../common'
+import {
+  DA_BRIDGES,
+  DA_LAYERS,
+  NEW_CRYPTOGRAPHY,
+  RISK_VIEW,
+} from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { polygonCDKStack } from './templates/polygonCDKStack'
@@ -63,12 +68,11 @@ export const gpt: Layer2 = polygonCDKStack({
   rpcUrl: 'https://rpc.gptprotocol.io', // tested at over 10k requests per minute with no ratelimit (we default to 1500/min)
   discovery,
   daProvider: {
-    name: 'DAC',
-    bridge: {
-      type: 'DAC Members',
+    layer: DA_LAYERS.DAC,
+    bridge: DA_BRIDGES.DAC_MEMBERS({
       requiredSignatures: requiredSignaturesDAC,
       membersCount: membersCountDAC,
-    },
+    }),
     riskView: {
       ...RISK_VIEW.DATA_EXTERNAL_DAC({
         membersCount: membersCountDAC,

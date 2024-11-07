@@ -24,12 +24,11 @@ export class BlockProviders {
 
   constructor(
     private readonly config: ActivityConfig,
-    private readonly clients: (RpcClient2 | ZksyncLiteClient)[],
+    private readonly clients: (RpcClient2 | ZksyncLiteClient | FuelClient)[],
     readonly starknetClient: StarknetClient | undefined,
     readonly loopringClient: LoopringClient | undefined,
     readonly degateClient: DegateClient | undefined,
     readonly starkexClient: StarkexClient | undefined,
-    readonly fuelClient: FuelClient | undefined,
     private readonly indexerClients: BlockIndexerClient[],
   ) {
     const byChain = groupBy(clients, (c) => c.chain)
@@ -63,7 +62,8 @@ export class BlockProviders {
 
     switch (project.config.type) {
       case 'rpc':
-      case 'zksync': {
+      case 'zksync':
+      case 'fuel': {
         const blockClients = this.clients.filter((r) => r.chain === chain)
         assert(blockClients.length > 0, `No configured clients for ${chain}`)
         return new BlockTimestampProvider({ indexerClients, blockClients })
@@ -81,11 +81,6 @@ export class BlockProviders {
       case 'degate': {
         assert(this.degateClient, 'degateClient should be defined')
         const blockClients = [this.degateClient]
-        return new BlockTimestampProvider({ indexerClients, blockClients })
-      }
-      case 'fuel': {
-        assert(this.fuelClient, 'fuelClient should be defined')
-        const blockClients = [this.fuelClient]
         return new BlockTimestampProvider({ indexerClients, blockClients })
       }
       case 'starkex': {
@@ -201,12 +196,15 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
 
   return new BlockProviders(
     config,
-    [...evmClients, ...(zksyncLiteClient ? [zksyncLiteClient] : [])],
+    [
+      ...evmClients,
+      ...(zksyncLiteClient ? [zksyncLiteClient] : []),
+      ...(fuelClient ? [fuelClient] : []),
+    ],
     starknetClient,
     loopringClient,
     degateClient,
     starkexClient,
-    fuelClient,
     indexerClients,
   )
 }

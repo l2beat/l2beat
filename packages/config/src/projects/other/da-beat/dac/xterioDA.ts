@@ -1,4 +1,5 @@
 import { formatSeconds } from '@l2beat/shared-pure'
+import { DA_LAYERS } from '../../../../common'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
 import { DaChallengeMechanism } from '../types/DaChallengeMechanism'
@@ -26,7 +27,7 @@ export const xterioDA: DaLayer = {
   type: 'DaLayer',
   kind: 'No DAC',
   systemCategory: 'custom',
-  fallback: 'Ethereum (calldata)',
+  fallback: DA_LAYERS.ETH_CALLDATA,
   display: {
     name: 'XterioDA',
     slug: 'xterio',

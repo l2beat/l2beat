@@ -1,11 +1,12 @@
-import { execSync } from 'child_process'
 import {
   ConfigReader,
   DiscoveryConfig,
   TemplateService,
+  getChainConfig,
 } from '@l2beat/discovery'
 import { DiscoveryOutput } from '@l2beat/discovery-types'
 import { keyInYN } from 'readline-sync'
+import { discoverAndUpdateDiffHistory } from './discoveryWrapper'
 
 const configReader = new ConfigReader()
 const templateService = new TemplateService()
@@ -64,8 +65,10 @@ async function main() {
     )
     if (keyInYN('Do you want to continue?')) {
       for (const { config } of toRefresh) {
-        execSync(`pnpm discover "${config.chain}" "${config.name}" --dev`, {
-          stdio: 'inherit',
+        await discoverAndUpdateDiffHistory({
+          project: config.name,
+          chain: getChainConfig(config.chain),
+          dev: true,
         })
       }
     }
