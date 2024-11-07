@@ -2,16 +2,15 @@ import { createHash } from 'crypto'
 import {} from '@l2beat/shared'
 import { providers } from 'ethers'
 import { Chain } from '../../../chains'
-import { getApiKey, getApiUrl } from '../apiUrls'
+import { getApiUrl } from '../apiUrls'
 
 export class RpcCodeClient {
   private readonly provider: providers.Provider
 
   constructor(private readonly chain: Chain) {
     const apiUrl = getApiUrl(chain.id)
-    const apiKey = getApiKey(chain.id, 'RPC')
     this.provider = new providers.StaticJsonRpcProvider({
-      url: `${apiUrl}/${apiKey}`,
+      url: apiUrl,
       timeout: 15_000,
     })
   }

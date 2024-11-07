@@ -209,7 +209,7 @@ function createNameService(
       IMPLEMENTATIONS: new Map(),
     },
     signatureClients ?? [],
-    contractClient ?? mockObject<ContractClient>(),
     codeClient ?? mockObject<RpcCodeClient>(),
+    contractClient ?? mockObject<ContractClient>(),
   )
 }
