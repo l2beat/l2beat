@@ -51,7 +51,6 @@ export function flattenDiscoveredSources(
           .filter((e) => e.path.endsWith('.sol'))
 
         if (input.length === 0) {
-          logger.log(`[SKIP]: ${outName}-${bundle.name} no .sol files`)
           continue
         }
 
@@ -91,13 +90,13 @@ export function flattenDiscoveredSources(
         )
         flatSources[path] = flatContent
 
-        logger.log(`[ OK ]: ${outName} @ ${throughput}`)
+        logger.log(`Flattened ${path} @ ${throughput}`)
       }
     } catch (e) {
       assert(analyzedContract.type !== 'EOA', 'This should never happen')
       const contractName = analyzedContract.derivedName ?? analyzedContract.name
 
-      logger.log(`[FAIL]: ${contractName} - ${stringifyError(e)}`)
+      logger.logError(`Failed ${contractName} - ${stringifyError(e)}`)
     }
   }
 

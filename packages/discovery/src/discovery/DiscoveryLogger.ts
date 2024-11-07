@@ -2,47 +2,16 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 
 interface LoggerOptions {
-  buffered: boolean
   enabled: boolean
 }
 
 export class DiscoveryLogger {
-  private bufferedLogs = ''
-
   constructor(private readonly options: LoggerOptions) {}
 
-  static SILENT = new DiscoveryLogger({ enabled: false, buffered: false })
-  static CLI = new DiscoveryLogger({ enabled: true, buffered: false })
-  static SERVER = new DiscoveryLogger({ enabled: false, buffered: true })
-
-  flushServer(project: string): void {
-    this.flush(`Printing discovery logs for [${project}]:`)
-  }
-
-  flushToLogger(logger: DiscoveryLogger): void {
-    if (!this.options.buffered) {
-      return
-    }
-    logger.log(this.bufferedLogs)
-    this.bufferedLogs = ''
-  }
-
-  flush(log?: string): void {
-    if (!this.options.buffered) {
-      return
-    }
-    if (log) {
-      console.log(log)
-    }
-    console.log(this.bufferedLogs)
-    this.bufferedLogs = ''
-  }
+  static SILENT = new DiscoveryLogger({ enabled: false })
+  static CLI = new DiscoveryLogger({ enabled: true })
 
   log(message: string): void {
-    if (this.options.buffered) {
-      this.bufferedLogs += message + '\n'
-    }
-
     if (!this.options.enabled) {
       return
     }

@@ -13,10 +13,6 @@ import { gatherReachableAddresses } from './gatherReachableAddresses'
 import { removeAlreadyAnalyzed } from './removeAlreadyAnalyzed'
 import { shouldSkip } from './shouldSkip'
 
-// Bump this value when the logic of discovery changes,
-// causing a difference in discovery output
-
-// Last change: Merge upgradeability and values
 export class DiscoveryEngine {
   constructor(
     private readonly addressAnalyzer: AddressAnalyzer,
@@ -40,6 +36,9 @@ export class DiscoveryEngine {
       removeAlreadyAnalyzed(toAnalyze, Object.values(resolved))
 
       for (const address of Object.keys(toAnalyze)) {
+        const total = count + Object.keys(toAnalyze).length - 1
+        const info = `${count}/${total}`
+
         const skipReason = shouldSkip(
           EthereumAddress(address),
           config,
@@ -47,7 +46,7 @@ export class DiscoveryEngine {
           count,
         )
         if (skipReason !== undefined) {
-          this.logger.log(skipReason)
+          this.logger.log(`${address} | ${info} | skipped: ${skipReason}`)
           delete toAnalyze[address]
         } else {
           count++
@@ -89,27 +88,15 @@ export class DiscoveryEngine {
       await Promise.all(
         leftToAnalyze.map(async ([_address, templates]) => {
           const address = EthereumAddress(_address)
-          const bufferedLogger = new DiscoveryLogger({
-            enabled: false,
-            buffered: true,
-          })
-
-          bufferedLogger.log(`Analyzing ${address.toString()}`)
           const analysis = await this.addressAnalyzer.analyze(
             provider,
             address,
             config.overrides.get(address),
             config.typesFor(address.toString()),
-            bufferedLogger,
+            DiscoveryLogger.SILENT,
             templates,
           )
           resolved[address.toString()] = analysis
-          if (analysis.type === 'Contract') {
-            bufferedLogger.log(
-              `Relatives: [${Object.keys(analysis.relatives)}]`,
-            )
-          }
-
           if (analysis.type === 'Contract') {
             for (const [address, suggestedTemplates] of Object.entries(
               analysis.relatives,
@@ -121,7 +108,28 @@ export class DiscoveryEngine {
             }
           }
 
-          bufferedLogger.flushToLogger(this.logger)
+          const total = count + Object.keys(toAnalyze).length
+          const info = `${count}/${total}`
+
+          if (analysis.type === 'EOA') {
+            this.logger.log(`${address} | ${info} | EOA`)
+          } else if (analysis.type === 'Contract') {
+            this.logger.log([address, info, analysis.name || '???'].join(' | '))
+            if (analysis.proxyType) {
+              this.logger.log(`  P ${analysis.proxyType})`)
+            }
+            if (analysis.extendedTemplate) {
+              this.logger.log(
+                `  T ${analysis.extendedTemplate.template} (${analysis.extendedTemplate.reason})`,
+              )
+            }
+            for (const relative of Object.keys(analysis.relatives)) {
+              this.logger.log(`  R ${relative}`)
+            }
+            for (const [key, value] of Object.entries(analysis.errors)) {
+              this.logger.logError(`  E ${key} - ${value}`)
+            }
+          }
         }),
       )
 
@@ -139,7 +147,6 @@ export class DiscoveryEngine {
       )
     })
 
-    this.logger.flushServer(config.name)
     this.checkErrors(Object.values(resolved))
     return Object.values(resolved)
   }
@@ -152,17 +159,17 @@ export class DiscoveryEngine {
         analysis.type === 'Contract' &&
         Object.keys(analysis.errors).length > 0
       ) {
-        const msgStart = `${analysis.name}(${analysis.address.toString()}): {`
-        const msgEnd = '\n}'
+        const msgStart = `${analysis.address}`
         const errorMessages = Object.entries(analysis.errors).map(
-          ([field, error]) => `\n\t${field}: ${error}`,
+          ([field, error]) => `  E ${field} - ${error}`,
         )
 
         errorCount += errorMessages.length
-        errorMsgs.push([msgStart, ...errorMessages, msgEnd].join(''))
+        errorMsgs.push([msgStart, ...errorMessages].join('\n'))
       }
     }
     if (errorCount > 0) {
+      this.logger.log('')
       this.logger.logError(`Errors during discovery: ${errorCount}`)
       for (const error of errorMsgs) {
         this.logger.logError(error)

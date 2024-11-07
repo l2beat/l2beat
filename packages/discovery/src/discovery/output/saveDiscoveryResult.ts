@@ -107,7 +107,7 @@ async function saveFlatSources(
   await rimraf(flatSourcesPath)
   await mkdirp(flatSourcesPath)
 
-  logger.log(`Saving flattened sources`)
+  logger.log('')
 
   const flatten = flattenDiscoveredSources(results, logger)
   for (const entryPath of Object.keys(flatten)) {
