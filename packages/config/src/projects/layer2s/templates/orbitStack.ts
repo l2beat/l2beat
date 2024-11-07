@@ -279,7 +279,7 @@ function defaultStateValidation(
       risks: [
         {
           category: 'Funds can be stolen if',
-          text: 'fast-confirming validators finalize a malicious state root before the challenge period has passed.',
+          text: "validators with the 'fast-confirmer' permission finalize a malicious state root before the challenge period has passed.",
           isCritical: true,
         },
       ],
