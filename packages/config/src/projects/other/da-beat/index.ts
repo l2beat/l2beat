@@ -75,7 +75,7 @@ export const daLayers: DaLayer[] = applyProcessor([
   paychainDac,
   gptProtocolDac,
   witnessDac,
-  apechainDac, 
+  apechainDac,
   degenDac,
   l3xDac,
   moltenDac,
