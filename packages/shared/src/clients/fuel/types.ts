@@ -22,19 +22,12 @@ export const FuelBlockResponse = z.object({
       id: z.string(),
       height: z.string(),
       header: z.object({
-        transactionsCount: z.string(),
         time: z.string(),
       }),
+      transactionIds: z.array(z.string()),
     }),
   }),
 })
-
-export type FuelBlock = {
-  height: number
-  id: string
-  timestamp: number
-  transactionsCount: number
-}
 
 export type FuelError = z.infer<typeof FuelError>
 export const FuelError = z.object({

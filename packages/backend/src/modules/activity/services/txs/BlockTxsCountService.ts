@@ -9,7 +9,7 @@ import { RpcUopsAnalyzer } from '../uops/analyzers/RpcUopsAnalyzer'
 interface Dependencies {
   provider: BlockProvider
   projectId: ProjectId
-  type: 'rpc' | 'zksync'
+  type: 'rpc' | 'zksync' | 'fuel'
   rpcUopsAnalyzer: RpcUopsAnalyzer
   assessCount?: AssessCount
 }
