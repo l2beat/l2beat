@@ -24,7 +24,7 @@ import {
 
 import { env } from '~/env'
 
-function createCustomChain({
+export function createCustomChain({
   id,
   name,
   rpcUrl,
@@ -59,14 +59,7 @@ function createCustomChain({
 }
 
 const supportedChains = [
-  {
-    ...mainnet,
-    rpcUrls: {
-      default: {
-        http: [env.ETHEREUM_RPC_URL],
-      },
-    },
-  },
+  mainnet,
   arbitrum,
   base,
   blast,
