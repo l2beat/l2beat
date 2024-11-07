@@ -1,4 +1,10 @@
-import { type StageConfig, layer2s, layer3s } from '@l2beat/config'
+import {
+  type Layer2,
+  type Layer3,
+  type StageConfig,
+  layer2s,
+  layer3s,
+} from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import { TRPCError } from '@trpc/server'
 import { getAddress } from 'viem'
@@ -7,9 +13,21 @@ import { db } from '~/server/database'
 import { refreshBalancesOfAddress } from '~/server/features/asset-risks/refresh-balances-of-address'
 import { refreshTokensOfAddress } from '~/server/features/asset-risks/refresh-tokens-of-address'
 import { procedure, router } from '../trpc'
-import { type TokenRecord, type TokenBridgeRecord } from '@l2beat/database'
+import {
+  type TokenRecord,
+  type TokenBridgeRecord,
+  type TokenMetaRecord,
+} from '@l2beat/database'
+import { type AssetRisksBalanceRecord } from '@l2beat/database/dist/asset-risks/balance/entity'
 
-const projects = [...layer2s, ...layer3s]
+const projectsByChainId = [...layer2s, ...layer3s].reduce<
+  Record<number, Layer2 | Layer3>
+>((acc, p) => {
+  if (p.chainConfig?.chainId) {
+    acc[p.chainConfig.chainId] = p
+  }
+  return acc
+}, {})
 
 export const assetRisksRouter = router({
   refreshTokens: procedure
@@ -61,9 +79,15 @@ export const assetRisksRouter = router({
       const networks = await db.network.getAll()
       const externalBridges = await db.externalBridge.getAll()
       const bridges = await db.tokenBridge.getAll()
-      const balances = await db.assetRisksBalance.getAllForUser(user.id)
 
-      const userTokenIds = balances.map((b) => b.tokenId)
+      const balances = (
+        await db.assetRisksBalance.getAllForUser(user.id)
+      ).reduce<Record<string, AssetRisksBalanceRecord>>((acc, b) => {
+        acc[b.tokenId] = b
+        return acc
+      }, {})
+
+      const userTokenIds = Object.keys(balances)
 
       const tokens: Record<string, TokenRecord> = {}
       const relations: Record<string, TokenBridgeRecord> = {}
@@ -87,10 +111,16 @@ export const assetRisksRouter = router({
         }
       }
 
-      const tokenMeta = await db.tokenMeta.getByTokenIdsAndSource(
-        Object.values(tokens).map((t) => t.id),
-        'Aggregate',
-      )
+      const tokenMeta = (
+        await db.tokenMeta.getByTokenIdsAndSource(
+          Object.values(tokens).map((t) => t.id),
+          'Aggregate',
+        )
+      ).reduce<Record<string, TokenMetaRecord>>((acc, meta) => {
+        acc[meta.tokenId] = meta
+        return acc
+      }, {})
+
       // TODO: Fetch info about prices / etc.
 
       const chains = networks.reduce<
@@ -106,7 +136,7 @@ export const assetRisksRouter = router({
           }
         >
       >((acc, { id, name, chainId }) => {
-        const chain = projects.find((p) => p.chainConfig?.chainId === chainId)
+        const chain = chainId && projectsByChainId[chainId]
         if (chain) {
           acc[id] = {
             name: chain.display.name,
@@ -146,12 +176,10 @@ export const assetRisksRouter = router({
         externalBridges,
         relations,
         tokens: Object.values(tokens).map((token) => {
-          const balanceRecord = balances.find((b) => b.tokenId === token.id)
-
           return {
             token,
-            meta: tokenMeta.find((m) => m.tokenId === token.id && m.name),
-            balance: balanceRecord?.balance ?? '0',
+            meta: tokenMeta[token.id],
+            balance: balances[token.id]?.balance ?? '0',
           }
         }),
       }
