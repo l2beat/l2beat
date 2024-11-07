@@ -81,7 +81,7 @@ export const assetRisksRouter = router({
             stage?: StageConfig['stage']
           }
         >
-      >((acc, { id, chainId }) => {
+      >((acc, { id, name, chainId }) => {
         const chain = projects.find((p) => p.chainConfig?.chainId === chainId)
         if (chain) {
           acc[id] = {
@@ -103,6 +103,11 @@ export const assetRisksRouter = router({
               text: `${r.category} ${r.text}`,
               isCritical: r.isCritical,
             })),
+          }
+        } else {
+          acc[id] = {
+            name,
+            risks: [],
           }
         }
         return acc
