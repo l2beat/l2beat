@@ -72,24 +72,13 @@ export class PriceService {
     } catch (error) {
       const latestHour = assertLatestHour(coingeckoId, from, to, error)
 
-      const fallback = await this.getLatestPriceFromDb(
+      const priceFromDb = await this.getLatestPriceFromDb(
         coingeckoId,
         latestHour,
         configurations,
       )
 
-      this.$.logger.error(
-        'DB fallback triggered: failed to fetch price from Coingecko',
-        { coingeckoId, from, to },
-      )
-
-      return [
-        {
-          value: fallback.priceUsd,
-          timestamp: fallback.timestamp,
-          deltaMs: 0, // not important in this case
-        },
-      ]
+      return [priceFromDb]
     }
   }
 
@@ -107,7 +96,15 @@ export class PriceService {
     const fallback = records.find((r) => r.timestamp.equals(latestHour))
 
     assert(fallback, `DB fallback failed: ${coingeckoId}`)
-    return fallback
+
+    this.$.logger.error(
+      'DB fallback triggered: failed to fetch price from Coingecko',
+      { coingeckoId, latestHour: latestHour.toNumber() },
+    )
+    return {
+      value: fallback.priceUsd,
+      timestamp: fallback.timestamp,
+    }
   }
 
   calculateAdjustedTo(from: number, to: number): UnixTime {

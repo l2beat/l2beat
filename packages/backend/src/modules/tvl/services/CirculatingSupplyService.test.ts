@@ -96,6 +96,5 @@ function coingeckoResponse(timestamp: number) {
   return {
     timestamp: new UnixTime(timestamp),
     value: timestamp, // for the sake of tests simplicity it is the same
-    deltaMs: 0,
   }
 }

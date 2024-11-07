@@ -18,7 +18,6 @@ export const COINGECKO_INTERPOLATION_WINDOW_DAYS = 14
 export interface QueryResultPoint {
   value: number
   timestamp: UnixTime
-  deltaMs: number
 }
 
 export class CoingeckoQueryService {
@@ -61,7 +60,6 @@ export class CoingeckoQueryService {
         return {
           value,
           timestamp: price.timestamp,
-          deltaMs: price.deltaMs,
         }
       },
     )
@@ -208,7 +206,6 @@ export function pickClosestValues(
     result.push({
       value: points[j].value,
       timestamp: timestamps[i],
-      deltaMs: getDelta(i, j),
     })
   }
   return result
