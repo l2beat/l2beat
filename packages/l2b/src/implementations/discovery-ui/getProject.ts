@@ -6,6 +6,8 @@ import {
 } from '@l2beat/discovery-types'
 import { DiscoveryContract } from '@l2beat/discovery/dist/discovery/config/RawDiscoveryConfig'
 import { EthereumAddress } from '@l2beat/shared-pure'
+import { getContractType } from './getContractType'
+import { getMeta } from './getMeta'
 import { parseFieldValue } from './parseFieldValue'
 import { toAddress } from './toAddress'
 import {
@@ -174,48 +176,6 @@ function fixAddresses(value: FieldValue, chain: string): FieldValue {
     }
   }
   return value
-}
-
-function getMeta(discovery: DiscoveryOutput) {
-  const meta: Record<string, { name?: string; type: ApiAddressType }> = {}
-  for (const contract of discovery.contracts) {
-    const address = contract.address.toString()
-    meta[address] = {
-      name: contract.name || undefined,
-      type: getContractType(contract),
-    }
-  }
-  for (const eoa of discovery.eoas) {
-    const address = eoa.address.toString()
-    meta[address] = { name: eoa.name || undefined, type: 'EOA' }
-  }
-  meta[EthereumAddress.ZERO] = { name: 'ZERO', type: 'Unknown' }
-  return meta
-}
-
-function getContractType(
-  contract: ContractParameters,
-): ApiAddressEntry['type'] {
-  if (contract.unverified) {
-    return 'Unverified'
-  }
-  if (contract.values?.['$members']) {
-    return 'Multisig'
-  }
-  if (
-    !!contract.values?.['name'] &&
-    !!contract.values?.['symbol'] &&
-    !!contract.values?.['decimals']
-  ) {
-    return 'Token'
-  }
-  if (contract.values?.['TIMELOCK_ADMIN_ROLE']) {
-    return 'Timelock'
-  }
-  if (Array.isArray(contract.values?.['$implementation'])) {
-    return 'Diamond'
-  }
-  return 'Contract'
 }
 
 function populateReferencedBy(chains: ApiProjectChain[]) {
