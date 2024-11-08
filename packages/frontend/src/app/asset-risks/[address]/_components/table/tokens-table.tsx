@@ -1,11 +1,11 @@
 'use client'
 
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { useTable } from '~/hooks/use-table'
-import { tokenColumns, type TokenEntry } from './columns'
-import { BasicTable } from '~/app/asset-risks/_components/table/basic-table'
-import { Card } from '~/app/asset-risks/_components/card'
 import { useMemo } from 'react'
+import { Card } from '~/app/asset-risks/_components/card'
+import { BasicTable } from '~/app/asset-risks/_components/table/basic-table'
+import { useTable } from '~/hooks/use-table'
+import { type TokenEntry, tokenColumns } from './columns'
 
 export function TokensTable() {
   const data = useMemo<TokenEntry[]>(

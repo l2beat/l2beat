@@ -6,6 +6,7 @@ import {
 } from '@tanstack/react-table'
 import React from 'react'
 import { cn } from '~/utils/cn'
+import { SortingArrows } from './sorting-arrows'
 import {
   Table,
   TableBody,
@@ -15,7 +16,6 @@ import {
   TableHeaderRow,
   TableRow,
 } from './table'
-import { SortingArrows } from './sorting-arrows'
 
 export interface BasicTableProps<T> {
   table: TanstackTable<T>
