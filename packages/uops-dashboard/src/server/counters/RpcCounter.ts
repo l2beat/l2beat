@@ -106,6 +106,7 @@ export class RpcCounter implements Counter {
 
       assert(tx.type, 'Tx type should be defined')
       assert(tx.from !== undefined, 'From should be defined')
+      assert(tx.hash !== undefined, 'Hash should be defined')
 
       return {
         from: tx.from,
@@ -120,6 +121,7 @@ export class RpcCounter implements Counter {
 
     assert(tx.type !== undefined, 'Tx type should be defined')
     assert(tx.from !== undefined, 'From should be defined')
+    assert(tx.hash !== undefined, 'Hash should be defined')
 
     return {
       from: tx.from,
