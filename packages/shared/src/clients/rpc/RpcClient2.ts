@@ -1,6 +1,5 @@
-import { Block, Bytes, UnixTime, json } from '@l2beat/shared-pure'
+import { Block, Bytes, json } from '@l2beat/shared-pure'
 import { generateId } from '../../tools/generateId'
-import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 import {
   ClientCore,
   ClientCoreDependencies as ClientCoreDependencies,
@@ -21,16 +20,6 @@ export class RpcClient2 extends ClientCore {
   async getLatestBlockNumber() {
     const block = await this.getBlockWithTransactions('latest')
     return Number(block.number)
-  }
-
-  async getBlockNumberAtOrBefore(timestamp: UnixTime, start = 0) {
-    const end = await this.getLatestBlockNumber()
-    return await getBlockNumberAtOrBefore(
-      timestamp,
-      start,
-      end,
-      this.getBlockWithTransactions.bind(this),
-    )
   }
 
   /** Calls eth_getBlockByNumber on RPC, includes full transactions bodies.*/

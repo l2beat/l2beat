@@ -23,7 +23,7 @@ export class ZksyncLiteClient extends ClientCore {
     super($)
   }
 
-  async getLatestBlock() {
+  async getLatestBlockNumber() {
     const result = await this.query('blocks/lastFinalized')
     const parsed = ZksyncLiteBlocksResult.safeParse(result)
 
@@ -35,7 +35,7 @@ export class ZksyncLiteClient extends ClientCore {
   }
 
   async getBlockNumberAtOrBefore(timestamp: UnixTime, start = 0) {
-    const end = await this.getLatestBlock()
+    const end = await this.getLatestBlockNumber()
 
     return await getBlockNumberAtOrBefore(
       timestamp,
@@ -53,7 +53,8 @@ export class ZksyncLiteClient extends ClientCore {
   }
 
   async getBlockWithTransactions(tag: number | 'latest'): Promise<Block> {
-    const blockNumber = tag === 'latest' ? await this.getLatestBlock() : tag
+    const blockNumber =
+      tag === 'latest' ? await this.getLatestBlockNumber() : tag
 
     const transactions = await this.getTransactionsInBlock(blockNumber)
 

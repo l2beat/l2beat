@@ -1,7 +1,6 @@
-import { BlockIndexerClient } from '@l2beat/shared'
+import { BlockIndexerClient, BlockProvider } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { BlockTimestampProvider } from './BlockTimestampProvider'
 
 describe(BlockTimestampProvider.name, () => {
@@ -15,7 +14,7 @@ describe(BlockTimestampProvider.name, () => {
 
       const service = new BlockTimestampProvider({
         indexerClients: [explorerClient],
-        blockClients: [mockObject<RpcClient>({})],
+        blockProvider: mockObject<BlockProvider>({}),
       })
 
       const blockNumber = await service.getBlockNumberAtOrBefore(UnixTime.ZERO)
@@ -29,18 +28,18 @@ describe(BlockTimestampProvider.name, () => {
     it('fetches using RPC if provider not defined', async () => {
       const BLOCK_NUMBER = 1
 
-      const rpc = mockObject<RpcClient>({
+      const blockProvider = mockObject<BlockProvider>({
         getBlockNumberAtOrBefore: async () => BLOCK_NUMBER,
       })
       const service = new BlockTimestampProvider({
         indexerClients: [],
-        blockClients: [rpc],
+        blockProvider: blockProvider,
       })
 
       const blockNumber = await service.getBlockNumberAtOrBefore(UnixTime.ZERO)
 
       expect(blockNumber).toEqual(BLOCK_NUMBER)
-      expect(rpc.getBlockNumberAtOrBefore).toHaveBeenOnlyCalledWith(
+      expect(blockProvider.getBlockNumberAtOrBefore).toHaveBeenOnlyCalledWith(
         UnixTime.ZERO,
       )
     })
@@ -51,18 +50,18 @@ describe(BlockTimestampProvider.name, () => {
       const explorerClient = mockObject<BlockIndexerClient>({
         getBlockNumberAtOrBefore: mockFn().throwsOnce('ERROR'),
       })
-      const rpc = mockObject<RpcClient>({
+      const blockProvider = mockObject<BlockProvider>({
         getBlockNumberAtOrBefore: async () => BLOCK_NUMBER,
       })
       const service = new BlockTimestampProvider({
         indexerClients: [explorerClient],
-        blockClients: [rpc],
+        blockProvider,
       })
 
       const blockNumber = await service.getBlockNumberAtOrBefore(UnixTime.ZERO)
 
       expect(blockNumber).toEqual(BLOCK_NUMBER)
-      expect(rpc.getBlockNumberAtOrBefore).toHaveBeenOnlyCalledWith(
+      expect(blockProvider.getBlockNumberAtOrBefore).toHaveBeenOnlyCalledWith(
         UnixTime.ZERO,
       )
     })

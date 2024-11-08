@@ -1,6 +1,5 @@
-import { Block, UnixTime, json } from '@l2beat/shared-pure'
+import { Block, json } from '@l2beat/shared-pure'
 import { generateIntId } from '../../tools/generateId'
-import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 import { ClientCore, ClientCoreDependencies } from '../ClientCore'
 import {
   StarknetErrorResponse,
@@ -31,16 +30,6 @@ export class StarknetClient extends ClientCore {
     }
 
     return Number(latestBlockNumberResponse.data.result.block_number)
-  }
-
-  async getBlockNumberAtOrBefore(timestamp: UnixTime, start = 0) {
-    const end = await this.getLatestBlockNumber()
-    return await getBlockNumberAtOrBefore(
-      timestamp,
-      start,
-      end,
-      this.getBlockWithTransactions.bind(this),
-    )
   }
 
   async getBlockWithTransactions(blockNumber: number): Promise<Block> {

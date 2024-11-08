@@ -1,5 +1,4 @@
-import { Block, UnixTime, json } from '@l2beat/shared-pure'
-import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
+import { Block, json } from '@l2beat/shared-pure'
 import { ClientCore, ClientCoreDependencies } from '../ClientCore'
 import { tai64ToUnix } from './tai64ToUnix'
 import {
@@ -21,7 +20,7 @@ export class FuelClient extends ClientCore {
     const query = `query LatestBlocks {
         blocks(last: 1) {
           nodes {
-            height  
+            height
           }
         }
       }`
@@ -39,16 +38,6 @@ export class FuelClient extends ClientCore {
     }
 
     return Number(latestBlockNumberResponse.data.data.blocks.nodes[0].height)
-  }
-
-  async getBlockNumberAtOrBefore(timestamp: UnixTime, start = 0) {
-    const end = await this.getLatestBlockNumber()
-    return await getBlockNumberAtOrBefore(
-      timestamp,
-      start,
-      end,
-      this.getBlockWithTransactions.bind(this),
-    )
   }
 
   async getBlockWithTransactions(blockNumber: number): Promise<Block> {
