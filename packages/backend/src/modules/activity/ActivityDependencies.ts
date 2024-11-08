@@ -45,7 +45,6 @@ export class ActivityDependencies {
         return new BlockTxsCountService({
           provider,
           projectId: project.id,
-          assessCount: undefined,
           uopsAnalyzer: this.starknetUopsAnalyzer,
         })
       }

@@ -15,7 +15,7 @@ interface Dependencies extends ClientCoreDependencies {
 
 export class StarknetClient extends ClientCore {
   constructor(private readonly $: Dependencies) {
-    super({ ...$ })
+    super($)
   }
 
   async getLatestBlockNumber() {
