@@ -1,5 +1,6 @@
 import { avail } from './blockchain/avail/avail'
 import { celestia } from './blockchain/celestia/celestia'
+import { ethereum } from './blockchain/ethereum/ethereum'
 import { memo } from './blockchain/memo/memo'
 import { near } from './blockchain/near/near'
 import { alephzeroDac } from './dac/alephzero'
@@ -46,6 +47,8 @@ import { applyProcessor } from './processors'
 import { DaLayer } from './types/DaLayer'
 
 export * from './types'
+
+export const ethereumDaLayer = ethereum
 
 export const daLayers: DaLayer[] = applyProcessor([
   // Permissioned DACs
