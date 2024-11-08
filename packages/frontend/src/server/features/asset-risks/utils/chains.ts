@@ -1,7 +1,7 @@
 import 'server-only'
 
-import { type Chain } from 'viem'
 import { assert } from '@l2beat/shared-pure'
+import { type Chain } from 'viem'
 
 import * as chains from 'viem/chains'
 
