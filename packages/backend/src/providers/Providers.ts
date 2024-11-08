@@ -39,7 +39,7 @@ export class Providers {
     // TODO: refactor
     this.degateClient = new LoopringClient({
       url: 'https://v1-mainnet-backend.degate.com/order-book-api',
-      type: 'degate',
+      type: 'degate3',
       http,
       logger,
       rateLimiter: new RateLimiter({ callsPerMinute: 60 }),

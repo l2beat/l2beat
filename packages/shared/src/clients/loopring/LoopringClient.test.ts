@@ -70,11 +70,11 @@ describe(LoopringClient.name, () => {
 
     it('works for latest Degate', async () => {
       const http = mockObject<HttpClient2>({
-        fetch: async () => mockBlock(10),
+        fetch: async () => mockBlock(10, 'degate3'),
       })
       const degateClient = mockClient({
         http,
-        type: 'degate',
+        type: 'degate3',
       })
       const result = await degateClient.queryBlock('latest')
       expect(result).toEqual({
@@ -92,22 +92,31 @@ describe(LoopringClient.name, () => {
   })
 
   describe(LoopringClient.prototype.validateResponse.name, () => {
-    it('returns false when response includes errors', async () => {
-      const client = mockClient({})
+    it('Loopring: returns false when response includes errors', async () => {
+      const client = mockClient({ type: 'loopring' })
+      const isValid = client.validateResponse({
+        resultInfo: {
+          code: 1,
+          message: 'Error',
+        },
+      })
+
+      expect(isValid).toEqual({ success: false })
+    })
+
+    it('Degate: returns false when response includes errors', async () => {
+      const client = mockClient({ type: 'degate3' })
       const isValid = client.validateResponse({
         code: 1,
         message: 'Error',
       })
 
-      expect(isValid).toEqual({ success: false, message: 'Error' })
+      expect(isValid).toEqual({ success: false })
     })
 
     it('returns true otherwise', async () => {
       const rpc = mockClient({})
-      const isValid = rpc.validateResponse({
-        code: 0,
-        data: 'success',
-      })
+      const isValid = rpc.validateResponse({})
 
       expect(isValid).toEqual({ success: true })
     })
@@ -120,7 +129,7 @@ function mockClient(deps: {
   retryHandler?: RetryHandler
   logger?: Logger
   url?: string
-  type?: 'loopring' | 'degate'
+  type?: 'loopring' | 'degate3'
 }) {
   return new LoopringClient({
     http: deps.http ?? mockObject<HttpClient2>(),
@@ -132,13 +141,19 @@ function mockClient(deps: {
   })
 }
 
-function mockBlock(blockId: number): unknown {
-  return {
-    code: 0,
-    data: {
-      blockId,
-      createdAt: 1000,
-      transactions: [{ txType: 'foo' }],
-    },
+function mockBlock(
+  blockId: number,
+  type: 'loopring' | 'degate3' = 'loopring',
+): unknown {
+  const block = {
+    blockId,
+    createdAt: 1000,
+    transactions: [{ txType: 'foo' }],
   }
+  return type === 'loopring'
+    ? block
+    : {
+        code: 0,
+        data: block,
+      }
 }

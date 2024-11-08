@@ -1,11 +1,11 @@
 import { Block, UnixTime, json } from '@l2beat/shared-pure'
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 import { ClientCore, ClientCoreDependencies } from '../ClientCore'
-import { LoopringBlock, LoopringError } from './types'
+import { DegateBlock, DegateError, LoopringBlock, LoopringError } from './types'
 
 interface Dependencies extends ClientCoreDependencies {
   url: string
-  type: 'loopring' | 'degate'
+  type: 'loopring' | 'degate3'
 }
 
 export class LoopringClient extends ClientCore {
@@ -50,26 +50,29 @@ export class LoopringClient extends ClientCore {
       timeout: 30_000,
     })
 
-    return LoopringBlock.parse(blockResponse).data
+    return this.$.type === 'loopring'
+      ? LoopringBlock.parse(blockResponse)
+      : DegateBlock.parse(blockResponse).data
   }
 
   override validateResponse(response: json): {
     success: boolean
     message?: string
   } {
-    const parsedError = LoopringError.safeParse(response)
+    const parsedError =
+      this.$.type === 'loopring'
+        ? LoopringError.safeParse(response)
+        : DegateError.safeParse(response)
 
     if (parsedError.success) {
-      this.$.logger.warn(`Response validation error`, {
-        error: parsedError.data.message,
-      })
-      return { success: false, message: parsedError.data.message }
+      this.$.logger.warn(`Response validation error`, {})
+      return { success: false }
     }
 
     return { success: true }
   }
 
   get chain() {
-    return 'degate3'
+    return this.$.type
   }
 }

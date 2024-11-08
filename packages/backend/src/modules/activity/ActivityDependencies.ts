@@ -33,7 +33,7 @@ export class ActivityDependencies {
     switch (project.config.type) {
       case 'rpc':
       case 'zksync':
-      case 'degate':
+      case 'degate3':
       case 'loopring':
       case 'fuel': {
         const provider = this.blockProviders.getBlockProvider(chain)

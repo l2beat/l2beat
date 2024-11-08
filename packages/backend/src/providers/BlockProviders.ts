@@ -11,12 +11,7 @@ import {
   RpcClient2,
   ZksyncLiteClient,
 } from '@l2beat/shared'
-import {
-  assert,
-  ProjectId,
-  assertUnreachable,
-  notUndefined,
-} from '@l2beat/shared-pure'
+import { assert, ProjectId, assertUnreachable } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { ActivityConfig } from '../config/Config'
 import { BlockTimestampProvider } from '../modules/tvl/services/BlockTimestampProvider'
@@ -66,7 +61,7 @@ export class BlockProviders {
     switch (project.config.type) {
       case 'rpc':
       case 'zksync':
-      case 'degate':
+      case 'degate3':
       case 'loopring':
       case 'fuel': {
         const blockClients = this.clients.filter((r) => r.chain === chain)
@@ -89,16 +84,11 @@ export class BlockProviders {
 }
 
 export function initBlockProviders(config: ActivityConfig): BlockProviders {
-  let zksyncLiteClient: ZksyncLiteClient | undefined
   let starknetClient: StarknetClient | undefined
-  let loopringClient: LoopringClient | undefined
-  let degateClient: LoopringClient | undefined
   let starkexClient: StarkexClient | undefined
-  let fuelClient: FuelClient | undefined
 
-  const evmClients: RpcClient2[] = []
+  const blockClients: BlockClient[] = []
   const indexerClients: BlockIndexerClient[] = []
-  //todo indexer clients
 
   const http = new HttpClient()
   const http2 = new HttpClient2()
@@ -129,16 +119,17 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
           rateLimiter: new RateLimiter({
             callsPerMinute: project.config.callsPerMinute,
           }),
+          // TODO: handle different retry strategies
           retryHandler,
           logger,
         })
 
-        evmClients.push(rpcClient)
+        blockClients.push(rpcClient)
 
         break
       }
       case 'zksync': {
-        zksyncLiteClient = new ZksyncLiteClient({
+        const zksyncLiteClient = new ZksyncLiteClient({
           url: project.config.url,
           http: http2,
           rateLimiter: new RateLimiter({
@@ -147,6 +138,7 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
           retryHandler: RetryHandler.RELIABLE_API(logger),
           logger,
         })
+        blockClients.push(zksyncLiteClient)
         break
       }
       case 'starknet': {
@@ -155,8 +147,9 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
         })
         break
       }
-      case 'loopring': {
-        loopringClient = new LoopringClient({
+      case 'loopring':
+      case 'degate3': {
+        const loopringClient = new LoopringClient({
           http: http2,
           logger,
           rateLimiter: new RateLimiter({
@@ -164,21 +157,9 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
           }),
           retryHandler: RetryHandler.RELIABLE_API(logger),
           url: project.config.url,
-          type: 'loopring',
+          type: project.config.type,
         })
-        break
-      }
-      case 'degate': {
-        degateClient = new LoopringClient({
-          http: http2,
-          logger,
-          rateLimiter: new RateLimiter({
-            callsPerMinute: project.config.callsPerMinute,
-          }),
-          retryHandler: RetryHandler.RELIABLE_API(logger),
-          url: project.config.url,
-          type: 'degate',
-        })
+        blockClients.push(loopringClient)
         break
       }
       case 'starkex': {
@@ -188,7 +169,7 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
         break
       }
       case 'fuel': {
-        fuelClient = new FuelClient({
+        const fuelClient = new FuelClient({
           url: project.config.url,
           http: http2,
           rateLimiter: new RateLimiter({
@@ -197,6 +178,7 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
           retryHandler: RetryHandler.RELIABLE_API(logger),
           logger,
         })
+        blockClients.push(fuelClient)
         break
       }
       default:
@@ -204,16 +186,9 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
     }
   }
 
-  const otherClients = [
-    zksyncLiteClient,
-    degateClient,
-    loopringClient,
-    fuelClient,
-  ].filter(notUndefined)
-
   return new BlockProviders(
     config,
-    [...evmClients, ...otherClients],
+    blockClients,
     starknetClient,
     starkexClient,
     indexerClients,
