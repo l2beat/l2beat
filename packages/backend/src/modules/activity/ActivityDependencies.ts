@@ -6,8 +6,6 @@ import { Providers } from '../../providers/Providers'
 import { BlockTimestampProvider } from '../tvl/services/BlockTimestampProvider'
 import { TxsCountService } from './indexers/types'
 import { BlockTxsCountService } from './services/txs/BlockTxsCountService'
-import { DegateTxsCountService } from './services/txs/DegateTxsCountService'
-import { LoopringTxsCountService } from './services/txs/LoopringTxsCountService'
 import { StarkexTxsCountService } from './services/txs/StarkexTxsCountService'
 import { StarknetTxsCountService } from './services/txs/StarknetTxsCountService'
 import { RpcUopsAnalyzer } from './services/uops/analyzers/RpcUopsAnalyzer'
@@ -33,20 +31,25 @@ export class ActivityDependencies {
     assert(project, `Project ${chain} not found`)
 
     switch (project.config.type) {
-      case 'rpc':
+      case 'rpc': {
+        const provider = this.blockProviders.getBlockProvider(chain)
+
+        return new BlockTxsCountService({
+          provider,
+          projectId: project.id,
+          assessCount: project.config.assessCount,
+          rpcUopsAnalyzer: this.rpcUopsAnalyzer,
+        })
+      }
       case 'zksync':
+      case 'degate3':
+      case 'loopring':
       case 'fuel': {
         const provider = this.blockProviders.getBlockProvider(chain)
 
         return new BlockTxsCountService({
           provider,
           projectId: project.id,
-          type: project.config.type,
-          assessCount:
-            project.config.type === 'zksync' || project.config.type === 'fuel'
-              ? undefined
-              : project.config.assessCount,
-          rpcUopsAnalyzer: this.rpcUopsAnalyzer,
         })
       }
       case 'starknet': {
@@ -58,26 +61,6 @@ export class ActivityDependencies {
           this.blockProviders.starknetClient,
           project.id,
           this.starknetUopsAnalyzer,
-        )
-      }
-      case 'loopring': {
-        assert(
-          this.blockProviders.loopringClient,
-          'loopringClient should be defined',
-        )
-        return new LoopringTxsCountService(
-          this.blockProviders.loopringClient,
-          project.id,
-        )
-      }
-      case 'degate': {
-        assert(
-          this.blockProviders.degateClient,
-          'degateClient should be defined',
-        )
-        return new DegateTxsCountService(
-          this.blockProviders.degateClient,
-          project.id,
         )
       }
       case 'starkex': {

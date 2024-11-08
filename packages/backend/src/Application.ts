@@ -60,6 +60,7 @@ export class Application {
         config,
         logger,
         peripherals,
+        providers,
         trackedTxsModule?.indexer,
       ),
       createLzOAppsModule(config, logger),
