@@ -17,9 +17,9 @@ export function DetailsHeader(props: DetailsHeaderProps) {
   )
 
   const sum = counts.reduce((acc, risk) => acc + risk, 0)
-
-  const averageIssuesPerToken = Math.round(sum / report.tokens.length)
-  const leastIssues = Math.min(...counts)
+  const averageIssuesPerToken =
+    report.tokens.length !== 0 ? Math.round(sum / report.tokens.length) : 0
+  const leastIssues = counts.length !== 0 ? Math.min(...counts) : 0
 
   return (
     <Card className="flex flex-col gap-4 rounded-none sm:rounded-xl">
