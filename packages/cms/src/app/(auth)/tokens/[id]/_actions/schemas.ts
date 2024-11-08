@@ -4,6 +4,7 @@ import { nanoidSchema } from '~/lib/schemas'
 export const insertTokenSchema = z.object({
   networkId: nanoidSchema,
   address: z.union([z.literal('native'), z.string().length(42)]),
+  managingEntities: z.array(z.object({ entityId: nanoidSchema })),
   relations: z.array(
     z
       .object({

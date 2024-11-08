@@ -10,7 +10,7 @@ export const insertToken = actionClient
   .action(async ({ parsedInput }) => {
     revalidatePath('/', 'layout')
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { relations, customMeta, ...data } = parsedInput
+    const { relations, customMeta, managingEntities, ...data } = parsedInput
     return await db.transaction(async () => {
       try {
         const { id } = await db.token.insert(data)
@@ -38,6 +38,12 @@ export const insertToken = actionClient
           decimals: customMeta?.decimals ?? null,
           contractName: customMeta?.contractName ?? null,
         })
+        await db.entityToToken.upsertManyOfTokenId(
+          managingEntities.map(({ entityId }) => ({
+            tokenId: id,
+            entityId,
+          })),
+        )
         return { success: { id } }
       } catch (e) {
         return { failure: `Failed to insert token: ${e as string}` }
@@ -48,7 +54,7 @@ export const insertToken = actionClient
 export const updateToken = actionClient
   .schema(updateTokenSchema)
   .action(async ({ parsedInput }) => {
-    const { id, relations, customMeta, ...data } = parsedInput
+    const { id, relations, customMeta, managingEntities, ...data } = parsedInput
     revalidatePath('/', 'layout')
     return await db.transaction(async () => {
       try {
@@ -78,6 +84,13 @@ export const updateToken = actionClient
           decimals: customMeta?.decimals ?? null,
           contractName: customMeta?.contractName ?? null,
         })
+        await db.entityToToken.deleteByTokenId(id)
+        await db.entityToToken.upsertManyOfTokenId(
+          managingEntities.map(({ entityId }) => ({
+            tokenId: id,
+            entityId,
+          })),
+        )
         return { success: { id } }
       } catch (e) {
         return { failure: `Failed to update token: ${e as string}` }
@@ -92,6 +105,7 @@ export const deleteToken = actionClient
     revalidatePath('/', 'layout')
     return await db.transaction(async () => {
       try {
+        await db.entityToToken.deleteByTokenId(id)
         await db.tokenBridge.deleteByTokenId(id)
         await db.tokenMeta.deleteByTokenId(id)
         await db.token.delete(id)

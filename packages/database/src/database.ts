@@ -20,6 +20,9 @@ import { VerifierStatusRepository } from './other/verifier-status/repository'
 import { BridgeEscrowRepository } from './token-db/bridge-escrow/repository'
 import { CacheRepository } from './token-db/cache/repository'
 import { DeploymentRepository } from './token-db/deployment/repository'
+import { EntityToExternalBridgeRepository } from './token-db/entity-to-external-bridge/repository'
+import { EntityToTokenRepository } from './token-db/entity-to-token/repository'
+import { EntityRepository } from './token-db/entity/repository'
 import { ExternalBridgeRepository } from './token-db/external-bridge/repository'
 import { NetworkExplorerRepository } from './token-db/network-explorer/repository'
 import { NetworkRpcRepository } from './token-db/network-rpc/repository'
@@ -68,6 +71,9 @@ export function createDatabase(config?: PoolConfig) {
     bridgeEscrow: new BridgeEscrowRepository(db),
     cache: new CacheRepository(db),
     deployment: new DeploymentRepository(db),
+    entity: new EntityRepository(db),
+    entityToExternalBridge: new EntityToExternalBridgeRepository(db),
+    entityToToken: new EntityToTokenRepository(db),
     externalBridge: new ExternalBridgeRepository(db),
     networkExplorer: new NetworkExplorerRepository(db),
     networkRpc: new NetworkRpcRepository(db),
