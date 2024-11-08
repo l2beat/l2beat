@@ -44,7 +44,7 @@ export const oevnetworkDac = AnytrustDAC({
             'EXECUTOR_ROLE',
           ),
           description:
-            'Multisig that can upgrade authorized batch posters (relayers) via the UpgradeExecutor contract.',
+            'Address that can upgrade the DA bridge, upgrade authorized batch posters (relayers), and change the Committee members by updating the valid keyset (via UpgradeExecutor).',
         },
         {
           name: 'UpgradeExecutor',
@@ -59,10 +59,6 @@ export const oevnetworkDac = AnytrustDAC({
           description:
             'The contract used to manage the upgrade of the DA bridge and other contracts.',
         },
-        ...discovery.getMultisigPermission(
-          'ConduitMultisig',
-          `Multisig that can upgrade the DA bridge, upgrade authorized batch posters (relayers), and change the Committee members by updating the valid keyset (via UpgradeExecutor).`,
-        ),
       ],
     },
     chain: ChainId.ETHEREUM,
