@@ -26,11 +26,12 @@ export class BlockProvider {
     for (const [index, client] of this.clients.entries()) {
       try {
         const end = await client.getLatestBlockNumber()
+
         return await getBlockNumberAtOrBefore(
           timestamp,
           start,
           end,
-          this.getBlockWithTransactions.bind(this),
+          (number: number) => client.getBlockWithTransactions(number),
         )
       } catch (error) {
         if (index === this.clients.length - 1) throw error
