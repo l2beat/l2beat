@@ -31,7 +31,16 @@ export class ActivityDependencies {
     assert(project, `Project ${chain} not found`)
 
     switch (project.config.type) {
-      case 'rpc':
+      case 'rpc': {
+        const provider = this.blockProviders.getBlockProvider(chain)
+
+        return new BlockTxsCountService({
+          provider,
+          projectId: project.id,
+          assessCount: project.config.assessCount,
+          rpcUopsAnalyzer: this.rpcUopsAnalyzer,
+        })
+      }
       case 'zksync':
       case 'degate3':
       case 'loopring':
@@ -41,11 +50,6 @@ export class ActivityDependencies {
         return new BlockTxsCountService({
           provider,
           projectId: project.id,
-          assessCount:
-            project.config.type === 'rpc'
-              ? project.config.assessCount
-              : undefined,
-          rpcUopsAnalyzer: this.rpcUopsAnalyzer,
         })
       }
       case 'starknet': {
