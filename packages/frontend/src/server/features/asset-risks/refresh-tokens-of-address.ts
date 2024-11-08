@@ -55,57 +55,89 @@ export async function refreshTokensOfAddress(address: Address) {
     })
     .filter(notUndefined)
 
-  const tokens = Object.fromEntries(
-    (
-      await Promise.allSettled(
-        networksToCheck.map<Promise<[string, TokenRecord[]]>>(
-          async (network) => {
-            if (!network.chainId) return [network.id, []]
+  const checkResults = await Promise.allSettled(
+    networksToCheck.map<Promise<[string, TokenRecord[]]>>(async (network) => {
+      if (!network.chainId || !network.rpc?.url) return [network.id, []]
 
-            const chain = getChain(network.chainId)
-            if (!chain) return [network.id, []]
+      const chain = getChain({
+        chainId: network.chainId,
+        rpcUrl: network.rpc.url,
+      })
 
-            const client = createPublicClient({
-              chain,
-              transport: http(),
-            })
+      const client = createPublicClient({
+        chain,
+        transport: http(),
+      })
 
-            const blockNumber = await client.getBlockNumber()
-            const logs = await getAllLogs(
-              client as unknown as PublicClient,
-              address,
-              0n,
-              blockNumber,
-            )
-            const tokens = new Set<TokenRecord>()
-            for (const log of logs) {
-              const token = tokensByNetwork[network.id]?.find(
-                (token) => token.address === log.address,
-              )
-              if (token) {
-                tokens.add(token)
-              }
-            }
+      const blockNumber = await client.getBlockNumber()
+      const tokens = new Set<TokenRecord>()
 
-            return [network.id, Array.from(tokens)]
-          },
-        ),
+      const nativeTokenRecords =
+        tokensByNetwork[network.id]?.filter(
+          (token) => token.address === 'native',
+        ) ?? []
+
+      for (const token of nativeTokenRecords) {
+        tokens.add(token)
+      }
+
+      const logs = await getAllLogs(
+        client as unknown as PublicClient,
+        address,
+        0n,
+        blockNumber,
       )
-    )
+
+      for (const log of logs) {
+        const token = tokensByNetwork[network.id]?.find(
+          (token) => token.address.toLowerCase() === log.address.toLowerCase(),
+        )
+        if (token) {
+          tokens.add(token)
+        }
+      }
+
+      return [network.id, Array.from(tokens)]
+    }),
+  )
+
+  const errors = checkResults
+    .map((p, i) => ({
+      networkId: networksToCheck[i]?.id,
+      error: p.status === 'rejected' ? String(p.reason) : undefined,
+    }))
+    .filter((p) => p.error)
+
+  const tokens = Object.fromEntries(
+    checkResults
       .filter((p) => p.status === 'fulfilled')
       .map((p) => p.value)
       .filter(([_, tokens]) => tokens.length > 0),
   )
 
-  await db.assetRisksBalance.upsertMany(
-    Object.values(tokens).flatMap((tokens) =>
-      tokens.map((token) => ({
-        userId: user.id,
-        tokenId: token.id,
-        balance: '0',
-      })),
-    ),
+  const existingTokenIds = new Set(
+    (await db.assetRisksBalance.getAllForUser(user.id)).map((b) => b.tokenId),
   )
+
+  await db.assetRisksBalance.upsertMany(
+    Object.values(tokens)
+      .flatMap((tokens) =>
+        tokens.map((token) => ({
+          userId: user.id,
+          tokenId: token.id,
+          balance: '0',
+        })),
+      )
+      .filter((b) => !existingTokenIds.has(b.tokenId)),
+  )
+
+  if (errors.length > 0) {
+    console.error('Some networks failed to check', { errors })
+  }
+
+  return {
+    found: Object.keys(tokens).length,
+  }
 }
 
 async function getAllLogsInner(

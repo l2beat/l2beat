@@ -49,6 +49,8 @@ export class TokenMetaRepository extends BaseRepository {
     tokenIds: string[],
     source: string,
   ): Promise<TokenMetaRecord[]> {
+    if (tokenIds.length === 0) return []
+
     return await this.db
       .selectFrom('TokenMeta')
       .select(selectTokenMeta)

@@ -10,7 +10,6 @@ import { StarknetUopsAnalyzer } from '../uops/analyzers/StarknetUopsAnalyzer'
 interface Dependencies {
   provider: BlockProvider
   projectId: ProjectId
-  type: 'rpc' | 'zksync' | 'fuel' | 'starknet'
   uopsAnalyzer?: RpcUopsAnalyzer | StarknetUopsAnalyzer
   assessCount?: AssessCount
 }

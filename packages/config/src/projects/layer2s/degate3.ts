@@ -117,7 +117,7 @@ export const degate3: Layer2 = {
       }),
     ],
     transactionApi: {
-      type: 'degate',
+      type: 'degate3',
       defaultUrl: 'https://v1-mainnet-backend.degate.com/order-book-api',
       defaultCallsPerMinute: 120,
     },

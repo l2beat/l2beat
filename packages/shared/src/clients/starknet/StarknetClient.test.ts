@@ -148,7 +148,7 @@ const mockStarknetGetBlockWithTxsResponse = (
     transactions: block.transactions.map((tx: Transaction) => ({
       type: tx.type ?? '',
       calldata: tx.data ? (tx.data as string[]) : [],
-      transaction_hash: tx.hash,
+      transaction_hash: tx.hash ?? '',
       sender_address: tx.from ?? '',
     })),
   },

@@ -22,7 +22,6 @@ describe(BlockTxsCountService.name, () => {
       ])
 
       const txsCountProvider = new BlockTxsCountService({
-        type: 'rpc',
         projectId: ProjectId('a'),
         provider: client,
         uopsAnalyzer: analyzer,
@@ -47,7 +46,6 @@ describe(BlockTxsCountService.name, () => {
 
       analyzer.calculateUops = mockFn().returnsOnce(2).returnsOnce(3)
       const txsCountProvider = new BlockTxsCountService({
-        type: 'rpc',
         projectId: ProjectId('a'),
         provider: client,
         uopsAnalyzer: analyzer,
