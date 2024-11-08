@@ -1,9 +1,7 @@
 import { z } from 'zod'
 
-export type StarknetGetBlockResponseBodySchema = z.infer<
-  typeof StarknetGetBlockResponseBodySchema
->
-export const StarknetGetBlockResponseBodySchema = z.object({
+export type StarknetGetBlockResponse = z.infer<typeof StarknetGetBlockResponse>
+export const StarknetGetBlockResponse = z.object({
   jsonrpc: z.literal('2.0'),
   id: z.number().int(),
   result: z.object({
@@ -21,10 +19,10 @@ const StarknetTransaction = z.object({
   sender_address: z.string().optional(),
 })
 
-export type StarknetGetBlockWithTxsResponseBodySchema = z.infer<
-  typeof StarknetGetBlockWithTxsResponseBodySchema
+export type StarknetGetBlockWithTxsResponse = z.infer<
+  typeof StarknetGetBlockWithTxsResponse
 >
-export const StarknetGetBlockWithTxsResponseBodySchema = z.object({
+export const StarknetGetBlockWithTxsResponse = z.object({
   jsonrpc: z.literal('2.0'),
   id: z.number().int(),
   result: z.object({
@@ -32,5 +30,14 @@ export const StarknetGetBlockWithTxsResponseBodySchema = z.object({
     timestamp: z.number().int(),
     block_hash: z.string(),
     transactions: z.array(StarknetTransaction),
+  }),
+})
+
+export type StarknetErrorResponse = z.infer<typeof StarknetErrorResponse>
+export const StarknetErrorResponse = z.object({
+  jsonrpc: z.literal('2.0'),
+  error: z.object({
+    code: z.number().int(),
+    message: z.string(),
   }),
 })

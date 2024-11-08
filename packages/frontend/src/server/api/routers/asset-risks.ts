@@ -1,5 +1,16 @@
-import { type StageConfig, layer2s, layer3s } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
+import {
+  type Layer2,
+  type Layer3,
+  type StageConfig,
+  layer2s,
+  layer3s,
+} from '@l2beat/config'
+import {
+  type TokenBridgeRecord,
+  type TokenMetaRecord,
+  type TokenRecord,
+} from '@l2beat/database'
+import { type AssetRisksBalanceRecord } from '@l2beat/database/dist/asset-risks/balance/entity'
 import { TRPCError } from '@trpc/server'
 import { getAddress } from 'viem'
 import { z } from 'zod'
@@ -8,7 +19,14 @@ import { refreshBalancesOfAddress } from '~/server/features/asset-risks/refresh-
 import { refreshTokensOfAddress } from '~/server/features/asset-risks/refresh-tokens-of-address'
 import { procedure, router } from '../trpc'
 
-const projects = [...layer2s, ...layer3s]
+const projectsByChainId = [...layer2s, ...layer3s].reduce<
+  Record<number, Layer2 | Layer3>
+>((acc, p) => {
+  if (p.chainConfig?.chainId) {
+    acc[p.chainConfig.chainId] = p
+  }
+  return acc
+}, {})
 
 export const assetRisksRouter = router({
   refreshTokens: procedure
@@ -60,10 +78,48 @@ export const assetRisksRouter = router({
       const networks = await db.network.getAll()
       const externalBridges = await db.externalBridge.getAll()
       const bridges = await db.tokenBridge.getAll()
-      const balances = await db.assetRisksBalance.getAllForUser(user.id)
-      const tokens = await db.token.getByIds(balances.map((b) => b.tokenId))
-      // TODO: Fetch only needed token meta
-      const tokenMeta = await db.tokenMeta.getAll()
+
+      const balances = (
+        await db.assetRisksBalance.getAllForUser(user.id)
+      ).reduce<Record<string, AssetRisksBalanceRecord>>((acc, b) => {
+        acc[b.tokenId] = b
+        return acc
+      }, {})
+
+      const userTokenIds = Object.keys(balances)
+
+      const tokens: Record<string, TokenRecord> = {}
+      const relations: Record<string, TokenBridgeRecord> = {}
+
+      let tokensToCheck: string[] = userTokenIds
+
+      while (tokensToCheck.length > 0) {
+        const newTokens = await db.token.getByIds(tokensToCheck)
+        for (const token of newTokens) {
+          tokens[token.id] = token
+        }
+        const newRelations =
+          await db.tokenBridge.getByTargetTokenIds(tokensToCheck)
+        tokensToCheck = []
+        for (const relation of newRelations) {
+          if (relations[relation.id]) continue
+          relations[relation.id] = relation
+          if (!tokens[relation.sourceTokenId]) {
+            tokensToCheck.push(relation.sourceTokenId)
+          }
+        }
+      }
+
+      const tokenMeta = (
+        await db.tokenMeta.getByTokenIdsAndSource(
+          Object.values(tokens).map((t) => t.id),
+          'Aggregate',
+        )
+      ).reduce<Record<string, TokenMetaRecord>>((acc, meta) => {
+        acc[meta.tokenId] = meta
+        return acc
+      }, {})
+
       // TODO: Fetch info about prices / etc.
 
       const chains = networks.reduce<
@@ -78,8 +134,8 @@ export const assetRisksRouter = router({
             stage?: StageConfig['stage']
           }
         >
-      >((acc, { id, chainId }) => {
-        const chain = projects.find((p) => p.chainConfig?.chainId === chainId)
+      >((acc, { id, name, chainId }) => {
+        const chain = chainId && projectsByChainId[chainId]
         if (chain) {
           acc[id] = {
             name: chain.display.name,
@@ -101,6 +157,11 @@ export const assetRisksRouter = router({
               isCritical: r.isCritical,
             })),
           }
+        } else {
+          acc[id] = {
+            name,
+            risks: [],
+          }
         }
         return acc
       }, {})
@@ -112,14 +173,12 @@ export const assetRisksRouter = router({
         chains,
         bridges,
         externalBridges,
-        tokens: tokens.map((token) => {
-          const balanceRecord = balances.find((b) => b.tokenId === token.id)
-          assert(balanceRecord, 'Balance not found')
-
+        relations,
+        tokens: Object.values(tokens).map((token) => {
           return {
             token,
-            meta: tokenMeta.find((m) => m.tokenId === token.id && m.name),
-            balance: balanceRecord.balance,
+            meta: tokenMeta[token.id],
+            balance: balances[token.id]?.balance ?? '0',
           }
         }),
       }

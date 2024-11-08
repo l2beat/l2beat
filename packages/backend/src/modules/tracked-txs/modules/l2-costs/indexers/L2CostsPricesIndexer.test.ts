@@ -121,7 +121,7 @@ describe(L2CostsPricesIndexer.name, () => {
 
       expect(
         coingeckoQueryServiceMock.getUsdPriceHistoryHourly,
-      ).toHaveBeenCalledWith(ETHEREUM_COINGECKO_ID, from, to, undefined)
+      ).toHaveBeenCalledWith(ETHEREUM_COINGECKO_ID, from, to)
 
       expect(result).toEqual([
         {

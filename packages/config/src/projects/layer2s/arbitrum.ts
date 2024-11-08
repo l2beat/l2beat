@@ -441,7 +441,7 @@ export const arbitrum: Layer2 = orbitStackL2({
       tokens: '*',
       source: 'external',
       description:
-        'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
+        'Main entry point for users depositing ERC20 tokens that require minting custom tokens on L2.',
       ...upgradeExecutorUpgradeability,
     }),
     discovery.getEscrowDetails({
