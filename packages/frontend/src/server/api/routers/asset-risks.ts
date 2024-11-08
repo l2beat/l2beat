@@ -18,6 +18,7 @@ import { db } from '~/server/database'
 import { refreshBalancesOfAddress } from '~/server/features/asset-risks/refresh-balances-of-address'
 import { refreshTokensOfAddress } from '~/server/features/asset-risks/refresh-tokens-of-address'
 import { procedure, router } from '../trpc'
+import { assert, notUndefined } from '@l2beat/shared-pure'
 
 const projectsByChainId = [...layer2s, ...layer3s].reduce<
   Record<number, Layer2 | Layer3>
@@ -127,6 +128,7 @@ export const assetRisksRouter = router({
           string,
           {
             name: string
+            logoUrl: string | undefined
             risks: {
               text: string
               isCritical?: boolean
@@ -134,11 +136,14 @@ export const assetRisksRouter = router({
             stage?: StageConfig['stage']
           }
         >
-      >((acc, { id, name, chainId }) => {
+      >((acc, { id, name, chainId, logoUrl }) => {
         const chain = chainId && projectsByChainId[chainId]
+
         if (chain) {
           acc[id] = {
             name: chain.display.name,
+            logoUrl:
+              logoUrl ?? `https://l2beat.com/icons/${chain.display.slug}.png`,
             stage: 'stage' in chain ? chain.stage?.stage : undefined,
             risks: (chain?.technology
               ? [
@@ -160,27 +165,48 @@ export const assetRisksRouter = router({
         } else {
           acc[id] = {
             name,
+            logoUrl: logoUrl ?? undefined,
             risks: [],
           }
         }
         return acc
       }, {})
 
+      const coingeckoMeta = await db.tokenMeta.getByTokenIdsAndSource(
+        Object.values(tokens).map((t) => t.id),
+        'Coingecko',
+      )
+
+      const coingeckoIds = coingeckoMeta
+        .map((m) => m.externalId ?? undefined)
+        .filter(notUndefined)
+
+      const prices = await db.currentPrice.getByCoingeckoIds(coingeckoIds)
+      const tokenss = Object.values(tokens).map((token) => {
+        const meta = tokenMeta[token.id]
+        assert(meta, 'Token meta not found')
+        const coingeckoId = coingeckoMeta.find(
+          (m) => m.tokenId === token.id,
+        )?.externalId
+        const price = prices.find((p) => p.coingeckoId === coingeckoId)
+        const balance = Number(balances[token.id]?.balance ?? '0')
+        const amount = balance / 10 ** meta.decimals!
+        return {
+          token,
+          meta,
+          usdValue: amount * (price?.priceUsd ?? 0),
+          amount,
+        }
+      })
       return {
-        usdValue: 0,
+        usdValue: tokenss.reduce((acc, t) => acc + t.usdValue, 0),
         tokensRefreshedAt: user.tokensRefreshedAt,
         balancesRefreshedAt: user.balancesRefreshedAt,
         chains,
         bridges,
         externalBridges,
         relations,
-        tokens: Object.values(tokens).map((token) => {
-          return {
-            token,
-            meta: tokenMeta[token.id],
-            balance: balances[token.id]?.balance ?? '0',
-          }
-        }),
+        tokens: tokenss,
       }
     }),
 })

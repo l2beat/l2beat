@@ -18,7 +18,7 @@ export default async function Layout({
   }
 
   return (
-    <div className={cn(oswald.variable, 'bg-[#0B0B1C] text-white')}>
+    <div className={cn(oswald.variable, 'insight bg-[#0B0B1C] text-white')}>
       {children}
     </div>
   )

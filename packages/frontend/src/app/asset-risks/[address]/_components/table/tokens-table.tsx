@@ -1,49 +1,21 @@
 'use client'
 
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { useMemo } from 'react'
 import { Card } from '~/app/asset-risks/_components/card'
 import { BasicTable } from '~/app/asset-risks/_components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
-import { type TokenEntry, tokenColumns } from './columns'
+import { tokenColumns } from './columns'
+import { useReport } from '../report-context'
+import { getTokenEntries } from './get-token-entries'
+import { useMemo } from 'react'
 
 export function TokensTable() {
-  const data = useMemo<TokenEntry[]>(
-    () => [
-      {
-        symbol: 'USDC',
-        logoUrl:
-          'https://assets.coingecko.com/coins/images/6319/standard/usdc.png',
-        managedBy: 'Circle',
-        type: 'IOU',
-        underlyingTokens: [],
-        value: 50,
-        balance: 100,
-        chainName: 'Arbitrum',
-        chainLogoUrl: '/icons/arbitrum.png',
-        criticalWarnings: ['a'],
-        warnings: ['b'],
-      },
-      {
-        symbol: 'USDC',
-        logoUrl:
-          'https://assets.coingecko.com/coins/images/6319/standard/usdc.png',
-        managedBy: 'Circle',
-        type: 'IOU',
-        underlyingTokens: [],
-        value: 100,
-        balance: 100,
-        chainName: 'Optimism',
-        chainLogoUrl: '/icons/optimism.png',
-        criticalWarnings: ['a'],
-        warnings: ['b'],
-      },
-    ],
-    [],
-  )
+  const report = useReport()
+  const entries = useMemo(() => getTokenEntries(report), [report])
+
   const table = useTable({
     columns: tokenColumns,
-    data,
+    data: entries,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     initialState: {

@@ -2,12 +2,12 @@ import Image from 'next/image'
 
 interface Props {
   token: {
-    logoUrl: string
     symbol: string
+    logoUrl: string
   }
   chain: {
-    logoUrl: string
     name: string
+    logoUrl: string | undefined
   }
 }
 
@@ -21,13 +21,15 @@ export function TokenWithChainLogo({ token, chain }: Props) {
         height={32}
         className="min-h-8 min-w-8"
       />
-      <Image
-        src={chain.logoUrl}
-        alt={`${chain.name} icon`}
-        width={18}
-        height={18}
-        className="absolute bottom-0 right-0 min-h-[18px] min-w-[18px] translate-x-1/2 translate-y-1/2"
-      />
+      {chain.logoUrl && (
+        <Image
+          src={chain.logoUrl}
+          alt={`${chain.name} icon`}
+          width={18}
+          height={18}
+          className="absolute bottom-0 right-0 min-h-[18px] min-w-[18px] translate-x-1/2 translate-y-1/2"
+        />
+      )}
     </div>
   )
 }

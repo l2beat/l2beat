@@ -1,23 +1,10 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { TwoRowCell } from '~/components/table/cells/two-row-cell'
 import { formatNumberWithCommas } from '~/utils/number-format/format-number'
-import { CriticalBadgeIcon } from '../../_assets/critical-badge'
-import { WarningBadgeIcon } from '../../_assets/warning-badge'
-import { TokenWithChainLogo } from './token-with-chain-logo'
+import { TokenWithChainLogo } from '../../../_components/token-with-chain-logo'
+import { type TokenEntry } from './get-token-entries'
+import { pluralize } from '@l2beat/shared-pure'
 
-export interface TokenEntry {
-  symbol: string
-  logoUrl: string
-  chainName: string
-  chainLogoUrl: string
-  value: number
-  balance: number
-  type: string
-  managedBy: string
-  underlyingTokens: Omit<TokenEntry, 'underlyingTokens'>[]
-  criticalWarnings: string[]
-  warnings: string[]
-}
 const columnHelper = createColumnHelper<TokenEntry>()
 
 export const tokenColumns = [
@@ -26,14 +13,8 @@ export const tokenColumns = [
     cell: ({ row }) => {
       return (
         <TokenWithChainLogo
-          token={{
-            logoUrl: row.original.logoUrl,
-            symbol: row.original.symbol,
-          }}
-          chain={{
-            logoUrl: row.original.chainLogoUrl,
-            name: row.original.chainName,
-          }}
+          token={row.original.token}
+          chain={row.original.network}
         />
       )
     },
@@ -42,13 +23,13 @@ export const tokenColumns = [
       cellClassName: '!pr-0',
     },
   }),
-  columnHelper.accessor('symbol', {
+  columnHelper.accessor('token.name', {
     header: 'Asset',
     cell: ({ row }) => {
       return (
         <TwoRowCell>
-          <TwoRowCell.First>{row.original.symbol}</TwoRowCell.First>
-          <TwoRowCell.Second>on {row.original.chainName}</TwoRowCell.Second>
+          <TwoRowCell.First>{row.original.token.name}</TwoRowCell.First>
+          <TwoRowCell.Second>on {row.original.network.name}</TwoRowCell.Second>
         </TwoRowCell>
       )
     },
@@ -56,23 +37,25 @@ export const tokenColumns = [
       tooltip: 'Asset',
     },
   }),
-  columnHelper.accessor('value', {
+  columnHelper.accessor('usdValue', {
     id: 'value',
     header: 'Value',
     cell: ({ row }) => {
       return (
-        <TwoRowCell>
+        <TwoRowCell className="text-right">
           <TwoRowCell.First className="font-oswald !text-lg font-semibold text-[#D1FF1A]">
-            ${formatNumberWithCommas(row.original.value)}
+            ${formatNumberWithCommas(row.original.usdValue)}
           </TwoRowCell.First>
           <TwoRowCell.Second>
-            {formatNumberWithCommas(row.original.balance)}
+            {formatNumberWithCommas(row.original.amount)}{' '}
+            {row.original.token.symbol}
           </TwoRowCell.Second>
         </TwoRowCell>
       )
     },
     meta: {
       tooltip: 'Value',
+      align: 'right',
     },
   }),
   columnHelper.accessor('type', {
@@ -87,24 +70,32 @@ export const tokenColumns = [
       tooltip: 'Managed by',
     },
   }),
-  columnHelper.accessor('underlyingTokens', {
+  columnHelper.accessor('underlyingTokens.count', {
     header: 'Underlying Tokens',
     cell: ({ row }) => {
-      return `${row.original.underlyingTokens.length} underlying`
+      if (row.original.underlyingTokens.count === 0) {
+        return (
+          <TwoRowCell>
+            <TwoRowCell.First>None</TwoRowCell.First>
+            <TwoRowCell.Second>Native</TwoRowCell.Second>
+          </TwoRowCell>
+        )
+      }
+
+      return (
+        <TwoRowCell>
+          <TwoRowCell.First>
+            {row.original.underlyingTokens.count} underlying
+          </TwoRowCell.First>
+          <TwoRowCell.Second>
+            on {row.original.underlyingTokens.chainCount}{' '}
+            {pluralize(row.original.underlyingTokens.chainCount, 'chain')}
+          </TwoRowCell.Second>
+        </TwoRowCell>
+      )
     },
     meta: {
       tooltip: 'Underlying Tokens',
-    },
-  }),
-  columnHelper.display({
-    id: 'warnings',
-    cell: ({ row }) => {
-      return (
-        <div className="flex items-center gap-3">
-          {!!row.original.criticalWarnings.length && <CriticalBadgeIcon />}
-          {!!row.original.warnings.length && <WarningBadgeIcon />}
-        </div>
-      )
     },
   }),
 ]

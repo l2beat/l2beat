@@ -18,7 +18,6 @@ export function ReportProvider({
   placeholder?: React.ReactNode
 }) {
   const query = api.assetRisks.report.useQuery({ address })
-
   if (!query.data) return placeholder ?? null
 
   return (
@@ -35,5 +34,5 @@ export function useReport() {
   return context
 }
 
-type Report = ReturnType<typeof useReport>
+export type Report = ReturnType<typeof useReport>
 export type Token = Report['tokens'][number]

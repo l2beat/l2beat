@@ -298,6 +298,9 @@ const config: Config = {
     plugin(function ({ addVariant }) {
       addVariant('main-page-card', '.main-page-card &')
     }),
+    plugin(function ({ addVariant }) {
+      addVariant('insight', '.insight &')
+    }),
     require('tailwindcss-animate'),
     require('@tailwindcss/container-queries'),
   ],
