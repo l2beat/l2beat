@@ -6,7 +6,6 @@ import { type ScalingProjectRisk } from '@l2beat/config'
 import { mainnet } from 'viem/chains'
 import { Skeleton } from '~/components/core/skeleton'
 import { db } from '~/server/database'
-import { Footer } from '../_components/footer'
 import { ClientsideLogic } from './_components/clientside-logic'
 import { DetailsHeader } from './_components/details-header'
 import { Disclaimer } from './_components/disclaimer'
@@ -69,17 +68,16 @@ export default async function Page(props: Props) {
           address={address}
           placeholder={
             <div className="flex flex-col gap-6">
-              <Skeleton className="h-[335px] w-full rounded-xl" />
-              <Skeleton className="h-[400px] w-full rounded-xl" />
+              <Skeleton className="h-[242px] w-full rounded-xl" />
+              <Skeleton className="h-[calc(100vh_-_410px)] w-full rounded-xl" />
             </div>
           }
         >
           <DetailsHeader vanityAddress={vanityAddress} />
           <TokensTable />
+          <Disclaimer />
         </ReportProvider>
-        <Disclaimer />
       </div>
-      <Footer />
     </main>
   )
 }

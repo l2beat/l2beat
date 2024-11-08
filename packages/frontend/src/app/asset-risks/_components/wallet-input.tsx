@@ -1,13 +1,34 @@
 'use client'
+
+import { type VariantProps, cva } from 'class-variance-authority'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { http, createPublicClient, isAddress } from 'viem'
 import { mainnet } from 'viem/chains'
 import { normalize } from 'viem/ens'
 import { LensIcon } from '~/icons/lens'
+import { cn } from '~/utils/cn'
+import { Input } from './input'
 
-export function InputWallet() {
+const walletInputVariants = cva('pr-10', {
+  variants: {
+    size: {
+      sm: 'pl-4',
+      md: 'pl-5',
+    },
+  },
+  defaultVariants: {
+    size: 'md',
+  },
+})
+
+type Props = VariantProps<typeof walletInputVariants> & {
+  className?: string
+}
+
+export function WalletInput({ size, className }: Props) {
   const [address, setAddress] = useState('')
+  const [error, setError] = useState<string | undefined>(undefined)
   const router = useRouter()
   const publicClient = createPublicClient({
     chain: mainnet,
@@ -20,8 +41,8 @@ export function InputWallet() {
     })
     if (ensAddress) {
       router.push(`/asset-risks/${ensAddress}`)
-      setAddress('')
     } else if (!isAddress(address)) {
+      setError('Invalid address')
       return
     } else {
       router.push(`/asset-risks/${address}`)
@@ -30,7 +51,7 @@ export function InputWallet() {
 
   return (
     <div className="relative">
-      <input
+      <Input
         type="text"
         value={address}
         onChange={(e) => setAddress(e.target.value)}
@@ -40,14 +61,22 @@ export function InputWallet() {
           }
         }}
         placeholder="Input address or ENS name"
-        className="w-[min(45vw,450px)] rounded-md border border-[#C0C1C7] bg-gray-100 py-2 pl-4 pr-10 outline-none transition-colors duration-100 placeholder:text-zinc-500 focus:border-gray-500 dark:bg-zinc-900 dark:placeholder:text-white/50 dark:focus:border-white"
+        error={error}
+        size={size}
+        className={cn(
+          'peer',
+          walletInputVariants({
+            size,
+          }),
+          className,
+        )}
       />
-      <div
-        className="absolute right-2.5 top-3 cursor-pointer"
+      <button
+        className="absolute inset-y-0 right-[18px] peer-focus:[&>svg]:fill-white"
         onClick={() => handleWallet()}
       >
-        <LensIcon />
-      </div>
+        <LensIcon className="fill-[#74749F] transition-colors duration-200" />
+      </button>
     </div>
   )
 }
