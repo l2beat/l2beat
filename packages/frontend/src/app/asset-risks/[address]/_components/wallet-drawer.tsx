@@ -1,7 +1,7 @@
 'use client'
 
-import { WalletInput } from '../../_components/wallet-input'
 import { Drawer, DrawerClose, DrawerContent } from '../../_components/drawer'
+import { WalletInput } from '../../_components/wallet-input'
 
 export function WalletDrawer({ children }: { children: React.ReactNode }) {
   return (

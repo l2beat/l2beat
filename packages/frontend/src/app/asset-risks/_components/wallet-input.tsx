@@ -1,6 +1,6 @@
 'use client'
 
-import { cva, type VariantProps } from 'class-variance-authority'
+import { type VariantProps, cva } from 'class-variance-authority'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { http, createPublicClient, isAddress } from 'viem'

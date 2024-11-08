@@ -1,9 +1,9 @@
 'use client'
 
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { formatNumberWithCommas } from '~/utils/number-format/format-number'
 import { Card } from '../../_components/card'
 import { useReport } from './report-context'
-import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 
 interface DetailsHeaderProps {
   vanityAddress: string

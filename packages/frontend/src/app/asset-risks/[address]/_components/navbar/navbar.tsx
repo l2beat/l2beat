@@ -1,7 +1,7 @@
-import { DrawerTrigger } from '~/app/asset-risks/_components/drawer'
-import { WalletDrawer } from '../wallet-drawer'
-import { WalletInput } from '~/app/asset-risks/_components/wallet-input'
 import Link from 'next/link'
+import { DrawerTrigger } from '~/app/asset-risks/_components/drawer'
+import { WalletInput } from '~/app/asset-risks/_components/wallet-input'
+import { WalletDrawer } from '../wallet-drawer'
 
 export function Navbar() {
   return (
