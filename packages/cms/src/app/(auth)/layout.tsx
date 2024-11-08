@@ -1,4 +1,11 @@
-import { CircleUser, Coins, Menu, Network, SendToBack } from 'lucide-react'
+import {
+  Building,
+  CircleUser,
+  Coins,
+  Menu,
+  Network,
+  SendToBack,
+} from 'lucide-react'
 import Link from 'next/link'
 
 import { redirect } from 'next/navigation'
@@ -34,6 +41,11 @@ const menu = [
     href: '/links' as const,
     icon: SendToBack,
   },
+  {
+    name: 'Entities',
+    href: '/entities' as const,
+    icon: Building,
+  },
 ]
 
 export default async function Layout({
@@ -53,7 +65,7 @@ export default async function Layout({
 
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-      <div className="hidden border-r bg-muted/40 md:block">
+      <div className="bg-muted/40 hidden border-r md:block">
         <div className="flex h-full max-h-screen flex-col gap-2">
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
             <Link href="/" className="flex items-center gap-2 font-semibold">
@@ -77,7 +89,7 @@ export default async function Layout({
         </div>
       </div>
       <div className="flex min-h-full flex-col">
-        <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
+        <header className="bg-muted/40 flex h-14 items-center gap-4 border-b px-4 lg:h-[60px] lg:px-6">
           <Sheet>
             <SheetTrigger asChild>
               <Button
@@ -148,7 +160,7 @@ export default async function Layout({
           <main className="flex w-full flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
             {children}
           </main>
-          <footer className="border-t p-4 text-center text-sm text-muted-foreground lg:p-6">
+          <footer className="text-muted-foreground border-t p-4 text-center text-sm lg:p-6">
             &copy; {new Date().getFullYear()} L2BEAT. All rights reserved.
           </footer>
         </div>

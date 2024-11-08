@@ -43,6 +43,10 @@ export type {
   TokenRecord,
   UpsertableTokenRecord,
 } from './token-db/token/entity'
+export type {
+  EntityRecord,
+  UpsertableEntityRecord,
+} from './token-db/entity/entity'
 export type { AmountRecord } from './tvl/amount/entity'
 export type { BlockTimestampRecord } from './tvl/block-timestamp/entity'
 export type { PriceRecord } from './tvl/price/entity'

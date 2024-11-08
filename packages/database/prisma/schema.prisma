@@ -76,6 +76,13 @@ enum ExplorerType {
   Etherscan
 }
 
+model Entity {
+  id      String @id @db.Char(21)
+  name    String @db.VarChar(256)
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
+
 model NetworkRpc {
   id        String   @id @db.Char(21)
   networkId String   @db.Char(21)
