@@ -597,70 +597,37 @@ export function EditTokenPage({
               </Button>
             </CardFooter>
           </Card>
-
           {token && (
-            <>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Backing</CardTitle>
-                  <CardDescription>
-                    Shows which tokens is this token backing.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {backing.length === 0 ? (
-                    <p className="text-sm text-muted-foreground">
-                      This token is not backing any other token.
-                    </p>
-                  ) : (
-                    <Table>
-                      <TableHeader>
-                        <TableHead>Token</TableHead>
-                        <TableHead>Link</TableHead>
-                      </TableHeader>
-                      <TableBody>
-                        {backing.map((field, index) => (
-                          <TableRow key={index}>
-                            <TableCell>{field.targetTokenId}</TableCell>
-                            <TableCell>{field.externalBridgeId}</TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  )}
-                </CardContent>
-              </Card>
-              <div className="flex flex-row gap-4">
-                <Card className="flex-1">
-                  <CardHeader>
-                    <CardTitle>Token ID</CardTitle>
-                    <CardDescription>
-                      Unique identifier of this token.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <ReadonlyCopyInput value={token.id} />
-                  </CardContent>
-                </Card>
-                <Card className="flex-1">
-                  <CardHeader>
-                    <CardTitle>Delete Token</CardTitle>
-                    <CardDescription>
-                      This action is irreversible and will delete the token.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardFooter className="flex justify-end">
-                    <Button
-                      variant="destructive"
-                      type="button"
-                      onClick={() => setDeleteDialogOpen(true)}
-                    >
-                      Delete Token
-                    </Button>
-                  </CardFooter>
-                </Card>
-              </div>
-            </>
+            <Card>
+              <CardHeader>
+                <CardTitle>Backing</CardTitle>
+                <CardDescription>
+                  Shows which tokens is this token backing.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {backing.length === 0 ? (
+                  <p className="text-sm text-muted-foreground">
+                    This token is not backing any other token.
+                  </p>
+                ) : (
+                  <Table>
+                    <TableHeader>
+                      <TableHead>Token</TableHead>
+                      <TableHead>Link</TableHead>
+                    </TableHeader>
+                    <TableBody>
+                      {backing.map((field, index) => (
+                        <TableRow key={index}>
+                          <TableCell>{field.targetTokenId}</TableCell>
+                          <TableCell>{field.externalBridgeId}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                )}
+              </CardContent>
+            </Card>
           )}
           <Card>
             <CardHeader>
@@ -741,6 +708,38 @@ export function EditTokenPage({
               </Button>
             </CardFooter>
           </Card>
+          {token && (
+            <div className="flex flex-row gap-4">
+              <Card className="flex-1">
+                <CardHeader>
+                  <CardTitle>Token ID</CardTitle>
+                  <CardDescription>
+                    Unique identifier of this token.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ReadonlyCopyInput value={token.id} />
+                </CardContent>
+              </Card>
+              <Card className="flex-1">
+                <CardHeader>
+                  <CardTitle>Delete Token</CardTitle>
+                  <CardDescription>
+                    This action is irreversible and will delete the token.
+                  </CardDescription>
+                </CardHeader>
+                <CardFooter className="flex justify-end">
+                  <Button
+                    variant="destructive"
+                    type="button"
+                    onClick={() => setDeleteDialogOpen(true)}
+                  >
+                    Delete Token
+                  </Button>
+                </CardFooter>
+              </Card>
+            </div>
+          )}
         </div>
         <DiscardChangesDialog
           open={discardDialogOpen}
