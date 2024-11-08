@@ -2,7 +2,7 @@ import { Transaction } from './Transaction'
 
 export interface Block {
   number: number
-  hash: 'UNSUPPORTED' | (string & {})
+  hash: string
   timestamp: number
   transactions: Transaction[]
 }
