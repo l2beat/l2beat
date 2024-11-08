@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xa5c4ad01efb96895119974629f2421c7ff52337a
+
+# Diff at Fri, 08 Nov 2024 09:24:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@53988239f42edde0275ed92d8f3ada4279354f7d block: 123584561
+- current block number: 127729542
+
+## Description
+
+New yet unused verifier deployed at the address of the owner of OpWorldID_One (???). This address was the owner before and was assumed to be an EOA.
+
+## Watched changes
+
+```diff
++   Status: CREATED
+    contract Verifier (0xa6d85F3b3bE6Ff6DC52C3aaBe9A35d0ce252b79F)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../worldcoin/optimism/.flat/Verifier.sol          | 556 +++++++++++++++++++++
+ 1 file changed, 556 insertions(+)
+```
+
 Generated with discovered.json: 0x156f7a10d88f3de0393119244319511fafb4fb06
 
 # Diff at Mon, 21 Oct 2024 12:52:46 GMT:
