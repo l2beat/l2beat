@@ -1,5 +1,6 @@
 import { Block, json } from '@l2beat/shared-pure'
 import { ClientCore, ClientCoreDependencies } from '../ClientCore'
+import { BlockClient } from '../types'
 import { tai64ToUnix } from './tai64ToUnix'
 import {
   FuelBlockResponse,
@@ -11,7 +12,7 @@ interface Dependencies extends ClientCoreDependencies {
   url: string
 }
 
-export class FuelClient extends ClientCore {
+export class FuelClient extends ClientCore implements BlockClient {
   constructor(private readonly $: Dependencies) {
     super({ ...$ })
   }

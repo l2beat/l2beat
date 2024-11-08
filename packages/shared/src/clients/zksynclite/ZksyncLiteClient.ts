@@ -2,6 +2,7 @@ import { assert, Block, UnixTime, json } from '@l2beat/shared-pure'
 
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 import { ClientCore, ClientCoreDependencies } from '../ClientCore'
+import { BlockClient } from '../types'
 import {
   ZksyncLiteBlocksResult,
   ZksyncLiteError,
@@ -18,7 +19,7 @@ interface Transaction {
   createdAt: UnixTime
 }
 
-export class ZksyncLiteClient extends ClientCore {
+export class ZksyncLiteClient extends ClientCore implements BlockClient {
   constructor(private $: Dependencies) {
     super($)
   }

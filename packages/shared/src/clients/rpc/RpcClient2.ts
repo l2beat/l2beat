@@ -4,6 +4,7 @@ import {
   ClientCore,
   ClientCoreDependencies as ClientCoreDependencies,
 } from '../ClientCore'
+import { BlockClient } from '../types'
 import { CallParameters, EVMBlockResponse, Quantity, RPCError } from './types'
 
 interface Dependencies extends ClientCoreDependencies {
@@ -12,7 +13,7 @@ interface Dependencies extends ClientCoreDependencies {
   generateId?: () => string
 }
 
-export class RpcClient2 extends ClientCore {
+export class RpcClient2 extends ClientCore implements BlockClient {
   constructor(private readonly $: Dependencies) {
     super($)
   }

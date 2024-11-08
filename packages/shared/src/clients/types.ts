@@ -1,12 +1,7 @@
-import { FuelClient } from './fuel/FuelClient'
-import { LoopringClient } from './loopring/LoopringClient'
-import { RpcClient2 } from './rpc/RpcClient2'
-import { StarknetClient } from './starknet/StarknetClient'
-import { ZksyncLiteClient } from './zksynclite/ZksyncLiteClient'
+import { Block } from '@l2beat/shared-pure'
 
-export type BlockClient =
-  | RpcClient2
-  | ZksyncLiteClient
-  | FuelClient
-  | StarknetClient
-  | LoopringClient
+export interface BlockClient {
+  getLatestBlockNumber(): Promise<number>
+  getBlockWithTransactions(blockNumber: number | 'latest'): Promise<Block>
+  chain: string
+}

@@ -1,6 +1,7 @@
 import { Block, json } from '@l2beat/shared-pure'
 import { generateIntId } from '../../tools/generateId'
 import { ClientCore, ClientCoreDependencies } from '../ClientCore'
+import { BlockClient } from '../types'
 import {
   StarknetErrorResponse,
   StarknetGetBlockResponse,
@@ -12,7 +13,7 @@ interface Dependencies extends ClientCoreDependencies {
   generateId?: () => string
 }
 
-export class StarknetClient extends ClientCore {
+export class StarknetClient extends ClientCore implements BlockClient {
   constructor(private readonly $: Dependencies) {
     super($)
   }
