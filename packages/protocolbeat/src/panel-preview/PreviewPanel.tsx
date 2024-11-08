@@ -72,30 +72,38 @@ function PermissionsPreview(props: {
   selectedAddress: string | undefined
   showOnlySelected: boolean
 }) {
-  return props.permissionsPerChain.map(({ chain, permissions }) => (
-    <div key={chain}>
-      <SectionHeader title={`Permissions on ${chain}:`} />
-      {permissions.map((permission, idx) => {
-        const isSelected = includesAddress(
-          permission.addresses,
-          props.selectedAddress,
-        )
-        if (props.showOnlySelected && !isSelected) {
-          return null
-        }
-        return (
-          <PreviewItem
-            key={idx}
-            name={permission.name}
-            addresses={permission.addresses}
-            multisigParticipants={permission.multisigParticipants}
-            description={permission.description}
-            isHighlighted={isSelected}
-          />
-        )
-      })}
-    </div>
-  ))
+  return props.permissionsPerChain
+    .filter(({ permissions }) =>
+      applyShowOnlySelectedFilter(
+        permissions.flatMap((p) => p.addresses),
+        props.selectedAddress,
+        props.showOnlySelected,
+      ),
+    )
+    .map(({ chain, permissions }) => (
+      <div key={chain} className="border-b border-b-coffee-600 pb-2">
+        <SectionHeader title={`Permissions on ${chain}:`} />
+        {permissions.map((permission, idx) => {
+          const isSelected = includesAddress(
+            permission.addresses,
+            props.selectedAddress,
+          )
+          if (props.showOnlySelected && !isSelected) {
+            return null
+          }
+          return (
+            <PreviewItem
+              key={idx}
+              name={permission.name}
+              addresses={permission.addresses}
+              multisigParticipants={permission.multisigParticipants}
+              description={permission.description}
+              isHighlighted={isSelected}
+            />
+          )
+        })}
+      </div>
+    ))
 }
 
 function ContractsPreview(props: {
@@ -103,29 +111,37 @@ function ContractsPreview(props: {
   selectedAddress: string | undefined
   showOnlySelected: boolean
 }) {
-  return props.contractsPerChain.map(({ chain, contracts }) => (
-    <div key={chain} className="mt-2 border-t border-t-coffee-600">
-      <SectionHeader title={`Contracts on ${chain}:`} />
-      {contracts.map((contract, idx) => {
-        const isSelected = includesAddress(
-          contract.addresses,
-          props.selectedAddress,
-        )
-        if (props.showOnlySelected && !isSelected) {
-          return null
-        }
-        return (
-          <PreviewItem
-            key={idx}
-            name={contract.name}
-            addresses={contract.addresses}
-            description={contract.description}
-            isHighlighted={isSelected}
-          />
-        )
-      })}
-    </div>
-  ))
+  return props.contractsPerChain
+    .filter(({ contracts }) =>
+      applyShowOnlySelectedFilter(
+        contracts.flatMap((c) => c.addresses),
+        props.selectedAddress,
+        props.showOnlySelected,
+      ),
+    )
+    .map(({ chain, contracts }) => (
+      <div key={chain} className="border-b border-b-coffee-600 pb-2">
+        <SectionHeader title={`Contracts on ${chain}:`} />
+        {contracts.map((contract, idx) => {
+          const isSelected = includesAddress(
+            contract.addresses,
+            props.selectedAddress,
+          )
+          if (props.showOnlySelected && !isSelected) {
+            return null
+          }
+          return (
+            <PreviewItem
+              key={idx}
+              name={contract.name}
+              addresses={contract.addresses}
+              description={contract.description}
+              isHighlighted={isSelected}
+            />
+          )
+        })}
+      </div>
+    ))
 }
 
 function PreviewItem(props: {
@@ -177,4 +193,12 @@ function SectionHeader(props: { title: string }) {
 
 function includesAddress(addresses: AddressFieldValue[], address?: string) {
   return addresses.map((address) => address.address).includes(address ?? '')
+}
+
+function applyShowOnlySelectedFilter(
+  addresses: AddressFieldValue[],
+  selectedAddress: string | undefined,
+  showOnlySelected: boolean,
+) {
+  return !showOnlySelected || includesAddress(addresses, selectedAddress)
 }
