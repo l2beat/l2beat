@@ -1,5 +1,5 @@
 export interface Transaction {
-  hash: 'UNSUPPORTED' | (string & {})
+  hash?: string
   from?: string
   to?: string
   data?: string | string[]

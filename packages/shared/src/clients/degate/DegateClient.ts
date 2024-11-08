@@ -13,24 +13,20 @@ export class DegateClient extends ClientCore {
   }
 
   async getBlockWithTransactions(blockNumber: number): Promise<Block> {
-    const blockResponse = await this.query(blockNumber)
-    const { data: block } = DegateBlock.parse(blockResponse)
+    const block = await this.queryBlock(blockNumber)
 
     return {
-      hash: 'UNSUPPORTED',
+      hash: block.blockId.toString(),
       number: block.blockId,
       timestamp: block.createdAt.toNumber(),
       transactions: block.transactions.map((t) => ({
-        hash: 'UNSUPPORTED',
         type: t.txType,
       })),
     }
   }
 
   async getBlockNumberAtOrBefore(timestamp: UnixTime, start = 0) {
-    const blockResponse = await this.query('latest')
-    const { data } = DegateBlock.parse(blockResponse)
-    const latest = data.blockId
+    const { blockId: latest } = await this.queryBlock('latest')
 
     return await getBlockNumberAtOrBefore(
       timestamp,
@@ -43,13 +39,15 @@ export class DegateClient extends ClientCore {
     )
   }
 
-  async query(block: number | 'latest') {
+  async queryBlock(block: number | 'latest') {
     const query = new URLSearchParams({ id: block.toString() })
     const url = `${this.$.url}/block/getBlock?${query.toString()}`
 
-    return await this.fetch(url, {
+    const blockResponse = await this.fetch(url, {
       timeout: 30_000,
     })
+
+    return DegateBlock.parse(blockResponse).data
   }
 
   override validateResponse(response: json): {

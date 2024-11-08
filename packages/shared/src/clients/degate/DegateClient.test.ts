@@ -1,4 +1,5 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
+import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { RetryHandler } from '../../tools'
 import { HttpClient2 } from '../http/HttpClient2'
@@ -15,13 +16,51 @@ describe(DegateClient.name, () => {
       })
       const result = await degateClient.getBlockWithTransactions(42)
       expect(result).toEqual({
-        hash: 'UNSUPPORTED',
+        hash: '10',
         number: 10,
         timestamp: 1,
-        transactions: [{ hash: 'UNSUPPORTED', type: 'foo' }],
+        transactions: [{ hash: '10', type: 'foo' }],
+      })
+    })
+  })
+
+  describe(DegateClient.prototype.queryBlock.name, () => {
+    it('correctly queries API', async () => {
+      const http = mockObject<HttpClient2>({
+        fetch: async () => mockBlock(10),
+      })
+      const degateClient = mockClient({
+        http,
+      })
+      const result = await degateClient.queryBlock(42)
+      expect(result).toEqual({
+        blockId: 10,
+        createdAt: new UnixTime(1),
+        transactions: [{ txType: 'foo' }],
       })
       expect(http.fetch).toHaveBeenOnlyCalledWith(
         'https://example.com/block/getBlock?id=42',
+        {
+          timeout: 30_000,
+        },
+      )
+    })
+
+    it('works for latest', async () => {
+      const http = mockObject<HttpClient2>({
+        fetch: async () => mockBlock(10),
+      })
+      const degateClient = mockClient({
+        http,
+      })
+      const result = await degateClient.queryBlock('latest')
+      expect(result).toEqual({
+        blockId: 10,
+        createdAt: new UnixTime(1),
+        transactions: [{ txType: 'foo' }],
+      })
+      expect(http.fetch).toHaveBeenOnlyCalledWith(
+        'https://example.com/block/getBlock?id=latest',
         {
           timeout: 30_000,
         },
