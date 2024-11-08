@@ -1,13 +1,14 @@
 import { Block, UnixTime, json } from '@l2beat/shared-pure'
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 import { ClientCore, ClientCoreDependencies } from '../ClientCore'
-import { DegateBlock, DegateError } from './types'
+import { LoopringBlock, LoopringError } from './types'
 
-export interface Dependencies extends ClientCoreDependencies {
+interface Dependencies extends ClientCoreDependencies {
   url: string
+  type: 'loopring' | 'degate'
 }
 
-export class DegateClient extends ClientCore {
+export class LoopringClient extends ClientCore {
   constructor(private readonly $: Dependencies) {
     super($)
   }
@@ -40,21 +41,23 @@ export class DegateClient extends ClientCore {
   }
 
   async queryBlock(block: number | 'latest') {
-    const query = new URLSearchParams({ id: block.toString() })
+    const tag = this.$.type === 'loopring' ? 'finalized' : 'latest'
+    const id = block === 'latest' ? tag : block.toString()
+    const query = new URLSearchParams({ id })
     const url = `${this.$.url}/block/getBlock?${query.toString()}`
 
     const blockResponse = await this.fetch(url, {
       timeout: 30_000,
     })
 
-    return DegateBlock.parse(blockResponse).data
+    return LoopringBlock.parse(blockResponse).data
   }
 
   override validateResponse(response: json): {
     success: boolean
     message?: string
   } {
-    const parsedError = DegateError.safeParse(response)
+    const parsedError = LoopringError.safeParse(response)
 
     if (parsedError.success) {
       this.$.logger.warn(`Response validation error`, {

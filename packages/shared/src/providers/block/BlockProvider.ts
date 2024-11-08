@@ -1,7 +1,7 @@
 import { assert, Block, UnixTime } from '@l2beat/shared-pure'
 import {
-  DegateClient,
   FuelClient,
+  LoopringClient,
   RpcClient2,
   ZksyncLiteClient,
 } from '../../clients'
@@ -10,7 +10,7 @@ export type BlockClient =
   | RpcClient2
   | ZksyncLiteClient
   | FuelClient
-  | DegateClient
+  | LoopringClient
 
 export class BlockProvider {
   constructor(private readonly clients: BlockClient[]) {
