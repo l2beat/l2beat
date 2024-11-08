@@ -3,7 +3,7 @@ import { z } from 'zod'
 
 const MS_IN_SECOND = 1000
 
-//data
+// Data
 export const LoopringBlock = z.object({
   blockId: z.number(),
   createdAt: numberAs((n) => new UnixTime(Math.floor(n / MS_IN_SECOND))),
@@ -18,8 +18,7 @@ export const DegateBlock = z.object({
   data: LoopringBlock,
 })
 
-// errorr
-
+// Errors
 export const DegateError = z.object({
   code: z.number().gt(0),
   message: z.string(),
