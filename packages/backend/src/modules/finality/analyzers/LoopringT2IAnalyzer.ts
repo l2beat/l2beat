@@ -41,9 +41,10 @@ export class LoopringT2IAnalyzer extends BaseAnalyzer {
     assert(log, 'BlockSubmitted log not found')
 
     const blockIdx = BigNumber.from(log.args.blockIdx).toNumber()
-    const block = await this.l2Provider.getBlock(blockIdx)
+    //TODO
+    // const block = await this.l2Provider.get(blockIdx)
 
-    return [{ blockNumber: blockIdx, timestamp: block.createdAt.toNumber() }]
+    return [{ blockNumber: blockIdx, timestamp: 0 }]
   }
 
   private decodeLog(log: { topics: string[]; data: string }) {

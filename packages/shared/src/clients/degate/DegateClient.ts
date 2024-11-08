@@ -1,9 +1,7 @@
 import { Block, UnixTime, json } from '@l2beat/shared-pure'
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 import { ClientCore, ClientCoreDependencies } from '../ClientCore'
-import { DegateError, DegateResponse } from './types'
-
-type BlockTag = number | 'latest'
+import { DegateBlock, DegateError } from './types'
 
 export interface Dependencies extends ClientCoreDependencies {
   url: string
@@ -11,20 +9,12 @@ export interface Dependencies extends ClientCoreDependencies {
 
 export class DegateClient extends ClientCore {
   constructor(private readonly $: Dependencies) {
-    super({ ...$ })
-  }
-
-  async getLatestBlockNumber() {
-    const block = await this.query('latest')
-    return block.blockId
-  }
-
-  async getBlock(blockNumber: number) {
-    return await this.query(blockNumber)
+    super($)
   }
 
   async getBlockWithTransactions(blockNumber: number): Promise<Block> {
-    const block = await this.query(blockNumber)
+    const blockResponse = await this.query(blockNumber)
+    const { data: block } = DegateBlock.parse(blockResponse)
 
     return {
       hash: 'UNSUPPORTED',
@@ -38,29 +28,28 @@ export class DegateClient extends ClientCore {
   }
 
   async getBlockNumberAtOrBefore(timestamp: UnixTime, start = 0) {
-    const end = await this.getLatestBlockNumber()
+    const blockResponse = await this.query('latest')
+    const { data } = DegateBlock.parse(blockResponse)
+    const latest = data.blockId
 
     return await getBlockNumberAtOrBefore(
       timestamp,
       start,
-      end,
+      latest,
       async (block) => {
-        const blockData = await this.getBlock(block)
-        return { timestamp: blockData.createdAt.toNumber() }
+        const blockData = await this.getBlockWithTransactions(block)
+        return { timestamp: blockData.timestamp }
       },
     )
   }
 
-  async query(block: BlockTag) {
+  async query(block: number | 'latest') {
     const query = new URLSearchParams({ id: block.toString() })
     const url = `${this.$.url}/block/getBlock?${query.toString()}`
 
-    const res = await this.fetch(url, {
+    return await this.fetch(url, {
       timeout: 30_000,
     })
-
-    const degateResponse = DegateResponse.parse(res)
-    return degateResponse.data
   }
 
   override validateResponse(response: json): {

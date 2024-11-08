@@ -168,7 +168,7 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
       }
       case 'degate': {
         degateClient = new DegateClient({
-          http,
+          http: http2,
           logger,
           rateLimiter: new RateLimiter({
             callsPerMinute: project.config.callsPerMinute,
