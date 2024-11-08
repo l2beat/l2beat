@@ -24,8 +24,8 @@ export const metadata = getDefaultMetadata({
 })
 
 export default async function Page() {
-  const { entries: items, ethereumEntry } = await getDaSummaryEntries()
-  const { publicSystems, customSystems } = groupBySystem(items)
+  const { entries, ethereumEntry } = await getDaSummaryEntries()
+  const { publicSystems, customSystems } = groupBySystem(entries)
 
   return (
     <div>
