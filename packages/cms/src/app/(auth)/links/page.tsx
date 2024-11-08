@@ -25,7 +25,6 @@ export default async function Page({
       const search = (searchParams.search as string).toLowerCase()
       return (
         link.name.toLowerCase().includes(search) ||
-        !!link.managedBy?.toLowerCase().includes(search) ||
         !!link.type?.toLowerCase().includes(search)
       )
     })
@@ -53,7 +52,7 @@ export default async function Page({
             <h3 className="text-2xl font-bold tracking-tight">
               You have no links
             </h3>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foreground text-sm">
               You can add a links by clicking the button below.
             </p>
             <Link href="/links/new">
