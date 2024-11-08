@@ -4285,6 +4285,38 @@
         ]
       },
       "coingeckoId": "usd-coin"
+    },
+    {
+      "symbol": "deUSD",
+      "address": "0x809B99df4DDd6fA90F2CF305E2cDC310C6AD3C2c",
+      "coingeckoId": "elixir-deusd",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket",
+            "slug": "socket"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "sdeUSD",
+      "address": "0x4D3fEB76ab1C7eF40388Cd7a2066edacE1a2237D",
+      "coingeckoId": "elixir-deusd", // staked variant is not on CG
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket",
+            "slug": "socket"
+          }
+        ]
+      }
     }
   ],
   "zklinknova": [
