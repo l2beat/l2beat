@@ -3,6 +3,7 @@
 import Dagre from '@dagrejs/dagre'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
+  type EntityRecord,
   type TokenBridgeRecord,
   type TokenMetaRecord,
   type TokenRecord,
@@ -68,6 +69,7 @@ const tokenFormSchema = z.object({
     z.literal('native'),
     z.string().length(42, "Must be 42 characters long or 'native'"),
   ]),
+  managingEntities: z.array(z.object({ entityId: nanoidSchema })),
   backedBy: z.array(
     z.object({
       sourceTokenId: nanoidSchema,
@@ -90,6 +92,7 @@ export function EditTokenPage({
   tokens,
   bridges: links,
   networks,
+  entities,
 }: {
   networks: { id: string; name: string }[]
   bridges: { id: string; name: string }[]
@@ -98,8 +101,10 @@ export function EditTokenPage({
     | (TokenRecord & {
         relations: TokenBridgeRecord[]
         meta: TokenMetaRecord[]
+        managingEntities: { entityId: string }[]
       })
     | null
+  entities: EntityRecord[]
 }) {
   const router = useRouter()
   const tokenMeta = useMemo(
@@ -118,6 +123,7 @@ export function EditTokenPage({
     defaultValues: {
       networkId: token?.networkId ?? '',
       address: token?.address ?? '',
+      managingEntities: token?.managingEntities ?? [],
       backedBy:
         token?.relations
           .filter((r) => r.sourceTokenId !== token.id)
@@ -141,6 +147,11 @@ export function EditTokenPage({
   const backedBy = useFieldArray({
     control: form.control,
     name: 'backedBy',
+  })
+
+  const managingEntities = useFieldArray({
+    control: form.control,
+    name: 'managingEntities',
   })
 
   const backing =
@@ -191,6 +202,7 @@ export function EditTokenPage({
             externalBridgeId: r.externalBridgeId,
           })),
         ],
+        managingEntities: rawData.managingEntities,
       }
       const result = token
         ? await updateToken({ ...data, id: token.id })
@@ -297,7 +309,7 @@ export function EditTokenPage({
                             .map((network) => (
                               <SelectItem key={network.id} value={network.id}>
                                 {network.name}{' '}
-                                <span className="text-xs text-muted-foreground">
+                                <span className="text-muted-foreground text-xs">
                                   ({network.id})
                                 </span>
                               </SelectItem>
@@ -474,7 +486,7 @@ export function EditTokenPage({
             </CardHeader>
             <CardContent>
               {backedBy.fields.length === 0 ? (
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   This token is not backed by any other token.
                 </p>
               ) : (
@@ -508,7 +520,7 @@ export function EditTokenPage({
                                           value={token.tokenId}
                                         >
                                           {token.name ?? 'Unknown'}{' '}
-                                          <span className="text-xs text-muted-foreground">
+                                          <span className="text-muted-foreground text-xs">
                                             ({token.tokenId})
                                           </span>
                                         </SelectItem>
@@ -546,7 +558,7 @@ export function EditTokenPage({
                                             value={bridge.id}
                                           >
                                             {bridge.name}{' '}
-                                            <span className="text-xs text-muted-foreground">
+                                            <span className="text-muted-foreground text-xs">
                                               ({bridge.id})
                                             </span>
                                           </SelectItem>
@@ -597,7 +609,7 @@ export function EditTokenPage({
                 </CardHeader>
                 <CardContent>
                   {backing.length === 0 ? (
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                       This token is not backing any other token.
                     </p>
                   ) : (
@@ -650,6 +662,85 @@ export function EditTokenPage({
               </div>
             </>
           )}
+          <Card>
+            <CardHeader>
+              <CardTitle>Managing Entities</CardTitle>
+              <CardDescription>
+                Shows which entities manage this token.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {managingEntities.fields.length === 0 ? (
+                <p className="text-muted-foreground text-sm">
+                  This token is not managed by any entity.
+                </p>
+              ) : (
+                <Table>
+                  <TableHeader>
+                    <TableHead>Entity</TableHead>
+                    <TableHead className="w-0" />
+                  </TableHeader>
+                  <TableBody>
+                    {managingEntities.fields.map((field, index) => (
+                      <TableRow key={field.id}>
+                        <TableCell>
+                          <FormField
+                            control={form.control}
+                            name={`managingEntities.${index}.entityId`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormControl>
+                                  <Select
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}
+                                  >
+                                    <SelectTrigger>
+                                      <SelectValue placeholder="Select an entity" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      {entities.map((entity) => (
+                                        <SelectItem
+                                          key={entity.id}
+                                          value={entity.id}
+                                        >
+                                          {entity.name ?? 'Unknown'}{' '}
+                                          <span className="text-muted-foreground text-xs">
+                                            ({entity.id})
+                                          </span>
+                                        </SelectItem>
+                                      ))}
+                                    </SelectContent>
+                                  </Select>
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => managingEntities.remove(index)}
+                          >
+                            <Trash2 className="size-4" />
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              )}
+            </CardContent>
+            <CardFooter className="flex justify-end">
+              <Button
+                type="button"
+                onClick={() => managingEntities.append({ entityId: '' })}
+              >
+                Add
+              </Button>
+            </CardFooter>
+          </Card>
         </div>
         <DiscardChangesDialog
           open={discardDialogOpen}

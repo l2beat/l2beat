@@ -35,6 +35,8 @@ import { ValueRepository } from './tvl/value/repository'
 import { IndexerConfigurationRepository } from './uif/indexer-configuration/repository'
 import { IndexerStateRepository } from './uif/indexer-state/repository'
 import { EntityRepository } from './token-db/entity/repository'
+import { EntityToExternalBridgeRepository } from './token-db/entity-to-external-bridge/repository'
+import { EntityToTokenRepository } from './token-db/entity-to-token/repository'
 
 export type Database = ReturnType<typeof createDatabase>
 export function createDatabase(config?: PoolConfig) {
@@ -70,6 +72,8 @@ export function createDatabase(config?: PoolConfig) {
     cache: new CacheRepository(db),
     deployment: new DeploymentRepository(db),
     entity: new EntityRepository(db),
+    entityToExternalBridge: new EntityToExternalBridgeRepository(db),
+    entityToToken: new EntityToTokenRepository(db),
     externalBridge: new ExternalBridgeRepository(db),
     networkExplorer: new NetworkExplorerRepository(db),
     networkRpc: new NetworkRpcRepository(db),
