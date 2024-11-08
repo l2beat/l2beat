@@ -17,6 +17,7 @@ import { z } from 'zod'
 import { db } from '~/server/database'
 import { refreshBalancesOfAddress } from '~/server/features/asset-risks/refresh-balances-of-address'
 import { refreshTokensOfAddress } from '~/server/features/asset-risks/refresh-tokens-of-address'
+import { calculateValue } from '~/server/features/scaling/tvl/tokens/utils/calculate-value'
 import { procedure, router } from '../trpc'
 
 const projectsByChainId = [...layer2s, ...layer3s].reduce<
@@ -143,6 +144,32 @@ export const assetRisksRouter = router({
         coingeckoIdsWithTokenIds.map(({ coingeckoId }) => coingeckoId),
       )
 
+      const valueInCents = Object.entries(tokenMeta)
+        .flatMap(([tokenId, meta]) => {
+          const { decimals } = meta
+
+          if (!decimals) return []
+
+          const resolvedCoingeckoId = tokenIdToCoingeckoId[tokenId]
+
+          if (!resolvedCoingeckoId) return []
+
+          const price = priceRecords.find(
+            ({ coingeckoId }) => coingeckoId === resolvedCoingeckoId,
+          )?.priceUsd
+
+          if (!price) return []
+
+          const balance = balances[meta.tokenId]?.balance ?? '0'
+
+          return calculateValue({
+            amount: BigInt(balance),
+            priceUsd: price,
+            decimals,
+          })
+        })
+        .reduce((acc, value) => acc + value, 0n)
+
       const chains = networks.reduce<
         Record<
           string,
@@ -188,8 +215,7 @@ export const assetRisksRouter = router({
       }, {})
 
       return {
-        // Probably should calculate this instead of prices
-        usdValue: 0,
+        usdValue: Number(valueInCents) / 100,
         tokensRefreshedAt: user.tokensRefreshedAt,
         balancesRefreshedAt: user.balancesRefreshedAt,
         chains,
@@ -197,19 +223,10 @@ export const assetRisksRouter = router({
         externalBridges,
         relations,
         tokens: Object.values(tokens).map((token) => {
-          const matchingCoingeckoId = tokenIdToCoingeckoId[token.id]
-
-          const matchingPriceRecord = matchingCoingeckoId
-            ? priceRecords.find(
-                ({ coingeckoId }) => coingeckoId === matchingCoingeckoId,
-              )
-            : undefined
-
           return {
             token,
             meta: tokenMeta[token.id],
             balance: balances[token.id]?.balance ?? '0',
-            price: matchingPriceRecord?.priceUsd,
           }
         }),
       }
