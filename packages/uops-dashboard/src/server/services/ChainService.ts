@@ -30,14 +30,24 @@ export class ChainService {
         this.client = new StarknetClient(chain)
         this.counter = new StarknetCounter()
         break
-      case 'base':
-      case 'ethereum':
-      case 'xai':
-      case 'taiko':
+      case 'alephzero':
       case 'arbitrum':
+      case 'base':
+      case 'blast':
+      case 'ethereum':
       case 'gravity':
+      case 'linea':
+      case 'lyra':
+      case 'mantle':
+      case 'nova':
       case 'optimism':
-      case 'zksync-era': {
+      case 'polynomial':
+      case 'scroll':
+      case 'silicon':
+      case 'taiko':
+      case 'xai':
+      case 'zksync-era':
+      case 'zora': {
         this.client = new RpcClient2({
           url: getApiUrl(chain.id),
           chain: chain.id,
