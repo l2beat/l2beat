@@ -77,7 +77,7 @@ export function EditEntityPage({ entity }: { entity: EntityRecord | null }) {
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="mx-auto grid w-full max-w-[59rem] flex-1 auto-rows-max gap-4">
           <div className="flex items-center gap-4">
-            <Link href="/links">
+            <Link href="/entities">
               <Button variant="ghost" size="icon">
                 <ChevronLeft className="size-4" />
               </Button>
@@ -137,8 +137,9 @@ export function EditEntityPage({ entity }: { entity: EntityRecord | null }) {
                 <CardHeader>
                   <CardTitle>Delete Entity</CardTitle>
                   <CardDescription>
-                    This action is irreversible and will delete the entity,
-                    together with all associated token connections.
+                    This action is irreversible and will delete the entity.
+                    Other things that referred to this entity will not be
+                    deleted.
                   </CardDescription>
                 </CardHeader>
                 <CardFooter className="flex justify-end">
