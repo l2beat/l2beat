@@ -2,8 +2,7 @@ import { assert, ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { BigNumber, utils } from 'ethers'
 
 import { Database } from '@l2beat/database'
-import { DegateClient } from '@l2beat/shared'
-import { LoopringClient } from '../../../peripherals/loopring/LoopringClient'
+import { LoopringClient } from '@l2beat/shared'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { BaseAnalyzer } from './types/BaseAnalyzer'
 import type { L2Block, Transaction } from './types/BaseAnalyzer'
@@ -13,7 +12,7 @@ export class LoopringT2IAnalyzer extends BaseAnalyzer {
     provider: RpcClient,
     db: Database,
     projectId: ProjectId,
-    private readonly l2Provider: LoopringClient | DegateClient,
+    private readonly l2Provider: LoopringClient,
   ) {
     super(provider, db, projectId)
   }
@@ -41,10 +40,9 @@ export class LoopringT2IAnalyzer extends BaseAnalyzer {
     assert(log, 'BlockSubmitted log not found')
 
     const blockIdx = BigNumber.from(log.args.blockIdx).toNumber()
-    //TODO
-    // const block = await this.l2Provider.get(blockIdx)
+    const block = await this.l2Provider.getBlockWithTransactions(blockIdx)
 
-    return [{ blockNumber: blockIdx, timestamp: 0 }]
+    return [{ blockNumber: blockIdx, timestamp: block.timestamp }]
   }
 
   private decodeLog(log: { topics: string[]; data: string }) {

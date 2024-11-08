@@ -9,8 +9,7 @@ import { RpcUopsAnalyzer } from '../uops/analyzers/RpcUopsAnalyzer'
 interface Dependencies {
   provider: BlockProvider
   projectId: ProjectId
-  type: 'rpc' | 'zksync' | 'fuel' | 'degate'
-  rpcUopsAnalyzer: RpcUopsAnalyzer
+  rpcUopsAnalyzer?: RpcUopsAnalyzer
   assessCount?: AssessCount
 }
 
@@ -25,7 +24,7 @@ export class BlockTxsCountService {
       const txsCount = this.$.assessCount?.(txs, blockNumber) ?? txs
 
       let uopsCount: number | null = null
-      if (this.$.type === 'rpc') {
+      if (this.$.rpcUopsAnalyzer) {
         assert(this.$.rpcUopsAnalyzer)
         const uops = this.$.rpcUopsAnalyzer.calculateUops(block)
         uopsCount = this.$.assessCount?.(uops, blockNumber) ?? uops

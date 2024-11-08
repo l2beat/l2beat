@@ -3,10 +3,10 @@ import {
   BlockClient,
   BlockIndexerClient,
   BlockProvider,
-  DegateClient,
   FuelClient,
   HttpClient,
   HttpClient2,
+  LoopringClient,
   RetryHandler,
   RpcClient2,
   ZksyncLiteClient,
@@ -20,7 +20,6 @@ import {
 import { groupBy } from 'lodash'
 import { ActivityConfig } from '../config/Config'
 import { BlockTimestampProvider } from '../modules/tvl/services/BlockTimestampProvider'
-import { LoopringClient } from '../peripherals/loopring/LoopringClient'
 import { StarkexClient } from '../peripherals/starkex/StarkexClient'
 import { StarknetClient } from '../peripherals/starknet/StarknetClient'
 
@@ -32,7 +31,6 @@ export class BlockProviders {
     private readonly config: ActivityConfig,
     private readonly clients: BlockClient[],
     readonly starknetClient: StarknetClient | undefined,
-    readonly loopringClient: LoopringClient | undefined,
     readonly starkexClient: StarkexClient | undefined,
     private readonly indexerClients: BlockIndexerClient[],
   ) {
@@ -69,6 +67,7 @@ export class BlockProviders {
       case 'rpc':
       case 'zksync':
       case 'degate':
+      case 'loopring':
       case 'fuel': {
         const blockClients = this.clients.filter((r) => r.chain === chain)
         assert(blockClients.length > 0, `No configured clients for ${chain}`)
@@ -79,11 +78,7 @@ export class BlockProviders {
         const blockClients = [this.starknetClient]
         return new BlockTimestampProvider({ indexerClients, blockClients })
       }
-      case 'loopring': {
-        assert(this.loopringClient, 'loopringClient should be defined')
-        const blockClients = [this.loopringClient]
-        return new BlockTimestampProvider({ indexerClients, blockClients })
-      }
+
       case 'starkex': {
         throw new Error('Starkex should not be handled with this method')
       }
@@ -97,7 +92,7 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
   let zksyncLiteClient: ZksyncLiteClient | undefined
   let starknetClient: StarknetClient | undefined
   let loopringClient: LoopringClient | undefined
-  let degateClient: DegateClient | undefined
+  let degateClient: LoopringClient | undefined
   let starkexClient: StarkexClient | undefined
   let fuelClient: FuelClient | undefined
 
@@ -161,13 +156,7 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
         break
       }
       case 'loopring': {
-        loopringClient = new LoopringClient(http, logger, project.config.url, {
-          callsPerMinute: project.config.callsPerMinute,
-        })
-        break
-      }
-      case 'degate': {
-        degateClient = new DegateClient({
+        loopringClient = new LoopringClient({
           http: http2,
           logger,
           rateLimiter: new RateLimiter({
@@ -175,6 +164,20 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
           }),
           retryHandler: RetryHandler.RELIABLE_API(logger),
           url: project.config.url,
+          type: 'loopring',
+        })
+        break
+      }
+      case 'degate': {
+        degateClient = new LoopringClient({
+          http: http2,
+          logger,
+          rateLimiter: new RateLimiter({
+            callsPerMinute: project.config.callsPerMinute,
+          }),
+          retryHandler: RetryHandler.RELIABLE_API(logger),
+          url: project.config.url,
+          type: 'degate',
         })
         break
       }
@@ -201,15 +204,17 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
     }
   }
 
-  const otherClients = [zksyncLiteClient, degateClient, fuelClient].filter(
-    notUndefined,
-  )
+  const otherClients = [
+    zksyncLiteClient,
+    degateClient,
+    loopringClient,
+    fuelClient,
+  ].filter(notUndefined)
 
   return new BlockProviders(
     config,
     [...evmClients, ...otherClients],
     starknetClient,
-    loopringClient,
     starkexClient,
     indexerClients,
   )

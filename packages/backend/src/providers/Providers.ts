@@ -1,8 +1,8 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import {
   CoingeckoClient,
-  DegateClient,
   HttpClient2,
+  LoopringClient,
   RetryHandler,
 } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
@@ -21,7 +21,8 @@ export class Providers {
   circulatingSupply: CirculatingSupplyProviders | undefined
   tvlBlock: TvlBlockProviders | undefined
   coingeckoClient: CoingeckoClient
-  degateClient: DegateClient
+  degateClient: LoopringClient
+  loopringClient: LoopringClient
 
   constructor(
     readonly config: Config,
@@ -36,8 +37,17 @@ export class Providers {
       retryHandler: RetryHandler.RELIABLE_API(logger),
     })
     // TODO: refactor
-    this.degateClient = new DegateClient({
+    this.degateClient = new LoopringClient({
       url: 'https://v1-mainnet-backend.degate.com/order-book-api',
+      type: 'degate',
+      http,
+      logger,
+      rateLimiter: new RateLimiter({ callsPerMinute: 60 }),
+      retryHandler: RetryHandler.RELIABLE_API(logger),
+    })
+    this.loopringClient = new LoopringClient({
+      url: 'https://api3.loopring.io/api/v3',
+      type: 'loopring',
       http,
       logger,
       rateLimiter: new RateLimiter({ callsPerMinute: 60 }),
