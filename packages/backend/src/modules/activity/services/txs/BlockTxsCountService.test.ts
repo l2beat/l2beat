@@ -25,7 +25,7 @@ describe(BlockTxsCountService.name, () => {
         type: 'rpc',
         projectId: ProjectId('a'),
         provider: client,
-        rpcUopsAnalyzer: analyzer,
+        uopsAnalyzer: analyzer,
       })
 
       const result = await txsCountProvider.getTxsCount(1, 3)
@@ -50,7 +50,7 @@ describe(BlockTxsCountService.name, () => {
         type: 'rpc',
         projectId: ProjectId('a'),
         provider: client,
-        rpcUopsAnalyzer: analyzer,
+        uopsAnalyzer: analyzer,
         assessCount,
       })
       const result = await txsCountProvider.getTxsCount(1, 2)

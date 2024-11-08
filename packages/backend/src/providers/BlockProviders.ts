@@ -1,5 +1,6 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import {
+  BlockClient,
   BlockIndexerClient,
   BlockProvider,
   FuelClient,
@@ -7,6 +8,7 @@ import {
   HttpClient2,
   RetryHandler,
   RpcClient2,
+  StarknetClient,
   ZksyncLiteClient,
 } from '@l2beat/shared'
 import { assert, ProjectId, assertUnreachable } from '@l2beat/shared-pure'
@@ -16,7 +18,6 @@ import { BlockTimestampProvider } from '../modules/tvl/services/BlockTimestampPr
 import { DegateClient } from '../peripherals/degate'
 import { LoopringClient } from '../peripherals/loopring/LoopringClient'
 import { StarkexClient } from '../peripherals/starkex/StarkexClient'
-import { StarknetClient } from '../peripherals/starknet/StarknetClient'
 
 export class BlockProviders {
   blockProviders: Map<string, BlockProvider> = new Map()
@@ -24,8 +25,7 @@ export class BlockProviders {
 
   constructor(
     private readonly config: ActivityConfig,
-    private readonly clients: (RpcClient2 | ZksyncLiteClient | FuelClient)[],
-    readonly starknetClient: StarknetClient | undefined,
+    private readonly clients: BlockClient[],
     readonly loopringClient: LoopringClient | undefined,
     readonly degateClient: DegateClient | undefined,
     readonly starkexClient: StarkexClient | undefined,
@@ -63,14 +63,10 @@ export class BlockProviders {
     switch (project.config.type) {
       case 'rpc':
       case 'zksync':
-      case 'fuel': {
+      case 'fuel':
+      case 'starknet': {
         const blockClients = this.clients.filter((r) => r.chain === chain)
         assert(blockClients.length > 0, `No configured clients for ${chain}`)
-        return new BlockTimestampProvider({ indexerClients, blockClients })
-      }
-      case 'starknet': {
-        assert(this.starknetClient, 'starknetClient should be defined')
-        const blockClients = [this.starknetClient]
         return new BlockTimestampProvider({ indexerClients, blockClients })
       }
       case 'loopring': {
@@ -154,8 +150,14 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
         break
       }
       case 'starknet': {
-        starknetClient = new StarknetClient(project.config.url, http, {
-          callsPerMinute: project.config.callsPerMinute,
+        starknetClient = new StarknetClient({
+          url: project.config.url,
+          http: http2,
+          rateLimiter: new RateLimiter({
+            callsPerMinute: project.config.callsPerMinute,
+          }),
+          retryHandler: RetryHandler.RELIABLE_API(logger),
+          logger,
         })
         break
       }
@@ -200,8 +202,8 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
       ...evmClients,
       ...(zksyncLiteClient ? [zksyncLiteClient] : []),
       ...(fuelClient ? [fuelClient] : []),
+      ...(starknetClient ? [starknetClient] : []),
     ],
-    starknetClient,
     loopringClient,
     degateClient,
     starkexClient,

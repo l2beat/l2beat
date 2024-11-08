@@ -9,7 +9,6 @@ import { BlockTxsCountService } from './services/txs/BlockTxsCountService'
 import { DegateTxsCountService } from './services/txs/DegateTxsCountService'
 import { LoopringTxsCountService } from './services/txs/LoopringTxsCountService'
 import { StarkexTxsCountService } from './services/txs/StarkexTxsCountService'
-import { StarknetTxsCountService } from './services/txs/StarknetTxsCountService'
 import { RpcUopsAnalyzer } from './services/uops/analyzers/RpcUopsAnalyzer'
 import { StarknetUopsAnalyzer } from './services/uops/analyzers/StarknetUopsAnalyzer'
 
@@ -33,32 +32,34 @@ export class ActivityDependencies {
     assert(project, `Project ${chain} not found`)
 
     switch (project.config.type) {
-      case 'rpc':
-      case 'zksync':
-      case 'fuel': {
+      case 'rpc': {
         const provider = this.blockProviders.getBlockProvider(chain)
-
         return new BlockTxsCountService({
           provider,
           projectId: project.id,
           type: project.config.type,
-          assessCount:
-            project.config.type === 'zksync' || project.config.type === 'fuel'
-              ? undefined
-              : project.config.assessCount,
-          rpcUopsAnalyzer: this.rpcUopsAnalyzer,
+          assessCount: project.config.assessCount,
+          uopsAnalyzer: this.rpcUopsAnalyzer,
         })
       }
       case 'starknet': {
-        assert(
-          this.blockProviders.starknetClient,
-          'starknetClient should be defined',
-        )
-        return new StarknetTxsCountService(
-          this.blockProviders.starknetClient,
-          project.id,
-          this.starknetUopsAnalyzer,
-        )
+        const provider = this.blockProviders.getBlockProvider(chain)
+        return new BlockTxsCountService({
+          provider,
+          projectId: project.id,
+          type: project.config.type,
+          assessCount: undefined,
+          uopsAnalyzer: this.starknetUopsAnalyzer,
+        })
+      }
+      case 'zksync':
+      case 'fuel': {
+        const provider = this.blockProviders.getBlockProvider(chain)
+        return new BlockTxsCountService({
+          provider,
+          projectId: project.id,
+          type: project.config.type,
+        })
       }
       case 'loopring': {
         assert(
