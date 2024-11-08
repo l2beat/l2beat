@@ -6,6 +6,7 @@ import { ApiServer } from './api/ApiServer'
 import { Config } from './config'
 import { ApplicationModule } from './modules/ApplicationModule'
 import { initActivityModule } from './modules/activity/ActivityModule'
+import { createAssetRisksModule } from './modules/asset-risks/AssetRisksModule'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
@@ -67,6 +68,7 @@ export class Application {
       initTvlModule(config, logger, peripherals, providers, clock),
       createVerifiersModule(config, logger, peripherals, clock),
       createDaBeatModule(config, logger, peripherals, providers, clock),
+      createAssetRisksModule(config, logger, peripherals, providers, clock),
     ]
 
     const apiServer = new ApiServer(

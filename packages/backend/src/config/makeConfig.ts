@@ -232,6 +232,7 @@ export function makeConfig(
         'wss://avail-mainnet.public.blastapi.io/',
       ),
     },
+    assetRisks: flags.isEnabled('asset-risks'),
 
     // Must be last
     flags: flags.getResolved(),

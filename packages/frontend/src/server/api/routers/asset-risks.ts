@@ -120,7 +120,28 @@ export const assetRisksRouter = router({
         return acc
       }, {})
 
-      // TODO: Fetch info about prices / etc.
+      // Prices
+      const coingeckoTokenMeta = await db.tokenMeta.getByTokenIdsAndSource(
+        Object.values(tokens).map((t) => t.id),
+        'CoinGecko',
+      )
+
+      const coingeckoIdsWithTokenIds = coingeckoTokenMeta.flatMap((meta) =>
+        meta.externalId
+          ? [{ coingeckoId: meta.externalId, tokenId: meta.tokenId }]
+          : [],
+      )
+
+      const tokenIdToCoingeckoId = coingeckoIdsWithTokenIds.reduce<
+        Record<string, string>
+      >((acc, { tokenId, coingeckoId }) => {
+        acc[tokenId] = coingeckoId
+        return acc
+      }, {})
+
+      const priceRecords = await db.currentPrice.getByCoingeckoIds(
+        coingeckoIdsWithTokenIds.map(({ coingeckoId }) => coingeckoId),
+      )
 
       const chains = networks.reduce<
         Record<
@@ -167,6 +188,7 @@ export const assetRisksRouter = router({
       }, {})
 
       return {
+        // Probably should calculate this instead of prices
         usdValue: 0,
         tokensRefreshedAt: user.tokensRefreshedAt,
         balancesRefreshedAt: user.balancesRefreshedAt,
@@ -175,10 +197,19 @@ export const assetRisksRouter = router({
         externalBridges,
         relations,
         tokens: Object.values(tokens).map((token) => {
+          const matchingCoingeckoId = tokenIdToCoingeckoId[token.id]
+
+          const matchingPriceRecord = matchingCoingeckoId
+            ? priceRecords.find(
+                ({ coingeckoId }) => coingeckoId === matchingCoingeckoId,
+              )
+            : undefined
+
           return {
             token,
             meta: tokenMeta[token.id],
             balance: balances[token.id]?.balance ?? '0',
+            price: matchingPriceRecord?.priceUsd,
           }
         }),
       }
