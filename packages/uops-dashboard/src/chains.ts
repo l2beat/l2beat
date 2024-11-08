@@ -6,6 +6,7 @@ export type ChainId =
   | 'ethereum'
   | 'gravity'
   | 'immutablex'
+  | 'linea'
   | 'lyra'
   | 'taiko'
   | 'mantle'
@@ -101,15 +102,17 @@ export const SUPPORTED_CHAINS: Chain[] = [
     getContractLink: (address: string) =>
       `https://explorer.gravity.xyz/address/${address}`,
   },
-  // {
-  //   id: 'linea',
-  //   name: 'Linea',
-  //   suggestedBlocksCount: 100,
-  //   batchSize: 10,
-  //   getBlockLink: (blockNumber: number) => ``,
-  //   getTxLink: (txHash: string) => ``,
-  //   getContractLink: (address: string) => ``,
-  // },
+  {
+    id: 'linea',
+    name: 'Linea',
+    suggestedBlocksCount: 100,
+    batchSize: 10,
+    getBlockLink: (blockNumber: number) =>
+      `https://lineascan.build/block/${blockNumber}`,
+    getTxLink: (txHash: string) => `https://lineascan.build/tx/${txHash}`,
+    getContractLink: (address: string) =>
+      `https://lineascan.build/address/${address}`,
+  },
   {
     id: 'lyra',
     name: 'Derive',
@@ -121,15 +124,17 @@ export const SUPPORTED_CHAINS: Chain[] = [
     getContractLink: (address: string) =>
       `https://explorer.lyra.finance/address/${address}`,
   },
-  // {
-  //   id: 'mantle',
-  //   name: 'Mantle',
-  //   suggestedBlocksCount: 100,
-  //   batchSize: 10,
-  //   getBlockLink: (blockNumber: number) => ``,
-  //   getTxLink: (txHash: string) => ``,
-  //   getContractLink: (address: string) => ``,
-  // },
+  {
+    id: 'mantle',
+    name: 'Mantle',
+    suggestedBlocksCount: 100,
+    batchSize: 10,
+    getBlockLink: (blockNumber: number) =>
+      `https://explorer.mantle.xyz/block/${blockNumber}`,
+    getTxLink: (txHash: string) => `https://explorer.mantle.xyz/tx/${txHash}`,
+    getContractLink: (address: string) =>
+      `https://explorer.mantle.xyz/address/${address}`,
+  },
   {
     id: 'nova',
     name: 'Arbitrum Nova',
@@ -165,6 +170,17 @@ export const SUPPORTED_CHAINS: Chain[] = [
       `https://polynomialscan.io//address/${address}`,
   },
   {
+    id: 'scroll',
+    name: 'Scroll',
+    suggestedBlocksCount: 100,
+    batchSize: 10,
+    getBlockLink: (blockNumber: number) =>
+      `https://scrollscan.com/block/${blockNumber}`,
+    getTxLink: (txHash: string) => `https://scrollscan.com/tx/${txHash}`,
+    getContractLink: (address: string) =>
+      `https://scrollscan.com/address/${address}`,
+  },
+  {
     id: 'silicon',
     name: 'Silicon',
     suggestedBlocksCount: 100,
@@ -175,15 +191,6 @@ export const SUPPORTED_CHAINS: Chain[] = [
     getContractLink: (address: string) =>
       `https://scope.silicon.network/address/${address}`,
   },
-  // {
-  //   id: 'scroll',
-  //   name: 'Scroll',
-  //   suggestedBlocksCount: 100,
-  //   batchSize: 10,
-  //   getBlockLink: (blockNumber: number) => ``,
-  //   getTxLink: (txHash: string) => ``,
-  //   getContractLink: (address: string) => ``,
-  // },
   {
     id: 'starknet',
     name: 'Starknet',

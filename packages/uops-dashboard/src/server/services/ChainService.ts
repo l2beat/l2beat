@@ -36,10 +36,13 @@ export class ChainService {
       case 'blast':
       case 'ethereum':
       case 'gravity':
+      case 'linea':
       case 'lyra':
+      case 'mantle':
       case 'nova':
       case 'optimism':
       case 'polynomial':
+      case 'scroll':
       case 'silicon':
       case 'taiko':
       case 'xai':

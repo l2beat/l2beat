@@ -91,7 +91,8 @@
       "0x5a7d6b2f92c77fad6ccabd7ee0624e64907eaf3e",
       "TransparentUpgradeableProxy"
     ],
-    ["0x283ccfbafddc747b71aec3c1e29fb824156a8f09", "DropERC1155"]
+    ["0x283ccfbafddc747b71aec3c1e29fb824156a8f09", "DropERC1155"],
+    ["0x0000000000000000000000000000000000000000", "SimpleStorage"]
   ],
   "METHODS": [
     ["0xfec93e49", "follow"],
