@@ -101,7 +101,7 @@ describe(LoopringClient.name, () => {
         },
       })
 
-      expect(isValid).toEqual({ success: false })
+      expect(isValid).toEqual({ success: false, message: 'Error' })
     })
 
     it('Degate: returns false when response includes errors', async () => {
@@ -111,7 +111,7 @@ describe(LoopringClient.name, () => {
         message: 'Error',
       })
 
-      expect(isValid).toEqual({ success: false })
+      expect(isValid).toEqual({ success: false, message: 'Error' })
     })
 
     it('returns true otherwise', async () => {
@@ -134,7 +134,7 @@ function mockClient(deps: {
   return new LoopringClient({
     http: deps.http ?? mockObject<HttpClient2>(),
     logger: deps.logger ?? Logger.SILENT,
-    rateLimiter: deps.rateLimiter ?? new RateLimiter({ callsPerMinute: 120 }),
+    rateLimiter: deps.rateLimiter ?? RateLimiter.TEST,
     retryHandler: deps.retryHandler ?? RetryHandler.TEST,
     url: deps.url ?? 'https://example.com',
     type: deps.type ?? 'loopring',

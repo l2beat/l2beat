@@ -1,16 +1,5 @@
 import { assert, Block, UnixTime } from '@l2beat/shared-pure'
-import {
-  FuelClient,
-  LoopringClient,
-  RpcClient2,
-  ZksyncLiteClient,
-} from '../../clients'
-
-export type BlockClient =
-  | RpcClient2
-  | ZksyncLiteClient
-  | FuelClient
-  | LoopringClient
+import { BlockClient } from '../../clients/types'
 
 export class BlockProvider {
   constructor(private readonly clients: BlockClient[]) {

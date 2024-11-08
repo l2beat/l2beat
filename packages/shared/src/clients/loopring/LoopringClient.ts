@@ -59,14 +59,28 @@ export class LoopringClient extends ClientCore {
     success: boolean
     message?: string
   } {
-    const parsedError =
-      this.$.type === 'loopring'
-        ? LoopringError.safeParse(response)
-        : DegateError.safeParse(response)
+    if (this.$.type === 'loopring') {
+      const parsedError = LoopringError.safeParse(response)
 
-    if (parsedError.success) {
-      this.$.logger.warn(`Response validation error`, {})
-      return { success: false }
+      if (parsedError.success) {
+        this.$.logger.warn(`Response validation error`, {
+          message: parsedError.data.resultInfo.message,
+          code: parsedError.data.resultInfo.code,
+        })
+        return { success: false, message: parsedError.data.resultInfo.message }
+      }
+    }
+
+    if (this.$.type === 'degate3') {
+      const parsedError = DegateError.safeParse(response)
+
+      if (parsedError.success) {
+        this.$.logger.warn(`Response validation error`, {
+          message: parsedError.data.message,
+          code: parsedError.data.code,
+        })
+        return { success: false, message: parsedError.data.message }
+      }
     }
 
     return { success: true }
