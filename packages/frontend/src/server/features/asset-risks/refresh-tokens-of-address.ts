@@ -131,9 +131,12 @@ export async function refreshTokensOfAddress(address: Address) {
       .filter((b) => !existingTokenIds.has(b.tokenId)),
   )
 
+  if (errors.length > 0) {
+    console.error('Some networks failed to check', { errors })
+  }
+
   return {
     found: Object.keys(tokens).length,
-    errors,
   }
 }
 
