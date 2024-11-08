@@ -90,7 +90,7 @@ export async function refreshTokensOfAddress(address: Address) {
 
       for (const log of logs) {
         const token = tokensByNetwork[network.id]?.find(
-          (token) => token.address === log.address,
+          (token) => token.address.toLowerCase() === log.address.toLowerCase(),
         )
         if (token) {
           tokens.add(token)
