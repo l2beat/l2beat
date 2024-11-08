@@ -37,6 +37,7 @@
   "base": true,
   "beamer-bridge-v2": true,
   "blast": true,
+  "blessnet": true,
   "bob": true,
   "bobanetwork": true,
   "brine": true,
