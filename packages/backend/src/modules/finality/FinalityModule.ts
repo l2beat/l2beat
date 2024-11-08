@@ -1,12 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
 import { assert, assertUnreachable, notUndefined } from '@l2beat/shared-pure'
 
-import { BlobClient, LoopringClient } from '@l2beat/shared'
+import { BlobClient, LoopringClient, StarknetClient } from '@l2beat/shared'
 import { Config } from '../../config'
 import { FinalityProjectConfig } from '../../config/features/finality'
 import { ClientClass, Peripherals } from '../../peripherals/Peripherals'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
-import { StarknetClient } from '../../peripherals/starknet/StarknetClient'
 import { Providers } from '../../providers/Providers'
 import { ApplicationModule } from '../ApplicationModule'
 import { TrackedTxsIndexer } from '../tracked-txs/TrackedTxsIndexer'
@@ -61,6 +60,7 @@ export function createFinalityModule(
     peripherals,
     providers.loopringClient,
     providers.degateClient,
+    providers.starknetClient,
   )
 
   const finalityIndexers = runtimeConfigurations.map(
@@ -95,6 +95,7 @@ function initializeConfigurations(
   peripherals: Peripherals,
   loopringClient: LoopringClient,
   degateClient: LoopringClient,
+  starknetClient: StarknetClient,
 ): FinalityConfig[] {
   return configs
     .map((configuration): FinalityConfig | undefined => {
@@ -201,7 +202,7 @@ function initializeConfigurations(
                 ethereumRPC,
                 peripherals.database,
                 configuration.projectId,
-                getL2Rpc(configuration, peripherals, StarknetClient),
+                starknetClient,
               ),
             },
             minTimestamp: configuration.minTimestamp,

@@ -1,5 +1,5 @@
 import { assert, Block, UnixTime } from '@l2beat/shared-pure'
-import { BlockClient } from '../../clients/types'
+import { BlockClient } from '../../clients'
 
 export class BlockProvider {
   constructor(private readonly clients: BlockClient[]) {

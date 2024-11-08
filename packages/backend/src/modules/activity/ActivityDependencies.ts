@@ -7,7 +7,6 @@ import { BlockTimestampProvider } from '../tvl/services/BlockTimestampProvider'
 import { TxsCountService } from './indexers/types'
 import { BlockTxsCountService } from './services/txs/BlockTxsCountService'
 import { StarkexTxsCountService } from './services/txs/StarkexTxsCountService'
-import { StarknetTxsCountService } from './services/txs/StarknetTxsCountService'
 import { RpcUopsAnalyzer } from './services/uops/analyzers/RpcUopsAnalyzer'
 import { StarknetUopsAnalyzer } from './services/uops/analyzers/StarknetUopsAnalyzer'
 
@@ -38,30 +37,26 @@ export class ActivityDependencies {
           provider,
           projectId: project.id,
           assessCount: project.config.assessCount,
-          rpcUopsAnalyzer: this.rpcUopsAnalyzer,
+          uopsAnalyzer: this.rpcUopsAnalyzer,
+        })
+      }
+      case 'starknet': {
+        const provider = this.blockProviders.getBlockProvider(chain)
+        return new BlockTxsCountService({
+          provider,
+          projectId: project.id,
+          uopsAnalyzer: this.starknetUopsAnalyzer,
         })
       }
       case 'zksync':
+      case 'fuel':
       case 'degate3':
-      case 'loopring':
-      case 'fuel': {
+      case 'loopring': {
         const provider = this.blockProviders.getBlockProvider(chain)
-
         return new BlockTxsCountService({
           provider,
           projectId: project.id,
         })
-      }
-      case 'starknet': {
-        assert(
-          this.blockProviders.starknetClient,
-          'starknetClient should be defined',
-        )
-        return new StarknetTxsCountService(
-          this.blockProviders.starknetClient,
-          project.id,
-          this.starknetUopsAnalyzer,
-        )
       }
       case 'starkex': {
         assert(

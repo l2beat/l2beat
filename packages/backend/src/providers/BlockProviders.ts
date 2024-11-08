@@ -9,6 +9,7 @@ import {
   LoopringClient,
   RetryHandler,
   RpcClient2,
+  StarknetClient,
   ZksyncLiteClient,
 } from '@l2beat/shared'
 import { assert, ProjectId, assertUnreachable } from '@l2beat/shared-pure'
@@ -16,7 +17,6 @@ import { groupBy } from 'lodash'
 import { ActivityConfig } from '../config/Config'
 import { BlockTimestampProvider } from '../modules/tvl/services/BlockTimestampProvider'
 import { StarkexClient } from '../peripherals/starkex/StarkexClient'
-import { StarknetClient } from '../peripherals/starknet/StarknetClient'
 
 export class BlockProviders {
   blockProviders: Map<string, BlockProvider> = new Map()
@@ -25,7 +25,6 @@ export class BlockProviders {
   constructor(
     private readonly config: ActivityConfig,
     private readonly clients: BlockClient[],
-    readonly starknetClient: StarknetClient | undefined,
     readonly starkexClient: StarkexClient | undefined,
     private readonly indexerClients: BlockIndexerClient[],
   ) {
@@ -61,19 +60,14 @@ export class BlockProviders {
     switch (project.config.type) {
       case 'rpc':
       case 'zksync':
+      case 'fuel':
+      case 'starknet':
       case 'degate3':
-      case 'loopring':
-      case 'fuel': {
+      case 'loopring': {
         const blockClients = this.clients.filter((r) => r.chain === chain)
         assert(blockClients.length > 0, `No configured clients for ${chain}`)
         return new BlockTimestampProvider({ indexerClients, blockClients })
       }
-      case 'starknet': {
-        assert(this.starknetClient, 'starknetClient should be defined')
-        const blockClients = [this.starknetClient]
-        return new BlockTimestampProvider({ indexerClients, blockClients })
-      }
-
       case 'starkex': {
         throw new Error('Starkex should not be handled with this method')
       }
@@ -84,7 +78,6 @@ export class BlockProviders {
 }
 
 export function initBlockProviders(config: ActivityConfig): BlockProviders {
-  let starknetClient: StarknetClient | undefined
   let starkexClient: StarkexClient | undefined
 
   const blockClients: BlockClient[] = []
@@ -142,9 +135,16 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
         break
       }
       case 'starknet': {
-        starknetClient = new StarknetClient(project.config.url, http, {
-          callsPerMinute: project.config.callsPerMinute,
+        const starknetClient = new StarknetClient({
+          url: project.config.url,
+          http: http2,
+          rateLimiter: new RateLimiter({
+            callsPerMinute: project.config.callsPerMinute,
+          }),
+          retryHandler: RetryHandler.RELIABLE_API(logger),
+          logger,
         })
+        blockClients.push(starknetClient)
         break
       }
       case 'loopring':
@@ -186,11 +186,5 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
     }
   }
 
-  return new BlockProviders(
-    config,
-    blockClients,
-    starknetClient,
-    starkexClient,
-    indexerClients,
-  )
+  return new BlockProviders(config, blockClients, starkexClient, indexerClients)
 }

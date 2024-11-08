@@ -3,8 +3,8 @@ import { BigNumber, utils } from 'ethers'
 import { z } from 'zod'
 
 import { Database } from '@l2beat/database'
+import { StarknetClient } from '@l2beat/shared'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
-import { StarknetClient } from '../../../peripherals/starknet/StarknetClient'
 import { BaseAnalyzer } from './types/BaseAnalyzer'
 import type { L2Block, Transaction } from './types/BaseAnalyzer'
 
@@ -38,7 +38,7 @@ export class StarknetT2IAnalyzer extends BaseAnalyzer {
     const l2BlockNumber = extractBlockNumber(decodedTransactionData)
 
     const { timestamp: l2Timestamp } =
-      await this.l2Provider.getBlock(l2BlockNumber)
+      await this.l2Provider.getBlockWithTransactions(l2BlockNumber)
 
     return [{ blockNumber: l2BlockNumber, timestamp: l2Timestamp }]
   }
