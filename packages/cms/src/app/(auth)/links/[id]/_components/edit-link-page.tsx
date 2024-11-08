@@ -40,8 +40,6 @@ import {
   SelectValue,
   selectNullValue,
 } from '~/components/ui/select'
-import { deleteBridge, insertBridge, updateBridge } from '../_actions'
-import { insertBridgeSchema } from '../_actions/schemas'
 import {
   Table,
   TableBody,
@@ -50,6 +48,8 @@ import {
   TableHeader,
   TableRow,
 } from '~/components/ui/table'
+import { deleteBridge, insertBridge, updateBridge } from '../_actions'
+import { insertBridgeSchema } from '../_actions/schemas'
 
 export function EditLinkPage({
   link,
@@ -206,7 +206,7 @@ export function EditLinkPage({
             </CardHeader>
             <CardContent>
               {managingEntities.fields.length === 0 ? (
-                <p className="text-muted-foreground text-sm">
+                <p className="text-sm text-muted-foreground">
                   This token is not managed by any entity.
                 </p>
               ) : (
@@ -239,7 +239,7 @@ export function EditLinkPage({
                                           value={entity.id}
                                         >
                                           {entity.name ?? 'Unknown'}{' '}
-                                          <span className="text-muted-foreground text-xs">
+                                          <span className="text-xs text-muted-foreground">
                                             ({entity.id})
                                           </span>
                                         </SelectItem>
