@@ -55,57 +55,62 @@ export async function refreshTokensOfAddress(address: Address) {
     })
     .filter(notUndefined)
 
-  const tokens = Object.fromEntries(
-    (
-      await Promise.allSettled(
-        networksToCheck.map<Promise<[string, TokenRecord[]]>>(
-          async (network) => {
-            if (!network.chainId || !network.rpc?.url) return [network.id, []]
+  const checkResults = await Promise.allSettled(
+    networksToCheck.map<Promise<[string, TokenRecord[]]>>(async (network) => {
+      if (!network.chainId || !network.rpc?.url) return [network.id, []]
 
-            const chain = getChain({
-              id: network.chainId,
-              name: network.name,
-              rpcUrl: network.rpc.url,
-            })
+      const chain = getChain({
+        id: network.chainId,
+        name: network.name,
+        rpcUrl: network.rpc.url,
+      })
 
-            const client = createPublicClient({
-              chain,
-              transport: http(),
-            })
+      const client = createPublicClient({
+        chain,
+        transport: http(),
+      })
 
-            const blockNumber = await client.getBlockNumber()
-            const tokens = new Set<TokenRecord>()
+      const blockNumber = await client.getBlockNumber()
+      const tokens = new Set<TokenRecord>()
 
-            const nativeTokenRecords =
-              tokensByNetwork[network.id]?.filter(
-                (token) => token.address === 'native',
-              ) ?? []
+      const nativeTokenRecords =
+        tokensByNetwork[network.id]?.filter(
+          (token) => token.address === 'native',
+        ) ?? []
 
-            for (const token of nativeTokenRecords) {
-              tokens.add(token)
-            }
+      for (const token of nativeTokenRecords) {
+        tokens.add(token)
+      }
 
-            const logs = await getAllLogs(
-              client as unknown as PublicClient,
-              address,
-              0n,
-              blockNumber,
-            )
-
-            for (const log of logs) {
-              const token = tokensByNetwork[network.id]?.find(
-                (token) => token.address === log.address,
-              )
-              if (token) {
-                tokens.add(token)
-              }
-            }
-
-            return [network.id, Array.from(tokens)]
-          },
-        ),
+      const logs = await getAllLogs(
+        client as unknown as PublicClient,
+        address,
+        0n,
+        blockNumber,
       )
-    )
+
+      for (const log of logs) {
+        const token = tokensByNetwork[network.id]?.find(
+          (token) => token.address === log.address,
+        )
+        if (token) {
+          tokens.add(token)
+        }
+      }
+
+      return [network.id, Array.from(tokens)]
+    }),
+  )
+
+  const errors = checkResults
+    .map((p, i) => ({
+      networkId: networksToCheck[i]?.id,
+      error: p.status === 'rejected' ? String(p.reason) : undefined,
+    }))
+    .filter((p) => p.error)
+
+  const tokens = Object.fromEntries(
+    checkResults
       .filter((p) => p.status === 'fulfilled')
       .map((p) => p.value)
       .filter(([_, tokens]) => tokens.length > 0),
@@ -126,6 +131,11 @@ export async function refreshTokensOfAddress(address: Address) {
       )
       .filter((b) => !existingTokenIds.has(b.tokenId)),
   )
+
+  return {
+    found: Object.keys(tokens).length,
+    errors,
+  }
 }
 
 async function getAllLogsInner(
