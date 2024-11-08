@@ -21,7 +21,7 @@ export function EthereumDaEntry({ entry }: { entry: DaSummaryEthereumEntry }) {
           <TooltipTrigger>
             <InfoIcon variant="blue" />
           </TooltipTrigger>
-          <TooltipContent>
+          <TooltipContent className="z-[1000]">
             From the rollup perspective, Ethereum&apos;s canonical chain cannot
             contain unavailable data commitments as full nodes self-verify the
             data availability of each block, discarding blocks with unavailable
