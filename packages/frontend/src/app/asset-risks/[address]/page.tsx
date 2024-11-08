@@ -3,8 +3,9 @@ import type { SetOptional } from 'type-fest'
 import { http, type Hex, createPublicClient, isAddress } from 'viem'
 
 import { type ScalingProjectRisk } from '@l2beat/config'
+import { mainnet } from 'viem/chains'
 import { Skeleton } from '~/components/core/skeleton'
-import { getChain } from '~/server/features/asset-risks/utils/chains'
+import { db } from '~/server/database'
 import { ClientsideLogic } from './_components/clientside-logic'
 import { DetailsHeader } from './_components/details-header'
 import { Disclaimer } from './_components/disclaimer'
@@ -18,12 +19,11 @@ interface Props {
 }
 
 async function getAddressDisplayName(address: Hex) {
-  const ethereumChain = getChain(1)
-  if (!ethereumChain) return address
+  const network = await db.network.findByChainIdWithConfigs(1)
 
   const ethereum = createPublicClient({
-    chain: ethereumChain,
-    transport: http(),
+    chain: mainnet,
+    transport: http(network?.rpcs?.[0]?.url),
   })
 
   const resolvedEnsDomain = await ethereum.getEnsName({
