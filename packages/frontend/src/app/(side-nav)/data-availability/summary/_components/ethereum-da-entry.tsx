@@ -16,7 +16,7 @@ export function EthereumDaEntry({ entry }: { entry: DaSummaryEthereumEntry }) {
 
   return (
     <div className="mb-3 overflow-auto max-md:-mr-4">
-      <div className="relative flex min-w-[940px] items-center justify-between gap-3 rounded-lg bg-blue-300 px-4 py-1 dark:bg-blue-800 max-md:mr-4 md:py-3">
+      <div className="relative flex min-w-[940px] items-center justify-between gap-3 rounded-lg bg-blue-300 px-4 py-1 dark:bg-blue-950 max-md:mr-4 md:py-3">
         <Tooltip>
           <TooltipTrigger>
             <InfoIcon variant="blue" />
@@ -61,6 +61,7 @@ export function EthereumDaEntry({ entry }: { entry: DaSummaryEthereumEntry }) {
             <ProjectsUsedIn
               usedIn={entry.usedIn}
               className="text-sm font-medium"
+              noTooltip
             />
           </div>
         </div>
