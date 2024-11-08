@@ -4,6 +4,7 @@ import { memo } from './blockchain/memo/memo'
 import { near } from './blockchain/near/near'
 import { alephzeroDac } from './dac/alephzero'
 import { alienxDac } from './dac/alienx'
+import { apechainDac } from './dac/apechain'
 import { apexDac } from './dac/apex'
 import { arbitrumNovaDac } from './dac/arbitrumnova'
 import { astarZkEvmDac } from './dac/astarzkEVM'
@@ -74,7 +75,7 @@ export const daLayers: DaLayer[] = applyProcessor([
   paychainDac,
   gptProtocolDac,
   witnessDac,
-  // apechainDac, // still upcoming
+  apechainDac,
   degenDac,
   l3xDac,
   moltenDac,
