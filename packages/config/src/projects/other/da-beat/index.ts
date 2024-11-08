@@ -12,6 +12,7 @@ import { degenDac } from './dac/degen'
 import { edgelessDac } from './dac/edgeless'
 import { eigenDA } from './dac/eigenDA'
 import { everclearDac } from './dac/everclear'
+import { fluenceDac } from './dac/fluence'
 import { fraxtalDA } from './dac/fraxtalDA'
 import { gptProtocolDac } from './dac/gptProtocol'
 import { galxegravityDac } from './dac/gravity'
@@ -21,6 +22,7 @@ import { l3xDac } from './dac/l3x'
 import { mantleDA } from './dac/mantleDA'
 import { moltenDac } from './dac/molten'
 import { myriaDac } from './dac/myria'
+import { oevnetworkDac } from './dac/oevnetwork'
 import { paychainDac } from './dac/payChain'
 import { playblockDac } from './dac/playblock'
 import { popapexDac } from './dac/popapex'
@@ -84,6 +86,8 @@ export const daLayers: DaLayer[] = applyProcessor([
   popbossDac,
   rariDac,
   xaiDac,
+  fluenceDac,
+  oevnetworkDac,
   // DA Layers
   // ethereum,
   avail,
