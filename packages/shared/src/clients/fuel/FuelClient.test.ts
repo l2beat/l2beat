@@ -135,7 +135,7 @@ const mockFuelBlockResponse = (
       header: {
         time,
       },
-      transactionIds: block.transactions.map((t) => t.hash),
+      transactionIds: block.transactions.map((t) => t.hash!),
     },
   },
 })

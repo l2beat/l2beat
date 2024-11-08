@@ -1,6 +1,8 @@
 import { type Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { env } from '~/env'
+import { oswald } from '~/fonts/oswald'
+import { cn } from '~/utils/cn'
 import { getDefaultMetadata } from '~/utils/metadata'
 
 export const metadata: Metadata = getDefaultMetadata({
@@ -15,5 +17,9 @@ export default async function Layout({
     return notFound()
   }
 
-  return children
+  return (
+    <div className={cn(oswald.variable, 'bg-[#0B0B1C] text-white')}>
+      {children}
+    </div>
+  )
 }
