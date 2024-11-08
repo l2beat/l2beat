@@ -60,8 +60,7 @@ export async function refreshTokensOfAddress(address: Address) {
       if (!network.chainId || !network.rpc?.url) return [network.id, []]
 
       const chain = getChain({
-        id: network.chainId,
-        name: network.name,
+        chainId: network.chainId,
         rpcUrl: network.rpc.url,
       })
 

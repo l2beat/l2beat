@@ -50,8 +50,7 @@ export async function refreshBalancesOfAddress(address: Address) {
       }
 
       const chain = getChain({
-        id: network.chainId,
-        name: network.name,
+        chainId: network.chainId,
         rpcUrl: network.rpc.url,
       })
 
