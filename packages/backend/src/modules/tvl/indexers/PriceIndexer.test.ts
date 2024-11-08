@@ -33,8 +33,8 @@ describe(PriceIndexer.name, () => {
       const adjustedTo = 200
 
       const priceService = mockObject<PriceService>({
-        getAdjustedTo: () => new UnixTime(adjustedTo),
-        fetchPrices: async () => [
+        calculateAdjustedTo: () => new UnixTime(adjustedTo),
+        getPrices: async () => [
           price('a', 100),
           price('a', 150), // will be filtered out, see syncOptimizer
           price('a', 200),
@@ -76,9 +76,12 @@ describe(PriceIndexer.name, () => {
       const saveData = await indexer.multiUpdate(from, to, configurations)
       const safeHeight = await saveData()
 
-      expect(priceService.getAdjustedTo).toHaveBeenOnlyCalledWith(from, to)
+      expect(priceService.calculateAdjustedTo).toHaveBeenOnlyCalledWith(
+        from,
+        to,
+      )
 
-      expect(priceService.fetchPrices).toHaveBeenOnlyCalledWith(
+      expect(priceService.getPrices).toHaveBeenOnlyCalledWith(
         new UnixTime(from),
         new UnixTime(adjustedTo),
         parameters.coingeckoId,

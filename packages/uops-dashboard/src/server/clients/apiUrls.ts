@@ -1,24 +1,36 @@
 import type { ChainId } from '@/chains'
 
 const API_URLS: Map<ChainId, string> = new Map([
-  ['starknet', 'https://starknet-mainnet.public.blastapi.io'],
-  ['base', 'https://mainnet.base.org'],
-  ['ethereum', 'https://ethereum-rpc.publicnode.com'],
-  ['xai', 'https://xai-chain.net/rpc'],
-  ['taiko', 'https://rpc.taiko.xyz'],
+  ['alephzero', 'https://rpc.alephzero-testnet.gelato.digital'],
   ['arbitrum', 'https://arbitrum-one.publicnode.com'],
+  ['base', 'https://mainnet.base.org'],
+  ['blast', 'https://rpc.blast.io/'],
+  ['ethereum', 'https://ethereum-rpc.publicnode.com'],
   ['gravity', 'https://rpc.gravity.xyz'],
+  ['linea', 'https://linea-rpc.publicnode.com'],
+  ['lyra', 'https://rpc.lyra.finance'],
+  ['mantle', 'https://rpc.mantle.xyz'],
+  ['nova', 'https://nova.arbitrum.io/rpc'],
   ['optimism', 'https://mainnet.optimism.io'],
+  ['polynomial', 'https://rpc.polynomial.fi'],
+  ['scroll', 'https://rpc.scroll.io'],
+  ['silicon', 'https://rpc.silicon.network'],
+  ['starknet', 'https://starknet-mainnet.public.blastapi.io'],
+  ['taiko', 'https://rpc.taiko.xyz'],
+  ['xai', 'https://xai-chain.net/rpc'],
   ['zksync-era', 'https://mainnet.era.zksync.io'],
+  ['zora', 'https://rpc.zora.energy'],
 ])
 
 const SCAN_URLS: Map<ChainId, string> = new Map([
+  ['arbitrum', 'https://api.arbiscan.io'],
   ['base', 'https://api.basescan.org'],
   ['ethereum', 'https://api.etherscan.io'],
-  ['xai', 'https://api.xaiscan.io'],
+  ['linea', 'https://api.lineascan.build'],
+  ['nova', 'https://api-nova.arbiscan.io'],
+  ['optimism', 'https://api.optimism.io'],
   ['taiko', 'https://api.taikoscan.io'],
-  ['arbitrum', 'https://api.arbiscan.io'],
-  ['optimism', 'https://mainnet.optimism.io'],
+  ['xai', 'https://api.xaiscan.io'],
   ['zksync-era', 'https://api-era.zksync.network'],
 ])
 

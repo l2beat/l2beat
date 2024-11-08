@@ -56,7 +56,7 @@ describe(CirculatingSupplyService.name, () => {
 
       expect(
         circulatingSupplyProvider.getCirculatingSupplies,
-      ).toHaveBeenOnlyCalledWith(coingeckoId, { from, to }, undefined)
+      ).toHaveBeenOnlyCalledWith(coingeckoId, { from, to })
     })
   })
 
@@ -71,7 +71,7 @@ describe(CirculatingSupplyService.name, () => {
 
       const result = circulatingSupplyProvider.getAdjustedTo(from, to)
 
-      const expected = CoingeckoQueryService.getAdjustedTo(
+      const expected = CoingeckoQueryService.calculateAdjustedTo(
         new UnixTime(from),
         new UnixTime(to),
       )
@@ -96,6 +96,5 @@ function coingeckoResponse(timestamp: number) {
   return {
     timestamp: new UnixTime(timestamp),
     value: timestamp, // for the sake of tests simplicity it is the same
-    deltaMs: 0,
   }
 }
