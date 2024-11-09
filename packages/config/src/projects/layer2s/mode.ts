@@ -16,6 +16,21 @@ export const mode: Layer2 = opStackL2({
     name: 'Mode Network',
     shortName: 'Mode',
     slug: 'mode',
+    isOther: true,
+    mainPermissions: {
+      challenger: {
+        value: '4/6',
+        secondLine: 'Mode',
+      },
+      proposer: {
+        value: '1 EOA',
+        secondLine: 'Mode',
+      },
+      upgrader: {
+        value: '5/7 + 10/13',
+        secondLine: 'OP Foundation + Superchain SC',
+      },
+    },
     description:
       'Mode is an OP stack Optimistic Rollup building the AIFi economy. Their mission is to scale DeFi to billions of users through onchain agents and AI powered financial applications to build a more open, efficient, and inclusive financial future.',
     links: {

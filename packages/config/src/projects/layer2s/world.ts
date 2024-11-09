@@ -13,6 +13,21 @@ export const world: Layer2 = opStackL2({
   display: {
     name: 'World Chain',
     slug: 'world',
+    isOther: true,
+    mainPermissions: {
+      challenger: {
+        value: '1 EOA',
+        secondLine: 'Alchemy',
+      },
+      proposer: {
+        value: '1 EOA',
+        secondLine: 'Alchemy',
+      },
+      upgrader: {
+        value: '3/6',
+        secondLine: 'Alchemy',
+      },
+    },
     description:
       'World Chain is an OP Stack Rollup built to scale Proof of Personhood, aiming to offer priority blockspace for users with a World ID.',
     links: {

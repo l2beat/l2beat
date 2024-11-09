@@ -83,6 +83,20 @@ export const linea: Layer2 = {
   display: {
     name: 'Linea',
     slug: 'linea',
+    isOther: true,
+    mainPermissions: {
+      challenger: {
+        value: 'None',
+      },
+      proposer: {
+        value: '2 EOAs',
+        secondLine: 'Linea',
+      },
+      upgrader: {
+        value: '4/8',
+        secondLine: 'Linea',
+      },
+    },
     warning: 'The circuit of the program being proven is not public.',
     description:
       'Linea is a ZK Rollup powered by Consensys zkEVM, designed to scale the Ethereum network.',

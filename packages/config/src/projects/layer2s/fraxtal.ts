@@ -53,6 +53,21 @@ export const fraxtal: Layer2 = opStackL2({
   display: {
     name: 'Fraxtal',
     slug: 'fraxtal',
+    isOther: true,
+    mainPermissions: {
+      challenger: {
+        value: '3/5',
+        secondLine: 'Fraxtal',
+      },
+      proposer: {
+        value: '1 EOA',
+        secondLine: 'Fraxtal',
+      },
+      upgrader: {
+        value: '3/5',
+        secondLine: 'Fraxtal',
+      },
+    },
     description:
       'Fraxtal is an EVM equivalent Optimium utilizing the OP stack as its smart contract platform and execution environment.',
     links: {

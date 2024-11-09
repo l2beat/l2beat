@@ -17,6 +17,21 @@ export const mantapacific: Layer2 = opStackL2({
   display: {
     name: 'Manta Pacific',
     slug: 'mantapacific',
+    isOther: true,
+    mainPermissions: {
+      challenger: {
+        value: '1 EOA',
+        secondLine: 'Manta',
+      },
+      proposer: {
+        value: '1 EOA',
+        secondLine: 'Manta',
+      },
+      upgrader: {
+        value: '5/7',
+        secondLine: 'Manta',
+      },
+    },
     architectureImage: 'mantapacific',
     description:
       'Manta Pacific is an Optimium empowering EVM-native zero-knowledge (ZK) applications and general dapps.',

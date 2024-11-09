@@ -22,6 +22,7 @@ const threshold =
 export const mantle: Layer2 = opStackL2({
   createdAt: new UnixTime(1680782525), // 2023-04-06T12:02:05Z
   badges: [Badge.DA.CustomDA],
+
   daProvider: {
     layer: DA_LAYERS.MANTLE_DA,
     bridge: DA_BRIDGES.STAKED_OPERATORS({
@@ -64,6 +65,21 @@ export const mantle: Layer2 = opStackL2({
     name: 'Mantle',
     slug: 'mantle',
     architectureImage: 'mantle',
+    isOther: true,
+    mainPermissions: {
+      challenger: {
+        value: '3/7',
+        secondLine: 'Mantle',
+      },
+      proposer: {
+        value: '1 EOA',
+        secondLine: 'Mantle',
+      },
+      upgrader: {
+        value: '6/11',
+        secondLine: 'Mantle',
+      },
+    },
     description:
       'Mantle is an under development EVM compatible Optimium, based on the OP Stack.',
     links: {

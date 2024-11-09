@@ -15,6 +15,21 @@ export const lisk: Layer2 = opStackL2({
   display: {
     name: 'Lisk',
     slug: 'lisk',
+    isOther: true,
+    mainPermissions: {
+      challenger: {
+        value: '6/9',
+        secondLine: 'Gelato',
+      },
+      proposer: {
+        value: '1 EOA',
+        secondLine: 'Gelato',
+      },
+      upgrader: {
+        value: '6/9',
+        secondLine: 'Gelato',
+      },
+    },
     description:
       'Lisk is an OP stack rollup on Ethereum that migrated from the L1 blockchain of the same name.',
     links: {
