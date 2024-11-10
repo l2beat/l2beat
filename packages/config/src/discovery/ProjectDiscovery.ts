@@ -459,12 +459,19 @@ export class ProjectDiscovery {
     return contract !== undefined
   }
 
+  getContractValueOrUndefined<T extends ContractValue>(
+    contractIdentifier: string,
+    key: string,
+  ): T | undefined {
+    const contract = this.getContract(contractIdentifier)
+    return contract.values?.[key] as T | undefined
+  }
+
   getContractValue<T extends ContractValue>(
     contractIdentifier: string,
     key: string,
   ): T {
-    const contract = this.getContract(contractIdentifier)
-    const result = contract.values?.[key] as T | undefined
+    const result = this.getContractValueOrUndefined<T>(contractIdentifier, key)
     assert(
       isNonNullable(result),
       `Value of key ${key} does not exist in ${contractIdentifier} contract (${this.projectName})`,
