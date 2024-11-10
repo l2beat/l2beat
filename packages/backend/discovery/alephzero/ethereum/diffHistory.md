@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xd575ac2c8a0b1506b98083d21e5484245052b183
+Generated with discovered.json: 0xa78e2d60f2015678e5767d3af89e67ba9438a931
 
-# Diff at Fri, 08 Nov 2024 09:47:42 GMT:
+# Diff at Sun, 10 Nov 2024 14:19:58 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@53988239f42edde0275ed92d8f3ada4279354f7d block: 21071352
-- current block number: 21142121
+- comparing to: main@5f3c7e0644a7d5faea1ebbb16c0c873d426980fc block: 21071352
+- current block number: 21157823
 
 ## Description
 
@@ -15,6 +15,15 @@ Config related.
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 21071352 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x1CA12290D954CFe022323b6A6Df92113ed6b1C98) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.2.via.0.description:
+-        "can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
++        "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+    }
+```
 
 ```diff
     contract ERC20RollupEventInbox (0x4e008aEeA79Fcd5708A7b46CA1732dFAf2a25B7d) {
@@ -37,6 +46,15 @@ discovery. Values are for block 21071352 (main branch discovery), not current.
 +        "GatewayRouter"
       description:
 +        "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging."
+    }
+```
+
+```diff
+    contract AlephZeroMultisig (0xeC475675629B38E42d4aC5d40761618268E7Ed21) {
+    +++ description: None
+      directlyReceivedPermissions.1.description:
+-        "can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
++        "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
     }
 ```
 
