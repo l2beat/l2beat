@@ -1,3 +1,44 @@
+Generated with discovered.json: 0x1d83f3fa814362ea0a7cae6d80b8ece3290603e1
+
+# Diff at Fri, 08 Nov 2024 08:00:26 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@53988239f42edde0275ed92d8f3ada4279354f7d block: 21121964
+- current block number: 21141582
+
+## Description
+
+Sets to 0. The current validator reward is calculated in the ValidatorManager (`_calculateReward()`) and does not reference this value in the SystemConfig, so it is unclear what consequence this change has. One SC member address is rotated.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35) {
+    +++ description: None
+      values.validatorRewardScalar:
+-        5000
++        0
+    }
+```
+
+```diff
+    contract SecurityCouncilToken (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c) {
+    +++ description: None
+      values.tokenOwners.9:
+-        "0x16876e5c608cec36968517A9Eb345269D308D94a"
++        "0x27EFE61C5266e461995141f57b4D13F13c83f786"
+      values.tokenOwners.4:
+-        "0x7B3225ADc5D908668FaA050246680CBE4e75A93f"
++        "0x16876e5c608cec36968517A9Eb345269D308D94a"
+      values.tokens.9:
+-        13
++        14
+      values.tokens.4:
+-        6
++        13
+    }
+```
+
 Generated with discovered.json: 0xae6965fa07c9fb7b28f375e33d6b3162e72d9712
 
 # Diff at Fri, 01 Nov 2024 14:16:06 GMT:

@@ -1,7 +1,7 @@
 {
   "name": "symbiosis",
   "chain": "ethereum",
-  "blockNumber": 19532236,
+  "blockNumber": 21141679,
   "configHash": "0x6f289441b363ced9d2f5f1500c425c462ed7923c113afec9d7de7b772d896e22",
   "contracts": [
     {
@@ -72,7 +72,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 32,
+        "nonce": 45,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -106,10 +106,10 @@
         ],
         "$upgradeCount": 1,
         "currentChainId": 1,
-        "mpc": "0x4Bb117e73b7e50D063C146b94bD291688D9f5658",
-        "newMPC": "0x4Bb117e73b7e50D063C146b94bD291688D9f5658",
-        "newMPCEffectiveTime": 1701676415,
-        "oldMPC": "0xA8E11F769BB3b97Dc615b9833615159436a9c1Fb",
+        "mpc": "0xeAc9340AE80c2d62E4e9b1A137eFb23Fa53a9A03",
+        "newMPC": "0xeAc9340AE80c2d62E4e9b1A137eFb23Fa53a9A03",
+        "newMPCEffectiveTime": 1726816907,
+        "oldMPC": "0xaF4A61f99306Be8dFE69a1e369e5f8480Ea3687A",
         "owner": "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a"
       },
       "derivedName": "BridgeV2"
@@ -119,7 +119,7 @@
       "address": "0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
-        "0x4754c4887d8e1782eeead45b2652e3639e4887315d18aaac0050cbcdbdf3a0fa"
+        "0x8c47d485b7d202eb666ef592012502f811cc91f1337393dbfd3411b67dea3580"
       ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -133,7 +133,7 @@
       "sinceTimestamp": 1668406751,
       "values": {
         "$admin": "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75",
-        "$implementation": "0x326adbE46D7E6C1B3927e9309B96DF478bda6D16",
+        "$implementation": "0x755a967298c96d50216C6ED8D68869747B4f6878",
         "$pastUpgrades": [
           [
             "2022-11-14T06:19:11.000Z",
@@ -164,14 +164,19 @@
             "2023-12-19T10:42:59.000Z",
             "0x39b772a5e9ebcd7384b27fa529f91ecf5fc67e6c81740c3540b5bb580287844b",
             ["0x326adbE46D7E6C1B3927e9309B96DF478bda6D16"]
+          ],
+          [
+            "2024-11-06T18:25:35.000Z",
+            "0x4ba8c9e82d442fff19bc936ad0a26c1b91025d3d9f321847b9a1b22dab3bc86b",
+            ["0x755a967298c96d50216C6ED8D68869747B4f6878"]
           ]
         ],
-        "$upgradeCount": 6,
+        "$upgradeCount": 7,
         "bridge": "0x5523985926Aa12BA58DC5Ad00DDca99678D7227E",
         "metaRouter": "0xf621Fb08BBE51aF70e7E0F4EA63496894166Ff7F",
         "owner": "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a",
         "paused": false,
-        "requestCount": 9853,
+        "requestCount": 31929,
         "versionRecipient": "2.0.1",
         "wrapper": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
@@ -254,11 +259,11 @@
     { "address": "0x0ee552336134B6f8F0a72927b6124f8A81865928" },
     { "address": "0x28e41c41f61cab69aA0b50668eB3c38ee76d0BA9" },
     { "address": "0x32e42EEE9586D685a40A26f8BAc4197cEA967b5F" },
-    { "address": "0x4Bb117e73b7e50D063C146b94bD291688D9f5658" },
     { "address": "0x74Bcc68B52E3De4C105CEE3eb1814fe496a60ab9" },
     { "address": "0x8dFCBe7ABd7426B7441a89B6Db97B28376E46971" },
-    { "address": "0xA8E11F769BB3b97Dc615b9833615159436a9c1Fb" },
-    { "address": "0xDD335D90dE6e4ECE62C966FF07a000cF26e19C0e" }
+    { "address": "0xaF4A61f99306Be8dFE69a1e369e5f8480Ea3687A" },
+    { "address": "0xDD335D90dE6e4ECE62C966FF07a000cF26e19C0e" },
+    { "address": "0xeAc9340AE80c2d62E4e9b1A137eFb23Fa53a9A03" }
   ],
   "abis": {
     "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75": [
@@ -271,50 +276,6 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
-    "0x326adbE46D7E6C1B3927e9309B96DF478bda6D16": [
-      "event BurnCompleted(bytes32 indexed id, bytes32 indexed crossChainID, address indexed to, uint256 amount, uint256 bridgingFee, address token)",
-      "event ClientIdLog(bytes32 requestId, bytes32 indexed clientId)",
-      "event MetaRevertRequest(bytes32 indexed id, address indexed to)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event RevertBurnRequest(bytes32 indexed id, address indexed to)",
-      "event RevertSynthesizeCompleted(bytes32 indexed id, address indexed to, uint256 amount, uint256 bridgingFee, address token)",
-      "event SetMetaRouter(address metaRouter)",
-      "event SetTokenThreshold(address token, uint256 threshold)",
-      "event SetWhitelistToken(address token, bool activate)",
-      "event SynthesizeRequest(bytes32 id, address indexed from, uint256 indexed chainID, address indexed revertableAddress, address to, uint256 amount, address token)",
-      "event Unpaused(address account)",
-      "function balanceOf(address) view returns (uint256)",
-      "function bridge() view returns (address)",
-      "function initialize(address _bridge, address _trustedForwarder, address _wrapper, address _whitelistedToken, address _metaRouter)",
-      "function isTrustedForwarder(address forwarder) view returns (bool)",
-      "function metaRevertRequest(tuple(uint256 stableBridgingFee, bytes32 internalID, address receiveSide, address managerChainBridge, address sourceChainBridge, uint256 managerChainId, uint256 sourceChainId, address router, bytes swapCalldata, address sourceChainSynthesis, address burnToken, bytes burnCalldata, bytes32 clientID) _metaRevertTransaction)",
-      "function metaRouter() view returns (address)",
-      "function metaSynthesize(tuple(uint256 stableBridgingFee, uint256 amount, address rtoken, address chain2address, address receiveSide, address oppositeBridge, address syntCaller, uint256 chainID, address[] swapTokens, address secondDexRouter, bytes secondSwapCalldata, address finalReceiveSide, bytes finalCalldata, uint256 finalOffset, address revertableAddress, bytes32 clientID) _metaSynthesizeTransaction) returns (bytes32)",
-      "function metaUnsynthesize(uint256 _stableBridgingFee, bytes32 _crossChainID, bytes32 _externalID, address _to, uint256 _amount, address _rToken, address _finalReceiveSide, bytes _finalCalldata, uint256 _finalOffset)",
-      "function owner() view returns (address)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function renounceOwnership()",
-      "function requestCount() view returns (uint256)",
-      "function requests(bytes32) view returns (address recipient, address chain2address, uint256 amount, address rtoken, uint8 state)",
-      "function revertBurnRequest(uint256 _stableBridgingFee, bytes32 _internalID, address _receiveSide, address _oppositeBridge, uint256 _chainId, bytes32 _clientID)",
-      "function revertSynthesize(uint256 _stableBridgingFee, bytes32 _externalID)",
-      "function setMetaRouter(address _metaRouter)",
-      "function setTokenThreshold(address _token, uint256 _threshold)",
-      "function setWhitelistToken(address _token, bool _activate)",
-      "function synthesize(uint256 _stableBridgingFee, address _token, uint256 _amount, address _chain2address, address _receiveSide, address _oppositeBridge, address _revertableAddress, uint256 _chainID, bytes32 _clientID) returns (bytes32)",
-      "function synthesizeNative(uint256 _stableBridgingFee, address _chain2address, address _receiveSide, address _oppositeBridge, address _revertableAddress, uint256 _chainID, bytes32 _clientID) payable returns (bytes32)",
-      "function synthesizeWithPermit(tuple(uint256 stableBridgingFee, bytes approvalData, address token, uint256 amount, address chain2address, address receiveSide, address oppositeBridge, address revertableAddress, uint256 chainID, bytes32 clientID) _syntWithPermitTx) returns (bytes32)",
-      "function tokenThreshold(address) view returns (uint256)",
-      "function tokenWhitelist(address) view returns (bool)",
-      "function transferOwnership(address newOwner)",
-      "function unpause()",
-      "function unsynthesize(uint256 _stableBridgingFee, bytes32 _externalID, bytes32 _crossChainID, address _token, uint256 _amount, address _to)",
-      "function unsynthesizeStates(bytes32) view returns (uint8)",
-      "function versionRecipient() pure returns (string)",
-      "function wrapper() view returns (address)"
     ],
     "0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -366,6 +327,52 @@
       "function transferOwnership(address newOwner)",
       "function transmitRequestV2(bytes _callData, address _receiveSide, address _oppositeBridge, uint256 _chainId)",
       "function withdrawFee(address token, address to, uint256 amount) returns (bool)"
+    ],
+    "0x755a967298c96d50216C6ED8D68869747B4f6878": [
+      "event BurnCompleted(bytes32 indexed id, bytes32 indexed crossChainID, address indexed to, uint256 amount, uint256 bridgingFee, address token)",
+      "event ClientIdLog(bytes32 requestId, bytes32 indexed clientId)",
+      "event MetaRevertRequest(bytes32 indexed id, address indexed to)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event RevertBurnRequest(bytes32 indexed id, address indexed to)",
+      "event RevertSynthesizeCompleted(bytes32 indexed id, address indexed to, uint256 amount, uint256 bridgingFee, address token)",
+      "event SetBalanceOf(address[] tokens)",
+      "event SetMetaRouter(address metaRouter)",
+      "event SetTokenThreshold(address token, uint256 threshold)",
+      "event SetWhitelistToken(address token, bool activate)",
+      "event SetWrapper(address wrapper)",
+      "event SynthesizeRequest(bytes32 id, address indexed from, uint256 indexed chainID, address indexed revertableAddress, address to, uint256 amount, address token)",
+      "event Unpaused(address account)",
+      "function balanceOf(address) view returns (uint256)",
+      "function bridge() view returns (address)",
+      "function initialize(address _bridge, address _trustedForwarder, address _wrapper, address _whitelistedToken, address _metaRouter)",
+      "function isTrustedForwarder(address forwarder) view returns (bool)",
+      "function metaRevertRequest(tuple(uint256 stableBridgingFee, bytes32 internalID, address receiveSide, address managerChainBridge, address sourceChainBridge, uint256 managerChainId, uint256 sourceChainId, address router, bytes swapCalldata, address sourceChainSynthesis, address burnToken, bytes burnCalldata, bytes32 clientID) _metaRevertTransaction)",
+      "function metaRouter() view returns (address)",
+      "function metaSynthesize(tuple(uint256 stableBridgingFee, uint256 amount, address rtoken, address chain2address, address receiveSide, address oppositeBridge, address syntCaller, uint256 chainID, address[] swapTokens, address secondDexRouter, bytes secondSwapCalldata, address finalReceiveSide, bytes finalCalldata, uint256 finalOffset, address revertableAddress, bytes32 clientID) _metaSynthesizeTransaction) returns (bytes32)",
+      "function metaUnsynthesize(uint256 _stableBridgingFee, bytes32 _crossChainID, bytes32 _externalID, address _to, uint256 _amount, address _rToken, address _finalReceiveSide, bytes _finalCalldata, uint256 _finalOffset)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function renounceOwnership()",
+      "function requestCount() view returns (uint256)",
+      "function requests(bytes32) view returns (address recipient, address chain2address, uint256 amount, address rtoken, uint8 state)",
+      "function revertBurnRequest(uint256 _stableBridgingFee, bytes32 _internalID, address _receiveSide, address _oppositeBridge, uint256 _chainId, bytes32 _clientID)",
+      "function revertSynthesize(uint256 _stableBridgingFee, bytes32 _externalID)",
+      "function setBalanceOf(address[] _tokens)",
+      "function setMetaRouter(address _metaRouter)",
+      "function setTokenThreshold(address _token, uint256 _threshold)",
+      "function setWhitelistToken(address _token, bool _activate)",
+      "function setWrapper(address _wrapper)",
+      "function synthesize(uint256 _stableBridgingFee, address _token, uint256 _amount, address _chain2address, address _receiveSide, address _oppositeBridge, address _revertableAddress, uint256 _chainID, bytes32 _clientID) returns (bytes32)",
+      "function tokenThreshold(address) view returns (uint256)",
+      "function tokenWhitelist(address) view returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function unsynthesize(uint256 _stableBridgingFee, bytes32 _externalID, bytes32 _crossChainID, address _token, uint256 _amount, address _to)",
+      "function unsynthesizeStates(bytes32) view returns (uint8)",
+      "function versionRecipient() pure returns (string)",
+      "function wrapper() view returns (address)"
     ],
     "0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8": [
       "constructor(address _logic, address admin_, bytes _data) payable",

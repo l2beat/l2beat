@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x6aee0a38af8170f95f07dc8569fa9cee48703ad0
+Generated with discovered.json: 0xd575ac2c8a0b1506b98083d21e5484245052b183
 
-# Diff at Thu, 07 Nov 2024 11:04:12 GMT:
+# Diff at Fri, 08 Nov 2024 09:47:42 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@e983273bf2ca9304e4b729faaddf20acae0f6c19 block: 21071352
-- current block number: 21071352
+- comparing to: main@53988239f42edde0275ed92d8f3ada4279354f7d block: 21071352
+- current block number: 21142121
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Config related.
 
 ## Config/verification related changes
 
@@ -17,20 +17,26 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 21071352 (main branch discovery), not current.
 
 ```diff
-    contract RollupProxy (0x1CA12290D954CFe022323b6A6Df92113ed6b1C98) {
-    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
-      issuedPermissions.2.via.0.description:
--        "can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
-+        "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+    contract ERC20RollupEventInbox (0x4e008aEeA79Fcd5708A7b46CA1732dFAf2a25B7d) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      template:
++        "orbitstack/RollupEventInbox"
+      displayName:
++        "RollupEventInbox"
+      description:
++        "Helper contract sending configuration data over the bridge during the systems initialization."
     }
 ```
 
 ```diff
-    contract AlephZeroMultisig (0xeC475675629B38E42d4aC5d40761618268E7Ed21) {
-    +++ description: None
-      directlyReceivedPermissions.1.description:
--        "can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
-+        "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+    contract L1OrbitGatewayRouter (0xeBb17f398ed30d02F2e8733e7c1e5cf566e17812) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      template:
++        "orbitstack/GatewayRouter"
+      displayName:
++        "GatewayRouter"
+      description:
++        "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging."
     }
 ```
 
