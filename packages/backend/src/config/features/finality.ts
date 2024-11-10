@@ -37,7 +37,7 @@ export function getFinalityConfigurations(
 function getChainFinalityConfig(env: Env, project: Layer2) {
   if (
     project.config.transactionApi?.type === 'loopring' ||
-    project.config.transactionApi?.type === 'degate'
+    project.config.transactionApi?.type === 'degate3'
   ) {
     return {
       url: project.config.transactionApi.defaultUrl,

@@ -1,9 +1,4 @@
-import {
-  CoingeckoId,
-  EthereumAddress,
-  UnixTime,
-  json,
-} from '@l2beat/shared-pure'
+import { CoingeckoId, UnixTime, json } from '@l2beat/shared-pure'
 import { ClientCore, ClientCoreDependencies } from '../../clients/ClientCore'
 import {
   CoinListEntry,
@@ -26,10 +21,37 @@ interface Dependencies extends ClientCoreDependencies {
 
 export class CoingeckoClient extends ClientCore {
   private readonly timeoutMs = 10_000
-  private readonly newIds = new Map<string, CoingeckoId>()
 
   constructor(private readonly $: Dependencies) {
-    super({ ...$ })
+    super($)
+  }
+
+  async getCoinMarketChartRange(
+    coinId: CoingeckoId,
+    vs_currency: string,
+    from: UnixTime,
+    to: UnixTime,
+  ): Promise<CoinMarketChartRangeData> {
+    const data = await this.query(
+      `/coins/${coinId.toString()}/market_chart/range`,
+      {
+        vs_currency: vs_currency.toLowerCase(),
+        from: from.toString(),
+        to: to.toString(),
+      },
+    )
+
+    const parsedData = CoinMarketChartRangeResult.parse(data)
+    return {
+      prices: parsedData.prices.map(([timestamp, price]) => ({
+        date: new Date(timestamp),
+        value: price,
+      })),
+      marketCaps: parsedData.market_caps.map(([timestamp, marketCap]) => ({
+        date: new Date(timestamp),
+        value: marketCap,
+      })),
+    }
   }
 
   async getCoinList(options?: {
@@ -61,83 +83,6 @@ export class CoingeckoClient extends ClientCore {
 
     const parsed = CoinMetadata.parse(data)
     return parsed.image.large
-  }
-
-  async getCoinMarketChartRange(
-    coinId: CoingeckoId,
-    vs_currency: string,
-    from: UnixTime,
-    to: UnixTime,
-    address?: EthereumAddress,
-  ): Promise<CoinMarketChartRangeData> {
-    try {
-      const id = this.newIds.get(address?.toString() ?? '') ?? coinId
-      return await this.callMarketChartRange(id, vs_currency, from, to)
-    } catch (e) {
-      if (!isCoingeckoIdError(e)) {
-        throw e
-      }
-      this.$.logger.error(`CoingeckoId change detected: ${coinId}`)
-      const id = await this.getNewCoingeckoId(coinId, address)
-      this.$.logger.info(
-        `Successfully fetched new CoingeckoId: ${coinId} -> ${id}`,
-      )
-      return await this.callMarketChartRange(id, vs_currency, from, to)
-    }
-  }
-
-  async callMarketChartRange(
-    coinId: CoingeckoId,
-    vs_currency: string,
-    from: UnixTime,
-    to: UnixTime,
-  ): Promise<CoinMarketChartRangeData> {
-    const data = await this.query(
-      `/coins/${coinId.toString()}/market_chart/range`,
-      {
-        vs_currency: vs_currency.toLowerCase(),
-        from: from.toString(),
-        to: to.toString(),
-      },
-    )
-
-    const parsedData = CoinMarketChartRangeResult.parse(data)
-    return {
-      prices: parsedData.prices.map(([timestamp, price]) => ({
-        date: new Date(timestamp),
-        value: price,
-      })),
-      marketCaps: parsedData.market_caps.map(([timestamp, marketCap]) => ({
-        date: new Date(timestamp),
-        value: marketCap,
-      })),
-    }
-  }
-
-  async getNewCoingeckoId(
-    oldId: CoingeckoId,
-    address?: EthereumAddress,
-  ): Promise<CoingeckoId> {
-    if (address === undefined) {
-      throw new Error(
-        `Server responded with non-2XX result: Could not fetch the prices for ${oldId.toString()}`,
-      )
-    }
-    const list = await this.getCoinList({ includePlatform: true })
-    const coingeckoSupported = list.find((item) => {
-      const addr = item.platforms.ethereum
-      return (
-        addr?.toLocaleLowerCase() === address.toString().toLocaleLowerCase()
-      )
-    })
-    if (coingeckoSupported?.id === undefined) {
-      throw new Error(
-        `Server responded with non-2XX result: Could not fetch the prices for ${oldId.toString()}`,
-      )
-    }
-
-    this.newIds.set(address.toString(), coingeckoSupported.id)
-    return coingeckoSupported.id
   }
 
   async getCoinsMarket(
@@ -179,11 +124,4 @@ export class CoingeckoClient extends ClientCore {
 
     return { success: true }
   }
-}
-
-function isCoingeckoIdError(e: unknown): boolean {
-  if (e instanceof Error) {
-    return e.message.includes('coin not found')
-  }
-  return false
 }

@@ -65,7 +65,7 @@ function decodeMultiSendInput(data: string): MultiSendTransaction[] {
   // Read the length of the transaction data
   const length = txBuffer.length
 
-  while (i < length) {
+  while (i < length - 1) {
     // First byte is the operation
     const operation = txBuffer[i]
 

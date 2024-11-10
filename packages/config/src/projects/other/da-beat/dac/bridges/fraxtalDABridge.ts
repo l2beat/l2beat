@@ -1,6 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
-import { redstone } from '../../../../layer2s/redstone'
+import { fraxtal } from '../../../../layer2s/fraxtal'
 import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../../types'
 import { DaBridge } from '../../types/DaBridge'
 import { DaRelayerFailureRisk } from '../../types/DaRelayerFailureRisk'
@@ -23,14 +23,15 @@ export const fraxtalDABridge = {
     description: `The SequencerInbox only stores IPFS hash commitments posted by the sequencer. It is not possible to verify blob inclusion against the data commitments onchain.
       Projects not integrating with a functional DA bridge rely only on the data availability attestation of the sequencer.`,
     links: {
-      websites: ['https://redstone.xyz/'],
-      apps: ['https://redstone.xyz/deposit'],
-      documentation: ['https://redstone.xyz/docs'],
-      explorers: ['https://explorer.redstone.xyz/'],
-      repositories: ['https://github.com/latticexyz/redstone'],
+      websites: ['https://frax.com/'],
+      apps: ['https://app.frax.finance/'],
+      documentation: ['https://docs.frax.com/'],
+      explorers: ['https://fraxscan.com/'],
+      repositories: ['https://github.com/FraxFinance'],
       socialMedia: [
-        'https://twitter.com/redstonexyz',
-        'https://discord.com/invite/latticexyz',
+        'https://discord.com/invite/UJVtDTFRaA',
+        'https://twitter.com/fraxfinance',
+        'https://t.me/fraxfinance',
       ],
     },
   },
@@ -72,7 +73,7 @@ export const fraxtalDABridge = {
       },
     ],
   },
-  usedIn: toUsedInProject([redstone]),
+  usedIn: toUsedInProject([fraxtal]),
   risks: {
     committeeSecurity: DaCommitteeSecurityRisk.NoBridge,
     upgradeability: DaUpgradeabilityRisk.NoBridge,

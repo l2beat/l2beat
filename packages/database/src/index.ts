@@ -43,6 +43,10 @@ export type {
   TokenRecord,
   UpsertableTokenRecord,
 } from './token-db/token/entity'
+export type {
+  EntityRecord,
+  UpsertableEntityRecord,
+} from './token-db/entity/entity'
 export type { AmountRecord } from './tvl/amount/entity'
 export type { BlockTimestampRecord } from './tvl/block-timestamp/entity'
 export type { PriceRecord } from './tvl/price/entity'
@@ -50,3 +54,5 @@ export type { TvlCleanerRecord } from './tvl/tvl-cleaner/entity'
 export type { ValueRecord } from './tvl/value/entity'
 export type { IndexerConfigurationRecord } from './uif/indexer-configuration/entity'
 export type { IndexerStateRecord } from './uif/indexer-state/entity'
+export type { EntityToExternalBridgeRecord } from './token-db/entity-to-external-bridge/entity'
+export type { EntityToTokenRecord } from './token-db/entity-to-token/entity'

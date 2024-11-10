@@ -4,7 +4,7 @@ import { nanoidSchema } from '~/lib/schemas'
 
 export const insertBridgeSchema = z.object({
   name: z.string().min(3).max(191),
-  managedBy: z.string().nullable(),
+  managingEntities: z.array(z.object({ entityId: nanoidSchema })),
   type: z.nativeEnum(ExternalBridgeType).nullable(),
 })
 

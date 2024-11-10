@@ -1,4 +1,11 @@
-import { CircleUser, Coins, Menu, Network, SendToBack } from 'lucide-react'
+import {
+  Building,
+  CircleUser,
+  Coins,
+  Menu,
+  Network,
+  SendToBack,
+} from 'lucide-react'
 import Link from 'next/link'
 
 import { redirect } from 'next/navigation'
@@ -33,6 +40,11 @@ const menu = [
     name: 'Links',
     href: '/links' as const,
     icon: SendToBack,
+  },
+  {
+    name: 'Entities',
+    href: '/entities' as const,
+    icon: Building,
   },
 ]
 

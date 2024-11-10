@@ -1,9 +1,11 @@
 import { avail } from './blockchain/avail/avail'
 import { celestia } from './blockchain/celestia/celestia'
+import { ethereum } from './blockchain/ethereum/ethereum'
 import { memo } from './blockchain/memo/memo'
 import { near } from './blockchain/near/near'
 import { alephzeroDac } from './dac/alephzero'
 import { alienxDac } from './dac/alienx'
+import { apechainDac } from './dac/apechain'
 import { apexDac } from './dac/apex'
 import { arbitrumNovaDac } from './dac/arbitrumnova'
 import { astarZkEvmDac } from './dac/astarzkEVM'
@@ -11,6 +13,7 @@ import { degenDac } from './dac/degen'
 import { edgelessDac } from './dac/edgeless'
 import { eigenDA } from './dac/eigenDA'
 import { everclearDac } from './dac/everclear'
+import { fluenceDac } from './dac/fluence'
 import { fraxtalDA } from './dac/fraxtalDA'
 import { gptProtocolDac } from './dac/gptProtocol'
 import { galxegravityDac } from './dac/gravity'
@@ -20,6 +23,7 @@ import { l3xDac } from './dac/l3x'
 import { mantleDA } from './dac/mantleDA'
 import { moltenDac } from './dac/molten'
 import { myriaDac } from './dac/myria'
+import { oevnetworkDac } from './dac/oevnetwork'
 import { paychainDac } from './dac/payChain'
 import { playblockDac } from './dac/playblock'
 import { popapexDac } from './dac/popapex'
@@ -45,6 +49,8 @@ import { applyProcessor } from './processors'
 import { DaLayer } from './types/DaLayer'
 
 export * from './types'
+
+export const ethereumDaLayer = ethereum
 
 export const daLayers: DaLayer[] = applyProcessor([
   // Permissioned DACs
@@ -74,7 +80,7 @@ export const daLayers: DaLayer[] = applyProcessor([
   paychainDac,
   gptProtocolDac,
   witnessDac,
-  // apechainDac, // still upcoming
+  apechainDac,
   degenDac,
   l3xDac,
   moltenDac,
@@ -83,6 +89,8 @@ export const daLayers: DaLayer[] = applyProcessor([
   popbossDac,
   rariDac,
   xaiDac,
+  fluenceDac,
+  oevnetworkDac,
   // DA Layers
   // ethereum,
   avail,

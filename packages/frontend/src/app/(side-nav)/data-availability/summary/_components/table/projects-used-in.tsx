@@ -12,9 +12,15 @@ interface Props {
   usedIn: UsedInProject[]
   className?: string
   maxProjects?: number
+  noTooltip?: boolean
 }
 
-export function ProjectsUsedIn({ usedIn, className, maxProjects = 5 }: Props) {
+export function ProjectsUsedIn({
+  usedIn,
+  className,
+  maxProjects = 5,
+  noTooltip,
+}: Props) {
   if (usedIn.length === 0) {
     return (
       <Tooltip>
@@ -29,6 +35,25 @@ export function ProjectsUsedIn({ usedIn, className, maxProjects = 5 }: Props) {
   const cappedProjects = usedIn.slice(0, maxProjects)
 
   const rest = usedIn.slice(maxProjects)
+
+  const nMoreComponent = noTooltip ? (
+    <span className="text-2xs text-zinc-800 dark:text-gray-50">
+      + {rest.length} more
+    </span>
+  ) : (
+    <Tooltip>
+      <TooltipTrigger>
+        <span className="text-2xs text-zinc-800 dark:text-gray-50">
+          + {rest.length} more
+        </span>
+      </TooltipTrigger>
+      <TooltipContent className="flex flex-col">
+        {rest.map((project) => (
+          <span key={project.slug}>{project.name}</span>
+        ))}
+      </TooltipContent>
+    </Tooltip>
+  )
 
   return (
     <div
@@ -54,20 +79,7 @@ export function ProjectsUsedIn({ usedIn, className, maxProjects = 5 }: Props) {
           </Tooltip>
         )
       })}
-      {rest.length > 0 && (
-        <Tooltip>
-          <TooltipTrigger>
-            <span className="text-2xs text-zinc-800 dark:text-gray-50">
-              + {rest.length} more
-            </span>
-          </TooltipTrigger>
-          <TooltipContent className="flex flex-col">
-            {rest.map((project) => (
-              <span key={project.slug}>{project.name}</span>
-            ))}
-          </TooltipContent>
-        </Tooltip>
-      )}
+      {rest.length > 0 && nMoreComponent}
     </div>
   )
 }

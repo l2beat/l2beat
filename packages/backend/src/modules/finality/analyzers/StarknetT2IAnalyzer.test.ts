@@ -2,8 +2,8 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { Database } from '@l2beat/database'
+import { StarknetClient } from '@l2beat/shared'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
-import { StarknetClient } from '../../../peripherals/starknet/StarknetClient'
 import { StarknetT2IAnalyzer } from './StarknetT2IAnalyzer'
 
 describe(StarknetT2IAnalyzer.name, () => {
@@ -20,7 +20,7 @@ describe(StarknetT2IAnalyzer.name, () => {
       const L2_TIMESTAMP = 1712099039
 
       const l2Client = mockObject<StarknetClient>({
-        getBlock: mockFn().resolvesTo({
+        getBlockWithTransactions: mockFn().resolvesTo({
           timestamp: L2_TIMESTAMP,
         }),
       })
@@ -49,7 +49,10 @@ describe(StarknetT2IAnalyzer.name, () => {
           timestamp: L2_TIMESTAMP,
         },
       ])
-      expect(l2Client.getBlock).toHaveBeenNthCalledWith(1, L2_BLOCK)
+      expect(l2Client.getBlockWithTransactions).toHaveBeenNthCalledWith(
+        1,
+        L2_BLOCK,
+      )
     })
   })
 })

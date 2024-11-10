@@ -1,3 +1,4 @@
+import { StringWithAutocomplete } from '@l2beat/shared-pure'
 import { Insertable } from 'kysely'
 import { nanoid } from 'nanoid'
 import { TokenMeta } from '../../kysely/generated/types'
@@ -6,7 +7,7 @@ export interface TokenMetaRecord {
   id: string
   tokenId: string
   externalId: string | null
-  source: string
+  source: StringWithAutocomplete<'Aggregate' | 'Overrides'>
   name: string | null
   symbol: string | null
   decimals: number | null
