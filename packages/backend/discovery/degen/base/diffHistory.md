@@ -8,7 +8,7 @@ Generated with discovered.json: 0xa7afd5da9d3fbc5f8413a6da688eae16f5fdc056
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Governance moved to DegenMultisig.
 
 ## Watched changes
 
