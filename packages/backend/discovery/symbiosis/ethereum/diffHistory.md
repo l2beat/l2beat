@@ -1,3 +1,41 @@
+Generated with discovered.json: 0xe90b55da15bd118c537a47b11110c4d2bcee4971
+
+# Diff at Fri, 08 Nov 2024 08:19:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@53988239f42edde0275ed92d8f3ada4279354f7d block: 19532236
+- current block number: 21141679
+
+## Description
+
+Minor Portal upgrade allowing to change the WETH contract reference and removing two sToken functions for the local chain.
+
+## Watched changes
+
+```diff
+    contract Portal (0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x4754c4887d8e1782eeead45b2652e3639e4887315d18aaac0050cbcdbdf3a0fa"
++        "0x8c47d485b7d202eb666ef592012502f811cc91f1337393dbfd3411b67dea3580"
+      values.$implementation:
+-        "0x326adbE46D7E6C1B3927e9309B96DF478bda6D16"
++        "0x755a967298c96d50216C6ED8D68869747B4f6878"
+      values.$pastUpgrades.6:
++        ["2024-11-06T18:25:35.000Z","0x4ba8c9e82d442fff19bc936ad0a26c1b91025d3d9f321847b9a1b22dab3bc86b",["0x755a967298c96d50216C6ED8D68869747B4f6878"]]
+      values.$upgradeCount:
+-        6
++        7
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@19532236 => .flat}/Portal/Portal.sol    | 112 ++++-----------------
+ 1 file changed, 20 insertions(+), 92 deletions(-)
+```
+
 Generated with discovered.json: 0x1700256035eb0ccf0c956b8518dec2eba25ff38d
 
 # Diff at Mon, 21 Oct 2024 11:11:14 GMT:

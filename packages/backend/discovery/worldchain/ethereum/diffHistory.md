@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x352982f42ccd16bc231aff31dfbaadacd8f60c7f
+
+# Diff at Fri, 08 Nov 2024 08:27:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@53988239f42edde0275ed92d8f3ada4279354f7d block: 21040685
+- current block number: 21141719
+
+## Description
+
+Worldchain raises gasLimit to 150M. With 10x elasticity the block gas target is 15M. Current *daily* gas use on Worldchain is 160B, making the average block about 25% of the target.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        100000000
++        150000000
+    }
+```
+
 Generated with discovered.json: 0x1c91991f2da9d43ee585be24af56a8cc07ec5492
 
 # Diff at Fri, 01 Nov 2024 12:24:14 GMT:

@@ -1,7 +1,7 @@
 {
   "name": "worldchain",
   "chain": "ethereum",
-  "blockNumber": 21040685,
+  "blockNumber": 21141719,
   "configHash": "0xad1e5bb1d4e4a62e256a89a10ecc12c340d628c23b3bb273fcb8fa9c2a4fa4de",
   "contracts": [
     {
@@ -110,10 +110,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 5248800,
-        "latestOutputIndex": 2915,
-        "nextBlockNumber": 5250600,
-        "nextOutputIndex": 2916,
+        "latestBlockNumber": 5857200,
+        "latestOutputIndex": 3253,
+        "nextBlockNumber": 5859000,
+        "nextOutputIndex": 3254,
         "proposer": "0x2307278fC8aB0005974A6DeD2FA6d1187333a223",
         "PROPOSER": "0x2307278fC8aB0005974A6DeD2FA6d1187333a223",
         "startingBlockNumber": 0,
@@ -286,7 +286,7 @@
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "0xdBBE3D8c2d2b22A2611c5A94A9a12C2fCD49Eb29",
         "batchInbox": "0xff00000000000000000000000000000000000480",
-        "gasLimit": 100000000,
+        "gasLimit": 150000000,
         "L1_CROSS_DOMAIN_MESSENGER_SLOT": "0x383f291819e6d54073bc9a648251d97421076bdd101933c0c022219ce9580636",
         "L1_ERC_721_BRIDGE_SLOT": "0x46adcbebc6be8ce551740c29c47c8798210f23f7f4086c41752944352568d5a7",
         "L1_STANDARD_BRIDGE_SLOT": "0x9904ba90dde5696cda05c9e0dab5cbaa0fea005ace4d11218a02ac668dad6376",
@@ -544,7 +544,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 1301449,
-          "prevBlockNum": 21040669
+          "prevBlockNum": 21141659
         },
         "paused": false,
         "superchainConfig": "0xa231f8be37e583f276f93dF516D88a043bfe47E3",
@@ -628,7 +628,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292623968",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292624829",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,

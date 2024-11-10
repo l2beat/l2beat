@@ -1,7 +1,7 @@
 {
   "name": "kinto",
   "chain": "ethereum",
-  "blockNumber": 21123028,
+  "blockNumber": 21141407,
   "configHash": "0xd475e7d334a91367fcf86d3c9cb7b5aad64d80a3dba84e7556b2d9eae71a934b",
   "contracts": [
     {
@@ -383,12 +383,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 2161,
+        "firstUnresolvedNode": 2174,
         "inbox": "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
         "isERC20Enabled": false,
         "lastStakeBlock": 21107949,
-        "latestConfirmed": 2160,
-        "latestNodeCreated": 2188,
+        "latestConfirmed": 2173,
+        "latestNodeCreated": 2198,
         "loserStakeEscrow": "0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5",
         "minimumAssertionPeriod": 75,
         "outbox": "0x655761AD5FC251F414D6993A73184B0669F278c8",
@@ -413,9 +413,9 @@
         "validatorWalletCreator": "0x9CAd81628aB7D8e239F1A5B497313341578c5F71",
         "validatorWhitelistDisabled": false,
         "wasmModuleRoot": "0x58a9512cf4096461f866446387e845c6573856ef603bba4e24cb1d89630a675c",
-        "zombieAddress": ["0x2bfDA59220413DEd39dD0E443620b5277EcE6348"],
-        "zombieCount": 1,
-        "zombieLatestStakedNode": [2167]
+        "zombieAddress": [],
+        "zombieCount": 0,
+        "zombieLatestStakedNode": []
       },
       "fieldMeta": {
         "confirmPeriodBlocks": {
@@ -849,11 +849,11 @@
           "0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F"
         ],
         "allowedOutboxList": ["0x655761AD5FC251F414D6993A73184B0669F278c8"],
-        "delayedMessageCount": 4204,
+        "delayedMessageCount": 4219,
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerInbox": "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
-        "sequencerMessageCount": 3513,
-        "sequencerReportedSubMessageCount": 249174
+        "sequencerMessageCount": 3528,
+        "sequencerReportedSubMessageCount": 250179
       }
     },
     {
@@ -1047,7 +1047,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 193,
+        "nonce": 194,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1101,7 +1101,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 3513,
+        "batchCount": 3528,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xe27f3f6db6824def1738b2aACe2672aC59046a39"],
         "bridge": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
@@ -1129,7 +1129,7 @@
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 4203,
+        "totalDelayedMessagesRead": 4218,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },

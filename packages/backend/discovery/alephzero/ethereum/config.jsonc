@@ -4,7 +4,7 @@
   "name": "alephzero",
   "initialAddresses": [
     "0x41Ec9456AB918f2aBA81F38c03Eb0B93b78E84d9", // Bridge
-    "0xeBb17f398ed30d02F2e8733e7c1e5cf566e17812" // GatewayRouter
+    "0xccaF21F002EAF230c9Fa810B34837a3739B70F7B" // erc20gw
   ],
   "names": {
     "0xeC475675629B38E42d4aC5d40761618268E7Ed21": "AlephZeroMultisig"
