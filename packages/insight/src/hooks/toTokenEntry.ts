@@ -1,4 +1,4 @@
-import { AssetEntry, TokenEntry, tokens } from '../schema'
+import { AssetEntry, ConnectedEntry, TokenEntry, tokens } from '../schema'
 import { Balance } from './Balance'
 
 const chainToPrefix: Record<string, string> = {
@@ -35,6 +35,20 @@ const countSeverities = (
   return { low, medium, high }
 }
 
+const createChildren = (childEntry: AssetEntry): ConnectedEntry => {
+  const child = tokens.find(
+    (token) => token.address === childEntry.child?.address,
+  )
+
+  return {
+    ...childEntry,
+    child:
+      childEntry.child && child
+        ? { ...childEntry.child, entry: createChildren(child) }
+        : undefined,
+  }
+}
+
 export function toTokenEntry(tokenBalance: Balance): TokenEntry | undefined {
   const address = `${chainToPrefix[tokenBalance.chain]}:${tokenBalance.address}`
   const token = tokens.find((token) => token.address === address)
@@ -56,11 +70,8 @@ export function toTokenEntry(tokenBalance: Balance): TokenEntry | undefined {
     balanceUsd,
     severity: { low, medium, high },
     child:
-      childEntry && token.child
-        ? {
-            ...token.child,
-            entry: childEntry,
-          }
+      token.child && childEntry
+        ? { ...token.child, entry: createChildren(childEntry) }
         : undefined,
   }
 }

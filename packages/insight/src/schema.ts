@@ -22,7 +22,16 @@ export interface AssetEntry {
   }
 }
 
-export type TokenEntry = AssetEntry & {
+export type ConnectedEntry = Omit<AssetEntry, 'child'> & {
+  child?: {
+    entry: ConnectedEntry
+    address: string
+    bridgeInfo: string
+    bridgeSeverity: 'medium' | 'high' | 'low'
+  }
+}
+
+export type TokenEntry = ConnectedEntry & {
   balanceUnits: number
   balanceUsd: number
   severity: {
@@ -30,7 +39,6 @@ export type TokenEntry = AssetEntry & {
     medium: number
     high: number
   }
-  child?: AssetEntry['child'] & { entry: AssetEntry }
 }
 
 export const tokens: AssetEntry[] = [
