@@ -3,7 +3,8 @@ import { Home } from './Home'
 import { Profile } from './Profile'
 
 export function App() {
-  const [query, setQuery] = useState('')
+  // TODO: remove vitalik
+  const [query, setQuery] = useState('vitalik.eth')
 
   if (query === '') {
     return <Home onSearch={setQuery} />

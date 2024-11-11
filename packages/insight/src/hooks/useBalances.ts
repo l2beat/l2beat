@@ -116,7 +116,7 @@ export function useBalances(addressOrENS: string): Balance[] {
         )
       ).filter((v) => v !== undefined)
 
-      setBalances(balances)
+      setBalances(balances.filter((x) => x.balance !== 0n))
     }
     fetchBalances()
   }, [resolved])

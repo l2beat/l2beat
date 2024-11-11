@@ -40,40 +40,39 @@ export function useTokens(addressOrENS: string): TokenEntry[] {
   const tokenBalances = useBalances(addressOrENS)
 
   const tokensToDisplay = useMemo(() => {
-    return tokenBalances.map((tokenBalance) => {
-      const address = `${chainToPrefix[tokenBalance.chain]}:${tokenBalance.address}`
-      const token = tokens.find((token) => token.address === address)
-      if (!token) return
+    return tokenBalances
+      .map((tokenBalance) => {
+        const address = `${chainToPrefix[tokenBalance.chain]}:${tokenBalance.address}`
+        const token = tokens.find((token) => token.address === address)
+        if (!token) return
 
-      const balanceUnits = Number(tokenBalance.balance) / 10 ** token.decimals
-      const balanceUsd = balanceUnits * token.priceUsd
+        const balanceUnits = Number(tokenBalance.balance) / 10 ** token.decimals
+        const balanceUsd = balanceUnits * token.priceUsd
 
-      const childEntry = token.child
-        ? tokens.find((token) => token.address === token.child?.address)
-        : undefined
+        const childEntry = token.child
+          ? tokens.find((token) => token.address === token.child?.address)
+          : undefined
 
-      const { low, medium, high } = countSeverities(token)
+        const { low, medium, high } = countSeverities(token)
 
-      return {
-        ...token,
-        address,
-        balanceUnits,
-        balanceUsd,
-        severity: { low, medium, high },
-        child:
-          childEntry && token.child
-            ? {
-                ...token.child,
-                entry: childEntry,
-              }
-            : undefined,
-      }
-    })
+        return {
+          ...token,
+          address,
+          balanceUnits,
+          balanceUsd,
+          severity: { low, medium, high },
+          child:
+            childEntry && token.child
+              ? {
+                  ...token.child,
+                  entry: childEntry,
+                }
+              : undefined,
+        }
+      })
+      .filter((x) => x !== undefined)
+      .sort((a, b) => b.balanceUsd - a.balanceUsd)
   }, [tokenBalances])
 
-  return tokensToDisplay.filter(notUndefined)
-}
-
-function notUndefined<T>(value: T | undefined): value is T {
-  return value !== undefined
+  return tokensToDisplay
 }

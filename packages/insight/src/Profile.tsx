@@ -15,7 +15,12 @@ export function Profile(props: Props) {
     <div className="mx-auto max-w-4xl p-4 pt-10">
       <form
         className="flex items-center justify-end"
-        onSubmit={() => search !== '' && props.onSearch(search)}
+        onSubmit={(e) => {
+          e.preventDefault()
+          if (search !== '') {
+            props.onSearch(search)
+          }
+        }}
       >
         <input
           className="w-60 border border-black px-4 py-1"

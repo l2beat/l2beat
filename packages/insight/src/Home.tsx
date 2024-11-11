@@ -13,7 +13,12 @@ export function Home(props: Props) {
       </h1>
       <form
         className="flex items-center justify-center"
-        onSubmit={() => search !== '' && props.onSearch(search)}
+        onSubmit={(e) => {
+          e.preventDefault()
+          if (search !== '') {
+            props.onSearch(search)
+          }
+        }}
       >
         <input
           type="text"
