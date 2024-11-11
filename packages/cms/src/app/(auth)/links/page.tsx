@@ -25,7 +25,6 @@ export default async function Page({
       const search = (searchParams.search as string).toLowerCase()
       return (
         link.name.toLowerCase().includes(search) ||
-        !!link.managedBy?.toLowerCase().includes(search) ||
         !!link.type?.toLowerCase().includes(search)
       )
     })
@@ -67,7 +66,6 @@ export default async function Page({
             <TableHeader>
               <TableRow>
                 <TableHead>Name</TableHead>
-                <TableHead>Managed By</TableHead>
                 <TableHead>Handler</TableHead>
                 <TableHead />
               </TableRow>
@@ -78,7 +76,6 @@ export default async function Page({
                 .map((link) => (
                   <TableRow key={link.id}>
                     <TableCell>{link.name}</TableCell>
-                    <TableCell>{link.managedBy ?? 'None'}</TableCell>
                     <TableCell>{link.type ?? 'None'}</TableCell>
                     <TableCell className="text-right">
                       <Link href={`/links/${link.id}`} key={link.id}>

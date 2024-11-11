@@ -1,13 +1,13 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { type ExternalBridgeRecord } from '@l2beat/database'
+import { type EntityRecord, type ExternalBridgeRecord } from '@l2beat/database'
 import { ExternalBridgeType } from '@l2beat/database/dist/kysely/generated/enums'
-import { ChevronLeft } from 'lucide-react'
+import { ChevronLeft, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useCallback, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useFieldArray, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { type z } from 'zod'
 import { DeleteDialog } from '~/components/delete-dialog'
@@ -40,19 +40,41 @@ import {
   SelectValue,
   selectNullValue,
 } from '~/components/ui/select'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '~/components/ui/table'
 import { deleteBridge, insertBridge, updateBridge } from '../_actions'
 import { insertBridgeSchema } from '../_actions/schemas'
 
-export function EditLinkPage({ link }: { link: ExternalBridgeRecord | null }) {
+export function EditLinkPage({
+  link,
+  entities,
+}: {
+  link:
+    | (ExternalBridgeRecord & { managingEntities: { entityId: string }[] })
+    | null
+  entities: EntityRecord[]
+}) {
   const router = useRouter()
   const form = useForm({
     defaultValues: {
       name: link?.name ?? '',
-      managedBy: link?.managedBy ?? '',
+      managingEntities: link?.managingEntities ?? [],
       type: link?.type ?? null,
     },
     resolver: zodResolver(insertBridgeSchema),
   })
+
+  const managingEntities = useFieldArray({
+    control: form.control,
+    name: 'managingEntities',
+  })
+
   const [discardDialogOpen, setDiscardDialogOpen] = useState(false)
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
 
@@ -61,10 +83,6 @@ export function EditLinkPage({ link }: { link: ExternalBridgeRecord | null }) {
       const result = link
         ? await updateBridge({
             ...data,
-            managedBy:
-              data.managedBy && data.managedBy.length > 0
-                ? data.managedBy
-                : null,
             id: link.id,
           })
         : await insertBridge(data)
@@ -135,22 +153,6 @@ export function EditLinkPage({ link }: { link: ExternalBridgeRecord | null }) {
               />
               <FormField
                 control={form.control}
-                name="managedBy"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Managed By</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormDescription>
-                      The name of the entity that is responsible for this link.
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
                 name="type"
                 render={({ field }) => (
                   <FormItem>
@@ -194,6 +196,85 @@ export function EditLinkPage({ link }: { link: ExternalBridgeRecord | null }) {
                 )}
               />
             </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Managing Entities</CardTitle>
+              <CardDescription>
+                Shows which entities manage this token.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {managingEntities.fields.length === 0 ? (
+                <p className="text-sm text-muted-foreground">
+                  This token is not managed by any entity.
+                </p>
+              ) : (
+                <Table>
+                  <TableHeader>
+                    <TableHead>Entity</TableHead>
+                    <TableHead className="w-0" />
+                  </TableHeader>
+                  <TableBody>
+                    {managingEntities.fields.map((field, index) => (
+                      <TableRow key={field.id}>
+                        <TableCell>
+                          <FormField
+                            control={form.control}
+                            name={`managingEntities.${index}.entityId`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormControl>
+                                  <Select
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}
+                                  >
+                                    <SelectTrigger>
+                                      <SelectValue placeholder="Select an entity" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      {entities.map((entity) => (
+                                        <SelectItem
+                                          key={entity.id}
+                                          value={entity.id}
+                                        >
+                                          {entity.name ?? 'Unknown'}{' '}
+                                          <span className="text-xs text-muted-foreground">
+                                            ({entity.id})
+                                          </span>
+                                        </SelectItem>
+                                      ))}
+                                    </SelectContent>
+                                  </Select>
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => managingEntities.remove(index)}
+                          >
+                            <Trash2 className="size-4" />
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              )}
+            </CardContent>
+            <CardFooter className="flex justify-end">
+              <Button
+                type="button"
+                onClick={() => managingEntities.append({ entityId: '' })}
+              >
+                Add
+              </Button>
+            </CardFooter>
           </Card>
           {link && (
             <div className="flex flex-row gap-4">

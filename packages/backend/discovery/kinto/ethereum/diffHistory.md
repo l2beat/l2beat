@@ -1,3 +1,32 @@
+Generated with discovered.json: 0xbadecc0125ffd00ab33a489de1190ff6975a4ada
+
+# Diff at Fri, 08 Nov 2024 07:24:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@53988239f42edde0275ed92d8f3ada4279354f7d block: 21123028
+- current block number: 21141407
+
+## Description
+
+The initial diverging node is now [rejected](https://etherscan.io/tx/0xeddeaed1b11b112b6131993a9a9149297d280312fed6969176249949bc3e3158) and the losing validator churned (un-zombified). Since they stay whitelisted as a validator and are not a zombie anymore, they can propose/challenge again whenever needed.
+
+During the challenge, all validators except hypernative took part, Kinto says they were in 'watchtower' mode and not defensive.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.zombieAddress.0:
+-        "0x2bfDA59220413DEd39dD0E443620b5277EcE6348"
+      values.zombieCount:
+-        1
++        0
+      values.zombieLatestStakedNode.0:
+-        2167
+    }
+```
+
 Generated with discovered.json: 0x07e8c632515ec118c973e23cff33a07ec4c18e27
 
 # Diff at Tue, 05 Nov 2024 17:46:29 GMT:

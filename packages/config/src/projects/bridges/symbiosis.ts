@@ -112,7 +112,7 @@ export const symbiosis: Bridge = {
       {
         address: discovery.getContract('Portal').address, // Portal v2
         sinceTimestamp: new UnixTime(1668373200),
-        tokens: ['USDC', 'SIS', 'WETH'],
+        tokens: '*',
         chain: 'ethereum',
       },
     ],

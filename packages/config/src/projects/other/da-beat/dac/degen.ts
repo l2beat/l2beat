@@ -51,7 +51,7 @@ export const degenDac = AnytrustDAC({
             'The contract used to manage the upgrade of the DA bridge and other contracts.',
         },
         ...discovery.getMultisigPermission(
-          'ConduitMultisig3',
+          'DegenMultisig',
           `Multisig that can upgrade the DA bridge, upgrade authorized batch posters (relayers), and change the Committee members by updating the valid keyset (via UpgradeExecutor).`,
         ),
       ],

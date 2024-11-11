@@ -81,7 +81,7 @@
             {
               "address": "0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa",
               "delay": 0,
-              "description": "can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+              "description": "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
             }
           ]
         },
@@ -631,7 +631,7 @@
         {
           "permission": "configure",
           "target": "0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
-          "description": "can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+          "description": "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
         },
         {
           "permission": "propose",
@@ -775,7 +775,7 @@
         {
           "permission": "configure",
           "target": "0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
-          "description": "can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "description": "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
           "via": [{ "address": "0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa" }]
         },
         {
@@ -1487,7 +1487,7 @@
     "orbitstack/OneStepProverMath": "0x8dd8aebb517eb6eaf15437ddbb90dff66f2b14d9d6b5390dd87fbdab15168188",
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
-    "orbitstack/RollupProxy_fastConfirm": "0x6839b58d7a5b6bd705353c967a69bca2857bc5ea618038b6ca2b6fd8826de260",
+    "orbitstack/RollupProxy_fastConfirm": "0xd546e59ba8d91506ef80aa56633b22a79fb90ea1a6e0c19be680149790098ecd",
     "orbitstack/SequencerInbox": "0x746f38463ee5aff9c2f6051c828002565b57c702a6be447c979d1996dd6bd673",
     "orbitstack/UpgradeExecutor": "0xa25e02367a436cebea22481663da914bbf1fd9492d903659cc6ec9ddbaccb241"
   }
