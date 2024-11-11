@@ -99,6 +99,22 @@ export const tokens: AssetEntry[] = [
     priceUsd: 3149,
     decimals: 18,
     issuer: 'Ethereum',
+    child: {
+      address: 'eth:native',
+      bridgeInfo: 'Canonical Bridge',
+      bridgeSeverity: 'low',
+    },
+  },
+  {
+    address: 'eth:native',
+    assetLogoUrl:
+      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+    chainLogoUrl: 'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png',
+    assetName: 'ETH',
+    chainName: 'Ethereum',
+    priceUsd: 3149,
+    decimals: 18,
+    issuer: 'Ethereum',
   },
   {
     address: 'base:0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb',

@@ -44,7 +44,7 @@ export function toTokenEntry(tokenBalance: Balance): TokenEntry | undefined {
   const balanceUsd = balanceUnits * token.priceUsd
 
   const childEntry = token.child
-    ? tokens.find((token) => token.address === token.child?.address)
+    ? tokens.find((t) => t.address === token.child?.address)
     : undefined
 
   const { low, medium, high } = countSeverities(token)
