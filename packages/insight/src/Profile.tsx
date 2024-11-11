@@ -24,7 +24,7 @@ export function Profile(props: Props) {
           src={LogoSmall}
           alt="Insight"
           onClick={() => props.onSearch('')}
-          className="cursor-pointer rounded-full"
+          className="cursor-pointer"
         />
         <Search onSearch={props.onSearch} />
       </div>
