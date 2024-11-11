@@ -109,12 +109,13 @@ function ProfileRow({ entry, i }: { entry: TokenEntry; i: number }) {
       <tr
         key={entry.address}
         className={clsx(
-          'border-zinc-600 border-t',
+          'border-zinc-600 border-t hover:bg-zinc-800',
           entry.child && 'cursor-pointer',
+          open && 'bg-zinc-800',
         )}
         onClick={() => setOpen(!open)}
       >
-        <td className="w-4 py-2 pr-4">
+        <td className="w-12 px-4 py-2">
           <img
             src={open ? ChevronDown : ChevronRight}
             className="block h-4 w-4 min-w-4"
@@ -162,7 +163,7 @@ function ProfileRow({ entry, i }: { entry: TokenEntry; i: number }) {
         </td>
       </tr>
       {open && (
-        <tr>
+        <tr className="border-zinc-900 border-t bg-zinc-800">
           <td colSpan={11} className="h-full">
             <ExpandedRow entry={entry} />
           </td>
