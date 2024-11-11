@@ -38,4 +38,19 @@ export const tokens: AssetEntry[] = [
     //   bridgeSeverity: 'low'
     // }
   },
+  {
+    address: 'base:0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452',
+    assetLogoUrl: 'https://basescan.org/token/images/wsteth3_32.png',
+    chainLogoUrl: 'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png',
+    assetName: 'wstETH',
+    chainName: 'Base',
+    priceUsd: 3719,
+    decimals: 18,
+    issuer: 'Lido',
+    child: {
+      address: 'eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0',
+      bridgeInfo: 'Canonical Bridge (external escrow)',
+      bridgeSeverity: 'medium'
+    }
+  },
 ]
