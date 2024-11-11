@@ -84,6 +84,8 @@ export const tokens: AssetEntry[] = [
     priceUsd: 3196,
     decimals: 18,
     issuer: 'Lido',
+    tokenInfo: 'governed by Lido Agent, Lido DAO and diverse node operators ',
+    tokenSeverity: 'medium',
   },
   {
     address: 'eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
@@ -95,6 +97,8 @@ export const tokens: AssetEntry[] = [
     priceUsd: 81167,
     decimals: 8,
     issuer: 'BiT Global/BitGo',
+    tokenInfo: 'permissioned BTC custodians on Bitcoin',
+    tokenSeverity: 'high',
   },
   {
     address: 'eth:0x6B175474E89094C44Da98b954EedeAC495271d0F',
@@ -106,6 +110,8 @@ export const tokens: AssetEntry[] = [
     priceUsd: 1,
     decimals: 18,
     issuer: 'MakerDAO',
+    tokenInfo: 'MakerDAO onchain governnance',
+    tokenSeverity: 'low',
   },
   {
     address: 'eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3',
@@ -117,6 +123,8 @@ export const tokens: AssetEntry[] = [
     priceUsd: 1,
     decimals: 18,
     issuer: 'Ethena',
+    tokenInfo: 'governed and backed by Ethena and permissioned custodians',
+    tokenSeverity: 'high',
   },
   {
     address: 'eth:0x57e114B691Db790C35207b2e685D4A43181e6061',
@@ -128,6 +136,8 @@ export const tokens: AssetEntry[] = [
     priceUsd: 0.5835,
     decimals: 18,
     issuer: 'Ethena',
+    tokenInfo: 'Ethena governance token',
+    tokenSeverity: 'low',
   },
   {
     address: 'eth:0xbf5495Efe5DB9ce00f80364C8B423567e58d2110',
@@ -139,6 +149,8 @@ export const tokens: AssetEntry[] = [
     priceUsd: 3246,
     decimals: 18,
     issuer: 'Renzo',
+    tokenInfo: 'governed and staked by Renzo and permissioned stakers',
+    tokenSeverity: 'high',
   },
   {
     address: 'eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704',
@@ -150,6 +162,8 @@ export const tokens: AssetEntry[] = [
     priceUsd: 3420,
     decimals: 18,
     issuer: 'Coinbase',
+    tokenInfo: 'governed and backed by Coinbase',
+    tokenSeverity: 'medium',
   },
   {
     address: 'eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
@@ -161,6 +175,8 @@ export const tokens: AssetEntry[] = [
     priceUsd: 1,
     decimals: 6,
     issuer: 'Circle',
+    tokenInfo: 'governed, bridged and backed by Circle',
+    tokenSeverity: 'medium',
   },
   {
     address: 'eth:0xdAC17F958D2ee523a2206206994597C13D831ec7',
@@ -173,6 +189,8 @@ export const tokens: AssetEntry[] = [
     priceUsd: 1,
     decimals: 6,
     issuer: 'Tether',
+    tokenInfo: 'governed and backed by Tether',
+    tokenSeverity: 'medium',
   },
   {
     address: 'eth:0xc944E90C64B2c07662A292be6244BDf05Cda44a7',
@@ -184,6 +202,8 @@ export const tokens: AssetEntry[] = [
     priceUsd: 0.1829,
     decimals: 18,
     issuer: 'The Graph',
+    tokenInfo: 'TheGraph governance token',
+    tokenSeverity: 'low',
   },
   {
     address: 'eth:0x58b6A8A3302369DAEc383334672404Ee733aB239',
@@ -195,6 +215,8 @@ export const tokens: AssetEntry[] = [
     priceUsd: 1,
     decimals: 18,
     issuer: 'Livepeer',
+    tokenInfo: 'Livepeer governance token',
+    tokenSeverity: 'low',
   },
   {
     address: 'eth:0x52A8845DF664D76C69d2EEa607CD793565aF42B8',
@@ -206,6 +228,8 @@ export const tokens: AssetEntry[] = [
     priceUsd: 1.66,
     decimals: 18,
     issuer: 'ApeX Protocol',
+    tokenInfo: 'ApeX Protocol governance token',
+    tokenSeverity: 'low',
   },
   {
     address: 'eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee',
@@ -233,6 +257,9 @@ export const tokens: AssetEntry[] = [
     priceUsd: 3180,
     decimals: 18,
     issuer: 'Ether.fi',
+    tokenInfo:
+      'governed and backed by Ether.fi and permissioned restaking services',
+    tokenSeverity: 'high',
   },
   {
     address: 'eth:0x808507121B80c02388fAd14726482e061B8da827',
@@ -244,6 +271,8 @@ export const tokens: AssetEntry[] = [
     priceUsd: 5.63,
     decimals: 18,
     issuer: 'Pendle',
+    tokenInfo: 'Pendle Finance governance token',
+    tokenSeverity: 'low',
   },
   {
     address: 'eth:0xB0c7a3Ba49C7a6EaBa6cD4a96C55a1391070Ac9A',
@@ -255,6 +284,8 @@ export const tokens: AssetEntry[] = [
     priceUsd: 0.41,
     decimals: 18,
     issuer: 'Treasure Technology Foundation',
+    tokenInfo: 'Treasure.lol governance token',
+    tokenSeverity: 'low',
   },
   {
     address: 'arb1:0x514910771AF9Ca656af840dff83E8264EcF986CA',
@@ -266,6 +297,8 @@ export const tokens: AssetEntry[] = [
     priceUsd: 14.08,
     decimals: 18,
     issuer: 'Chainlink Foundation',
+    tokenInfo: 'Chainlink governance token',
+    tokenSeverity: 'low',
   },
   // BASE -----------------------------------------VVV
   {
@@ -278,6 +311,8 @@ export const tokens: AssetEntry[] = [
     priceUsd: 1,
     decimals: 6,
     issuer: 'Circle',
+    tokenInfo: 'governed, bridged and backed by Circle',
+    tokenSeverity: 'medium',
   },
   {
     address: 'base:0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452',
@@ -418,11 +453,8 @@ export const tokens: AssetEntry[] = [
     priceUsd: 0.0105,
     decimals: 18,
     issuer: 'degen.tips',
-    // child: {
-    //   address: 'eth:0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed',
-    //   bridgeInfo: 'LayerZero v2 OFT (external)',
-    //   bridgeSeverity: 'high'
-    // }
+    tokenInfo: 'governed by Degen.tips and bridged by LayerZero',
+    tokenSeverity: 'high',
   },
   {
     address: 'base:0x6223901eA64608c75Da8497d5eff15D19A1D8fd5',
@@ -434,6 +466,8 @@ export const tokens: AssetEntry[] = [
     priceUsd: 0.0005365,
     decimals: 18,
     issuer: 'CORGI Coin Inc.',
+    tokenInfo: 'governed by Corgi Coin Inc.',
+    tokenSeverity: 'medium',
   },
   {
     address: 'base:0x55027a5b06f4340cC4C82DCC74C90cA93dcb173E',
@@ -445,6 +479,8 @@ export const tokens: AssetEntry[] = [
     priceUsd: 0.001789,
     decimals: 18,
     issuer: 'All TADS Reserved',
+    tokenInfo: 'governed by All TADS Reserved',
+    tokenSeverity: 'medium',
   },
   {
     address: 'base:0x3ecced5b416e58664f04a39dD18935eB71D33B15',
@@ -456,6 +492,8 @@ export const tokens: AssetEntry[] = [
     priceUsd: 0.0003774,
     decimals: 18,
     issuer: 'brianarmbase.com',
+    tokenInfo: 'governed by brianarmbase.com',
+    tokenSeverity: 'medium',
   },
   {
     address: 'base:0x940181a94A35A4569E4529A3CDfB74e38FD98631',
@@ -467,6 +505,8 @@ export const tokens: AssetEntry[] = [
     priceUsd: 1.47,
     decimals: 18,
     issuer: 'Aerodrome Finance',
+    tokenInfo: 'Aerodrome Finance governance token',
+    tokenSeverity: 'low',
   },
   {
     address: 'base:0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf',
@@ -478,6 +518,8 @@ export const tokens: AssetEntry[] = [
     priceUsd: 81611,
     decimals: 8,
     issuer: 'Coinbase',
+    tokenInfo: 'governed, bridged and backed by Coinbase',
+    tokenSeverity: 'medium',
   },
   {
     address: 'base:0x6985884C4392D348587B19cb9eAAf157F13271cd',
@@ -489,6 +531,8 @@ export const tokens: AssetEntry[] = [
     priceUsd: 3.88,
     decimals: 18,
     issuer: 'LayerZero',
+    tokenInfo: 'LayerZero governance token',
+    tokenSeverity: 'low',
   },
   {
     address: 'base:0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22',
@@ -550,6 +594,8 @@ export const tokens: AssetEntry[] = [
     priceUsd: 0.63,
     decimals: 18,
     issuer: 'Arbitrum Foundation / DAO',
+    tokenInfo: 'Arbitrum governance token',
+    tokenSeverity: 'low',
   },
   {
     address: 'arb1:0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
@@ -561,6 +607,8 @@ export const tokens: AssetEntry[] = [
     priceUsd: 1,
     decimals: 6,
     issuer: 'Circle',
+    tokenInfo: 'governed, bridged and backed by Circle',
+    tokenSeverity: 'medium',
   },
   {
     address: 'arb1:0xfc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a',
@@ -572,6 +620,8 @@ export const tokens: AssetEntry[] = [
     priceUsd: 27.55,
     decimals: 18,
     issuer: 'GMX.io',
+    tokenInfo: 'GMX governance token',
+    tokenSeverity: 'low',
   },
   {
     address: 'arb1:0x6985884C4392D348587B19cb9eAAf157F13271cd',
@@ -583,6 +633,8 @@ export const tokens: AssetEntry[] = [
     priceUsd: 3.88,
     decimals: 18,
     issuer: 'LayerZero',
+    tokenInfo: 'LayerZero governance token',
+    tokenSeverity: 'low',
   },
   {
     address: 'arb1:0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66',
@@ -594,6 +646,8 @@ export const tokens: AssetEntry[] = [
     priceUsd: 0.24,
     decimals: 18,
     issuer: 'XAI.games',
+    tokenInfo: 'XAI governance token',
+    tokenSeverity: 'medium',
   },
   {
     address: 'arb1:0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9',
