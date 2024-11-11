@@ -199,6 +199,24 @@ function ExpandedRow({ entry }: { entry: ConnectedEntry }) {
             >
               {address === 'native' ? 'Native token' : address}
             </span>
+            <div
+              className={clsx(
+                entry.tokenSeverity
+                  ? severityToColor[entry.tokenSeverity]
+                  : undefined,
+              )}
+            >
+              {entry.tokenSeverity === 'medium' ? (
+                <img
+                  className="mr-1 inline-block"
+                  src={Yellow}
+                  alt="Medium risk"
+                />
+              ) : entry.tokenSeverity === 'high' ? (
+                <img className="mr-1 inline-block" src={Red} alt="High risk" />
+              ) : null}
+              {entry.tokenInfo}
+            </div>
           </div>
         </div>
         {entry.child && (
