@@ -304,20 +304,108 @@ export const tokens: AssetEntry[] = [
     tokenSeverity: 'low',
   },
   {
-    address: 'arb1:0x514910771AF9Ca656af840dff83E8264EcF986CA',
+    address: 'eth:0x514910771AF9Ca656af840dff83E8264EcF986CA',
     assetLogoUrl:
       'https://assets.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1696502009',
     chainLogoUrl:
       'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
     assetName: 'LINK',
-    chainName: 'Arbitrum One',
+    chainName: 'Ethereum',
     priceUsd: 14.08,
     decimals: 18,
     issuer: 'Chainlink Foundation',
     tokenInfo: 'Chainlink governance token',
     tokenSeverity: 'low',
   },
+  {
+    address: 'eth:0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/3406/large/SNX.png',
+    chainLogoUrl:
+      'https://assets.coingecko.com/coins/images/279/large/ethereum.png',
+    assetName: 'SNX',
+    chainName: 'Ethereum',
+    priceUsd: 1.62,
+    decimals: 18,
+    issuer: 'Synthetix',
+    tokenInfo: 'Synthetix governance token',
+    tokenSeverity: 'low',
+  },
+  {
+    address: 'eth:0x163f8c2467924be0ae7b5347228cabf260318753',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/31069/large/worldcoin.jpeg',
+    chainLogoUrl:
+      'https://assets.coingecko.com/coins/images/25244/large/Optimism.png',
+    assetName: 'WLD',
+    chainName: 'Ethereum',
+    priceUsd: 2.15,
+    decimals: 18,
+    issuer: 'WorldCoin',
+    tokenInfo: 'WorldCoin governance token',
+    tokenSeverity: 'low',
+  },
+  {
+    address: 'eth:0xbbb32f99e6f2cb29337eebaa43c5069386de6e6c',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/33314/large/phemex_logo.png',
+    chainLogoUrl:
+      'https://assets.coingecko.com/coins/images/25244/large/Optimism.png',
+    assetName: 'PT',
+    chainName: 'Ethereum',
+    priceUsd: 1.33,
+    decimals: 18,
+    issuer: 'Phemex',
+    tokenInfo: 'Phemex governance token',
+    tokenSeverity: 'low',
+  },
+  {
+    address: 'eth:0xbc396689893d065f41bc2c6ecbee5e0085233447',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/12381/large/60d18e06844a844ad75901a9_mark_only_03.png',
+    chainLogoUrl:
+      'https://assets.coingecko.com/coins/images/25244/large/Optimism.png',
+    assetName: 'PERP',
+    chainName: 'Ethereum',
+    priceUsd: 0.7238,
+    decimals: 18,
+    issuer: 'Perpetual Protocol',
+    tokenInfo: 'Perpetual Protocol governance token',
+    tokenSeverity: 'low',
+  },
+  {
+    address: 'eth:0xae78736cd615f374d3085123a210448e74fc6393',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/20764/large/reth.png',
+    chainLogoUrl:
+      'https://assets.coingecko.com/coins/images/25244/large/Optimism.png',
+    assetName: 'rETH',
+    chainName: 'Ethereum',
+    priceUsd: 3554,
+    decimals: 18,
+    issuer: 'RocketPool',
+    tokenInfo:
+      'governed by the RocketPool DAO, backed by a decentralised liquid staking protocol',
+    tokenSeverity: 'low',
+  },
   // BASE -----------------------------------------VVV
+  {
+    address: 'base:0xB6fe221Fe9EeF5aBa221c348bA20A1Bf5e73624c',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/20764/large/reth.png',
+    chainLogoUrl:
+      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=128&q=100',
+    assetName: 'rETH',
+    chainName: 'Base',
+    priceUsd: 3554,
+    decimals: 18,
+    issuer: 'RocketPool',
+    child: {
+      address: 'eth:0xae78736cd615f374d3085123a210448e74fc6393',
+      bridgeInfo: 'Canonical Bridge',
+      bridgeSeverity: 'low',
+    },
+  },
   {
     address: 'base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
     assetLogoUrl:
@@ -560,8 +648,8 @@ export const tokens: AssetEntry[] = [
     priceUsd: 3.88,
     decimals: 18,
     issuer: 'LayerZero',
-    tokenInfo: 'LayerZero governance token',
-    tokenSeverity: 'low',
+    tokenInfo: 'LayerZero governance token, LayerZero OFT',
+    tokenSeverity: 'high',
   },
   {
     address: 'base:0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22',
@@ -667,8 +755,8 @@ export const tokens: AssetEntry[] = [
     priceUsd: 3.88,
     decimals: 18,
     issuer: 'LayerZero',
-    tokenInfo: 'LayerZero governance token',
-    tokenSeverity: 'low',
+    tokenInfo: 'LayerZero governance token, LayerZero OFT',
+    tokenSeverity: 'high',
   },
   {
     address: 'arb1:0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66',
@@ -998,8 +1086,8 @@ export const tokens: AssetEntry[] = [
     issuer: 'Tether',
     child: {
       address: 'eth:0xdAC17F958D2ee523a2206206994597C13D831ec7',
-      bridgeInfo: 'Canonical Bridge (external escrow)',
-      bridgeSeverity: 'medium',
+      bridgeInfo: 'Canonical Bridge',
+      bridgeSeverity: 'low',
     },
   },
   {
@@ -1049,6 +1137,195 @@ export const tokens: AssetEntry[] = [
     issuer: 'BiT Global/BitGo',
     child: {
       address: 'eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
+      bridgeInfo: 'Canonical Bridge',
+      bridgeSeverity: 'low',
+    },
+  },
+  {
+    address: 'oeth:0x9560e827af36c94d2ac33a39bce1fe78631088db',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/25783/large/velo.png',
+    chainLogoUrl:
+      'https://assets.coingecko.com/coins/images/25244/large/Optimism.png',
+    assetName: 'VELO',
+    chainName: 'OP Mainnet',
+    priceUsd: 0.09853,
+    decimals: 18,
+    issuer: 'Velodrome Finance',
+    tokenInfo: 'Velodrome Finance governance token',
+    tokenSeverity: 'low',
+  },
+  {
+    address: 'oeth:0x2dAD3a13ef0C6366220f989157009e501e7938F8',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/30973/large/Ex_logo-white-blue_ring_288x.png',
+    chainLogoUrl:
+      'https://assets.coingecko.com/coins/images/25244/large/Optimism.png',
+    assetName: 'EXTRA',
+    chainName: 'OP Mainnet',
+    priceUsd: 0.1021,
+    decimals: 18,
+    issuer: 'Extra Finance',
+    tokenInfo: 'Extra Finance governance token',
+    tokenSeverity: 'low',
+  },
+  {
+    address: 'oeth:0x6985884c4392d348587b19cb9eaaf157f13271cd',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/28206/large/ftxG9_TJ_400x400.jpeg',
+    chainLogoUrl:
+      'https://assets.coingecko.com/coins/images/25244/large/Optimism.png',
+    assetName: 'ZRO',
+    chainName: 'OP Mainnet',
+    priceUsd: 3.88,
+    decimals: 18,
+    issuer: 'LayerZero',
+    tokenInfo: 'LayerZero governance token, LayerZero OFT',
+    tokenSeverity: 'high',
+  },
+  {
+    address: 'oeth:0x920cf626a271321c151d027030d5d08af699456b',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/27409/large/kwenta.png',
+    chainLogoUrl:
+      'https://assets.coingecko.com/coins/images/25244/large/Optimism.png',
+    assetName: 'KWENTA',
+    chainName: 'OP Mainnet',
+    priceUsd: 23.3,
+    decimals: 18,
+    issuer: 'Kwenta',
+    tokenInfo: 'Kwenta governance token',
+    tokenSeverity: 'low',
+  },
+  {
+    address: 'oeth:0x1f514a61bcde34f94bc39731235690ab9da737f7',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/31800/large/TAROT.jpg',
+    chainLogoUrl:
+      'https://assets.coingecko.com/coins/images/25244/large/Optimism.png',
+    assetName: 'TAROT',
+    chainName: 'OP Mainnet',
+    priceUsd: 0.2966,
+    decimals: 18,
+    issuer: 'Tarot Lending',
+    tokenInfo: 'Tarot governance token, LayerZero OFT',
+    tokenSeverity: 'high',
+  },
+  {
+    address: 'oeth:0x8700daec35af8ff88c16bdf0418774cb3d7599b4',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/3406/large/SNX.png',
+    chainLogoUrl:
+      'https://assets.coingecko.com/coins/images/25244/large/Optimism.png',
+    assetName: 'SNX',
+    chainName: 'OP Mainnet',
+    priceUsd: 1.62,
+    decimals: 18,
+    issuer: 'Synthetix',
+    child: {
+      address: 'eth:0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f',
+      bridgeInfo: 'Canonical Bridge (external escrow)',
+      bridgeSeverity: 'medium',
+    },
+  },
+  {
+    address: 'oeth:0x8700daec35af8ff88c16bdf0418774cb3d7599b4',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png',
+    chainLogoUrl:
+      'https://assets.coingecko.com/coins/images/25244/large/Optimism.png',
+    assetName: 'DAI',
+    chainName: 'OP Mainnet',
+    priceUsd: 1,
+    decimals: 18,
+    issuer: 'MakerDAO',
+    child: {
+      address: 'eth:0x6B175474E89094C44Da98b954EedeAC495271d0F',
+      bridgeInfo: 'Canonical Bridge (external escrow)',
+      bridgeSeverity: 'medium',
+    },
+  },
+  {
+    address: 'oeth:0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/33613/large/USDE.png',
+    chainLogoUrl:
+      'https://assets.coingecko.com/coins/images/25244/large/Optimism.png',
+    assetName: 'USDe',
+    chainName: 'OP Mainnet',
+    priceUsd: 1,
+    decimals: 18,
+    issuer: 'Ethena',
+    child: {
+      address: 'eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3',
+      bridgeInfo: 'LayerZero v2 OFT (external)',
+      bridgeSeverity: 'high',
+    },
+  },
+  {
+    address: 'oeth:0xdc6ff44d5d932cbd77b52e5612ba0529dc6226f1',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/31069/large/worldcoin.jpeg',
+    chainLogoUrl:
+      'https://assets.coingecko.com/coins/images/25244/large/Optimism.png',
+    assetName: 'WLD',
+    chainName: 'OP Mainnet',
+    priceUsd: 2.15,
+    decimals: 18,
+    issuer: 'WorldCoin',
+    child: {
+      address: 'eth:0x163f8c2467924be0ae7b5347228cabf260318753',
+      bridgeInfo: 'Canonical Bridge',
+      bridgeSeverity: 'low',
+    },
+  },
+  {
+    address: 'oeth:0x35b5a3bf31b67f832230da9424824edc9f7ad98c',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/33314/large/phemex_logo.png',
+    chainLogoUrl:
+      'https://assets.coingecko.com/coins/images/25244/large/Optimism.png',
+    assetName: 'PT',
+    chainName: 'OP Mainnet',
+    priceUsd: 1.33,
+    decimals: 18,
+    issuer: 'Phemex',
+    child: {
+      address: 'eth:0xbbb32f99e6f2cb29337eebaa43c5069386de6e6c',
+      bridgeInfo: 'Canonical Bridge',
+      bridgeSeverity: 'low',
+    },
+  },
+  {
+    address: 'oeth:0x9e1028f5f1d5ede59748ffcee5532509976840e0',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/12381/large/60d18e06844a844ad75901a9_mark_only_03.png',
+    chainLogoUrl:
+      'https://assets.coingecko.com/coins/images/25244/large/Optimism.png',
+    assetName: 'PERP',
+    chainName: 'OP Mainnet',
+    priceUsd: 0.7238,
+    decimals: 18,
+    issuer: 'Perpetual Protocol',
+    child: {
+      address: 'eth:0xbc396689893d065f41bc2c6ecbee5e0085233447',
+      bridgeInfo: 'Canonical Bridge',
+      bridgeSeverity: 'low',
+    },
+  },
+  {
+    address: 'oeth:0x9bcef72be871e61ed4fbbc7630889bee758eb81d',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/20764/large/reth.png',
+    chainLogoUrl:
+      'https://assets.coingecko.com/coins/images/25244/large/Optimism.png',
+    assetName: 'rETH',
+    chainName: 'OP Mainnet',
+    priceUsd: 3554,
+    decimals: 18,
+    issuer: 'RocketPool',
+    child: {
+      address: 'eth:0xae78736cd615f374d3085123a210448e74fc6393',
       bridgeInfo: 'Canonical Bridge',
       bridgeSeverity: 'low',
     },
