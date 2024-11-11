@@ -88,4 +88,49 @@ export const tokens: AssetEntry[] = [
     decimals: 18,
     issuer: 'Ethereum',
   },
+  {
+    address: 'base:0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb',
+    assetLogoUrl: 'https://basescan.org/token/images/daistablecoin_32.png',
+    chainLogoUrl: 'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png',
+    assetName: 'DAI',
+    chainName: 'Base',
+    priceUsd: 1,
+    decimals: 18,
+    issuer: 'MakerDAO',
+    child: {
+      address: 'eth:0x6B175474E89094C44Da98b954EedeAC495271d0F',
+      bridgeInfo: 'Canonical Bridge',
+      bridgeSeverity: 'low'
+    }
+  },
+  {
+    address: 'base:0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34',
+    assetLogoUrl: 'https://basescan.org/token/images/ethenausde_32.png',
+    chainLogoUrl: 'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png',
+    assetName: 'USDe',
+    chainName: 'Base',
+    priceUsd: 1,
+    decimals: 18,
+    issuer: 'Ethena',
+    child: {
+      address: 'eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3',
+      bridgeInfo: 'LayerZero v2 OFT (external)',
+      bridgeSeverity: 'high'
+    }
+  },
+  {
+    address: 'base:0xB6fe221Fe9EeF5aBa221c348bA20A1Bf5e73624c',
+    assetLogoUrl: 'https://basescan.org/token/images/rocketpooleth_32.png',
+    chainLogoUrl: 'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png',
+    assetName: 'rETH',
+    chainName: 'Base',
+    priceUsd: 3528,
+    decimals: 18,
+    issuer: 'RocketPool',
+    child: {
+      address: 'eth:0xae78736Cd615f374D3085123A210448E74Fc6393',
+      bridgeInfo: 'Canonical Bridge',
+      bridgeSeverity: 'low'
+    }
+  },
 ]
