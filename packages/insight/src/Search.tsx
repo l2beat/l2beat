@@ -4,16 +4,19 @@ import { isAddress } from 'viem'
 
 export interface SearchProps {
   onSearch: (searchValue: string) => void
-  className?: string
+  isHome?: boolean
 }
 
-export function Search({ onSearch, className }: SearchProps) {
+export function Search({ onSearch, isHome }: SearchProps) {
   const [error, setError] = useState<string | undefined>()
   const [search, setSearch] = useState('')
 
   return (
     <form
-      className="flex items-center justify-center"
+      className={clsx(
+        'flex items-center justify-center',
+        isHome && 'flex-col-reverse gap-4',
+      )}
       onSubmit={(e) => {
         e.preventDefault()
 
@@ -42,7 +45,12 @@ export function Search({ onSearch, className }: SearchProps) {
       )}
       <input
         type="text"
-        className={clsx(className, error && 'focus:outline-rose-500')}
+        className={clsx(
+          isHome
+            ? 'w-[500px] border border-white bg-zinc-900 p-4'
+            : 'w-60 border border-white bg-transparent px-4 py-1',
+          error && 'focus:outline-rose-500',
+        )}
         placeholder="Input address or ENS name"
         value={search}
         onChange={(e) => setSearch(e.target.value)}

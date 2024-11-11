@@ -11,10 +11,7 @@ export function Home(props: Props) {
       <h1 className="mb-10 text-center font-bold text-3xl">
         <img src={LogoDouble} alt="Insight by L2BEAT" />
       </h1>
-      <Search
-        className="w-[500px] border border-white bg-zinc-900 p-4"
-        onSearch={props.onSearch}
-      />
+      <Search isHome onSearch={props.onSearch} />
     </div>
   )
 }

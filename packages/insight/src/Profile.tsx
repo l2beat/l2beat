@@ -24,10 +24,7 @@ export function Profile(props: Props) {
           onClick={() => props.onSearch('')}
           className="cursor-pointer"
         />
-        <Search
-          className={'w-60 border border-white bg-transparent px-4 py-1'}
-          onSearch={props.onSearch}
-        />
+        <Search onSearch={props.onSearch} />
       </div>
       <h1 className="mb-10 text-xl">Profile of {props.query}</h1>
       <table className="w-full">
@@ -124,7 +121,7 @@ function ProfileRow({ entry, i }: { entry: TokenEntry; i: number }) {
           </div>
         </td>
         <td className="w-[25%] py-2" />
-        <td className="w-0">{entry.issuer}</td>
+        <td className="w-0 whitespace-pre">{entry.issuer}</td>
         <td className="w-[25%] py-2" />
         <td className="w-0 whitespace-pre py-2 pr-4">
           H: {entry.severity.high} M: {entry.severity.medium} L:{' '}
