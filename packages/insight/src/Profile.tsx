@@ -1,8 +1,8 @@
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
-import { useTokens } from './hooks/useTokens'
-import { TokenEntry } from './schema'
 import { isAddress } from 'viem'
+import { useTokens } from './hooks/useTokens'
+import { ConnectedEntry, TokenEntry } from './schema'
 
 interface Props {
   query: string
@@ -135,10 +135,39 @@ function ProfileRow({ entry, i }: { entry: TokenEntry; i: number }) {
       </tr>
       {open && (
         <tr>
-          <td colSpan={11} className="h-10 bg-red-500"></td>
+          <td colSpan={11} className="h-full">
+            <ExpandedRow entry={entry} />
+          </td>
         </tr>
       )}
     </>
+  )
+}
+
+function ExpandedRow({ entry }: { entry: ConnectedEntry }) {
+  return (
+    <div className="p-4">
+      <div className="flex items-center gap-4">
+        <div className="relative h-10 w-10 min-w-10">
+          <img src={entry.assetLogoUrl} className="h-10 w-10" />
+          <img
+            src={entry.chainLogoUrl}
+            className="-bottom-1.5 -right-1.5 absolute h-6 w-6"
+          />
+        </div>
+        <div>
+          <div>
+            {entry.assetName} on {entry.chainName}
+          </div>
+          <div>{formatAddress(entry.address)}</div>
+        </div>
+      </div>
+      {entry.child && (
+        <div className="mt-4 ml-8 border-gray-300 border-l-2 pl-4">
+          <ExpandedRow entry={entry.child.entry} />
+        </div>
+      )}
+    </div>
   )
 }
 
