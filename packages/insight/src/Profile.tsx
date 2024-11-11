@@ -144,9 +144,9 @@ function ProfileRow({ entry, i }: { entry: TokenEntry; i: number }) {
 }
 
 const severityToColor = {
-  low: '#919191',
-  medium: '#E1FF00',
-  high: '#FF0000',
+  low: 'text-[#919191]',
+  medium: 'text-[#E1FF00]',
+  high: 'text-[#FF0000]',
 }
 
 function ExpandedRow({ entry }: { entry: ConnectedEntry }) {
@@ -187,12 +187,21 @@ function ExpandedRow({ entry }: { entry: ConnectedEntry }) {
           </div>
         </div>
         {entry.child && (
-          <div className='flex items-center gap-6 pl-9'>
-            <div className='h-8 w-[2px] gap-2 bg-[#919191]' />
+          <div className="flex items-center gap-6 pl-9">
+            <div className="h-8 w-[2px] gap-2 bg-[#919191]" />
+            {entry.child?.bridgeSeverity === 'medium' ? (
+              <img
+                className="mr-1 inline-block"
+                src={Yellow}
+                alt="Medium risk"
+              />
+            ) : entry.child?.bridgeSeverity === 'high' ? (
+              <img className="mr-1 inline-block" src={Red} alt="High risk" />
+            ) : null}
             <span
               className={clsx(
                 entry.child?.bridgeSeverity
-                  ? `text-[${severityToColor[entry.child?.bridgeSeverity]}]`
+                  ? severityToColor[entry.child?.bridgeSeverity]
                   : undefined,
               )}
             >
