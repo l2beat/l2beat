@@ -7,6 +7,17 @@ const countSeverities = (
   medium: number = 0,
   high: number = 0,
 ) => {
+  switch (token.tokenSeverity) {
+    case 'low':
+      low++
+      break
+    case 'medium':
+      medium++
+      break
+    case 'high':
+      high++
+      break
+  }
   if (token.child) {
     switch (token.child.bridgeSeverity) {
       case 'low':
