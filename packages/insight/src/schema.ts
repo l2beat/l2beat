@@ -323,7 +323,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
+      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=128&q=100',
     assetName: 'USDC',
     chainName: 'Base',
     priceUsd: 1,
@@ -337,7 +337,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
+      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=128&q=100',
     assetName: 'wstETH',
     chainName: 'Base',
     priceUsd: 3719,
@@ -354,7 +354,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
+      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=128&q=100',
     assetName: 'WBTC',
     chainName: 'Base',
     priceUsd: 81167,
@@ -371,7 +371,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://assets.coingecko.com/coins/images/2518/large/weth.png?1696503332',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
+      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=128&q=100',
     assetName: 'WETH',
     chainName: 'Base',
     priceUsd: 3149,
@@ -388,7 +388,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
+      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=128&q=100',
     assetName: 'ETH',
     chainName: 'Base',
     priceUsd: 3149,
@@ -405,7 +405,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://coin-images.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
+      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=128&q=100',
     assetName: 'DAI',
     chainName: 'Base',
     priceUsd: 1,
@@ -422,7 +422,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://assets.coingecko.com/coins/images/33613/large/3466ef_3c088c66c7d941e8856339d0bddf33cc_mv2.png?1702514458',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
+      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=128&q=100',
     assetName: 'USDe',
     chainName: 'Base',
     priceUsd: 1,
@@ -439,7 +439,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://assets.coingecko.com/coins/images/36530/large/ethena.png?1711701436',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
+      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=128&q=100',
     assetName: 'ENA',
     chainName: 'Base',
     priceUsd: 0.5835,
@@ -456,7 +456,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://assets.coingecko.com/coins/images/34753/large/eth_renzo_logo_%281%29.png?1705956747',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
+      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=128&q=100',
     assetName: 'ezETH',
     chainName: 'Base',
     priceUsd: 3246,
@@ -473,7 +473,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://assets.coingecko.com/coins/images/34515/large/android-chrome-512x512.png?1706198225',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
+      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=128&q=100',
     assetName: 'DEGEN',
     chainName: 'Base',
     priceUsd: 0.0105,
@@ -486,7 +486,7 @@ export const tokens: AssetEntry[] = [
     address: 'base:0x6223901eA64608c75Da8497d5eff15D19A1D8fd5',
     assetLogoUrl: 'https://basescan.org/token/images/corgibase_32.png',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
+      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=128&q=100',
     assetName: 'CORGI',
     chainName: 'Base',
     priceUsd: 0.0005365,
@@ -499,7 +499,7 @@ export const tokens: AssetEntry[] = [
     address: 'base:0x55027a5b06f4340cC4C82DCC74C90cA93dcb173E',
     assetLogoUrl: 'https://basescan.org/token/images/tad_32.png',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
+      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=128&q=100',
     assetName: 'TAD',
     chainName: 'Base',
     priceUsd: 0.001789,
@@ -512,7 +512,7 @@ export const tokens: AssetEntry[] = [
     address: 'base:0x3ecced5b416e58664f04a39dD18935eB71D33B15',
     assetLogoUrl: 'https://basescan.org/token/images/brianarmbase2_32.png',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
+      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=128&q=100',
     assetName: 'BRIAN',
     chainName: 'Base',
     priceUsd: 0.0003774,
@@ -526,7 +526,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://assets.coingecko.com/coins/images/31745/large/token.png?1696530564',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
+      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=128&q=100',
     assetName: 'AERO',
     chainName: 'Base',
     priceUsd: 1.47,
@@ -540,7 +540,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://coin-images.coingecko.com/coins/images/40143/large/cbbtc.webp?1726136727',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
+      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=128&q=100',
     assetName: 'cbBTC',
     chainName: 'Base',
     priceUsd: 81611,
@@ -554,7 +554,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://coin-images.coingecko.com/coins/images/28206/large/ftxG9_TJ_400x400.jpeg?1696527208',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
+      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=128&q=100',
     assetName: 'ZRO',
     chainName: 'Base',
     priceUsd: 3.88,
@@ -568,7 +568,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://assets.coingecko.com/coins/images/27008/large/cbeth.png?1709186989',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
+      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=128&q=100',
     assetName: 'cbETH',
     chainName: 'Base',
     priceUsd: 3420,
@@ -584,7 +584,7 @@ export const tokens: AssetEntry[] = [
     address: 'base:0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA',
     assetLogoUrl: 'https://basescan.org/token/images/usdbc_ofc_32.png',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
+      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=128&q=100',
     assetName: 'USDbC',
     chainName: 'Base',
     priceUsd: 1,
@@ -601,7 +601,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
+      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=128&q=100',
     assetName: 'USDT',
     chainName: 'Base',
     priceUsd: 1,
