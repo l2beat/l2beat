@@ -1,78 +1,110 @@
-import { useMemo } from 'react'
-import { AssetEntry, TokenEntry, tokens } from '../schema'
-import { useBalances } from './useBalances'
+import {
+  http,
+  PublicClient,
+  createPublicClient,
+  encodeFunctionData,
+  parseAbi,
+} from 'viem'
+import { arbitrum, base, mainnet, optimism } from 'viem/chains'
+import { TokenEntry, tokens } from '../schema'
+import { useQuery, UseQueryResult } from '@tanstack/react-query'
+import { Balance } from './Balance'
+import { toTokenEntry } from './toTokenEntry'
 
-const chainToPrefix: Record<string, string> = {
-  arbitrum: 'arb1',
-  optimism: 'oeth',
-  ethereum: 'eth',
-  base: 'base',
+type Chain = 'eth' | 'arb1' | 'oeth' | 'base'
+
+const clients: Record<Chain, PublicClient> = {
+  eth: createPublicClient({
+    chain: mainnet,
+    transport: http(),
+    batch: { multicall: true },
+  }),
+  arb1: createPublicClient({
+    chain: arbitrum,
+    transport: http(),
+    batch: { multicall: true },
+  }),
+  oeth: createPublicClient({
+    chain: optimism,
+    transport: http(),
+    batch: { multicall: true },
+  }) as PublicClient,
+  base: createPublicClient({
+    chain: base,
+    transport: http(),
+    batch: { multicall: true },
+  }) as PublicClient,
 }
 
-const countSeverities = (
-  token: AssetEntry,
-  low: number = 0,
-  medium: number = 0,
-  high: number = 0,
-) => {
-  if (token.child) {
-    switch (token.child.bridgeSeverity) {
-      case 'low':
-        low++
-        break
-      case 'medium':
-        medium++
-        break
-      case 'high':
-        high++
-        break
-    }
+async function resolveENS(ens: string): Promise<`0x${string}` | undefined> {
+  const address = await clients['eth'].getEnsAddress({ name: ens })
+  if (!address) {
+    return undefined
   }
-  const child = token.child
-    ? tokens.find((token) => token.address === token.child?.address)
-    : undefined
-  if (child?.child) return countSeverities(child, low, medium, high)
 
-  return { low, medium, high }
+  return address
 }
 
-export function useTokens(addressOrENS: string): TokenEntry[] {
-  const tokenBalances = useBalances(addressOrENS)
+async function getBalanceOf(
+  holder: `0x${string}`,
+  addressWithChain: string,
+): Promise<Balance> {
+  const [chain, address] = addressWithChain.split(':') as [
+    string,
+    `0x{string}` | 'native',
+  ]
 
-  const tokensToDisplay = useMemo(() => {
-    return tokenBalances
-      .map((tokenBalance) => {
-        const address = `${chainToPrefix[tokenBalance.chain]}:${tokenBalance.address}`
-        const token = tokens.find((token) => token.address === address)
-        if (!token) return
+  let balance = 0n
+  const client = clients[chain as keyof typeof clients]
+  if (address === 'native') {
+    const result = await client.getBalance({ address: holder })
+    balance = BigInt(result ?? 0x0)
+  } else {
+    const result = await client.call({
+      to: address as `0x{string}`,
+      data: encodeFunctionData({
+        abi: parseAbi([
+          'function balanceOf(address spender) view returns (uint256)',
+        ]),
+        functionName: 'balanceOf',
+        args: [holder],
+      }),
+    })
+    balance = BigInt(result.data ?? 0x0)
+  }
 
-        const balanceUnits = Number(tokenBalance.balance) / 10 ** token.decimals
-        const balanceUsd = balanceUnits * token.priceUsd
+  return {
+    address: address,
+    chain: chain,
+    balance,
+  } satisfies Balance
+}
 
-        const childEntry = token.child
-          ? tokens.find((token) => token.address === token.child?.address)
-          : undefined
+export function useTokens(
+  addressOrENS: string,
+): UseQueryResult<TokenEntry[], Error> {
+  return useQuery({
+    queryKey: ['tokens', addressOrENS],
+    queryFn: () => fetchTokens(addressOrENS),
+  })
+}
 
-        const { low, medium, high } = countSeverities(token)
+export async function fetchTokens(addressOrENS: string) {
+  const address = addressOrENS.endsWith('.eth')
+    ? await resolveENS(addressOrENS)
+    : (addressOrENS as `0x${string}`)
+  if (address === undefined) {
+    // TODO: ENS resolution failed
+    return []
+  }
+  const balances: Balance[] = (
+    await Promise.all(
+      tokens.map(async (token) => await getBalanceOf(address, token.address)),
+    )
+  ).filter((v) => v !== undefined && v.balance !== 0n)
 
-        return {
-          ...token,
-          address,
-          balanceUnits,
-          balanceUsd,
-          severity: { low, medium, high },
-          child:
-            childEntry && token.child
-              ? {
-                  ...token.child,
-                  entry: childEntry,
-                }
-              : undefined,
-        }
-      })
-      .filter((x) => x !== undefined)
-      .sort((a, b) => b.balanceUsd - a.balanceUsd)
-  }, [tokenBalances])
-
-  return tokensToDisplay
+  return balances
+    .map(toTokenEntry)
+    .filter((v) => v !== undefined)
+    .sort((a, b) => b.balanceUsd - a.balanceUsd)
 }

@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { useTokens } from './hooks/useTokens'
 import { TokenEntry } from './schema'
+import { useTokens } from './hooks/useTokens'
 
 interface Props {
   query: string
@@ -48,11 +48,12 @@ export function Profile(props: Props) {
           </tr>
         </thead>
         <tbody>
-          {response.map((entry, i) => (
-            <ProfileRow entry={entry} i={i} />
-          ))}
+          {response.isSuccess &&
+            response.data.map((entry, i) => <ProfileRow entry={entry} i={i} />)}
         </tbody>
       </table>
+      {response.isPending && <div>Loading</div>}
+      {response.isError && <div>{response.error.message}</div>}
     </div>
   )
 }
