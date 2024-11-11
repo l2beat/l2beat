@@ -15,10 +15,10 @@ export function Profile(props: Props) {
   const response = useTokens(props.query)
 
   useEffect(() => {
-    if (response.isError) {
-      setError(response.error.message)
+    if (response.ensStatus.isError) {
+      setError(response.ensStatus.error?.message)
     }
-  }, [response])
+  }, [response.isError, response.ensStatus.isError])
 
   return (
     <div className="mx-auto max-w-4xl p-4 pt-10">
@@ -79,7 +79,7 @@ export function Profile(props: Props) {
         </tbody>
       </table>
       {response.isPending && <div>Loading</div>}
-      {response.isError && <div>{response.error.message}</div>}
+      {response.tokensStatus.isError && <div>{response.tokensStatus.error?.message}</div>}
     </div>
   )
 }
