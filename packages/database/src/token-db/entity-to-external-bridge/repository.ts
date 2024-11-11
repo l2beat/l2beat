@@ -16,6 +16,8 @@ export class EntityToExternalBridgeRepository extends BaseRepository {
   async upsertManyOfExternalBridgeId(
     records: EntityToExternalBridgeRecord[],
   ): Promise<void> {
+    if (records.length === 0) return
+    
     await this.db
       .insertInto('_EntityToExternalBridge')
       .values(
