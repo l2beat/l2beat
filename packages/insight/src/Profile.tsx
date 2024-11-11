@@ -123,13 +123,28 @@ function ProfileRow({ entry, i }: { entry: TokenEntry; i: number }) {
           </div>
         </td>
         <td className="w-[25%] py-2" />
-        <td className="w-0 whitespace-pre">{entry.issuer}</td>
+        <td className="w-0 max-w-40 overflow-hidden text-ellipsis whitespace-pre">
+          {entry.issuer}
+        </td>
         <td className="w-[25%] py-2" />
-        <td className="w-0 whitespace-pre py-2 pr-4">
-          <img className="mr-1 inline-block" src={Red} alt="High risk" />
-          <img className="mr-1 inline-block" src={Yellow} alt="Medium risk" />
-          H: {entry.severity.high} M: {entry.severity.medium} L:{' '}
-          {entry.severity.low}
+        <td>
+          <div className="flex flex-gap-1 items-center justify-start whitespace-pre py-2 pr-4">
+            {new Array(entry.severity.high).fill(0).map((_, i) => (
+              <img key={i} className="h-5 w-5" src={Red} alt="High risk" />
+            ))}
+            {new Array(entry.severity.medium).fill(0).map((_, i) => (
+              <img key={i} className="h-5 w-5" src={Yellow} alt="Medium risk" />
+            ))}
+            {entry.severity.high === 0 &&
+              entry.severity.medium === 0 &&
+              entry.severity.low > 0 && (
+                <span className="text-zinc-400">{entry.severity.low} info</span>
+              )}
+            {entry.severity.high === 0 &&
+              entry.severity.medium === 0 &&
+              entry.severity.low === 0 &&
+              `No issues`}
+          </div>
         </td>
       </tr>
       {open && (
