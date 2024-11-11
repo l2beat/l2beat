@@ -156,10 +156,8 @@ function ProfileRow({ entry, i }: { entry: TokenEntry; i: number }) {
         <td className="w-0">{entry.issuer}</td>
         <td className="w-[25%] py-2" />
         <td className="w-0 whitespace-pre py-2">
-          {new Array(entry.severity.high)
-            .fill('HIGH')
-            .concat(new Array(entry.severity.medium).fill('MED'))
-            .join(' ')}
+          H: {entry.severity.high} M: {entry.severity.medium} L:{' '}
+          {entry.severity.low}
         </td>
       </tr>
       {open && (
