@@ -1,6 +1,7 @@
+import clsx from 'clsx'
 import { useState } from 'react'
-import { TokenEntry } from './schema'
 import { useTokens } from './hooks/useTokens'
+import { TokenEntry } from './schema'
 
 interface Props {
   query: string
@@ -62,45 +63,57 @@ function ProfileRow({ entry, i }: { entry: TokenEntry; i: number }) {
   const [open, setOpen] = useState(false)
 
   return (
-    <tr
-      key={entry.address}
-      className="border-black border-t"
-      onClick={() => setOpen(!open)}
-    >
-      <td className="w-0">{open ? 'V' : '>'}</td>
-      <td className="w-[20%]" />
-      <td className="w-0">{i + 1}</td>
-      <td className="w-[20%]" />
-      <td className="w-0">
-        <div className="text-right">${formatNumber(entry.balanceUsd, 2)}</div>
-        <div className="text-right">{formatNumber(entry.balanceUnits, 4)}</div>
-      </td>
-      <td className="w-[20%]" />
-      <td className="flex w-min gap-4">
-        <div className="relative h-10 w-10 min-w-10">
-          <img src={entry.assetLogoUrl} className="h-10 w-10" />
-          <img
-            src={entry.chainLogoUrl}
-            className="-bottom-1.5 -right-1.5 absolute h-6 w-6"
-          />
-        </div>
-        <div className="whitespace-pre">
-          <div>
-            {entry.assetName} on {entry.chainName}
+    <>
+      <tr
+        key={entry.address}
+        className={clsx(
+          'border-black border-t',
+          entry.child && 'cursor-pointer',
+        )}
+        onClick={() => entry.child && setOpen(!open)}
+      >
+        <td className="w-0">{entry.child && (open ? 'V' : '>')}</td>
+        <td className="w-[20%]" />
+        <td className="w-0">{i + 1}</td>
+        <td className="w-[20%]" />
+        <td className="w-0">
+          <div className="text-right">${formatNumber(entry.balanceUsd, 2)}</div>
+          <div className="text-right">
+            {formatNumber(entry.balanceUnits, 4)}
           </div>
-          <div>{formatAddress(entry.address)}</div>
-        </div>
-      </td>
-      <td className="w-[20%]" />
-      <td className="w-0">{entry.issuer}</td>
-      <td className="w-[20%]" />
-      <td className="w-0 whitespace-pre">
-        {new Array(entry.severity.high)
-          .fill('HIGH')
-          .concat(new Array(entry.severity.medium).fill('MED'))
-          .join(' ')}
-      </td>
-    </tr>
+        </td>
+        <td className="w-[20%]" />
+        <td className="flex w-min gap-4">
+          <div className="relative h-10 w-10 min-w-10">
+            <img src={entry.assetLogoUrl} className="h-10 w-10" />
+            <img
+              src={entry.chainLogoUrl}
+              className="-bottom-1.5 -right-1.5 absolute h-6 w-6"
+            />
+          </div>
+          <div className="whitespace-pre">
+            <div>
+              {entry.assetName} on {entry.chainName}
+            </div>
+            <div>{formatAddress(entry.address)}</div>
+          </div>
+        </td>
+        <td className="w-[20%]" />
+        <td className="w-0">{entry.issuer}</td>
+        <td className="w-[20%]" />
+        <td className="w-0 whitespace-pre">
+          {new Array(entry.severity.high)
+            .fill('HIGH')
+            .concat(new Array(entry.severity.medium).fill('MED'))
+            .join(' ')}
+        </td>
+      </tr>
+      {open && (
+        <tr>
+          <td colSpan={11} className="h-10 bg-red-500"></td>
+        </tr>
+      )}
+    </>
   )
 }
 

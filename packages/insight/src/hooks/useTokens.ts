@@ -1,3 +1,4 @@
+import { UseQueryResult, useQuery } from '@tanstack/react-query'
 import {
   http,
   PublicClient,
@@ -7,7 +8,6 @@ import {
 } from 'viem'
 import { arbitrum, base, mainnet, optimism } from 'viem/chains'
 import { TokenEntry, tokens } from '../schema'
-import { useQuery, UseQueryResult } from '@tanstack/react-query'
 import { Balance } from './Balance'
 import { toTokenEntry } from './toTokenEntry'
 
