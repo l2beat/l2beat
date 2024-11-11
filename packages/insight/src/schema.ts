@@ -910,7 +910,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://assets.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1696502009',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
+      'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=128&q=75',
     assetName: 'LINK',
     chainName: 'Arbitrum One',
     priceUsd: 14.08,
@@ -918,6 +918,137 @@ export const tokens: AssetEntry[] = [
     issuer: 'Chainlink Foundation',
     child: {
       address: 'eth:0x514910771AF9Ca656af840dff83E8264EcF986CA',
+      bridgeInfo: 'Canonical Bridge',
+      bridgeSeverity: 'low',
+    },
+  },
+  // Optimism -------------------------------------VVV
+  {
+    address: 'oeth:native',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/279/large/ethereum.png',
+    chainLogoUrl:
+      'https://assets.coingecko.com/coins/images/25244/large/Optimism.png',
+    assetName: 'ETH',
+    chainName: 'OP Mainnet',
+    priceUsd: 3149,
+    decimals: 18,
+    issuer: 'Ethereum',
+    child: {
+      address: 'eth:native',
+      bridgeInfo: 'Canonical Bridge',
+      bridgeSeverity: 'low',
+    },
+  },
+  {
+    address: 'oeth:0x4200000000000000000000000000000000000006',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/39810/large/weth.png',
+    chainLogoUrl:
+      'https://assets.coingecko.com/coins/images/25244/large/Optimism.png',
+    assetName: 'WETH',
+    chainName: 'OP Mainnet',
+    priceUsd: 3149,
+    decimals: 18,
+    issuer: 'Optimism WETH9 wrapper',
+    child: {
+      address: 'oeth:native',
+      bridgeInfo: 'WETH9 wrapper',
+      bridgeSeverity: 'low',
+    },
+  },
+  {
+    address: 'oeth:0x4200000000000000000000000000000000000042',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/25244/large/Optimism.png',
+    chainLogoUrl:
+      'https://assets.coingecko.com/coins/images/25244/large/Optimism.png',
+    assetName: 'OP',
+    chainName: 'OP Mainnet',
+    priceUsd: 1.65,
+    decimals: 18,
+    issuer: 'Optimism Foundation / DAO',
+    tokenInfo: 'Optimism governance token',
+    tokenSeverity: 'low',
+  },
+  {
+    address: 'oeth:0x0b2c639c533813f4aa9d7837caf62653d097ff85',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/6319/large/usdc.png',
+    chainLogoUrl:
+      'https://assets.coingecko.com/coins/images/25244/large/Optimism.png',
+    assetName: 'USDC',
+    chainName: 'OP Mainnet',
+    priceUsd: 1,
+    decimals: 6,
+    issuer: 'Circle',
+    tokenInfo: 'governed, bridged and backed by Circle',
+    tokenSeverity: 'medium',
+  },
+  {
+    address: 'oeth:0x94b008aA00579c1307B0EF2c499aD98a8ce58e58',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/325/large/Tether.png',
+    chainLogoUrl:
+      'https://assets.coingecko.com/coins/images/25244/large/Optimism.png',
+    assetName: 'USDT',
+    chainName: 'OP Mainnet',
+    priceUsd: 1,
+    decimals: 6,
+    issuer: 'Tether',
+    child: {
+      address: 'eth:0xdAC17F958D2ee523a2206206994597C13D831ec7',
+      bridgeInfo: 'Canonical Bridge (external escrow)',
+      bridgeSeverity: 'medium',
+    },
+  },
+  {
+    address: 'oeth:0x1f32b1c2345538c0c6f582fcb022739c4a194ebb',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/18834/large/wstETH.png',
+    chainLogoUrl:
+      'https://assets.coingecko.com/coins/images/25244/large/Optimism.png',
+    assetName: 'wstETH',
+    chainName: 'OP Mainnet',
+    priceUsd: 3770,
+    decimals: 18,
+    issuer: 'Lido',
+    child: {
+      address: 'eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0',
+      bridgeInfo: 'Canonical Bridge (external escrow)',
+      bridgeSeverity: 'medium',
+    },
+  },
+  {
+    address: 'oeth:0x7f5c764cbc14f9669b88837ca1490cca17c31607',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/31580/large/USDC-icon.png',
+    chainLogoUrl:
+      'https://assets.coingecko.com/coins/images/25244/large/Optimism.png',
+    assetName: 'USDC.e',
+    chainName: 'OP Mainnet',
+    priceUsd: 1,
+    decimals: 6,
+    issuer: 'Circle',
+    child: {
+      address: 'eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+      bridgeInfo: 'Canonical Bridge (external escrow)',
+      bridgeSeverity: 'medium',
+    },
+  },
+  {
+    address: 'oeth:0x68f180fcce6836688e9084f035309e29bf0a2095',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png',
+    chainLogoUrl:
+      'https://assets.coingecko.com/coins/images/25244/large/Optimism.png',
+    assetName: 'WBTC',
+    chainName: 'OP Mainnet',
+    priceUsd: 81850,
+    decimals: 8,
+    issuer: 'BiT Global/BitGo',
+    child: {
+      address: 'eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
       bridgeInfo: 'Canonical Bridge',
       bridgeSeverity: 'low',
     },
