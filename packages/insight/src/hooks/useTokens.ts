@@ -80,20 +80,7 @@ async function getBalanceOf(
   } satisfies Balance
 }
 
-export type TokensQueryResult = UseQueryResult<TokenEntry[], Error> & {
-  ensStatus: {
-    isError: boolean
-    error: Error | null
-    isLoading: boolean
-    isSuccess: boolean
-  }
-  tokensStatus: {
-    isError: boolean
-    error: Error | null
-    isLoading: boolean
-    isSuccess: boolean
-  }
-}
+export type TokensQueryResult = UseQueryResult<TokenEntry[], Error>
 
 async function resolveAddressOrENS(
   addressOrENS: string,
@@ -141,20 +128,6 @@ export function useTokens(addressOrENS: string): TokensQueryResult {
     refetch: async () => {
       await ensQuery.refetch()
       return tokensQuery.refetch()
-    },
-    // Add ENS-specific status
-    ensStatus: {
-      isError: ensQuery.isError,
-      error: ensQuery.error,
-      isLoading: ensQuery.isLoading,
-      isSuccess: ensQuery.isSuccess,
-    },
-    // Add ENS-specific status
-    tokensStatus: {
-      isError: tokensQuery.isError,
-      error: tokensQuery.error,
-      isLoading: tokensQuery.isLoading,
-      isSuccess: tokensQuery.isSuccess,
     },
   } as TokensQueryResult
 }

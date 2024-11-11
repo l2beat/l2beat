@@ -1,6 +1,6 @@
 import clsx from 'clsx'
-import { useEffect, useState } from 'react'
-import { isAddress } from 'viem'
+import { useState } from 'react'
+import { Search } from './Search'
 import ChevronDown from './assets/chevron-down.svg'
 import ChevronRight from './assets/chevron-right.svg'
 import LogoSmall from './assets/logo-small.svg'
@@ -13,15 +13,7 @@ interface Props {
 }
 
 export function Profile(props: Props) {
-  const [search, setSearch] = useState('')
-  const [error, setError] = useState<string | undefined>(undefined)
   const response = useTokens(props.query)
-
-  useEffect(() => {
-    if (response.ensStatus.isError) {
-      setError(response.ensStatus.error?.message)
-    }
-  }, [response.isError, response.ensStatus.isError])
 
   return (
     <div className="mx-auto max-w-4xl p-4 pt-10">
@@ -32,44 +24,10 @@ export function Profile(props: Props) {
           onClick={() => props.onSearch('')}
           className="cursor-pointer"
         />
-        <form
-          className="flex items-center justify-end"
-          onSubmit={(e) => {
-            e.preventDefault()
-            if (search.startsWith('0x') && !isAddress(search)) {
-              setError('Invalid address')
-              return
-            } else if (!search.endsWith('0x') && !search.endsWith('.eth')) {
-              setError('Invalid ENS')
-              return
-            }
-
-            if (search !== '') {
-              props.onSearch(search)
-              setSearch('')
-            }
-          }}
-        >
-          {error && (
-            <label
-              className="px-2 font-semibold text-red-600"
-              htmlFor="addressOrEns"
-            >
-              {error}
-            </label>
-          )}
-          <input
-            className={clsx(
-              'w-60 border border-white bg-transparent px-4 py-1',
-              error && 'focus:outline-rose-500',
-            )}
-            type="text"
-            placeholder="Input address or ENS name"
-            value={search}
-            name="addressOrEns"
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </form>
+        <Search
+          className={'w-60 border border-white bg-transparent px-4 py-1'}
+          onSearch={props.onSearch}
+        />
       </div>
       <h1 className="mb-10 text-xl">Profile of {props.query}</h1>
       <table className="w-full">
@@ -106,9 +64,9 @@ export function Profile(props: Props) {
           </div>
         </div>
       )}
-      {response.tokensStatus.isError && (
+      {response.isError && (
         <div className="flex h-20 w-full items-center justify-center bg-zinc-950 px-4 text-red-600">
-          {response.tokensStatus.error?.message}
+          {response.error?.message}
         </div>
       )}
     </div>
