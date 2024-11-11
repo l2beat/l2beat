@@ -4,6 +4,8 @@ import { Search } from './Search'
 import ChevronDown from './assets/chevron-down.svg'
 import ChevronRight from './assets/chevron-right.svg'
 import LogoSmall from './assets/logo-small.svg'
+import Red from './assets/red.svg'
+import Yellow from './assets/yellow.svg'
 import { useTokens } from './hooks/useTokens'
 import { ConnectedEntry, TokenEntry } from './schema'
 
@@ -124,6 +126,8 @@ function ProfileRow({ entry, i }: { entry: TokenEntry; i: number }) {
         <td className="w-0 whitespace-pre">{entry.issuer}</td>
         <td className="w-[25%] py-2" />
         <td className="w-0 whitespace-pre py-2 pr-4">
+          <img className="mr-1 inline-block" src={Red} alt="High risk" />
+          <img className="mr-1 inline-block" src={Yellow} alt="Medium risk" />
           H: {entry.severity.high} M: {entry.severity.medium} L:{' '}
           {entry.severity.low}
         </td>
