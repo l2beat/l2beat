@@ -25,6 +25,12 @@ export interface AssetEntry {
 export type TokenEntry = AssetEntry & {
   balanceUnits: number
   balanceUsd: number
+  severity: {
+    low: number
+    medium: number
+    high: number
+  }
+  child?: AssetEntry['child'] & { entry: AssetEntry }
 }
 
 export const tokens: AssetEntry[] = [
