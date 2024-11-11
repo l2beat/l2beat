@@ -133,8 +133,8 @@ function ProfileRow({ entry, i }: { entry: TokenEntry; i: number }) {
         </td>
       </tr>
       {open && (
-        <tr className="border-zinc-900 border-t bg-zinc-800">
-          <td colSpan={11} className="h-full">
+        <tr>
+          <td colSpan={11} className="h-full bg-black">
             <ExpandedRow entry={entry} />
           </td>
         </tr>
@@ -143,29 +143,65 @@ function ProfileRow({ entry, i }: { entry: TokenEntry; i: number }) {
   )
 }
 
+const severityToColor = {
+  low: '#919191',
+  medium: '#E1FF00',
+  high: '#FF0000',
+}
+
 function ExpandedRow({ entry }: { entry: ConnectedEntry }) {
+  const address = entry.address.split(':')[1]
   return (
-    <div className="p-4">
-      <div className="flex items-center gap-4">
-        <div className="relative h-10 w-10 min-w-10">
-          <img src={entry.assetLogoUrl} className="h-10 w-10" />
-          <img
-            src={entry.chainLogoUrl}
-            className="-bottom-1.5 -right-1.5 absolute h-6 w-6"
-          />
-        </div>
-        <div>
-          <div>
-            {entry.assetName} on {entry.chainName}
+    <div>
+      <div className="flex flex-col">
+        <div className="flex items-center gap-6 p-4">
+          <div className="relative h-10 w-10 min-w-10">
+            <img src={entry.assetLogoUrl} className="h-10 w-10" />
+            <img
+              src={entry.chainLogoUrl}
+              className="-bottom-1.5 -right-1.5 absolute h-6 w-6"
+            />
           </div>
-          <div>{formatAddress(entry.address)}</div>
+          <div>
+            <div className="flex items-center gap-[10px]">
+              <div className="flex items-end gap-[10px] text-2xl">
+                <span className="font-bold">{entry.assetName}</span>
+                <div className="text-lg">
+                  on&nbsp;
+                  <span className="text-[#598BE8] underline">
+                    {entry.chainName}
+                  </span>
+                </div>
+              </div>
+              <div className="size-[2px] bg-[#919191]" />
+              <div className="text-[#919191]">Emitted by {entry.issuer}</div>
+            </div>
+            <span
+              className={clsx(
+                'text-sm',
+                address === 'native' ? 'text-white' : 'text-[#598BE8]',
+              )}
+            >
+              {address === 'native' ? 'Native token' : address}
+            </span>
+          </div>
         </div>
+        {entry.child && (
+          <div className='flex items-center gap-6 pl-9'>
+            <div className='h-8 w-[2px] gap-2 bg-[#919191]' />
+            <span
+              className={clsx(
+                entry.child?.bridgeSeverity
+                  ? `text-[${severityToColor[entry.child?.bridgeSeverity]}]`
+                  : undefined,
+              )}
+            >
+              {entry.child?.bridgeInfo}
+            </span>
+          </div>
+        )}
       </div>
-      {entry.child && (
-        <div className="mt-4 ml-8 border-gray-300 border-l-2 pl-4">
-          <ExpandedRow entry={entry.child.entry} />
-        </div>
-      )}
+      {entry.child && <ExpandedRow entry={entry.child.entry} />}
     </div>
   )
 }
