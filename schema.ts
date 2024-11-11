@@ -238,4 +238,34 @@ export const tokens: AssetEntry[] = [
       bridgeSeverity: 'low'
     }
   },
+  {
+    address: 'base:0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA',
+    assetLogoUrl: 'https://basescan.org/token/images/usdbc_ofc_32.png',
+    chainLogoUrl: 'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png',
+    assetName: 'USDbC',
+    chainName: 'Base',
+    priceUsd: 1,
+    decimals: 6,
+    issuer: 'Circle',
+    child: {
+      address: 'eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+      bridgeInfo: 'Canonical Bridge',
+      bridgeSeverity: 'low'
+    }
+  },
+  {
+    address: 'base:0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2',
+    assetLogoUrl: 'https://assets.coingecko.com/coins/images/325/standard/Tether.png?1696501661',
+    chainLogoUrl: 'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png',
+    assetName: 'USDT',
+    chainName: 'Base',
+    priceUsd: 1,
+    decimals: 6,
+    issuer: 'Tether',
+    child: {
+      address: 'eth:0xdAC17F958D2ee523a2206206994597C13D831ec7',
+      bridgeInfo: 'Canonical Bridge',
+      bridgeSeverity: 'low'
+    }
+  },
 ]
