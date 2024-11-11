@@ -35,6 +35,118 @@ export type TokenEntry = AssetEntry & {
 
 export const tokens: AssetEntry[] = [
   // ETHEREUM -------------------------------------VVV
+  {
+    address: 'eth:native',
+    assetLogoUrl:
+      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+    chainLogoUrl:
+      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+    assetName: 'ETH',
+    chainName: 'Ethereum',
+    priceUsd: 3149,
+    decimals: 18,
+    issuer: 'Ethereum',
+  },
+  {
+    address: 'eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0',
+    assetLogoUrl: 'https://basescan.org/token/images/wsteth3_32.png',
+    chainLogoUrl:
+      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+    assetName: 'wstETH',
+    chainName: 'Ethereum',
+    priceUsd: 3719,
+    decimals: 18,
+    issuer: 'Lido',
+  },
+  {
+    address: 'eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
+    assetLogoUrl: 'https://basescan.org/token/images/wbtc_28.png',
+    chainLogoUrl:
+      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+    assetName: 'WBTC',
+    chainName: 'Ethereum',
+    priceUsd: 81167,
+    decimals: 8,
+    issuer: 'BiT Global/BitGo',
+  },
+  {
+    address: 'eth:0x6B175474E89094C44Da98b954EedeAC495271d0F',
+    assetLogoUrl: 'https://basescan.org/token/images/daistablecoin_32.png',
+    chainLogoUrl:
+      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+    assetName: 'DAI',
+    chainName: 'Ethereum',
+    priceUsd: 1,
+    decimals: 18,
+    issuer: 'MakerDAO',
+  },
+  {
+    address: 'eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3',
+    assetLogoUrl: 'https://basescan.org/token/images/ethenausde_32.png',
+    chainLogoUrl:
+      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+    assetName: 'USDe',
+    chainName: 'Ethereum',
+    priceUsd: 1,
+    decimals: 18,
+    issuer: 'Ethena',
+  },
+  {
+    address: 'eth:0x57e114B691Db790C35207b2e685D4A43181e6061',
+    assetLogoUrl: 'https://basescan.org/token/images/ethena_32.png',
+    chainLogoUrl:
+      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+    assetName: 'ENA',
+    chainName: 'Ethereum',
+    priceUsd: 0.5835,
+    decimals: 18,
+    issuer: 'Ethena',
+  },
+  {
+    address: 'eth:0xbf5495Efe5DB9ce00f80364C8B423567e58d2110',
+    assetLogoUrl: 'https://basescan.org/token/images/ezETHv2_32.png',
+    chainLogoUrl:
+      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+    assetName: 'ezETH',
+    chainName: 'Ethereum',
+    priceUsd: 3246,
+    decimals: 18,
+    issuer: 'Renzo',
+  },
+  {
+    address: 'eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704',
+    assetLogoUrl: 'https://basescan.org/token/images/coinbasecbeth_32.png',
+    chainLogoUrl:
+      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
+    assetName: 'cbETH',
+    chainName: 'Ethereum',
+    priceUsd: 3420,
+    decimals: 18,
+    issuer: 'Coinbase',
+  },
+  {
+    address: 'eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+    assetLogoUrl: 'https://basescan.org/token/images/usdbc_ofc_32.png',
+    chainLogoUrl:
+      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
+    assetName: 'USDbC',
+    chainName: 'Ethereum',
+    priceUsd: 1,
+    decimals: 6,
+    issuer: 'Circle',
+  },
+  {
+    address: 'eth:0xdAC17F958D2ee523a2206206994597C13D831ec7',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/325/standard/Tether.png?1696501661',
+    chainLogoUrl:
+      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
+    assetName: 'USDT',
+    chainName: 'Ethereum',
+    priceUsd: 1,
+    decimals: 6,
+    issuer: 'Tether',
+  },
   // BASE -----------------------------------------VVV
   {
     address: 'base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
@@ -111,17 +223,6 @@ export const tokens: AssetEntry[] = [
       bridgeInfo: 'Canonical Bridge',
       bridgeSeverity: 'low',
     },
-  },
-  {
-    address: 'eth:native',
-    assetLogoUrl:
-      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
-    chainLogoUrl: 'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png',
-    assetName: 'ETH',
-    chainName: 'Ethereum',
-    priceUsd: 3149,
-    decimals: 18,
-    issuer: 'Ethereum',
   },
   {
     address: 'base:0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb',
