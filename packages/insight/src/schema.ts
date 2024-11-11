@@ -22,6 +22,11 @@ export interface AssetEntry {
   }
 }
 
+export type TokenEntry = AssetEntry & {
+  balanceUnits: number
+  balanceUsd: number
+}
+
 export const tokens: AssetEntry[] = [
   {
     address: 'base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',

@@ -1,12 +1,13 @@
-import { tokens } from './schema'
+import { useState } from 'react'
+import { Home } from './Home'
+import { Profile } from './Profile'
 
 export function App() {
-  return (
-    <div>
-      <h1>Hello World!</h1>
-      <pre>
-        <code>{JSON.stringify(tokens, null, 2)}</code>
-      </pre>
-    </div>
-  )
+  const [query, setQuery] = useState('')
+
+  if (query === '') {
+    return <Home onSearch={setQuery} />
+  }
+
+  return <Profile query={query} onSearch={setQuery} />
 }
