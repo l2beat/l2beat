@@ -50,13 +50,16 @@ export function Profile(props: Props) {
           }}
         >
           {error && (
-            <label className="px-2 font-semibold italic" htmlFor="addressOrEns">
+            <label
+              className="px-2 font-semibold text-red-600"
+              htmlFor="addressOrEns"
+            >
               {error}
             </label>
           )}
           <input
             className={clsx(
-              'w-60 border border-black px-4 py-1',
+              'w-60 border border-white bg-transparent px-4 py-1',
               error && 'focus:outline-rose-500',
             )}
             type="text"
