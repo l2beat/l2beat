@@ -188,7 +188,7 @@ function toTechnologyContract(
       ? concat(permission.references, manuallyVerifiedReferences)
       : manuallyVerifiedReferences
 
-  const result = [
+  const result: TechnologyContract[] = [
     {
       name,
       addresses,
@@ -196,6 +196,8 @@ function toTechnologyContract(
       chain,
       description: permission.description,
       references,
+      implementationChanged: false,
+      highSeverityFieldChanged: false,
     },
   ]
 
@@ -229,6 +231,8 @@ function toTechnologyContract(
       description: `Those are the participants of the ${permission.name}.`,
       references: permission.references ?? [],
       usedInProjects: undefined,
+      implementationChanged: false,
+      highSeverityFieldChanged: false,
     })
   }
 

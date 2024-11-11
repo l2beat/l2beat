@@ -8,12 +8,7 @@ interface CardProps {
 
 export function Card(props: CardProps) {
   return (
-    <div
-      className={cn(
-        'w-full rounded-xl bg-white p-6 dark:bg-zinc-900',
-        props.className,
-      )}
-    >
+    <div className={cn('w-full rounded-xl bg-[#1F1F38] p-6', props.className)}>
       {props.children}
     </div>
   )

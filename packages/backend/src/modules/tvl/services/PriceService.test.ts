@@ -1,15 +1,17 @@
+import { Logger } from '@l2beat/backend-tools'
+import { Database } from '@l2beat/database'
 import { CoingeckoQueryService, PriceProvider } from '@l2beat/shared'
 import {
   CoingeckoId,
   CoingeckoPriceConfigEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 import { Configuration } from '../../../tools/uif/multi/types'
 import { PriceService } from './PriceService'
 
 describe(PriceService.name, () => {
-  describe(PriceService.prototype.fetchPrices.name, () => {
+  describe(PriceService.prototype.getPrices.name, () => {
     it('fetches prices and joins them with configurations', async () => {
       const from = new UnixTime(100)
       const to = new UnixTime(300)
@@ -30,9 +32,11 @@ describe(PriceService.name, () => {
 
       const priceService = new PriceService({
         priceProvider,
+        database: mockObject<Database>(),
+        logger: Logger.SILENT,
       })
 
-      const prices = await priceService.fetchPrices(
+      const prices = await priceService.getPrices(
         from,
         to,
         coingeckoId,
@@ -43,7 +47,6 @@ describe(PriceService.name, () => {
         coingeckoId,
         from,
         to,
-        undefined,
       )
 
       // all for "a" - maxHeight === null
@@ -62,18 +65,88 @@ describe(PriceService.name, () => {
     })
   })
 
-  describe(PriceService.prototype.getAdjustedTo.name, () => {
+  describe(PriceService.prototype.fetchPricesWithFallback.name, () => {
+    it('returns DB record when PriceProvider fails', async () => {
+      const coingeckoId = CoingeckoId('coingecko-id')
+      const to = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
+      const from = to.add(-1, 'hours').add(1, 'seconds')
+      const configurations = [configuration('id', 1, null)]
+
+      const priceProvider = mockObject<PriceProvider>({
+        getUsdPriceHistoryHourly: mockFn().rejectsWith(new Error('error')),
+      })
+      const priceTable = mockObject<Database['price']>({
+        getByConfigIdsInRange: async () => [price('id', to.toNumber())],
+      })
+
+      const service = new PriceService({
+        priceProvider,
+        database: mockObject<Database>({ price: priceTable }),
+        logger: Logger.SILENT,
+      })
+
+      const result = await service.fetchPricesWithFallback(
+        coingeckoId,
+        from,
+        to,
+        configurations,
+      )
+
+      expect(result).toEqual([{ value: to.toNumber(), timestamp: to }])
+      expect(priceProvider.getUsdPriceHistoryHourly).toHaveBeenOnlyCalledWith(
+        coingeckoId,
+        from,
+        to,
+      )
+      expect(priceTable.getByConfigIdsInRange).toHaveBeenOnlyCalledWith(
+        ['id'],
+        to,
+        to,
+      )
+    })
+
+    it('works only for latest hour', async () => {
+      const coingeckoId = CoingeckoId('coingecko-id')
+      const to = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
+      const from = to.add(-365, 'days')
+      const configurations = [configuration('id', 1, null)]
+
+      const priceProvider = mockObject<PriceProvider>({
+        getUsdPriceHistoryHourly: mockFn().rejectsWith(new Error('error')),
+      })
+
+      const service = new PriceService({
+        priceProvider,
+        database: mockObject<Database>({}),
+        logger: Logger.SILENT,
+      })
+
+      await expect(
+        async () =>
+          await service.fetchPricesWithFallback(
+            coingeckoId,
+            from,
+            to,
+            configurations,
+          ),
+      ).toBeRejectedWith('error')
+    })
+  })
+
+  describe(PriceService.prototype.calculateAdjustedTo.name, () => {
     it('adjust range for coingecko hourly query range', () => {
       const from = 0
       const to = 100
 
       const service = new PriceService({
         priceProvider: mockObject<PriceProvider>({}),
+        database: mockObject<Database>(),
+        logger: Logger.SILENT,
       })
 
-      const result = service.getAdjustedTo(from, to)
+      const result = service.calculateAdjustedTo(from, to)
 
-      const expected = CoingeckoQueryService.getAdjustedTo(
+      const expected = CoingeckoQueryService.calculateAdjustedTo(
         new UnixTime(from),
         new UnixTime(to),
       )
@@ -110,6 +183,5 @@ function coingeckoResponse(timestamp: number) {
   return {
     timestamp: new UnixTime(timestamp),
     value: timestamp, // for the sake of tests simplicity it is the same
-    deltaMs: 0,
   }
 }

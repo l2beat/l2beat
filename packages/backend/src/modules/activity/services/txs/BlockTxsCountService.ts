@@ -1,16 +1,16 @@
 import { AssessCount } from '@l2beat/config'
 import { ActivityRecord } from '@l2beat/database'
 import { BlockProvider } from '@l2beat/shared'
-import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 import { aggregatePerDay } from '../../utils/aggregatePerDay'
 import { RpcUopsAnalyzer } from '../uops/analyzers/RpcUopsAnalyzer'
+import { StarknetUopsAnalyzer } from '../uops/analyzers/StarknetUopsAnalyzer'
 
 interface Dependencies {
   provider: BlockProvider
   projectId: ProjectId
-  type: 'rpc' | 'zksync'
-  rpcUopsAnalyzer: RpcUopsAnalyzer
+  uopsAnalyzer?: RpcUopsAnalyzer | StarknetUopsAnalyzer
   assessCount?: AssessCount
 }
 
@@ -25,9 +25,8 @@ export class BlockTxsCountService {
       const txsCount = this.$.assessCount?.(txs, blockNumber) ?? txs
 
       let uopsCount: number | null = null
-      if (this.$.type === 'rpc') {
-        assert(this.$.rpcUopsAnalyzer)
-        const uops = this.$.rpcUopsAnalyzer.calculateUops(block)
+      if (this.$.uopsAnalyzer) {
+        const uops = this.$.uopsAnalyzer.calculateUops(block)
         uopsCount = this.$.assessCount?.(uops, blockNumber) ?? uops
       }
 

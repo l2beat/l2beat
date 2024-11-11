@@ -23,9 +23,9 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
     to: number,
     configurations: Configuration<CoingeckoPriceConfigEntry>[],
   ) {
-    const adjustedTo = this.$.priceService.getAdjustedTo(from, to)
+    const adjustedTo = this.$.priceService.calculateAdjustedTo(from, to)
 
-    const prices = await this.$.priceService.fetchPrices(
+    const prices = await this.$.priceService.getPrices(
       new UnixTime(from),
       adjustedTo,
       this.$.coingeckoId,

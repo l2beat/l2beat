@@ -1,18 +1,24 @@
-import { Card } from '../../_components/card'
+import { Logo } from '~/components/logo'
 
 export function Disclaimer() {
   return (
-    <Card className="flex flex-col gap-4">
-      <h2 className="text-xl font-bold">
-        How the Assets&apos; Risks Monitor work?
+    <div className="flex flex-col gap-4">
+      <h2 className="flex items-center gap-1.5 font-oswald text-xl font-bold">
+        How the INSIGHT by{' '}
+        <Logo
+          className="dark h-8 w-20 translate-y-0"
+          animated={false}
+          aria-label="L2BEAT"
+        />{' '}
+        work?
       </h2>
-      <p className="text-sm font-medium text-zinc-500 dark:text-gray-50">
+      <p className="text-sm font-medium leading-[170%] text-white/80">
         This is a paragraph 2 ipsum dolor sit amet, consectetur adipiscing elit.
         Proin elementum nulla tortor, ac aliquet nisl this is a link pretium.
         Aliquam id eros ante. Suspendisse vehicula rutrum vehicula. Curabitur
         nec laoreet sapien. Donec quis vulputate magna, non suscipit felis.
       </p>
-      <p className="text-sm font-medium text-zinc-500 dark:text-gray-50">
+      <p className="text-sm font-medium leading-[170%] text-white/80">
         Duis bibendum elementum leo sit amet dignissim. Vestibulum ante ipsum
         primis in faucibus orci luctus et ultrices posuere cubilia curae;
         Aliquam posuere neque sit amet nunc rutrum sollicitudin. Vestibulum at
@@ -25,6 +31,6 @@ export function Disclaimer() {
         tempor justo. Cras eget mauris orci. Nam dictum ligula nunc, at tempor
         tellus pretium a. Duis consectetur pharetra elementum.
       </p>
-    </Card>
+    </div>
   )
 }

@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x6aee0a38af8170f95f07dc8569fa9cee48703ad0
+Generated with discovered.json: 0xa78e2d60f2015678e5767d3af89e67ba9438a931
 
-# Diff at Thu, 07 Nov 2024 11:04:12 GMT:
+# Diff at Sun, 10 Nov 2024 14:19:58 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@e983273bf2ca9304e4b729faaddf20acae0f6c19 block: 21071352
-- current block number: 21071352
+- comparing to: main@5f3c7e0644a7d5faea1ebbb16c0c873d426980fc block: 21071352
+- current block number: 21157823
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Config related.
 
 ## Config/verification related changes
 
@@ -22,6 +22,30 @@ discovery. Values are for block 21071352 (main branch discovery), not current.
       issuedPermissions.2.via.0.description:
 -        "can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
 +        "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+    }
+```
+
+```diff
+    contract ERC20RollupEventInbox (0x4e008aEeA79Fcd5708A7b46CA1732dFAf2a25B7d) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      template:
++        "orbitstack/RollupEventInbox"
+      displayName:
++        "RollupEventInbox"
+      description:
++        "Helper contract sending configuration data over the bridge during the systems initialization."
+    }
+```
+
+```diff
+    contract L1OrbitGatewayRouter (0xeBb17f398ed30d02F2e8733e7c1e5cf566e17812) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      template:
++        "orbitstack/GatewayRouter"
+      displayName:
++        "GatewayRouter"
+      description:
++        "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging."
     }
 ```
 

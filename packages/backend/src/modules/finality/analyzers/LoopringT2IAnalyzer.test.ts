@@ -2,7 +2,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { Database } from '@l2beat/database'
-import { LoopringClient } from '../../../peripherals/loopring/LoopringClient'
+import { LoopringClient } from '@l2beat/shared'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { LoopringT2IAnalyzer } from './LoopringT2IAnalyzer'
 
@@ -18,8 +18,8 @@ describe(LoopringT2IAnalyzer.name, () => {
         }),
       })
       const loopringClient = mockObject<LoopringClient>({
-        getBlock: mockFn().resolvesTo({
-          createdAt: new UnixTime(MOCK_DATA.blockCreatedAt),
+        getBlockWithTransactions: mockFn().resolvesTo({
+          timestamp: MOCK_DATA.blockCreatedAt,
         }),
       })
 

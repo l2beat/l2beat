@@ -1,3 +1,136 @@
+Generated with discovered.json: 0xa7afd5da9d3fbc5f8413a6da688eae16f5fdc056
+
+# Diff at Fri, 08 Nov 2024 09:23:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@53988239f42edde0275ed92d8f3ada4279354f7d block: 22016603
+- current block number: 22134218
+
+## Description
+
+Governance moved to DegenMultisig.
+
+## Watched changes
+
+```diff
+    contract Inbox (0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      issuedPermissions.0.target:
+-        "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+    }
+```
+
+```diff
+    contract SequencerInbox (0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221) {
+    +++ description: State batches / commitments get posted here.
+      issuedPermissions.1.target:
+-        "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+    }
+```
+
+```diff
+    contract ChallengeManager (0x67812161Bbb6aCF891aA6028BC614a660961ceD8) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      issuedPermissions.0.target:
+-        "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+    }
+```
+
+```diff
+    contract ERC20RollupEventInbox (0x766DD3A13d17C6D175975C89225bde89F052dBc4) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      issuedPermissions.0.target:
+-        "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ConduitMultisig3 (0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104)
+    +++ description: None
+```
+
+```diff
+    contract UpgradeExecutor (0xaA3A7A2ec2477A61082E1C41a2c6710587917028) {
+    +++ description: Central contract defining the access control for upgrading the system contract implementations.
+      issuedPermissions.0.target:
+-        "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+      values.executors.0:
+-        "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+    }
+```
+
+```diff
+    contract RollupProxy (0xD34F3a11F10DB069173b32d84F02eDA578709143) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.3.target:
+-        "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+      issuedPermissions.1.target:
+-        "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+    }
+```
+
+```diff
+    contract Outbox (0xe63ddb12FBb6211a73F12a4367b10dA0834B82da) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      issuedPermissions.0.target:
+-        "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+    }
+```
+
+```diff
+    contract Bridge (0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C) {
+    +++ description: Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      issuedPermissions.0.target:
+-        "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DegenMultisig (0x871e290d5447b958131F6d44f915F10032436ee6)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../DegenMultisig/SafeL2.sol}                      | 708 ++++++++++++---------
+ .../DegenMultisig/SafeProxy.p.sol}                 |  10 +-
+ 2 files changed, 420 insertions(+), 298 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22016603 (main branch discovery), not current.
+
+```diff
+    contract ERC20RollupEventInbox (0x766DD3A13d17C6D175975C89225bde89F052dBc4) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      template:
++        "orbitstack/RollupEventInbox"
+      displayName:
++        "RollupEventInbox"
+      description:
++        "Helper contract sending configuration data over the bridge during the systems initialization."
+    }
+```
+
 Generated with discovered.json: 0x9999c42a4fc957a8715e91a613aa9bdfcbbb80ea
 
 # Diff at Tue, 05 Nov 2024 16:03:28 GMT:

@@ -1,26 +1,30 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
+import { Block } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { RetryHandler } from '../../tools/RetryHandler'
 import { HttpClient2 } from '../http/HttpClient2'
 import { FuelClient } from './FuelClient'
 import { tai64ToUnix } from './tai64ToUnix'
 import {
-  FuelBlock,
   FuelBlockResponse,
   FuelError,
   FuelLatestBlockNumberResponse,
 } from './types'
 
 describe(FuelClient.name, () => {
-  describe(FuelClient.prototype.getBlock.name, () => {
+  describe(FuelClient.prototype.getBlockWithTransactions.name, () => {
     it('fetches block from api and parsers response', async () => {
       const mockTia64time = '4611686020155261080'
 
-      const mockFuelBlock: FuelBlock = {
-        id: '0xabcdef',
-        height: 100,
-        transactionsCount: 2,
+      const mockFuelBlock: Block = {
+        hash: '0xabcdef',
+        number: 100,
         timestamp: tai64ToUnix(mockTia64time),
+        transactions: [
+          {
+            hash: '0x123',
+          },
+        ],
       }
 
       const http = mockObject<HttpClient2>({
@@ -29,7 +33,7 @@ describe(FuelClient.name, () => {
 
       const client = mockClient({ http })
 
-      const result = await client.getBlock(100)
+      const result = await client.getBlockWithTransactions(100)
 
       expect(result).toEqual(mockFuelBlock)
     })
@@ -121,17 +125,17 @@ function mockClient(deps: {
 }
 
 const mockFuelBlockResponse = (
-  block: FuelBlock,
+  block: Block,
   time: string,
 ): FuelBlockResponse => ({
   data: {
     block: {
-      id: block.id,
-      height: block.height.toString(),
+      id: block.hash,
+      height: block.number.toString(),
       header: {
-        transactionsCount: block.transactionsCount.toString(),
         time,
       },
+      transactionIds: block.transactions.map((t) => t.hash!),
     },
   },
 })

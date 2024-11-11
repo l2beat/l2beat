@@ -3,6 +3,7 @@
 import Dagre from '@dagrejs/dagre'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
+  type EntityRecord,
   type TokenBridgeRecord,
   type TokenMetaRecord,
   type TokenRecord,
@@ -68,6 +69,7 @@ const tokenFormSchema = z.object({
     z.literal('native'),
     z.string().length(42, "Must be 42 characters long or 'native'"),
   ]),
+  managingEntities: z.array(z.object({ entityId: nanoidSchema })),
   backedBy: z.array(
     z.object({
       sourceTokenId: nanoidSchema,
@@ -90,6 +92,7 @@ export function EditTokenPage({
   tokens,
   bridges: links,
   networks,
+  entities,
 }: {
   networks: { id: string; name: string }[]
   bridges: { id: string; name: string }[]
@@ -98,8 +101,10 @@ export function EditTokenPage({
     | (TokenRecord & {
         relations: TokenBridgeRecord[]
         meta: TokenMetaRecord[]
+        managingEntities: { entityId: string }[]
       })
     | null
+  entities: EntityRecord[]
 }) {
   const router = useRouter()
   const tokenMeta = useMemo(
@@ -118,6 +123,7 @@ export function EditTokenPage({
     defaultValues: {
       networkId: token?.networkId ?? '',
       address: token?.address ?? '',
+      managingEntities: token?.managingEntities ?? [],
       backedBy:
         token?.relations
           .filter((r) => r.sourceTokenId !== token.id)
@@ -141,6 +147,11 @@ export function EditTokenPage({
   const backedBy = useFieldArray({
     control: form.control,
     name: 'backedBy',
+  })
+
+  const managingEntities = useFieldArray({
+    control: form.control,
+    name: 'managingEntities',
   })
 
   const backing =
@@ -191,6 +202,7 @@ export function EditTokenPage({
             externalBridgeId: r.externalBridgeId,
           })),
         ],
+        managingEntities: rawData.managingEntities,
       }
       const result = token
         ? await updateToken({ ...data, id: token.id })
@@ -585,70 +597,148 @@ export function EditTokenPage({
               </Button>
             </CardFooter>
           </Card>
-
           {token && (
-            <>
-              <Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Backing</CardTitle>
+                <CardDescription>
+                  Shows which tokens is this token backing.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {backing.length === 0 ? (
+                  <p className="text-sm text-muted-foreground">
+                    This token is not backing any other token.
+                  </p>
+                ) : (
+                  <Table>
+                    <TableHeader>
+                      <TableHead>Token</TableHead>
+                      <TableHead>Link</TableHead>
+                    </TableHeader>
+                    <TableBody>
+                      {backing.map((field, index) => (
+                        <TableRow key={index}>
+                          <TableCell>{field.targetTokenId}</TableCell>
+                          <TableCell>{field.externalBridgeId}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                )}
+              </CardContent>
+            </Card>
+          )}
+          <Card>
+            <CardHeader>
+              <CardTitle>Managing Entities</CardTitle>
+              <CardDescription>
+                Shows which entities manage this token.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {managingEntities.fields.length === 0 ? (
+                <p className="text-sm text-muted-foreground">
+                  This token is not managed by any entity.
+                </p>
+              ) : (
+                <Table>
+                  <TableHeader>
+                    <TableHead>Entity</TableHead>
+                    <TableHead className="w-0" />
+                  </TableHeader>
+                  <TableBody>
+                    {managingEntities.fields.map((field, index) => (
+                      <TableRow key={field.id}>
+                        <TableCell>
+                          <FormField
+                            control={form.control}
+                            name={`managingEntities.${index}.entityId`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormControl>
+                                  <Select
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}
+                                  >
+                                    <SelectTrigger>
+                                      <SelectValue placeholder="Select an entity" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      {entities.map((entity) => (
+                                        <SelectItem
+                                          key={entity.id}
+                                          value={entity.id}
+                                        >
+                                          {entity.name ?? 'Unknown'}{' '}
+                                          <span className="text-xs text-muted-foreground">
+                                            ({entity.id})
+                                          </span>
+                                        </SelectItem>
+                                      ))}
+                                    </SelectContent>
+                                  </Select>
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => managingEntities.remove(index)}
+                          >
+                            <Trash2 className="size-4" />
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              )}
+            </CardContent>
+            <CardFooter className="flex justify-end">
+              <Button
+                type="button"
+                onClick={() => managingEntities.append({ entityId: '' })}
+              >
+                Add
+              </Button>
+            </CardFooter>
+          </Card>
+          {token && (
+            <div className="flex flex-row gap-4">
+              <Card className="flex-1">
                 <CardHeader>
-                  <CardTitle>Backing</CardTitle>
+                  <CardTitle>Token ID</CardTitle>
                   <CardDescription>
-                    Shows which tokens is this token backing.
+                    Unique identifier of this token.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  {backing.length === 0 ? (
-                    <p className="text-sm text-muted-foreground">
-                      This token is not backing any other token.
-                    </p>
-                  ) : (
-                    <Table>
-                      <TableHeader>
-                        <TableHead>Token</TableHead>
-                        <TableHead>Link</TableHead>
-                      </TableHeader>
-                      <TableBody>
-                        {backing.map((field, index) => (
-                          <TableRow key={index}>
-                            <TableCell>{field.targetTokenId}</TableCell>
-                            <TableCell>{field.externalBridgeId}</TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  )}
+                  <ReadonlyCopyInput value={token.id} />
                 </CardContent>
               </Card>
-              <div className="flex flex-row gap-4">
-                <Card className="flex-1">
-                  <CardHeader>
-                    <CardTitle>Token ID</CardTitle>
-                    <CardDescription>
-                      Unique identifier of this token.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <ReadonlyCopyInput value={token.id} />
-                  </CardContent>
-                </Card>
-                <Card className="flex-1">
-                  <CardHeader>
-                    <CardTitle>Delete Token</CardTitle>
-                    <CardDescription>
-                      This action is irreversible and will delete the token.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardFooter className="flex justify-end">
-                    <Button
-                      variant="destructive"
-                      type="button"
-                      onClick={() => setDeleteDialogOpen(true)}
-                    >
-                      Delete Token
-                    </Button>
-                  </CardFooter>
-                </Card>
-              </div>
-            </>
+              <Card className="flex-1">
+                <CardHeader>
+                  <CardTitle>Delete Token</CardTitle>
+                  <CardDescription>
+                    This action is irreversible and will delete the token.
+                  </CardDescription>
+                </CardHeader>
+                <CardFooter className="flex justify-end">
+                  <Button
+                    variant="destructive"
+                    type="button"
+                    onClick={() => setDeleteDialogOpen(true)}
+                  >
+                    Delete Token
+                  </Button>
+                </CardFooter>
+              </Card>
+            </div>
           )}
         </div>
         <DiscardChangesDialog

@@ -1,12 +1,17 @@
+import { type SvgIconProps } from '~/icons/svg-icon'
 import { cn } from '~/utils/cn'
 
-export interface LogoProps {
-  className?: string
+export interface LogoProps extends SvgIconProps {
   animated?: boolean
   small?: boolean
 }
 
-export function Logo({ className, animated = true, small = false }: LogoProps) {
+export function Logo({
+  className,
+  animated = true,
+  small = false,
+  ...props
+}: LogoProps) {
   return (
     <svg
       className={cn('translate-y-[-2.5px] overflow-visible', className)}
@@ -17,6 +22,7 @@ export function Logo({ className, animated = true, small = false }: LogoProps) {
       xmlns="http://www.w3.org/2000/svg"
       role="img"
       aria-label="L2BEAT logo"
+      {...props}
     >
       <g className={cn('origin-center', animated && 'animate-beat')}>
         <path

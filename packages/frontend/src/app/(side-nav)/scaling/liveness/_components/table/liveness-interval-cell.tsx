@@ -123,8 +123,7 @@ function getNonApplicableTooltipText(
 ) {
   if (
     dataType === 'batchSubmissions' &&
-    (project?.dataAvailabilityMode === 'State diffs' ||
-      project?.dataAvailabilityMode === 'State diffs (compressed)')
+    project?.dataAvailabilityMode?.value === 'State diffs'
   ) {
     return 'State diff rollups do not post batches of transactions to the L1.'
   }

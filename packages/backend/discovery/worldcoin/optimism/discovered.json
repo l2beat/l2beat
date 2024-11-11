@@ -1,7 +1,7 @@
 {
   "name": "worldcoin",
   "chain": "optimism",
-  "blockNumber": 123584561,
+  "blockNumber": 127729542,
   "configHash": "0xacfdf8cae6b79206af8daa019648487244a36aebfae0394e9a29e7ea1544a351",
   "contracts": [
     {
@@ -24,7 +24,7 @@
         "getChainId": 10,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 10,
+        "nonce": 11,
         "VERSION": "1.3.0"
       }
     },
@@ -145,7 +145,7 @@
         "getChainId": 10,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 13,
+        "nonce": 14,
         "VERSION": "1.3.0"
       }
     },
@@ -181,7 +181,7 @@
         "getChainId": 10,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 26,
+        "nonce": 27,
         "VERSION": "1.3.0"
       }
     },
@@ -193,7 +193,7 @@
       ],
       "ignoreInWatchMode": ["getCurrentId"],
       "sinceTimestamp": 1722153659,
-      "values": { "$immutable": true, "calculateId": [], "getCurrentId": 39 },
+      "values": { "$immutable": true, "calculateId": [], "getCurrentId": 46 },
       "derivedName": "WLDGrant"
     },
     {
@@ -239,7 +239,7 @@
         "getChainId": 10,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 16,
+        "nonce": 19,
         "VERSION": "1.3.0"
       }
     },
@@ -282,7 +282,7 @@
         "getSemaphoreVerifierAddress": "0x31b0e17db1D02B079177698dF2eD7037Fc1d0B2c",
         "getTreeDepth": 30,
         "identityOperator": "0x997c96386A7D0A491170742346570eb8E8A4E96E",
-        "latestRoot": "14704416756932451497324454646328411445076347139566027368256712337201170915024",
+        "latestRoot": "12288050922895207407279920155798897051447935430829628481638158416096445574946",
         "NO_SUCH_ROOT": {
           "root": 0,
           "supersededTimestamp": 0,
@@ -292,6 +292,15 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
       "derivedName": "WorldIDIdentityManagerImplV2"
+    },
+    {
+      "name": "Verifier",
+      "address": "0xa6d85F3b3bE6Ff6DC52C3aaBe9A35d0ce252b79F",
+      "sourceHashes": [
+        "0xaf7a518594f31dbc23c534719916ed50d7548b82bd675415a1a697555b68f471"
+      ],
+      "sinceTimestamp": 1730982513,
+      "values": { "$immutable": true }
     },
     {
       "name": "VerifierLookupTable",
@@ -379,7 +388,7 @@
         "getChainId": 10,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 6 (33%)",
-        "nonce": 21,
+        "nonce": 22,
         "VERSION": "1.3.0"
       }
     },
@@ -402,7 +411,7 @@
         "REMOTE_TOKEN": "0x163f8C2467924be0ae7B5347228CABF260318753",
         "remoteToken": "0x163f8C2467924be0ae7B5347228CABF260318753",
         "symbol": "WLD",
-        "totalSupply": "264136550414669009132423397",
+        "totalSupply": "328472627106591140054273696",
         "version": "1.0.0"
       },
       "derivedName": "OptimismMintableERC20"
@@ -495,7 +504,6 @@
       ]
     },
     { "address": "0x997c96386A7D0A491170742346570eb8E8A4E96E" },
-    { "address": "0xa6d85F3b3bE6Ff6DC52C3aaBe9A35d0ce252b79F" },
     { "address": "0xB6d1621B770A088C16bfec22bAd00F77D874d011" },
     { "address": "0xF85733e96Fa7791C5188C4B9740f0ff7d7bd2C09" }
   ],
@@ -720,6 +728,13 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function verifyProof(uint256 root, uint256 signalHash, uint256 nullifierHash, uint256 externalNullifierHash, uint256[8] proof) view"
+    ],
+    "0xa6d85F3b3bE6Ff6DC52C3aaBe9A35d0ce252b79F": [
+      "error ProofInvalid()",
+      "error PublicInputNotInField()",
+      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
+      "function verifyCompressedProof(uint256[4] compressedProof, uint256[1] input) view",
+      "function verifyProof(uint256[8] proof, uint256[1] input) view"
     ],
     "0xA8710B3ba329fc7B80a49F7C82E889D1340C99fb": [
       "constructor()",

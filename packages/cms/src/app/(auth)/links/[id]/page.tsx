@@ -10,5 +10,22 @@ export default async function Page({ params }: { params: { id: string } }) {
     return notFound()
   }
 
-  return <EditLinkPage link={link} />
+  const [entities, managingEntities] = await Promise.all([
+    db.entity.getAll(),
+    db.entityToExternalBridge.getEntityIdsByExternalBridgeId(params.id),
+  ])
+
+  return (
+    <EditLinkPage
+      link={
+        link && {
+          ...link,
+          managingEntities: managingEntities.map((entityId) => ({
+            entityId,
+          })),
+        }
+      }
+      entities={entities}
+    />
+  )
 }

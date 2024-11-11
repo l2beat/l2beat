@@ -1,5 +1,6 @@
 import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
 
+import { DA_BRIDGES, DA_LAYERS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
@@ -46,7 +47,7 @@ export const xterio: Layer2 = opStackL2({
     activityDataSource: 'Blockchain RPC',
   },
   daProvider: {
-    name: 'XterioDA',
+    layer: DA_LAYERS.XTERIO_DA,
     riskView: {
       value: 'External',
       description:
@@ -77,7 +78,7 @@ export const xterio: Layer2 = opStackL2({
         },
       ],
     },
-    bridge: { type: 'None + DA challenges' },
+    bridge: DA_BRIDGES.NONE_WITH_DA_CHALLENGES,
   },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(

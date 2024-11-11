@@ -151,6 +151,7 @@ const config: Config = {
         700: '#005DD7',
         800: '#083575',
         900: '#112944',
+        950: '#152A4B',
       },
       slate: {
         600: '#525C6A',
@@ -266,6 +267,13 @@ const config: Config = {
           'var(--font-roboto-serif-ext)',
           'var(--font-roboto-serif)',
           'Roboto Serif',
+          'Roboto',
+          'Arial',
+        ],
+        oswald: [
+          'var(--font-oswald)',
+          'Oswald',
+          'var(--font-roboto)',
           'Roboto',
           'Arial',
         ],
