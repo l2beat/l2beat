@@ -1,11 +1,6 @@
 import { useMemo } from 'react'
 import { AssetEntry, TokenEntry, tokens } from '../schema'
-
-interface Balance {
-  chain: string
-  address: string
-  balance: number
-}
+import { useBalances } from './useBalances'
 
 const chainToPrefix: Record<string, string> = {
   arbitrum: 'arb1',
@@ -41,14 +36,16 @@ const countSeverities = (
   return { low, medium, high }
 }
 
-export function useTokens(tokenBalances: Balance[]): TokenEntry[] {
+export function useTokens(addressOrENS: string): TokenEntry[] {
+  const tokenBalances = useBalances(addressOrENS)
+
   const tokensToDisplay = useMemo(() => {
     return tokenBalances.map((tokenBalance) => {
       const address = `${chainToPrefix[tokenBalance.chain]}:${tokenBalance.address}`
       const token = tokens.find((token) => token.address === address)
       if (!token) return
 
-      const balanceUnits = tokenBalance.balance / 10 ** token.decimals
+      const balanceUnits = Number(tokenBalance.balance) / 10 ** token.decimals
       const balanceUsd = balanceUnits * token.priceUsd
 
       const childEntry = token.child

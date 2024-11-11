@@ -1,6 +1,6 @@
 import { useState } from 'react'
+import { useTokens } from './hooks/useTokens'
 import { TokenEntry } from './schema'
-import { useTokens } from './useTokens'
 
 interface Props {
   query: string
@@ -26,31 +26,28 @@ export function Profile(props: Props) {
         />
       </form>
       <h1>Profile of {props.query}</h1>
-      {response.type === 'loading' && <div>Loading</div>}
-      {response.type === 'success' && (
-        <table>
-          <thead>
-            <tr>
-              <th />
-              <th />
-              <th className="text-right">#</th>
-              <th />
-              <th className="text-right">Balance</th>
-              <th />
-              <th className="pl-14 text-left">Token</th>
-              <th />
-              <th className="text-left">Issuer</th>
-              <th />
-              <th className="text-left">Risks</th>
-            </tr>
-          </thead>
-          <tbody>
-            {response.data.map((entry, i) => (
-              <ProfileRow entry={entry} i={i} />
-            ))}
-          </tbody>
-        </table>
-      )}
+      <table>
+        <thead>
+          <tr>
+            <th />
+            <th />
+            <th className="text-right">#</th>
+            <th />
+            <th className="text-right">Balance</th>
+            <th />
+            <th className="pl-14 text-left">Token</th>
+            <th />
+            <th className="text-left">Issuer</th>
+            <th />
+            <th className="text-left">Risks</th>
+          </tr>
+        </thead>
+        <tbody>
+          {response.map((entry, i) => (
+            <ProfileRow entry={entry} i={i} />
+          ))}
+        </tbody>
+      </table>
     </div>
   )
 }
