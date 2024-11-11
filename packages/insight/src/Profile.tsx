@@ -1,6 +1,9 @@
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 import { isAddress } from 'viem'
+import ChevronDown from './assets/chevron-down.svg'
+import ChevronRight from './assets/chevron-right.svg'
+import LogoSmall from './assets/logo-small.svg'
 import { useTokens } from './hooks/useTokens'
 import { ConnectedEntry, TokenEntry } from './schema'
 
@@ -22,64 +25,75 @@ export function Profile(props: Props) {
 
   return (
     <div className="mx-auto max-w-4xl p-4 pt-10">
-      <form
-        className="flex items-center justify-end"
-        onSubmit={(e) => {
-          e.preventDefault()
-          if (search.startsWith('0x') && !isAddress(search)) {
-            setError('Invalid address')
-            return
-          } else if (!search.endsWith('0x') && !search.endsWith('.eth')) {
-            setError('Invalid ENS')
-            return
-          }
-
-          if (search !== '') {
-            props.onSearch(search)
-          }
-        }}
-      >
-        {error && (
-          <label className="px-2 font-semibold italic" htmlFor="addressOrEns">
-            {error}
-          </label>
-        )}
-        <input
-          className={clsx(
-            'w-60 border border-black px-4 py-1',
-            error && 'focus:outline-rose-500',
-          )}
-          type="text"
-          placeholder="Input address or ENS name"
-          value={search}
-          name="addressOrEns"
-          onChange={(e) => setSearch(e.target.value)}
+      <div className="mb-10 flex items-center justify-between">
+        <img
+          src={LogoSmall}
+          alt="Insight"
+          onClick={() => props.onSearch('')}
+          className="cursor-pointer"
         />
-      </form>
-      <h1>Profile of {props.query}</h1>
+        <form
+          className="flex items-center justify-end"
+          onSubmit={(e) => {
+            e.preventDefault()
+            if (search.startsWith('0x') && !isAddress(search)) {
+              setError('Invalid address')
+              return
+            } else if (!search.endsWith('0x') && !search.endsWith('.eth')) {
+              setError('Invalid ENS')
+              return
+            }
+
+            if (search !== '') {
+              props.onSearch(search)
+            }
+          }}
+        >
+          {error && (
+            <label className="px-2 font-semibold italic" htmlFor="addressOrEns">
+              {error}
+            </label>
+          )}
+          <input
+            className={clsx(
+              'w-60 border border-black px-4 py-1',
+              error && 'focus:outline-rose-500',
+            )}
+            type="text"
+            placeholder="Input address or ENS name"
+            value={search}
+            name="addressOrEns"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </form>
+      </div>
+      <h1 className="mb-10 text-xl">Profile of {props.query}</h1>
       <table>
         <thead>
           <tr>
             <th />
+            <th className="py-2 text-right">#</th>
             <th />
-            <th className="text-right">#</th>
+            <th className="py-2 text-right">Balance</th>
             <th />
-            <th className="text-right">Balance</th>
+            <th className="py-2 pl-14 text-left">Token</th>
             <th />
-            <th className="pl-14 text-left">Token</th>
+            <th className="py-2 text-left">Issuer</th>
             <th />
-            <th className="text-left">Issuer</th>
-            <th />
-            <th className="text-left">Risks</th>
+            <th className="py-2 text-left">Risks</th>
           </tr>
         </thead>
         <tbody>
           {response.isSuccess &&
-            response.data.map((entry, i) => <ProfileRow entry={entry} i={i} />)}
+            response.data.map((entry, i) => (
+              <ProfileRow key={entry.address} entry={entry} i={i} />
+            ))}
         </tbody>
       </table>
       {response.isPending && <div>Loading</div>}
-      {response.tokensStatus.isError && <div>{response.tokensStatus.error?.message}</div>}
+      {response.tokensStatus.isError && (
+        <div>{response.tokensStatus.error?.message}</div>
+      )}
     </div>
   )
 }
@@ -92,28 +106,39 @@ function ProfileRow({ entry, i }: { entry: TokenEntry; i: number }) {
       <tr
         key={entry.address}
         className={clsx(
-          'border-black border-t',
+          'border-zinc-600 border-t',
           entry.child && 'cursor-pointer',
         )}
-        onClick={() => entry.child && setOpen(!open)}
+        onClick={() => setOpen(!open)}
       >
-        <td className="w-0">{entry.child && (open ? 'V' : '>')}</td>
-        <td className="w-[20%]" />
-        <td className="w-0">{i + 1}</td>
-        <td className="w-[20%]" />
-        <td className="w-0">
-          <div className="text-right">${formatNumber(entry.balanceUsd, 2)}</div>
+        <td className="w-4 py-2 pr-4">
+          <img
+            src={open ? ChevronDown : ChevronRight}
+            className="block h-4 w-4 min-w-4"
+            width={16}
+            height={16}
+          />
+        </td>
+        <td className="w-0 py-2 text-right text-zinc-400">{i + 1}</td>
+        <td className="w-[25%] py-2" />
+        <td className="w-0 py-2 tabular-nums">
+          <div className="text-right font-semibold text-lg text-yellow-400">
+            ${formatNumber(entry.balanceUsd, 2)}
+          </div>
           <div className="text-right">
             {formatNumber(entry.balanceUnits, 4)}
           </div>
         </td>
-        <td className="w-[20%]" />
-        <td className="flex w-min gap-4">
-          <div className="relative h-10 w-10 min-w-10">
-            <img src={entry.assetLogoUrl} className="h-10 w-10" />
+        <td className="w-[25%] py-2" />
+        <td className="flex w-min gap-4 py-2">
+          <div className="relative h-13 w-10 min-w-10">
+            <img
+              src={entry.assetLogoUrl}
+              className="relative top-0.5 h-10 w-10"
+            />
             <img
               src={entry.chainLogoUrl}
-              className="-bottom-1.5 -right-1.5 absolute h-6 w-6"
+              className="-bottom-0.5 -right-1.5 absolute h-6 w-6"
             />
           </div>
           <div className="whitespace-pre">
@@ -123,10 +148,10 @@ function ProfileRow({ entry, i }: { entry: TokenEntry; i: number }) {
             <div>{formatAddress(entry.address)}</div>
           </div>
         </td>
-        <td className="w-[20%]" />
+        <td className="w-[25%] py-2" />
         <td className="w-0">{entry.issuer}</td>
-        <td className="w-[20%]" />
-        <td className="w-0 whitespace-pre">
+        <td className="w-[25%] py-2" />
+        <td className="w-0 whitespace-pre py-2">
           {new Array(entry.severity.high)
             .fill('HIGH')
             .concat(new Array(entry.severity.medium).fill('MED'))
@@ -179,5 +204,8 @@ function formatNumber(value: number, decimals: number) {
 
 function formatAddress(value: string) {
   const [chain, address] = value.split(':')
+  if (address === 'native') {
+    return 'Native token'
+  }
   return `${chain}:${address?.slice(0, 6)}…${address?.slice(-4)}`
 }
