@@ -46,6 +46,7 @@ export function Profile(props: Props) {
 
             if (search !== '') {
               props.onSearch(search)
+              setSearch("")
             }
           }}
         >
