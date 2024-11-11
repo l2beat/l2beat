@@ -268,4 +268,99 @@ export const tokens: AssetEntry[] = [
       bridgeSeverity: 'low'
     }
   },
+  {
+    address: 'arb1:0x912CE59144191C1204E64559FE8253a0e49E6548',
+    assetLogoUrl: 'https://arbiscan.io/token/images/arbitrumone2_32_new.png',
+    chainLogoUrl: 'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png',
+    assetName: 'ARB',
+    chainName: 'Arbitrum One',
+    priceUsd: 0.63,
+    decimals: 18,
+    issuer: 'Arbitrum Foundation / DAO',
+  },
+  {
+    address: 'arb1:0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
+    assetLogoUrl: 'https://arbiscan.io/token/images/centre-usdc_28.png',
+    chainLogoUrl: 'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png',
+    assetName: 'USDC',
+    chainName: 'Arbitrum One',
+    priceUsd: 1,
+    decimals: 6,
+    issuer: 'Circle',
+  },
+  {
+    address: 'arb1:0xfc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a',
+    assetLogoUrl: 'https://arbiscan.io/token/images/gmxarbi_32.png',
+    chainLogoUrl: 'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png',
+    assetName: 'GMX',
+    chainName: 'Arbitrum One',
+    priceUsd: 27.55,
+    decimals: 18,
+    issuer: 'GMX.io',
+  },
+  {
+    address: 'arb1:0x6985884C4392D348587B19cb9eAAf157F13271cd',
+    assetLogoUrl: 'https://arbiscan.io/token/images/zro_32.png',
+    chainLogoUrl: 'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png',
+    assetName: 'GMX',
+    chainName: 'Arbitrum One',
+    priceUsd: 3.88,
+    decimals: 18,
+    issuer: 'LayerZero',
+  },
+  {
+    address: 'arb1:0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66',
+    assetLogoUrl: 'https://arbiscan.io/token/images/xaitoken_32.png?v=12',
+    chainLogoUrl: 'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png',
+    assetName: 'XAI',
+    chainName: 'Arbitrum One',
+    priceUsd: 0.24,
+    decimals: 18,
+    issuer: 'XAI.games',
+  },
+  {
+    address: 'arb1:0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9',
+    assetLogoUrl: 'https://arbiscan.io/token/images/tether_32.png',
+    chainLogoUrl: 'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png',
+    assetName: 'USDT',
+    chainName: 'Arbitrum One',
+    priceUsd: 1,
+    decimals: 6,
+    issuer: 'Tether',
+    child: {
+      address: 'eth:0xdAC17F958D2ee523a2206206994597C13D831ec7',
+      bridgeInfo: 'Canonical Bridge (external escrow)',
+      bridgeSeverity: 'medium'
+    }
+  },
+  {
+    address: 'arb1:0x9623063377AD1B27544C965cCd7342f7EA7e88C7',
+    assetLogoUrl: 'https://arbiscan.io/token/images/TheGraph_32.png',
+    chainLogoUrl: 'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png',
+    assetName: 'GRT',
+    chainName: 'Arbitrum One',
+    priceUsd: 0.1829,
+    decimals: 18,
+    issuer: 'The Graph',
+    child: {
+      address: 'eth:0xc944E90C64B2c07662A292be6244BDf05Cda44a7',
+      bridgeInfo: 'Canonical Bridge (external escrow)',
+      bridgeSeverity: 'medium'
+    }
+  },
+  {
+    address: 'arb1:0x5979D7b546E38E414F7E9822514be443A4800529',
+    assetLogoUrl: 'https://arbiscan.io/token/images/lido_32.png',
+    chainLogoUrl: 'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png',
+    assetName: 'wstETH',
+    chainName: 'Arbitrum One',
+    priceUsd: 3770,
+    decimals: 18,
+    issuer: 'Lido',
+    child: {
+      address: 'eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0',
+      bridgeInfo: 'Canonical Bridge (external escrow)',
+      bridgeSeverity: 'medium'
+    }
+  },
 ]
