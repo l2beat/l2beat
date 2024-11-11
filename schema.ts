@@ -119,18 +119,58 @@ export const tokens: AssetEntry[] = [
     }
   },
   {
-    address: 'base:0xB6fe221Fe9EeF5aBa221c348bA20A1Bf5e73624c',
-    assetLogoUrl: 'https://basescan.org/token/images/rocketpooleth_32.png',
+    address: 'base:0x58538e6A46E07434d7E7375Bc268D3cb839C0133',
+    assetLogoUrl: 'https://basescan.org/token/images/ethena_32.png',
     chainLogoUrl: 'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png',
-    assetName: 'rETH',
+    assetName: 'ENA',
     chainName: 'Base',
-    priceUsd: 3528,
+    priceUsd: 0.5835,
     decimals: 18,
-    issuer: 'RocketPool',
+    issuer: 'Ethena',
     child: {
-      address: 'eth:0xae78736Cd615f374D3085123A210448E74Fc6393',
-      bridgeInfo: 'Canonical Bridge',
-      bridgeSeverity: 'low'
+      address: 'eth:0x57e114B691Db790C35207b2e685D4A43181e6061',
+      bridgeInfo: 'LayerZero v2 OFT (external)',
+      bridgeSeverity: 'high'
     }
+  },
+  {
+    address: 'base:0x2416092f143378750bb29b79eD961ab195CcEea5',
+    assetLogoUrl: 'https://basescan.org/token/images/ezETHv2_32.png',
+    chainLogoUrl: 'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png',
+    assetName: 'ezETH',
+    chainName: 'Base',
+    priceUsd: 3246,
+    decimals: 18,
+    issuer: 'Renzo',
+    child: {
+      address: 'eth:0xbf5495Efe5DB9ce00f80364C8B423567e58d2110',
+      bridgeInfo: 'Hyperlane, Everclear xERC-20 (external)',
+      bridgeSeverity: 'high'
+    }
+  },
+  {
+    address: 'base:0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed',
+    assetLogoUrl: 'https://basescan.org/token/images/degentips_32.png',
+    chainLogoUrl: 'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png',
+    assetName: 'DEGEN',
+    chainName: 'Base',
+    priceUsd: 0.0105,
+    decimals: 18,
+    issuer: 'degen.tips',
+    // child: {
+    //   address: 'eth:0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed',
+    //   bridgeInfo: 'LayerZero v2 OFT (external)',
+    //   bridgeSeverity: 'high'
+    // }
+  },
+  {
+    address: 'base:0x6223901eA64608c75Da8497d5eff15D19A1D8fd5',
+    assetLogoUrl: 'https://basescan.org/token/images/corgibase_32.png',
+    chainLogoUrl: 'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png',
+    assetName: 'CORGI',
+    chainName: 'Base',
+    priceUsd: 0.0005365,
+    decimals: 18,
+    issuer: 'CORGI Coin Inc.',
   },
 ]
