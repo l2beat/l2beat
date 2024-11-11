@@ -32,7 +32,7 @@ const countSeverities = (
     }
   }
   const child = token.child
-    ? tokens.find((token) => token.address === token.child?.address)
+    ? tokens.find((t) => t.address === token.child?.address)
     : undefined
   if (child?.child) return countSeverities(child, low, medium, high)
 
