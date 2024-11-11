@@ -707,7 +707,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg?1721358242',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
+      'https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg',
     assetName: 'ARB',
     chainName: 'Arbitrum One',
     priceUsd: 0.63,
@@ -721,7 +721,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
+      'https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg',
     assetName: 'USDC',
     chainName: 'Arbitrum One',
     priceUsd: 1,
@@ -735,7 +735,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://assets.coingecko.com/coins/images/18323/large/arbit.png?1696517814',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
+      'https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg',
     assetName: 'GMX',
     chainName: 'Arbitrum One',
     priceUsd: 27.55,
@@ -749,7 +749,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://coin-images.coingecko.com/coins/images/28206/large/ftxG9_TJ_400x400.jpeg?1696527208',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
+      'https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg',
     assetName: 'ZRO',
     chainName: 'Arbitrum One',
     priceUsd: 3.88,
@@ -763,7 +763,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://assets.coingecko.com/coins/images/34258/large/2024-01-09_16.31.28.jpg?1704789138',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
+      'https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg',
     assetName: 'XAI',
     chainName: 'Arbitrum One',
     priceUsd: 0.24,
@@ -777,7 +777,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://coin-images.coingecko.com/coins/images/31271/large/usdt.jpeg?1696530095',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
+      'https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg',
     assetName: 'USDT',
     chainName: 'Arbitrum One',
     priceUsd: 1,
@@ -794,7 +794,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://assets.coingecko.com/coins/images/13397/large/Graph_Token.png?1696513159',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
+      'https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg',
     assetName: 'GRT',
     chainName: 'Arbitrum One',
     priceUsd: 0.1829,
@@ -811,7 +811,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
+      'https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg',
     assetName: 'wstETH',
     chainName: 'Arbitrum One',
     priceUsd: 3770,
@@ -828,7 +828,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://coin-images.coingecko.com/coins/images/31580/large/USDC-icon.png?1696530397',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
+      'https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg',
     assetName: 'USDC.e',
     chainName: 'Arbitrum One',
     priceUsd: 1,
@@ -845,7 +845,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://assets.coingecko.com/coins/images/7137/large/logo-circle-green.png?1696507437',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
+      'https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg',
     assetName: 'LPT',
     chainName: 'Arbitrum One',
     priceUsd: 1,
@@ -862,7 +862,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://assets.coingecko.com/coins/images/34753/large/eth_renzo_logo_%281%29.png?1705956747',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
+      'https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg',
     assetName: 'ezETH',
     chainName: 'Arbitrum One',
     priceUsd: 3246,
@@ -879,7 +879,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
+      'https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg',
     assetName: 'ETH',
     chainName: 'Arbitrum One',
     priceUsd: 3149,
@@ -896,7 +896,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
+      'https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg',
     assetName: 'WETH',
     chainName: 'Arbitrum One',
     priceUsd: 3149,
@@ -913,7 +913,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
+      'https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg',
     assetName: 'WBTC',
     chainName: 'Arbitrum One',
     priceUsd: 81850,
@@ -930,7 +930,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://assets.coingecko.com/coins/images/25266/large/CxpMECpk_400x400_%281%29.png?1696524406',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
+      'https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg',
     assetName: 'APEX',
     chainName: 'Arbitrum One',
     priceUsd: 1.66,
@@ -947,7 +947,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://assets.coingecko.com/coins/images/33033/large/weETH.png?1701438396',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
+      'https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg',
     assetName: 'weETH',
     chainName: 'Arbitrum One',
     priceUsd: 3180,
@@ -964,7 +964,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://assets.coingecko.com/coins/images/15069/large/Pendle_Logo_Normal-03.png?1696514728',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
+      'https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg',
     assetName: 'PENDLE',
     chainName: 'Arbitrum One',
     priceUsd: 5.63,
@@ -981,7 +981,7 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://assets.coingecko.com/coins/images/18623/large/magic.png?1696518095',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
+      'https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg',
     assetName: 'MAGIC',
     chainName: 'Arbitrum One',
     priceUsd: 0.41,
