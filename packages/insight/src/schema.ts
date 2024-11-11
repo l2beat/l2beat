@@ -65,6 +65,22 @@ export const tokens: AssetEntry[] = [
     priceUsd: 3719,
     decimals: 18,
     issuer: 'Lido',
+    child: {
+      address: 'eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84',
+      bridgeInfo: 'stETH wrapper',
+      bridgeSeverity: 'medium',
+    },
+  },
+  {
+    address: 'eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84',
+    assetLogoUrl: 'https://basescan.org/token/images/wsteth3_32.png',
+    chainLogoUrl:
+      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+    assetName: 'stETH',
+    chainName: 'Ethereum',
+    priceUsd: 3196,
+    decimals: 18,
+    issuer: 'Lido',
   },
   {
     address: 'eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
@@ -125,7 +141,7 @@ export const tokens: AssetEntry[] = [
     address: 'eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704',
     assetLogoUrl: 'https://basescan.org/token/images/coinbasecbeth_32.png',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
+      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
     assetName: 'cbETH',
     chainName: 'Ethereum',
     priceUsd: 3420,
@@ -134,10 +150,10 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-    assetLogoUrl: 'https://basescan.org/token/images/usdbc_ofc_32.png',
+    assetLogoUrl: 'https://etherscan.io/token/images/centre-usdc_28.png',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
-    assetName: 'USDbC',
+      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+    assetName: 'USDC',
     chainName: 'Ethereum',
     priceUsd: 1,
     decimals: 6,
@@ -148,12 +164,105 @@ export const tokens: AssetEntry[] = [
     assetLogoUrl:
       'https://assets.coingecko.com/coins/images/325/standard/Tether.png?1696501661',
     chainLogoUrl:
-      'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
+      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
     assetName: 'USDT',
     chainName: 'Ethereum',
     priceUsd: 1,
     decimals: 6,
     issuer: 'Tether',
+  },
+  {
+    address: 'eth:0xc944E90C64B2c07662A292be6244BDf05Cda44a7',
+    assetLogoUrl: 'https://arbiscan.io/token/images/TheGraph_32.png',
+    chainLogoUrl:
+      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+    assetName: 'GRT',
+    chainName: 'Ethereum',
+    priceUsd: 0.1829,
+    decimals: 18,
+    issuer: 'The Graph',
+  },
+  {
+    address: 'eth:0x58b6A8A3302369DAEc383334672404Ee733aB239',
+    assetLogoUrl: 'https://arbiscan.io/token/images/livepeer_32.png',
+    chainLogoUrl:
+      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+    assetName: 'LPT',
+    chainName: 'Ethereum',
+    priceUsd: 1,
+    decimals: 18,
+    issuer: 'Livepeer',
+  },
+  {
+    address: 'eth:0x52A8845DF664D76C69d2EEa607CD793565aF42B8',
+    assetLogoUrl: 'https://arbiscan.io/token/images/apexprotocol_32.png',
+    chainLogoUrl:
+      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+    assetName: 'APEX',
+    chainName: 'Ethereum',
+    priceUsd: 1.66,
+    decimals: 18,
+    issuer: 'ApeX Protocol',
+  },
+  {
+    address: 'eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee',
+    assetLogoUrl: 'https://arbiscan.io/token/images/etherfiweeth_32.png',
+    chainLogoUrl:
+      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+    assetName: 'weETH',
+    chainName: 'Ethereum',
+    priceUsd: 3180,
+    decimals: 18,
+    issuer: 'Ether.fi',
+    child: {
+      address: 'eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2',
+      bridgeInfo: 'eETH wrapper',
+      bridgeSeverity: 'medium',
+    },
+  },
+  {
+    address: 'eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2',
+    assetLogoUrl: 'https://arbiscan.io/token/images/etherfiweeth_32.png',
+    chainLogoUrl:
+      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+    assetName: 'eETH',
+    chainName: 'Ethereum',
+    priceUsd: 3180,
+    decimals: 18,
+    issuer: 'Ether.fi',
+  },
+  {
+    address: 'eth:0x808507121B80c02388fAd14726482e061B8da827',
+    assetLogoUrl: 'https://arbiscan.io/token/images/pendlefin_32.png',
+    chainLogoUrl:
+      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+    assetName: 'PENDLE',
+    chainName: 'Ethereum',
+    priceUsd: 5.63,
+    decimals: 18,
+    issuer: 'Pendle',
+  },
+  {
+    address: 'eth:0xB0c7a3Ba49C7a6EaBa6cD4a96C55a1391070Ac9A',
+    assetLogoUrl: 'https://arbiscan.io/token/images/magicv2_32.png',
+    chainLogoUrl:
+      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+    assetName: 'MAGIC',
+    chainName: 'Ethereum',
+    priceUsd: 0.41,
+    decimals: 18,
+    issuer: 'Treasure Technology Foundation',
+  },
+  {
+    address: 'arb1:0x514910771AF9Ca656af840dff83E8264EcF986CA',
+    assetLogoUrl: 'https://arbiscan.io/token/images/chainlink_32.png?v=1',
+    chainLogoUrl:
+      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+    assetName: 'LINK',
+    chainName: 'Arbitrum One',
+    priceUsd: 14.08,
+    decimals: 18,
+    issuer: 'Chainlink Foundation',
   },
   // BASE -----------------------------------------VVV
   {
