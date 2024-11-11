@@ -1,13 +1,6 @@
 import { AssetEntry, ConnectedEntry, TokenEntry, tokens } from '../schema'
 import { Balance } from './Balance'
 
-const chainToPrefix: Record<string, string> = {
-  arbitrum: 'arb1',
-  optimism: 'oeth',
-  ethereum: 'eth',
-  base: 'base',
-}
-
 const countSeverities = (
   token: AssetEntry,
   low: number = 0,
@@ -50,7 +43,7 @@ const createChildren = (childEntry: AssetEntry): ConnectedEntry => {
 }
 
 export function toTokenEntry(tokenBalance: Balance): TokenEntry | undefined {
-  const address = `${chainToPrefix[tokenBalance.chain]}:${tokenBalance.address}`
+  const address = `${tokenBalance.chain}:${tokenBalance.address}`
   const token = tokens.find((token) => token.address === address)
   if (!token) return
 
