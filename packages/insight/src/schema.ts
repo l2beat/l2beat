@@ -14,6 +14,9 @@ export interface AssetEntry {
   // Who is responsible for the token. For USDC it's Circle, for WETH it's None.
   issuer: string
 
+  tokenInfo?: string
+  tokenSeverity?: 'medium' | 'high' | 'low'
+
   child?: {
     // backreference to AssetEntry
     address: string
