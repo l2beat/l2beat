@@ -72,7 +72,7 @@ export function Profile(props: Props) {
         </form>
       </div>
       <h1 className="mb-10 text-xl">Profile of {props.query}</h1>
-      <table>
+      <table className="w-full">
         <thead>
           <tr className="bg-zinc-700">
             <th />
@@ -94,9 +94,22 @@ export function Profile(props: Props) {
             ))}
         </tbody>
       </table>
-      {response.isPending && <div>Loading</div>}
+      {response.isLoading && (
+        <div className="flex h-20 w-full items-center justify-center bg-zinc-950">
+          <div
+            className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-current border-e-transparent border-solid align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white"
+            role="status"
+          >
+            <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+              Loading...
+            </span>
+          </div>
+        </div>
+      )}
       {response.tokensStatus.isError && (
-        <div>{response.tokensStatus.error?.message}</div>
+        <div className="flex h-20 w-full items-center justify-center bg-zinc-950 px-4 text-red-600">
+          {response.tokensStatus.error?.message}
+        </div>
       )}
     </div>
   )
