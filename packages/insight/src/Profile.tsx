@@ -74,7 +74,7 @@ export function Profile(props: Props) {
       <h1 className="mb-10 text-xl">Profile of {props.query}</h1>
       <table>
         <thead>
-          <tr>
+          <tr className="bg-zinc-700">
             <th />
             <th className="py-2 text-right">#</th>
             <th />
@@ -110,7 +110,7 @@ function ProfileRow({ entry, i }: { entry: TokenEntry; i: number }) {
       <tr
         key={entry.address}
         className={clsx(
-          'cursor-pointer border-zinc-600 border-t hover:bg-zinc-800',
+          'cursor-pointer border-zinc-600 border-t bg-zinc-900 hover:bg-zinc-800',
           open && 'bg-zinc-800',
         )}
         onClick={() => setOpen(!open)}
@@ -155,7 +155,7 @@ function ProfileRow({ entry, i }: { entry: TokenEntry; i: number }) {
         <td className="w-[25%] py-2" />
         <td className="w-0">{entry.issuer}</td>
         <td className="w-[25%] py-2" />
-        <td className="w-0 whitespace-pre py-2">
+        <td className="w-0 whitespace-pre py-2 pr-4">
           H: {entry.severity.high} M: {entry.severity.medium} L:{' '}
           {entry.severity.low}
         </td>
