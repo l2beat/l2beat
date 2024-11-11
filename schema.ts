@@ -32,11 +32,6 @@ export const tokens: AssetEntry[] = [
     priceUsd: 1,
     decimals: 6,
     issuer: 'Circle',
-    // child: {
-    //   address: 'eth:0x123123',
-    //   bridgeInfo: 'Canonically bridged',
-    //   bridgeSeverity: 'low'
-    // }
   },
   {
     address: 'base:0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452',
@@ -52,5 +47,45 @@ export const tokens: AssetEntry[] = [
       bridgeInfo: 'Canonical Bridge (external escrow)',
       bridgeSeverity: 'medium'
     }
+  },
+  {
+    address: 'base:0x0555E30da8f98308EdB960aa94C0Db47230d2B9c',
+    assetLogoUrl: 'https://basescan.org/token/images/wbtc_28.png',
+    chainLogoUrl: 'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png',
+    assetName: 'WBTC',
+    chainName: 'Base',
+    priceUsd: 81167,
+    decimals: 8,
+    issuer: 'BiT Global/BitGo',
+    child: {
+      address: 'eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
+      bridgeInfo: 'LayerZero v2 OFT (external)',
+      bridgeSeverity: 'high'
+    }
+  },
+  {
+    address: 'base:0x4200000000000000000000000000000000000006',
+    assetLogoUrl: 'https://basescan.org/token/images/weth_28.png',
+    chainLogoUrl: 'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png',
+    assetName: 'WETH',
+    chainName: 'Base',
+    priceUsd: 3149,
+    decimals: 18,
+    issuer: 'WETH9 wrapper',
+    child: {
+      address: 'base:native',
+      bridgeInfo: 'WETH9 wrapper',
+      bridgeSeverity: 'low'
+    }
+  },
+  {
+    address: 'base:native',
+    assetLogoUrl: 'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+    chainLogoUrl: 'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png',
+    assetName: 'ETH',
+    chainName: 'Base',
+    priceUsd: 3149,
+    decimals: 18,
+    issuer: 'Ethereum',
   },
 ]
