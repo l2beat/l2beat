@@ -49,9 +49,9 @@ export const tokens: AssetEntry[] = [
   {
     address: 'eth:native',
     assetLogoUrl:
-      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+      'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
     chainLogoUrl:
-      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+      'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
     assetName: 'ETH',
     chainName: 'Ethereum',
     priceUsd: 3149,
@@ -60,9 +60,10 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0',
-    assetLogoUrl: 'https://basescan.org/token/images/wsteth3_32.png',
+    assetLogoUrl:
+      'https://coin-images.coingecko.com/coins/images/18834/large/wstETH.png?1696518295',
     chainLogoUrl:
-      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+      'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
     assetName: 'wstETH',
     chainName: 'Ethereum',
     priceUsd: 3719,
@@ -76,9 +77,10 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84',
-    assetLogoUrl: 'https://basescan.org/token/images/wsteth3_32.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/13442/large/steth_logo.png?1696513206',
     chainLogoUrl:
-      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+      'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
     assetName: 'stETH',
     chainName: 'Ethereum',
     priceUsd: 3196,
@@ -89,9 +91,10 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
-    assetLogoUrl: 'https://basescan.org/token/images/wbtc_28.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857',
     chainLogoUrl:
-      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+      'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
     assetName: 'WBTC',
     chainName: 'Ethereum',
     priceUsd: 81167,
@@ -102,9 +105,10 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'eth:0x6B175474E89094C44Da98b954EedeAC495271d0F',
-    assetLogoUrl: 'https://basescan.org/token/images/daistablecoin_32.png',
+    assetLogoUrl:
+      'https://coin-images.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996',
     chainLogoUrl:
-      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+      'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
     assetName: 'DAI',
     chainName: 'Ethereum',
     priceUsd: 1,
@@ -115,9 +119,10 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3',
-    assetLogoUrl: 'https://basescan.org/token/images/ethenausde_32.png',
+    assetLogoUrl:
+      'https://coin-images.coingecko.com/coins/images/33613/large/USDE.png?1716355685',
     chainLogoUrl:
-      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+      'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
     assetName: 'USDe',
     chainName: 'Ethereum',
     priceUsd: 1,
@@ -128,9 +133,10 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'eth:0x57e114B691Db790C35207b2e685D4A43181e6061',
-    assetLogoUrl: 'https://basescan.org/token/images/ethena_32.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/36530/large/ethena.png?1711701436',
     chainLogoUrl:
-      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+      'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
     assetName: 'ENA',
     chainName: 'Ethereum',
     priceUsd: 0.5835,
@@ -141,9 +147,10 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'eth:0xbf5495Efe5DB9ce00f80364C8B423567e58d2110',
-    assetLogoUrl: 'https://basescan.org/token/images/ezETHv2_32.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/34753/large/eth_renzo_logo_%281%29.png?1705956747',
     chainLogoUrl:
-      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+      'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
     assetName: 'ezETH',
     chainName: 'Ethereum',
     priceUsd: 3246,
@@ -154,9 +161,10 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704',
-    assetLogoUrl: 'https://basescan.org/token/images/coinbasecbeth_32.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/27008/large/cbeth.png?1709186989',
     chainLogoUrl:
-      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+      'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
     assetName: 'cbETH',
     chainName: 'Ethereum',
     priceUsd: 3420,
@@ -167,9 +175,10 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-    assetLogoUrl: 'https://etherscan.io/token/images/centre-usdc_28.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694',
     chainLogoUrl:
-      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+      'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
     assetName: 'USDC',
     chainName: 'Ethereum',
     priceUsd: 1,
@@ -181,9 +190,9 @@ export const tokens: AssetEntry[] = [
   {
     address: 'eth:0xdAC17F958D2ee523a2206206994597C13D831ec7',
     assetLogoUrl:
-      'https://assets.coingecko.com/coins/images/325/standard/Tether.png?1696501661',
+      'https://coin-images.coingecko.com/coins/images/35001/large/logo.png?1706959346',
     chainLogoUrl:
-      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+      'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
     assetName: 'USDT',
     chainName: 'Ethereum',
     priceUsd: 1,
@@ -194,9 +203,10 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'eth:0xc944E90C64B2c07662A292be6244BDf05Cda44a7',
-    assetLogoUrl: 'https://arbiscan.io/token/images/TheGraph_32.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/13397/large/Graph_Token.png?1696513159',
     chainLogoUrl:
-      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+      'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
     assetName: 'GRT',
     chainName: 'Ethereum',
     priceUsd: 0.1829,
@@ -207,9 +217,10 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'eth:0x58b6A8A3302369DAEc383334672404Ee733aB239',
-    assetLogoUrl: 'https://arbiscan.io/token/images/livepeer_32.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/7137/large/logo-circle-green.png?1696507437',
     chainLogoUrl:
-      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+      'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
     assetName: 'LPT',
     chainName: 'Ethereum',
     priceUsd: 1,
@@ -220,9 +231,10 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'eth:0x52A8845DF664D76C69d2EEa607CD793565aF42B8',
-    assetLogoUrl: 'https://arbiscan.io/token/images/apexprotocol_32.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/25266/large/CxpMECpk_400x400_%281%29.png?1696524406',
     chainLogoUrl:
-      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+      'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
     assetName: 'APEX',
     chainName: 'Ethereum',
     priceUsd: 1.66,
@@ -233,9 +245,10 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee',
-    assetLogoUrl: 'https://arbiscan.io/token/images/etherfiweeth_32.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/33033/large/weETH.png?1701438396',
     chainLogoUrl:
-      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+      'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
     assetName: 'weETH',
     chainName: 'Ethereum',
     priceUsd: 3180,
@@ -249,9 +262,10 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2',
-    assetLogoUrl: 'https://arbiscan.io/token/images/etherfiweeth_32.png',
+    assetLogoUrl:
+      'https://coin-images.coingecko.com/coins/images/33049/large/ether.fi_eETH.png?1700473063',
     chainLogoUrl:
-      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+      'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
     assetName: 'eETH',
     chainName: 'Ethereum',
     priceUsd: 3180,
@@ -263,9 +277,10 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'eth:0x808507121B80c02388fAd14726482e061B8da827',
-    assetLogoUrl: 'https://arbiscan.io/token/images/pendlefin_32.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/15069/large/Pendle_Logo_Normal-03.png?1696514728',
     chainLogoUrl:
-      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+      'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
     assetName: 'PENDLE',
     chainName: 'Ethereum',
     priceUsd: 5.63,
@@ -276,9 +291,10 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'eth:0xB0c7a3Ba49C7a6EaBa6cD4a96C55a1391070Ac9A',
-    assetLogoUrl: 'https://arbiscan.io/token/images/magicv2_32.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/18623/large/magic.png?1696518095',
     chainLogoUrl:
-      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+      'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
     assetName: 'MAGIC',
     chainName: 'Ethereum',
     priceUsd: 0.41,
@@ -289,9 +305,10 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'arb1:0x514910771AF9Ca656af840dff83E8264EcF986CA',
-    assetLogoUrl: 'https://arbiscan.io/token/images/chainlink_32.png?v=1',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1696502009',
     chainLogoUrl:
-      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+      'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
     assetName: 'LINK',
     chainName: 'Arbitrum One',
     priceUsd: 14.08,
@@ -303,7 +320,8 @@ export const tokens: AssetEntry[] = [
   // BASE -----------------------------------------VVV
   {
     address: 'base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
-    assetLogoUrl: 'https://basescan.org/token/images/centre-usdc_28.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
     assetName: 'USDC',
@@ -316,7 +334,8 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'base:0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452',
-    assetLogoUrl: 'https://basescan.org/token/images/wsteth3_32.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
     assetName: 'wstETH',
@@ -332,7 +351,8 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'base:0x0555E30da8f98308EdB960aa94C0Db47230d2B9c',
-    assetLogoUrl: 'https://basescan.org/token/images/wbtc_28.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
     assetName: 'WBTC',
@@ -348,7 +368,8 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'base:0x4200000000000000000000000000000000000006',
-    assetLogoUrl: 'https://basescan.org/token/images/weth_28.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/2518/large/weth.png?1696503332',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
     assetName: 'WETH',
@@ -365,7 +386,7 @@ export const tokens: AssetEntry[] = [
   {
     address: 'base:native',
     assetLogoUrl:
-      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+      'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
     assetName: 'ETH',
@@ -381,7 +402,8 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'base:0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb',
-    assetLogoUrl: 'https://basescan.org/token/images/daistablecoin_32.png',
+    assetLogoUrl:
+      'https://coin-images.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
     assetName: 'DAI',
@@ -397,7 +419,8 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'base:0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34',
-    assetLogoUrl: 'https://basescan.org/token/images/ethenausde_32.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/33613/large/3466ef_3c088c66c7d941e8856339d0bddf33cc_mv2.png?1702514458',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
     assetName: 'USDe',
@@ -413,7 +436,8 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'base:0x58538e6A46E07434d7E7375Bc268D3cb839C0133',
-    assetLogoUrl: 'https://basescan.org/token/images/ethena_32.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/36530/large/ethena.png?1711701436',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
     assetName: 'ENA',
@@ -429,7 +453,8 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'base:0x2416092f143378750bb29b79eD961ab195CcEea5',
-    assetLogoUrl: 'https://basescan.org/token/images/ezETHv2_32.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/34753/large/eth_renzo_logo_%281%29.png?1705956747',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
     assetName: 'ezETH',
@@ -445,7 +470,8 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'base:0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed',
-    assetLogoUrl: 'https://basescan.org/token/images/degentips_32.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/34515/large/android-chrome-512x512.png?1706198225',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
     assetName: 'DEGEN',
@@ -497,7 +523,8 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'base:0x940181a94A35A4569E4529A3CDfB74e38FD98631',
-    assetLogoUrl: 'https://basescan.org/token/images/aerodrome_32.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/31745/large/token.png?1696530564',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
     assetName: 'AERO',
@@ -510,7 +537,8 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'base:0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf',
-    assetLogoUrl: 'https://basescan.org/token/images/cbbtc_32.png',
+    assetLogoUrl:
+      'https://coin-images.coingecko.com/coins/images/40143/large/cbbtc.webp?1726136727',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
     assetName: 'cbBTC',
@@ -523,7 +551,8 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'base:0x6985884C4392D348587B19cb9eAAf157F13271cd',
-    assetLogoUrl: 'https://basescan.org/token/images/zro_32.png',
+    assetLogoUrl:
+      'https://coin-images.coingecko.com/coins/images/28206/large/ftxG9_TJ_400x400.jpeg?1696527208',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
     assetName: 'ZRO',
@@ -536,7 +565,8 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'base:0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22',
-    assetLogoUrl: 'https://basescan.org/token/images/coinbasecbeth_32.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/27008/large/cbeth.png?1709186989',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
     assetName: 'cbETH',
@@ -569,7 +599,7 @@ export const tokens: AssetEntry[] = [
   {
     address: 'base:0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2',
     assetLogoUrl:
-      'https://assets.coingecko.com/coins/images/325/standard/Tether.png?1696501661',
+      'https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Fbase.png&w=96&q=75',
     assetName: 'USDT',
@@ -586,7 +616,8 @@ export const tokens: AssetEntry[] = [
   // ARBITRUM -----------------------------------------VVV
   {
     address: 'arb1:0x912CE59144191C1204E64559FE8253a0e49E6548',
-    assetLogoUrl: 'https://arbiscan.io/token/images/arbitrumone2_32_new.png',
+    assetLogoUrl:
+      'https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg?1721358242',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
     assetName: 'ARB',
@@ -599,7 +630,8 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'arb1:0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
-    assetLogoUrl: 'https://arbiscan.io/token/images/centre-usdc_28.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
     assetName: 'USDC',
@@ -612,7 +644,8 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'arb1:0xfc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a',
-    assetLogoUrl: 'https://arbiscan.io/token/images/gmxarbi_32.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/18323/large/arbit.png?1696517814',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
     assetName: 'GMX',
@@ -625,7 +658,8 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'arb1:0x6985884C4392D348587B19cb9eAAf157F13271cd',
-    assetLogoUrl: 'https://arbiscan.io/token/images/zro_32.png',
+    assetLogoUrl:
+      'https://coin-images.coingecko.com/coins/images/28206/large/ftxG9_TJ_400x400.jpeg?1696527208',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
     assetName: 'ZRO',
@@ -638,7 +672,8 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'arb1:0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66',
-    assetLogoUrl: 'https://arbiscan.io/token/images/xaitoken_32.png?v=12',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/34258/large/2024-01-09_16.31.28.jpg?1704789138',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
     assetName: 'XAI',
@@ -651,7 +686,8 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'arb1:0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9',
-    assetLogoUrl: 'https://arbiscan.io/token/images/tether_32.png',
+    assetLogoUrl:
+      'https://coin-images.coingecko.com/coins/images/31271/large/usdt.jpeg?1696530095',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
     assetName: 'USDT',
@@ -667,7 +703,8 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'arb1:0x9623063377AD1B27544C965cCd7342f7EA7e88C7',
-    assetLogoUrl: 'https://arbiscan.io/token/images/TheGraph_32.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/13397/large/Graph_Token.png?1696513159',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
     assetName: 'GRT',
@@ -683,7 +720,8 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'arb1:0x5979D7b546E38E414F7E9822514be443A4800529',
-    assetLogoUrl: 'https://arbiscan.io/token/images/lido_32.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
     assetName: 'wstETH',
@@ -699,7 +737,8 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'arb1:0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8',
-    assetLogoUrl: 'https://arbiscan.io/token/images/centre-usdc_28.png',
+    assetLogoUrl:
+      'https://coin-images.coingecko.com/coins/images/31580/large/USDC-icon.png?1696530397',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
     assetName: 'USDC.e',
@@ -715,7 +754,8 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'arb1:0x289ba1701C2F088cf0faf8B3705246331cB8A839',
-    assetLogoUrl: 'https://arbiscan.io/token/images/livepeer_32.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/7137/large/logo-circle-green.png?1696507437',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
     assetName: 'LPT',
@@ -731,7 +771,8 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'arb1:0x2416092f143378750bb29b79eD961ab195CcEea5',
-    assetLogoUrl: 'https://basescan.org/token/images/ezETHv2_32.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/34753/large/eth_renzo_logo_%281%29.png?1705956747',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
     assetName: 'ezETH',
@@ -748,7 +789,7 @@ export const tokens: AssetEntry[] = [
   {
     address: 'arb1:native',
     assetLogoUrl:
-      'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
+      'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
     assetName: 'ETH',
@@ -764,7 +805,8 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'arb1:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1',
-    assetLogoUrl: 'https://basescan.org/token/images/weth_28.png',
+    assetLogoUrl:
+      'https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
     assetName: 'WETH',
@@ -780,7 +822,8 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'arb1:0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f',
-    assetLogoUrl: 'https://arbiscan.io/token/images/wbtc_28.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
     assetName: 'WBTC',
@@ -796,7 +839,8 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'arb1:0x61A1ff55C5216b636a294A07D77C6F4Df10d3B56',
-    assetLogoUrl: 'https://arbiscan.io/token/images/apexprotocol_32.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/25266/large/CxpMECpk_400x400_%281%29.png?1696524406',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
     assetName: 'APEX',
@@ -812,7 +856,8 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'arb1:0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe',
-    assetLogoUrl: 'https://arbiscan.io/token/images/etherfiweeth_32.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/33033/large/weETH.png?1701438396',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
     assetName: 'weETH',
@@ -828,7 +873,8 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'arb1:0x0c880f6761F1af8d9Aa9C466984b80DAb9a8c9e8',
-    assetLogoUrl: 'https://arbiscan.io/token/images/pendlefin_32.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/15069/large/Pendle_Logo_Normal-03.png?1696514728',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
     assetName: 'PENDLE',
@@ -844,7 +890,8 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'arb1:0x539bdE0d7Dbd336b79148AA742883198BBF60342',
-    assetLogoUrl: 'https://arbiscan.io/token/images/magicv2_32.png',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/18623/large/magic.png?1696518095',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
     assetName: 'MAGIC',
@@ -860,7 +907,8 @@ export const tokens: AssetEntry[] = [
   },
   {
     address: 'arb1:0xf97f4df75117a78c1A5a0DBb814Af92458539FB4',
-    assetLogoUrl: 'https://arbiscan.io/token/images/chainlink_32.png?v=1',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1696502009',
     chainLogoUrl:
       'https://l2beat.com/_next/image?url=%2Ficons%2Farbitrum.png&w=96&q=75',
     assetName: 'LINK',

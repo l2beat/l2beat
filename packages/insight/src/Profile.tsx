@@ -24,7 +24,7 @@ export function Profile(props: Props) {
           src={LogoSmall}
           alt="Insight"
           onClick={() => props.onSearch('')}
-          className="cursor-pointer"
+          className="cursor-pointer rounded-full"
         />
         <Search onSearch={props.onSearch} />
       </div>
@@ -88,7 +88,7 @@ function ProfileRow({ entry, i }: { entry: TokenEntry; i: number }) {
         <td className="w-12 px-4 py-2">
           <img
             src={open ? ChevronDown : ChevronRight}
-            className="block h-4 w-4 min-w-4"
+            className="block h-4 w-4 min-w-4 rounded-full"
             width={16}
             height={16}
           />
@@ -108,11 +108,11 @@ function ProfileRow({ entry, i }: { entry: TokenEntry; i: number }) {
           <div className="relative h-13 w-10 min-w-10">
             <img
               src={entry.assetLogoUrl}
-              className="relative top-0.5 h-10 w-10"
+              className="relative top-0.5 h-10 w-10 rounded-full"
             />
             <img
               src={entry.chainLogoUrl}
-              className="-bottom-0.5 -right-1.5 absolute h-6 w-6"
+              className="-bottom-0.5 -right-1.5 absolute h-6 w-6 rounded-full"
             />
           </div>
           <div className="whitespace-pre">
