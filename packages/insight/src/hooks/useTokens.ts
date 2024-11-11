@@ -86,6 +86,7 @@ export function useTokens(
   return useQuery({
     queryKey: ['tokens', addressOrENS],
     queryFn: () => fetchTokens(addressOrENS),
+    retry: false,
   })
 }
 
@@ -93,10 +94,11 @@ export async function fetchTokens(addressOrENS: string) {
   const address = addressOrENS.endsWith('.eth')
     ? await resolveENS(addressOrENS)
     : (addressOrENS as `0x${string}`)
+
   if (address === undefined) {
-    // TODO: ENS resolution failed
-    return []
+    throw new Error(`Failed to resolve ENS name`)
   }
+
   const balances: Balance[] = (
     await Promise.all(
       tokens.map(async (token) => await getBalanceOf(address, token.address)),

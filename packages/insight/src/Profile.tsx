@@ -1,7 +1,8 @@
 import clsx from 'clsx'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTokens } from './hooks/useTokens'
 import { TokenEntry } from './schema'
+import { isAddress } from 'viem'
 
 interface Props {
   query: string
@@ -10,7 +11,14 @@ interface Props {
 
 export function Profile(props: Props) {
   const [search, setSearch] = useState('')
+  const [error, setError] = useState<string | undefined>(undefined)
   const response = useTokens(props.query)
+
+  useEffect(() => {
+    if (response.isError) {
+      setError(response.error.message)
+    }
+  }, [response])
 
   return (
     <div className="mx-auto max-w-4xl p-4 pt-10">
@@ -18,16 +26,33 @@ export function Profile(props: Props) {
         className="flex items-center justify-end"
         onSubmit={(e) => {
           e.preventDefault()
+          if (search.startsWith('0x') && !isAddress(search)) {
+            setError('Invalid address')
+            return
+          } else if (!search.endsWith('0x') && !search.endsWith('.eth')) {
+            setError('Invalid ENS')
+            return
+          }
+
           if (search !== '') {
             props.onSearch(search)
           }
         }}
       >
+        {error && (
+          <label className="px-2 font-semibold italic" htmlFor="addressOrEns">
+            {error}
+          </label>
+        )}
         <input
-          className="w-60 border border-black px-4 py-1"
+          className={clsx(
+            'w-60 border border-black px-4 py-1',
+            error && 'focus:outline-rose-500',
+          )}
           type="text"
           placeholder="Input address or ENS name"
           value={search}
+          name="addressOrEns"
           onChange={(e) => setSearch(e.target.value)}
         />
       </form>
