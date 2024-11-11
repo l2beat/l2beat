@@ -46,7 +46,7 @@ export function Profile(props: Props) {
 
             if (search !== '') {
               props.onSearch(search)
-              setSearch("")
+              setSearch('')
             }
           }}
         >
@@ -110,8 +110,7 @@ function ProfileRow({ entry, i }: { entry: TokenEntry; i: number }) {
       <tr
         key={entry.address}
         className={clsx(
-          'border-zinc-600 border-t hover:bg-zinc-800',
-          entry.child && 'cursor-pointer',
+          'cursor-pointer border-zinc-600 border-t hover:bg-zinc-800',
           open && 'bg-zinc-800',
         )}
         onClick={() => setOpen(!open)}
