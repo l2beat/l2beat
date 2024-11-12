@@ -7,8 +7,8 @@ import {
 } from '@l2beat/config'
 import {
   type NetworkRecord,
-  type TokenMetaRecord,
   type TokenBridgeRecord,
+  type TokenMetaRecord,
   type TokenRecord,
 } from '@l2beat/database'
 import { type AssetRisksBalanceRecord } from '@l2beat/database/dist/asset-risks/balance/entity'
@@ -16,11 +16,11 @@ import { notUndefined } from '@l2beat/shared-pure'
 import { TRPCError } from '@trpc/server'
 import { getAddress } from 'viem'
 import { z } from 'zod'
+import { getRequiredTokenMeta } from '~/app/asset-risks/_utils/get-required-token-meta'
 import { db } from '~/server/database'
 import { refreshBalancesOfAddress } from '~/server/features/asset-risks/refresh-balances-of-address'
 import { refreshTokensOfAddress } from '~/server/features/asset-risks/refresh-tokens-of-address'
 import { procedure, router } from '../trpc'
-import { getRequiredTokenMeta } from '~/app/asset-risks/_utils/get-required-token-meta'
 
 const projectsByChainId = [...layer2s, ...layer3s].reduce<
   Record<number, Layer2 | Layer3>
