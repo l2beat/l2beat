@@ -1,23 +1,13 @@
+import { pluralize } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
+import { uniq } from 'lodash'
 import { TwoRowCell } from '~/components/table/cells/two-row-cell'
+import { ChevronIcon } from '~/icons/chevron'
+import { cn } from '~/utils/cn'
 import { formatNumberWithCommas } from '~/utils/number-format/format-number'
-import { CriticalBadgeIcon } from '../../_assets/critical-badge'
-import { WarningBadgeIcon } from '../../_assets/warning-badge'
-import { TokenWithChainLogo } from './token-with-chain-logo'
+import { TokenWithChainLogo } from '../../../_components/token-with-chain-logo'
+import { type TokenEntry } from './get-token-entries'
 
-export interface TokenEntry {
-  symbol: string
-  logoUrl: string
-  chainName: string
-  chainLogoUrl: string
-  value: number
-  balance: number
-  type: string
-  managedBy: string
-  underlyingTokens: Omit<TokenEntry, 'underlyingTokens'>[]
-  criticalWarnings: string[]
-  warnings: string[]
-}
 const columnHelper = createColumnHelper<TokenEntry>()
 
 export const tokenColumns = [
@@ -26,14 +16,8 @@ export const tokenColumns = [
     cell: ({ row }) => {
       return (
         <TokenWithChainLogo
-          token={{
-            logoUrl: row.original.logoUrl,
-            symbol: row.original.symbol,
-          }}
-          chain={{
-            logoUrl: row.original.chainLogoUrl,
-            name: row.original.chainName,
-          }}
+          token={{ symbol: row.original.symbol, logoUrl: row.original.logoUrl }}
+          chain={row.original.chain}
         />
       )
     },
@@ -42,13 +26,13 @@ export const tokenColumns = [
       cellClassName: '!pr-0',
     },
   }),
-  columnHelper.accessor('symbol', {
+  columnHelper.accessor('name', {
     header: 'Asset',
     cell: ({ row }) => {
       return (
         <TwoRowCell>
-          <TwoRowCell.First>{row.original.symbol}</TwoRowCell.First>
-          <TwoRowCell.Second>on {row.original.chainName}</TwoRowCell.Second>
+          <TwoRowCell.First>{row.original.name}</TwoRowCell.First>
+          <TwoRowCell.Second>on {row.original.chain.name}</TwoRowCell.Second>
         </TwoRowCell>
       )
     },
@@ -56,23 +40,24 @@ export const tokenColumns = [
       tooltip: 'Asset',
     },
   }),
-  columnHelper.accessor('value', {
+  columnHelper.accessor('usdValue', {
     id: 'value',
     header: 'Value',
     cell: ({ row }) => {
       return (
-        <TwoRowCell>
+        <TwoRowCell className="text-right">
           <TwoRowCell.First className="font-oswald !text-lg font-semibold text-[#D1FF1A]">
-            ${formatNumberWithCommas(row.original.value)}
+            ${formatNumberWithCommas(row.original.usdValue)}
           </TwoRowCell.First>
           <TwoRowCell.Second>
-            {formatNumberWithCommas(row.original.balance)}
+            {formatNumberWithCommas(row.original.amount)} {row.original.symbol}
           </TwoRowCell.Second>
         </TwoRowCell>
       )
     },
     meta: {
       tooltip: 'Value',
+      align: 'right',
     },
   }),
   columnHelper.accessor('type', {
@@ -87,23 +72,51 @@ export const tokenColumns = [
       tooltip: 'Managed by',
     },
   }),
-  columnHelper.accessor('underlyingTokens', {
+  columnHelper.accessor((row) => row.underlyingTokens.length, {
+    id: 'underlyingTokens',
     header: 'Underlying Tokens',
     cell: ({ row }) => {
-      return `${row.original.underlyingTokens.length} underlying`
+      if (row.original.underlyingTokens.length === 0) {
+        return (
+          <TwoRowCell>
+            <TwoRowCell.First>None</TwoRowCell.First>
+          </TwoRowCell>
+        )
+      }
+      const chainCount = uniq(
+        row.original.underlyingTokens.map((token) => token.chain.id),
+      ).length
+      return (
+        <TwoRowCell>
+          <TwoRowCell.First>
+            {row.original.underlyingTokens.length} underlying
+          </TwoRowCell.First>
+          <TwoRowCell.Second>
+            on {chainCount} {pluralize(chainCount, 'chain')}
+          </TwoRowCell.Second>
+        </TwoRowCell>
+      )
     },
     meta: {
       tooltip: 'Underlying Tokens',
     },
   }),
   columnHelper.display({
-    id: 'warnings',
+    id: 'expander',
     cell: ({ row }) => {
+      if (!row.getCanExpand()) {
+        return null
+      }
+
       return (
-        <div className="flex items-center gap-3">
-          {!!row.original.criticalWarnings.length && <CriticalBadgeIcon />}
-          {!!row.original.warnings.length && <WarningBadgeIcon />}
-        </div>
+        <button onClick={row.getToggleExpandedHandler()}>
+          <ChevronIcon
+            className={cn(
+              'fill-[#CA80EC] transition-transform duration-200',
+              row.getIsExpanded() && 'rotate-180',
+            )}
+          />
+        </button>
       )
     },
   }),

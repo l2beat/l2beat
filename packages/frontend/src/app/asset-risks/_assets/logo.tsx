@@ -7,7 +7,7 @@ export function InsightLogo(props: SvgIconProps) {
       height="102"
       viewBox="0 0 272 102"
       fill="none"
-      aria-label="Asset risks Logo"
+      aria-label="Insight Logo"
       {...props}
     >
       <path

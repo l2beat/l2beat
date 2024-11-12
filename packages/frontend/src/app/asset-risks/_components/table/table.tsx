@@ -75,7 +75,7 @@ const TableHead = ({
 }) => (
   <th
     className={cn(
-      'h-16 py-2 text-left align-bottom text-[13px] font-medium uppercase',
+      'h-8 py-2 text-left align-bottom text-[13px] font-medium uppercase',
       'pr-3 first:pl-2 last:pr-2 md:pr-4',
       className,
     )}
@@ -107,7 +107,7 @@ const TableCell = ({
 }) => (
   <td
     className={cn(
-      'group h-9 whitespace-pre p-0 align-middle text-xs md:h-14 md:text-sm',
+      'group h-16 whitespace-pre p-0 align-middle text-xs md:text-sm',
       !href && [
         'pr-3 first:pl-2 last:pr-2 md:pr-4',
         align === 'center' && 'text-center',

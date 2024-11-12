@@ -5,8 +5,8 @@ interface Props {
   className?: string
 }
 
-export function TwoRowCell({ children }: Props) {
-  return <div className="text-left">{children}</div>
+export function TwoRowCell({ children, className }: Props) {
+  return <div className={cn('text-left', className)}>{children}</div>
 }
 
 TwoRowCell.First = TwoRowCellFirstRow
@@ -29,7 +29,7 @@ function TwoRowCellSecondRow({ children, className }: Props) {
   return (
     <div
       className={cn(
-        'text-[13px] leading-[14px] text-secondary md:text-xs md:leading-[15px]',
+        'text-[13px] leading-[14px] text-secondary insight:text-pure-white/60 md:text-xs md:leading-[15px]',
         className,
       )}
     >

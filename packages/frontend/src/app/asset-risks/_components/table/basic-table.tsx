@@ -25,10 +25,6 @@ export interface BasicTableProps<T> {
    */
   renderSubComponent?: (props: { row: Row<T> }) => React.ReactElement
   /**
-   * If the sub component is a raw component (e.g. renders a tr element), false by default
-   */
-  rawSubComponent?: boolean
-  /**
    * If the table is inside a main page card - bypass right margin by adding classes
    */
   insideMainPageCard?: boolean
@@ -122,18 +118,14 @@ export function BasicTableRow<T>({
           )
         })}
       </TableRow>
-      {row.getIsExpanded() &&
-        props.renderSubComponent &&
-        (props.rawSubComponent ? (
-          props.renderSubComponent({ row })
-        ) : (
-          <tr className="border-b">
-            {/* 2nd row is a custom 1 cell row */}
-            <td colSpan={row.getVisibleCells().length}>
-              {props.renderSubComponent({ row })}
-            </td>
-          </tr>
-        ))}
+      {row.getIsExpanded() && props.renderSubComponent && (
+        <TableRow>
+          {/* 2nd row is a custom 1 cell row */}
+          <td className="px-2 py-6" colSpan={row.getVisibleCells().length}>
+            {props.renderSubComponent({ row })}
+          </td>
+        </TableRow>
+      )}
     </>
   )
 }

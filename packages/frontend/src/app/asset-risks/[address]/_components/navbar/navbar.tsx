@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { InsightSmallLogo } from '~/app/asset-risks/_assets/small-logo'
 import { DrawerTrigger } from '~/app/asset-risks/_components/drawer'
 import { WalletInput } from '~/app/asset-risks/_components/wallet-input'
 import { WalletDrawer } from '../wallet-drawer'
@@ -10,11 +11,8 @@ export function Navbar() {
         <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center justify-between px-4 lg:px-8">
           <ul className="flex h-full items-center">
             <li className="mr-4 lg:mr-8">
-              <Link
-                href="/asset-risks"
-                className="font-oswald text-[34px] font-semibold uppercase leading-none tracking-[-0.173px]"
-              >
-                Insight
+              <Link href="/asset-risks">
+                <InsightSmallLogo />
               </Link>
             </li>
           </ul>

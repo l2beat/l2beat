@@ -6,18 +6,20 @@ import {
   layer3s,
 } from '@l2beat/config'
 import {
+  type NetworkRecord,
   type TokenBridgeRecord,
   type TokenMetaRecord,
   type TokenRecord,
 } from '@l2beat/database'
 import { type AssetRisksBalanceRecord } from '@l2beat/database/dist/asset-risks/balance/entity'
+import { notUndefined } from '@l2beat/shared-pure'
 import { TRPCError } from '@trpc/server'
 import { getAddress } from 'viem'
 import { z } from 'zod'
+import { getRequiredTokenMeta } from '~/app/asset-risks/_utils/get-required-token-meta'
 import { db } from '~/server/database'
 import { refreshBalancesOfAddress } from '~/server/features/asset-risks/refresh-balances-of-address'
 import { refreshTokensOfAddress } from '~/server/features/asset-risks/refresh-tokens-of-address'
-import { calculateValue } from '~/server/features/scaling/tvl/tokens/utils/calculate-value'
 import { procedure, router } from '../trpc'
 
 const projectsByChainId = [...layer2s, ...layer3s].reduce<
@@ -76,159 +78,162 @@ export const assetRisksRouter = router({
           message: 'User not found',
         })
       }
-      const networks = await db.network.getAll()
-      const externalBridges = await db.externalBridge.getAll()
-      const bridges = await db.tokenBridge.getAll()
+      const [networks, externalBridges, bridges, balances] = await Promise.all([
+        db.network.getAll(),
+        db.externalBridge.getAll(),
+        db.tokenBridge.getAll(),
+        db.assetRisksBalance.getAllForUser(user.id),
+      ])
 
-      const balances = (
-        await db.assetRisksBalance.getAllForUser(user.id)
-      ).reduce<Record<string, AssetRisksBalanceRecord>>((acc, b) => {
-        acc[b.tokenId] = b
-        return acc
-      }, {})
+      const balancesMap = groupByTokenId(balances)
+      const { tokenMap, relations } = await getTokenAndRelationsMap(balancesMap)
 
-      const userTokenIds = Object.keys(balances)
-
-      const tokens: Record<string, TokenRecord> = {}
-      const relations: Record<string, TokenBridgeRecord> = {}
-
-      let tokensToCheck: string[] = userTokenIds
-
-      while (tokensToCheck.length > 0) {
-        const newTokens = await db.token.getByIds(tokensToCheck)
-        for (const token of newTokens) {
-          tokens[token.id] = token
-        }
-        const newRelations =
-          await db.tokenBridge.getByTargetTokenIds(tokensToCheck)
-        tokensToCheck = []
-        for (const relation of newRelations) {
-          if (relations[relation.id]) continue
-          relations[relation.id] = relation
-          if (!tokens[relation.sourceTokenId]) {
-            tokensToCheck.push(relation.sourceTokenId)
-          }
-        }
-      }
-
-      const tokenMeta = (
-        await db.tokenMeta.getByTokenIdsAndSource(
-          Object.values(tokens).map((t) => t.id),
-          'Aggregate',
-        )
-      ).reduce<Record<string, TokenMetaRecord>>((acc, meta) => {
-        acc[meta.tokenId] = meta
-        return acc
-      }, {})
-
-      // Prices
-      const coingeckoTokenMeta = await db.tokenMeta.getByTokenIdsAndSource(
-        Object.values(tokens).map((t) => t.id),
-        'CoinGecko',
+      const tokenMeta = await db.tokenMeta.getByTokenIdsAndSource(
+        Object.keys(tokenMap),
+        'Aggregate',
       )
-
-      const coingeckoIdsWithTokenIds = coingeckoTokenMeta.flatMap((meta) =>
-        meta.externalId
-          ? [{ coingeckoId: meta.externalId, tokenId: meta.tokenId }]
-          : [],
-      )
-
-      const tokenIdToCoingeckoId = coingeckoIdsWithTokenIds.reduce<
-        Record<string, string>
-      >((acc, { tokenId, coingeckoId }) => {
-        acc[tokenId] = coingeckoId
-        return acc
-      }, {})
-
-      const priceRecords = await db.currentPrice.getByCoingeckoIds(
-        coingeckoIdsWithTokenIds.map(({ coingeckoId }) => coingeckoId),
-      )
-
-      const valueInCents = Object.entries(tokenMeta)
-        .flatMap(([tokenId, meta]) => {
-          const { decimals } = meta
-
-          if (!decimals) return []
-
-          const resolvedCoingeckoId = tokenIdToCoingeckoId[tokenId]
-
-          if (!resolvedCoingeckoId) return []
-
-          const price = priceRecords.find(
-            ({ coingeckoId }) => coingeckoId === resolvedCoingeckoId,
-          )?.priceUsd
-
-          if (!price) return []
-
-          const balance = balances[meta.tokenId]?.balance ?? '0'
-
-          return calculateValue({
-            amount: BigInt(balance),
-            priceUsd: price,
-            decimals,
-          })
-        })
-        .reduce((acc, value) => acc + value, 0n)
-
-      const chains = networks.reduce<
-        Record<
-          string,
-          {
-            name: string
-            risks: {
-              text: string
-              isCritical?: boolean
-            }[]
-            stage?: StageConfig['stage']
-          }
-        >
-      >((acc, { id, name, chainId }) => {
-        const chain = chainId && projectsByChainId[chainId]
-        if (chain) {
-          acc[id] = {
-            name: chain.display.name,
-            stage: 'stage' in chain ? chain.stage?.stage : undefined,
-            risks: (chain?.technology
-              ? [
-                  chain.technology.stateCorrectness,
-                  chain.technology.newCryptography,
-                  chain.technology.dataAvailability,
-                  chain.technology.operator,
-                  chain.technology.forceTransactions,
-                  ...(chain.technology.exitMechanisms ?? []),
-                  chain.technology.massExit,
-                  ...(chain.technology.otherConsiderations ?? []),
-                ].flatMap((choice) => choice?.risks ?? [])
-              : []
-            ).map((r) => ({
-              text: `${r.category} ${r.text}`,
-              isCritical: r.isCritical,
-            })),
-          }
-        } else {
-          acc[id] = {
-            name,
-            risks: [],
-          }
-        }
-        return acc
-      }, {})
+      const tokenMetaMap = groupByTokenId(tokenMeta)
+      const chainMap = getChainMap(networks)
+      const tokens = await getTokens(tokenMap, tokenMetaMap, balancesMap)
 
       return {
-        usdValue: Number(valueInCents) / 100,
+        usdValue: tokens.reduce((acc, t) => acc + t.usdValue, 0),
         tokensRefreshedAt: user.tokensRefreshedAt,
         balancesRefreshedAt: user.balancesRefreshedAt,
-        chains,
+        chains: chainMap,
         bridges,
         externalBridges,
         relations,
-        tokens: Object.values(tokens).map((token) => {
-          return {
-            token,
-            meta: tokenMeta[token.id],
-            balance: balances[token.id]?.balance ?? '0',
-          }
-        }),
+        tokens,
       }
     }),
 })
+
+async function getTokenAndRelationsMap(
+  balancesMap: Record<string, AssetRisksBalanceRecord>,
+) {
+  const userTokenIds = Object.keys(balancesMap)
+
+  const tokenMap: Record<string, TokenRecord> = {}
+  const relations: Record<string, TokenBridgeRecord> = {}
+
+  let tokensToCheck: string[] = userTokenIds
+
+  while (tokensToCheck.length > 0) {
+    const newTokens = await db.token.getByIds(tokensToCheck)
+    for (const token of newTokens) {
+      tokenMap[token.id] = token
+    }
+    const newRelations = await db.tokenBridge.getByTargetTokenIds(tokensToCheck)
+    tokensToCheck = []
+    for (const relation of newRelations) {
+      if (relations[relation.id]) continue
+      relations[relation.id] = relation
+      if (!tokenMap[relation.sourceTokenId]) {
+        tokensToCheck.push(relation.sourceTokenId)
+      }
+    }
+  }
+
+  return { tokenMap, relations }
+}
+
+function groupByTokenId<T extends { tokenId: string }>(
+  arr: T[],
+): Record<string, T> {
+  return arr.reduce<Record<string, T>>((acc, e) => {
+    acc[e.tokenId] = e
+    return acc
+  }, {})
+}
+
+function getChainMap(networks: NetworkRecord[]) {
+  return networks.reduce<
+    Record<
+      string,
+      {
+        id: string
+        name: string
+        logoUrl: string | undefined
+        risks: {
+          text: string
+          isCritical?: boolean
+        }[]
+        stage?: StageConfig['stage']
+      }
+    >
+  >((acc, { id, name, chainId, logoUrl }) => {
+    const chain = chainId && projectsByChainId[chainId]
+
+    if (chain) {
+      acc[id] = {
+        id,
+        name: chain.display.name,
+        logoUrl:
+          logoUrl ?? `https://l2beat.com/icons/${chain.display.slug}.png`,
+        stage: 'stage' in chain ? chain.stage?.stage : undefined,
+        risks: (chain?.technology
+          ? [
+              chain.technology.stateCorrectness,
+              chain.technology.newCryptography,
+              chain.technology.dataAvailability,
+              chain.technology.operator,
+              chain.technology.forceTransactions,
+              ...(chain.technology.exitMechanisms ?? []),
+              chain.technology.massExit,
+              ...(chain.technology.otherConsiderations ?? []),
+            ].flatMap((choice) => choice?.risks ?? [])
+          : []
+        ).map((r) => ({
+          text: `${r.category} ${r.text}`,
+          isCritical: r.isCritical,
+        })),
+      }
+    } else {
+      acc[id] = {
+        id,
+        name,
+        logoUrl: logoUrl ?? undefined,
+        risks: [],
+      }
+    }
+    return acc
+  }, {})
+}
+
+async function getTokens(
+  tokenMap: Record<string, TokenRecord>,
+  tokenMetaMap: Record<string, TokenMetaRecord>,
+  balancesMap: Record<string, AssetRisksBalanceRecord>,
+) {
+  const coingeckoMeta = await db.tokenMeta.getByTokenIdsAndSource(
+    Object.values(tokenMap).map((t) => t.id),
+    'CoinGecko',
+  )
+
+  const coingeckoIds = coingeckoMeta
+    .map((m) => m.externalId ?? undefined)
+    .filter(notUndefined)
+
+  const prices = await db.currentPrice.getByCoingeckoIds(coingeckoIds)
+  return Object.values(tokenMap)
+    .map((token) => {
+      const meta = getRequiredTokenMeta(tokenMetaMap[token.id])
+      if (!meta) {
+        return undefined
+      }
+      const coingeckoId = coingeckoMeta.find(
+        (m) => m.tokenId === token.id,
+      )?.externalId
+      const price = prices.find((p) => p.coingeckoId === coingeckoId)
+      const balance = Number(balancesMap[token.id]?.balance ?? '0')
+      const amount = balance / 10 ** meta.decimals
+      return {
+        token,
+        meta,
+        usdValue: amount * (price?.priceUsd ?? 0),
+        amount,
+      }
+    })
+    .filter(notUndefined)
+}
