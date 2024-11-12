@@ -100,8 +100,23 @@ export const tokens: AssetEntry[] = [
     priceUsd: 81167,
     decimals: 8,
     issuer: 'BiT Global/BitGo',
-    tokenInfo: 'permissioned BTC custodians on Bitcoin',
-    tokenSeverity: 'high',
+    child: {
+      address: 'btc:native',
+      bridgeInfo: 'permissioned BTC custodians on Bitcoin',
+      bridgeSeverity: 'high',
+    },
+  },
+  {
+    address: 'btc:native',
+    assetLogoUrl:
+      'https://assets.coingecko.com/coins/images/1/standard/bitcoin.png?1696501400',
+    chainLogoUrl:
+      'https://assets.coingecko.com/coins/images/1/standard/bitcoin.png?1696501400',
+    assetName: 'BTC',
+    chainName: 'Bitcoin',
+    decimals: 9,
+    issuer: 'Bitcoin',
+    priceUsd: 81167,
   },
   {
     address: 'eth:0x6B175474E89094C44Da98b954EedeAC495271d0F',

@@ -56,6 +56,9 @@ async function getBalanceOf(
 
   let balance = 0n
   const client = clients[chain as keyof typeof clients]
+  if (!client) {
+    return { address, chain, balance }
+  }
   if (address === 'native') {
     const result = await client.getBalance({ address: holder })
     balance = BigInt(result ?? 0x0)
@@ -72,12 +75,7 @@ async function getBalanceOf(
     })
     balance = BigInt(result.data ?? 0x0)
   }
-
-  return {
-    address: address,
-    chain: chain,
-    balance,
-  } satisfies Balance
+  return { address, chain, balance }
 }
 
 export type TokensQueryResult = UseQueryResult<TokenEntry[], Error>
