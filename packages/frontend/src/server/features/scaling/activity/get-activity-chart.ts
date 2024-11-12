@@ -38,11 +38,24 @@ const getCachedActivityChart = cache(
       .filter(createActivityProjectsFilter(filter))
       .map((p) => p.id)
       .concat(ProjectId.ETHEREUM)
-    const adjustedRange = getFullySyncedActivityRange(range)
+    const isSingleProject = projects.length === 2 // Ethereum + 1 other project
+    let adjustedRange = getFullySyncedActivityRange(range)
     const entries = await db.activity.getByProjectsAndTimeRange(
       projects,
       adjustedRange,
     )
+
+    // If we are looking at a single project, we should adjust the range to the last day
+    // we have this project data for.
+    if (isSingleProject) {
+      const maxProjectTimestamp = entries.reduce((max, e) => {
+        if (e.projectId === ProjectId.ETHEREUM || !max.isFull('day')) {
+          return max
+        }
+        return max.gt(e.timestamp) ? max : e.timestamp
+      }, adjustedRange[1])
+      adjustedRange = [adjustedRange[0], maxProjectTimestamp]
+    }
 
     const startTimestamp = entries.find(
       (e) => e.projectId !== ProjectId.ETHEREUM && e.count > 0,
