@@ -72,6 +72,7 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
   chainConfig: {
     name: 'polygonzkevm',
     chainId: 1101,
+    blockscoutV2ApiUrl: 'https://zkevm.blockscout.com/api/v2',
     explorerUrl: 'https://zkevm.polygonscan.com',
     explorerApi: {
       url: 'https://api-zkevm.polygonscan.com/api',
