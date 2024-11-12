@@ -63,6 +63,16 @@ import '@xyflow/react/dist/style.css'
 import { nanoidSchema } from '~/lib/schemas'
 import { api } from '~/trpc/react'
 
+const metaSchema = z.object({
+  source: z.string(),
+  externalId: z.string(),
+  name: z.string(),
+  symbol: z.string(),
+  decimals: z.string(),
+  logoUrl: z.string().url().or(z.literal('')),
+  contractName: z.string(),
+})
+
 const tokenFormSchema = z.object({
   networkId: nanoidSchema,
   address: z.union([
@@ -76,16 +86,10 @@ const tokenFormSchema = z.object({
       externalBridgeId: nanoidSchema.or(z.literal('')),
     }),
   ),
-  customMeta: z
-    .object({
-      name: z.string(),
-      symbol: z.string(),
-      decimals: z.string(),
-      logoUrl: z.string().url().or(z.literal('')),
-      contractName: z.string(),
-    })
-    .nullable(),
+  meta: z.array(metaSchema),
 })
+
+const metaEndOrder = [null, 'Overrides', 'Aggregate']
 
 export function EditTokenPage({
   token,
@@ -107,17 +111,39 @@ export function EditTokenPage({
   entities: EntityRecord[]
 }) {
   const router = useRouter()
-  const tokenMeta = useMemo(
-    () =>
-      token?.meta && {
-        aggregate: token.meta.filter((m) => m.source === 'Aggregate'),
-        overrides: token.meta.find((m) => m.source === 'Overrides'),
-        rest: token.meta.filter(
-          (m) => m.source !== 'Aggregate' && m.source !== 'Overrides',
-        ),
-      },
-    [token?.meta],
-  )
+  const tokenMeta = useMemo(() => {
+    const arr: z.infer<typeof metaSchema>[] = [
+      ...(token?.meta ?? []).map((m) => ({
+        source: m.source,
+        externalId: m.externalId ?? '',
+        name: m.name ?? '',
+        symbol: m.symbol ?? '',
+        decimals: m.decimals?.toString() ?? '',
+        logoUrl: m.logoUrl ?? '',
+        contractName: m.contractName ?? '',
+      })),
+    ]
+    for (const source of ['Aggregate', 'Overrides', 'CoinGecko']) {
+      if (!arr.find((m) => m.source === source)) {
+        arr.push({
+          source,
+          externalId: '',
+          name: '',
+          symbol: '',
+          decimals: '',
+          logoUrl: '',
+          contractName: '',
+        })
+      }
+    }
+    return arr.sort((a, b) => {
+      const aIndex = metaEndOrder.indexOf(a.source)
+      const bIndex = metaEndOrder.indexOf(b.source)
+      const endOrder =
+        (aIndex !== -1 ? aIndex : 0) - (bIndex !== -1 ? bIndex : 0)
+      return endOrder === 0 ? a.source.localeCompare(b.source) : endOrder
+    })
+  }, [token?.meta])
 
   const form = useForm<z.infer<typeof tokenFormSchema>>({
     defaultValues: {
@@ -131,13 +157,7 @@ export function EditTokenPage({
             sourceTokenId: r.sourceTokenId,
             externalBridgeId: r.externalBridgeId ?? '',
           })) ?? [],
-      customMeta: {
-        name: tokenMeta?.overrides?.name ?? '',
-        symbol: tokenMeta?.overrides?.symbol ?? '',
-        decimals: tokenMeta?.overrides?.decimals?.toString() ?? '',
-        logoUrl: tokenMeta?.overrides?.logoUrl ?? '',
-        contractName: tokenMeta?.overrides?.contractName ?? '',
-      },
+      meta: tokenMeta,
     },
     resolver: zodResolver(tokenFormSchema),
   })
@@ -154,6 +174,11 @@ export function EditTokenPage({
     name: 'managingEntities',
   })
 
+  const meta = useFieldArray({
+    control: form.control,
+    name: 'meta',
+  })
+
   const backing =
     token?.relations
       .filter((r) => r.targetTokenId !== token.id)
@@ -167,32 +192,15 @@ export function EditTokenPage({
       const data = {
         networkId: rawData.networkId,
         address: rawData.address,
-        customMeta:
-          rawData.customMeta &&
-          Object.values(rawData.customMeta).some((value) => value !== '')
-            ? {
-                name:
-                  rawData.customMeta.name !== ''
-                    ? rawData.customMeta.name
-                    : null,
-                symbol:
-                  rawData.customMeta.symbol !== ''
-                    ? rawData.customMeta.symbol
-                    : null,
-                decimals:
-                  rawData.customMeta.decimals !== ''
-                    ? parseInt(rawData.customMeta.decimals)
-                    : null,
-                logoUrl:
-                  rawData.customMeta.logoUrl !== ''
-                    ? rawData.customMeta.logoUrl
-                    : null,
-                contractName:
-                  rawData.customMeta.contractName !== ''
-                    ? rawData.customMeta.contractName
-                    : null,
-              }
-            : null,
+        meta: rawData.meta.map((m) => ({
+          ...m,
+          externalId: m.externalId === '' ? null : m.externalId,
+          name: m.name === '' ? null : m.name,
+          symbol: m.symbol === '' ? null : m.symbol,
+          logoUrl: m.logoUrl === '' ? null : m.logoUrl,
+          contractName: m.contractName === '' ? null : m.contractName,
+          decimals: m.decimals ? parseInt(m.decimals) : null,
+        })),
         relations: [
           ...(token?.relations ?? []).filter(
             (r) => r.sourceTokenId === token?.id,
@@ -358,109 +366,131 @@ export function EditTokenPage({
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {[
-                    ...(tokenMeta?.aggregate ?? []),
-                    ...(tokenMeta?.rest ?? []),
-                  ].map((meta) => {
+                  {meta.fields.map((field, index) => {
+                    const editMode =
+                      field.source === 'Overrides'
+                        ? ('full' as const)
+                        : field.source === 'CoinGecko'
+                          ? ('externalId' as const)
+                          : ('none' as const)
                     const cellClassName =
-                      meta.source === 'Aggregate' ? 'font-bold' : ''
+                      field.source === 'Aggregate' ? 'font-bold' : ''
                     return (
-                      <TableRow key={meta.source}>
+                      <TableRow key={field.id}>
                         <TableCell className={cellClassName}>
-                          {meta.source}
+                          {field.source}
                         </TableCell>
-                        <TableCell className="max-w-[200px] break-words font-mono text-xs">
-                          {/* eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing */}
-                          {meta.externalId || 'N/A'}
-                        </TableCell>
-                        <TableCell className={cellClassName}>
-                          {meta.name}
-                        </TableCell>
-                        <TableCell className={cellClassName}>
-                          {meta.symbol}
-                        </TableCell>
-                        <TableCell className={cellClassName}>
-                          {meta.decimals}
-                        </TableCell>
-                        <TableCell>{meta.logoUrl}</TableCell>
-                        <TableCell>{meta.contractName}</TableCell>
+                        {editMode !== 'externalId' ? (
+                          <TableCell className="max-w-[200px] break-words font-mono text-xs">
+                            {field.externalId || 'N/A'}
+                          </TableCell>
+                        ) : (
+                          <TableCell>
+                            <FormField
+                              control={form.control}
+                              name={`meta.${index}.externalId`}
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormControl>
+                                    <Input {...field} />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </TableCell>
+                        )}
+                        {editMode === 'full' ? (
+                          <>
+                            <TableCell>
+                              <FormField
+                                control={form.control}
+                                name={`meta.${index}.name`}
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormControl>
+                                      <Input {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <FormField
+                                control={form.control}
+                                name={`meta.${index}.symbol`}
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormControl>
+                                      <Input {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <FormField
+                                control={form.control}
+                                name={`meta.${index}.decimals`}
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormControl>
+                                      <Input type="number" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <FormField
+                                control={form.control}
+                                name={`meta.${index}.logoUrl`}
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormControl>
+                                      <Input {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <FormField
+                                control={form.control}
+                                name={`meta.${index}.contractName`}
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormControl>
+                                      <Input {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                            </TableCell>
+                          </>
+                        ) : (
+                          <>
+                            <TableCell className={cellClassName}>
+                              {field.name}
+                            </TableCell>
+                            <TableCell className={cellClassName}>
+                              {field.symbol}
+                            </TableCell>
+                            <TableCell className={cellClassName}>
+                              {field.decimals}
+                            </TableCell>
+                            <TableCell>{field.logoUrl}</TableCell>
+                            <TableCell>{field.contractName}</TableCell>
+                          </>
+                        )}
                       </TableRow>
                     )
                   })}
-                  <TableRow>
-                    <TableCell>Overrides</TableCell>
-                    <TableCell>N/A</TableCell>
-                    <TableCell>
-                      <FormField
-                        control={form.control}
-                        name="customMeta.name"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <FormField
-                        control={form.control}
-                        name="customMeta.symbol"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <FormField
-                        control={form.control}
-                        name="customMeta.decimals"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input type="number" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <FormField
-                        control={form.control}
-                        name="customMeta.logoUrl"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <FormField
-                        control={form.control}
-                        name="customMeta.contractName"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </TableCell>
-                  </TableRow>
                 </TableBody>
               </Table>
             </CardContent>
