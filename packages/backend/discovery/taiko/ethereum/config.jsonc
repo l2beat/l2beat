@@ -13,11 +13,14 @@
     "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab": "SharedERC20Vault",
     "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a": "TaikoL1Contract",
     "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9": "ProverSetProxy",
-    "0x8f1C1D58C858e9a9eeCc587d7D51AECfd16b5542": "MainnetTierRouter",
+    "0x394E30d83d020469a1F8b16E89D7fD5FdB1935b0": "MainnetTierRouter",
     "0x579f40D0BE111b823962043702cabe6Aaa290780": "L1RollupAddressManager",
     "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F": "TaikoAdmin",
     "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa": "L1SharedAddressManager",
     "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81": "SgxVerifier",
+    "0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc": "Risc0Verifier",
+    "0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452": "SP1Verifier",
+    "0x2D33d748644dAb8B3FB0E07642d9dE96b816d067": "SP1RemoteVerifier",
     "0x579A8d63a2Db646284CBFE31FE5082c9989E985c": "GuardianMinorityProver",
     "0xE3D777143Ea25A6E031d1e921F396750885f43aC": "GuardianProver",
     "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C": "SignalService",
@@ -25,6 +28,12 @@
     "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3": "AutomataDcapV3Attestation"
   },
   "overrides": {
+    "Risc0Verifier": {
+      "ignoreMethods": ["proxiableUUID"]
+    },
+    "SP1Verifier": {
+      "ignoreMethods": ["proxiableUUID"]
+    },
     "TaikoBridge": {
       "ignoreMethods": [
         "getMessageMinGasLimit", // too many values
@@ -86,6 +95,16 @@
               "0x6175746f6d6174615f646361705f6174746573746174696f6e00000000000000",
               "false"
             ] // bytes32("automata_dcap_attestation");
+          }
+        },
+        "bond_token": {
+          "handler": {
+            "type": "call",
+            "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+            "args": [
+              "0x626f6e645f746f6b656e00000000000000000000000000000000000000000000",
+              "false"
+            ]
           }
         },
         "bridge": {
@@ -178,12 +197,12 @@
             ] // bytes32("erc721_vault");
           }
         },
-        "preconf_registry": {
+        "preconf_task_manager": {
           "handler": {
             "type": "call",
             "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
             "args": [
-              "0x707265636f6e665f726567697374727900000000000000000000000000000000",
+              "0x707265636f6e665f7461736b5f6d616e61676572000000000000000000000000",
               "false"
             ]
           }
@@ -296,6 +315,16 @@
               "0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000",
               "false"
             ] // bytes32("tier_guardian_minority")
+          }
+        },
+        "verifier_TIER_OPTIMISTIC": {
+          "handler": {
+            "type": "call",
+            "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+            "args": [
+              "0x0000000000000000000000000000000000000000000000000000000000000000",
+              "false"
+            ]
           }
         },
         "verifier_TIER_SGX": {
@@ -482,6 +511,24 @@
             "type": "call",
             "method": "function getTier(uint16 _tierId) pure returns (tuple(bytes32 verifierName, uint96 validityBond, uint96 contestBond, uint24 cooldownWindow, uint16 provingWindow, uint8 maxBlocksToVerifyPerProof))",
             "args": [200]
+          },
+          "returnType": "(bytes32 verifierName, uint96 validityBond, uint96 contestBond, uint24 cooldownWindow, uint16 provingWindow, uint8 maxBlocksToVerifyPerProof)"
+        },
+        "TIER_RISC0": {
+          "description": "verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof",
+          "handler": {
+            "type": "call",
+            "method": "function getTier(uint16 _tierId) pure returns (tuple(bytes32 verifierName, uint96 validityBond, uint96 contestBond, uint24 cooldownWindow, uint16 provingWindow, uint8 maxBlocksToVerifyPerProof))",
+            "args": [250]
+          },
+          "returnType": "(bytes32 verifierName, uint96 validityBond, uint96 contestBond, uint24 cooldownWindow, uint16 provingWindow, uint8 maxBlocksToVerifyPerProof)"
+        },
+        "TIER_SP1": {
+          "description": "verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof",
+          "handler": {
+            "type": "call",
+            "method": "function getTier(uint16 _tierId) pure returns (tuple(bytes32 verifierName, uint96 validityBond, uint96 contestBond, uint24 cooldownWindow, uint16 provingWindow, uint8 maxBlocksToVerifyPerProof))",
+            "args": [251]
           },
           "returnType": "(bytes32 verifierName, uint96 validityBond, uint96 contestBond, uint24 cooldownWindow, uint16 provingWindow, uint8 maxBlocksToVerifyPerProof)"
         },
