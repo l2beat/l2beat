@@ -23,7 +23,7 @@ export function Search({ onSearch, isHome }: SearchProps) {
         if (search.startsWith('0x') && !isAddress(search)) {
           setError('Invalid address')
           return
-        } else if (!search.endsWith('0x') && !search.endsWith('.eth')) {
+        } else if (!search.startsWith('0x') && !search.endsWith('.eth')) {
           setError('Invalid ENS')
           return
         }

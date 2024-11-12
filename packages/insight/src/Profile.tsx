@@ -51,6 +51,11 @@ export function Profile(props: Props) {
             ))}
         </tbody>
       </table>
+      {response.isSuccess && response.data.length === 0 && (
+        <div className="flex h-20 w-full items-center justify-center bg-zinc-950 px-4">
+          No tokens found
+        </div>
+      )}
       {response.isLoading && (
         <div className="flex h-20 w-full items-center justify-center bg-zinc-950">
           <div
