@@ -20,7 +20,7 @@ interface Props {
 
 export async function NavSidebar({ groups, logoLink, legacyNav }: Props) {
   const hiringBadge = env.NEXT_PUBLIC_SHOW_HIRING_BADGE
-  const insight = env.NEXT_PUBLIC_FEATURE_FLAG_ASSET_RISKS
+  const insight = env.NEXT_PUBLIC_FEATURE_FLAG_INSIGHT
   return (
     <NavSideBarWrapper legacyNav={legacyNav}>
       <div className="flex h-[38px] flex-row items-center justify-between">

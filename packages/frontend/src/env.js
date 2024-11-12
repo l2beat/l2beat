@@ -39,7 +39,7 @@ export const env = createEnv({
    * Environment variables exposed to the client (should be prefixed with `NEXT_PUBLIC_`)
    */
   client: {
-    NEXT_PUBLIC_FEATURE_FLAG_ASSET_RISKS: featureFlag.default('false'),
+    NEXT_PUBLIC_FEATURE_FLAG_INSIGHT: featureFlag.default('false'),
     NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION: featureFlag.default('false'),
     NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS: featureFlag.default('false'),
     NEXT_PUBLIC_FEATURE_FLAG_INTERNAL_TOOLS: featureFlag.default(
@@ -69,8 +69,8 @@ export const env = createEnv({
     EXCLUDED_ACTIVITY_PROJECTS: process.env.EXCLUDED_ACTIVITY_PROJECTS,
     EXCLUDED_TVL_PROJECTS: process.env.EXCLUDED_TVL_PROJECTS,
     // Client
-    NEXT_PUBLIC_FEATURE_FLAG_ASSET_RISKS:
-      process.env.NEXT_PUBLIC_FEATURE_FLAG_ASSET_RISKS,
+    NEXT_PUBLIC_FEATURE_FLAG_INSIGHT:
+      process.env.NEXT_PUBLIC_FEATURE_FLAG_INSIGHT,
     NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION:
       process.env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION,
     NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS:
