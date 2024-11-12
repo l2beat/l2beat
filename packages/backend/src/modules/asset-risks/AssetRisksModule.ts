@@ -5,6 +5,7 @@ import { Providers } from '../../providers/Providers'
 import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
 import { AssetRisksPriceRefresher } from './AssetRisksPriceRefresher'
+import { createAssetRisksRouter } from './AssetRisksRouter'
 
 export function createAssetRisksModule(
   config: Config,
@@ -35,5 +36,6 @@ export function createAssetRisksModule(
 
   return {
     start,
+    routers: [createAssetRisksRouter(pricesRefresher)],
   }
 }

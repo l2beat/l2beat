@@ -42,13 +42,27 @@ export class AssetRisksPriceRefresher {
     this.refreshQueue.addIfEmpty()
   }
 
-  private async refresh() {
+  async refresh(opts?: { onlyNewTokens?: boolean }) {
     // TBD: constant/tag for query purposes
     const meta = await this.database.tokenMeta.getBySource('CoinGecko')
 
     const coingeckoIds = meta.flatMap(({ externalId }) => externalId ?? [])
 
-    const uniqueCoingeckoIds = [...new Set(coingeckoIds)]
+    let uniqueCoingeckoIds = [...new Set(coingeckoIds)]
+
+    if (opts?.onlyNewTokens) {
+      const currentPrices =
+        await this.database.currentPrice.getByCoingeckoIds(uniqueCoingeckoIds)
+      const currentCoingeckoIds = currentPrices.map((p) => p.coingeckoId)
+      uniqueCoingeckoIds = uniqueCoingeckoIds.filter(
+        (id) => !currentCoingeckoIds.includes(id),
+      )
+    }
+
+    if (uniqueCoingeckoIds.length === 0) {
+      this.logger.info('No tokens to refresh')
+      return
+    }
 
     // Max per page mentioned in the docs
     // @see https://docs.coingecko.com/reference/coins-markets
