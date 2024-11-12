@@ -90,7 +90,7 @@ const tokenFormSchema = z.object({
   meta: z.array(metaSchema),
 })
 
-const metaEndOrder = ['Aggregate', 'Overrides']
+const metaEndOrder = [null, 'Overrides', 'Aggregate']
 
 export function EditTokenPage({
   token,
@@ -141,7 +141,7 @@ export function EditTokenPage({
       const aIndex = metaEndOrder.indexOf(a.source)
       const bIndex = metaEndOrder.indexOf(b.source)
       const endOrder =
-        (aIndex === -1 ? aIndex : 0) - (bIndex === -1 ? bIndex : 0)
+        (aIndex !== -1 ? aIndex : 0) - (bIndex !== -1 ? bIndex : 0)
       return endOrder === 0 ? a.source.localeCompare(b.source) : endOrder
     })
   }, [token?.meta])
@@ -318,7 +318,7 @@ export function EditTokenPage({
                             .map((network) => (
                               <SelectItem key={network.id} value={network.id}>
                                 {network.name}{' '}
-                                <span className="text-xs text-muted-foreground">
+                                <span className="text-muted-foreground text-xs">
                                   ({network.id})
                                 </span>
                               </SelectItem>
@@ -368,11 +368,12 @@ export function EditTokenPage({
                 </TableHeader>
                 <TableBody>
                   {meta.fields.map((field, index) => {
-                    const editMode = metaEndOrder.includes(field.source)
-                      ? ('full' as const)
-                      : field.source === 'CoinGecko'
-                        ? ('externalId' as const)
-                        : ('overrides' as const)
+                    const editMode =
+                      field.source === 'Overrides'
+                        ? ('full' as const)
+                        : field.source === 'CoinGecko'
+                          ? ('externalId' as const)
+                          : ('none' as const)
                     const cellClassName =
                       field.source === 'Aggregate' ? 'font-bold' : ''
                     return (
@@ -380,11 +381,9 @@ export function EditTokenPage({
                         <TableCell className={cellClassName}>
                           {field.source}
                         </TableCell>
-                        {editMode !== 'full' ? (
+                        {editMode !== 'externalId' ? (
                           <TableCell className="max-w-[200px] break-words font-mono text-xs">
-                            {editMode === 'externalId'
-                              ? field.externalId
-                              : 'N/A'}
+                            {field.externalId || 'N/A'}
                           </TableCell>
                         ) : (
                           <TableCell>
@@ -518,7 +517,7 @@ export function EditTokenPage({
             </CardHeader>
             <CardContent>
               {backedBy.fields.length === 0 ? (
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   This token is not backed by any other token.
                 </p>
               ) : (
@@ -552,7 +551,7 @@ export function EditTokenPage({
                                           value={token.tokenId}
                                         >
                                           {token.name ?? 'Unknown'}{' '}
-                                          <span className="text-xs text-muted-foreground">
+                                          <span className="text-muted-foreground text-xs">
                                             ({token.tokenId})
                                           </span>
                                         </SelectItem>
@@ -590,7 +589,7 @@ export function EditTokenPage({
                                             value={bridge.id}
                                           >
                                             {bridge.name}{' '}
-                                            <span className="text-xs text-muted-foreground">
+                                            <span className="text-muted-foreground text-xs">
                                               ({bridge.id})
                                             </span>
                                           </SelectItem>
@@ -639,7 +638,7 @@ export function EditTokenPage({
               </CardHeader>
               <CardContent>
                 {backing.length === 0 ? (
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-muted-foreground text-sm">
                     This token is not backing any other token.
                   </p>
                 ) : (
@@ -670,7 +669,7 @@ export function EditTokenPage({
             </CardHeader>
             <CardContent>
               {managingEntities.fields.length === 0 ? (
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   This token is not managed by any entity.
                 </p>
               ) : (
@@ -703,7 +702,7 @@ export function EditTokenPage({
                                           value={entity.id}
                                         >
                                           {entity.name ?? 'Unknown'}{' '}
-                                          <span className="text-xs text-muted-foreground">
+                                          <span className="text-muted-foreground text-xs">
                                             ({entity.id})
                                           </span>
                                         </SelectItem>
