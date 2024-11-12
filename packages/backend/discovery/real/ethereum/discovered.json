@@ -1,8 +1,8 @@
 {
   "name": "real",
   "chain": "ethereum",
-  "blockNumber": 21135466,
-  "configHash": "0x01e670e7b4b3f4cabceea82e924810492294526cb46962b9a06bc455f0bc37a0",
+  "blockNumber": 21170377,
+  "configHash": "0x3417021c76fe0aa029324cb339e219447152dc5ebaf84f02035aeee6aa9d0dab",
   "contracts": [
     {
       "name": "OneStepProverHostIo",
@@ -52,7 +52,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 56,
+        "nonce": 75,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -193,22 +193,25 @@
           "0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C"
         ],
         "allowedOutboxList": ["0x8592Ca44dE1D354A20F75160F5602E5933D33761"],
-        "delayedMessageCount": 5014,
+        "delayedMessageCount": 5041,
         "nativeToken": "0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
         "rollup": "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
         "sequencerInbox": "0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0",
-        "sequencerMessageCount": 3167,
-        "sequencerReportedSubMessageCount": 1032847
+        "sequencerMessageCount": 3187,
+        "sequencerReportedSubMessageCount": 1083748
       }
     },
     {
       "name": "L1OrbitGatewayRouter",
       "address": "0x490f337Ac108b2a555183f5b5fd2ee84a7F45a18",
+      "template": "orbitstack/GatewayRouter",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
         "0x33422e0ac90902db5dad442b006c9df60e262556d8ad286808d133b5429a3eb0"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "GatewayRouter",
+      "description": "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -268,11 +271,14 @@
     {
       "name": "ERC20RollupEventInbox",
       "address": "0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C",
+      "template": "orbitstack/RollupEventInbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0x88c3a2fa81cad2f98a156402c78de0fc804b2a1866ea4f449aa90ae92ceabc6c"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "RollupEventInbox",
+      "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -354,7 +360,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 3167,
+        "batchCount": 3187,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x0e00df1afC8574762Ac4C4D8E5D1a19bD6A8Fa2E"],
         "bridge": "0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03",
@@ -385,7 +391,7 @@
         "rollup": "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 5012,
+        "totalDelayedMessagesRead": 5041,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -411,15 +417,15 @@
       "values": {
         "$immutable": true,
         "assetsVault": "0xf985E2c73d74BefF3C8c16EFC4fa5ab4cfb62294",
-        "getAllStrategiesValue": "844752735874454943429",
-        "getAllStrategyPendingValue": 0,
+        "getAllStrategiesValue": "828682350261591788142",
+        "getAllStrategyPendingValue": "101539566183490545",
         "getStrategies": {
           "addrs": ["0x679D4C1cC6855C57726BEA1784F578315d6431f6"],
           "allocations": [1000000]
         },
         "getTotalInvestedValue": {
-          "_value": "844752735874454943429",
-          "strategiesValue": ["844752735874454943429"]
+          "_value": "828580810695408297597",
+          "strategiesValue": ["828580810695408297597"]
         },
         "realVault": "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1"
       },
@@ -435,7 +441,7 @@
       "sinceTimestamp": 1710542279,
       "values": {
         "$immutable": true,
-        "getTokenPrice": "1014974513072701661",
+        "getTokenPrice": "1015395661834905452",
         "real": "0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
         "vault": "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1"
       },
@@ -455,9 +461,21 @@
       "sinceTimestamp": 1715706239,
       "values": {
         "$immutable": true,
-        "getInvestedValue": "844752735874454943429",
-        "getStETHWithdrawalStatus": { "requestIds": [], "statuses": [] },
-        "getTotalValue": "844752735874454943429",
+        "getInvestedValue": "828580810695408297597",
+        "getStETHWithdrawalStatus": {
+          "requestIds": [58214],
+          "statuses": [
+            {
+              "amountOfStETH": "101539566183490545",
+              "amountOfShares": "85723115055440154",
+              "owner": "0x679D4C1cC6855C57726BEA1784F578315d6431f6",
+              "timestamp": 1731383711,
+              "isFinalized": false,
+              "isClaimed": false
+            }
+          ]
+        },
+        "getTotalValue": "828682350261591788142",
         "governance": "0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3",
         "manager": "0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8",
         "MAX_STETH_WITHDRAWAL_AMOUNT": "1000000000000000000000",
@@ -757,8 +775,8 @@
         "minter": "0x655756824385F8903AC8cFDa17B656cc26f7C7da",
         "name": "Real Ether",
         "symbol": "reETH",
-        "tokenPrice": "1014974513072701661",
-        "totalSupply": "832948959770758518203"
+        "tokenPrice": "1015395661834905452",
+        "totalSupply": "816775863754368135339"
       },
       "derivedName": "Real"
     },
@@ -869,12 +887,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 2666,
+        "firstUnresolvedNode": 2685,
         "inbox": "0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11",
         "isERC20Enabled": false,
         "lastStakeBlock": 19524244,
-        "latestConfirmed": 2665,
-        "latestNodeCreated": 2665,
+        "latestConfirmed": 2684,
+        "latestNodeCreated": 2684,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 1,
         "outbox": "0x8592Ca44dE1D354A20F75160F5602E5933D33761",
@@ -961,7 +979,7 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "EscrowMultisig",
+      "name": "RealStrategiesMultisig",
       "address": "0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -969,6 +987,17 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1",
+          "description": "can manage asset strategies and fees for the user's funds backing reETH."
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1715303135,
       "values": {
@@ -1117,7 +1146,7 @@
       "sinceTimestamp": 1715706239,
       "values": {
         "$immutable": true,
-        "getBalance": "664658711648354953",
+        "getBalance": "663471020496400215",
         "realVault": "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1",
         "strategyManager": "0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8"
       },
@@ -1130,6 +1159,18 @@
         "0x3a95f1a37b3000abfc131510d1895ebfa14d26888610509cb2dd8ff7ffe4c81c"
       ],
       "description": "This contract is responsible for managing deposit, withdrawal, and settlement processes for the assets backing reETH using the ERC4626 (tokenized vault) standard.",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "currentSharePrice",
         "withdrawingSharesInPast",
@@ -1141,7 +1182,7 @@
       "values": {
         "$immutable": true,
         "assetsVault": "0xf985E2c73d74BefF3C8c16EFC4fa5ab4cfb62294",
-        "currentSharePrice": "1014974513072701661",
+        "currentSharePrice": "1015395661834905452",
         "feeRecipient": "0x0000000000000000000000000000000000000000",
         "minter": "0x655756824385F8903AC8cFDa17B656cc26f7C7da",
         "minWithdrawableShares": 100,
@@ -1149,12 +1190,12 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "proposal": "0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4",
         "real": "0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
-        "rebaseTime": 1730950211,
+        "rebaseTime": 1731383711,
         "rebaseTimeInterval": 86400,
         "strategyManager": "0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8",
-        "withdrawableAmountInPast": "663471020496400215",
+        "withdrawableAmountInPast": "765010586679890760",
         "withdrawFeeRate": 0,
-        "withdrawingSharesInPast": "658185287933671463",
+        "withdrawingSharesInPast": "758185287933671463",
         "withdrawingSharesInRound": 0
       },
       "derivedName": "RealVault"
@@ -2321,6 +2362,7 @@
     "orbitstack/Bridge": "0x6e309bce5a8758ba24f800f3c0135c502fd5cc22724da5165d8368377eb6c9c8",
     "orbitstack/ChallengeManager": "0xc4fbc82c5001579bb1f880d92a3510cda3dc4a65e284fc300363ce048c2fb6d7",
     "orbitstack/ERC20Gateway": "0xf1eafb4b453c67c3928c43ad270e71102bda129c494c4cf3d132be60695af7f9",
+    "orbitstack/GatewayRouter": "0x97cee29343dc6f8ca1922c4809fd47d7538dc7c66fff651958aea58575094575",
     "orbitstack/Inbox": "0x1938bb9de2d7f328ae3e83f2dd9f5d3c5575b599fc097cf9308bac4d5bb3e89e",
     "orbitstack/OneStepProofEntry": "0xf3bff5da86f9bbb5f9ac93a0f2239f0769d051b67a44be2e52c322799e3b8d4f",
     "orbitstack/OneStepProver0": "0x80f18705038deef096683a89d16549bf343ada57cac1f2750df2f06fbbaed5ca",
@@ -2328,6 +2370,7 @@
     "orbitstack/OneStepProverMath": "0x8dd8aebb517eb6eaf15437ddbb90dff66f2b14d9d6b5390dd87fbdab15168188",
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
+    "orbitstack/RollupEventInbox": "0x0608b35e1df8a51677a6392869e50b60a1ff7137f71f40bddf83143a5ef640c1",
     "orbitstack/RollupProxy_fastConfirm": "0xd546e59ba8d91506ef80aa56633b22a79fb90ea1a6e0c19be680149790098ecd",
     "orbitstack/SequencerInbox": "0x746f38463ee5aff9c2f6051c828002565b57c702a6be447c979d1996dd6bd673",
     "orbitstack/UpgradeExecutor": "0xa25e02367a436cebea22481663da914bbf1fd9492d903659cc6ec9ddbaccb241"

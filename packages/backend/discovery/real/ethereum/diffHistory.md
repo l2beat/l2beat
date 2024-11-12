@@ -1,3 +1,66 @@
+Generated with discovered.json: 0x78cce8e61f9b802afaaf60507b4c29b4f224b541
+
+# Diff at Tue, 12 Nov 2024 08:22:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f2ba58e4822d6e1b44bf8df4bcf234795de075a7 block: 21135466
+- current block number: 21170377
+
+## Description
+
+Added permission resolution for the RealVault contract (underlying assets management).
+
+Rest config related.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21135466 (main branch discovery), not current.
+
+```diff
+    contract L1OrbitGatewayRouter (0x490f337Ac108b2a555183f5b5fd2ee84a7F45a18) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      template:
++        "orbitstack/GatewayRouter"
+      displayName:
++        "GatewayRouter"
+      description:
++        "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging."
+    }
+```
+
+```diff
+    contract ERC20RollupEventInbox (0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      template:
++        "orbitstack/RollupEventInbox"
+      displayName:
++        "RollupEventInbox"
+      description:
++        "Helper contract sending configuration data over the bridge during the systems initialization."
+    }
+```
+
+```diff
+    contract RealStrategiesMultisig (0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4) {
+    +++ description: None
+      name:
+-        "EscrowMultisig"
++        "RealStrategiesMultisig"
+      receivedPermissions:
++        [{"permission":"configure","target":"0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1","description":"can manage asset strategies and fees for the user's funds backing reETH."},{"permission":"upgrade","target":"0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1"}]
+    }
+```
+
+```diff
+    contract RealVault (0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1) {
+    +++ description: This contract is responsible for managing deposit, withdrawal, and settlement processes for the assets backing reETH using the ERC4626 (tokenized vault) standard.
+      issuedPermissions:
++        [{"permission":"configure","target":"0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4","via":[]},{"permission":"upgrade","target":"0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xc7b1ff5e59690ffc663e377ed6ac3259f717f0ba
 
 # Diff at Thu, 07 Nov 2024 11:26:36 GMT:
