@@ -45,19 +45,22 @@ export function Profile(props: Props) {
             title="High risk funds"
             value={funds?.highRisk}
             total={funds?.total}
-            className="bg-red-500"
+            bgClassName="bg-red-600"
+            textClassName="text-red-600"
           />
           <RiskRow
             title="Medium risk funds"
             value={funds?.mediumRisk}
             total={funds?.total}
-            className="bg-yellow-400"
+            bgClassName="bg-yellow-400"
+            textClassName="text-yellow-400"
           />
           <RiskRow
             title="Low risk funds"
             value={funds?.lowRisk}
             total={funds?.total}
-            className="bg-zinc-400"
+            bgClassName="bg-zinc-400"
+            textClassName="text-zinc-400"
           />
         </tbody>
       </table>
@@ -289,7 +292,8 @@ function RiskRow(props: {
   title: string
   value?: number
   total?: number
-  className: string
+  bgClassName: string
+  textClassName: string
 }) {
   const percent =
     props.value !== undefined && props.total !== undefined
@@ -297,14 +301,14 @@ function RiskRow(props: {
       : undefined
   return (
     <tr>
-      <td className="py-1 pr-2">{props.title}</td>
+      <td className={clsx('py-1 pr-2', props.textClassName)}>{props.title}</td>
       <td className="px-2 py-1 text-right tabular-nums">
         {props.value !== undefined ? `$${formatNumber(props.value, 2)}` : '…'}
       </td>
       <td className="px-2 py-1">{percent !== undefined && percent + '%'}</td>
       <td className="px-2 py-1">
         <div
-          className={clsx(props.className, 'h-5')}
+          className={clsx(props.bgClassName, 'h-5')}
           style={{
             width: percent !== undefined ? 2 * percent + 'px' : 0,
           }}
