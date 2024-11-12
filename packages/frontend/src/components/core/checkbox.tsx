@@ -25,7 +25,7 @@ const Checkbox = ({
       ref={ref}
       id={id}
       className={cn(
-        'peer size-5 shrink-0 rounded bg-pure-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand disabled:cursor-not-allowed disabled:opacity-50 dark:bg-black',
+        'peer size-5 shrink-0 rounded bg-pure-white disabled:cursor-not-allowed disabled:opacity-50 dark:bg-black',
         'sidebar:data-[state=unchecked]:border-2 sidebar:data-[state=unchecked]:border-surface-tertiary',
       )}
       {...props}
@@ -41,7 +41,7 @@ const Checkbox = ({
     </CheckboxPrimitive.Root>
     <label
       htmlFor={id}
-      className="cursor-pointer whitespace-pre text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+      className="cursor-pointer whitespace-pre text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 md:text-sm"
     >
       {children}
     </label>
