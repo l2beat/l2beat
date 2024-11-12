@@ -281,6 +281,7 @@ export const linea: Layer2 = {
   chainConfig: {
     name: 'linea',
     chainId: 59144,
+    blockscoutV2ApiUrl: 'https://api-explorer.linea.build/api/v2',
     explorerUrl: 'https://lineascan.build',
     explorerApi: {
       url: 'https://api.lineascan.build/api',
