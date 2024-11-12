@@ -54,6 +54,13 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
 
     await this.$.db.activity.upsertMany(dataToSave)
 
+    this.logger.info('Metrics', {
+      remainingBlocks: to - adjustedTo,
+      remainingBlocksPercentage: parseFloat(
+        ((to - adjustedTo) / to).toFixed(4),
+      ),
+    })
+
     return adjustedTo
   }
 
