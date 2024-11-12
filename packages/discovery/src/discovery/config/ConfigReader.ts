@@ -187,10 +187,10 @@ export class ConfigReader {
       'discovery',
       'commonAddressNames.jsonc',
     )
-    assert(
-      fileExistsCaseSensitive(commonAddressNamesPath),
-      `${commonAddressNamesPath} not found`,
-    )
+
+    if (!fileExistsCaseSensitive(commonAddressNamesPath)) {
+      return {}
+    }
 
     return readJsonc(commonAddressNamesPath) as unknown as Record<
       string,
@@ -204,10 +204,11 @@ export class ConfigReader {
       'discovery',
       'globalTypes.jsonc',
     )
-    assert(
-      fileExistsCaseSensitive(globalTypesPath),
-      `${globalTypesPath} not found`,
-    )
+
+    if (!fileExistsCaseSensitive(globalTypesPath)) {
+      return {}
+    }
+
     return GlobalTypes.parse(readJsonc(globalTypesPath))
   }
 }
