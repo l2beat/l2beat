@@ -18,6 +18,8 @@ export class TokenBridgeRepository extends BaseRepository {
   async getByTargetTokenIds(
     targetTokenIds: string[],
   ): Promise<TokenBridgeRecord[]> {
+    if (targetTokenIds.length === 0) return []
+
     const rows = await this.db
       .selectFrom('TokenBridge')
       .select(selectTokenBridge)
