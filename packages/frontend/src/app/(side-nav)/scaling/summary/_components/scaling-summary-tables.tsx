@@ -39,6 +39,7 @@ export function ScalingSummaryTables(props: Props) {
             ...filteredEntries.validiumsAndOptimiums,
             ...(filteredEntries.others ?? []),
           ]}
+          excludeAssociatedTokensClassName="max-md:ml-4"
         />
         <DirectoryTabs defaultValue="rollups">
           <DirectoryTabsList>

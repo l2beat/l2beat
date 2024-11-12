@@ -35,6 +35,7 @@ export function ScalingLivenessTables(props: Props) {
             ...filteredEntries.rollups,
             ...filteredEntries.validiumsAndOptimiums,
           ]}
+          timeControlsClassname="max-md:ml-4"
         />
         <DirectoryTabs defaultValue="rollups">
           <DirectoryTabsList>
@@ -69,15 +70,19 @@ export function ScalingLivenessTables(props: Props) {
   )
 }
 
-function Controls({ entries }: { entries: ScalingLivenessEntry[] }) {
+function Controls({
+  entries,
+  timeControlsClassname,
+}: { entries: ScalingLivenessEntry[]; timeControlsClassname?: string }) {
   const { timeRange, setTimeRange } = useLivenessTimeRangeContext()
 
   return (
-    <div className="flex flex-col justify-between gap-4 md:flex-row">
+    <div className="flex flex-col justify-between gap-2 md:flex-row">
       <BaseScalingFilters items={entries} />
       <LivenessTimeRangeControls
         timeRange={timeRange}
         setTimeRange={setTimeRange}
+        className={timeControlsClassname}
       />
     </div>
   )

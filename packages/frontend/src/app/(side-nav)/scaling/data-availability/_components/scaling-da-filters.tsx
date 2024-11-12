@@ -5,9 +5,10 @@ import { BaseScalingFilters } from '../../_components/base-scaling-filters'
 import { useScalingFilterValues } from '../../_components/scaling-filter-context'
 interface Props {
   items: ScalingDataAvailabilityEntry[]
+  className?: string
 }
 
-export function ScalingDaFilters({ items }: Props) {
+export function ScalingDaFilters({ items, className }: Props) {
   const state = useScalingFilterValues()
   const daLayerOptions = uniq(
     items.map((item) => getDaLayerValue(item.dataAvailability.layer)),
@@ -27,7 +28,13 @@ export function ScalingDaFilters({ items }: Props) {
     />
   )
 
-  return <BaseScalingFilters items={items} additionalFilters={daLayerFilter} />
+  return (
+    <BaseScalingFilters
+      items={items}
+      additionalFilters={daLayerFilter}
+      className={className}
+    />
+  )
 }
 
 export function getDaLayerValue(
