@@ -37,6 +37,7 @@ export function ScalingCostsTables(props: Props) {
             ...filteredEntries.validiumsAndOptimiums,
           ]}
           className="mt-4"
+          costMetricControlsClassname="max-md:ml-4"
         />
         <DirectoryTabs defaultValue="rollups">
           <DirectoryTabsList>
@@ -75,7 +76,12 @@ export function ScalingCostsTables(props: Props) {
 function Controls({
   entries,
   className,
-}: { entries: ScalingCostsEntry[]; className?: string }) {
+  costMetricControlsClassname,
+}: {
+  entries: ScalingCostsEntry[]
+  className?: string
+  costMetricControlsClassname?: string
+}) {
   const { metric, setMetric } = useCostsMetricContext()
   const { range, setRange } = useCostsTimeRangeContext()
 
@@ -94,7 +100,11 @@ function Controls({
       )}
     >
       <ScalingFilters items={entries} />
-      <CostsMetricControls value={metric} onValueChange={onMetricChange} />
+      <CostsMetricControls
+        value={metric}
+        onValueChange={onMetricChange}
+        className={costMetricControlsClassname}
+      />
     </div>
   )
 }

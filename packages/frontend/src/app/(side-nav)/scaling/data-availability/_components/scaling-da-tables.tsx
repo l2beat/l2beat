@@ -42,6 +42,7 @@ export function ScalingDaTables(props: Props) {
             ...filteredEntries.rollups,
             ...filteredEntries.validiumsAndOptimiums,
           ]}
+          className="max-md:mt-4"
         />
         <DirectoryTabs defaultValue="rollups">
           <DirectoryTabsList>

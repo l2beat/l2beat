@@ -30,6 +30,7 @@ export function ScalingUpcomingTables({
       <>
         <ScalingUpcomingAndArchivedFilters
           items={[...filteredRollups, ...filteredValidiumsAndOptimiums]}
+          className="max-md:ml-4 max-md:mt-4"
         />
         <Suspense>
           <DirectoryTabs defaultValue="rollups">

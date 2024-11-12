@@ -29,6 +29,7 @@ export function ScalingArchivedTables({
       <>
         <ScalingUpcomingAndArchivedFilters
           items={[...filteredRollups, ...filteredValidiumsAndOptimiums]}
+          className="max-md:ml-4 max-md:mt-4"
         />
         <DirectoryTabs defaultValue="rollups">
           <DirectoryTabsList>
