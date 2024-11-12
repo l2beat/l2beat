@@ -123,7 +123,7 @@ assert(
     RISC0validityBond === SP1validityBond &&
     RISC0contestBond === SP1contestBond &&
     SGXcooldownWindow === RISC0cooldownWindow,
-  'The tier config assumptions have changed, plz review the technology section.',
+  'The tier config assumptions have changed, plz review the technology section and riskView.stateValidation.',
 )
 
 const LivenessBond = utils.formatEther(TaikoChainConfig.livenessBond)
@@ -276,11 +276,10 @@ export const taiko: Layer2 = {
   type: 'layer2',
   riskView: {
     stateValidation: {
-      description: `Taiko uses a multi-tier proof system to validate the state. However, current tier proofs include either SGX (secure-enclave) execution verification, or approval by a minimum number of Guardians. State validation through the Zk-proof tier is not yet active. 
-        Each proof goes through a cooldown window allowing for contestation. Contested blocks require proof from a higher level tier. If no contestation is made, or the block has been proven by the highest tier, the proof is considered valid.
-        The system allows for an invalid state to be proven by either a compromised SGX instance or compromised Guardians (the highest tier). This can lead to a state being proven as valid when it is not.`,
-      sentiment: 'bad',
-      value: 'SGX proofs',
+      description: `A multi-tier proof system is used. The tiers are SGX, ZK (RISC0, SP1), Minority Guardian, and Guardian (highest tier). A higher tier proof can challenge a lower one within the challenge period.
+        The system allows for an invalid state to be proven and finalized by compromised Guardians (the highest tier).`,
+      sentiment: 'warning',
+      value: 'Multi-proofs',
       secondLine: `${SGXcooldownWindow} challenge period`,
     },
     dataAvailability: {
