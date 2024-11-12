@@ -14,12 +14,8 @@
       "target": {
         "permissions": [
           {
-            "type": "propose",
-            "description": "can submit state roots to the RollupProxy contract on the host chain."
-          },
-          {
-            "type": "challenge",
-            "description": "can challenge state roots on the host chain."
+            "type": "validate",
+            "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
           }
         ]
       },
