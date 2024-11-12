@@ -11,6 +11,7 @@ import {
   get7dTokenBreakdown,
 } from '../tvl/utils/get-7d-token-breakdown'
 import { orderByTvl } from '../tvl/utils/order-by-tvl'
+import { groupByMainCategories } from '~/utils/group-by-main-categories'
 
 export async function getScalingArchivedEntries() {
   const [projectsChangeReport, projectsVerificationStatuses, tvl] =
@@ -35,7 +36,7 @@ export async function getScalingArchivedEntries() {
   const remappedForOrdering = Object.fromEntries(
     Object.entries(tvl.projects).map(([k, v]) => [k, v.breakdown.total]),
   )
-  return orderByTvl(entries, remappedForOrdering)
+  return groupByMainCategories(orderByTvl(entries, remappedForOrdering))
 }
 
 export type ScalingArchivedEntry = ReturnType<typeof getScalingArchivedEntry>

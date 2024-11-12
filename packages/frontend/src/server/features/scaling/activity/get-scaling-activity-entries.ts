@@ -1,6 +1,5 @@
 import { type Layer2, type Layer3 } from '@l2beat/config'
 import { assert, ProjectId, notUndefined } from '@l2beat/shared-pure'
-import { env } from '~/env'
 import { groupByMainCategories } from '~/utils/group-by-main-categories'
 import {
   type ProjectsChangeReport,
@@ -47,26 +46,19 @@ export async function getScalingActivityEntries() {
     .filter(notUndefined)
     .sort((a, b) => b.data.pastDayTps - a.data.pastDayTps)
 
-  if (env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION) {
-    const recategorisedEntries = groupByMainCategories(
-      orderByStageAndPastDayTps(entries),
-    )
-    return {
-      type: 'recategorised' as const,
-      entries: {
-        rollups: [ethereumEntry, ...recategorisedEntries.rollups],
-        validiumsAndOptimiums: [
-          ethereumEntry,
-          ...recategorisedEntries.validiumsAndOptimiums,
-        ],
-      },
-    }
-  }
+  const recategorisedEntries = groupByMainCategories(
+    orderByStageAndPastDayTps(entries),
+  )
 
   return {
-    entries: [ethereumEntry, ...entries].sort(
-      (a, b) => b.data.pastDayTps - a.data.pastDayTps,
-    ),
+    rollups: [ethereumEntry, ...recategorisedEntries.rollups],
+    validiumsAndOptimiums: [
+      ethereumEntry,
+      ...recategorisedEntries.validiumsAndOptimiums,
+    ],
+    ...(recategorisedEntries.others
+      ? { others: [ethereumEntry, ...recategorisedEntries.others] }
+      : {}),
   }
 }
 

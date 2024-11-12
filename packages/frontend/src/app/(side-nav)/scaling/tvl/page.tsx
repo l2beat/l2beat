@@ -46,14 +46,11 @@ export default async function Page() {
           <MainPageCard>
             <ScalingStackedTvlChart
               milestones={HOMEPAGE_MILESTONES}
-              entries={
-                entries.type === 'recategorised'
-                  ? [
-                      ...entries.entries.rollups,
-                      ...entries.entries.validiumsAndOptimiums,
-                    ]
-                  : entries.entries
-              }
+              entries={[
+                ...entries.rollups,
+                ...entries.validiumsAndOptimiums,
+                ...(entries.others ?? []),
+              ]}
             />
           </MainPageCard>
           <ScalingTvlTables {...entries} />

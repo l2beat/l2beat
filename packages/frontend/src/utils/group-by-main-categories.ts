@@ -3,15 +3,7 @@ import { env } from '~/env'
 
 export type RecategorisedScalingEntry<
   T extends { category: string | undefined; isOther?: boolean },
-> =
-  | {
-      type?: never
-      entries: T[]
-    }
-  | {
-      type: 'recategorised'
-      entries: ReturnType<typeof groupByMainCategories<T>>
-    }
+> = ReturnType<typeof groupByMainCategories<T>>
 
 export function groupByMainCategories<
   T extends { category: string | undefined; isOther?: boolean },

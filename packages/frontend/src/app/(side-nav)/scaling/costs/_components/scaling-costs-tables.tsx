@@ -6,7 +6,6 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
-import { MainPageCard } from '~/components/main-page-card'
 import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { cn } from '~/utils/cn'
 import { type RecategorisedScalingEntry } from '~/utils/group-by-main-categories'
@@ -22,53 +21,42 @@ type Props = RecategorisedScalingEntry<ScalingCostsEntry>
 export function ScalingCostsTables(props: Props) {
   const includeFilters = useScalingFilter()
 
-  if (props.type === 'recategorised') {
-    const filteredEntries = {
-      rollups: props.entries.rollups.filter(includeFilters),
-      validiumsAndOptimiums:
-        props.entries.validiumsAndOptimiums.filter(includeFilters),
-      others: props.entries.others?.filter(includeFilters),
-    }
-    return (
-      <>
-        <Controls
-          entries={[
-            ...filteredEntries.rollups,
-            ...filteredEntries.validiumsAndOptimiums,
-          ]}
-          className="mt-4"
-        />
-        <DirectoryTabs defaultValue="rollups">
-          <DirectoryTabsList>
-            <DirectoryTabsTrigger value="rollups">
-              Rollups <CountBadge>{filteredEntries.rollups.length}</CountBadge>
-            </DirectoryTabsTrigger>
-            {filteredEntries.others && filteredEntries.others.length > 0 && (
-              <DirectoryTabsTrigger value="others">
-                Others <CountBadge>{filteredEntries.others.length}</CountBadge>
-              </DirectoryTabsTrigger>
-            )}
-          </DirectoryTabsList>
-          <DirectoryTabsContent value="rollups">
-            <ScalingCostsTable entries={filteredEntries.rollups} rollups />
-          </DirectoryTabsContent>
-          {filteredEntries.others && filteredEntries.others.length > 0 && (
-            <DirectoryTabsContent value="others">
-              <ScalingCostsTable entries={filteredEntries.others} />
-            </DirectoryTabsContent>
-          )}
-        </DirectoryTabs>
-      </>
-    )
+  const filteredEntries = {
+    rollups: props.rollups.filter(includeFilters),
+    validiumsAndOptimiums: props.validiumsAndOptimiums.filter(includeFilters),
+    others: props.others?.filter(includeFilters) ?? [],
   }
-
-  const filteredEntries = props.entries.filter(includeFilters)
-
   return (
-    <MainPageCard className="space-y-3 md:mt-6 md:space-y-6">
-      <Controls entries={filteredEntries} />
-      <ScalingCostsTable entries={filteredEntries} />
-    </MainPageCard>
+    <>
+      <Controls
+        entries={[
+          ...filteredEntries.rollups,
+          ...filteredEntries.validiumsAndOptimiums,
+          ...filteredEntries.others,
+        ]}
+        className="mt-4"
+      />
+      <DirectoryTabs defaultValue="rollups">
+        <DirectoryTabsList>
+          <DirectoryTabsTrigger value="rollups">
+            Rollups <CountBadge>{filteredEntries.rollups.length}</CountBadge>
+          </DirectoryTabsTrigger>
+          {filteredEntries.others.length > 0 && (
+            <DirectoryTabsTrigger value="others">
+              Others <CountBadge>{filteredEntries.others.length}</CountBadge>
+            </DirectoryTabsTrigger>
+          )}
+        </DirectoryTabsList>
+        <DirectoryTabsContent value="rollups">
+          <ScalingCostsTable entries={filteredEntries.rollups} rollups />
+        </DirectoryTabsContent>
+        {filteredEntries.others.length > 0 && (
+          <DirectoryTabsContent value="others">
+            <ScalingCostsTable entries={filteredEntries.others} />
+          </DirectoryTabsContent>
+        )}
+      </DirectoryTabs>
+    </>
   )
 }
 

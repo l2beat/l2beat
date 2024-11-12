@@ -3,11 +3,9 @@ import {
   type ProjectsVerificationStatuses,
   notUndefined,
 } from '@l2beat/shared-pure'
-import { env } from '~/env'
 import { groupByMainCategories } from '~/utils/group-by-main-categories'
 import { type ProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
-import { orderByTvl } from '../tvl/utils/order-by-tvl'
 import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
 import { type SevenDayTvlBreakdown } from './utils/get-7d-tvl-breakdown'
 
@@ -46,18 +44,7 @@ export function getScalingTvlEntries({
     ]),
   )
 
-  if (env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION) {
-    return {
-      type: 'recategorised' as const,
-      entries: groupByMainCategories(
-        orderByStageAndTvl(entries, remappedForOrdering),
-      ),
-    }
-  }
-
-  return {
-    entries: orderByTvl(entries, remappedForOrdering),
-  }
+  return groupByMainCategories(orderByStageAndTvl(entries, remappedForOrdering))
 }
 
 export type ScalingTvlEntry = Awaited<ReturnType<typeof getScalingTvlEntry>>
