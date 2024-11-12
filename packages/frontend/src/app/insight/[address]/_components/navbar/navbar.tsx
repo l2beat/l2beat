@@ -1,7 +1,7 @@
 import Link from 'next/link'
-import { InsightSmallLogo } from '~/app/asset-risks/_assets/small-logo'
-import { DrawerTrigger } from '~/app/asset-risks/_components/drawer'
-import { WalletInput } from '~/app/asset-risks/_components/wallet-input'
+import { InsightSmallLogo } from '~/app/insight/_assets/small-logo'
+import { DrawerTrigger } from '~/app/insight/_components/drawer'
+import { WalletInput } from '~/app/insight/_components/wallet-input'
 import { WalletDrawer } from '../wallet-drawer'
 
 export function Navbar() {

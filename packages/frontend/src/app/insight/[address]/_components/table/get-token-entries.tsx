@@ -1,5 +1,5 @@
 import { type StringWithAutocomplete, notUndefined } from '@l2beat/shared-pure'
-import { getRequiredTokenMeta } from '~/app/asset-risks/_utils/get-required-token-meta'
+import { getRequiredTokenMeta } from '~/app/insight/_utils/get-required-token-meta'
 import { type Report, type Token } from '../report-context'
 
 export interface TokenEntry {

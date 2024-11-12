@@ -7,9 +7,9 @@ import {
   getSortedRowModel,
 } from '@tanstack/react-table'
 import { useMemo } from 'react'
-import { Card } from '~/app/asset-risks/_components/card'
-import { BasicTable } from '~/app/asset-risks/_components/table/basic-table'
-import { TokenWithChainLogo } from '~/app/asset-risks/_components/token-with-chain-logo'
+import { Card } from '~/app/insight/_components/card'
+import { BasicTable } from '~/app/insight/_components/table/basic-table'
+import { TokenWithChainLogo } from '~/app/insight/_components/token-with-chain-logo'
 import { CustomLink } from '~/components/link/custom-link'
 import { useTable } from '~/hooks/use-table'
 import { useReport } from '../report-context'
