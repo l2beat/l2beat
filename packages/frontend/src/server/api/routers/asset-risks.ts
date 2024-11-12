@@ -121,8 +121,6 @@ export const assetRisksRouter = router({
         return acc
       }, {})
 
-      // TODO: Fetch info about prices / etc.
-
       const chains = networks.reduce<
         Record<
           string,

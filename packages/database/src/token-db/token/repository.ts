@@ -101,6 +101,8 @@ export class TokenRepository extends BaseRepository {
     networks: { address: string; networkId: string }[],
     contractName: string,
   ): Promise<TokenRecord[]> {
+    if (networks.length === 0) return []
+
     const rows = await this.db
       .selectFrom('Token')
       .select(selectTokenWithPrefix('Token'))
@@ -168,6 +170,8 @@ export class TokenRepository extends BaseRepository {
     networkId: string
     contractName: string
   }): Promise<TokenRecord[]> {
+    if (target.to.length === 0) return []
+
     const rows = await this.db
       .selectFrom('Token')
       .select(selectTokenWithPrefix('Token'))

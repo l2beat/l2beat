@@ -12,6 +12,8 @@ export class EntityToTokenRepository extends BaseRepository {
   }
 
   async upsertManyOfTokenId(records: EntityToTokenRecord[]): Promise<void> {
+    if (records.length === 0) return
+
     await this.db
       .insertInto('_EntityToToken')
       .values(

@@ -4,8 +4,8 @@
   "name": "real",
   "initialAddresses": [
     "0xbf2F26cadbC10C4d61ac7e424D514d79a12126f8", // Bridger
-    "0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03",
-    "0xfC89B875970122E24C6C5ADd4Dea139443943ea7",
+    "0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03", // Bridge
+    "0xfC89B875970122E24C6C5ADd4Dea139443943ea7", // ERC20gw
     "0x679D4C1cC6855C57726BEA1784F578315d6431f6" // LidoStEthStrategy
   ],
   "names": {
@@ -17,7 +17,7 @@
     "0x655756824385F8903AC8cFDa17B656cc26f7C7da": "Minter",
     "0x679D4C1cC6855C57726BEA1784F578315d6431f6": "LidoStEthStrategy",
     "0x4AC36E1Fa7daBeFEc885f30B163c571080b2c335": "SwapManager",
-    "0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4": "EscrowMultisig",
+    "0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4": "RealStrategiesMultisig",
     "0x118Ab5501564F1Cfa755d0b3070874a26c1C3A50": "RealFastConfirmerMultisig"
   },
   "overrides": {
@@ -63,6 +63,28 @@
     },
     "RealVault": {
       "description": "This contract is responsible for managing deposit, withdrawal, and settlement processes for the assets backing reETH using the ERC4626 (tokenized vault) standard.",
+      "fields": {
+        "owner": {
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "can manage asset strategies and fees for the user's funds backing reETH."
+              }
+            ]
+          }
+        },
+        "proposal": {
+          // 'proposal' is misleading as this role allows to directly access the migrateVault() function
+          "target": {
+            "permissions": [
+              {
+                "type": "upgrade"
+              }
+            ]
+          }
+        }
+      },
       "ignoreMethods": [
         "previewDeposit",
         "roundPricePerShare",
