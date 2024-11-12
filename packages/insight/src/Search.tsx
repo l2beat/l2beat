@@ -20,19 +20,29 @@ export function Search({ onSearch, isHome }: SearchProps) {
       onSubmit={(e) => {
         e.preventDefault()
 
-        if (search.startsWith('0x') && !isAddress(search)) {
-          setError('Invalid address')
-          return
-        } else if (!search.startsWith('0x') && !search.endsWith('.eth')) {
-          setError('Invalid ENS')
+        if (search === '') {
           return
         }
 
-        if (search !== '') {
+        if (search.endsWith('.eth')) {
           onSearch(search)
           setError(undefined)
           setSearch('')
+          return
         }
+
+        if (search.startsWith('0x')) {
+          if (!isAddress(search)) {
+            setError('Invalid address')
+            return
+          }
+          onSearch(search)
+          setError(undefined)
+          setSearch('')
+          return
+        }
+
+        setError('Input must be an Ethereum address or ENS name')
       }}
     >
       {error && (
