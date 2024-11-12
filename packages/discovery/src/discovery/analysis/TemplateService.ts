@@ -16,6 +16,7 @@ import {
 } from '../config/RawDiscoveryConfig'
 import { ContractSources } from '../source/SourceCodeService'
 import { readJsonc } from '../utils/readJsonc'
+import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 
 const TEMPLATES_PATH = path.join('discovery', '_templates')
 const TEMPLATE_SHAPE_FOLDER = 'shape'
@@ -34,6 +35,9 @@ export class TemplateService {
   listAllTemplates(): Record<string, string[]> {
     const result: Record<string, string[]> = {}
     const resolvedRootPath = path.join(this.rootPath, TEMPLATES_PATH)
+    if(!fileExistsCaseSensitive(resolvedRootPath)) {
+        return {}
+    }
     const templatePaths = listAllPaths(resolvedRootPath)
     for (const path of templatePaths) {
       if (!existsSync(join(path, 'template.jsonc'))) {
