@@ -169,8 +169,7 @@ function getChainMap(networks: NetworkRecord[]) {
       acc[id] = {
         id,
         name: chain.display.name,
-        logoUrl:
-          logoUrl ?? `https://l2beat.com/icons/${chain.display.slug}.png`,
+        logoUrl: logoUrl ?? `/icons/${chain.display.slug}.png`,
         stage: 'stage' in chain ? chain.stage?.stage : undefined,
         risks: (chain?.technology
           ? [
