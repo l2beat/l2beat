@@ -10,6 +10,7 @@ import { DetailsHeader } from './_components/details-header'
 import { GeneratingReport } from './_components/generating-report'
 import { ReportProvider } from './_components/report-context'
 import { TokensTable } from './_components/table/tokens-table'
+import { formatAddress } from '~/utils/format-address'
 
 export type Risk = SetOptional<ScalingProjectRisk, 'category'>
 
@@ -29,7 +30,7 @@ async function getAddressDisplayName(address: Hex) {
     address,
   })
 
-  return resolvedEnsDomain ?? address
+  return resolvedEnsDomain ?? formatAddress(address)
 }
 
 export async function generateMetadata(props: Props) {
@@ -39,9 +40,7 @@ export async function generateMetadata(props: Props) {
 
   if (!isAddress(address)) return {}
   return {
-    title: `${await getAddressDisplayName(
-      address,
-    )}'s Asset Risk Report – L2BEAT`,
+    title: `${await getAddressDisplayName(address)}'s Insights – L2BEAT`,
     description: 'Detailed risk assessment for your L2 assets.',
   }
 }
