@@ -28,10 +28,17 @@ export const insertToken = actionClient
           }),
         )
         await db.tokenMeta.upsertMany(
-          meta.map((m) => ({
-            ...m,
-            tokenId: id,
-          })),
+          meta
+            .map((m) => ({
+              ...m,
+              tokenId: id,
+            }))
+            .filter(
+              (m) =>
+                m.source === 'Aggregate' ||
+                m.source === 'Overrides' ||
+                m.externalId,
+            ),
         )
         await db.entityToToken.upsertManyOfTokenId(
           managingEntities.map(({ entityId }) => ({
@@ -69,11 +76,19 @@ export const updateToken = actionClient
             }
           }),
         )
+        await db.tokenMeta.deleteByTokenId(id)
         await db.tokenMeta.upsertMany(
-          meta.map((m) => ({
-            ...m,
-            tokenId: id,
-          })),
+          meta
+            .map((m) => ({
+              ...m,
+              tokenId: id,
+            }))
+            .filter(
+              (m) =>
+                m.source === 'Aggregate' ||
+                m.source === 'Overrides' ||
+                m.externalId,
+            ),
         )
         await db.entityToToken.deleteByTokenId(id)
         await db.entityToToken.upsertManyOfTokenId(
