@@ -4,6 +4,9 @@ import { formatNumberWithCommas } from '~/utils/number-format/format-number'
 import { TokenWithChainLogo } from '../../../_components/token-with-chain-logo'
 import { type TokenEntry } from './get-token-entries'
 import { pluralize } from '@l2beat/shared-pure'
+import { ChevronIcon } from '~/icons/chevron'
+import { cn } from '~/utils/cn'
+import { uniq } from 'lodash'
 
 const columnHelper = createColumnHelper<TokenEntry>()
 
@@ -13,8 +16,8 @@ export const tokenColumns = [
     cell: ({ row }) => {
       return (
         <TokenWithChainLogo
-          token={row.original.token}
-          chain={row.original.network}
+          token={{ symbol: row.original.symbol, logoUrl: row.original.logoUrl }}
+          chain={row.original.chain}
         />
       )
     },
@@ -23,13 +26,13 @@ export const tokenColumns = [
       cellClassName: '!pr-0',
     },
   }),
-  columnHelper.accessor('token.name', {
+  columnHelper.accessor('name', {
     header: 'Asset',
     cell: ({ row }) => {
       return (
         <TwoRowCell>
-          <TwoRowCell.First>{row.original.token.name}</TwoRowCell.First>
-          <TwoRowCell.Second>on {row.original.network.name}</TwoRowCell.Second>
+          <TwoRowCell.First>{row.original.name}</TwoRowCell.First>
+          <TwoRowCell.Second>on {row.original.chain.name}</TwoRowCell.Second>
         </TwoRowCell>
       )
     },
@@ -47,8 +50,7 @@ export const tokenColumns = [
             ${formatNumberWithCommas(row.original.usdValue)}
           </TwoRowCell.First>
           <TwoRowCell.Second>
-            {formatNumberWithCommas(row.original.amount)}{' '}
-            {row.original.token.symbol}
+            {formatNumberWithCommas(row.original.amount)} {row.original.symbol}
           </TwoRowCell.Second>
         </TwoRowCell>
       )
@@ -70,32 +72,49 @@ export const tokenColumns = [
       tooltip: 'Managed by',
     },
   }),
-  columnHelper.accessor('underlyingTokens.count', {
+  columnHelper.accessor((row) => row.underlyingTokens.length, {
+    id: 'underlyingTokens',
     header: 'Underlying Tokens',
     cell: ({ row }) => {
-      if (row.original.underlyingTokens.count === 0) {
+      if (row.original.underlyingTokens.length === 0) {
         return (
           <TwoRowCell>
             <TwoRowCell.First>None</TwoRowCell.First>
-            <TwoRowCell.Second>Native</TwoRowCell.Second>
           </TwoRowCell>
         )
       }
-
+      const chainCount = uniq(
+        row.original.underlyingTokens.map((token) => token.chain.id),
+      ).length
       return (
         <TwoRowCell>
           <TwoRowCell.First>
-            {row.original.underlyingTokens.count} underlying
+            {row.original.underlyingTokens.length} underlying
           </TwoRowCell.First>
           <TwoRowCell.Second>
-            on {row.original.underlyingTokens.chainCount}{' '}
-            {pluralize(row.original.underlyingTokens.chainCount, 'chain')}
+            on {chainCount} {pluralize(chainCount, 'chain')}
           </TwoRowCell.Second>
         </TwoRowCell>
       )
     },
     meta: {
       tooltip: 'Underlying Tokens',
+    },
+  }),
+  columnHelper.display({
+    id: 'expander',
+    cell: ({ row }) => {
+      return (
+        <button onClick={row.getToggleExpandedHandler()}>
+          <ChevronIcon
+            className={cn(
+              'fill-[#CA80EC] transition-transform duration-200',
+              row.getIsExpanded() && 'rotate-180',
+              !row.getCanExpand() && 'cursor-not-allowed fill-pure-white/60',
+            )}
+          />
+        </button>
+      )
     },
   }),
 ]

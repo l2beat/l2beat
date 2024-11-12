@@ -125,6 +125,7 @@ export const assetRisksRouter = router({
         Record<
           string,
           {
+            id: string
             name: string
             logoUrl: string | undefined
             risks: {
@@ -139,6 +140,7 @@ export const assetRisksRouter = router({
 
         if (chain) {
           acc[id] = {
+            id,
             name: chain.display.name,
             logoUrl:
               logoUrl ?? `https://l2beat.com/icons/${chain.display.slug}.png`,
@@ -162,6 +164,7 @@ export const assetRisksRouter = router({
           }
         } else {
           acc[id] = {
+            id,
             name,
             logoUrl: logoUrl ?? undefined,
             risks: [],
