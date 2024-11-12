@@ -5,12 +5,12 @@ import { http, type Hex, createPublicClient, isAddress } from 'viem'
 import { type ScalingProjectRisk } from '@l2beat/config'
 import { mainnet } from 'viem/chains'
 import { db } from '~/server/database'
+import { formatAddress } from '~/utils/format-address'
 import { ClientsideLogic } from './_components/clientside-logic'
 import { DetailsHeader } from './_components/details-header'
 import { GeneratingReport } from './_components/generating-report'
 import { ReportProvider } from './_components/report-context'
 import { TokensTable } from './_components/table/tokens-table'
-import { formatAddress } from '~/utils/format-address'
 
 export type Risk = SetOptional<ScalingProjectRisk, 'category'>
 

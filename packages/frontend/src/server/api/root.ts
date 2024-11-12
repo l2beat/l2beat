@@ -1,7 +1,7 @@
 import { createCallerFactory, router } from '~/server/api/trpc'
 import { activityRouter } from './routers/activity'
-import { insightRouter } from './routers/insight'
 import { costsRouter } from './routers/costs'
+import { insightRouter } from './routers/insight'
 import { tvlRouter } from './routers/tvl'
 
 /**
