@@ -9,8 +9,7 @@ export const insertToken = actionClient
   .schema(insertTokenSchema)
   .action(async ({ parsedInput }) => {
     revalidatePath('/', 'layout')
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { relations, customMeta, managingEntities, ...data } = parsedInput
+    const { relations, meta, managingEntities, ...data } = parsedInput
     return await db.transaction(async () => {
       try {
         const { id } = await db.token.insert(data)
@@ -28,16 +27,12 @@ export const insertToken = actionClient
             }
           }),
         )
-        await db.tokenMeta.upsert({
-          tokenId: id,
-          externalId: '',
-          source: 'Overrides',
-          symbol: customMeta?.symbol ?? null,
-          name: customMeta?.name ?? null,
-          logoUrl: customMeta?.logoUrl ?? null,
-          decimals: customMeta?.decimals ?? null,
-          contractName: customMeta?.contractName ?? null,
-        })
+        await db.tokenMeta.upsertMany(
+          meta.map((m) => ({
+            ...m,
+            tokenId: id,
+          })),
+        )
         await db.entityToToken.upsertManyOfTokenId(
           managingEntities.map(({ entityId }) => ({
             tokenId: id,
@@ -54,7 +49,7 @@ export const insertToken = actionClient
 export const updateToken = actionClient
   .schema(updateTokenSchema)
   .action(async ({ parsedInput }) => {
-    const { id, relations, customMeta, managingEntities, ...data } = parsedInput
+    const { id, relations, meta, managingEntities, ...data } = parsedInput
     revalidatePath('/', 'layout')
     return await db.transaction(async () => {
       try {
@@ -74,16 +69,12 @@ export const updateToken = actionClient
             }
           }),
         )
-        await db.tokenMeta.upsert({
-          tokenId: id,
-          externalId: '',
-          source: 'Overrides',
-          symbol: customMeta?.symbol ?? null,
-          name: customMeta?.name ?? null,
-          logoUrl: customMeta?.logoUrl ?? null,
-          decimals: customMeta?.decimals ?? null,
-          contractName: customMeta?.contractName ?? null,
-        })
+        await db.tokenMeta.upsertMany(
+          meta.map((m) => ({
+            ...m,
+            tokenId: id,
+          })),
+        )
         await db.entityToToken.deleteByTokenId(id)
         await db.entityToToken.upsertManyOfTokenId(
           managingEntities.map(({ entityId }) => ({
