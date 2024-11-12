@@ -1,6 +1,6 @@
-import { type TokenMetaRecord } from '@l2beat/database'
 import { type StringWithAutocomplete, notUndefined } from '@l2beat/shared-pure'
 import { type Report, type Token } from '../report-context'
+import { getRequiredTokenMeta } from '~/app/asset-risks/_utils/get-required-token-meta'
 
 export interface TokenEntry {
   symbol: string
@@ -24,12 +24,6 @@ export type UnderlyingTokenEntry = Omit<TokenEntry, 'underlyingTokens'>
 export function getTokenEntries(report: Report): TokenEntry[] {
   const tokenEntries = report.tokens
     .map((token) => {
-      const meta = getMeta(token.meta)
-      const chain = report.chains[token.token.networkId]
-      if (!meta || !chain) {
-        return undefined
-      }
-
       const underlyingTokens = getUnderlyingTokens(report, token.token.id)
       return getTokenEntry(token, report, underlyingTokens)
     })
@@ -43,7 +37,7 @@ function getTokenEntry(
   report: Report,
   underlyingTokens?: UnderlyingTokenEntry[],
 ): TokenEntry | undefined {
-  const meta = getMeta(token.meta)
+  const meta = getRequiredTokenMeta(token.meta)
   const chain = report.chains[token.token.networkId]
   if (!meta || !chain) {
     return undefined
@@ -64,25 +58,6 @@ function getTokenEntry(
     type: underlyingTokens?.length !== 0 ? 'IOU' : 'Native',
     managedBy: 'N/A',
     underlyingTokens: underlyingTokens ?? [],
-  }
-}
-
-function getMeta(tokenMeta: TokenMetaRecord | undefined) {
-  if (
-    !tokenMeta?.name ||
-    !tokenMeta.symbol ||
-    !tokenMeta.decimals ||
-    !tokenMeta.logoUrl
-  ) {
-    return undefined
-  }
-
-  return {
-    ...tokenMeta,
-    name: tokenMeta.name,
-    symbol: tokenMeta.symbol,
-    decimals: tokenMeta.decimals,
-    logoUrl: tokenMeta.logoUrl,
   }
 }
 
