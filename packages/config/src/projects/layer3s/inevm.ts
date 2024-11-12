@@ -40,6 +40,13 @@ export const inevm: Layer3 = orbitStackL3({
       description:
         'Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.',
       source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Canonically (custom escrow)',
+          },
+        ],
+      },
       tokens: '*',
     }),
   ],

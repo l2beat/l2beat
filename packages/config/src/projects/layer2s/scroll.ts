@@ -172,24 +172,52 @@ export const scroll: Layer2 = {
         address: EthereumAddress('0xb2b10a289A229415a124EFDeF310C10cb004B6ff'), // custom gateway
         tokens: '*',
         source: 'external',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'Canonically (external escrow)',
+            },
+          ],
+        },
         ...upgradesScrollMultisig,
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B'),
         tokens: ['USDC'],
         source: 'external',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'Canonically (external escrow)',
+            },
+          ],
+        },
         ...upgradesScrollMultisig,
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x67260A8B73C5B77B55c1805218A42A7A6F98F515'),
         tokens: ['DAI'],
         source: 'external',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'Canonically (external escrow)',
+            },
+          ],
+        },
         ...upgradesScrollMultisig,
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x6625C6332c9F91F2D27c304E729B86db87A3f504'),
         tokens: ['wstETH'],
         source: 'external',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'Canonically (external escrow)',
+            },
+          ],
+        },
         description:
           'Custom token escrow with third-party governance, using the canonical bridge only for messaging.',
       }),
@@ -197,6 +225,13 @@ export const scroll: Layer2 = {
         address: EthereumAddress('0xA033Ff09f2da45f0e9ae495f525363722Df42b2a'),
         tokens: ['pufETH'],
         source: 'external',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'Canonically (external escrow)',
+            },
+          ],
+        },
         description:
           'Custom token escrow with third-party governance, using the canonical bridge only for messaging.',
       }),

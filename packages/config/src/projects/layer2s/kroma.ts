@@ -164,6 +164,13 @@ export const kroma: Layer2 = {
         sinceTimestamp: new UnixTime(1700122827),
         tokens: ['USDC'],
         source: 'external',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'Canonically (external escrow)',
+            },
+          ],
+        },
         description: 'Main entry point for users depositing USDC.',
       }),
     ],
