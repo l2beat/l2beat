@@ -342,7 +342,7 @@ function orbitStackCommon(
 
   const validators: ScalingProjectPermission = {
     name: 'Validators/Proposers',
-    accounts: templateVars.discovery.getPermissionsByRole('propose'), // Validators in Arbitrum are proposers and challengers
+    accounts: templateVars.discovery.getPermissionsByRole('validate'), // Validators in Arbitrum are proposers and challengers
     description:
       'They can submit new state roots and challenge state roots. Some of the operators perform their duties through special purpose smart contracts.',
     chain: templateVars.discovery.chain,
