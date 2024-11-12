@@ -6,10 +6,10 @@ import { type ScalingProjectRisk } from '@l2beat/config'
 import { mainnet } from 'viem/chains'
 import { db } from '~/server/database'
 import { ClientsideLogic } from './_components/clientside-logic'
-import { ReportProvider } from './_components/report-context'
 import { DetailsHeader } from './_components/details-header'
-import { TokensTable } from './_components/table/tokens-table'
 import { GeneratingReport } from './_components/generating-report'
+import { ReportProvider } from './_components/report-context'
+import { TokensTable } from './_components/table/tokens-table'
 
 export type Risk = SetOptional<ScalingProjectRisk, 'category'>
 

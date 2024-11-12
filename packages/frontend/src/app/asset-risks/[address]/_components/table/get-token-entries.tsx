@@ -1,6 +1,6 @@
-import { notUndefined, type StringWithAutocomplete } from '@l2beat/shared-pure'
-import { type Token, type Report } from '../report-context'
 import { type TokenMetaRecord } from '@l2beat/database'
+import { type StringWithAutocomplete, notUndefined } from '@l2beat/shared-pure'
+import { type Report, type Token } from '../report-context'
 
 export interface TokenEntry {
   symbol: string

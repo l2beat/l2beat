@@ -11,6 +11,7 @@ import {
   type TokenRecord,
 } from '@l2beat/database'
 import { type AssetRisksBalanceRecord } from '@l2beat/database/dist/asset-risks/balance/entity'
+import { assert, notUndefined } from '@l2beat/shared-pure'
 import { TRPCError } from '@trpc/server'
 import { getAddress } from 'viem'
 import { z } from 'zod'
@@ -18,7 +19,6 @@ import { db } from '~/server/database'
 import { refreshBalancesOfAddress } from '~/server/features/asset-risks/refresh-balances-of-address'
 import { refreshTokensOfAddress } from '~/server/features/asset-risks/refresh-tokens-of-address'
 import { procedure, router } from '../trpc'
-import { assert, notUndefined } from '@l2beat/shared-pure'
 
 const projectsByChainId = [...layer2s, ...layer3s].reduce<
   Record<number, Layer2 | Layer3>

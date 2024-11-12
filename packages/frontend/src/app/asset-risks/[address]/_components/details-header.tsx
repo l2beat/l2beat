@@ -1,10 +1,10 @@
 'use client'
 
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { api } from '~/trpc/react'
 import { formatNumberWithCommas } from '~/utils/number-format/format-number'
 import { Card } from '../../_components/card'
 import { useReport } from './report-context'
-import { api } from '~/trpc/react'
 
 interface DetailsHeaderProps {
   vanityAddress: string

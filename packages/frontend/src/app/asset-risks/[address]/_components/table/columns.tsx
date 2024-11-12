@@ -1,12 +1,12 @@
+import { pluralize } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
+import { uniq } from 'lodash'
 import { TwoRowCell } from '~/components/table/cells/two-row-cell'
+import { ChevronIcon } from '~/icons/chevron'
+import { cn } from '~/utils/cn'
 import { formatNumberWithCommas } from '~/utils/number-format/format-number'
 import { TokenWithChainLogo } from '../../../_components/token-with-chain-logo'
 import { type TokenEntry } from './get-token-entries'
-import { pluralize } from '@l2beat/shared-pure'
-import { ChevronIcon } from '~/icons/chevron'
-import { cn } from '~/utils/cn'
-import { uniq } from 'lodash'
 
 const columnHelper = createColumnHelper<TokenEntry>()
 

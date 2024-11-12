@@ -1,24 +1,24 @@
 'use client'
 
 import {
+  type Row,
   getCoreRowModel,
   getExpandedRowModel,
   getSortedRowModel,
-  type Row,
 } from '@tanstack/react-table'
+import { useMemo } from 'react'
 import { Card } from '~/app/asset-risks/_components/card'
 import { BasicTable } from '~/app/asset-risks/_components/table/basic-table'
-import { useTable } from '~/hooks/use-table'
-import { tokenColumns } from './columns'
-import { useReport } from '../report-context'
-import {
-  getTokenEntries,
-  type UnderlyingTokenEntry,
-  type TokenEntry,
-} from './get-token-entries'
-import { useMemo } from 'react'
 import { TokenWithChainLogo } from '~/app/asset-risks/_components/token-with-chain-logo'
 import { CustomLink } from '~/components/link/custom-link'
+import { useTable } from '~/hooks/use-table'
+import { useReport } from '../report-context'
+import { tokenColumns } from './columns'
+import {
+  type TokenEntry,
+  type UnderlyingTokenEntry,
+  getTokenEntries,
+} from './get-token-entries'
 
 export function TokensTable() {
   const report = useReport()
