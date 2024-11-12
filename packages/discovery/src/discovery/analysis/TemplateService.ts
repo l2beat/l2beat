@@ -9,6 +9,7 @@ import {
   formatIntoHashable,
   sha2_256bit,
 } from '../../flatten/utils'
+import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
 import {
   DiscoveryContract,
@@ -34,6 +35,9 @@ export class TemplateService {
   listAllTemplates(): Record<string, string[]> {
     const result: Record<string, string[]> = {}
     const resolvedRootPath = path.join(this.rootPath, TEMPLATES_PATH)
+    if (!fileExistsCaseSensitive(resolvedRootPath)) {
+      return {}
+    }
     const templatePaths = listAllPaths(resolvedRootPath)
     for (const path of templatePaths) {
       if (!existsSync(join(path, 'template.jsonc'))) {
