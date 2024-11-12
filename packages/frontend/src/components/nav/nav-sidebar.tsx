@@ -41,7 +41,7 @@ export async function NavSidebar({ groups, logoLink, legacyNav }: Props) {
       </nav>
       <div>
         <NavSmallLinkGroup className="mt-5">
-          {insight && <NavSmallLink title="Insight" href="/asset-risks" />}
+          {insight && <NavSmallLink title="Insight" href="/insight" />}
           <NavSmallLink title="Forum" href={externalLinks.forum} />
           <NavSmallLink title="Donate" href="/donate" />
           <NavSmallLink

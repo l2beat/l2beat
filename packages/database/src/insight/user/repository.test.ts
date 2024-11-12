@@ -1,12 +1,12 @@
 import { assert } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../../test/database'
-import { AssetRisksUserRepository } from './repository'
+import { InsightUserRepository } from './repository'
 
-describeDatabase(AssetRisksUserRepository.name, (db) => {
-  const repository = db.assetRisksUser
+describeDatabase(InsightUserRepository.name, (db) => {
+  const repository = db.insightUser
 
-  describe(AssetRisksUserRepository.prototype.upsert.name, () => {
+  describe(InsightUserRepository.prototype.upsert.name, () => {
     it('adds new rows', async () => {
       await repository.upsert({
         address: '0x0000000000000000000000000000000000000000',
@@ -58,7 +58,7 @@ describeDatabase(AssetRisksUserRepository.name, (db) => {
     })
   })
 
-  describe(AssetRisksUserRepository.prototype.findUserById.name, () => {
+  describe(InsightUserRepository.prototype.findUserById.name, () => {
     it('returns the user with the given id', async () => {
       await repository.upsert({
         address: '0x0000000000000000000000000000000000000000',
@@ -69,7 +69,7 @@ describeDatabase(AssetRisksUserRepository.name, (db) => {
     })
   })
 
-  describe(AssetRisksUserRepository.prototype.findUserByAddress.name, () => {
+  describe(InsightUserRepository.prototype.findUserByAddress.name, () => {
     it('returns the user with the given address', async () => {
       await repository.upsert({
         address: '0x0000000000000000000000000000000000000000',

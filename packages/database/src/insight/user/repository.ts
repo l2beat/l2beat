@@ -1,16 +1,16 @@
 import { BaseRepository } from '../../BaseRepository'
 import {
-  AssetRisksUserRecord,
-  UpsertableAssetRisksUserRecord,
+  InsightUserRecord,
+  UpsertableInsightUserRecord,
   upsertableToRecord,
 } from './entity'
-import { selectAssetRisksUser } from './select'
+import { selectInsightUser } from './select'
 
-export class AssetRisksUserRepository extends BaseRepository {
-  async findUserById(id: string): Promise<AssetRisksUserRecord | undefined> {
+export class InsightUserRepository extends BaseRepository {
+  async findUserById(id: string): Promise<InsightUserRecord | undefined> {
     const result = await this.db
-      .selectFrom('AssetRisksUser')
-      .select(selectAssetRisksUser)
+      .selectFrom('InsightUser')
+      .select(selectInsightUser)
       .where('id', '=', id)
       .executeTakeFirst()
     return result
@@ -18,37 +18,37 @@ export class AssetRisksUserRepository extends BaseRepository {
 
   async findUserByAddress(
     address: string,
-  ): Promise<AssetRisksUserRecord | undefined> {
+  ): Promise<InsightUserRecord | undefined> {
     const result = await this.db
-      .selectFrom('AssetRisksUser')
-      .select(selectAssetRisksUser)
+      .selectFrom('InsightUser')
+      .select(selectInsightUser)
       .where('address', 'ilike', address)
       .executeTakeFirst()
     return result
   }
 
-  async getAll(): Promise<AssetRisksUserRecord[]> {
+  async getAll(): Promise<InsightUserRecord[]> {
     const result = await this.db
-      .selectFrom('AssetRisksUser')
-      .select(selectAssetRisksUser)
+      .selectFrom('InsightUser')
+      .select(selectInsightUser)
       .execute()
     return result
   }
 
   async update(
     id: string,
-    updateable: Partial<AssetRisksUserRecord>,
+    updateable: Partial<InsightUserRecord>,
   ): Promise<void> {
     await this.db
-      .updateTable('AssetRisksUser')
+      .updateTable('InsightUser')
       .set(updateable)
       .where('id', '=', id)
       .execute()
   }
 
-  async upsert(upsertable: UpsertableAssetRisksUserRecord): Promise<void> {
+  async upsert(upsertable: UpsertableInsightUserRecord): Promise<void> {
     await this.db
-      .insertInto('AssetRisksUser')
+      .insertInto('InsightUser')
       .values(upsertableToRecord(upsertable))
       .onConflict((oc) =>
         oc.column('address').doUpdateSet((eb) => ({
@@ -62,7 +62,7 @@ export class AssetRisksUserRepository extends BaseRepository {
 
   async deleteAll(): Promise<number> {
     const result = await this.db
-      .deleteFrom('AssetRisksUser')
+      .deleteFrom('InsightUser')
       .executeTakeFirstOrThrow()
     return Number(result.numDeletedRows)
   }

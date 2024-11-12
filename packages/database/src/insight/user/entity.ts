@@ -1,8 +1,8 @@
 import { Insertable } from 'kysely'
 import { nanoid } from 'nanoid'
-import { AssetRisksUser } from '../../kysely/generated/types'
+import { InsightUser } from '../../kysely/generated/types'
 
-export interface AssetRisksUserRecord {
+export interface InsightUserRecord {
   id: string
   address: string
   tokensRefreshedAt: Date | null
@@ -11,14 +11,14 @@ export interface AssetRisksUserRecord {
   createdAt: Date
 }
 
-export type UpsertableAssetRisksUserRecord = Omit<
-  Insertable<AssetRisksUser>,
+export type UpsertableInsightUserRecord = Omit<
+  Insertable<InsightUser>,
   'id' | 'updatedAt' | 'createdAt'
 >
 
 export function upsertableToRecord(
-  record: UpsertableAssetRisksUserRecord,
-): Insertable<AssetRisksUser> {
+  record: UpsertableInsightUserRecord,
+): Insertable<InsightUser> {
   return {
     ...record,
     id: nanoid(),

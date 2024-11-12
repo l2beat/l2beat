@@ -11,7 +11,7 @@ import { db } from '~/server/database'
 import { getChain } from './utils/chains'
 
 export async function refreshBalancesOfAddress(address: Address) {
-  const user = await db.assetRisksUser.findUserByAddress(address)
+  const user = await db.insightUser.findUserByAddress(address)
   if (!user) {
     throw new TRPCError({
       code: 'NOT_FOUND',
@@ -19,12 +19,12 @@ export async function refreshBalancesOfAddress(address: Address) {
     })
   }
 
-  await db.assetRisksUser.upsert({
+  await db.insightUser.upsert({
     address,
     balancesRefreshedAt: new Date(),
   })
 
-  const balances = await db.assetRisksBalance.getAllForUser(user.id)
+  const balances = await db.insightBalance.getAllForUser(user.id)
   const tokens = await db.token.getByIds(balances.map((b) => b.tokenId))
   const tokensByNetwork = tokens.reduce<Record<string, TokenRecord[]>>(
     (acc, token) => {
@@ -78,7 +78,7 @@ export async function refreshBalancesOfAddress(address: Address) {
         const nativeBalance = await client.getBalance({
           address,
         })
-        await db.assetRisksBalance.upsertMany(
+        await db.insightBalance.upsertMany(
           nativeTokens.map((token) => ({
             tokenId: token.id,
             userId: user.id,
@@ -97,7 +97,7 @@ export async function refreshBalancesOfAddress(address: Address) {
           })),
         })
 
-        await db.assetRisksBalance.upsertMany(
+        await db.insightBalance.upsertMany(
           contractTokens.map((token, index) => ({
             tokenId: token.id,
             userId: user.id,

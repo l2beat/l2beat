@@ -5,7 +5,7 @@ import { type Address } from 'viem'
 import { type RouterOutputs, api } from '~/trpc/react'
 
 const ReportContext = createContext<
-  (RouterOutputs['assetRisks']['report'] & { address: Address }) | null
+  (RouterOutputs['insight']['report'] & { address: Address }) | null
 >(null)
 
 export function ReportProvider({
@@ -17,7 +17,7 @@ export function ReportProvider({
   children: React.ReactNode
   placeholder?: React.ReactNode
 }) {
-  const query = api.assetRisks.report.useQuery({ address })
+  const query = api.insight.report.useQuery({ address })
   if (!query.data) return placeholder ?? null
 
   return (

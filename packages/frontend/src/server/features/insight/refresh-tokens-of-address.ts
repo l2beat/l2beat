@@ -11,14 +11,14 @@ import { db } from '~/server/database'
 import { getChain } from './utils/chains'
 
 export async function refreshTokensOfAddress(address: Address) {
-  await db.assetRisksUser.upsert({
+  await db.insightUser.upsert({
     address,
   })
-  const user = await db.assetRisksUser.findUserByAddress(address)
+  const user = await db.insightUser.findUserByAddress(address)
 
   assert(user, 'User not found')
 
-  await db.assetRisksUser.upsert({
+  await db.insightUser.upsert({
     address,
     tokensRefreshedAt: new Date(),
   })
@@ -116,10 +116,10 @@ export async function refreshTokensOfAddress(address: Address) {
   )
 
   const existingTokenIds = new Set(
-    (await db.assetRisksBalance.getAllForUser(user.id)).map((b) => b.tokenId),
+    (await db.insightBalance.getAllForUser(user.id)).map((b) => b.tokenId),
   )
 
-  await db.assetRisksBalance.upsertMany(
+  await db.insightBalance.upsertMany(
     Object.values(tokens)
       .flatMap((tokens) =>
         tokens.map((token) => ({

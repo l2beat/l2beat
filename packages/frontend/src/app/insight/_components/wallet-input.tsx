@@ -40,12 +40,12 @@ export function WalletInput({ size, className }: Props) {
       name: normalize(address),
     })
     if (ensAddress) {
-      router.push(`/asset-risks/${ensAddress}`)
+      router.push(`/insight/${ensAddress}`)
     } else if (!isAddress(address)) {
       setError('Invalid address')
       return
     } else {
-      router.push(`/asset-risks/${address}`)
+      router.push(`/insight/${address}`)
     }
   }
 

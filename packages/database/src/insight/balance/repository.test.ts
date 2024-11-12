@@ -1,11 +1,11 @@
 import { assert } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../../test/database'
-import { UpsertableAssetRisksBalanceRecord } from './entity'
-import { AssetRisksBalanceRepository } from './repository'
+import { UpsertableInsightBalanceRecord } from './entity'
+import { InsightBalanceRepository } from './repository'
 
-describeDatabase(AssetRisksBalanceRepository.name, (db) => {
-  const repository = db.assetRisksBalance
+describeDatabase(InsightBalanceRepository.name, (db) => {
+  const repository = db.insightBalance
   let networkId: string
   let users: [string, string]
   let tokens: [string, string, string, string]
@@ -20,8 +20,8 @@ describeDatabase(AssetRisksBalanceRepository.name, (db) => {
     )
     networkId = allNetworks[0].id
 
-    await db.assetRisksUser.upsert({ address: 'a' })
-    await db.assetRisksUser.upsert({ address: 'b' })
+    await db.insightUser.upsert({ address: 'a' })
+    await db.insightUser.upsert({ address: 'b' })
     await db.token.upsertMany([
       { networkId, address: 'a' },
       { networkId, address: 'b' },
@@ -29,7 +29,7 @@ describeDatabase(AssetRisksBalanceRepository.name, (db) => {
       { networkId, address: 'd' },
     ])
 
-    const allUsers = await db.assetRisksUser.getAll()
+    const allUsers = await db.insightUser.getAll()
     assert(
       allUsers.length === 2 && allUsers[0] && allUsers[1],
       'Expected exactly two users',
@@ -55,12 +55,12 @@ describeDatabase(AssetRisksBalanceRepository.name, (db) => {
 
   afterEach(async function () {
     await repository.deleteAll()
-    await db.assetRisksUser.deleteAll()
+    await db.insightUser.deleteAll()
     await db.token.deleteAll()
     await db.network.deleteAll()
   })
 
-  describe(AssetRisksBalanceRepository.prototype.upsertMany.name, () => {
+  describe(InsightBalanceRepository.prototype.upsertMany.name, () => {
     it('adds new rows', async () => {
       await repository.upsertMany([
         record(users[0], tokens[0], '1'),
@@ -106,7 +106,7 @@ function record(
   userId: string,
   tokenId: string,
   balance: string,
-): UpsertableAssetRisksBalanceRecord {
+): UpsertableInsightBalanceRecord {
   return {
     userId,
     tokenId,

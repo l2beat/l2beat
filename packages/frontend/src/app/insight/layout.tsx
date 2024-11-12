@@ -6,8 +6,8 @@ import { cn } from '~/utils/cn'
 import { getDefaultMetadata } from '~/utils/metadata'
 
 export const metadata: Metadata = getDefaultMetadata({
-  title: 'L2BEAT - Asset Risks',
-  description: 'Get your asset risks report for your L2 assets.',
+  title: 'L2BEAT - Insight',
+  description: 'Get insights about your L2 assets.',
 })
 
 export default async function Layout({

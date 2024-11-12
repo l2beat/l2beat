@@ -16,7 +16,7 @@ const coinMarketResponseSchema = z.array(
 
 // It's similar to DaBeatPricesRefresher, if not the same, only query source is different
 // and it will end-up in the token-db once we wire it up.
-export class AssetRisksPriceRefresher {
+export class InsightPriceRefresher {
   private readonly refreshQueue: TaskQueue<void>
   constructor(
     private readonly database: Database,
@@ -32,7 +32,7 @@ export class AssetRisksPriceRefresher {
         this.logger.info('Refresh finished')
       },
       this.logger.for('refreshQueue'),
-      { metricsId: 'AssetRisksPriceRefresher' },
+      { metricsId: 'InsightPriceRefresher' },
     )
   }
 

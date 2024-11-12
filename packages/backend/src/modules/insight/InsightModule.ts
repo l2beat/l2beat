@@ -4,23 +4,23 @@ import { Peripherals } from '../../peripherals/Peripherals'
 import { Providers } from '../../providers/Providers'
 import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
-import { AssetRisksPriceRefresher } from './AssetRisksPriceRefresher'
-import { createAssetRisksRouter } from './AssetRisksRouter'
+import { InsightPriceRefresher } from './InsightPriceRefresher'
+import { createInsightRouter } from './InsightRouter'
 
-export function createAssetRisksModule(
+export function createInsightModule(
   config: Config,
   logger: Logger,
   peripherals: Peripherals,
   providers: Providers,
   clock: Clock,
 ): ApplicationModule | undefined {
-  const assetRisksConfig = config.assetRisks
-  if (!assetRisksConfig) {
-    logger.info('Asset risks module disabled')
+  const insightConfig = config.insight
+  if (!insightConfig) {
+    logger.info('Insight module disabled')
     return
   }
 
-  const pricesRefresher = new AssetRisksPriceRefresher(
+  const pricesRefresher = new InsightPriceRefresher(
     peripherals.database,
     providers.coingeckoClient,
     clock,
@@ -28,7 +28,7 @@ export function createAssetRisksModule(
   )
 
   const start = () => {
-    logger = logger.for('AssetRisksModule')
+    logger = logger.for('InsightModule')
     logger.info('Starting')
     pricesRefresher.start()
     logger.info('Started')
@@ -36,6 +36,6 @@ export function createAssetRisksModule(
 
   return {
     start,
-    routers: [createAssetRisksRouter(pricesRefresher)],
+    routers: [createInsightRouter(pricesRefresher)],
   }
 }

@@ -11,15 +11,15 @@ import {
   type TokenMetaRecord,
   type TokenRecord,
 } from '@l2beat/database'
-import { type AssetRisksBalanceRecord } from '@l2beat/database/dist/asset-risks/balance/entity'
+import { type InsightBalanceRecord } from '@l2beat/database/dist/insight/balance/entity'
 import { notUndefined } from '@l2beat/shared-pure'
 import { TRPCError } from '@trpc/server'
 import { getAddress } from 'viem'
 import { z } from 'zod'
 import { getRequiredTokenMeta } from '~/app/insight/_utils/get-required-token-meta'
 import { db } from '~/server/database'
-import { refreshBalancesOfAddress } from '~/server/features/asset-risks/refresh-balances-of-address'
-import { refreshTokensOfAddress } from '~/server/features/asset-risks/refresh-tokens-of-address'
+import { refreshBalancesOfAddress } from '~/server/features/insight/refresh-balances-of-address'
+import { refreshTokensOfAddress } from '~/server/features/insight/refresh-tokens-of-address'
 import { procedure, router } from '../trpc'
 
 const projectsByChainId = [...layer2s, ...layer3s].reduce<
@@ -31,7 +31,7 @@ const projectsByChainId = [...layer2s, ...layer3s].reduce<
   return acc
 }, {})
 
-export const assetRisksRouter = router({
+export const insightRouter = router({
   refreshTokens: procedure
     .input(
       z.object({
@@ -68,10 +68,10 @@ export const assetRisksRouter = router({
       }),
     )
     .query(async ({ input }) => {
-      await db.assetRisksUser.upsert({
+      await db.insightUser.upsert({
         address: input.address,
       })
-      const user = await db.assetRisksUser.findUserByAddress(input.address)
+      const user = await db.insightUser.findUserByAddress(input.address)
       if (!user) {
         throw new TRPCError({
           code: 'NOT_FOUND',
@@ -82,7 +82,7 @@ export const assetRisksRouter = router({
         db.network.getAll(),
         db.externalBridge.getAll(),
         db.tokenBridge.getAll(),
-        db.assetRisksBalance.getAllForUser(user.id),
+        db.insightBalance.getAllForUser(user.id),
       ])
 
       const balancesMap = groupByTokenId(balances)
@@ -110,7 +110,7 @@ export const assetRisksRouter = router({
 })
 
 async function getTokenAndRelationsMap(
-  balancesMap: Record<string, AssetRisksBalanceRecord>,
+  balancesMap: Record<string, InsightBalanceRecord>,
 ) {
   const userTokenIds = Object.keys(balancesMap)
 
@@ -204,7 +204,7 @@ function getChainMap(networks: NetworkRecord[]) {
 async function getTokens(
   tokenMap: Record<string, TokenRecord>,
   tokenMetaMap: Record<string, TokenMetaRecord>,
-  balancesMap: Record<string, AssetRisksBalanceRecord>,
+  balancesMap: Record<string, InsightBalanceRecord>,
 ) {
   const coingeckoMeta = await db.tokenMeta.getByTokenIdsAndSource(
     Object.values(tokenMap).map((t) => t.id),

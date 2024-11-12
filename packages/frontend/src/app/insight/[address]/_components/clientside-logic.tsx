@@ -5,10 +5,10 @@ import { type Address } from 'viem'
 import { api } from '~/trpc/react'
 
 export function ClientsideLogic({ address }: { address: Address }) {
-  const refreshTokens = api.assetRisks.refreshTokens.useMutation()
-  const refreshBalances = api.assetRisks.refreshBalances.useMutation()
+  const refreshTokens = api.insight.refreshTokens.useMutation()
+  const refreshBalances = api.insight.refreshBalances.useMutation()
 
-  const report = api.assetRisks.report.useQuery({ address })
+  const report = api.insight.report.useQuery({ address })
   const [refetched, setRefetched] = useState(false)
 
   useEffect(() => {
