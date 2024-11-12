@@ -17,6 +17,7 @@ import { z } from 'zod'
 import { db } from '~/server/database'
 import { refreshBalancesOfAddress } from '~/server/features/asset-risks/refresh-balances-of-address'
 import { refreshTokensOfAddress } from '~/server/features/asset-risks/refresh-tokens-of-address'
+import { calculateValue } from '~/server/features/scaling/tvl/tokens/utils/calculate-value'
 import { procedure, router } from '../trpc'
 
 const projectsByChainId = [...layer2s, ...layer3s].reduce<
@@ -120,7 +121,54 @@ export const assetRisksRouter = router({
         return acc
       }, {})
 
-      // TODO: Fetch info about prices / etc.
+      // Prices
+      const coingeckoTokenMeta = await db.tokenMeta.getByTokenIdsAndSource(
+        Object.values(tokens).map((t) => t.id),
+        'CoinGecko',
+      )
+
+      const coingeckoIdsWithTokenIds = coingeckoTokenMeta.flatMap((meta) =>
+        meta.externalId
+          ? [{ coingeckoId: meta.externalId, tokenId: meta.tokenId }]
+          : [],
+      )
+
+      const tokenIdToCoingeckoId = coingeckoIdsWithTokenIds.reduce<
+        Record<string, string>
+      >((acc, { tokenId, coingeckoId }) => {
+        acc[tokenId] = coingeckoId
+        return acc
+      }, {})
+
+      const priceRecords = await db.currentPrice.getByCoingeckoIds(
+        coingeckoIdsWithTokenIds.map(({ coingeckoId }) => coingeckoId),
+      )
+
+      const valueInCents = Object.entries(tokenMeta)
+        .flatMap(([tokenId, meta]) => {
+          const { decimals } = meta
+
+          if (!decimals) return []
+
+          const resolvedCoingeckoId = tokenIdToCoingeckoId[tokenId]
+
+          if (!resolvedCoingeckoId) return []
+
+          const price = priceRecords.find(
+            ({ coingeckoId }) => coingeckoId === resolvedCoingeckoId,
+          )?.priceUsd
+
+          if (!price) return []
+
+          const balance = balances[meta.tokenId]?.balance ?? '0'
+
+          return calculateValue({
+            amount: BigInt(balance),
+            priceUsd: price,
+            decimals,
+          })
+        })
+        .reduce((acc, value) => acc + value, 0n)
 
       const chains = networks.reduce<
         Record<
@@ -167,7 +215,7 @@ export const assetRisksRouter = router({
       }, {})
 
       return {
-        usdValue: 0,
+        usdValue: Number(valueInCents) / 100,
         tokensRefreshedAt: user.tokensRefreshedAt,
         balancesRefreshedAt: user.balancesRefreshedAt,
         chains,
