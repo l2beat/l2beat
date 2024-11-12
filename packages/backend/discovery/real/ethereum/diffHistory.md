@@ -1,3 +1,86 @@
+Generated with discovered.json: 0x3bf05c5287e6090b26ec176e656ba7e8caeec42f
+
+# Diff at Tue, 12 Nov 2024 15:38:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b2d1031f386ed9987b07f83babe4993700b00d33 block: 21170377
+- current block number: 21170377
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21170377 (main branch discovery), not current.
+
+```diff
+    contract RealFastConfirmerMultisig (0x118Ab5501564F1Cfa755d0b3070874a26c1C3A50) {
+    +++ description: None
+      directlyReceivedPermissions.2:
+-        {"permission":"propose","target":"0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a","description":"can submit state roots to the RollupProxy contract on the host chain."}
+      directlyReceivedPermissions.1.permission:
+-        "configure"
++        "validate"
+      directlyReceivedPermissions.1.description:
+-        "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
++        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+      directlyReceivedPermissions.0.permission:
+-        "challenge"
++        "configure"
+      directlyReceivedPermissions.0.description:
+-        "can challenge state roots on the host chain."
++        "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+    }
+```
+
+```diff
+    contract SequencerInbox (0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.maxTimeVariation.description:
+-        "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
++        "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
+    }
+```
+
+```diff
+    contract RollupProxy (0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.5:
+-        {"permission":"upgrade","target":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","via":[{"address":"0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a","delay":0}]}
+      issuedPermissions.4:
+-        {"permission":"propose","target":"0x4b8Fbc3006F256dd470B070d6c70fAb413Fceb62","via":[{"address":"0x118Ab5501564F1Cfa755d0b3070874a26c1C3A50","delay":0,"description":"can submit state roots to the RollupProxy contract on the host chain."}]}
+      issuedPermissions.3.permission:
+-        "propose"
++        "validate"
+      issuedPermissions.3.via.0:
++        {"address":"0x118Ab5501564F1Cfa755d0b3070874a26c1C3A50","delay":0,"description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}
+      issuedPermissions.2.permission:
+-        "configure"
++        "validate"
+      issuedPermissions.2.via.0:
+-        {"address":"0x118Ab5501564F1Cfa755d0b3070874a26c1C3A50","delay":0,"description":"a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."}
+      issuedPermissions.1.permission:
+-        "challenge"
++        "upgrade"
+      issuedPermissions.1.target:
+-        "0x4b8Fbc3006F256dd470B070d6c70fAb413Fceb62"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+      issuedPermissions.1.via.0.address:
+-        "0x118Ab5501564F1Cfa755d0b3070874a26c1C3A50"
++        "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"
+      issuedPermissions.1.via.0.description:
+-        "can challenge state roots on the host chain."
+      issuedPermissions.0.permission:
+-        "challenge"
++        "configure"
+      issuedPermissions.0.via.0:
++        {"address":"0x118Ab5501564F1Cfa755d0b3070874a26c1C3A50","delay":0,"description":"a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."}
+    }
+```
+
 Generated with discovered.json: 0x78cce8e61f9b802afaaf60507b4c29b4f224b541
 
 # Diff at Tue, 12 Nov 2024 08:22:36 GMT:

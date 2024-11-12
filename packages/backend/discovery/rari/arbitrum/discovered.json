@@ -2,7 +2,7 @@
   "name": "rari",
   "chain": "arbitrum",
   "blockNumber": 271338161,
-  "configHash": "0x2e79adeecb5c88a2d754eb17affc91ea18658ef518603ad27a314d9e645714dd",
+  "configHash": "0x617970930a892a69b6e4c072d8e2d77c86dd4fe2e3469af58e037cdea4d95111",
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -245,11 +245,6 @@
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
       "issuedPermissions": [
         {
-          "permission": "challenge",
-          "target": "0xeCebCfC101c3a1c4dB99902cE1Df914dCAd50a65",
-          "via": []
-        },
-        {
           "permission": "configure",
           "target": "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF",
           "via": [
@@ -261,11 +256,6 @@
           ]
         },
         {
-          "permission": "propose",
-          "target": "0xeCebCfC101c3a1c4dB99902cE1Df914dCAd50a65",
-          "via": []
-        },
-        {
           "permission": "upgrade",
           "target": "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF",
           "via": [
@@ -274,6 +264,11 @@
               "delay": 0
             }
           ]
+        },
+        {
+          "permission": "validate",
+          "target": "0xeCebCfC101c3a1c4dB99902cE1Df914dCAd50a65",
+          "via": []
         }
       ],
       "ignoreInWatchMode": [
@@ -877,7 +872,7 @@
       },
       "fieldMeta": {
         "maxTimeVariation": {
-          "description": "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
+          "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
       },
       "derivedName": "SequencerInbox"
@@ -993,14 +988,9 @@
       "address": "0xeCebCfC101c3a1c4dB99902cE1Df914dCAd50a65",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "validate",
           "target": "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
-          "description": "can challenge state roots on the host chain."
-        },
-        {
-          "permission": "propose",
-          "target": "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
-          "description": "can submit state roots to the RollupProxy contract on the host chain."
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ]
     }
@@ -1734,8 +1724,8 @@
     "orbitstack/OneStepProverMath": "0x8dd8aebb517eb6eaf15437ddbb90dff66f2b14d9d6b5390dd87fbdab15168188",
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
-    "orbitstack/RollupProxy": "0x896aca243cf3d45ddf79cc142d37874406a6e07e5572f1450df6adccd0d627ac",
-    "orbitstack/SequencerInbox": "0x746f38463ee5aff9c2f6051c828002565b57c702a6be447c979d1996dd6bd673",
+    "orbitstack/RollupProxy": "0x88165b83156dbb5b288912a52adc278d223904d0c933472cb3950a05ba456170",
+    "orbitstack/SequencerInbox": "0x58bf3ad8ac9dc1181ff793e330641c545ee2d9558fce65d2ee39d483c2490494",
     "orbitstack/UpgradeExecutor": "0xa25e02367a436cebea22481663da914bbf1fd9492d903659cc6ec9ddbaccb241"
   }
 }

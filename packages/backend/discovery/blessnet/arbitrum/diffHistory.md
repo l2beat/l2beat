@@ -1,3 +1,111 @@
+Generated with discovered.json: 0x49e2dddde9e4cbeafb87cdd99640a16c67eb1072
+
+# Diff at Tue, 12 Nov 2024 15:38:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b2d1031f386ed9987b07f83babe4993700b00d33 block: 272297655
+- current block number: 272297655
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 272297655 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x1e751242C9CE10E165969EeD91E5D98587904aad) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.maxTimeVariation.description:
+-        "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
++        "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
+    }
+```
+
+```diff
+    contract BlessnetFastconfirmerMultisig (0x571D6CA61B979A967E055696c822CF8C928d3556) {
+    +++ description: None
+      receivedPermissions.2:
+-        {"permission":"propose","target":"0xF9327276c0E0d255543C095AC6D243B555e645D9","description":"can submit state roots to the RollupProxy contract on the host chain."}
+      receivedPermissions.1.permission:
+-        "configure"
++        "validate"
+      receivedPermissions.1.description:
+-        "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
++        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "configure"
+      receivedPermissions.0.description:
+-        "can challenge state roots on the host chain."
++        "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+    }
+```
+
+```diff
+    contract ERC20RollupEventInbox (0x67B01721383baedF4b27B745bf533F6F7bDc4AE4) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      template:
++        "orbitstack/RollupEventInbox"
+      displayName:
++        "RollupEventInbox"
+      description:
++        "Helper contract sending configuration data over the bridge during the systems initialization."
+    }
+```
+
+```diff
+    contract RollupProxy (0xF9327276c0E0d255543C095AC6D243B555e645D9) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.9:
+-        {"permission":"upgrade","target":"0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF","via":[{"address":"0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3","delay":0}]}
+      issuedPermissions.8:
+-        {"permission":"propose","target":"0x82Bc29d2a230d99261CFF7Dab9dAB27649784Fd9","via":[]}
+      issuedPermissions.7:
+-        {"permission":"propose","target":"0x571D6CA61B979A967E055696c822CF8C928d3556","via":[]}
+      issuedPermissions.6:
+-        {"permission":"propose","target":"0x3D5cFeB6C99343793a8E112dF7D6c331F48e22De","via":[]}
+      issuedPermissions.5.permission:
+-        "propose"
++        "validate"
+      issuedPermissions.5.target:
+-        "0x27752e6B947e777E894c1b7E574Ca7593d6F2C49"
++        "0x82Bc29d2a230d99261CFF7Dab9dAB27649784Fd9"
+      issuedPermissions.4.permission:
+-        "configure"
++        "validate"
+      issuedPermissions.3.permission:
+-        "challenge"
++        "validate"
+      issuedPermissions.3.target:
+-        "0x82Bc29d2a230d99261CFF7Dab9dAB27649784Fd9"
++        "0x3D5cFeB6C99343793a8E112dF7D6c331F48e22De"
+      issuedPermissions.2.permission:
+-        "challenge"
++        "validate"
+      issuedPermissions.2.target:
+-        "0x571D6CA61B979A967E055696c822CF8C928d3556"
++        "0x27752e6B947e777E894c1b7E574Ca7593d6F2C49"
+      issuedPermissions.1.permission:
+-        "challenge"
++        "upgrade"
+      issuedPermissions.1.target:
+-        "0x3D5cFeB6C99343793a8E112dF7D6c331F48e22De"
++        "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"
+      issuedPermissions.1.via.0:
++        {"address":"0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3","delay":0}
+      issuedPermissions.0.permission:
+-        "challenge"
++        "configure"
+      issuedPermissions.0.target:
+-        "0x27752e6B947e777E894c1b7E574Ca7593d6F2C49"
++        "0x571D6CA61B979A967E055696c822CF8C928d3556"
+    }
+```
+
 Generated with discovered.json: 0x559fb671bc7d281ff267dd97b4968edd6835ec80
 
 # Diff at Fri, 08 Nov 2024 11:02:40 GMT:

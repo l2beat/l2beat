@@ -1,3 +1,98 @@
+Generated with discovered.json: 0x7f64ed08da69d16760b05fc47f24fc18677a1a21
+
+# Diff at Tue, 12 Nov 2024 15:38:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b2d1031f386ed9987b07f83babe4993700b00d33 block: 21071398
+- current block number: 21071398
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21071398 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.5:
+-        {"permission":"upgrade","target":"0xa9d1C9D877F235C21d803e4a0b81F8ca6C4c83AC","via":[{"address":"0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a","delay":0}]}
+      issuedPermissions.4:
+-        {"permission":"propose","target":"0x9C56265ef2989138d264b30fBbA2043902daBdf8","via":[{"address":"0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa","delay":0,"description":"can submit state roots to the RollupProxy contract on the host chain."}]}
+      issuedPermissions.3.permission:
+-        "propose"
++        "validate"
+      issuedPermissions.3.via.0:
++        {"address":"0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa","delay":0,"description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}
+      issuedPermissions.2.permission:
+-        "configure"
++        "validate"
+      issuedPermissions.2.via.0:
+-        {"address":"0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa","delay":0,"description":"a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."}
+      issuedPermissions.1.permission:
+-        "challenge"
++        "upgrade"
+      issuedPermissions.1.target:
+-        "0x9C56265ef2989138d264b30fBbA2043902daBdf8"
++        "0xa9d1C9D877F235C21d803e4a0b81F8ca6C4c83AC"
+      issuedPermissions.1.via.0.address:
+-        "0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa"
++        "0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a"
+      issuedPermissions.1.via.0.description:
+-        "can challenge state roots on the host chain."
+      issuedPermissions.0.permission:
+-        "challenge"
++        "configure"
+      issuedPermissions.0.via.0:
++        {"address":"0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa","delay":0,"description":"a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."}
+    }
+```
+
+```diff
+    contract ERC20RollupEventInbox (0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      template:
++        "orbitstack/RollupEventInbox"
+      displayName:
++        "RollupEventInbox"
+      description:
++        "Helper contract sending configuration data over the bridge during the systems initialization."
+    }
+```
+
+```diff
+    contract SequencerInbox (0xD80a805c86C14c879420eC6acb366D04D318fC0C) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.maxTimeVariation.description:
+-        "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
++        "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
+    }
+```
+
+```diff
+    contract SxNetworkMultisig (0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa) {
+    +++ description: None
+      directlyReceivedPermissions.2:
+-        {"permission":"propose","target":"0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F","description":"can submit state roots to the RollupProxy contract on the host chain."}
+      directlyReceivedPermissions.1.permission:
+-        "configure"
++        "validate"
+      directlyReceivedPermissions.1.description:
+-        "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
++        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+      directlyReceivedPermissions.0.permission:
+-        "challenge"
++        "configure"
+      directlyReceivedPermissions.0.description:
+-        "can challenge state roots on the host chain."
++        "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+    }
+```
+
 Generated with discovered.json: 0x7ecc1402f643d6f6f3aa391195d3d8e2b8f765ce
 
 # Diff at Thu, 07 Nov 2024 11:04:26 GMT:

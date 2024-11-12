@@ -2,7 +2,7 @@
   "name": "kinto",
   "chain": "ethereum",
   "blockNumber": 21141407,
-  "configHash": "0xd475e7d334a91367fcf86d3c9cb7b5aad64d80a3dba84e7556b2d9eae71a934b",
+  "configHash": "0xb0c4669c0a76fa4c12b420d9c012bbe961ce837f7c8273be411518a00abf2fc5",
   "contracts": [
     {
       "name": "Bridger",
@@ -264,31 +264,6 @@
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
       "issuedPermissions": [
         {
-          "permission": "challenge",
-          "target": "0x2bfDA59220413DEd39dD0E443620b5277EcE6348",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "target": "0x58028fFbc25aE2e12b96276bDB125955F41D41f3",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "target": "0x64Cf65036a76E3827e448cadbc53D31EefDCE04a",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "target": "0x944eB0a2829A859959586b10D54229278534a696",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "target": "0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f",
-          "via": []
-        },
-        {
           "permission": "configure",
           "target": "0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d",
           "via": [
@@ -300,31 +275,6 @@
           ]
         },
         {
-          "permission": "propose",
-          "target": "0x2bfDA59220413DEd39dD0E443620b5277EcE6348",
-          "via": []
-        },
-        {
-          "permission": "propose",
-          "target": "0x58028fFbc25aE2e12b96276bDB125955F41D41f3",
-          "via": []
-        },
-        {
-          "permission": "propose",
-          "target": "0x64Cf65036a76E3827e448cadbc53D31EefDCE04a",
-          "via": []
-        },
-        {
-          "permission": "propose",
-          "target": "0x944eB0a2829A859959586b10D54229278534a696",
-          "via": []
-        },
-        {
-          "permission": "propose",
-          "target": "0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f",
-          "via": []
-        },
-        {
           "permission": "upgrade",
           "target": "0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d",
           "via": [
@@ -333,6 +283,31 @@
               "delay": 0
             }
           ]
+        },
+        {
+          "permission": "validate",
+          "target": "0x2bfDA59220413DEd39dD0E443620b5277EcE6348",
+          "via": []
+        },
+        {
+          "permission": "validate",
+          "target": "0x58028fFbc25aE2e12b96276bDB125955F41D41f3",
+          "via": []
+        },
+        {
+          "permission": "validate",
+          "target": "0x64Cf65036a76E3827e448cadbc53D31EefDCE04a",
+          "via": []
+        },
+        {
+          "permission": "validate",
+          "target": "0x944eB0a2829A859959586b10D54229278534a696",
+          "via": []
+        },
+        {
+          "permission": "validate",
+          "target": "0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f",
+          "via": []
         }
       ],
       "ignoreInWatchMode": [
@@ -1135,7 +1110,7 @@
       },
       "fieldMeta": {
         "maxTimeVariation": {
-          "description": "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
+          "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
       }
     }
@@ -1156,14 +1131,9 @@
       "address": "0x2bfDA59220413DEd39dD0E443620b5277EcE6348",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "validate",
           "target": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-          "description": "can challenge state roots on the host chain."
-        },
-        {
-          "permission": "propose",
-          "target": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-          "description": "can submit state roots to the RollupProxy contract on the host chain."
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ]
     },
@@ -1178,14 +1148,9 @@
       "address": "0x58028fFbc25aE2e12b96276bDB125955F41D41f3",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "validate",
           "target": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-          "description": "can challenge state roots on the host chain."
-        },
-        {
-          "permission": "propose",
-          "target": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-          "description": "can submit state roots to the RollupProxy contract on the host chain."
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ]
     },
@@ -1199,14 +1164,9 @@
       "address": "0x64Cf65036a76E3827e448cadbc53D31EefDCE04a",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "validate",
           "target": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-          "description": "can challenge state roots on the host chain."
-        },
-        {
-          "permission": "propose",
-          "target": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-          "description": "can submit state roots to the RollupProxy contract on the host chain."
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ]
     },
@@ -1218,14 +1178,9 @@
       "address": "0x944eB0a2829A859959586b10D54229278534a696",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "validate",
           "target": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-          "description": "can challenge state roots on the host chain."
-        },
-        {
-          "permission": "propose",
-          "target": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-          "description": "can submit state roots to the RollupProxy contract on the host chain."
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ]
     },
@@ -1258,14 +1213,9 @@
       "address": "0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "validate",
           "target": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-          "description": "can challenge state roots on the host chain."
-        },
-        {
-          "permission": "propose",
-          "target": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-          "description": "can submit state roots to the RollupProxy contract on the host chain."
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ]
     },
@@ -2045,8 +1995,8 @@
     "orbitstack/OneStepProverMath": "0x8dd8aebb517eb6eaf15437ddbb90dff66f2b14d9d6b5390dd87fbdab15168188",
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
-    "orbitstack/RollupProxy": "0x896aca243cf3d45ddf79cc142d37874406a6e07e5572f1450df6adccd0d627ac",
-    "orbitstack/SequencerInbox": "0x746f38463ee5aff9c2f6051c828002565b57c702a6be447c979d1996dd6bd673",
+    "orbitstack/RollupProxy": "0x88165b83156dbb5b288912a52adc278d223904d0c933472cb3950a05ba456170",
+    "orbitstack/SequencerInbox": "0x58bf3ad8ac9dc1181ff793e330641c545ee2d9558fce65d2ee39d483c2490494",
     "orbitstack/UpgradeExecutor": "0xa25e02367a436cebea22481663da914bbf1fd9492d903659cc6ec9ddbaccb241"
   }
 }

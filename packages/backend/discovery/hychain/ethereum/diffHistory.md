@@ -1,3 +1,92 @@
+Generated with discovered.json: 0x61eba373ecca6ad6c3158709f6ccce17f249a0f1
+
+# Diff at Tue, 12 Nov 2024 15:38:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b2d1031f386ed9987b07f83babe4993700b00d33 block: 21041836
+- current block number: 21041836
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21041836 (main branch discovery), not current.
+
+```diff
+    contract ERC20RollupEventInbox (0x617f70525Dc4D2BBbd6ADFd3781DbEAe5C8F0048) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      template:
++        "orbitstack/RollupEventInbox"
+      displayName:
++        "RollupEventInbox"
+      description:
++        "Helper contract sending configuration data over the bridge during the systems initialization."
+    }
+```
+
+```diff
+    contract RollupProxy (0x8f98f9ae2f2836Ed3a628c23311Ad9976B9fBF1B) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.5:
+-        {"permission":"upgrade","target":"0x798Fa726f0B4DF564681446D051b344E3FE4a6ca","via":[{"address":"0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881","delay":0}]}
+      issuedPermissions.4:
+-        {"permission":"propose","target":"0xf0DDa810ed19bb640f2A03e8382814e3f0D36e13","via":[]}
+      issuedPermissions.3.permission:
+-        "propose"
++        "validate"
+      issuedPermissions.3.target:
+-        "0x88781Fb85EA68bd5B8bE4C1C0c1ED94f4fd35647"
++        "0xf0DDa810ed19bb640f2A03e8382814e3f0D36e13"
+      issuedPermissions.2.permission:
+-        "configure"
++        "validate"
+      issuedPermissions.2.target:
+-        "0x798Fa726f0B4DF564681446D051b344E3FE4a6ca"
++        "0x88781Fb85EA68bd5B8bE4C1C0c1ED94f4fd35647"
+      issuedPermissions.2.via.0:
+-        {"address":"0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881","delay":0,"description":"can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."}
+      issuedPermissions.1.permission:
+-        "challenge"
++        "upgrade"
+      issuedPermissions.1.target:
+-        "0xf0DDa810ed19bb640f2A03e8382814e3f0D36e13"
++        "0x798Fa726f0B4DF564681446D051b344E3FE4a6ca"
+      issuedPermissions.1.via.0:
++        {"address":"0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881","delay":0}
+      issuedPermissions.0.permission:
+-        "challenge"
++        "configure"
+      issuedPermissions.0.target:
+-        "0x88781Fb85EA68bd5B8bE4C1C0c1ED94f4fd35647"
++        "0x798Fa726f0B4DF564681446D051b344E3FE4a6ca"
+      issuedPermissions.0.via.0:
++        {"address":"0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881","delay":0,"description":"can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."}
+    }
+```
+
+```diff
+    contract SequencerInbox (0xaF5800ADF22301968613c37DA9C3C2a486eA915A) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.maxTimeVariation.description:
+-        "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
++        "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
+    }
+```
+
+```diff
+    contract ChallengeManager (0xE8AcC0E28a82a26D498f2C66B64C56B9Ef996c2e) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      template:
++        "orbitstack/ChallengeManager"
+      description:
++        "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor."
+    }
+```
+
 Generated with discovered.json: 0x6e32a3817c44223f35256892c6f73cb5f66f37d9
 
 # Diff at Mon, 04 Nov 2024 07:56:40 GMT:
