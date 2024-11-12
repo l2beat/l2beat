@@ -6,7 +6,7 @@ import ChevronRight from './assets/chevron-right.svg'
 import LogoSmall from './assets/logo-small.svg'
 import Red from './assets/red.svg'
 import Yellow from './assets/yellow.svg'
-import { useTokens } from './hooks/useTokens'
+import { TokensQueryResult, useTokens } from './hooks/useTokens'
 import { ConnectedEntry, TokenEntry } from './schema'
 
 interface Props {
@@ -16,6 +16,7 @@ interface Props {
 
 export function Profile(props: Props) {
   const response = useTokens(props.query)
+  const funds = getFundsAtRisk(response)
 
   return (
     <div className="mx-auto max-w-4xl p-4 pt-10">
@@ -29,6 +30,37 @@ export function Profile(props: Props) {
         <Search onSearch={props.onSearch} />
       </div>
       <h1 className="mb-10 text-xl">Profile of {props.query}</h1>
+      <table className="mb-10">
+        <thead>
+          <tr className="border-b border-b-zinc-600">
+            <th className="py-1 pr-2 text-left">Type</th>
+            <th className="px-2 py-1 text-right">Amount</th>
+            <th className="px-2 py-1 text-left" colSpan={2}>
+              Percentage
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <RiskRow
+            title="High risk funds"
+            value={funds?.highRisk}
+            total={funds?.total}
+            className="bg-red-500"
+          />
+          <RiskRow
+            title="Medium risk funds"
+            value={funds?.mediumRisk}
+            total={funds?.total}
+            className="bg-yellow-400"
+          />
+          <RiskRow
+            title="Low risk funds"
+            value={funds?.lowRisk}
+            total={funds?.total}
+            className="bg-zinc-400"
+          />
+        </tbody>
+      </table>
       <table className="w-full">
         <thead>
           <tr className="bg-zinc-700">
@@ -253,6 +285,35 @@ function ExpandedRow({ entry }: { entry: ConnectedEntry }) {
   )
 }
 
+function RiskRow(props: {
+  title: string
+  value?: number
+  total?: number
+  className: string
+}) {
+  const percent =
+    props.value !== undefined && props.total !== undefined
+      ? Math.round((props.value / props.total) * 100)
+      : undefined
+  return (
+    <tr>
+      <td className="py-1 pr-2">{props.title}</td>
+      <td className="px-2 py-1 text-right tabular-nums">
+        {props.value !== undefined ? `$${formatNumber(props.value, 2)}` : '…'}
+      </td>
+      <td className="px-2 py-1">{percent !== undefined && percent + '%'}</td>
+      <td className="px-2 py-1">
+        <div
+          className={clsx(props.className, 'h-5')}
+          style={{
+            width: percent !== undefined ? 2 * percent + 'px' : 0,
+          }}
+        ></div>
+      </td>
+    </tr>
+  )
+}
+
 function formatNumber(value: number, decimals: number) {
   const decimalPart = value.toFixed(decimals).slice(-decimals - 1)
   const intPart = new Intl.NumberFormat('en-US', {}).format(Math.floor(value))
@@ -265,4 +326,35 @@ function formatAddress(value: string) {
     return 'Native token'
   }
   return `${chain}:${address?.slice(0, 6)}…${address?.slice(-4)}`
+}
+
+function getFundsAtRisk(response: TokensQueryResult) {
+  if (!response.isSuccess) {
+    return undefined
+  }
+  const highRisk = response.data.reduce(
+    (acc, entry) => (entry.severity.high > 0 ? acc + entry.balanceUsd : acc),
+    0,
+  )
+  const mediumRisk = response.data.reduce(
+    (acc, entry) =>
+      entry.severity.high === 0 && entry.severity.medium > 0
+        ? acc + entry.balanceUsd
+        : acc,
+    0,
+  )
+  const lowRisk = response.data.reduce(
+    (acc, entry) =>
+      entry.severity.high === 0 && entry.severity.medium === 0
+        ? acc + entry.balanceUsd
+        : acc,
+    0,
+  )
+  const total = response.data.reduce((acc, entry) => acc + entry.balanceUsd, 0)
+  return {
+    highRisk,
+    mediumRisk,
+    lowRisk,
+    total,
+  }
 }
