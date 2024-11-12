@@ -1,5 +1,6 @@
 import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
+import { groupByMainCategories } from '~/utils/group-by-main-categories'
 import {
   type ProjectsChangeReport,
   getProjectsChangeReport,
@@ -11,7 +12,6 @@ import {
   get7dTokenBreakdown,
 } from '../tvl/utils/get-7d-token-breakdown'
 import { orderByTvl } from '../tvl/utils/order-by-tvl'
-import { groupByMainCategories } from '~/utils/group-by-main-categories'
 
 export async function getScalingArchivedEntries() {
   const [projectsChangeReport, projectsVerificationStatuses, tvl] =
