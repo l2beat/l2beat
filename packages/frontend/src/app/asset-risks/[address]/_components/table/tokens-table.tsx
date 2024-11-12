@@ -11,7 +11,10 @@ import { useMemo } from 'react'
 
 export function TokensTable() {
   const report = useReport()
-  const entries = useMemo(() => getTokenEntries(report), [report])
+  const entries = useMemo(
+    () => getTokenEntries(report).filter((token) => token.usdValue > 0),
+    [report],
+  )
 
   const table = useTable({
     columns: tokenColumns,

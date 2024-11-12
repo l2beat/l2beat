@@ -174,7 +174,7 @@ export const assetRisksRouter = router({
 
       const coingeckoMeta = await db.tokenMeta.getByTokenIdsAndSource(
         Object.values(tokenMap).map((t) => t.id),
-        'Coingecko',
+        'CoinGecko',
       )
 
       const coingeckoIds = coingeckoMeta
@@ -198,6 +198,7 @@ export const assetRisksRouter = router({
           amount,
         }
       })
+
       return {
         usdValue: tokens.reduce((acc, t) => acc + t.usdValue, 0),
         tokensRefreshedAt: user.tokensRefreshedAt,

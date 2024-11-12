@@ -62,12 +62,13 @@ function getUnderlyingTokens(report: Report, tokenId: string) {
   const underlyingTokens = []
   const relations = Object.values(report.relations)
   let currentTokenId = tokenId
+  const tokenSet = new Set<string>(currentTokenId)
 
   while (true) {
     const relation = relations.find(
       (relation) => relation.targetTokenId === currentTokenId,
     )
-    if (!relation) {
+    if (!relation || tokenSet.has(relation.sourceTokenId)) {
       break
     }
     const token = report.tokens.find(
@@ -75,6 +76,7 @@ function getUnderlyingTokens(report: Report, tokenId: string) {
     )
     assert(token, 'Token not found')
     underlyingTokens.push(token)
+    tokenSet.add(currentTokenId)
     currentTokenId = relation.sourceTokenId
   }
   return underlyingTokens

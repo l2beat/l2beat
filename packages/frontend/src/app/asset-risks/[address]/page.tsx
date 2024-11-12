@@ -7,10 +7,9 @@ import { mainnet } from 'viem/chains'
 import { db } from '~/server/database'
 import { ClientsideLogic } from './_components/clientside-logic'
 import { ReportProvider } from './_components/report-context'
-import { Spinner } from '../_components/spinner'
 import { DetailsHeader } from './_components/details-header'
-import { Disclaimer } from './_components/disclaimer'
 import { TokensTable } from './_components/table/tokens-table'
+import { GeneratingReport } from './_components/generating-report'
 
 export type Risk = SetOptional<ScalingProjectRisk, 'category'>
 
@@ -63,21 +62,11 @@ export default async function Page(props: Props) {
   return (
     <main className="mx-auto w-screen max-w-[1176px] grow px-0 pt-10 sm:px-4 md:px-12">
       <ClientsideLogic address={address} />
-      <ReportProvider
-        address={address}
-        placeholder={
-          <div className="flex min-h-[70vh] flex-col items-center justify-center gap-4">
-            <span className="font-oswald text-5xl font-bold">
-              Generating report...
-            </span>
-            <Spinner className="size-20 stroke-[#D1FF1A]" />
-          </div>
-        }
-      >
+      <ReportProvider address={address} placeholder={<GeneratingReport />}>
         <div className="flex grow flex-col gap-6">
           <DetailsHeader vanityAddress={vanityAddress} />
           <TokensTable />
-          <Disclaimer />
+          {/* <Disclaimer /> */}
         </div>
       </ReportProvider>
     </main>
