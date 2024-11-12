@@ -6,7 +6,7 @@ import { cn } from '~/utils/cn'
 import { getDefaultMetadata } from '~/utils/metadata'
 
 export const metadata: Metadata = getDefaultMetadata({
-  title: 'L2BEAT - Insight',
+  title: 'Insight by L2BEAT',
   description: 'Get insights about your L2 assets.',
 })
 
