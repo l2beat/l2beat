@@ -32,14 +32,14 @@ export function ScalingSummaryTables(props: Props) {
 
     return (
       <>
-        <HorizontalSeparator className="my-4 !border-divider" />
+        <HorizontalSeparator className="my-4 !border-divider max-md:hidden" />
         <ScalingTvlFilters
           items={[
             ...filteredEntries.rollups,
             ...filteredEntries.validiumsAndOptimiums,
             ...(filteredEntries.others ?? []),
           ]}
-          excludeAssociatedTokensClassName="max-md:ml-4"
+          excludeAssociatedTokensClassName="max-md:ml-4 max-md:mt-4"
         />
         <DirectoryTabs defaultValue="rollups">
           <DirectoryTabsList>
