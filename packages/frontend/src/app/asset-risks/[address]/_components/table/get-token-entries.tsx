@@ -37,6 +37,9 @@ function getTokenEntry(
   report: Report,
   underlyingTokens?: UnderlyingTokenEntry[],
 ): TokenEntry | undefined {
+  if (token.usdValue === 0) {
+    return undefined
+  }
   const meta = getRequiredTokenMeta(token.meta)
   const chain = report.chains[token.token.networkId]
   if (!meta || !chain) {

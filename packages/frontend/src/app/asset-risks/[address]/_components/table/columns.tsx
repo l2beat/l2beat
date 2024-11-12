@@ -104,13 +104,16 @@ export const tokenColumns = [
   columnHelper.display({
     id: 'expander',
     cell: ({ row }) => {
+      if (!row.getCanExpand()) {
+        return null
+      }
+
       return (
         <button onClick={row.getToggleExpandedHandler()}>
           <ChevronIcon
             className={cn(
               'fill-[#CA80EC] transition-transform duration-200',
               row.getIsExpanded() && 'rotate-180',
-              !row.getCanExpand() && 'cursor-not-allowed fill-pure-white/60',
             )}
           />
         </button>
