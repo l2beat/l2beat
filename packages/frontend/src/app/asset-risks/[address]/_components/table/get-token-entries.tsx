@@ -24,7 +24,6 @@ export interface TokenEntry {
 }
 
 export function getTokenEntries(report: Report): TokenEntry[] {
-  console.log(report)
   const tokenEntries = report.tokens.map<TokenEntry>((token) => {
     const meta = token.meta
     assert(meta, 'Token meta not found')

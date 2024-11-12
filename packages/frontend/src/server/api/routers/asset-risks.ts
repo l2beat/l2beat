@@ -89,7 +89,7 @@ export const assetRisksRouter = router({
 
       const userTokenIds = Object.keys(balances)
 
-      const tokens: Record<string, TokenRecord> = {}
+      const tokenMap: Record<string, TokenRecord> = {}
       const relations: Record<string, TokenBridgeRecord> = {}
 
       let tokensToCheck: string[] = userTokenIds
@@ -97,7 +97,7 @@ export const assetRisksRouter = router({
       while (tokensToCheck.length > 0) {
         const newTokens = await db.token.getByIds(tokensToCheck)
         for (const token of newTokens) {
-          tokens[token.id] = token
+          tokenMap[token.id] = token
         }
         const newRelations =
           await db.tokenBridge.getByTargetTokenIds(tokensToCheck)
@@ -105,7 +105,7 @@ export const assetRisksRouter = router({
         for (const relation of newRelations) {
           if (relations[relation.id]) continue
           relations[relation.id] = relation
-          if (!tokens[relation.sourceTokenId]) {
+          if (!tokenMap[relation.sourceTokenId]) {
             tokensToCheck.push(relation.sourceTokenId)
           }
         }
@@ -113,7 +113,7 @@ export const assetRisksRouter = router({
 
       const tokenMeta = (
         await db.tokenMeta.getByTokenIdsAndSource(
-          Object.values(tokens).map((t) => t.id),
+          Object.values(tokenMap).map((t) => t.id),
           'Aggregate',
         )
       ).reduce<Record<string, TokenMetaRecord>>((acc, meta) => {
@@ -173,7 +173,7 @@ export const assetRisksRouter = router({
       }, {})
 
       const coingeckoMeta = await db.tokenMeta.getByTokenIdsAndSource(
-        Object.values(tokens).map((t) => t.id),
+        Object.values(tokenMap).map((t) => t.id),
         'Coingecko',
       )
 
@@ -182,7 +182,7 @@ export const assetRisksRouter = router({
         .filter(notUndefined)
 
       const prices = await db.currentPrice.getByCoingeckoIds(coingeckoIds)
-      const tokenss = Object.values(tokens).map((token) => {
+      const tokens = Object.values(tokenMap).map((token) => {
         const meta = tokenMeta[token.id]
         assert(meta, 'Token meta not found')
         const coingeckoId = coingeckoMeta.find(
@@ -199,14 +199,14 @@ export const assetRisksRouter = router({
         }
       })
       return {
-        usdValue: tokenss.reduce((acc, t) => acc + t.usdValue, 0),
+        usdValue: tokens.reduce((acc, t) => acc + t.usdValue, 0),
         tokensRefreshedAt: user.tokensRefreshedAt,
         balancesRefreshedAt: user.balancesRefreshedAt,
         chains,
         bridges,
         externalBridges,
         relations,
-        tokens: tokenss,
+        tokens,
       }
     }),
 })
