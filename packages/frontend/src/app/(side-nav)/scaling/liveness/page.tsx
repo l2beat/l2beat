@@ -16,7 +16,7 @@ export default async function Page() {
   const entries = await getScalingLivenessEntries()
 
   return (
-    <ScalingFilterContextProvider>
+    <>
       <LivenessTimeRangeContextProvider>
         <MainPageHeader>Liveness</MainPageHeader>
         <LivenessWarning />
@@ -24,6 +24,6 @@ export default async function Page() {
           <ScalingLivenessTables {...entries} />
         </ScalingFilterContextProvider>
       </LivenessTimeRangeContextProvider>
-    </ScalingFilterContextProvider>
+    </>
   )
 }

@@ -1,11 +1,12 @@
 import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
+import { groupByMainCategories } from '~/utils/group-by-main-categories'
 import { getHostChain } from '../utils/get-host-chain'
 
 export function getScalingUpcomingEntries() {
   const projects = [...layer2s, ...layer3s].filter((p) => p.isUpcoming)
 
-  return projects
+  const entries = projects
     .sort((a, b) => {
       assert(
         a.createdAt && b.createdAt,
@@ -14,6 +15,8 @@ export function getScalingUpcomingEntries() {
       return b.createdAt.toNumber() - a.createdAt.toNumber()
     })
     .map((project) => getScalingUpcomingEntry(project))
+
+  return groupByMainCategories(entries)
 }
 
 export type ScalingUpcomingEntry = ReturnType<typeof getScalingUpcomingEntry>

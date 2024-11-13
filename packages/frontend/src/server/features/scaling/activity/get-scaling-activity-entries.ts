@@ -50,47 +50,32 @@ export async function getScalingActivityEntries() {
     .filter(notUndefined)
     .sort((a, b) => b.data.pastDayTps - a.data.pastDayTps)
 
-  if (env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION) {
-    const categorisedEntries = groupByMainCategories(
-      orderByStageAndPastDayTps(entries),
-    )
-    if (!env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING) {
-      return {
-        type: 'recategorised' as const,
-        entries: {
-          rollups: [ethereumEntry, ...categorisedEntries.rollups].sort(
-            sortByTps,
-          ),
-          validiumsAndOptimiums: [
-            ethereumEntry,
-            ...categorisedEntries.validiumsAndOptimiums,
-          ].sort(sortByTps),
-          others: categorisedEntries.others
-            ? [ethereumEntry, ...categorisedEntries.others].sort(sortByTps)
-            : undefined,
-        },
-      }
-    }
+  const categorisedEntries = groupByMainCategories(
+    orderByStageAndPastDayTps(entries),
+  )
 
+  if (!env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING) {
     return {
-      type: 'recategorised' as const,
-      entries: {
-        rollups: [ethereumEntry, ...categorisedEntries.rollups],
-        validiumsAndOptimiums: [
-          ethereumEntry,
-          ...categorisedEntries.validiumsAndOptimiums,
-        ],
-        others: categorisedEntries.others
-          ? [ethereumEntry, ...categorisedEntries.others]
-          : undefined,
-      },
+      rollups: [ethereumEntry, ...categorisedEntries.rollups].sort(sortByTps),
+      validiumsAndOptimiums: [
+        ethereumEntry,
+        ...categorisedEntries.validiumsAndOptimiums,
+      ].sort(sortByTps),
+      others: categorisedEntries.others
+        ? [ethereumEntry, ...categorisedEntries.others].sort(sortByTps)
+        : undefined,
     }
   }
 
   return {
-    entries: [ethereumEntry, ...entries].sort(
-      (a, b) => b.data.pastDayTps - a.data.pastDayTps,
-    ),
+    rollups: [ethereumEntry, ...categorisedEntries.rollups],
+    validiumsAndOptimiums: [
+      ethereumEntry,
+      ...categorisedEntries.validiumsAndOptimiums,
+    ],
+    others: categorisedEntries.others
+      ? [ethereumEntry, ...categorisedEntries.others]
+      : undefined,
   }
 }
 

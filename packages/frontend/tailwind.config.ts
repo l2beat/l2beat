@@ -301,9 +301,6 @@ const config: Config = {
     plugin(function ({ addVariant }) {
       addVariant('insight', '.insight &')
     }),
-    plugin(function ({ addVariant }) {
-      addVariant('recategorised', '.recategorised &')
-    }),
     require('tailwindcss-animate'),
     require('@tailwindcss/container-queries'),
   ],

@@ -85,8 +85,8 @@ export function BaseScalingFilters({
 
   return (
     <OverflowWrapper
-      childrenClassName="-m-1 [&>*]:m-1 recategorised:max-md:pl-4"
-      className={cn(className, 'recategorised:pr-4')}
+      childrenClassName="-m-1 [&>*]:m-1 max-md:pl-4"
+      className={cn('pr-4', className)}
     >
       <div className="flex flex-row space-x-1">
         {showRollupsOnly && (

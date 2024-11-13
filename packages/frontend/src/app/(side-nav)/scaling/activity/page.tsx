@@ -28,7 +28,6 @@ export default async function Page() {
       filter: { type: 'all' },
     }),
   ])
-
   return (
     <HydrateClient>
       <ScalingFilterContextProvider>
@@ -37,11 +36,11 @@ export default async function Page() {
           <MainPageCard>
             <ActivityChart
               milestones={HOMEPAGE_MILESTONES}
-              entries={
-                entries.type === 'recategorised'
-                  ? entries.entries.rollups
-                  : entries.entries
-              }
+              entries={[
+                ...entries.rollups,
+                ...entries.validiumsAndOptimiums,
+                ...(entries.others ?? []),
+              ]}
             />
           </MainPageCard>
           <ScalingActivityTables {...entries} />
