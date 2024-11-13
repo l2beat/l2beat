@@ -2,8 +2,10 @@
 
 import { assertUnreachable } from '@l2beat/shared-pure'
 import fuzzysort from 'fuzzysort'
+import { groupBy } from 'lodash'
 import Image from 'next/image'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { type Entries } from 'type-fest'
 import {
   Command,
   CommandDialog,
@@ -16,18 +18,16 @@ import {
 } from '~/components/core/command'
 import { useOnClickOutside } from '~/hooks/use-on-click-outside'
 import { useRouterWithProgressBar } from '../progress-bar'
+import {
+  type SearchBarCategory,
+  searchBarCategories,
+} from './search-bar-categories'
 import { useSearchBarContext } from './search-bar-context'
-import { searchBarPages } from './search-bar-pages'
-import { groupBy } from 'lodash'
 import {
   type AnySearchBarEntry,
   type SearchBarProject,
 } from './search-bar-entry'
-import {
-  searchBarCategories,
-  type SearchBarCategory,
-} from './search-bar-categories'
-import { type Entries } from 'type-fest'
+import { searchBarPages } from './search-bar-pages'
 interface Props {
   allProjects: SearchBarProject[]
   recentlyAdded: SearchBarProject[]
