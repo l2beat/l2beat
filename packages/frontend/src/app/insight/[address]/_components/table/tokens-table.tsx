@@ -81,13 +81,15 @@ function TokenDetailsItem({
         </p>
         {token.address === 'native' ? (
           <p className="text-xs text-gray-50">Native/gas token</p>
-        ) : (
+        ) : token.chain.name === 'Ethereum' ? (
           <CustomLink
             className="text-xs"
             href={`https://etherscan.io/address/${token.address}`}
           >
             {token.address}
           </CustomLink>
+        ) : (
+          <p className="text-xs">{token.address}</p>
         )}
         <p className="text-xs">Secured by {token.managedBy}</p>
       </div>

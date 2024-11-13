@@ -7,6 +7,7 @@ import { cn } from '~/utils/cn'
 import { formatNumberWithCommas } from '~/utils/number-format/format-number'
 import { TokenWithChainLogo } from '../../../_components/token-with-chain-logo'
 import { type TokenEntry } from './get-token-entries'
+import { getFirstTwoNonZeroPrecision } from '~/utils/get-first-two-non-zero-precision'
 
 const columnHelper = createColumnHelper<TokenEntry>()
 
@@ -50,7 +51,13 @@ export const tokenColumns = [
             ${formatNumberWithCommas(row.original.usdValue)}
           </TwoRowCell.First>
           <TwoRowCell.Second>
-            {formatNumberWithCommas(row.original.amount)} {row.original.symbol}
+            {row.original.amount < 1
+              ? formatNumberWithCommas(
+                  row.original.amount,
+                  getFirstTwoNonZeroPrecision(row.original.amount),
+                )
+              : formatNumberWithCommas(row.original.amount)}{' '}
+            {row.original.symbol}
           </TwoRowCell.Second>
         </TwoRowCell>
       )
