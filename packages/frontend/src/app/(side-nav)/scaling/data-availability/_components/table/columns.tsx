@@ -25,6 +25,17 @@ export const columns = [
         {ctx.row.original.category}
       </TypeCell>
     ),
+    sortingFn: ({ original: a }, { original: b }) => {
+      // Sort by category first
+      const categories = (a.category ?? '').localeCompare(b.category ?? '')
+
+      if (categories !== 0) {
+        return categories
+      }
+
+      // Then sort by provider
+      return a.provider?.localeCompare(b.provider ?? '') ?? 0
+    },
   }),
   columnHelper.accessor('dataAvailability.layer.value', {
     header: 'DA Layer',
