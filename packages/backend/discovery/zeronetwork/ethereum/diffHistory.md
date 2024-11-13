@@ -7,7 +7,7 @@ Generated with discovered.json: 0x093b6e8b1a33e995e8cfb0b68b8d31e63a123f60
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+First zk stack rollup apart from ZKsync era. Uses the shared bridge, shared contracts and shared diamond implementation of the elastic chain. Gas token is ETH.
 
 ## Initial discovery
 
