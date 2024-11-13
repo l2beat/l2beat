@@ -10,6 +10,7 @@ import { type ProjectSectionId } from '../types'
 import { ContractsUpdated } from './contracts-updated'
 import { TechnologyIncompleteNote } from './technology-incomplete-note'
 import { cn } from '~/utils/cn'
+import { DiagramImage } from '~/components/diagram-image'
 
 export interface ContractsSectionProps {
   id: ProjectSectionId
@@ -81,23 +82,7 @@ export function ContractsSection(props: ContractsSectionProps) {
       {props.isIncomplete && <TechnologyIncompleteNote />}
       {props.diagram && (
         <figure className="mb-8 mt-4 text-center">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            className={cn(
-              'inline max-w-full align-[unset] dark:invert',
-              props.diagram.src.dark && 'dark:hidden',
-            )}
-            src={props.diagram.src.light}
-            alt={props.diagram.caption}
-          />
-          {props.diagram.src.dark && (
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img
-              className="hidden max-w-full align-[unset] dark:inline"
-              src={props.diagram.src.dark}
-              alt={props.diagram.caption}
-            />
-          )}
+          <DiagramImage diagram={props.diagram} />
           <figcaption className="text-xs text-gray-500 dark:text-gray-600">
             {props.diagram.caption}
           </figcaption>
