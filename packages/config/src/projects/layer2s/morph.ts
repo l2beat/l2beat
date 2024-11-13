@@ -14,9 +14,9 @@ export const morph: Layer2 = underReviewL2({
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://morphl2.io'],
-      apps: ['https://bridge-holesky.morphl2.io'],
+      apps: ['https://bridge.morphl2.io'],
       documentation: ['https://docs.morphl2.io'],
-      explorers: ['https://explorer-holesky.morphl2.io'],
+      explorers: ['https://explorer.morphl2.io'],
       repositories: ['https://github.com/morph-l2'],
       socialMedia: [
         'https://twitter.com/MorphL2',
