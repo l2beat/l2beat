@@ -4,10 +4,6 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build", "db:generate-types"],
-      "outputs": ["build/**", ".next/**", "!.next/cache/**", "dist/**"]
-    },
-    "frontend#build": {
-      "dependsOn": ["^build", "db:generate-types"],
       "env": ["DATABASE_URL", "EXCLUDED_TVL_PROJECTS"],
       "outputs": ["build/**", ".next/**", "!.next/cache/**", "dist/**"]
     },
