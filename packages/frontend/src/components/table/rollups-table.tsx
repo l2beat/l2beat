@@ -2,6 +2,7 @@ import { type StageConfig } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import { type Row, type Table } from '@tanstack/react-table'
 import React from 'react'
+import { env } from '~/env'
 import { cn } from '~/utils/cn'
 import {
   BasicTable,
@@ -15,6 +16,10 @@ interface BasicEntry extends BasicTableEntry {
 }
 
 export function RollupsTable<T extends BasicEntry>(props: BasicTableProps<T>) {
+  if (!env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING) {
+    return <BasicTable {...props} />
+  }
+
   const { ethereumEntry, stageTwoAndOne, stageZero, rest } =
     getRollupsTableRows(props.table)
 
