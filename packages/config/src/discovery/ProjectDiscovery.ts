@@ -138,7 +138,7 @@ export class ProjectDiscovery {
     /**
      * For chains without multicall, please avoid using the wildcard '*'
      */
-    tokens: string[] | '*' 
+    tokens: string[] | '*'
     excludedTokens?: string[]
     premintedTokens?: string[]
     upgradableBy?: string[]

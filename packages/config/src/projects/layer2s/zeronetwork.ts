@@ -23,23 +23,31 @@ export const zeronetwork: Layer2 = zkStackL2({
     Badge.DA.EthereumBlobs,
     Badge.Stack.ZKStack,
     Badge.Infra.ElasticChain,
+    Badge.RaaS.Caldera,
   ],
   createdAt: new UnixTime(1721214420), // 2024-07-17T11:07:00Z
   display: {
     name: 'ZERϴ Network',
     slug: 'zeronetwork',
     description:
-      'ZERϴ Network is an L2 by the Zerion wallet team, utilizing the ZK stack and native account abstraction, allowing users with Zerion Wallet DNA NFTs gasless and prioritized transactions.',
+      'ZERϴ Network is an L2 by the Zerion wallet team, utilizing the ZK stack and native account abstraction, allowing Zerion wallet users gasless and prioritized transactions.',
     links: {
       websites: ['https://zero.network/'],
-      apps: ['https://bridge.zero.network/', 'https://zerion.io/'],
+      apps: [
+        'https://bridge.zero.network/',
+        'https://app.zerion.io/bridge?outputChain=zero&inputChain=ethereum',
+      ],
       documentation: ['https://docs.zero.network/'],
-      explorers: ['https://explorer.zero.network/'],
+      explorers: [
+        'https://explorer.zero.network/',
+        'https://zero-network.calderaexplorer.xyz/',
+      ],
       repositories: [],
       socialMedia: [
         'https://x.com/ZEROdotnetwork',
         'https://zero.network/blog',
-        'https://discord.com/invite/VfC24at',
+        'https://warpcast.com/~/channel/zero',
+        'https://youtube.com/@ZERO-Network-L2',
       ],
     },
     activityDataSource: 'Blockchain RPC',
@@ -55,7 +63,7 @@ export const zeronetwork: Layer2 = zkStackL2({
   nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
     discovery.getEscrowDetails({
       address: bridge.address,
-      tokens: ['ETH'],
+      tokens: ['ETH', 'USDC'],
       description:
         'Shared bridge for depositing tokens to ZERϴ and other ZK stack chains.',
       sharedEscrow: {
@@ -101,7 +109,7 @@ export const zeronetwork: Layer2 = zkStackL2({
   milestones: [
     {
       name: 'Mainnet launch',
-      link: 'https://zero.network/blog', // TODO: Update
+      link: 'https://zero.network/blog/zer-mainnet-welcome-to-a-world-without-gas-fees',
       date: '2024-11-12T00:00:00Z',
       description: 'ZERϴ launches their mainnet.',
       type: 'general',
