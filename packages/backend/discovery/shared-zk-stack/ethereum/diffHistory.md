@@ -1,3 +1,121 @@
+Generated with discovered.json: 0x90071073d0912ec1cd9045303242ef91f2f2b792
+
+# Diff at Wed, 13 Nov 2024 10:40:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@52436269c628b928351a43e9d5c374c442a5c66d block: 21077285
+- current block number: 21178232
+
+## Description
+
+New ZK stack chain deployed (native token is called GBT - GRVTBaseToken)
+
+## Watched changes
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
++++ description: All new chains created go thorugh the central bridgehub and are thus stored here with their respective STMs.
+      values.chainsCreated.5:
++        {"chainId":325,"stateTransitionManager":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","chainGovernance":"0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"}
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
++++ description: If non-zero, the third batch has been posted.
++++ severity: MEDIUM
+      values.Project__ThirdBatchTS:
+-        0
++        1730348459
+    }
+```
+
+```diff
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: None
+      values.getAllHyperchainChainIDs.5:
++        325
+      values.getAllHyperchains.5:
++        "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21077285 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Safe (0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9)
+    +++ description: None
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
+      values.sophonTenthBatchTS:
+-        1730241371
+      values.zeronetworkTenthBatchTS:
+-        1729719755
++++ description: If non-zero, the third batch has been posted.
++++ severity: MEDIUM
+      values.Project__ThirdBatchTS:
++        0
++++ description: If non-zero, the third batch has been posted.
++++ severity: MEDIUM
+      values.sophonThirdBatchTS:
++        1729673999
++++ description: If non-zero, the third batch has been posted.
++++ severity: MEDIUM
+      values.zeronetworkThirdBatchTS:
++        1729683215
+      fieldMeta.zeronetworkTenthBatchTS:
+-        {"severity":"MEDIUM","description":"If non-zero, the first batch has been posted."}
+      fieldMeta.sophonTenthBatchTS:
+-        {"severity":"MEDIUM","description":"If non-zero, the first batch has been posted."}
+      fieldMeta.zeronetworkThirdBatchTS:
++        {"severity":"MEDIUM","description":"If non-zero, the third batch has been posted."}
+      fieldMeta.sophonThirdBatchTS:
++        {"severity":"MEDIUM","description":"If non-zero, the third batch has been posted."}
+      fieldMeta.Project__ThirdBatchTS:
++        {"severity":"MEDIUM","description":"If non-zero, the third batch has been posted."}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ChainAdmin (0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ChainAdmin (0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ChainAdmin (0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (0xe4644b6d106A18062344c0A853666bc0B8f052d1)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xde45bfbb66b4c0ba71900ab28b3dcd0ed29ac97c
 
 # Diff at Wed, 30 Oct 2024 08:32:41 GMT:
