@@ -1,4 +1,5 @@
 import { type ScalingProjectReference } from '@l2beat/config'
+import { cn } from '~/utils/cn'
 import {
   type DiagramType,
   getDiagramParams,
@@ -38,10 +39,21 @@ export function MarkdownSection({
         <figure className="mb-8 mt-4 text-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            className="inline max-w-full align-[unset] dark:invert"
-            src={diagramParams.src}
+            className={cn(
+              'inline max-w-full align-[unset] dark:invert',
+              diagramParams.src.dark && 'dark:hidden',
+            )}
+            src={diagramParams.src.light}
             alt={diagramParams.caption}
           />
+          {diagramParams.src.dark && (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              className="hidden max-w-full align-[unset] dark:inline"
+              src={diagramParams.src.dark}
+              alt={diagramParams.caption}
+            />
+          )}
           <figcaption className="text-xs text-gray-500 dark:text-gray-600">
             {diagramParams.caption}
           </figcaption>
