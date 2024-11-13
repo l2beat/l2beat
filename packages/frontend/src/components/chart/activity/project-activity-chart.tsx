@@ -7,6 +7,7 @@ import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
 import { type ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/react'
+import { formatTimestamp } from '~/utils/dates'
 import { Checkbox } from '../../core/checkbox'
 import { Chart } from '../core/chart'
 import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
@@ -15,7 +16,6 @@ import { ProjectChartTimeRange } from '../core/chart-time-range'
 import { type ChartScale } from '../types'
 import { ActivityChartHover } from './activity-chart-hover'
 import { useActivityChartRenderParams } from './use-activity-chart-render-params'
-import { formatTimestamp } from '~/utils/dates'
 
 interface Props {
   milestones: Milestone[]

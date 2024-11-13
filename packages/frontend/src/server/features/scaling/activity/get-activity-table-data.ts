@@ -10,9 +10,9 @@ import { db } from '~/server/database'
 import { countToTps } from './utils/count-to-tps'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import { getLastDayTps } from './utils/get-last-day-tps'
+import { getSyncStatus } from './utils/get-sync-status'
 import { getTpsWeeklyChange } from './utils/get-tps-weekly-change'
 import { sumActivityCount } from './utils/sum-activity-count'
-import { getSyncStatus } from './utils/get-sync-status'
 
 export async function getActivityTableData(projects: (Layer2 | Layer3)[]) {
   if (env.MOCK) {

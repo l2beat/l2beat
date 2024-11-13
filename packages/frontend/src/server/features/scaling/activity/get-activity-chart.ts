@@ -9,12 +9,12 @@ import { getRangeWithMax } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generate-timestamps'
 import { getActivityProjects } from './utils/get-activity-projects'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
+import { getSyncStatus } from './utils/get-sync-status'
 import {
   type ActivityProjectFilter,
   createActivityProjectsFilter,
 } from './utils/project-filter-utils'
 import { type ActivityTimeRange } from './utils/range'
-import { getSyncStatus } from './utils/get-sync-status'
 
 /**
  * A function that computes values for chart data of the activity over time.
