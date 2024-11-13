@@ -8,7 +8,7 @@ import {
 } from '~/components/core/directory-tabs'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
-import { type RecategorisedScalingEntry } from '~/utils/group-by-main-categories'
+import { type CategorisedScalingEntries } from '~/utils/group-by-main-categories'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingTvlFilters } from '../../_components/scaling-tvl-filters'
 import { OthersComingSoonNotice } from './table/others-coming-soon-notice'
@@ -16,7 +16,7 @@ import { ScalingSummaryOthersTable } from './table/scaling-summary-others-table'
 import { ScalingSummaryRollupsTable } from './table/scaling-summary-rollups-table'
 import { ScalingSummaryValidiumsAndOptimiumsTable } from './table/scaling-summary-validiums-and-optimiums-table'
 
-type Props = RecategorisedScalingEntry<ScalingSummaryEntry>
+type Props = CategorisedScalingEntries<ScalingSummaryEntry>
 export function ScalingSummaryTables(props: Props) {
   const includeFilters = useScalingFilter()
 
@@ -35,7 +35,7 @@ export function ScalingSummaryTables(props: Props) {
           ...filteredEntries.validiumsAndOptimiums,
           ...filteredEntries.others,
         ]}
-        excludeAssociatedTokensClassName="max-md:ml-4 max-md:mt-4"
+        className="mt-4"
       />
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>

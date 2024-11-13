@@ -8,14 +8,14 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
 import { type ScalingLivenessEntry } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
-import { type RecategorisedScalingEntry } from '~/utils/group-by-main-categories'
+import { type CategorisedScalingEntries } from '~/utils/group-by-main-categories'
 import { BaseScalingFilters } from '../../_components/base-scaling-filters'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { useLivenessTimeRangeContext } from './liveness-time-range-context'
 import { LivenessTimeRangeControls } from './liveness-time-range-controls'
 import { ScalingLivenessTable } from './table/scaling-liveness-table'
 
-type Props = RecategorisedScalingEntry<ScalingLivenessEntry>
+type Props = CategorisedScalingEntries<ScalingLivenessEntry>
 
 export function ScalingLivenessTables(props: Props) {
   const includeFilters = useScalingFilter()
@@ -33,7 +33,6 @@ export function ScalingLivenessTables(props: Props) {
           ...filteredEntries.validiumsAndOptimiums,
           ...filteredEntries.others,
         ]}
-        timeControlsClassname="max-md:ml-4"
       />
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
@@ -59,10 +58,7 @@ export function ScalingLivenessTables(props: Props) {
   )
 }
 
-function Controls({
-  entries,
-  timeControlsClassname,
-}: { entries: ScalingLivenessEntry[]; timeControlsClassname?: string }) {
+function Controls({ entries }: { entries: ScalingLivenessEntry[] }) {
   const { timeRange, setTimeRange } = useLivenessTimeRangeContext()
 
   return (
@@ -71,7 +67,7 @@ function Controls({
       <LivenessTimeRangeControls
         timeRange={timeRange}
         setTimeRange={setTimeRange}
-        className={timeControlsClassname}
+        className="max-md:ml-4"
       />
     </div>
   )

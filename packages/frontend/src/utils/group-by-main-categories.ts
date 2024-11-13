@@ -1,7 +1,7 @@
 import { partition } from 'lodash'
 import { env } from '~/env'
 
-export type RecategorisedScalingEntry<
+export type CategorisedScalingEntries<
   T extends { category: string | undefined; isOther?: boolean },
 > = ReturnType<typeof groupByMainCategories<T>>
 

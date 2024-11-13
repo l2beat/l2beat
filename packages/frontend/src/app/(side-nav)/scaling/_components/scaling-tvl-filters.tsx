@@ -13,14 +13,12 @@ interface Props {
   items: CommonScalingEntry[]
   className?: string
   showRollupsOnly?: boolean
-  excludeAssociatedTokensClassName?: string
 }
 
 export function ScalingTvlFilters({
   items,
   className,
   showRollupsOnly,
-  excludeAssociatedTokensClassName,
 }: Props) {
   const { excludeAssociatedTokens, setExcludeAssociatedTokens } =
     useScalingAssociatedTokensContext()
@@ -60,7 +58,7 @@ export function ScalingTvlFilters({
         id="exclude-associated-tokens"
         checked={excludeAssociatedTokens}
         onCheckedChange={(checked) => setExcludeAssociatedTokens(!!checked)}
-        className={excludeAssociatedTokensClassName}
+        className="max-md:ml-4"
       >
         Exclude associated tokens
       </Checkbox>

@@ -7,12 +7,12 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
 import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/get-scaling-finality-entries'
-import { type RecategorisedScalingEntry } from '~/utils/group-by-main-categories'
+import { type CategorisedScalingEntries } from '~/utils/group-by-main-categories'
 import { BaseScalingFilters } from '../../_components/base-scaling-filters'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingFinalityTable } from './table/scaling-finality-table'
 
-type Props = RecategorisedScalingEntry<ScalingFinalityEntry>
+type Props = CategorisedScalingEntries<ScalingFinalityEntry>
 
 export function ScalingFinalityTables(props: Props) {
   const includeFilters = useScalingFilter()

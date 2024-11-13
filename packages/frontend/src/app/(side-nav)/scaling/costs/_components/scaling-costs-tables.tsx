@@ -7,8 +7,7 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
 import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
-import { cn } from '~/utils/cn'
-import { type RecategorisedScalingEntry } from '~/utils/group-by-main-categories'
+import { type CategorisedScalingEntries } from '~/utils/group-by-main-categories'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingFilters } from '../../_components/scaling-filters'
 import { type CostsMetric, useCostsMetricContext } from './costs-metric-context'
@@ -16,7 +15,7 @@ import { useCostsTimeRangeContext } from './costs-time-range-context'
 import { CostsMetricControls } from './costs-type-controls'
 import { ScalingCostsTable } from './table/scaling-costs-table'
 
-type Props = RecategorisedScalingEntry<ScalingCostsEntry>
+type Props = CategorisedScalingEntries<ScalingCostsEntry>
 
 export function ScalingCostsTables(props: Props) {
   const includeFilters = useScalingFilter()
@@ -34,8 +33,6 @@ export function ScalingCostsTables(props: Props) {
           ...filteredEntries.validiumsAndOptimiums,
           ...filteredEntries.others,
         ]}
-        className="mt-4"
-        costMetricControlsClassname="max-md:ml-4"
       />
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
@@ -63,12 +60,8 @@ export function ScalingCostsTables(props: Props) {
 
 function Controls({
   entries,
-  className,
-  costMetricControlsClassname,
 }: {
   entries: ScalingCostsEntry[]
-  className?: string
-  costMetricControlsClassname?: string
 }) {
   const { metric, setMetric } = useCostsMetricContext()
   const { range, setRange } = useCostsTimeRangeContext()
@@ -81,17 +74,12 @@ function Controls({
   }
 
   return (
-    <div
-      className={cn(
-        'flex flex-col gap-2 lg:flex-row lg:justify-between',
-        className,
-      )}
-    >
+    <div className="mt-4 flex flex-col gap-2 lg:flex-row lg:justify-between">
       <ScalingFilters items={entries} />
       <CostsMetricControls
         value={metric}
         onValueChange={onMetricChange}
-        className={costMetricControlsClassname}
+        className="max-md:ml-4"
       />
     </div>
   )

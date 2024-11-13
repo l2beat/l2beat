@@ -9,14 +9,14 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
 import { type ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/get-scaling-upcoming-entries'
-import { type RecategorisedScalingEntry } from '~/utils/group-by-main-categories'
+import { type CategorisedScalingEntries } from '~/utils/group-by-main-categories'
 import { useScalingUpcomingFilter } from '../../_components/scaling-filter-context'
 import { ScalingUpcomingAndArchivedFilters } from '../../_components/scaling-upcoming-and-archived-filters'
 import { ScalingUpcomingTable } from './table/scaling-upcoming-table'
 
 export function ScalingUpcomingTables({
   entries,
-}: { entries: RecategorisedScalingEntry<ScalingUpcomingEntry> }) {
+}: { entries: CategorisedScalingEntries<ScalingUpcomingEntry> }) {
   const includeFilters = useScalingUpcomingFilter()
 
   const filteredEntries = {

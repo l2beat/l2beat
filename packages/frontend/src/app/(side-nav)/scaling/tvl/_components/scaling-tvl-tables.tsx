@@ -7,12 +7,12 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
 import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
-import { type RecategorisedScalingEntry as RecategorisedScalingEntries } from '~/utils/group-by-main-categories'
+import { type CategorisedScalingEntries } from '~/utils/group-by-main-categories'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingTvlFilters } from '../../_components/scaling-tvl-filters'
 import { ScalingTvlTable } from './table/scaling-tvl-table'
 
-type Props = RecategorisedScalingEntries<ScalingTvlEntry>
+type Props = CategorisedScalingEntries<ScalingTvlEntry>
 
 export function ScalingTvlTables(props: Props) {
   const includeFilters = useScalingFilter()
@@ -31,7 +31,6 @@ export function ScalingTvlTables(props: Props) {
           ...filteredEntries.others,
         ]}
         className="mt-4"
-        excludeAssociatedTokensClassName="max-md:ml-4"
       />
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>

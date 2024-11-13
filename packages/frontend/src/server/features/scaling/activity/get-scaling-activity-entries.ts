@@ -46,18 +46,18 @@ export async function getScalingActivityEntries() {
     .filter(notUndefined)
     .sort((a, b) => b.data.pastDayTps - a.data.pastDayTps)
 
-  const recategorisedEntries = groupByMainCategories(
+  const categorisedEntries = groupByMainCategories(
     orderByStageAndPastDayTps(entries),
   )
 
   return {
-    rollups: [ethereumEntry, ...recategorisedEntries.rollups],
+    rollups: [ethereumEntry, ...categorisedEntries.rollups],
     validiumsAndOptimiums: [
       ethereumEntry,
-      ...recategorisedEntries.validiumsAndOptimiums,
+      ...categorisedEntries.validiumsAndOptimiums,
     ],
-    ...(recategorisedEntries.others
-      ? { others: [ethereumEntry, ...recategorisedEntries.others] }
+    ...(categorisedEntries.others
+      ? { others: [ethereumEntry, ...categorisedEntries.others] }
       : {}),
   }
 }

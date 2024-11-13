@@ -8,12 +8,12 @@ import {
 } from '~/components/core/directory-tabs'
 import { getStageSortedRowModel } from '~/components/table/sorting/get-stage-sorting-row-model'
 import { type ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
-import { type RecategorisedScalingEntry } from '~/utils/group-by-main-categories'
+import { type CategorisedScalingEntries } from '~/utils/group-by-main-categories'
 import { ScalingActivityFilters } from '../../_components/scaling-activity-filters'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingActivityTable } from './table/scaling-activity-table'
 
-type Props = RecategorisedScalingEntry<ScalingActivityEntry>
+type Props = CategorisedScalingEntries<ScalingActivityEntry>
 
 export function ScalingActivityTables({
   rollups,

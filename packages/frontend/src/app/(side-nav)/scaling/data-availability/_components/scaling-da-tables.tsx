@@ -7,12 +7,12 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
 import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
-import { type RecategorisedScalingEntry } from '~/utils/group-by-main-categories'
+import { type CategorisedScalingEntries } from '~/utils/group-by-main-categories'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingDaFilters } from './scaling-da-filters'
 import { ScalingDataAvailabilityTable } from './table/scaling-da-table'
 
-type Props = RecategorisedScalingEntry<ScalingDataAvailabilityEntry>
+type Props = CategorisedScalingEntries<ScalingDataAvailabilityEntry>
 
 export function ScalingDaTables(props: Props) {
   const includeFilters = useScalingFilter()

@@ -8,14 +8,14 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
 import { type ScalingArchivedEntry } from '~/server/features/scaling/archived/get-scaling-archived-entries'
-import { type RecategorisedScalingEntry } from '~/utils/group-by-main-categories'
+import { type CategorisedScalingEntries } from '~/utils/group-by-main-categories'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingUpcomingAndArchivedFilters } from '../../_components/scaling-upcoming-and-archived-filters'
 import { ScalingArchivedTable } from './table/scaling-archived-table'
 
 export function ScalingArchivedTables({
   entries,
-}: { entries: RecategorisedScalingEntry<ScalingArchivedEntry> }) {
+}: { entries: CategorisedScalingEntries<ScalingArchivedEntry> }) {
   const includeFilters = useScalingFilter()
 
   const filteredEntries = {
@@ -31,7 +31,7 @@ export function ScalingArchivedTables({
           ...filteredEntries.validiumsAndOptimiums,
           ...filteredEntries.others,
         ]}
-          className="max-md:ml-4 max-md:mt-4"
+        className="max-md:ml-4 max-md:mt-4"
       />
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
