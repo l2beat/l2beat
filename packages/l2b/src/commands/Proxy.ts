@@ -1,4 +1,4 @@
-import { DiscoveryLogger, ProxyDetector } from '@l2beat/discovery'
+import { ProxyDetector } from '@l2beat/discovery'
 import { get$Implementations } from '@l2beat/discovery-types'
 import { ExplorerConfig } from '@l2beat/discovery/dist/utils/IEtherscanClient'
 import { CliLogger } from '@l2beat/shared'
@@ -29,11 +29,7 @@ export const DetectProxy = command({
     const provider = await getProvider(args.rpcUrl, explorer)
 
     const proxyDetector = new ProxyDetector()
-    const result = await proxyDetector.detectProxy(
-      provider,
-      args.address,
-      DiscoveryLogger.SILENT,
-    )
+    const result = await proxyDetector.detectProxy(provider, args.address)
 
     if (result === undefined) {
       logger.logLine(

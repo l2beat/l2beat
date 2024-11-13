@@ -2,7 +2,6 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
 
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { AccessControlHandler } from './AccessControlHandler'
 
@@ -59,7 +58,6 @@ describe(AccessControlHandler.name, () => {
         type: 'accessControl',
       },
       [],
-      DiscoveryLogger.SILENT,
     )
     const value = await handler.execute(provider, address)
     expect(value).toEqual({
@@ -115,7 +113,6 @@ describe(AccessControlHandler.name, () => {
         'function WARRIOR_ROLE() view returns (bytes32)',
         'function ROGUE_ROLE() view returns (bytes32)',
       ],
-      DiscoveryLogger.SILENT,
     )
     const value = await handler.execute(provider, address)
     expect(value).toEqual({
@@ -161,7 +158,6 @@ describe(AccessControlHandler.name, () => {
         ignoreRelative: true,
       },
       [],
-      DiscoveryLogger.SILENT,
     )
     const value = await handler.execute(provider, address)
     expect(value).toEqual({

@@ -1,9 +1,4 @@
-import {
-  DiscoveryLogger,
-  IProvider,
-  ProxyDetector,
-  SQLiteCache,
-} from '@l2beat/discovery'
+import { IProvider, ProxyDetector, SQLiteCache } from '@l2beat/discovery'
 import { get$Implementations } from '@l2beat/discovery-types'
 import { ExplorerConfig } from '@l2beat/discovery/dist/utils/IEtherscanClient'
 import { CliLogger } from '@l2beat/shared'
@@ -50,11 +45,7 @@ export async function getEvents(
     )
 
     const proxyDetector = new ProxyDetector()
-    const result = await proxyDetector.detectProxy(
-      provider,
-      address,
-      DiscoveryLogger.SILENT,
-    )
+    const result = await proxyDetector.detectProxy(provider, address)
 
     const addresses = [address]
     if (result !== undefined) {

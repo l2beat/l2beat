@@ -1,6 +1,6 @@
-import { Block, UnixTime, json } from '@l2beat/shared-pure'
-import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
+import { Block, json } from '@l2beat/shared-pure'
 import { ClientCore, ClientCoreDependencies } from '../ClientCore'
+import { BlockClient } from '../types'
 import { DegateBlock, DegateError, LoopringBlock, LoopringError } from './types'
 
 interface Dependencies extends ClientCoreDependencies {
@@ -8,9 +8,14 @@ interface Dependencies extends ClientCoreDependencies {
   type: 'loopring' | 'degate3'
 }
 
-export class LoopringClient extends ClientCore {
+export class LoopringClient extends ClientCore implements BlockClient {
   constructor(private readonly $: Dependencies) {
     super($)
+  }
+
+  async getLatestBlockNumber() {
+    const block = await this.queryBlock('latest')
+    return block.blockId
   }
 
   async getBlockWithTransactions(blockNumber: number): Promise<Block> {
@@ -24,20 +29,6 @@ export class LoopringClient extends ClientCore {
         type: t.txType,
       })),
     }
-  }
-
-  async getBlockNumberAtOrBefore(timestamp: UnixTime, start = 0) {
-    const { blockId: latest } = await this.queryBlock('latest')
-
-    return await getBlockNumberAtOrBefore(
-      timestamp,
-      start,
-      latest,
-      async (block) => {
-        const blockData = await this.getBlockWithTransactions(block)
-        return { timestamp: blockData.timestamp }
-      },
-    )
   }
 
   async queryBlock(block: number | 'latest') {

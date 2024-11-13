@@ -2,7 +2,6 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
 
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { ArrayFromOneEventHandler } from './ArrayFromOneEventHandler'
 
@@ -18,7 +17,6 @@ describe(ArrayFromOneEventHandler.name, () => {
           flagKey: 'status',
         },
         ['event OwnerChanged(address indexed account, bool indexed status)'],
-        DiscoveryLogger.SILENT,
       )
       expect(handler.getEvent()).toEqual(
         'event OwnerChanged(address indexed account, bool indexed status)',
@@ -39,7 +37,6 @@ describe(ArrayFromOneEventHandler.name, () => {
             [
               'event OwnerChanged(address indexed account, bool indexed status)',
             ],
-            DiscoveryLogger.SILENT,
           ),
       ).toThrow('Cannot find a matching event for OwnerChanged')
     })
@@ -58,7 +55,6 @@ describe(ArrayFromOneEventHandler.name, () => {
             [
               'event OwnerChanged(address indexed account, bool indexed status)',
             ],
-            DiscoveryLogger.SILENT,
           ),
       ).toThrow('Cannot find a matching event for OwnerChanged')
     })
@@ -75,7 +71,6 @@ describe(ArrayFromOneEventHandler.name, () => {
               flagKey: 'status',
             },
             [],
-            DiscoveryLogger.SILENT,
           ),
       ).toThrow('Invalid event abi')
     })
@@ -115,7 +110,6 @@ describe(ArrayFromOneEventHandler.name, () => {
           flagKey: 'status',
         },
         [],
-        DiscoveryLogger.SILENT,
       )
       const value = await handler.execute(provider, address)
       expect(value).toEqual({
@@ -153,7 +147,6 @@ describe(ArrayFromOneEventHandler.name, () => {
           flagKey: 'status',
         },
         [],
-        DiscoveryLogger.SILENT,
       )
       const value = await handler.execute(provider, address)
       expect(value).toEqual({
@@ -192,7 +185,6 @@ describe(ArrayFromOneEventHandler.name, () => {
           invert: true,
         },
         [],
-        DiscoveryLogger.SILENT,
       )
       const value = await handler.execute(provider, address)
       expect(value).toEqual({
@@ -229,7 +221,6 @@ describe(ArrayFromOneEventHandler.name, () => {
           valueKey: 'account',
         },
         [],
-        DiscoveryLogger.SILENT,
       )
       const value = await handler.execute(provider, address)
       expect(value).toEqual({
@@ -268,7 +259,6 @@ describe(ArrayFromOneEventHandler.name, () => {
           ignoreRelative: true,
         },
         [],
-        DiscoveryLogger.SILENT,
       )
       const value = await handler.execute(provider, address)
       expect(value).toEqual({
@@ -320,7 +310,6 @@ describe(ArrayFromOneEventHandler.name, () => {
           flagFalseValues: [0, 2],
         },
         [],
-        DiscoveryLogger.SILENT,
       )
       const value = await handler.execute(provider, EthereumAddress.random())
       expect(value).toEqual({

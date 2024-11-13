@@ -31,6 +31,7 @@ export function ScalingTvlTables(props: Props) {
           ...filteredEntries.others,
         ]}
         className="mt-4"
+        excludeAssociatedTokensClassName="max-md:ml-4"
       />
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>

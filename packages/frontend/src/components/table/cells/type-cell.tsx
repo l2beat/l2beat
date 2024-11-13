@@ -55,7 +55,7 @@ interface ProviderProps {
   text: string
 }
 
-const providerMap: Record<
+export const providerMap: Record<
   Layer2Provider | Layer3Provider,
   ProviderProps | undefined
 > = {

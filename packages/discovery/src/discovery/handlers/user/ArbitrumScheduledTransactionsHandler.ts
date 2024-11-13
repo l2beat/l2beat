@@ -3,7 +3,6 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { ethers, utils } from 'ethers'
 import * as z from 'zod'
 
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
 import { toContractValue } from '../utils/toContractValue'
@@ -35,7 +34,6 @@ export class ArbitrumScheduledTransactionsHandler implements Handler {
   constructor(
     readonly field: string,
     readonly abi: string[],
-    readonly logger: DiscoveryLogger,
   ) {
     this.timelockInterface = new utils.Interface(abi)
   }

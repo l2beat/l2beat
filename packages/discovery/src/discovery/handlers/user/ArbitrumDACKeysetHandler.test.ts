@@ -2,7 +2,6 @@ import { Bytes, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
 
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { ArbitrumDACKeysetHandler } from './ArbitrumDACKeysetHandler'
 
@@ -51,11 +50,9 @@ describe(ArbitrumDACKeysetHandler.name, () => {
       },
     })
 
-    const handler = new ArbitrumDACKeysetHandler(
-      'someName',
-      { type: 'arbitrumDACKeyset' },
-      DiscoveryLogger.SILENT,
-    )
+    const handler = new ArbitrumDACKeysetHandler('someName', {
+      type: 'arbitrumDACKeyset',
+    })
 
     const value = await handler.execute(provider, address)
     expect(value).toEqual({
@@ -78,11 +75,9 @@ describe(ArbitrumDACKeysetHandler.name, () => {
       },
     })
 
-    const handler = new ArbitrumDACKeysetHandler(
-      'someName',
-      { type: 'arbitrumDACKeyset' },
-      DiscoveryLogger.SILENT,
-    )
+    const handler = new ArbitrumDACKeysetHandler('someName', {
+      type: 'arbitrumDACKeyset',
+    })
 
     const value = await handler.execute(provider, address)
     expect(value).toEqual({

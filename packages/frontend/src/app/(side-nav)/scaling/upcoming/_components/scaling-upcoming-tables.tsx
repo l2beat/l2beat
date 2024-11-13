@@ -32,6 +32,7 @@ export function ScalingUpcomingTables({
           ...filteredEntries.validiumsAndOptimiums,
           ...filteredEntries.others,
         ]}
+        className="max-md:ml-4 max-md:mt-4"
       />
       <Suspense>
         <DirectoryTabs defaultValue="rollups">

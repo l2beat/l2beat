@@ -1,7 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import * as z from 'zod'
 
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
 import {
@@ -45,7 +44,6 @@ export class OpStackDAHandler implements Handler {
   constructor(
     readonly field: string,
     readonly definition: OpStackDAHandlerDefinition,
-    readonly logger: DiscoveryLogger,
   ) {
     const dependency = getReferencedName(this.definition.sequencerAddress)
     if (dependency) {
@@ -58,8 +56,6 @@ export class OpStackDAHandler implements Handler {
     currentContractAddress: EthereumAddress,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
-    this.logger.logExecution(this.field, ['Checking OP Stack DA mode'])
-
     const referenceInput = generateReferenceInput(
       previousResults,
       provider,

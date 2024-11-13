@@ -1,6 +1,5 @@
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import * as z from 'zod'
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { FunctionSelectorDecoder } from '../../utils/FunctionSelectorDecoder'
 import { Handler, HandlerResult } from '../Handler'
@@ -21,14 +20,12 @@ export class EIP2535FacetHandler implements Handler {
   constructor(
     readonly field: string,
     private readonly definition: EIP2535FacetHandlerDefinition,
-    readonly logger: DiscoveryLogger,
   ) {}
 
   async execute(
     provider: IProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
-    this.logger.logExecution(this.field, ['Decoding EIP2535 facet selectors'])
     const method =
       'function facets() view returns (tuple(address addr, bytes4[] selectors)[] result)'
     const facets = await provider.callMethod<FacetsEntry[]>(address, method, [])

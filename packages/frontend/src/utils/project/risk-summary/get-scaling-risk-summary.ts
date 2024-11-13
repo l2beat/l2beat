@@ -55,6 +55,12 @@ export function getScalingRiskSummarySection(
     }
   }
 
+  for (const risk of project.stateValidation?.categories.flatMap(
+    (c) => c.risks ?? [],
+  ) ?? []) {
+    risks.push({ ...risk, referencedId: 'state-validation' })
+  }
+
   return {
     riskGroups: groupRisks(risks),
     warning: project.display.warning,

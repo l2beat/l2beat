@@ -53,8 +53,8 @@ const SelectTrigger = ({
         }
       }}
       className={cn(
-        'group/trigger flex min-h-8 select-none items-center justify-between gap-1.5 whitespace-nowrap rounded-lg px-3 py-1 shadow-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
-        'bg-gray-200 text-sm font-medium leading-none data-[state=open]:hover:bg-gray-400 dark:bg-zinc-700 dark:data-[state=open]:hover:bg-slate-600',
+        'group/trigger flex min-h-8 select-none items-center justify-between gap-1.5 whitespace-nowrap rounded-lg px-3 py-1 shadow-sm disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
+        'bg-gray-200 text-xs font-medium leading-none data-[state=open]:hover:bg-gray-400 dark:bg-zinc-700 dark:data-[state=open]:hover:bg-slate-600 md:text-sm',
         'sidebar:!bg-surface-primary sidebar:data-[state=open]:hover:!bg-surface-secondary sidebar:main-page-card:!bg-surface-secondary sidebar:main-page-card:data-[state=open]:hover:!bg-surface-tertiary',
         'z-20 transition-colors',
         className,
@@ -63,7 +63,7 @@ const SelectTrigger = ({
     >
       {children}
       <SelectPrimitive.Icon asChild>
-        <ChevronIcon className="size-3 fill-current stroke-[1.8px] transition-transform group-data-[state=open]/trigger:rotate-180" />
+        <ChevronIcon className="size-2.5 fill-current stroke-[1.8px] transition-transform group-data-[state=open]/trigger:rotate-180 md:size-3" />
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   )
@@ -150,7 +150,7 @@ const SelectLabel = ({
 }: React.ComponentProps<typeof SelectPrimitive.Label>) => (
   <SelectPrimitive.Label
     ref={ref}
-    className={cn('py-1.5 pl-8 pr-2 text-sm font-medium', className)}
+    className={cn('py-1.5 pl-8 pr-2 text-xs font-medium md:text-sm', className)}
     {...props}
   />
 )
@@ -165,7 +165,7 @@ const SelectItem = ({
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
-      'relative flex w-full cursor-pointer select-none items-center rounded-lg px-2.5 py-2 pr-9 text-base font-medium outline-none transition-colors focus:bg-gray-400 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-zinc-800',
+      'relative flex w-full cursor-pointer select-none items-center rounded-lg px-2.5 py-2 pr-9 text-xs font-medium outline-none transition-colors focus:bg-gray-400 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-zinc-800 md:text-sm',
       className,
     )}
     {...props}

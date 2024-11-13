@@ -37,7 +37,7 @@ export class BlockProviders {
         (c) => c.chain === chain,
       )
       const timestamp = new BlockTimestampProvider({
-        blockClients: clients,
+        blockProvider: block,
         indexerClients,
       })
       this.timestampProviders.set(chain, timestamp)
@@ -64,9 +64,11 @@ export class BlockProviders {
       case 'starknet':
       case 'degate3':
       case 'loopring': {
-        const blockClients = this.clients.filter((r) => r.chain === chain)
-        assert(blockClients.length > 0, `No configured clients for ${chain}`)
-        return new BlockTimestampProvider({ indexerClients, blockClients })
+        const blockProvider = this.getBlockProvider(chain)
+        return new BlockTimestampProvider({
+          indexerClients,
+          blockProvider,
+        })
       }
       case 'starkex': {
         throw new Error('Starkex should not be handled with this method')

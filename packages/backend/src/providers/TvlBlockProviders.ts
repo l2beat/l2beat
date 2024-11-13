@@ -30,10 +30,12 @@ export class TvlBlockProviders {
     assert(project, `Project ${chain} not found`)
 
     const indexerClients = this.indexerClients.filter((c) => c.chain === chain)
-    const blockClients = this.evmClients.filter((r) => r.chain === chain)
-    assert(blockClients.length > 0, `No configured clients for ${chain}`)
+    const blockProvider = this.getEvmBlockProvider(chain)
 
-    return new BlockTimestampProvider({ indexerClients, blockClients })
+    return new BlockTimestampProvider({
+      indexerClients,
+      blockProvider,
+    })
   }
 }
 
