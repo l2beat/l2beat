@@ -3,7 +3,6 @@ import { expect, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
 
 import { ContractSource } from '../../../utils/IEtherscanClient'
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { LayerZeroMultisigHandler } from './LayerZeroMultisigHandler'
 
@@ -43,7 +42,6 @@ describe(LayerZeroMultisigHandler.name, () => {
     const handler = new LayerZeroMultisigHandler(
       'layerZeroMultisig',
       SAMPLE_CONSTRUCTOR_FRAGMENT,
-      DiscoveryLogger.SILENT,
     )
 
     const contractAddress = EthereumAddress.random()
@@ -73,7 +71,6 @@ describe(LayerZeroMultisigHandler.name, () => {
     const handler = new LayerZeroMultisigHandler(
       'layerZeroMultisig',
       SAMPLE_CONSTRUCTOR_FRAGMENT,
-      DiscoveryLogger.SILENT,
     )
     const contractAddress = EthereumAddress.random()
 

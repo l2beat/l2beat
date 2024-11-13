@@ -2,7 +2,6 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { providers, utils } from 'ethers'
 import * as z from 'zod'
 
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { rpcWithRetries } from '../../provider/LowLevelProvider'
 import { Handler, HandlerResult } from '../Handler'
@@ -26,17 +25,12 @@ export class OrbitPostsBlobsHandler implements Handler {
   constructor(
     readonly field: string,
     readonly definition: OrbitPostsBlobsDefinition,
-    readonly logger: DiscoveryLogger,
   ) {}
 
   async execute(
     provider: IProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
-    this.logger.logExecution(this.field, [
-      'Checking if orbit stack chain posts blobs to L1',
-    ])
-
     const lastEvents =
       (await this.getLast10Events(provider, address, provider.blockNumber)) ??
       []

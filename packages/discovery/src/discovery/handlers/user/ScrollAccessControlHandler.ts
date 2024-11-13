@@ -2,7 +2,6 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { providers, utils } from 'ethers'
 import * as z from 'zod'
 
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { FunctionSelectorDecoder } from '../../utils/FunctionSelectorDecoder'
 import { Handler, HandlerResult } from '../Handler'
@@ -34,7 +33,6 @@ export class ScrollAccessControlHandler implements Handler {
     readonly field: string,
     readonly definition: ScrollAccessControlHandlerDefinition,
     abi: string[],
-    readonly logger: DiscoveryLogger,
   ) {
     this.knownNames.set('0x' + '0'.repeat(64), 'DEFAULT_ADMIN_ROLE')
     for (const [hash, name] of Object.entries(definition.roleNames ?? {})) {
@@ -58,7 +56,6 @@ export class ScrollAccessControlHandler implements Handler {
     provider: IProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
-    this.logger.logExecution(this.field, ['Checking ScrollAccessControl'])
     const logs = await provider.getLogs(address, [
       [
         abi.getEventTopic('RoleGranted'),

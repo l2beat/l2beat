@@ -2,7 +2,6 @@ import { assert, Bytes, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { providers, utils } from 'ethers'
 import * as z from 'zod'
 
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { rpcWithRetries } from '../../provider/LowLevelProvider'
 import { Handler, HandlerResult } from '../Handler'
@@ -37,17 +36,12 @@ export class ArbitrumSequencerVersionHandler implements Handler {
   constructor(
     readonly field: string,
     readonly definition: ArbitrumSequencerVersionDefinition,
-    readonly logger: DiscoveryLogger,
   ) {}
 
   async execute(
     provider: IProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
-    this.logger.logExecution(this.field, [
-      'Checking Arbitrum Sequencer Version',
-    ])
-
     const lastEvent = await this.getLastEventWithTxInput(
       provider,
       address,

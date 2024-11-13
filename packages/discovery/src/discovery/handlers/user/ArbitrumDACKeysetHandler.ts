@@ -3,7 +3,6 @@ import { providers, utils } from 'ethers'
 import * as z from 'zod'
 
 import { base64 } from 'ethers/lib/utils'
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
 
@@ -25,15 +24,12 @@ export class ArbitrumDACKeysetHandler implements Handler {
   constructor(
     readonly field: string,
     readonly definition: ArbitrumDACKeysetHandlerDefinition,
-    readonly logger: DiscoveryLogger,
   ) {}
 
   async execute(
     provider: IProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
-    this.logger.logExecution(this.field, ['Resolving Arbitrum DAC Keyset'])
-
     const events = await provider.getLogs(address, [
       [abi.getEventTopic('SetValidKeyset')],
     ])

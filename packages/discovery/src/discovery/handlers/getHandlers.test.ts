@@ -1,7 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { DiscoveryLogger } from '../DiscoveryLogger'
 import { getHandlers } from './getHandlers'
 import { ErrorHandler } from './system/ErrorHandler'
 import { LimitedArrayHandler } from './system/LimitedArrayHandler'
@@ -10,7 +9,7 @@ import { StorageHandler } from './user/StorageHandler'
 
 describe(getHandlers.name, () => {
   it('returns empty handlers', () => {
-    const handlers = getHandlers([], undefined, DiscoveryLogger.SILENT)
+    const handlers = getHandlers([], undefined)
     expect(handlers).toEqual([])
   })
 
@@ -22,22 +21,14 @@ describe(getHandlers.name, () => {
         'function baz(uint256 i) view returns (address)',
       ],
       undefined,
-      DiscoveryLogger.SILENT,
     )
     expect(handlers).toEqual([
-      new SimpleMethodHandler(
-        'function bar() view returns (address)',
-        DiscoveryLogger.SILENT,
-      ),
+      new SimpleMethodHandler('function bar() view returns (address)'),
       new LimitedArrayHandler(
         'function baz(uint256 i) view returns (address)',
         5,
-        DiscoveryLogger.SILENT,
       ),
-      new SimpleMethodHandler(
-        'function foo() view returns (uint256)',
-        DiscoveryLogger.SILENT,
-      ),
+      new SimpleMethodHandler('function foo() view returns (uint256)'),
     ])
   })
 
@@ -48,13 +39,9 @@ describe(getHandlers.name, () => {
         'function bar(uint256 i) view returns (address)',
       ],
       undefined,
-      DiscoveryLogger.SILENT,
     )
     expect(handlers).toEqual([
-      new SimpleMethodHandler(
-        'function bar() view returns (address)',
-        DiscoveryLogger.SILENT,
-      ),
+      new SimpleMethodHandler('function bar() view returns (address)'),
     ])
   })
 
@@ -65,13 +52,9 @@ describe(getHandlers.name, () => {
         'function bar() view returns (address)',
       ],
       undefined,
-      DiscoveryLogger.SILENT,
     )
     expect(handlers).toEqual([
-      new SimpleMethodHandler(
-        'function bar() view returns (address)',
-        DiscoveryLogger.SILENT,
-      ),
+      new SimpleMethodHandler('function bar() view returns (address)'),
     ])
   })
 
@@ -79,7 +62,6 @@ describe(getHandlers.name, () => {
     const handlers = getHandlers(
       ['function complex(uint256 a, uint256 b) view returns (address)'],
       undefined,
-      DiscoveryLogger.SILENT,
     )
     expect(handlers).toEqual([])
   })
@@ -91,17 +73,12 @@ describe(getHandlers.name, () => {
         'function requireUnresolvedExists() view',
       ],
       undefined,
-      DiscoveryLogger.SILENT,
     )
     expect(handlers).toEqual([])
   })
 
   it('ignores write methods', () => {
-    const handlers = getHandlers(
-      ['function write()'],
-      undefined,
-      DiscoveryLogger.SILENT,
-    )
+    const handlers = getHandlers(['function write()'], undefined)
     expect(handlers).toEqual([])
   })
 
@@ -118,44 +95,27 @@ describe(getHandlers.name, () => {
         address: EthereumAddress.random(),
         ignoreMethods: ['foo', 'baz', 'flip'],
       },
-      DiscoveryLogger.SILENT,
     )
     expect(handlers).toEqual([
-      new SimpleMethodHandler(
-        'function bar() view returns (address)',
-        DiscoveryLogger.SILENT,
-      ),
+      new SimpleMethodHandler('function bar() view returns (address)'),
       new LimitedArrayHandler(
         'function flop(uint256 i) view returns (uint256)',
         5,
-        DiscoveryLogger.SILENT,
       ),
     ])
   })
 
   it('returns user handlers', () => {
-    const handlers = getHandlers(
-      [],
-      {
-        address: EthereumAddress.random(),
-        fields: {
-          foo: { handler: { type: 'storage', slot: 1 } },
-          bar: { handler: { type: 'storage', slot: 2 } },
-        },
+    const handlers = getHandlers([], {
+      address: EthereumAddress.random(),
+      fields: {
+        foo: { handler: { type: 'storage', slot: 1 } },
+        bar: { handler: { type: 'storage', slot: 2 } },
       },
-      DiscoveryLogger.SILENT,
-    )
+    })
     expect(handlers).toEqual([
-      new StorageHandler(
-        'bar',
-        { type: 'storage', slot: 2 },
-        DiscoveryLogger.SILENT,
-      ),
-      new StorageHandler(
-        'foo',
-        { type: 'storage', slot: 1 },
-        DiscoveryLogger.SILENT,
-      ),
+      new StorageHandler('bar', { type: 'storage', slot: 2 }),
+      new StorageHandler('foo', { type: 'storage', slot: 1 }),
     ])
   })
 
@@ -172,42 +132,26 @@ describe(getHandlers.name, () => {
           bar: { handler: { type: 'storage', slot: 2 } },
         },
       },
-      DiscoveryLogger.SILENT,
     )
     expect(handlers).toEqual([
-      new StorageHandler(
-        'bar',
-        { type: 'storage', slot: 2 },
-        DiscoveryLogger.SILENT,
-      ),
-      new SimpleMethodHandler(
-        'function baz() view returns (address)',
-        DiscoveryLogger.SILENT,
-      ),
-      new StorageHandler(
-        'foo',
-        { type: 'storage', slot: 1 },
-        DiscoveryLogger.SILENT,
-      ),
+      new StorageHandler('bar', { type: 'storage', slot: 2 }),
+      new SimpleMethodHandler('function baz() view returns (address)'),
+      new StorageHandler('foo', { type: 'storage', slot: 1 }),
     ])
   })
 
   it('handles constructor errors', () => {
-    const handlers = getHandlers(
-      [],
-      {
-        address: EthereumAddress.random(),
-        fields: {
-          foo: {
-            handler: {
-              type: 'call',
-              args: [],
-            },
+    const handlers = getHandlers([], {
+      address: EthereumAddress.random(),
+      fields: {
+        foo: {
+          handler: {
+            type: 'call',
+            args: [],
           },
         },
       },
-      DiscoveryLogger.SILENT,
-    )
+    })
     expect(handlers).toEqual([
       new ErrorHandler('foo', 'Cannot find a matching method for foo'),
     ])
