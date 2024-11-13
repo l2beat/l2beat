@@ -54,7 +54,7 @@ interface ProjectDetailsSectionHeaderProps {
   id: string
   title: string
   sectionOrder: string | undefined
-  nested?: boolean
+  nested: boolean | undefined
   className?: string
 }
 
