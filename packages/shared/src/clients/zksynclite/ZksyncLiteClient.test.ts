@@ -79,14 +79,14 @@ describe(ZksyncLiteClient.name, () => {
     })
   })
 
-  describe(ZksyncLiteClient.prototype.getLatestBlock.name, () => {
+  describe(ZksyncLiteClient.prototype.getLatestBlockNumber.name, () => {
     it('gets latest block', async () => {
       const http = mockObject<HttpClient2>({
         fetch: async () => ({ result: { blockNumber: 42 } }),
       })
       const zksyncClient = mockClient({ http })
 
-      const result = await zksyncClient.getLatestBlock()
+      const result = await zksyncClient.getLatestBlockNumber()
       expect(result).toEqual(42)
     })
   })
