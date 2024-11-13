@@ -160,9 +160,8 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                         router.push(item.href)
                       }}
                       label={entryToLabel(item)}
+                      value={`${item.category}-${item.name}-${item.type}${'kind' in item ? `-${item.kind}` : ''}`}
                     >
-                      {/* For selection to work, we need to have some distinction in the DOM */}
-                      <span className="hidden">{item.category} </span>
                       {item.type === 'project' && (
                         <Image
                           src={item.iconUrl}
@@ -188,11 +187,18 @@ function SearchBarItem({
   onSelect,
   children,
   label,
-}: { onSelect: () => void; children: React.ReactNode; label?: string }) {
+  value,
+}: {
+  onSelect: () => void
+  children: React.ReactNode
+  label?: string
+  value?: string
+}) {
   return (
     <CommandItem
       className="cursor-pointer gap-2 rounded-lg"
       onSelect={onSelect}
+      value={value}
     >
       {children}
       {label && <div className="ml-auto text-xs text-secondary">{label}</div>}
