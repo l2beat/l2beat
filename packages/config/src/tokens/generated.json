@@ -4637,6 +4637,20 @@
       "supply": "zero"
     },
     {
+      "name": "Veritaseum",
+      "coingeckoId": "veritaseum",
+      "address": "0x8f3470A7388c05eE4e7AF3d01D8C722b0FF52374",
+      "symbol": "VERI",
+      "decimals": 18,
+      "deploymentTimestamp": 1492951503,
+      "coingeckoListingTimestamp": 1611619200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/695/large/veritaseum.png?1696501884",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Vertex",
       "coingeckoId": "vertex-protocol",
       "address": "0xbbEE07B3e8121227AfCFe1E2B82772246226128e",
@@ -7128,6 +7142,20 @@
       }
     },
     {
+      "name": "Mister Miggles",
+      "coingeckoId": "mister-miggles",
+      "address": "0xB1a03EdA10342529bBF8EB700a06C60441fEf25d",
+      "symbol": "MIGGLES",
+      "decimals": 18,
+      "deploymentTimestamp": 1721147639,
+      "coingeckoListingTimestamp": 1721260800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39251/large/miggles.jpg?1721283044",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Mochi",
       "coingeckoId": "mochi-thecatcoin",
       "address": "0xF6e932Ca12afa26665dC4dDE7e27be02A7c02e50",
@@ -7220,6 +7248,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "The Next 100x Memecoin on Base",
+      "coingeckoId": "tn100x",
+      "address": "0x5B5dee44552546ECEA05EDeA01DCD7Be7aa6144A",
+      "symbol": "TN100X",
+      "decimals": 18,
+      "deploymentTimestamp": 1707598217,
+      "coingeckoListingTimestamp": 1709596800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35729/large/patch-transparent-blue.png?1729878068",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "Toshi",
@@ -7440,6 +7482,27 @@
           {
             "name": "Connext (xERC20)",
             "slug": "connext"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Solv BTC",
+      "coingeckoId": "solv-btc",
+      "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
+      "symbol": "SolvBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1730555345,
+      "coingeckoListingTimestamp": 1712448000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
+      "chainId": 34443,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
           }
         ]
       }
