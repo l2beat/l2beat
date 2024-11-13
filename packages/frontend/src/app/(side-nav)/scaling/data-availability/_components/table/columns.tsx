@@ -2,6 +2,7 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { SentimentText } from '~/components/sentiment-text'
 import { TwoRowCell } from '~/components/table/cells/two-row-cell'
 import {
+  providerMap,
   TypeCell,
   TypeExplanationTooltip,
 } from '~/components/table/cells/type-cell'
@@ -25,17 +26,17 @@ export const columns = [
         {ctx.row.original.category}
       </TypeCell>
     ),
-    sortingFn: ({ original: a }, { original: b }) => {
-      // Sort by category first
-      const categories = (a.category ?? '').localeCompare(b.category ?? '')
-
-      if (categories !== 0) {
-        return categories
-      }
-
-      // Then sort by provider
-      return a.provider?.localeCompare(b.provider ?? '') ?? 0
-    },
+    sortingFn: ({ original: a }, { original: b }) =>
+      sortTwoRowCell(
+        {
+          value: a.category ?? '',
+          secondLine: a.provider && providerMap[a.provider]?.text,
+        },
+        {
+          value: b.category ?? '',
+          secondLine: b.provider && providerMap[b.provider]?.text,
+        },
+      ),
   }),
   columnHelper.accessor('dataAvailability.layer.value', {
     header: 'DA Layer',
