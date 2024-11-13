@@ -19,6 +19,7 @@ import { useRouterWithProgressBar } from '../progress-bar'
 import { useSearchBarContext } from './search-bar-context'
 import { type SearchBarPage, searchBarPages } from './search-bar-pages'
 import { type SearchBarProject } from './search-bar-projects'
+import { groupBy } from 'lodash'
 interface Props {
   allProjects: SearchBarProject[]
   recentlyAdded: SearchBarProject[]
@@ -69,6 +70,14 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
     [value],
   )
 
+  const grouped = useMemo(() => {
+    return Object.entries(
+      groupBy([...filteredProjects, ...filteredPages], (p) =>
+        typeToGroup(p.type),
+      ),
+    )
+  }, [filteredProjects, filteredPages])
+
   const onEscapeKeyDown = (e?: KeyboardEvent) => {
     e?.preventDefault()
     if (value !== '') {
@@ -102,10 +111,8 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
         </CommandInput>
         <CommandList className="max-h-screen md:h-[270px] md:max-h-[270px] [@supports(height:100dvh)]:max-h-dvh">
           <CommandEmpty>No results found.</CommandEmpty>
-          {filteredProjects.length > 0 && (
-            <CommandGroup
-              heading={value === '' ? 'Recently added projects' : 'Projects'}
-            >
+          {filteredProjects.length > 0 && value === '' && (
+            <CommandGroup heading="Recently added projects">
               {filteredProjects.map((project) => {
                 const label = typeToLabel(project.type)
                 return (
@@ -131,26 +138,37 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
               })}
             </CommandGroup>
           )}
-          {value !== '' && filteredPages.length > 0 && (
-            <CommandGroup heading="Pages">
-              {filteredPages.map((page) => {
-                const label = typeToLabel(page.type)
-                return (
-                  <SearchBarItem
-                    key={page.href}
-                    onSelect={() => {
-                      setOpen(false)
-                      setValue('')
-                      router.push(page.href)
-                    }}
-                    label={label}
-                  >
-                    {page.name}
-                  </SearchBarItem>
-                )
-              })}
-            </CommandGroup>
-          )}
+          {value !== '' &&
+            grouped.length > 0 &&
+            grouped.map(([group, items]) => (
+              <CommandGroup heading={group} key={group}>
+                {items.map((page) => {
+                  const label = typeToLabel(page.type)
+                  return (
+                    <SearchBarItem
+                      key={page.href}
+                      onSelect={() => {
+                        setOpen(false)
+                        setValue('')
+                        router.push(page.href)
+                      }}
+                      label={label}
+                    >
+                      {'iconUrl' in page && (
+                        <Image
+                          src={page.iconUrl}
+                          alt={`${page.name} logo`}
+                          className="rounded-sm"
+                          width={20}
+                          height={20}
+                        />
+                      )}
+                      {page.name}
+                    </SearchBarItem>
+                  )
+                })}
+              </CommandGroup>
+            ))}
         </CommandList>
       </Command>
     </CommandDialog>
@@ -171,6 +189,26 @@ function SearchBarItem({
       {label && <div className="ml-auto text-xs text-secondary">{label}</div>}
     </CommandItem>
   )
+}
+
+function typeToGroup(type: SearchBarProject['type'] | SearchBarPage['type']) {
+  switch (type) {
+    case 'layer2':
+    case 'layer3':
+    case 'scaling':
+      return 'Scaling'
+    case 'bridge':
+    case 'bridges':
+      return 'Bridges'
+    case 'da':
+      return 'Data Availability'
+    case 'zk-catalog':
+      return 'ZK Catalog'
+    case undefined:
+      return undefined
+    default:
+      assertUnreachable(type)
+  }
 }
 
 function typeToLabel(type: SearchBarProject['type'] | SearchBarPage['type']) {
