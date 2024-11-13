@@ -1,5 +1,4 @@
 import { type ScalingProjectStateDerivation } from '@l2beat/config'
-import React from 'react'
 import { Markdown } from '../../markdown/markdown'
 import { ProjectSection } from './project-section'
 import { type ProjectSectionProps } from './types'
