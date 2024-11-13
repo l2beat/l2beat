@@ -1,14 +1,22 @@
-Generated with discovered.json: 0x90071073d0912ec1cd9045303242ef91f2f2b792
+Generated with discovered.json: 0x5cb3ef8489e38292ed93e28a0a458eea902c4bb1
 
-# Diff at Wed, 13 Nov 2024 10:40:18 GMT:
+# Diff at Wed, 13 Nov 2024 11:13:12 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@52436269c628b928351a43e9d5c374c442a5c66d block: 21077285
-- current block number: 21178232
+- current block number: 21178397
 
 ## Description
 
 New ZK stack chain deployed (native token is called GBT - GRVTBaseToken)
+
+Current ZK stack chains (BH.getAllHyperchains array):
+1) ZKsync Era 324 RU 0x32400084C286CF3E17e7B677ea9583e60a000324 ETH
+2) CronosZkEvm 388 Validium 0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc zkCRO
+3) Sophon 50104 Validium 0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3 SOPH
+4) ZeroNetwork 543210 RU 0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9 ETH
+5) [Abstract](docs.abs.xyz) 2741 RU 0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9 ETH
+6) [GRVT](https://grvt.gitbook.io/grvt/introduction/architecture-overview) 325 Validium 0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E GBT (GRVTBaseToken)
 
 ## Watched changes
 
@@ -24,9 +32,9 @@ New ZK stack chain deployed (native token is called GBT - GRVTBaseToken)
 ```diff
     contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
     +++ description: None
-+++ description: If non-zero, the third batch has been posted.
++++ description: If non-zero, the third batch has been posted (launch monitor).
 +++ severity: MEDIUM
-      values.Project__ThirdBatchTS:
+      values.abstractThirdBatchTS:
 -        0
 +        1730348459
     }
@@ -61,28 +69,22 @@ discovery. Values are for block 21077285 (main branch discovery), not current.
 -        1730241371
       values.zeronetworkTenthBatchTS:
 -        1729719755
-+++ description: If non-zero, the third batch has been posted.
++++ description: If non-zero, the third batch has been posted (launch monitor).
 +++ severity: MEDIUM
-      values.Project__ThirdBatchTS:
+      values.abstractThirdBatchTS:
 +        0
-+++ description: If non-zero, the third batch has been posted.
++++ description: If non-zero, the third batch has been posted (launch monitor).
 +++ severity: MEDIUM
-      values.sophonThirdBatchTS:
-+        1729673999
-+++ description: If non-zero, the third batch has been posted.
-+++ severity: MEDIUM
-      values.zeronetworkThirdBatchTS:
-+        1729683215
+      values.grvtThirdBatchTS:
++        0
       fieldMeta.zeronetworkTenthBatchTS:
 -        {"severity":"MEDIUM","description":"If non-zero, the first batch has been posted."}
       fieldMeta.sophonTenthBatchTS:
 -        {"severity":"MEDIUM","description":"If non-zero, the first batch has been posted."}
-      fieldMeta.zeronetworkThirdBatchTS:
-+        {"severity":"MEDIUM","description":"If non-zero, the third batch has been posted."}
-      fieldMeta.sophonThirdBatchTS:
-+        {"severity":"MEDIUM","description":"If non-zero, the third batch has been posted."}
-      fieldMeta.Project__ThirdBatchTS:
-+        {"severity":"MEDIUM","description":"If non-zero, the third batch has been posted."}
+      fieldMeta.abstractThirdBatchTS:
++        {"severity":"MEDIUM","description":"If non-zero, the third batch has been posted (launch monitor)."}
+      fieldMeta.grvtThirdBatchTS:
++        {"severity":"MEDIUM","description":"If non-zero, the third batch has been posted (launch monitor)."}
     }
 ```
 

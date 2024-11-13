@@ -1,8 +1,8 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 21178232,
-  "configHash": "0xdbe708906dc685ef68780952b15491a272527f1add793d8653ac17ca151cb4e1",
+  "blockNumber": 21178397,
+  "configHash": "0x9cecdf9723a91441db71aa06c72cf2ab41e87e7fe3142e7c5d40ead6602cc24d",
   "contracts": [
     {
       "name": "GnosisSafe",
@@ -320,6 +320,7 @@
       "sinceTimestamp": 1717520615,
       "values": {
         "$immutable": true,
+        "abstractThirdBatchTS": 1730348459,
         "cronosValidatorsAdded": [
           "0xACBD581D1BedB2F71d2F5F01f881586e0623d591",
           "0xE4F4FdaD61f192EBe9a32b2d2fB47A5802891e14",
@@ -332,18 +333,16 @@
         ],
         "executionDelay": 75600,
         "getName": "ValidatorTimelock",
+        "grvtThirdBatchTS": 0,
         "owner": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "Project__ThirdBatchTS": 1730348459,
         "revertedBlocks": [],
-        "sophonThirdBatchTS": 1729673999,
         "sophonValidatorsAdded": [
           "0x4cc87B0A504047967CeD9A955431B3229237e7de",
           "0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f"
         ],
         "sophonValidatorsRemoved": [],
         "stateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "zeronetworkThirdBatchTS": 1729683215,
         "zeronetworkValidatorsAdded": [
           "0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F",
           "0x479B7c95b9509E1A834C994fc94e3581aA8A73B9"
@@ -356,17 +355,13 @@
         "zksyncValidatorsRemoved": []
       },
       "fieldMeta": {
-        "zeronetworkThirdBatchTS": {
+        "abstractThirdBatchTS": {
           "severity": "MEDIUM",
-          "description": "If non-zero, the third batch has been posted."
+          "description": "If non-zero, the third batch has been posted (launch monitor)."
         },
-        "sophonThirdBatchTS": {
+        "grvtThirdBatchTS": {
           "severity": "MEDIUM",
-          "description": "If non-zero, the third batch has been posted."
-        },
-        "Project__ThirdBatchTS": {
-          "severity": "MEDIUM",
-          "description": "If non-zero, the third batch has been posted."
+          "description": "If non-zero, the third batch has been posted (launch monitor)."
         }
       },
       "derivedName": "ValidatorTimelock"

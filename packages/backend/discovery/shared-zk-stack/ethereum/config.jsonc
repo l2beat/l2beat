@@ -262,31 +262,22 @@
             "argValue": "50104"
           }
         },
-        "zeronetworkThirdBatchTS": {
-          "description": "If non-zero, the third batch has been posted.",
-          "severity": "MEDIUM",
-          "handler": {
-            "type": "call",
-            "method": "getCommittedBatchTimestamp",
-            "args": [543210, 3]
-          }
-        },
-        "sophonThirdBatchTS": {
-          "description": "If non-zero, the third batch has been posted.",
-          "severity": "MEDIUM",
-          "handler": {
-            "type": "call",
-            "method": "getCommittedBatchTimestamp",
-            "args": [50104, 3]
-          }
-        },
-        "Project__ThirdBatchTS": {
-          "description": "If non-zero, the third batch has been posted.",
+        "abstractThirdBatchTS": {
+          "description": "If non-zero, the third batch has been posted (launch monitor).",
           "severity": "MEDIUM",
           "handler": {
             "type": "call",
             "method": "getCommittedBatchTimestamp",
             "args": [2741, 3]
+          }
+        },
+        "grvtThirdBatchTS": {
+          "description": "If non-zero, the third batch has been posted (launch monitor).",
+          "severity": "MEDIUM",
+          "handler": {
+            "type": "call",
+            "method": "getCommittedBatchTimestamp",
+            "args": [325, 3]
           }
         },
         "revertedBlocks": {
