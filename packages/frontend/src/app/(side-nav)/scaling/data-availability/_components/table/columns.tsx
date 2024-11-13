@@ -2,9 +2,9 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { SentimentText } from '~/components/sentiment-text'
 import { TwoRowCell } from '~/components/table/cells/two-row-cell'
 import {
-  providerMap,
   TypeCell,
   TypeExplanationTooltip,
+  providerMap,
 } from '~/components/table/cells/type-cell'
 import { sortByDacMembers } from '~/components/table/sorting/functions/sort-by-dac-members'
 import { sortBySentiment } from '~/components/table/sorting/functions/sort-by-sentiment'
