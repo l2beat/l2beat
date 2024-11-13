@@ -4,10 +4,10 @@ import { uniq } from 'lodash'
 import { TwoRowCell } from '~/components/table/cells/two-row-cell'
 import { ChevronIcon } from '~/icons/chevron'
 import { cn } from '~/utils/cn'
+import { getFirstTwoNonZeroPrecision } from '~/utils/get-first-two-non-zero-precision'
 import { formatNumberWithCommas } from '~/utils/number-format/format-number'
 import { TokenWithChainLogo } from '../../../_components/token-with-chain-logo'
 import { type TokenEntry } from './get-token-entries'
-import { getFirstTwoNonZeroPrecision } from '~/utils/get-first-two-non-zero-precision'
 
 const columnHelper = createColumnHelper<TokenEntry>()
 
