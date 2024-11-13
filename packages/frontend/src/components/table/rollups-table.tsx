@@ -9,12 +9,17 @@ import {
   type BasicTableProps,
   BasicTableRow,
 } from './basic-table'
+import { env } from '~/env'
 
 interface BasicEntry extends BasicTableEntry {
   stage: StageConfig
 }
 
 export function RollupsTable<T extends BasicEntry>(props: BasicTableProps<T>) {
+  if (!env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING) {
+    return <BasicTable {...props} />
+  }
+
   const { ethereumEntry, stageTwoAndOne, stageZero, rest } =
     getRollupsTableRows(props.table)
 

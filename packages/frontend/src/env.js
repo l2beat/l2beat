@@ -41,6 +41,7 @@ export const env = createEnv({
   client: {
     NEXT_PUBLIC_FEATURE_FLAG_INSIGHT: featureFlag.default('false'),
     NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION: featureFlag.default('false'),
+    NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING: featureFlag.default('false'),
     NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS: featureFlag.default('false'),
     NEXT_PUBLIC_FEATURE_FLAG_INTERNAL_TOOLS: featureFlag.default(
       process.env.NODE_ENV === 'development' ? 'true' : 'false',
@@ -73,6 +74,8 @@ export const env = createEnv({
       process.env.NEXT_PUBLIC_FEATURE_FLAG_INSIGHT,
     NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION:
       process.env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION,
+    NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING:
+      process.env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING,
     NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS:
       process.env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS,
     NEXT_PUBLIC_FEATURE_FLAG_INTERNAL_TOOLS:
