@@ -15,6 +15,7 @@ import { ProjectChartTimeRange } from '../core/chart-time-range'
 import { type ChartScale } from '../types'
 import { ActivityChartHover } from './activity-chart-hover'
 import { useActivityChartRenderParams } from './use-activity-chart-render-params'
+import { formatTimestamp } from '~/utils/dates'
 
 interface Props {
   milestones: Milestone[]
@@ -87,6 +88,15 @@ export function ProjectActivityChart({ milestones, projectId }: Props) {
             <RadioGroupItem value="lin">LIN</RadioGroupItem>
           </RadioGroup>
         </div>
+        {data && !data.syncStatus.isSynced && (
+          <div className="flex w-full items-center rounded-lg bg-gray-200 px-4 py-2 text-xs font-medium dark:bg-zinc-800">
+            Activity data has not been synced since:{' '}
+            {formatTimestamp(data.syncStatus.syncedUntil, {
+              mode: 'datetime',
+              longMonthName: true,
+            })}
+          </div>
+        )}
       </section>
     </ChartProvider>
   )

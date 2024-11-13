@@ -14,6 +14,7 @@ import {
   createActivityProjectsFilter,
 } from './utils/project-filter-utils'
 import { type ActivityTimeRange } from './utils/range'
+import { getSyncStatus } from './utils/get-sync-status'
 
 /**
  * A function that computes values for chart data of the activity over time.
@@ -45,16 +46,17 @@ const getCachedActivityChart = cache(
       adjustedRange,
     )
 
-    // If we are looking at a single project, we should adjust the range to the last day
-    // we have this project data for.
+    // By default, we assume we're always synced...
+    let syncStatus = getSyncStatus(adjustedRange[1])
+
+    // ...but if we are looking at a single project, we check the last day we have data for,
+    // and use that as the cutoff.
     if (isSingleProject) {
-      const maxProjectTimestamp = entries.reduce((max, e) => {
-        if (e.projectId === ProjectId.ETHEREUM || !max.isFull('day')) {
-          return max
-        }
-        return max.gt(e.timestamp) ? max : e.timestamp
-      }, adjustedRange[1])
-      adjustedRange = [adjustedRange[0], maxProjectTimestamp]
+      const lastProjectEntry = entries.findLast((entry) => entry.projectId)
+      if (lastProjectEntry) {
+        syncStatus = getSyncStatus(lastProjectEntry.timestamp)
+        adjustedRange = [adjustedRange[0], lastProjectEntry.timestamp]
+      }
     }
 
     const startTimestamp = entries.find(
@@ -62,7 +64,7 @@ const getCachedActivityChart = cache(
     )?.timestamp
 
     if (!startTimestamp) {
-      return []
+      return { data: [], syncStatus }
     }
 
     const startIndex = entries.findIndex(
@@ -107,7 +109,10 @@ const getCachedActivityChart = cache(
       return [+timestamp, entry.count, entry.ethereumCount]
     })
 
-    return result
+    return {
+      data: result,
+      syncStatus,
+    }
   },
   ['activityChart'],
   { revalidate: UnixTime.HOUR },
@@ -124,5 +129,8 @@ function getMockActivityChart(
   ]
   const timestamps = generateTimestamps(adjustedRange, 'daily')
 
-  return timestamps.map((timestamp) => [+timestamp, 15, 11])
+  return {
+    data: timestamps.map((timestamp) => [+timestamp, 15, 11]),
+    syncStatus: getSyncStatus(adjustedRange[1]),
+  }
 }

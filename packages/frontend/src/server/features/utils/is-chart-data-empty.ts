@@ -9,5 +9,5 @@ export function isTvlChartDataEmpty(data: TvlChartData) {
 }
 
 export function isActivityChartDataEmpty(data: ActivityChartData) {
-  return data.every(([_, count]) => count === 0)
+  return data.data.every(([_, count]) => count === 0)
 }

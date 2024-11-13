@@ -6,7 +6,7 @@ export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
   const range = ActivityTimeRange.catch('30d').parse(searchParams.get('range'))
 
-  const data = await getActivityChart({ type: 'all' }, range)
+  const { data } = await getActivityChart({ type: 'all' }, range)
 
   const latestActivityData = data.at(-1)
 

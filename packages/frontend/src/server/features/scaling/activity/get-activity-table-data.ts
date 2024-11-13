@@ -12,6 +12,7 @@ import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-r
 import { getLastDayTps } from './utils/get-last-day-tps'
 import { getTpsWeeklyChange } from './utils/get-tps-weekly-change'
 import { sumActivityCount } from './utils/sum-activity-count'
+import { getSyncStatus } from './utils/get-sync-status'
 
 export async function getActivityTableData(projects: (Layer2 | Layer3)[]) {
   if (env.MOCK) {
@@ -74,11 +75,6 @@ const getCachedActivityTableData = cache(
     revalidate: 10 * UnixTime.MINUTE,
   },
 )
-
-function getSyncStatus(syncedUntil: UnixTime) {
-  const isSynced = UnixTime.now().add(-2, 'days').lte(syncedUntil)
-  return { isSynced, syncedUntil: syncedUntil.toNumber() }
-}
 
 function getMockActivityTableData(): ActivityTableData {
   const projects = [
