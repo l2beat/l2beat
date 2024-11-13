@@ -1,5 +1,6 @@
 import { type Layer2, type Layer3 } from '@l2beat/config'
 import { assert, ProjectId, notUndefined } from '@l2beat/shared-pure'
+import { env } from '~/env'
 import { groupByMainCategories } from '~/utils/group-by-main-categories'
 import {
   type ProjectsChangeReport,
@@ -16,7 +17,6 @@ import {
   getActivityTableData,
 } from './get-activity-table-data'
 import { getActivityProjects } from './utils/get-activity-projects'
-import { env } from '~/env'
 
 type ActivityProject = Layer2 | Layer3
 
