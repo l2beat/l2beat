@@ -19,6 +19,8 @@ export class DayActivityIndexer extends ManagedChildIndexer {
   }
 
   override async update(from: number, to: number): Promise<number> {
+    this.logMetrics(this.safeHeight, to)
+
     // starkex APIs are not stable and can change from the past. With this we make sure to scrape them again
     const fromWithUncertainty = from - this.$.uncertaintyBuffer
     const adjustedFrom =
@@ -36,10 +38,7 @@ export class DayActivityIndexer extends ManagedChildIndexer {
 
     await this.$.db.activity.upsertMany(counts)
 
-    this.logger.info('Metrics', {
-      remainingDays: to - adjustedTo,
-      remainingDaysPercentage: parseFloat(((to - adjustedTo) / to).toFixed(4)),
-    })
+    this.logMetrics(adjustedTo, to)
 
     return adjustedTo
   }
@@ -47,5 +46,14 @@ export class DayActivityIndexer extends ManagedChildIndexer {
   override invalidate(targetHeight: number): Promise<number> {
     // no need to delete data as it will be overwritten by new values
     return Promise.resolve(targetHeight)
+  }
+
+  logMetrics(current: number, target: number): void {
+    this.logger.info('Metrics', {
+      remainingDays: target - current,
+      remainingDaysPercentage: parseFloat(
+        ((target - current) / target).toFixed(4),
+      ),
+    })
   }
 }
