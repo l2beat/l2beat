@@ -638,6 +638,9 @@ importers:
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
+      eslint-config-turbo:
+        specifier: ^2.2.3
+        version: 2.2.3(eslint@9.13.0(jiti@1.21.6))
       fuzzysort:
         specifier: ^3.1.0
         version: 3.1.0
@@ -6082,6 +6085,11 @@ packages:
       typescript:
         optional: true
 
+  eslint-config-turbo@2.2.3:
+    resolution: {integrity: sha512-/zwNU+G2w0HszXzWILdl6/Catt86ejUG7vsFSdpnFzFAAUbbT2TxgoCFvC1fKtm6+SkQsXwkRRe9tFz0aMftpg==}
+    peerDependencies:
+      eslint: '>6.6.0'
+
   eslint-import-resolver-node@0.3.9:
     resolution: {integrity: sha512-WFj2isz22JahUv+B788TlO3N6zL3nNJGU8CcZbPZvVEkBPaJdCV4vy5wyghty5ROFbCRnm132v8BScu5/1BQ8g==}
 
@@ -6164,6 +6172,11 @@ packages:
     engines: {node: '>=18.12.0'}
     peerDependencies:
       tailwindcss: ^3.4.0
+
+  eslint-plugin-turbo@2.2.3:
+    resolution: {integrity: sha512-LHt35VwxthdGVO6hQRfvmFb6ee8/exAzAYWCy4o87Bnp7urltP8qg7xMd4dPSLAhtfnI2xSo1WgeVaR3MeItxw==}
+    peerDependencies:
+      eslint: '>6.6.0'
 
   eslint-scope@5.1.1:
     resolution: {integrity: sha512-2NxwbF/hZ0KpepYN0cNbo+FN6XoK7GaHlQhgx/hIZl6Va0bF45RQOOwhLIy8lQDbuCiadSLCBnH2CFYquit5bw==}
@@ -16021,6 +16034,11 @@ snapshots:
       - eslint-plugin-import-x
       - supports-color
 
+  eslint-config-turbo@2.2.3(eslint@9.13.0(jiti@1.21.6)):
+    dependencies:
+      eslint: 9.13.0(jiti@1.21.6)
+      eslint-plugin-turbo: 2.2.3(eslint@9.13.0(jiti@1.21.6))
+
   eslint-import-resolver-node@0.3.9:
     dependencies:
       debug: 3.2.7
@@ -16252,6 +16270,11 @@ snapshots:
       fast-glob: 3.3.2
       postcss: 8.4.47
       tailwindcss: 3.4.14(ts-node@10.9.2(@swc/core@1.7.40(@swc/helpers@0.5.13))(@types/node@20.17.2)(typescript@5.6.3))
+
+  eslint-plugin-turbo@2.2.3(eslint@9.13.0(jiti@1.21.6)):
+    dependencies:
+      dotenv: 16.0.3
+      eslint: 9.13.0(jiti@1.21.6)
 
   eslint-scope@5.1.1:
     dependencies:
