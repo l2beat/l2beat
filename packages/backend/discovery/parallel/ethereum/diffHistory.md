@@ -1,3 +1,82 @@
+Generated with discovered.json: 0x6cc6f9bd60cdcbd5c240fb1fff6c1becc859e653
+
+# Diff at Wed, 13 Nov 2024 15:04:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ea60800af45c71fbd5d292e0f4301ba9afda01fa block: 21093350
+- current block number: 21179544
+
+## Description
+
+Move to discovery driven data.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21093350 (main branch discovery), not current.
+
+```diff
+    contract Inbox (0x12485B9d469c1D51d05b5C39e009D50eF0170cF7) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      template:
++        "orbitstack/Inbox"
+      description:
++        "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds."
+    }
+```
+
+```diff
+    contract L1WethGateway (0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d) {
+    +++ description: None
+      name:
+-        "L1WETHGateway"
++        "L1WethGateway"
+    }
+```
+
+```diff
+    contract RollupEventInbox (0x36E5DE57f862cf5bA28624845faB8c2fF6Aa41d2) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      template:
++        "orbitstack/RollupEventInbox"
+      description:
++        "Helper contract sending configuration data over the bridge during the systems initialization."
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0x5D657b905275F36AD62C3d5C36966975613aFB96) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      template:
++        "orbitstack/GatewayRouter"
+      displayName:
++        "GatewayRouter"
+      description:
++        "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging."
+    }
+```
+
+```diff
+    contract L1CustomGateway (0xa1c86E2362dba0525075622af6d5f739B1304D45) {
+    +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
+      template:
++        "orbitstack/CustomGateway"
+      displayName:
++        "CustomGateway"
+      description:
++        "Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability."
+    }
+```
+
+```diff
+    contract SequencerInbox (0xb4795A0edae98d7820C37F06f6b858e7acb51DF8) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.IS_HARDCODED_SEQUENCER_BATCH_POSTER:
+-        false
+    }
+```
+
 Generated with discovered.json: 0x3601e7f6cd1f8ce8a1d1eca2b887c669e87ea6c1
 
 # Diff at Mon, 04 Nov 2024 07:59:02 GMT:
