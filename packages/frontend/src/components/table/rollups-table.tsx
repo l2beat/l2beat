@@ -2,6 +2,7 @@ import { type StageConfig } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import { type Row, type Table } from '@tanstack/react-table'
 import React from 'react'
+import { env } from '~/env'
 import { cn } from '~/utils/cn'
 import {
   BasicTable,
@@ -9,7 +10,6 @@ import {
   type BasicTableProps,
   BasicTableRow,
 } from './basic-table'
-import { env } from '~/env'
 
 interface BasicEntry extends BasicTableEntry {
   stage: StageConfig
