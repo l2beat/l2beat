@@ -14,7 +14,7 @@ import {
 } from '../utils/order-by-stage-and-past-day-tps'
 import {
   type ActivityProjectTableData,
-  getActivityTableData,
+  getActivityTable,
 } from './get-activity-table-data'
 import { getActivityProjects } from './utils/get-activity-projects'
 
@@ -26,7 +26,7 @@ export async function getScalingActivityEntries() {
     await Promise.all([
       getProjectsVerificationStatuses(),
       getProjectsChangeReport(),
-      getActivityTableData(projects),
+      getActivityTable(projects),
     ])
 
   const ethereumData = activityData[ProjectId.ETHEREUM]

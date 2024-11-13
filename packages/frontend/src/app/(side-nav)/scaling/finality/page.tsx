@@ -5,6 +5,7 @@ import { ScalingFilterContextProvider } from '../_components/scaling-filter-cont
 import { ScalingFinalityTables } from './_components/scaling-finality-tables'
 import { FinalityWarning } from './_components/warning'
 
+export const revalidate = 600
 export const metadata = getDefaultMetadata({
   openGraph: {
     url: '/scaling/finality',

@@ -5,32 +5,28 @@ import {
   EthereumAddress,
   UnixTime,
 } from '@l2beat/shared-pure'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
 import { env } from '~/env'
 import { getConfigMapping } from '../utils/get-config-mapping'
 import { getTvlBreakdown } from './get-tvl-breakdown'
+import { unstable_cache as cache } from 'next/cache'
 
 export type ProjectTvlBreakdown = Awaited<
   ReturnType<ReturnType<typeof getTvlBreakdown>>
 >
 
 export async function getTvlBreakdownForProject(
-  ...parameters: Parameters<typeof getCachedTvlBreakdownForProject>
+  ...parameters: Parameters<typeof getCachedTvlBreakdownForProjectData>
 ) {
   if (env.MOCK) {
-    return getMockTvlBreakdownForProject()
+    return getMockTvlBreakdownForProjectData()
   }
-  noStore()
-  return getCachedTvlBreakdownForProject(...parameters)
+  return getCachedTvlBreakdownForProjectData(...parameters)
 }
 
 type TvlBreakdownForProject = Awaited<
-  ReturnType<typeof getCachedTvlBreakdownForProject>
+  ReturnType<typeof getCachedTvlBreakdownForProjectData>
 >
-export const getCachedTvlBreakdownForProject = cache(
+export const getCachedTvlBreakdownForProjectData = cache(
   async (project: Layer2 | Layer3) => {
     const backendProject = toBackendProject(project)
     const configMapping = getConfigMapping(backendProject)
@@ -43,7 +39,7 @@ export const getCachedTvlBreakdownForProject = cache(
   },
 )
 
-function getMockTvlBreakdownForProject(): TvlBreakdownForProject {
+function getMockTvlBreakdownForProjectData(): TvlBreakdownForProject {
   return {
     dataTimestamp: UnixTime.now().toNumber(),
     breakdown: {
