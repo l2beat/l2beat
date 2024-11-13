@@ -7,12 +7,16 @@ import {
 } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
-import { orderByStageAndPastDayTps } from '../utils/order-by-stage-and-past-day-tps'
+import {
+  orderByStageAndPastDayTps,
+  sortByTps,
+} from '../utils/order-by-stage-and-past-day-tps'
 import {
   type ActivityProjectTableData,
   getActivityTableData,
 } from './get-activity-table-data'
 import { getActivityProjects } from './utils/get-activity-projects'
+import { env } from '~/env'
 
 type ActivityProject = Layer2 | Layer3
 
@@ -50,15 +54,28 @@ export async function getScalingActivityEntries() {
     orderByStageAndPastDayTps(entries),
   )
 
+  if (!env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING) {
+    return {
+      rollups: [ethereumEntry, ...categorisedEntries.rollups].sort(sortByTps),
+      validiumsAndOptimiums: [
+        ethereumEntry,
+        ...categorisedEntries.validiumsAndOptimiums,
+      ].sort(sortByTps),
+      others: categorisedEntries.others
+        ? [ethereumEntry, ...categorisedEntries.others].sort(sortByTps)
+        : undefined,
+    }
+  }
+
   return {
     rollups: [ethereumEntry, ...categorisedEntries.rollups],
     validiumsAndOptimiums: [
       ethereumEntry,
       ...categorisedEntries.validiumsAndOptimiums,
     ],
-    ...(categorisedEntries.others
-      ? { others: [ethereumEntry, ...categorisedEntries.others] }
-      : {}),
+    others: categorisedEntries.others
+      ? [ethereumEntry, ...categorisedEntries.others]
+      : undefined,
   }
 }
 
