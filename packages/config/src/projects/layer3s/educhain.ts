@@ -1,9 +1,8 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { upcomingL3 } from '../layer2s/templates/upcoming'
-import { Layer3 } from './types'
-import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { orbitStackL3 } from '../layer2s/templates/orbitStack'
+import { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('educhain', 'arbitrum')
 
@@ -16,7 +15,8 @@ export const educhain: Layer3 = orbitStackL3({
   display: {
     name: 'EDU',
     slug: 'edu-chain',
-    description: 'EDU Chain is an upcoming Layer 3 on Arbitrum, built on the Orbit stack. It is designed to onboard real-world educational economies to blockchain and establish an innovative “Learn Own Earn” model for education.',
+    description:
+      'EDU Chain is an upcoming Layer 3 on Arbitrum, built on the Orbit stack. It is designed to onboard real-world educational economies to blockchain and establish an innovative “Learn Own Earn” model for education.',
     links: {
       websites: ['https://opencampus.xyz/'],
       apps: [],
@@ -25,8 +25,9 @@ export const educhain: Layer3 = orbitStackL3({
       repositories: ['https://github.com/opencampus-xyz'],
       socialMedia: ['https://x.com/opencampus_xyz'],
     },
+    activityDataSource: 'Blockchain RPC',
   },
-  
+
   associatedTokens: ['EDU'],
   rpcUrl: 'https://rpc.open-campus-codex.gelato.digital',
   bridge: discovery.getContract('ERC20Bridge'),
