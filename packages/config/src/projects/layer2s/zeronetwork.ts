@@ -64,9 +64,8 @@ export const zeronetwork: Layer2 = zkStackL2({
           '0x954ba8223a6BFEC1Cc3867139243A02BA0Bc66e4',
         ),
         l2EtherAddress: EthereumAddress(
-          '',
+          '0x000000000000000000000000000000000000800A',
         ),
-        tokensToAssignFromL1: ['ETH'],
       },
       ...zkStackUpgrades,
     }),
