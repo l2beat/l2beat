@@ -6,6 +6,7 @@ import { ProjectSection } from './project-section'
 import { ReferenceList } from './reference-list'
 import { RiskList } from './risk-list'
 import { type ProjectSectionProps } from './types'
+import { cn } from '~/utils/cn'
 
 export interface StateValidationSectionProps extends ProjectSectionProps {
   diagram: DiagramParams | undefined
@@ -23,10 +24,21 @@ export function StateValidationSection({
         <figure className="mb-8 mt-4 text-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            className="inline max-w-full align-[unset] dark:invert"
-            src={diagram.src}
+            className={cn(
+              'inline max-w-full align-[unset] dark:invert',
+              diagram.src.dark && 'dark:hidden',
+            )}
+            src={diagram.src.light}
             alt={diagram.caption}
           />
+          {diagram.src.dark && (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              className="hidden max-w-full align-[unset] dark:inline"
+              src={diagram.src.dark}
+              alt={diagram.caption}
+            />
+          )}
           <figcaption className="text-xs text-gray-500 dark:text-gray-600">
             {diagram.caption}
           </figcaption>
