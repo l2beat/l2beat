@@ -1,4 +1,5 @@
 import { type ScalingProjectReference } from '@l2beat/config'
+import { DiagramImage } from '~/components/diagram-image'
 import { cn } from '~/utils/cn'
 import {
   type DiagramType,
@@ -9,7 +10,6 @@ import { ProjectSection } from './project-section'
 import { ReferenceList } from './reference-list'
 import { RiskList, type TechnologyRisk } from './risk-list'
 import { type ProjectSectionProps } from './types'
-import { DiagramImage } from '~/components/diagram-image'
 
 export interface MarkdownSectionProps extends ProjectSectionProps {
   diagram?: {

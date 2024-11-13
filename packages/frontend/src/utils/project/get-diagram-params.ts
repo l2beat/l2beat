@@ -33,7 +33,7 @@ export function getDiagramParams(
 ): DiagramParams | undefined {
   const imagePaths = {
     light: `/images/${type}/${fileName}.png`,
-    dark: `/images/${type}/${fileName}-dark.png`,
+    dark: `/images/${type}/${fileName}.dark.png`,
   }
   const paths: {
     light?: string

@@ -1,5 +1,7 @@
 'use client'
 import partition from 'lodash/partition'
+import { DiagramImage } from '~/components/diagram-image'
+import { cn } from '~/utils/cn'
 import { type DiagramParams } from '~/utils/project/get-diagram-params'
 import { ContractEntry, type TechnologyContract } from '../contract-entry'
 import { ProjectSection } from '../project-section'
@@ -9,8 +11,6 @@ import { RiskList, type TechnologyRisk } from '../risk-list'
 import { type ProjectSectionId } from '../types'
 import { ContractsUpdated } from './contracts-updated'
 import { TechnologyIncompleteNote } from './technology-incomplete-note'
-import { cn } from '~/utils/cn'
-import { DiagramImage } from '~/components/diagram-image'
 
 export interface ContractsSectionProps {
   id: ProjectSectionId
