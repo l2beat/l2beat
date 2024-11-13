@@ -8,6 +8,7 @@ const nextConfig = {
       'assets.coingecko.com',
       'coin-images.coingecko.com',
       'token-repository.dappradar.com',
+      'l2beat.com',
     ],
   },
   async headers() {

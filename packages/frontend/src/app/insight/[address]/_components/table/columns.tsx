@@ -4,6 +4,7 @@ import { uniq } from 'lodash'
 import { TwoRowCell } from '~/components/table/cells/two-row-cell'
 import { ChevronIcon } from '~/icons/chevron'
 import { cn } from '~/utils/cn'
+import { getFirstTwoNonZeroPrecision } from '~/utils/get-first-two-non-zero-precision'
 import { formatNumberWithCommas } from '~/utils/number-format/format-number'
 import { TokenWithChainLogo } from '../../../_components/token-with-chain-logo'
 import { type TokenEntry } from './get-token-entries'
@@ -50,7 +51,13 @@ export const tokenColumns = [
             ${formatNumberWithCommas(row.original.usdValue)}
           </TwoRowCell.First>
           <TwoRowCell.Second>
-            {formatNumberWithCommas(row.original.amount)} {row.original.symbol}
+            {row.original.amount < 1
+              ? formatNumberWithCommas(
+                  row.original.amount,
+                  getFirstTwoNonZeroPrecision(row.original.amount),
+                )
+              : formatNumberWithCommas(row.original.amount)}{' '}
+            {row.original.symbol}
           </TwoRowCell.Second>
         </TwoRowCell>
       )

@@ -2,6 +2,8 @@ import { type StringWithAutocomplete, notUndefined } from '@l2beat/shared-pure'
 import { getRequiredTokenMeta } from '~/app/insight/_utils/get-required-token-meta'
 import { type Report, type Token } from '../report-context'
 
+const LOW_AMOUNT_THRESHOLD = 1 / 10 ** 6
+
 export interface TokenEntry {
   symbol: string
   name: string
@@ -28,7 +30,9 @@ export function getTokenEntries(report: Report): TokenEntry[] {
       return getTokenEntry(token, report, underlyingTokens)
     })
     .filter(notUndefined)
-
+    .filter(
+      (token) => token.usdValue !== 0 && token.amount >= LOW_AMOUNT_THRESHOLD,
+    )
   return tokenEntries
 }
 
@@ -37,9 +41,6 @@ function getTokenEntry(
   report: Report,
   underlyingTokens?: UnderlyingTokenEntry[],
 ): TokenEntry | undefined {
-  if (token.usdValue === 0) {
-    return undefined
-  }
   const meta = getRequiredTokenMeta(token.meta)
   const chain = report.chains[token.token.networkId]
   if (!meta || !chain) {
@@ -74,12 +75,14 @@ function getUnderlyingTokens(report: Report, tokenId: string) {
     const relation = relations.find(
       (relation) => relation.targetTokenId === currentTokenId,
     )
+
     if (!relation || tokenSet.has(relation.sourceTokenId)) {
       break
     }
     const token = report.tokens.find(
       (token) => token.token.id === relation.sourceTokenId,
     )
+
     if (!token) {
       break
     }
