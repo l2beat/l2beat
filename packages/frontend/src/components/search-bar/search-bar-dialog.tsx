@@ -17,9 +17,17 @@ import {
 import { useOnClickOutside } from '~/hooks/use-on-click-outside'
 import { useRouterWithProgressBar } from '../progress-bar'
 import { useSearchBarContext } from './search-bar-context'
-import { type SearchBarPage, searchBarPages } from './search-bar-pages'
-import { type SearchBarProject } from './search-bar-projects'
+import { searchBarPages } from './search-bar-pages'
 import { groupBy } from 'lodash'
+import {
+  type AnySearchBarEntry,
+  type SearchBarProject,
+} from './search-bar-entry'
+import {
+  searchBarCategories,
+  type SearchBarCategory,
+} from './search-bar-categories'
+import { type Entries } from 'type-fest'
 interface Props {
   allProjects: SearchBarProject[]
   recentlyAdded: SearchBarProject[]
@@ -50,9 +58,9 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
         : fuzzysort
             .go(value, allProjects, {
               limit: 15,
-              keys: ['name', (e) => e.tags.join()],
+              keys: ['name', (e) => e.tags?.join() ?? ''],
               scoreFn: (match) =>
-                match.score * (match.obj.type === 'zk-catalog' ? 0.9 : 1),
+                match.score * (match.obj.category === 'zkCatalog' ? 0.9 : 1),
             })
             .map((match) => match.obj),
     [value, recentlyAdded, allProjects],
@@ -72,10 +80,8 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
 
   const grouped = useMemo(() => {
     return Object.entries(
-      groupBy([...filteredProjects, ...filteredPages], (p) =>
-        typeToGroup(p.type),
-      ),
-    )
+      groupBy([...filteredProjects, ...filteredPages], (p) => p.category),
+    ) as Entries<Record<SearchBarCategory, AnySearchBarEntry[]>>
   }, [filteredProjects, filteredPages])
 
   const onEscapeKeyDown = (e?: KeyboardEvent) => {
@@ -114,7 +120,6 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
           {filteredProjects.length > 0 && value === '' && (
             <CommandGroup heading="Recently added projects">
               {filteredProjects.map((project) => {
-                const label = typeToLabel(project.type)
                 return (
                   <SearchBarItem
                     key={project.id}
@@ -123,7 +128,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                       setValue('')
                       router.push(project.href)
                     }}
-                    label={label}
+                    label={entryToLabel(project)}
                   >
                     <Image
                       src={project.iconUrl}
@@ -141,29 +146,33 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
           {value !== '' &&
             grouped.length > 0 &&
             grouped.map(([group, items]) => (
-              <CommandGroup heading={group} key={group}>
-                {items.map((page) => {
-                  const label = typeToLabel(page.type)
+              <CommandGroup
+                heading={searchBarCategories[group].name}
+                key={group}
+              >
+                {items.map((item) => {
                   return (
                     <SearchBarItem
-                      key={page.href}
+                      key={item.href}
                       onSelect={() => {
                         setOpen(false)
                         setValue('')
-                        router.push(page.href)
+                        router.push(item.href)
                       }}
-                      label={label}
+                      label={entryToLabel(item)}
                     >
-                      {'iconUrl' in page && (
+                      {/* For selection to work, we need to have some distinction in the DOM */}
+                      <span className="hidden">{item.category} </span>
+                      {item.type === 'project' && (
                         <Image
-                          src={page.iconUrl}
-                          alt={`${page.name} logo`}
+                          src={item.iconUrl}
+                          alt={`${item.name} logo`}
                           className="rounded-sm"
                           width={20}
                           height={20}
                         />
                       )}
-                      {page.name}
+                      {item.name}
                     </SearchBarItem>
                   )
                 })}
@@ -191,28 +200,9 @@ function SearchBarItem({
   )
 }
 
-function typeToGroup(type: SearchBarProject['type'] | SearchBarPage['type']) {
-  switch (type) {
-    case 'layer2':
-    case 'layer3':
-    case 'scaling':
-      return 'Scaling'
-    case 'bridge':
-    case 'bridges':
-      return 'Bridges'
-    case 'da':
-      return 'Data Availability'
-    case 'zk-catalog':
-      return 'ZK Catalog'
-    case undefined:
-      return undefined
-    default:
-      assertUnreachable(type)
-  }
-}
-
-function typeToLabel(type: SearchBarProject['type'] | SearchBarPage['type']) {
-  switch (type) {
+function entryToLabel(entry: AnySearchBarEntry) {
+  if (entry.type === 'page') return 'Page'
+  switch (entry.kind) {
     case 'layer2':
       return 'Layer 2'
     case 'layer3':
@@ -220,16 +210,10 @@ function typeToLabel(type: SearchBarProject['type'] | SearchBarPage['type']) {
     case 'bridge':
       return 'Bridge'
     case 'da':
-      return 'DA'
-    case 'zk-catalog':
-      return 'ZK Catalog'
-    case 'bridges':
-      return 'Bridges'
-    case 'scaling':
-      return 'Scaling'
-    case undefined:
+      return 'DA Layer'
+    case 'zkCatalog':
       return undefined
     default:
-      assertUnreachable(type)
+      assertUnreachable(entry.kind)
   }
 }
