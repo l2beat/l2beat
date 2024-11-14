@@ -31,20 +31,24 @@ export function PreviewPanel() {
 
   return (
     <div className="flex h-full w-full select-none flex-col text-sm">
-      <OptionsPanel
-        showOnlySelected={showOnlySelected}
-        setShowOnlySelected={setShowOnlySelected}
-      />
-      <PermissionsPreview
-        permissionsPerChain={response.permissionsPerChain}
-        selectedAddress={selectedAddress}
-        showOnlySelected={showOnlySelected}
-      />
-      <ContractsPreview
-        contractsPerChain={response.contractsPerChain}
-        selectedAddress={selectedAddress}
-        showOnlySelected={showOnlySelected}
-      />
+      <div className="sticky top-0 z-10">
+        <OptionsPanel
+          showOnlySelected={showOnlySelected}
+          setShowOnlySelected={setShowOnlySelected}
+        />
+      </div>
+      <div className="overflow-auto">
+        <PermissionsPreview
+          permissionsPerChain={response.permissionsPerChain}
+          selectedAddress={selectedAddress}
+          showOnlySelected={showOnlySelected}
+        />
+        <ContractsPreview
+          contractsPerChain={response.contractsPerChain}
+          selectedAddress={selectedAddress}
+          showOnlySelected={showOnlySelected}
+        />
+      </div>
     </div>
   )
 }
