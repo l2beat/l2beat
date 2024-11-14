@@ -3979,6 +3979,20 @@
       "supply": "zero"
     },
     {
+      "name": "SPX6900",
+      "coingeckoId": "spx6900",
+      "address": "0xE0f63A424a4439cBE457D80E4f4b51aD25b2c56C",
+      "symbol": "SPX",
+      "decimals": 8,
+      "deploymentTimestamp": 1692153767,
+      "coingeckoListingTimestamp": 1692835200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31401/large/sticker_%281%29.jpg?1702371083",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Stake DAO Token",
       "coingeckoId": "stake-dao",
       "address": "0x73968b9a57c6E53d41345FD57a6E6ae27d6CDB2F",
@@ -7222,6 +7236,28 @@
         "bridges": [
           {
             "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SPX6900",
+      "coingeckoId": "spx6900",
+      "address": "0x50dA645f148798F68EF2d7dB7C1CB22A6819bb2C",
+      "symbol": "SPX",
+      "decimals": 8,
+      "deploymentTimestamp": 1703965689,
+      "coingeckoListingTimestamp": 1692835200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31401/large/sticker_%281%29.jpg?1702371083",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole Token Bridge",
             "slug": "portal"
           }
         ]
