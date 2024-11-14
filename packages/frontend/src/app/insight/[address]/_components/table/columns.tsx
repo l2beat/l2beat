@@ -96,7 +96,7 @@ export const tokenColumns = [
       return (
         <TwoRowCell>
           <TwoRowCell.First>
-            {row.original.underlyingTokens.length} underlying
+            {row.original.underlyingTokens.length} tokens
           </TwoRowCell.First>
           <TwoRowCell.Second>
             on {chainCount} {pluralize(chainCount, 'chain')}
