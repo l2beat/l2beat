@@ -15,8 +15,6 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
   }
 
   override async update(from: number, to: number): Promise<number> {
-    this.logMetrics(this.safeHeight, to)
-
     const fromWithBatchSize = from + this.$.batchSize
     const adjustedTo = fromWithBatchSize < to ? fromWithBatchSize : to
 
@@ -55,8 +53,6 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
     this.logger.info('Saving records', { count: dataToSave.length })
 
     await this.$.db.activity.upsertMany(dataToSave)
-
-    this.logMetrics(adjustedTo, to)
 
     return adjustedTo
   }
@@ -118,14 +114,5 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
     })
 
     return Promise.resolve(adjustedTargetHeight)
-  }
-
-  logMetrics(current: number, target: number): void {
-    this.logger.info('Metrics', {
-      remainingBlocks: target - current,
-      remainingDaysPercentage: parseFloat(
-        ((target - current) / target).toFixed(4),
-      ),
-    })
   }
 }
