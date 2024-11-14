@@ -47,7 +47,7 @@ export const tokenColumns = [
     cell: ({ row }) => {
       return (
         <TwoRowCell className="text-right">
-          <TwoRowCell.First className="font-oswald !text-lg font-semibold text-[#D1FF1A]">
+          <TwoRowCell.First className="font-oswald !text-lg font-semibold text-highlight">
             ${formatNumberWithCommas(row.original.usdValue)}
           </TwoRowCell.First>
           <TwoRowCell.Second>
@@ -119,7 +119,7 @@ export const tokenColumns = [
         <button onClick={row.getToggleExpandedHandler()}>
           <ChevronIcon
             className={cn(
-              'fill-[#CA80EC] transition-transform duration-200',
+              'fill-highlight-secondary transition-transform duration-200',
               row.getIsExpanded() && 'rotate-180',
             )}
           />

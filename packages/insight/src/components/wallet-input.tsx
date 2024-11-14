@@ -75,7 +75,7 @@ export function WalletInput({ size, className }: Props) {
         className="absolute inset-y-0 right-[18px] peer-focus:[&>svg]:fill-white"
         onClick={() => handleWallet()}
       >
-        <LensIcon className="fill-[#74749F] transition-colors duration-200" />
+        <LensIcon className="fill-surface-secondary transition-colors duration-200" />
       </button>
     </div>
   )

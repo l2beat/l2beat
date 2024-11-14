@@ -29,7 +29,7 @@ function TwoRowCellSecondRow({ children, className }: Props) {
   return (
     <div
       className={cn(
-        'text-secondary insight:text-pure-white/60 text-[13px] leading-[14px] md:text-xs md:leading-[15px]',
+        'text-[13px] leading-[14px] text-secondary md:text-xs md:leading-[15px]',
         className,
       )}
     >

@@ -30,7 +30,7 @@ export default async function RootLayout({
         className={cn(
           inter.variable,
           oswald.variable,
-          'bg-[#0B0B1C] font-inter text-base text-white md:text-lg',
+          'bg-background font-inter text-base text-primary md:text-lg',
         )}
       >
         <TRPCReactProvider>

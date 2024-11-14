@@ -28,7 +28,7 @@ const TableHeader = ({
 }: React.HTMLAttributes<HTMLTableSectionElement>) => (
   <thead
     className={cn(
-      'group/header whitespace-pre py-2 align-bottom text-xs font-medium uppercase text-[#74749F]',
+      'group/header whitespace-pre py-2 align-bottom text-xs font-medium uppercase text-surface-secondary',
       className,
     )}
     {...props}
@@ -48,7 +48,7 @@ const TableHeaderRow = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLTableRowElement>) => (
-  <tr className={cn('border-b border-[#32326A]', className)} {...props} />
+  <tr className={cn('border-b border-divider', className)} {...props} />
 )
 TableHeaderRow.displayName = 'TableHeaderRow'
 
@@ -57,7 +57,7 @@ const TableRow = ({
   ...props
 }: React.HTMLAttributes<HTMLTableRowElement>) => (
   <TableHeaderRow
-    className={cn('group/row border-b border-[#32326A]', className)}
+    className={cn('group/row border-b border-divider', className)}
     {...props}
   />
 )

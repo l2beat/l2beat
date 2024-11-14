@@ -6,7 +6,7 @@ export function GeneratingReport() {
       <span className="font-oswald text-5xl font-bold">
         Generating report...
       </span>
-      <Spinner className="size-20 stroke-[#D1FF1A]" />
+      <Spinner className="size-20 stroke-highlight" />
     </div>
   )
 }

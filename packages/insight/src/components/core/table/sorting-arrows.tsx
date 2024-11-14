@@ -27,7 +27,7 @@ export function SortingArrows({
           width={10}
           height={6}
           className={cn(
-            'fill-[#74749F] transition-all',
+            'fill-surface-secondary transition-all',
             direction === 'asc' && 'fill-[#666694]',
             nextDirection === 'asc' &&
               'group-hover/sorting-arrows:fill-[#666694] group-hover/sorting-arrows:opacity-70',
@@ -37,7 +37,7 @@ export function SortingArrows({
           width={10}
           height={6}
           className={cn(
-            'rotate-180 fill-[#74749F] transition-all',
+            'rotate-180 fill-surface-secondary transition-all',
             direction === 'desc' && 'fill-[#666694]',
             nextDirection === 'desc' &&
               'group-hover/sorting-arrows:fill-[#666694] group-hover/sorting-arrows:opacity-70',

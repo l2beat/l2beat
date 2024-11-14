@@ -1,5 +1,7 @@
 import type { Config } from 'tailwindcss'
 import plugin from 'tailwindcss/plugin'
+import tailwindcssAnimate from 'tailwindcss-animate'
+import containerQueries from '@tailwindcss/container-queries'
 
 const config: Config = {
   content: [
@@ -285,17 +287,14 @@ const config: Config = {
     },
   },
   plugins: [
-    plugin(function ({ addVariant }) {
-      addVariant('sidebar', '.sidebar &')
+    plugin((creator) => {
+      creator.addVariant('sidebar', '.sidebar &')
     }),
-    plugin(function ({ addVariant }) {
-      addVariant('main-page-card', '.main-page-card &')
+    plugin((creator) => {
+      creator.addVariant('main-page-card', '.main-page-card &')
     }),
-    plugin(function ({ addVariant }) {
-      addVariant('insight', '.insight &')
-    }),
-    require('tailwindcss-animate'),
-    require('@tailwindcss/container-queries'),
+    tailwindcssAnimate,
+    containerQueries,
   ],
 }
 

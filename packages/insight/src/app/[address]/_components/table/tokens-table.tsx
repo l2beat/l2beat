@@ -55,7 +55,7 @@ function TokenDetails({ row }: { row: Row<TokenEntry> }) {
       </div>
       {row.original.underlyingTokens.map((token) => (
         <div key={token.address}>
-          <div className="ml-[15.5px] h-12 border-l border-[#CA80EC]" />
+          <div className="ml-[15.5px] h-12 border-l border-highlight-secondary" />
           <TokenDetailsItem token={token} />
         </div>
       ))}
@@ -80,7 +80,7 @@ function TokenDetailsItem({
           <strong>{token.name}</strong> on {token.chain.name}
         </p>
         {token.address === 'native' ? (
-          <p className="text-xs text-gray-50">Native/gas token</p>
+          <p className="text-xs text-secondary">Native/gas token</p>
         ) : token.chain.name === 'Ethereum' ? (
           <CustomLink
             className="text-xs"
