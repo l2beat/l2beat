@@ -1,8 +1,8 @@
 {
   "name": "vector",
   "chain": "ethereum",
-  "blockNumber": 21184659,
-  "configHash": "0x5cf5535bdfdbc3ce0f730c750163f2442bc8277820e9cf4745d3cb33b5f941fb",
+  "blockNumber": 21184939,
+  "configHash": "0xa03144b7d27afc0d41506d464625d3e41d7e7238e83e26927284bfac6cba7fb0",
   "contracts": [
     {
       "name": "Vector",
@@ -64,7 +64,7 @@
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "isRelayerApproved": true,
         "latestAuthoritySetId": 139,
-        "latestBlock": 574080,
+        "latestBlock": 574430,
         "relayers": ["0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"],
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
@@ -183,7 +183,7 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "SP1Verifier_OLD",
+      "name": "SP1Verifier",
       "address": "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB",
       "sourceHashes": [
         "0x6e3bfeae0d549b79decfd956f551a8aeac66523cdd66da389ef55eb56ef72aac"
@@ -193,8 +193,7 @@
         "$immutable": true,
         "VERIFIER_HASH": "0xc430ff7f31a22c5f7607f3ed2a2f5621af340bc45a44179319cba5761664e1f0",
         "VERSION": "v1.1.0"
-      },
-      "derivedName": "SP1Verifier"
+      }
     },
     {
       "name": "SuccinctGatewaySP1Multisig",

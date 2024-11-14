@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xb20ea330028fc5a6b30ef78f97f8a01a0dd01fd8
+Generated with discovered.json: 0x6114f6566c4a9860fe0e5395e9f5826074d19140
 
-# Diff at Thu, 14 Nov 2024 08:11:54 GMT:
+# Diff at Thu, 14 Nov 2024 09:08:08 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@ea60800af45c71fbd5d292e0f4301ba9afda01fa block: 21122554
-- current block number: 21184659
+- current block number: 21184939
 
 ## Description
 
@@ -45,6 +45,15 @@ discovery. Values are for block 21122554 (main branch discovery), not current.
 +        {"description":"The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-11-01."}
       fieldMeta.oldVerifier4:
 +        {"description":"The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-11-08."}
+    }
+```
+
+```diff
+    contract SP1Verifier (0xc350F063C13a3Ca21331610fe159E697a5c9c2FB) {
+    +++ description: None
+      name:
+-        "SP1Verifier_OLD"
++        "SP1Verifier"
     }
 ```
 
