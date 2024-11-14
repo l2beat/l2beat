@@ -39,6 +39,7 @@ const config: Config = {
       divider: 'var(--divider)',
       white: '#FFFFFF',
       'off-white': '#FAFAFA',
+      black: '#1B1B1B',
       blue: {
         500: '#53A2FF',
         550: '#1F87FF',
