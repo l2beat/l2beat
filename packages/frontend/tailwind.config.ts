@@ -1,7 +1,7 @@
-import type { Config } from 'tailwindcss'
-import plugin from 'tailwindcss/plugin'
-import tailwindcssAnimate from 'tailwindcss-animate'
 import containerQueries from '@tailwindcss/container-queries'
+import type { Config } from 'tailwindcss'
+import tailwindcssAnimate from 'tailwindcss-animate'
+import plugin from 'tailwindcss/plugin'
 
 const config: Config = {
   content: [

@@ -4,13 +4,13 @@
 
 @layer base {
   :root {
-    --background: #0B0B1C;
-    --primary: #FAFAFA;
-    --secondary: #FAFAFA99;
-    --surface-primary: #1F1F38;
-    --surface-secondary: #74749F;
-    --highlight: #D1FF1A;
-    --highlight-secondary: #CA80EC;
-    --divider: #32326A;
+    --background: #0b0b1c;
+    --primary: #fafafa;
+    --secondary: #fafafa99;
+    --surface-primary: #1f1f38;
+    --surface-secondary: #74749f;
+    --highlight: #d1ff1a;
+    --highlight-secondary: #ca80ec;
+    --divider: #32326a;
   }
 }
