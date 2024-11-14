@@ -40,6 +40,8 @@ export abstract class Indexer {
     Retries.exponentialBackOff({
       initialTimeoutMs: 1000,
       maxAttempts: Infinity,
+      // WARNING: Change only if you know what you are doing
+      // Alerting system in Kibana requires Indexer to log sth once an hour
       maxTimeoutMs: 1 * 60 * 60_000,
     })
 
