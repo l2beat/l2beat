@@ -14,12 +14,10 @@ import {
 import { db } from '~/db'
 import { getServerPagination } from '~/lib/server-pagination/server'
 
-export default async function Page(
-  props: {
-    searchParams: Promise<Record<string, string | string[] | undefined>>
-  }
-) {
-  const searchParams = await props.searchParams;
+export default async function Page(props: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>
+}) {
+  const searchParams = await props.searchParams
   const networks = await db.network.getAll()
   // TODO: proper pagination support in repository
   const tokenMeta = (await db.tokenMeta.getBySource('Aggregate')).reduce(
