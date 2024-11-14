@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x5e0d12e936795301883225446f95128f6b80979d
+
+# Diff at Thu, 14 Nov 2024 08:19:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ea60800af45c71fbd5d292e0f4301ba9afda01fa block: 21141407
+- current block number: 21184697
+
+## Description
+
+Staker count drops to 1 as the 'defensive' validators are not actively staking on new nodes anymore.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.stakerCount:
+-        3
++        1
+    }
+```
+
 Generated with discovered.json: 0xbadecc0125ffd00ab33a489de1190ff6975a4ada
 
 # Diff at Fri, 08 Nov 2024 07:24:58 GMT:
