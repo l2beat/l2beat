@@ -1,6 +1,7 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "@l2beat/typescript-config/base",
   "compilerOptions": {
+    "jsx": "react",
     "outDir": "build",
     "rootDir": "."
   },

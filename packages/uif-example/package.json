@@ -14,5 +14,8 @@
   "dependencies": {
     "@l2beat/backend-tools": "workspace:*",
     "@l2beat/uif": "workspace:*"
+  },
+  "devDependencies": {
+    "@l2beat/typescript-config": "workspace:*"
   }
 }

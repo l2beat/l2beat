@@ -46,6 +46,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@l2beat/typescript-config": "workspace:*",
     "@eslint/compat": "^1.2.1",
     "@eslint/eslintrc": "^3.1.0",
     "@eslint/js": "^9.13.0",
