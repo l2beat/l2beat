@@ -270,13 +270,6 @@ const config: Config = {
           'Roboto',
           'Arial',
         ],
-        oswald: [
-          'var(--font-oswald)',
-          'Oswald',
-          'var(--font-roboto)',
-          'Roboto',
-          'Arial',
-        ],
         lora: ['Lora', 'serif'],
       },
       spacing: {

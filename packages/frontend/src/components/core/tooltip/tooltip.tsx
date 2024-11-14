@@ -75,8 +75,8 @@ const TooltipContent = ({
     ref={ref}
     sideOffset={sideOffset}
     className={cn(
-      'bg-white insight:bg-[#1F1F38] dark:bg-neutral-700',
-      'text-left text-sm font-normal normal-case leading-tight text-gray-700 insight:!text-white dark:text-white',
+      'bg-white dark:bg-neutral-700',
+      'text-left text-sm font-normal normal-case leading-tight text-gray-700 dark:text-white',
       'z-110 rounded-md px-4 py-3 shadow-md',
       'animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
       !fitContent && 'max-w-[300px] text-wrap',
