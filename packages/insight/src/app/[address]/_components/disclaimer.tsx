@@ -3,9 +3,9 @@ import { L2BEATLogo } from '~/icons/logos/l2beat'
 export function Disclaimer() {
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="font-oswald flex items-center gap-1.5 text-xl font-bold">
+      <h2 className="flex items-center gap-1.5 font-oswald text-xl font-bold">
         How the INSIGHT by{' '}
-        <L2BEATLogo className="dark h-8 w-20" aria-label="L2BEAT" /> work?
+        <L2BEATLogo className="h-8 w-20" aria-label="L2BEAT" /> work?
       </h2>
       <p className="text-sm font-medium leading-[170%] text-white/80">
         This is a paragraph 2 ipsum dolor sit amet, consectetur adipiscing elit.
