@@ -26,6 +26,7 @@ const config: Config = {
       ],
     },
     colors: {
+      current: 'currentColor',
       background: 'var(--background)',
       primary: 'var(--primary)',
       secondary: 'var(--secondary)',
