@@ -1,7 +1,7 @@
 {
   "name": "optopia",
   "chain": "ethereum",
-  "blockNumber": 20427351,
+  "blockNumber": 21184911,
   "configHash": "0xc7c40222e97bb7eb890e67012eb76755690e21388f5478196b49be557465b589",
   "contracts": [
     {
@@ -56,7 +56,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620148",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620224",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -239,7 +239,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 21,
+        "nonce": 24,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -312,7 +312,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491822,
-          "prevBlockNum": 20425152
+          "prevBlockNum": 21001641
         },
         "paused": false,
         "superchainConfig": "0x5e8d351FD046Aa0b3DDA24096751996C0c397C61",
@@ -540,7 +540,7 @@
       "template": "opstack/L2OutputOracle",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x025c187b0231be4785898f25f98d749f953f5d06781772aef242812e2ecf52e3"
+        "0x82ce2b4d2c7dcca833593de12c2cf9aef63b23af286529708131f3aa909484ce"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
@@ -575,15 +575,25 @@
       "sinceTimestamp": 1715334983,
       "values": {
         "$admin": "0x161aF05fA6BdA1c6E7Ee12839d470931bA796948",
-        "$implementation": "0x38f2D861b23866b92188155C4876F0879cA706Ec",
+        "$implementation": "0xDe94ECc695F2Df967b49ED11829eC9f7c1831a61",
         "$pastUpgrades": [
           [
             "2024-05-10T09:57:11.000Z",
             "0x180139009c00eb38a40976d4c9203252b2c5ecfdd00af1678827f1dd32ba29ba",
             ["0x38f2D861b23866b92188155C4876F0879cA706Ec"]
+          ],
+          [
+            "2024-11-12T03:33:47.000Z",
+            "0xe56f6658e706a93ca4aa13817ca9316ae594f08268d7dbada461427b4f55756c",
+            ["0xfc2Af8738f04d14833BBcE3AD446F603E91D9306"]
+          ],
+          [
+            "2024-11-12T05:33:23.000Z",
+            "0x205d623832f5a7d959f55aac33cae361475b2abfd69ca37c8eec2bd510276c3f",
+            ["0xDe94ECc695F2Df967b49ED11829eC9f7c1831a61"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 3,
         "challenger": "0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE",
         "CHALLENGER": "0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE",
         "deletedOutputs": [],
@@ -591,17 +601,17 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 3551400,
-        "latestOutputIndex": 1972,
-        "nextBlockNumber": 3553200,
-        "nextOutputIndex": 1973,
+        "latestBlockNumber": 8098200,
+        "latestOutputIndex": 4462,
+        "nextBlockNumber": 8116200,
+        "nextOutputIndex": 4463,
         "proposer": "0x33397410000A219fa5a476c5B51032B367C77e78",
         "PROPOSER": "0x33397410000A219fa5a476c5B51032B367C77e78",
         "startingBlockNumber": 0,
         "startingTimestamp": 1715333975,
-        "SUBMISSION_INTERVAL": 1800,
-        "submissionInterval": 1800,
-        "version": "1.8.0"
+        "SUBMISSION_INTERVAL": 18000,
+        "submissionInterval": 18000,
+        "version": "1.8.1-beta.2"
       },
       "fieldMeta": {
         "FINALIZATION_PERIOD_SECONDS": {
@@ -701,36 +711,6 @@
     ],
     "0x2C73A1610EE822a8C2C21eddd455e725A3334c8C": [
       "constructor(address _singleton)"
-    ],
-    "0x38f2D861b23866b92188155C4876F0879cA706Ec": [
-      "constructor()",
-      "event Initialized(uint8 version)",
-      "event OutputProposed(bytes32 indexed outputRoot, uint256 indexed l2OutputIndex, uint256 indexed l2BlockNumber, uint256 l1Timestamp)",
-      "event OutputsDeleted(uint256 indexed prevNextOutputIndex, uint256 indexed newNextOutputIndex)",
-      "function CHALLENGER() view returns (address)",
-      "function FINALIZATION_PERIOD_SECONDS() view returns (uint256)",
-      "function L2_BLOCK_TIME() view returns (uint256)",
-      "function PROPOSER() view returns (address)",
-      "function SUBMISSION_INTERVAL() view returns (uint256)",
-      "function challenger() view returns (address)",
-      "function computeL2Timestamp(uint256 _l2BlockNumber) view returns (uint256)",
-      "function deleteL2Outputs(uint256 _l2OutputIndex)",
-      "function finalizationPeriodSeconds() view returns (uint256)",
-      "function getL2Output(uint256 _l2OutputIndex) view returns (tuple(bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
-      "function getL2OutputAfter(uint256 _l2BlockNumber) view returns (tuple(bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
-      "function getL2OutputIndexAfter(uint256 _l2BlockNumber) view returns (uint256)",
-      "function initialize(uint256 _submissionInterval, uint256 _l2BlockTime, uint256 _startingBlockNumber, uint256 _startingTimestamp, address _proposer, address _challenger, uint256 _finalizationPeriodSeconds)",
-      "function l2BlockTime() view returns (uint256)",
-      "function latestBlockNumber() view returns (uint256)",
-      "function latestOutputIndex() view returns (uint256)",
-      "function nextBlockNumber() view returns (uint256)",
-      "function nextOutputIndex() view returns (uint256)",
-      "function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber) payable",
-      "function proposer() view returns (address)",
-      "function startingBlockNumber() view returns (uint256)",
-      "function startingTimestamp() view returns (uint256)",
-      "function submissionInterval() view returns (uint256)",
-      "function version() view returns (string)"
     ],
     "0x39A90926306E11497EC5FE1C459910258B620edD": [
       "constructor(address _admin)",
@@ -946,6 +926,37 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "0xDe94ECc695F2Df967b49ED11829eC9f7c1831a61": [
+      "constructor()",
+      "event Initialized(uint8 version)",
+      "event OutputProposed(bytes32 indexed outputRoot, uint256 indexed l2OutputIndex, uint256 indexed l2BlockNumber, uint256 l1Timestamp)",
+      "event OutputsDeleted(uint256 indexed prevNextOutputIndex, uint256 indexed newNextOutputIndex)",
+      "function CHALLENGER() view returns (address)",
+      "function FINALIZATION_PERIOD_SECONDS() view returns (uint256)",
+      "function L2_BLOCK_TIME() view returns (uint256)",
+      "function PROPOSER() view returns (address)",
+      "function SUBMISSION_INTERVAL() view returns (uint256)",
+      "function challenger() view returns (address)",
+      "function computeL2Timestamp(uint256 _l2BlockNumber) view returns (uint256)",
+      "function deleteL2Outputs(uint256 _l2OutputIndex)",
+      "function finalizationPeriodSeconds() view returns (uint256)",
+      "function getL2Output(uint256 _l2OutputIndex) view returns (tuple(bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
+      "function getL2OutputAfter(uint256 _l2BlockNumber) view returns (tuple(bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
+      "function getL2OutputIndexAfter(uint256 _l2BlockNumber) view returns (uint256)",
+      "function initialize(uint256 _submissionInterval, uint256 _l2BlockTime, uint256 _startingBlockNumber, uint256 _startingTimestamp, address _proposer, address _challenger, uint256 _finalizationPeriodSeconds)",
+      "function l2BlockTime() view returns (uint256)",
+      "function latestBlockNumber() view returns (uint256)",
+      "function latestOutputIndex() view returns (uint256)",
+      "function nextBlockNumber() view returns (uint256)",
+      "function nextOutputIndex() view returns (uint256)",
+      "function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber) payable",
+      "function proposer() view returns (address)",
+      "function startingBlockNumber() view returns (uint256)",
+      "function startingTimestamp() view returns (uint256)",
+      "function submissionInterval() view returns (uint256)",
+      "function updateSubmissionInterval(uint256 _submissionInterval)",
+      "function version() view returns (string)"
     ],
     "0xe04D088840aE793afd0970fE97FEC6Ac7BaF4AAC": [
       "constructor()",
