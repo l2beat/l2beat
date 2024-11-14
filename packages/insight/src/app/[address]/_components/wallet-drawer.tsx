@@ -10,7 +10,7 @@ export function WalletDrawer({ children }: { children: React.ReactNode }) {
       <DrawerContent>
         <div className="flex flex-col gap-8 px-4 py-8">
           <WalletInput />
-          <DrawerClose className="text-sm font-medium text-zinc-800 underline">
+          <DrawerClose className="text-zinc-800 text-sm font-medium underline">
             Close overlay
           </DrawerClose>
         </div>

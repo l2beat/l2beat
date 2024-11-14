@@ -13,11 +13,10 @@ import {
 import { db } from '~/db'
 import { getServerPagination } from '~/lib/server-pagination/server'
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: Record<string, string | string[] | undefined>
+export default async function Page(props: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>
 }) {
+  const searchParams = await props.searchParams
   const allEntities = (await db.entity.getAll())
     .sort((a, b) => a.name.localeCompare(b.name))
     .filter((entity) => {
@@ -49,7 +48,7 @@ export default async function Page({
             <h3 className="text-2xl font-bold tracking-tight">
               You have no entities
             </h3>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foreground text-sm">
               You can add a entities by clicking the button below.
             </p>
             <Link href="/entities/new">
