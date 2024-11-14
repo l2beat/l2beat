@@ -1,6 +1,5 @@
 import { type ScalingProjectReference } from '@l2beat/config'
 import { DiagramImage } from '~/components/diagram-image'
-import { cn } from '~/utils/cn'
 import {
   type DiagramType,
   getDiagramParams,

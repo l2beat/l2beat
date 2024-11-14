@@ -23,7 +23,7 @@ export function DetailsHeader(props: DetailsHeaderProps) {
         rows.
       </p>
       <HorizontalSeparator className="!border-[#5656C759]" />
-      <div className="font-oswald grid grid-cols-1 gap-3 md:grid-cols-4 md:gap-2">
+      <div className="grid grid-cols-1 gap-3 font-oswald md:grid-cols-4 md:gap-2">
         <div className="col-span-2 flex flex-col gap-[5px]">
           <span className="text-xs font-bold text-[#74749F]">Value</span>
           <span className="text-2xl font-bold leading-none text-[#D1FF1A]">
