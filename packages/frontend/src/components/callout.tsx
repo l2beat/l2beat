@@ -1,7 +1,7 @@
 import { type VariantProps, cva } from 'class-variance-authority'
 import React, { type ReactNode } from 'react'
 
-const calloutVariants = cva('flex rounded-lg', {
+const calloutVariants = cva('flex rounded-lg text-base', {
   variants: {
     color: {
       red: 'bg-red-600/20 hover:bg-red-500/20',
@@ -36,9 +36,7 @@ export function Callout({
 }: CalloutProps) {
   return (
     <div className={calloutVariants({ color, small, className })}>
-      <div className="flex h-7 flex-col items-center justify-center">
-        {icon}
-      </div>
+      <span>{icon}</span>
       <div className="flex flex-col gap-2">
         {message}
         <div>{body}</div>
