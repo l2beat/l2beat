@@ -265,6 +265,7 @@ export abstract class Indexer {
   private async executeUpdate(effect: UpdateEffect): Promise<void> {
     const from = this.state.height + 1
     this.logger.info('Updating', { from, to: effect.targetHeight })
+    this.logMetrics(this.state.height, effect.targetHeight)
     try {
       const newHeight = await this.update(from, effect.targetHeight)
       if (newHeight < from || newHeight > effect.targetHeight) {
@@ -276,6 +277,7 @@ export abstract class Indexer {
         this.dispatch({ type: 'UpdateFailed', fatal: true })
       } else {
         this.dispatch({ type: 'UpdateSucceeded', from, newHeight })
+        this.logMetrics(newHeight, effect.targetHeight)
         this.updateRetryStrategy.clear()
       }
     } catch (error) {
@@ -297,6 +299,7 @@ export abstract class Indexer {
           attempt,
         })
       }
+      this.logMetrics(this.state.height, effect.targetHeight)
       this.dispatch({ type: 'UpdateFailed', fatal })
     }
   }
@@ -398,7 +401,7 @@ export abstract class Indexer {
 
   // #endregion
   // #region Common methods
-
+  //
   private async executeSetSafeHeight(
     effect: SetSafeHeightEffect,
   ): Promise<void> {
@@ -407,6 +410,10 @@ export abstract class Indexer {
       child.notifyUpdate(this, effect.safeHeight),
     )
     await this.setSafeHeight(effect.safeHeight)
+  }
+
+  private logMetrics(current: number, target: number): void {
+    this.logger.info('Metrics', { delay: target - current })
   }
 
   // #endregion
