@@ -1477,7 +1477,7 @@ export const Default: Story = {
       },
     ],
     diagram: {
-      src: '/images/architecture/arbitrum.png',
+      src: { light: '/images/architecture/arbitrum.png' },
       caption: 'A diagram of the smart contract architecture',
     },
     references: [],
