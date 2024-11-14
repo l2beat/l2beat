@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ConfigMapping } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
+import { assert, ProjectId } from '@l2beat/shared-pure'
 import { Config } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { Providers } from '../../../providers/Providers'
@@ -33,6 +33,10 @@ export function initTvlModule(
     clock,
     logger,
     providers,
+  )
+
+  const a = config.tvl.amounts.filter(
+    (a) => a.project === ProjectId('zeronetwork'),
   )
 
   const syncOptimizer = dependencies.getSyncOptimizer()
@@ -112,12 +116,12 @@ export function initTvlModule(
 
   const start = async () => {
     await hourlyIndexer.start()
-    await priceModule.start()
+    // await priceModule.start()
     await blockTimestampModule?.start()
-    await chainModule?.start()
-    await premintedModule?.start()
-    await circulatingSupplyModule?.start()
-    await aggLayerModule?.start()
+    // await chainModule?.start()
+    // await premintedModule?.start()
+    // await circulatingSupplyModule?.start()
+    // await aggLayerModule?.start()
     await elasticChainModule?.start()
 
     if (config.tvl && config.tvl.tvlCleanerEnabled) {
