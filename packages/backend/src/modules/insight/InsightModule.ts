@@ -15,10 +15,13 @@ export function createInsightModule(
   clock: Clock,
 ): ApplicationModule | undefined {
   const insightConfig = config.insight
+
   if (!insightConfig) {
     logger.info('Insight module disabled')
     return
   }
+
+  logger = logger.tag({ feature: 'insights' })
 
   const pricesRefresher = new InsightPriceRefresher(
     peripherals.database,

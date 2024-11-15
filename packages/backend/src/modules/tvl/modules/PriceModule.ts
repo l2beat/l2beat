@@ -60,7 +60,7 @@ function createPriceIndexers(config: TvlConfig, dependencies: TvlDependencies) {
 
   const descendant = new DescendantIndexer({
     logger,
-    tag: 'price',
+    tags: { tag: 'price' },
     parents: indexers,
     indexerService,
     minHeight: Math.min(

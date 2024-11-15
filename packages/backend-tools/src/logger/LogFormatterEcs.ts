@@ -14,6 +14,11 @@ export class LogFormatterEcs implements LogFormatter {
       service: {
         name: entry.service,
       },
+      labels: {
+        feature: entry.feature,
+        chain: entry.chain,
+        project: entry.project,
+      },
       message: entry.message ? truncate(entry.message) : undefined,
       error: entry.resolvedError
         ? {

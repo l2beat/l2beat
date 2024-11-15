@@ -20,6 +20,8 @@ export function createDaBeatModule(
     return
   }
 
+  logger = logger.tag({ feature: 'dabeat' })
+
   const pricesRefresher = new DaBeatPricesRefresher(
     peripherals.database,
     providers.coingeckoClient,

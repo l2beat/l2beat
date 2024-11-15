@@ -138,7 +138,7 @@ describe(Logger.name, () => {
     it('service with tag', () => {
       const { transport, baseLogger } = setup()
 
-      const logger = baseLogger.tag('Red').for('FooService')
+      const logger = baseLogger.tag({ tag: 'Red' }).for('FooService')
       logger.info('hello')
 
       expect(transport.log).toHaveBeenOnlyCalledWith(
@@ -149,7 +149,10 @@ describe(Logger.name, () => {
     it('service with tag and member', () => {
       const { transport, baseLogger } = setup()
 
-      const logger = baseLogger.tag('Red').for('FooService').for('queue')
+      const logger = baseLogger
+        .tag({ tag: 'Red' })
+        .for('FooService')
+        .for('queue')
       logger.info('hello')
 
       expect(transport.log).toHaveBeenOnlyCalledWith(
@@ -160,7 +163,7 @@ describe(Logger.name, () => {
     it('lone tag', () => {
       const { transport, baseLogger } = setup()
 
-      const logger = baseLogger.tag('Red')
+      const logger = baseLogger.tag({ tag: 'Red' })
       logger.info('hello')
 
       expect(transport.log).toHaveBeenOnlyCalledWith(
@@ -191,6 +194,9 @@ describe(Logger.name, () => {
         level: 'ERROR',
         time: expect.a(Date),
         service: undefined,
+        feature: undefined,
+        chain: undefined,
+        project: undefined,
         message: 'foo',
         parameters: undefined,
         error: undefined,
@@ -200,6 +206,9 @@ describe(Logger.name, () => {
         level: 'CRITICAL',
         time: expect.a(Date),
         service: undefined,
+        feature: undefined,
+        chain: undefined,
+        project: undefined,
         message: 'bar',
         parameters: undefined,
         error: undefined,
@@ -215,6 +224,9 @@ describe(Logger.name, () => {
             level: 'ERROR',
             time: expect.a(Date),
             service: undefined,
+            feature: undefined,
+            chain: undefined,
+            project: undefined,
             message: 'message',
             parameters: undefined,
             error: undefined,
@@ -227,6 +239,9 @@ describe(Logger.name, () => {
             level: 'ERROR',
             time: expect.a(Date),
             service: undefined,
+            feature: undefined,
+            chain: undefined,
+            project: undefined,
             message: undefined,
             parameters: undefined,
             error: new Error('message'),
@@ -243,6 +258,9 @@ describe(Logger.name, () => {
             level: 'ERROR',
             time: expect.a(Date),
             service: undefined,
+            feature: undefined,
+            chain: undefined,
+            project: undefined,
             message: 'foo',
             parameters: undefined,
             error: new Error('bar'),
@@ -259,6 +277,9 @@ describe(Logger.name, () => {
             level: 'ERROR',
             time: expect.a(Date),
             service: undefined,
+            feature: undefined,
+            chain: undefined,
+            project: undefined,
             message: undefined,
             parameters: { x: 1, y: 2 },
             error: undefined,
@@ -271,6 +292,9 @@ describe(Logger.name, () => {
             level: 'ERROR',
             time: expect.a(Date),
             service: undefined,
+            feature: undefined,
+            chain: undefined,
+            project: undefined,
             message: 'message',
             parameters: { x: 1, y: 2 },
             error: undefined,
@@ -283,6 +307,9 @@ describe(Logger.name, () => {
             level: 'ERROR',
             time: expect.a(Date),
             service: undefined,
+            feature: undefined,
+            chain: undefined,
+            project: undefined,
             message: 'message',
             parameters: { x: 1, y: 2 },
             error: undefined,
@@ -295,6 +322,9 @@ describe(Logger.name, () => {
             level: 'ERROR',
             time: expect.a(Date),
             service: undefined,
+            feature: undefined,
+            chain: undefined,
+            project: undefined,
             message: undefined,
             parameters: { x: 1, y: 2, message: true },
             error: undefined,
@@ -307,6 +337,9 @@ describe(Logger.name, () => {
             level: 'ERROR',
             time: expect.a(Date),
             service: undefined,
+            feature: undefined,
+            chain: undefined,
+            project: undefined,
             message: 'bar',
             parameters: { x: 1, y: 2 },
             error: new Error('foo'),

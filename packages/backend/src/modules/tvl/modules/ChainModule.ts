@@ -98,7 +98,7 @@ function createIndexers(
         rpcClient,
         chainConfig.config.multicallConfig,
       ),
-      logger: logger.tag(chain),
+      logger: logger.tag({ tag: chain, chain }),
     })
 
     const blockTimestampIndexer =

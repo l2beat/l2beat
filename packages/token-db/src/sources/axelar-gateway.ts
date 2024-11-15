@@ -21,7 +21,9 @@ function buildAxelarGatewaySource({
   networkConfig,
   queue,
 }: Dependencies) {
-  logger = logger.for('AxelarGatewaySource').tag(`${networkConfig.name}`)
+  logger = logger
+    .for('AxelarGatewaySource')
+    .tag({ tag: `${networkConfig.name}` })
 
   return async function () {
     logger.info(`Syncing tokens from Axelar Gateway...`)

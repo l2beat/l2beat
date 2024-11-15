@@ -17,6 +17,8 @@ export function createVerifiersModule(
     return
   }
 
+  logger = logger.tag({ feature: 'update_monitor' })
+
   const refresher = new VerifiersStatusRefresher({
     db: peripherals.database,
     peripherals,

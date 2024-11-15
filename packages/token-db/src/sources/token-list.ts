@@ -18,7 +18,7 @@ type Dependencies = {
 }
 
 function buildTokenListSource({ db, url, tag, logger, queue }: Dependencies) {
-  logger = logger.for('TokenListSource').tag(`${tag}`)
+  logger = logger.for('TokenListSource').tag({ tag: `${tag}` })
 
   return async function () {
     logger.info(`Syncing tokens from token list...`)

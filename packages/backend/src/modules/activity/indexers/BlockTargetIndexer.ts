@@ -11,9 +11,15 @@ export class BlockTargetIndexer extends RootIndexer {
     private readonly blockTimestampProvider: BlockTimestampProvider,
     projectId: ProjectId,
   ) {
-    super(logger.tag(projectId), {
-      tickRetryStrategy: Indexer.getInfiniteRetryStrategy(),
-    })
+    super(
+      logger.tag({
+        tag: projectId,
+        project: projectId,
+      }),
+      {
+        tickRetryStrategy: Indexer.getInfiniteRetryStrategy(),
+      },
+    )
   }
 
   override async initialize() {

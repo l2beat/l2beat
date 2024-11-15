@@ -25,7 +25,7 @@ function buildOnChainMetadataSource({
   logger,
   networkConfig,
 }: Dependencies) {
-  logger = logger.for('OnChainMetadataSource').tag(networkConfig.name)
+  logger = logger.for('OnChainMetadataSource').tag({ tag: networkConfig.name })
 
   return async function (tokenIds: string[]) {
     logger.info(`Syncing tokens metadata...`)
