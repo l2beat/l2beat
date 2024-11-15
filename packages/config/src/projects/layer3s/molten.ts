@@ -38,9 +38,10 @@ export const molten: Layer3 = orbitStackL3({
   nativeToken: 'MOLTEN',
   associatedTokens: ['MOLTEN'],
   rpcUrl: 'https://molten.calderachain.xyz/http',
-  bridge: discovery.getContract('Bridge'),
+  bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+  discoveryDrivenData: true,
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       includeInTotal: false,
@@ -49,11 +50,5 @@ export const molten: Layer3 = orbitStackL3({
       description:
         'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
     }),
-  ],
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'Caldera Multisig',
-      'Rollup Owner: Can execute upgrades for the entire rollup system via the UpgradeExecutor.',
-    ),
   ],
 })

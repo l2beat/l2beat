@@ -2,7 +2,7 @@
   "name": "sanko",
   "chain": "arbitrum",
   "blockNumber": 268839192,
-  "configHash": "0x01fc80a404c63be0d3b0e1ba97a168bb58ec97e51ce28e1d56787a1b85984afd",
+  "configHash": "0x7f38d96948d66fbe60635f85a3941c0f526be6fd77c20c8ebf8d324270255695",
   "contracts": [
     {
       "name": "ChallengeManager",
@@ -177,7 +177,7 @@
       },
       "fieldMeta": {
         "maxTimeVariation": {
-          "description": "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
+          "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
       },
       "derivedName": "SequencerInbox"
@@ -207,11 +207,13 @@
     {
       "name": "Bridge",
       "address": "0x2f285781B8d58678a3483de52D618198E4d27532",
+      "template": "orbitstack/Bridge",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0xc138999c828d091534e4fea5f3730160aa2a6366cea16b82a55b9c8de07670df"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -266,11 +268,14 @@
     {
       "name": "ERC20RollupEventInbox",
       "address": "0x365ce7234CE515c2e0139f3578b6c5989da1a863",
+      "template": "orbitstack/RollupEventInbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0x88c3a2fa81cad2f98a156402c78de0fc804b2a1866ea4f449aa90ae92ceabc6c"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "RollupEventInbox",
+      "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -561,7 +566,7 @@
         "0xa7ff878cfd433a428d567d3b90fe1df400a048a1af5298f22cd4cd4fc25bdecd"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Central contract defining the access control for upgrading the system contract implementations.",
+      "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -629,11 +634,14 @@
     {
       "name": "L1OrbitGatewayRouter",
       "address": "0x847186fbeEBf41eEe9c230360D0bF8585c0Db57B",
+      "template": "orbitstack/GatewayRouter",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
         "0x33422e0ac90902db5dad442b006c9df60e262556d8ad286808d133b5429a3eb0"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "GatewayRouter",
+      "description": "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -683,21 +691,6 @@
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
       "issuedPermissions": [
         {
-          "permission": "challenge",
-          "target": "0x795aA8E945b571c57b12E7b5B77De10A88a1FADe",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "target": "0x839ed36E86D36328c687a211CBe36C271065BAfD",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "target": "0x964C83a66F78b67F75f076e386C433A1a10cefDB",
-          "via": []
-        },
-        {
           "permission": "configure",
           "target": "0x420B4d16119127E4b96E55CB8a9D0c2828a161BB",
           "via": [
@@ -709,21 +702,6 @@
           ]
         },
         {
-          "permission": "propose",
-          "target": "0x795aA8E945b571c57b12E7b5B77De10A88a1FADe",
-          "via": []
-        },
-        {
-          "permission": "propose",
-          "target": "0x839ed36E86D36328c687a211CBe36C271065BAfD",
-          "via": []
-        },
-        {
-          "permission": "propose",
-          "target": "0x964C83a66F78b67F75f076e386C433A1a10cefDB",
-          "via": []
-        },
-        {
           "permission": "upgrade",
           "target": "0x420B4d16119127E4b96E55CB8a9D0c2828a161BB",
           "via": [
@@ -732,6 +710,21 @@
               "delay": 0
             }
           ]
+        },
+        {
+          "permission": "validate",
+          "target": "0x795aA8E945b571c57b12E7b5B77De10A88a1FADe",
+          "via": []
+        },
+        {
+          "permission": "validate",
+          "target": "0x839ed36E86D36328c687a211CBe36C271065BAfD",
+          "via": []
+        },
+        {
+          "permission": "validate",
+          "target": "0x964C83a66F78b67F75f076e386C433A1a10cefDB",
+          "via": []
         }
       ],
       "ignoreInWatchMode": [
@@ -1021,14 +1014,9 @@
       "address": "0x795aA8E945b571c57b12E7b5B77De10A88a1FADe",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "validate",
           "target": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
-          "description": "can challenge state roots on the host chain."
-        },
-        {
-          "permission": "propose",
-          "target": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
-          "description": "can submit state roots to the RollupProxy contract on the host chain."
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ]
     },
@@ -1037,14 +1025,9 @@
       "address": "0x839ed36E86D36328c687a211CBe36C271065BAfD",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "validate",
           "target": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
-          "description": "can challenge state roots on the host chain."
-        },
-        {
-          "permission": "propose",
-          "target": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
-          "description": "can submit state roots to the RollupProxy contract on the host chain."
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ]
     },
@@ -1052,14 +1035,9 @@
       "address": "0x964C83a66F78b67F75f076e386C433A1a10cefDB",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "validate",
           "target": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
-          "description": "can challenge state roots on the host chain."
-        },
-        {
-          "permission": "propose",
-          "target": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
-          "description": "can submit state roots to the RollupProxy contract on the host chain."
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ]
     },
@@ -1812,7 +1790,9 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
+    "orbitstack/Bridge": "0x6e309bce5a8758ba24f800f3c0135c502fd5cc22724da5165d8368377eb6c9c8",
     "orbitstack/ChallengeManager": "0xc4fbc82c5001579bb1f880d92a3510cda3dc4a65e284fc300363ce048c2fb6d7",
+    "orbitstack/GatewayRouter": "0x97cee29343dc6f8ca1922c4809fd47d7538dc7c66fff651958aea58575094575",
     "orbitstack/Inbox": "0x1938bb9de2d7f328ae3e83f2dd9f5d3c5575b599fc097cf9308bac4d5bb3e89e",
     "orbitstack/OneStepProofEntry": "0xf3bff5da86f9bbb5f9ac93a0f2239f0769d051b67a44be2e52c322799e3b8d4f",
     "orbitstack/OneStepProver0": "0x80f18705038deef096683a89d16549bf343ada57cac1f2750df2f06fbbaed5ca",
@@ -1820,8 +1800,9 @@
     "orbitstack/OneStepProverMath": "0x8dd8aebb517eb6eaf15437ddbb90dff66f2b14d9d6b5390dd87fbdab15168188",
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
-    "orbitstack/RollupProxy": "0x896aca243cf3d45ddf79cc142d37874406a6e07e5572f1450df6adccd0d627ac",
-    "orbitstack/SequencerInbox": "0x746f38463ee5aff9c2f6051c828002565b57c702a6be447c979d1996dd6bd673",
-    "orbitstack/UpgradeExecutor": "0xa25e02367a436cebea22481663da914bbf1fd9492d903659cc6ec9ddbaccb241"
+    "orbitstack/RollupEventInbox": "0x0608b35e1df8a51677a6392869e50b60a1ff7137f71f40bddf83143a5ef640c1",
+    "orbitstack/RollupProxy": "0x88165b83156dbb5b288912a52adc278d223904d0c933472cb3950a05ba456170",
+    "orbitstack/SequencerInbox": "0x58bf3ad8ac9dc1181ff793e330641c545ee2d9558fce65d2ee39d483c2490494",
+    "orbitstack/UpgradeExecutor": "0xa8c2617950ce46d982abd852226ebcc1aacaf9c8c7daeda793b53a790eced777"
   }
 }

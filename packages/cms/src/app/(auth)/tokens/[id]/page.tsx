@@ -2,9 +2,10 @@ import { notFound } from 'next/navigation'
 import { db } from '~/db'
 import { EditTokenPage } from './_components/edit-token-page'
 
-export default async function Page({ params }: { params: { id: string } }) {
-  const isNew = params.id === 'new'
-  const tokenEntity = isNew ? null : await db.token.findById(params.id)
+export default async function Page(props: { params: Promise<{ id: string }> }) {
+  const { id } = await props.params
+  const isNew = id === 'new'
+  const tokenEntity = isNew ? null : await db.token.findById(id)
 
   if (!isNew && !tokenEntity) {
     return notFound()

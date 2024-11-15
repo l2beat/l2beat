@@ -59,22 +59,6 @@
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
       "issuedPermissions": [
         {
-          "permission": "challenge",
-          "target": "0x9C56265ef2989138d264b30fBbA2043902daBdf8",
-          "via": []
-        },
-        {
-          "permission": "challenge",
-          "target": "0x9C56265ef2989138d264b30fBbA2043902daBdf8",
-          "via": [
-            {
-              "address": "0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa",
-              "delay": 0,
-              "description": "can challenge state roots on the host chain."
-            }
-          ]
-        },
-        {
           "permission": "configure",
           "target": "0x9C56265ef2989138d264b30fBbA2043902daBdf8",
           "via": [
@@ -86,28 +70,28 @@
           ]
         },
         {
-          "permission": "propose",
-          "target": "0x9C56265ef2989138d264b30fBbA2043902daBdf8",
-          "via": []
-        },
-        {
-          "permission": "propose",
-          "target": "0x9C56265ef2989138d264b30fBbA2043902daBdf8",
-          "via": [
-            {
-              "address": "0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa",
-              "delay": 0,
-              "description": "can submit state roots to the RollupProxy contract on the host chain."
-            }
-          ]
-        },
-        {
           "permission": "upgrade",
           "target": "0xa9d1C9D877F235C21d803e4a0b81F8ca6C4c83AC",
           "via": [
             {
               "address": "0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a",
               "delay": 0
+            }
+          ]
+        },
+        {
+          "permission": "validate",
+          "target": "0x9C56265ef2989138d264b30fBbA2043902daBdf8",
+          "via": []
+        },
+        {
+          "permission": "validate",
+          "target": "0x9C56265ef2989138d264b30fBbA2043902daBdf8",
+          "via": [
+            {
+              "address": "0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa",
+              "delay": 0,
+              "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
             }
           ]
         }
@@ -242,7 +226,7 @@
         "0xa7ff878cfd433a428d567d3b90fe1df400a048a1af5298f22cd4cd4fc25bdecd"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Central contract defining the access control for upgrading the system contract implementations.",
+      "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -371,11 +355,14 @@
     {
       "name": "ERC20RollupEventInbox",
       "address": "0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3",
+      "template": "orbitstack/RollupEventInbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0x88c3a2fa81cad2f98a156402c78de0fc804b2a1866ea4f449aa90ae92ceabc6c"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "RollupEventInbox",
+      "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -609,7 +596,7 @@
       },
       "fieldMeta": {
         "maxTimeVariation": {
-          "description": "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
+          "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
       }
     },
@@ -624,19 +611,14 @@
       "proxyType": "gnosis safe",
       "directlyReceivedPermissions": [
         {
-          "permission": "challenge",
-          "target": "0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
-          "description": "can challenge state roots on the host chain."
-        },
-        {
           "permission": "configure",
           "target": "0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
           "description": "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
         },
         {
-          "permission": "propose",
+          "permission": "validate",
           "target": "0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
-          "description": "can submit state roots to the RollupProxy contract on the host chain."
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -762,32 +744,21 @@
       "address": "0x9C56265ef2989138d264b30fBbA2043902daBdf8",
       "receivedPermissions": [
         {
-          "permission": "challenge",
-          "target": "0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
-          "description": "can challenge state roots on the host chain.",
-          "via": [{ "address": "0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa" }]
-        },
-        {
-          "permission": "challenge",
-          "target": "0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
-          "description": "can challenge state roots on the host chain."
-        },
-        {
           "permission": "configure",
           "target": "0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
           "description": "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
           "via": [{ "address": "0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa" }]
         },
         {
-          "permission": "propose",
+          "permission": "validate",
           "target": "0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
-          "description": "can submit state roots to the RollupProxy contract on the host chain.",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "via": [{ "address": "0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa" }]
         },
         {
-          "permission": "propose",
+          "permission": "validate",
           "target": "0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
-          "description": "can submit state roots to the RollupProxy contract on the host chain."
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ]
     },
@@ -1487,8 +1458,9 @@
     "orbitstack/OneStepProverMath": "0x8dd8aebb517eb6eaf15437ddbb90dff66f2b14d9d6b5390dd87fbdab15168188",
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
-    "orbitstack/RollupProxy_fastConfirm": "0xd546e59ba8d91506ef80aa56633b22a79fb90ea1a6e0c19be680149790098ecd",
-    "orbitstack/SequencerInbox": "0x746f38463ee5aff9c2f6051c828002565b57c702a6be447c979d1996dd6bd673",
-    "orbitstack/UpgradeExecutor": "0xa25e02367a436cebea22481663da914bbf1fd9492d903659cc6ec9ddbaccb241"
+    "orbitstack/RollupEventInbox": "0x0608b35e1df8a51677a6392869e50b60a1ff7137f71f40bddf83143a5ef640c1",
+    "orbitstack/RollupProxy_fastConfirm": "0x91c9d3536cb44155adbb51ee7d5712c88dab3fed8850fde3967215b257571df5",
+    "orbitstack/SequencerInbox": "0x58bf3ad8ac9dc1181ff793e330641c545ee2d9558fce65d2ee39d483c2490494",
+    "orbitstack/UpgradeExecutor": "0xa8c2617950ce46d982abd852226ebcc1aacaf9c8c7daeda793b53a790eced777"
   }
 }

@@ -12,11 +12,10 @@ import {
 import { AuthErrorMessages } from '~/lib/auth-errors'
 import { getSession } from '~/server/auth/cookie'
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: { error?: string }
+export default async function Page(props: {
+  searchParams: Promise<{ error?: string }>
 }) {
+  const { error } = await props.searchParams
   if (await getSession()) {
     redirect('/')
   }
@@ -33,12 +32,10 @@ export default async function Page({
             <Button className="w-full">Sign in with L2BEAT</Button>
           </Link>
         </CardContent>
-        {searchParams.error && (
+        {error && (
           <CardFooter>
             <p className="text-red-500">
-              Error:{' '}
-              {AuthErrorMessages[searchParams.error] ??
-                'An unknown error occurred.'}
+              Error: {AuthErrorMessages[error] ?? 'An unknown error occurred.'}
             </p>
           </CardFooter>
         )}

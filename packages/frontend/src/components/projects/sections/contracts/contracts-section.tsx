@@ -1,5 +1,6 @@
 'use client'
 import partition from 'lodash/partition'
+import { DiagramImage } from '~/components/diagram-image'
 import { type DiagramParams } from '~/utils/project/get-diagram-params'
 import { ContractEntry, type TechnologyContract } from '../contract-entry'
 import { ProjectSection } from '../project-section'
@@ -80,12 +81,7 @@ export function ContractsSection(props: ContractsSectionProps) {
       {props.isIncomplete && <TechnologyIncompleteNote />}
       {props.diagram && (
         <figure className="mb-8 mt-4 text-center">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            className="inline max-w-full align-[unset] dark:invert"
-            src={props.diagram.src}
-            alt={props.diagram.caption}
-          />
+          <DiagramImage diagram={props.diagram} />
           <figcaption className="text-xs text-gray-500 dark:text-gray-600">
             {props.diagram.caption}
           </figcaption>

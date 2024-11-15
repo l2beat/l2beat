@@ -1,21 +1,21 @@
 {
+  "extends": "@l2beat/typescript-config/nextjs",
   "compilerOptions": {
-    "target": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "skipLibCheck": true,
-    "esModuleInterop": false,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "noUncheckedIndexedAccess": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
+    /* Path aliases */
+    "baseUrl": ".",
     "paths": {
+      "~/*": ["./src/*"],
       "react": ["./node_modules/@types/react"]
     }
-  }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.cjs",
+    "**/*.mjs",
+    "**/*.js",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": ["node_modules", "storybook-static"]
 }

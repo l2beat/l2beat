@@ -1,3 +1,269 @@
+Generated with discovered.json: 0x93910d0c61840241ea03ec8fd42f6e07e0049d1e
+
+# Diff at Tue, 12 Nov 2024 15:33:45 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b2d1031f386ed9987b07f83babe4993700b00d33 block: 21122709
+- current block number: 21122709
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21122709 (main branch discovery), not current.
+
+```diff
+    contract ValidatorWallet (0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"propose","target":"0x5eF0D09d1E6204141B4d37530808eD19f60FBa35","description":"can submit state roots to the RollupProxy contract on the host chain."}
+      receivedPermissions.0.permission:
+-        "challenge"
++        "validate"
+      receivedPermissions.0.description:
+-        "can challenge state roots on the host chain."
++        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+    }
+```
+
+```diff
+    contract RollupEventInbox (0x57Bd336d579A51938619271a7Cc137a46D0501B1) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      template:
++        "orbitstack/RollupEventInbox"
+      description:
++        "Helper contract sending configuration data over the bridge during the systems initialization."
+    }
+```
+
+```diff
+    contract RollupProxy (0x5eF0D09d1E6204141B4d37530808eD19f60FBa35) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.29:
+-        {"permission":"upgrade","target":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","via":[]}
+      issuedPermissions.28:
+-        {"permission":"propose","target":"0xF8D3E1cF58386c92B27710C6a0D8A54c76BC6ab5","via":[]}
+      issuedPermissions.27:
+-        {"permission":"propose","target":"0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b","via":[]}
+      issuedPermissions.26:
+-        {"permission":"propose","target":"0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E","via":[]}
+      issuedPermissions.25:
+-        {"permission":"propose","target":"0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d","via":[]}
+      issuedPermissions.24:
+-        {"permission":"propose","target":"0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0","via":[]}
+      issuedPermissions.23:
+-        {"permission":"propose","target":"0xAB1A39332e934300eBCc57B5f95cA90631a347FF","via":[]}
+      issuedPermissions.22:
+-        {"permission":"propose","target":"0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5","via":[]}
+      issuedPermissions.21:
+-        {"permission":"propose","target":"0x7CF3d537733F6Ba4183A833c9B021265716cE9d0","via":[]}
+      issuedPermissions.20:
+-        {"permission":"propose","target":"0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398","via":[]}
+      issuedPermissions.19:
+-        {"permission":"propose","target":"0x6Fb914de4653eC5592B7c15F4d9466Cbd03F2104","via":[]}
+      issuedPermissions.18:
+-        {"permission":"propose","target":"0x610Aa279989F440820e14248BD3879B148717974","via":[]}
+      issuedPermissions.17:
+-        {"permission":"propose","target":"0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78","via":[]}
+      issuedPermissions.16:
+-        {"permission":"propose","target":"0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c","via":[]}
+      issuedPermissions.15.permission:
+-        "propose"
++        "validate"
+      issuedPermissions.15.target:
+-        "0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4"
++        "0xF8D3E1cF58386c92B27710C6a0D8A54c76BC6ab5"
+      issuedPermissions.14.permission:
+-        "configure"
++        "validate"
+      issuedPermissions.14.target:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b"
+      issuedPermissions.13.permission:
+-        "challenge"
++        "validate"
+      issuedPermissions.13.target:
+-        "0xF8D3E1cF58386c92B27710C6a0D8A54c76BC6ab5"
++        "0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E"
+      issuedPermissions.12.permission:
+-        "challenge"
++        "validate"
+      issuedPermissions.12.target:
+-        "0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b"
++        "0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d"
+      issuedPermissions.11.permission:
+-        "challenge"
++        "validate"
+      issuedPermissions.11.target:
+-        "0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E"
++        "0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0"
+      issuedPermissions.10.permission:
+-        "challenge"
++        "validate"
+      issuedPermissions.10.target:
+-        "0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d"
++        "0xAB1A39332e934300eBCc57B5f95cA90631a347FF"
+      issuedPermissions.9.permission:
+-        "challenge"
++        "validate"
+      issuedPermissions.9.target:
+-        "0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0"
++        "0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5"
+      issuedPermissions.8.permission:
+-        "challenge"
++        "validate"
+      issuedPermissions.8.target:
+-        "0xAB1A39332e934300eBCc57B5f95cA90631a347FF"
++        "0x7CF3d537733F6Ba4183A833c9B021265716cE9d0"
+      issuedPermissions.7.permission:
+-        "challenge"
++        "validate"
+      issuedPermissions.7.target:
+-        "0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5"
++        "0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398"
+      issuedPermissions.6.permission:
+-        "challenge"
++        "validate"
+      issuedPermissions.6.target:
+-        "0x7CF3d537733F6Ba4183A833c9B021265716cE9d0"
++        "0x6Fb914de4653eC5592B7c15F4d9466Cbd03F2104"
+      issuedPermissions.5.permission:
+-        "challenge"
++        "validate"
+      issuedPermissions.5.target:
+-        "0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398"
++        "0x610Aa279989F440820e14248BD3879B148717974"
+      issuedPermissions.4.permission:
+-        "challenge"
++        "validate"
+      issuedPermissions.4.target:
+-        "0x6Fb914de4653eC5592B7c15F4d9466Cbd03F2104"
++        "0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78"
+      issuedPermissions.3.permission:
+-        "challenge"
++        "validate"
+      issuedPermissions.3.target:
+-        "0x610Aa279989F440820e14248BD3879B148717974"
++        "0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c"
+      issuedPermissions.2.permission:
+-        "challenge"
++        "validate"
+      issuedPermissions.2.target:
+-        "0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78"
++        "0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4"
+      issuedPermissions.1.permission:
+-        "challenge"
++        "upgrade"
+      issuedPermissions.1.target:
+-        "0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      issuedPermissions.0.permission:
+-        "challenge"
++        "configure"
+      issuedPermissions.0.target:
+-        "0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      template:
++        "orbitstack/GatewayRouter"
+      displayName:
++        "GatewayRouter"
+      description:
++        "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging."
+    }
+```
+
+```diff
+    contract Validator (0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"propose","target":"0x5eF0D09d1E6204141B4d37530808eD19f60FBa35","description":"can submit state roots to the RollupProxy contract on the host chain."}
+      receivedPermissions.0.permission:
+-        "challenge"
++        "validate"
+      receivedPermissions.0.description:
+-        "can challenge state roots on the host chain."
++        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+    }
+```
+
+```diff
+    contract ValidatorWallet (0x7CF3d537733F6Ba4183A833c9B021265716cE9d0) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"propose","target":"0x5eF0D09d1E6204141B4d37530808eD19f60FBa35","description":"can submit state roots to the RollupProxy contract on the host chain."}
+      receivedPermissions.0.permission:
+-        "challenge"
++        "validate"
+      receivedPermissions.0.description:
+-        "can challenge state roots on the host chain."
++        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+    }
+```
+
+```diff
+    contract ValidatorWallet (0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"propose","target":"0x5eF0D09d1E6204141B4d37530808eD19f60FBa35","description":"can submit state roots to the RollupProxy contract on the host chain."}
+      receivedPermissions.0.permission:
+-        "challenge"
++        "validate"
+      receivedPermissions.0.description:
+-        "can challenge state roots on the host chain."
++        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+    }
+```
+
+```diff
+    contract ValidatorWallet (0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"propose","target":"0x5eF0D09d1E6204141B4d37530808eD19f60FBa35","description":"can submit state roots to the RollupProxy contract on the host chain."}
+      receivedPermissions.0.permission:
+-        "challenge"
++        "validate"
+      receivedPermissions.0.description:
+-        "can challenge state roots on the host chain."
++        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+    }
+```
+
+```diff
+    contract L1CustomGateway (0xcEe284F754E854890e311e3280b767F80797180d) {
+    +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
+      template:
++        "orbitstack/CustomGateway"
+      displayName:
++        "CustomGateway"
+      description:
++        "Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability."
+    }
+```
+
+```diff
+    contract ValidatorWallet (0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"propose","target":"0x5eF0D09d1E6204141B4d37530808eD19f60FBa35","description":"can submit state roots to the RollupProxy contract on the host chain."}
+      receivedPermissions.0.permission:
+-        "challenge"
++        "validate"
+      receivedPermissions.0.description:
+-        "can challenge state roots on the host chain."
++        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+    }
+```
+
 Generated with discovered.json: 0x38084f4892c537f1a98d76e93894349a02897105
 
 # Diff at Tue, 05 Nov 2024 16:42:27 GMT:
