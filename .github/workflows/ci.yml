@@ -208,11 +208,13 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          run_install: false
+
       - name: Setup Biome CLI
         uses: biomejs/setup-biome@v2
-
-      - name: Install pnpm
-        run: corepack enable && corepack prepare pnpm@latest --activate
 
       - name: Install biome-config package
         run: pnpm install --filter @l2beat/biome-config
