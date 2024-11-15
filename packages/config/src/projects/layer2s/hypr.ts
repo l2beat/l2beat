@@ -28,7 +28,6 @@ export const hypr: Layer2 = opStackL2({
       ],
     },
     activityDataSource: 'Blockchain RPC',
-    architectureImage: 'opstack',
   },
   genesisTimestamp: new UnixTime(1705509623),
   isNodeAvailable: 'UnderReview',

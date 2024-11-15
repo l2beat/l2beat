@@ -36,7 +36,7 @@ export const cyber: Layer2 = opStackL2({
   display: {
     name: 'Cyber',
     slug: 'cyber',
-    architectureImage: 'cyber',
+    architectureImage: 'opstack-dachallenge',
     description:
       'Cyber is a chain designed for social applications using an implementation of OP Plasma with DA challenges.',
     links: {
