@@ -1,17 +1,19 @@
 {
   "name": "parallel",
   "chain": "ethereum",
-  "blockNumber": 21093350,
-  "configHash": "0x5d959414cd1ea1cd3c30f101a2fae18a88877a04a3d9a2d637521dde49fa8f8a",
+  "blockNumber": 21179544,
+  "configHash": "0x82fe5b0c026b68681fed51a568c4479d2cb529fcfff1e2f5e9b92fb55a00d659",
   "contracts": [
     {
       "name": "Inbox",
       "address": "0x12485B9d469c1D51d05b5C39e009D50eF0170cF7",
+      "template": "orbitstack/Inbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0x99872d99b7163c705118e0a168f99728c3c7089581779077707271cdaad30be3"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -63,7 +65,7 @@
       }
     },
     {
-      "name": "L1WETHGateway",
+      "name": "L1WethGateway",
       "address": "0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
@@ -116,8 +118,7 @@
         "inbox": "0x12485B9d469c1D51d05b5C39e009D50eF0170cF7",
         "l2Weth": "0xe3bb30f7742eC97Be5D60789A2b1273e462C0287",
         "router": "0x5D657b905275F36AD62C3d5C36966975613aFB96"
-      },
-      "derivedName": "L1WethGateway"
+      }
     },
     {
       "name": "OneStepProverHostIo",
@@ -263,7 +264,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 220,
+        "nonce": 221,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -330,8 +331,7 @@
         "resultReceiver": "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877",
         "sequencerInbox": "0xb4795A0edae98d7820C37F06f6b858e7acb51DF8",
         "totalChallengesCreated": 0
-      },
-      "derivedName": "ChallengeManager"
+      }
     },
     {
       "name": "ValidatorUtils",
@@ -345,11 +345,13 @@
     {
       "name": "RollupEventInbox",
       "address": "0x36E5DE57f862cf5bA28624845faB8c2fF6Aa41d2",
+      "template": "orbitstack/RollupEventInbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0xcd37abd5bdcc8c37cbf37dcfa4889d5b238388344d913b3a48914f659e0d627b"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -476,22 +478,24 @@
           "0x36E5DE57f862cf5bA28624845faB8c2fF6Aa41d2"
         ],
         "allowedOutboxList": ["0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3"],
-        "delayedMessageCount": 3756,
+        "delayedMessageCount": 3758,
         "rollup": "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877",
         "sequencerInbox": "0xb4795A0edae98d7820C37F06f6b858e7acb51DF8",
-        "sequencerMessageCount": 1282,
-        "sequencerReportedSubMessageCount": 534381
-      },
-      "derivedName": "Bridge"
+        "sequencerMessageCount": 1284,
+        "sequencerReportedSubMessageCount": 534386
+      }
     },
     {
       "name": "L1GatewayRouter",
       "address": "0x5D657b905275F36AD62C3d5C36966975613aFB96",
+      "template": "orbitstack/GatewayRouter",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
         "0x61cc407871b0c56af41887c99354633d150e4586f0a6d237c6efd10966b17bd7"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "GatewayRouter",
+      "description": "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -639,12 +643,12 @@
         "confirmPeriodBlocks": 43200,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 40320,
-        "firstUnresolvedNode": 1183,
+        "firstUnresolvedNode": 1185,
         "inbox": "0x12485B9d469c1D51d05b5C39e009D50eF0170cF7",
         "isERC20Enabled": false,
         "lastStakeBlock": 20468408,
-        "latestConfirmed": 1182,
-        "latestNodeCreated": 1183,
+        "latestConfirmed": 1184,
+        "latestNodeCreated": 1184,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3",
@@ -684,7 +688,6 @@
           "description": "Emitted on createChallenge() in RollupUserLogic."
         }
       },
-      "derivedName": "RollupProxy",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -771,8 +774,7 @@
       "values": {
         "$immutable": true,
         "owner": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89"
-      },
-      "derivedName": "ProxyAdmin"
+      }
     },
     {
       "name": "L1ERC20Gateway",
@@ -833,8 +835,7 @@
         "l2BeaconProxyFactory": "0x533Ebf8893c5bB7DDe47938507e239789E299a5f",
         "router": "0x5D657b905275F36AD62C3d5C36966975613aFB96",
         "whitelist": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "L1ERC20Gateway"
+      }
     },
     {
       "name": "OneStepProver0",
@@ -872,11 +873,14 @@
     {
       "name": "L1CustomGateway",
       "address": "0xa1c86E2362dba0525075622af6d5f739B1304D45",
+      "template": "orbitstack/CustomGateway",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
         "0x8d9e1660cd96605e8727f611f7b96ef82ad6cd8a76db94cd253b74cddd1c6bce"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "CustomGateway",
+      "description": "Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -924,8 +928,7 @@
         "owner": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
         "router": "0x5D657b905275F36AD62C3d5C36966975613aFB96",
         "whitelist": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "L1CustomGateway"
+      }
     },
     {
       "name": "SequencerInbox",
@@ -1000,7 +1003,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 1282,
+        "batchCount": 1284,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "0x40acDc94a00b33151B40763b3Fed7C46fF639Df4",
@@ -1017,7 +1020,6 @@
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "DATA_BLOB_HEADER_FLAG": "0x50",
         "HEADER_LENGTH": 40,
-        "IS_HARDCODED_SEQUENCER_BATCH_POSTER": false,
         "isUsingFeeToken": false,
         "keySetUpdates": 0,
         "maxDataSize": 117964,
@@ -1032,7 +1034,7 @@
         "rollup": "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 4,
-        "totalDelayedMessagesRead": 3755,
+        "totalDelayedMessagesRead": 3757,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1040,8 +1042,7 @@
         "maxTimeVariation": {
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
         }
-      },
-      "derivedName": "SequencerInbox"
+      }
     },
     {
       "name": "Outbox",
@@ -1104,8 +1105,7 @@
         "l2ToL1Timestamp": 0,
         "OUTBOX_VERSION": 2,
         "rollup": "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877"
-      },
-      "derivedName": "Outbox"
+      }
     },
     {
       "name": "UpgradeExecutor",
@@ -1198,8 +1198,7 @@
           "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
           "0x19293FBec52F94165f903708a74513Dd6dFedd0a"
         ]
-      },
-      "derivedName": "UpgradeExecutor"
+      }
     }
   ],
   "eoas": [
@@ -2103,13 +2102,17 @@
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "orbitstack/Bridge": "0x6e309bce5a8758ba24f800f3c0135c502fd5cc22724da5165d8368377eb6c9c8",
     "orbitstack/ChallengeManager": "0xc4fbc82c5001579bb1f880d92a3510cda3dc4a65e284fc300363ce048c2fb6d7",
+    "orbitstack/CustomGateway": "0xc4bb8ded0b7cd317b76ac6cfa0b521e1f8f3093f9f4dfd8634bc43c08592fa80",
     "orbitstack/ERC20Gateway": "0xf1eafb4b453c67c3928c43ad270e71102bda129c494c4cf3d132be60695af7f9",
+    "orbitstack/GatewayRouter": "0x97cee29343dc6f8ca1922c4809fd47d7538dc7c66fff651958aea58575094575",
+    "orbitstack/Inbox": "0x1938bb9de2d7f328ae3e83f2dd9f5d3c5575b599fc097cf9308bac4d5bb3e89e",
     "orbitstack/OneStepProofEntry": "0xf3bff5da86f9bbb5f9ac93a0f2239f0769d051b67a44be2e52c322799e3b8d4f",
     "orbitstack/OneStepProver0": "0x80f18705038deef096683a89d16549bf343ada57cac1f2750df2f06fbbaed5ca",
     "orbitstack/OneStepProverHostIo": "0xacacb7603847a3f0212fdf80c653040278214c00451f763907e270d1f19efec0",
     "orbitstack/OneStepProverMath": "0x8dd8aebb517eb6eaf15437ddbb90dff66f2b14d9d6b5390dd87fbdab15168188",
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
+    "orbitstack/RollupEventInbox": "0x0608b35e1df8a51677a6392869e50b60a1ff7137f71f40bddf83143a5ef640c1",
     "orbitstack/RollupProxy": "0x896aca243cf3d45ddf79cc142d37874406a6e07e5572f1450df6adccd0d627ac",
     "orbitstack/SequencerInbox": "0x746f38463ee5aff9c2f6051c828002565b57c702a6be447c979d1996dd6bd673",
     "orbitstack/UpgradeExecutor": "0xa25e02367a436cebea22481663da914bbf1fd9492d903659cc6ec9ddbaccb241"
