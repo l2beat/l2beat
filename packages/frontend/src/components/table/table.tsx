@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import * as React from 'react'
 import { cn } from '~/utils/cn'
 import { TableTooltip } from './table-tooltip'
@@ -107,37 +108,41 @@ const TableCell = ({
 }: React.TdHTMLAttributes<HTMLTableCellElement> & {
   href?: string
   align?: 'right' | 'center'
-}) => (
-  <td
-    className={cn(
-      'group h-9 whitespace-pre p-0 align-middle text-xs md:h-14 md:text-sm',
-      !href && [
-        'pr-3 first:pl-2 last:pr-2 md:pr-4',
-        align === 'center' && 'text-center',
-        align === 'right' && 'text-right',
-        className,
-      ],
-    )}
-    {...props}
-  >
-    {href ? (
-      <Link
-        prefetch={false}
-        href={href}
-        className={cn(
-          'flex size-full items-center pr-3 group-first:pl-2 group-last:pr-2 md:pr-4',
-          align === 'center' && 'justify-center',
-          align === 'right' && 'justify-end',
+}) => {
+  const router = useRouter()
+  return (
+    <td
+      className={cn(
+        'group h-9 whitespace-pre p-0 align-middle text-xs md:h-14 md:text-sm',
+        !href && [
+          'pr-3 first:pl-2 last:pr-2 md:pr-4',
+          align === 'center' && 'text-center',
+          align === 'right' && 'text-right',
           className,
-        )}
-      >
-        {children}
-      </Link>
-    ) : (
-      children
-    )}
-  </td>
-)
+        ],
+      )}
+      {...props}
+    >
+      {href ? (
+        <Link
+          prefetch={false}
+          href={href}
+          className={cn(
+            'flex size-full items-center pr-3 group-first:pl-2 group-last:pr-2 md:pr-4',
+            align === 'center' && 'justify-center',
+            align === 'right' && 'justify-end',
+            className,
+          )}
+          onMouseOver={() => router.prefetch(href)}
+        >
+          {children}
+        </Link>
+      ) : (
+        children
+      )}
+    </td>
+  )
+}
 TableCell.displayName = 'TableCell'
 
 export {
