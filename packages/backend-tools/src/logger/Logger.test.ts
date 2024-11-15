@@ -350,6 +350,30 @@ describe(Logger.name, () => {
             },
           },
         ],
+        [
+          [
+            'message',
+            {
+              feature: 'feature',
+              chain: 'chain',
+              project: 'project',
+              x: 4,
+              y: 5,
+            },
+          ],
+          {
+            level: 'ERROR',
+            time: expect.a(Date),
+            service: undefined,
+            feature: 'feature',
+            chain: 'chain',
+            project: 'project',
+            message: 'message',
+            parameters: { x: 4, y: 5 },
+            error: undefined,
+            resolvedError: undefined,
+          },
+        ],
       ]
 
       for (const [args, expected] of patterns) {

@@ -189,9 +189,9 @@ export class Logger {
       level,
       time: this.options.getTime(),
       service: tagService(this.options.service, this.options.tag),
-      feature: this.options.feature,
-      chain: this.options.chain,
-      project: this.options.project,
+      feature: parsed.feature ?? this.options.feature,
+      chain: parsed.chain ?? this.options.chain,
+      project: parsed.project ?? this.options.project,
     }
   }
 

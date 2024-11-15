@@ -1,5 +1,8 @@
 export interface ParsedLogArguments {
   message?: string
+  feature?: string
+  chain?: string
+  project?: string
   error?: Error
   parameters?: object
 }
@@ -7,6 +10,9 @@ export interface ParsedLogArguments {
 export function parseLogArguments(args: unknown[]): ParsedLogArguments {
   let message: string | undefined
   let error: Error | undefined
+  let feature: string | undefined
+  let chain: string | undefined
+  let project: string | undefined
   const values: unknown[] = []
   let parameters = {}
 
@@ -51,8 +57,29 @@ export function parseLogArguments(args: unknown[]): ParsedLogArguments {
     Reflect.deleteProperty(parameters, 'error')
   }
 
+  const parameterFeature: unknown = Reflect.get(parameters, 'feature')
+  if (typeof parameterFeature === 'string') {
+    feature = parameterFeature
+    Reflect.deleteProperty(parameters, 'feature')
+  }
+
+  const parameterChain: unknown = Reflect.get(parameters, 'chain')
+  if (typeof parameterChain === 'string') {
+    chain = parameterChain
+    Reflect.deleteProperty(parameters, 'chain')
+  }
+
+  const parameterProject: unknown = Reflect.get(parameters, 'project')
+  if (typeof parameterProject === 'string') {
+    project = parameterProject
+    Reflect.deleteProperty(parameters, 'project')
+  }
+
   return {
     message,
+    feature,
+    chain,
+    project,
     error,
     parameters: Object.keys(parameters).length > 0 ? parameters : undefined,
   }
