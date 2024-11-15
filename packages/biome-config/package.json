@@ -1,18 +1,14 @@
 {
-  "name": "@l2beat/typescript-config",
+  "name": "@l2beat/biome-config",
   "private": true,
   "exports": {
     "./base": "./base.json",
-    "./nextjs": "./nextjs.json",
-    "./react": "./react.json"
+    "./nextjs": "./nextjs.json"
   },
   "scripts": {
     "format:fix": "biome format --write .",
     "format": "biome format .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
     "lint": "biome check --formatter-enabled=false ."
-  },
-  "devDependencies": {
-    "@l2beat/biome-config": "workspace:*"
   }
 }

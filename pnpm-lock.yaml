@@ -150,6 +150,9 @@ importers:
         specifier: ^3.22.2
         version: 3.23.8
     devDependencies:
+      '@l2beat/biome-config':
+        specifier: workspace:*
+        version: link:../biome-config
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -226,6 +229,9 @@ importers:
         specifier: ^9.0.1
         version: 9.0.1
     devDependencies:
+      '@l2beat/biome-config':
+        specifier: workspace:*
+        version: link:../biome-config
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -238,6 +244,8 @@ importers:
       '@types/uuid':
         specifier: ^9.0.8
         version: 9.0.8
+
+  packages/biome-config: {}
 
   packages/cms:
     dependencies:
@@ -350,6 +358,9 @@ importers:
         specifier: ^3.23.8
         version: 3.23.8
     devDependencies:
+      '@l2beat/biome-config':
+        specifier: workspace:*
+        version: link:../biome-config
       '@l2beat/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
@@ -423,6 +434,9 @@ importers:
         specifier: ^3.22.2
         version: 3.23.8
     devDependencies:
+      '@l2beat/biome-config':
+        specifier: workspace:*
+        version: link:../biome-config
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -466,6 +480,9 @@ importers:
         specifier: ^8.8.0
         version: 8.13.1
     devDependencies:
+      '@l2beat/biome-config':
+        specifier: workspace:*
+        version: link:../biome-config
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -542,6 +559,9 @@ importers:
         specifier: ^3.22.2
         version: 3.23.8
     devDependencies:
+      '@l2beat/biome-config':
+        specifier: workspace:*
+        version: link:../biome-config
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -561,6 +581,9 @@ importers:
         specifier: ^3.22.2
         version: 3.23.8
     devDependencies:
+      '@l2beat/biome-config':
+        specifier: workspace:*
+        version: link:../biome-config
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -576,6 +599,9 @@ importers:
       '@eslint/js':
         specifier: ^9.13.0
         version: 9.13.0
+      '@l2beat/biome-config':
+        specifier: workspace:*
+        version: link:../biome-config
       '@types/eslint':
         specifier: ^9.6.1
         version: 9.6.1
@@ -760,6 +786,9 @@ importers:
       '@chromatic-com/storybook':
         specifier: ^1.6.1
         version: 1.9.0(react@19.0.0-rc-69d4b800-20241021)
+      '@l2beat/biome-config':
+        specifier: workspace:*
+        version: link:../biome-config
       '@l2beat/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
@@ -938,6 +967,9 @@ importers:
         specifier: ^3.23.8
         version: 3.23.8
     devDependencies:
+      '@l2beat/biome-config':
+        specifier: workspace:*
+        version: link:../biome-config
       '@l2beat/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
@@ -999,6 +1031,9 @@ importers:
         specifier: ^3.23.8
         version: 3.23.8
     devDependencies:
+      '@l2beat/biome-config':
+        specifier: workspace:*
+        version: link:../biome-config
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -1075,6 +1110,9 @@ importers:
         specifier: ^3.23.8
         version: 3.23.8
     devDependencies:
+      '@l2beat/biome-config':
+        specifier: workspace:*
+        version: link:../biome-config
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -1133,6 +1171,9 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0(@types/react@18.3.12)(react@18.3.1)(use-sync-external-store@1.2.2(react@18.3.1))
     devDependencies:
+      '@l2beat/biome-config':
+        specifier: workspace:*
+        version: link:../biome-config
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -1182,6 +1223,9 @@ importers:
         specifier: ^3.22.2
         version: 3.23.8
     devDependencies:
+      '@l2beat/biome-config':
+        specifier: workspace:*
+        version: link:../biome-config
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -1204,6 +1248,9 @@ importers:
         specifier: ^3.22.2
         version: 3.23.8
     devDependencies:
+      '@l2beat/biome-config':
+        specifier: workspace:*
+        version: link:../biome-config
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -1259,6 +1306,9 @@ importers:
         specifier: ^3.23.6
         version: 3.23.8
     devDependencies:
+      '@l2beat/biome-config':
+        specifier: workspace:*
+        version: link:../biome-config
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -1305,6 +1355,9 @@ importers:
         specifier: ^3.23.8
         version: 3.23.8
     devDependencies:
+      '@l2beat/biome-config':
+        specifier: workspace:*
+        version: link:../biome-config
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -1324,7 +1377,11 @@ importers:
         specifier: ^5.4.10
         version: 5.4.10(@types/node@22.8.2)(terser@5.36.0)
 
-  packages/typescript-config: {}
+  packages/typescript-config:
+    devDependencies:
+      '@l2beat/biome-config':
+        specifier: workspace:*
+        version: link:../biome-config
 
   packages/uif:
     dependencies:
@@ -1335,6 +1392,9 @@ importers:
         specifier: workspace:*
         version: link:../shared-pure
     devDependencies:
+      '@l2beat/biome-config':
+        specifier: workspace:*
+        version: link:../biome-config
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -1354,6 +1414,9 @@ importers:
         specifier: workspace:*
         version: link:../uif
     devDependencies:
+      '@l2beat/biome-config':
+        specifier: workspace:*
+        version: link:../biome-config
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -1397,6 +1460,9 @@ importers:
         specifier: ^3.23.8
         version: 3.23.8
     devDependencies:
+      '@l2beat/biome-config':
+        specifier: workspace:*
+        version: link:../biome-config
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config

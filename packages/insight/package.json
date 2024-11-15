@@ -46,8 +46,9 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@l2beat/typescript-config": "workspace:*",
+    "@l2beat/biome-config": "workspace:*",
     "@l2beat/eslint-config": "workspace:*",
+    "@l2beat/typescript-config": "workspace:*",
     "@types/lodash": "^4.17.13",
     "@types/react": "npm:types-react@19.0.0-rc.1",
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",

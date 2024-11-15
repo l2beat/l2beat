@@ -1,6 +1,6 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.7.0/schema.json",
-  "extends": ["../../biome.json"],
+  "extends": ["@l2beat/biome-config/base"],
   "linter": {
     "rules": {
       "nursery": {

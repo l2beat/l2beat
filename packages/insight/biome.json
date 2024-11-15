@@ -1,6 +1,3 @@
 {
-  "extends": ["../../biome.json"],
-  "linter": {
-    "enabled": false
-  }
+  "extends": ["@l2beat/biome-config/nextjs"]
 }

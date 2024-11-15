@@ -16,6 +16,7 @@
     "@l2beat/uif": "workspace:*"
   },
   "devDependencies": {
+    "@l2beat/biome-config": "workspace:*",
     "@l2beat/typescript-config": "workspace:*"
   }
 }

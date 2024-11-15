@@ -21,6 +21,7 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
+    "@l2beat/biome-config": "workspace:*",
     "@l2beat/typescript-config": "workspace:*"
   }
 }

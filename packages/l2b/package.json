@@ -42,6 +42,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@l2beat/biome-config": "workspace:*",
     "@l2beat/typescript-config": "workspace:*",
     "@types/express": "^5.0.0",
     "@types/mock-fs": "^4.13.4",

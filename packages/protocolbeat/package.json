@@ -30,6 +30,7 @@
     "zustand": "^5.0.0"
   },
   "devDependencies": {
+    "@l2beat/biome-config": "workspace:*",
     "@l2beat/typescript-config": "workspace:*",
     "@vitejs/plugin-react-swc": "^3.7.1",
     "autoprefixer": "^10.4.20",

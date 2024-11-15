@@ -34,6 +34,7 @@
     "@l2beat/shared-pure": "workspace:*"
   },
   "devDependencies": {
+    "@l2beat/biome-config": "workspace:*",
     "@l2beat/typescript-config": "workspace:*",
     "@sinonjs/fake-timers": "^11.1.0",
     "@types/sinonjs__fake-timers": "^8.1.2"

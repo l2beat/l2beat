@@ -11,6 +11,7 @@
     "lint": "biome check --formatter-enabled=false ."
   },
   "devDependencies": {
+    "@l2beat/biome-config": "workspace:*",
     "@eslint/compat": "^1.2.1",
     "@eslint/eslintrc": "^3.1.0",
     "@eslint/js": "^9.13.0",

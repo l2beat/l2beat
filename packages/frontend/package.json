@@ -70,8 +70,9 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@l2beat/typescript-config": "workspace:*",
+    "@l2beat/biome-config": "workspace:*",
     "@l2beat/eslint-config": "workspace:*",
+    "@l2beat/typescript-config": "workspace:*",
     "@chromatic-com/storybook": "^1.6.1",
     "@storybook/addon-essentials": "^8.3.6",
     "@storybook/addon-interactions": "^8.3.6",

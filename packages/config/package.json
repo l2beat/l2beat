@@ -40,6 +40,7 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
+    "@l2beat/biome-config": "workspace:*",
     "@l2beat/typescript-config": "workspace:*",
     "@types/lodash": "^4.17.12",
     "@types/node-fetch": "^2.6.11",

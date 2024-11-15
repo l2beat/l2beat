@@ -1,4 +1,4 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.7.0/schema.json",
-  "extends": ["@l2beat/biome-config/base"]
+  "extends": ["./base.json"]
 }
