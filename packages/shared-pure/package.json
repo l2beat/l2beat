@@ -19,5 +19,8 @@
     "chalk": "^4.1.2",
     "ethers": "^5.7.2",
     "zod": "^3.22.2"
+  },
+  "devDependencies": {
+    "@l2beat/typescript-config": "workspace:*"
   }
 }

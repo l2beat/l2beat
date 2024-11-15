@@ -13,11 +13,10 @@ import {
 import { db } from '~/db'
 import { getServerPagination } from '~/lib/server-pagination/server'
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: Record<string, string | string[] | undefined>
+export default async function Page(props: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>
 }) {
+  const searchParams = await props.searchParams
   const allEntities = (await db.entity.getAll())
     .sort((a, b) => a.name.localeCompare(b.name))
     .filter((entity) => {

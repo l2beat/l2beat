@@ -1,3 +1,251 @@
+Generated with discovered.json: 0x94859a2265fef62a397bdf438d5c7b76367ced8a
+
+# Diff at Tue, 12 Nov 2024 15:34:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b2d1031f386ed9987b07f83babe4993700b00d33 block: 21093343
+- current block number: 21093343
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21093343 (main branch discovery), not current.
+
+```diff
+    contract ValidatorWallet (0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"propose","target":"0xFb209827c58283535b744575e11953DCC4bEAD88","description":"can submit state roots to the RollupProxy contract on the host chain."}
+      receivedPermissions.0.permission:
+-        "challenge"
++        "validate"
+      receivedPermissions.0.description:
+-        "can challenge state roots on the host chain."
++        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+    }
+```
+
+```diff
+    contract L1CustomGateway (0x23122da8C581AA7E0d07A36Ff1f16F799650232f) {
+    +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
+      template:
++        "orbitstack/CustomGateway"
+      displayName:
++        "CustomGateway"
+      description:
++        "Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability."
+    }
+```
+
+```diff
+    contract ValidatorWallet (0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"propose","target":"0xFb209827c58283535b744575e11953DCC4bEAD88","description":"can submit state roots to the RollupProxy contract on the host chain."}
+      receivedPermissions.0.permission:
+-        "challenge"
++        "validate"
+      receivedPermissions.0.description:
+-        "can challenge state roots on the host chain."
++        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+    }
+```
+
+```diff
+    contract Validator (0x3B0369CAD35d257793F51c28213a4Cf4001397AC) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"propose","target":"0xFb209827c58283535b744575e11953DCC4bEAD88","description":"can submit state roots to the RollupProxy contract on the host chain."}
+      receivedPermissions.0.permission:
+-        "challenge"
++        "validate"
+      receivedPermissions.0.description:
+-        "can challenge state roots on the host chain."
++        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+    }
+```
+
+```diff
+    contract ValidatorWallet (0x57004b440Cc4eb2FEd8c4d1865FaC907F9150C76) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"propose","target":"0xFb209827c58283535b744575e11953DCC4bEAD88","description":"can submit state roots to the RollupProxy contract on the host chain."}
+      receivedPermissions.0.permission:
+-        "challenge"
++        "validate"
+      receivedPermissions.0.description:
+-        "can challenge state roots on the host chain."
++        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+    }
+```
+
+```diff
+    contract ValidatorWallet (0x658e8123722462F888b6fa01a7dbcEFe1D6DD709) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"propose","target":"0xFb209827c58283535b744575e11953DCC4bEAD88","description":"can submit state roots to the RollupProxy contract on the host chain."}
+      receivedPermissions.0.permission:
+-        "challenge"
++        "validate"
+      receivedPermissions.0.description:
+-        "can challenge state roots on the host chain."
++        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      template:
++        "orbitstack/GatewayRouter"
+      displayName:
++        "GatewayRouter"
+      description:
++        "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging."
+    }
+```
+
+```diff
+    contract ValidatorWallet (0xE27d4Ed355e5273A3D4855c8e11BC4a8d3e39b87) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"propose","target":"0xFb209827c58283535b744575e11953DCC4bEAD88","description":"can submit state roots to the RollupProxy contract on the host chain."}
+      receivedPermissions.0.permission:
+-        "challenge"
++        "validate"
+      receivedPermissions.0.description:
+-        "can challenge state roots on the host chain."
++        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+    }
+```
+
+```diff
+    contract RollupProxy (0xFb209827c58283535b744575e11953DCC4bEAD88) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.27:
+-        {"permission":"upgrade","target":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","via":[]}
+      issuedPermissions.26:
+-        {"permission":"propose","target":"0xE27d4Ed355e5273A3D4855c8e11BC4a8d3e39b87","via":[]}
+      issuedPermissions.25:
+-        {"permission":"propose","target":"0xDfB23DFE9De7dcC974467195C8B7D5cd21C9d7cB","via":[]}
+      issuedPermissions.24:
+-        {"permission":"propose","target":"0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E","via":[]}
+      issuedPermissions.23:
+-        {"permission":"propose","target":"0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d","via":[]}
+      issuedPermissions.22:
+-        {"permission":"propose","target":"0xAB1A39332e934300eBCc57B5f95cA90631a347FF","via":[]}
+      issuedPermissions.21:
+-        {"permission":"propose","target":"0x658e8123722462F888b6fa01a7dbcEFe1D6DD709","via":[]}
+      issuedPermissions.20:
+-        {"permission":"propose","target":"0x610Aa279989F440820e14248BD3879B148717974","via":[]}
+      issuedPermissions.19:
+-        {"permission":"propose","target":"0x57004b440Cc4eb2FEd8c4d1865FaC907F9150C76","via":[]}
+      issuedPermissions.18:
+-        {"permission":"propose","target":"0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c","via":[]}
+      issuedPermissions.17:
+-        {"permission":"propose","target":"0x3B0369CAD35d257793F51c28213a4Cf4001397AC","via":[]}
+      issuedPermissions.16:
+-        {"permission":"propose","target":"0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3","via":[]}
+      issuedPermissions.15:
+-        {"permission":"propose","target":"0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23","via":[]}
+      issuedPermissions.14.permission:
+-        "propose"
++        "validate"
+      issuedPermissions.14.target:
+-        "0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4"
++        "0xE27d4Ed355e5273A3D4855c8e11BC4a8d3e39b87"
+      issuedPermissions.13.permission:
+-        "configure"
++        "validate"
+      issuedPermissions.13.target:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0xDfB23DFE9De7dcC974467195C8B7D5cd21C9d7cB"
+      issuedPermissions.12.permission:
+-        "challenge"
++        "validate"
+      issuedPermissions.12.target:
+-        "0xE27d4Ed355e5273A3D4855c8e11BC4a8d3e39b87"
++        "0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E"
+      issuedPermissions.11.permission:
+-        "challenge"
++        "validate"
+      issuedPermissions.11.target:
+-        "0xDfB23DFE9De7dcC974467195C8B7D5cd21C9d7cB"
++        "0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d"
+      issuedPermissions.10.permission:
+-        "challenge"
++        "validate"
+      issuedPermissions.10.target:
+-        "0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E"
++        "0xAB1A39332e934300eBCc57B5f95cA90631a347FF"
+      issuedPermissions.9.permission:
+-        "challenge"
++        "validate"
+      issuedPermissions.9.target:
+-        "0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d"
++        "0x658e8123722462F888b6fa01a7dbcEFe1D6DD709"
+      issuedPermissions.8.permission:
+-        "challenge"
++        "validate"
+      issuedPermissions.8.target:
+-        "0xAB1A39332e934300eBCc57B5f95cA90631a347FF"
++        "0x610Aa279989F440820e14248BD3879B148717974"
+      issuedPermissions.7.permission:
+-        "challenge"
++        "validate"
+      issuedPermissions.7.target:
+-        "0x658e8123722462F888b6fa01a7dbcEFe1D6DD709"
++        "0x57004b440Cc4eb2FEd8c4d1865FaC907F9150C76"
+      issuedPermissions.6.permission:
+-        "challenge"
++        "validate"
+      issuedPermissions.6.target:
+-        "0x610Aa279989F440820e14248BD3879B148717974"
++        "0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c"
+      issuedPermissions.5.permission:
+-        "challenge"
++        "validate"
+      issuedPermissions.5.target:
+-        "0x57004b440Cc4eb2FEd8c4d1865FaC907F9150C76"
++        "0x3B0369CAD35d257793F51c28213a4Cf4001397AC"
+      issuedPermissions.4.permission:
+-        "challenge"
++        "validate"
+      issuedPermissions.4.target:
+-        "0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c"
++        "0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3"
+      issuedPermissions.3.permission:
+-        "challenge"
++        "validate"
+      issuedPermissions.3.target:
+-        "0x3B0369CAD35d257793F51c28213a4Cf4001397AC"
++        "0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23"
+      issuedPermissions.2.permission:
+-        "challenge"
++        "validate"
+      issuedPermissions.2.target:
+-        "0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3"
++        "0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4"
+      issuedPermissions.1.permission:
+-        "challenge"
++        "upgrade"
+      issuedPermissions.1.target:
+-        "0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      issuedPermissions.0.permission:
+-        "challenge"
++        "configure"
+      issuedPermissions.0.target:
+-        "0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+    }
+```
+
 Generated with discovered.json: 0x57bd571ea09c31a66246c88f42cc412021aec9e2
 
 # Diff at Mon, 04 Nov 2024 07:57:32 GMT:

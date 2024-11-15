@@ -2,7 +2,7 @@
   "name": "degen",
   "chain": "base",
   "blockNumber": 22134218,
-  "configHash": "0x01430fad2fd5ae2f292465484ad954f5ad52c2e83f649fd614e4655b507fd27f",
+  "configHash": "0x4b704cbe0effa5c187bab334faa19910708d5022d4d2cbffda1f0a52739a44cd",
   "contracts": [
     {
       "name": "Inbox",
@@ -175,7 +175,7 @@
       },
       "fieldMeta": {
         "maxTimeVariation": {
-          "description": "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
+          "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
       },
       "derivedName": "SequencerInbox"
@@ -406,7 +406,7 @@
         "0xa7ff878cfd433a428d567d3b90fe1df400a048a1af5298f22cd4cd4fc25bdecd"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Central contract defining the access control for upgrading the system contract implementations.",
+      "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -512,11 +512,6 @@
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
       "issuedPermissions": [
         {
-          "permission": "challenge",
-          "target": "0x1BCdC0eCc1e4A31E5dB0542f81895d8319A757Ca",
-          "via": []
-        },
-        {
           "permission": "configure",
           "target": "0x871e290d5447b958131F6d44f915F10032436ee6",
           "via": [
@@ -528,11 +523,6 @@
           ]
         },
         {
-          "permission": "propose",
-          "target": "0x1BCdC0eCc1e4A31E5dB0542f81895d8319A757Ca",
-          "via": []
-        },
-        {
           "permission": "upgrade",
           "target": "0x871e290d5447b958131F6d44f915F10032436ee6",
           "via": [
@@ -541,6 +531,11 @@
               "delay": 0
             }
           ]
+        },
+        {
+          "permission": "validate",
+          "target": "0x1BCdC0eCc1e4A31E5dB0542f81895d8319A757Ca",
+          "via": []
         }
       ],
       "ignoreInWatchMode": [
@@ -820,14 +815,9 @@
       "address": "0x1BCdC0eCc1e4A31E5dB0542f81895d8319A757Ca",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "validate",
           "target": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
-          "description": "can challenge state roots on the host chain."
-        },
-        {
-          "permission": "propose",
-          "target": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
-          "description": "can submit state roots to the RollupProxy contract on the host chain."
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ]
     },
@@ -1498,8 +1488,8 @@
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
     "orbitstack/RollupEventInbox": "0x0608b35e1df8a51677a6392869e50b60a1ff7137f71f40bddf83143a5ef640c1",
-    "orbitstack/RollupProxy": "0x896aca243cf3d45ddf79cc142d37874406a6e07e5572f1450df6adccd0d627ac",
-    "orbitstack/SequencerInbox": "0x746f38463ee5aff9c2f6051c828002565b57c702a6be447c979d1996dd6bd673",
-    "orbitstack/UpgradeExecutor": "0xa25e02367a436cebea22481663da914bbf1fd9492d903659cc6ec9ddbaccb241"
+    "orbitstack/RollupProxy": "0x88165b83156dbb5b288912a52adc278d223904d0c933472cb3950a05ba456170",
+    "orbitstack/SequencerInbox": "0x58bf3ad8ac9dc1181ff793e330641c545ee2d9558fce65d2ee39d483c2490494",
+    "orbitstack/UpgradeExecutor": "0xa8c2617950ce46d982abd852226ebcc1aacaf9c8c7daeda793b53a790eced777"
   }
 }

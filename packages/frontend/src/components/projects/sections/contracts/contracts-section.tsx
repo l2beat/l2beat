@@ -1,7 +1,6 @@
 'use client'
 import partition from 'lodash/partition'
 import { DiagramImage } from '~/components/diagram-image'
-import { cn } from '~/utils/cn'
 import { type DiagramParams } from '~/utils/project/get-diagram-params'
 import { ContractEntry, type TechnologyContract } from '../contract-entry'
 import { ProjectSection } from '../project-section'
