@@ -72,6 +72,7 @@ export async function getL3ProjectDetails({
       contracts: project.contracts,
       isUnderReview: project.isUnderReview,
       escrows: project.config.escrows,
+      architectureImage: project.display.architectureImage,
     },
     contractsVerificationStatuses,
     manuallyVerifiedContracts,

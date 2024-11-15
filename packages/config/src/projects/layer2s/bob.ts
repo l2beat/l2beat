@@ -26,7 +26,6 @@ export const bob: Layer2 = opStackL2({
       socialMedia: ['https://twitter.com/build_on_bob'],
     },
     activityDataSource: 'Blockchain RPC',
-    architectureImage: 'opstack',
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({

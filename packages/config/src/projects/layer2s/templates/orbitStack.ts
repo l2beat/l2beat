@@ -664,6 +664,20 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     }
   }
 
+  const fastConfirmer =
+    templateVars.discovery.getContractValueOrUndefined<EthereumAddress>(
+      'RollupProxy',
+      'anyTrustFastConfirmer',
+    ) ?? EthereumAddress.ZERO
+
+  const existFastConfirmer = fastConfirmer !== EthereumAddress.ZERO
+
+  const architectureImage = existFastConfirmer
+    ? 'orbit-optimium-fastconfirm'
+    : postsToExternalDA
+      ? 'orbit-optimium'
+      : 'orbit-rollup'
+
   return {
     type: 'layer3',
     ...orbitStackCommon(
@@ -673,6 +687,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     ),
     hostChain: templateVars.hostChain,
     display: {
+      architectureImage,
       stateValidationImage: 'orbit',
       purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       ...templateVars.display,
@@ -824,10 +839,25 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     templateVars.display.category ??
     (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup')
 
+  const fastConfirmer =
+    templateVars.discovery.getContractValueOrUndefined<EthereumAddress>(
+      'RollupProxy',
+      'anyTrustFastConfirmer',
+    ) ?? EthereumAddress.ZERO
+
+  const existFastConfirmer = fastConfirmer !== EthereumAddress.ZERO
+
+  const architectureImage = existFastConfirmer
+    ? 'orbit-optimium-fastconfirm'
+    : postsToExternalDA
+      ? 'orbit-optimium'
+      : 'orbit-rollup'
+
   return {
     type: 'layer2',
     ...orbitStackCommon(templateVars, ETHEREUM_EXPLORER_URL, 12),
     display: {
+      architectureImage,
       stateValidationImage: 'orbit',
       purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       warning:

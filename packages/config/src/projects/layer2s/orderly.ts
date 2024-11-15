@@ -38,7 +38,6 @@ export const orderly: Layer2 = opStackL2({
       ],
     },
     activityDataSource: 'Blockchain RPC',
-    architectureImage: 'opstack',
   },
   nonTemplateEscrows: [
     {

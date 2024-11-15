@@ -25,7 +25,6 @@ export const river: Layer2 = opStackL2({
       socialMedia: ['https://x.com/buildonriver'],
     },
     activityDataSource: 'Blockchain RPC',
-    architectureImage: 'opstack',
   },
   isNodeAvailable: true,
   rpcUrl: 'https://explorer.river.build/api',
