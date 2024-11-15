@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { TotalCell } from '~/app/(side-nav)/scaling/summary/_components/table/total-cell'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
@@ -13,7 +14,6 @@ import { sortStages } from '~/components/table/sorting/functions/stage-sorting'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { formatTps } from '~/utils/number-format/format-tps'
 import { type ScalingSummaryTableRow } from '../../_utils/to-table-rows'
-import { UnixTime } from '@l2beat/shared-pure'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 

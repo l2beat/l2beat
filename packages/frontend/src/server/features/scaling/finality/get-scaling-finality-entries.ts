@@ -11,9 +11,9 @@ import {
   type ProjectsChangeReport,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
+import { getCurrentEntry } from '../../utils/get-current-entry'
 import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
 import { getFinalityConfigurations } from './utils/get-finality-configurations'
-import { getCurrentEntry } from '../../utils/get-current-entry'
 
 export type ScalingFinalityEntries = Awaited<
   ReturnType<typeof getScalingFinalityEntries>

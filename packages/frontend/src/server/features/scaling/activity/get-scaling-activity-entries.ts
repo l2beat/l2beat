@@ -6,6 +6,7 @@ import {
   type ProjectsChangeReport,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
+import { getCurrentEntry } from '../../utils/get-current-entry'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import {
@@ -17,7 +18,6 @@ import {
   getActivityTableData,
 } from './get-activity-table-data'
 import { getActivityProjects } from './utils/get-activity-projects'
-import { getCurrentEntry } from '../../utils/get-current-entry'
 
 type ActivityProject = Layer2 | Layer3
 

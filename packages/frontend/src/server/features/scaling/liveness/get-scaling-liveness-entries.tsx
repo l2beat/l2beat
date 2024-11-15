@@ -12,13 +12,13 @@ import {
   type ProjectsChangeReport,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
+import { getCurrentEntry } from '../../utils/get-current-entry'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
 import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
 import { toAnomalyIndicatorEntries } from './utils/get-anomaly-entries'
 import { getLivenessProjects } from './utils/get-liveness-projects'
-import { getCurrentEntry } from '../../utils/get-current-entry'
 
 export async function getScalingLivenessEntries() {
   const [tvl, projectsVerificationStatuses, projectsChangeReport, liveness] =
