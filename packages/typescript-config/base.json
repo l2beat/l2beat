@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
     "allowUnreachableCode": false,
     "declaration": true,
@@ -6,8 +7,8 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
+    "noUncheckedIndexedAccess": true,
     "isolatedModules": true,
-    "jsx": "react",
     "lib": ["es2022"],
     "module": "CommonJS",
     "moduleResolution": "node",

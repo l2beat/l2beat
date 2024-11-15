@@ -38,6 +38,7 @@
     "zod": "^3.23.6"
   },
   "devDependencies": {
+    "@l2beat/typescript-config": "workspace:*",
     "@types/lodash": "^4.17.1",
     "@types/node": "^20.12.10",
     "@types/papaparse": "^5.3.14",
