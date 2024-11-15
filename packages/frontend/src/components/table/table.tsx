@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import * as React from 'react'
 import { cn } from '~/utils/cn'
 import { TableTooltip } from './table-tooltip'
@@ -109,7 +108,6 @@ const TableCell = ({
   href?: string
   align?: 'right' | 'center'
 }) => {
-  const router = useRouter()
   return (
     <td
       className={cn(
@@ -125,7 +123,6 @@ const TableCell = ({
     >
       {href ? (
         <Link
-          prefetch={false}
           href={href}
           className={cn(
             'flex size-full items-center pr-3 group-first:pl-2 group-last:pr-2 md:pr-4',
@@ -133,7 +130,6 @@ const TableCell = ({
             align === 'right' && 'justify-end',
             className,
           )}
-          onMouseOver={() => router.prefetch(href)}
         >
           {children}
         </Link>
