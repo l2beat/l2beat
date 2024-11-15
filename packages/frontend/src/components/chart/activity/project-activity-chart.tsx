@@ -7,7 +7,6 @@ import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
 import { type ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/react'
-import { formatTimestamp } from '~/utils/dates'
 import { Checkbox } from '../../core/checkbox'
 import { Chart } from '../core/chart'
 import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
@@ -16,6 +15,7 @@ import { ProjectChartTimeRange } from '../core/chart-time-range'
 import { type ChartScale } from '../types'
 import { ActivityChartHover } from './activity-chart-hover'
 import { useActivityChartRenderParams } from './use-activity-chart-render-params'
+import { NotSyncedBanner } from '~/components/not-synced-banner'
 
 interface Props {
   milestones: Milestone[]
@@ -27,7 +27,7 @@ export function ProjectActivityChart({ milestones, projectId }: Props) {
   const [scale, setScale] = useState<ChartScale>('lin')
   const [showMainnet, setShowMainnet] = useState(true)
 
-  const { data, isLoading } = api.activity.chart.useQuery({
+  const { data: chart, isLoading } = api.activity.chart.useQuery({
     range: timeRange,
     filter: {
       type: 'projects',
@@ -38,7 +38,7 @@ export function ProjectActivityChart({ milestones, projectId }: Props) {
   const { columns, valuesStyle, chartRange, formatYAxisLabel } =
     useActivityChartRenderParams({
       milestones,
-      data,
+      chart,
       showMainnet,
     })
 
@@ -88,14 +88,8 @@ export function ProjectActivityChart({ milestones, projectId }: Props) {
             <RadioGroupItem value="lin">LIN</RadioGroupItem>
           </RadioGroup>
         </div>
-        {data && !data.syncStatus.isSynced && (
-          <div className="flex w-full items-center rounded-lg bg-gray-200 px-4 py-2 text-xs font-medium dark:bg-zinc-800">
-            Activity data has not been synced since:{' '}
-            {formatTimestamp(data.syncStatus.syncedUntil, {
-              mode: 'datetime',
-              longMonthName: true,
-            })}
-          </div>
+        {chart && !chart.syncStatus.isSynced && (
+          <NotSyncedBanner what="Activity" data={chart} />
         )}
       </section>
     </ChartProvider>
