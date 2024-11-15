@@ -1,42 +1,22 @@
-import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 
-import { BlockExplorerClient } from '@l2beat/shared'
-
-export type BaseClient = {
-  getBlockNumberAtOrBefore(timestamp: UnixTime, start?: number): Promise<number>
-}
+import { BlockIndexerClient, BlockProvider } from '@l2beat/shared'
 
 interface Dependencies {
-  readonly blockExplorerClient?: BlockExplorerClient
-  readonly client: BaseClient
-  logger: Logger
+  readonly indexerClients: BlockIndexerClient[]
+  readonly blockProvider: BlockProvider
 }
 
 export class BlockTimestampProvider {
-  constructor(private readonly $: Dependencies) {
-    this.$.logger = $.logger.for(this)
-    if (!$.blockExplorerClient) {
-      this.$.logger.warn(
-        'No blockExplorerClient configured. Fetching blocks will take longer.',
-      )
-    }
-  }
+  constructor(private readonly $: Dependencies) {}
 
   async getBlockNumberAtOrBefore(_timestamp: UnixTime): Promise<number> {
-    if (this.$.blockExplorerClient) {
+    for (const client of this.$.indexerClients) {
       try {
-        return await this.$.blockExplorerClient.getBlockNumberAtOrBefore(
-          _timestamp,
-        )
-      } catch (error) {
-        this.$.logger.warn(
-          'Failed to fetch block number via blockExplorerClient. Trying to fetch using RPC.',
-          error,
-        )
-      }
+        return await client.getBlockNumberAtOrBefore(_timestamp)
+      } catch (_) {}
     }
 
-    return await this.$.client.getBlockNumberAtOrBefore(_timestamp)
+    return await this.$.blockProvider.getBlockNumberAtOrBefore(_timestamp)
   }
 }

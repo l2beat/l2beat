@@ -1,3 +1,132 @@
+Generated with discovered.json: 0x1d5143c2b352fdcded4d78e8c846c2e8a0e57e1d
+
+# Diff at Thu, 14 Nov 2024 09:02:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ea60800af45c71fbd5d292e0f4301ba9afda01fa block: 20427351
+- current block number: 21184911
+
+## Description
+
+Upgrade L2OutputOracle to a beta version (minor changes).
+
+## Watched changes
+
+```diff
+    contract L2OutputOracle (0xdd80E05004f40815EaEf12ffeE69c2a8A5112aA5) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      sourceHashes.1:
+-        "0x025c187b0231be4785898f25f98d749f953f5d06781772aef242812e2ecf52e3"
++        "0x82ce2b4d2c7dcca833593de12c2cf9aef63b23af286529708131f3aa909484ce"
+      values.$implementation:
+-        "0x38f2D861b23866b92188155C4876F0879cA706Ec"
++        "0xDe94ECc695F2Df967b49ED11829eC9f7c1831a61"
+      values.$pastUpgrades.2:
++        ["2024-11-12T05:33:23.000Z","0x205d623832f5a7d959f55aac33cae361475b2abfd69ca37c8eec2bd510276c3f",["0xDe94ECc695F2Df967b49ED11829eC9f7c1831a61"]]
+      values.$pastUpgrades.1:
++        ["2024-11-12T03:33:47.000Z","0xe56f6658e706a93ca4aa13817ca9316ae594f08268d7dbada461427b4f55756c",["0xfc2Af8738f04d14833BBcE3AD446F603E91D9306"]]
+      values.$upgradeCount:
+-        1
++        3
+      values.SUBMISSION_INTERVAL:
+-        1800
++        18000
+      values.submissionInterval:
+-        1800
++        18000
+      values.version:
+-        "1.8.0"
++        "1.8.1-beta.2"
+    }
+```
+
+## Source code changes
+
+```diff
+.../L2OutputOracle/L2OutputOracle.sol              | 163 +++++++++++++++++----
+ 1 file changed, 135 insertions(+), 28 deletions(-)
+```
+
+Generated with discovered.json: 0x68124028c6826842d33172001049f07db1237c2c
+
+# Diff at Fri, 01 Nov 2024 12:23:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cd1f0e71bb08ce16b2084a11b768538e8aa6ba8c block: 20427351
+- current block number: 20427351
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20427351 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x161aF05fA6BdA1c6E7Ee12839d470931bA796948) {
+    +++ description: None
+      directlyReceivedPermissions.1.description:
+-        "upgrading bridge implementation allows to access all funds and change every system component."
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x1adE86B9cc8a50Db747b7aaC32E8527d42c71fC1) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      issuedPermissions.0.via.0.description:
+-        "upgrading bridge implementation allows to access all funds and change every system component."
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract Optopia Multisig (0x2C73A1610EE822a8C2C21eddd455e725A3334c8C) {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "upgrading bridge implementation allows to access all funds and change every system component."
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x5e8d351FD046Aa0b3DDA24096751996C0c397C61) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      description:
+-        "This is NOT the shared SuperchainConfig of the OP stack Superchain. This SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
++        "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
+    }
+```
+
+Generated with discovered.json: 0x83badceebeae857b8a485b79c07bb8773e9c3d7b
+
+# Diff at Tue, 29 Oct 2024 13:14:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7b3fc9dc9074e1d423b48522c3f0273c86aab54a block: 20427351
+- current block number: 20427351
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20427351 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0xdd80E05004f40815EaEf12ffeE69c2a8A5112aA5) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      fieldMeta:
++        {"FINALIZATION_PERIOD_SECONDS":{"description":"Challenge period (Number of seconds until a state root is finalized)."}}
+    }
+```
+
 Generated with discovered.json: 0x91b688f42d748679e46b1aee72218561d06ee425
 
 # Diff at Tue, 22 Oct 2024 13:50:29 GMT:

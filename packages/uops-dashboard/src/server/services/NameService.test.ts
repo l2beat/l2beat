@@ -1,5 +1,6 @@
 import { CountedBlock, CountedOperation, CountedTransaction } from '@/types'
 import { expect, mockFn, mockObject } from 'earl'
+import { RpcCodeClient } from '../clients/code/RpcCodeClient'
 import { ContractClient } from '../clients/contract/ContractClient'
 import { SignatureClient } from '../clients/signature/SignatureClient'
 import { DB } from '../db/db'
@@ -29,8 +30,14 @@ describe(NameService.name, () => {
         mockFn<(operation: CountedOperation) => Promise<void>>().resolvesTo()
       nameService.fillContractNames = fillContractNamesMock
 
+      const fillImplementationNameMock =
+        mockFn<(tx: CountedTransaction) => Promise<void>>().resolvesTo()
+      nameService.fillImplementationName = fillImplementationNameMock
+
       await nameService.fillNames(mockBlock)
       expect(fillContractNamesMock).toHaveBeenCalledTimes(2)
+      expect(fillMethodNamesMock).toHaveBeenCalledTimes(2)
+      expect(fillImplementationNameMock).toHaveBeenCalledTimes(2)
     })
   })
 
@@ -39,10 +46,11 @@ describe(NameService.name, () => {
       const mockDB: DB = {
         METHODS: new Map([['selector1', 'name1']]),
         CONTRACTS: new Map(),
+        IMPLEMENTATIONS: new Map(),
       }
 
       const mockSignatureClient1 = mockObject<SignatureClient>({
-        getSignature: mockFn().resolvesToOnce('name2'),
+        getSignature: mockFn().resolvesToOnce('name2').resolvesToOnce(''),
         getName: mockFn().returns('client1'),
       })
 
@@ -107,6 +115,7 @@ describe(NameService.name, () => {
       const mockDB: DB = {
         METHODS: new Map(),
         CONTRACTS: new Map([['address1', 'name1']]),
+        IMPLEMENTATIONS: new Map(),
       }
 
       const mockContractClient = mockObject<ContractClient>({
@@ -147,19 +156,60 @@ describe(NameService.name, () => {
       expect(mockOperation.children[1].contractName).toEqual('name2')
     })
   })
+
+  describe(NameService.prototype.fillImplementationName.name, () => {
+    it('should fill contract names and save new signatures to DB', async () => {
+      const mockImplementationName = 'name1'
+      const mocCodeHash = 'codeHash1'
+      const mockAddress = 'address1'
+
+      const mockDB: DB = {
+        METHODS: new Map(),
+        CONTRACTS: new Map(),
+        IMPLEMENTATIONS: new Map([[mocCodeHash, mockImplementationName]]),
+      }
+
+      const mockCodeClient = mockObject<RpcCodeClient>({
+        getCodeHash: mockFn().resolvesToOnce(mocCodeHash),
+      })
+
+      const mockTransaction = mockObject<CountedTransaction>({
+        type: 'EIP-712',
+        from: mockAddress,
+      })
+
+      const nameService = createNameService(
+        mockDB,
+        [],
+        undefined,
+        mockCodeClient,
+      )
+
+      await nameService.fillImplementationName(mockTransaction)
+
+      expect(mockCodeClient.getCodeHash).toHaveBeenCalledWith(mockAddress)
+
+      expect(mockTransaction.type).toEqual(
+        `EIP-712 (${mockImplementationName})`,
+      )
+    })
+  })
 })
 
 function createNameService(
   db?: DB,
   signatureClients?: SignatureClient[],
   contractClient?: ContractClient,
+  codeClient?: RpcCodeClient,
 ) {
   return new NameService(
     db ?? {
       METHODS: new Map(),
       CONTRACTS: new Map(),
+      IMPLEMENTATIONS: new Map(),
     },
     signatureClients ?? [],
+    codeClient ?? mockObject<RpcCodeClient>(),
     contractClient ?? mockObject<ContractClient>(),
   )
 }

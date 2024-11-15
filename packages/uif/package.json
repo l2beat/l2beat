@@ -30,12 +30,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@l2beat/backend-tools": "*",
-    "@l2beat/shared-pure": "*"
+    "@l2beat/backend-tools": "workspace:*",
+    "@l2beat/shared-pure": "workspace:*"
   },
   "devDependencies": {
+    "@l2beat/typescript-config": "workspace:*",
     "@sinonjs/fake-timers": "^11.1.0",
-    "@types/sinonjs__fake-timers": "^8.1.2",
-    "wait-for-expect": "^3.0.2"
+    "@types/sinonjs__fake-timers": "^8.1.2"
   }
 }

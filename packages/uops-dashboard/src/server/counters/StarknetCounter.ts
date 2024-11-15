@@ -1,5 +1,6 @@
 import { CountedBlock, StatResults } from '@/types'
-import { Block, StarknetTransaction, Transaction } from '@l2beat/shared'
+import { StarknetTransaction } from '@l2beat/shared'
+import { Block, Transaction } from '@l2beat/shared-pure'
 import { Counter } from './counter'
 
 export class StarknetCounter implements Counter {
@@ -10,6 +11,7 @@ export class StarknetCounter implements Counter {
         const starknetTx = tx as StarknetTransaction
         return {
           type: starknetTx.type,
+          from: starknetTx.from,
           hash: starknetTx.hash,
           operationsCount: this.getOperationsCount(starknetTx, block.number),
         }

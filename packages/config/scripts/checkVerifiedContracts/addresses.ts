@@ -10,7 +10,7 @@ import {
 import { Project } from './types'
 import { withoutDuplicates } from './utils'
 
-export interface AddressOnChain {
+interface AddressOnChain {
   chain: string
   address: EthereumAddress
 }
@@ -55,7 +55,7 @@ export function getUniqueContractsForProject(
   ])
 }
 
-export function getUniqueContractsFromList(
+function getUniqueContractsFromList(
   contracts: ScalingProjectContract[],
 ): AddressOnChain[] {
   const mainAddresses = contracts.flatMap((c) =>
@@ -100,8 +100,8 @@ function getDaBridgeContractsForChain(
       (b): b is OnChainDaBridge | DacBridge =>
         b.type === 'OnChainBridge' || b.type === 'DAC',
     )
-    .flatMap((b) => b.contracts.addresses)
-  const addresses = getUniqueContractsFromList(contracts)
+    .flatMap((b) => Object.values(b.contracts.addresses))
+  const addresses = getUniqueContractsFromList(contracts.flat())
   return addresses.filter((a) => a.chain === chain)
 }
 
@@ -114,14 +114,20 @@ function getDaBridgePermissionsForChain(
       (b): b is OnChainDaBridge | DacBridge =>
         b.type === 'OnChainBridge' || b.type === 'DAC',
     )
-    .flatMap((b) =>
-      b.permissions.flatMap((p) => {
-        return p.accounts.flatMap((a) => ({
-          chain: b.chain.toString(),
-          address: a.address,
-        }))
-      }),
-    )
+    .flatMap((b) => {
+      if (b.permissions === 'UnderReview') {
+        return []
+      }
+
+      return Object.values(b.permissions).flatMap((perChain) => {
+        return perChain.flatMap((a) =>
+          a.accounts.map((a) => ({
+            chain: b.chain.toString(),
+            address: a.address,
+          })),
+        )
+      })
+    })
 
   return permissions.filter((p) => p.chain === chain)
 }

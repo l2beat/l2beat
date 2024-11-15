@@ -1,7 +1,7 @@
 {
   "name": "nova",
   "chain": "nova",
-  "blockNumber": 77458757,
+  "blockNumber": 79276078,
   "configHash": "0x3126f9b4d9710b222723513b08bf8aceb05d8d9785ffaef88e905065048b4801",
   "contracts": [
     {
@@ -15,8 +15,13 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xada790b026097BfB36a5ed696859b97a96CEd92C",
-          "via": []
+          "target": "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482",
+          "via": [
+            {
+              "address": "0xada790b026097BfB36a5ed696859b97a96CEd92C",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1656313073,
@@ -151,8 +156,13 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xada790b026097BfB36a5ed696859b97a96CEd92C",
-          "via": []
+          "target": "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482",
+          "via": [
+            {
+              "address": "0xada790b026097BfB36a5ed696859b97a96CEd92C",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1656314863,
@@ -212,8 +222,28 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
+          "target": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8",
+          "via": [{ "address": "0xada790b026097BfB36a5ed696859b97a96CEd92C" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD",
+          "via": [{ "address": "0xada790b026097BfB36a5ed696859b97a96CEd92C" }]
+        },
+        {
+          "permission": "upgrade",
           "target": "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482",
           "via": [{ "address": "0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xbf544970E6BD77b21C6492C281AB60d0770451F4",
+          "via": [{ "address": "0xada790b026097BfB36a5ed696859b97a96CEd92C" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257",
+          "via": [{ "address": "0xada790b026097BfB36a5ed696859b97a96CEd92C" }]
         },
         {
           "permission": "upgrade",
@@ -222,6 +252,10 @@
         }
       ],
       "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0xada790b026097BfB36a5ed696859b97a96CEd92C"
+        },
         {
           "permission": "act",
           "target": "0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3"
@@ -317,10 +351,11 @@
     {
       "name": "L2GatewaysProxyAdmin",
       "address": "0xada790b026097BfB36a5ed696859b97a96CEd92C",
+      "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
       ],
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "target": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
@@ -356,8 +391,13 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xada790b026097BfB36a5ed696859b97a96CEd92C",
-          "via": []
+          "target": "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482",
+          "via": [
+            {
+              "address": "0xada790b026097BfB36a5ed696859b97a96CEd92C",
+              "delay": 0
+            }
+          ]
         }
       ],
       "ignoreInWatchMode": ["exitNum"],
@@ -384,7 +424,7 @@
         ],
         "$upgradeCount": 3,
         "counterpartGateway": "0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
-        "exitNum": 2308,
+        "exitNum": 2316,
         "router": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
       },
       "derivedName": "L2CustomGateway"
@@ -404,8 +444,8 @@
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
+          "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC",
           "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75",
-          "0xA821c8c245d1F3A257e3B0DEC99268cA05144422",
           "0x5a09A94eE8198D3c474d723337aa58023810022C",
           "0x5DD2205C3aac13E592F0a3D85188c948D1781df1",
           "0x8F10e3413586c4a8DCfcE19D009872b19e9cd8E3",
@@ -438,8 +478,13 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xada790b026097BfB36a5ed696859b97a96CEd92C",
-          "via": []
+          "target": "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482",
+          "via": [
+            {
+              "address": "0xada790b026097BfB36a5ed696859b97a96CEd92C",
+              "delay": 0
+            }
+          ]
         }
       ],
       "ignoreInWatchMode": ["exitNum"],
@@ -463,7 +508,7 @@
         "beaconProxyFactory": "0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3",
         "cloneableProxyHash": "0xe95e7b13b0b76934e55320c0f1a812918ec818f61a9b36660d64d803eeecb91a",
         "counterpartGateway": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
-        "exitNum": 851,
+        "exitNum": 854,
         "router": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
       },
       "derivedName": "L2ERC20Gateway"
@@ -588,7 +633,7 @@
         "l2Gateway": "0xbf544970E6BD77b21C6492C281AB60d0770451F4",
         "name": "Arbitrum",
         "symbol": "ARB",
-        "totalSupply": "232021314455061742437815"
+        "totalSupply": "228776137865927120728272"
       },
       "derivedName": "L2CustomGatewayToken"
     }
@@ -612,8 +657,8 @@
     { "address": "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75" },
     { "address": "0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe" },
     { "address": "0x8F10e3413586c4a8DCfcE19D009872b19e9cd8E3" },
+    { "address": "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC" },
     { "address": "0xA221f29236996BDEfA5C585acdD407Ec84D78447" },
-    { "address": "0xA821c8c245d1F3A257e3B0DEC99268cA05144422" },
     { "address": "0xb07dc9103328A51128bC6Cc1049d1137035f5E28" },
     { "address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1" },
     { "address": "0xb71ca4FFbB7b58d75Ba29891ab45e9Dc12B444Ed" },

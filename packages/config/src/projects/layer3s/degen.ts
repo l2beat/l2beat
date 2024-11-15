@@ -46,7 +46,7 @@ export const degen: Layer3 = orbitStackL3({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
-      'RollupOwnerMultisig',
+      'DegenMultisig',
       (() => {
         const discoveredAdminOwner = discovery.getAddressFromValue(
           'ProxyAdmin',
@@ -58,9 +58,8 @@ export const degen: Layer3 = orbitStackL3({
           'UpgradeExecutor',
           'EXECUTOR_ROLE',
         ).members[0]
-        const discoveredRollupOwnerMultisig = discovery.getContract(
-          'RollupOwnerMultisig',
-        ).address
+        const discoveredRollupOwnerMultisig =
+          discovery.getContract('DegenMultisig').address
         assert(
           discoveredAdminOwner === discoveredUpgradeExecutorAddy &&
             discoveredExecutor === discoveredRollupOwnerMultisig,

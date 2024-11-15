@@ -1,3 +1,199 @@
+Generated with discovered.json: 0xf276d73318b359d7629a080c14b833c05ff56860
+
+# Diff at Tue, 05 Nov 2024 15:44:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5e6ce51851b57187ccdd52c4944a82e2a8ab1e88 block: 21078732
+- current block number: 21122420
+
+## Description
+
+Zora MS one signer added (2/10).
+
+## Watched changes
+
+```diff
+    contract ZoraMultisig (0xC72aE5c7cc9a332699305E29F68Be66c73b60542) {
+    +++ description: None
+      values.$members.9:
++        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+      values.$members.8:
+-        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
++        "0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c"
+      values.$members.7:
+-        "0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c"
++        "0xD05e9Ab3B6A7F10ec1374bc352854ABA51643E81"
+      values.$members.6:
+-        "0xD05e9Ab3B6A7F10ec1374bc352854ABA51643E81"
++        "0xc08C1b8fD69A22a448fC014bEe4A700d70726dA7"
+      values.$members.5:
+-        "0xc08C1b8fD69A22a448fC014bEe4A700d70726dA7"
++        "0xe7d71aea6FB8248d4fD4D5d5098D201674B531dB"
+      values.$members.4:
+-        "0xe7d71aea6FB8248d4fD4D5d5098D201674B531dB"
++        "0xf2989961Bf987bdD6c86CD6B845B6fACa194a8e4"
+      values.$members.3:
+-        "0xf2989961Bf987bdD6c86CD6B845B6fACa194a8e4"
++        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+      values.$members.2:
+-        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
++        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.$members.1:
+-        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
++        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
+      values.$members.0:
+-        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
++        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
+      values.multisigThreshold:
+-        "2 of 9 (22%)"
++        "2 of 10 (20%)"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21078732 (main branch discovery), not current.
+
+```diff
+    contract OptimismFoundationMultisig_1 (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      name:
+-        "FoundationMultisig_1"
++        "OptimismFoundationMultisig_1"
+    }
+```
+
+```diff
+    contract OptimismFoundationMultisig_2 (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      name:
+-        "FoundationMultisig_2"
++        "OptimismFoundationMultisig_2"
+    }
+```
+
+Generated with discovered.json: 0xf052d4d3276cfe95ec5076b228ad5504f85af869
+
+# Diff at Fri, 01 Nov 2024 12:11:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cd1f0e71bb08ce16b2084a11b768538e8aa6ba8c block: 21078732
+- current block number: 21078732
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21078732 (main branch discovery), not current.
+
+```diff
+    contract L1StandardBridge (0x3e2Ea9B92B7E48A52296fD261dc26fd995284631) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      issuedPermissions.0.via.0.description:
+-        "upgrading bridge implementation allows to access all funds and change every system component."
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      receivedPermissions.3.description:
+-        "upgrading bridge implementation allows to access all funds and change every system component."
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49) {
+    +++ description: None
+      directlyReceivedPermissions.2.description:
+-        "upgrading bridge implementation allows to access all funds and change every system component."
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+Generated with discovered.json: 0x4f6d8330a55807ba11f8c05abd22893b6a04624c
+
+# Diff at Wed, 30 Oct 2024 13:24:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0a8a53530022c6c5edd257c3682a3e7f80d0c550 block: 20970978
+- current block number: 21078732
+
+## Description
+
+Zora MS: Signer added.
+
+## Watched changes
+
+```diff
+    contract ZoraMultisig (0xC72aE5c7cc9a332699305E29F68Be66c73b60542) {
+    +++ description: None
+      values.$members.8:
++        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+      values.$members.7:
+-        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
++        "0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c"
+      values.$members.6:
+-        "0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c"
++        "0xD05e9Ab3B6A7F10ec1374bc352854ABA51643E81"
+      values.$members.5:
+-        "0xD05e9Ab3B6A7F10ec1374bc352854ABA51643E81"
++        "0xc08C1b8fD69A22a448fC014bEe4A700d70726dA7"
+      values.$members.4:
+-        "0xc08C1b8fD69A22a448fC014bEe4A700d70726dA7"
++        "0xe7d71aea6FB8248d4fD4D5d5098D201674B531dB"
+      values.$members.3:
+-        "0xe7d71aea6FB8248d4fD4D5d5098D201674B531dB"
++        "0xf2989961Bf987bdD6c86CD6B845B6fACa194a8e4"
+      values.$members.2:
+-        "0xf2989961Bf987bdD6c86CD6B845B6fACa194a8e4"
++        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+      values.$members.1:
+-        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
++        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.$members.0:
+-        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
++        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
+      values.multisigThreshold:
+-        "2 of 8 (25%)"
++        "2 of 9 (22%)"
+    }
+```
+
+Generated with discovered.json: 0x7004a08b4cb90d632ac23c801787f51b67311caf
+
+# Diff at Tue, 29 Oct 2024 13:21:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7b3fc9dc9074e1d423b48522c3f0273c86aab54a block: 20970978
+- current block number: 20970978
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20970978 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x9E6204F750cD866b299594e2aC9eA824E2e5f95c) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      fieldMeta:
++        {"FINALIZATION_PERIOD_SECONDS":{"description":"Challenge period (Number of seconds until a state root is finalized)."}}
+    }
+```
+
 Generated with discovered.json: 0xde2bf8d4e112d4711db3c568d5bb78d580201993
 
 # Diff at Mon, 21 Oct 2024 12:50:57 GMT:

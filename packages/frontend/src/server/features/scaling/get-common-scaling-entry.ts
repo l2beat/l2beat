@@ -6,6 +6,7 @@ import {
 } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import { type SetOptional } from 'type-fest'
+import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getHostChain } from './utils/get-host-chain'
 import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
 
@@ -15,14 +16,15 @@ export type CommonScalingEntry = SetOptional<
   'type' | 'category' | 'purposes'
 >
 
+interface Params {
+  project: Layer2 | Layer3
+  isVerified: boolean
+  hasImplementationChanged: boolean
+  hasHighSeverityFieldChanged: boolean
+}
+
 export function getCommonScalingEntry(
-  params:
-    | {
-        project: Layer2 | Layer3
-        isVerified: boolean
-        hasImplementationChanged: boolean
-      }
-    | { project: 'ethereum' },
+  params: Params | { project: 'ethereum' },
 ) {
   if (params.project === 'ethereum') {
     return {
@@ -39,19 +41,17 @@ export function getCommonScalingEntry(
       headerWarning: undefined,
       redWarning: undefined,
       isVerified: true,
-      showProjectUnderReview: false,
       isArchived: false,
       hostChain: undefined,
       href: undefined,
-      hasImplementationChanged: false,
       isUpcoming: false,
-      isUnderReview: false,
+      underReviewStatus: undefined,
       stage: { stage: 'NotApplicable' as const },
       badges: [],
     }
   }
 
-  const { project, isVerified, hasImplementationChanged } = params
+  const { project, isVerified } = params
 
   return {
     id: project.id,
@@ -62,13 +62,15 @@ export function getCommonScalingEntry(
     category: project.display.category,
     isOther: project.display.isOther,
     isVerified,
-    hasImplementationChanged,
+    underReviewStatus: getUnderReviewStatus({
+      isUnderReview: isAnySectionUnderReview(project),
+      hasImplementationChanged: params.hasImplementationChanged,
+      hasHighSeverityFieldChanged: params.hasHighSeverityFieldChanged,
+    }),
     isArchived: !!project.isArchived,
     isUpcoming: !!project.isUpcoming,
-    isUnderReview: !!project.isUnderReview,
     warning: project.display.warning,
     headerWarning: project.display.headerWarning,
-    showProjectUnderReview: isAnySectionUnderReview(project),
     redWarning: project.display.redWarning,
     purposes: project.display.purposes,
     badges:

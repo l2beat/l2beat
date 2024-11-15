@@ -101,14 +101,5 @@ function createLogger(environment: string): Logger {
     reportError: isLocal ? undefined : reportError,
   }
 
-  let logger = new Logger(options)
-  if (!isLocal) {
-    logger = logger.withThrottling({
-      callsUntilThrottle: 4,
-      clearIntervalMs: 5000,
-      throttleTimeMs: 20000,
-    })
-  }
-
-  return logger
+  return new Logger(options)
 }

@@ -1,5 +1,3 @@
-import { EVMTransaction } from '../clients'
-
 export type Operation = StaticOperation | RecursiveOperation
 
 export interface StaticOperation {
@@ -22,19 +20,10 @@ export interface Method {
   count(calldata: string): Operation[]
 }
 
-export type Block = {
-  number: number
-  timestamp: number
-  hash: string
-  status?: string
-  transactions: Transaction[]
-}
-
-export type Transaction = EVMTransaction | StarknetTransaction
-
 export type StarknetTransaction = {
   hash: string
   data: string[]
   type: string
+  from: string
   to?: string
 }

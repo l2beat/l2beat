@@ -13,7 +13,7 @@ export const NavSideBarWrapper = ({
 }: { children: React.ReactNode; legacyNav?: boolean }) => {
   const ref = useRef<HTMLDivElement>(null)
   const { open, setOpen } = useMobileNav()
-  const timeout = useRef<ReturnType<typeof setTimeout>>()
+  const timeout = useRef<ReturnType<typeof setTimeout>>(undefined)
   const [resizing, setResizing] = useState(false)
 
   const sharedSizeClasses = cn(

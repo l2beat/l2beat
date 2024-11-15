@@ -46,11 +46,12 @@ enum ExternalBridgeType {
 }
 
 model ExternalBridge {
-  id      String             @id @db.Char(21)
-  name    String             @db.VarChar(256)
-  type    ExternalBridgeType @unique
-  tokens  TokenBridge[]
-  escrows BridgeEscrow[]
+  id               String              @id @db.Char(21)
+  name             String              @db.VarChar(256)
+  managingEntities Entity[]
+  type             ExternalBridgeType? @unique
+  tokens           TokenBridge[]
+  escrows          BridgeEscrow[]
 
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
@@ -73,6 +74,15 @@ model Deployment {
 
 enum ExplorerType {
   Etherscan
+}
+
+model Entity {
+  id            String           @id @db.Char(21)
+  name          String           @db.VarChar(256)
+  updatedAt     DateTime         @updatedAt
+  createdAt     DateTime         @default(now())
+  managedLinks  ExternalBridge[]
+  managedTokens Token[]
 }
 
 model NetworkRpc {
@@ -100,15 +110,21 @@ model NetworkExplorer {
 
 model Network {
   id                         String           @id @db.Char(21)
-  chainId                    Int
+  // Network details
   name                       String           @db.VarChar(256)
+  logoUrl                    String?          @db.VarChar(256)
+  // STI
+  type                       NetworkType?
+  // EVM network data
+  chainId                    Int?
+  // External IDs and addresses
   coingeckoId                String?          @unique @db.VarChar(256)
   axelarId                   String?          @db.VarChar(256)
   axelarGatewayAddress       String?          @db.Char(42)
   orbitId                    String?          @db.VarChar(256)
   wormholeId                 String?          @db.VarChar(256)
   layerZeroV1EndpointAddress String?          @db.Char(42)
-  logoUrl                    String?          @db.VarChar(256)
+  // Other
   bridgeEscrows              BridgeEscrow[]   @relation("network")
   canonicalBridgeEscrows     BridgeEscrow[]   @relation("canonicalNetwork")
   rpcs                       NetworkRpc[]
@@ -116,6 +132,10 @@ model Network {
   tokens                     Token[]
   updatedAt                  DateTime         @updatedAt
   createdAt                  DateTime         @default(now())
+}
+
+enum NetworkType {
+  EVM
 }
 
 model TokenBridge {
@@ -148,18 +168,20 @@ model TokenMeta {
 }
 
 model Token {
-  id                 String              @id @db.Char(21)
-  networkId          String              @db.Char(21)
-  network            Network             @relation(fields: [networkId], references: [id])
-  address            String
-  deployment         Deployment?
-  metadata           TokenMeta[]
-  bridgedTo          TokenBridge[]       @relation("bridgedTo")
-  bridgedFrom        TokenBridge?        @relation("bridgedFrom")
-  escrows            BridgeEscrow[]
-  updatedAt          DateTime            @updatedAt
-  createdAt          DateTime            @default(now())
-  assetRisksBalances AssetRisksBalance[]
+  id              String           @id @db.Char(21)
+  networkId       String           @db.Char(21)
+  network         Network          @relation(fields: [networkId], references: [id])
+  // Either an address or "native"
+  address         String
+  deployment      Deployment?
+  metadata        TokenMeta[]
+  bridgedTo       TokenBridge[]    @relation("bridgedTo")
+  bridgedFrom     TokenBridge?     @relation("bridgedFrom")
+  escrows         BridgeEscrow[]
+  updatedAt       DateTime         @updatedAt
+  createdAt       DateTime         @default(now())
+  insightBalances InsightBalance[]
+  managedBy       Entity[]
 
   @@unique([networkId, address])
 }
@@ -173,27 +195,27 @@ model Cache {
   updatedAt   DateTime @default(now()) @db.Timestamp(6)
 }
 
-model AssetRisksUser {
-  id                  String              @id @db.Char(21)
-  address             String              @db.Char(42)
+model InsightUser {
+  id                  String           @id @db.Char(21)
+  address             String           @db.Char(42)
   tokensRefreshedAt   DateTime?
   balancesRefreshedAt DateTime?
-  updatedAt           DateTime            @updatedAt
-  createdAt           DateTime            @default(now())
-  balances            AssetRisksBalance[]
+  updatedAt           DateTime         @updatedAt
+  createdAt           DateTime         @default(now())
+  balances            InsightBalance[]
 
   @@unique([address])
 }
 
-model AssetRisksBalance {
-  id        String         @id @db.Char(21)
-  userId    String         @db.Char(21)
-  user      AssetRisksUser @relation(fields: [userId], references: [id])
-  tokenId   String         @db.Char(21)
-  token     Token          @relation(fields: [tokenId], references: [id])
-  balance   Decimal        @db.Decimal(80, 0)
-  updatedAt DateTime       @updatedAt
-  createdAt DateTime       @default(now())
+model InsightBalance {
+  id        String      @id @db.Char(21)
+  userId    String      @db.Char(21)
+  user      InsightUser @relation(fields: [userId], references: [id])
+  tokenId   String      @db.Char(21)
+  token     Token       @relation(fields: [tokenId], references: [id])
+  balance   Decimal     @db.Decimal(80, 0)
+  updatedAt DateTime    @updatedAt
+  createdAt DateTime    @default(now())
 
   @@unique([tokenId, userId])
 }

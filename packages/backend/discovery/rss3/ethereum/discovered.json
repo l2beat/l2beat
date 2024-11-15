@@ -1,8 +1,8 @@
 {
   "name": "rss3",
   "chain": "ethereum",
-  "blockNumber": 21027285,
-  "configHash": "0xc90237ac9d232942699e2395976f51875ba5a8cb3948f7d87bcb44b12bf122b2",
+  "blockNumber": 21041870,
+  "configHash": "0xec85fd55437c4ca6250516a75b2f4e6c7538e6aef60afc1a35ba83ca592cae92",
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -28,7 +28,7 @@
         {
           "permission": "upgrade",
           "target": "0x4cbab69108Aa72151EDa5A3c164eA86845f18438",
-          "description": "upgrading bridge implementation allows to access all funds and change every system component."
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein."
         },
         {
           "permission": "upgrade",
@@ -101,7 +101,7 @@
         "0x65dcaf0bdde7cc90f916020b1615321a4b086bfd802f2c27f6ed226fc486b65d"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "This is NOT the shared SuperchainConfig of the OP stack Superchain. This SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
+      "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
       "categories": ["Upgrades&Governance"],
       "issuedPermissions": [
         {
@@ -157,7 +157,7 @@
             {
               "address": "0x1075B29e5F7a911128C77F3989702E150C988904",
               "delay": 0,
-              "description": "upgrading bridge implementation allows to access all funds and change every system component."
+              "description": "upgrading the bridge implementation can give access to all funds escrowed therein."
             }
           ]
         }
@@ -236,7 +236,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491822,
-          "prevBlockNum": 21025371
+          "prevBlockNum": 21041000
         },
         "paused": false,
         "superchainConfig": "0x3e5FaB39eD4eFB4fc29A5201059AE819f2f0418A",
@@ -373,7 +373,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621206",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621217",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -420,7 +420,7 @@
         {
           "permission": "upgrade",
           "target": "0x4cbab69108Aa72151EDa5A3c164eA86845f18438",
-          "description": "upgrading bridge implementation allows to access all funds and change every system component.",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
           "via": [{ "address": "0x1075B29e5F7a911128C77F3989702E150C988904" }]
         },
         {
@@ -518,6 +518,7 @@
     {
       "name": "WithdrawalOverwriterMultisig",
       "address": "0xC4f81F990b47c12144e74A901162A2cFDf4b5a9d",
+      "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
         "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
@@ -530,6 +531,7 @@
           "description": "can overwrite the calldata of any withdrawals in the OptimismPortal on finalization, potentially stealing the withdrawn funds or calling arbitrary contracts."
         }
       ],
+      "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1729561211,
       "values": {
         "$immutable": false,
@@ -544,14 +546,6 @@
         "$threshold": 3,
         "domainSeparator": "0x97ce9fdef3a68ed6c6f6586305dfde8ad9987238ec00eda8475498ff7fe1f98e",
         "getChainId": 1,
-        "getOwners": [
-          "0xF209b7Bbadf8d9518a822aEaa7119B38b17377A7",
-          "0xf877475092Dc23AD9d367B27D48645d56564D310",
-          "0xEE52b76e6A9F6eA669F8A99bb63b113819cDCbEF",
-          "0x70f8b7f14eA00209A70a926134B86E5eb9f4317f",
-          "0xc06d32F7C20f100C7b8657dE2b24f201A46BC3DD"
-        ],
-        "getThreshold": 3,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
         "nonce": 1,
@@ -616,10 +610,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 9907200,
-        "latestOutputIndex": 5503,
-        "nextBlockNumber": 9909000,
-        "nextOutputIndex": 5504,
+        "latestBlockNumber": 9995400,
+        "latestOutputIndex": 5552,
+        "nextBlockNumber": 9997200,
+        "nextOutputIndex": 5553,
         "proposer": "0x0016b6bacD56a0D1DaFdA52d06B7eFe65AA0816a",
         "PROPOSER": "0x0016b6bacD56a0D1DaFdA52d06B7eFe65AA0816a",
         "startingBlockNumber": 0,
@@ -627,6 +621,11 @@
         "SUBMISSION_INTERVAL": 1800,
         "submissionInterval": 1800,
         "version": "1.7.0"
+      },
+      "fieldMeta": {
+        "FINALIZATION_PERIOD_SECONDS": {
+          "description": "Challenge period (Number of seconds until a state root is finalized)."
+        }
       }
     }
   ],
@@ -1083,9 +1082,9 @@
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
-    "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
-    "opstack/L2OutputOracle": "0xfc8737561d85bab2fe5e39a7a02436a0cb0e7f96d7a7adc2ee3ea486b391c2fc",
-    "opstack/SuperchainConfigFake": "0x53a7342e3ad0ea230608a115aa098bc297d88c30ea6560b549c25853b184cc7b",
+    "opstack/L1StandardBridge": "0x9111ef1dcd42452953522f42115f0396e80b8ffacbe0ee0e3f62763880a6b6cc",
+    "opstack/L2OutputOracle": "0x2da233df369518b2564031e603ae272763f51cec1bc780ab0a814e46046b47a2",
+    "opstack/SuperchainConfigFake": "0x49e6353b6089be214c9fc1f021124f840323a29f519b5240594dd16c3a775ca8",
     "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3"
   }
 }

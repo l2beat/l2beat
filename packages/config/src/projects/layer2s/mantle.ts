@@ -1,5 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
+import { DA_BRIDGES, DA_LAYERS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
@@ -22,12 +23,11 @@ export const mantle: Layer2 = opStackL2({
   createdAt: new UnixTime(1680782525), // 2023-04-06T12:02:05Z
   badges: [Badge.DA.CustomDA],
   daProvider: {
-    name: 'Mantle DA',
-    bridge: {
-      type: 'Staked Operators',
+    layer: DA_LAYERS.MANTLE_DA,
+    bridge: DA_BRIDGES.STAKED_OPERATORS({
       requiredSignatures: threshold,
       membersCount: committeeMembers,
-    },
+    }),
     riskView: {
       value: 'External',
       description:
@@ -58,7 +58,7 @@ export const mantle: Layer2 = opStackL2({
     },
   },
   associatedTokens: ['MNT'],
-  nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN'],
+  nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'FBTC'],
   discovery,
   display: {
     name: 'Mantle',

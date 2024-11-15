@@ -8,13 +8,15 @@ const meta = {
   component: PermissionsSection,
   args: {
     id: 'permissions',
-    sectionOrder: 1,
+    sectionOrder: '1',
     includeChildrenIfUnderReview: false,
     isUnderReview: false,
     title: 'Permissions',
     permissions: [
       {
         name: 'Sequencers (2)',
+        highSeverityFieldChanged: false,
+        implementationChanged: false,
         addresses: [
           {
             name: '0x0C59…E32D',
@@ -39,6 +41,8 @@ const meta = {
       },
       {
         name: 'Validators/Proposers (14)',
+        highSeverityFieldChanged: false,
+        implementationChanged: false,
         addresses: [
           {
             name: '0x56D8…2D78',
@@ -147,6 +151,8 @@ const meta = {
       },
       {
         name: 'SecurityCouncil',
+        highSeverityFieldChanged: false,
+        implementationChanged: false,
         addresses: [
           {
             name: '0xF06E…3F85',
@@ -174,6 +180,8 @@ const meta = {
       },
       {
         name: 'SecurityCouncil participants (12)',
+        highSeverityFieldChanged: false,
+        implementationChanged: false,
         addresses: [
           {
             name: '0x70C0…6C75',
@@ -275,6 +283,8 @@ const meta = {
       'Arbitrum One': [
         {
           name: 'L2SecurityCouncilEmergency',
+          highSeverityFieldChanged: false,
+          implementationChanged: false,
           addresses: [
             {
               name: '0x4235…1641',
@@ -292,6 +302,8 @@ const meta = {
         },
         {
           name: 'L2SecurityCouncilEmergency participants (12)',
+          highSeverityFieldChanged: false,
+          implementationChanged: false,
           addresses: [
             {
               name: '0x70C0…6C75',
@@ -394,6 +406,11 @@ const meta = {
       </HighlightableLinkContextProvider>
     ),
   ],
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+    },
+  },
 } satisfies Meta<typeof PermissionsSection>
 export default meta
 

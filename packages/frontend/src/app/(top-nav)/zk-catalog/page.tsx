@@ -4,8 +4,9 @@ import { getVerifiers } from '~/server/features/zk-catalog/get-verifiers'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ZkCatalogPage } from './_components/zk-catalog-page'
 import { getZkCatalogView } from './_utils/get-zk-catalog-view'
-import { projects } from './_utils/projects'
+import { zkCatalogProjects } from './_utils/projects'
 
+export const revalidate = 3600
 export const metadata: Metadata = getDefaultMetadata({
   title: 'ZK Catalog - L2BEAT',
   description: 'A catalog of the ZK projects with detailed research.',
@@ -16,7 +17,7 @@ export const metadata: Metadata = getDefaultMetadata({
 
 export default async function Page() {
   const verifiers = await getVerifiers()
-  const view = getZkCatalogView(projects, verifiers)
+  const view = getZkCatalogView(zkCatalogProjects, verifiers)
 
   return (
     <ContentWrapper>

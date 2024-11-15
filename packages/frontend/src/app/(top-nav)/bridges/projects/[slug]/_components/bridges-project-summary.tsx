@@ -8,7 +8,7 @@ import { UnderReviewBar } from '~/components/projects/under-review-bar'
 import { UpcomingBar } from '~/components/projects/upcoming-bar'
 import { WarningBar } from '~/components/warning-bar'
 import { type BridgesProjectEntry } from '~/server/features/bridges/project/get-bridges-project-entry'
-import { getUnderReviewText } from '~/utils/project/get-under-review-text'
+import { getUnderReviewText } from '~/utils/project/under-review'
 import { BridgesProjectStats } from './bridges-project-stats'
 
 interface Props {
@@ -26,12 +26,9 @@ export function BridgesProjectSummary({ project }: Props) {
           <ProjectHeader title={project.name} slug={project.slug} />
           {project.isArchived && <ArchivedBar />}
           {project.isUpcoming && <UpcomingBar />}
-          {(project.isUnderReview || project.isImplementationUnderReview) && (
+          {project.underReviewStatus && (
             <UnderReviewBar
-              text={getUnderReviewText(
-                project.isUnderReview,
-                project.isImplementationUnderReview,
-              )}
+              text={getUnderReviewText(project.underReviewStatus)}
             />
           )}
           {project.header.warning && (

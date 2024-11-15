@@ -7,7 +7,7 @@ import { getChartRange } from '../../core/utils/get-chart-range-from-columns'
 import { mapMilestones } from '../../core/utils/map-milestones'
 import { type ChartUnit } from '../../types'
 
-export type TvlDataPoint = readonly [number, number, number, number, number]
+type TvlDataPoint = readonly [number, number, number, number, number]
 
 interface Params {
   milestones: Milestone[]
@@ -46,6 +46,21 @@ export function useStackedTvlChartRenderParams({
     [data, mappedMilestones, unit],
   )
 
+  const total = useMemo(() => {
+    const lastColumn = columns.at(-1)
+    if (!lastColumn) {
+      return undefined
+    }
+    const total =
+      lastColumn.data.canonical +
+      lastColumn.data.external +
+      lastColumn.data.native
+    return {
+      usd: total / 100,
+      eth: total / lastColumn.data.ethPrice,
+    }
+  }, [columns])
+
   const firstValue = useMemo(() => columns[0]?.values[0]?.value, [columns])
   const lastValue = useMemo(
     () => columns[columns.length - 1]?.values[0]!.value ?? 0,
@@ -83,6 +98,7 @@ export function useStackedTvlChartRenderParams({
     valuesStyle,
     formatYAxisLabel,
     change,
+    total,
   }
 }
 

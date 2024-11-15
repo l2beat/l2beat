@@ -3,7 +3,8 @@ import { resolvedLayer2s } from '@l2beat/config/projects'
 import { compact } from 'lodash'
 import { env } from '~/env'
 import { getProjectLinks } from '~/utils/project/get-project-links'
-import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
+import { getUnderReviewStatus } from '~/utils/project/under-review'
+import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getContractsVerificationStatuses } from '../../verification-status/get-contracts-verification-statuses'
 import { getManuallyVerifiedContracts } from '../../verification-status/get-manually-verified-contracts'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
@@ -25,28 +26,33 @@ export async function getScalingProjectEntry(project: ScalingProject) {
     projectsVerificationStatuses,
     contractsVerificationStatuses,
     manuallyVerifiedContracts,
-    implementationChangeReport,
+    projectsChangeReport,
     header,
   ] = await Promise.all([
     getProjectsVerificationStatuses(),
     getContractsVerificationStatuses(project),
     getManuallyVerifiedContracts(project),
-    getImplementationChangeReport(),
+    getProjectsChangeReport(),
     getHeader(project),
   ])
 
   const isVerified = !!projectsVerificationStatuses[project.id]
-  const isImplementationUnderReview =
-    !!implementationChangeReport.projects[project.id]
+  const hasImplementationChanged =
+    projectsChangeReport.hasImplementationChanged(project.id)
+  const hasHighSeverityFieldChanged =
+    projectsChangeReport.hasHighSeverityFieldChanged(project.id)
 
   const common = {
     type: project.type,
     name: project.display.name,
     slug: project.display.slug,
-    isUnderReview: !!project.isUnderReview,
+    underReviewStatus: getUnderReviewStatus({
+      isUnderReview: !!project.isUnderReview,
+      hasImplementationChanged,
+      hasHighSeverityFieldChanged,
+    }),
     isArchived: !!project.isArchived,
     isUpcoming: !!project.isUpcoming,
-    isImplementationUnderReview,
     header,
   }
 
@@ -58,7 +64,7 @@ export async function getScalingProjectEntry(project: ScalingProject) {
       isVerified,
       contractsVerificationStatuses,
       manuallyVerifiedContracts,
-      implementationChangeReport,
+      projectsChangeReport,
       rosetteValues,
     })
 
@@ -90,7 +96,7 @@ export async function getScalingProjectEntry(project: ScalingProject) {
     rosetteValues,
     isHostChainVerified,
     manuallyVerifiedContracts,
-    implementationChangeReport,
+    projectsChangeReport,
     contractsVerificationStatuses,
     combinedRosetteValues: stackedRosetteValues,
     hostChainRosetteValues: baseLayerRosetteValues,
@@ -125,6 +131,11 @@ async function getHeader(project: ScalingProject) {
     activity: activityProjectStats,
     rosetteValues: getScalingRosetteValues(project.riskView),
     links: getProjectLinks(project.display.links),
+    hostChain:
+      project.type === 'layer3'
+        ? (layer2s.find((l) => l.id === project.hostChain)?.display.name ??
+          project.hostChain)
+        : undefined,
     tvl:
       !env.EXCLUDED_TVL_PROJECTS?.includes(project.id.toString()) &&
       tvlProjectStats

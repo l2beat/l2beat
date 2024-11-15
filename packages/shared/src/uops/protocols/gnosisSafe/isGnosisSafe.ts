@@ -1,10 +1,15 @@
-import { EVMTransaction } from '../../../clients/rpc/types'
+import { assert, Transaction } from '@l2beat/shared-pure'
+import { isArray } from 'lodash'
 import {
   SAFE_EXEC_TRANSACTION_SELECTOR,
   SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
 } from './const'
 
-export function isGnosisSafe(tx: EVMTransaction): boolean {
+export function isGnosisSafe(tx: Transaction): boolean {
+  assert(
+    tx.data && !isArray(tx.data),
+    `Only EVM Transcations are allowed: ${tx.hash}`,
+  )
   const selector = tx.data.slice(0, 10)
 
   return (

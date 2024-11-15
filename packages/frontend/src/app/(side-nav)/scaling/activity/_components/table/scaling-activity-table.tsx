@@ -8,8 +8,9 @@ import {
 } from '@tanstack/react-table'
 import { BasicTable } from '~/components/table/basic-table'
 import { RollupsTable } from '~/components/table/rollups-table'
+import { env } from '~/env'
 import { useTable } from '~/hooks/use-table'
-import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling-activity-entries'
+import { type ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
 import { getScalingActivityColumns } from './columns'
 
 interface Props {
@@ -27,7 +28,8 @@ export function ScalingActivityTable({
 }: Props) {
   const table = useTable({
     columns: getScalingActivityColumns({
-      customActivityIndexing: !!customSortedRowModel,
+      activity:
+        !!customSortedRowModel && env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING,
     }),
     data: entries,
     getCoreRowModel: getCoreRowModel(),

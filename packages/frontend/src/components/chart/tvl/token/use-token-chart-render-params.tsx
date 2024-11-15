@@ -8,7 +8,7 @@ import { getChartRange } from '../../core/utils/get-chart-range-from-columns'
 import { mapMilestones } from '../../core/utils/map-milestones'
 import { type ChartUnit } from '../../types'
 
-export type TokenDataPoint = [number, number, number]
+type TokenDataPoint = [number, number, number]
 
 interface Params {
   milestones: Milestone[]

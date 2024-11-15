@@ -50,9 +50,10 @@ export const real: Layer2 = orbitStackL2({
     minTimestampForTvl: new UnixTime(1710580715),
     coingeckoPlatform: 're-al',
   },
+  discoveryDrivenData: true,
   associatedTokens: ['RWA'], // native token reETH not on coingecko yet
   isNodeAvailable: 'UnderReview',
-  bridge: discovery.getContract('Bridge'),
+  bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   rpcUrl: 'https://real.drpc.org',
@@ -67,50 +68,10 @@ export const real: Layer2 = orbitStackL2({
     discovery.getEscrowDetails({
       address: EthereumAddress('0x679D4C1cC6855C57726BEA1784F578315d6431f6'),
       tokens: ['stETH'],
+      source: 'external',
       description:
         'This contract escrows the stETH that was deposited to mint reETH.',
     }),
-  ],
-  nonTemplateContracts: [
-    discovery.getContractDetails(
-      'StrategyManager',
-      'A gateway contract that manages strategies for assets that are deposited to the AssetsVault. From a user PoV this happens when bridging to the L2.',
-    ),
-    discovery.getContractDetails(
-      'SwapManager',
-      'Performs swaps via Curve or UniswapV3 to serve instant withdrawals from the reETH RealVault.',
-    ),
-    discovery.getContractDetails(
-      'RealVault',
-      'This contract is responsible for managing deposit, withdrawal, and settlement processes for the assets backing reETH using the ERC4626 (tokenized vault) standard.',
-    ),
-    discovery.getContractDetails(
-      'AssetsVault',
-      'This escrow contract receives ETH that users bridge to Re.al L2. This ETH is then converted to yielding assets using the StrategyManager.',
-    ),
-    {
-      ...discovery.getContractDetails(
-        'Bridger',
-        'A Routing contract to the standard orbit stack bridge of the L2.',
-      ),
-      upgradableBy: ['Bridger Owner'],
-      upgradeDelay: 'No delay',
-    },
-  ],
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'GelatoMultisig',
-      'Multisig that can execute upgrades of the L2 system contracts via the UpgradeExecutor.',
-    ),
-    ...discovery.getMultisigPermission(
-      'EscrowMultisig',
-      'Multisig that owns reETH-strategy and escrow-related contracts and can move deposited funds. Also governs the reETH token as a minter.',
-    ),
-    {
-      name: 'Bridger Owner',
-      accounts: [discovery.getPermissionedAccount('Bridger', 'owner')],
-      description: 'Can upgrade the Bridger contract.',
-    },
   ],
   milestones: [
     {

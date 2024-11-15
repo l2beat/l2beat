@@ -19,7 +19,10 @@ const diagramTypeToCaption: Record<DiagramType, string> = {
 }
 
 export interface DiagramParams {
-  src: string
+  src: {
+    light: string
+    dark?: string
+  }
   caption: string
 }
 
@@ -28,12 +31,31 @@ export function getDiagramParams(
   fileName: string,
   _fs = { existsSync: fs.existsSync },
 ): DiagramParams | undefined {
-  const filePath = `/images/${type}/${fileName}.png`
-  const exists = _fs.existsSync(path.join(process.cwd(), './public', filePath))
+  const imagePaths = {
+    light: `/images/${type}/${fileName}.png`,
+    dark: `/images/${type}/${fileName}.dark.png`,
+  }
+  const paths: {
+    light?: string
+    dark?: string
+  } = Object.fromEntries(
+    Object.entries(imagePaths).map(([key, filePath]) => [
+      key,
+      _fs.existsSync(path.join(process.cwd(), './public', filePath))
+        ? filePath
+        : undefined,
+    ]),
+  )
 
-  if (!exists) return undefined
+  const { light } = paths
+
+  if (!light) return undefined
+
   return {
-    src: filePath,
+    src: {
+      ...paths,
+      light: light,
+    },
     caption: diagramTypeToCaption[type],
   }
 }

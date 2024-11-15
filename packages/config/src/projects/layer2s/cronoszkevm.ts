@@ -1,5 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { RISK_VIEW } from '../../common'
+import { DA_BRIDGES, DA_LAYERS, RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { Upgradeability, zkStackL2 } from './templates/zkStack'
@@ -56,10 +56,8 @@ export const cronoszkevm: Layer2 = zkStackL2({
   },
   diamondContract: discovery.getContract('CronosZkEvm'),
   daProvider: {
-    name: 'External',
-    bridge: {
-      type: 'None',
-    },
+    layer: DA_LAYERS.EXTERNAL,
+    bridge: DA_BRIDGES.NONE,
     riskView: {
       ...RISK_VIEW.DATA_EXTERNAL,
       sources: [
@@ -93,7 +91,7 @@ export const cronoszkevm: Layer2 = zkStackL2({
   nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
     shared.getEscrowDetails({
       address: bridge.address,
-      tokens: ['ybETH', 'CRO', 'USDC', 'WBTC', 'zkCRO'],
+      tokens: ['CRO', 'USDC', 'WBTC', 'zkCRO', 'FUL', 'FRTN', 'MOON'],
       description:
         'Shared bridge for depositing tokens to Cronos zkEVM and other ZK stack chains.',
       sharedEscrow: {

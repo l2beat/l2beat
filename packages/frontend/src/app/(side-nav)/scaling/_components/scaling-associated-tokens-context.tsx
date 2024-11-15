@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState } from 'react'
 
-export type ScalingAssociatedTokensContextValue = {
+type ScalingAssociatedTokensContextValue = {
   excludeAssociatedTokens: boolean
   setExcludeAssociatedTokens: (value: boolean) => void
 }

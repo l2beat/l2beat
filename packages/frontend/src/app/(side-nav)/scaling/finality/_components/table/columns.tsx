@@ -1,12 +1,13 @@
 import { formatSeconds } from '@l2beat/shared-pure'
 import { type Row, createColumnHelper } from '@tanstack/react-table'
 import { Badge } from '~/components/badge/badge'
-import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
+import { TwoRowCell } from '~/components/table/cells/two-row-cell'
 import {
   TypeCell,
   TypeExplanationTooltip,
 } from '~/components/table/cells/type-cell'
-import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
+import { sortTwoRowCell } from '~/components/table/sorting/functions/sort-two-row-cell'
+import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/get-scaling-finality-entries'
 import { FinalityDurationCell } from './finality-duration-cell'
 
@@ -25,10 +26,7 @@ const sortFinality =
 const columnHelper = createColumnHelper<ScalingFinalityEntry>()
 
 export const scalingFinalityColumns = [
-  ...getCommonProjectColumns(columnHelper),
-  columnHelper.accessor('name', {
-    cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
-  }),
+  ...getScalingCommonProjectColumns(columnHelper),
   columnHelper.accessor('category', {
     header: 'Type',
     cell: (ctx) => (
@@ -38,14 +36,33 @@ export const scalingFinalityColumns = [
       tooltip: <TypeExplanationTooltip showOnlyRollupsDefinitions />,
     },
   }),
-  columnHelper.accessor('dataAvailabilityMode', {
+  columnHelper.accessor('dataAvailabilityMode.value', {
     header: 'DA Mode',
-    cell: (ctx) => ctx.getValue()?.replace(' ', ' ') ?? <span>&mdash;</span>,
+    cell: (ctx) => {
+      const daMode = ctx.row.original.dataAvailabilityMode
+      if (!daMode) {
+        return <span>&mdash;</span>
+      }
+
+      return (
+        <TwoRowCell>
+          <TwoRowCell.First>{daMode.value}</TwoRowCell.First>
+          {daMode.secondLine && (
+            <TwoRowCell.Second>{daMode.secondLine}</TwoRowCell.Second>
+          )}
+        </TwoRowCell>
+      )
+    },
     meta: {
       cellClassName: 'whitespace-nowrap',
       tooltip:
         'The type shows whether projects are posting transaction data batches or state diffs to the L1.',
     },
+    sortingFn: (a, b) =>
+      sortTwoRowCell(
+        a.original.dataAvailabilityMode,
+        b.original.dataAvailabilityMode,
+      ),
   }),
   columnHelper.accessor('data', {
     id: 'timeToInclusion',
@@ -76,7 +93,7 @@ export const scalingFinalityColumns = [
     cell: (ctx) => {
       const { data } = ctx.row.original
       return data?.stateUpdateDelay ? (
-        data.stateUpdateDelay.averageInSeconds === 0 ? (
+        data.stateUpdateDelay.averageInSeconds <= 0 ? (
           'None'
         ) : (
           <FinalityDurationCell

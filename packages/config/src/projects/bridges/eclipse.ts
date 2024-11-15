@@ -1,9 +1,19 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 import { Bridge } from '.'
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 
 const discovery = new ProjectDiscovery('eclipse')
+
+const withdrawalDelaySeconds = discovery.getContractValue<number>(
+  'CanonicalBridge',
+  'fraudWindowDuration',
+)
 
 export const eclipse: Bridge = {
   type: 'bridge',
@@ -44,15 +54,15 @@ export const eclipse: Bridge = {
     principleOfOperation: {
       name: 'Principle of Operation',
       description:
-        'Eclipse implements a custom deposit-only bridge. There is no functionality to withdraw assets back to Ethereum.',
+        'Eclipse implements a custom permissioned bridge. Withdrawals need to be actively authorized by a Multisig.',
       references: [
         {
-          text: 'EtherBridge.sol - Etherscan source code, deposit() function, no withdraw function',
-          href: 'https://etherscan.io/address/0x338017e0f208b4eaf8cd4bbdc8bdabefd0e39be9#code',
+          text: 'CanonicalBridge.sol - Etherscan source code, authorizeWithdraw() function',
+          href: 'https://etherscan.io/address/0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11#code#F1#L183',
         },
         {
-          text: 'Mailbox.sol - Etherscan source code, receiveMessage() function calls EtherBridge',
-          href: 'https://etherscan.io/address/0x4cef0fa54dc06ce0ea198dab2f57d28a9dee712b#code',
+          text: 'Mailbox.sol - Etherscan source code, receiveMessage() function calls CanonicalBridge',
+          href: 'https://etherscan.io/address/0x4cef0fa54dc06ce0ea198dab2f57d28a9dee712b#code#F1#L199',
         },
       ],
       risks: [],
@@ -65,7 +75,6 @@ export const eclipse: Bridge = {
         {
           category: 'Users can be censored if',
           text: 'the bridge operators decide not to mint tokens after observing a deposit.',
-          isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
@@ -94,7 +103,7 @@ export const eclipse: Bridge = {
   },
   contracts: {
     addresses: [
-      discovery.getContractDetails('EtherBridge', {
+      discovery.getContractDetails('CanonicalBridge', {
         description:
           'Entry point to deposit ETH. It is registered as a module in the Mailbox contract.',
       }),
@@ -111,11 +120,31 @@ export const eclipse: Bridge = {
   permissions: [
     ...discovery.getMultisigPermission(
       'AuthorityMultisig',
-      'Can pause and upgrade the EtherBridge and Mailbox contracts.',
+      "Can pause and upgrade the EtherBridge and Mailbox contracts and change all parameters in the 'CanonicalBridge' contract or authorize/cancel withdrawals.",
     ),
     ...discovery.getMultisigPermission(
       'TreasuryOwner',
       'Can upgrade and transfer funds from the Treasury.',
     ),
+    {
+      name: 'WithdrawerEOA',
+      accounts: [
+        discovery.getAccessControlRolePermission(
+          'CanonicalBridge',
+          'WITHDRAW_AUTHORITY_ROLE',
+        )[1],
+      ],
+      description: `Can authorize arbitrary withdrawals from the Treasury (via the 'CanonicalBridge' contract) with a ${formatSeconds(withdrawalDelaySeconds)} delay.`,
+    },
+    {
+      name: 'PauserEOA',
+      accounts: [
+        discovery.getAccessControlRolePermission(
+          'CanonicalBridge',
+          'PAUSER_ROLE',
+        )[1],
+      ],
+      description: `Can pause standard withdrawals from the 'CanonicalBridge' contract and cancel withdrawals during the standard ${formatSeconds(withdrawalDelaySeconds)} delay.`,
+    },
   ],
 }

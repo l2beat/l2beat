@@ -1,8 +1,8 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { TotalCell } from '~/app/(side-nav)/scaling/summary/_components/table/total-cell'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/pizza-rosette-cell'
-import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { StageCell } from '~/components/table/cells/stage/stage-cell'
 import { TwoRowCell } from '~/components/table/cells/two-row-cell'
 import {
@@ -11,23 +11,20 @@ import {
 } from '~/components/table/cells/type-cell'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { sortStages } from '~/components/table/sorting/functions/stage-sorting'
-import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
+import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { formatTps } from '~/utils/number-format/format-tps'
 import { type ScalingSummaryTableRow } from '../../_utils/to-table-rows'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 
 export const scalingSummaryColumns = [
-  ...getCommonProjectColumns(columnHelper),
-  columnHelper.accessor('name', {
-    cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
-  }),
+  ...getScalingCommonProjectColumns(columnHelper),
   columnHelper.display({
     header: 'Risks',
     cell: (ctx) => (
       <PizzaRosetteCell
         values={ctx.row.original.risks}
-        isUnderReview={ctx.row.original.isUnderReview}
+        isUnderReview={ctx.row.original.underReviewStatus === 'config'}
       />
     ),
     meta: {
@@ -43,13 +40,26 @@ export const scalingSummaryColumns = [
       tooltip: <TypeExplanationTooltip />,
     },
   }),
-  columnHelper.accessor('stage', {
-    cell: (ctx) => <StageCell stageConfig={ctx.getValue()} />,
-    sortingFn: sortStages,
-    meta: {
-      hash: 'stage',
+  columnHelper.accessor(
+    (e) => {
+      if (
+        e.stage?.stage === 'NotApplicable' ||
+        e.stage?.stage === 'UnderReview'
+      ) {
+        return undefined
+      }
+      return e.stage
     },
-  }),
+    {
+      id: 'stage',
+      cell: (ctx) => <StageCell stageConfig={ctx.row.original.stage} />,
+      sortingFn: sortStages,
+      sortUndefined: 'last',
+      meta: {
+        hash: 'stage',
+      },
+    },
+  ),
   columnHelper.accessor(
     (e) => {
       return e.tvl?.breakdown?.total
@@ -104,6 +114,28 @@ export const scalingSummaryColumns = [
 
 export const scalingSummaryValidiumAndOptimiumsColumns = [
   ...scalingSummaryColumns.slice(0, 4),
+  columnHelper.display({
+    header: 'DA Layer',
+    cell: (ctx) => {
+      const now = UnixTime.now()
+      const latestValue = ctx.row.original.dataAvailability?.find(
+        (entry) =>
+          (!entry.sinceTimestamp || entry.sinceTimestamp.lte(now)) &&
+          (!entry.untilTimestamp || entry.untilTimestamp.gt(now)),
+      )
+      if (!latestValue) {
+        return <NoDataBadge />
+      }
+      return (
+        <TwoRowCell>
+          <TwoRowCell.First>{latestValue.layer.value}</TwoRowCell.First>
+          {ctx.row.original.dataAvailability && (
+            <TwoRowCell.Second>{latestValue.bridge.value}</TwoRowCell.Second>
+          )}
+        </TwoRowCell>
+      )
+    },
+  }),
   ...scalingSummaryColumns.slice(6),
 ]
 
@@ -113,7 +145,7 @@ export const scalingSummaryOthersColumns = [
     id: 'proposer',
     header: 'Proposer',
     cell: (ctx) => {
-      const value = ctx.row.original.proposer
+      const value = ctx.row.original.mainPermissions?.proposer
       if (!value) {
         return <NoDataBadge />
       }
@@ -132,7 +164,26 @@ export const scalingSummaryOthersColumns = [
     id: 'challenger',
     header: 'Challenger',
     cell: (ctx) => {
-      const value = ctx.row.original.challenger
+      const value = ctx.row.original.mainPermissions?.challenger
+      if (!value) {
+        return <NoDataBadge />
+      }
+
+      return (
+        <TwoRowCell>
+          <TwoRowCell.First>{value.value}</TwoRowCell.First>
+          {value.secondLine && (
+            <TwoRowCell.Second>{value.secondLine}</TwoRowCell.Second>
+          )}
+        </TwoRowCell>
+      )
+    },
+  }),
+  columnHelper.display({
+    id: 'upgrader',
+    header: 'Upgrader',
+    cell: (ctx) => {
+      const value = ctx.row.original.mainPermissions?.upgrader
       if (!value) {
         return <NoDataBadge />
       }

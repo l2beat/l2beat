@@ -8,6 +8,9 @@ import {
 
 import {
   CONTRACTS,
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   EXITS,
   NEW_CRYPTOGRAPHY,
   NUGGETS,
@@ -103,6 +106,7 @@ export const paradex: Layer2 = {
       discovery.getEscrowDetails({
         address: EthereumAddress('0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3'),
         tokens: ['USDC'],
+        source: 'external',
         upgradableBy: ['USDC Escrow owner'],
         upgradeDelay: formatSeconds(escrowUSDCDelaySeconds),
         description:
@@ -234,11 +238,13 @@ export const paradex: Layer2 = {
       stateUpdate: 'disabled',
     },
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (blobs or calldata)'],
-    bridge: { type: 'Enshrined' },
-    mode: 'State diffs',
-  }),
+  dataAvailability: [
+    addSentimentToDataAvailability({
+      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
+      bridge: DA_BRIDGES.ENSHRINED,
+      mode: DA_MODES.STATE_DIFFS,
+    }),
+  ],
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,

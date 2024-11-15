@@ -28,6 +28,7 @@ type Optionals = {
     technology?: DacDaLayer['technology']
     description?: DacDaLayer['display']['description']
     otherConsiderations?: DacDaLayer['otherConsiderations']
+    numberOfOperators?: DacDaLayer['numberOfOperators']
   }
   /**
    * Optional layer description and technology, defaults to generic ones
@@ -42,6 +43,7 @@ type Optionals = {
     | 'membersCount'
     | 'knownMembers'
     | 'requiredMembers'
+    | 'hideMembers'
     | 'permissions'
     | 'contracts'
     | 'transactionDataType'
@@ -53,7 +55,7 @@ type Optionals = {
   /** Optional red warning, defaults to undefined */
   redWarning?: DacBridge['display']['redWarning']
   /** Optional challenge mechanism, defaults to undefined */
-  hasChallengeMechanism?: DacDaLayer['hasChallengeMechanism']
+  challengeMechanism?: DacDaLayer['challengeMechanism']
   /** Optional fallback, defaults to undefined */
   fallback?: DacDaLayer['fallback']
 }
@@ -85,7 +87,7 @@ export function DAC(template: TemplateVars): DacDaLayer {
   `
 
   const bridgeDisplay: DacBridge['display'] = {
-    name,
+    name: 'DA Bridge',
     slug: 'dac',
     description: bridgeDescription,
     warning: template.warning,
@@ -141,13 +143,13 @@ export function DAC(template: TemplateVars): DacDaLayer {
     type: 'DaLayer',
     systemCategory: 'custom',
     fallback: template.fallback,
-    hasChallengeMechanism: template.hasChallengeMechanism,
+    challengeMechanism: template.challengeMechanism,
+    numberOfOperators: template.layer?.numberOfOperators,
     display: layerDisplay,
     technology: {
       description: layerTechnology,
       risks: template.layer?.technology?.risks,
     },
-    usedIn,
     bridges: [dacBridge],
     risks: {
       economicSecurity:

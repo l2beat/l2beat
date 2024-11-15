@@ -6,6 +6,9 @@ import {
 } from '@l2beat/shared-pure'
 import { formatEther } from 'ethers/lib/utils'
 import {
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
@@ -39,11 +42,13 @@ const challengePeriod = discovery.getContractValue<number>(
 export const fuel: Layer2 = {
   id: ProjectId('fuel'),
   createdAt: new UnixTime(1729589660), // 2024-10-22T09:34:20Z
-  dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (blobs)'],
-    bridge: { type: 'Enshrined' },
-    mode: 'Transaction data (compressed)',
-  }),
+  dataAvailability: [
+    addSentimentToDataAvailability({
+      layers: [DA_LAYERS.ETH_BLOBS],
+      bridge: DA_BRIDGES.ENSHRINED,
+      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+    }),
+  ],
   display: {
     name: 'Fuel Ignition',
     slug: 'fuel',
@@ -68,6 +73,7 @@ export const fuel: Layer2 = {
         'https://youtube.com/channel/UCam2Sj3SvFSAIfDbP-4jWZQ',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
   },
   badges: [Badge.VM.FuelVM, Badge.DA.EthereumBlobs],
   type: 'layer2',
@@ -118,6 +124,11 @@ export const fuel: Layer2 = {
         },
       },
     ],
+    transactionApi: {
+      type: 'fuel',
+      defaultUrl: 'https://mainnet.fuel.network/v1/graphql',
+      defaultCallsPerMinute: 120,
+    },
   },
   riskView: {
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
@@ -131,26 +142,30 @@ export const fuel: Layer2 = {
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: 'UnderReview',
+
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        stateVerificationOnL1: false,
+        fraudProofSystemAtLeast5Outsiders: null,
+        usersCanExitWithoutCooperation: false,
+        usersHave7DaysToExit: false,
+        securityCouncilProperlySetUp: false,
+      },
+      stage2: {
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+      },
     },
-    stage1: {
-      stateVerificationOnL1: false,
-      fraudProofSystemAtLeast5Outsiders: null,
-      usersCanExitWithoutCooperation: false,
-      usersHave7DaysToExit: false,
-      securityCouncilProperlySetUp: false,
-    },
-    stage2: {
-      fraudProofSystemIsPermissionless: null,
-      delayWith30DExitWindow: false,
-      proofSystemOverriddenOnlyInCaseOfABug: false,
-    },
-  }),
+    { rollupNodeLink: 'https://github.com/FuelLabs/network-watchtower' },
+  ),
   technology: {
     stateCorrectness: {
       name: 'Fraud proofs are in development',

@@ -91,12 +91,6 @@
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
     secondLine: undefined
     sentiment: "bad"
-    sources: [
-      {
-        contract: "OptimismPortal"
-        references: []
-      }
-    ]
     value: "None"
   }
   proposerFailure: {
@@ -120,7 +114,6 @@
   stateValidation: {
     definingMetric: -Infinity
     description: "Currently the system permits invalid state roots. More details in project overview."
-    secondLine: "7d challenge period"
     sentiment: "bad"
     value: "None"
   }

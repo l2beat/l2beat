@@ -1,8 +1,12 @@
 import type { Chain } from '@/chains'
 import type { CountedBlock, StatResults } from '@/types'
+import { Logger } from '@l2beat/backend-tools'
+import { HttpClient2, RetryHandler, RpcClient2 } from '@l2beat/shared'
+import { RateLimiter } from '../../../../backend-tools/dist'
+import { getApiKey, getApiUrl, getScanUrl } from '../clients/apiUrls'
 import { BlockClient } from '../clients/block/BlockClient'
-import { RpcClient } from '../clients/block/RpcClient'
 import { StarknetClient } from '../clients/block/StarknetClient'
+import { RpcCodeClient } from '../clients/code/RpcCodeClient'
 import { ScanClient } from '../clients/contract/ScanClient'
 import { EtherfaceClient } from '../clients/signature/EtherfaceClient'
 import { FourByteClient } from '../clients/signature/FourByteClient'
@@ -19,27 +23,64 @@ export class ChainService {
   private readonly nameService?: NameService
 
   constructor(chain: Chain, db: DB) {
+    const http = new HttpClient2()
+
     switch (chain.id) {
       case 'starknet':
         this.client = new StarknetClient(chain)
         this.counter = new StarknetCounter()
         break
-      case 'base':
-      case 'ethereum':
-      case 'xai':
-      case 'taiko':
+      case 'alephzero':
       case 'arbitrum':
+      case 'base':
+      case 'blast':
+      case 'ethereum':
       case 'gravity':
-      case 'optimism': {
-        this.client = new RpcClient(chain)
+      case 'linea':
+      case 'lyra':
+      case 'mantle':
+      case 'nova':
+      case 'optimism':
+      case 'polynomial':
+      case 'scroll':
+      case 'silicon':
+      case 'taiko':
+      case 'xai':
+      case 'zksync-era':
+      case 'zora': {
+        this.client = new RpcClient2({
+          url: getApiUrl(chain.id),
+          chain: chain.id,
+          http,
+          rateLimiter: new RateLimiter({
+            callsPerMinute: chain.batchSize * 30, // heuristic
+          }),
+          logger: Logger.SILENT,
+          retryHandler: RetryHandler.RELIABLE_API(Logger.SILENT),
+        })
+
         this.counter = new RpcCounter()
+
         const signatureClients = [
           new EtherfaceClient(),
           new FourByteClient(),
           new OpenChainClient(),
         ]
-        const contractClient = new ScanClient(chain)
-        this.nameService = new NameService(db, signatureClients, contractClient)
+
+        let contractClient = undefined
+        const scanApiUrl = getScanUrl(chain.id)
+        const scanApiKey = getApiKey(chain.id, 'SCAN')
+        if (scanApiUrl && scanApiKey) {
+          contractClient = new ScanClient(scanApiUrl, scanApiKey)
+        }
+
+        const codeClient = new RpcCodeClient(chain)
+        this.nameService = new NameService(
+          db,
+          signatureClients,
+          codeClient,
+          contractClient,
+        )
         break
       }
       default:
@@ -48,12 +89,12 @@ export class ChainService {
   }
 
   async getBlockNumber(): Promise<number> {
-    return await this.client.getBlockNumber()
+    return await this.client.getLatestBlockNumber()
   }
 
   async getBlock(blockNumber: number): Promise<CountedBlock> {
-    const block = await this.client.getBlock(blockNumber)
-    const countedBlock = await this.counter.countForBlock(block)
+    const block = await this.client.getBlockWithTransactions(blockNumber)
+    const countedBlock = this.counter.countForBlock(block)
 
     if (this.nameService) {
       await this.nameService.fillNames(countedBlock)
@@ -65,10 +106,10 @@ export class ChainService {
   async analyzeBlocks(startBlock: number, count: number): Promise<StatResults> {
     const blocks = []
     for (let i = 0; i < count; i++) {
-      const block = await this.client.getBlock(startBlock + i)
+      const block = await this.client.getBlockWithTransactions(startBlock + i)
       blocks.push(block)
     }
 
-    return await this.counter.countForBlocks(blocks)
+    return this.counter.countForBlocks(blocks)
   }
 }

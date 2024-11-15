@@ -1,24 +1,33 @@
 'use client'
 
 import { assertUnreachable } from '@l2beat/shared-pure'
+import fuzzysort from 'fuzzysort'
+import { groupBy } from 'lodash'
 import Image from 'next/image'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { type Entries } from 'type-fest'
 import {
   Command,
   CommandDialog,
   CommandEmpty,
   CommandGroup,
   CommandInput,
+  CommandInputActionButton,
   CommandItem,
   CommandList,
 } from '~/components/core/command'
 import { useOnClickOutside } from '~/hooks/use-on-click-outside'
 import { useRouterWithProgressBar } from '../progress-bar'
 import {
+  type SearchBarCategory,
+  searchBarCategories,
+} from './search-bar-categories'
+import { useSearchBarContext } from './search-bar-context'
+import {
+  type AnySearchBarEntry,
   type SearchBarProject,
-  useSearchBarContext,
-} from './search-bar-context'
-
+} from './search-bar-entry'
+import { searchBarPages } from './search-bar-pages'
 interface Props {
   allProjects: SearchBarProject[]
   recentlyAdded: SearchBarProject[]
@@ -46,25 +55,34 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
     () =>
       value === ''
         ? recentlyAdded
-        : allProjects
-            .filter((p) => {
-              return (
-                p.name.toLowerCase().includes(value.toLowerCase()) ||
-                p.matchers.some((m) => m.includes(value.toLowerCase()))
-              )
+        : fuzzysort
+            .go(value, allProjects, {
+              limit: 15,
+              keys: ['name', (e) => e.tags?.join() ?? ''],
+              scoreFn: (match) =>
+                match.score * (match.obj.category === 'zkCatalog' ? 0.9 : 1),
             })
-            .sort((a, b) => {
-              // Sort filtered pages: exact matches first, then partial matches
-              const searchTerm = value.toLowerCase()
-              return (
-                (a.name.toLowerCase().startsWith(searchTerm) ? -1 : 1) ||
-                (a.name.toLowerCase().includes(searchTerm) ? -1 : 1) ||
-                a.name.localeCompare(b.name)
-              )
-            })
-            .slice(0, 15),
-    [value, allProjects, recentlyAdded],
+            .map((match) => match.obj),
+    [value, recentlyAdded, allProjects],
   )
+
+  const filteredPages = useMemo(
+    () =>
+      fuzzysort
+        .go(value, searchBarPages, {
+          keys: ['name', (e) => e.tags?.join() ?? ''],
+        })
+        .flatMap((match) => match.obj)
+        .sort((a, b) => a.index - b.index),
+
+    [value],
+  )
+
+  const grouped = useMemo(() => {
+    return Object.entries(
+      groupBy([...filteredProjects, ...filteredPages], (p) => p.category),
+    ) as Entries<Record<SearchBarCategory, AnySearchBarEntry[]>>
+  }, [filteredProjects, filteredPages])
 
   const onEscapeKeyDown = (e?: KeyboardEvent) => {
     e?.preventDefault()
@@ -92,24 +110,25 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
           placeholder="Search for projects"
           value={value}
           onValueChange={setValue}
-          reset={() => onEscapeKeyDown()}
-        />
+        >
+          <CommandInputActionButton onClick={() => onEscapeKeyDown()}>
+            {value !== '' ? 'Clear' : 'Close'}
+          </CommandInputActionButton>
+        </CommandInput>
         <CommandList className="max-h-screen md:h-[270px] md:max-h-[270px] [@supports(height:100dvh)]:max-h-dvh">
           <CommandEmpty>No results found.</CommandEmpty>
-          {filteredProjects.length > 0 && (
-            <CommandGroup
-              heading={value === '' ? 'Recently added projects' : 'Projects'}
-            >
+          {filteredProjects.length > 0 && value === '' && (
+            <CommandGroup heading="Recently added projects">
               {filteredProjects.map((project) => {
                 return (
-                  <CommandItem
+                  <SearchBarItem
                     key={project.id}
-                    className="cursor-pointer gap-2 rounded-lg"
                     onSelect={() => {
                       setOpen(false)
                       setValue('')
                       router.push(project.href)
                     }}
+                    label={entryToLabel(project)}
                   >
                     <Image
                       src={project.iconUrl}
@@ -119,22 +138,77 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                       height={20}
                     />
                     {project.name}
-                    <div className="ml-auto text-xs text-secondary">
-                      {typeToLabel(project.type)}
-                    </div>
-                  </CommandItem>
+                  </SearchBarItem>
                 )
               })}
             </CommandGroup>
           )}
+          {value !== '' &&
+            grouped.length > 0 &&
+            grouped.map(([group, items]) => (
+              <CommandGroup
+                heading={searchBarCategories[group].name}
+                key={group}
+              >
+                {items.map((item) => {
+                  return (
+                    <SearchBarItem
+                      key={item.href}
+                      onSelect={() => {
+                        setOpen(false)
+                        setValue('')
+                        router.push(item.href)
+                      }}
+                      label={entryToLabel(item)}
+                      value={`${item.category}-${item.name}-${item.type}${'kind' in item ? `-${item.kind}` : ''}`}
+                    >
+                      {item.type === 'project' && (
+                        <Image
+                          src={item.iconUrl}
+                          alt={`${item.name} logo`}
+                          className="rounded-sm"
+                          width={20}
+                          height={20}
+                        />
+                      )}
+                      {item.name}
+                    </SearchBarItem>
+                  )
+                })}
+              </CommandGroup>
+            ))}
         </CommandList>
       </Command>
     </CommandDialog>
   )
 }
 
-function typeToLabel(type: SearchBarProject['type']) {
-  switch (type) {
+function SearchBarItem({
+  onSelect,
+  children,
+  label,
+  value,
+}: {
+  onSelect: () => void
+  children: React.ReactNode
+  label?: string
+  value?: string
+}) {
+  return (
+    <CommandItem
+      className="cursor-pointer gap-2 rounded-lg"
+      onSelect={onSelect}
+      value={value}
+    >
+      {children}
+      {label && <div className="ml-auto text-xs text-secondary">{label}</div>}
+    </CommandItem>
+  )
+}
+
+function entryToLabel(entry: AnySearchBarEntry) {
+  if (entry.type === 'page') return 'Page'
+  switch (entry.kind) {
     case 'layer2':
       return 'Layer 2'
     case 'layer3':
@@ -142,8 +216,10 @@ function typeToLabel(type: SearchBarProject['type']) {
     case 'bridge':
       return 'Bridge'
     case 'da':
-      return 'DA'
+      return 'DA Layer'
+    case 'zkCatalog':
+      return undefined
     default:
-      assertUnreachable(type)
+      assertUnreachable(entry.kind)
   }
 }

@@ -1,20 +1,48 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "State batches / commitments get posted here.",
+  "displayName": "SequencerInbox",
+  "description": "A sequencer (registered in this contract) can submit transaction batches or commitments here.",
   "ignoreMethods": ["inboxAccs"],
   "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
+  "ignoreRelatives": ["reader4844"],
   "fields": {
     "maxTimeVariation": {
-      "description": "Struct: delayBlocks, futureBlocks, delaySeconds, futureSeconds. onlyRollupOwner settable. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
+      "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed.",
+      "returnType": "(uint256 delayBlocks, uint256 futureBlocks, uint256 delaySeconds, uint256 futureSeconds)"
     },
     "sequencerVersion": {
       "handler": {
         "type": "arbitrumSequencerVersion"
       }
     },
-    "dacKeyset": {
+    "postsBlobs": {
       "handler": {
-        "type": "arbitrumDACKeyset"
+        "type": "orbitPostsBlobs"
+      }
+    },
+    // TODO: can only be used as soon as 0x00 is ignored for permissions
+    // "batchPosterManager": {
+    //   "target": {
+    //     "permissions": [
+    //       {
+    //         "type": "configure",
+    //         "description": "can add/remove batchPosters (Sequencers)."
+    //       }
+    //     ]
+    //   }
+    // },
+    "batchPosters": {
+      "target": {
+        "permissions": [
+          {
+            "type": "sequence",
+            "description": "can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+          }
+        ]
+      },
+      "handler": {
+        "type": "arbitrumActors",
+        "actorType": "batchPoster"
       }
     },
     // when this changes, it means the sequencers have changed
@@ -29,13 +57,9 @@
         ]
       }
     },
-    "batchPosters": {
-      "target": {
-        "permissions": [{ "type": "sequence" }]
-      },
+    "dacKeyset": {
       "handler": {
-        "type": "arbitrumActors",
-        "actorType": "batchPoster"
+        "type": "arbitrumDACKeyset"
       }
     },
     "keySetUpdates": {

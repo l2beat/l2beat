@@ -1,7 +1,7 @@
 {
   "name": "aztecconnect",
   "chain": "ethereum",
-  "blockNumber": 19816414,
+  "blockNumber": 21041827,
   "configHash": "0x79ab0e953135f51ef67edee8308d7def1f7b57f24e77fe39d6d60da30592bd08",
   "contracts": [
     {
@@ -28,10 +28,11 @@
     {
       "name": "ProxyAdmin",
       "address": "0xC5b735d05c26579B701Be9bED253Bb588503B26B",
+      "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
       ],
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "target": "0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455"
@@ -54,8 +55,13 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xC5b735d05c26579B701Be9bED253Bb588503B26B",
-          "via": []
+          "target": "0x0000000000000000000000000000000000000000",
+          "via": [
+            {
+              "address": "0xC5b735d05c26579B701Be9bED253Bb588503B26B",
+              "delay": 0
+            }
+          ]
         }
       ],
       "ignoreInWatchMode": [
@@ -112,9 +118,9 @@
         "escapeBlockUpperBound": 2400,
         "getAsyncDefiInteractionHashesLength": 0,
         "getCapped": true,
-        "getDataSize": 27318272,
+        "getDataSize": 27326464,
         "getDefiInteractionHashesLength": 0,
-        "getEscapeHatchStatus": [false, 146],
+        "getEscapeHatchStatus": [false, 1133],
         "getImplementationVersion": 3,
         "getPendingDefiInteractionHashesLength": 0,
         "getSupportedAsset": [
@@ -166,14 +172,29 @@
           "0xA173BDdF4953C1E8be2cA0695CFc07502Ff3B1e7",
           "0xD64791E747188b0e5061fC65b56Bf20FeE2e3321"
         ],
-        "rollupStateHash": "0xa0b5fd7668d98634fb7cbd339e1bb36d27da4976af2a8ccb8e9d47cb72d2d5fc",
+        "rollupStateHash": "0x795a52c2d8cb26fde9cbc3df5fba2149ceba20f20ad3006d0921f84fedfa51ef",
         "verifier": "0xb7baA1420f88b7758E341c93463426A2b7651CFB"
       },
       "derivedName": "RollupProcessorV3"
     }
   ],
   "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
+    {
+      "address": "0x0000000000000000000000000000000000000000",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455",
+          "via": [{ "address": "0xC5b735d05c26579B701Be9bED253Bb588503B26B" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0xC5b735d05c26579B701Be9bED253Bb588503B26B"
+        }
+      ]
+    },
     { "address": "0xA173BDdF4953C1E8be2cA0695CFc07502Ff3B1e7" },
     { "address": "0xD64791E747188b0e5061fC65b56Bf20FeE2e3321" }
   ],
@@ -339,5 +360,7 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {
+    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091"
+  }
 }

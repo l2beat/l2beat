@@ -15,7 +15,8 @@
     "0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea": "BondToken",
     "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE": "OptimisticOracleV3",
     "0x8692B776d1Ff0664177c90465038056Dc64f8991": "OptimisticGovernor",
-    "0xA8399e221a583A57F54Abb5bA22f31b5D6C09f32": "WorldChain_Adapter"
+    "0xA8399e221a583A57F54Abb5bA22f31b5D6C09f32": "WorldChain_Adapter",
+    "0x6F4083304C2cA99B077ACE06a5DcF670615915Af": "Alephzero_Adapter"
   },
   "overrides": {
     "HubPool": {

@@ -9,36 +9,31 @@
     "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
   ],
   "names": {
-    "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11": "RollupProxy",
-    "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB": "Bridge",
-    "0x6228e2FB8C561f1a5A963039Bc38Eb6D539A1A7F": "ChallengeManager",
-    "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a": "SequencerInbox",
-    "0x655761AD5FC251F414D6993A73184B0669F278c8": "Outbox",
-    "0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a": "UpgradeExecutor",
-    "0x74C717C01425eb475A5fC55d2A4a9045fC9800df": "ProxyAdmin",
-    "0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d": "ExecutorMultisig",
+    "0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d": "Kinto SecurityCouncil",
     "0x0f1b7bd7762662B23486320AA91F30312184f70C": "Bridger",
-    "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82": "BridgerOwnerMultisig"
+    "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82": "BridgerOwnerMultisig",
+    "0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1": "TurnkeyMultisig",
+    // eoa names
+    "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8": "Kinto Foundation EOA",
+    "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B": "Mamori Labs EOA 1",
+    "0x94561e98DD5E55271f91A103e4979aa6C493745E": "Mamori Labs EOA 2",
+    "0x356000Cec4fC967f8FC372381D983426760A0391": "Caldera EOA",
+    "0x082CBA3929aD00EbB6d81ebE57B0BD24fBF3Fc6B": "Hypernative EOA",
+    "0xe52957E92a372d5a3B544F4C329b606f1A1b4bD2": "Venn/Ironblocks EOA",
+    "0x5FB5040dfC5B8b9Ea40dFBd881188Ec85cDC0621": "Certora EOA",
+    // validator EOA names
+    "0x64Cf65036a76E3827e448cadbc53D31EefDCE04a": "Caldera EOA 2",
+    "0x944eB0a2829A859959586b10D54229278534a696": "Mamori Labs EOA 3",
+    "0x2bfDA59220413DEd39dD0E443620b5277EcE6348": "Ankr EOA",
+    "0x58028fFbc25aE2e12b96276bDB125955F41D41f3": "Hypernative EOA 2",
+    "0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f": "Venn EOA 2"
   },
   "overrides": {
-    "ChallengeManager": {
-      "ignoreMethods": ["challenges"]
-    },
-    "RollupProxy": {
-      "extends": "orbitstack/RollupProxy"
-    },
-    "Outbox": {
-      "ignoreMethods": ["spent", "isSpent"]
-    },
-    "Bridge": {
-      "ignoreMethods": ["sequencerInboxAccs", "delayedInboxAccs"],
-      "ignoreInWatchMode": [
-        "delayedMessageCount",
-        "sequencerMessageCount",
-        "sequencerReportedSubMessageCount"
-      ]
+    "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11": {
+      "extends": "orbitstack/RollupProxy" // hack: prevents fastconfirmer permission to be resolved to 0x00 on FE
     },
     "Bridger": {
+      "description": "Bridger gateway that can swap assets to 'L2 final assets' before bridging them to the L2.",
       "ignoreRelatives": [
         "DAI",
         "ETH",
@@ -66,77 +61,6 @@
         "domainSeparator",
         "__depositCount"
       ]
-    },
-    "SequencerInbox": {
-      "ignoreMethods": ["inboxAccs"],
-      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
-      "fields": {
-        // getting sequencers from the contract is too complex at the moment
-        // so we hardcode it in config .ts
-        // this field will notify us in case of changes
-        "IS_HARDCODED_SEQUENCER_BATCH_POSTER": {
-          "handler": {
-            "type": "call",
-            "method": "function isBatchPoster(address) external view returns (bool)",
-            "args": ["0x5eAD389b57d533A94a0eacd570Dc1CC59C25F2D4"]
-          }
-        },
-        "sequencerVersion": {
-          "handler": {
-            "type": "arbitrumSequencerVersion"
-          }
-        },
-        "postsBlobs": {
-          "handler": {
-            "type": "orbitPostsBlobs"
-          }
-        },
-        // when this changes, it means the sequencers have changed
-        "setIsBatchPosterCount": {
-          "handler": {
-            "type": "eventCount",
-            "topics": [
-              // event OwnerFunctionCalled(uint256 indexed id);
-              "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
-              // id == 6 is emitted inside setValidator()
-              "0x0000000000000000000000000000000000000000000000000000000000000001"
-            ]
-          }
-        },
-        "batchPosters": {
-          "target": {
-            "permissions": [{ "type": "sequence" }]
-          },
-          "handler": {
-            "type": "arbitrumActors",
-            "actorType": "batchPoster"
-          }
-        },
-        "maxTimeVariation": {
-          "returnType": "(uint256 delayBlocks, uint256 futureBlocks, uint256 delaySeconds, uint256 futureSeconds)"
-        },
-        "keySetUpdates": {
-          "handler": {
-            "type": "eventCount",
-            "topics": [
-              // SetValidKeyset(bytes32,bytes)
-              "0xabca9b7986bc22ad0160eb0cb88ae75411eacfba4052af0b457a9335ef655722"
-            ]
-          }
-        }
-      }
-    },
-    "UpgradeExecutor": {
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
-        }
-      }
-    },
-    "BridgerOwnerMultisig": {
-      "ignoreInWatchMode": ["nonce"]
     }
   }
 }

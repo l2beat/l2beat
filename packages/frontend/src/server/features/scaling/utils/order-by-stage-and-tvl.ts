@@ -1,5 +1,7 @@
 import { type StageConfig } from '@l2beat/config'
 import { type ProjectId } from '@l2beat/shared-pure'
+import { env } from '~/env'
+import { orderByTvl } from '../tvl/utils/order-by-tvl'
 
 export function orderByStageAndTvl<
   T extends {
@@ -8,6 +10,10 @@ export function orderByStageAndTvl<
     stage: StageConfig
   },
 >(projects: T[], tvls: Record<ProjectId, number>): T[] {
+  if (!env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING) {
+    return orderByTvl(projects, tvls)
+  }
+
   const getTvl = (project: T) => tvls[project.id] ?? 0
 
   const sortByStageAndTvl = (a: T, b: T) => {

@@ -3,7 +3,6 @@ import { utils } from 'ethers'
 import * as z from 'zod'
 
 import { getErrorMessage } from '../../../utils/getErrorMessage'
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
 import {
@@ -35,7 +34,6 @@ export class StorageHandler implements Handler {
   constructor(
     readonly field: string,
     private readonly definition: StorageHandlerDefinition,
-    readonly logger: DiscoveryLogger,
   ) {
     this.dependencies = getDependencies(definition)
   }
@@ -45,7 +43,6 @@ export class StorageHandler implements Handler {
     address: EthereumAddress,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
-    this.logger.logExecution(this.field, ['Reading storage'])
     const referenceInput = generateReferenceInput(
       previousResults,
       provider,

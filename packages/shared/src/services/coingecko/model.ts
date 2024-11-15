@@ -53,3 +53,8 @@ export const CoinsMarketResult = z.object({
 
 export const CoinsMarketResultData = z.array(CoinsMarketResult)
 export type CoinsMarketResultData = z.infer<typeof CoinsMarketResultData>
+
+export type CoingeckoError = z.infer<typeof CoingeckoError>
+export const CoingeckoError = z.object({
+  error: z.string(),
+})

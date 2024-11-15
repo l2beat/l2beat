@@ -1,3 +1,222 @@
+Generated with discovered.json: 0x03f973eaa951078e3ce4e868aba5cb0f8b34d015
+
+# Diff at Tue, 05 Nov 2024 12:13:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5e6ce51851b57187ccdd52c4944a82e2a8ab1e88 block: 21092345
+- current block number: 21121371
+
+## Description
+
+Bridge upgrade without major logic changes.
+
+### EtherBridge 
+- Now called CanonicalBridge.sol
+- More granular roles (AuthorityMultisig still main admin)
+- 'FraudWindow' of 7d introduced for normal withdrawals (but still using permissioned withdrawals, and Treasury allows permissioned direct emergencyWithdraw())
+- Two step process for withdrawals interfaces with the bridge and not the Treasury directly: 1) `authorizeWithdraw()` by permissioned actor any time 2) `claimWithdraw()` after 7d by anyone
+
+### Treasury
+- AccessControl and SemVer added
+- minor changes
+
+### EtherBridge
+
+## Watched changes
+
+```diff
+    contract TreasuryOwner (0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0xD7E4b67E735733aC98a88F13d087D8aac670E644"}]
+    }
+```
+
+```diff
+    contract EtherBridge (0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1) {
+    +++ description: None
+      values.paused:
+-        false
++        true
+    }
+```
+
+```diff
+    contract Treasury (0xD7E4b67E735733aC98a88F13d087D8aac670E644) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x9bdc786276b4d7feab768c6c8c296d44e22918524e1a28b23db40678d2b0eeef"
++        "0x63d1cc40bc2613e87b2d6905ffda15f04f069e3bf72cb12a2979f95a0e7010b7"
+      issuedPermissions.0.target:
+-        "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
++        "0x0000000000000000000000000000000000000000"
+      values.$admin:
+-        "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
++        "0x0000000000000000000000000000000000000000"
+      values.$implementation:
+-        "0xa8E15d2B1bf6B0Fd3Bc9Ead06323c0730b67f8d4"
++        "0xF1F7a359C3f33EE8A66bdCbf4c897D25Caf90978"
+      values.$pastUpgrades.1:
++        ["2024-11-05T03:53:23.000Z","0x15aecc2b0cac5c03221b0f7ade10e888ad4f944df4bdc19c1f3c40fc56d5ebbb",["0xF1F7a359C3f33EE8A66bdCbf4c897D25Caf90978"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.1:
++        "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "0x4720342419C1D316B948690d12C86D5b485C64E0"
+      values.accessControl.PAUSER_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xD02f545d57536BC1E8F12D867731F006AacE71E3","0x4720342419C1D316B948690d12C86D5b485C64E0","0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"]}
+      values.accessControl.STARTER_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xD02f545d57536BC1E8F12D867731F006AacE71E3","0x4720342419C1D316B948690d12C86D5b485C64E0","0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"]}
+      values.accessControl.UPGRADER_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xD02f545d57536BC1E8F12D867731F006AacE71E3","0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"]}
+      values.accessControl.EMERGENCY_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xD02f545d57536BC1E8F12D867731F006AacE71E3","0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"]}
+      values.accessControl.DEPOSITOR_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11","0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"]}
+      values.accessControl.WITHDRAW_AUTHORITY_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11","0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"]}
+      values.getVersionComponents.major:
+-        1
++        2
+      values.owner:
+-        "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+      values.pendingOwner:
+-        "0x4720342419C1D316B948690d12C86D5b485C64E0"
+      values.DEFAULT_ADMIN_ROLE:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.DEPOSITOR_ROLE:
++        "0xd50fd8c1b5fa5213a5974932fcc33d2992a99225bc9319caf7cf652d0d2b9acf"
+      values.EMERGENCY_ROLE:
++        "0x9e97963c33348a1cae64c3216747be51682ee42f36d1ed282cb81018cdb30e3d"
+      values.PAUSER_ROLE:
++        "0x39935d86204acf3d77da26425d7a46606d2550568c6b1876f3a2e76c804c7626"
+      values.STARTER_ROLE:
++        "0xac6a94bcd1ac2877eda181de9748e5972fc07f76d4864cecf836b3fca185e53c"
+      values.UPGRADER_ROLE:
++        "0x0fb7166d9f681d2bd296a45a1a2e81365c392be30b6156d73b45df44e85cdb9f"
+      values.WITHDRAW_AUTHORITY_ROLE:
++        "0xfe482b7b16acc2ea6eda181934b481a09d50ed8e3579b43c531bc57b84336c53"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract CanonicalBridge (0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Upgrader0to1 (0xD02f545d57536BC1E8F12D867731F006AacE71E3)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../eclipse/ethereum/.flat/CanonicalBridge.sol     | 952 +++++++++++++++++++++
+ .../Treasury/Treasury.sol                          | 658 +++++++++-----
+ .../eclipse/ethereum/.flat/Upgrader0to1.sol        | 686 +++++++++++++++
+ 3 files changed, 2067 insertions(+), 229 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21092345 (main branch discovery), not current.
+
+```diff
+    contract Treasury (0xD7E4b67E735733aC98a88F13d087D8aac670E644) {
+    +++ description: None
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
+    }
+```
+
+Generated with discovered.json: 0xf7289bb1bf13ba75be6254a4e759e751bd0a6f53
+
+# Diff at Fri, 01 Nov 2024 10:58:18 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@cd1f0e71bb08ce16b2084a11b768538e8aa6ba8c block: 21041942
+- current block number: 21092345
+
+## Description
+
+Multisig members change and threshold increase, also added a pending owner. Waiting for the new owner to accept the ownership transfer.
+
+## Watched changes
+
+```diff
+    contract AuthorityMultisig (0x4720342419C1D316B948690d12C86D5b485C64E0) {
+    +++ description: None
+      values.$members.4:
++        "0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA"
+      values.$members.3:
+-        "0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA"
++        "0x757210F15AB48f0F8d328984fc321CfA6BB5BFc2"
+      values.$members.2:
+-        "0x757210F15AB48f0F8d328984fc321CfA6BB5BFc2"
++        "0x950815d0e585095B06111CD101440fb1E95AB2a5"
+      values.$members.1:
+-        "0x950815d0e585095B06111CD101440fb1E95AB2a5"
++        "0xCD2fA978D163c0068167dDff8b6951f0E626e6A4"
+      values.$members.0:
+-        "0xCD2fA978D163c0068167dDff8b6951f0E626e6A4"
++        "0xBb534A6Bd0440727cb5883D037DEd7358059D547"
+      values.$threshold:
+-        2
++        3
+      values.multisigThreshold:
+-        "2 of 4 (50%)"
++        "3 of 5 (60%)"
+    }
+```
+
+```diff
+    contract Treasury (0xD7E4b67E735733aC98a88F13d087D8aac670E644) {
+    +++ description: None
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "0x4720342419C1D316B948690d12C86D5b485C64E0"
+    }
+```
+
+Generated with discovered.json: 0x295923dcc511c729fda3a20b1db66baad067c07f
+
+# Diff at Fri, 25 Oct 2024 10:10:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e7501f424c0cea9b5438386ee76e509448999836 block: 20997772
+- current block number: 21041942
+
+## Description
+
+Single signer changed in AuthorityMultisig.
+
+## Watched changes
+
+```diff
+    contract AuthorityMultisig (0x4720342419C1D316B948690d12C86D5b485C64E0) {
+    +++ description: None
+      values.$members.3:
+-        "0xAFa49B46301BaaD9152dD5aF0C05245B0FA58695"
++        "0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA"
+      values.$members.2:
+-        "0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA"
++        "0x757210F15AB48f0F8d328984fc321CfA6BB5BFc2"
+      values.$members.1:
+-        "0x757210F15AB48f0F8d328984fc321CfA6BB5BFc2"
++        "0x950815d0e585095B06111CD101440fb1E95AB2a5"
+      values.$members.0:
+-        "0x950815d0e585095B06111CD101440fb1E95AB2a5"
++        "0xCD2fA978D163c0068167dDff8b6951f0E626e6A4"
+    }
+```
+
 Generated with discovered.json: 0xc8d8f321c1c5b2dde2d7092a08ebb40586ef5d7c
 
 # Diff at Mon, 21 Oct 2024 11:05:44 GMT:

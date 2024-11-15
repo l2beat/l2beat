@@ -1,6 +1,5 @@
 import { CountedBlock } from '@/types'
-import { Block } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import { Block, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn } from 'earl'
 import { StarknetCounter } from './StarknetCounter'
 
@@ -14,11 +13,13 @@ describe(StarknetCounter.name, () => {
         transactions: [
           {
             hash: 'tx1.hash',
+            from: 'tx1.from',
             operationsCount: 1,
             type: 'INVOKE',
           },
           {
             hash: 'tx2.hash',
+            from: 'tx2.from',
             operationsCount: 2,
             type: 'INVOKE',
           },
@@ -87,6 +88,7 @@ describe(StarknetCounter.name, () => {
         data: ['8'],
         type: 'INVOKE',
         to: '0x123',
+        from: '0x456',
       }
       const blockNumber = 2999
       const result = counter.getOperationsCount(tx, blockNumber)
@@ -100,6 +102,7 @@ describe(StarknetCounter.name, () => {
         data: ['0x3'],
         type: 'INVOKE',
         to: '0x123',
+        from: '0x456',
       }
       const blockNumber = 3001
       const result = counter.getOperationsCount(tx, blockNumber)
@@ -113,6 +116,7 @@ describe(StarknetCounter.name, () => {
         data: ['8'],
         type: 'DECLARE',
         to: '0x123',
+        from: '0x456',
       }
       const blockNumber = 3001
       const result = counter.getOperationsCount(tx, blockNumber)
@@ -126,6 +130,7 @@ describe(StarknetCounter.name, () => {
         data: [],
         type: 'INVOKE',
         to: '0x123',
+        from: '0x456',
       }
       const blockNumber = 3001
       const result = counter.getOperationsCount(tx, blockNumber)
@@ -144,11 +149,15 @@ function createBlock(number: number, timestamp?: UnixTime): Block {
         type: 'INVOKE',
         hash: 'tx1.hash',
         data: ['tx1.data'],
+        to: 'tx1.to',
+        from: 'tx1.from',
       },
       {
         type: 'INVOKE',
         hash: 'tx2.hash',
         data: ['tx2.data'],
+        to: 'tx2.to',
+        from: 'tx2.from',
       },
     ],
   }

@@ -47,7 +47,7 @@ export function AlphabetSelector<T extends { id: string }>(props: Props<T>) {
                 char={char}
                 href={entry ? `#${entry.id}` : undefined}
                 selected={selected}
-                ref={selected ? selectedItem : null}
+                ref={selected ? selectedItem : undefined}
               />
             )
           })}

@@ -50,6 +50,8 @@ export const SingleAddress: Story = {
     contract: {
       name: 'Contract',
       chain: 'ethereum',
+      implementationChanged: false,
+      highSeverityFieldChanged: false,
       addresses: [CONTRACT],
       description:
         'This is a smart contract responsible for X in the system Y.',
@@ -64,6 +66,8 @@ export const UpgradeDetails: Story = {
     contract: {
       name: 'Contract',
       chain: 'ethereum',
+      implementationChanged: false,
+      highSeverityFieldChanged: false,
       addresses: [CONTRACT],
       description:
         'This is a smart contract responsible for X in the system Y.',
@@ -82,6 +86,8 @@ export const MultipleAddresses: Story = {
     contract: {
       name: 'Contract',
       chain: 'ethereum',
+      implementationChanged: false,
+      highSeverityFieldChanged: false,
       addresses: [CONTRACT, IMPLEMENTATION, ADMIN],
       description:
         'This is a smart contract responsible for X in the system Y.',
@@ -96,6 +102,8 @@ export const UnverifiedContract: Story = {
     contract: {
       name: 'Contract',
       chain: 'ethereum',
+      implementationChanged: false,
+      highSeverityFieldChanged: false,
       addresses: [
         CONTRACT,
         { ...IMPLEMENTATION, verificationStatus: 'unverified' as const },

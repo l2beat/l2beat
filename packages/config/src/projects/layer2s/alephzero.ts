@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL2 } from './templates/orbitStack'
@@ -28,23 +28,22 @@ export const alephzero: Layer2 = orbitStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  nonTemplatePermissions: [
-    {
-      name: 'AdminEOA',
-      accounts: discovery.getAccessControlRolePermission(
-        'UpgradeExecutor',
-        'EXECUTOR_ROLE',
-      ),
-      description:
-        'Can upgrade any project implementation via UpgradeExecutor, potentially gaining access to all funds.',
-    },
-  ],
   associatedTokens: ['AZERO'],
   nativeToken: 'AZERO',
   rpcUrl: 'https://rpc.alephzero.raas.gelato.cloud',
-  bridge: discovery.getContract('Bridge'),
+  bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+  discoveryDrivenData: true,
+  nonTemplateEscrows: [
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0xccaF21F002EAF230c9Fa810B34837a3739B70F7B'),
+      name: 'ERC20Gateway',
+      description:
+        'Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.',
+      tokens: '*',
+    }),
+  ],
   milestones: [
     {
       name: 'Mainnet launch',

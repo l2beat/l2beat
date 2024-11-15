@@ -3,7 +3,6 @@ import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { ethers } from 'ethers'
 import { z } from 'zod'
 
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
 
@@ -23,7 +22,6 @@ export class ConstructorArgsHandler implements Handler {
     readonly field: string,
     private readonly definition: ConstructorArgsDefinition,
     abi: string[],
-    readonly logger: DiscoveryLogger,
   ) {
     assert(
       field === 'constructorArgs',
@@ -73,9 +71,6 @@ export class ConstructorArgsHandler implements Handler {
 
       return serializeResult(decodedConstructorArguments)
     } catch {
-      this.logger.log(
-        'Could not get constructor arguments with heuristic approach. Trying with block explorer.',
-      )
       const decodedConstructorArguments = await this.getWithBlockExplorer(
         provider,
         address,

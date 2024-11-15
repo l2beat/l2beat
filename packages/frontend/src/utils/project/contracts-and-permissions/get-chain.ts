@@ -1,5 +1,6 @@
 import {
   type Bridge,
+  type DaBridge,
   type DaLayer,
   type Layer2,
   type Layer3,
@@ -7,7 +8,7 @@ import {
 
 type BaseProjectParams =
   | {
-      type: (Layer2 | Bridge | DaLayer)['type']
+      type: (Layer2 | Bridge | DaLayer | DaBridge)['type']
     }
   | {
       type: Layer3['type']

@@ -1,8 +1,8 @@
 {
   "name": "optopia",
   "chain": "ethereum",
-  "blockNumber": 20427351,
-  "configHash": "0x832dfabee4a571474954b5f2ff520d4b4a1f7e8d85443d489e85460f58dbc8b0",
+  "blockNumber": 21184911,
+  "configHash": "0xc7c40222e97bb7eb890e67012eb76755690e21388f5478196b49be557465b589",
   "contracts": [
     {
       "name": "AddressManager",
@@ -56,7 +56,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620148",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620224",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -91,7 +91,7 @@
         {
           "permission": "upgrade",
           "target": "0x1adE86B9cc8a50Db747b7aaC32E8527d42c71fC1",
-          "description": "upgrading bridge implementation allows to access all funds and change every system component."
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein."
         },
         {
           "permission": "upgrade",
@@ -144,7 +144,7 @@
             {
               "address": "0x161aF05fA6BdA1c6E7Ee12839d470931bA796948",
               "delay": 0,
-              "description": "upgrading bridge implementation allows to access all funds and change every system component."
+              "description": "upgrading the bridge implementation can give access to all funds escrowed therein."
             }
           ]
         }
@@ -184,7 +184,7 @@
         {
           "permission": "upgrade",
           "target": "0x1adE86B9cc8a50Db747b7aaC32E8527d42c71fC1",
-          "description": "upgrading bridge implementation allows to access all funds and change every system component.",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
           "via": [{ "address": "0x161aF05fA6BdA1c6E7Ee12839d470931bA796948" }]
         },
         {
@@ -239,7 +239,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 21,
+        "nonce": 24,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -312,7 +312,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491822,
-          "prevBlockNum": 20425152
+          "prevBlockNum": 21001641
         },
         "paused": false,
         "superchainConfig": "0x5e8d351FD046Aa0b3DDA24096751996C0c397C61",
@@ -330,7 +330,7 @@
         "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "This is NOT the shared SuperchainConfig of the OP stack Superchain. This SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
+      "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
       "categories": ["Upgrades&Governance"],
       "issuedPermissions": [
         {
@@ -540,7 +540,7 @@
       "template": "opstack/L2OutputOracle",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x025c187b0231be4785898f25f98d749f953f5d06781772aef242812e2ecf52e3"
+        "0x82ce2b4d2c7dcca833593de12c2cf9aef63b23af286529708131f3aa909484ce"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
@@ -575,15 +575,25 @@
       "sinceTimestamp": 1715334983,
       "values": {
         "$admin": "0x161aF05fA6BdA1c6E7Ee12839d470931bA796948",
-        "$implementation": "0x38f2D861b23866b92188155C4876F0879cA706Ec",
+        "$implementation": "0xDe94ECc695F2Df967b49ED11829eC9f7c1831a61",
         "$pastUpgrades": [
           [
             "2024-05-10T09:57:11.000Z",
             "0x180139009c00eb38a40976d4c9203252b2c5ecfdd00af1678827f1dd32ba29ba",
             ["0x38f2D861b23866b92188155C4876F0879cA706Ec"]
+          ],
+          [
+            "2024-11-12T03:33:47.000Z",
+            "0xe56f6658e706a93ca4aa13817ca9316ae594f08268d7dbada461427b4f55756c",
+            ["0xfc2Af8738f04d14833BBcE3AD446F603E91D9306"]
+          ],
+          [
+            "2024-11-12T05:33:23.000Z",
+            "0x205d623832f5a7d959f55aac33cae361475b2abfd69ca37c8eec2bd510276c3f",
+            ["0xDe94ECc695F2Df967b49ED11829eC9f7c1831a61"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 3,
         "challenger": "0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE",
         "CHALLENGER": "0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE",
         "deletedOutputs": [],
@@ -591,17 +601,22 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 3551400,
-        "latestOutputIndex": 1972,
-        "nextBlockNumber": 3553200,
-        "nextOutputIndex": 1973,
+        "latestBlockNumber": 8098200,
+        "latestOutputIndex": 4462,
+        "nextBlockNumber": 8116200,
+        "nextOutputIndex": 4463,
         "proposer": "0x33397410000A219fa5a476c5B51032B367C77e78",
         "PROPOSER": "0x33397410000A219fa5a476c5B51032B367C77e78",
         "startingBlockNumber": 0,
         "startingTimestamp": 1715333975,
-        "SUBMISSION_INTERVAL": 1800,
-        "submissionInterval": 1800,
-        "version": "1.8.0"
+        "SUBMISSION_INTERVAL": 18000,
+        "submissionInterval": 18000,
+        "version": "1.8.1-beta.2"
+      },
+      "fieldMeta": {
+        "FINALIZATION_PERIOD_SECONDS": {
+          "description": "Challenge period (Number of seconds until a state root is finalized)."
+        }
       }
     }
   ],
@@ -696,36 +711,6 @@
     ],
     "0x2C73A1610EE822a8C2C21eddd455e725A3334c8C": [
       "constructor(address _singleton)"
-    ],
-    "0x38f2D861b23866b92188155C4876F0879cA706Ec": [
-      "constructor()",
-      "event Initialized(uint8 version)",
-      "event OutputProposed(bytes32 indexed outputRoot, uint256 indexed l2OutputIndex, uint256 indexed l2BlockNumber, uint256 l1Timestamp)",
-      "event OutputsDeleted(uint256 indexed prevNextOutputIndex, uint256 indexed newNextOutputIndex)",
-      "function CHALLENGER() view returns (address)",
-      "function FINALIZATION_PERIOD_SECONDS() view returns (uint256)",
-      "function L2_BLOCK_TIME() view returns (uint256)",
-      "function PROPOSER() view returns (address)",
-      "function SUBMISSION_INTERVAL() view returns (uint256)",
-      "function challenger() view returns (address)",
-      "function computeL2Timestamp(uint256 _l2BlockNumber) view returns (uint256)",
-      "function deleteL2Outputs(uint256 _l2OutputIndex)",
-      "function finalizationPeriodSeconds() view returns (uint256)",
-      "function getL2Output(uint256 _l2OutputIndex) view returns (tuple(bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
-      "function getL2OutputAfter(uint256 _l2BlockNumber) view returns (tuple(bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
-      "function getL2OutputIndexAfter(uint256 _l2BlockNumber) view returns (uint256)",
-      "function initialize(uint256 _submissionInterval, uint256 _l2BlockTime, uint256 _startingBlockNumber, uint256 _startingTimestamp, address _proposer, address _challenger, uint256 _finalizationPeriodSeconds)",
-      "function l2BlockTime() view returns (uint256)",
-      "function latestBlockNumber() view returns (uint256)",
-      "function latestOutputIndex() view returns (uint256)",
-      "function nextBlockNumber() view returns (uint256)",
-      "function nextOutputIndex() view returns (uint256)",
-      "function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber) payable",
-      "function proposer() view returns (address)",
-      "function startingBlockNumber() view returns (uint256)",
-      "function startingTimestamp() view returns (uint256)",
-      "function submissionInterval() view returns (uint256)",
-      "function version() view returns (string)"
     ],
     "0x39A90926306E11497EC5FE1C459910258B620edD": [
       "constructor(address _admin)",
@@ -942,6 +927,37 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
+    "0xDe94ECc695F2Df967b49ED11829eC9f7c1831a61": [
+      "constructor()",
+      "event Initialized(uint8 version)",
+      "event OutputProposed(bytes32 indexed outputRoot, uint256 indexed l2OutputIndex, uint256 indexed l2BlockNumber, uint256 l1Timestamp)",
+      "event OutputsDeleted(uint256 indexed prevNextOutputIndex, uint256 indexed newNextOutputIndex)",
+      "function CHALLENGER() view returns (address)",
+      "function FINALIZATION_PERIOD_SECONDS() view returns (uint256)",
+      "function L2_BLOCK_TIME() view returns (uint256)",
+      "function PROPOSER() view returns (address)",
+      "function SUBMISSION_INTERVAL() view returns (uint256)",
+      "function challenger() view returns (address)",
+      "function computeL2Timestamp(uint256 _l2BlockNumber) view returns (uint256)",
+      "function deleteL2Outputs(uint256 _l2OutputIndex)",
+      "function finalizationPeriodSeconds() view returns (uint256)",
+      "function getL2Output(uint256 _l2OutputIndex) view returns (tuple(bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
+      "function getL2OutputAfter(uint256 _l2BlockNumber) view returns (tuple(bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
+      "function getL2OutputIndexAfter(uint256 _l2BlockNumber) view returns (uint256)",
+      "function initialize(uint256 _submissionInterval, uint256 _l2BlockTime, uint256 _startingBlockNumber, uint256 _startingTimestamp, address _proposer, address _challenger, uint256 _finalizationPeriodSeconds)",
+      "function l2BlockTime() view returns (uint256)",
+      "function latestBlockNumber() view returns (uint256)",
+      "function latestOutputIndex() view returns (uint256)",
+      "function nextBlockNumber() view returns (uint256)",
+      "function nextOutputIndex() view returns (uint256)",
+      "function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber) payable",
+      "function proposer() view returns (address)",
+      "function startingBlockNumber() view returns (uint256)",
+      "function startingTimestamp() view returns (uint256)",
+      "function submissionInterval() view returns (uint256)",
+      "function updateSubmissionInterval(uint256 _submissionInterval)",
+      "function version() view returns (string)"
+    ],
     "0xe04D088840aE793afd0970fE97FEC6Ac7BaF4AAC": [
       "constructor()",
       "event ERC721BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 tokenId, bytes extraData)",
@@ -1009,10 +1025,10 @@
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
-    "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
-    "opstack/L2OutputOracle": "0xfc8737561d85bab2fe5e39a7a02436a0cb0e7f96d7a7adc2ee3ea486b391c2fc",
+    "opstack/L1StandardBridge": "0x9111ef1dcd42452953522f42115f0396e80b8ffacbe0ee0e3f62763880a6b6cc",
+    "opstack/L2OutputOracle": "0x2da233df369518b2564031e603ae272763f51cec1bc780ab0a814e46046b47a2",
     "opstack/OptimismPortal": "0x5fb419891d613086f39879ae360e765fdb6d154ef5ea5b2f5f98a4443a1b4839",
-    "opstack/SuperchainConfigFake": "0x53a7342e3ad0ea230608a115aa098bc297d88c30ea6560b549c25853b184cc7b",
+    "opstack/SuperchainConfigFake": "0x49e6353b6089be214c9fc1f021124f840323a29f519b5240594dd16c3a775ca8",
     "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3"
   }
 }

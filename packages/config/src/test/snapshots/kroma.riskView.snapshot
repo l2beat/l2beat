@@ -36,13 +36,14 @@
     value: "None"
   }
   proposerFailure: {
+    definingMetric: 0
     description: "Anyone can be a Proposer and propose new roots to the L1 bridge."
     sentiment: "good"
     sources: [
       {
         contract: "L2OutputOracle"
         references: [
-          "https://etherscan.io/address/0x14126FFa3889a026A79F0f99FaE80B3dc9E38095#code#F1#L197"
+          "https://etherscan.io/address/0x4B68F22d96a04F6d80e284C20A648f8Da2fD569b#code#F1#L197"
         ]
       }
     ]

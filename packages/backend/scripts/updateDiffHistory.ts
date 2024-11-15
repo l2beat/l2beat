@@ -21,28 +21,8 @@ import { rimraf } from 'rimraf'
 import { updateDiffHistoryHash } from '../src/modules/update-monitor/utils/hashing'
 
 const FIRST_SECTION_PREFIX = '# Diff at'
-const ALLOWED_SWITCHES = ['--dev', '--save-sources', '--refresh']
 
-// This is a CLI tool. Run logic immediately.
-void updateDiffHistoryFile()
-
-async function updateDiffHistoryFile() {
-  const filtered = process.argv.filter((v) => !ALLOWED_SWITCHES.includes(v))
-  if (filtered.filter((v) => v.startsWith('-')).length > 0) {
-    console.log(
-      'Discovery run with non-default configuration, skipping updating the diff history file...',
-    )
-    process.exit(0)
-  }
-
-  console.log('Updating diff history file...')
-  const params = process.argv.filter((v) => !v.startsWith('-'))
-  const [_node, _sourcefile, chain, projectName] = params
-  if (!chain || !projectName) {
-    console.error('Pass parameters: <chainName> <projectName>')
-    process.exit(1)
-  }
-
+export async function updateDiffHistory(projectName: string, chain: string) {
   // Get discovered.json from main branch and compare to current
   console.log(`Project: ${projectName}`)
   const configReader = new ConfigReader()
@@ -248,9 +228,19 @@ function getFileVersionOnMainBranch(filePath: string): {
 } {
   const mainBranch = getMainBranchName()
   try {
-    const content = execSync(
-      `git show ${mainBranch}:${filePath} 2>/dev/null`,
-    ).toString()
+    // NOTE(radomski): Node when starting a process reserves a buffer of around
+    // 200KB for STDIO output. This is not enough in cases where the
+    // discovered.json is really big (e.g. transporter). In that case the git
+    // command fails with "ENOBUFS" and we assume that there no old
+    // discovered.json. Which in turn always causes the diffHistory.md to
+    // include "all" the contracts as being created. To solve this problem we
+    // allocate a 10MB buffer upfront so all the data can be stored. At the
+    // time of writing this (21.10.2024) discovered.json of transporter is
+    // around 1.2MB.
+    const BUFFER_SIZE = 10 * 1024 * 1024
+    const content = execSync(`git show ${mainBranch}:${filePath} 2>/dev/null`, {
+      maxBuffer: BUFFER_SIZE,
+    }).toString()
     const mainBranchHash = execSync(`git rev-parse ${mainBranch}`)
       .toString()
       .trim()

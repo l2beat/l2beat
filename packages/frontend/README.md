@@ -8,27 +8,27 @@ To run or develop frontend you need to install and build its dependencies. You c
 commands in the repository root:
 
 ```
-yarn
-yarn build:dependencies
+pnpm install
+pnpm build:dependencies
 ```
 
 ## Scripts
 
-- `yarn dev` - run the Next.js development server
-- `yarn dev:mock` - run the Next.js development server with mock data
-- `yarn build` - compile the production build
-- `yarn build:dependencies` - builds the dependencies of frontend
-- `yarn format` - run biome automatic formatter
-- `yarn format:fix` - run biome automatic formatter and apply the recommended changes
-- `yarn lint` - run Next.js doctor and ESLint
-- `yarn test` - run the tests
-- `yarn typecheck` - check if the code satisfies the typescript compiler
-- `yarn tinify-logos` - resizes and optimizes logos
+- `pnpm dev` - run the Next.js development server
+- `pnpm dev:mock` - run the Next.js development server with mock data
+- `pnpm build` - compile the production build
+- `pnpm build:dependencies` - builds the dependencies of frontend
+- `pnpm format` - run biome automatic formatter
+- `pnpm format:fix` - run biome automatic formatter and apply the recommended changes
+- `pnpm lint` - run Next.js doctor and ESLint
+- `pnpm test` - run the tests
+- `pnpm typecheck` - check if the code satisfies the typescript compiler
+- `pnpm tinify-logos` - resizes and optimizes logos
 
 ### Environment variables
-If you are running `yarn dev:mock` you do not need any environment variables.
+If you are running `pnpm dev:mock` you do not need any environment variables.
 
-If you are running `yarn dev` or `yarn build` you need to set the following environment variables:
+If you are running `pnpm dev` or `pnpm build` you need to set the following environment variables:
 - create file `.env.local` in frontend root folder
 - `DATABASE_URL` - database connection url (read-only access is sufficient)
 

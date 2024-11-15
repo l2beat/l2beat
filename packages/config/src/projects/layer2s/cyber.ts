@@ -5,6 +5,7 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 
+import { DA_BRIDGES, DA_LAYERS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
@@ -57,7 +58,7 @@ export const cyber: Layer2 = opStackL2({
     activityDataSource: 'Blockchain RPC',
   },
   daProvider: {
-    name: 'External',
+    layer: DA_LAYERS.EXTERNAL,
     riskView: {
       value: 'External',
       description:
@@ -88,7 +89,7 @@ export const cyber: Layer2 = opStackL2({
         },
       ],
     },
-    bridge: { type: 'None + DA challenges' },
+    bridge: DA_BRIDGES.NONE_WITH_DA_CHALLENGES,
   },
   chainConfig: {
     name: 'cyber',

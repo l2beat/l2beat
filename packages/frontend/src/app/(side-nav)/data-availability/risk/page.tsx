@@ -1,3 +1,4 @@
+import { CountBadge } from '~/components/badge/count-badge'
 import {
   DirectoryTabs,
   DirectoryTabsContent,
@@ -6,8 +7,20 @@ import {
 } from '~/components/core/directory-tabs'
 import { MainPageHeader } from '~/components/main-page-header'
 import { getDaRiskEntries } from '~/server/features/data-availability/risks/get-da-risk-entries'
+import { getDefaultMetadata } from '~/utils/metadata'
+import {
+  CustomSystemInfo,
+  PublicSystemInfo,
+} from '../_components/da-category-info'
 import { groupBySystem } from '../_utils/group-by-system'
 import { DaRiskTable } from './_components/table/da-risk-table'
+
+export const revalidate = 600
+export const metadata = getDefaultMetadata({
+  openGraph: {
+    url: '/data-availability/risk',
+  },
+})
 
 export default async function Page() {
   const items = await getDaRiskEntries()
@@ -19,14 +32,20 @@ export default async function Page() {
       <div className="flex flex-col gap-6">
         <DirectoryTabs defaultValue="public">
           <DirectoryTabsList>
-            <DirectoryTabsTrigger value="public">Public</DirectoryTabsTrigger>
-            <DirectoryTabsTrigger value="custom">Custom</DirectoryTabsTrigger>
+            <DirectoryTabsTrigger value="public">
+              Public <CountBadge>{publicSystems.length}</CountBadge>
+            </DirectoryTabsTrigger>
+            <DirectoryTabsTrigger value="custom">
+              Custom <CountBadge>{customSystems.length}</CountBadge>
+            </DirectoryTabsTrigger>
           </DirectoryTabsList>
           <DirectoryTabsContent value="public">
+            <PublicSystemInfo />
             <DaRiskTable items={publicSystems} />
           </DirectoryTabsContent>
           <DirectoryTabsContent value="custom">
-            <DaRiskTable items={customSystems} />
+            <CustomSystemInfo />
+            <DaRiskTable items={customSystems} excludeBridge />
           </DirectoryTabsContent>
         </DirectoryTabs>
       </div>

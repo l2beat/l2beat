@@ -260,6 +260,7 @@ export const acrossV3: Bridge = {
       discovery.getContractDetails('Redstone_Adapter'),
       discovery.getContractDetails('Zora_Adapter'),
       discovery.getContractDetails('WorldChain_Adapter'),
+      discovery.getContractDetails('Alephzero_Adapter'),
       discovery.getContractDetails(
         'Ethereum_SpokePool',
         'Contract enabling depositors to transfer assets from Ethereum to L2s, and relayers to fulfill transfer from L2s to Ethereum. Deposit orders are fulfilled by off-chain relayers with the fillV3Relay() function. Relayers are later refunded with destination token out of this contract when the data worker submits a proof that the relayer correctly submitted a relay on this SpokePool.',
@@ -281,7 +282,6 @@ export const acrossV3: Bridge = {
       {
         category: 'Funds can be stolen if',
         text: 'a Spoke Pool contract receives a malicious code upgrade. There is no delay on code upgrades.',
-        isCritical: true,
       },
     ],
   },

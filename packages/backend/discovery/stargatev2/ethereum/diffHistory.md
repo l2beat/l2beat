@@ -1,3 +1,92 @@
+Generated with discovered.json: 0x8b0a477ff755972982f608b4f4e4badb3dfff4d2
+
+# Diff at Thu, 14 Nov 2024 08:32:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ea60800af45c71fbd5d292e0f4301ba9afda01fa block: 21121935
+- current block number: 21184760
+
+## Description
+
+Previously added lib is now verified. This library is the core of the new [lzRead feature](https://medium.com/layerzero-official/lzread-power-your-app-with-omnichain-data-cdd341eeeaf7).
+
+lzRead allows requesting and receiving data from other LayerZero-supported chains asynchronously. The library uses the same architecture and similar oracles as the LayerZero AMB (lzRead-specific DVNs).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21121935 (main branch discovery), not current.
+
+```diff
+    contract ReadLib1002 (0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D) {
+    +++ description: None
+      name:
+-        ""
++        "ReadLib1002"
+      unverified:
+-        true
+      values.getTreasuryAndNativeFeeCap:
++        ["0x0000000000000000000000000000000000000000",450000000000000]
+      values.messageLibType:
++        2
+      values.owner:
++        "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92"
+      values.version:
++        {"major":10,"minor":0,"endpointVersion":2}
+      sourceHashes:
++        ["0xf7800be6fd99520201da1404c35bac8a1ed826bbc2134f0a77547e0d7a74c9c1"]
+    }
+```
+
+Generated with discovered.json: 0x17bcc71bcb0f9f1253d487abedae99e93902cf58
+
+# Diff at Tue, 05 Nov 2024 14:06:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5e6ce51851b57187ccdd52c4944a82e2a8ab1e88 block: 21027597
+- current block number: 21121935
+
+## Description
+
+A new unverified send- or receive library is added by the LayerZeroMultisig, but not yet used for the monitored OApps, nor as default, nor is it described in the docs.
+
+This is a good example of an attack we would not notice because we cannot monitor all OApps and if someone is using this new library for any of them.
+
+Also, the unverified LayerZero Executor is upgraded.
+
+## Watched changes
+
+```diff
+    contract LayerZero Executor (0x173272739Bd7Aa6e4e214714048a9fE699453059) {
+    +++ description: None
+      values.$implementation:
+-        "0xDaC2d26317C42ae3CB21357B73404120E1dA4232"
++        "0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805"
+      values.$pastUpgrades.2:
++        ["2024-11-01T19:07:23.000Z","0x8714871659f7ff2feb7968256c3baf39e5cdbe9160f36649f8a530a536456ed5",["0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805"]]
+      values.$upgradeCount:
+-        2
++        3
+    }
+```
+
+```diff
+    contract EndpointV2 (0x1a44076050125825900e736c501f859c50fE728c) {
+    +++ description: Its configuration and MessageLib to use is set for each OApp and destination by the OApp owner.
++++ description: MessageLibs registered for this Endpoint, enforcing the OApp owner's custom security stack.
++++ severity: HIGH
+      values.getRegisteredLibraries.3:
++        "0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract  (0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xb5f91a650c3a7dffc12a394c10ca27113e365112
 
 # Diff at Wed, 23 Oct 2024 10:10:27 GMT:

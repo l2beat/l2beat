@@ -12,7 +12,7 @@ export type DiffingMode = (typeof DIFFING_MODES)[number]
 
 export const DISPLAY_MODES = ['inline', 'side-by-side'] as const
 export type DisplayMode = (typeof DISPLAY_MODES)[number]
-export const displayModeMap: Record<DisplayMode, string> = {
+const displayModeMap: Record<DisplayMode, string> = {
   inline: '--display=inline',
   'side-by-side': '--display=side-by-side-show-both --width=200',
 }
@@ -121,7 +121,7 @@ function diffPaths(
             <p>Error with difftastic:</p>
             <p><code>exceeded DFT_PARSE_ERROR_LIMIT</code></p>
             <p>Include the following command to increase the limit:</p>
-            <p><code>export DFT_PARSE_ERROR_LIMIT=100; yarn powerdiff ...</code></p>
+            <p><code>export DFT_PARSE_ERROR_LIMIT=100; pnpm powerdiff ...</code></p>
           </div>`,
         )
       }

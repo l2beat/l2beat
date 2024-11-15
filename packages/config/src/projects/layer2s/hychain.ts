@@ -37,20 +37,6 @@ export const hychain: Layer2 = orbitStackL2({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   rpcUrl: 'https://rpc.hychain.com/http',
   nonTemplatePermissions: [
-    {
-      name: 'Hychain Admin EOA',
-      accounts: [
-        {
-          address: discovery.getAccessControlField(
-            'UpgradeExecutor',
-            'EXECUTOR_ROLE',
-          ).members[0],
-          type: 'EOA',
-        },
-      ],
-      description:
-        "EOA address that can upgrade the rollup's smart contract system (via UpgradeExecutor) and gain access to all funds.",
-    },
     ...discovery.getMultisigPermission(
       'HychainMultisig',
       'Can execute upgrades via the UpgradeExecutor.',

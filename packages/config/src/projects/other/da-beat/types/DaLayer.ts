@@ -6,6 +6,7 @@ import {
   NoDaBridge,
   OnChainDaBridge,
 } from './DaBridge'
+import { DaChallengeMechanism } from './DaChallengeMechanism'
 import { DaConsensusAlgorithm } from './DaConsensusAlgorithm'
 import { DaEconomicSecurity } from './DaEconomicSecurity'
 import { DaEconomicSecurityRisk } from './DaEconomicSecurityRisk'
@@ -13,7 +14,6 @@ import { DaFraudDetectionRisk } from './DaFraudDetectionRisk'
 import { DaLinks } from './DaLinks'
 import { DaTechnology } from './DaTechnology'
 import { DataAvailabilitySampling } from './DataAvailabilitySampling'
-import { UsedInProject } from './UsedInProject'
 
 export type DaLayer = BlockchainDaLayer | DacDaLayer
 
@@ -31,7 +31,7 @@ export type BlockchainDaLayer = CommonDaLayer & {
 }
 
 export type DacDaLayer = CommonDaLayer & {
-  kind: 'DAC' | 'DA Service'
+  kind: 'DAC' | 'DA Service' | 'No DAC'
   bridges: (DacBridge | NoDaBridge)[]
 }
 
@@ -41,10 +41,12 @@ export type CommonDaLayer = {
   id: string
   /** Classification layers will be split based on */
   systemCategory: 'public' | 'custom'
-  /** Whether given solution has challenge mechanism in place */
-  hasChallengeMechanism?: boolean
+  /** Supported challenge mechanism in place */
+  challengeMechanism?: DaChallengeMechanism
   /** Fallback */
   fallback?: ScalingDaLayerOption
+  /** Number of operators in the data availability layer. */
+  numberOfOperators?: number
   /** Display information for the data availability layer. */
   display: DaLayerDisplay
   /** Is the DA layer upcoming? */
@@ -53,8 +55,6 @@ export type CommonDaLayer = {
   isUnderReview?: boolean
   /** The technology used by the data availability layer. */
   technology: DaTechnology
-  /** List of projects given da layer is being used in. */
-  usedIn: UsedInProject[]
   /** Risks associated with the data availability layer. */
   risks: DaLayerRisks
   /** Other considerations */

@@ -1,20 +1,22 @@
 import { CountedBlock, CountedOperation, CountedTransaction } from '@/types'
 import {
+  EIP712_TX_TYPE,
+  EIP712_methods,
   ENTRY_POINT_ADDRESS_0_6_0,
   ENTRY_POINT_ADDRESS_0_7_0,
   ERC4337_methods,
-  EVMBlock,
+  EVMTransaction,
   SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
   SAFE_methods,
 } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import { Block, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { RpcCounter } from './RpcCounter'
 
 describe(RpcCounter.name, () => {
   describe(RpcCounter.prototype.countForBlock.name, () => {
     it('should return block with counted operations', () => {
-      const mockBlock: EVMBlock = createBlock(1)
+      const mockBlock: Block = createBlock(1)
 
       const expectedResult: CountedBlock = {
         ...mockBlock,
@@ -24,11 +26,13 @@ describe(RpcCounter.name, () => {
             hash: 'tx1.hash',
             operationsCount: 1,
             type: 'ERC-4337 Entry Point 0.6.0',
+            from: 'tx1.from',
           },
           {
             hash: 'tx2.hash',
             operationsCount: 2,
             type: 'ERC-4337 Entry Point 0.6.0',
+            from: 'tx1.from',
           },
         ],
       }
@@ -49,7 +53,7 @@ describe(RpcCounter.name, () => {
       const end = UnixTime.now()
       const start = end.add(-1, 'hours')
 
-      const mockBlocks: EVMBlock[] = [
+      const mockBlocks: Block[] = [
         createBlock(1, start),
         createBlock(2),
         createBlock(3, end),
@@ -124,13 +128,16 @@ describe(RpcCounter.name, () => {
       const counter = new RpcCounter()
 
       const result = counter.mapTransaction({
-        to: '0x123',
+        from: 'tx.from',
+        to: 'tx.to',
         hash: 'tx.hash',
         data: 'tx.data',
+        type: '0',
       })
 
       expect(result).toEqual({
-        type: 'unknown',
+        from: 'tx.from',
+        type: 'Legacy',
         hash: 'tx.hash',
         operationsCount: 1,
         includesBatch: false,
@@ -156,12 +163,15 @@ describe(RpcCounter.name, () => {
       })
 
       const result = counter.mapTransaction({
+        from: 'tx.from',
         to: ENTRY_POINT_ADDRESS_0_6_0,
         hash: 'tx.hash',
         data: 'tx.data',
+        type: '2',
       })
 
       expect(result).toEqual({
+        from: 'tx.from',
         type: 'ERC-4337 Entry Point 0.6.0',
         hash: 'tx.hash',
         operationsCount: 1,
@@ -190,13 +200,53 @@ describe(RpcCounter.name, () => {
       })
 
       const result = counter.mapTransaction({
+        from: 'tx.from',
         to: SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
         hash: 'tx.hash',
         data: 'tx.data',
+        type: '2',
       })
 
       expect(result).toEqual({
+        from: 'tx.from',
         type: 'Safe: Multi Send Call Only 1.3.0',
+        hash: 'tx.hash',
+        operationsCount: 1,
+        includesBatch: false,
+        includesUnknown: false,
+        details: mockOperation,
+      })
+    })
+
+    it('should map EIP-712 txs', () => {
+      const counter = new RpcCounter()
+
+      const mockOperation = {
+        id: 'id',
+        level: 0,
+        methodSelector: '0x123',
+        count: 1,
+        children: [],
+      } as CountedOperation
+
+      counter.countUserOperations = mockFn().returns(mockOperation)
+
+      counter.checkOperations = mockFn().returns({
+        includesBatch: false,
+        includesUnknown: false,
+      })
+
+      const result = counter.mapTransaction({
+        from: 'tx.from',
+        to: 'tx.to',
+        hash: 'tx.hash',
+        data: 'tx.data',
+        type: EIP712_TX_TYPE,
+      })
+
+      expect(result).toEqual({
+        from: 'tx.from',
+        type: 'EIP-712',
         hash: 'tx.hash',
         operationsCount: 1,
         includesBatch: false,
@@ -397,10 +447,55 @@ describe(RpcCounter.name, () => {
 
       expect(result).toEqual(expectedResult)
     })
+
+    it('should count GnosisSafe user operations', () => {
+      const calldata =
+        '0x8f0273a900000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000001200000000000000000000000009248f1ee8cbd029f3d22a92eb270333a39846fb200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000242e1a7d4d00000000000000000000000000000000000000000000003635c9adc5dea00000000000000000000000000000000000000000000000000000000000000000000000000000000000009248f1ee8cbd029f3d22a92eb270333a39846fb200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000043d18b91200000000000000000000000000000000000000000000000000000000'
+
+      const expectedResult: CountedOperation = {
+        contractAddress: 'tx.to',
+        contractName: 'ClaveSmartWallet',
+        count: 2,
+        id: 'id',
+        level: 0,
+        methodName: 'batchCall',
+        methodSelector: '0x8f0273a9',
+        methodSignature: 'batchCall((address,bool,uint256,bytes)[])',
+        children: [
+          {
+            children: [],
+            contractAddress: '0x9248F1Ee8cBD029F3D22A92EB270333a39846fB2',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodSelector: '0x2e1a7d4d',
+          },
+          {
+            children: [],
+            contractAddress: '0x9248F1Ee8cBD029F3D22A92EB270333a39846fB2',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodSelector: '0x3d18b912',
+          },
+        ],
+      }
+
+      const counter = new RpcCounter()
+
+      const result = counter.countUserOperations(
+        calldata,
+        'tx.to',
+        EIP712_methods,
+        () => 'id',
+      )
+
+      expect(result).toEqual(expectedResult)
+    })
   })
 
   describe(RpcCounter.prototype.checkOperations.name, () => {
-    it('should find batch operation', () => {
+    it('should find batch operation for ERC-4337', () => {
       const mockCountedOperation = mockObject<CountedOperation>({
         level: 0,
         contractAddress: ENTRY_POINT_ADDRESS_0_6_0,
@@ -431,9 +526,47 @@ describe(RpcCounter.name, () => {
         ],
       })
 
+      const mockTx = mockObject<EVMTransaction>({
+        type: '2',
+      })
+
       const counter = new RpcCounter()
 
-      const result = counter.checkOperations(mockCountedOperation)
+      const result = counter.checkOperations(mockCountedOperation, mockTx)
+      expect(result).toEqual({
+        includesBatch: true,
+        includesUnknown: false,
+      })
+    })
+
+    it('should find batch operation for EIP-712', () => {
+      const mockCountedOperation = mockObject<CountedOperation>({
+        level: 0,
+        id: 'id',
+        contractAddress: 'address',
+        children: [
+          mockObject<CountedOperation>({
+            id: 'id',
+            level: 1,
+            contractAddress: 'address',
+            children: [],
+          }),
+          mockObject<CountedOperation>({
+            id: 'id',
+            level: 1,
+            contractAddress: 'address',
+            children: [],
+          }),
+        ],
+      })
+
+      const mockTx = mockObject<EVMTransaction>({
+        type: EIP712_TX_TYPE,
+      })
+
+      const counter = new RpcCounter()
+
+      const result = counter.checkOperations(mockCountedOperation, mockTx)
       expect(result).toEqual({
         includesBatch: true,
         includesUnknown: false,
@@ -456,9 +589,13 @@ describe(RpcCounter.name, () => {
         ],
       })
 
+      const mockTx = mockObject<EVMTransaction>({
+        type: '2',
+      })
+
       const counter = new RpcCounter()
 
-      const result = counter.checkOperations(mockCountedOperation)
+      const result = counter.checkOperations(mockCountedOperation, mockTx)
       expect(result).toEqual({
         includesBatch: false,
         includesUnknown: true,
@@ -525,21 +662,25 @@ describe(RpcCounter.name, () => {
   })
 })
 
-function createBlock(number: number, timestamp?: UnixTime): EVMBlock {
+function createBlock(number: number, timestamp?: UnixTime): Block {
   return {
     number,
     timestamp: timestamp?.toNumber() ?? UnixTime.now().toNumber(),
     hash: `${number}.hash`,
     transactions: [
       {
+        from: 'tx1.from',
         to: 'tx1.to',
         hash: 'tx1.hash',
         data: 'tx1.data',
+        type: '2',
       },
       {
+        from: 'tx2.from',
         to: 'tx2.to',
         hash: 'tx2.hash',
         data: 'tx2.data',
+        type: '2',
       },
     ],
   }
@@ -554,5 +695,6 @@ function createCountedTransaction(
     operationsCount,
     type: 'ERC-4337 Entry Point 0.6.0',
     includesBatch,
+    from: 'tx.from',
   }
 }

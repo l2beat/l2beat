@@ -1,5 +1,5 @@
 export { discover } from './cli/discoverCommand'
-export { getChainConfig } from './config/config.discovery'
+export { getChainConfig, getChainShortName } from './config/config.discovery'
 export type {
   DiscoveryChainConfig,
   DiscoveryModuleConfig,
@@ -20,6 +20,7 @@ export { DiscoveryEngine } from './discovery/engine/DiscoveryEngine'
 export { flattenDiscoveredSources } from './discovery/output/flattenDiscoveredSource'
 export { HandlerExecutor } from './discovery/handlers/HandlerExecutor'
 export { diffContracts, type FieldDiff } from './discovery/output/diffContracts'
+export { neuterErrors } from './discovery/output/errors'
 export {
   diffDiscovery,
   type DiscoveryDiff,
@@ -61,3 +62,4 @@ export type { IProvider } from './discovery/provider/IProvider'
 export { ParsedFilesManager } from './flatten/ParsedFilesManager'
 export { flattenStartingFrom } from './flatten/flatten'
 export { format } from './flatten/format'
+export { DiscoverCommandArgs } from './cli/discoverCommand'

@@ -10,13 +10,15 @@ import { HydrateClient } from '~/trpc/server'
 import { getProjectMetadata } from '~/utils/metadata'
 import { BridgesProjectSummary } from './_components/bridges-project-summary'
 
+export const revalidate = 600
 export async function generateStaticParams() {
   return resolvedBridges.map((layer) => ({
     slug: layer.display.slug,
   }))
 }
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata(props: Props) {
+  const params = await props.params
   const project = resolvedBridges.find(
     (layer) => layer.display.slug === params.slug,
   )
@@ -37,12 +39,13 @@ export async function generateMetadata({ params }: Props) {
 }
 
 interface Props {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
-export default async function Page({ params }: Props) {
+export default async function Page(props: Props) {
+  const params = await props.params
   const project = resolvedBridges.find((p) => p.display.slug === params.slug)
 
   if (!project) {
@@ -73,7 +76,7 @@ export default async function Page({ params }: Props) {
               project={{
                 title: projectEntry.name,
                 slug: projectEntry.slug,
-                showProjectUnderReview: projectEntry.isUnderReview,
+                isUnderReview: !!projectEntry.underReviewStatus,
               }}
               sections={navigationSections}
             />

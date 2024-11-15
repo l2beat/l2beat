@@ -1,6 +1,7 @@
 'use client'
 import {
   type CSSProperties,
+  Fragment,
   useCallback,
   useEffect,
   useMemo,
@@ -9,7 +10,16 @@ import {
 } from 'react'
 
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '~/components/core/select'
+import { useRouterWithProgressBar } from '~/components/progress-bar'
 import { useCurrentSection } from '~/hooks/use-current-section'
 import { SummaryIcon } from '~/icons/summary'
 import { cn } from '~/utils/cn'
@@ -19,18 +29,22 @@ import { type ProjectNavigationSection } from './types'
 
 interface Project {
   title: string
-  showProjectUnderReview?: boolean
+  isUnderReview?: boolean
   slug: string
 }
 interface ProjectNavigationProps {
   project: Project
+  projectVariants?: { title: string; href: string }[]
   sections: ProjectNavigationSection[]
 }
 
 export function DesktopProjectNavigation({
   project,
+  projectVariants,
   sections,
 }: ProjectNavigationProps) {
+  const router = useRouterWithProgressBar()
+  const pathname = usePathname()
   const headerRef = useRef<HTMLDivElement>(null)
   const [headerHeight, setHeaderHeight] = useState<number>()
   const currentSection = useCurrentSection()
@@ -73,8 +87,31 @@ export function DesktopProjectNavigation({
               {project.title}
             </span>
           </div>
-          {project.showProjectUnderReview && (
+          {project.isUnderReview && (
             <UnderReviewCallout small className="mt-2" />
+          )}
+          {projectVariants && (
+            <div className="mt-2 pl-12">
+              <Select
+                defaultValue={
+                  projectVariants.find((v) => pathname.startsWith(v.href))?.href
+                }
+                onValueChange={(value) => {
+                  router.push(value)
+                }}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {projectVariants.map((variant) => (
+                    <SelectItem key={variant.href} value={variant.href}>
+                      {variant.title}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           )}
           <HorizontalSeparator className="my-4" />
         </div>
@@ -129,21 +166,37 @@ function ProjectNavigationList({
         Summary
       </a>
       {sections.map((section, i) => {
-        const selected = currentSection?.id === section.id
+        const selected =
+          currentSection?.id === section.id ||
+          !!section.subsections?.some(
+            (subsection) => subsection.id === currentSection?.id,
+          )
 
         return (
-          <a
-            key={section.id}
-            href={`#${section.id}`}
-            ref={selected ? currentMenuEntry : null}
-            className={cn(
-              'flex flex-row items-center transition-opacity hover:opacity-100',
-              !selected && 'opacity-60',
+          <Fragment key={i}>
+            <a
+              href={`#${section.id}`}
+              ref={selected ? currentMenuEntry : null}
+              className={cn(
+                'flex flex-row items-center transition-opacity hover:opacity-100',
+                !selected && 'opacity-60',
+              )}
+            >
+              <NavigationListIndex index={i + 1} selected={selected} />
+              <span className="ml-3">{section.title}</span>
+            </a>
+            {section.subsections && (
+              <div className="flex flex-col">
+                {section.subsections.map((subsection, i) => (
+                  <NavigationSubsectionEntry
+                    key={i}
+                    {...subsection}
+                    selected={subsection.id === currentSection?.id}
+                  />
+                ))}
+              </div>
             )}
-          >
-            <NavigationListIndex index={i + 1} selected={selected} />
-            <span className="ml-3">{section.title}</span>
-          </a>
+          </Fragment>
         )
       })}
     </div>
@@ -162,5 +215,34 @@ function NavigationListIndex(props: { index: number; selected: boolean }) {
     >
       <span>{props.index}</span>
     </div>
+  )
+}
+
+function NavigationSubsectionEntry(props: {
+  title: string
+  id: string
+  selected: boolean
+}) {
+  return (
+    <a
+      key={props.id}
+      href={`#${props.id}`}
+      className={cn(
+        'flex flex-row items-center transition-opacity hover:opacity-100',
+        !props.selected && 'opacity-60',
+      )}
+    >
+      <div className="flex flex-row gap-3">
+        {/* Left side */}
+        <div className="flex w-6 flex-col items-center">
+          {props.selected && (
+            <div className="absolute h-[18px] w-[5px] rounded-full bg-gradient-to-r from-purple-100 to-pink-100" />
+          )}
+          <div className="h-full border-l border-divider" />
+        </div>
+        {/* Right side */}
+        <div className="flex-1 pb-3">{props.title}</div>
+      </div>
+    </a>
   )
 }

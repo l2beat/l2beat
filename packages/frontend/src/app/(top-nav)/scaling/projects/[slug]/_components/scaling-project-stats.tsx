@@ -24,6 +24,8 @@ interface Props {
 }
 
 export function ScalingProjectStats({ project, className }: Props) {
+  const isOther =
+    env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS && project.header.isOther
   return (
     <div
       className={cn(
@@ -64,7 +66,7 @@ export function ScalingProjectStats({ project, className }: Props) {
         }
       />
       <HorizontalSeparator className="col-span-full max-md:hidden" />
-      {project.stageConfig.stage !== 'NotApplicable' ? (
+      {project.stageConfig.stage !== 'NotApplicable' && !isOther ? (
         <ProjectStat
           title="Stage"
           value={
@@ -87,23 +89,21 @@ export function ScalingProjectStats({ project, className }: Props) {
       <ProjectStat
         title="Type"
         value={
-          <TypeCell>
-            {env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS &&
-            project.header.isOther
-              ? 'Other'
-              : project.header.category}
-          </TypeCell>
+          <TypeCell>{isOther ? 'Other' : project.header.category}</TypeCell>
         }
       />
       <ProjectStat
         title={pluralize(project.header.purposes.length, 'Purpose')}
         value={project.header.purposes.join(', ')}
       />
+      {project.header.hostChain && (
+        <ProjectStat title="Host chain" value={project.header.hostChain} />
+      )}
     </div>
   )
 }
 
-export interface ProjectStat {
+interface ProjectStat {
   title: string
   value: ReactNode
   tooltip?: string

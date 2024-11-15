@@ -8,7 +8,7 @@ const meta = {
   component: ContractsSection,
   args: {
     title: 'Contracts',
-    sectionOrder: 1,
+    sectionOrder: '1',
     chainName: 'Ethereum',
     id: 'contracts',
   },
@@ -19,6 +19,11 @@ const meta = {
       </HighlightableLinkContextProvider>
     ),
   ],
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+    },
+  },
 } satisfies Meta<typeof ContractsSection>
 export default meta
 
@@ -26,7 +31,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    sectionOrder: 13,
+    sectionOrder: '13',
     chainName: 'Ethereum',
     nativeContracts: {
       'Arbitrum One': [
@@ -60,7 +65,8 @@ export const Default: Story = {
           usedInProjects: [],
           references: [],
           chain: 'arbitrum',
-          implementationHasChanged: false,
+          implementationChanged: false,
+          highSeverityFieldChanged: false,
           upgradeableBy: [
             'SecurityCouncilEmergency',
             'SecurityCouncilPropose',
@@ -100,7 +106,8 @@ export const Default: Story = {
           usedInProjects: [],
           references: [],
           chain: 'arbitrum',
-          implementationHasChanged: false,
+          implementationChanged: false,
+          highSeverityFieldChanged: false,
           upgradeableBy: [
             'SecurityCouncilEmergency',
             'SecurityCouncilPropose',
@@ -140,7 +147,8 @@ export const Default: Story = {
           usedInProjects: [],
           references: [],
           chain: 'arbitrum',
-          implementationHasChanged: false,
+          implementationChanged: false,
+          highSeverityFieldChanged: false,
           upgradeableBy: [
             'SecurityCouncilEmergency',
             'SecurityCouncilPropose',
@@ -180,7 +188,8 @@ export const Default: Story = {
           usedInProjects: [],
           references: [],
           chain: 'arbitrum',
-          implementationHasChanged: false,
+          implementationChanged: false,
+          highSeverityFieldChanged: false,
           upgradeableBy: [
             'SecurityCouncilEmergency',
             'SecurityCouncilPropose',
@@ -220,7 +229,8 @@ export const Default: Story = {
           usedInProjects: [],
           references: [],
           chain: 'arbitrum',
-          implementationHasChanged: false,
+          implementationChanged: false,
+          highSeverityFieldChanged: false,
           upgradeableBy: [
             'SecurityCouncilEmergency',
             'SecurityCouncilPropose',
@@ -260,7 +270,8 @@ export const Default: Story = {
           usedInProjects: [],
           references: [],
           chain: 'arbitrum',
-          implementationHasChanged: false,
+          implementationChanged: false,
+          highSeverityFieldChanged: false,
           upgradeableBy: [
             'SecurityCouncilEmergency',
             'SecurityCouncilPropose',
@@ -286,7 +297,8 @@ export const Default: Story = {
           usedInProjects: [],
           references: [],
           chain: 'arbitrum',
-          implementationHasChanged: false,
+          implementationChanged: false,
+          highSeverityFieldChanged: false,
         },
         {
           name: 'L2ProxyAdmin',
@@ -304,7 +316,8 @@ export const Default: Story = {
           usedInProjects: [],
           references: [],
           chain: 'arbitrum',
-          implementationHasChanged: false,
+          implementationChanged: false,
+          highSeverityFieldChanged: false,
         },
         {
           name: 'L2GatewaysProxyAdmin',
@@ -322,7 +335,8 @@ export const Default: Story = {
           usedInProjects: [],
           references: [],
           chain: 'arbitrum',
-          implementationHasChanged: false,
+          implementationChanged: false,
+          highSeverityFieldChanged: false,
         },
         {
           name: 'L2BaseFee',
@@ -340,7 +354,8 @@ export const Default: Story = {
           usedInProjects: [],
           references: [],
           chain: 'arbitrum',
-          implementationHasChanged: false,
+          implementationChanged: false,
+          highSeverityFieldChanged: false,
         },
         {
           name: 'L2SurplusFee',
@@ -358,7 +373,8 @@ export const Default: Story = {
           usedInProjects: [],
           references: [],
           chain: 'arbitrum',
-          implementationHasChanged: false,
+          implementationChanged: false,
+          highSeverityFieldChanged: false,
         },
         {
           name: 'L2ArbitrumToken',
@@ -390,7 +406,8 @@ export const Default: Story = {
           usedInProjects: [],
           references: [],
           chain: 'arbitrum',
-          implementationHasChanged: false,
+          implementationChanged: false,
+          highSeverityFieldChanged: false,
           upgradeableBy: [
             'SecurityCouncilEmergency',
             'SecurityCouncilPropose',
@@ -429,7 +446,8 @@ export const Default: Story = {
           usedInProjects: [],
           references: [],
           chain: 'arbitrum',
-          implementationHasChanged: false,
+          implementationChanged: false,
+          highSeverityFieldChanged: false,
           upgradeableBy: [
             'SecurityCouncilEmergency',
             'SecurityCouncilPropose',
@@ -469,7 +487,8 @@ export const Default: Story = {
           usedInProjects: [],
           references: [],
           chain: 'arbitrum',
-          implementationHasChanged: false,
+          implementationChanged: false,
+          highSeverityFieldChanged: false,
           upgradeableBy: [
             'SecurityCouncilEmergency',
             'SecurityCouncilPropose',
@@ -509,7 +528,8 @@ export const Default: Story = {
           usedInProjects: [],
           references: [],
           chain: 'arbitrum',
-          implementationHasChanged: false,
+          implementationChanged: false,
+          highSeverityFieldChanged: false,
           upgradeableBy: [
             'SecurityCouncilEmergency',
             'SecurityCouncilPropose',
@@ -549,7 +569,8 @@ export const Default: Story = {
           usedInProjects: [],
           references: [],
           chain: 'arbitrum',
-          implementationHasChanged: false,
+          implementationChanged: false,
+          highSeverityFieldChanged: false,
           upgradeableBy: [
             'SecurityCouncilEmergency',
             'SecurityCouncilPropose',
@@ -575,7 +596,8 @@ export const Default: Story = {
           usedInProjects: [],
           references: [],
           chain: 'arbitrum',
-          implementationHasChanged: false,
+          implementationChanged: false,
+          highSeverityFieldChanged: false,
         },
         {
           name: 'L2LPTGateway',
@@ -593,7 +615,8 @@ export const Default: Story = {
           usedInProjects: [],
           references: [],
           chain: 'arbitrum',
-          implementationHasChanged: false,
+          implementationChanged: false,
+          highSeverityFieldChanged: false,
         },
       ],
     },
@@ -654,7 +677,8 @@ export const Default: Story = {
         ],
         references: [],
         chain: 'ethereum',
-        implementationHasChanged: false,
+        implementationChanged: false,
+        highSeverityFieldChanged: false,
         upgradeableBy: ['SecurityCouncil', 'L1Timelock'],
         upgradeDelay: '12d 8h or 0 if overridden by the Security Council',
         upgradeConsiderations:
@@ -709,7 +733,8 @@ export const Default: Story = {
         ],
         references: [],
         chain: 'ethereum',
-        implementationHasChanged: false,
+        implementationChanged: false,
+        highSeverityFieldChanged: false,
         upgradeableBy: ['SecurityCouncil', 'L1Timelock'],
         upgradeDelay: '12d 8h or 0 if overridden by the Security Council',
         upgradeConsiderations:
@@ -764,7 +789,8 @@ export const Default: Story = {
         ],
         references: [],
         chain: 'ethereum',
-        implementationHasChanged: false,
+        implementationChanged: false,
+        highSeverityFieldChanged: false,
         upgradeableBy: ['SecurityCouncil', 'L1Timelock'],
         upgradeDelay: '12d 8h or 0 if overridden by the Security Council',
         upgradeConsiderations:
@@ -800,7 +826,8 @@ export const Default: Story = {
         usedInProjects: [],
         references: [],
         chain: 'ethereum',
-        implementationHasChanged: false,
+        implementationChanged: false,
+        highSeverityFieldChanged: false,
         upgradeableBy: ['SecurityCouncil', 'L1Timelock'],
         upgradeDelay: '12d 8h or 0 if overridden by the Security Council',
         upgradeConsiderations:
@@ -836,7 +863,8 @@ export const Default: Story = {
         usedInProjects: [],
         references: [],
         chain: 'ethereum',
-        implementationHasChanged: false,
+        implementationChanged: false,
+        highSeverityFieldChanged: false,
         upgradeableBy: ['SecurityCouncil', 'L1Timelock'],
         upgradeDelay: '12d 8h or 0 if overridden by the Security Council',
         upgradeConsiderations:
@@ -891,7 +919,8 @@ export const Default: Story = {
         ],
         references: [],
         chain: 'ethereum',
-        implementationHasChanged: false,
+        implementationChanged: false,
+        highSeverityFieldChanged: false,
         upgradeableBy: ['SecurityCouncil', 'L1Timelock'],
         upgradeDelay: '12d 8h or 0 if overridden by the Security Council',
         upgradeConsiderations:
@@ -946,7 +975,8 @@ export const Default: Story = {
         ],
         references: [],
         chain: 'ethereum',
-        implementationHasChanged: false,
+        implementationChanged: false,
+        highSeverityFieldChanged: false,
         upgradeableBy: ['SecurityCouncil', 'L1Timelock'],
         upgradeDelay: '12d 8h or 0 if overridden by the Security Council',
         upgradeConsiderations:
@@ -1000,7 +1030,8 @@ export const Default: Story = {
         ],
         references: [],
         chain: 'ethereum',
-        implementationHasChanged: false,
+        implementationChanged: false,
+        highSeverityFieldChanged: false,
         upgradeableBy: ['SecurityCouncil', 'L1Timelock'],
         upgradeDelay: '12d 8h or 0 if overridden by the Security Council',
         upgradeConsiderations:
@@ -1055,7 +1086,8 @@ export const Default: Story = {
         ],
         references: [],
         chain: 'ethereum',
-        implementationHasChanged: true,
+        implementationChanged: true,
+        highSeverityFieldChanged: false,
         upgradeableBy: ['SecurityCouncil', 'L1Timelock'],
         upgradeDelay: '12d 8h or 0 if overridden by the Security Council',
         upgradeConsiderations:
@@ -1095,7 +1127,8 @@ export const Default: Story = {
         ],
         references: [],
         chain: 'ethereum',
-        implementationHasChanged: false,
+        implementationChanged: false,
+        highSeverityFieldChanged: false,
       },
       {
         name: 'OneStepProverMemory',
@@ -1131,7 +1164,8 @@ export const Default: Story = {
         ],
         references: [],
         chain: 'ethereum',
-        implementationHasChanged: false,
+        implementationChanged: false,
+        highSeverityFieldChanged: false,
       },
       {
         name: 'OneStepProverMath',
@@ -1167,7 +1201,8 @@ export const Default: Story = {
         ],
         references: [],
         chain: 'ethereum',
-        implementationHasChanged: false,
+        implementationChanged: false,
+        highSeverityFieldChanged: false,
       },
       {
         name: 'OneStepProverHostIo',
@@ -1203,7 +1238,8 @@ export const Default: Story = {
         ],
         references: [],
         chain: 'ethereum',
-        implementationHasChanged: false,
+        implementationChanged: false,
+        highSeverityFieldChanged: false,
       },
       {
         name: 'OneStepProver0',
@@ -1239,7 +1275,8 @@ export const Default: Story = {
         ],
         references: [],
         chain: 'ethereum',
-        implementationHasChanged: false,
+        implementationChanged: false,
+        highSeverityFieldChanged: false,
       },
     ],
     escrows: [
@@ -1273,7 +1310,8 @@ export const Default: Story = {
         usedInProjects: [],
         references: [],
         chain: 'ethereum',
-        implementationHasChanged: false,
+        implementationChanged: false,
+        highSeverityFieldChanged: false,
         upgradeableBy: ['SecurityCouncil', 'L1Timelock'],
         upgradeDelay: '12d 8h or 0 if overridden by the Security Council',
       },
@@ -1307,7 +1345,8 @@ export const Default: Story = {
         usedInProjects: [],
         references: [],
         chain: 'ethereum',
-        implementationHasChanged: false,
+        implementationChanged: false,
+        highSeverityFieldChanged: false,
         upgradeableBy: ['SecurityCouncil', 'L1Timelock'],
         upgradeDelay: '12d 8h or 0 if overridden by the Security Council',
       },
@@ -1360,7 +1399,8 @@ export const Default: Story = {
         ],
         references: [],
         chain: 'ethereum',
-        implementationHasChanged: false,
+        implementationChanged: false,
+        highSeverityFieldChanged: false,
         upgradeableBy: ['ProxyAdmin'],
         upgradeDelay: 'No delay',
       },
@@ -1380,7 +1420,8 @@ export const Default: Story = {
         usedInProjects: [],
         references: [],
         chain: 'ethereum',
-        implementationHasChanged: false,
+        implementationChanged: false,
+        highSeverityFieldChanged: false,
       },
       {
         name: 'Escrow for wstETH',
@@ -1412,7 +1453,8 @@ export const Default: Story = {
         usedInProjects: [],
         references: [],
         chain: 'ethereum',
-        implementationHasChanged: false,
+        implementationChanged: false,
+        highSeverityFieldChanged: false,
       },
       {
         name: 'Escrow for LPT',
@@ -1429,7 +1471,8 @@ export const Default: Story = {
         usedInProjects: [],
         references: [],
         chain: 'ethereum',
-        implementationHasChanged: false,
+        implementationChanged: false,
+        highSeverityFieldChanged: false,
       },
     ],
     risks: [
@@ -1439,7 +1482,7 @@ export const Default: Story = {
       },
     ],
     diagram: {
-      src: '/images/architecture/arbitrum.png',
+      src: { light: '/images/architecture/arbitrum.png' },
       caption: 'A diagram of the smart contract architecture',
     },
     references: [],

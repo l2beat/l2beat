@@ -4,50 +4,10 @@
   "name": "alephzero",
   "initialAddresses": [
     "0x41Ec9456AB918f2aBA81F38c03Eb0B93b78E84d9", // Bridge
-    "0xeBb17f398ed30d02F2e8733e7c1e5cf566e17812" // GatewayRouter
+    "0xccaF21F002EAF230c9Fa810B34837a3739B70F7B" // erc20gw
   ],
   "names": {
-    "0x1CA12290D954CFe022323b6A6Df92113ed6b1C98": "RollupProxy",
-    "0x41Ec9456AB918f2aBA81F38c03Eb0B93b78E84d9": "Bridge",
-    "0xb9e6987d1E0936b93f512bC89632E15DcA706d87": "ChallengeManager",
-    "0xF75206c49c1694594E3e69252E519434f1579876": "SequencerInbox",
-    "0x73bb50c32a3BD6A1032aa5cFeA048fBDA3D6aF6e": "Outbox",
-    "0x56D8EC76a421063e1907503aDd3794c395256AEb": "Inbox",
-    "0x830D41c5624EE982cddEd92Ba01DAB3a4856116f": "UpgradeExecutor",
-    "0xdD0ae774F7E300CdAA4EA371cD55169665Ee6AFe": "AZERO token"
+    "0xeC475675629B38E42d4aC5d40761618268E7Ed21": "AlephZeroMultisig"
   },
-  "overrides": {
-    "AZERO token": {
-      "ignoreDiscovery": true
-    },
-    "ChallengeManager": {
-      "ignoreMethods": ["challenges"]
-    },
-    "RollupProxy": {
-      "extends": "orbitstack/RollupProxy"
-    },
-    "Outbox": {
-      "ignoreMethods": ["spent", "isSpent"]
-    },
-    "Bridge": {
-      "ignoreMethods": ["sequencerInboxAccs", "delayedInboxAccs"],
-      "ignoreInWatchMode": [
-        "delayedMessageCount",
-        "sequencerMessageCount",
-        "sequencerReportedSubMessageCount"
-      ]
-    },
-    "SequencerInbox": {
-      "extends": "orbitstack/SequencerInbox"
-    },
-    "UpgradeExecutor": {
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
-        }
-      }
-    }
-  }
+  "overrides": {}
 }

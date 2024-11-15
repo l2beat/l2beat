@@ -1,3 +1,144 @@
+Generated with discovered.json: 0xf8073d8b8ed50a1a342d050ed69f56f9f7dc70f9
+
+# Diff at Thu, 14 Nov 2024 08:21:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ea60800af45c71fbd5d292e0f4301ba9afda01fa block: 21121843
+- current block number: 21184706
+
+## Description
+
+Polyhedra DVN contract upgraded, new verifiers linked.
+
+## Watched changes
+
+```diff
+    contract PolyhedraDVN (0x8ddF05F9A5c488b4973897E278B58895bF87Cb24) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x28e4c0a9b19237dbabd13c2ff57934b80b69c88954b99bd66c38e3626a030b26"
++        "0x7b47ae15df80519afbed6bca2472ab35b7e20938dfc898ececbbb6d1c7a369a0"
+      values.$implementation:
+-        "0xcb75F0dFFf5c5046CAA9dB1DE56645a962FeFFc2"
++        "0xdFf54e8d2B31A197DC5859739E7177AA31fC3390"
+      values.$pastUpgrades.2:
++        ["2024-11-12T05:45:11.000Z","0xc8f7a01b73f35e11ca4263d71196b6490da462b11cda69f32b53f91177b9b04f",["0xdFf54e8d2B31A197DC5859739E7177AA31fC3390"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.MESSAGE_TOPIC_V1:
+-        "0x3dc6f2ede34d1db05729bbb76e5efd17ec1bc83f98f665e7fba0596dca438b96"
+      values.MESSAGE_TOPIC_V2:
+-        "0x1ab700d4ced0c005b164c0f789fd09fcbb0156d4c2041b8a3bfbcd961cd1567f"
+      values.mptValidator:
+-        "0x8022ceAa2771FdC188a6f3c783e7207F53B121D2"
+      values.zkMptValidator:
+-        "0x4b9D6177a832376867F1723158BD6eF5E9c7fc5f"
+      values.defaultTxValidator:
++        "0x38C967856d17E900042Af447B3346bfF26C8ed4B"
+      values.defaultZkValidator:
++        "0x276816F1931aFac123BdaeA54afF02BE6fd73e14"
+      values.sender:
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EvmZkMptValidator (0x276816F1931aFac123BdaeA54afF02BE6fd73e14)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EvmMptValidator (0x38C967856d17E900042Af447B3346bfF26C8ed4B)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/EvmMptValidator.sol             | 723 +++++++++++++++++++++
+ .../ethereum/.flat/EvmZkMptValidator.sol           | 287 ++++++++
+ .../PolyhedraDVN/ZkBridgeOracleV2.sol              | 687 +++++---------------
+ 3 files changed, 1164 insertions(+), 533 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21121843 (main branch discovery), not current.
+
+```diff
+    contract ReadLib1002 (0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D) {
+    +++ description: None
+      name:
+-        ""
++        "ReadLib1002"
+      unverified:
+-        true
+      values.getTreasuryAndNativeFeeCap:
++        ["0x0000000000000000000000000000000000000000",450000000000000]
+      values.messageLibType:
++        2
+      values.owner:
++        "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92"
+      values.version:
++        {"major":10,"minor":0,"endpointVersion":2}
+      sourceHashes:
++        ["0xf7800be6fd99520201da1404c35bac8a1ed826bbc2134f0a77547e0d7a74c9c1"]
+    }
+```
+
+Generated with discovered.json: 0xf47e257a4f963ed5e4deb297ed84e0342635cca1
+
+# Diff at Tue, 05 Nov 2024 13:48:26 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5e6ce51851b57187ccdd52c4944a82e2a8ab1e88 block: 21027620
+- current block number: 21121843
+
+## Description
+
+A new unverified send- or receive library is added by the LayerZeroMultisig, but not yet used for the monitored OApps, nor as default, nor is it described in the docs.
+
+This is a good example of an attack we would not notice because we cannot monitor all OApps and if someone is using this new library for any of them.
+
+Also, the unverified LayerZero Executor is upgraded.
+
+## Watched changes
+
+```diff
+    contract  (0x173272739Bd7Aa6e4e214714048a9fE699453059) {
+    +++ description: None
+      values.$implementation:
+-        "0xDaC2d26317C42ae3CB21357B73404120E1dA4232"
++        "0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805"
+      values.$pastUpgrades.2:
++        ["2024-11-01T19:07:23.000Z","0x8714871659f7ff2feb7968256c3baf39e5cdbe9160f36649f8a530a536456ed5",["0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805"]]
+      values.$upgradeCount:
+-        2
++        3
+    }
+```
+
+```diff
+    contract EndpointV2 (0x1a44076050125825900e736c501f859c50fE728c) {
+    +++ description: None
++++ description: All registered libraries in the Ethereum LZ Endpoint. Index 0 is the blockedLibrary, 1 and 2 are send and receive. Send- and ReceiveLibraries define the messaging framework (that can be further configured by the OApp owner). A new MessageLibrary should be thoroughly reviewed, especially if it is set as the default Library in new OApps.
++++ severity: HIGH
+      values.getRegisteredLibraries.3:
++        "0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract  (0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xfd72ec3cb3bb0bba544ff22a06ddb27c3f7c7e0e
 
 # Diff at Wed, 23 Oct 2024 10:15:03 GMT:

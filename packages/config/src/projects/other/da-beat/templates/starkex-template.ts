@@ -53,7 +53,7 @@ type Optionals = {
   /** Optional red warning, defaults to undefined */
   redWarning?: DacBridge['display']['redWarning']
   /** Optional challenge mechanism, defaults to undefined */
-  hasChallengeMechanism?: DacDaLayer['hasChallengeMechanism']
+  challengeMechanism?: DacDaLayer['challengeMechanism']
   /** Optional fallback, defaults to undefined */
   fallback?: DacDaLayer['fallback']
 }
@@ -100,7 +100,7 @@ export function StarkexDAC(template: TemplateVars): DacDaLayer {
     Before the state update is accepted, the StarkEx contract verifies the transaction public inputs by calling the isValid() function, which verifies the hash derived from state update inputs matches the hash stored by the Committee Verifier contract.
     `)
   const bridgeDisplay: DacBridge['display'] = {
-    name,
+    name: 'DA Bridge',
     slug: 'dac',
     description: bridgeDescription,
     warning: template.warning,
@@ -116,16 +116,22 @@ export function StarkexDAC(template: TemplateVars): DacDaLayer {
     display: bridgeDisplay,
     technology: {
       description: bridgeTechnology,
-      risks: template.bridge.technology?.risks,
+      risks: [
+        {
+          category: 'Funds can be lost if',
+          text: `a malicious committee signs a data availability attestation for an unavailable transaction batch.`,
+        },
+      ],
     },
     risks: {
       committeeSecurity:
         template.risks?.committeeSecurity ?? DaCommitteeSecurityRisk.Auto(),
       // TODO: make it required and remove the default
       upgradeability:
-        template.risks?.upgradeability ?? DaUpgradeabilityRisk.Immutable,
+        template.risks?.upgradeability ??
+        DaUpgradeabilityRisk.ImmutableNoSecurity,
       relayerFailure:
-        template.risks?.relayerFailure ?? DaRelayerFailureRisk.NoMechanism,
+        template.risks?.relayerFailure ?? DaRelayerFailureRisk.SelfPropose,
     },
     otherConsiderations: template.bridge.otherConsiderations,
   }
@@ -171,13 +177,18 @@ export function StarkexDAC(template: TemplateVars): DacDaLayer {
     systemCategory: 'custom',
     fallback: template.fallback, // Currently none?
     // https://github.com/starkware-libs/starkex-data-availability-committee?tab=readme-ov-file#publishing-committee-members-data
-    hasChallengeMechanism: template.hasChallengeMechanism,
+    challengeMechanism: template.challengeMechanism,
     display: layerDisplay,
     technology: {
       description: layerTechnology,
       risks: template.layer?.technology?.risks,
+      references: [
+        {
+          text: 'StarkEx Committee Service - Source Code',
+          href: 'https://github.com/starkware-libs/starkex-data-availability-committee',
+        },
+      ],
     },
-    usedIn,
     bridges: [dacBridge],
     risks: {
       economicSecurity:

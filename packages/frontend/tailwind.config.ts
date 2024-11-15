@@ -1,4 +1,6 @@
+import containerQueries from '@tailwindcss/container-queries'
 import type { Config } from 'tailwindcss'
+import tailwindcssAnimate from 'tailwindcss-animate'
 import plugin from 'tailwindcss/plugin'
 
 const config: Config = {
@@ -30,6 +32,7 @@ const config: Config = {
       light: '300',
       normal: '400',
       medium: '500',
+      semibold: '600',
       bold: '700',
       black: '900',
     },
@@ -150,6 +153,7 @@ const config: Config = {
         700: '#005DD7',
         800: '#083575',
         900: '#112944',
+        950: '#152A4B',
       },
       slate: {
         600: '#525C6A',
@@ -176,6 +180,7 @@ const config: Config = {
       'surface-primary': 'var(--surface-primary)',
       'surface-secondary': 'var(--surface-secondary)',
       'surface-tertiary': 'var(--surface-tertiary)',
+      'surface-table-group': 'var(--surface-table-group)',
       'icon-secondary': 'var(--icon-secondary)',
       overlay: 'var(--overlay)',
       divider: 'var(--divider)',
@@ -260,6 +265,13 @@ const config: Config = {
           'Roboto',
           'Arial',
         ],
+        'roboto-serif-ext': [
+          'var(--font-roboto-serif-ext)',
+          'var(--font-roboto-serif)',
+          'Roboto Serif',
+          'Roboto',
+          'Arial',
+        ],
         lora: ['Lora', 'serif'],
       },
       spacing: {
@@ -275,14 +287,14 @@ const config: Config = {
     },
   },
   plugins: [
-    plugin(function ({ addVariant }) {
-      addVariant('sidebar', '.sidebar &')
+    plugin((creator) => {
+      creator.addVariant('sidebar', '.sidebar &')
     }),
-    plugin(function ({ addVariant }) {
-      addVariant('main-page-card', '.main-page-card &')
+    plugin((creator) => {
+      creator.addVariant('main-page-card', '.main-page-card &')
     }),
-    require('tailwindcss-animate'),
-    require('@tailwindcss/container-queries'),
+    tailwindcssAnimate,
+    containerQueries,
   ],
 }
 

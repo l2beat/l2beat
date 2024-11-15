@@ -1,10 +1,10 @@
 import { type Bridge } from '@l2beat/config'
 import {
   type ContractsVerificationStatuses,
-  type ImplementationChangeReportApiResponse,
   type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
 import { type ProjectDetailsSection } from '~/components/projects/sections/types'
+import { type ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
 import { getTokensForProject } from '~/server/features/scaling/tvl/tokens/get-tokens-for-project'
 import { isTvlChartDataEmpty } from '~/server/features/utils/is-chart-data-empty'
 import { api } from '~/trpc/server'
@@ -18,7 +18,7 @@ export async function getBridgeProjectDetails(
   isVerified: boolean,
   contractsVerificationStatuses: ContractsVerificationStatuses,
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
-  implementationChange: ImplementationChangeReportApiResponse | undefined,
+  projectsChangeReport: ProjectsChangeReport,
 ) {
   const permissionsSection = bridge.permissions
     ? getPermissionsSection(
@@ -46,7 +46,7 @@ export async function getBridgeProjectDetails(
         },
         contractsVerificationStatuses,
         manuallyVerifiedContracts,
-        implementationChange,
+        projectsChangeReport,
       )
     : undefined
   const riskSummary = getBridgesRiskSummarySection(bridge, isVerified)

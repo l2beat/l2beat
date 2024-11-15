@@ -5,10 +5,11 @@ import { createDatabase } from '@l2beat/database'
 import { ApiServer } from './api/ApiServer'
 import { Config } from './config'
 import { ApplicationModule } from './modules/ApplicationModule'
-import { createActivityModule } from './modules/activity/ActivityModule'
+import { initActivityModule } from './modules/activity/ActivityModule'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
+import { createInsightModule } from './modules/insight/InsightModule'
 import { createLzOAppsModule } from './modules/lz-oapps/createLzOAppsModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
@@ -16,6 +17,7 @@ import { initTvlModule } from './modules/tvl/modules/TvlModule'
 import { createUpdateMonitorModule } from './modules/update-monitor/UpdateMonitorModule'
 import { createVerifiersModule } from './modules/verifiers/VerifiersModule'
 import { Peripherals } from './peripherals/Peripherals'
+import { Providers } from './providers/Providers'
 import { Clock } from './tools/Clock'
 import { getErrorReportingMiddleware } from './tools/ErrorReporter'
 
@@ -23,7 +25,9 @@ export class Application {
   start: () => Promise<void>
 
   constructor(config: Config, logger: Logger) {
-    const kyselyDatabase = createDatabase({
+    logger.for(this).info('Initializing App')
+
+    const database = createDatabase({
       ...config.database.connection,
       ...config.database.connectionPoolSize,
     })
@@ -36,18 +40,20 @@ export class Application {
     )
 
     const http = new HttpClient()
-    const peripherals = new Peripherals(kyselyDatabase, http, logger)
+    const peripherals = new Peripherals(database, http, logger)
+    const providers = new Providers(config, logger)
 
     const trackedTxsModule = createTrackedTxsModule(
       config,
       logger,
       peripherals,
+      providers,
       clock,
     )
 
     const modules: (ApplicationModule | undefined)[] = [
       createMetricsModule(config),
-      createActivityModule(config, logger, peripherals, clock),
+      initActivityModule(config, logger, clock, providers, database),
       createUpdateMonitorModule(config, logger, peripherals, clock),
       createFlatSourcesModule(config, logger, peripherals),
       trackedTxsModule,
@@ -55,12 +61,14 @@ export class Application {
         config,
         logger,
         peripherals,
+        providers,
         trackedTxsModule?.indexer,
       ),
       createLzOAppsModule(config, logger),
-      initTvlModule(config, logger, peripherals, clock),
+      initTvlModule(config, logger, peripherals, providers, clock),
       createVerifiersModule(config, logger, peripherals, clock),
-      createDaBeatModule(config, logger, peripherals, clock),
+      createDaBeatModule(config, logger, peripherals, providers, clock),
+      createInsightModule(config, logger, peripherals, providers, clock),
     ]
 
     const apiServer = new ApiServer(

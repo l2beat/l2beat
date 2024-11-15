@@ -11,6 +11,9 @@ import { Badge } from '../badges'
 
 import {
   CONTRACTS,
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
@@ -124,11 +127,13 @@ export const linea: Layer2 = {
       discovery.getEscrowDetails({
         address: EthereumAddress('0x504A330327A089d8364C4ab3811Ee26976d388ce'),
         sinceTimestamp: new UnixTime(1691079071),
+        source: 'external',
         tokens: ['USDC'],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319'),
         sinceTimestamp: new UnixTime(1691060675),
+        excludedTokens: ['rsETH'],
         tokens: '*',
       }),
     ],
@@ -276,6 +281,7 @@ export const linea: Layer2 = {
   chainConfig: {
     name: 'linea',
     chainId: 59144,
+    blockscoutV2ApiUrl: 'https://api-explorer.linea.build/api/v2',
     explorerUrl: 'https://lineascan.build',
     explorerApi: {
       url: 'https://api.lineascan.build/api',
@@ -292,11 +298,13 @@ export const linea: Layer2 = {
     ],
     coingeckoPlatform: 'linea',
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (blobs or calldata)'],
-    bridge: { type: 'Enshrined' },
-    mode: 'Transaction data (compressed)',
-  }),
+  dataAvailability: [
+    addSentimentToDataAvailability({
+      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
+      bridge: DA_BRIDGES.ENSHRINED,
+      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+    }),
+  ],
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
@@ -304,7 +312,7 @@ export const linea: Layer2 = {
         {
           contract: 'zkEVM',
           references: [
-            'https://etherscan.io/address/0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562#code',
+            'https://etherscan.io/address/0x1825242411792536469Cbb5843fd27Ce3e9e583A#code',
           ],
         },
       ],
@@ -318,7 +326,7 @@ export const linea: Layer2 = {
         {
           contract: 'zkEVM',
           references: [
-            'https://etherscan.io/address/0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562#code',
+            'https://etherscan.io/address/0x1825242411792536469Cbb5843fd27Ce3e9e583A#code',
           ],
         },
       ],
@@ -370,7 +378,7 @@ export const linea: Layer2 = {
       references: [
         {
           text: 'ZkEvmV2.sol - Etherscan source code, _verifyProof() function',
-          href: 'https://etherscan.io/address/0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562#code',
+          href: 'https://etherscan.io/address/0x1825242411792536469Cbb5843fd27Ce3e9e583A#code',
         },
       ],
     },
@@ -379,7 +387,7 @@ export const linea: Layer2 = {
       references: [
         {
           text: 'LineaRollup.sol - Etherscan source code, submitData() function',
-          href: 'https://etherscan.io/address/0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562#code',
+          href: 'https://etherscan.io/address/0x1825242411792536469Cbb5843fd27Ce3e9e583A#code',
         },
       ],
     },
@@ -398,7 +406,7 @@ export const linea: Layer2 = {
       references: [
         {
           text: 'LineaRollup.sol - Etherscan source code, onlyRole(OPERATOR_ROLE) modifier',
-          href: 'https://etherscan.io/address/0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562#code',
+          href: 'https://etherscan.io/address/0x1825242411792536469Cbb5843fd27Ce3e9e583A#code',
         },
       ],
     },
@@ -414,7 +422,7 @@ export const linea: Layer2 = {
         references: [
           {
             text: 'L1MessageService.sol - Etherscan source code, claimMessageWithProof() function',
-            href: 'https://etherscan.io/address/0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562#code',
+            href: 'https://etherscan.io/address/0x1825242411792536469Cbb5843fd27Ce3e9e583A#code',
           },
         ],
       },
@@ -475,7 +483,7 @@ export const linea: Layer2 = {
         references: [
           {
             text: 'LineaRollup.sol - Etherscan source code, state injections: stateRoot and l2MerkleRoot are part of the validity proof input.',
-            href: 'https://etherscan.io/address/0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562#code',
+            href: 'https://etherscan.io/address/0x1825242411792536469Cbb5843fd27Ce3e9e583A#code',
           },
         ],
       }),

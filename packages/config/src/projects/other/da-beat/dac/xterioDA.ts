@@ -1,9 +1,10 @@
-import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import { formatSeconds } from '@l2beat/shared-pure'
+import { DA_LAYERS } from '../../../../common'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
-import { NO_BRIDGE } from '../templates/no-bridge-template'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
+import { DaChallengeMechanism } from '../types/DaChallengeMechanism'
 import { DaLayer } from '../types/DaLayer'
-import { linkByDA } from '../utils/link-by-da'
+import { xterioDABridge } from './bridges/xterioDABridge'
 
 const discovery = new ProjectDiscovery('xterio')
 
@@ -24,8 +25,9 @@ const daResolveWindow = formatSeconds(
 export const xterioDA: DaLayer = {
   id: 'xterio-da',
   type: 'DaLayer',
-  kind: 'DAC',
+  kind: 'No DAC',
   systemCategory: 'custom',
+  fallback: DA_LAYERS.ETH_CALLDATA,
   display: {
     name: 'XterioDA',
     slug: 'xterio',
@@ -44,9 +46,12 @@ export const xterioDA: DaLayer = {
       ],
     },
   },
-  hasChallengeMechanism: true,
+  challengeMechanism: DaChallengeMechanism.DaChallenges,
   technology: {
     description: `
+    ## Architecture
+    ![XterioDA layer](/images/da-layer-technology/xterioda/architecture.png#center)
+
     ## Data Availability Challenges
     Xterio relies on DA challenges for data availability. 
     The DA Provider submits an input commitment on Ethereum, and users can request the data behind the commitment off-chain from the DA Provider.
@@ -56,24 +61,30 @@ export const xterioDA: DaLayer = {
     The system is not secure if the malicious sequencer is able to outspend the altruistic challengers. 
     If instead, after a challenge, the preimage data is not published, the chain reorgs to the last fully derivable state.
   `,
-  },
-  bridges: [
-    NO_BRIDGE({
-      createdAt: new UnixTime(1726747460), // 2024-09-19T12:04:20Z
-      layer: 'XterioDA',
-      description:
-        'The risk profile in this page refers to scaling solutions that do not integrate with a data availability bridge.',
-      technology: {
-        description: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.
-        However, there is a mechanism that allows users to challenge unavailability of data. \n`,
+    references: [
+      {
+        text: 'Alt-DA Specification',
+        href: 'https://github.com/ethereum-optimism/specs/blob/main/specs/experimental/alt-da.md',
       },
-    }),
-  ],
-  usedIn: linkByDA({
-    layer: (layer) => layer === 'XterioDA',
-  }),
+      {
+        text: 'Security Considerations - Ethresear.ch ',
+        href: 'https://ethresear.ch/t/universal-plasma-and-da-challenges/18629',
+      },
+    ],
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: `the sequencer posts an invalid data availability certificate and there are no challengers.`,
+      },
+      {
+        category: 'Funds can be lost if',
+        text: `the sequencer posts an invalid data availability certificate, and he is able to outspend the challengers.`,
+      },
+    ],
+  },
+  bridges: [xterioDABridge],
   risks: {
-    economicSecurity: DaEconomicSecurityRisk.Unknown,
+    economicSecurity: DaEconomicSecurityRisk.DAChallengesNoFunds,
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
   },
 }

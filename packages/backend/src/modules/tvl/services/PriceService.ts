@@ -1,5 +1,10 @@
-import { PriceRecord } from '@l2beat/database'
-import { CoingeckoQueryService } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
+import { Database, PriceRecord } from '@l2beat/database'
+import {
+  CoingeckoQueryService,
+  PriceProvider,
+  QueryResultPoint,
+} from '@l2beat/shared'
 import {
   assert,
   CoingeckoId,
@@ -9,13 +14,15 @@ import {
 import { Configuration } from '../../../tools/uif/multi/types'
 
 export interface PriceServiceDependencies {
-  readonly coingeckoQueryService: CoingeckoQueryService
+  readonly priceProvider: PriceProvider
+  readonly database: Database
+  readonly logger: Logger
 }
 
 export class PriceService {
   constructor(private readonly $: PriceServiceDependencies) {}
 
-  async fetchPrices(
+  async getPrices(
     from: UnixTime,
     to: UnixTime,
     coingeckoId: CoingeckoId,
@@ -26,11 +33,11 @@ export class PriceService {
       'Configuration error: coingeckoId mismatch',
     )
 
-    const prices = await this.$.coingeckoQueryService.getUsdPriceHistoryHourly(
+    const prices = await this.fetchPricesWithFallback(
       coingeckoId,
       from,
       to,
-      undefined,
+      configurations,
     )
 
     return configurations
@@ -50,10 +57,73 @@ export class PriceService {
       .flat()
   }
 
-  getAdjustedTo(from: number, to: number): UnixTime {
-    return CoingeckoQueryService.getAdjustedTo(
+  async fetchPricesWithFallback(
+    coingeckoId: CoingeckoId,
+    from: UnixTime,
+    to: UnixTime,
+    configurations: Configuration<CoingeckoPriceConfigEntry>[],
+  ): Promise<QueryResultPoint[]> {
+    try {
+      return await this.$.priceProvider.getUsdPriceHistoryHourly(
+        coingeckoId,
+        from,
+        to,
+      )
+    } catch (error) {
+      const latestHour = assertLatestHour(coingeckoId, from, to, error)
+
+      const priceFromDb = await this.getLatestPriceFromDb(
+        coingeckoId,
+        latestHour,
+        configurations,
+      )
+
+      return [priceFromDb]
+    }
+  }
+
+  private async getLatestPriceFromDb(
+    coingeckoId: CoingeckoId,
+    latestHour: UnixTime,
+    configurations: Configuration<CoingeckoPriceConfigEntry>[],
+  ) {
+    const records = await this.$.database.price.getByConfigIdsInRange(
+      configurations.map((c) => c.id),
+      latestHour,
+      latestHour,
+    )
+
+    const fallback = records.find((r) => r.timestamp.equals(latestHour))
+
+    assert(fallback, `DB fallback failed: ${coingeckoId}`)
+
+    this.$.logger.error(
+      'DB fallback triggered: failed to fetch price from Coingecko',
+      { coingeckoId, latestHour: latestHour.toNumber() },
+    )
+    return {
+      value: fallback.priceUsd,
+      timestamp: fallback.timestamp,
+    }
+  }
+
+  calculateAdjustedTo(from: number, to: number): UnixTime {
+    return CoingeckoQueryService.calculateAdjustedTo(
       new UnixTime(from),
       new UnixTime(to),
     )
   }
+}
+
+function assertLatestHour(
+  coingeckoId: CoingeckoId,
+  from: UnixTime,
+  to: UnixTime,
+  error: unknown,
+) {
+  const diff = to.toNumber() - from.toNumber()
+  if (diff >= 3600) throw error
+  assert(to.isFull('hour'), `DB fallback failed: ${coingeckoId}`)
+
+  return to
 }

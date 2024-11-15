@@ -1,5 +1,6 @@
 import { resolvedBridges } from '@l2beat/config/projects'
-import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
+import { getUnderReviewStatus } from '~/utils/project/under-review'
+import { getProjectsChangeReport } from '../projects-change-report/get-projects-change-report'
 import { get7dTokenBreakdown } from '../scaling/tvl/utils/get-7d-token-breakdown'
 import { orderByTvl } from '../scaling/tvl/utils/order-by-tvl'
 import { isAnySectionUnderReview } from '../scaling/utils/is-any-section-under-review'
@@ -10,21 +11,20 @@ export type BridgesArchivedEntry = Awaited<
 >[number]
 export async function getBridgesArchivedEntries() {
   const archivedBridges = resolvedBridges.filter((bridge) => bridge.isArchived)
-  const [
-    tvl7dBreakdown,
-    implementationChangeReport,
-    projectsVerificationStatuses,
-  ] = await Promise.all([
-    get7dTokenBreakdown({ type: 'bridge' }),
-    getImplementationChangeReport(),
-    getProjectsVerificationStatuses(),
-  ])
+  const [tvl7dBreakdown, projectsChangeReport, projectsVerificationStatuses] =
+    await Promise.all([
+      get7dTokenBreakdown({ type: 'bridge' }),
+      getProjectsChangeReport(),
+      getProjectsVerificationStatuses(),
+    ])
 
   const entries = archivedBridges.map((bridge) => {
     const tvl = tvl7dBreakdown.projects[bridge.id.toString()]
     const isVerified = !!projectsVerificationStatuses[bridge.id.toString()]
     const hasImplementationChanged =
-      !!implementationChangeReport.projects[bridge.id.toString()]
+      projectsChangeReport.hasImplementationChanged(bridge.id.toString())
+    const hasHighSeverityFieldChanged =
+      projectsChangeReport.hasHighSeverityFieldChanged(bridge.id.toString())
     return {
       id: bridge.id,
       slug: bridge.display.slug,
@@ -32,8 +32,11 @@ export async function getBridgesArchivedEntries() {
       name: bridge.display.name,
       shortName: bridge.display.shortName,
       isVerified,
-      hasImplementationChanged,
-      showProjectUnderReview: isAnySectionUnderReview(bridge),
+      underReviewStatus: getUnderReviewStatus({
+        isUnderReview: isAnySectionUnderReview(bridge),
+        hasImplementationChanged,
+        hasHighSeverityFieldChanged,
+      }),
       warning: bridge.display.warning,
       validatedBy: bridge.riskView?.validatedBy,
       category: bridge.display.category,

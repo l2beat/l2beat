@@ -47,6 +47,7 @@ export const world: Layer2 = opStackL2({
     discovery.getEscrowDetails({
       address: EthereumAddress('0x153A69e4bb6fEDBbAaF463CB982416316c84B2dB'),
       name: 'External USDC Vault',
+      source: 'external',
       description: 'Custom external escrow for USDC bridged to Worldchain.',
       tokens: ['USDC'],
     }),

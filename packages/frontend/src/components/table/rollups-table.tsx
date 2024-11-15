@@ -1,6 +1,8 @@
 import { type StageConfig } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
+import { type Row, type Table } from '@tanstack/react-table'
 import React from 'react'
+import { env } from '~/env'
 import { cn } from '~/utils/cn'
 import {
   BasicTable,
@@ -14,21 +16,12 @@ interface BasicEntry extends BasicTableEntry {
 }
 
 export function RollupsTable<T extends BasicEntry>(props: BasicTableProps<T>) {
-  const rows = props.table.getRowModel().rows
-  const ethereumEntry = rows.find((p) => p.original.id === ProjectId.ETHEREUM)
-  const stageTwoAndOne = rows.filter(
-    (row) =>
-      row.original.stage.stage === 'Stage 2' ||
-      row.original.stage.stage === 'Stage 1',
-  )
-  const stageZero = rows.filter((row) => row.original.stage.stage === 'Stage 0')
-  const rest = rows.filter(
-    (row) =>
-      row.original.stage.stage !== 'Stage 2' &&
-      row.original.stage.stage !== 'Stage 1' &&
-      row.original.stage.stage !== 'Stage 0' &&
-      row.original.id !== ProjectId.ETHEREUM,
-  )
+  if (!env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING) {
+    return <BasicTable {...props} />
+  }
+
+  const { ethereumEntry, stageTwoAndOne, stageZero, rest } =
+    getRollupsTableRows(props.table)
 
   return (
     <BasicTable {...props}>
@@ -53,7 +46,7 @@ export function RollupsTable<T extends BasicEntry>(props: BasicTableProps<T>) {
           className={cn(i === stageZero.length - 1 && '!border-b-0')}
         />
       ))}
-      {rest.length !== 0 && <RowDivider>Other projects</RowDivider>}
+      {rest.length !== 0 && <RowDivider>Under review projects</RowDivider>}
       {rest.map((row, i) => (
         <BasicTableRow
           key={row.id}
@@ -72,11 +65,50 @@ function RowDivider({
 }: { children: React.ReactNode; className?: string }) {
   return (
     <tr className="group">
-      <td colSpan={100} className={cn('px-0 group-first:pt-1', className)}>
-        <div className="rounded bg-surface-tertiary px-2 py-1 text-2xs font-medium leading-none text-zinc-500 dark:text-n-zinc-300">
+      <td
+        colSpan={3}
+        className={cn('sticky left-0 z-1 px-0 group-first:pt-1', className)}
+      >
+        <div className="h-5 rounded-l bg-surface-tertiary px-2 py-1 text-2xs font-medium uppercase leading-none text-zinc-500 dark:text-n-zinc-300">
           {children}
         </div>
       </td>
+      <td colSpan={100} className={cn('px-0 group-first:pt-1', className)}>
+        <div className="h-5 rounded-r bg-surface-tertiary px-2 py-1"></div>
+      </td>
     </tr>
   )
+}
+
+function getRollupsTableRows<T extends BasicEntry>(table: Table<T>) {
+  const rows = table.getRowModel().rows
+
+  let ethereumEntry: Row<T> | undefined
+  const stageTwoAndOne: Row<T>[] = []
+  const stageZero: Row<T>[] = []
+  const rest: Row<T>[] = []
+
+  for (const row of rows) {
+    if (row.original.id === ProjectId.ETHEREUM) {
+      ethereumEntry = row
+      continue
+    }
+
+    if (
+      row.original.stage.stage === 'Stage 2' ||
+      row.original.stage.stage === 'Stage 1'
+    ) {
+      stageTwoAndOne.push(row)
+      continue
+    }
+
+    if (row.original.stage.stage === 'Stage 0') {
+      stageZero.push(row)
+      continue
+    }
+
+    rest.push(row)
+  }
+
+  return { ethereumEntry, stageTwoAndOne, stageZero, rest }
 }

@@ -27,6 +27,7 @@ export type ScalingProjectTransactionApi =
   | SimpleTransactionApi<'starknet'>
   | SimpleTransactionApi<'zksync'>
   | SimpleTransactionApi<'loopring'>
-  | SimpleTransactionApi<'degate'>
+  | SimpleTransactionApi<'degate3'>
+  | SimpleTransactionApi<'fuel'>
   | RpcTransactionApi
   | StarkexTransactionApi

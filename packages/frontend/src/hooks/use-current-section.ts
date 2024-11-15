@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useEventListener } from './use-event-listener'
 import { useBreakpoint } from './use-is-mobile'
 
-const DEFAULT_THRESHOLD = `15%`
+const DEFAULT_THRESHOLD = `30%`
 
 type ThresholdValue = `${number}%` | `${number}px`
 
@@ -30,22 +30,32 @@ export function useCurrentSection(threshold?: Threshold) {
       setCurrentSection(lastSection)
       return
     }
-    const currentSection = sections.find((section) => {
-      const sectionTop = section.offsetTop
-      const sectionHeight = section.offsetHeight
-      const sectionBottom = sectionTop + sectionHeight
 
-      const scrollPos =
-        window.scrollY +
-        getViewportHeightOffset(threshold, breakpoint === 'mobile')
-      const isCurrentSection =
-        scrollPos >= sectionTop && scrollPos < sectionBottom
-      return isCurrentSection
-    })
+    const current = sections
+      .map((section) => {
+        const sectionTop = section.offsetTop
+        const sectionHeight = section.offsetHeight
+        const sectionBottom = sectionTop + sectionHeight
 
-    if (!currentSection) return
+        const scrollPos =
+          window.scrollY +
+          getViewportHeightOffset(threshold, breakpoint === 'mobile')
 
-    setCurrentSection(currentSection)
+        return {
+          section,
+          offset:
+            scrollPos < sectionTop
+              ? sectionTop - scrollPos
+              : scrollPos > sectionBottom
+                ? scrollPos - sectionBottom
+                : 0,
+        }
+      })
+      .sort((a, b) => a.offset - b.offset)[0]
+
+    if (!current) return
+
+    setCurrentSection(current.section)
   }, [breakpoint, threshold])
 
   useEffect(() => {

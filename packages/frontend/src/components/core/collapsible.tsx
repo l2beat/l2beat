@@ -8,10 +8,12 @@ const Collapsible = CollapsiblePrimitive.Root
 
 const CollapsibleTrigger = CollapsiblePrimitive.CollapsibleTrigger
 
-const CollapsibleContent = React.forwardRef<
-  React.ElementRef<typeof CollapsiblePrimitive.CollapsibleContent>,
-  React.ComponentPropsWithoutRef<typeof CollapsiblePrimitive.CollapsibleContent>
->(({ className, children, ...props }, ref) => (
+const CollapsibleContent = ({
+  ref,
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof CollapsiblePrimitive.CollapsibleContent>) => (
   <CollapsiblePrimitive.CollapsibleContent
     ref={ref}
     {...props}
@@ -22,7 +24,7 @@ const CollapsibleContent = React.forwardRef<
   >
     {children}
   </CollapsiblePrimitive.CollapsibleContent>
-))
+)
 CollapsibleContent.displayName =
   CollapsiblePrimitive.CollapsibleContent.displayName
 

@@ -8,6 +8,9 @@ import {
 
 import {
   CONTRACTS,
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   NUGGETS,
@@ -26,9 +29,14 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('kroma')
 
-const proposerRoundDurationSeconds = discovery.getContractValue<number>(
+const proposerRoundDurationSecondsOLD = discovery.getContractValue<number>(
   'ValidatorPool',
   'ROUND_DURATION',
+)
+
+const proposerRoundDurationSeconds = discovery.getContractValue<number>(
+  'ValidatorManager',
+  'ROUND_DURATION_SECONDS',
 )
 
 const rootsSubmissionIntervalBlocks = discovery.getContractValue<number>(
@@ -155,6 +163,7 @@ export const kroma: Layer2 = {
         address: EthereumAddress('0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e'),
         sinceTimestamp: new UnixTime(1700122827),
         tokens: ['USDC'],
+        source: 'external',
         description: 'Main entry point for users depositing USDC.',
       }),
     ],
@@ -205,11 +214,13 @@ export const kroma: Layer2 = {
       stateUpdate: 'disabled',
     },
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (blobs or calldata)'],
-    bridge: { type: 'Enshrined' },
-    mode: 'Transaction data',
-  }),
+  dataAvailability: [
+    addSentimentToDataAvailability({
+      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
+      bridge: DA_BRIDGES.ENSHRINED,
+      mode: DA_MODES.TRANSACTION_DATA,
+    }),
+  ],
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_INT_ZK,
@@ -260,7 +271,7 @@ export const kroma: Layer2 = {
         {
           contract: 'L2OutputOracle',
           references: [
-            'https://etherscan.io/address/0x14126FFa3889a026A79F0f99FaE80B3dc9E38095#code#F1#L197',
+            'https://etherscan.io/address/0x4B68F22d96a04F6d80e284C20A648f8Da2fD569b#code#F1#L197',
           ],
         },
       ],
@@ -298,22 +309,22 @@ export const kroma: Layer2 = {
       name: 'Fraud Proofs ensure state correctness',
       description:
         'Kroma uses an interactive fraud proof system to find a single block of disagreement, which is then ZK proven. The zkEVM used is based on Scroll.\
-        Once the single block of disagreement is found, the challenger is required to present ZK proof of the fraud. When the proof is validated, the incorrect\
+        Once the single block of disagreement is found, the challenger is required to present a ZK proof of the fraud. If the proof is validated, the incorrect\
         state output is deleted. The Security Council can always override the result of the challenge, it can also delete any L2 state root at any time. If\
-        the malicious attester and challenger collude and are willing to spend bonds, they can perform a delay attack by engaging in continuous challenge\
-        resulting in lack of finalization of the L2 state root on L1. The protocol can also fail under certain conditions.',
+        the malicious attester and challenger collude and are willing to spend bonds, they can perform a delay attack by engaging in continuous challenges\
+        resulting in a lack of finalization of the L2 state root on L1. The protocol can also fail under certain conditions.',
       references: [
         {
           text: 'Colosseum.sol#L300 - Etherscan source code, createChallenge function',
-          href: 'https://etherscan.io/address/0xb87eaB624EE684C1799f1E8b24936A1c90759eEc#code#F1#L300',
+          href: 'https://etherscan.io/address/0xAB54b3e775f645cf4486039bfA4dA539E70c9f99#code#F1#L437',
         },
         {
           text: 'Colosseum.sol#L378 - Etherscan source code, bisect function',
-          href: 'https://etherscan.io/address/0xb87eaB624EE684C1799f1E8b24936A1c90759eEc#code#F1#L378',
+          href: 'https://etherscan.io/address/0xAB54b3e775f645cf4486039bfA4dA539E70c9f99#code#F1#L514',
         },
         {
           text: 'Colosseum.sol#L434 - Etherscan source code, proveFault function',
-          href: 'https://etherscan.io/address/0xb87eaB624EE684C1799f1E8b24936A1c90759eEc#code#F1#L434',
+          href: 'https://etherscan.io/address/0xAB54b3e775f645cf4486039bfA4dA539E70c9f99#code#F1#L570',
         },
         {
           text: 'KROMA-020: lack of validation segments and proofs in Colosseum.sol - ChainLight security audit',
@@ -471,6 +482,10 @@ export const kroma: Layer2 = {
       description:
         'Actor allowed to pause withdrawals. Currently set to the Security Council.',
     },
+    ...discovery.getMultisigPermission(
+      'KromaRewardVaultMultisig',
+      'Escrows a pool of KRO used as validator rewards by the AssetManager.',
+    ),
   ],
   contracts: {
     addresses: [
@@ -525,8 +540,17 @@ export const kroma: Layer2 = {
       }),
       discovery.getContractDetails('ValidatorPool', {
         description: `Contract used to manage the Proposers. Anyone can submit a deposit and bond to a state root, or create a challenge. It also manages the Proposer rotation for each submittable block using a random selection. If the selected proposer fails to publish a root within ${formatSeconds(
-          proposerRoundDurationSeconds,
+          proposerRoundDurationSecondsOLD,
         )}, then the submission becomes open to everyone.`,
+        ...upgradesProxy,
+      }),
+      discovery.getContractDetails('ValidatorManager', {
+        description: `Manages the set of Proposers (Validators in Kroma) and selects the next proposer with the window to submit the output root within ${formatSeconds(proposerRoundDurationSeconds)}, after which anyone propose for them. It is also the entry point for other contracts, such as the L2OutputOracle and the Colosseum, which distribute output rewards and slash challenge losers. It makes successive calls to the AssetManager to apply changes to the proposers' assets.`,
+        ...upgradesProxy,
+      }),
+      discovery.getContractDetails('AssetManager', {
+        description:
+          'Manages the delegation and undelegation of KRO tokens and Kroma Guardian House (KGH) NFTs for Proposers (Kroma Validators) and distributes rewards.',
         ...upgradesProxy,
       }),
       discovery.getContractDetails('ZKMerkleTrie', {

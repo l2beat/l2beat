@@ -49,6 +49,8 @@ export const mantleDA: DaLayer = {
     description: `
     ## Architecture
 
+    ![MantleDA architecture](/images/da-layer-technology/mantleda/architecture.png#center)
+
     Mantle DA is an independent DA module that is built on top of an early version of EigenDA smart contracts.
     The system is made up of two main component: onchain smart contracts for storing and verifying data committments, and an offchain network of permissioned nodes storing the data.
     The permissioned set of nodes is tasked with providing data availability to the Mantle network. 
@@ -58,7 +60,6 @@ export const mantleDA: DaLayer = {
     `,
   },
   bridges: [mantleDABridge],
-  usedIn: [...mantleDABridge.usedIn],
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('MNT'),
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,

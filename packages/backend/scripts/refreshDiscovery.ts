@@ -1,11 +1,12 @@
-import { execSync } from 'child_process'
 import {
   ConfigReader,
   DiscoveryConfig,
   TemplateService,
+  getChainConfig,
 } from '@l2beat/discovery'
 import { DiscoveryOutput } from '@l2beat/discovery-types'
 import { keyInYN } from 'readline-sync'
+import { discoverAndUpdateDiffHistory } from './discoveryWrapper'
 
 const configReader = new ConfigReader()
 const templateService = new TemplateService()
@@ -16,6 +17,9 @@ void main().catch((e) => {
   console.log(e)
 })
 
+// Hello future reader. Please set this to a project you errored on e.g. zklinknova/blast
+const from: string | undefined = undefined
+
 async function main() {
   const refreshAll = process.argv.includes('--all')
   const chainConfigs = await Promise.all(
@@ -25,7 +29,16 @@ async function main() {
       .flatMap((chain) => configReader.readAllConfigsForChain(chain)),
   )
   const toRefresh: { config: DiscoveryConfig; reason: string }[] = []
+  let foundFrom = false
   for (const config of chainConfigs) {
+    if (from !== undefined) {
+      if (!foundFrom && `${config.name}/${config.chain}` === from) {
+        foundFrom = true
+      }
+      if (!foundFrom) {
+        continue
+      }
+    }
     const discovery = configReader.readDiscovery(config.name, config.chain)
     const needsRefreshReason = refreshAll
       ? '--all flag was provided'
@@ -52,8 +65,10 @@ async function main() {
     )
     if (keyInYN('Do you want to continue?')) {
       for (const { config } of toRefresh) {
-        execSync(`yarn discover "${config.chain}" "${config.name}" --dev`, {
-          stdio: 'inherit',
+        await discoverAndUpdateDiffHistory({
+          project: config.name,
+          chain: getChainConfig(config.chain),
+          dev: true,
         })
       }
     }

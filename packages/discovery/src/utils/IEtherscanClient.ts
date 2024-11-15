@@ -10,14 +10,14 @@ export interface EtherscanUnsupportedMethods {
   getContractCreation?: boolean
 }
 
-export interface EtherscanExplorerConfig {
+interface EtherscanExplorerConfig {
   type: 'etherscan'
   url: string
   apiKey: string
   unsupported?: EtherscanUnsupportedMethods
 }
 
-export interface BlockscoutExplorerConfig {
+interface BlockscoutExplorerConfig {
   type: 'blockscout'
   url: string
   unsupported?: EtherscanUnsupportedMethods

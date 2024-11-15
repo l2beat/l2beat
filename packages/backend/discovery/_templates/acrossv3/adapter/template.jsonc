@@ -33,7 +33,9 @@
     "L1_USDC_BRIDGE",
     "l1StandardBridge",
     "messenger",
-    "L1_OP_USDC_BRIDGE"
+    "L1_OP_USDC_BRIDGE",
+    "CUSTOM_GAS_TOKEN",
+    "CUSTOM_GAS_TOKEN_FUNDER"
   ],
   "ignoreMethods": ["getL1CallValue"],
   "ignoreInWatchMode": [

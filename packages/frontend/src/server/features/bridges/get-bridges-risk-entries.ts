@@ -1,7 +1,11 @@
 import { type Bridge } from '@l2beat/config'
 import { resolvedBridges } from '@l2beat/config/projects'
 import { notUndefined } from '@l2beat/shared-pure'
-import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
+import { getUnderReviewStatus } from '~/utils/project/under-review'
+import {
+  type ProjectsChangeReport,
+  getProjectsChangeReport,
+} from '../projects-change-report/get-projects-change-report'
 import { getProjectsLatestTvlUsd } from '../scaling/tvl/utils/get-latest-tvl-usd'
 import { orderByTvl } from '../scaling/tvl/utils/order-by-tvl'
 import { isAnySectionUnderReview } from '../scaling/utils/is-any-section-under-review'
@@ -9,11 +13,11 @@ import { getProjectsVerificationStatuses } from '../verification-status/get-proj
 import { getDestination } from './get-destination'
 
 export async function getBridgeRiskEntries() {
-  const [tvl, projectsVerificationStatuses, implementationChangeReport] =
+  const [tvl, projectsVerificationStatuses, projectsChangeReport] =
     await Promise.all([
       getProjectsLatestTvlUsd(),
       getProjectsVerificationStatuses(),
-      getImplementationChangeReport(),
+      getProjectsChangeReport(),
     ])
 
   const included = resolvedBridges.filter(
@@ -22,12 +26,9 @@ export async function getBridgeRiskEntries() {
 
   const entries = included
     .map((project) => {
-      const changes = implementationChangeReport.projects[project.id.toString()]
-      const hasImplementationChanged = !!changes?.ethereum
-
       const isVerified = !!projectsVerificationStatuses[project.id.toString()]
 
-      return getBridgesRiskEntry(project, hasImplementationChanged, isVerified)
+      return getBridgesRiskEntry(project, projectsChangeReport, isVerified)
     })
     .filter(notUndefined)
 
@@ -36,9 +37,14 @@ export async function getBridgeRiskEntries() {
 
 function getBridgesRiskEntry(
   project: Bridge,
-  hasImplementationChanged: boolean,
+  projectsChangeReport: ProjectsChangeReport,
   isVerified: boolean,
 ) {
+  const hasImplementationChanged =
+    projectsChangeReport.hasImplementationChanged(project.id.toString())
+  const hasHighSeverityFieldChanged =
+    projectsChangeReport.hasHighSeverityFieldChanged(project.id.toString())
+
   return {
     id: project.id,
     href: `/bridges/projects/${project.display.slug}`,
@@ -48,8 +54,11 @@ function getBridgesRiskEntry(
     slug: project.display.slug,
     warning: project.display.warning,
     isArchived: project.isArchived,
-    showProjectUnderReview: isAnySectionUnderReview(project),
-    hasImplementationChanged,
+    underReviewStatus: getUnderReviewStatus({
+      isUnderReview: isAnySectionUnderReview(project),
+      hasImplementationChanged,
+      hasHighSeverityFieldChanged,
+    }),
     isVerified,
     category: project.display.category,
     destination: getDestination(

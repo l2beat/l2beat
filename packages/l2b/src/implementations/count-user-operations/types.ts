@@ -1,12 +1,12 @@
 export type Operation = StaticOperation | RecursiveOperation
 
-export interface StaticOperation {
+interface StaticOperation {
   type: 'static'
   name: string
   count: number
 }
 
-export interface RecursiveOperation {
+interface RecursiveOperation {
   type: 'recursive'
   calldata: string
 }

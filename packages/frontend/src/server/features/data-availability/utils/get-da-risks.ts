@@ -14,19 +14,35 @@ export function getDaRisks(
   economicSecurity?: EconomicSecurityData,
 ): DaBridgeRisks & DaLayerRisks {
   return {
+    ...getDaLayerRisks(daLayer, totalValueSecured, economicSecurity),
+    ...getDaBridgeRisks(daBridge),
+  }
+}
+
+export function getDaLayerRisks(
+  daLayer: DaLayer,
+  totalValueSecured: number,
+  economicSecurity?: EconomicSecurityData,
+) {
+  return {
     economicSecurity: getEconomicSecurity(
       daLayer,
       totalValueSecured,
       economicSecurity,
     ),
     fraudDetection: daLayer.risks.fraudDetection,
+  }
+}
+
+export function getDaBridgeRisks(daBridge: DaBridge) {
+  return {
     relayerFailure: daBridge.risks.relayerFailure,
     upgradeability: daBridge.risks.upgradeability,
     committeeSecurity: daBridge.risks.committeeSecurity,
   }
 }
 
-export function getEconomicSecurity(
+function getEconomicSecurity(
   daLayer: DaLayer,
   totalValueSecured: number,
   economicSecurity?: EconomicSecurityData,

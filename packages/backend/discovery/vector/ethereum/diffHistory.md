@@ -1,3 +1,97 @@
+Generated with discovered.json: 0x6114f6566c4a9860fe0e5395e9f5826074d19140
+
+# Diff at Thu, 14 Nov 2024 09:08:08 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ea60800af45c71fbd5d292e0f4301ba9afda01fa block: 21122554
+- current block number: 21184939
+
+## Description
+
+New verifier, zk catalog updated.
+
+## Watched changes
+
+```diff
+    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: None
++++ description: The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-11-08.
+      values.oldVerifier4.1:
+-        false
++        true
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21122554 (main branch discovery), not current.
+
+```diff
+    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: None
++++ description: The prover contract address for SP1, and whether it is frozen (true if frozen).
+      values.verifier.0:
+-        "0x1764C29FBd94865198588f10FC75D4f6636d158d"
++        "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16"
++++ description: The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-11-01.
+      values.oldVerifier3:
++        ["0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3",true]
++++ description: The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-11-08.
+      values.oldVerifier4:
++        ["0x1764C29FBd94865198588f10FC75D4f6636d158d",false]
+      fieldMeta.oldVerifier3:
++        {"description":"The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-11-01."}
+      fieldMeta.oldVerifier4:
++        {"description":"The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-11-08."}
+    }
+```
+
+```diff
+    contract SP1Verifier (0xc350F063C13a3Ca21331610fe159E697a5c9c2FB) {
+    +++ description: None
+      name:
+-        "SP1Verifier_OLD"
++        "SP1Verifier"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x17e3f29f3916d42155d9374428d10c5e6c6b7eb2
+
+# Diff at Tue, 05 Nov 2024 16:10:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5e6ce51851b57187ccdd52c4944a82e2a8ab1e88 block: 21022907
+- current block number: 21122554
+
+## Description
+
+Verifier program verification key changed, verifier implementation is the same.
+
+## Watched changes
+
+```diff
+    contract Vector (0x02993cdC11213985b9B13224f3aF289F03bf298d) {
+    +++ description: None
+      values.vectorXProgramVkey:
+-        "0x0003c5cf9260fcef3df6c79870952e1ce2f57595ac042ea868c9cbbcab548cf8"
++        "0x00285180a989ed2d6aa8194220690d0d45f2907535d3d3c09e4cb29f6dbe3d4d"
+    }
+```
+
 Generated with discovered.json: 0xcccd51fbb01c8fd230c5f00ddbeb7a651eae76f6
 
 # Diff at Tue, 22 Oct 2024 18:27:40 GMT:

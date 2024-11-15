@@ -21,13 +21,14 @@ export function isAnySectionUnderReview(
   )
 }
 
-export function isAnyRiskUnderReview(
+function isAnyRiskUnderReview(
   riskView?: ScalingProjectRiskView | BridgeRiskView,
 ) {
   return (
     riskView &&
-    Object.values(riskView as Record<string, ScalingProjectRiskViewEntry>).some(
-      (risk) => risk.sentiment === 'UnderReview',
+    Object.values(riskView).some(
+      (risk) =>
+        (risk as ScalingProjectRiskViewEntry).sentiment === 'UnderReview',
     )
   )
 }

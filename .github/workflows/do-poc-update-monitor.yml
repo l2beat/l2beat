@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Login to DO container registry
         uses: docker/login-action@v3
         with:
@@ -37,12 +37,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install
       - name: Apply migrations
-        run: yarn prisma migrate deploy --schema=packages/database/prisma/schema.prisma
+        run: pnpm prisma migrate deploy --schema=packages/database/prisma/schema.prisma
         env:
           PRISMA_DB_URL: ${{ secrets.DO_POC_DATABASE_URL }}

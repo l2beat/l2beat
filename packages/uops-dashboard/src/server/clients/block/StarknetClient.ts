@@ -1,5 +1,5 @@
 import { Chain } from '@/chains'
-import { Block } from '@l2beat/shared'
+import { Block } from '@l2beat/shared-pure'
 import { z } from 'zod'
 import { getApiUrl } from '../apiUrls'
 import { BlockClient } from './BlockClient'
@@ -8,7 +8,7 @@ import { BlockClient } from './BlockClient'
 export class StarknetClient implements BlockClient {
   constructor(private readonly chain: Chain) {}
 
-  async getBlockNumber(): Promise<number> {
+  async getLatestBlockNumber(): Promise<number> {
     const params = ['latest']
 
     const apiUrl = getApiUrl(this.chain.id)
@@ -39,7 +39,7 @@ export class StarknetClient implements BlockClient {
     return block.block_number
   }
 
-  async getBlock(blockNumber: number): Promise<Block> {
+  async getBlockWithTransactions(blockNumber: number): Promise<Block> {
     const params = [{ block_number: blockNumber }]
 
     const apiUrl = getApiUrl(this.chain.id)
@@ -73,11 +73,11 @@ export class StarknetClient implements BlockClient {
       number: block.block_number,
       timestamp: block.timestamp,
       hash: block.block_hash,
-      status: block.status,
       transactions: block.transactions.map((tx: StarknetApiTransaction) => ({
         hash: tx.transaction_hash,
         data: tx.calldata ?? [],
         type: tx.type,
+        from: tx.sender_address ?? '',
       })),
     }
   }
@@ -97,6 +97,7 @@ const StarknetTransaction = z.object({
   type: z.string(),
   calldata: z.array(z.string()).optional(),
   transaction_hash: z.string(),
+  sender_address: z.string().optional(),
 })
 
 type StarknetApiTransaction = z.infer<typeof StarknetTransaction>

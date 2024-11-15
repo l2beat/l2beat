@@ -9,6 +9,7 @@ import {
   formatIntoHashable,
   sha2_256bit,
 } from '../../flatten/utils'
+import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
 import {
   DiscoveryContract,
@@ -22,6 +23,7 @@ const TEMPLATE_SHAPE_FOLDER = 'shape'
 
 export class TemplateService {
   private readonly loadedTemplates: Record<string, DiscoveryContract> = {}
+  private shapeHashes: Record<string, Hash256[]> | undefined
 
   constructor(private readonly rootPath: string = '') {}
 
@@ -33,6 +35,9 @@ export class TemplateService {
   listAllTemplates(): Record<string, string[]> {
     const result: Record<string, string[]> = {}
     const resolvedRootPath = path.join(this.rootPath, TEMPLATES_PATH)
+    if (!fileExistsCaseSensitive(resolvedRootPath)) {
+      return {}
+    }
     const templatePaths = listAllPaths(resolvedRootPath)
     for (const path of templatePaths) {
       if (!existsSync(join(path, 'template.jsonc'))) {
@@ -95,6 +100,10 @@ export class TemplateService {
   }
 
   getAllShapeHashes(): Record<string, Hash256[]> {
+    if (this.shapeHashes !== undefined) {
+      return this.shapeHashes
+    }
+
     const result: Record<string, Hash256[]> = {}
     const allTemplates = this.listAllTemplates()
     for (const [templateId, shapeFilePaths] of Object.entries(allTemplates)) {
@@ -104,6 +113,7 @@ export class TemplateService {
       result[templateId] = haystackHashes
     }
 
+    this.shapeHashes = result
     return result
   }
 

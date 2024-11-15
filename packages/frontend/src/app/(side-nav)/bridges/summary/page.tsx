@@ -3,12 +3,12 @@ import { MainPageCard } from '~/components/main-page-card'
 import { MainPageHeader } from '~/components/main-page-header'
 import { getBridgesSummaryEntries } from '~/server/features/bridges/get-bridges-summary-entries'
 import { HydrateClient, api } from '~/trpc/server'
-import { getCookie } from '~/utils/cookies/server'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { BridgesFilterContextProvider } from '../_components/bridges-filter-context'
 import { BridgesMvpWarning } from '../_components/bridges-mvp-warning'
 import { BridgesSummaryTable } from './_components/table/bridges-summary-table'
 
+export const revalidate = 600
 export const metadata = getDefaultMetadata({
   openGraph: {
     url: '/bridges/summary',
@@ -19,11 +19,7 @@ export default async function Page() {
   const [entries] = await Promise.all([
     getBridgesSummaryEntries(),
     api.tvl.chart.prefetch({
-      range: getCookie('bridgesSummaryChartRange'),
-      filter: { type: 'bridge' },
-      excludeAssociatedTokens: false,
-    }),
-    api.tvl.total.prefetch({
+      range: '1y',
       filter: { type: 'bridge' },
       excludeAssociatedTokens: false,
     }),

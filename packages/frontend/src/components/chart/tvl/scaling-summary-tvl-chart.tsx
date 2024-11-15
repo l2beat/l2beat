@@ -19,17 +19,13 @@ export function ScalingSummaryTvlChart({
   unit,
   timeRange,
 }: { unit: ChartUnit; timeRange: TvlChartRange }) {
-  const { data: total } = api.tvl.total.useQuery({
-    excludeAssociatedTokens: false,
-    filter: { type: 'layer2' },
-  })
   const { data, isLoading } = api.tvl.chart.useQuery({
     range: timeRange,
     excludeAssociatedTokens: false,
     filter: { type: 'layer2' },
   })
 
-  const { formatYAxisLabel, valuesStyle, columns, change } =
+  const { formatYAxisLabel, valuesStyle, columns, change, total } =
     useTvlChartRenderParams({ data, unit: unit, milestones: [] })
 
   return (
@@ -95,7 +91,7 @@ function Header({ total, unit, change, timeRange }: Props) {
           )}
         </div>
         {loading ? (
-          <Skeleton className="my-px h-3.5 w-40" />
+          <Skeleton className="my-0.5 h-4 w-40" />
         ) : (
           <p className="whitespace-nowrap text-right text-xs">
             <PercentChange value={change} />

@@ -84,19 +84,19 @@ export const sygma: Bridge = {
         {
           category: 'Users can be censored if',
           text: 'Greater than threshold number of MPC relayer nodes decide to censor certain transactions.',
-          isCritical: true,
+
           _ignoreTextFormatting: true,
         },
         {
           category: 'Funds can be stolen if',
           text: 'Greater than threshold number of MPC relayer nodes are maliciously taken over resulting in signing of malicious transactions.',
-          isCritical: true,
+
           _ignoreTextFormatting: true,
         },
         {
           category: 'Funds can be lost if',
           text: 'Greater than threshold number of MPC relayer nodes lose access to their MPC private keys.',
-          isCritical: true,
+
           _ignoreTextFormatting: true,
         },
       ],
@@ -146,7 +146,6 @@ export const sygma: Bridge = {
       {
         category: 'Funds can be stolen if',
         text: 'admin sets a handler that allows for mismanagement of funds.',
-        isCritical: true,
       },
     ],
   },

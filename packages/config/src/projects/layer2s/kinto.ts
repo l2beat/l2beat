@@ -3,10 +3,14 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { getStage } from './common/stages/getStage'
 import { orbitStackL2 } from './templates/orbitStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('kinto')
+
+// Validators: https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/kinto-validators
+// SC: https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/security-council
 
 export const kinto: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1695735468), // 2023-09-26T13:37:48Z
@@ -50,6 +54,44 @@ export const kinto: Layer2 = orbitStackL2({
     minTimestampForTvl: UnixTime.fromDate(new Date('2024-05-21T00:00:01Z')),
   },
   usesBlobs: true,
+  discoveryDrivenData: true,
+  isNodeAvailable: true,
+  bridge: discovery.getContract('Bridge'),
+  rollupProxy: discovery.getContract('RollupProxy'),
+  sequencerInbox: discovery.getContract('SequencerInbox'),
+  transactionApi: {
+    type: 'rpc',
+    defaultUrl: 'https://rpc.kinto-rpc.com',
+    defaultCallsPerMinute: 600,
+    assessCount: subtractOne,
+    startBlock: 1,
+  },
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: true,
+        usersHave7DaysToExit: false,
+        usersCanExitWithoutCooperation: true,
+        securityCouncilProperlySetUp: true,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+        fraudProofSystemIsPermissionless: false,
+        delayWith30DExitWindow: false,
+      },
+    },
+    {
+      rollupNodeLink:
+        'https://docs.kinto.xyz/kinto-the-safe-l2/building-on-kinto/running-kinto-nodes',
+    },
+  ),
   trackedTxs: [
     {
       uses: [
@@ -357,6 +399,81 @@ export const kinto: Layer2 = orbitStackL2({
       tokens: ['ETHFI'],
       chain: 'ethereum',
     },
+    {
+      address: EthereumAddress('0x25f0D71Da51A77Ca231484eBbAD1f588A0230ef2'),
+      sinceTimestamp: new UnixTime(1721253827),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['PAXG'],
+      chain: 'ethereum',
+    },
+    {
+      address: EthereumAddress('0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF'),
+      sinceTimestamp: new UnixTime(1721253935),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['XAUt'],
+      chain: 'ethereum',
+    },
+    {
+      address: EthereumAddress('0x0fC783f611A888A2cAbC3dA482Add3215334dCc2'),
+      sinceTimestamp: new UnixTime(1721252735),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['MKR'],
+      chain: 'ethereum',
+    },
+    {
+      address: EthereumAddress('0xA2bc0DaA9BF98820632bCa0663a9616f6bC180f8'),
+      sinceTimestamp: new UnixTime(1725992651),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['SOL'],
+      chain: 'ethereum',
+    },
+    {
+      address: EthereumAddress('0xd1228C6CB94a670F30D5ACb1340a9d96aC30e6A8'),
+      sinceTimestamp: new UnixTime(1730147723),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['SPX'],
+      chain: 'ethereum',
+    },
     // {
     //   address: EthereumAddress('0x2f87464d5F5356dB350dcb302FE28040986783a7'),
     //   sinceTimestamp: new UnixTime(1719239375),
@@ -447,6 +564,22 @@ export const kinto: Layer2 = orbitStackL2({
       },
       tokens: ['weETH'],
       chain: 'base',
+    },
+    {
+      address: EthereumAddress('0x67c1869c1A105d8117938cFC6597409f59eA9af7'),
+      sinceTimestamp: new UnixTime(1730154133),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['SPX'],
+      chain: 'base',
+      includeInTotal: false,
     },
     {
       address: EthereumAddress('0x4D585D346DFB27b297C37F480a82d4cAB39491Bb'),
@@ -576,65 +709,24 @@ export const kinto: Layer2 = orbitStackL2({
       tokens: ['SolvBTC'],
       chain: 'arbitrum',
     },
-    {
-      address: EthereumAddress('0x25f0D71Da51A77Ca231484eBbAD1f588A0230ef2'),
-      sinceTimestamp: new UnixTime(1721253827),
-      source: 'external',
-      bridgedUsing: {
-        bridges: [
-          {
-            name: 'Socket bridge',
-            slug: 'socket',
-          },
-        ],
-      },
-      tokens: ['PAXG'],
-      chain: 'ethereum',
-    },
-    {
-      address: EthereumAddress('0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF'),
-      sinceTimestamp: new UnixTime(1721253935),
-      source: 'external',
-      bridgedUsing: {
-        bridges: [
-          {
-            name: 'Socket bridge',
-            slug: 'socket',
-          },
-        ],
-      },
-      tokens: ['XAUt'],
-      chain: 'ethereum',
-    },
-  ],
-  isNodeAvailable: false,
-  bridge: discovery.getContract('Bridge'),
-  rollupProxy: discovery.getContract('RollupProxy'),
-  sequencerInbox: discovery.getContract('SequencerInbox'),
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://rpc.kinto-rpc.com',
-    defaultCallsPerMinute: 600,
-    assessCount: subtractOne,
-    startBlock: 1,
-  },
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'ExecutorMultisig',
-      'Multisig that can execute upgrades via the UpgradeExecutor.',
-    ),
-    ...discovery.getMultisigPermission(
-      'BridgerOwnerMultisig',
-      'Multisig that can upgrade the Bridger gateway contract. It also owns the Socket contracts used as escrows for bridged assets.',
-    ),
-    {
-      name: 'Bridger Sender Account',
-      description:
-        'EOA privileged to call `depositBySig()` on the Bridger gateway to deposit assets to the L2 using pre-signed transactions from users.',
-      accounts: [discovery.getPermissionedAccount('Bridger', 'senderAccount')],
-    },
   ],
   milestones: [
+    {
+      name: 'Security Council Governance',
+      link: 'https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/security-council',
+      date: '2024-11-03T00:00:00Z',
+      description:
+        'Kinto gives the ownership of all L1 system contracts to a Security Council that is properly set up.',
+      type: 'general',
+    },
+    {
+      name: 'First ever Challenge on mainnet',
+      link: 'https://x.com/vincfurc/status/1853891918037463521',
+      date: '2024-10-31T00:00:00Z',
+      description:
+        'The first correctly resolved fault proof challenge of a mainnet Orbit stack rollup.',
+      type: 'general',
+    },
     {
       name: 'Mainnet full launch',
       link: 'https://medium.com/mamori-finance/%EF%B8%8F-engen-is-over-kinto-is-launching-d9f2dd49fb2e',

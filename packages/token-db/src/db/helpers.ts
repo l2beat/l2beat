@@ -1,6 +1,6 @@
 import { Database } from '@l2beat/database'
-import { UpsertableTokenMetaRecord } from '@l2beat/database/src/token-db/token-meta/entity.js'
-import { UpsertableTokenRecord } from '@l2beat/database/src/token-db/token/entity.js'
+import { type UpsertableTokenMetaRecord } from '@l2beat/database'
+import { type UpsertableTokenRecord } from '@l2beat/database'
 import { nanoid } from 'nanoid'
 import { Simplify } from 'type-fest'
 import { SourceTagParams, sourceTag } from '../utils/source-tag.js'
@@ -36,13 +36,13 @@ export async function upsertTokenWithMeta(
 
   const { id: tokenId } = await db.token.upsert(token)
 
-  const { id: tokenMetaId } = await upsertTokenMeta(db, {
+  await upsertTokenMeta(db, {
     source,
     tokenId,
     ...meta,
   })
 
-  return { tokenId, tokenMetaId }
+  return { tokenId }
 }
 
 export async function upsertManyTokenMeta(

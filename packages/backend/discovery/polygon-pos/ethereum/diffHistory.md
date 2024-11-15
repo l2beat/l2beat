@@ -1,3 +1,117 @@
+Generated with discovered.json: 0xc20a91b80a6975330aea8d251983186767413fa3
+
+# Diff at Tue, 05 Nov 2024 14:19:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5e6ce51851b57187ccdd52c4944a82e2a8ab1e88 block: 20997846
+- current block number: 21121997
+
+## Description
+
+Minor patch upgrade. Removes `drainValidatorShares()` and `drain()` permissioned functions from the StakeManager, the rest are lib changes.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract ValidatorShare (0x053FA9b934b83E1E0ffc7e98a41aAdc3640bB462)
+    +++ description: None
+```
+
+```diff
+    contract WithdrawManager (0x2A88696e0fFA76bAA1338F2C74497cC013495922) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xee5a9e827bcc91e480a2d03b37006a7a028e7785a3c351f49251fd7e6521ad30"
++        "0xda0990aeeb22bcf3c867d4f398d00bd7d2f15aef3add8c60800711185b34a09c"
+      values.$implementation:
+-        "0x31f9c8c786aD7cc70ad10cF136B36681d340b792"
++        "0x6F8a42cf6f3CE657B66A9d5849f1251dE7a35168"
+      values.implementation:
+-        "0x31f9c8c786aD7cc70ad10cF136B36681d340b792"
++        "0x6F8a42cf6f3CE657B66A9d5849f1251dE7a35168"
+    }
+```
+
+```diff
+    contract Registry (0x33a02E6cC863D393d6Bf231B697b82F6e499cA71) {
+    +++ description: None
+      values.getValidatorShareAddress:
+-        "0x053FA9b934b83E1E0ffc7e98a41aAdc3640bB462"
++        "0x7e94d6cAbb20114b22a088d828772645f68CC67B"
+    }
+```
+
+```diff
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xa084de5be3dc11f2a48e65491394d0ee5c3c2aecf08f90d10c9d1cce6faba01d"
++        "0x5b260eb8b498c90359fa555e522f2fdd615857ea55e37c785de7da84915bfa7d"
+      values.$implementation:
+-        "0x97a3500083348A147F419b8a65717909762c389f"
++        "0x3AD88467E40399dc6Ae10427f8B0842348d9076c"
+      values.$pastUpgrades.8:
++        ["2024-11-04T15:38:47.000Z","0xa6a8a4e53e07aaca3a49c554781538762a1457b47b82e3f4a0edd54b18676f7d",["0x3AD88467E40399dc6Ae10427f8B0842348d9076c"]]
+      values.$upgradeCount:
+-        8
++        9
+      values.implementation:
+-        "0x97a3500083348A147F419b8a65717909762c389f"
++        "0x3AD88467E40399dc6Ae10427f8B0842348d9076c"
+    }
+```
+
+```diff
+    contract RootChainManager (0xA0c68C638235ee32657e8f720a23ceC1bFc77C77) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xdc4360c93969702ab43800fb0154ca71259a30c57fa03a1f9567c3a3937c4b3e"
++        "0x0f4d3951fb826a28e98a0923400b0173d459b26141d47b08227689849ce11141"
+      values.$implementation:
+-        "0x8F372f5404514cec63A3F88BAac772Cc620F2281"
++        "0x639f13D5f30B47c792b6851238c05D0b623C77DE"
+      values.$pastUpgrades.11:
++        ["2024-11-04T15:38:47.000Z","0xa6a8a4e53e07aaca3a49c554781538762a1457b47b82e3f4a0edd54b18676f7d",["0x639f13D5f30B47c792b6851238c05D0b623C77DE"]]
+      values.$upgradeCount:
+-        11
++        12
+      values.implementation:
+-        "0x8F372f5404514cec63A3F88BAac772Cc620F2281"
++        "0x639f13D5f30B47c792b6851238c05D0b623C77DE"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorShare (0x7e94d6cAbb20114b22a088d828772645f68CC67B)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../RootChainManager/RootChainManager.sol          |  11 +-
+ .../StakeManager/StakeManager.sol                  | 364 ------------------
+ .../{.flat@20997846 => .flat}/ValidatorShare.sol   |   6 +-
+ .../WithdrawManager/WithdrawManager.sol            | 419 +++++++++++----------
+ 4 files changed, 218 insertions(+), 582 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20997846 (main branch discovery), not current.
+
+```diff
+    contract ValidatorShare (0x053FA9b934b83E1E0ffc7e98a41aAdc3640bB462) {
+    +++ description: None
+      errors:
++        {"getRewardPerShare":"Execution reverted"}
+    }
+```
+
 Generated with discovered.json: 0x309a4e2bee30381821c09e8248ae6b71a78d1cb7
 
 # Diff at Mon, 21 Oct 2024 11:09:01 GMT:

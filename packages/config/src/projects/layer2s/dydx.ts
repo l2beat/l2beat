@@ -8,6 +8,9 @@ import { Badge } from '../badges'
 
 import {
   CONTRACTS,
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
@@ -84,7 +87,7 @@ export const dydx: Layer2 = {
     warning:
       'This page describes dYdX v3, which is an L2 built on Ethereum. Recently deployed dYdX v4 is a separate blockchain based on Cosmos SDK, unrelated to Ethereum and is using different technology. No information on this page applies to dYdX v4.',
     headerWarning:
-      'dYdX v3 is planned to shut down on October 28th at 12:05 P.M. UTC. [Read more](https://dydx.exchange/blog/v3-product-sunset)',
+      'dYdX v3 shut down on October 28th and is currently processing withdrawals in escape-hatch mode. [Read more](https://dydx.exchange/blog/v3-product-sunset) or [use the escape-hatch](https://explorer.dydx.exchange/tutorials/escapehatch).',
     description:
       'dYdX v3 aims to build a powerful and professional exchange for trading crypto assets where users can truly own their trades and, eventually, the exchange itself.',
     purposes: ['Exchange'],
@@ -177,11 +180,13 @@ export const dydx: Layer2 = {
     ],
     finality: 'coming soon',
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (calldata)'],
-    bridge: { type: 'Enshrined' },
-    mode: 'State diffs',
-  }),
+  dataAvailability: [
+    addSentimentToDataAvailability({
+      layers: [DA_LAYERS.ETH_CALLDATA],
+      bridge: DA_BRIDGES.ENSHRINED,
+      mode: DA_MODES.STATE_DIFFS,
+    }),
+  ],
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
@@ -206,16 +211,12 @@ export const dydx: Layer2 = {
       ],
     },
     exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(maxPriorityDelay, freezeGracePeriod, {
-        upgradeDelay2: minPriorityDelay,
-      }),
-      description: `There is no exit window. Upgrades have a ${formatSeconds(
+      ...RISK_VIEW.EXIT_WINDOW(maxPriorityDelay, 0),
+      description: `There is a ${formatSeconds(
         maxPriorityDelay,
-      )} delay, (or ${formatSeconds(
+      )} exit window (or ${formatSeconds(
         minPriorityDelay,
-      )} if shortened by the Priority Controller), but withdrawals can be censored for up to ${formatSeconds(
-        freezeGracePeriod,
-      )}.`,
+      )} if shortened by the Priority Controller).`,
     },
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL(freezeGracePeriod),

@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Build container
         uses: docker/build-push-action@v5
         with:
@@ -32,19 +32,26 @@ jobs:
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
         with:
-          node-version: 18.x
-          cache: "yarn"
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: yarn --frozen-lockfile
+        run: pnpm install
 
-      - name: Build frontend
-        run: yarn build:frontend
+      - name: Build mocked frontend
+        run: pnpm build:frontend
+        env:
+          MOCK: true
 
   build-protocolbeat:
     name: Build protocolbeat
@@ -54,19 +61,24 @@ jobs:
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
         with:
-          node-version: 18.x
-          cache: "yarn"
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: yarn --frozen-lockfile
+        run: pnpm install
 
       - name: Build protocolbeat
-        run: yarn build:protocolbeat
+        run: pnpm build:protocolbeat
 
   build-tx-decoder:
     name: Build tx-decoder
@@ -76,19 +88,24 @@ jobs:
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
+        uses: actions/checkout@v4
+        
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
         with:
-          node-version: 18.x
-          cache: "yarn"
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: yarn --frozen-lockfile
+        run: pnpm install
 
       - name: Build tx-decoder
-        run: yarn build:tx-decoder
+        run: pnpm build:tx-decoder
 
   build-uops-dashboard:
     name: Build uops-dashboard
@@ -98,19 +115,24 @@ jobs:
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
+        uses: actions/checkout@v4
+        
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
         with:
-          node-version: 18.x
-          cache: "yarn"
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: yarn --frozen-lockfile
+        run: pnpm install
 
       - name: Build tx-decoder
-        run: yarn build:uops-dashboard
+        run: pnpm build:uops-dashboard
 
   typecheck:
     name: Typecheck
@@ -120,19 +142,24 @@ jobs:
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
         with:
-          node-version: 18.x
-          cache: "yarn"
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: yarn --frozen-lockfile
+        run: pnpm install
 
       - name: Typecheck
-        run: yarn typecheck
+        run: pnpm typecheck
 
   test:
     name: Test
@@ -157,29 +184,42 @@ jobs:
           - 5432:5432
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
         with:
-          node-version: 18.x
-          cache: "yarn"
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: yarn --frozen-lockfile
+        run: pnpm install
 
       - name: Test
-        run: yarn test --reporter min
+        run: pnpm test --reporter min
 
   biome:
     name: Lint & Format
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          run_install: false
 
       - name: Setup Biome CLI
         uses: biomejs/setup-biome@v2
+
+      - name: Install biome-config package
+        run: pnpm install --filter @l2beat/biome-config
 
       - name: Run Biome
         run: ls packages/ | xargs -n 1 -I {} -- sh -c 'biome ci --config-path=packages/{} packages/{}'

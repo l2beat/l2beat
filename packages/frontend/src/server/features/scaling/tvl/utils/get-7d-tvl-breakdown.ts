@@ -4,10 +4,7 @@ import {
   resolvedLayer3s,
 } from '@l2beat/config/projects'
 import { UnixTime } from '@l2beat/shared-pure'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
+import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
 import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
 import { getTvlBreakdown } from './get-tvl-breakdown'
@@ -15,19 +12,18 @@ import { getTvlProjects } from './get-tvl-projects'
 import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
 
 export function get7dTvlBreakdown(
-  ...parameters: Parameters<typeof getCached7dTvlBreakdown>
+  ...parameters: Parameters<typeof getCached7dTokenBreakdown>
 ) {
   if (env.MOCK) {
-    return getMockTvlBreakdown()
+    return getMockTvlBreakdownData()
   }
-  noStore()
-  return getCached7dTvlBreakdown(...parameters)
+  return getCached7dTokenBreakdown(...parameters)
 }
 
 export type SevenDayTvlBreakdown = Awaited<
-  ReturnType<typeof getCached7dTvlBreakdown>
+  ReturnType<typeof getCached7dTokenBreakdown>
 >
-const getCached7dTvlBreakdown = cache(
+const getCached7dTokenBreakdown = cache(
   async () => {
     const tvlValues = await getTvlValuesForProjects(
       getTvlProjects().filter(
@@ -99,7 +95,7 @@ const getCached7dTvlBreakdown = cache(
   },
 )
 
-function getMockTvlBreakdown(): SevenDayTvlBreakdown {
+function getMockTvlBreakdownData(): SevenDayTvlBreakdown {
   return {
     total: 1000,
     projects: Object.fromEntries(
