@@ -216,8 +216,8 @@ jobs:
       - name: Setup Biome CLI
         uses: biomejs/setup-biome@v2
 
-      - name: Install `@l2beat/biome-config`
-        run: pnpm install --filter @l2beat/biome-config
+      - name: Link `@l2beat/biome-config`
+        run: pnpm link --workspace @l2beat/biome-config
 
       - name: Run Biome
         run: ls packages/ | xargs -n 1 -I {} -- sh -c 'biome ci --config-path=packages/{} packages/{}'
