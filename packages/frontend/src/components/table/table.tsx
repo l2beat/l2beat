@@ -122,6 +122,7 @@ const TableCell = ({
   >
     {href ? (
       <Link
+        prefetch={false}
         href={href}
         className={cn(
           'flex size-full items-center pr-3 group-first:pl-2 group-last:pr-2 md:pr-4',
