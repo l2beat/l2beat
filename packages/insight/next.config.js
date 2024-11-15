@@ -10,6 +10,9 @@ const nextConfig = {
       'l2beat.com',
     ],
   },
+  experimental: {
+    typedRoutes: true,
+  },
 }
 
 function createNextConfig() {

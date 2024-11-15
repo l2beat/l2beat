@@ -1,8 +1,4 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
 import { env } from '~/env'
 import { db } from '~/server/database'
 import { getRangeWithMax } from '~/utils/range/range'

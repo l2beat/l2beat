@@ -1,3 +1,4 @@
+import { type Route } from 'next'
 import Link from 'next/link'
 import * as React from 'react'
 import { TableTooltip } from '~/components/core/table/table-tooltip'
@@ -95,14 +96,14 @@ const TableHead = ({
 )
 TableHead.displayName = 'TableHead'
 
-const TableCell = ({
+const TableCell = <T extends string>({
   className,
   children,
   href,
   align,
   ...props
 }: React.TdHTMLAttributes<HTMLTableCellElement> & {
-  href?: string
+  href?: Route<T>
   align?: 'right' | 'center'
 }) => (
   <td
