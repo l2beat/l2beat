@@ -21,7 +21,7 @@ import { type ActivityTimeRange } from './utils/range'
  * @returns [timestamp, projectsTxCount, ethereumTxCount][] - all numbers
  */
 export function getActivityChart(
-  ...parameters: Parameters<typeof getCachedActivityChart>
+  ...parameters: Parameters<typeof getActivityChartData>
 ) {
   if (env.MOCK) {
     return getMockActivityChart(...parameters)
@@ -29,11 +29,12 @@ export function getActivityChart(
   return getActivityChartData(...parameters)
 }
 
-export type ActivityChartData = Awaited<
-  ReturnType<typeof getCachedActivityChart>
->
-             
-function getActivityChartData (filter: ActivityProjectFilter, range: ActivityTimeRange) {
+export type ActivityChartData = Awaited<ReturnType<typeof getActivityChartData>>
+
+async function getActivityChartData(
+  filter: ActivityProjectFilter,
+  range: ActivityTimeRange,
+) {
   const projects = getActivityProjects()
     .filter(createActivityProjectsFilter(filter))
     .map((p) => p.id)
