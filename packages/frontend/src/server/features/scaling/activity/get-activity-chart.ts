@@ -1,10 +1,15 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  unstable_cache as cache,
+  unstable_noStore as noStore,
+} from 'next/cache'
 import { env } from '~/env'
 import { db } from '~/server/database'
 import { getRangeWithMax } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generate-timestamps'
 import { getActivityProjects } from './utils/get-activity-projects'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
+import { getSyncStatus } from './utils/get-sync-status'
 import {
   type ActivityProjectFilter,
   createActivityProjectsFilter,
@@ -19,12 +24,13 @@ export function getActivityChart(
   ...parameters: Parameters<typeof getActivityChartData>
 ) {
   if (env.MOCK) {
-    return getMockActivityChartData(...parameters)
+    return getMockActivityChart(...parameters)
   }
   return getActivityChartData(...parameters)
 }
 
 export type ActivityChartData = Awaited<ReturnType<typeof getActivityChartData>>
+
 async function getActivityChartData(
   filter: ActivityProjectFilter,
   range: ActivityTimeRange,
@@ -33,18 +39,32 @@ async function getActivityChartData(
     .filter(createActivityProjectsFilter(filter))
     .map((p) => p.id)
     .concat(ProjectId.ETHEREUM)
-  const adjustedRange = getFullySyncedActivityRange(range)
+  const isSingleProject = projects.length === 2 // Ethereum + 1 other project
+  let adjustedRange = getFullySyncedActivityRange(range)
   const entries = await db.activity.getByProjectsAndTimeRange(
     projects,
     adjustedRange,
   )
+
+  // By default, we assume we're always synced...
+  let syncStatus = getSyncStatus(adjustedRange[1])
+
+  // ...but if we are looking at a single project, we check the last day we have data for,
+  // and use that as the cutoff.
+  if (isSingleProject) {
+    const lastProjectEntry = entries.findLast((entry) => entry.projectId)
+    if (lastProjectEntry) {
+      syncStatus = getSyncStatus(lastProjectEntry.timestamp)
+      adjustedRange = [adjustedRange[0], lastProjectEntry.timestamp]
+    }
+  }
 
   const startTimestamp = entries.find(
     (e) => e.projectId !== ProjectId.ETHEREUM && e.count > 0,
   )?.timestamp
 
   if (!startTimestamp) {
-    return []
+    return { data: [], syncStatus }
   }
 
   const startIndex = entries.findIndex(
@@ -89,10 +109,13 @@ async function getActivityChartData(
     return [+timestamp, entry.count, entry.ethereumCount]
   })
 
-  return result
+  return {
+    data: result,
+    syncStatus,
+  }
 }
 
-function getMockActivityChartData(
+function getMockActivityChart(
   _: ActivityProjectFilter,
   timeRange: ActivityTimeRange,
 ): ActivityChartData {
@@ -103,5 +126,8 @@ function getMockActivityChartData(
   ]
   const timestamps = generateTimestamps(adjustedRange, 'daily')
 
-  return timestamps.map((timestamp) => [+timestamp, 15, 11])
+  return {
+    data: timestamps.map((timestamp) => [+timestamp, 15, 11]),
+    syncStatus: getSyncStatus(adjustedRange[1]),
+  }
 }

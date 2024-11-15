@@ -6,6 +6,7 @@ import { db } from '~/server/database'
 import { countToTps } from './utils/count-to-tps'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import { getLastDayTps } from './utils/get-last-day-tps'
+import { getSyncStatus } from './utils/get-sync-status'
 import { getTpsWeeklyChange } from './utils/get-tps-weekly-change'
 import { sumActivityCount } from './utils/sum-activity-count'
 
@@ -60,11 +61,6 @@ async function getActivityTableData(projects: (Layer2 | Layer3)[]) {
   )
 
   return Object.fromEntries(Object.entries(data).filter(([_, value]) => value))
-}
-
-function getSyncStatus(syncedUntil: UnixTime) {
-  const isSynced = UnixTime.now().add(-2, 'days').lte(syncedUntil)
-  return { isSynced, syncedUntil: syncedUntil.toNumber() }
 }
 
 function getMockActivityTableData(): ActivityTableData {

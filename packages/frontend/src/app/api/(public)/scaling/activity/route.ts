@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
 
 const getCachedResponse = cache(
   async (range: ActivityTimeRange) => {
-    const data = await getActivityChart({ type: 'all' }, range)
+    const { data } = await getActivityChart({ type: 'all' }, range)
 
     const latestActivityData = data.at(-1)
 

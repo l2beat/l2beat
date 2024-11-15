@@ -9,13 +9,13 @@ import { mapMilestones } from '../core/utils/map-milestones'
 
 interface Params {
   milestones: Milestone[]
-  data: ActivityChartData | undefined
+  chart: ActivityChartData | undefined
   showMainnet: boolean
 }
 
 export function useActivityChartRenderParams({
   milestones,
-  data,
+  chart,
   showMainnet,
 }: Params) {
   const mappedMilestones = useMemo(
@@ -30,7 +30,7 @@ export function useActivityChartRenderParams({
 
   const columns = useMemo(
     () =>
-      data?.map((dataPoint) => {
+      chart?.data.map((dataPoint) => {
         const [timestamp, count, ethereumCount] = dataPoint
         const milestone = mappedMilestones[timestamp]
         const tps = countToTps(count)
@@ -44,10 +44,10 @@ export function useActivityChartRenderParams({
           milestone,
         }
       }) ?? [],
-    [data, mappedMilestones, showMainnet],
+    [chart, mappedMilestones, showMainnet],
   )
 
-  const chartRange = useMemo(() => getChartRange(data), [data])
+  const chartRange = useMemo(() => getChartRange(chart?.data), [chart])
 
   const valuesStyle: SeriesStyle[] = useMemo(
     () =>
