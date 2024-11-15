@@ -1,8 +1,4 @@
-import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
+import { type ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { db } from '~/server/database'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
@@ -12,37 +8,31 @@ import { sumActivityCount } from './utils/sum-activity-count'
 
 export async function getActivityProjectStats(projectId: ProjectId) {
   if (env.MOCK) {
-    return getMockActivityProjectStats()
+    return getMockActivityProjectStatsData()
   }
-  noStore()
-  return getCachedActivityProjectStats(projectId)
+
+  return getActivityProjectStatsData(projectId)
 }
 
 type ActivityProjectStats = Awaited<
-  ReturnType<typeof getCachedActivityProjectStats>
+  ReturnType<typeof getActivityProjectStatsData>
 >
-const getCachedActivityProjectStats = cache(
-  async (projectId: ProjectId) => {
-    const range = getFullySyncedActivityRange('30d')
-    const counts = await db.activity.getByProjectAndTimeRange(projectId, range)
-    if (counts.length === 0) {
-      return
-    }
-    const summed = sumActivityCount(counts)
+async function getActivityProjectStatsData(projectId: ProjectId) {
+  const range = getFullySyncedActivityRange('30d')
+  const counts = await db.activity.getByProjectAndTimeRange(projectId, range)
+  if (counts.length === 0) {
+    return
+  }
+  const summed = sumActivityCount(counts)
 
-    return {
-      txCount: summed,
-      lastDayTps: getLastDayTps(counts),
-      tpsWeeklyChange: getTpsWeeklyChange(counts),
-    }
-  },
-  ['activityProjectStats'],
-  {
-    revalidate: 6 * UnixTime.HOUR,
-  },
-)
+  return {
+    txCount: summed,
+    lastDayTps: getLastDayTps(counts),
+    tpsWeeklyChange: getTpsWeeklyChange(counts),
+  }
+}
 
-function getMockActivityProjectStats(): ActivityProjectStats {
+function getMockActivityProjectStatsData(): ActivityProjectStats {
   return {
     lastDayTps: 15,
     txCount: 1500,

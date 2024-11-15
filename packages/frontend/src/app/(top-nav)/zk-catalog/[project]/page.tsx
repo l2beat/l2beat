@@ -14,6 +14,13 @@ interface Props {
   }>
 }
 
+export const revalidate = 3600
+export async function generateStaticParams() {
+  return zkCatalogProjects.map((project) => ({
+    project: project.display.slug,
+  }))
+}
+
 export async function generateMetadata(props: Props): Promise<Metadata | null> {
   const params = await props.params
   const project = zkCatalogProjects.find(

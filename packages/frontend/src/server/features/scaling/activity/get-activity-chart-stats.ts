@@ -6,7 +6,7 @@ export type ActivityChartStats = Awaited<
 >
 export async function getActivityChartStats(filter: ActivityProjectFilter) {
   // We should use the last 7 days but 30d is probably cached already so it's faster
-  const chartData = await getActivityChart(filter, '30d')
+  const { data: chartData } = await getActivityChart(filter, '30d')
 
   const latestData = chartData.at(-1)
   if (!latestData) {

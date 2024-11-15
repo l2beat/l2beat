@@ -1,6 +1,5 @@
 'use client'
 
-import { Suspense } from 'react'
 import { CountBadge } from '~/components/badge/count-badge'
 import {
   DirectoryTabs,
@@ -34,39 +33,37 @@ export function ScalingUpcomingTables({
         ]}
         className="max-md:ml-4 max-md:mt-4"
       />
-      <Suspense>
-        <DirectoryTabs defaultValue="rollups">
-          <DirectoryTabsList>
-            <DirectoryTabsTrigger value="rollups">
-              Rollups <CountBadge>{filteredEntries.rollups.length}</CountBadge>
-            </DirectoryTabsTrigger>
-            <DirectoryTabsTrigger value="validiums-and-optimiums">
-              Validiums & Optimiums{' '}
-              <CountBadge>
-                {filteredEntries.validiumsAndOptimiums.length}
-              </CountBadge>
-            </DirectoryTabsTrigger>
-            {filteredEntries.others.length > 0 && (
-              <DirectoryTabsTrigger value="others">
-                Others <CountBadge>{filteredEntries.others.length}</CountBadge>
-              </DirectoryTabsTrigger>
-            )}
-          </DirectoryTabsList>
-          <DirectoryTabsContent value="rollups">
-            <ScalingUpcomingTable entries={filteredEntries.rollups} />
-          </DirectoryTabsContent>
-          <DirectoryTabsContent value="validiums-and-optimiums">
-            <ScalingUpcomingTable
-              entries={filteredEntries.validiumsAndOptimiums}
-            />
-          </DirectoryTabsContent>
+      <DirectoryTabs defaultValue="rollups">
+        <DirectoryTabsList>
+          <DirectoryTabsTrigger value="rollups">
+            Rollups <CountBadge>{filteredEntries.rollups.length}</CountBadge>
+          </DirectoryTabsTrigger>
+          <DirectoryTabsTrigger value="validiums-and-optimiums">
+            Validiums & Optimiums{' '}
+            <CountBadge>
+              {filteredEntries.validiumsAndOptimiums.length}
+            </CountBadge>
+          </DirectoryTabsTrigger>
           {filteredEntries.others.length > 0 && (
-            <DirectoryTabsContent value="others">
-              <ScalingUpcomingTable entries={filteredEntries.others} />
-            </DirectoryTabsContent>
+            <DirectoryTabsTrigger value="others">
+              Others <CountBadge>{filteredEntries.others.length}</CountBadge>
+            </DirectoryTabsTrigger>
           )}
-        </DirectoryTabs>
-      </Suspense>
+        </DirectoryTabsList>
+        <DirectoryTabsContent value="rollups">
+          <ScalingUpcomingTable entries={filteredEntries.rollups} />
+        </DirectoryTabsContent>
+        <DirectoryTabsContent value="validiums-and-optimiums">
+          <ScalingUpcomingTable
+            entries={filteredEntries.validiumsAndOptimiums}
+          />
+        </DirectoryTabsContent>
+        {filteredEntries.others.length > 0 && (
+          <DirectoryTabsContent value="others">
+            <ScalingUpcomingTable entries={filteredEntries.others} />
+          </DirectoryTabsContent>
+        )}
+      </DirectoryTabs>
     </>
   )
 }

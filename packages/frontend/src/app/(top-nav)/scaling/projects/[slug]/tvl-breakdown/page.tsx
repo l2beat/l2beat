@@ -45,6 +45,9 @@ export default async function Page(props: Props) {
 
   const projects7dData = await get7dTvlBreakdown()
   const project7dData = projects7dData.projects[project.id.toString()]!
+  if (!project7dData) {
+    notFound()
+  }
 
   const {
     dataTimestamp,

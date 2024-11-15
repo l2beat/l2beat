@@ -1,0 +1,18 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "env": [
+        "DATABASE_URL",
+        "NODE_ENV",
+        "PORT",
+        "SKIP_ENV_VALIDATION",
+        "VERCEL_GIT_COMMIT_REF",
+        "VERCEL_GIT_COMMIT_SHA",
+        "VERCEL_URL",
+        "VERCEL_ENV"
+      ]
+    }
+  }
+}

@@ -65,7 +65,11 @@ export function ProjectsUsedIn({
       {cappedProjects.map((project) => {
         return (
           <Tooltip key={project.slug}>
-            <Link href={`/scaling/projects/${project.slug}`} className="size-5">
+            <Link
+              prefetch={false}
+              href={`/scaling/projects/${project.slug}`}
+              className="size-5"
+            >
               <TooltipTrigger>
                 <Image
                   width={20}
