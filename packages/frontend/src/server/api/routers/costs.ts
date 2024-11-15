@@ -3,7 +3,7 @@ import {
   CostsChartParams,
   getCostsChart,
 } from '~/server/features/scaling/costs/get-costs-chart'
-import { getCostsTableData } from '~/server/features/scaling/costs/get-costs-table-data'
+import { getCostsTable } from '~/server/features/scaling/costs/get-costs-table-data'
 import { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
 import { procedure, router } from '../trpc'
 
@@ -18,6 +18,6 @@ export const costsRouter = router({
       }),
     )
     .query(async ({ input }) => {
-      return getCostsTableData(input.range)
+      return getCostsTable(input.range)
     }),
 })

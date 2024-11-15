@@ -1,7 +1,6 @@
 'use client'
 
-import { createContext, useContext } from 'react'
-import { useCookieState } from '~/hooks/use-cookie-state'
+import { createContext, useContext, useState } from 'react'
 import { type ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 
 type ActivityTimeRangeContextValue = {
@@ -17,7 +16,7 @@ interface Props {
 }
 
 export function ActivityTimeRangeContextProvider({ children }: Props) {
-  const [timeRange, setTimeRange] = useCookieState('activityTimeRange')
+  const [timeRange, setTimeRange] = useState<ActivityTimeRange>('30d')
   return (
     <ActivityTimeRangeContext.Provider
       value={{

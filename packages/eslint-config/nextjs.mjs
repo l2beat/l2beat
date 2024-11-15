@@ -16,7 +16,11 @@ const compat = new FlatCompat({
 })
 
 const nonFlatConfigs = fixupConfigRules(
-  compat.extends('next/core-web-vitals', 'plugin:react-hooks/recommended'),
+  compat.extends(
+    'next/core-web-vitals',
+    'plugin:react-hooks/recommended',
+    'turbo',
+  ),
 )
 
 const typescriptConfigs = tsEslint.config(

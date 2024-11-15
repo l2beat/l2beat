@@ -1,7 +1,7 @@
 'use client'
 
 import { type Milestone } from '@l2beat/config'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useScalingAssociatedTokensContext } from '~/app/(side-nav)/scaling/_components/scaling-associated-tokens-context'
 import {
   useScalingFilter,
@@ -10,10 +10,10 @@ import {
 import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
 import { TvlChartUnitControls } from '~/components/chart/tvl/tvl-chart-unit-controls'
-import { useCookieState } from '~/hooks/use-cookie-state'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
 import { type TvlProjectFilter } from '~/server/features/scaling/tvl/utils/project-filter-utils'
+import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { api } from '~/trpc/react'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { ChartControlsWrapper } from '../../core/chart-controls-wrapper'
@@ -33,7 +33,7 @@ export function ScalingStackedTvlChart({ milestones, entries }: Props) {
 
   const filters = useScalingFilterValues()
   const includeFilter = useScalingFilter()
-  const [timeRange, setTimeRange] = useCookieState('scalingTvlChartRange')
+  const [timeRange, setTimeRange] = useState<TvlChartRange>('1y')
 
   const [unit, setUnit] = useLocalStorage<ChartUnit>('scaling-tvl-unit', 'usd')
 

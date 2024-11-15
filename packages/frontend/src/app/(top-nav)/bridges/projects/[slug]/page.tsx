@@ -10,6 +10,7 @@ import { HydrateClient } from '~/trpc/server'
 import { getProjectMetadata } from '~/utils/metadata'
 import { BridgesProjectSummary } from './_components/bridges-project-summary'
 
+export const revalidate = 600
 export async function generateStaticParams() {
   return bridges.map((layer) => ({
     slug: layer.display.slug,
