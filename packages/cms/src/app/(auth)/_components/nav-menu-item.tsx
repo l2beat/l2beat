@@ -1,17 +1,18 @@
 'use client'
 
+import { Route } from 'next'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '~/lib/utils'
 
-export function NavMenuItem({
+export function NavMenuItem<T extends string>({
   name,
   href,
   icon,
   activeBehavior = { type: 'exact' },
 }: {
   name: string
-  href: string
+  href: Route<T>
   icon: React.ReactNode
   activeBehavior?: { type: 'exact' } | { type: 'prefix'; prefix: string }
 }) {
