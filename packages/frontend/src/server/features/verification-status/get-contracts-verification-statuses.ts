@@ -20,7 +20,6 @@ export function getContractsVerificationStatuses(project: Project) {
   const contracts = Object.fromEntries(
     chainNames.map((chain) => [chain, readContractVerificationStatus(chain)]),
   )
-
   return ContractsVerificationStatuses.parse(contracts)
 }
 
