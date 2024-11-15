@@ -211,5 +211,8 @@ jobs:
       - name: Setup Biome CLI
         uses: biomejs/setup-biome@v2
 
+      - name: Fetch `@l2beat/biome-config`
+        run: pnpm fetch @l2beat/biome-config
+
       - name: Run Biome
         run: ls packages/ | xargs -n 1 -I {} -- sh -c 'biome ci --config-path=packages/{} packages/{}'
