@@ -6,6 +6,7 @@ import {
   type ProjectsChangeReport,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
+import { getCurrentEntry } from '../../utils/get-current-entry'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import {
@@ -88,6 +89,7 @@ function getScalingProjectActivityEntry(
   isVerified: boolean,
   projectsChangeReport: ProjectsChangeReport,
 ) {
+  const currentDataAvailability = getCurrentEntry(project.dataAvailability)
   return {
     ...getCommonScalingEntry({
       project,
@@ -101,7 +103,7 @@ function getScalingProjectActivityEntry(
     entryType: 'activity' as const,
     dataSource: project.display.activityDataSource,
     dataAvailability: {
-      layer: project.dataAvailability?.layer,
+      layer: currentDataAvailability?.layer,
     },
     data,
   }

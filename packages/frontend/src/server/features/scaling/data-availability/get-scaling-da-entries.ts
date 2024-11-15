@@ -5,6 +5,7 @@ import {
   type ProjectsChangeReport,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
+import { getCurrentEntry } from '../../utils/get-current-entry'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
@@ -40,7 +41,8 @@ function getScalingDataAvailabilityEntry(
   projectsChangeReport: ProjectsChangeReport,
   isVerified: boolean,
 ) {
-  if (!project.dataAvailability) return
+  const dataAvailability = getCurrentEntry(project.dataAvailability)
+  if (!dataAvailability) return
 
   return {
     entryType: 'data-availability' as const,
@@ -54,9 +56,9 @@ function getScalingDataAvailabilityEntry(
         projectsChangeReport.hasHighSeverityFieldChanged(project.id),
     }),
     dataAvailability: {
-      layer: project.dataAvailability.layer,
-      bridge: project.dataAvailability.bridge,
-      mode: project.dataAvailability.mode,
+      layer: dataAvailability.layer,
+      bridge: dataAvailability.bridge,
+      mode: dataAvailability.mode,
     },
   }
 }

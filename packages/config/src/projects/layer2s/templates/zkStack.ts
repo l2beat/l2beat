@@ -323,7 +323,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
     chainConfig: templateVars.chainConfig,
-    dataAvailability:
+    dataAvailability: [
       daProvider !== undefined
         ? addSentimentToDataAvailability({
             layers: daProvider.fallback
@@ -337,6 +337,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
             bridge: DA_BRIDGES.ENSHRINED,
             mode: DA_MODES.STATE_DIFFS_COMPRESSED,
           }),
+    ],
     riskView: {
       stateValidation: {
         ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
