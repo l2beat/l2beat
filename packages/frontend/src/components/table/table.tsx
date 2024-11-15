@@ -1,6 +1,6 @@
-import Link from 'next/link'
 import * as React from 'react'
 import { cn } from '~/utils/cn'
+import { LinkWithOnHoverPrefetch } from '../link/link-with-on-hover-prefetch'
 import { TableTooltip } from './table-tooltip'
 
 const Table = ({
@@ -121,8 +121,7 @@ const TableCell = ({
     {...props}
   >
     {href ? (
-      <Link
-        prefetch={false}
+      <LinkWithOnHoverPrefetch
         href={href}
         className={cn(
           'flex size-full items-center pr-3 group-first:pl-2 group-last:pr-2 md:pr-4',
@@ -132,7 +131,7 @@ const TableCell = ({
         )}
       >
         {children}
-      </Link>
+      </LinkWithOnHoverPrefetch>
     ) : (
       children
     )}
