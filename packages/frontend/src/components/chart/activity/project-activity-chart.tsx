@@ -4,6 +4,7 @@ import { type Milestone } from '@l2beat/config'
 import { useState } from 'react'
 import { ActivityTimeRangeControls } from '~/app/(side-nav)/scaling/activity/_components/activity-time-range-controls'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
+import { NotSyncedBanner } from '~/components/not-synced-banner'
 import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
 import { type ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/react'
@@ -15,7 +16,6 @@ import { ProjectChartTimeRange } from '../core/chart-time-range'
 import { type ChartScale } from '../types'
 import { ActivityChartHover } from './activity-chart-hover'
 import { useActivityChartRenderParams } from './use-activity-chart-render-params'
-import { NotSyncedBanner } from '~/components/not-synced-banner'
 
 interface Props {
   milestones: Milestone[]
