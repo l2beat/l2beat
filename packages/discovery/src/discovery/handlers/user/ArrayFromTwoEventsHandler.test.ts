@@ -2,7 +2,6 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
 
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { ArrayFromTwoEventsHandler } from './ArrayFromTwoEventsHandler'
 
@@ -22,7 +21,6 @@ describe(ArrayFromTwoEventsHandler.name, () => {
           'event OwnerAdded(address indexed account)',
           'event OwnerRemoved(address indexed account)',
         ],
-        DiscoveryLogger.SILENT,
       )
       expect(handler.getAddEvent()).toEqual(
         'event OwnerAdded(address indexed account)',
@@ -48,7 +46,6 @@ describe(ArrayFromTwoEventsHandler.name, () => {
               'event OwnerAdded(address indexed account)',
               'event OwnerRemoved(address indexed account)',
             ],
-            DiscoveryLogger.SILENT,
           ),
       ).toThrow('Cannot find a matching event for OwnerAdded')
     })
@@ -69,7 +66,6 @@ describe(ArrayFromTwoEventsHandler.name, () => {
               'event OwnerAdded(address indexed account)',
               'event OwnerRemoved(address indexed account)',
             ],
-            DiscoveryLogger.SILENT,
           ),
       ).toThrow('Cannot find a matching event for OwnerRemoved')
     })
@@ -87,7 +83,6 @@ describe(ArrayFromTwoEventsHandler.name, () => {
               removeKey: 'account',
             },
             ['event OwnerRemoved(address indexed account)'],
-            DiscoveryLogger.SILENT,
           ),
       ).toThrow('Invalid event abi')
     })
@@ -105,7 +100,6 @@ describe(ArrayFromTwoEventsHandler.name, () => {
               removeKey: 'account',
             },
             ['event OwnerAdded(address indexed account)'],
-            DiscoveryLogger.SILENT,
           ),
       ).toThrow('Invalid event abi')
     })
@@ -153,7 +147,6 @@ describe(ArrayFromTwoEventsHandler.name, () => {
           removeKey: 'account',
         },
         [],
-        DiscoveryLogger.SILENT,
       )
       const value = await handler.execute(provider, address)
       expect(value).toEqual({
@@ -192,7 +185,6 @@ describe(ArrayFromTwoEventsHandler.name, () => {
           removeKey: 'account',
         },
         [],
-        DiscoveryLogger.SILENT,
       )
       const value = await handler.execute(provider, address)
       expect(value).toEqual({

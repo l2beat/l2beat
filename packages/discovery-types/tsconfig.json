@@ -1,10 +1,7 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "@l2beat/typescript-config/base",
   "compilerOptions": {
-    "outDir": "dist",
-    "incremental": true,
-    "noUncheckedIndexedAccess": true,
-    "noFallthroughCasesInSwitch": false
+    "outDir": "dist"
   },
   "include": ["src"]
 }

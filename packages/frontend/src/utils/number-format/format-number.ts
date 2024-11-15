@@ -45,10 +45,10 @@ function withSpace(unit: string) {
   return unit
 }
 
-export function formatNumberWithCommas(value: number): string {
+export function formatNumberWithCommas(value: number, precision = 2): string {
   const formattedNumber = value.toLocaleString('en-US', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
+    minimumFractionDigits: precision,
+    maximumFractionDigits: precision,
   })
 
   return formattedNumber

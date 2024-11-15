@@ -1,4 +1,5 @@
-node_modules
-build
-cache
-.env
+.vercel
+.env*.local
+
+*storybook.log
+storybook-static

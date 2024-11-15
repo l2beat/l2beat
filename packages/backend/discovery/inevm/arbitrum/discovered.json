@@ -347,7 +347,7 @@
       },
       "fieldMeta": {
         "maxTimeVariation": {
-          "description": "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
+          "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
       }
     },
@@ -364,11 +364,6 @@
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
       "issuedPermissions": [
         {
-          "permission": "challenge",
-          "target": "0x3fFbA7F56fd346765077678d3e5BEdDC195FC774",
-          "via": []
-        },
-        {
           "permission": "configure",
           "target": "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF",
           "via": [
@@ -380,11 +375,6 @@
           ]
         },
         {
-          "permission": "propose",
-          "target": "0x3fFbA7F56fd346765077678d3e5BEdDC195FC774",
-          "via": []
-        },
-        {
           "permission": "upgrade",
           "target": "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF",
           "via": [
@@ -393,6 +383,11 @@
               "delay": 0
             }
           ]
+        },
+        {
+          "permission": "validate",
+          "target": "0x3fFbA7F56fd346765077678d3e5BEdDC195FC774",
+          "via": []
         }
       ],
       "ignoreInWatchMode": [
@@ -510,7 +505,7 @@
         "0xa7ff878cfd433a428d567d3b90fe1df400a048a1af5298f22cd4cd4fc25bdecd"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Central contract defining the access control for upgrading the system contract implementations.",
+      "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -716,9 +711,11 @@
     {
       "name": "OneStepProverHostIo",
       "address": "0x89AF7C4C2198c426cFe6E86de0680A0850503e06",
+      "template": "orbitstack/OneStepProverHostIo",
       "sourceHashes": [
         "0x0a8f8db8198082757cc8145891c633c20ed4313dab05beab40618258e534a1e8"
       ],
+      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1700037277,
       "values": { "$immutable": true }
     },
@@ -949,14 +946,9 @@
       "address": "0x3fFbA7F56fd346765077678d3e5BEdDC195FC774",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "validate",
           "target": "0x60A85a4C9F8Bdb92FAaFdb4eC98Ce4F4173e213A",
-          "description": "can challenge state roots on the host chain."
-        },
-        {
-          "permission": "propose",
-          "target": "0x60A85a4C9F8Bdb92FAaFdb4eC98Ce4F4173e213A",
-          "description": "can submit state roots to the RollupProxy contract on the host chain."
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ]
     },
@@ -1680,12 +1672,13 @@
     "orbitstack/Inbox": "0x1938bb9de2d7f328ae3e83f2dd9f5d3c5575b599fc097cf9308bac4d5bb3e89e",
     "orbitstack/OneStepProofEntry": "0xf3bff5da86f9bbb5f9ac93a0f2239f0769d051b67a44be2e52c322799e3b8d4f",
     "orbitstack/OneStepProver0": "0x80f18705038deef096683a89d16549bf343ada57cac1f2750df2f06fbbaed5ca",
+    "orbitstack/OneStepProverHostIo": "0xacacb7603847a3f0212fdf80c653040278214c00451f763907e270d1f19efec0",
     "orbitstack/OneStepProverMath": "0x8dd8aebb517eb6eaf15437ddbb90dff66f2b14d9d6b5390dd87fbdab15168188",
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
     "orbitstack/RollupEventInbox": "0x0608b35e1df8a51677a6392869e50b60a1ff7137f71f40bddf83143a5ef640c1",
-    "orbitstack/RollupProxy": "0x896aca243cf3d45ddf79cc142d37874406a6e07e5572f1450df6adccd0d627ac",
-    "orbitstack/SequencerInbox": "0x746f38463ee5aff9c2f6051c828002565b57c702a6be447c979d1996dd6bd673",
-    "orbitstack/UpgradeExecutor": "0xa25e02367a436cebea22481663da914bbf1fd9492d903659cc6ec9ddbaccb241"
+    "orbitstack/RollupProxy": "0x88165b83156dbb5b288912a52adc278d223904d0c933472cb3950a05ba456170",
+    "orbitstack/SequencerInbox": "0x58bf3ad8ac9dc1181ff793e330641c545ee2d9558fce65d2ee39d483c2490494",
+    "orbitstack/UpgradeExecutor": "0xa8c2617950ce46d982abd852226ebcc1aacaf9c8c7daeda793b53a790eced777"
   }
 }

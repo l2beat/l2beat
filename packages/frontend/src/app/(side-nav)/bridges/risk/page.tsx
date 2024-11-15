@@ -6,6 +6,7 @@ import { BridgesFilterContextProvider } from '../_components/bridges-filter-cont
 import { BridgesMvpWarning } from '../_components/bridges-mvp-warning'
 import { BridgesRiskTable } from './_components/table/bridges-risks-table'
 
+export const revalidate = 600
 export const metadata = getDefaultMetadata({
   openGraph: {
     url: '/bridges/risk',

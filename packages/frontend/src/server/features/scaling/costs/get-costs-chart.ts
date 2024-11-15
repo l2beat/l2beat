@@ -1,9 +1,5 @@
 import type { AggregatedL2CostRecord } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
+import { type UnixTime } from '@l2beat/shared-pure'
 import { z } from 'zod'
 import { env } from '~/env'
 import { db } from '~/server/database'
@@ -28,58 +24,57 @@ export type CostsChartParams = z.infer<typeof CostsChartParams>
  * @returns [timestamp, overheadGas, overheadEth, overheadUsd, calldataGas, calldataEth, calldataUsd, computeGas, computeEth, computeUsd, blobsGas, blobsEth, blobsUsd][] - all numbers
  */
 export function getCostsChart(
-  ...parameters: Parameters<typeof getCachedCostsChart>
+  ...parameters: Parameters<typeof getCostsChartData>
 ) {
   if (env.MOCK) {
-    return getMockCostsChart(...parameters)
+    return getMockCostsChartData(...parameters)
   }
-  noStore()
-  return getCachedCostsChart(...parameters)
+
+  return getCostsChartData(...parameters)
 }
 
-export type CostsChartData = Awaited<ReturnType<typeof getCachedCostsChart>>
-const getCachedCostsChart = cache(
-  async ({ range: timeRange, filter }: CostsChartParams) => {
-    const projects = getCostsProjects(filter)
-    if (projects.length === 0) {
-      return []
-    }
-    const resolution = rangeToResolution(timeRange)
-    const targetTimestamp = getCostsTargetTimestamp()
-    const [from, to] = getRange(timeRange, resolution, { now: targetTimestamp })
+export type CostsChartData = Awaited<ReturnType<typeof getCostsChartData>>
+async function getCostsChartData({
+  range: timeRange,
+  filter,
+}: CostsChartParams) {
+  const projects = getCostsProjects(filter)
+  if (projects.length === 0) {
+    return []
+  }
+  const resolution = rangeToResolution(timeRange)
+  const targetTimestamp = getCostsTargetTimestamp()
+  const [from, to] = getRange(timeRange, resolution, { now: targetTimestamp })
 
-    // one-off
-    const fromToQuery = from.add(-1, resolution === 'daily' ? 'days' : 'hours')
+  // one-off
+  const fromToQuery = from.add(-1, resolution === 'daily' ? 'days' : 'hours')
 
-    // to is exclusive
-    const rangeForQuery: [UnixTime, UnixTime] = [fromToQuery, to]
+  // to is exclusive
+  const rangeForQuery: [UnixTime, UnixTime] = [fromToQuery, to]
 
-    const data = await db.aggregatedL2Cost.getByProjectsAndTimeRange(
-      projects.map((p) => p.id),
-      rangeForQuery,
-    )
+  const data = await db.aggregatedL2Cost.getByProjectsAndTimeRange(
+    projects.map((p) => p.id),
+    rangeForQuery,
+  )
 
-    if (data.length === 0) {
-      return []
-    }
+  if (data.length === 0) {
+    return []
+  }
 
-    const summedByTimestamp = sumByTimestamp(data, resolution)
-    const timestamps = generateTimestamps(
-      [fromToQuery, to.add(-1, resolution === 'daily' ? 'days' : 'hours')],
-      resolution,
-    )
-    const result = timestamps.map(
-      (timestamp) =>
-        summedByTimestamp.find((entry) => entry[0] === timestamp.toNumber()) ??
-        ([timestamp.toNumber(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] as const),
-    )
-    return result
-  },
-  ['costsChartDD'],
-  { revalidate: 10 * UnixTime.MINUTE },
-)
+  const summedByTimestamp = sumByTimestamp(data, resolution)
+  const timestamps = generateTimestamps(
+    [fromToQuery, to.add(-1, resolution === 'daily' ? 'days' : 'hours')],
+    resolution,
+  )
+  const result = timestamps.map(
+    (timestamp) =>
+      summedByTimestamp.find((entry) => entry[0] === timestamp.toNumber()) ??
+      ([timestamp.toNumber(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] as const),
+  )
+  return result
+}
 
-function getMockCostsChart({
+function getMockCostsChartData({
   range: timeRange,
 }: CostsChartParams): CostsChartData {
   const resolution = rangeToResolution(timeRange)

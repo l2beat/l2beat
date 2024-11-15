@@ -105,7 +105,8 @@
               "chainId",
               "stateTransitionManager",
               "chainGovernance"
-            ]
+            ],
+            "ignoreRelative": true
           }
         },
         "zksyncEraDiamond": {
@@ -261,22 +262,22 @@
             "argValue": "50104"
           }
         },
-        "zeronetworkTenthBatchTS": {
-          "description": "If non-zero, the first batch has been posted.",
+        "abstractThirdBatchTS": {
+          "description": "If non-zero, the third batch has been posted (launch monitor).",
           "severity": "MEDIUM",
           "handler": {
             "type": "call",
             "method": "getCommittedBatchTimestamp",
-            "args": [543210, 10]
+            "args": [2741, 3]
           }
         },
-        "sophonTenthBatchTS": {
-          "description": "If non-zero, the first batch has been posted.",
+        "grvtThirdBatchTS": {
+          "description": "If non-zero, the third batch has been posted (launch monitor).",
           "severity": "MEDIUM",
           "handler": {
             "type": "call",
             "method": "getCommittedBatchTimestamp",
-            "args": [50104, 10]
+            "args": [325, 3]
           }
         },
         "revertedBlocks": {

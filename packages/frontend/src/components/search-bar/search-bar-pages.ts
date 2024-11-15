@@ -1,128 +1,130 @@
-export type SearchBarPage = {
-  type?: 'scaling' | 'bridges' | 'da'
-  name: string
-  tags?: string[]
-  href: string
-}
+import { type SearchBarPage } from './search-bar-entry'
 
 export const searchBarPages = withIndex([
   {
-    type: 'scaling',
+    category: 'scaling',
     name: 'Summary',
     tags: ['pages', 'scaling'],
     href: '/scaling/summary',
   },
   {
-    type: 'scaling',
+    category: 'scaling',
     name: 'Risk Analysis',
     tags: ['pages', 'scaling', 'risks'],
     href: '/scaling/risk',
   },
   {
-    type: 'scaling',
+    category: 'scaling',
     name: 'Value Locked',
     tags: ['pages', 'scaling', 'tvl'],
     href: '/scaling/tvl',
   },
   {
-    type: 'scaling',
+    category: 'scaling',
     name: 'Activity',
     tags: ['pages', 'scaling'],
     href: '/scaling/activity',
   },
   {
-    type: 'scaling',
+    category: 'scaling',
     name: 'Data Availability',
     tags: ['pages', 'scaling'],
     href: '/scaling/data-availability',
   },
   {
-    type: 'scaling',
+    category: 'scaling',
     name: 'Liveness',
     tags: ['pages', 'scaling'],
     href: '/scaling/liveness',
   },
   {
-    type: 'scaling',
+    category: 'scaling',
     name: 'Finality',
     tags: ['pages', 'scaling'],
     href: '/scaling/finality',
   },
   {
-    type: 'scaling',
+    category: 'scaling',
     name: 'Costs',
     tags: ['pages', 'scaling'],
     href: '/scaling/costs',
   },
   {
-    type: 'scaling',
+    category: 'scaling',
     name: 'Upcoming',
     tags: ['pages', 'scaling'],
     href: '/scaling/upcoming',
   },
   {
-    type: 'scaling',
+    category: 'scaling',
     name: 'Archived',
     tags: ['pages', 'scaling'],
     href: '/scaling/archived',
   },
   {
-    type: 'bridges',
+    category: 'bridges',
     name: 'Summary',
     tags: ['pages', 'bridges'],
     href: '/bridges/summary',
   },
   {
-    type: 'bridges',
+    category: 'bridges',
     name: 'Risk Analysis',
     tags: ['pages', 'bridges', 'risks'],
     href: '/bridges/risk',
   },
   {
-    type: 'bridges',
+    category: 'bridges',
     name: 'Archived',
     tags: ['pages', 'bridges'],
     href: '/bridges/archived',
   },
   {
-    type: 'da',
+    category: 'da',
     name: 'Summary',
     tags: ['pages', 'da', 'data', 'availability'],
     href: '/data-availability/summary',
   },
   {
-    type: 'da',
+    category: 'da',
     name: 'Risk Analysis',
     tags: ['pages', 'da', 'data', 'availability', 'risks'],
     href: '/data-availability/risk',
   },
   {
+    category: 'zkCatalog',
     name: 'ZK Catalog',
     href: '/zk-catalog',
     tags: ['pages', 'zk', 'catalog'],
   },
   {
+    category: 'other',
     name: 'Donate',
     href: '/donate',
     tags: ['pages'],
   },
   {
+    category: 'other',
     name: 'Governance',
     href: '/governance',
     tags: ['pages'],
   },
   {
+    category: 'other',
     name: 'Glossary',
     href: '/glossary',
     tags: ['pages'],
   },
   {
+    category: 'other',
     name: 'FAQ',
     href: '/faq',
     tags: ['pages'],
   },
 ])
 
-function withIndex(arr: SearchBarPage[]) {
-  return arr.map((e, i) => ({ ...e, index: i }))
+function withIndex(arr: Omit<SearchBarPage, 'type'>[]): (SearchBarPage & {
+  index: number
+})[] {
+  return arr.map((e, i) => ({ ...e, index: i, type: 'page' }))
 }

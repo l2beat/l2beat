@@ -1,7 +1,6 @@
 import { ProxyDetails } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { DiscoveryLogger } from '../DiscoveryLogger'
 import { IProvider } from '../provider/IProvider'
 import { MANUAL_DETECTORS, ProxyDetector } from './ProxyDetector'
 
@@ -31,7 +30,6 @@ describe(ProxyDetector.name, () => {
     const result = await detector.detectProxy(
       provider,
       EthereumAddress.random(),
-      DiscoveryLogger.SILENT,
     )
 
     expect(result).toEqual(undefined)
@@ -48,7 +46,6 @@ describe(ProxyDetector.name, () => {
     const result = await detector.detectProxy(
       provider,
       EthereumAddress.random(),
-      DiscoveryLogger.SILENT,
     )
     expect(result).toEqual(FIRST_DETAILS)
   })
@@ -62,7 +59,6 @@ describe(ProxyDetector.name, () => {
     const result = await detector.detectProxy(
       provider,
       EthereumAddress.random(),
-      DiscoveryLogger.SILENT,
       'call implementation proxy',
     )
 

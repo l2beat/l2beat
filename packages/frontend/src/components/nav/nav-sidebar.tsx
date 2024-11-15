@@ -20,7 +20,6 @@ interface Props {
 
 export async function NavSidebar({ groups, logoLink, legacyNav }: Props) {
   const hiringBadge = env.NEXT_PUBLIC_SHOW_HIRING_BADGE
-  const insight = env.NEXT_PUBLIC_FEATURE_FLAG_ASSET_RISKS
   return (
     <NavSideBarWrapper legacyNav={legacyNav}>
       <div className="flex h-[38px] flex-row items-center justify-between">
@@ -41,7 +40,6 @@ export async function NavSidebar({ groups, logoLink, legacyNav }: Props) {
       </nav>
       <div>
         <NavSmallLinkGroup className="mt-5">
-          {insight && <NavSmallLink title="Insight" href="/asset-risks" />}
           <NavSmallLink title="Forum" href={externalLinks.forum} />
           <NavSmallLink title="Donate" href="/donate" />
           <NavSmallLink

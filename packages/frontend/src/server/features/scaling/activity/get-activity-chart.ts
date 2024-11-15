@@ -26,97 +26,93 @@ export function getActivityChart(
   if (env.MOCK) {
     return getMockActivityChart(...parameters)
   }
-  noStore()
-  return getCachedActivityChart(...parameters)
+  return getActivityChartData(...parameters)
 }
 
 export type ActivityChartData = Awaited<
   ReturnType<typeof getCachedActivityChart>
 >
-const getCachedActivityChart = cache(
-  async (filter: ActivityProjectFilter, range: ActivityTimeRange) => {
-    const projects = getActivityProjects()
-      .filter(createActivityProjectsFilter(filter))
-      .map((p) => p.id)
-      .concat(ProjectId.ETHEREUM)
-    const isSingleProject = projects.length === 2 // Ethereum + 1 other project
-    let adjustedRange = getFullySyncedActivityRange(range)
-    const entries = await db.activity.getByProjectsAndTimeRange(
-      projects,
-      adjustedRange,
-    )
+             
+function getActivityChartData (filter: ActivityProjectFilter, range: ActivityTimeRange) {
+  const projects = getActivityProjects()
+    .filter(createActivityProjectsFilter(filter))
+    .map((p) => p.id)
+    .concat(ProjectId.ETHEREUM)
+  const isSingleProject = projects.length === 2 // Ethereum + 1 other project
+  let adjustedRange = getFullySyncedActivityRange(range)
+  const entries = await db.activity.getByProjectsAndTimeRange(
+    projects,
+    adjustedRange,
+  )
 
-    // By default, we assume we're always synced...
-    let syncStatus = getSyncStatus(adjustedRange[1])
+  // By default, we assume we're always synced...
+  let syncStatus = getSyncStatus(adjustedRange[1])
 
-    // ...but if we are looking at a single project, we check the last day we have data for,
-    // and use that as the cutoff.
-    if (isSingleProject) {
-      const lastProjectEntry = entries.findLast((entry) => entry.projectId)
-      if (lastProjectEntry) {
-        syncStatus = getSyncStatus(lastProjectEntry.timestamp)
-        adjustedRange = [adjustedRange[0], lastProjectEntry.timestamp]
-      }
+  // ...but if we are looking at a single project, we check the last day we have data for,
+  // and use that as the cutoff.
+  if (isSingleProject) {
+    const lastProjectEntry = entries.findLast((entry) => entry.projectId)
+    if (lastProjectEntry) {
+      syncStatus = getSyncStatus(lastProjectEntry.timestamp)
+      adjustedRange = [adjustedRange[0], lastProjectEntry.timestamp]
     }
+  }
 
-    const startTimestamp = entries.find(
-      (e) => e.projectId !== ProjectId.ETHEREUM && e.count > 0,
-    )?.timestamp
+  const startTimestamp = entries.find(
+    (e) => e.projectId !== ProjectId.ETHEREUM && e.count > 0,
+  )?.timestamp
 
-    if (!startTimestamp) {
-      return { data: [], syncStatus }
-    }
+  if (!startTimestamp) {
+    return { data: [], syncStatus }
+  }
 
-    const startIndex = entries.findIndex(
-      (e) => e.timestamp.toNumber() === startTimestamp.toNumber(),
-    )
+  const startIndex = entries.findIndex(
+    (e) => e.timestamp.toNumber() === startTimestamp.toNumber(),
+  )
 
-    const aggregatedEntries = entries.slice(startIndex).reduce(
-      (acc, entry) => {
-        const timestamp = entry.timestamp.toNumber()
-        const isEthereum = entry.projectId === ProjectId.ETHEREUM
+  const aggregatedEntries = entries.slice(startIndex).reduce(
+    (acc, entry) => {
+      const timestamp = entry.timestamp.toNumber()
+      const isEthereum = entry.projectId === ProjectId.ETHEREUM
 
-        if (!acc[timestamp]) {
-          acc[timestamp] = {
-            timestamp: entry.timestamp,
-            count: 0,
-            ethereumCount: 0,
-          }
+      if (!acc[timestamp]) {
+        acc[timestamp] = {
+          timestamp: entry.timestamp,
+          count: 0,
+          ethereumCount: 0,
         }
-
-        if (isEthereum) {
-          acc[timestamp].ethereumCount += entry.count
-        } else {
-          acc[timestamp].count += entry.count
-        }
-
-        return acc
-      },
-      {} as Record<
-        number,
-        { timestamp: UnixTime; count: number; ethereumCount: number }
-      >,
-    )
-    const timestamps = generateTimestamps(
-      [startTimestamp, adjustedRange[1]],
-      'daily',
-    )
-    const result: [number, number, number][] = timestamps.map((timestamp) => {
-      const entry = aggregatedEntries[timestamp.toNumber()]
-      if (!entry) {
-        return [+timestamp, 0, 0]
       }
-      return [+timestamp, entry.count, entry.ethereumCount]
-    })
 
-    return {
-      data: result,
-      syncStatus,
+      if (isEthereum) {
+        acc[timestamp].ethereumCount += entry.count
+      } else {
+        acc[timestamp].count += entry.count
+      }
+
+      return acc
+    },
+    {} as Record<
+      number,
+      { timestamp: UnixTime; count: number; ethereumCount: number }
+    >,
+  )
+  const timestamps = generateTimestamps(
+    [startTimestamp, adjustedRange[1]],
+    'daily',
+  )
+  const result: [number, number, number][] = timestamps.map((timestamp) => {
+    const entry = aggregatedEntries[timestamp.toNumber()]
+    if (!entry) {
+      return [+timestamp, 0, 0]
     }
-  },
-  ['activityChart'],
-  { revalidate: UnixTime.HOUR },
-)
+    return [+timestamp, entry.count, entry.ethereumCount]
+  })
+
+  return {
+    data: result,
+    syncStatus,
+  }
+}
 
 function getMockActivityChart(
   _: ActivityProjectFilter,

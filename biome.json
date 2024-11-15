@@ -21,7 +21,7 @@
   "organizeImports": { "enabled": true },
   "linter": {
     "enabled": true,
-    "ignore": ["packages/frontend", "packages/cms"],
+    "ignore": ["packages/frontend", "packages/cms", "packages/insight"],
     "rules": {
       "recommended": false,
       "complexity": {

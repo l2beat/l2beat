@@ -1,4 +1,6 @@
+import containerQueries from '@tailwindcss/container-queries'
 import type { Config } from 'tailwindcss'
+import tailwindcssAnimate from 'tailwindcss-animate'
 import plugin from 'tailwindcss/plugin'
 
 const config: Config = {
@@ -270,13 +272,6 @@ const config: Config = {
           'Roboto',
           'Arial',
         ],
-        oswald: [
-          'var(--font-oswald)',
-          'Oswald',
-          'var(--font-roboto)',
-          'Roboto',
-          'Arial',
-        ],
         lora: ['Lora', 'serif'],
       },
       spacing: {
@@ -292,17 +287,14 @@ const config: Config = {
     },
   },
   plugins: [
-    plugin(function ({ addVariant }) {
-      addVariant('sidebar', '.sidebar &')
+    plugin((creator) => {
+      creator.addVariant('sidebar', '.sidebar &')
     }),
-    plugin(function ({ addVariant }) {
-      addVariant('main-page-card', '.main-page-card &')
+    plugin((creator) => {
+      creator.addVariant('main-page-card', '.main-page-card &')
     }),
-    plugin(function ({ addVariant }) {
-      addVariant('insight', '.insight &')
-    }),
-    require('tailwindcss-animate'),
-    require('@tailwindcss/container-queries'),
+    tailwindcssAnimate,
+    containerQueries,
   ],
 }
 

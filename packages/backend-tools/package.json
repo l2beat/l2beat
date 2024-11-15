@@ -38,6 +38,7 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@l2beat/typescript-config": "workspace:*",
     "@sinonjs/fake-timers": "^11.1.0",
     "@types/sinonjs__fake-timers": "^8.1.2",
     "@types/uuid": "^9.0.8"

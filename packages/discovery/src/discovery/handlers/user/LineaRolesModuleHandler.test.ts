@@ -2,7 +2,6 @@ import { assert, Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { type providers, utils } from 'ethers'
 
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import type { IProvider } from '../../provider/IProvider'
 import {
   LineaRolesModuleHandler,
@@ -314,7 +313,6 @@ describe(LineaRolesModuleHandler.name, () => {
       'someName',
       { type: 'lineaRolesModule' },
       [],
-      DiscoveryLogger.SILENT,
     )
     const value = await handler.execute(provider, address)
     expect(value).toEqual({
@@ -652,7 +650,6 @@ describe(LineaRolesModuleHandler.name, () => {
       'someName',
       { type: 'lineaRolesModule' },
       [],
-      DiscoveryLogger.SILENT,
     )
     const value = await handler.execute(provider, address)
     expect(value).toEqual({
@@ -854,7 +851,6 @@ describe(LineaRolesModuleHandler.name, () => {
         ignoreRelative: true,
       },
       [],
-      DiscoveryLogger.SILENT,
     )
     const value = await handler.execute(provider, address)
     expect(value).toEqual({

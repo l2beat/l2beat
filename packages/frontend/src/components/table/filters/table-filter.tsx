@@ -43,7 +43,7 @@ function SelectedValue<T extends string>({
     <button
       onClick={() => onValueChange(undefined)}
       className={cn(
-        'flex h-8 cursor-pointer select-none items-center justify-center gap-1.5 whitespace-pre rounded-lg px-2.5 text-sm font-medium text-brand outline-none transition-colors',
+        'flex h-8 cursor-pointer select-none items-center justify-center gap-1.5 whitespace-pre rounded-lg px-2.5 text-xs font-medium text-brand outline-none transition-colors md:text-sm',
         'sidebar:bg-surface-primary sidebar:hover:bg-surface-tertiary sidebar:main-page-card:bg-surface-secondary',
       )}
     >

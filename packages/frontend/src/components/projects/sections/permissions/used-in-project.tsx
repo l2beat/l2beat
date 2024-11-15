@@ -31,6 +31,7 @@ export function UsedInProjectEntry({
           <Tooltip key={i}>
             <TooltipTrigger disabledOnMobile>
               <Link
+                prefetch={false}
                 href={`/${project.hrefRoot}/projects/${project.slug}/#${project.targetName}`}
                 className="size-5"
               >

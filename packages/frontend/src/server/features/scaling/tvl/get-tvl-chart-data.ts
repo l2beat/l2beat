@@ -1,10 +1,6 @@
 import { type ValueRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { type Dictionary } from 'lodash'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
 import { z } from 'zod'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
@@ -37,39 +33,35 @@ export type TvlChartDataParams = z.infer<typeof TvlChartDataParams>
  *  chart: [timestamp, native, canonical, external, ethPrice][] - all numbers
  * }
  */
-export async function getTvlChartData(
-  ...args: Parameters<typeof getCachedTvlChartData>
-) {
+export async function getTvlChart(...args: Parameters<typeof getTvlChartData>) {
   if (env.MOCK) {
     return getMockTvlChartData(...args)
   }
-  noStore()
-  return getCachedTvlChartData(...args)
+  return getTvlChartData(...args)
 }
 
-export type TvlChartData = Awaited<ReturnType<typeof getCachedTvlChartData>>
-export const getCachedTvlChartData = cache(
-  async ({ range, excludeAssociatedTokens, filter }: TvlChartDataParams) => {
-    const projectsFilter = createTvlProjectsFilter(filter)
-    const tvlProjects = getTvlProjects().filter(projectsFilter)
+export type TvlChartData = Awaited<ReturnType<typeof getTvlChartData>>
+export async function getTvlChartData({
+  range,
+  excludeAssociatedTokens,
+  filter,
+}: TvlChartDataParams) {
+  const projectsFilter = createTvlProjectsFilter(filter)
+  const tvlProjects = getTvlProjects().filter(projectsFilter)
 
-    const [ethPrices, values] = await Promise.all([
-      getEthPrices(),
-      getTvlValuesForProjects(tvlProjects, range),
-    ])
+  const [ethPrices, values] = await Promise.all([
+    getEthPrices(),
+    getTvlValuesForProjects(tvlProjects, range),
+  ])
 
-    // NOTE: Quick fix for now, we should reinvestigate if this is the best way to handle this
-    const forTotal =
-      filter.type !== 'projects' || filter.projectIds.length !== 1
+  // NOTE: Quick fix for now, we should reinvestigate if this is the best way to handle this
+  const forTotal = filter.type !== 'projects' || filter.projectIds.length !== 1
 
-    return getChartData(values, ethPrices, {
-      excludeAssociatedTokens,
-      forTotal,
-    })
-  },
-  ['getTvlChartData'],
-  { revalidate: 10 * UnixTime.MINUTE },
-)
+  return getChartData(values, ethPrices, {
+    excludeAssociatedTokens,
+    forTotal,
+  })
+}
 
 function getChartData(
   values: Dictionary<Dictionary<ValueRecord[]>>,

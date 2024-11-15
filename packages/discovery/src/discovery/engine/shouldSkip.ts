@@ -8,18 +8,18 @@ export function shouldSkip(
   counter: number,
 ): string | undefined {
   if (config.overrides.get(address).ignoreDiscovery) {
-    return `Address ${address} ignored via "ignoreDiscovery"`
+    return 'ignored'
   }
 
   if (config.isInSharedModules(address)) {
-    return `Ignoring ${address} - it's part of a shared module`
+    return 'part of a shared module'
   }
 
   if (depth > config.maxDepth) {
-    return `Error: Depth ${depth} exceeded max = ${config.maxDepth}`
+    return `depth ${depth} > MAX (${config.maxDepth})`
   }
 
   if (counter > config.maxAddresses) {
-    return `Error: Total addresses ${counter} exceeded max = ${config.maxAddresses}`
+    return `total ${counter} > MAX (${config.maxAddresses})`
   }
 }

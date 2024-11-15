@@ -3,7 +3,6 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import * as z from 'zod'
 
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
 import {
@@ -39,7 +38,6 @@ export class ArrayHandler implements Handler {
     readonly field: string,
     private readonly definition: ArrayHandlerDefinition,
     abi: string[],
-    readonly logger: DiscoveryLogger,
   ) {
     const dependency = getReferencedName(definition.length)
     if (dependency) {
@@ -65,10 +63,6 @@ export class ArrayHandler implements Handler {
     address: EthereumAddress,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
-    this.logger.logExecution(this.field, [
-      'Calling array ',
-      this.fragment.name + '(i)',
-    ])
     const referenceInput = generateReferenceInput(
       previousResults,
       provider,

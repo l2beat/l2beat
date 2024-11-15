@@ -1,5 +1,4 @@
 import { type Layer2 } from '@l2beat/config'
-import { env } from '~/env'
 import { groupByMainCategories } from '~/utils/group-by-main-categories'
 import {
   type ProjectsChangeReport,
@@ -9,7 +8,6 @@ import { getProjectsVerificationStatuses } from '../../verification-status/get-p
 import { getCostsProjects } from '../costs/utils/get-costs-projects'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
-import { orderByTvl } from '../tvl/utils/order-by-tvl'
 import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
 
 export async function getScalingCostsEntries() {
@@ -26,14 +24,7 @@ export async function getScalingCostsEntries() {
     return getScalingCostEntry(project, isVerified, projectsChangeReport)
   })
 
-  if (env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION) {
-    return {
-      type: 'recategorised' as const,
-      entries: groupByMainCategories(orderByStageAndTvl(entries, tvl)),
-    }
-  }
-
-  return { entries: orderByTvl(entries, tvl) }
+  return groupByMainCategories(orderByStageAndTvl(entries, tvl))
 }
 
 export type ScalingCostsEntry = ReturnType<typeof getScalingCostEntry>
