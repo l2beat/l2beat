@@ -778,8 +778,8 @@ export class ProjectDiscovery {
     const ultimatePermissionToPrefix: {
       [key in PermissionType]: string | undefined
     } = {
-      configure: 'Can change configuration of',
-      upgrade: 'Can upgrade implementation of',
+      configure: 'Can change the configuration of',
+      upgrade: 'Can upgrade the implementation of',
       act: undefined,
       guard: 'Is a Guardian',
       challenge: 'Is a Challenger',
@@ -1065,17 +1065,17 @@ const roleDescriptions: {
   sequence: {
     name: 'Sequencer',
     description:
-      'Sequencer is an actor allowed to commit transactions from current layer to the host chain.',
+      'Sequencer is an actor allowed to commit transactions from the current layer to the host chain.',
   },
   propose: {
     name: 'Proposer',
     description:
-      'Proposer is an actor allowed to post new state roots of current layer to the host chain.',
+      'Proposer is an actor allowed to post new state roots of the current layer to the host chain.',
   },
   challenge: {
     name: 'Challenger',
     description:
-      'Challenger is an actor allowed to delete state roots proposed by a Proposer.',
+      'Challenger is an actor allowed to challenge or delete state roots proposed by a Proposer.',
   },
   guard: {
     name: 'Guardian',
@@ -1083,9 +1083,10 @@ const roleDescriptions: {
       'Guardian is an actor allowed to pause deposits and withdrawals.',
   },
   validate: {
-    name: 'Validator',
+    // ORBIT specific
+    name: 'Validator/Proposer',
     description:
-      'Validator is an actor that validates the correctness of state transitions.',
+      'Can propose new state roots (called nodes) and challenge state roots on the host chain.',
   },
 }
 

@@ -7,7 +7,7 @@
   "ignoreRelatives": ["reader4844"],
   "fields": {
     "maxTimeVariation": {
-      "description": "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed.",
+      "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed.",
       "returnType": "(uint256 delayBlocks, uint256 futureBlocks, uint256 delaySeconds, uint256 futureSeconds)"
     },
     "sequencerVersion": {
