@@ -206,6 +206,10 @@ const Next13ProgressBar = React.memo(
       const handleMutation: MutationCallback = () => {
         const anchorElements = document.querySelectorAll('a')
         const validAnchorELes = Array.from(anchorElements).filter((anchor) => {
+          if (!anchor.getAttribute('progress-bar')) {
+            return false
+          }
+
           if (
             anchor.href.startsWith('tel:+') ||
             anchor.href.startsWith('mailto:')

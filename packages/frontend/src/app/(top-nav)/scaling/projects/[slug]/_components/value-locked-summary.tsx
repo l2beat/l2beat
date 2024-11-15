@@ -142,7 +142,11 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
       </div>
       {params.breakdown.total > 0 ? (
         <div className="mt-2 flex justify-center md:mt-0">
-          <CustomLink href={props.detailedBreakdownHref} className="text-xs">
+          <CustomLink
+            href={props.detailedBreakdownHref}
+            className="text-xs"
+            progress-bar
+          >
             View TVL Breakdown
           </CustomLink>
         </div>
