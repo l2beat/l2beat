@@ -292,6 +292,13 @@ export const nova: Layer2 = orbitStackL2({
       sinceTimestamp: new UnixTime(1659620187),
       tokens: ['DAI'],
       source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Canonically (external escrow)',
+          },
+        ],
+      },
       description:
         'DAI Vault for custom DAI Gateway. Fully controlled by MakerDAO governance.',
       ...upgradeExecutorUpgradeability,
@@ -309,6 +316,13 @@ export const nova: Layer2 = orbitStackL2({
       sinceTimestamp: new UnixTime(1659620187),
       tokens: '*',
       source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Canonically (custom escrow)',
+          },
+        ],
+      },
       description:
         'Main entry point for users depositing ERC20 tokens that require minting a custom token on the L2.',
       ...upgradeExecutorUpgradeability,

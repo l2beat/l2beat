@@ -128,6 +128,13 @@ export const linea: Layer2 = {
         address: EthereumAddress('0x504A330327A089d8364C4ab3811Ee26976d388ce'),
         sinceTimestamp: new UnixTime(1691079071),
         source: 'external',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'Canonically (external escrow)',
+            },
+          ],
+        },
         tokens: ['USDC'],
       }),
       discovery.getEscrowDetails({

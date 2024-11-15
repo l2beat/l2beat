@@ -28,6 +28,7 @@ export const xterio: Layer2 = opStackL2({
   badges: [Badge.DA.CustomDA, Badge.RaaS.AltLayer],
   additionalPurposes: ['Gaming'],
   display: {
+    architectureImage: 'opstack-dachallenge',
     name: 'Xterio Chain',
     slug: 'xterio',
     description:

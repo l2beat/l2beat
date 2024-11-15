@@ -107,6 +107,13 @@ export const paradex: Layer2 = {
         address: EthereumAddress('0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3'),
         tokens: ['USDC'],
         source: 'external',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'Canonically (external escrow)',
+            },
+          ],
+        },
         upgradableBy: ['USDC Escrow owner'],
         upgradeDelay: formatSeconds(escrowUSDCDelaySeconds),
         description:

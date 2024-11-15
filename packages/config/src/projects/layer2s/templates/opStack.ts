@@ -413,11 +413,9 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
       'FINALIZATION_PERIOD_SECONDS',
     )
 
-  const architectureImage = templateVars.discovery.hasContract(
-    'SuperchainConfig',
-  )
-    ? 'bedrock-superchain'
-    : 'opstack'
+  // 4 cases: Optimium, Optimium + Superchain, Rollup, Rollup + Superchain
+  // archi images defined locally in the project.ts take precedence over this one
+  const architectureImage = `opstack-${daProvider !== undefined ? 'optimium' : 'rollup'}${templateVars.discovery.hasContract('SuperchainConfig') ? '-superchain' : ''}`
 
   return {
     type: 'layer2',

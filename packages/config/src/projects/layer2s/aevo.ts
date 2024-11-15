@@ -19,7 +19,6 @@ export const aevo: Layer2 = opStackL2({
   display: {
     name: 'Aevo',
     slug: 'aevo',
-    architectureImage: 'aevo',
     description:
       'Aevo is a high-performance decentralized options exchange, powered by the OP Stack and Celestia DA.',
     links: {
