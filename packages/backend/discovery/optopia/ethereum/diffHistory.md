@@ -1,3 +1,52 @@
+Generated with discovered.json: 0x1d5143c2b352fdcded4d78e8c846c2e8a0e57e1d
+
+# Diff at Thu, 14 Nov 2024 09:02:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ea60800af45c71fbd5d292e0f4301ba9afda01fa block: 20427351
+- current block number: 21184911
+
+## Description
+
+Upgrade L2OutputOracle to a beta version (minor changes).
+
+## Watched changes
+
+```diff
+    contract L2OutputOracle (0xdd80E05004f40815EaEf12ffeE69c2a8A5112aA5) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      sourceHashes.1:
+-        "0x025c187b0231be4785898f25f98d749f953f5d06781772aef242812e2ecf52e3"
++        "0x82ce2b4d2c7dcca833593de12c2cf9aef63b23af286529708131f3aa909484ce"
+      values.$implementation:
+-        "0x38f2D861b23866b92188155C4876F0879cA706Ec"
++        "0xDe94ECc695F2Df967b49ED11829eC9f7c1831a61"
+      values.$pastUpgrades.2:
++        ["2024-11-12T05:33:23.000Z","0x205d623832f5a7d959f55aac33cae361475b2abfd69ca37c8eec2bd510276c3f",["0xDe94ECc695F2Df967b49ED11829eC9f7c1831a61"]]
+      values.$pastUpgrades.1:
++        ["2024-11-12T03:33:47.000Z","0xe56f6658e706a93ca4aa13817ca9316ae594f08268d7dbada461427b4f55756c",["0xfc2Af8738f04d14833BBcE3AD446F603E91D9306"]]
+      values.$upgradeCount:
+-        1
++        3
+      values.SUBMISSION_INTERVAL:
+-        1800
++        18000
+      values.submissionInterval:
+-        1800
++        18000
+      values.version:
+-        "1.8.0"
++        "1.8.1-beta.2"
+    }
+```
+
+## Source code changes
+
+```diff
+.../L2OutputOracle/L2OutputOracle.sol              | 163 +++++++++++++++++----
+ 1 file changed, 135 insertions(+), 28 deletions(-)
+```
+
 Generated with discovered.json: 0x68124028c6826842d33172001049f07db1237c2c
 
 # Diff at Fri, 01 Nov 2024 12:23:48 GMT:

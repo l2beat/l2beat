@@ -1,6 +1,5 @@
 import * as z from 'zod'
 
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { Handler } from '../Handler'
 import {
   AccessControlHandler,
@@ -142,66 +141,65 @@ export function getUserHandler(
   field: string,
   definition: UserHandlerDefinition,
   abi: string[],
-  logger: DiscoveryLogger,
 ): Handler {
   switch (definition.type) {
     case 'storage':
-      return new StorageHandler(field, definition, logger)
+      return new StorageHandler(field, definition)
     case 'dynamicArray':
-      return new DynamicArrayHandler(field, definition, logger)
+      return new DynamicArrayHandler(field, definition)
     case 'array':
-      return new ArrayHandler(field, definition, abi, logger)
+      return new ArrayHandler(field, definition, abi)
     case 'call':
-      return new CallHandler(field, definition, abi, logger)
+      return new CallHandler(field, definition, abi)
     case 'starkWareNamedStorage':
-      return new StarkWareNamedStorageHandler(field, definition, logger)
+      return new StarkWareNamedStorageHandler(field, definition)
     case 'accessControl':
-      return new AccessControlHandler(field, definition, abi, logger)
+      return new AccessControlHandler(field, definition, abi)
     case 'scrollAccessControl':
-      return new ScrollAccessControlHandler(field, definition, abi, logger)
+      return new ScrollAccessControlHandler(field, definition, abi)
     case 'lineaRolesModule':
-      return new LineaRolesModuleHandler(field, definition, abi, logger)
+      return new LineaRolesModuleHandler(field, definition, abi)
     case 'arrayFromOneEvent':
-      return new ArrayFromOneEventHandler(field, definition, abi, logger)
+      return new ArrayFromOneEventHandler(field, definition, abi)
     case 'arrayFromOneEventWithArg':
-      return new ArrayFromOneEventWithArgHandler(field, definition, abi, logger)
+      return new ArrayFromOneEventWithArgHandler(field, definition, abi)
     case 'arrayFromTwoEvents':
-      return new ArrayFromTwoEventsHandler(field, definition, abi, logger)
+      return new ArrayFromTwoEventsHandler(field, definition, abi)
     case 'constructorArgs':
-      return new ConstructorArgsHandler(field, definition, abi, logger)
+      return new ConstructorArgsHandler(field, definition, abi)
     case 'eventCount':
-      return new EventCountHandler(field, definition, logger)
+      return new EventCountHandler(field, definition)
     case 'hardcoded':
-      return new HardCodedHandler(field, definition, logger)
+      return new HardCodedHandler(field, definition)
     case 'starkWareGovernance':
-      return new StarkWareGovernanceHandler(field, definition, abi, logger)
+      return new StarkWareGovernanceHandler(field, definition, abi)
     case 'stateFromEvent':
-      return new StateFromEventHandler(field, definition, abi, logger)
+      return new StateFromEventHandler(field, definition, abi)
     case 'stateFromEventTuple':
-      return new StateFromEventTupleHandler(field, definition, abi, logger)
+      return new StateFromEventTupleHandler(field, definition, abi)
     case 'layerZeroMultisig':
-      return new LayerZeroMultisigHandler(field, abi, logger)
+      return new LayerZeroMultisigHandler(field, abi)
     case 'arbitrumActors':
-      return new ArbitrumActorsHandler(field, definition, logger)
+      return new ArbitrumActorsHandler(field, definition)
     case 'arbitrumScheduledTransactions':
-      return new ArbitrumScheduledTransactionsHandler(field, abi, logger)
+      return new ArbitrumScheduledTransactionsHandler(field, abi)
     case 'opStackDA':
-      return new OpStackDAHandler(field, definition, logger)
+      return new OpStackDAHandler(field, definition)
     case 'opStackSequencerInbox':
-      return new OpStackSequencerInboxHandler(field, definition, logger)
+      return new OpStackSequencerInboxHandler(field, definition)
     case 'arbitrumSequencerVersion':
-      return new ArbitrumSequencerVersionHandler(field, definition, logger)
+      return new ArbitrumSequencerVersionHandler(field, definition)
     case 'arbitrumDACKeyset':
-      return new ArbitrumDACKeysetHandler(field, definition, logger)
+      return new ArbitrumDACKeysetHandler(field, definition)
     case 'eip2535Facets':
-      return new EIP2535FacetHandler(field, definition, logger)
+      return new EIP2535FacetHandler(field, definition)
     case 'zksynceraScheduledTransactions':
-      return new ZKsyncEraScheduledTransactionHandler(field, abi, logger)
+      return new ZKsyncEraScheduledTransactionHandler(field, abi)
     case 'zksynceraValidators':
-      return new ZKsyncEraValidatorsHandler(field, abi, logger)
+      return new ZKsyncEraValidatorsHandler(field, abi)
     case 'orbitPostsBlobs':
-      return new OrbitPostsBlobsHandler(field, definition, logger)
+      return new OrbitPostsBlobsHandler(field, definition)
     case 'polygoncdkScheduledTransactions':
-      return new PolygonCDKScheduledTransactionHandler(field, abi, logger)
+      return new PolygonCDKScheduledTransactionHandler(field, abi)
   }
 }

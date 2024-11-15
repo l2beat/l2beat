@@ -135,6 +135,9 @@ export class ProjectDiscovery {
     name?: string
     description?: string
     sinceTimestamp?: UnixTime
+    /**
+     * For chains without multicall, please avoid using the wildcard '*'
+     */
     tokens: string[] | '*'
     excludedTokens?: string[]
     premintedTokens?: string[]

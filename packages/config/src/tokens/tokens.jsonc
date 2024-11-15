@@ -1,6 +1,15 @@
 {
   "ethereum": [
     {
+      "symbol": "SPX",
+      "address": "0xE0f63A424a4439cBE457D80E4f4b51aD25b2c56C"
+    },
+    {
+      "symbol": "VERI",
+      "address": "0x8f3470a7388c05ee4e7af3d01d8c722b0ff52374",
+      "deploymentTimestamp": 1492951503
+    },
+    {
       "symbol": "ERN",
       "address": "0xBBc2AE13b23d715c30720F079fcd9B4a74093505"
     },
@@ -2690,6 +2699,32 @@
   ],
   "base": [
     {
+      "symbol": "SPX",
+      "address": "0x50dA645f148798F68EF2d7dB7C1CB22A6819bb2C",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole Token Bridge",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "TN100X",
+      "address": "0x5b5dee44552546ecea05edea01dcd7be7aa6144a",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "MIGGLES",
+      "address": "0xb1a03eda10342529bbf8eb700a06c60441fef25d",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "symbol": "EURC",
       "address": "0x60a3E35Cc302bFA44Cb288Bc5a4F316Fdb1adb42",
       "category": "stablecoin",
@@ -3667,6 +3702,20 @@
     }
   ],
   "mode": [
+    {
+      "symbol": "SolvBTC",
+      "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
+      "coingeckoId": "solv-btc",
+      "source": "external",
+      "supply": "totalSupply", // not mintable on mode 24/11/13
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
+    },
     {
       "symbol": "msDai",
       "coingeckoId": "savings-dai",

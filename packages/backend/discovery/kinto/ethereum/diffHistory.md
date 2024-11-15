@@ -1,91 +1,23 @@
-Generated with discovered.json: 0xd5d746b8ab669b1c7ed81b54a33d7d98f933ead2
+Generated with discovered.json: 0x5e0d12e936795301883225446f95128f6b80979d
 
-# Diff at Tue, 12 Nov 2024 15:38:19 GMT:
+# Diff at Thu, 14 Nov 2024 08:19:46 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@b2d1031f386ed9987b07f83babe4993700b00d33 block: 21141407
-- current block number: 21141407
+- comparing to: main@ea60800af45c71fbd5d292e0f4301ba9afda01fa block: 21141407
+- current block number: 21184697
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Staker count drops to 1 as the 'defensive' validators are not actively staking on new nodes anymore.
 
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 21141407 (main branch discovery), not current.
+## Watched changes
 
 ```diff
     contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
     +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
-      issuedPermissions.11:
--        {"permission":"upgrade","target":"0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d","via":[{"address":"0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a","delay":0}]}
-      issuedPermissions.10:
--        {"permission":"propose","target":"0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f","via":[]}
-      issuedPermissions.9:
--        {"permission":"propose","target":"0x944eB0a2829A859959586b10D54229278534a696","via":[]}
-      issuedPermissions.8:
--        {"permission":"propose","target":"0x64Cf65036a76E3827e448cadbc53D31EefDCE04a","via":[]}
-      issuedPermissions.7:
--        {"permission":"propose","target":"0x58028fFbc25aE2e12b96276bDB125955F41D41f3","via":[]}
-      issuedPermissions.6.permission:
--        "propose"
-+        "validate"
-      issuedPermissions.6.target:
--        "0x2bfDA59220413DEd39dD0E443620b5277EcE6348"
-+        "0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f"
-      issuedPermissions.5.permission:
--        "configure"
-+        "validate"
-      issuedPermissions.5.target:
--        "0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d"
-+        "0x944eB0a2829A859959586b10D54229278534a696"
-      issuedPermissions.5.via.0:
--        {"address":"0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a","delay":0,"description":"can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."}
-      issuedPermissions.4.permission:
--        "challenge"
-+        "validate"
-      issuedPermissions.4.target:
--        "0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f"
-+        "0x64Cf65036a76E3827e448cadbc53D31EefDCE04a"
-      issuedPermissions.3.permission:
--        "challenge"
-+        "validate"
-      issuedPermissions.3.target:
--        "0x944eB0a2829A859959586b10D54229278534a696"
-+        "0x58028fFbc25aE2e12b96276bDB125955F41D41f3"
-      issuedPermissions.2.permission:
--        "challenge"
-+        "validate"
-      issuedPermissions.2.target:
--        "0x64Cf65036a76E3827e448cadbc53D31EefDCE04a"
-+        "0x2bfDA59220413DEd39dD0E443620b5277EcE6348"
-      issuedPermissions.1.permission:
--        "challenge"
-+        "upgrade"
-      issuedPermissions.1.target:
--        "0x58028fFbc25aE2e12b96276bDB125955F41D41f3"
-+        "0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d"
-      issuedPermissions.1.via.0:
-+        {"address":"0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a","delay":0}
-      issuedPermissions.0.permission:
--        "challenge"
-+        "configure"
-      issuedPermissions.0.target:
--        "0x2bfDA59220413DEd39dD0E443620b5277EcE6348"
-+        "0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d"
-      issuedPermissions.0.via.0:
-+        {"address":"0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a","delay":0,"description":"can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."}
-    }
-```
-
-```diff
-    contract SequencerInbox (0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a) {
-    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
-      fieldMeta.maxTimeVariation.description:
--        "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
-+        "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
+      values.stakerCount:
+-        3
++        1
     }
 ```
 

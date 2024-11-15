@@ -32,7 +32,6 @@ export function getDiscoveryEngine(
     sourceCodeService,
     handlerExecutor,
     templateService,
-    logger,
   )
 
   const discoveryEngine = new DiscoveryEngine(addressAnalyzer, logger)

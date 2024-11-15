@@ -2,8 +2,10 @@
 
 import { assertUnreachable } from '@l2beat/shared-pure'
 import fuzzysort from 'fuzzysort'
+import { groupBy } from 'lodash'
 import Image from 'next/image'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { type Entries } from 'type-fest'
 import {
   Command,
   CommandDialog,
@@ -16,9 +18,16 @@ import {
 } from '~/components/core/command'
 import { useOnClickOutside } from '~/hooks/use-on-click-outside'
 import { useRouterWithProgressBar } from '../progress-bar'
+import {
+  type SearchBarCategory,
+  searchBarCategories,
+} from './search-bar-categories'
 import { useSearchBarContext } from './search-bar-context'
-import { type SearchBarPage, searchBarPages } from './search-bar-pages'
-import { type SearchBarProject } from './search-bar-projects'
+import {
+  type AnySearchBarEntry,
+  type SearchBarProject,
+} from './search-bar-entry'
+import { searchBarPages } from './search-bar-pages'
 interface Props {
   allProjects: SearchBarProject[]
   recentlyAdded: SearchBarProject[]
@@ -49,9 +58,9 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
         : fuzzysort
             .go(value, allProjects, {
               limit: 15,
-              keys: ['name', (e) => e.tags.join()],
+              keys: ['name', (e) => e.tags?.join() ?? ''],
               scoreFn: (match) =>
-                match.score * (match.obj.type === 'zk-catalog' ? 0.9 : 1),
+                match.score * (match.obj.category === 'zkCatalog' ? 0.9 : 1),
             })
             .map((match) => match.obj),
     [value, recentlyAdded, allProjects],
@@ -68,6 +77,12 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
 
     [value],
   )
+
+  const grouped = useMemo(() => {
+    return Object.entries(
+      groupBy([...filteredProjects, ...filteredPages], (p) => p.category),
+    ) as Entries<Record<SearchBarCategory, AnySearchBarEntry[]>>
+  }, [filteredProjects, filteredPages])
 
   const onEscapeKeyDown = (e?: KeyboardEvent) => {
     e?.preventDefault()
@@ -102,12 +117,9 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
         </CommandInput>
         <CommandList className="max-h-screen md:h-[270px] md:max-h-[270px] [@supports(height:100dvh)]:max-h-dvh">
           <CommandEmpty>No results found.</CommandEmpty>
-          {filteredProjects.length > 0 && (
-            <CommandGroup
-              heading={value === '' ? 'Recently added projects' : 'Projects'}
-            >
+          {filteredProjects.length > 0 && value === '' && (
+            <CommandGroup heading="Recently added projects">
               {filteredProjects.map((project) => {
-                const label = typeToLabel(project.type)
                 return (
                   <SearchBarItem
                     key={project.id}
@@ -116,7 +128,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                       setValue('')
                       router.push(project.href)
                     }}
-                    label={label}
+                    label={entryToLabel(project)}
                   >
                     <Image
                       src={project.iconUrl}
@@ -131,26 +143,40 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
               })}
             </CommandGroup>
           )}
-          {value !== '' && filteredPages.length > 0 && (
-            <CommandGroup heading="Pages">
-              {filteredPages.map((page) => {
-                const label = typeToLabel(page.type)
-                return (
-                  <SearchBarItem
-                    key={page.href}
-                    onSelect={() => {
-                      setOpen(false)
-                      setValue('')
-                      router.push(page.href)
-                    }}
-                    label={label}
-                  >
-                    {page.name}
-                  </SearchBarItem>
-                )
-              })}
-            </CommandGroup>
-          )}
+          {value !== '' &&
+            grouped.length > 0 &&
+            grouped.map(([group, items]) => (
+              <CommandGroup
+                heading={searchBarCategories[group].name}
+                key={group}
+              >
+                {items.map((item) => {
+                  return (
+                    <SearchBarItem
+                      key={item.href}
+                      onSelect={() => {
+                        setOpen(false)
+                        setValue('')
+                        router.push(item.href)
+                      }}
+                      label={entryToLabel(item)}
+                      value={`${item.category}-${item.name}-${item.type}${'kind' in item ? `-${item.kind}` : ''}`}
+                    >
+                      {item.type === 'project' && (
+                        <Image
+                          src={item.iconUrl}
+                          alt={`${item.name} logo`}
+                          className="rounded-sm"
+                          width={20}
+                          height={20}
+                        />
+                      )}
+                      {item.name}
+                    </SearchBarItem>
+                  )
+                })}
+              </CommandGroup>
+            ))}
         </CommandList>
       </Command>
     </CommandDialog>
@@ -161,11 +187,18 @@ function SearchBarItem({
   onSelect,
   children,
   label,
-}: { onSelect: () => void; children: React.ReactNode; label?: string }) {
+  value,
+}: {
+  onSelect: () => void
+  children: React.ReactNode
+  label?: string
+  value?: string
+}) {
   return (
     <CommandItem
       className="cursor-pointer gap-2 rounded-lg"
       onSelect={onSelect}
+      value={value}
     >
       {children}
       {label && <div className="ml-auto text-xs text-secondary">{label}</div>}
@@ -173,8 +206,9 @@ function SearchBarItem({
   )
 }
 
-function typeToLabel(type: SearchBarProject['type'] | SearchBarPage['type']) {
-  switch (type) {
+function entryToLabel(entry: AnySearchBarEntry) {
+  if (entry.type === 'page') return 'Page'
+  switch (entry.kind) {
     case 'layer2':
       return 'Layer 2'
     case 'layer3':
@@ -182,16 +216,10 @@ function typeToLabel(type: SearchBarProject['type'] | SearchBarPage['type']) {
     case 'bridge':
       return 'Bridge'
     case 'da':
-      return 'DA'
-    case 'zk-catalog':
-      return 'ZK Catalog'
-    case 'bridges':
-      return 'Bridges'
-    case 'scaling':
-      return 'Scaling'
-    case undefined:
+      return 'DA Layer'
+    case 'zkCatalog':
       return undefined
     default:
-      assertUnreachable(type)
+      assertUnreachable(entry.kind)
   }
 }

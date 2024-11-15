@@ -2,7 +2,6 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
 
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { StateFromEventHandler } from './StateFromEventHandler'
 
@@ -17,7 +16,6 @@ describe(StateFromEventHandler.name, () => {
           returnParams: ['account', 'status'],
         },
         ['event OwnerChanged(address indexed account, bool indexed status)'],
-        DiscoveryLogger.SILENT,
       )
       expect(handler.getEvent()).toEqual(
         'event OwnerChanged(address indexed account, bool indexed status)',
@@ -58,7 +56,6 @@ describe(StateFromEventHandler.name, () => {
           returnParams: ['account', 'status'],
         },
         [],
-        DiscoveryLogger.SILENT,
       )
       const value = await handler.execute(provider, address)
       expect(value).toEqual({
@@ -94,7 +91,6 @@ describe(StateFromEventHandler.name, () => {
           returnParams: ['account', 'status'],
         },
         [],
-        DiscoveryLogger.SILENT,
       )
       const value = await handler.execute(provider, address)
 
@@ -152,7 +148,6 @@ describe(StateFromEventHandler.name, () => {
           groupBy: 'account',
         },
         [],
-        DiscoveryLogger.SILENT,
       )
       const value = await handler.execute(provider, address)
 
@@ -195,7 +190,6 @@ describe(StateFromEventHandler.name, () => {
           ignoreRelative: true,
         },
         [],
-        DiscoveryLogger.SILENT,
       )
       const value = await handler.execute(provider, address)
       expect(value).toEqual({
@@ -233,7 +227,6 @@ describe(StateFromEventHandler.name, () => {
           returnParams: ['account', 'status'],
         },
         [],
-        DiscoveryLogger.SILENT,
       )
       await handler.execute(provider, address)
     })

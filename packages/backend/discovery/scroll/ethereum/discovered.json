@@ -1,7 +1,7 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "blockNumber": 20891049,
+  "blockNumber": 21184190,
   "configHash": "0x5f7370f4a07a8cc3494a93546960c459fd25377b9c259ccbbcc8e1de5fd48b40",
   "contracts": [
     {
@@ -62,13 +62,13 @@
         "$upgradeCount": 3,
         "enforcedTxGateway": "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "gasOracle": "0x987e300fDfb06093859358522a79098848C33852",
-        "l2BaseFee": 40333748,
+        "l2BaseFee": 138751327,
         "maxGasLimit": 10000000,
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 940425,
-        "nextUnfinalizedQueueIndex": 940402,
+        "nextCrossDomainMessageIndex": 947595,
+        "nextUnfinalizedQueueIndex": 947592,
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-        "pendingQueueIndex": 940421,
+        "pendingQueueIndex": 947593,
         "scrollChain": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "whitelistChecker": "0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37"
       },
@@ -1043,7 +1043,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 39,
+        "nonce": 40,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1183,7 +1183,7 @@
           ]
         ],
         "$upgradeCount": 5,
-        "lastFinalizedBatchIndex": 326856,
+        "lastFinalizedBatchIndex": 347398,
         "layer2ChainId": 534352,
         "maxNumTxInChunk": 100,
         "messageQueue": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
@@ -1248,7 +1248,11 @@
           { "batchIndex": 275170 },
           { "batchIndex": 275171 },
           { "batchIndex": 275172 },
-          { "batchIndex": 275173 }
+          { "batchIndex": 275173 },
+          { "batchIndex": 346818 },
+          { "batchIndex": 346817 },
+          { "batchIndex": 346816 },
+          { "batchIndex": 346815 }
         ],
         "sequencers": [
           "0xcF2898225ED05Be911D3709d9417e86E0b4Cfc8f",
@@ -1372,7 +1376,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 138,
+        "nonce": 145,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1656,7 +1660,7 @@
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 86571374612221,
+        "totalBridgedUSDC": 40277283264148,
         "withdrawPaused": false
       },
       "derivedName": "L1USDCGateway"

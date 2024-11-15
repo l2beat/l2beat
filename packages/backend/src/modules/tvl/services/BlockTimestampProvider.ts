@@ -1,14 +1,10 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
-import { BlockIndexerClient } from '@l2beat/shared'
-
-type BaseClient = {
-  getBlockNumberAtOrBefore(timestamp: UnixTime, start?: number): Promise<number>
-}
+import { BlockIndexerClient, BlockProvider } from '@l2beat/shared'
 
 interface Dependencies {
   readonly indexerClients: BlockIndexerClient[]
-  readonly blockClients: BaseClient[]
+  readonly blockProvider: BlockProvider
 }
 
 export class BlockTimestampProvider {
@@ -21,14 +17,6 @@ export class BlockTimestampProvider {
       } catch (_) {}
     }
 
-    for (const [index, client] of this.$.blockClients.entries()) {
-      try {
-        return await client.getBlockNumberAtOrBefore(_timestamp)
-      } catch (error) {
-        if (index === this.$.blockClients.length - 1) throw error
-      }
-    }
-
-    throw new Error('Programmer error: Clients should not be empty')
+    return await this.$.blockProvider.getBlockNumberAtOrBefore(_timestamp)
   }
 }

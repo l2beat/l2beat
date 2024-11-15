@@ -8,7 +8,10 @@ import {
 } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
-import { orderByStageAndPastDayTps } from '../utils/order-by-stage-and-past-day-tps'
+import {
+  orderByStageAndPastDayTps,
+  sortByTps,
+} from '../utils/order-by-stage-and-past-day-tps'
 import {
   type ActivityProjectTableData,
   getActivityTableData,
@@ -47,26 +50,32 @@ export async function getScalingActivityEntries() {
     .filter(notUndefined)
     .sort((a, b) => b.data.pastDayTps - a.data.pastDayTps)
 
-  if (env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION) {
-    const recategorisedEntries = groupByMainCategories(
-      orderByStageAndPastDayTps(entries),
-    )
+  const categorisedEntries = groupByMainCategories(
+    orderByStageAndPastDayTps(entries),
+  )
+
+  if (!env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING) {
     return {
-      type: 'recategorised' as const,
-      entries: {
-        rollups: [ethereumEntry, ...recategorisedEntries.rollups],
-        validiumsAndOptimiums: [
-          ethereumEntry,
-          ...recategorisedEntries.validiumsAndOptimiums,
-        ],
-      },
+      rollups: [ethereumEntry, ...categorisedEntries.rollups].sort(sortByTps),
+      validiumsAndOptimiums: [
+        ethereumEntry,
+        ...categorisedEntries.validiumsAndOptimiums,
+      ].sort(sortByTps),
+      others: categorisedEntries.others
+        ? [ethereumEntry, ...categorisedEntries.others].sort(sortByTps)
+        : undefined,
     }
   }
 
   return {
-    entries: [ethereumEntry, ...entries].sort(
-      (a, b) => b.data.pastDayTps - a.data.pastDayTps,
-    ),
+    rollups: [ethereumEntry, ...categorisedEntries.rollups],
+    validiumsAndOptimiums: [
+      ethereumEntry,
+      ...categorisedEntries.validiumsAndOptimiums,
+    ],
+    others: categorisedEntries.others
+      ? [ethereumEntry, ...categorisedEntries.others]
+      : undefined,
   }
 }
 

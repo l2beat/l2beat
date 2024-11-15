@@ -33,11 +33,11 @@ export default async function Page() {
               <MainPageHeader>Onchain costs</MainPageHeader>
               <MainPageCard>
                 <ScalingCostsChart
-                  entries={
-                    entries.type === 'recategorised'
-                      ? entries.entries.rollups
-                      : entries.entries
-                  }
+                  entries={[
+                    ...entries.rollups,
+                    ...entries.validiumsAndOptimiums,
+                    ...(entries.others ?? []),
+                  ]}
                   milestones={HOMEPAGE_MILESTONES}
                 />
               </MainPageCard>

@@ -1,10 +1,8 @@
 import { type Layer2, layer2s } from '@l2beat/config'
 import { UnixTime, notUndefined } from '@l2beat/shared-pure'
-import { env } from '~/env'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
-import { orderByTvl } from '../tvl/utils/order-by-tvl'
 import { getFinality } from './get-finality'
 import { type FinalityData, type FinalityProjectData } from './schema'
 
@@ -44,14 +42,7 @@ export async function getScalingFinalityEntries() {
     })
     .filter(notUndefined)
 
-  if (env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION) {
-    return {
-      type: 'recategorised' as const,
-      entries: groupByMainCategories(orderByStageAndTvl(entries, tvl)),
-    }
-  }
-
-  return { entries: orderByTvl(entries, tvl) }
+  return groupByMainCategories(orderByStageAndTvl(entries, tvl))
 }
 
 function getFinalityData(

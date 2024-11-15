@@ -148,7 +148,6 @@ export class EtherscanClient implements IEtherscanClient {
         remappings = decodedSource.remappings
       } catch (e) {
         console.error(e)
-        console.log(source)
       }
     }
 

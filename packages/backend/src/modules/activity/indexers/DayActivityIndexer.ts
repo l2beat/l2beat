@@ -36,11 +36,6 @@ export class DayActivityIndexer extends ManagedChildIndexer {
 
     await this.$.db.activity.upsertMany(counts)
 
-    this.logger.info('Metrics', {
-      remainingDays: to - adjustedTo,
-      remainingDaysPercentage: parseFloat(((to - adjustedTo) / to).toFixed(4)),
-    })
-
     return adjustedTo
   }
 

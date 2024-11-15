@@ -1,4 +1,5 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
+import chalk from 'chalk'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import {
   AddressAnalyzer,
@@ -13,10 +14,6 @@ import { gatherReachableAddresses } from './gatherReachableAddresses'
 import { removeAlreadyAnalyzed } from './removeAlreadyAnalyzed'
 import { shouldSkip } from './shouldSkip'
 
-// Bump this value when the logic of discovery changes,
-// causing a difference in discovery output
-
-// Last change: Merge upgradeability and values
 export class DiscoveryEngine {
   constructor(
     private readonly addressAnalyzer: AddressAnalyzer,
@@ -38,21 +35,6 @@ export class DiscoveryEngine {
 
     while (Object.keys(toAnalyze).length > 0) {
       removeAlreadyAnalyzed(toAnalyze, Object.values(resolved))
-
-      for (const address of Object.keys(toAnalyze)) {
-        const skipReason = shouldSkip(
-          EthereumAddress(address),
-          config,
-          depth,
-          count,
-        )
-        if (skipReason !== undefined) {
-          this.logger.log(skipReason)
-          delete toAnalyze[address]
-        } else {
-          count++
-        }
-      }
 
       // remove resolved addresses that need to be analyzed again
       for (const address of Object.keys(resolved)) {
@@ -80,36 +62,45 @@ export class DiscoveryEngine {
           delete resolved[address]
         }
       }
+
       // filter out addresses from `toAnalyze` that are no longer reachable from initial
-      const leftToAnalyze = Object.entries(toAnalyze).filter(([address]) =>
-        reachableAddresses.has(EthereumAddress(address)),
-      )
+      const leftToAnalyze = Object.entries(toAnalyze)
+        .filter(([address]) => reachableAddresses.has(EthereumAddress(address)))
+        .map(([address, templates]) => ({
+          address: EthereumAddress(address),
+          templates,
+        }))
       toAnalyze = {}
 
+      const total = count + leftToAnalyze.length
       await Promise.all(
-        leftToAnalyze.map(async ([_address, templates]) => {
-          const address = EthereumAddress(_address)
-          const bufferedLogger = new DiscoveryLogger({
-            enabled: false,
-            buffered: true,
-          })
+        leftToAnalyze.map(async ({ address, templates }) => {
+          const skipReason = shouldSkip(
+            EthereumAddress(address),
+            config,
+            depth,
+            count,
+          )
+          if (skipReason !== undefined) {
+            const info = `${++count}/${total}`
+            const entries = [
+              chalk.gray(info),
+              chalk.gray(address),
+              chalk.yellowBright('SKIP'),
+              chalk.gray(skipReason),
+            ]
+            this.logger.log(entries.join(' '))
+            return
+          }
 
-          bufferedLogger.log(`Analyzing ${address.toString()}`)
           const analysis = await this.addressAnalyzer.analyze(
             provider,
             address,
             config.overrides.get(address),
             config.typesFor(address.toString()),
-            bufferedLogger,
             templates,
           )
           resolved[address.toString()] = analysis
-          if (analysis.type === 'Contract') {
-            bufferedLogger.log(
-              `Relatives: [${Object.keys(analysis.relatives)}]`,
-            )
-          }
-
           if (analysis.type === 'Contract') {
             for (const [address, suggestedTemplates] of Object.entries(
               analysis.relatives,
@@ -121,7 +112,41 @@ export class DiscoveryEngine {
             }
           }
 
-          bufferedLogger.flushToLogger(this.logger)
+          const info = `${++count}/${total}`
+          if (analysis.type === 'EOA') {
+            const entries = [chalk.gray(info), address, chalk.blue('EOA')]
+            this.logger.log(entries.join(' '))
+          } else if (analysis.type === 'Contract') {
+            const entries = [
+              chalk.gray(info),
+              address,
+              chalk.blue(analysis.name || '???'),
+            ]
+            this.logger.log(entries.join(' '))
+
+            const logs: string[] = []
+            if (analysis.proxyType) {
+              logs.push(chalk.cyan(`P ${analysis.proxyType}`))
+            }
+            if (analysis.extendedTemplate) {
+              logs.push(
+                chalk.green(
+                  `T ${analysis.extendedTemplate.template} (${analysis.extendedTemplate.reason})`,
+                ),
+              )
+            }
+            for (const relative of Object.keys(analysis.relatives)) {
+              logs.push(chalk.gray(`R ${relative}`))
+            }
+            for (const [key, value] of Object.entries(analysis.errors)) {
+              logs.push(chalk.red(`E ${key} - ${value}`))
+            }
+            for (const [i, log] of logs.entries()) {
+              const prefix = i === logs.length - 1 ? `└─` : `├─`
+              const indent = ' '.repeat(6)
+              this.logger.log(`${indent}${chalk.gray(prefix)} ${log}`)
+            }
+          }
         }),
       )
 
@@ -139,7 +164,6 @@ export class DiscoveryEngine {
       )
     })
 
-    this.logger.flushServer(config.name)
     this.checkErrors(Object.values(resolved))
     return Object.values(resolved)
   }
@@ -152,20 +176,20 @@ export class DiscoveryEngine {
         analysis.type === 'Contract' &&
         Object.keys(analysis.errors).length > 0
       ) {
-        const msgStart = `${analysis.name}(${analysis.address.toString()}): {`
-        const msgEnd = '\n}'
+        const msgStart = `${analysis.address}`
         const errorMessages = Object.entries(analysis.errors).map(
-          ([field, error]) => `\n\t${field}: ${error}`,
+          ([field, error]) => `  E ${field} - ${error}`,
         )
 
         errorCount += errorMessages.length
-        errorMsgs.push([msgStart, ...errorMessages, msgEnd].join(''))
+        errorMsgs.push([msgStart, ...errorMessages].join('\n'))
       }
     }
     if (errorCount > 0) {
-      this.logger.logError(`Errors during discovery: ${errorCount}`)
+      this.logger.log('')
+      this.logger.error(`Errors during discovery: ${errorCount}`)
       for (const error of errorMsgs) {
-        this.logger.logError(error)
+        this.logger.error(error)
       }
     }
   }

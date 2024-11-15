@@ -3,7 +3,6 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import * as z from 'zod'
 
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
 import { callMethod } from '../utils/callMethod'
@@ -33,7 +32,6 @@ export class StarkWareGovernanceHandler implements Handler {
     readonly field: string,
     readonly definition: StarkWareGovernanceHandlerDefinition,
     abi: string[],
-    readonly logger: DiscoveryLogger,
   ) {
     this.filterBy = getFunctionFragment(
       definition.filterBy,
@@ -51,7 +49,6 @@ export class StarkWareGovernanceHandler implements Handler {
     provider: IProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
-    this.logger.logExecution(this.field, ['Querying ', EVENT_FRAGMENT.name])
     const logs = await provider.getLogs(address, [
       [ABI.getEventTopic(EVENT_FRAGMENT)],
     ])
