@@ -28,6 +28,7 @@
     "tailwind-merge": "^2.3.0"
   },
   "devDependencies": {
+    "@l2beat/typescript-config": "workspace:*",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

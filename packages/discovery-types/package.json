@@ -30,5 +30,8 @@
   },
   "dependencies": {
     "zod": "^3.22.2"
+  },
+  "devDependencies": {
+    "@l2beat/typescript-config": "workspace:*"
   }
 }
