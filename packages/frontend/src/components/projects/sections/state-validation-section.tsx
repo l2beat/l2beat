@@ -1,4 +1,6 @@
 import { type ScalingProjectStateValidation } from '@l2beat/config'
+import { DiagramImage } from '~/components/diagram-image'
+import { cn } from '~/utils/cn'
 import { type DiagramParams } from '~/utils/project/get-diagram-params'
 import { HorizontalSeparator } from '../../core/horizontal-separator'
 import { Markdown } from '../../markdown/markdown'
@@ -21,12 +23,7 @@ export function StateValidationSection({
     <ProjectSection {...sectionProps}>
       {diagram && (
         <figure className="mb-8 mt-4 text-center">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            className="inline max-w-full align-[unset] dark:invert"
-            src={diagram.src}
-            alt={diagram.caption}
-          />
+          <DiagramImage diagram={diagram} />
           <figcaption className="text-xs text-gray-500 dark:text-gray-600">
             {diagram.caption}
           </figcaption>

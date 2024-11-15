@@ -1,3 +1,44 @@
+Generated with discovered.json: 0x8b0a477ff755972982f608b4f4e4badb3dfff4d2
+
+# Diff at Thu, 14 Nov 2024 08:32:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ea60800af45c71fbd5d292e0f4301ba9afda01fa block: 21121935
+- current block number: 21184760
+
+## Description
+
+Previously added lib is now verified. This library is the core of the new [lzRead feature](https://medium.com/layerzero-official/lzread-power-your-app-with-omnichain-data-cdd341eeeaf7).
+
+lzRead allows requesting and receiving data from other LayerZero-supported chains asynchronously. The library uses the same architecture and similar oracles as the LayerZero AMB (lzRead-specific DVNs).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21121935 (main branch discovery), not current.
+
+```diff
+    contract ReadLib1002 (0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D) {
+    +++ description: None
+      name:
+-        ""
++        "ReadLib1002"
+      unverified:
+-        true
+      values.getTreasuryAndNativeFeeCap:
++        ["0x0000000000000000000000000000000000000000",450000000000000]
+      values.messageLibType:
++        2
+      values.owner:
++        "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92"
+      values.version:
++        {"major":10,"minor":0,"endpointVersion":2}
+      sourceHashes:
++        ["0xf7800be6fd99520201da1404c35bac8a1ed826bbc2134f0a77547e0d7a74c9c1"]
+    }
+```
+
 Generated with discovered.json: 0x17bcc71bcb0f9f1253d487abedae99e93902cf58
 
 # Diff at Tue, 05 Nov 2024 14:06:59 GMT:

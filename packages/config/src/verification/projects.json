@@ -48,7 +48,7 @@
   "canvasconnect": true,
   "capx": true,
   "cbridge": true,
-  "celestia-blobstream": true,
+  "celestia-blobstream": false,
   "celestia-no-bridge": true,
   "celo": true,
   "chainport": false,
