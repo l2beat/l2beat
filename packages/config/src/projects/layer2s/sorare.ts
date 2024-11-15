@@ -105,14 +105,16 @@ export const sorare: Layer2 = {
       resyncLastDays: 7,
     },
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.DAC],
-    bridge: DA_BRIDGES.DAC_MEMBERS({
-      membersCount: committee.accounts.length,
-      requiredSignatures: committee.minSigners,
+  dataAvailability: [
+    addSentimentToDataAvailability({
+      layers: [DA_LAYERS.DAC],
+      bridge: DA_BRIDGES.DAC_MEMBERS({
+        membersCount: committee.accounts.length,
+        requiredSignatures: committee.minSigners,
+      }),
+      mode: DA_MODES.STATE_DIFFS,
     }),
-    mode: DA_MODES.STATE_DIFFS,
-  }),
+  ],
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: {

@@ -13,6 +13,7 @@ import { sortStages } from '~/components/table/sorting/functions/stage-sorting'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { formatTps } from '~/utils/number-format/format-tps'
 import { type ScalingSummaryTableRow } from '../../_utils/to-table-rows'
+import { UnixTime } from '@l2beat/shared-pure'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 
@@ -113,25 +114,27 @@ export const scalingSummaryColumns = [
 
 export const scalingSummaryValidiumAndOptimiumsColumns = [
   ...scalingSummaryColumns.slice(0, 4),
-  columnHelper.accessor('dataAvailability.layer.value', {
+  columnHelper.display({
     header: 'DA Layer',
     cell: (ctx) => {
-      const value = ctx.getValue()
-      if (!value) {
+      const now = UnixTime.now()
+      const latestValue = ctx.row.original.dataAvailability?.find(
+        (entry) =>
+          (!entry.sinceTimestamp || entry.sinceTimestamp.lte(now)) &&
+          (!entry.untilTimestamp || entry.untilTimestamp.gt(now)),
+      )
+      if (!latestValue) {
         return <NoDataBadge />
       }
       return (
         <TwoRowCell>
-          <TwoRowCell.First>{ctx.getValue()}</TwoRowCell.First>
+          <TwoRowCell.First>{latestValue.layer.value}</TwoRowCell.First>
           {ctx.row.original.dataAvailability && (
-            <TwoRowCell.Second>
-              {ctx.row.original.dataAvailability.bridge.value}
-            </TwoRowCell.Second>
+            <TwoRowCell.Second>{latestValue.bridge.value}</TwoRowCell.Second>
           )}
         </TwoRowCell>
       )
     },
-    enableSorting: false,
   }),
   ...scalingSummaryColumns.slice(6),
 ]

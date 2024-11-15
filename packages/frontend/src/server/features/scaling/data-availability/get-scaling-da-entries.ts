@@ -9,6 +9,7 @@ import { getProjectsVerificationStatuses } from '../../verification-status/get-p
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
 import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
+import { getCurrentEntry } from '../../utils/get-current-entry'
 
 export async function getScalingDaEntries() {
   const activeProjects = [...layer2s, ...layer3s].filter(
@@ -40,7 +41,8 @@ function getScalingDataAvailabilityEntry(
   projectsChangeReport: ProjectsChangeReport,
   isVerified: boolean,
 ) {
-  if (!project.dataAvailability) return
+  const dataAvailability = getCurrentEntry(project.dataAvailability)
+  if (!dataAvailability) return
 
   return {
     entryType: 'data-availability' as const,
@@ -54,9 +56,9 @@ function getScalingDataAvailabilityEntry(
         projectsChangeReport.hasHighSeverityFieldChanged(project.id),
     }),
     dataAvailability: {
-      layer: project.dataAvailability.layer,
-      bridge: project.dataAvailability.bridge,
-      mode: project.dataAvailability.mode,
+      layer: dataAvailability.layer,
+      bridge: dataAvailability.bridge,
+      mode: dataAvailability.mode,
     },
   }
 }

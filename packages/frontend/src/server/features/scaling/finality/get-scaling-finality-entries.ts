@@ -13,6 +13,7 @@ import {
 } from '../../projects-change-report/get-projects-change-report'
 import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
 import { getFinalityConfigurations } from './utils/get-finality-configurations'
+import { getCurrentEntry } from '../../utils/get-current-entry'
 
 export type ScalingFinalityEntries = Awaited<
   ReturnType<typeof getScalingFinalityEntries>
@@ -101,6 +102,7 @@ function getScalingFinalityEntry(
   isVerified: boolean,
   projectsChangeReport: ProjectsChangeReport,
 ) {
+  const dataAvailability = getCurrentEntry(project.dataAvailability)
   return {
     entryType: 'finality' as const,
     ...getCommonScalingEntry({
@@ -112,7 +114,7 @@ function getScalingFinalityEntry(
       hasHighSeverityFieldChanged:
         projectsChangeReport.hasHighSeverityFieldChanged(project.id),
     }),
-    dataAvailabilityMode: project.dataAvailability?.mode,
+    dataAvailabilityMode: dataAvailability?.mode,
     data: getFinalityData(finalityProjectData, project),
     finalizationPeriod: project.display.finality?.finalizationPeriod,
   }

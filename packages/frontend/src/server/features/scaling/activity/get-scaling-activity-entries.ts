@@ -17,6 +17,7 @@ import {
   getActivityTableData,
 } from './get-activity-table-data'
 import { getActivityProjects } from './utils/get-activity-projects'
+import { getCurrentEntry } from '../../utils/get-current-entry'
 
 type ActivityProject = Layer2 | Layer3
 
@@ -88,6 +89,7 @@ function getScalingProjectActivityEntry(
   isVerified: boolean,
   projectsChangeReport: ProjectsChangeReport,
 ) {
+  const currentDataAvailability = getCurrentEntry(project.dataAvailability)
   return {
     ...getCommonScalingEntry({
       project,
@@ -101,7 +103,7 @@ function getScalingProjectActivityEntry(
     entryType: 'activity' as const,
     dataSource: project.display.activityDataSource,
     dataAvailability: {
-      layer: project.dataAvailability?.layer,
+      layer: currentDataAvailability?.layer,
     },
     data,
   }

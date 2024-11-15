@@ -18,6 +18,7 @@ import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
 import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
 import { toAnomalyIndicatorEntries } from './utils/get-anomaly-entries'
 import { getLivenessProjects } from './utils/get-liveness-projects'
+import { getCurrentEntry } from '../../utils/get-current-entry'
 
 export async function getScalingLivenessEntries() {
   const [tvl, projectsVerificationStatuses, projectsChangeReport, liveness] =
@@ -58,6 +59,7 @@ function getScalingLivenessEntry(
   isVerified: boolean,
   liveness: LivenessProject,
 ) {
+  const dataAvailability = getCurrentEntry(project.dataAvailability)
   return {
     ...getCommonScalingEntry({
       project,
@@ -72,7 +74,7 @@ function getScalingLivenessEntry(
     data: getLivenessData(liveness, project),
     explanation: project.display.liveness?.explanation,
     anomalies: toAnomalyIndicatorEntries(liveness.anomalies ?? []),
-    dataAvailabilityMode: project.dataAvailability?.mode,
+    dataAvailabilityMode: dataAvailability?.mode,
   }
 }
 
