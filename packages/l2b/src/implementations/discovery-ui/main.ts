@@ -1,6 +1,7 @@
 import { join } from 'path'
 import { ConfigReader } from '@l2beat/discovery'
 import express from 'express'
+import { executeTerminalCommand } from './executeTerminalCommand'
 import { getCode } from './getCode'
 import { getPreview } from './getPreview'
 import { getProject } from './getProject'
@@ -36,6 +37,11 @@ export function runDiscoveryUi() {
       req.params.address,
     )
     res.json(response)
+  })
+
+  app.post('/api/terminal/execute', (_req, res) => {
+    res.setHeader('Content-Type', 'text/plain')
+    executeTerminalCommand('echo Output from CLI command :)', res)
   })
 
   app.get('/', (_req, res) => {

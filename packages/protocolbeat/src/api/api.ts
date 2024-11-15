@@ -46,3 +46,19 @@ export async function getPreview(project: string): Promise<ApiPreviewResponse> {
   const data = await res.json()
   return data as ApiPreviewResponse
 }
+
+export async function executeCommand(): Promise<ReadableStream<string>> {
+  const response = await fetch('/api/terminal/execute', {
+    method: 'POST',
+  })
+
+  if (!response.ok) {
+    throw new Error('Failed to execute command')
+  }
+
+  if (!response.body) {
+    throw new Error('Response body is null')
+  }
+
+  return response.body.pipeThrough(new TextDecoderStream())
+}
