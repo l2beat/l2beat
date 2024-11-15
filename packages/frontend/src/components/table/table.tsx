@@ -1,6 +1,6 @@
-import Link from 'next/link'
 import * as React from 'react'
 import { cn } from '~/utils/cn'
+import { LinkWithOnHoverPrefetch } from '../link/link-with-on-hover-prefetch'
 import { TableTooltip } from './table-tooltip'
 
 const Table = ({
@@ -107,38 +107,36 @@ const TableCell = ({
 }: React.TdHTMLAttributes<HTMLTableCellElement> & {
   href?: string
   align?: 'right' | 'center'
-}) => {
-  return (
-    <td
-      className={cn(
-        'group h-9 whitespace-pre p-0 align-middle text-xs md:h-14 md:text-sm',
-        !href && [
-          'pr-3 first:pl-2 last:pr-2 md:pr-4',
-          align === 'center' && 'text-center',
-          align === 'right' && 'text-right',
+}) => (
+  <td
+    className={cn(
+      'group h-9 whitespace-pre p-0 align-middle text-xs md:h-14 md:text-sm',
+      !href && [
+        'pr-3 first:pl-2 last:pr-2 md:pr-4',
+        align === 'center' && 'text-center',
+        align === 'right' && 'text-right',
+        className,
+      ],
+    )}
+    {...props}
+  >
+    {href ? (
+      <LinkWithOnHoverPrefetch
+        href={href}
+        className={cn(
+          'flex size-full items-center pr-3 group-first:pl-2 group-last:pr-2 md:pr-4',
+          align === 'center' && 'justify-center',
+          align === 'right' && 'justify-end',
           className,
-        ],
-      )}
-      {...props}
-    >
-      {href ? (
-        <Link
-          href={href}
-          className={cn(
-            'flex size-full items-center pr-3 group-first:pl-2 group-last:pr-2 md:pr-4',
-            align === 'center' && 'justify-center',
-            align === 'right' && 'justify-end',
-            className,
-          )}
-        >
-          {children}
-        </Link>
-      ) : (
-        children
-      )}
-    </td>
-  )
-}
+        )}
+      >
+        {children}
+      </LinkWithOnHoverPrefetch>
+    ) : (
+      children
+    )}
+  </td>
+)
 TableCell.displayName = 'TableCell'
 
 export {
