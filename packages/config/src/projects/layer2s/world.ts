@@ -48,6 +48,13 @@ export const world: Layer2 = opStackL2({
       address: EthereumAddress('0x153A69e4bb6fEDBbAaF463CB982416316c84B2dB'),
       name: 'External USDC Vault',
       source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Canonically (external escrow)',
+          },
+        ],
+      },
       description: 'Custom external escrow for USDC bridged to Worldchain.',
       tokens: ['USDC'],
     }),
