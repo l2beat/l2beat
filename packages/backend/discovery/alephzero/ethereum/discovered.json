@@ -476,7 +476,7 @@
         "0xa7ff878cfd433a428d567d3b90fe1df400a048a1af5298f22cd4cd4fc25bdecd"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Central contract defining the access control for upgrading the system contract implementations.",
+      "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1653,6 +1653,6 @@
     "orbitstack/RollupEventInbox": "0x0608b35e1df8a51677a6392869e50b60a1ff7137f71f40bddf83143a5ef640c1",
     "orbitstack/RollupProxy_fastConfirm": "0x91c9d3536cb44155adbb51ee7d5712c88dab3fed8850fde3967215b257571df5",
     "orbitstack/SequencerInbox": "0x58bf3ad8ac9dc1181ff793e330641c545ee2d9558fce65d2ee39d483c2490494",
-    "orbitstack/UpgradeExecutor": "0xa25e02367a436cebea22481663da914bbf1fd9492d903659cc6ec9ddbaccb241"
+    "orbitstack/UpgradeExecutor": "0xa8c2617950ce46d982abd852226ebcc1aacaf9c8c7daeda793b53a790eced777"
   }
 }

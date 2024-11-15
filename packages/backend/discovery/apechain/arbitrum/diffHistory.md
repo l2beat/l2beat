@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x30ebec6d9dc1b6456813bc70221b374217b065fb
+Generated with discovered.json: 0xb9db02fba53339cc04259d6fa9097baff18c1fd6
 
-# Diff at Tue, 12 Nov 2024 15:38:22 GMT:
+# Diff at Fri, 15 Nov 2024 08:18:15 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@b2d1031f386ed9987b07f83babe4993700b00d33 block: 267469765
+- comparing to: main@a00c2a67d12a174a45864b549412045028598606 block: 267469765
 - current block number: 267469765
 
 ## Description
@@ -37,6 +37,15 @@ discovery. Values are for block 267469765 (main branch discovery), not current.
 +        "0x2B1FbeE3c7D278bFD9E179893FF304fE49FA7DDF"
       issuedPermissions.0.via.0:
 +        {"address":"0xe032d15909e90f9A36901abB08944653e9E87d72","delay":0,"description":"can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xe032d15909e90f9A36901abB08944653e9E87d72) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      description:
+-        "Central contract defining the access control for upgrading the system contract implementations."
++        "Central contract defining the access control permissions for upgrading the system contract implementations."
     }
 ```
 

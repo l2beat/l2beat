@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xfef4683fdff64e7456b3ccc33d6b3d0432ef275c
+Generated with discovered.json: 0xf26c12ad0159a69a958f1496b02f299f7e8c522b
 
-# Diff at Tue, 12 Nov 2024 15:38:17 GMT:
+# Diff at Fri, 15 Nov 2024 08:18:09 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@b2d1031f386ed9987b07f83babe4993700b00d33 block: 21092372
+- comparing to: main@a00c2a67d12a174a45864b549412045028598606 block: 21092372
 - current block number: 21092372
 
 ## Description
@@ -22,6 +22,37 @@ discovery. Values are for block 21092372 (main branch discovery), not current.
       fieldMeta.maxTimeVariation.description:
 -        "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
 +        "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
+    }
+```
+
+```diff
+    contract Inbox (0x97FdC935c5E25613AA13a054C7Aa71cf751DB495) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      template:
++        "orbitstack/Inbox"
+      description:
++        "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds."
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0xA880b3fC75928695ac75e06793277aC4bEA84a3E) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      template:
++        "orbitstack/GatewayRouter"
+      displayName:
++        "GatewayRouter"
+      description:
++        "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging."
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      description:
+-        "Central contract defining the access control for upgrading the system contract implementations."
++        "Central contract defining the access control permissions for upgrading the system contract implementations."
     }
 ```
 
@@ -46,6 +77,16 @@ discovery. Values are for block 21092372 (main branch discovery), not current.
 +        "0x98a426C8ED821cAaef1b4BF7D29b514dcef970C0"
       issuedPermissions.0.via.0:
 +        {"address":"0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B","delay":0,"description":"can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."}
+    }
+```
+
+```diff
+    contract RollupEventInbox (0xdE3fdE71a026236b6b5C35505643FF4155EAb20D) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      template:
++        "orbitstack/RollupEventInbox"
+      description:
++        "Helper contract sending configuration data over the bridge during the systems initialization."
     }
 ```
 

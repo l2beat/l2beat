@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x49e2dddde9e4cbeafb87cdd99640a16c67eb1072
+Generated with discovered.json: 0xc1c8c787d4349fb65902fc9d8e50fa3b53599d8f
 
-# Diff at Tue, 12 Nov 2024 15:38:23 GMT:
+# Diff at Fri, 15 Nov 2024 08:18:15 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@b2d1031f386ed9987b07f83babe4993700b00d33 block: 272297655
+- comparing to: main@a00c2a67d12a174a45864b549412045028598606 block: 272297655
 - current block number: 272297655
 
 ## Description
@@ -54,6 +54,15 @@ discovery. Values are for block 272297655 (main branch discovery), not current.
 +        "RollupEventInbox"
       description:
 +        "Helper contract sending configuration data over the bridge during the systems initialization."
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      description:
+-        "Central contract defining the access control for upgrading the system contract implementations."
++        "Central contract defining the access control permissions for upgrading the system contract implementations."
     }
 ```
 

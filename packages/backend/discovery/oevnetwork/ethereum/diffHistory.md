@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xd6bfef77199c8438404bce2c8489f7aaea1f0a1d
+Generated with discovered.json: 0xa1a301aa6d9d473978ccf42c4d8f58c18a05162b
 
-# Diff at Tue, 12 Nov 2024 15:38:19 GMT:
+# Diff at Fri, 15 Nov 2024 08:18:12 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@b2d1031f386ed9987b07f83babe4993700b00d33 block: 21084619
+- comparing to: main@a00c2a67d12a174a45864b549412045028598606 block: 21084619
 - current block number: 21084619
 
 ## Description
@@ -15,6 +15,16 @@ Discovery rerun on the same block number with only config-related changes.
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 21084619 (main branch discovery), not current.
+
+```diff
+    contract RollupEventInbox (0x3401eafd7Ceb84265B2cC4252155e12B446E7c57) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      template:
++        "orbitstack/RollupEventInbox"
+      description:
++        "Helper contract sending configuration data over the bridge during the systems initialization."
+    }
+```
 
 ```diff
     contract RollupProxy (0x3AAfe635FCfA0E5C19C9368ab5eb384277836006) {
@@ -37,6 +47,25 @@ discovery. Values are for block 21084619 (main branch discovery), not current.
 +        "0x2bf43034b9559643e986A2fE3cE015a18247b904"
       issuedPermissions.0.via.0:
 +        {"address":"0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA","delay":0,"description":"can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      description:
+-        "Central contract defining the access control for upgrading the system contract implementations."
++        "Central contract defining the access control permissions for upgrading the system contract implementations."
+    }
+```
+
+```diff
+    contract Inbox (0x7EF9d2fe20307165599101e93Ea05b04d46Af159) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      template:
++        "orbitstack/Inbox"
+      description:
++        "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds."
     }
 ```
 

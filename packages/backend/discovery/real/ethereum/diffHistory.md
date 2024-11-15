@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x3bf05c5287e6090b26ec176e656ba7e8caeec42f
+Generated with discovered.json: 0x2b053ff41fe22f213b5d487591c62651f115bff2
 
-# Diff at Tue, 12 Nov 2024 15:38:20 GMT:
+# Diff at Fri, 15 Nov 2024 08:18:13 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@b2d1031f386ed9987b07f83babe4993700b00d33 block: 21170377
+- comparing to: main@a00c2a67d12a174a45864b549412045028598606 block: 21170377
 - current block number: 21170377
 
 ## Description
@@ -78,6 +78,15 @@ discovery. Values are for block 21170377 (main branch discovery), not current.
 +        "configure"
       issuedPermissions.0.via.0:
 +        {"address":"0x118Ab5501564F1Cfa755d0b3070874a26c1C3A50","delay":0,"description":"a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      description:
+-        "Central contract defining the access control for upgrading the system contract implementations."
++        "Central contract defining the access control permissions for upgrading the system contract implementations."
     }
 ```
 

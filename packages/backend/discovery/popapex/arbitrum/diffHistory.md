@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x9116dc5f633549693f740db7f8fa8de59b532e9e
+Generated with discovered.json: 0x4518b3327b38cfdbd965369a942a499ce1e2c6aa
 
-# Diff at Tue, 12 Nov 2024 15:38:25 GMT:
+# Diff at Fri, 15 Nov 2024 08:18:18 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@b2d1031f386ed9987b07f83babe4993700b00d33 block: 269948275
+- comparing to: main@a00c2a67d12a174a45864b549412045028598606 block: 269948275
 - current block number: 269948275
 
 ## Description
@@ -15,6 +15,15 @@ Discovery rerun on the same block number with only config-related changes.
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 269948275 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (0x3d0b021E1d2A8747411E3724d5165716B35448f3) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      description:
+-        "Central contract defining the access control for upgrading the system contract implementations."
++        "Central contract defining the access control permissions for upgrading the system contract implementations."
+    }
+```
 
 ```diff
     contract RollupProxy (0x65AD139061B3f6DDb16170a07b925337ddf42407) {
@@ -41,6 +50,26 @@ discovery. Values are for block 269948275 (main branch discovery), not current.
 ```
 
 ```diff
+    contract RollupEventInbox (0x7b18A3073774e00C072DeBd390ed6fE4251493A7) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      template:
++        "orbitstack/RollupEventInbox"
+      description:
++        "Helper contract sending configuration data over the bridge during the systems initialization."
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (0x89AF7C4C2198c426cFe6E86de0680A0850503e06) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverHostIo"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
     contract SequencerInbox (0xa58F38102579dAE7C584850780dDA55744f67DF1) {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
       fieldMeta.maxTimeVariation.description:
@@ -56,6 +85,16 @@ discovery. Values are for block 269948275 (main branch discovery), not current.
 +        "orbitstack/ChallengeManager"
       description:
 +        "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor."
+    }
+```
+
+```diff
+    contract Inbox (0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      template:
++        "orbitstack/Inbox"
+      description:
++        "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds."
     }
 ```
 

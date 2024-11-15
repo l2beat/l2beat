@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x61eba373ecca6ad6c3158709f6ccce17f249a0f1
+Generated with discovered.json: 0x697622368c046d70f4a6215cc396c5da499a2ca0
 
-# Diff at Tue, 12 Nov 2024 15:38:18 GMT:
+# Diff at Fri, 15 Nov 2024 08:18:11 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@b2d1031f386ed9987b07f83babe4993700b00d33 block: 21041836
+- comparing to: main@a00c2a67d12a174a45864b549412045028598606 block: 21041836
 - current block number: 21041836
 
 ## Description
@@ -25,6 +25,15 @@ discovery. Values are for block 21041836 (main branch discovery), not current.
 +        "RollupEventInbox"
       description:
 +        "Helper contract sending configuration data over the bridge during the systems initialization."
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      description:
+-        "Central contract defining the access control for upgrading the system contract implementations."
++        "Central contract defining the access control permissions for upgrading the system contract implementations."
     }
 ```
 
@@ -65,6 +74,16 @@ discovery. Values are for block 21041836 (main branch discovery), not current.
 +        "0x798Fa726f0B4DF564681446D051b344E3FE4a6ca"
       issuedPermissions.0.via.0:
 +        {"address":"0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881","delay":0,"description":"can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."}
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (0x99a2A31300816C1FA3f40818AC9280fe7271F878) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverHostIo"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
     }
 ```
 

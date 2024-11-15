@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x80dc981e994f3d15605cae316efa27edb04e6221
+Generated with discovered.json: 0x788082b9f78a873b5c629c85fa5d048c9a48810a
 
-# Diff at Tue, 12 Nov 2024 15:38:16 GMT:
+# Diff at Fri, 15 Nov 2024 08:18:09 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@b2d1031f386ed9987b07f83babe4993700b00d33 block: 21041831
+- comparing to: main@a00c2a67d12a174a45864b549412045028598606 block: 21041831
 - current block number: 21041831
 
 ## Description
@@ -63,6 +63,16 @@ discovery. Values are for block 21041831 (main branch discovery), not current.
 ```
 
 ```diff
+    contract OneStepProverHostIo (0x99a2A31300816C1FA3f40818AC9280fe7271F878) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverHostIo"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
     contract L1OrbitGatewayRouter (0xb47D14b4282DF795E036e9Ea43E54C31FCB0eCAC) {
     +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
       template:
@@ -71,6 +81,15 @@ discovery. Values are for block 21041831 (main branch discovery), not current.
 +        "GatewayRouter"
       description:
 +        "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging."
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xc213d433802ea473e23623476b26FB12e9B4eFe6) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      description:
+-        "Central contract defining the access control for upgrading the system contract implementations."
++        "Central contract defining the access control permissions for upgrading the system contract implementations."
     }
 ```
 

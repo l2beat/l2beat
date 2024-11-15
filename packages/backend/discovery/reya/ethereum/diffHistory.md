@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xb7e9a6ebf9bac008d491614511008270f05b8b1a
+Generated with discovered.json: 0x46bce8870224c75062ad367340247e04a5e782ac
 
-# Diff at Tue, 12 Nov 2024 15:38:21 GMT:
+# Diff at Fri, 15 Nov 2024 08:18:13 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@b2d1031f386ed9987b07f83babe4993700b00d33 block: 21093393
+- comparing to: main@a00c2a67d12a174a45864b549412045028598606 block: 21093393
 - current block number: 21093393
 
 ## Description
@@ -15,6 +15,15 @@ Discovery rerun on the same block number with only config-related changes.
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 21093393 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (0x07390626b8Bc2C04b1D93c7D246A0629198D7868) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      description:
+-        "Central contract defining the access control for upgrading the system contract implementations."
++        "Central contract defining the access control permissions for upgrading the system contract implementations."
+    }
+```
 
 ```diff
     contract RollupProxy (0x448Bbd134dE1B23976073aB4F2915849b2dcD73A) {
@@ -41,11 +50,31 @@ discovery. Values are for block 21093393 (main branch discovery), not current.
 ```
 
 ```diff
+    contract Inbox (0x672109752635177ebcb17F2C7e04575A709014BD) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      template:
++        "orbitstack/Inbox"
+      description:
++        "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds."
+    }
+```
+
+```diff
     contract SequencerInbox (0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d) {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
       fieldMeta.maxTimeVariation.description:
 -        "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
 +        "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
+    }
+```
+
+```diff
+    contract RollupEventInbox (0xFd9f59554351122b231F832a0e0A1aBb0604D7fd) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      template:
++        "orbitstack/RollupEventInbox"
+      description:
++        "Helper contract sending configuration data over the bridge during the systems initialization."
     }
 ```
 

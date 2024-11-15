@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x9fe51a078f183d6cd185fb5fd32847d4080e374a
+Generated with discovered.json: 0x7eb381761b7d1025a73c07541c04a05e5424be41
 
-# Diff at Tue, 12 Nov 2024 15:38:17 GMT:
+# Diff at Fri, 15 Nov 2024 08:18:10 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@b2d1031f386ed9987b07f83babe4993700b00d33 block: 21128887
+- comparing to: main@a00c2a67d12a174a45864b549412045028598606 block: 21128887
 - current block number: 21128887
 
 ## Description
@@ -15,6 +15,15 @@ Discovery rerun on the same block number with only config-related changes.
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 21128887 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (0x6BCe4c44668C77ff67730C14d2378857103F53C7) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      description:
+-        "Central contract defining the access control for upgrading the system contract implementations."
++        "Central contract defining the access control permissions for upgrading the system contract implementations."
+    }
+```
 
 ```diff
     contract ERC20RollupEventInbox (0x89De2771f84b8fd0d09560f75908D6F6a1273A6e) {

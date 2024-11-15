@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x6e5f3a2951fa64197ac5ecefe91ac6c7652e0263
+Generated with discovered.json: 0x80431a0161106f0270f1a1d7fe67cdf52bba035e
 
-# Diff at Tue, 12 Nov 2024 15:38:27 GMT:
+# Diff at Fri, 15 Nov 2024 08:18:20 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@b2d1031f386ed9987b07f83babe4993700b00d33 block: 268839192
+- comparing to: main@a00c2a67d12a174a45864b549412045028598606 block: 268839192
 - current block number: 268839192
 
 ## Description
@@ -26,6 +26,16 @@ discovery. Values are for block 268839192 (main branch discovery), not current.
 ```
 
 ```diff
+    contract Bridge (0x2f285781B8d58678a3483de52D618198E4d27532) {
+    +++ description: Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      template:
++        "orbitstack/Bridge"
+      description:
++        "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
+    }
+```
+
+```diff
     contract ERC20RollupEventInbox (0x365ce7234CE515c2e0139f3578b6c5989da1a863) {
     +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
       template:
@@ -34,6 +44,15 @@ discovery. Values are for block 268839192 (main branch discovery), not current.
 +        "RollupEventInbox"
       description:
 +        "Helper contract sending configuration data over the bridge during the systems initialization."
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      description:
+-        "Central contract defining the access control for upgrading the system contract implementations."
++        "Central contract defining the access control permissions for upgrading the system contract implementations."
     }
 ```
 

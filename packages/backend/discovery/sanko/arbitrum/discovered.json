@@ -207,11 +207,13 @@
     {
       "name": "Bridge",
       "address": "0x2f285781B8d58678a3483de52D618198E4d27532",
+      "template": "orbitstack/Bridge",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0xc138999c828d091534e4fea5f3730160aa2a6366cea16b82a55b9c8de07670df"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -564,7 +566,7 @@
         "0xa7ff878cfd433a428d567d3b90fe1df400a048a1af5298f22cd4cd4fc25bdecd"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Central contract defining the access control for upgrading the system contract implementations.",
+      "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1788,6 +1790,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
+    "orbitstack/Bridge": "0x6e309bce5a8758ba24f800f3c0135c502fd5cc22724da5165d8368377eb6c9c8",
     "orbitstack/ChallengeManager": "0xc4fbc82c5001579bb1f880d92a3510cda3dc4a65e284fc300363ce048c2fb6d7",
     "orbitstack/GatewayRouter": "0x97cee29343dc6f8ca1922c4809fd47d7538dc7c66fff651958aea58575094575",
     "orbitstack/Inbox": "0x1938bb9de2d7f328ae3e83f2dd9f5d3c5575b599fc097cf9308bac4d5bb3e89e",
@@ -1800,6 +1803,6 @@
     "orbitstack/RollupEventInbox": "0x0608b35e1df8a51677a6392869e50b60a1ff7137f71f40bddf83143a5ef640c1",
     "orbitstack/RollupProxy": "0x88165b83156dbb5b288912a52adc278d223904d0c933472cb3950a05ba456170",
     "orbitstack/SequencerInbox": "0x58bf3ad8ac9dc1181ff793e330641c545ee2d9558fce65d2ee39d483c2490494",
-    "orbitstack/UpgradeExecutor": "0xa25e02367a436cebea22481663da914bbf1fd9492d903659cc6ec9ddbaccb241"
+    "orbitstack/UpgradeExecutor": "0xa8c2617950ce46d982abd852226ebcc1aacaf9c8c7daeda793b53a790eced777"
   }
 }

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x928cc98109ec04e90bbf3773fc2fcaf9a2017644
+Generated with discovered.json: 0xd2d78e1158c0f33ba3269855cf148129a9947d3d
 
-# Diff at Tue, 12 Nov 2024 15:38:28 GMT:
+# Diff at Fri, 15 Nov 2024 08:18:21 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@b2d1031f386ed9987b07f83babe4993700b00d33 block: 269220300
+- comparing to: main@a00c2a67d12a174a45864b549412045028598606 block: 269220300
 - current block number: 269220300
 
 ## Description
@@ -15,6 +15,15 @@ Discovery rerun on the same block number with only config-related changes.
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 269220300 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      description:
+-        "Central contract defining the access control for upgrading the system contract implementations."
++        "Central contract defining the access control permissions for upgrading the system contract implementations."
+    }
+```
 
 ```diff
     contract L1GatewayRouter (0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35) {

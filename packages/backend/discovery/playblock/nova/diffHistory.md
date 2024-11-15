@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x40323aa70d7866ac64d64a0c50c483f95c46559b
+Generated with discovered.json: 0xab40c9938f1df67d89713314a0be9c53cbbe36d7
 
-# Diff at Tue, 12 Nov 2024 15:38:30 GMT:
+# Diff at Fri, 15 Nov 2024 08:18:24 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@b2d1031f386ed9987b07f83babe4993700b00d33 block: 76950926
+- comparing to: main@a00c2a67d12a174a45864b549412045028598606 block: 76950926
 - current block number: 76950926
 
 ## Description
@@ -41,6 +41,15 @@ discovery. Values are for block 76950926 (main branch discovery), not current.
 ```
 
 ```diff
+    contract UpgradeExecutor (0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      description:
+-        "Central contract defining the access control for upgrading the system contract implementations."
++        "Central contract defining the access control permissions for upgrading the system contract implementations."
+    }
+```
+
+```diff
     contract ERC20RollupEventInbox (0x0fF7A97caAb356c5507e5355b6819CB8b93d5591) {
     +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
       template:
@@ -59,6 +68,16 @@ discovery. Values are for block 76950926 (main branch discovery), not current.
 +        "orbitstack/ChallengeManager"
       description:
 +        "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor."
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (0x89AF7C4C2198c426cFe6E86de0680A0850503e06) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverHostIo"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
     }
 ```
 

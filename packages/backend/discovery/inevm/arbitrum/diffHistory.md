@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x05fd7ebad42ddff6b9a3470a21c378ade0aa3f03
+Generated with discovered.json: 0xbf4bc44444ac9a79ff26762491016a7571669e4b
 
-# Diff at Tue, 12 Nov 2024 15:38:24 GMT:
+# Diff at Fri, 15 Nov 2024 08:18:17 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@b2d1031f386ed9987b07f83babe4993700b00d33 block: 272011240
+- comparing to: main@a00c2a67d12a174a45864b549412045028598606 block: 272011240
 - current block number: 272011240
 
 ## Description
@@ -46,6 +46,25 @@ discovery. Values are for block 272011240 (main branch discovery), not current.
 +        "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"
       issuedPermissions.0.via.0:
 +        {"address":"0x65e556838D665e04737Be37816d12Fae633c7d83","delay":0,"description":"can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x65e556838D665e04737Be37816d12Fae633c7d83) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      description:
+-        "Central contract defining the access control for upgrading the system contract implementations."
++        "Central contract defining the access control permissions for upgrading the system contract implementations."
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (0x89AF7C4C2198c426cFe6E86de0680A0850503e06) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverHostIo"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
     }
 ```
 

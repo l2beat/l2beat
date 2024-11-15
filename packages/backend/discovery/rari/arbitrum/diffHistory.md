@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xf7756a2c71ffb6131673afd701064696a3f6b14b
+Generated with discovered.json: 0x1a029a4e7515497c38656b25c22fef2403213c62
 
-# Diff at Tue, 12 Nov 2024 15:38:26 GMT:
+# Diff at Fri, 15 Nov 2024 08:18:19 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@b2d1031f386ed9987b07f83babe4993700b00d33 block: 271338161
+- comparing to: main@a00c2a67d12a174a45864b549412045028598606 block: 271338161
 - current block number: 271338161
 
 ## Description
@@ -15,6 +15,27 @@ Discovery rerun on the same block number with only config-related changes.
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 271338161 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (0x139C5A235632EDdad741ff380112B3161d31a21C) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      description:
+-        "Central contract defining the access control for upgrading the system contract implementations."
++        "Central contract defining the access control permissions for upgrading the system contract implementations."
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0x2623C144B4d167f70893f6A8968B98c89a6C5F97) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      template:
++        "orbitstack/GatewayRouter"
+      displayName:
++        "GatewayRouter"
+      description:
++        "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging."
+    }
+```
 
 ```diff
     contract RollupProxy (0x2e988Ea0873C9d712628F0bf38DAFdE754927C89) {
@@ -37,6 +58,38 @@ discovery. Values are for block 271338161 (main branch discovery), not current.
 +        "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"
       issuedPermissions.0.via.0:
 +        {"address":"0x139C5A235632EDdad741ff380112B3161d31a21C","delay":0,"description":"can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."}
+    }
+```
+
+```diff
+    contract Inbox (0x37e60F80d921dc5E7f501a7130F31f6548dBa564) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      template:
++        "orbitstack/Inbox"
+      description:
++        "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds."
+    }
+```
+
+```diff
+    contract RollupEventInbox (0x3bC4894370dE0Aa304ed717c2e01866c46F1CEa6) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      template:
++        "orbitstack/RollupEventInbox"
+      description:
++        "Helper contract sending configuration data over the bridge during the systems initialization."
+    }
+```
+
+```diff
+    contract L1CustomGateway (0x8bE956aB42274056ef4471BEb211b33e258b7324) {
+    +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
+      template:
++        "orbitstack/CustomGateway"
+      displayName:
++        "CustomGateway"
+      description:
++        "Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability."
     }
 ```
 

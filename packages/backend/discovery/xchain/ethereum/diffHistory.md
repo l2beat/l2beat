@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x035f8345796ca7b35328e0a7b545bfab076a27f3
+Generated with discovered.json: 0x43e6ae32c1f4321849ed2c9a2cd9c5b198a82407
 
-# Diff at Tue, 12 Nov 2024 15:38:22 GMT:
+# Diff at Fri, 15 Nov 2024 08:18:14 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@b2d1031f386ed9987b07f83babe4993700b00d33 block: 21093452
+- comparing to: main@a00c2a67d12a174a45864b549412045028598606 block: 21093452
 - current block number: 21093452
 
 ## Description
@@ -17,11 +17,40 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 21093452 (main branch discovery), not current.
 
 ```diff
+    contract UpgradeExecutor (0x20195677a6De5f0f7dF4e21cE48F0D24e5477110) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      description:
+-        "Central contract defining the access control for upgrading the system contract implementations."
++        "Central contract defining the access control permissions for upgrading the system contract implementations."
+    }
+```
+
+```diff
     contract SequencerInbox (0x47861E0419BE83d0175818a09221B6DF2EFD7793) {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
       fieldMeta.maxTimeVariation.description:
 -        "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
 +        "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
+    }
+```
+
+```diff
+    contract RollupEventInbox (0x6c8faa6b06d4bDD5Af628ac28954736a0fC0BD6b) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      template:
++        "orbitstack/RollupEventInbox"
+      description:
++        "Helper contract sending configuration data over the bridge during the systems initialization."
+    }
+```
+
+```diff
+    contract Inbox (0xE961Ef06c26D0f032F0298c97C41e648d3bb715a) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      template:
++        "orbitstack/Inbox"
+      description:
++        "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds."
     }
 ```
 

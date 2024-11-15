@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xe75c9cab6bf1c6067b28e7ff9558b9204273eded
+Generated with discovered.json: 0x6cac5b3fe80b7480ca7a97dd119e9891188696c9
 
-# Diff at Tue, 12 Nov 2024 15:38:27 GMT:
+# Diff at Fri, 15 Nov 2024 08:18:20 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@b2d1031f386ed9987b07f83babe4993700b00d33 block: 269235450
+- comparing to: main@a00c2a67d12a174a45864b549412045028598606 block: 269235450
 - current block number: 269235450
 
 ## Description
@@ -46,6 +46,15 @@ discovery. Values are for block 269235450 (main branch discovery), not current.
       fieldMeta.maxTimeVariation.description:
 -        "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
 +        "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xc5d17f6e0025a23c0AAFf7832Cc531B3034602DA) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      description:
+-        "Central contract defining the access control for upgrading the system contract implementations."
++        "Central contract defining the access control permissions for upgrading the system contract implementations."
     }
 ```
 

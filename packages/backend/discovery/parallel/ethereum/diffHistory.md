@@ -1,3 +1,82 @@
+Generated with discovered.json: 0x913739f6b65290818309dbe646d74fad9c37985c
+
+# Diff at Fri, 15 Nov 2024 08:18:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a00c2a67d12a174a45864b549412045028598606 block: 21179544
+- current block number: 21179544
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21179544 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x6594085ca55a2B3a5fAD1C57A270D060eEa99877) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.5:
+-        {"permission":"upgrade","target":"0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C","via":[{"address":"0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89","delay":0}]}
+      issuedPermissions.4.permission:
+-        "upgrade"
++        "validate"
+      issuedPermissions.4.target:
+-        "0x19293FBec52F94165f903708a74513Dd6dFedd0a"
++        "0xcCE420Beb5a68091572A1cd860e10aE3Ce286FeA"
+      issuedPermissions.4.via.0:
+-        {"address":"0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89","delay":0}
+      issuedPermissions.3.permission:
+-        "propose"
++        "upgrade"
+      issuedPermissions.3.target:
+-        "0xcCE420Beb5a68091572A1cd860e10aE3Ce286FeA"
++        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+      issuedPermissions.3.via.0:
++        {"address":"0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89","delay":0}
+      issuedPermissions.2.permission:
+-        "configure"
++        "upgrade"
+      issuedPermissions.2.target:
+-        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
++        "0x19293FBec52F94165f903708a74513Dd6dFedd0a"
+      issuedPermissions.2.via.0.description:
+-        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      issuedPermissions.1.target:
+-        "0x19293FBec52F94165f903708a74513Dd6dFedd0a"
++        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+      issuedPermissions.0.permission:
+-        "challenge"
++        "configure"
+      issuedPermissions.0.target:
+-        "0xcCE420Beb5a68091572A1cd860e10aE3Ce286FeA"
++        "0x19293FBec52F94165f903708a74513Dd6dFedd0a"
+      issuedPermissions.0.via.0:
++        {"address":"0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89","delay":0,"description":"can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."}
+    }
+```
+
+```diff
+    contract SequencerInbox (0xb4795A0edae98d7820C37F06f6b858e7acb51DF8) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.maxTimeVariation.description:
+-        "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
++        "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      description:
+-        "Central contract defining the access control for upgrading the system contract implementations."
++        "Central contract defining the access control permissions for upgrading the system contract implementations."
+    }
+```
+
 Generated with discovered.json: 0x6cc6f9bd60cdcbd5c240fb1fff6c1becc859e653
 
 # Diff at Wed, 13 Nov 2024 15:04:05 GMT:
