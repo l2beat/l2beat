@@ -92,7 +92,7 @@ export function ProjectActivityChart({ milestones, projectId }: Props) {
           <div className="flex w-full items-center rounded-lg bg-gray-200 px-4 py-2 text-xs font-medium dark:bg-zinc-800">
             Activity data has not been synced since:{' '}
             {formatTimestamp(data.syncStatus.syncedUntil, {
-              mode: 'datetime',
+              mode: 'date',
               longMonthName: true,
             })}
           </div>
