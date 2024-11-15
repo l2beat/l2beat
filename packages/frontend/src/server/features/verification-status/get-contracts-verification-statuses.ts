@@ -12,7 +12,7 @@ import { ContractsVerificationStatuses } from '@l2beat/shared-pure'
 
 type Project = Layer2 | Layer3 | Bridge | DaLayer
 
-export async function getContractsVerificationStatuses(project: Project) {
+export function getContractsVerificationStatuses(project: Project) {
   const chainNames =
     project.type === 'DaLayer'
       ? getChainNamesForDA(project)

@@ -2,8 +2,8 @@ import { readFileSync } from 'fs'
 import path from 'path'
 import { ProjectsVerificationStatuses } from '@l2beat/shared-pure'
 
-export async function getProjectsVerificationStatuses() {
-  const projects = await readProjectsVerificationStatuses()
+export function getProjectsVerificationStatuses() {
+  const projects = readProjectsVerificationStatuses()
   return ProjectsVerificationStatuses.parse(projects)
 }
 

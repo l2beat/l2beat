@@ -6,10 +6,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { keyBy, mapValues, partition } from 'lodash'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
 import { env } from '~/env'
 import { db } from '~/server/database'
 import { type FinalityData, type FinalityDataPoint } from './schema'
@@ -23,33 +19,27 @@ export type FinalityProjectConfig = {
 
 export async function getFinality(projects: FinalityProjectConfig[]) {
   if (env.MOCK) {
-    return getMockFinalityApiResponse(projects)
+    return getMockFinalityData(projects)
   }
-  noStore()
-  return getCachedFinalityData(projects)
+
+  return getFinalityData(projects)
 }
 
-const getCachedFinalityData = cache(
-  async (projects: FinalityProjectConfig[]) => {
-    const result: FinalityData = {}
+async function getFinalityData(projects: FinalityProjectConfig[]) {
+  const result: FinalityData = {}
 
-    const [OPStackProjects, otherProjects] = partition(
-      projects,
-      (p) => p.type === 'OPStack',
-    )
-    const OPStackFinality = await getOPStackFinality(OPStackProjects)
-    Object.assign(result, OPStackFinality)
+  const [OPStackProjects, otherProjects] = partition(
+    projects,
+    (p) => p.type === 'OPStack',
+  )
+  const OPStackFinality = await getOPStackFinality(OPStackProjects)
+  Object.assign(result, OPStackFinality)
 
-    const projectsFinality = await getProjectsFinality(otherProjects)
-    Object.assign(result, projectsFinality)
+  const projectsFinality = await getProjectsFinality(otherProjects)
+  Object.assign(result, projectsFinality)
 
-    return result
-  },
-  ['finality'],
-  {
-    revalidate: UnixTime.HOUR,
-  },
-)
+  return result
+}
 
 async function getProjectsFinality(
   projects: FinalityProjectConfig[],
@@ -195,9 +185,7 @@ async function getLatestConfigurations() {
   return configurations
 }
 
-function getMockFinalityApiResponse(
-  projects: FinalityProjectConfig[],
-): FinalityData {
+function getMockFinalityData(projects: FinalityProjectConfig[]): FinalityData {
   const result = projects.reduce<FinalityData>((acc, cur) => {
     acc[cur.projectId.toString()] = {
       timeToInclusion: generateMockData(),

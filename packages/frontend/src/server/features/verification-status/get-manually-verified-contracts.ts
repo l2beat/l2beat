@@ -13,7 +13,7 @@ import { type ManuallyVerifiedContracts } from '@l2beat/shared-pure'
 
 type Project = Layer2 | Layer3 | Bridge | DaLayer
 
-export async function getManuallyVerifiedContracts(project: Project) {
+export function getManuallyVerifiedContracts(project: Project) {
   const chainNames =
     project.type === 'DaLayer'
       ? getChainNamesForDA(project)
