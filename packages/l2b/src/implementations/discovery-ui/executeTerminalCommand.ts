@@ -2,8 +2,7 @@ import { spawn } from 'child_process'
 import { Response } from 'express'
 
 export function executeTerminalCommand(command: string, res: Response): void {
-  const [cmd, ...args] = command.split(' ')
-  const process = spawn(cmd, args)
+  const process = spawn(command, { shell: true })
 
   process.stdout.on('data', (data) => {
     res.write(data.toString())

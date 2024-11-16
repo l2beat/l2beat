@@ -15,6 +15,8 @@ export function runDiscoveryUi() {
   const DISCOVERY_ROOT = join(__dirname, '../../../../backend')
   const configReader = new ConfigReader(DISCOVERY_ROOT)
 
+  app.use(express.json())
+
   app.get('/api/projects', (_req, res) => {
     const response = getProjects(configReader)
     res.json(response)
@@ -39,17 +41,31 @@ export function runDiscoveryUi() {
     res.json(response)
   })
 
-  app.post('/api/terminal/execute', (_req, res) => {
-    res.setHeader('Content-Type', 'text/plain')
-    executeTerminalCommand('echo Output from CLI command :)', res)
-  })
-
   app.get('/', (_req, res) => {
     res.redirect('/ui')
   })
 
   app.get(['/ui', '/ui/*'], (_req, res) => {
     res.sendFile(join(STATIC_ROOT, 'index.html'))
+  })
+
+  // Start executing one of predefined commands
+  // and stream the output back to the client
+  app.post('/api/terminal/execute', (req, res) => {
+    const { command, project, chain } = req.body
+    if (!command || !project || !chain) {
+      res.status(400).send('Missing required parameters')
+      return
+    }
+    if (command !== 'discover') {
+      res.status(400).send('Invalid command')
+    }
+
+    res.setHeader('Content-Type', 'text/plain')
+    executeTerminalCommand(
+      `(cd ../backend && pnpm discover ${chain} ${project})`,
+      res,
+    )
   })
 
   app.use(express.static(STATIC_ROOT))

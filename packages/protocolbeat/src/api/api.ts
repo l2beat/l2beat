@@ -47,9 +47,17 @@ export async function getPreview(project: string): Promise<ApiPreviewResponse> {
   return data as ApiPreviewResponse
 }
 
-export async function executeCommand(): Promise<ReadableStream<string>> {
+export async function executeCommand(
+  command: string,
+  project: string,
+  chain: string,
+): Promise<ReadableStream<string>> {
   const response = await fetch('/api/terminal/execute', {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ command, project, chain }),
   })
 
   if (!response.ok) {
