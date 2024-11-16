@@ -24,7 +24,9 @@ export async function GET(
   const params = await props.params
   const searchParams = request.nextUrl.searchParams
   const range = ActivityTimeRange.catch('30d').parse(searchParams.get('range'))
-  return getCachedResponse(params.slug, range)
+  const response = await getCachedResponse(params.slug, range)
+
+  return NextResponse.json(response)
 }
 
 const getCachedResponse = cache(
@@ -32,10 +34,10 @@ const getCachedResponse = cache(
     const project = projectsIds.find((p) => p.slug === slug)
 
     if (!project) {
-      return NextResponse.json({
+      return {
         success: false,
         error: 'Project not found.',
-      })
+      } as const
     }
 
     const isEthereum = project.slug === 'ethereum'
@@ -50,10 +52,10 @@ const getCachedResponse = cache(
     const latestProjectData = data.at(-1)
 
     if (!oldestProjectData || !latestProjectData) {
-      return NextResponse.json({
+      return {
         success: false,
         error: 'Missing data.',
-      })
+      } as const
     }
 
     // Unfortunately, ethereum data is being served along with other projects data
@@ -62,7 +64,7 @@ const getCachedResponse = cache(
         [timestamp, isEthereum ? ethereumTxCount : projectsTxCount] as const,
     )
 
-    return NextResponse.json({
+    return {
       success: true,
       data: {
         chart: {
@@ -70,7 +72,7 @@ const getCachedResponse = cache(
           data: dataPoints,
         },
       },
-    })
+    } as const
   },
   ['scaling-activity-project-route'],
   {
