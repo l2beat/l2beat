@@ -1,27 +1,32 @@
+import { UnixTime } from '@l2beat/shared-pure'
+import { unstable_cache as cache } from 'next/cache'
 import { NextResponse } from 'next/server'
 import { getScalingSummaryEntries } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { getTvlChart } from '~/server/features/scaling/tvl/get-tvl-chart-data'
 
-export const dynamic = 'force-static'
-export const revalidate = 600
-
 export async function GET() {
-  const entries = await getScalingSummaryEntries()
-  const items = [
-    ...entries.rollups,
-    ...entries.validiumsAndOptimiums,
-    ...(entries.others ?? []),
-  ]
-
-  const data = await getTvlChart({
-    range: '30d',
-    excludeAssociatedTokens: false,
-    filter: { type: 'layer2' },
-  })
-
+  const data = await getCachedData()
   return NextResponse.json({
     success: true,
-    data: {
+    data,
+  })
+}
+
+const getCachedData = cache(
+  async () => {
+    const entries = await getScalingSummaryEntries()
+    const items = [
+      ...entries.rollups,
+      ...entries.validiumsAndOptimiums,
+      ...(entries.others ?? []),
+    ]
+
+    const data = await getTvlChart({
+      range: '30d',
+      excludeAssociatedTokens: false,
+      filter: { type: 'layer2' },
+    })
+    return {
       chart: {
         types: ['timestamp', 'native', 'canonical', 'external', 'ethPrice'],
         data: data.map(([timestamp, native, canonical, external, ethPrice]) => [
@@ -64,6 +69,10 @@ export async function GET() {
           ]
         }),
       ),
-    },
-  })
-}
+    }
+  },
+  ['scaling-summary-route'],
+  {
+    revalidate: 10 * UnixTime.MINUTE,
+  },
+)

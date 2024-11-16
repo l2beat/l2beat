@@ -11,7 +11,9 @@ export async function GET(
   props: { params: Promise<{ slug: string }> },
 ) {
   const params = await props.params
-  return getCachedResponse(params.slug)
+  const response = await getCachedResponse(params.slug)
+
+  return NextResponse.json(response)
 }
 
 const getCachedResponse = cache(
@@ -19,16 +21,16 @@ const getCachedResponse = cache(
     const project = projects.find((p) => p.display.slug === slug)
 
     if (!project) {
-      return NextResponse.json({
+      return {
         success: false,
         error: 'Project not found.',
-      })
+      } as const
     }
 
-    return NextResponse.json({
+    return {
       success: true,
       data: await getTvlBreakdownForProject(project),
-    })
+    } as const
   },
   ['scaling-tvl-project-breakdown-route'],
   {

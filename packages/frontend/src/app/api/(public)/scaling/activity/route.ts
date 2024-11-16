@@ -7,7 +7,9 @@ import { ActivityTimeRange } from '~/server/features/scaling/activity/utils/rang
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
   const range = ActivityTimeRange.catch('30d').parse(searchParams.get('range'))
-  return getCachedResponse(range)
+  const response = await getCachedResponse(range)
+
+  return NextResponse.json(response)
 }
 
 const getCachedResponse = cache(
@@ -17,10 +19,10 @@ const getCachedResponse = cache(
     const latestActivityData = data.at(-1)
 
     if (!latestActivityData) {
-      return NextResponse.json({
+      return {
         success: false,
         error: 'Missing data.',
-      })
+      } as const
     }
 
     // Strip ethereum data points
@@ -28,7 +30,7 @@ const getCachedResponse = cache(
       ([timestamp, projectsTxCount]) => [timestamp, projectsTxCount] as const,
     )
 
-    return NextResponse.json({
+    return {
       success: true,
       data: {
         chart: {
@@ -36,7 +38,7 @@ const getCachedResponse = cache(
           data: projectsDataPoints,
         },
       },
-    })
+    } as const
   },
   ['scaling-activity-route'],
   {
