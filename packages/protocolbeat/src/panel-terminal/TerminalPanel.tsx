@@ -25,6 +25,10 @@ export function TerminalPanel() {
   const chains = getProjectResponse.data?.chains ?? []
 
   useEffect(() => {
+    clear()
+  }, [])
+
+  useEffect(() => {
     return () => {
       // Cleanup on unmount
       abortControllerRef.current?.abort()
