@@ -4,6 +4,7 @@ import { assertUnreachable } from '@l2beat/shared-pure'
 import matter from 'gray-matter'
 import { type z } from 'zod'
 
+import getConfig from 'next/config'
 import { startsWithLetterOrNumber } from '~/utils/starts-with-letter-or-number'
 import { collections } from './collections'
 
@@ -33,7 +34,10 @@ export type CollectionEntry<T extends CollectionKey> =
     ? DataCollectionEntry<T>
     : ContentCollectionEntry<T>
 
-const DIR_PATH = path.join('.', 'src', 'content')
+const { serverRuntimeConfig } = getConfig() as {
+  serverRuntimeConfig: { CONTENT_DIR: string }
+}
+const CONTENT_DIR = serverRuntimeConfig.CONTENT_DIR
 
 export function getCollection<T extends CollectionKey>(
   key: T,
@@ -56,8 +60,8 @@ function getDataCollection<T extends DataCollectionKey>(
   key: T,
 ): DataCollectionEntry<T>[] {
   const collection = collections[key]
-  console.log(path.join(process.cwd(), DIR_PATH, key), __dirname)
-  const fileNames = readdirSync(path.join(process.cwd(), DIR_PATH, key))
+  console.log(CONTENT_DIR)
+  const fileNames = readdirSync(CONTENT_DIR)
 
   const parsedFiles = fileNames
     .filter((fileName) => fileName.endsWith(collection.extension))
@@ -98,7 +102,7 @@ function getContentCollection<T extends ContentCollectionKey>(
   key: T,
 ): ContentCollectionEntry<T>[] {
   const contentEntry = collections[key]
-  const fileNames = readdirSync(path.join(process.cwd(), DIR_PATH, key))
+  const fileNames = readdirSync(CONTENT_DIR)
   const parsedFiles = fileNames
     .filter((fileName) => fileName.endsWith(contentEntry.extension))
     .map((fileName) => fileName.replace(`.${contentEntry.extension}`, ''))

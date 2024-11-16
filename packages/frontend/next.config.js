@@ -1,5 +1,6 @@
 import { withPlausibleProxy as createPlausibleProxyPlugin } from 'next-plausible'
 import './src/env.js'
+import path from 'path'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -10,6 +11,9 @@ const nextConfig = {
       'token-repository.dappradar.com',
       'l2beat.com',
     ],
+  },
+  serverRuntimeConfig: {
+    CONTENT_DIR: path.join(__dirname, 'src', 'content'),
   },
   async headers() {
     return [
