@@ -14,7 +14,10 @@ export async function GET(
   const params = await props.params
   const searchParams = request.nextUrl.searchParams
   const range = TvlChartRange.catch('30d').parse(searchParams.get('range'))
-  return getCachedResponse(params.slug, range)
+
+  const response = await getCachedResponse(params.slug, range)
+
+  return NextResponse.json(response)
 }
 
 const getCachedResponse = cache(
@@ -22,10 +25,10 @@ const getCachedResponse = cache(
     const project = projects.find((p) => p.display.slug === slug)
 
     if (!project) {
-      return NextResponse.json({
+      return {
         success: false,
         error: 'Project not found.',
-      })
+      } as const
     }
 
     const data = await getTvlChart({
@@ -38,16 +41,16 @@ const getCachedResponse = cache(
     const latestTvlData = data.at(-1)
 
     if (!oldestTvlData || !latestTvlData) {
-      return NextResponse.json({
+      return {
         success: false,
         error: 'Missing data.',
-      })
+      } as const
     }
 
     const centsValue = latestTvlData[1] + latestTvlData[2] + latestTvlData[3]
     const ethValue = centsValue / latestTvlData[4]
 
-    return NextResponse.json({
+    return {
       success: true,
       data: {
         usdValue: centsValue / 100,
@@ -65,7 +68,7 @@ const getCachedResponse = cache(
           ),
         },
       },
-    })
+    } as const
   },
   ['scaling-tvl-project-route'],
   {

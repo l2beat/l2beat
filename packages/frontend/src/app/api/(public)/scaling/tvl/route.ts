@@ -7,7 +7,9 @@ import { TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
   const range = TvlChartRange.catch('30d').parse(searchParams.get('range'))
-  return getCachedResponse(range)
+  const response = await getCachedResponse(range)
+
+  return NextResponse.json(response)
 }
 
 const getCachedResponse = cache(
@@ -21,16 +23,16 @@ const getCachedResponse = cache(
     const latestTvlData = data.at(-1)
 
     if (!latestTvlData) {
-      return NextResponse.json({
+      return {
         success: false,
         error: 'Missing data.',
-      })
+      } as const
     }
 
     const centsValue = latestTvlData[1] + latestTvlData[2] + latestTvlData[3]
     const ethValue = centsValue / latestTvlData[4]
 
-    return NextResponse.json({
+    return {
       success: true,
       data: {
         usdValue: centsValue / 100,
@@ -48,7 +50,7 @@ const getCachedResponse = cache(
           ),
         },
       },
-    })
+    } as const
   },
   ['scaling-tvl-route'],
   {
