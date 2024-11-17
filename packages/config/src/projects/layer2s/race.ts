@@ -28,12 +28,14 @@ export const race: Layer2 = underReviewL2({
         'https://raceecosystem.com/onboarding',
       ],
       documentation: [],
-      explorers: [], // https://testnet.racescan.io/ testnet explorer only
+      explorers: ['https://racescan.io/'],
       repositories: [],
       socialMedia: [
         'https://x.com/RACEecosystem',
         'https://facebook.com/RACEecosystem/',
         'https://linkedin.com/company/raceecosystem',
+        'https://t.me/RACEecosystem',
+        'https://www.instagram.com/raceecosystem/',
       ],
     },
     activityDataSource: 'Blockchain RPC',
