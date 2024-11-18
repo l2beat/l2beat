@@ -202,7 +202,7 @@ describe(BlockActivityIndexer.name, () => {
       const activityRepository = mockObject<Database['activity']>({
         getByProjectIncludingDataPoint:
           mockFn().resolvesTo(mockActivityRecords),
-        deleteByProjectIdFrom: mockFn().resolvesTo(undefined),
+        deleteByProjectIdFrom: mockFn().resolvesTo(1),
       })
 
       const indexer = createIndexer({
