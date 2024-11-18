@@ -85,7 +85,7 @@ export const degen: Layer3 = orbitStackL3({
         discovery.getPermissionedAccount('OrbitERC20OFTAdapter', 'owner'),
       ],
       description:
-        'Can control the OrbitERC20OFTAdapter contract for the DEGEN token and thus potentially steal all funds from the canonical bridge.',
+        'Can control the LayerZero OrbitERC20OFTAdapter contract for the DEGEN token and thus potentially steal all funds from the canonical bridge.',
     },
   ],
   nonTemplateContracts: [
