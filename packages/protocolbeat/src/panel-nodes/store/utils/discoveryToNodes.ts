@@ -4,6 +4,8 @@ import type { DiscoveryContract, DiscoveryOutput } from './parseDiscovery'
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
+const IGNORED_FIELDS = ['$pastUpgrades']
+
 function encodeChainAddress(chain: string, value: string): string {
   if (value.includes(':')) {
     return value
@@ -68,7 +70,8 @@ function mapFields(
       if (
         typeof value === 'string' &&
         (isAddress(value) || isChainAddress(value)) &&
-        !implementations.includes(value)
+        !implementations.includes(value) &&
+        !IGNORED_FIELDS.includes(key)
       ) {
         if (value === ZERO_ADDRESS) {
           return []
