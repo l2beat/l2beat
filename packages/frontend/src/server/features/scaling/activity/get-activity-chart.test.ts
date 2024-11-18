@@ -1,224 +1,105 @@
-import { type Database } from '@l2beat/database'
-import { type ActivityRepository } from '@l2beat/database/dist/activity/repository'
+import { type ActivityRecord, type Database } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
+
+import { type ActivityRepository } from '@l2beat/database/dist/activity/repository'
 import { getActivityChart } from './get-activity-chart'
 
-describe.only(getActivityChart.name, () => {
-  it('returns data for all projects', async () => {
-    const startOfDay = UnixTime.now().toStartOf('day')
-    const db = mockObject<Database>({
-      activity: mockObject<ActivityRepository>({
-        getByProjectsAndTimeRange: mockFn().resolvesTo([
-          {
-            projectId: ProjectId('a'),
-            timestamp: startOfDay.add(-2, 'days'),
-            count: 15,
-          },
-          {
-            projectId: ProjectId('b'),
-            timestamp: startOfDay.add(-2, 'days'),
-            count: 20,
-          },
-          {
-            projectId: ProjectId.ETHEREUM,
-            timestamp: startOfDay.add(-2, 'days'),
-            count: 100,
-          },
-          {
-            projectId: ProjectId('a'),
-            timestamp: startOfDay.add(-1, 'days'),
-            count: 20,
-          },
-          {
-            projectId: ProjectId('b'),
-            timestamp: startOfDay.add(-1, 'days'),
-            count: 30,
-          },
-          {
-            projectId: ProjectId('c'),
-            timestamp: startOfDay.add(-1, 'days'),
-            count: 50,
-          },
-          {
-            projectId: ProjectId.ETHEREUM,
-            timestamp: startOfDay.add(-1, 'days'),
-            count: 1000,
-          },
-          {
-            projectId: ProjectId('a'),
-            timestamp: startOfDay,
-            count: 10,
-          },
-        ]),
-      }),
-    })
-    const data = await getActivityChart(db, { type: 'all' }, '30d')
-    expect(data.data).toEqual([
-      [startOfDay.add(-2, 'days').toNumber(), 35, 100],
-      [startOfDay.add(-1, 'days').toNumber(), 100, 1000],
-    ])
+describe(getActivityChart.name, () => {
+  const NOW = UnixTime.now()
+
+  const record = (
+    timestamp: UnixTime,
+    projectId: ProjectId,
+    count: number,
+  ): ActivityRecord => ({
+    timestamp,
+    projectId,
+    count,
+    uopsCount: 0,
+    start: 0,
+    end: 0,
   })
 
-  it('starts aggregation from first non-ethereum project', async () => {
-    const startOfDay = UnixTime.now().toStartOf('day')
-    const db = mockObject<Database>({
+  it('returns empty data when no records exist', async () => {
+    const mockDb = mockObject<Database>({
       activity: mockObject<ActivityRepository>({
-        getByProjectsAndTimeRange: mockFn().resolvesTo([
-          {
-            projectId: ProjectId.ETHEREUM,
-            timestamp: startOfDay.add(-4, 'days'),
-            count: 100,
-          },
-          {
-            projectId: ProjectId.ETHEREUM,
-            timestamp: startOfDay.add(-3, 'days'),
-            count: 100,
-          },
-          {
-            projectId: ProjectId('a'),
-            timestamp: startOfDay.add(-2, 'days'),
-            count: 15,
-          },
-          {
-            projectId: ProjectId('b'),
-            timestamp: startOfDay.add(-2, 'days'),
-            count: 20,
-          },
-          {
-            projectId: ProjectId.ETHEREUM,
-            timestamp: startOfDay.add(-2, 'days'),
-            count: 100,
-          },
-          {
-            projectId: ProjectId('a'),
-            timestamp: startOfDay.add(-1, 'days'),
-            count: 20,
-          },
-          {
-            projectId: ProjectId('b'),
-            timestamp: startOfDay.add(-1, 'days'),
-            count: 30,
-          },
-          {
-            projectId: ProjectId('c'),
-            timestamp: startOfDay.add(-1, 'days'),
-            count: 50,
-          },
-          {
-            projectId: ProjectId.ETHEREUM,
-            timestamp: startOfDay.add(-1, 'days'),
-            count: 1000,
-          },
-          {
-            projectId: ProjectId('a'),
-            timestamp: startOfDay,
-            count: 10,
-          },
-        ]),
+        getByProjectsAndTimeRange: mockFn().resolvesTo([]),
       }),
     })
-    const data = await getActivityChart(db, { type: 'all' }, '30d')
-    expect(data.data).toEqual([
-      [startOfDay.add(-2, 'days').toNumber(), 35, 100],
-      [startOfDay.add(-1, 'days').toNumber(), 100, 1000],
-    ])
+    const result = await getActivityChart(mockDb, { type: 'all' }, '30d')
+
+    expect(result.data).toEqual([])
+    expect(result.syncStatus.isSynced).toEqual(true)
   })
 
-  it('returns empty data when no non-ethereum projects exist', async () => {
-    const startOfDay = UnixTime.now().toStartOf('day')
-    const db = mockObject<Database>({
+  it('aggregates data correctly for multiple projects', async () => {
+    const mockRecords = [
+      record(NOW, ProjectId('arbitrum'), 100),
+      record(NOW, ProjectId('optimism'), 50),
+      record(NOW, ProjectId.ETHEREUM, 1000),
+      record(NOW.add(1, 'days'), ProjectId('arbitrum'), 200),
+      record(NOW.add(1, 'days'), ProjectId.ETHEREUM, 2000),
+    ]
+
+    const mockDb = mockObject<Database>({
       activity: mockObject<ActivityRepository>({
-        getByProjectsAndTimeRange: mockFn().resolvesTo([
-          {
-            projectId: ProjectId.ETHEREUM,
-            timestamp: startOfDay.add(-2, 'days'),
-            count: 100,
-          },
-          {
-            projectId: ProjectId.ETHEREUM,
-            timestamp: startOfDay.add(-1, 'days'),
-            count: 200,
-          },
-        ]),
+        getByProjectsAndTimeRange: mockFn().resolvesTo(mockRecords),
       }),
     })
-    const data = await getActivityChart(db, { type: 'all' }, '30d')
-    expect(data.data).toEqual([])
+
+    const result = await getActivityChart(mockDb, { type: 'all' }, '30d')
+
+    expect(result.data).toHaveLength(2)
+    expect(result.data[0]).toEqual([+NOW, 150, 1000]) // Combined L2 count, ETH count
+    expect(result.data[1]).toEqual([+NOW.add(1, 'days'), 200, 2000])
   })
 
   it('handles single project filter correctly', async () => {
-    const startOfDay = UnixTime.now().toStartOf('day')
-    const db = mockObject<Database>({
+    const mockRecords = [
+      record(NOW, ProjectId('arbitrum'), 100),
+      record(NOW, ProjectId.ETHEREUM, 1000),
+      record(NOW.add(1, 'days'), ProjectId('arbitrum'), 200),
+      record(NOW.add(1, 'days'), ProjectId.ETHEREUM, 2000),
+    ]
+
+    const mockDb = mockObject<Database>({
       activity: mockObject<ActivityRepository>({
-        getByProjectsAndTimeRange: mockFn().resolvesTo([
-          {
-            projectId: ProjectId('a'),
-            timestamp: startOfDay.add(-2, 'days'),
-            count: 15,
-          },
-          {
-            projectId: ProjectId.ETHEREUM,
-            timestamp: startOfDay.add(-2, 'days'),
-            count: 100,
-          },
-          {
-            projectId: ProjectId('a'),
-            timestamp: startOfDay.add(-1, 'days'),
-            count: 20,
-          },
-          {
-            projectId: ProjectId.ETHEREUM,
-            timestamp: startOfDay.add(-1, 'days'),
-            count: 200,
-          },
-        ]),
+        getByProjectsAndTimeRange: mockFn().resolvesTo(mockRecords),
       }),
     })
-    const data = await getActivityChart(
-      db,
-      { type: 'projects', projectIds: [ProjectId('a')] },
+
+    const result = await getActivityChart(
+      mockDb,
+      { type: 'projects', projectIds: [ProjectId('arbitrum')] },
       '30d',
     )
-    expect(data.data).toEqual([
-      [startOfDay.add(-2, 'days').toNumber(), 15, 100],
-      [startOfDay.add(-1, 'days').toNumber(), 20, 200],
-    ])
+
+    expect(result.data).toHaveLength(2)
+    expect(result.data[0]).toEqual([+NOW, 100, 1000])
+    expect(result.data[1]).toEqual([+NOW.add(1, 'days'), 200, 2000])
   })
 
-  it('handles gaps in data correctly', async () => {
-    const startOfDay = UnixTime.now().toStartOf('day')
-    const db = mockObject<Database>({
+  it('fills missing data points with zeros', async () => {
+    const mockRecords = [
+      record(NOW, ProjectId('arbitrum'), 100),
+      record(NOW, ProjectId.ETHEREUM, 1000),
+      // Gap in data
+      record(NOW.add(2, 'days'), ProjectId('arbitrum'), 200),
+      record(NOW.add(2, 'days'), ProjectId.ETHEREUM, 2000),
+    ]
+
+    const mockDb = mockObject<Database>({
       activity: mockObject<ActivityRepository>({
-        getByProjectsAndTimeRange: mockFn().resolvesTo([
-          {
-            projectId: ProjectId('a'),
-            timestamp: startOfDay.add(-3, 'days'),
-            count: 10,
-          },
-          {
-            projectId: ProjectId.ETHEREUM,
-            timestamp: startOfDay.add(-3, 'days'),
-            count: 100,
-          },
-          {
-            projectId: ProjectId('a'),
-            timestamp: startOfDay.add(-1, 'days'),
-            count: 20,
-          },
-          {
-            projectId: ProjectId.ETHEREUM,
-            timestamp: startOfDay.add(-1, 'days'),
-            count: 200,
-          },
-        ]),
+        getByProjectsAndTimeRange: mockFn().resolvesTo(mockRecords),
       }),
     })
-    const data = await getActivityChart(db, { type: 'all' }, '30d')
-    expect(data.data).toEqual([
-      [startOfDay.add(-3, 'days').toNumber(), 10, 100],
-      [startOfDay.add(-2, 'days').toNumber(), 0, 0],
-      [startOfDay.add(-1, 'days').toNumber(), 20, 200],
-    ])
+
+    const result = await getActivityChart(mockDb, { type: 'all' }, '30d')
+
+    expect(result.data).toHaveLength(3)
+    expect(result.data[0]).toEqual([+NOW, 100, 1000])
+    expect(result.data[1]).toEqual([+NOW.add(1, 'days'), 0, 0])
+    expect(result.data[2]).toEqual([+NOW.add(2, 'days'), 200, 2000])
   })
 })

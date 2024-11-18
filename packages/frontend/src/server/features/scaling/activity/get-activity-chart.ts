@@ -4,6 +4,7 @@ import { type Database } from '@l2beat/database'
 import { env } from '~/env'
 import { getRangeWithMax } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generate-timestamps'
+import { aggregateActivityEntries } from './utils/aggregate-activity-records'
 import { getActivityProjects } from './utils/get-activity-projects'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import { getSyncStatus } from './utils/get-sync-status'
@@ -57,49 +58,18 @@ async function getActivityChartData(
     }
   }
 
-  const startTimestamp = entries.find(
-    (e) => e.projectId !== ProjectId.ETHEREUM && e.count > 0,
-  )?.timestamp
+  const aggregatedEntries = aggregateActivityEntries(entries)
 
-  if (!startTimestamp) {
+  if (!aggregatedEntries || Object.values(aggregatedEntries).length === 0) {
     return { data: [], syncStatus }
   }
 
-  const startIndex = entries.findIndex(
-    (e) => e.timestamp.toNumber() === startTimestamp.toNumber(),
-  )
-
-  const aggregatedEntries = entries.slice(startIndex).reduce(
-    (acc, entry) => {
-      const timestamp = entry.timestamp.toNumber()
-      const isEthereum = entry.projectId === ProjectId.ETHEREUM
-
-      if (!acc[timestamp]) {
-        acc[timestamp] = {
-          timestamp: entry.timestamp,
-          count: 0,
-          ethereumCount: 0,
-        }
-      }
-
-      if (isEthereum) {
-        acc[timestamp].ethereumCount += entry.count
-      } else {
-        acc[timestamp].count += entry.count
-      }
-
-      return acc
-    },
-    {} as Record<
-      number,
-      { timestamp: UnixTime; count: number; ethereumCount: number }
-    >,
-  )
+  const startTimestamp = Math.min(...Object.keys(aggregatedEntries).map(Number))
   const timestamps = generateTimestamps(
-    [startTimestamp, adjustedRange[1]],
+    [new UnixTime(startTimestamp), adjustedRange[1]],
     'daily',
   )
-  const result: [number, number, number][] = timestamps.map((timestamp) => {
+  const data: [number, number, number][] = timestamps.map((timestamp) => {
     const entry = aggregatedEntries[timestamp.toNumber()]
     if (!entry) {
       return [+timestamp, 0, 0]
@@ -108,7 +78,7 @@ async function getActivityChartData(
   })
 
   return {
-    data: result,
+    data,
     syncStatus,
   }
 }
