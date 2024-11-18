@@ -36,7 +36,7 @@ export class RpcClient2 extends ClientCore implements BlockClient {
     if (!block.success) {
       this.$.logger.warn(`Invalid response`, {
         blockNumber,
-        response: JSON.stringify(block),
+        response: JSON.stringify(blockResponse),
       })
       throw new Error(`Block ${blockNumber}: Error during parsing`)
     }
