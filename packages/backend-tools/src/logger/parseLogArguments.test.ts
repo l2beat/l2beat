@@ -8,7 +8,6 @@ describe(parseLogArguments.name, () => {
       [],
       {
         message: undefined,
-        feature: undefined,
         chain: undefined,
         project: undefined,
         error: undefined,
@@ -19,7 +18,6 @@ describe(parseLogArguments.name, () => {
       ['message'],
       {
         message: 'message',
-        feature: undefined,
         chain: undefined,
         project: undefined,
         error: undefined,
@@ -31,7 +29,6 @@ describe(parseLogArguments.name, () => {
       ['foo', 'bar'],
       {
         message: 'foo',
-        feature: undefined,
         chain: undefined,
         project: undefined,
         error: undefined,
@@ -43,7 +40,6 @@ describe(parseLogArguments.name, () => {
       [{ message: 'message' }],
       {
         message: 'message',
-        feature: undefined,
         chain: undefined,
         project: undefined,
         error: undefined,
@@ -55,7 +51,6 @@ describe(parseLogArguments.name, () => {
       [{ notMessage: 'message' }],
       {
         message: undefined,
-        feature: undefined,
         chain: undefined,
         project: undefined,
         error: undefined,
@@ -67,7 +62,6 @@ describe(parseLogArguments.name, () => {
       ['foo', { message: 'bar' }],
       {
         message: 'foo',
-        feature: undefined,
         chain: undefined,
         project: undefined,
         error: undefined,
@@ -79,7 +73,7 @@ describe(parseLogArguments.name, () => {
       [{ message: 'foo' }, 'bar'],
       {
         message: 'bar',
-        feature: undefined,
+
         chain: undefined,
         project: undefined,
         error: undefined,
@@ -90,7 +84,6 @@ describe(parseLogArguments.name, () => {
       ['foo', 'bar', 'baz'],
       {
         message: 'foo',
-        feature: undefined,
         chain: undefined,
         project: undefined,
         error: undefined,
@@ -101,7 +94,6 @@ describe(parseLogArguments.name, () => {
       [new Error('error')],
       {
         message: undefined,
-        feature: undefined,
         chain: undefined,
         project: undefined,
         error: new Error('error'),
@@ -112,7 +104,6 @@ describe(parseLogArguments.name, () => {
       [new Error('foo'), new Error('bar')],
       {
         message: undefined,
-        feature: undefined,
         chain: undefined,
         project: undefined,
         error: new Error('foo'),
@@ -123,7 +114,6 @@ describe(parseLogArguments.name, () => {
       [new Error('foo'), new Error('bar'), new Error('baz')],
       {
         message: undefined,
-        feature: undefined,
         chain: undefined,
         project: undefined,
         error: new Error('foo'),
@@ -134,7 +124,6 @@ describe(parseLogArguments.name, () => {
       ['message', new Error('error')],
       {
         message: 'message',
-        feature: undefined,
         chain: undefined,
         project: undefined,
         error: new Error('error'),
@@ -145,7 +134,6 @@ describe(parseLogArguments.name, () => {
       [new Error('error'), 'message'],
       {
         message: 'message',
-        feature: undefined,
         chain: undefined,
         project: undefined,
         error: new Error('error'),
@@ -157,7 +145,6 @@ describe(parseLogArguments.name, () => {
       [{ error: new Error('error') }],
       {
         message: undefined,
-        feature: undefined,
         chain: undefined,
         project: undefined,
         error: new Error('error'),
@@ -169,7 +156,6 @@ describe(parseLogArguments.name, () => {
       [{ notError: new Error('error') }],
       {
         message: undefined,
-        feature: undefined,
         chain: undefined,
         project: undefined,
         error: undefined,
@@ -180,7 +166,6 @@ describe(parseLogArguments.name, () => {
       ['message', new Error('error'), { foo: 'bar' }],
       {
         message: 'message',
-        feature: undefined,
         chain: undefined,
         project: undefined,
         error: new Error('error'),
@@ -191,7 +176,6 @@ describe(parseLogArguments.name, () => {
       [123],
       {
         message: undefined,
-        feature: undefined,
         chain: undefined,
         project: undefined,
         error: undefined,
@@ -202,7 +186,6 @@ describe(parseLogArguments.name, () => {
       [123, 45],
       {
         message: undefined,
-        feature: undefined,
         chain: undefined,
         project: undefined,
         error: undefined,
@@ -213,7 +196,6 @@ describe(parseLogArguments.name, () => {
       [[123, 45]],
       {
         message: undefined,
-        feature: undefined,
         chain: undefined,
         project: undefined,
         error: undefined,
@@ -225,7 +207,6 @@ describe(parseLogArguments.name, () => {
       [123, { value: 45 }],
       {
         message: undefined,
-        feature: undefined,
         chain: undefined,
         project: undefined,
         error: undefined,
@@ -237,7 +218,6 @@ describe(parseLogArguments.name, () => {
       [1, 2, 3, { values: 42 }],
       {
         message: undefined,
-        feature: undefined,
         chain: undefined,
         project: undefined,
         error: undefined,
@@ -248,7 +228,6 @@ describe(parseLogArguments.name, () => {
       [{}],
       {
         message: undefined,
-        feature: undefined,
         chain: undefined,
         project: undefined,
         error: undefined,
@@ -259,7 +238,6 @@ describe(parseLogArguments.name, () => {
       [{ foo: 'bar', baz: true }],
       {
         message: undefined,
-        feature: undefined,
         chain: undefined,
         project: undefined,
         error: undefined,
@@ -273,7 +251,6 @@ describe(parseLogArguments.name, () => {
       ],
       {
         message: undefined,
-        feature: undefined,
         chain: undefined,
         project: undefined,
         error: undefined,
@@ -287,7 +264,6 @@ describe(parseLogArguments.name, () => {
       ],
       {
         message: undefined,
-        feature: undefined,
         chain: undefined,
         project: undefined,
         error: undefined,
@@ -298,7 +274,7 @@ describe(parseLogArguments.name, () => {
       [123, { foo: 'bar', baz: true }, { x: 4, y: 5 }],
       {
         message: undefined,
-        feature: undefined,
+
         chain: undefined,
         project: undefined,
         error: undefined,
@@ -306,13 +282,10 @@ describe(parseLogArguments.name, () => {
       },
     ],
     [
-      [
-        'message',
-        { feature: 'feature', chain: 'chain', project: 'project', x: 4, y: 5 },
-      ],
+      ['message', { chain: 'chain', project: 'project', x: 4, y: 5 }],
       {
         message: 'message',
-        feature: 'feature',
+
         chain: 'chain',
         project: 'project',
         error: undefined,
@@ -320,14 +293,10 @@ describe(parseLogArguments.name, () => {
       },
     ],
     [
-      [
-        'message',
-        { feature: 'feature', chain: 'chain', project: 'project' },
-        { x: 4, y: 5 },
-      ],
+      ['message', { chain: 'chain', project: 'project' }, { x: 4, y: 5 }],
       {
         message: 'message',
-        feature: 'feature',
+
         chain: 'chain',
         project: 'project',
         error: undefined,

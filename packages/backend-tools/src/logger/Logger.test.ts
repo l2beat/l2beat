@@ -354,7 +354,6 @@ describe(Logger.name, () => {
           [
             'message',
             {
-              feature: 'feature',
               chain: 'chain',
               project: 'project',
               x: 4,
@@ -365,7 +364,7 @@ describe(Logger.name, () => {
             level: 'ERROR',
             time: expect.a(Date),
             service: undefined,
-            feature: 'feature',
+            feature: undefined,
             chain: 'chain',
             project: 'project',
             message: 'message',
