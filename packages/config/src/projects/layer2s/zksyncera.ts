@@ -392,6 +392,7 @@ export const zksyncera: Layer2 = zkStackL2({
       accounts: validatorsOld().map((v) =>
         discovery.formatPermissionedAccount(v),
       ),
+      fromRole: true,
       description:
         'Actors that are allowed to propose, execute and revert L2 batches on L1 through the currently unused ValidatorTimelockOld.',
     },
