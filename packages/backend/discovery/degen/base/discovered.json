@@ -1,8 +1,8 @@
 {
   "name": "degen",
   "chain": "base",
-  "blockNumber": 22580297,
-  "configHash": "0x198b53bafc4e9a39199b96d3a060a7342e07804c57dd184d63fa6e55b74e184a",
+  "blockNumber": 22580502,
+  "configHash": "0x34f65ac78587c73a86da257c0c460cbe87415de33379e44e44e13d162fa538cd",
   "contracts": [
     {
       "name": "Inbox",
@@ -645,7 +645,6 @@
       "sourceHashes": [
         "0xa6648e861cb9df5f8a3d15fc05c8f842f7f8a47136470f83c5d452f2b4eca4e6"
       ],
-      "ignoreInWatchMode": ["circulatingSupply"],
       "sinceTimestamp": 1729063511,
       "values": {
         "$immutable": true,

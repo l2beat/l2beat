@@ -23,8 +23,7 @@
   },
   "overrides": {
     "OrbitERC20OFTAdapter": {
-      "ignoreRelatives": ["endpoint", "token"],
-      "ignoreInWatchMode": ["circulatingSupply"]
+      "ignoreRelatives": ["endpoint", "token"]
     },
     "RollupProxy": {
       "extends": "orbitstack/RollupProxy"
