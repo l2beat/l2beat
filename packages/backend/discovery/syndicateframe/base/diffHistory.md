@@ -1,3 +1,46 @@
+Generated with discovered.json: 0x04aa889b98dc1d9c730d1d9649db98adb1bfe033
+
+# Diff at Mon, 18 Nov 2024 17:16:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b54f69b0d6666908da980a31e5f52da87009f1ab block: 20760966
+- current block number: 22580417
+
+## Description
+
+Signer changes at Caldera.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 2 (0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d) {
+    +++ description: None
+      values.$members.3:
+-        "0x4919167EA334BE84B1604Cbc82A26A7746D5943e"
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 4 (75%)"
++        "2 of 3 (67%)"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20760966 (main branch discovery), not current.
+
+```diff
+    contract Caldera Multisig 2 (0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d) {
+    +++ description: None
+      name:
+-        "SyndicateFrameMultisig"
++        "Caldera Multisig 2"
+    }
+```
+
 Generated with discovered.json: 0x493a25fa3a1af3127e0421541c88f6000d80d0b7
 
 # Diff at Fri, 01 Nov 2024 12:11:16 GMT:
