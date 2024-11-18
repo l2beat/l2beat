@@ -28,6 +28,7 @@ export class BlockProvider {
     for (const [index, client] of this.clients.entries()) {
       try {
         const end = await client.getLatestBlockNumber()
+        assert(end !== 0, '`Invalid response')
 
         return await getBlockNumberAtOrBefore(
           timestamp,
