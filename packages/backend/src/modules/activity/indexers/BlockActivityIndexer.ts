@@ -103,10 +103,10 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
     )
 
     if (deletedRows > 0) {
-      this.$.logger.info('Deleted rows', { deletedRows })
+      this.logger.info('Deleted rows', { deletedRows })
     }
 
-    this.$.logger.info('Invalidated activity', {
+    this.logger.info('Invalidated activity', {
       projectId: this.$.projectId,
       targetHeight,
       adjustedTargetHeight,
