@@ -85,7 +85,7 @@ export const degen: Layer3 = orbitStackL3({
         discovery.getPermissionedAccount('OrbitERC20OFTAdapter', 'owner'),
       ],
       description:
-        'Can control the OrbitERC20OFTAdapter contract for the DEGEN token and thus potentially steal all DEGEN tokens from the bridge.',
+        'Can control the OrbitERC20OFTAdapter contract for the DEGEN token and thus potentially steal all funds from the canonical bridge.',
     },
   ],
   nonTemplateContracts: [
@@ -95,8 +95,15 @@ export const degen: Layer3 = orbitStackL3({
     }),
     discovery.getContractDetails('OrbitERC20OFTAdapter', {
       description:
-        'as a desiganted allowed outbox, this contract can access all funds of the canonical bridge escrow. It also interfaces with the LayerZero AMB, giving this external bridge access to the Degen L3 canonical bridge.',
+        'as a desiganted allowed outbox, this contract can access all funds of the canonical bridge escrow. It also interfaces with the LayerZero AMB, giving this external bridge access to the Degen L3 canonical bridge and making canonical bridge security dependent on LayerZero security.',
     }),
+  ],
+  nonTemplateContractRisks: [
+    {
+      category: 'Funds can be stolen if',
+      text: 'the security stack of the whitelisted LayerZero adapter changes or is compromised.',
+      isCritical: true,
+    },
   ],
   associatedTokens: ['DEGEN'],
   milestones: [
