@@ -335,7 +335,7 @@ export const taiko: Layer2 = {
     stateCorrectness: {
       name: 'Multi-tier proof system',
       description: `Taiko uses a multi-tier proof system to validate state transitions. There are five tiers: The SGX tier, two ZK tiers with RISC0 and SP1 verifiers, the ${GuardianMinorityProverMinSigners}/${NumGuardiansMinorityProver} Guardian tier and the ${GuardianProverMinSigners}/${NumGuardiansProver} Guardian tier (from lowest to highest).
-      Since the Guardian tiers are the highest, validity proofs can generally be overwritten by them. Consequently, there is also no way to force the RISC0 or SP1 tiers.
+      Since the Guardian tiers are the highest, validity proofs can generally be overwritten by a single Guardian. Consequently, there is no way to force the RISC0 or SP1 tiers.
       
       When proposing a batch (containing one or multiple L2 blocks), the proposer is assigned the designated prover role for that batch and is required to deposit a liveness bond (${LivenessBond} TAIKO) as a commitment to prove the batch, which will be returned once the batch is proven.
       The default (lowest) SGX tier has a proving window of ${SGXprovingWindow}, during which only the designated prover can submit the proof for the batch. Once elapsed, proving is open to everyone able to submit SGX proofs and a *validity bond*. The two ZK tiers have a proving window of ${RISC0provingWindow}.
@@ -440,9 +440,9 @@ export const taiko: Layer2 = {
         description: 'Verifier contract for Guardian multisig proven batches.',
         ...upgradesTaikoMultisig,
       }),
-      discovery.getContractDetails('ProverSetProxy', {
+      discovery.getContractDetails('DAOFallbackProposer', {
         description:
-          "A contract that holds TAIKO token and acts as a Taiko prover for Taiko Labs. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TAIKO. There are several instances of this contract operated by different entities.",
+          "A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TKO. There are several instances of this contract operated by different entities.",
         ...upgradesTaikoMultisig,
       }),
       discovery.getContractDetails('SignalService', {

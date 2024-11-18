@@ -1,8 +1,8 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 21214533,
-  "configHash": "0xd44f5506f6bd07fb79b407fc0ee26b58987546e4e53a27d2858cff338b8247f5",
+  "blockNumber": 21215436,
+  "configHash": "0x784276e8ab8d26b8692e7d487f4559c6cf326770c350bc09492a651b5f592145",
   "contracts": [
     {
       "name": "PEMCertChainLib",
@@ -164,27 +164,27 @@
           "ontakeForkHeight": 538304
         },
         "getLastSyncedBlock": {
-          "blockId_": 577055,
-          "blockHash_": "0x72c1197f04e4f93c5df7e51b782853e8de7bd29d24557f724c4b4482453f027c",
-          "stateRoot_": "0x98184c7e091a8f444687e1562b51c9c9bcaa8fe480f6bf0bfd1f911db2b92470",
-          "verifiedAt_": 1731904079
+          "blockId_": 577871,
+          "blockHash_": "0xd7c6302cbd22403751dc47eb8748c7548b93ed805f1cb494b84e5f52a0c0d87b",
+          "stateRoot_": "0x30cda8bcda844a6253d3c5a5475d056a2879c3ce4c3e54122232d6cbe5e82681",
+          "verifiedAt_": 1731917039
         },
         "getLastVerifiedBlock": {
-          "blockId_": 577070,
-          "blockHash_": "0x4598140e61dbffcc4a74fa9ea6a0cae255f506b66dca376999f144afb300da7d",
+          "blockId_": 577874,
+          "blockHash_": "0xeb58aa4f603842f72b96927dd74167e57060b7a0ba48b0c98bb95fac41e1cfdc",
           "stateRoot_": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "verifiedAt_": 1731903335
+          "verifiedAt_": 1731918167
         },
         "getStateVariables": [
           {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 577055,
-            "lastSynecdAt": 1731931571
+            "lastSyncedBlockId": 577871,
+            "lastSynecdAt": 1731942719
           },
           {
-            "numBlocks": 578670,
-            "lastVerifiedBlockId": 577070,
+            "numBlocks": 579147,
+            "lastVerifiedBlockId": 577874,
             "provingPaused": false,
             "__reservedB1": 46,
             "__reservedB2": 17113,
@@ -215,12 +215,12 @@
           "slotA": {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 577055,
-            "lastSynecdAt": 1731931571
+            "lastSyncedBlockId": 577871,
+            "lastSynecdAt": 1731942719
           },
           "slotB": {
-            "numBlocks": 578670,
-            "lastVerifiedBlockId": 577070,
+            "numBlocks": 579147,
+            "lastVerifiedBlockId": 577874,
             "provingPaused": false,
             "__reservedB1": 46,
             "__reservedB2": 17113,
@@ -296,7 +296,7 @@
         ],
         "$upgradeCount": 5,
         "addressManager": "0x0000000000000000000000000000000000000000",
-        "clock": 1731932051,
+        "clock": 1731942947,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -698,14 +698,14 @@
       "derivedName": "SP1Verifier"
     },
     {
-      "name": "ProverSetProxy",
+      "name": "DAOFallbackProposer",
       "address": "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
         "0x6c2e43f356e499e332ee9b82cb8ae970dbe6209146e72d925e9d9f22f5b791e1"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO.",
+      "description": "A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TKO. There are several instances of this contract operated by different entities.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1255,7 +1255,7 @@
         "impl": "0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 35203,
+        "nextMessageId": 35205,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",

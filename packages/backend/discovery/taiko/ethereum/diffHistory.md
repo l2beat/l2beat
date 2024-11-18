@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xe295e18f493b1ef399868074bf843a0a7555e898
+Generated with discovered.json: 0xea65667fba3c7f9645243f698b73ace7a9ceb06a
 
-# Diff at Mon, 18 Nov 2024 12:14:33 GMT:
+# Diff at Mon, 18 Nov 2024 15:16:10 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@b96351d6b064647cdbc4d127955822597fb5d9e0 block: 21122769
-- current block number: 21214533
+- current block number: 21215436
 
 ## Description
  
@@ -206,6 +206,18 @@ discovery. Values are for block 21122769 (main branch discovery), not current.
 +        "0x0000000000000000000000000000000000000000"
       values.verifier_TIER_OPTIMISTIC:
 +        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract DAOFallbackProposer (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9) {
+    +++ description: A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TKO. There are several instances of this contract operated by different entities.
+      name:
+-        "ProverSetProxy"
++        "DAOFallbackProposer"
+      description:
+-        "A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO."
++        "A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TKO. There are several instances of this contract operated by different entities."
     }
 ```
 
