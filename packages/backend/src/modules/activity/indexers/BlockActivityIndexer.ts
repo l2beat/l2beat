@@ -84,35 +84,37 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
       this.$.projectId,
       targetHeight + 1,
     )
+    if (records.length === 0) return targetHeight
 
-    if (records.length === 0) {
-      return targetHeight
-    }
-
-    assert(
-      records.length === 1,
-      `There should be exactly one record that includes data point (projectId: ${this.$.projectId}, dataPoint: ${targetHeight})`,
-    )
-
-    // we need to invalidate all data points from record
-    const adjustedTargetHeight = records[0].start - 1
+    this.assertInvalidationCausedByRestart(records, targetHeight)
 
     const deletedRows = await this.$.db.activity.deleteByProjectIdFrom(
       this.$.projectId,
       records[0].timestamp,
     )
 
-    if (deletedRows > 0) {
-      this.logger.info('Deleted rows', { deletedRows })
-    }
+    assert(
+      deletedRows === records.length,
+      `Incorrect amount of records deleted: ${deletedRows} != ${records.length}`,
+    )
+    this.logger.info('Deleted rows', { deletedRows })
 
-    this.logger.info('Invalidated activity', {
-      projectId: this.$.projectId,
-      targetHeight,
-      adjustedTargetHeight,
-      timestamp: records[0].timestamp,
-    })
-
+    // we need to invalidate all data points from record
+    const adjustedTargetHeight = records[0].start - 1
     return Promise.resolve(adjustedTargetHeight)
+  }
+
+  private assertInvalidationCausedByRestart(
+    records: ActivityRecord[],
+    targetHeight: number,
+  ) {
+    if (records.length > 2) {
+      this.logger.warn(`Invalidation error`, {
+        records: records.length,
+        safeHeight: this.safeHeight,
+        targetHeight,
+      })
+      throw new Error('Invalidation used only for restart protection')
+    }
   }
 }

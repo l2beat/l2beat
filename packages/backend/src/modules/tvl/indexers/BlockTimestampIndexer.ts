@@ -49,7 +49,7 @@ export class BlockTimestampIndexer extends ManagedChildIndexer {
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
-    this.assertSingleTickInvalidation(targetHeight)
+    this.assertInvalidationCausedByRestart(targetHeight)
 
     const deletedRecords = await this.$.db.blockTimestamp.deleteAfterExclusive(
       this.$.chain,
@@ -66,7 +66,7 @@ export class BlockTimestampIndexer extends ManagedChildIndexer {
     return Promise.resolve(targetHeight)
   }
 
-  private assertSingleTickInvalidation(targetHeight: number) {
+  private assertInvalidationCausedByRestart(targetHeight: number) {
     const hoursToInvalidate = (this.safeHeight - targetHeight) / 3600
 
     if (hoursToInvalidate > 1) {
@@ -75,7 +75,7 @@ export class BlockTimestampIndexer extends ManagedChildIndexer {
         safeHeight: this.safeHeight,
         targetHeight,
       })
-      throw new Error('Only single-tick invalidation is supported')
+      throw new Error('Invalidation used only for restart protection')
     }
   }
 }
