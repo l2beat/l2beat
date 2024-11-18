@@ -27,7 +27,9 @@ export function CodePanel() {
   })
   const [current, setCurrent] = useState(0)
   useEffect(() => {
-    setCurrent(0)
+    const hasProxy =
+      codeResponse.isSuccess && codeResponse.data.sources.length > 1
+    setCurrent(hasProxy ? 1 : 0)
   }, [codeResponse.data])
 
   if (projectResponse.isError || codeResponse.isError) {
