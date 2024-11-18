@@ -49,6 +49,8 @@ export class BlockTimestampIndexer extends ManagedChildIndexer {
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
+    this.assertSingleTickInvalidation(targetHeight)
+
     const deletedRecords = await this.$.db.blockTimestamp.deleteAfterExclusive(
       this.$.chain,
       new UnixTime(targetHeight),
@@ -62,5 +64,18 @@ export class BlockTimestampIndexer extends ManagedChildIndexer {
     }
 
     return Promise.resolve(targetHeight)
+  }
+
+  private assertSingleTickInvalidation(targetHeight: number) {
+    const hoursToInvalidate = (this.safeHeight - targetHeight) / 3600
+
+    if (hoursToInvalidate > 1) {
+      this.logger.warn(`Invalidation error`, {
+        diff: hoursToInvalidate,
+        safeHeight: this.safeHeight,
+        targetHeight,
+      })
+      throw new Error('Only single-tick invalidation is supported')
+    }
   }
 }
