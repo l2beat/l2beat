@@ -1,3 +1,56 @@
+Generated with discovered.json: 0xc6d814f45dd013995a28d92ed2980e1c20698544
+
+# Diff at Mon, 18 Nov 2024 17:12:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b54f69b0d6666908da980a31e5f52da87009f1ab block: 22134218
+- current block number: 22580297
+
+## Description
+
+A new OFT adapter contract (for the DEGEN token) is added as allowed Outbox to the main bridge. This gives the OFT adapter the permission to make any calls as the bridge (including sending all tokens from the bridge). See the Sanko L3 on Arbitrum for a similar contruction. The LayerZero AMB now has access to the canonically escrowed funds and the bridge escrow serves doubly as a canonical escrow and OFT adapter lockbox.
+
+## Watched changes
+
+```diff
+    contract Bridge (0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C) {
+    +++ description: Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      values.allowedOutboxList.1:
++        "0xDb8E759859058952c34953c8469f464109826e52"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OrbitERC20OFTAdapter (0xDb8E759859058952c34953c8469f464109826e52)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../degen/base/.flat/OrbitERC20OFTAdapter.sol      | 1905 ++++++++++++++++++++
+ 1 file changed, 1905 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22134218 (main branch discovery), not current.
+
+```diff
+    contract DegenMultisig (0x871e290d5447b958131F6d44f915F10032436ee6) {
+    +++ description: None
+      values.getOwners:
+-        ["0x39CF304731099e756204219BF0a8cCc4738dE9dD","0x3f0030b9Ca695Abd41b2B619F3298e172e4FCAD6","0x2e42cEfC761e64Bf4442694220d31C2464a6EE21","0x5EABE7f6673311EdD1Ad17A76ce148c2Bb56aF01","0xaCEF7482b54a57F50b1CD8c99d1dC1964202A063"]
+      values.getThreshold:
+-        3
+      template:
++        "GnosisSafe"
+    }
+```
+
 Generated with discovered.json: 0x39fbf742b897feff54977dd9ad15ea242c78c85a
 
 # Diff at Fri, 15 Nov 2024 08:18:21 GMT:

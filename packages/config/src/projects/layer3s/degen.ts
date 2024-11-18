@@ -79,11 +79,23 @@ export const degen: Layer3 = orbitStackL3({
       description:
         'The UTBAdmin directly controls the UTB contracts critical functions like updating all roles and modules.',
     },
+    {
+      name: 'OftAdapterEOA',
+      accounts: [
+        discovery.getPermissionedAccount('OrbitERC20OFTAdapter', 'owner'),
+      ],
+      description:
+        'Can control the OrbitERC20OFTAdapter contract for the DEGEN token and thus potentially steal all DEGEN tokens from the bridge.',
+    },
   ],
   nonTemplateContracts: [
     discovery.getContractDetails('UTBDecent', {
       description:
         'The UTB contract serves as an L2<->L3 gateway by integrating with Decent (LayerZero app) to allow bridging and swapping in- and out of Degen L3. This is achieved using external modules (smart contracts) like swappers and bridgers that can be registered in the UTB contract.',
+    }),
+    discovery.getContractDetails('OrbitERC20OFTAdapter', {
+      description:
+        'as a desiganted allowed outbox, this contract can access all funds of the canonical bridge escrow. It also interfaces with the LayerZero AMB, giving this external bridge access to the Degen L3 canonical bridge.',
     }),
   ],
   associatedTokens: ['DEGEN'],
