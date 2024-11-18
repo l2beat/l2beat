@@ -34,6 +34,10 @@ export class RpcClient2 extends ClientCore implements BlockClient {
 
     const block = EVMBlockResponse.safeParse(blockResponse)
     if (!block.success) {
+      this.$.logger.warn(`Invalid response`, {
+        blockNumber,
+        response: JSON.stringify(block),
+      })
       throw new Error(`Block ${blockNumber}: Error during parsing`)
     }
     return { ...block.data.result }
