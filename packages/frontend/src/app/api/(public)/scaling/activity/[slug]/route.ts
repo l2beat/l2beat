@@ -3,6 +3,7 @@ import { ProjectId } from '@l2beat/shared-pure'
 import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { type NextRequest, NextResponse } from 'next/server'
+import { db } from '~/server/database'
 import { getActivityChart } from '~/server/features/scaling/activity/get-activity-chart'
 import { type ActivityProjectFilter } from '~/server/features/scaling/activity/utils/project-filter-utils'
 import { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
@@ -46,7 +47,7 @@ const getCachedResponse = cache(
       ? { type: 'all' }
       : { type: 'projects', projectIds: [project.id] }
 
-    const { data } = await getActivityChart(filter, range)
+    const { data } = await getActivityChart(db, filter, range)
 
     const oldestProjectData = data.at(0)
     const latestProjectData = data.at(-1)

@@ -1,12 +1,16 @@
+import { type Database } from '@l2beat/database'
 import { getActivityChart } from './get-activity-chart'
 import { type ActivityProjectFilter } from './utils/project-filter-utils'
 
 export type ActivityChartStats = Awaited<
   ReturnType<typeof getActivityChartStats>
 >
-export async function getActivityChartStats(filter: ActivityProjectFilter) {
+export async function getActivityChartStats(
+  db: Database,
+  filter: ActivityProjectFilter,
+) {
   // We should use the last 7 days but 30d is probably cached already so it's faster
-  const { data: chartData } = await getActivityChart(filter, '30d')
+  const { data: chartData } = await getActivityChart(db, filter, '30d')
 
   const latestData = chartData.at(-1)
   if (!latestData) {

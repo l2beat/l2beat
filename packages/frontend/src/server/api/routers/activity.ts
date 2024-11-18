@@ -13,12 +13,12 @@ export const activityRouter = router({
         filter: ActivityProjectFilter,
       }),
     )
-    .query(({ input }) => {
-      return getActivityChart(input.filter, input.range)
+    .query(({ input, ctx }) => {
+      return getActivityChart(ctx.db, input.filter, input.range)
     }),
   chartStats: procedure
     .input(z.object({ filter: ActivityProjectFilter }))
-    .query(({ input }) => {
-      return getActivityChartStats(input.filter)
+    .query(({ input, ctx }) => {
+      return getActivityChartStats(ctx.db, input.filter)
     }),
 })

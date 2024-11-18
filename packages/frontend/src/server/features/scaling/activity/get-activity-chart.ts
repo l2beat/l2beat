@@ -1,10 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
+
+import { type Database } from '@l2beat/database'
 import { env } from '~/env'
-import { db } from '~/server/database'
 import { getRangeWithMax } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generate-timestamps'
 import { getActivityProjects } from './utils/get-activity-projects'
@@ -32,6 +29,7 @@ export function getActivityChart(
 export type ActivityChartData = Awaited<ReturnType<typeof getActivityChartData>>
 
 async function getActivityChartData(
+  db: Database,
   filter: ActivityProjectFilter,
   range: ActivityTimeRange,
 ) {
@@ -116,7 +114,8 @@ async function getActivityChartData(
 }
 
 function getMockActivityChart(
-  _: ActivityProjectFilter,
+  _: Database,
+  __: ActivityProjectFilter,
   timeRange: ActivityTimeRange,
 ): ActivityChartData {
   const [from, to] = getRangeWithMax(timeRange, 'daily')
