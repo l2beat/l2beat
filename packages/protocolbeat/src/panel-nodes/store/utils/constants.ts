@@ -15,7 +15,6 @@ export const FIELD_HEIGHT = 18
 export const BOTTOM_PADDING = 8
 
 export const NODE_WIDTH = 200
-export const NODE_SPACING = 25
 
 export const ZOOM_SENSITIVITY = 0.002
 export const MAX_ZOOM = 1
