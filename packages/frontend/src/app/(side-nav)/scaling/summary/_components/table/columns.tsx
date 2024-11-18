@@ -113,7 +113,7 @@ export const scalingSummaryColumns = [
 ]
 
 export const scalingSummaryValidiumAndOptimiumsColumns = [
-  ...scalingSummaryColumns.slice(0, 4),
+  ...scalingSummaryColumns.slice(0, 5),
   columnHelper.display({
     header: 'DA Layer',
     cell: (ctx) => {
@@ -140,7 +140,7 @@ export const scalingSummaryValidiumAndOptimiumsColumns = [
 ]
 
 export const scalingSummaryOthersColumns = [
-  ...scalingSummaryColumns.slice(0, 4),
+  ...scalingSummaryColumns.slice(0, 5),
   columnHelper.display({
     id: 'proposer',
     header: 'Proposer',
