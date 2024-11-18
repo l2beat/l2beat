@@ -198,6 +198,9 @@ const nextConfig = {
       fallback: [],
     }
   },
+  experimental: {
+    reactCompiler: true,
+  },
 }
 
 function createNextConfig() {

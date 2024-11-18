@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url'
 import { fixupConfigRules } from '@eslint/compat'
 import { FlatCompat } from '@eslint/eslintrc'
 import js from '@eslint/js'
+import reactCompiler from 'eslint-plugin-react-compiler'
 
 import tailwind from 'eslint-plugin-tailwindcss'
 import tsEslint from 'typescript-eslint'
@@ -87,10 +88,22 @@ const tailwindConfigs = tsEslint.config(
   },
 )
 
+const reactCompilerConfigs = [
+  {
+    plugins: {
+      'react-compiler': reactCompiler,
+    },
+    rules: {
+      'react-compiler/react-compiler': 'error',
+    },
+  },
+]
+
 const config = tsEslint.config(
   ...nonFlatConfigs,
   ...typescriptConfigs,
   ...tailwindConfigs,
+  ...reactCompilerConfigs,
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument
   {
     rules: {
