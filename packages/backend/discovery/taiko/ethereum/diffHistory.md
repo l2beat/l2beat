@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x59e9edc2849a8005670aeafb0a93121caa95483e
+Generated with discovered.json: 0xe295e18f493b1ef399868074bf843a0a7555e898
 
-# Diff at Tue, 12 Nov 2024 14:07:29 GMT:
+# Diff at Mon, 18 Nov 2024 12:14:33 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@be9ae0b6837521c04dee2895a77226bf7c5e4331 block: 21122769
-- current block number: 21172095
+- comparing to: main@b96351d6b064647cdbc4d127955822597fb5d9e0 block: 21122769
+- current block number: 21214533
 
 ## Description
  
@@ -17,9 +17,11 @@ Current active tiers:
 -  900: guardian minority
 - 1000: guardian
 
-A higher tier can be used to challenge a lower tier before the tier-specific cooldown period has passed.
+A higher tier can be used to challenge a lower tier before the tier-specific cooldown period has passed. A challenge resets the cooldown window for the proof.
 
-In the case of a block being proposed by the `DAO_FALLBACK_PROPOSER`, the *minimum proof tier* is determined pseudorandomly at the time of a batch proposal based on a hash depending on the number of blocks in the batch (`keccak256(abi.encode("TAIKO_DIFFICULTY", local.b.numBlocks))`). It can be either of RISC0, SP1 or SGX with certain hardcoded probabilities.
+The ZK tiers are generally not enforced and can always be contested by the higher Guardian tiers.
+
+In the case of a block being proposed by the `DAO_FALLBACK_PROPOSER` (the ProverSetProxy contract that is used by Taiko and proposes almost all batches), the **minimum proof tier** is determined pseudorandomly at the time of a batch proposal based on a hash depending on the number of blocks in the batch (`keccak256(abi.encode("TAIKO_DIFFICULTY", local.b.numBlocks))`). It can be either of RISC0, SP1 or SGX with certain hardcoded probabilities.
 
 Current probabilities assuming a uniformly random input (keccak256) to the function and the dao fallback proposer:
 - RISC0: 0.5% or 1/200
