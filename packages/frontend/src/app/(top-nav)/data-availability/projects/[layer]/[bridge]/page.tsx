@@ -16,6 +16,16 @@ interface Props {
   }>
 }
 
+export const revalidate = 600
+export async function generateStaticParams() {
+  return daLayers.flatMap((layer) =>
+    layer.bridges.map((bridge) => ({
+      layer: layer.display.slug,
+      bridge: bridge.display.slug,
+    })),
+  )
+}
+
 export async function generateMetadata(props: Props) {
   const params = await props.params
   const layer = daLayers.find((layer) => layer.display.slug === params.layer)

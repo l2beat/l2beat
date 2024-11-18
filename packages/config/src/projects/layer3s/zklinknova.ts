@@ -484,11 +484,13 @@ export const zklinknova: Layer3 = {
       },
     ],
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.EXTERNAL],
-    bridge: DA_BRIDGES.NONE,
-    mode: DA_MODES.STATE_DIFFS_COMPRESSED,
-  }),
+  dataAvailability: [
+    addSentimentToDataAvailability({
+      layers: [DA_LAYERS.EXTERNAL],
+      bridge: DA_BRIDGES.NONE,
+      mode: DA_MODES.STATE_DIFFS_COMPRESSED,
+    }),
+  ],
   contracts: {
     addresses: [
       lineaDiscovery.getContractDetails('L1ERC20Bridge', {

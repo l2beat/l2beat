@@ -299,6 +299,13 @@ export const starknet: Layer2 = {
         sinceTimestamp: new UnixTime(1652101033),
         tokens: ['DAI'],
         source: 'external',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'Canonically (external escrow)',
+            },
+          ],
+        },
         description:
           'DAI Vault for custom DAI Gateway managed by MakerDAO.' +
           ' ' +
@@ -340,6 +347,13 @@ export const starknet: Layer2 = {
           escrowWSTETHMaxTotalBalanceString,
         upgradableBy: ['BridgeMultisig'],
         source: 'external',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'Canonically (external escrow)',
+            },
+          ],
+        },
         upgradeDelay: formatSeconds(escrowWSTETHDelaySeconds),
       }),
       discovery.getEscrowDetails({
@@ -744,11 +758,13 @@ export const starknet: Layer2 = {
       },
     ],
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
-    bridge: DA_BRIDGES.ENSHRINED,
-    mode: DA_MODES.STATE_DIFFS,
-  }),
+  dataAvailability: [
+    addSentimentToDataAvailability({
+      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
+      bridge: DA_BRIDGES.ENSHRINED,
+      mode: DA_MODES.STATE_DIFFS,
+    }),
+  ],
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,

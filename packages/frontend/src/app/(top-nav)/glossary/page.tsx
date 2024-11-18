@@ -40,7 +40,7 @@ export default function Page() {
         </div>
       </FullPageHeader>
       <FullPageHeader
-        className="sticky top-0 z-10 py-8 lg:pt-14"
+        className="sticky top-0 z-10 py-8 md:py-8 lg:pt-14"
         contentWrapperClassName="block"
         as="div"
       >

@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { Layer2, layer2s } from '../../../layer2s'
 import { Layer3, layer3s } from '../../../layer3s'
 import { toUsedInProject } from './to-used-in-project'
@@ -11,10 +12,16 @@ export function linkByDA(where: {
   bridge?: (value: string | undefined) => boolean | undefined
 }) {
   const filterFn = ({ dataAvailability }: Layer2 | Layer3) => {
-    return where.bridge
-      ? where.layer(dataAvailability?.layer.value) &&
-          where.bridge(dataAvailability?.bridge.value)
-      : where.layer(dataAvailability?.layer.value)
+    const now = UnixTime.now()
+    const latestEntry = dataAvailability?.find(
+      (entry) =>
+        (!entry.sinceTimestamp || entry.sinceTimestamp.lte(now)) &&
+        (!entry.untilTimestamp || entry.untilTimestamp.gt(now)),
+    )
+    const layerResult = where.layer(latestEntry?.layer.value)
+    return (
+      layerResult && (!where.bridge || where.bridge(latestEntry?.bridge.value))
+    )
   }
 
   return toUsedInProject(

@@ -12,6 +12,7 @@ import {
   type ProjectsChangeReport,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
+import { getCurrentEntry } from '../../utils/get-current-entry'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
@@ -58,6 +59,7 @@ function getScalingLivenessEntry(
   isVerified: boolean,
   liveness: LivenessProject,
 ) {
+  const dataAvailability = getCurrentEntry(project.dataAvailability)
   return {
     ...getCommonScalingEntry({
       project,
@@ -72,7 +74,7 @@ function getScalingLivenessEntry(
     data: getLivenessData(liveness, project),
     explanation: project.display.liveness?.explanation,
     anomalies: toAnomalyIndicatorEntries(liveness.anomalies ?? []),
-    dataAvailabilityMode: project.dataAvailability?.mode,
+    dataAvailabilityMode: dataAvailability?.mode,
   }
 }
 

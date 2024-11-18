@@ -413,11 +413,9 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
       'FINALIZATION_PERIOD_SECONDS',
     )
 
-  const architectureImage = templateVars.discovery.hasContract(
-    'SuperchainConfig',
-  )
-    ? 'bedrock-superchain'
-    : 'opstack'
+  // 4 cases: Optimium, Optimium + Superchain, Rollup, Rollup + Superchain
+  // archi images defined locally in the project.ts take precedence over this one
+  const architectureImage = `opstack-${daProvider !== undefined ? 'optimium' : 'rollup'}${templateVars.discovery.hasContract('SuperchainConfig') ? '-superchain' : ''}`
 
   return {
     type: 'layer2',
@@ -530,7 +528,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
             ]),
       finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
-    dataAvailability:
+    dataAvailability: [
       daProvider !== undefined
         ? addSentimentToDataAvailability({
             layers: daProvider.fallback
@@ -548,6 +546,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
             bridge: DA_BRIDGES.ENSHRINED,
             mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
           }),
+    ],
     riskView: {
       stateValidation: {
         ...RISK_VIEW.STATE_NONE,
@@ -835,7 +834,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
               },
             )
         : templateVars.stage,
-    dataAvailability:
+    dataAvailability: [
       daProvider !== undefined
         ? addSentimentToDataAvailability({
             layers: daProvider.fallback
@@ -853,6 +852,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
             bridge: DA_BRIDGES.ENSHRINED,
             mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
           }),
+    ],
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: [

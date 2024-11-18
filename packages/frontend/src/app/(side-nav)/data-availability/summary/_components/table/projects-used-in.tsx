@@ -1,11 +1,11 @@
 import { type UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
 import Image from 'next/image'
-import Link from 'next/link'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
+import { LinkWithOnHoverPrefetch } from '~/components/link/link-with-on-hover-prefetch'
 import { cn } from '~/utils/cn'
 
 interface Props {
@@ -65,7 +65,10 @@ export function ProjectsUsedIn({
       {cappedProjects.map((project) => {
         return (
           <Tooltip key={project.slug}>
-            <Link href={`/scaling/projects/${project.slug}`} className="size-5">
+            <LinkWithOnHoverPrefetch
+              href={`/scaling/projects/${project.slug}`}
+              className="size-5"
+            >
               <TooltipTrigger>
                 <Image
                   width={20}
@@ -74,7 +77,7 @@ export function ProjectsUsedIn({
                   alt={`${project.name} logo`}
                 />
               </TooltipTrigger>
-            </Link>
+            </LinkWithOnHoverPrefetch>
             <TooltipContent>{project.name}</TooltipContent>
           </Tooltip>
         )

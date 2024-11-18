@@ -5,6 +5,7 @@ import { getScalingRiskEntries } from '~/server/features/scaling/risks/get-scali
 import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
 import { ScalingRiskTables } from './_components/scaling-risk-tables'
 
+export const revalidate = 600
 export const metadata = getDefaultMetadata({
   openGraph: {
     url: '/scaling/risk',

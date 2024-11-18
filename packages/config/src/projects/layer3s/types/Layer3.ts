@@ -2,7 +2,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   ChainConfig,
-  DataAvailabilityWithSentiment,
+  DataAvailabilityHistory,
   KnowledgeNugget,
   Layer3Provider,
   Milestone,
@@ -46,7 +46,7 @@ export interface Layer3 {
   /** Rollup stage */
   stage?: StageConfig
   /** Data availability of scaling project */
-  dataAvailability?: DataAvailabilityWithSentiment
+  dataAvailability?: DataAvailabilityHistory
   /** Deep dive into layer3 technology */
   technology: ScalingProjectTechnology
   /** Open-source node details */

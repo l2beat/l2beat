@@ -19,6 +19,11 @@ const meta = {
       </HighlightableLinkContextProvider>
     ),
   ],
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+    },
+  },
 } satisfies Meta<typeof ContractsSection>
 export default meta
 

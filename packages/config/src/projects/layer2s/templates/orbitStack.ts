@@ -664,6 +664,20 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     }
   }
 
+  const fastConfirmer =
+    templateVars.discovery.getContractValueOrUndefined<EthereumAddress>(
+      'RollupProxy',
+      'anyTrustFastConfirmer',
+    ) ?? EthereumAddress.ZERO
+
+  const existFastConfirmer = fastConfirmer !== EthereumAddress.ZERO
+
+  const architectureImage = existFastConfirmer
+    ? 'orbit-optimium-fastconfirm'
+    : postsToExternalDA
+      ? 'orbit-optimium'
+      : 'orbit-rollup'
+
   return {
     type: 'layer3',
     ...orbitStackCommon(
@@ -673,6 +687,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     ),
     hostChain: templateVars.hostChain,
     display: {
+      architectureImage,
       stateValidationImage: 'orbit',
       purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       ...templateVars.display,
@@ -715,32 +730,34 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
               rollupNodeLink: templateVars.nodeSourceLink,
             },
           )),
-    dataAvailability: postsToExternalDA
-      ? (() => {
-          const DAC = templateVars.discovery.getContractValue<{
-            membersCount: number
-            requiredSignatures: number
-          }>('SequencerInbox', 'dacKeyset')
-          const { membersCount, requiredSignatures } = DAC
+    dataAvailability: [
+      postsToExternalDA
+        ? (() => {
+            const DAC = templateVars.discovery.getContractValue<{
+              membersCount: number
+              requiredSignatures: number
+            }>('SequencerInbox', 'dacKeyset')
+            const { membersCount, requiredSignatures } = DAC
 
-          return addSentimentToDataAvailability({
-            layers: [DA_LAYERS.DAC],
-            bridge: DA_BRIDGES.DAC_MEMBERS({
-              membersCount,
-              requiredSignatures,
-            }),
+            return addSentimentToDataAvailability({
+              layers: [DA_LAYERS.DAC],
+              bridge: DA_BRIDGES.DAC_MEMBERS({
+                membersCount,
+                requiredSignatures,
+              }),
+              mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+            })
+          })()
+        : addSentimentToDataAvailability({
+            layers: [
+              templateVars.usesBlobs
+                ? DA_LAYERS.ETH_BLOBS_OR_CALLLDATA
+                : DA_LAYERS.ETH_CALLDATA,
+            ],
+            bridge: DA_BRIDGES.ENSHRINED,
             mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-          })
-        })()
-      : addSentimentToDataAvailability({
-          layers: [
-            templateVars.usesBlobs
-              ? DA_LAYERS.ETH_BLOBS_OR_CALLLDATA
-              : DA_LAYERS.ETH_CALLDATA,
-          ],
-          bridge: DA_BRIDGES.ENSHRINED,
-          mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-        }),
+          }),
+    ],
     stackedRiskView: getStackedRisks(),
     riskView,
     config: {
@@ -822,10 +839,25 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     templateVars.display.category ??
     (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup')
 
+  const fastConfirmer =
+    templateVars.discovery.getContractValueOrUndefined<EthereumAddress>(
+      'RollupProxy',
+      'anyTrustFastConfirmer',
+    ) ?? EthereumAddress.ZERO
+
+  const existFastConfirmer = fastConfirmer !== EthereumAddress.ZERO
+
+  const architectureImage = existFastConfirmer
+    ? 'orbit-optimium-fastconfirm'
+    : postsToExternalDA
+      ? 'orbit-optimium'
+      : 'orbit-rollup'
+
   return {
     type: 'layer2',
     ...orbitStackCommon(templateVars, ETHEREUM_EXPLORER_URL, 12),
     display: {
+      architectureImage,
       stateValidationImage: 'orbit',
       purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       warning:
@@ -883,32 +915,34 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
               rollupNodeLink: templateVars.nodeSourceLink,
             },
           )),
-    dataAvailability: postsToExternalDA
-      ? (() => {
-          const DAC = templateVars.discovery.getContractValue<{
-            membersCount: number
-            requiredSignatures: number
-          }>('SequencerInbox', 'dacKeyset')
-          const { membersCount, requiredSignatures } = DAC
+    dataAvailability: [
+      postsToExternalDA
+        ? (() => {
+            const DAC = templateVars.discovery.getContractValue<{
+              membersCount: number
+              requiredSignatures: number
+            }>('SequencerInbox', 'dacKeyset')
+            const { membersCount, requiredSignatures } = DAC
 
-          return addSentimentToDataAvailability({
-            layers: [DA_LAYERS.DAC],
-            bridge: DA_BRIDGES.DAC_MEMBERS({
-              membersCount,
-              requiredSignatures,
-            }),
+            return addSentimentToDataAvailability({
+              layers: [DA_LAYERS.DAC],
+              bridge: DA_BRIDGES.DAC_MEMBERS({
+                membersCount,
+                requiredSignatures,
+              }),
+              mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+            })
+          })()
+        : addSentimentToDataAvailability({
+            layers: [
+              templateVars.usesBlobs
+                ? DA_LAYERS.ETH_BLOBS_OR_CALLLDATA
+                : DA_LAYERS.ETH_CALLDATA,
+            ],
+            bridge: DA_BRIDGES.ENSHRINED,
             mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-          })
-        })()
-      : addSentimentToDataAvailability({
-          layers: [
-            templateVars.usesBlobs
-              ? DA_LAYERS.ETH_BLOBS_OR_CALLLDATA
-              : DA_LAYERS.ETH_CALLDATA,
-          ],
-          bridge: DA_BRIDGES.ENSHRINED,
-          mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-        }),
+          }),
+    ],
     riskView: {
       stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
         ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(

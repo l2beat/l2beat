@@ -10,6 +10,7 @@ import { ScalingFilterContextProvider } from '../_components/scaling-filter-cont
 import { ChartTabs } from './_components/chart-tabs'
 import { ScalingSummaryTables } from './_components/scaling-summary-tables'
 
+export const revalidate = 600
 export const metadata = getDefaultMetadata({
   openGraph: {
     url: '/scaling/summary',
@@ -36,6 +37,7 @@ export default async function Page() {
       filter: { type: 'all' },
     }),
   ])
+
   return (
     <HydrateClient>
       <MainPageHeader>Summary</MainPageHeader>

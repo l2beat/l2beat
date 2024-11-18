@@ -16,10 +16,6 @@ import {
   notUndefined,
 } from '@l2beat/shared-pure'
 import { uniqBy } from 'lodash'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
 import { env } from '~/env'
 import { getLatestAmountForConfigurations } from '../breakdown/get-latest-amount-for-configurations'
 import { getLatestPriceForConfigurations } from '../breakdown/get-latest-price-for-configurations'
@@ -42,60 +38,55 @@ export async function getTokensForProject(
   project: Layer2 | Layer3 | Bridge,
 ): Promise<ProjectTokens> {
   if (env.MOCK) {
-    return toDisplayableTokens(project.id, getMockTokensForProject())
+    return toDisplayableTokens(project.id, getMockTokensDataForProject())
   }
-  noStore()
-  const cachedTokens = await getCachedTokensForProject(project)
+  const cachedTokens = await getTokensDataForProject(project)
   return toDisplayableTokens(project.id, cachedTokens)
 }
 
-const getCachedTokensForProject = cache(
-  async (
-    project: Layer2 | Layer3 | Bridge,
-  ): Promise<Record<ProjectTokenSource, AssetId[]>> => {
-    const backendProject = toBackendProject(project)
-    const configMapping = getConfigMapping(backendProject)
-    const targetTimestamp = UnixTime.now().toStartOf('hour').add(-2, 'hours')
+async function getTokensDataForProject(
+  project: Layer2 | Layer3 | Bridge,
+): Promise<Record<ProjectTokenSource, AssetId[]>> {
+  const backendProject = toBackendProject(project)
+  const configMapping = getConfigMapping(backendProject)
+  const targetTimestamp = UnixTime.now().toStartOf('hour').add(-2, 'hours')
 
-    const [priceConfigs, amountConfigs] = await Promise.all([
-      getLatestPriceForConfigurations(configMapping.prices, targetTimestamp),
-      getLatestAmountForConfigurations(configMapping.amounts, targetTimestamp),
-    ])
+  const [priceConfigs, amountConfigs] = await Promise.all([
+    getLatestPriceForConfigurations(configMapping.prices, targetTimestamp),
+    getLatestAmountForConfigurations(configMapping.amounts, targetTimestamp),
+  ])
 
-    const pricesMap = new Map(
-      priceConfigs.prices.map((x) => [x.configId, x.priceUsd]),
-    )
+  const pricesMap = new Map(
+    priceConfigs.prices.map((x) => [x.configId, x.priceUsd]),
+  )
 
-    const withUsdValue = amountConfigs.amounts
-      .map((a) => {
-        const config = configMapping.getAmountConfig(a.configId)
-        const amountAsNumber = asNumber(a.amount, config.decimals)
-        const priceConfig = configMapping.getPriceConfigFromAmountConfig(config)
-        if (priceConfigs.excluded.has(priceConfig.configId)) {
-          return undefined
-        }
-        const price = pricesMap.get(priceConfig.configId)
-        assert(price, 'Price not found for id ' + priceConfig.configId)
+  const withUsdValue = amountConfigs.amounts
+    .map((a) => {
+      const config = configMapping.getAmountConfig(a.configId)
+      const amountAsNumber = asNumber(a.amount, config.decimals)
+      const priceConfig = configMapping.getPriceConfigFromAmountConfig(config)
+      if (priceConfigs.excluded.has(priceConfig.configId)) {
+        return undefined
+      }
+      const price = pricesMap.get(priceConfig.configId)
+      assert(price, 'Price not found for id ' + priceConfig.configId)
 
-        return {
-          assetId: priceConfig.assetId,
-          source: config.source,
-          usdValue: amountAsNumber * price,
-        }
-      })
-      .filter(notUndefined)
+      return {
+        assetId: priceConfig.assetId,
+        source: config.source,
+        usdValue: amountAsNumber * price,
+      }
+    })
+    .filter(notUndefined)
 
-    withUsdValue.sort((a, b) => b.usdValue - a.usdValue)
+  withUsdValue.sort((a, b) => b.usdValue - a.usdValue)
 
-    const unique = uniqBy(withUsdValue, (e) => e.assetId.toString())
+  const unique = uniqBy(withUsdValue, (e) => e.assetId.toString())
 
-    return groupBySource(unique)
-  },
-  ['topTokensForProjectV2'],
-  { revalidate: 60 * UnixTime.MINUTE },
-)
+  return groupBySource(unique)
+}
 
-function getMockTokensForProject(): Record<ProjectTokenSource, AssetId[]> {
+function getMockTokensDataForProject(): Record<ProjectTokenSource, AssetId[]> {
   return {
     canonical: [AssetId.ETH],
     native: [

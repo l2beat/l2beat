@@ -1,8 +1,8 @@
 'use client'
+import { useState } from 'react'
 import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
 import { INFINITY } from '~/consts/characters'
-import { useCookieState } from '~/hooks/use-cookie-state'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { api } from '~/trpc/react'
@@ -24,7 +24,7 @@ export function BridgesTvlChart() {
     'bridges-summary-unit',
     'usd',
   )
-  const [timeRange, setTimeRange] = useCookieState('bridgesSummaryChartRange')
+  const [timeRange, setTimeRange] = useState<TvlChartRange>('1y')
 
   const { data, isLoading } = api.tvl.chart.useQuery({
     range: timeRange,
