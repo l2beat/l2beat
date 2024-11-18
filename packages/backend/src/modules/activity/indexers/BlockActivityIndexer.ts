@@ -1,5 +1,5 @@
 import { ActivityRecord } from '@l2beat/database'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
 import { ActivityIndexerDeps } from './types'
@@ -93,10 +93,6 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
       records[0].timestamp,
     )
 
-    assert(
-      deletedRows === records.length,
-      `Incorrect amount of records deleted: ${deletedRows} != ${records.length}`,
-    )
     this.logger.info('Deleted rows', { deletedRows })
 
     // we need to invalidate all data points from record
