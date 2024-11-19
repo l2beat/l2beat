@@ -1,7 +1,13 @@
+import { fastAutoLayout } from '../../controls/FastLayoutButton'
 import type { Node, State } from '../State'
-import { NODE_SPACING, NODE_WIDTH } from '../utils/constants'
+import {
+  BOTTOM_PADDING,
+  FIELD_HEIGHT,
+  HEADER_HEIGHT,
+  NODE_WIDTH,
+} from '../utils/constants'
 import { recallNodeLayout } from '../utils/storage'
-import { updateNodePositions } from '../utils/updateNodePositions'
+import { layout } from './other'
 
 export function loadNodes(
   state: State,
@@ -17,31 +23,24 @@ export function loadNodes(
   })
   toAdd.push(...createUnknownNodes([...toAdd, ...existing]))
 
-  const startX =
-    existing.length === 0
-      ? 0
-      : Math.max(...existing.map((node) => node.box.x + node.box.width)) +
-        NODE_SPACING
-
   const saved = recallNodeLayout(projectId)
-  let missing = 0
   const added = toAdd.map((node) => {
     const box = saved?.locations[node.id]
-    const x = box?.x ?? startX + (NODE_WIDTH + NODE_SPACING) * missing
-    missing++
+    const x = box?.x ?? 0
     const y = box?.y ?? 0
     const width = box?.width ?? NODE_WIDTH
+    const height =
+      HEADER_HEIGHT + node.fields.length * FIELD_HEIGHT + BOTTOM_PADDING
     const savedColor = saved?.colors?.[node.id]
     const color = typeof savedColor === 'number' ? savedColor : node.color
-    // height will be updated by updatePositions
-    return { ...node, color, box: { x, y, width, height: 0 } }
+    return { ...node, color, box: { x, y, width, height: height } }
   })
 
-  return updateNodePositions({
-    ...state,
-    projectId,
-    nodes: existing.concat(added),
-  })
+  const allNodes = existing.concat(added)
+  return layout(
+    { ...state, nodes: allNodes, projectId },
+    fastAutoLayout(allNodes),
+  )
 }
 
 function createUnknownNodes(nodes: Node[]): Node[] {

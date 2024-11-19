@@ -642,6 +642,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
           templateVars.diamondContract.name,
           'validators',
         ),
+        fromRole: true,
         description: `Addresses permissioned to call the functions to propose, execute and revert L2 batches in the ${templateVars.display.name} diamond. Usually these are addresses of proxying ValidatorTimelock contracts.`,
       },
       {
@@ -649,6 +650,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
         accounts: validators().map((v) =>
           discovery.formatPermissionedAccount(v),
         ),
+        fromRole: true,
         description:
           'Actors that are allowed to propose, execute and revert L2 batches on L1 through the ValidatorTimelock.',
       },

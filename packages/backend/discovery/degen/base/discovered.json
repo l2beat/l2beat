@@ -1,8 +1,8 @@
 {
   "name": "degen",
   "chain": "base",
-  "blockNumber": 22134218,
-  "configHash": "0x4b704cbe0effa5c187bab334faa19910708d5022d4d2cbffda1f0a52739a44cd",
+  "blockNumber": 22580502,
+  "configHash": "0x34f65ac78587c73a86da257c0c460cbe87415de33379e44e44e13d162fa538cd",
   "contracts": [
     {
       "name": "Inbox",
@@ -139,7 +139,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 31698,
+        "batchCount": 31721,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xa3582189403F67a9CDB1CE0Ac066c954FFd3f205"],
         "bridge": "0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C",
@@ -169,7 +169,7 @@
         "rollup": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 144766,
+        "totalDelayedMessagesRead": 148009,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -288,6 +288,7 @@
     {
       "name": "DegenMultisig",
       "address": "0x871e290d5447b958131F6d44f915F10032436ee6",
+      "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
         "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
@@ -368,6 +369,7 @@
           "target": "0xaA3A7A2ec2477A61082E1C41a2c6710587917028"
         }
       ],
+      "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1730411695,
       "values": {
         "$immutable": false,
@@ -382,17 +384,9 @@
         "$threshold": 3,
         "domainSeparator": "0xfe2b5ffd0f201b89aa6e13b5aa1f580f9bb3ce92c06840de986217abbe3cdd9d",
         "getChainId": 8453,
-        "getOwners": [
-          "0x39CF304731099e756204219BF0a8cCc4738dE9dD",
-          "0x3f0030b9Ca695Abd41b2B619F3298e172e4FCAD6",
-          "0x2e42cEfC761e64Bf4442694220d31C2464a6EE21",
-          "0x5EABE7f6673311EdD1Ad17A76ce148c2Bb56aF01",
-          "0xaCEF7482b54a57F50b1CD8c99d1dC1964202A063"
-        ],
-        "getThreshold": 3,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 2,
+        "nonce": 3,
         "VERSION": "1.4.1"
       },
       "derivedName": "SafeL2"
@@ -570,12 +564,12 @@
         "confirmPeriodBlocks": 241920,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1541,
+        "firstUnresolvedNode": 1562,
         "inbox": "0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7",
         "isERC20Enabled": false,
         "lastStakeBlock": 12468814,
-        "latestConfirmed": 1540,
-        "latestNodeCreated": 1551,
+        "latestConfirmed": 1561,
+        "latestNodeCreated": 1572,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xe63ddb12FBb6211a73F12a4367b10dA0834B82da",
@@ -644,6 +638,32 @@
           }
         }
       ]
+    },
+    {
+      "name": "OrbitERC20OFTAdapter",
+      "address": "0xDb8E759859058952c34953c8469f464109826e52",
+      "sourceHashes": [
+        "0xa6648e861cb9df5f8a3d15fc05c8f842f7f8a47136470f83c5d452f2b4eca4e6"
+      ],
+      "sinceTimestamp": 1729063511,
+      "values": {
+        "$immutable": true,
+        "approvalRequired": true,
+        "composeMsgSender": "0xDb8E759859058952c34953c8469f464109826e52",
+        "decimalConversionRate": 1000000000000,
+        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
+        "msgInspector": "0x0000000000000000000000000000000000000000",
+        "oApp": "0xDb8E759859058952c34953c8469f464109826e52",
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
+        "owner": "0x3C12B77aE8B7DD1FEB63D1D6a2A819AcdA0a41d2",
+        "preCrime": "0x0000000000000000000000000000000000000000",
+        "SEND": 1,
+        "SEND_AND_CALL": 2,
+        "sharedDecimals": 6,
+        "token": "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed"
+      },
+      "derivedName": "OrbitERC20OFTAdapter"
     },
     {
       "name": "Outbox",
@@ -744,13 +764,16 @@
           "0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7",
           "0x766DD3A13d17C6D175975C89225bde89F052dBc4"
         ],
-        "allowedOutboxList": ["0xe63ddb12FBb6211a73F12a4367b10dA0834B82da"],
-        "delayedMessageCount": 144915,
+        "allowedOutboxList": [
+          "0xe63ddb12FBb6211a73F12a4367b10dA0834B82da",
+          "0xDb8E759859058952c34953c8469f464109826e52"
+        ],
+        "delayedMessageCount": 148019,
         "nativeToken": "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed",
         "rollup": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
         "sequencerInbox": "0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221",
-        "sequencerMessageCount": 31698,
-        "sequencerReportedSubMessageCount": 24462454
+        "sequencerMessageCount": 31721,
+        "sequencerReportedSubMessageCount": 24612010
       },
       "derivedName": "ERC20Bridge"
     },
@@ -823,6 +846,10 @@
     },
     { "address": "0x2e42cEfC761e64Bf4442694220d31C2464a6EE21" },
     { "address": "0x39CF304731099e756204219BF0a8cCc4738dE9dD" },
+    {
+      "name": "OftAdapterEOA",
+      "address": "0x3C12B77aE8B7DD1FEB63D1D6a2A819AcdA0a41d2"
+    },
     { "address": "0x3f0030b9Ca695Abd41b2B619F3298e172e4FCAD6" },
     { "address": "0x5EABE7f6673311EdD1Ad17A76ce148c2Bb56aF01" },
     { "address": "0x690f4e2f19717A06E1C146B2dCE68c2d23e36f4c" },
@@ -1439,6 +1466,61 @@
       "event UpgradedSecondary(address indexed implementation)",
       "function initializeProxy(tuple(uint64 confirmPeriodBlocks, uint64 extraChallengeTimeBlocks, address stakeToken, uint256 baseStake, bytes32 wasmModuleRoot, address owner, address loserStakeEscrow, uint256 chainId, string chainConfig, uint64 genesisBlockNum, tuple(uint256 delayBlocks, uint256 futureBlocks, uint256 delaySeconds, uint256 futureSeconds) sequencerInboxMaxTimeVariation) config, tuple(address bridge, address sequencerInbox, address inbox, address outbox, address rollupEventInbox, address challengeManager, address rollupAdminLogic, address rollupUserLogic, address validatorUtils, address validatorWalletCreator) connectedContracts)"
     ],
+    "0xDb8E759859058952c34953c8469f464109826e52": [
+      "constructor(address _token, address _layerZeroEndpoint, address _owner, address _bridge)",
+      "error InvalidDelegate()",
+      "error InvalidEndpointCall()",
+      "error InvalidLocalDecimals()",
+      "error InvalidOptions(bytes options)",
+      "error LzTokenUnavailable()",
+      "error NoPeer(uint32 eid)",
+      "error NotEnoughNative(uint256 msgValue)",
+      "error OnlyEndpoint(address addr)",
+      "error OnlyPeer(uint32 eid, bytes32 sender)",
+      "error OnlySelf()",
+      "error SimulationResult(bytes result)",
+      "error SlippageExceeded(uint256 amountLD, uint256 minAmountLD)",
+      "event EnforcedOptionSet(tuple(uint32 eid, uint16 msgType, bytes options)[] _enforcedOptions)",
+      "event MsgInspectorSet(address inspector)",
+      "event OFTReceived(bytes32 indexed guid, uint32 srcEid, address indexed toAddress, uint256 amountReceivedLD)",
+      "event OFTSent(bytes32 indexed guid, uint32 dstEid, address indexed fromAddress, uint256 amountSentLD, uint256 amountReceivedLD)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PeerSet(uint32 eid, bytes32 peer)",
+      "event PreCrimeSet(address preCrimeAddress)",
+      "function SEND() view returns (uint16)",
+      "function SEND_AND_CALL() view returns (uint16)",
+      "function allowInitializePath(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) origin) view returns (bool)",
+      "function approvalRequired() pure returns (bool)",
+      "function combineOptions(uint32 _eid, uint16 _msgType, bytes _extraOptions) view returns (bytes)",
+      "function composeMsgSender() view returns (address sender)",
+      "function decimalConversionRate() view returns (uint256)",
+      "function endpoint() view returns (address)",
+      "function enforcedOptions(uint32 eid, uint16 msgType) view returns (bytes enforcedOption)",
+      "function isPeer(uint32 _eid, bytes32 _peer) view returns (bool)",
+      "function lzReceive(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, bytes32 _guid, bytes _message, address _executor, bytes _extraData) payable",
+      "function lzReceiveAndRevert(tuple(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) origin, uint32 dstEid, address receiver, bytes32 guid, uint256 value, address executor, bytes message, bytes extraData)[] _packets) payable",
+      "function lzReceiveSimulate(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, bytes32 _guid, bytes _message, address _executor, bytes _extraData) payable",
+      "function msgInspector() view returns (address)",
+      "function nextNonce(uint32, bytes32) view returns (uint64 nonce)",
+      "function oApp() view returns (address)",
+      "function oAppVersion() pure returns (uint64 senderVersion, uint64 receiverVersion)",
+      "function oftVersion() pure returns (bytes4 interfaceId, uint64 version)",
+      "function owner() view returns (address)",
+      "function peers(uint32 eid) view returns (bytes32 peer)",
+      "function preCrime() view returns (address)",
+      "function quoteOFT(tuple(uint32 dstEid, bytes32 to, uint256 amountLD, uint256 minAmountLD, bytes extraOptions, bytes composeMsg, bytes oftCmd) _sendParam) view returns (tuple(uint256 minAmountLD, uint256 maxAmountLD) oftLimit, tuple(int256 feeAmountLD, string description)[] oftFeeDetails, tuple(uint256 amountSentLD, uint256 amountReceivedLD) oftReceipt)",
+      "function quoteSend(tuple(uint32 dstEid, bytes32 to, uint256 amountLD, uint256 minAmountLD, bytes extraOptions, bytes composeMsg, bytes oftCmd) _sendParam, bool _payInLzToken) view returns (tuple(uint256 nativeFee, uint256 lzTokenFee) msgFee)",
+      "function renounceOwnership()",
+      "function send(tuple(uint32 dstEid, bytes32 to, uint256 amountLD, uint256 minAmountLD, bytes extraOptions, bytes composeMsg, bytes oftCmd) _sendParam, tuple(uint256 nativeFee, uint256 lzTokenFee) _fee, address _refundAddress) payable returns (tuple(bytes32 guid, uint64 nonce, tuple(uint256 nativeFee, uint256 lzTokenFee) fee) msgReceipt, tuple(uint256 amountSentLD, uint256 amountReceivedLD) oftReceipt)",
+      "function setDelegate(address _delegate)",
+      "function setEnforcedOptions(tuple(uint32 eid, uint16 msgType, bytes options)[] _enforcedOptions)",
+      "function setMsgInspector(address _msgInspector)",
+      "function setPeer(uint32 _eid, bytes32 _peer)",
+      "function setPreCrime(address _preCrime)",
+      "function sharedDecimals() pure returns (uint8)",
+      "function token() view returns (address)",
+      "function transferOwnership(address newOwner)"
+    ],
     "0xe63ddb12FBb6211a73F12a4367b10dA0834B82da": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1478,6 +1560,7 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "orbitstack/Bridge": "0x6e309bce5a8758ba24f800f3c0135c502fd5cc22724da5165d8368377eb6c9c8",
     "orbitstack/ChallengeManager": "0xc4fbc82c5001579bb1f880d92a3510cda3dc4a65e284fc300363ce048c2fb6d7",
     "orbitstack/Inbox": "0x1938bb9de2d7f328ae3e83f2dd9f5d3c5575b599fc097cf9308bac4d5bb3e89e",

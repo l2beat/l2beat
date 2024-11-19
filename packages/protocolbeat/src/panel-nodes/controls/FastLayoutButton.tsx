@@ -7,7 +7,7 @@ export function FastLayoutButton() {
   const nodes = useStore((state) => state.nodes)
   const layout = useStore((state) => state.layout)
   return (
-    <ControlButton onClick={() => layout(autoLayout(nodes))}>
+    <ControlButton onClick={() => layout(fastAutoLayout(nodes))}>
       Fast layout
     </ControlButton>
   )
@@ -33,7 +33,7 @@ interface LayoutNode {
   force: number
 }
 
-function autoLayout(baseNodes: readonly Node[]) {
+export function fastAutoLayout(baseNodes: readonly Node[]) {
   const nodes = toLayoutNodes(baseNodes)
   const clusters = clusterNodes(nodes)
 
