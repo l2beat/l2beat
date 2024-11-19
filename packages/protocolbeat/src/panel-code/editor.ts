@@ -9,6 +9,7 @@ let initialized = false
 
 export class Editor {
   private readonly editor: monaco.editor.IStandaloneCodeEditor
+  private models: Record<string, editor.IModel | null> = {}
   private viewStates: Record<string, editor.ICodeEditorViewState | null> = {}
   private currentCode: string = ''
 
@@ -33,12 +34,18 @@ export class Editor {
   }
 
   setCode(code: string) {
-    this.viewStates[cyrb64(this.currentCode)] = this.editor.saveViewState()
+    const staleCodeHash = cyrb64(this.currentCode)
+    this.models[staleCodeHash] = this.editor.getModel()
+    this.viewStates[staleCodeHash] = this.editor.saveViewState()
 
-    this.editor.setValue(code)
     this.currentCode = code
+    const newCodeHash = cyrb64(code)
+    if (this.models[newCodeHash] === undefined) {
+      this.models[newCodeHash] = monaco.editor.createModel(code, 'solidity')
+    }
 
-    this.editor.restoreViewState(this.viewStates[cyrb64(code)] ?? null)
+    this.editor.setModel(this.models[newCodeHash] ?? null)
+    this.editor.restoreViewState(this.viewStates[newCodeHash] ?? null)
   }
 
   resize() {
