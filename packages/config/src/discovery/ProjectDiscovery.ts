@@ -483,7 +483,7 @@ export class ProjectDiscovery {
     return result
   }
 
-  getContractValueSafeInt(contractIdentifier: string, key: string): bigint {
+  getContractValueBigInt(contractIdentifier: string, key: string): bigint {
     const result = this.getContractValueOrUndefined(contractIdentifier, key)
     assert(
       isNonNullable(result),

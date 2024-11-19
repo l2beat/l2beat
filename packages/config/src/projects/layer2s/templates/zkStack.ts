@@ -194,32 +194,32 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     'EXTEND_LEGAL_VETO_THRESHOLD',
   )
   const protocolStartProposalThresholdM =
-    discovery_ZKstackGovL2.getContractValueSafeInt(
+    discovery_ZKstackGovL2.getContractValueBigInt(
       'ZkProtocolGovernor',
       'proposalThreshold',
     ) / 1000000000000000000000000n // result: M of tokens
   const tokenStartProposalThresholdM =
-    discovery_ZKstackGovL2.getContractValueSafeInt(
+    discovery_ZKstackGovL2.getContractValueBigInt(
       'ZkTokenGovernor',
       'proposalThreshold',
     ) / 1000000000000000000000000n // result: M of tokens
   const govOpsStartProposalThresholdM =
-    discovery_ZKstackGovL2.getContractValueSafeInt(
+    discovery_ZKstackGovL2.getContractValueBigInt(
       'ZkGovOpsGovernor',
       'proposalThreshold',
     ) / 1000000000000000000000000n // result: M of tokens
   const protocolQuorumM =
-    discovery_ZKstackGovL2.getContractValueSafeInt(
+    discovery_ZKstackGovL2.getContractValueBigInt(
       'ZkProtocolGovernor',
       'currentQuorum',
     ) / 1000000000000000000000000n // result: M of tokens
   const tokenQuorumM =
-    discovery_ZKstackGovL2.getContractValueSafeInt(
+    discovery_ZKstackGovL2.getContractValueBigInt(
       'ZkProtocolGovernor',
       'currentQuorum',
     ) / 1000000000000000000000000n // result: M of tokens
   const govOpsQuorumM =
-    discovery_ZKstackGovL2.getContractValueSafeInt(
+    discovery_ZKstackGovL2.getContractValueBigInt(
       'ZkProtocolGovernor',
       'currentQuorum',
     ) / 1000000000000000000000000n // result: M of tokens
