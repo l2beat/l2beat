@@ -5,8 +5,8 @@ import { expect, mockFn, mockObject } from 'earl'
 import { type ActivityRepository } from '@l2beat/database/dist/activity/repository'
 import { getActivityChart } from './get-activity-chart'
 
-describe(getActivityChart.name, () => {
-  const NOW = UnixTime.now()
+describe.only(getActivityChart.name, () => {
+  const START_OF_TODAY = UnixTime.now().toStartOf('day')
 
   const record = (
     timestamp: UnixTime,
@@ -30,16 +30,15 @@ describe(getActivityChart.name, () => {
     const result = await getActivityChart(mockDb, { type: 'all' }, '30d')
 
     expect(result.data).toEqual([])
-    expect(result.syncStatus.isSynced).toEqual(true)
   })
 
   it('aggregates data correctly for multiple projects', async () => {
     const mockRecords = [
-      record(NOW, ProjectId('arbitrum'), 100),
-      record(NOW, ProjectId('optimism'), 50),
-      record(NOW, ProjectId.ETHEREUM, 1000),
-      record(NOW.add(1, 'days'), ProjectId('arbitrum'), 200),
-      record(NOW.add(1, 'days'), ProjectId.ETHEREUM, 2000),
+      record(START_OF_TODAY.add(-2, 'days'), ProjectId('arbitrum'), 200),
+      record(START_OF_TODAY.add(-2, 'days'), ProjectId.ETHEREUM, 2000),
+      record(START_OF_TODAY.add(-1, 'days'), ProjectId('arbitrum'), 100),
+      record(START_OF_TODAY.add(-1, 'days'), ProjectId('optimism'), 50),
+      record(START_OF_TODAY.add(-1, 'days'), ProjectId.ETHEREUM, 1000),
     ]
 
     const mockDb = mockObject<Database>({
@@ -50,17 +49,23 @@ describe(getActivityChart.name, () => {
 
     const result = await getActivityChart(mockDb, { type: 'all' }, '30d')
 
+    expect(result.syncStatus.isSynced).toEqual(true)
+    expect(result.syncStatus.syncedUntil).toEqual(
+      START_OF_TODAY.add(-1, 'seconds').toNumber(),
+    )
     expect(result.data).toHaveLength(2)
-    expect(result.data[0]).toEqual([+NOW, 150, 1000]) // Combined L2 count, ETH count
-    expect(result.data[1]).toEqual([+NOW.add(1, 'days'), 200, 2000])
+    expect(result.data).toEqual([
+      [+START_OF_TODAY.add(-2, 'days'), 200, 2000],
+      [+START_OF_TODAY.add(-1, 'days'), 150, 1000],
+    ])
   })
 
   it('handles single project filter correctly', async () => {
     const mockRecords = [
-      record(NOW, ProjectId('arbitrum'), 100),
-      record(NOW, ProjectId.ETHEREUM, 1000),
-      record(NOW.add(1, 'days'), ProjectId('arbitrum'), 200),
-      record(NOW.add(1, 'days'), ProjectId.ETHEREUM, 2000),
+      record(START_OF_TODAY.add(-5, 'days'), ProjectId('arbitrum'), 200),
+      record(START_OF_TODAY.add(-5, 'days'), ProjectId.ETHEREUM, 2000),
+      record(START_OF_TODAY.add(-4, 'days'), ProjectId('arbitrum'), 100),
+      record(START_OF_TODAY.add(-4, 'days'), ProjectId.ETHEREUM, 1000),
     ]
 
     const mockDb = mockObject<Database>({
@@ -76,17 +81,23 @@ describe(getActivityChart.name, () => {
     )
 
     expect(result.data).toHaveLength(2)
-    expect(result.data[0]).toEqual([+NOW, 100, 1000])
-    expect(result.data[1]).toEqual([+NOW.add(1, 'days'), 200, 2000])
+    expect(result.data).toEqual([
+      [+START_OF_TODAY.add(-5, 'days'), 200, 2000],
+      [+START_OF_TODAY.add(-4, 'days'), 100, 1000],
+    ])
+    expect(result.syncStatus.isSynced).toEqual(false)
+    expect(result.syncStatus.syncedUntil).toEqual(
+      START_OF_TODAY.add(-4, 'days').toNumber(),
+    )
   })
 
   it('fills missing data points with zeros', async () => {
     const mockRecords = [
-      record(NOW, ProjectId('arbitrum'), 100),
-      record(NOW, ProjectId.ETHEREUM, 1000),
+      record(START_OF_TODAY.add(-3, 'days'), ProjectId('arbitrum'), 200),
+      record(START_OF_TODAY.add(-3, 'days'), ProjectId.ETHEREUM, 2000),
       // Gap in data
-      record(NOW.add(2, 'days'), ProjectId('arbitrum'), 200),
-      record(NOW.add(2, 'days'), ProjectId.ETHEREUM, 2000),
+      record(START_OF_TODAY.add(-1, 'days'), ProjectId('arbitrum'), 100),
+      record(START_OF_TODAY.add(-1, 'days'), ProjectId.ETHEREUM, 1000),
     ]
 
     const mockDb = mockObject<Database>({
@@ -98,8 +109,10 @@ describe(getActivityChart.name, () => {
     const result = await getActivityChart(mockDb, { type: 'all' }, '30d')
 
     expect(result.data).toHaveLength(3)
-    expect(result.data[0]).toEqual([+NOW, 100, 1000])
-    expect(result.data[1]).toEqual([+NOW.add(1, 'days'), 0, 0])
-    expect(result.data[2]).toEqual([+NOW.add(2, 'days'), 200, 2000])
+    expect(result.data).toEqual([
+      [+START_OF_TODAY.add(-3, 'days'), 200, 2000],
+      [+START_OF_TODAY.add(-2, 'days'), 0, 0],
+      [+START_OF_TODAY.add(-1, 'days'), 100, 1000],
+    ])
   })
 })

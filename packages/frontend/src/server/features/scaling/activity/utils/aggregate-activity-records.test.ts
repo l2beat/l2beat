@@ -2,9 +2,9 @@ import { type ActivityRecord } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { aggregateActivityEntries } from './aggregate-activity-records'
+import { aggregateActivityRecords } from './aggregate-activity-records'
 
-describe.only(aggregateActivityEntries.name, () => {
+describe(aggregateActivityRecords.name, () => {
   const NOW = UnixTime.now()
 
   it('aggregates activity records correctly', () => {
@@ -16,7 +16,7 @@ describe.only(aggregateActivityEntries.name, () => {
       record(NOW.add(1, 'days'), ProjectId.ETHEREUM, 2000),
     ]
 
-    const result = aggregateActivityEntries(records)
+    const result = aggregateActivityRecords(records)
 
     expect(result).toEqual({
       [NOW.toNumber()]: {
@@ -39,7 +39,7 @@ describe.only(aggregateActivityEntries.name, () => {
       record(NOW.add(2, 'days'), ProjectId('arbitrum'), 0),
     ]
 
-    const result = aggregateActivityEntries(records)
+    const result = aggregateActivityRecords(records)
 
     expect(result).toEqual(undefined)
   })
@@ -52,7 +52,7 @@ describe.only(aggregateActivityEntries.name, () => {
       record(NOW.add(2, 'days'), ProjectId.ETHEREUM, 2000),
     ]
 
-    const result = aggregateActivityEntries(records)
+    const result = aggregateActivityRecords(records)
 
     expect(result).toEqual({
       [NOW.add(2, 'days').toNumber()]: {
@@ -64,7 +64,7 @@ describe.only(aggregateActivityEntries.name, () => {
   })
 
   it('handles empty input array', () => {
-    const result = aggregateActivityEntries([])
+    const result = aggregateActivityRecords([])
     expect(result).toEqual(undefined)
   })
 })

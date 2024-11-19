@@ -4,7 +4,7 @@ import { type Database } from '@l2beat/database'
 import { env } from '~/env'
 import { getRangeWithMax } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generate-timestamps'
-import { aggregateActivityEntries } from './utils/aggregate-activity-records'
+import { aggregateActivityRecords } from './utils/aggregate-activity-records'
 import { getActivityProjects } from './utils/get-activity-projects'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import { getSyncStatus } from './utils/get-sync-status'
@@ -58,8 +58,7 @@ async function getActivityChartData(
     }
   }
 
-  const aggregatedEntries = aggregateActivityEntries(entries)
-
+  const aggregatedEntries = aggregateActivityRecords(entries)
   if (!aggregatedEntries || Object.values(aggregatedEntries).length === 0) {
     return { data: [], syncStatus }
   }
@@ -69,6 +68,7 @@ async function getActivityChartData(
     [new UnixTime(startTimestamp), adjustedRange[1]],
     'daily',
   )
+
   const data: [number, number, number][] = timestamps.map((timestamp) => {
     const entry = aggregatedEntries[timestamp.toNumber()]
     if (!entry) {
@@ -76,7 +76,6 @@ async function getActivityChartData(
     }
     return [+timestamp, entry.count, entry.ethereumCount]
   })
-
   return {
     data,
     syncStatus,
