@@ -140,6 +140,13 @@ export const zksyncera: Layer2 = zkStackL2({
       sinceTimestamp: new UnixTime(1698058151),
       tokens: ['wstETH'],
       source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Canonically (external escrow)',
+          },
+        ],
+      },
       description:
         'Bridge for depositing wrapped stETH (Lido) to ZKsync Era. These deposits and withdrawals do not go through the new shared BridgeHub.',
       upgradableBy: ['Lido (Lido Agent)'],
@@ -385,6 +392,7 @@ export const zksyncera: Layer2 = zkStackL2({
       accounts: validatorsOld().map((v) =>
         discovery.formatPermissionedAccount(v),
       ),
+      fromRole: true,
       description:
         'Actors that are allowed to propose, execute and revert L2 batches on L1 through the currently unused ValidatorTimelockOld.',
     },

@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { TotalCell } from '~/app/(side-nav)/scaling/summary/_components/table/total-cell'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
@@ -112,32 +113,34 @@ export const scalingSummaryColumns = [
 ]
 
 export const scalingSummaryValidiumAndOptimiumsColumns = [
-  ...scalingSummaryColumns.slice(0, 4),
-  columnHelper.accessor('dataAvailability.layer.value', {
+  ...scalingSummaryColumns.slice(0, 5),
+  columnHelper.display({
     header: 'DA Layer',
     cell: (ctx) => {
-      const value = ctx.getValue()
-      if (!value) {
+      const now = UnixTime.now()
+      const latestValue = ctx.row.original.dataAvailability?.find(
+        (entry) =>
+          (!entry.sinceTimestamp || entry.sinceTimestamp.lte(now)) &&
+          (!entry.untilTimestamp || entry.untilTimestamp.gt(now)),
+      )
+      if (!latestValue) {
         return <NoDataBadge />
       }
       return (
         <TwoRowCell>
-          <TwoRowCell.First>{ctx.getValue()}</TwoRowCell.First>
+          <TwoRowCell.First>{latestValue.layer.value}</TwoRowCell.First>
           {ctx.row.original.dataAvailability && (
-            <TwoRowCell.Second>
-              {ctx.row.original.dataAvailability.bridge.value}
-            </TwoRowCell.Second>
+            <TwoRowCell.Second>{latestValue.bridge.value}</TwoRowCell.Second>
           )}
         </TwoRowCell>
       )
     },
-    enableSorting: false,
   }),
   ...scalingSummaryColumns.slice(6),
 ]
 
 export const scalingSummaryOthersColumns = [
-  ...scalingSummaryColumns.slice(0, 4),
+  ...scalingSummaryColumns.slice(0, 5),
   columnHelper.display({
     id: 'proposer',
     header: 'Proposer',

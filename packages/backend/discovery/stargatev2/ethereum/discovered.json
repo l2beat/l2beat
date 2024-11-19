@@ -1,7 +1,7 @@
 {
   "name": "stargatev2",
   "chain": "ethereum",
-  "blockNumber": 21121935,
+  "blockNumber": 21184760,
   "configHash": "0xcfafca102a8fef0c60f0d35d20956b99c39d79582a1d98d1f869dddfa3a2538e",
   "contracts": [
     {
@@ -136,14 +136,14 @@
         "lpToken": "0xD646CD9Dff77097b454a5a148BeaE6615e3bC2e2",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "20362198706335494",
-        "poolBalance": "2582318007000000000000",
+        "plannerFee": "20529995501475077",
+        "poolBalance": "1810439404000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
-        "treasuryFee": 752601,
-        "tvl": "6000203720000000000000"
+        "treasuryFee": 742723,
+        "tvl": "6000299035000000000000"
       }
     },
     {
@@ -203,7 +203,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 812,
+        "nonce": 817,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -281,11 +281,22 @@
       "derivedName": "TokenMessaging"
     },
     {
-      "name": "",
+      "name": "ReadLib1002",
       "address": "0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D",
-      "unverified": true,
+      "sourceHashes": [
+        "0xf7800be6fd99520201da1404c35bac8a1ed826bbc2134f0a77547e0d7a74c9c1"
+      ],
       "sinceTimestamp": 1730488859,
-      "values": { "$immutable": true }
+      "values": {
+        "$immutable": true,
+        "getTreasuryAndNativeFeeCap": [
+          "0x0000000000000000000000000000000000000000",
+          450000000000000
+        ],
+        "messageLibType": 2,
+        "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
+        "version": { "major": 10, "minor": 0, "endpointVersion": 2 }
+      }
     },
     {
       "name": "StargatePoolNative",
@@ -319,14 +330,14 @@
         "lpToken": "0xfcb42A0e352a08AbD50b8EE68d01f581B6Dfd80A",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "183972780261606287",
-        "poolBalance": "3460421516000000000000",
+        "plannerFee": "206255249383634113",
+        "poolBalance": "8399990916000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x0000000000000000000000000000000000000000",
-        "treasuryFee": 2316066,
-        "tvl": "13482541055000000000000"
+        "treasuryFee": 2430594,
+        "tvl": "13075005521000000000000"
       }
     },
     {
@@ -384,14 +395,14 @@
         "lpToken": "0x17BBC9BD51A52aAf4d2CC6652630DaF4fdB358F7",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "237088216962219824",
-        "poolBalance": 10782735502483,
+        "plannerFee": "245214435497605485",
+        "poolBalance": 5776427874550,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "treasuryFee": 47977176504,
-        "tvl": 15105382533531
+        "treasuryFee": 50372877791,
+        "tvl": 16041255383943
       }
     },
     {
@@ -506,14 +517,14 @@
         "lpToken": "0x5DaAee9EF143faFF495B581e9863570e83F99d31",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "194068083639047047",
-        "poolBalance": 19095527324415,
+        "plannerFee": "203458100356200655",
+        "poolBalance": 22942615406055,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "treasuryFee": 22789183793,
-        "tvl": 19376934127722
+        "treasuryFee": 26123448427,
+        "tvl": 19158432264533
       }
     },
     {
@@ -609,7 +620,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 182,
+        "nonce": 185,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1113,6 +1124,71 @@
       "function stargateImpls(uint16 assetId) view returns (address stargateImpl)",
       "function taxi(tuple(address sender, uint32 dstEid, bytes32 receiver, uint64 amountSD, bytes composeMsg, bytes extraOptions) _params, tuple(uint256 nativeFee, uint256 lzTokenFee) _messagingFee, address _refundAddress) payable returns (tuple(bytes32 guid, uint64 nonce, tuple(uint256 nativeFee, uint256 lzTokenFee) fee) receipt)",
       "function transferOwnership(address newOwner)"
+    ],
+    "0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D": [
+      "constructor(address _endpoint, uint256 _treasuryGasLimit, uint256 _treasuryGasForFeeCap)",
+      "error DVN_InvalidDVNIdx()",
+      "error DVN_InvalidDVNOptions(uint256 cursor)",
+      "error LZ_MessageLib_OnlyEndpoint()",
+      "error LZ_RL_AtLeastOneDVN()",
+      "error LZ_RL_CannotWithdrawAltToken()",
+      "error LZ_RL_InvalidAmount(uint256 requested, uint256 available)",
+      "error LZ_RL_InvalidCmdHash()",
+      "error LZ_RL_InvalidConfigType(uint32 configType)",
+      "error LZ_RL_InvalidEid()",
+      "error LZ_RL_InvalidExecutor()",
+      "error LZ_RL_InvalidOptionalDVNCount()",
+      "error LZ_RL_InvalidOptionalDVNThreshold()",
+      "error LZ_RL_InvalidPacketHeader()",
+      "error LZ_RL_InvalidPacketVersion()",
+      "error LZ_RL_InvalidReceiver()",
+      "error LZ_RL_InvalidRequiredDVNCount()",
+      "error LZ_RL_NotTreasury()",
+      "error LZ_RL_Unsorted()",
+      "error LZ_RL_UnsupportedEid(uint32 eid)",
+      "error LZ_RL_Verifying()",
+      "error LZ_ULN_InvalidLegacyType1Option()",
+      "error LZ_ULN_InvalidLegacyType2Option()",
+      "error LZ_ULN_InvalidWorkerId(uint8 workerId)",
+      "error LZ_ULN_InvalidWorkerOptions(uint256 cursor)",
+      "error LZ_ULN_UnsupportedOptionType(uint16 optionType)",
+      "error Transfer_NativeFailed(address _to, uint256 _value)",
+      "error Transfer_ToAddressIsZero()",
+      "event DVNFeePaid(address[] requiredDVNs, address[] optionalDVNs, uint256[] fees)",
+      "event DefaultReadLibConfigsSet(tuple(uint32 eid, tuple(address executor, uint8 requiredDVNCount, uint8 optionalDVNCount, uint8 optionalDVNThreshold, address[] requiredDVNs, address[] optionalDVNs) config)[] params)",
+      "event ExecutorFeePaid(address executor, uint256 fee)",
+      "event LzTokenFeeWithdrawn(address lzToken, address receiver, uint256 amount)",
+      "event NativeFeeWithdrawn(address worker, address receiver, uint256 amount)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PayloadVerified(address dvn, bytes header, bytes32 cmdHash, bytes32 payloadHash)",
+      "event ReadLibConfigSet(address oapp, uint32 eid, tuple(address executor, uint8 requiredDVNCount, uint8 optionalDVNCount, uint8 optionalDVNThreshold, address[] requiredDVNs, address[] optionalDVNs) config)",
+      "event TreasuryNativeFeeCapSet(uint256 newTreasuryNativeFeeCap)",
+      "event TreasurySet(address treasury)",
+      "function cmdHashLookup(address oapp, uint32 eid, uint64 nonce) view returns (bytes32 cmdHash)",
+      "function commitVerification(bytes _packetHeader, bytes32 _cmdHash, bytes32 _payloadHash)",
+      "function fees(address worker) view returns (uint256 fee)",
+      "function getAppReadLibConfig(address _oapp, uint32 _remoteEid) view returns (tuple(address executor, uint8 requiredDVNCount, uint8 optionalDVNCount, uint8 optionalDVNThreshold, address[] requiredDVNs, address[] optionalDVNs))",
+      "function getConfig(uint32 _eid, address _oapp, uint32 _configType) view returns (bytes)",
+      "function getReadLibConfig(address _oapp, uint32 _remoteEid) view returns (tuple(address executor, uint8 requiredDVNCount, uint8 optionalDVNCount, uint8 optionalDVNThreshold, address[] requiredDVNs, address[] optionalDVNs) rtnConfig)",
+      "function getTreasuryAndNativeFeeCap() view returns (address, uint256)",
+      "function hashLookup(bytes32 headerHash, bytes32 cmdHash, address dvn) view returns (bytes32 payloadHash)",
+      "function isSupportedEid(uint32 _eid) view returns (bool)",
+      "function messageLibType() pure returns (uint8)",
+      "function owner() view returns (address)",
+      "function quote(tuple(uint64 nonce, uint32 srcEid, address sender, uint32 dstEid, bytes32 receiver, bytes32 guid, bytes message) _packet, bytes _options, bool _payInLzToken) view returns (tuple(uint256 nativeFee, uint256 lzTokenFee))",
+      "function renounceOwnership()",
+      "function send(tuple(uint64 nonce, uint32 srcEid, address sender, uint32 dstEid, bytes32 receiver, bytes32 guid, bytes message) _packet, bytes _options, bool _payInLzToken) returns (tuple(uint256 nativeFee, uint256 lzTokenFee), bytes)",
+      "function setConfig(address _oapp, tuple(uint32 eid, uint32 configType, bytes config)[] _params)",
+      "function setDefaultReadLibConfigs(tuple(uint32 eid, tuple(address executor, uint8 requiredDVNCount, uint8 optionalDVNCount, uint8 optionalDVNThreshold, address[] requiredDVNs, address[] optionalDVNs) config)[] _params)",
+      "function setTreasury(address _treasury)",
+      "function setTreasuryNativeFeeCap(uint256 _newTreasuryNativeFeeCap)",
+      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function verifiable(tuple(address executor, uint8 requiredDVNCount, uint8 optionalDVNCount, uint8 optionalDVNThreshold, address[] requiredDVNs, address[] optionalDVNs) _config, bytes32 _headerHash, bytes32 _cmdHash, bytes32 _payloadHash) view returns (bool)",
+      "function verify(bytes _packetHeader, bytes32 _cmdHash, bytes32 _payloadHash)",
+      "function version() pure returns (uint64 major, uint8 minor, uint8 endpointVersion)",
+      "function withdrawFee(address _to, uint256 _amount)",
+      "function withdrawLzTokenFee(address _lzToken, address _to, uint256 _amount)"
     ],
     "0x77b2043768d28E9C9aB44E1aBfC95944bcE57931": [
       "constructor(string _lpTokenName, string _lpTokenSymbol, uint8 _tokenDecimals, uint8 _sharedDecimals, address _endpoint, address _owner)",

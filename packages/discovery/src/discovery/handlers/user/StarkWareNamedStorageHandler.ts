@@ -3,7 +3,6 @@ import { utils } from 'ethers'
 import * as z from 'zod'
 
 import { getErrorMessage } from '../../../utils/getErrorMessage'
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
 import { bytes32ToContractValue } from '../utils/bytes32ToContractValue'
@@ -24,17 +23,12 @@ export class StarkWareNamedStorageHandler implements Handler {
   constructor(
     readonly field: string,
     private readonly definition: StarkWareNamedStorageHandlerDefinition,
-    readonly logger: DiscoveryLogger,
   ) {}
 
   async execute(
     provider: IProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
-    this.logger.logExecution(this.field, [
-      'Reading named storage at ',
-      JSON.stringify(this.definition.tag),
-    ])
     let storage: Bytes
     try {
       const slot = Bytes.fromHex(

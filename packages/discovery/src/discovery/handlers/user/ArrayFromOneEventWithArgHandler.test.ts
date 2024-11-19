@@ -2,7 +2,6 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
 
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { ArrayFromOneEventWithArgHandler } from './ArrayFromOneEventWithArgHandler'
 
@@ -22,7 +21,6 @@ describe(ArrayFromOneEventWithArgHandler.name, () => {
         [
           'event PermissionUpdate(address indexed user, bytes4 indexed selector, bool allowed)',
         ],
-        DiscoveryLogger.SILENT,
       )
       expect(handler.getEvent()).toEqual(
         'event PermissionUpdate(address indexed user, bytes4 indexed selector, bool allowed)',
@@ -45,7 +43,6 @@ describe(ArrayFromOneEventWithArgHandler.name, () => {
             [
               'event PermissionUpdate(address indexed user, bytes4 indexed selector, bool allowed)',
             ],
-            DiscoveryLogger.SILENT,
           ),
       ).toThrow('Cannot find a matching event for PermissionUpdate')
     })
@@ -66,7 +63,6 @@ describe(ArrayFromOneEventWithArgHandler.name, () => {
             [
               'event PermissionUpdate(address indexed user, bytes4 indexed selector, bool allowed)',
             ],
-            DiscoveryLogger.SILENT,
           ),
       ).toThrow('Cannot find a matching event for PermissionUpdate')
     })
@@ -87,7 +83,6 @@ describe(ArrayFromOneEventWithArgHandler.name, () => {
             [
               'event PermissionUpdate(address indexed user, bytes4 indexed selector, bool allowed)',
             ],
-            DiscoveryLogger.SILENT,
           ),
       ).toThrow('Cannot find a matching event for PermissionUpdate')
     })
@@ -106,7 +101,6 @@ describe(ArrayFromOneEventWithArgHandler.name, () => {
               argValue: '0x53228430',
             },
             [],
-            DiscoveryLogger.SILENT,
           ),
       ).toThrow('Invalid event abi')
     })
@@ -150,7 +144,6 @@ describe(ArrayFromOneEventWithArgHandler.name, () => {
           argValue: '0x53228430',
         },
         [],
-        DiscoveryLogger.SILENT,
       )
       const value = await handler.execute(provider, address)
       expect(value).toEqual({
@@ -191,7 +184,6 @@ describe(ArrayFromOneEventWithArgHandler.name, () => {
           argValue: '0x53228430',
         },
         [],
-        DiscoveryLogger.SILENT,
       )
       const value = await handler.execute(provider, address)
       expect(value).toEqual({
@@ -233,7 +225,6 @@ describe(ArrayFromOneEventWithArgHandler.name, () => {
           ignoreRelative: true,
         },
         [],
-        DiscoveryLogger.SILENT,
       )
       const value = await handler.execute(provider, address)
       expect(value).toEqual({

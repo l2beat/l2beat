@@ -1,5 +1,6 @@
 import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
+import { groupByMainCategories } from '~/utils/group-by-main-categories'
 import {
   type ProjectsChangeReport,
   getProjectsChangeReport,
@@ -35,7 +36,7 @@ export async function getScalingArchivedEntries() {
   const remappedForOrdering = Object.fromEntries(
     Object.entries(tvl.projects).map(([k, v]) => [k, v.breakdown.total]),
   )
-  return orderByTvl(entries, remappedForOrdering)
+  return groupByMainCategories(orderByTvl(entries, remappedForOrdering))
 }
 
 export type ScalingArchivedEntry = ReturnType<typeof getScalingArchivedEntry>

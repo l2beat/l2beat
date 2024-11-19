@@ -1,11 +1,17 @@
-import { Block, Bytes, UnixTime, json } from '@l2beat/shared-pure'
+import { Block, Bytes, EthereumAddress, json } from '@l2beat/shared-pure'
 import { generateId } from '../../tools/generateId'
-import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 import {
   ClientCore,
   ClientCoreDependencies as ClientCoreDependencies,
 } from '../ClientCore'
-import { CallParameters, EVMBlockResponse, Quantity, RPCError } from './types'
+import { BlockClient } from '../types'
+import {
+  CallParameters,
+  EVMBalanceResponse,
+  EVMBlockResponse,
+  Quantity,
+  RPCError,
+} from './types'
 
 interface Dependencies extends ClientCoreDependencies {
   url: string
@@ -13,7 +19,7 @@ interface Dependencies extends ClientCoreDependencies {
   generateId?: () => string
 }
 
-export class RpcClient2 extends ClientCore {
+export class RpcClient2 extends ClientCore implements BlockClient {
   constructor(private readonly $: Dependencies) {
     super($)
   }
@@ -21,16 +27,6 @@ export class RpcClient2 extends ClientCore {
   async getLatestBlockNumber() {
     const block = await this.getBlockWithTransactions('latest')
     return Number(block.number)
-  }
-
-  async getBlockNumberAtOrBefore(timestamp: UnixTime, start = 0) {
-    const end = await this.getLatestBlockNumber()
-    return await getBlockNumberAtOrBefore(
-      timestamp,
-      start,
-      end,
-      this.getBlockWithTransactions.bind(this),
-    )
   }
 
   /** Calls eth_getBlockByNumber on RPC, includes full transactions bodies.*/
@@ -47,6 +43,28 @@ export class RpcClient2 extends ClientCore {
       throw new Error(`Block ${blockNumber}: Error during parsing`)
     }
     return { ...block.data.result }
+  }
+
+  async getBalance(holder: EthereumAddress, blockNumber: number | 'latest') {
+    const method = 'eth_getBalance'
+    const encodedNumber =
+      blockNumber === 'latest' ? 'latest' : Quantity.encode(BigInt(blockNumber))
+    const balanceResponse = await this.query(method, [
+      holder.toString(),
+      encodedNumber,
+    ])
+
+    const balance = EVMBalanceResponse.safeParse(balanceResponse)
+    if (!balance.success) {
+      this.$.logger.warn(
+        `Cannot fetch ${holder} at block ${blockNumber}`,
+        JSON.stringify(balanceResponse),
+      )
+      throw new Error(
+        `Balance of ${holder} at block ${blockNumber}: Error during parsing`,
+      )
+    }
+    return balance.data.result
   }
 
   async call(

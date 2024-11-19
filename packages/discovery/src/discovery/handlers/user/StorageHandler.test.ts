@@ -1,8 +1,6 @@
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { utils } from 'ethers'
-
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { HandlerResult } from '../Handler'
 import { StorageHandler, StorageHandlerDefinition } from './StorageHandler'
@@ -23,14 +21,10 @@ describe(StorageHandler.name, () => {
         chain: 'foo',
       })
 
-      const handler = new StorageHandler(
-        'someName',
-        {
-          type: 'storage',
-          slot: 1,
-        },
-        DiscoveryLogger.SILENT,
-      )
+      const handler = new StorageHandler('someName', {
+        type: 'storage',
+        slot: 1,
+      })
       expect(handler.field).toEqual('someName')
 
       const result = await handler.execute(provider, address, {})
@@ -54,15 +48,11 @@ describe(StorageHandler.name, () => {
         chain: 'foo',
       })
 
-      const handler = new StorageHandler(
-        'someName',
-        {
-          type: 'storage',
-          slot: 1,
-          returnType: 'number',
-        },
-        DiscoveryLogger.SILENT,
-      )
+      const handler = new StorageHandler('someName', {
+        type: 'storage',
+        slot: 1,
+        returnType: 'number',
+      })
       expect(handler.field).toEqual('someName')
 
       const result = await handler.execute(provider, address, {})
@@ -87,15 +77,11 @@ describe(StorageHandler.name, () => {
         chain: 'foo',
       })
 
-      const handler = new StorageHandler(
-        'someName',
-        {
-          type: 'storage',
-          slot: 1,
-          returnType: 'address',
-        },
-        DiscoveryLogger.SILENT,
-      )
+      const handler = new StorageHandler('someName', {
+        type: 'storage',
+        slot: 1,
+        returnType: 'address',
+      })
       expect(handler.field).toEqual('someName')
 
       const result = await handler.execute(provider, address, {})
@@ -118,15 +104,11 @@ describe(StorageHandler.name, () => {
         chain: 'foo',
       })
 
-      const handler = new StorageHandler(
-        'someName',
-        {
-          type: 'storage',
-          slot: 1,
-          returnType: 'uint8',
-        },
-        DiscoveryLogger.SILENT,
-      )
+      const handler = new StorageHandler('someName', {
+        type: 'storage',
+        slot: 1,
+        returnType: 'uint8',
+      })
       expect(handler.field).toEqual('someName')
 
       const result = await handler.execute(provider, address, {})
@@ -140,83 +122,59 @@ describe(StorageHandler.name, () => {
 
   describe('dependencies', () => {
     it('detects no dependencies for a simple definition', () => {
-      const handler = new StorageHandler(
-        'someName',
-        {
-          type: 'storage',
-          slot: 1,
-        },
-        DiscoveryLogger.SILENT,
-      )
+      const handler = new StorageHandler('someName', {
+        type: 'storage',
+        slot: 1,
+      })
 
       expect(handler.dependencies).toEqual([])
     })
 
     it('detects no dependencies for a complex definition', () => {
-      const handler = new StorageHandler(
-        'someName',
-        {
-          type: 'storage',
-          slot: [1, '0x1234'],
-          offset: 25,
-        },
-        DiscoveryLogger.SILENT,
-      )
+      const handler = new StorageHandler('someName', {
+        type: 'storage',
+        slot: [1, '0x1234'],
+        offset: 25,
+      })
 
       expect(handler.dependencies).toEqual([])
     })
 
     it('detects dependency from the slot field', () => {
-      const handler = new StorageHandler(
-        'someName',
-        {
-          type: 'storage',
-          slot: '{{ foo }}',
-        },
-        DiscoveryLogger.SILENT,
-      )
+      const handler = new StorageHandler('someName', {
+        type: 'storage',
+        slot: '{{ foo }}',
+      })
 
       expect(handler.dependencies).toEqual(['foo'])
     })
 
     it('detects dependency from the offset field', () => {
-      const handler = new StorageHandler(
-        'someName',
-        {
-          type: 'storage',
-          slot: 1,
-          offset: '{{ foo }}',
-        },
-        DiscoveryLogger.SILENT,
-      )
+      const handler = new StorageHandler('someName', {
+        type: 'storage',
+        slot: 1,
+        offset: '{{ foo }}',
+      })
 
       expect(handler.dependencies).toEqual(['foo'])
     })
 
     it('detects dependency from the both fields at the same time', () => {
-      const handler = new StorageHandler(
-        'someName',
-        {
-          type: 'storage',
-          slot: '{{ foo }}',
-          offset: '{{ bar }}',
-        },
-        DiscoveryLogger.SILENT,
-      )
+      const handler = new StorageHandler('someName', {
+        type: 'storage',
+        slot: '{{ foo }}',
+        offset: '{{ bar }}',
+      })
 
       expect(handler.dependencies).toEqual(['bar', 'foo'])
     })
 
     it('detects from a complex slot field', () => {
-      const handler = new StorageHandler(
-        'someName',
-        {
-          type: 'storage',
-          slot: [1, '{{ foo }}', 2, '{{ baz }}'],
-          offset: '{{ bar }}',
-        },
-        DiscoveryLogger.SILENT,
-      )
+      const handler = new StorageHandler('someName', {
+        type: 'storage',
+        slot: [1, '{{ foo }}', 2, '{{ baz }}'],
+        offset: '{{ bar }}',
+      })
 
       expect(handler.dependencies).toEqual(['bar', 'foo', 'baz'])
     })
@@ -232,11 +190,7 @@ describe(StorageHandler.name, () => {
       expectedSlot?: bigint
       expectedError?: string
     }) {
-      const handler = new StorageHandler(
-        'someName',
-        options.definition,
-        DiscoveryLogger.SILENT,
-      )
+      const handler = new StorageHandler('someName', options.definition)
       let slot: bigint | number | Bytes | undefined
       const provider = mockObject<IProvider>({
         async getStorage(_passedAddress, receivedSlot) {
@@ -369,14 +323,10 @@ describe(StorageHandler.name, () => {
   })
 
   it('handles provider errors', async () => {
-    const handler = new StorageHandler(
-      'someName',
-      {
-        type: 'storage',
-        slot: 1,
-      },
-      DiscoveryLogger.SILENT,
-    )
+    const handler = new StorageHandler('someName', {
+      type: 'storage',
+      slot: 1,
+    })
 
     const provider = mockObject<IProvider>({
       async getStorage() {

@@ -6,7 +6,7 @@ import type {
 } from '@l2beat/shared-pure'
 
 import type {
-  DataAvailabilityWithSentiment,
+  DataAvailabilityHistory,
   KnowledgeNugget,
   Layer2Provider,
   Milestone,
@@ -46,7 +46,7 @@ export interface Layer2 {
   /** Technical chain configuration */
   chainConfig?: ChainConfig
   /** Data availability of scaling project */
-  dataAvailability?: DataAvailabilityWithSentiment
+  dataAvailability?: DataAvailabilityHistory
   /** Risk view values for this layer2 */
   riskView: ScalingProjectRiskView
   /** Rollup stage */

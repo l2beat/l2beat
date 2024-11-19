@@ -116,13 +116,9 @@ export const parallel: Layer2 = orbitStackL2({
     discovery.getEscrowDetails({
       address: EthereumAddress('0xa1c86E2362dba0525075622af6d5f739B1304D45'),
       tokens: '*',
+      source: 'external',
       description:
         'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
-    }),
-    discovery.getEscrowDetails({
-      address: EthereumAddress('0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d'),
-      tokens: ['WETH'],
-      description: 'Escrow for WETH sent to L2.',
     }),
   ],
   bridge: discovery.getContract('Bridge'),
@@ -135,26 +131,7 @@ export const parallel: Layer2 = orbitStackL2({
     assessCount: subtractOne,
     startBlock: 1,
   },
-  nonTemplateContracts: [
-    discovery.getContractDetails('L1GatewayRouter', {
-      description: 'Router managing token <--> gateway mapping.',
-    }),
-  ],
-  nonTemplatePermissions: [
-    {
-      name: 'RollupOwner',
-      accounts: discovery.getAccessControlRolePermission(
-        'UpgradeExecutor',
-        'EXECUTOR_ROLE',
-      ),
-      description:
-        'Can execute upgrades via the UpgradeExecutor, potentially stealing all funds.',
-    },
-    ...discovery.getMultisigPermission(
-      'ParallelMultisig',
-      'Multisig that can execute upgrades via the UpgradeExecutor.',
-    ),
-  ],
+  discoveryDrivenData: true,
   milestones: [
     {
       name: 'ArbOS v20 upgrade',

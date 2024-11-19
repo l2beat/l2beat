@@ -54,15 +54,15 @@ export const eclipse: Bridge = {
     principleOfOperation: {
       name: 'Principle of Operation',
       description:
-        'Eclipse implements a custom deposit-only bridge. There is no functionality to withdraw assets back to Ethereum.',
+        'Eclipse implements a custom permissioned bridge. Withdrawals need to be actively authorized by a Multisig.',
       references: [
         {
-          text: 'EtherBridge.sol - Etherscan source code, deposit() function, no withdraw function',
-          href: 'https://etherscan.io/address/0x338017e0f208b4eaf8cd4bbdc8bdabefd0e39be9#code',
+          text: 'CanonicalBridge.sol - Etherscan source code, authorizeWithdraw() function',
+          href: 'https://etherscan.io/address/0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11#code#F1#L183',
         },
         {
-          text: 'Mailbox.sol - Etherscan source code, receiveMessage() function calls EtherBridge',
-          href: 'https://etherscan.io/address/0x4cef0fa54dc06ce0ea198dab2f57d28a9dee712b#code',
+          text: 'Mailbox.sol - Etherscan source code, receiveMessage() function calls CanonicalBridge',
+          href: 'https://etherscan.io/address/0x4cef0fa54dc06ce0ea198dab2f57d28a9dee712b#code#F1#L199',
         },
       ],
       risks: [],

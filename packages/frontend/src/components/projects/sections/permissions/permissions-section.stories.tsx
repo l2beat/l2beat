@@ -406,6 +406,11 @@ const meta = {
       </HighlightableLinkContextProvider>
     ),
   ],
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+    },
+  },
 } satisfies Meta<typeof PermissionsSection>
 export default meta
 

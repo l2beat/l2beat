@@ -18,7 +18,6 @@ export const COINGECKO_INTERPOLATION_WINDOW_DAYS = 14
 export interface QueryResultPoint {
   value: number
   timestamp: UnixTime
-  deltaMs: number
 }
 
 export class CoingeckoQueryService {
@@ -36,14 +35,11 @@ export class CoingeckoQueryService {
     coingeckoId: CoingeckoId,
     from: UnixTime,
     to: UnixTime,
-    address?: EthereumAddress,
   ): Promise<QueryResultPoint[]> {
-    const queryResult = await this.queryHourlyPricesAndMarketCaps(
-      coingeckoId,
-      { from, to },
-      // TODO: either make it multichain or remove this fallback
-      address,
-    )
+    const queryResult = await this.queryHourlyPricesAndMarketCaps(coingeckoId, {
+      from,
+      to,
+    })
 
     return queryResult.prices
   }
@@ -51,12 +47,10 @@ export class CoingeckoQueryService {
   async getCirculatingSupplies(
     coingeckoId: CoingeckoId,
     range: { from: UnixTime; to: UnixTime },
-    address?: EthereumAddress,
   ): Promise<QueryResultPoint[]> {
     const queryResult = await this.queryHourlyPricesAndMarketCaps(
       coingeckoId,
       range,
-      address,
     )
     return zip(queryResult.prices, queryResult.marketCaps).map(
       ([price, marketCap]) => {
@@ -66,7 +60,6 @@ export class CoingeckoQueryService {
         return {
           value,
           timestamp: price.timestamp,
-          deltaMs: price.deltaMs,
         }
       },
     )
@@ -75,13 +68,11 @@ export class CoingeckoQueryService {
   async queryHourlyPricesAndMarketCaps(
     coingeckoId: CoingeckoId,
     range: { from: UnixTime; to: UnixTime },
-    address?: EthereumAddress,
   ) {
     const queryResult = await this.queryRawHourlyPricesAndMarketCaps(
       coingeckoId,
       range.from,
       range.to,
-      address,
     )
 
     const timestamps = getHourlyTimestamps(range.from, range.to)
@@ -107,7 +98,6 @@ export class CoingeckoQueryService {
     coingeckoId: CoingeckoId,
     from: UnixTime,
     to: UnixTime,
-    address?: EthereumAddress,
   ): Promise<CoinMarketChartRangeData> {
     const [adjustedFrom, adjustedTo] = adjust(from, to)
     const results: CoinMarketChartRangeData[] = []
@@ -132,7 +122,6 @@ export class CoingeckoQueryService {
         'usd',
         currentFrom,
         currentTo,
-        address,
       )
 
       results.push(data)
@@ -185,7 +174,7 @@ export class CoingeckoQueryService {
     }
   }
 
-  static getAdjustedTo(from: UnixTime, to: UnixTime): UnixTime {
+  static calculateAdjustedTo(from: UnixTime, to: UnixTime): UnixTime {
     const maxDaysForOneCall = CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL
 
     return to.gt(from.add(maxDaysForOneCall, 'days'))
@@ -217,7 +206,6 @@ export function pickClosestValues(
     result.push({
       value: points[j].value,
       timestamp: timestamps[i],
-      deltaMs: getDelta(i, j),
     })
   }
   return result

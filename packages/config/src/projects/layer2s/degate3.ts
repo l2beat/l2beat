@@ -117,7 +117,7 @@ export const degate3: Layer2 = {
       }),
     ],
     transactionApi: {
-      type: 'degate',
+      type: 'degate3',
       defaultUrl: 'https://v1-mainnet-backend.degate.com/order-book-api',
       defaultCallsPerMinute: 120,
     },
@@ -158,11 +158,13 @@ export const degate3: Layer2 = {
       stateUpdate: 'disabled',
     },
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.ETH_CALLDATA],
-    bridge: DA_BRIDGES.ENSHRINED,
-    mode: DA_MODES.STATE_DIFFS,
-  }),
+  dataAvailability: [
+    addSentimentToDataAvailability({
+      layers: [DA_LAYERS.ETH_CALLDATA],
+      bridge: DA_BRIDGES.ENSHRINED,
+      mode: DA_MODES.STATE_DIFFS,
+    }),
+  ],
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,

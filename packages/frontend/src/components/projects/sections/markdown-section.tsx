@@ -1,4 +1,5 @@
 import { type ScalingProjectReference } from '@l2beat/config'
+import { DiagramImage } from '~/components/diagram-image'
 import {
   type DiagramType,
   getDiagramParams,
@@ -36,12 +37,7 @@ export function MarkdownSection({
     <ProjectSection {...projectSectionProps}>
       {diagramParams ? (
         <figure className="mb-8 mt-4 text-center">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            className="inline max-w-full align-[unset] dark:invert"
-            src={diagramParams.src}
-            alt={diagramParams.caption}
-          />
+          <DiagramImage diagram={diagramParams} />
           <figcaption className="text-xs text-gray-500 dark:text-gray-600">
             {diagramParams.caption}
           </figcaption>

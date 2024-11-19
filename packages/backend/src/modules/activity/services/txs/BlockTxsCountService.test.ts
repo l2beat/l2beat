@@ -22,10 +22,9 @@ describe(BlockTxsCountService.name, () => {
       ])
 
       const txsCountProvider = new BlockTxsCountService({
-        type: 'rpc',
         projectId: ProjectId('a'),
         provider: client,
-        rpcUopsAnalyzer: analyzer,
+        uopsAnalyzer: analyzer,
       })
 
       const result = await txsCountProvider.getTxsCount(1, 3)
@@ -47,10 +46,9 @@ describe(BlockTxsCountService.name, () => {
 
       analyzer.calculateUops = mockFn().returnsOnce(2).returnsOnce(3)
       const txsCountProvider = new BlockTxsCountService({
-        type: 'rpc',
         projectId: ProjectId('a'),
         provider: client,
-        rpcUopsAnalyzer: analyzer,
+        uopsAnalyzer: analyzer,
         assessCount,
       })
       const result = await txsCountProvider.getTxsCount(1, 2)

@@ -53,7 +53,6 @@ export const kinto: Layer2 = orbitStackL2({
     // this is the full launch of their mainnet, should be negligible socket bridged tvl before
     minTimestampForTvl: UnixTime.fromDate(new Date('2024-05-21T00:00:01Z')),
   },
-  usesBlobs: true,
   discoveryDrivenData: true,
   isNodeAvailable: true,
   bridge: discovery.getContract('Bridge'),
@@ -399,6 +398,81 @@ export const kinto: Layer2 = orbitStackL2({
       tokens: ['ETHFI'],
       chain: 'ethereum',
     },
+    {
+      address: EthereumAddress('0x25f0D71Da51A77Ca231484eBbAD1f588A0230ef2'),
+      sinceTimestamp: new UnixTime(1721253827),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['PAXG'],
+      chain: 'ethereum',
+    },
+    {
+      address: EthereumAddress('0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF'),
+      sinceTimestamp: new UnixTime(1721253935),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['XAUt'],
+      chain: 'ethereum',
+    },
+    {
+      address: EthereumAddress('0x0fC783f611A888A2cAbC3dA482Add3215334dCc2'),
+      sinceTimestamp: new UnixTime(1721252735),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['MKR'],
+      chain: 'ethereum',
+    },
+    {
+      address: EthereumAddress('0xA2bc0DaA9BF98820632bCa0663a9616f6bC180f8'),
+      sinceTimestamp: new UnixTime(1725992651),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['SOL'],
+      chain: 'ethereum',
+    },
+    {
+      address: EthereumAddress('0xd1228C6CB94a670F30D5ACb1340a9d96aC30e6A8'),
+      sinceTimestamp: new UnixTime(1730147723),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['SPX'],
+      chain: 'ethereum',
+    },
     // {
     //   address: EthereumAddress('0x2f87464d5F5356dB350dcb302FE28040986783a7'),
     //   sinceTimestamp: new UnixTime(1719239375),
@@ -489,6 +563,22 @@ export const kinto: Layer2 = orbitStackL2({
       },
       tokens: ['weETH'],
       chain: 'base',
+    },
+    {
+      address: EthereumAddress('0x67c1869c1A105d8117938cFC6597409f59eA9af7'),
+      sinceTimestamp: new UnixTime(1730154133),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['SPX'],
+      chain: 'base',
+      includeInTotal: false,
     },
     {
       address: EthereumAddress('0x4D585D346DFB27b297C37F480a82d4cAB39491Bb'),
@@ -617,36 +707,6 @@ export const kinto: Layer2 = orbitStackL2({
       },
       tokens: ['SolvBTC'],
       chain: 'arbitrum',
-    },
-    {
-      address: EthereumAddress('0x25f0D71Da51A77Ca231484eBbAD1f588A0230ef2'),
-      sinceTimestamp: new UnixTime(1721253827),
-      source: 'external',
-      bridgedUsing: {
-        bridges: [
-          {
-            name: 'Socket bridge',
-            slug: 'socket',
-          },
-        ],
-      },
-      tokens: ['PAXG'],
-      chain: 'ethereum',
-    },
-    {
-      address: EthereumAddress('0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF'),
-      sinceTimestamp: new UnixTime(1721253935),
-      source: 'external',
-      bridgedUsing: {
-        bridges: [
-          {
-            name: 'Socket bridge',
-            slug: 'socket',
-          },
-        ],
-      },
-      tokens: ['XAUt'],
-      chain: 'ethereum',
     },
   ],
   milestones: [

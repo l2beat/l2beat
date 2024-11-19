@@ -30,7 +30,7 @@ export const redstone: Layer2 = opStackL2({
   display: {
     name: 'Redstone',
     slug: 'redstone',
-    architectureImage: 'redstone',
+    architectureImage: 'opstack-dachallenge',
     description:
       "Redstone is a chain built for onchain games and autonomous worlds running MUD. It's an implementation of OP Plasma with DA challenges.",
     links: {

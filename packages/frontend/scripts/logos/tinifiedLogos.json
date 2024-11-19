@@ -14,7 +14,7 @@
   "base.png": "4f4a76014028984ce3c6e0d89392ae11",
   "beamerbridgev2.png": "a157462b87c818a894b324595b57f1a8",
   "blast.png": "cfc545586964963182cc9d6ddc87338d",
-  "bob.png": "16661c9154995109a0927b26ff114d40",
+  "bob.png": "89c727e1eacb2c5e12fac9736613a9a9",
   "bobanetwork.png": "736fb3d9db36b53de99c6cc1a275c086",
   "canto.png": "5b856f5ac5221ae1aa1e85f376bd0cdb",
   "canvasconnect.png": "001ff21c7b547c919557b2f050c30806",
@@ -212,7 +212,7 @@
   "gpt.png": "4f1f5fc3a4360ff0a56606f5c76efa23",
   "wirex.png": "d4a5dfca3b3d2d88ee7999a8450b28f0",
   "witness.png": "c3c00460efca01baa599701bbfa93140",
-  "invm.png": "01af1efc3a9bbc9f07d67f6aa5fd08c7",
+  "inevm.png": "1bb03a8db13aa36f3af0cbdf784e8ac8",
   "aiechain.png": "8ac2c63b441947f8350698804d37df18",
   "aleph-zero.png": "b9c47b9a47c4114077d5584820b162b7",
   "alphadune.png": "4442b3599a0af168ca7edea3f16873ed",
@@ -289,5 +289,6 @@
   "t1.png": "af448b77b5d1fe2cf49ec4235d5e1f77",
   "river.png": "db7c1342044f187502ef34ef8b1f5336",
   "shape.png": "027704dfe2268b7dd32a38dc9b744317",
-  "fluence.png": "18b94a9b0462ec69387f3fdc3d962a77"
+  "fluence.png": "18b94a9b0462ec69387f3fdc3d962a77",
+  "blessnet.png": "cd2022600e8be3a9b1f817110d63e4be"
 }

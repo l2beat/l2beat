@@ -9,7 +9,10 @@ export class BlockTimestampIndexer extends ManagedChildIndexer {
     super({
       ...$,
       name: 'block_timestamp_indexer',
-      tag: $.chain,
+      tags: {
+        tag: $.chain,
+        chain: $.chain,
+      },
       updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
       configHash: $.minHeight.toString(),
     })

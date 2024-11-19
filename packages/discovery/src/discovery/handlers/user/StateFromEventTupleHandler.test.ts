@@ -2,7 +2,6 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
 
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { StateFromEventTupleHandler } from './StateFromEventTupleHandler'
 
@@ -20,7 +19,6 @@ describe(StateFromEventTupleHandler.name, () => {
           returnParam: 'params',
         },
         [EVENT],
-        DiscoveryLogger.SILENT,
       )
       expect(handler.getEvent()).toEqual(EVENT)
     })
@@ -63,7 +61,6 @@ describe(StateFromEventTupleHandler.name, () => {
           returnParam: 'params',
         },
         [],
-        DiscoveryLogger.SILENT,
       )
       const value = await handler.execute(provider, address)
 
@@ -116,7 +113,6 @@ describe(StateFromEventTupleHandler.name, () => {
           returnParam: 'params',
         },
         [],
-        DiscoveryLogger.SILENT,
       )
       const value = await handler.execute(provider, address)
 
@@ -163,7 +159,6 @@ describe(StateFromEventTupleHandler.name, () => {
           expandParam: 'config',
         },
         [],
-        DiscoveryLogger.SILENT,
       )
       const value = await handler.execute(provider, address)
 

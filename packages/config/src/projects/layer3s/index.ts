@@ -3,6 +3,7 @@ import { animechain } from './animechain'
 import { anomaly } from './anomaly'
 import { apechain } from './apechain'
 import { aviveworld } from './aviveworld'
+import { blessnet } from './blessnet'
 import { bugbuster } from './bugbuster'
 import { cheese } from './cheese'
 import { clique } from './clique'
@@ -15,7 +16,7 @@ import { educhain } from './educhain'
 import { fiefdom } from './fiefdom'
 import { ham } from './ham'
 import { hook } from './hook'
-import { invm } from './invm'
+import { inevm } from './inevm'
 import { l3x } from './l3x'
 import { lumiterra } from './lumiterra'
 import { meliora } from './meliora'
@@ -51,6 +52,7 @@ export const layer3s: Layer3[] = [
   alphadune,
   apechain,
   aviveworld,
+  blessnet,
   bugbuster,
   cheese,
   clique,
@@ -61,7 +63,7 @@ export const layer3s: Layer3[] = [
   donatuz,
   educhain,
   fiefdom,
-  invm,
+  inevm,
   ham,
   hook,
   rari,

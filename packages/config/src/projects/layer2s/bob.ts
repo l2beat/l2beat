@@ -26,21 +26,33 @@ export const bob: Layer2 = opStackL2({
       socialMedia: ['https://twitter.com/build_on_bob'],
     },
     activityDataSource: 'Blockchain RPC',
-    architectureImage: 'opstack',
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0x091dF5E1284E49fA682407096aD34cfD42B95B72'),
       tokens: ['wstETH'],
       source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Canonically (external escrow)',
+          },
+        ],
+      },
     }),
     discovery.getEscrowDetails({
       address: EthereumAddress('0x450D55a4B4136805B0e5A6BB59377c71FC4FaCBb'),
       tokens: ['USDC'],
       source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Canonically (external escrow)',
+          },
+        ],
+      },
     }),
   ],
-  usesBlobs: true,
   genesisTimestamp: new UnixTime(1712861989),
   nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN'],
   isNodeAvailable: 'UnderReview',
@@ -58,6 +70,7 @@ export const bob: Layer2 = opStackL2({
   chainConfig: {
     name: 'bob',
     chainId: 60808,
+    coingeckoPlatform: 'bob-network',
     explorerUrl: 'https://explorer.gobob.xyz',
     explorerApi: {
       url: 'https://explorer.gobob.xyz/api',

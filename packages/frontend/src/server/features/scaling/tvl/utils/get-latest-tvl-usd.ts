@@ -1,10 +1,7 @@
 import { bridges, layer2s, layer3s } from '@l2beat/config'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { groupBy, sum } from 'lodash'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
+import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
 import { db } from '~/server/database'
 import { sumValuesPerSource } from './sum-values-per-source'
@@ -18,7 +15,6 @@ export async function getProjectsLatestTvlUsd() {
   if (env.MOCK) {
     return getMockProjectsLatestTvlUsd()
   }
-  noStore()
   return getCachedProjectsLatestTvlUsd()
 }
 

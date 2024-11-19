@@ -6,9 +6,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from './tabs'
 const meta = {
   title: 'Atoms/Tabs',
   component: Tabs,
-  args: {
-    storeInSearchParams: false,
-  },
   parameters: {
     nextjs: {
       appDirectory: true,

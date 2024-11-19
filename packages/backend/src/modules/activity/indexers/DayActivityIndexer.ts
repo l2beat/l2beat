@@ -8,7 +8,10 @@ export class DayActivityIndexer extends ManagedChildIndexer {
     super({
       ...$,
       name: `activity_day_indexer`,
-      tag: $.projectId,
+      tags: {
+        tag: $.projectId,
+        project: $.projectId,
+      },
       updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
     })
 

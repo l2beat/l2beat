@@ -39,7 +39,6 @@ export const world: Layer2 = opStackL2({
   },
   discovery,
   genesisTimestamp: new UnixTime(1719432935), // OptiPortal deployed
-  usesBlobs: true,
   rpcUrl: 'https://worldchain-mainnet.g.alchemy.com/public',
   isNodeAvailable: 'UnderReview',
   associatedTokens: ['WLD'],
@@ -48,6 +47,13 @@ export const world: Layer2 = opStackL2({
       address: EthereumAddress('0x153A69e4bb6fEDBbAaF463CB982416316c84B2dB'),
       name: 'External USDC Vault',
       source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Canonically (external escrow)',
+          },
+        ],
+      },
       description: 'Custom external escrow for USDC bridged to Worldchain.',
       tokens: ['USDC'],
     }),

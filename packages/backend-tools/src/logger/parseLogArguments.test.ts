@@ -8,6 +8,8 @@ describe(parseLogArguments.name, () => {
       [],
       {
         message: undefined,
+        chain: undefined,
+        project: undefined,
         error: undefined,
         parameters: undefined,
       },
@@ -16,6 +18,8 @@ describe(parseLogArguments.name, () => {
       ['message'],
       {
         message: 'message',
+        chain: undefined,
+        project: undefined,
         error: undefined,
         parameters: undefined,
       },
@@ -25,6 +29,8 @@ describe(parseLogArguments.name, () => {
       ['foo', 'bar'],
       {
         message: 'foo',
+        chain: undefined,
+        project: undefined,
         error: undefined,
         parameters: { value: 'bar' },
       },
@@ -34,6 +40,8 @@ describe(parseLogArguments.name, () => {
       [{ message: 'message' }],
       {
         message: 'message',
+        chain: undefined,
+        project: undefined,
         error: undefined,
         parameters: undefined,
       },
@@ -43,6 +51,8 @@ describe(parseLogArguments.name, () => {
       [{ notMessage: 'message' }],
       {
         message: undefined,
+        chain: undefined,
+        project: undefined,
         error: undefined,
         parameters: { notMessage: 'message' },
       },
@@ -52,6 +62,8 @@ describe(parseLogArguments.name, () => {
       ['foo', { message: 'bar' }],
       {
         message: 'foo',
+        chain: undefined,
+        project: undefined,
         error: undefined,
         parameters: { message: 'bar' },
       },
@@ -61,6 +73,9 @@ describe(parseLogArguments.name, () => {
       [{ message: 'foo' }, 'bar'],
       {
         message: 'bar',
+
+        chain: undefined,
+        project: undefined,
         error: undefined,
         parameters: { message: 'foo' },
       },
@@ -69,6 +84,8 @@ describe(parseLogArguments.name, () => {
       ['foo', 'bar', 'baz'],
       {
         message: 'foo',
+        chain: undefined,
+        project: undefined,
         error: undefined,
         parameters: { values: ['bar', 'baz'] },
       },
@@ -77,6 +94,8 @@ describe(parseLogArguments.name, () => {
       [new Error('error')],
       {
         message: undefined,
+        chain: undefined,
+        project: undefined,
         error: new Error('error'),
         parameters: undefined,
       },
@@ -85,6 +104,8 @@ describe(parseLogArguments.name, () => {
       [new Error('foo'), new Error('bar')],
       {
         message: undefined,
+        chain: undefined,
+        project: undefined,
         error: new Error('foo'),
         parameters: { value: new Error('bar') },
       },
@@ -93,6 +114,8 @@ describe(parseLogArguments.name, () => {
       [new Error('foo'), new Error('bar'), new Error('baz')],
       {
         message: undefined,
+        chain: undefined,
+        project: undefined,
         error: new Error('foo'),
         parameters: { values: [new Error('bar'), new Error('baz')] },
       },
@@ -101,6 +124,8 @@ describe(parseLogArguments.name, () => {
       ['message', new Error('error')],
       {
         message: 'message',
+        chain: undefined,
+        project: undefined,
         error: new Error('error'),
         parameters: undefined,
       },
@@ -109,6 +134,8 @@ describe(parseLogArguments.name, () => {
       [new Error('error'), 'message'],
       {
         message: 'message',
+        chain: undefined,
+        project: undefined,
         error: new Error('error'),
         parameters: undefined,
       },
@@ -118,6 +145,8 @@ describe(parseLogArguments.name, () => {
       [{ error: new Error('error') }],
       {
         message: undefined,
+        chain: undefined,
+        project: undefined,
         error: new Error('error'),
         parameters: undefined,
       },
@@ -127,6 +156,8 @@ describe(parseLogArguments.name, () => {
       [{ notError: new Error('error') }],
       {
         message: undefined,
+        chain: undefined,
+        project: undefined,
         error: undefined,
         parameters: { notError: new Error('error') },
       },
@@ -135,6 +166,8 @@ describe(parseLogArguments.name, () => {
       ['message', new Error('error'), { foo: 'bar' }],
       {
         message: 'message',
+        chain: undefined,
+        project: undefined,
         error: new Error('error'),
         parameters: { foo: 'bar' },
       },
@@ -143,6 +176,8 @@ describe(parseLogArguments.name, () => {
       [123],
       {
         message: undefined,
+        chain: undefined,
+        project: undefined,
         error: undefined,
         parameters: { value: 123 },
       },
@@ -151,6 +186,8 @@ describe(parseLogArguments.name, () => {
       [123, 45],
       {
         message: undefined,
+        chain: undefined,
+        project: undefined,
         error: undefined,
         parameters: { values: [123, 45] },
       },
@@ -159,6 +196,8 @@ describe(parseLogArguments.name, () => {
       [[123, 45]],
       {
         message: undefined,
+        chain: undefined,
+        project: undefined,
         error: undefined,
         parameters: { value: [123, 45] },
       },
@@ -168,6 +207,8 @@ describe(parseLogArguments.name, () => {
       [123, { value: 45 }],
       {
         message: undefined,
+        chain: undefined,
+        project: undefined,
         error: undefined,
         parameters: { value: 45 },
       },
@@ -177,6 +218,8 @@ describe(parseLogArguments.name, () => {
       [1, 2, 3, { values: 42 }],
       {
         message: undefined,
+        chain: undefined,
+        project: undefined,
         error: undefined,
         parameters: { values: 42 },
       },
@@ -185,6 +228,8 @@ describe(parseLogArguments.name, () => {
       [{}],
       {
         message: undefined,
+        chain: undefined,
+        project: undefined,
         error: undefined,
         parameters: undefined,
       },
@@ -193,6 +238,8 @@ describe(parseLogArguments.name, () => {
       [{ foo: 'bar', baz: true }],
       {
         message: undefined,
+        chain: undefined,
+        project: undefined,
         error: undefined,
         parameters: { foo: 'bar', baz: true },
       },
@@ -204,6 +251,8 @@ describe(parseLogArguments.name, () => {
       ],
       {
         message: undefined,
+        chain: undefined,
+        project: undefined,
         error: undefined,
         parameters: { foo: 'bar', baz: true, x: 1, y: 2 },
       },
@@ -215,6 +264,8 @@ describe(parseLogArguments.name, () => {
       ],
       {
         message: undefined,
+        chain: undefined,
+        project: undefined,
         error: undefined,
         parameters: { foo: 'bar', baz: false, x: 1, y: 2 },
       },
@@ -223,8 +274,33 @@ describe(parseLogArguments.name, () => {
       [123, { foo: 'bar', baz: true }, { x: 4, y: 5 }],
       {
         message: undefined,
+
+        chain: undefined,
+        project: undefined,
         error: undefined,
         parameters: { foo: 'bar', baz: true, x: 4, y: 5, value: 123 },
+      },
+    ],
+    [
+      ['message', { chain: 'chain', project: 'project', x: 4, y: 5 }],
+      {
+        message: 'message',
+
+        chain: 'chain',
+        project: 'project',
+        error: undefined,
+        parameters: { x: 4, y: 5 },
+      },
+    ],
+    [
+      ['message', { chain: 'chain', project: 'project' }, { x: 4, y: 5 }],
+      {
+        message: 'message',
+
+        chain: 'chain',
+        project: 'project',
+        error: undefined,
+        parameters: { x: 4, y: 5 },
       },
     ],
   ]

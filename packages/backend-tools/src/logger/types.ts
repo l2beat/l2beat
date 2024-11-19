@@ -21,6 +21,10 @@ export interface LoggerOptions {
   logLevel: LogLevel
   service?: string
   tag?: string
+  feature?: string
+  module?: string
+  chain?: string
+  project?: string
   utc: boolean
   cwd: string
   getTime: () => Date
@@ -32,6 +36,10 @@ export interface LogEntry {
   level: LogLevel
   time: Date
   service?: string
+  feature?: string
+  module?: string
+  chain?: string
+  project?: string
   message?: string
   error?: Error
   resolvedError?: ResolvedError

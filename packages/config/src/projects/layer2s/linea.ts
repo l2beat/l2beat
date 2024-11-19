@@ -128,6 +128,13 @@ export const linea: Layer2 = {
         address: EthereumAddress('0x504A330327A089d8364C4ab3811Ee26976d388ce'),
         sinceTimestamp: new UnixTime(1691079071),
         source: 'external',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'Canonically (external escrow)',
+            },
+          ],
+        },
         tokens: ['USDC'],
       }),
       discovery.getEscrowDetails({
@@ -281,6 +288,7 @@ export const linea: Layer2 = {
   chainConfig: {
     name: 'linea',
     chainId: 59144,
+    blockscoutV2ApiUrl: 'https://api-explorer.linea.build/api/v2',
     explorerUrl: 'https://lineascan.build',
     explorerApi: {
       url: 'https://api.lineascan.build/api',
@@ -297,11 +305,13 @@ export const linea: Layer2 = {
     ],
     coingeckoPlatform: 'linea',
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
-    bridge: DA_BRIDGES.ENSHRINED,
-    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-  }),
+  dataAvailability: [
+    addSentimentToDataAvailability({
+      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
+      bridge: DA_BRIDGES.ENSHRINED,
+      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+    }),
+  ],
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,

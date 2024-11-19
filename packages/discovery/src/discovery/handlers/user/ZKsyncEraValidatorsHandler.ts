@@ -1,7 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import * as z from 'zod'
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
 
@@ -26,7 +25,6 @@ export class ZKsyncEraValidatorsHandler implements Handler {
   constructor(
     readonly field: string,
     readonly abi: string[],
-    readonly logger: DiscoveryLogger,
   ) {}
 
   async execute(

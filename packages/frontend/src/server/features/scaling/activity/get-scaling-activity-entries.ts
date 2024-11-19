@@ -6,12 +6,16 @@ import {
   type ProjectsChangeReport,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
+import { getCurrentEntry } from '../../utils/get-current-entry'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
-import { orderByStageAndPastDayTps } from '../utils/order-by-stage-and-past-day-tps'
+import {
+  orderByStageAndPastDayTps,
+  sortByTps,
+} from '../utils/order-by-stage-and-past-day-tps'
 import {
   type ActivityProjectTableData,
-  getActivityTableData,
+  getActivityTable,
 } from './get-activity-table-data'
 import { getActivityProjects } from './utils/get-activity-projects'
 
@@ -23,7 +27,7 @@ export async function getScalingActivityEntries() {
     await Promise.all([
       getProjectsVerificationStatuses(),
       getProjectsChangeReport(),
-      getActivityTableData(projects),
+      getActivityTable(projects),
     ])
 
   const ethereumData = activityData[ProjectId.ETHEREUM]
@@ -47,26 +51,32 @@ export async function getScalingActivityEntries() {
     .filter(notUndefined)
     .sort((a, b) => b.data.pastDayTps - a.data.pastDayTps)
 
-  if (env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION) {
-    const recategorisedEntries = groupByMainCategories(
-      orderByStageAndPastDayTps(entries),
-    )
+  const categorisedEntries = groupByMainCategories(
+    orderByStageAndPastDayTps(entries),
+  )
+
+  if (!env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING) {
     return {
-      type: 'recategorised' as const,
-      entries: {
-        rollups: [ethereumEntry, ...recategorisedEntries.rollups],
-        validiumsAndOptimiums: [
-          ethereumEntry,
-          ...recategorisedEntries.validiumsAndOptimiums,
-        ],
-      },
+      rollups: [ethereumEntry, ...categorisedEntries.rollups].sort(sortByTps),
+      validiumsAndOptimiums: [
+        ethereumEntry,
+        ...categorisedEntries.validiumsAndOptimiums,
+      ].sort(sortByTps),
+      others: categorisedEntries.others
+        ? [ethereumEntry, ...categorisedEntries.others].sort(sortByTps)
+        : undefined,
     }
   }
 
   return {
-    entries: [ethereumEntry, ...entries].sort(
-      (a, b) => b.data.pastDayTps - a.data.pastDayTps,
-    ),
+    rollups: [ethereumEntry, ...categorisedEntries.rollups],
+    validiumsAndOptimiums: [
+      ethereumEntry,
+      ...categorisedEntries.validiumsAndOptimiums,
+    ],
+    others: categorisedEntries.others
+      ? [ethereumEntry, ...categorisedEntries.others]
+      : undefined,
   }
 }
 
@@ -79,6 +89,7 @@ function getScalingProjectActivityEntry(
   isVerified: boolean,
   projectsChangeReport: ProjectsChangeReport,
 ) {
+  const currentDataAvailability = getCurrentEntry(project.dataAvailability)
   return {
     ...getCommonScalingEntry({
       project,
@@ -92,7 +103,7 @@ function getScalingProjectActivityEntry(
     entryType: 'activity' as const,
     dataSource: project.display.activityDataSource,
     dataAvailability: {
-      layer: project.dataAvailability?.layer,
+      layer: currentDataAvailability?.layer,
     },
     data,
   }

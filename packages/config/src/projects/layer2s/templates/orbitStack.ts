@@ -2,7 +2,13 @@ import {
   ContractParameters,
   get$Implementations,
 } from '@l2beat/discovery-types'
-import { assert, ProjectId, UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import {
+  assert,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { unionBy } from 'lodash'
@@ -26,6 +32,7 @@ import {
   ScalingProjectRiskView,
   ScalingProjectStateDerivation,
   ScalingProjectStateValidation,
+  ScalingProjectStateValidationCategory,
   ScalingProjectTechnology,
   ScalingProjectTechnologyChoice,
   ScalingProjectTransactionApi,
@@ -226,45 +233,72 @@ function defaultStateValidation(
   minimumAssertionPeriod: number,
   currentRequiredStake: number,
   challengePeriod: number,
+  existFastConfirmer: boolean = false,
 ): ScalingProjectStateValidation {
+  const categories: ScalingProjectStateValidationCategory[] = [
+    {
+      title: 'State root proposals',
+      description: `Whitelisted validators propose state roots as children of a previous state root. A state root can have multiple conflicting children. This structure forms a graph, and therefore, in the contracts, state roots are referred to as nodes. Each proposal requires a stake, currently set to ${utils.formatEther(
+        currentRequiredStake,
+      )} ETH, that can be slashed if the proposal is proven incorrect via a fraud proof. Stakes can be moved from one node to one of its children, either by calling \`stakeOnExistingNode\` or \`stakeOnNewNode\`. New nodes cannot be created faster than the minimum assertion period by the same validator, currently set to ${formatSeconds(
+        minimumAssertionPeriod,
+      )}. The oldest unconfirmed node can be confirmed if the challenge period has passed and there are no siblings, and rejected if the parent is not a confirmed node or if the challenge period has passed and no one is staked on it.`,
+      risks: [
+        {
+          category: 'Funds can be stolen if',
+          text: 'none of the whitelisted verifiers checks the published state. Fraud proofs assume at least one honest and able validator.',
+          isCritical: true,
+        },
+      ],
+      references: [
+        {
+          text: 'How is fraud proven - Arbitrum documentation FAQ',
+          href: 'https://docs.arbitrum.io/welcome/arbitrum-gentle-introduction#q-and-how-exactly-is-fraud-proven-sounds-complicated',
+        },
+      ],
+    },
+    {
+      title: 'Challenges',
+      description: `A challenge can be started between two siblings, i.e. two different state roots that share the same parent, by calling the \`startChallenge\` function. Validators cannot be in more than one challenge at the same time, meaning that the protocol operates with [partial concurrency](https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a). Since each challenge lasts ${formatSeconds(
+        challengePeriod,
+      )}, this implies that the protocol can be subject to [delay attacks](https://medium.com/offchainlabs/solutions-to-delay-attacks-on-rollups-434f9d05a07a), where a malicious actor can delay withdrawals as long as they are willing to pay the cost of losing their stakes. If the protocol is delayed attacked, the new stake requirement increases exponentially for each challenge period of delay. Challenges are played via a bisection game, where asserter and challenger play together to find the first instruction of disagreement. Such instruction is then executed onchain in the WASM OneStepProver contract to determine the winner, who then gets half of the stake of the loser. As said before, a state root is rejected only when no one left is staked on it. The protocol does not enforces valid bisections, meaning that actors can propose correct initial claim and then provide incorrect midpoints.`,
+      references: [
+        {
+          text: 'Fraud Proof Wars: Arbitrum Classic',
+          href: 'https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a',
+        },
+      ],
+    },
+  ]
+
+  if (existFastConfirmer) {
+    categories.push({
+      title: 'Fast confirmations',
+      description: `Whitelisted validators can fast-confirm state-roots after the initial ${formatSeconds(
+        minimumAssertionPeriod,
+      )} minimum assertion period has passed on a state root and skip the ${formatSeconds(
+        challengePeriod,
+      )} challenge period. This finalizes the fast-confirmed state root an permits withdrawals based on it.`,
+      risks: [
+        {
+          category: 'Funds can be stolen if',
+          text: "validators with the 'fast-confirmer' permission finalize a malicious state root before the challenge period has passed.",
+          isCritical: true,
+        },
+      ],
+      references: [
+        {
+          text: 'Fast withdrawals for AnyTrust chains - Arbitrum documentation',
+          href: 'https://docs.arbitrum.io/launch-orbit-chain/how-tos/fast-withdrawals#fast-withdrawals-for-anytrust-chains',
+        },
+      ],
+    })
+  }
+
   return {
     description:
       'Updates to the system state can be proposed and challenged by a set of whitelisted validators. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.',
-    categories: [
-      {
-        title: 'State root proposals',
-        description: `Whitelisted validators propose state roots as children of a previous state root. A state root can have multiple conflicting children. This structure forms a graph, and therefore, in the contracts, state roots are referred to as nodes. Each proposal requires a stake, currently set to ${utils.formatEther(
-          currentRequiredStake,
-        )} ETH, that can be slashed if the proposal is proven incorrect via a fraud proof. Stakes can be moved from one node to one of its children, either by calling \`stakeOnExistingNode\` or \`stakeOnNewNode\`. New nodes cannot be created faster than the minimum assertion period by the same validator, currently set to ${formatSeconds(
-          minimumAssertionPeriod,
-        )}. The oldest unconfirmed node can be confirmed if the challenge period has passed and there are no siblings, and rejected if the parent is not a confirmed node or if the challenge period has passed and no one is staked on it.`,
-        risks: [
-          {
-            category: 'Funds can be stolen if',
-            text: 'none of the whitelisted verifiers checks the published state. Fraud proofs assume at least one honest and able validator.',
-            isCritical: true,
-          },
-        ],
-        references: [
-          {
-            text: 'How is fraud proven - Arbitrum documentation FAQ',
-            href: 'https://docs.arbitrum.io/welcome/arbitrum-gentle-introduction#q-and-how-exactly-is-fraud-proven-sounds-complicated',
-          },
-        ],
-      },
-      {
-        title: 'Challenges',
-        description: `A challenge can be started between two siblings, i.e. two different state roots that share the same parent, by calling the \`startChallenge\` function. Validators cannot be in more than one challenge at the same time, meaning that the protocol operates with [partial concurrency](https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a). Since each challenge lasts ${formatSeconds(
-          challengePeriod,
-        )}, this implies that the protocol can be subject to [delay attacks](https://medium.com/offchainlabs/solutions-to-delay-attacks-on-rollups-434f9d05a07a), where a malicious actor can delay withdrawals as long as they are willing to pay the cost of losing their stakes. If the protocol is delayed attacked, the new stake requirement increases exponentially for each challenge period of delay. Challenges are played via a bisection game, where asserter and challenger play together to find the first instruction of disagreement. Such instruction is then executed onchain in the WASM OneStepProver contract to determine the winner, who then gets half of the stake of the loser. As said before, a state root is rejected only when no one left is staked on it. The protocol does not enforces valid bisections, meaning that actors can propose correct initial claim and then provide incorrect midpoints.`,
-        references: [
-          {
-            text: 'Fraud Proof Wars: Arbitrum Classic',
-            href: 'https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a',
-          },
-        ],
-      },
-    ],
+    categories,
   }
 }
 
@@ -276,6 +310,14 @@ function orbitStackCommon(
   Layer2,
   'type' | 'display' | 'config' | 'isArchived' | 'stage' | 'riskView'
 > {
+  const usesBlobs =
+    templateVars.usesBlobs ??
+    templateVars.discovery.getContractValueOrUndefined(
+      'SequencerInbox',
+      'postsBlobs',
+    ) ??
+    false
+
   const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
     templateVars.discovery,
   )
@@ -302,13 +344,11 @@ function orbitStackCommon(
       'DA badge is required for external DA',
     )
   }
-  const daBadge = templateVars.usesBlobs
-    ? Badge.DA.EthereumBlobs
-    : Badge.DA.EthereumCalldata
+  const daBadge = usesBlobs ? Badge.DA.EthereumBlobs : Badge.DA.EthereumCalldata
 
   const validators: ScalingProjectPermission = {
     name: 'Validators/Proposers',
-    accounts: templateVars.discovery.getPermissionsByRole('propose'), // Validators in Arbitrum are proposers and challengers
+    accounts: templateVars.discovery.getPermissionsByRole('validate'), // Validators in Arbitrum are proposers and challengers
     description:
       'They can submit new state roots and challenge state roots. Some of the operators perform their duties through special purpose smart contracts.',
     chain: templateVars.discovery.chain,
@@ -337,6 +377,13 @@ function orbitStackCommon(
   )
   const challengePeriodSeconds =
     challengePeriodBlocks * blockNumberOpcodeTimeSeconds
+
+  const fastConfirmer =
+    templateVars.discovery.getContractValueOrUndefined<EthereumAddress>(
+      'RollupProxy',
+      'anyTrustFastConfirmer',
+    ) ?? EthereumAddress.ZERO
+  const existFastConfirmer = fastConfirmer !== EthereumAddress.ZERO
 
   return {
     id: ProjectId(templateVars.discovery.projectName),
@@ -378,7 +425,7 @@ function orbitStackCommon(
               })
             })()
           : {
-              ...(templateVars.usesBlobs
+              ...(usesBlobs
                 ? TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA
                 : TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL),
               references: [
@@ -477,6 +524,7 @@ function orbitStackCommon(
         minimumAssertionPeriod,
         currentRequiredStake,
         challengePeriodSeconds,
+        existFastConfirmer,
       ),
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
     milestones: templateVars.milestones,
@@ -490,6 +538,18 @@ function orbitStackCommon(
 }
 
 export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
+  assert(
+    templateVars.hostChain !== 'Multiple',
+    'Unable to automatically stack risks for multiple chains, please override stackedRiskView in the template.',
+  )
+  const layer2s = require('..').layer2s as Layer2[]
+
+  const baseChain = layer2s.find((l2) => l2.id === templateVars.hostChain)
+  assert(
+    baseChain,
+    `Could not find base chain ${templateVars.hostChain} in layer2s`,
+  )
+
   const blockNumberOpcodeTimeSeconds =
     templateVars.blockNumberOpcodeTimeSeconds ?? 12 // currently only for the case of Degen Chain (built on OP stack chain which returns `block.number` based on 2 second block times, orbit host chains do not do this)
 
@@ -571,47 +631,34 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
   }
 
   const getStackedRisks = () => {
-    assert(
-      templateVars.hostChain !== 'Multiple',
-      'Unable to automatically stack risks for multiple chains, please override stackedRiskView in the template.',
-    )
-    const layer2s = require('..').layer2s as Layer2[]
-
-    const baseChainRiskView = layer2s.find(
-      (l2) => l2.id === templateVars.hostChain,
-    )?.riskView
-    assert(
-      baseChainRiskView,
-      `Could not find base chain ${templateVars.hostChain} in layer2s`,
-    )
     return {
       stateValidation:
         templateVars.stackedRiskView?.stateValidation ??
         pickWorseRisk(
           riskView.stateValidation,
-          baseChainRiskView.stateValidation,
+          baseChain.riskView.stateValidation,
         ),
       dataAvailability:
         templateVars.stackedRiskView?.dataAvailability ??
         pickWorseRisk(
           riskView.dataAvailability,
-          baseChainRiskView.dataAvailability,
+          baseChain.riskView.dataAvailability,
         ),
       exitWindow:
         templateVars.stackedRiskView?.exitWindow ??
-        pickWorseRisk(riskView.exitWindow, baseChainRiskView.exitWindow),
+        pickWorseRisk(riskView.exitWindow, baseChain.riskView.exitWindow),
       sequencerFailure:
         templateVars.stackedRiskView?.sequencerFailure ??
         sumRisk(
           riskView.sequencerFailure,
-          baseChainRiskView.sequencerFailure,
+          baseChain.riskView.sequencerFailure,
           RISK_VIEW.SEQUENCER_SELF_SEQUENCE,
         ),
       proposerFailure:
         templateVars.stackedRiskView?.sequencerFailure ??
         sumRisk(
           riskView.proposerFailure,
-          baseChainRiskView.proposerFailure,
+          baseChain.riskView.proposerFailure,
           RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
         ),
       validatedBy:
@@ -622,6 +669,20 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     }
   }
 
+  const fastConfirmer =
+    templateVars.discovery.getContractValueOrUndefined<EthereumAddress>(
+      'RollupProxy',
+      'anyTrustFastConfirmer',
+    ) ?? EthereumAddress.ZERO
+
+  const existFastConfirmer = fastConfirmer !== EthereumAddress.ZERO
+
+  const architectureImage = existFastConfirmer
+    ? 'orbit-optimium-fastconfirm'
+    : postsToExternalDA
+      ? 'orbit-optimium'
+      : 'orbit-rollup'
+
   return {
     type: 'layer3',
     ...orbitStackCommon(
@@ -631,6 +692,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     ),
     hostChain: templateVars.hostChain,
     display: {
+      architectureImage,
       stateValidationImage: 'orbit',
       purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       ...templateVars.display,
@@ -674,31 +736,25 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
             },
           )),
     dataAvailability: postsToExternalDA
-      ? (() => {
-          const DAC = templateVars.discovery.getContractValue<{
-            membersCount: number
-            requiredSignatures: number
-          }>('SequencerInbox', 'dacKeyset')
-          const { membersCount, requiredSignatures } = DAC
+      ? [
+          (() => {
+            const DAC = templateVars.discovery.getContractValue<{
+              membersCount: number
+              requiredSignatures: number
+            }>('SequencerInbox', 'dacKeyset')
+            const { membersCount, requiredSignatures } = DAC
 
-          return addSentimentToDataAvailability({
-            layers: [DA_LAYERS.DAC],
-            bridge: DA_BRIDGES.DAC_MEMBERS({
-              membersCount,
-              requiredSignatures,
-            }),
-            mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-          })
-        })()
-      : addSentimentToDataAvailability({
-          layers: [
-            templateVars.usesBlobs
-              ? DA_LAYERS.ETH_BLOBS_OR_CALLLDATA
-              : DA_LAYERS.ETH_CALLDATA,
-          ],
-          bridge: DA_BRIDGES.ENSHRINED,
-          mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-        }),
+            return addSentimentToDataAvailability({
+              layers: [DA_LAYERS.DAC],
+              bridge: DA_BRIDGES.DAC_MEMBERS({
+                membersCount,
+                requiredSignatures,
+              }),
+              mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+            })
+          })(),
+        ]
+      : baseChain.dataAvailability,
     stackedRiskView: getStackedRisks(),
     riskView,
     config: {
@@ -780,10 +836,33 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     templateVars.display.category ??
     (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup')
 
+  const fastConfirmer =
+    templateVars.discovery.getContractValueOrUndefined<EthereumAddress>(
+      'RollupProxy',
+      'anyTrustFastConfirmer',
+    ) ?? EthereumAddress.ZERO
+
+  const existFastConfirmer = fastConfirmer !== EthereumAddress.ZERO
+
+  const architectureImage = existFastConfirmer
+    ? 'orbit-optimium-fastconfirm'
+    : postsToExternalDA
+      ? 'orbit-optimium'
+      : 'orbit-rollup'
+
+  const usesBlobs =
+    templateVars.usesBlobs ??
+    templateVars.discovery.getContractValueOrUndefined(
+      'SequencerInbox',
+      'postsBlobs',
+    ) ??
+    false
+
   return {
     type: 'layer2',
     ...orbitStackCommon(templateVars, ETHEREUM_EXPLORER_URL, 12),
     display: {
+      architectureImage,
       stateValidationImage: 'orbit',
       purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       warning:
@@ -841,32 +920,34 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
               rollupNodeLink: templateVars.nodeSourceLink,
             },
           )),
-    dataAvailability: postsToExternalDA
-      ? (() => {
-          const DAC = templateVars.discovery.getContractValue<{
-            membersCount: number
-            requiredSignatures: number
-          }>('SequencerInbox', 'dacKeyset')
-          const { membersCount, requiredSignatures } = DAC
+    dataAvailability: [
+      postsToExternalDA
+        ? (() => {
+            const DAC = templateVars.discovery.getContractValue<{
+              membersCount: number
+              requiredSignatures: number
+            }>('SequencerInbox', 'dacKeyset')
+            const { membersCount, requiredSignatures } = DAC
 
-          return addSentimentToDataAvailability({
-            layers: [DA_LAYERS.DAC],
-            bridge: DA_BRIDGES.DAC_MEMBERS({
-              membersCount,
-              requiredSignatures,
-            }),
+            return addSentimentToDataAvailability({
+              layers: [DA_LAYERS.DAC],
+              bridge: DA_BRIDGES.DAC_MEMBERS({
+                membersCount,
+                requiredSignatures,
+              }),
+              mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+            })
+          })()
+        : addSentimentToDataAvailability({
+            layers: [
+              usesBlobs
+                ? DA_LAYERS.ETH_BLOBS_OR_CALLLDATA
+                : DA_LAYERS.ETH_CALLDATA,
+            ],
+            bridge: DA_BRIDGES.ENSHRINED,
             mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-          })
-        })()
-      : addSentimentToDataAvailability({
-          layers: [
-            templateVars.usesBlobs
-              ? DA_LAYERS.ETH_BLOBS_OR_CALLLDATA
-              : DA_LAYERS.ETH_CALLDATA,
-          ],
-          bridge: DA_BRIDGES.ENSHRINED,
-          mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-        }),
+          }),
+    ],
     riskView: {
       stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
         ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(

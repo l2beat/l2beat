@@ -13,6 +13,11 @@ import { TvlBreakdownSummaryBox } from './_components/tvl-breakdown-summary-box'
 
 const scalingProjects = [...layer2s, ...layer3s]
 
+export const revalidate = 3600
+export async function generateStaticParams() {
+  return scalingProjects.map((project) => ({ slug: project.display.slug }))
+}
+
 export async function generateMetadata(props: Props) {
   const params = await props.params
   const project = scalingProjects.find(
@@ -45,6 +50,9 @@ export default async function Page(props: Props) {
 
   const projects7dData = await get7dTvlBreakdown()
   const project7dData = projects7dData.projects[project.id.toString()]!
+  if (!project7dData) {
+    notFound()
+  }
 
   const {
     dataTimestamp,
