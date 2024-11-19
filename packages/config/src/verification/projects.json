@@ -59,6 +59,7 @@
   "creator": true,
   "cronoszkevm": true,
   "cyber": true,
+  "cyber-da-cyberDABridge": true,
   "dac-fraxtalDABridge": true,
   "dac-mantleDABridge": true,
   "davos": true,
