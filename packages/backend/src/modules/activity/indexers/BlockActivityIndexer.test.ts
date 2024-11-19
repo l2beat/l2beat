@@ -169,11 +169,12 @@ describe(BlockActivityIndexer.name, () => {
       expect(newSafeHeight).toEqual(targetHeight)
     })
 
-    it('throws assertion when more than one record found', async () => {
+    it('throws when invalidation not caused by restart', async () => {
       const mockProjectId = ProjectId('a')
       const mockActivityRecords = [
-        activityRecord(mockProjectId, START.add(-1, 'days'), 2, 11, 20),
-        activityRecord(mockProjectId, START.add(-2, 'days'), 4, 11, 20),
+        activityRecord(mockProjectId, START.add(1, 'days'), 1, 1, 11, 20),
+        activityRecord(mockProjectId, START.add(2, 'days'), 1, 1, 21, 30),
+        activityRecord(mockProjectId, START.add(3, 'days'), 1, 1, 31, 40),
       ]
 
       const activityRepository = mockObject<Database['activity']>({
@@ -186,11 +187,9 @@ describe(BlockActivityIndexer.name, () => {
       })
 
       const targetHeight = 15
-      expect(
+      await expect(
         async () => await indexer.invalidate(targetHeight),
-      ).toBeRejectedWith(
-        `There should be exactly one record that includes data point (projectId: ${mockProjectId}, dataPoint: ${targetHeight})`,
-      )
+      ).toBeRejectedWith(`Invalidation used only for restart protection`)
     })
 
     it('deletes records and returns adjusted targetHeight', async () => {
