@@ -4,25 +4,50 @@ import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
 import * as solidity from './solidity'
 import { theme } from './theme'
 
+import { editor } from 'monaco-editor/esm/vs/editor/editor.api'
 let initialized = false
 
-export function create(element: HTMLElement) {
-  if (!initialized) {
-    init()
-    initialized = true
+export class Editor {
+  private readonly editor: monaco.editor.IStandaloneCodeEditor
+  private viewStates: Record<string, editor.ICodeEditorViewState | null> = {}
+  private currentCode: string = ''
+
+  constructor(element: HTMLElement) {
+    if (!initialized) {
+      init()
+      initialized = true
+    }
+
+    this.editor = monaco.editor.create(element, {
+      language: 'solidity',
+      minimap: { enabled: false },
+      readOnly: true,
+      colorDecorators: false,
+      renderWhitespace: 'none',
+      renderControlCharacters: false,
+      fontFamily:
+        "ui-monospace, Menlo, Monaco, 'Cascadia Code', 'Source Code Pro', Consolas, 'DejaVu Sans Mono', monospace",
+      // @ts-expect-error Thanks you Microsoft
+      'bracketPairColorization.enabled': false,
+    })
   }
-  return monaco.editor.create(element, {
-    language: 'solidity',
-    minimap: { enabled: false },
-    readOnly: true,
-    colorDecorators: false,
-    renderWhitespace: 'none',
-    renderControlCharacters: false,
-    fontFamily:
-      "ui-monospace, Menlo, Monaco, 'Cascadia Code', 'Source Code Pro', Consolas, 'DejaVu Sans Mono', monospace",
-    // @ts-expect-error Thanks you Microsoft
-    'bracketPairColorization.enabled': false,
-  })
+
+  setCode(code: string) {
+    this.viewStates[cyrb64(this.currentCode)] = this.editor.saveViewState()
+
+    this.editor.setValue(code)
+    this.currentCode = code
+
+    this.editor.restoreViewState(this.viewStates[cyrb64(code)] ?? null)
+  }
+
+  resize() {
+    this.editor.layout()
+  }
+
+  destruct() {
+    this.editor.dispose()
+  }
 }
 
 function init() {
@@ -43,4 +68,29 @@ function init() {
 
   monaco.editor.defineTheme('default', theme)
   monaco.editor.setTheme('default')
+}
+
+// NOTE(radomski): Hashing function based on MurmurHash. I don't know if it
+// passes smhasher so it's not cryptographically secure. If you need anything
+// even semi-strong use sha2.
+// Based on: https://gist.github.com/jlevy/c246006675becc446360a798e2b2d781
+function cyrb64(str: string, seed: number = 0) {
+  let h1 = 0xdeadbeef ^ seed
+  let h2 = 0x41c6ce57 ^ seed
+
+  for (let i = 0, ch; i < str.length; i++) {
+    ch = str.charCodeAt(i)
+    h1 = Math.imul(h1 ^ ch, 2654435761)
+    h2 = Math.imul(h2 ^ ch, 1597334677)
+  }
+
+  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507)
+  h1 ^= Math.imul(h2 ^ (h2 >>> 13), 3266489909)
+  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507)
+  h2 ^= Math.imul(h1 ^ (h1 >>> 13), 3266489909)
+
+  h2 = h2 >>> 0
+  h1 = h1 >>> 0
+
+  return h2.toString(36).padStart(7, '0') + h1.toString(36).padStart(7, '0')
 }
