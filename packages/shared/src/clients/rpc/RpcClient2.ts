@@ -56,6 +56,10 @@ export class RpcClient2 extends ClientCore implements BlockClient {
 
     const balance = EVMBalanceResponse.safeParse(balanceResponse)
     if (!balance.success) {
+      this.$.logger.warn(
+        `Cannot fetch ${holder} at block ${blockNumber}`,
+        JSON.stringify(balanceResponse),
+      )
       throw new Error(
         `Balance of ${holder} at block ${blockNumber}: Error during parsing`,
       )
