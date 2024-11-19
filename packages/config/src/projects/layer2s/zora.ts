@@ -28,7 +28,7 @@ export const zora: Layer2 = opStackL2({
       ],
       repositories: ['https://github.com/ourzora/optimism'],
       socialMedia: [
-        'https://twitter.com/ourZORA',
+        'https://twitter.com/zora',
         'https://instagram.com/our.zora',
         'https://zora.community',
       ],
