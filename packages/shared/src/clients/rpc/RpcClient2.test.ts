@@ -60,6 +60,28 @@ describe(RpcClient2.name, () => {
     })
   })
 
+  describe(RpcClient2.prototype.getBalance.name, () => {
+    it('returns balance for given address and block', async () => {
+      const http = mockObject<HttpClient2>({
+        fetch: async () => ({ result: '0x7B' }),
+      })
+      const rpc = mockClient({ http, generateId: () => 'unique-id' })
+
+      const address = EthereumAddress.random()
+      const result = await rpc.getBalance(address, 'latest')
+
+      expect(result).toEqual(123)
+      expect(http.fetch.calls[0].args[1]?.body).toEqual(
+        JSON.stringify({
+          method: 'eth_getBalance',
+          params: [address, 'latest'],
+          id: 'unique-id',
+          jsonrpc: '2.0',
+        }),
+      )
+    })
+  })
+
   describe(RpcClient2.prototype.call.name, () => {
     it('calls eth_call with correct parameters', async () => {
       const http = mockObject<HttpClient2>({
