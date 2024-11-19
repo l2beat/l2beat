@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
-import type { editor as editorType } from 'monaco-editor'
 import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getCode, getProject } from '../api/api'
@@ -8,7 +7,7 @@ import { toShortenedAddress } from '../common/toShortenedAddress'
 import { IconCodeFile } from '../icons/IconCodeFile'
 import { useMultiViewStore } from '../multi-view/store'
 import { usePanelStore } from '../store/store'
-import { create } from './editor'
+import { Editor } from './editor'
 
 export function CodePanel() {
   const { project } = useParams()
@@ -73,9 +72,7 @@ export function CodePanel() {
 
 function CodeView({ code }: { code: string }) {
   const monacoEl = useRef(null)
-  const [editor, setEditor] = useState<
-    editorType.IStandaloneCodeEditor | undefined
-  >(undefined)
+  const [editor, setEditor] = useState<Editor | undefined>(undefined)
   const panels = useMultiViewStore((state) => state.panels)
   const pickedUp = useMultiViewStore((state) => state.pickedUp)
 
@@ -84,27 +81,25 @@ function CodeView({ code }: { code: string }) {
       return
     }
 
-    const editor = create(monacoEl.current)
+    const editor = new Editor(monacoEl.current)
     setEditor(editor)
 
     function onResize() {
-      editor.layout()
+      editor.resize()
     }
     window.addEventListener('resize', onResize)
     return () => {
       window.removeEventListener('resize', onResize)
-      editor.dispose()
+      editor.destruct()
     }
   }, [setEditor])
 
   useEffect(() => {
-    if (editor) {
-      editor.setValue(code)
-    }
+    editor?.setCode(code)
   }, [editor, code])
 
   useEffect(() => {
-    editor?.layout()
+    editor?.resize()
   }, [editor, panels, pickedUp])
 
   return <div className="h-full w-full" ref={monacoEl} />
