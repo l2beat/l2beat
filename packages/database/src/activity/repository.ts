@@ -158,7 +158,7 @@ export class ActivityRepository extends BaseRepository {
       .selectFrom('Activity')
       .select(selectActivity)
       .where('projectId', '=', projectId.toString())
-      .where('start', '<=', dataPoint)
+      .where('end', '>=', dataPoint)
       .orderBy('timestamp', 'asc')
       .execute()
 

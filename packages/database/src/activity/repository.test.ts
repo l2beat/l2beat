@@ -170,7 +170,10 @@ describeDatabase(ActivityRepository.name, (db) => {
         15,
       )
 
-      expect(results).toEqual([record('a', START.add(1, 'days'), 1, 2, 11, 20)])
+      expect(results).toEqual([
+        record('a', START.add(1, 'days'), 1, 2, 11, 20),
+        record('a', START.add(2, 'days'), 1, 1, 21, 30),
+      ])
     })
   })
 
