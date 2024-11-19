@@ -194,35 +194,35 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     'EXTEND_LEGAL_VETO_THRESHOLD',
   )
   const protocolStartProposalThresholdM =
-    discovery_ZKstackGovL2.getContractValue<number>(
+    discovery_ZKstackGovL2.getContractValueSafeInt(
       'ZkProtocolGovernor',
       'proposalThreshold',
-    ) / 1000000000000000000000000 // result: M of tokens
+    ) / 1000000000000000000000000n // result: M of tokens
   const tokenStartProposalThresholdM =
-    discovery_ZKstackGovL2.getContractValue<number>(
+    discovery_ZKstackGovL2.getContractValueSafeInt(
       'ZkTokenGovernor',
       'proposalThreshold',
-    ) / 1000000000000000000000000 // result: M of tokens
+    ) / 1000000000000000000000000n // result: M of tokens
   const govOpsStartProposalThresholdM =
-    discovery_ZKstackGovL2.getContractValue<number>(
+    discovery_ZKstackGovL2.getContractValueSafeInt(
       'ZkGovOpsGovernor',
       'proposalThreshold',
-    ) / 1000000000000000000000000 // result: M of tokens
+    ) / 1000000000000000000000000n // result: M of tokens
   const protocolQuorumM =
-    discovery_ZKstackGovL2.getContractValue<number>(
+    discovery_ZKstackGovL2.getContractValueSafeInt(
       'ZkProtocolGovernor',
       'currentQuorum',
-    ) / 1000000000000000000000000 // result: M of tokens
+    ) / 1000000000000000000000000n // result: M of tokens
   const tokenQuorumM =
-    discovery_ZKstackGovL2.getContractValue<number>(
+    discovery_ZKstackGovL2.getContractValueSafeInt(
       'ZkProtocolGovernor',
       'currentQuorum',
-    ) / 1000000000000000000000000 // result: M of tokens
+    ) / 1000000000000000000000000n // result: M of tokens
   const govOpsQuorumM =
-    discovery_ZKstackGovL2.getContractValue<number>(
+    discovery_ZKstackGovL2.getContractValueSafeInt(
       'ZkProtocolGovernor',
       'currentQuorum',
-    ) / 1000000000000000000000000 // result: M of tokens
+    ) / 1000000000000000000000000n // result: M of tokens
   const scThresholdString = `${scMainThreshold} / ${scMemberCount}`
   const guardiansThresholdString = `${guardiansMainThreshold} / ${guardiansMemberCount}`
 

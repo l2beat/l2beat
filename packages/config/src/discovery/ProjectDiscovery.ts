@@ -483,6 +483,21 @@ export class ProjectDiscovery {
     return result
   }
 
+  getContractValueSafeInt(
+    contractIdentifier: string,
+    key: string,
+  ): bigint {
+    const result = this.getContractValueOrUndefined(contractIdentifier, key)
+    assert(
+      isNonNullable(result),
+      `Value of key ${key} does not exist in ${contractIdentifier} contract (${this.projectName})`,
+    )
+
+    assert(typeof result === 'string' || typeof result === 'number')
+
+    return BigInt(result)
+  }
+
   getAddressFromValue(
     contractIdentifier: string,
     key: string,
