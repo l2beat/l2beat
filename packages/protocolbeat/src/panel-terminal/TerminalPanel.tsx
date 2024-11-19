@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { executeCommand, getProject } from '../api/api'
-import { useTerminalStore } from '../store/store'
+import { useTerminalStore } from './store'
 
 export function TerminalPanel() {
   const { project } = useParams()
