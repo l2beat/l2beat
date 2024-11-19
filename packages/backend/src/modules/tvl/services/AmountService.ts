@@ -10,13 +10,13 @@ import {
 import { partition } from 'lodash'
 
 import { AmountRecord } from '@l2beat/database'
+import { RpcClient2 } from '@l2beat/shared'
 import { BigNumber, utils } from 'ethers'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import {
   MulticallRequest,
   MulticallResponse,
 } from '../../../peripherals/multicall/types'
-import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { ChainAmountConfig } from '../indexers/types'
 
 export const multicallInterface = new utils.Interface([
@@ -31,7 +31,7 @@ export const erc20Interface = new utils.Interface([
 type Config = ChainAmountConfig & { id: string }
 
 export interface AmountServiceDependencies {
-  readonly rpcClient: RpcClient
+  readonly rpcClient: RpcClient2
   readonly multicallClient: MulticallClient
   logger: Logger
 }
@@ -79,7 +79,7 @@ export class AmountService {
         return {
           configId: configuration.id,
           type: configuration.type,
-          amount: amount.toBigInt(),
+          amount: BigInt(amount),
         }
       }),
     )
