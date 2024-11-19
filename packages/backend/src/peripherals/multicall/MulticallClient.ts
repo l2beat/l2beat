@@ -1,5 +1,5 @@
+import { RpcClient2 } from '@l2beat/shared'
 import { EthereumAddress } from '@l2beat/shared-pure'
-import { RpcClient } from '../rpcclient/RpcClient'
 import { parseEthersError } from './parseEthersError'
 import {
   MulticallConfigEntry,
@@ -9,7 +9,7 @@ import {
 
 export class MulticallClient {
   constructor(
-    private readonly rcpClient: RpcClient,
+    private readonly rcpClient: RpcClient2,
     private readonly config: MulticallConfigEntry[],
   ) {}
 
