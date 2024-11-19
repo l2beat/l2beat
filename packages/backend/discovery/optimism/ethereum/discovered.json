@@ -1,8 +1,8 @@
 {
   "name": "optimism",
   "chain": "ethereum",
-  "blockNumber": 21221919,
-  "configHash": "0x154bc6f68a64bd4ec3f59be157abc1ec4c131e7e346fd38525908dc28e7ef8d3",
+  "blockNumber": 21222002,
+  "configHash": "0x051393138a38088cdce0f2fae622120e70f0cea7b6256269beb9317857a894ed",
   "contracts": [
     {
       "name": "LivenessModule",
@@ -895,7 +895,7 @@
       "derivedName": "DelayedWETH"
     },
     {
-      "name": "OptimismFoundationMultisig_1",
+      "name": "OpFoundationUpgradeSafe",
       "address": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -1063,7 +1063,7 @@
       ]
     },
     {
-      "name": "FoundationMultisig_2",
+      "name": "OpFoundationOperationsSafe",
       "address": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
       "template": "GnosisSafe",
       "sourceHashes": [
