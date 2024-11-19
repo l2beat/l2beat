@@ -21,9 +21,8 @@ export class Logger {
 
   constructor(options: Partial<LoggerOptions>) {
     this.options = {
+      ...options,
       logLevel: options.logLevel ?? 'INFO',
-      service: options.service,
-      tag: options.tag,
       utc: options.utc ?? false,
       cwd: options.cwd ?? process.cwd(),
       getTime: options.getTime ?? (() => new Date()),
@@ -115,8 +114,13 @@ export class Logger {
     })
   }
 
-  tag(tag: string | undefined): Logger {
-    return this.configure({ tag })
+  tag(
+    tags: Pick<
+      LoggerOptions,
+      'tag' | 'module' | 'feature' | 'chain' | 'project'
+    >,
+  ): Logger {
+    return this.configure(tags)
   }
 
   withThrottling(options: LogThrottleOptions): Logger {
@@ -187,6 +191,10 @@ export class Logger {
       level,
       time: this.options.getTime(),
       service: tagService(this.options.service, this.options.tag),
+      feature: this.options.feature,
+      module: this.options.module,
+      chain: parsed.chain ?? this.options.chain,
+      project: parsed.project ?? this.options.project,
     }
   }
 

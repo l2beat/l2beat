@@ -25,7 +25,7 @@ export function initCirculatingSupplyProviders(
   const logger = Logger.SILENT
   const coingeckoQueryService = new CoingeckoQueryService(
     coingeckoClient,
-    logger.tag('circulatingSupply'),
+    logger.tag({ tag: 'circulatingSupply' }),
   )
 
   return new CirculatingSupplyProviders(coingeckoQueryService)

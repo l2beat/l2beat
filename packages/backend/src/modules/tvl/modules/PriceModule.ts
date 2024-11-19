@@ -34,7 +34,7 @@ function createPriceIndexers(config: TvlConfig, dependencies: TvlDependencies) {
   const syncOptimizer = dependencies.getSyncOptimizer()
   const priceService = dependencies.getPriceService()
   const hourlyIndexer = dependencies.getHourlyIndexer()
-  const logger = dependencies.logger
+  const logger = dependencies.logger.tag({ module: 'price' })
 
   const byCoingeckoId = groupBy(config.prices, (price) => price.coingeckoId)
 
@@ -60,7 +60,7 @@ function createPriceIndexers(config: TvlConfig, dependencies: TvlDependencies) {
 
   const descendant = new DescendantIndexer({
     logger,
-    tag: 'price',
+    tags: { tag: 'price' },
     parents: indexers,
     indexerService,
     minHeight: Math.min(

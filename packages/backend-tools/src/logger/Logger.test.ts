@@ -1,5 +1,6 @@
 import { expect, formatCompact, mockFn } from 'earl'
 
+import { LogFormatterEcs } from './LogFormatterEcs'
 import { LogFormatterJson } from './LogFormatterJson'
 import { LogFormatterPretty } from './LogFormatterPretty'
 import { Logger } from './Logger'
@@ -84,13 +85,18 @@ describe(Logger.name, () => {
   })
 
   describe('for', () => {
-    function setup() {
+    function setup(
+      formatter: LogFormatterPretty | LogFormatterEcs = new LogFormatterPretty({
+        colors: false,
+        utc: true,
+      }),
+    ) {
       const transport = createTestTransport()
       const baseLogger = new Logger({
         transports: [
           {
             transport: transport,
-            formatter: new LogFormatterPretty({ colors: false, utc: true }),
+            formatter,
           },
         ],
         logLevel: 'TRACE',
@@ -138,7 +144,7 @@ describe(Logger.name, () => {
     it('service with tag', () => {
       const { transport, baseLogger } = setup()
 
-      const logger = baseLogger.tag('Red').for('FooService')
+      const logger = baseLogger.tag({ tag: 'Red' }).for('FooService')
       logger.info('hello')
 
       expect(transport.log).toHaveBeenOnlyCalledWith(
@@ -149,7 +155,10 @@ describe(Logger.name, () => {
     it('service with tag and member', () => {
       const { transport, baseLogger } = setup()
 
-      const logger = baseLogger.tag('Red').for('FooService').for('queue')
+      const logger = baseLogger
+        .tag({ tag: 'Red' })
+        .for('FooService')
+        .for('queue')
       logger.info('hello')
 
       expect(transport.log).toHaveBeenOnlyCalledWith(
@@ -160,11 +169,136 @@ describe(Logger.name, () => {
     it('lone tag', () => {
       const { transport, baseLogger } = setup()
 
-      const logger = baseLogger.tag('Red')
+      const logger = baseLogger.tag({ tag: 'Red' })
       logger.info('hello')
 
       expect(transport.log).toHaveBeenOnlyCalledWith(
         '00:00:00.000Z INFO [ :Red ] hello',
+      )
+    })
+
+    it('module', () => {
+      const { transport, baseLogger } = setup(new LogFormatterEcs())
+
+      const logger = baseLogger.tag({
+        module: 'module',
+      })
+
+      logger.info('hello')
+
+      expect(transport.log).toHaveBeenOnlyCalledWith(
+        JSON.stringify({
+          '@timestamp': '1970-01-01T00:00:00.000Z',
+          log: { level: 'INFO' },
+          service: {},
+          labels: {
+            module: 'module',
+          },
+          message: 'hello',
+        }),
+      )
+    })
+
+    it('feature', () => {
+      const { transport, baseLogger } = setup(new LogFormatterEcs())
+
+      const logger = baseLogger.tag({
+        module: 'module',
+        feature: 'feature',
+      })
+
+      logger.info('hello')
+
+      expect(transport.log).toHaveBeenOnlyCalledWith(
+        JSON.stringify({
+          '@timestamp': '1970-01-01T00:00:00.000Z',
+          log: { level: 'INFO' },
+          service: {},
+          labels: {
+            feature: 'feature',
+            module: 'module',
+          },
+          message: 'hello',
+        }),
+      )
+    })
+
+    it('service tag', () => {
+      const { transport, baseLogger } = setup(new LogFormatterEcs())
+
+      const logger = baseLogger.tag({
+        tag: 'tag',
+        feature: 'feature',
+        module: 'module',
+      })
+
+      logger.info('hello')
+
+      expect(transport.log).toHaveBeenOnlyCalledWith(
+        JSON.stringify({
+          '@timestamp': '1970-01-01T00:00:00.000Z',
+          log: { level: 'INFO' },
+          service: {
+            name: ':tag',
+          },
+          labels: {
+            feature: 'feature',
+            module: 'module',
+          },
+          message: 'hello',
+        }),
+      )
+    })
+
+    it('project', () => {
+      const { transport, baseLogger } = setup(new LogFormatterEcs())
+
+      const logger = baseLogger.tag({
+        feature: 'feature',
+        module: 'module',
+        project: 'project',
+      })
+
+      logger.info('hello')
+
+      expect(transport.log).toHaveBeenOnlyCalledWith(
+        JSON.stringify({
+          '@timestamp': '1970-01-01T00:00:00.000Z',
+          log: { level: 'INFO' },
+          service: {},
+          labels: {
+            feature: 'feature',
+            module: 'module',
+            project: 'project',
+          },
+          message: 'hello',
+        }),
+      )
+    })
+
+    it('chain', () => {
+      const { transport, baseLogger } = setup(new LogFormatterEcs())
+
+      const logger = baseLogger.tag({
+        feature: 'feature',
+        module: 'module',
+        chain: 'chain',
+      })
+
+      logger.info('hello')
+
+      expect(transport.log).toHaveBeenOnlyCalledWith(
+        JSON.stringify({
+          '@timestamp': '1970-01-01T00:00:00.000Z',
+          log: { level: 'INFO' },
+          service: {},
+          labels: {
+            feature: 'feature',
+            module: 'module',
+            chain: 'chain',
+          },
+          message: 'hello',
+        }),
       )
     })
   })
@@ -191,6 +325,10 @@ describe(Logger.name, () => {
         level: 'ERROR',
         time: expect.a(Date),
         service: undefined,
+        feature: undefined,
+        module: undefined,
+        chain: undefined,
+        project: undefined,
         message: 'foo',
         parameters: undefined,
         error: undefined,
@@ -200,6 +338,10 @@ describe(Logger.name, () => {
         level: 'CRITICAL',
         time: expect.a(Date),
         service: undefined,
+        feature: undefined,
+        module: undefined,
+        chain: undefined,
+        project: undefined,
         message: 'bar',
         parameters: undefined,
         error: undefined,
@@ -215,6 +357,10 @@ describe(Logger.name, () => {
             level: 'ERROR',
             time: expect.a(Date),
             service: undefined,
+            feature: undefined,
+            module: undefined,
+            chain: undefined,
+            project: undefined,
             message: 'message',
             parameters: undefined,
             error: undefined,
@@ -227,6 +373,10 @@ describe(Logger.name, () => {
             level: 'ERROR',
             time: expect.a(Date),
             service: undefined,
+            feature: undefined,
+            module: undefined,
+            chain: undefined,
+            project: undefined,
             message: undefined,
             parameters: undefined,
             error: new Error('message'),
@@ -243,6 +393,10 @@ describe(Logger.name, () => {
             level: 'ERROR',
             time: expect.a(Date),
             service: undefined,
+            feature: undefined,
+            module: undefined,
+            chain: undefined,
+            project: undefined,
             message: 'foo',
             parameters: undefined,
             error: new Error('bar'),
@@ -259,6 +413,10 @@ describe(Logger.name, () => {
             level: 'ERROR',
             time: expect.a(Date),
             service: undefined,
+            feature: undefined,
+            module: undefined,
+            chain: undefined,
+            project: undefined,
             message: undefined,
             parameters: { x: 1, y: 2 },
             error: undefined,
@@ -271,6 +429,10 @@ describe(Logger.name, () => {
             level: 'ERROR',
             time: expect.a(Date),
             service: undefined,
+            feature: undefined,
+            module: undefined,
+            chain: undefined,
+            project: undefined,
             message: 'message',
             parameters: { x: 1, y: 2 },
             error: undefined,
@@ -283,6 +445,10 @@ describe(Logger.name, () => {
             level: 'ERROR',
             time: expect.a(Date),
             service: undefined,
+            feature: undefined,
+            module: undefined,
+            chain: undefined,
+            project: undefined,
             message: 'message',
             parameters: { x: 1, y: 2 },
             error: undefined,
@@ -295,6 +461,10 @@ describe(Logger.name, () => {
             level: 'ERROR',
             time: expect.a(Date),
             service: undefined,
+            feature: undefined,
+            module: undefined,
+            chain: undefined,
+            project: undefined,
             message: undefined,
             parameters: { x: 1, y: 2, message: true },
             error: undefined,
@@ -307,6 +477,10 @@ describe(Logger.name, () => {
             level: 'ERROR',
             time: expect.a(Date),
             service: undefined,
+            feature: undefined,
+            module: undefined,
+            chain: undefined,
+            project: undefined,
             message: 'bar',
             parameters: { x: 1, y: 2 },
             error: new Error('foo'),
@@ -315,6 +489,30 @@ describe(Logger.name, () => {
               error: 'foo',
               stack: expect.a(Array),
             },
+          },
+        ],
+        [
+          [
+            'message',
+            {
+              chain: 'chain',
+              project: 'project',
+              x: 4,
+              y: 5,
+            },
+          ],
+          {
+            level: 'ERROR',
+            time: expect.a(Date),
+            service: undefined,
+            feature: undefined,
+            module: undefined,
+            chain: 'chain',
+            project: 'project',
+            message: 'message',
+            parameters: { x: 4, y: 5 },
+            error: undefined,
+            resolvedError: undefined,
           },
         ],
       ]
