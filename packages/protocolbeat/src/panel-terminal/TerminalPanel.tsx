@@ -37,7 +37,12 @@ export function TerminalPanel() {
 
   useEffect(() => {
     if (outputRef.current) {
-      outputRef.current.scrollTop = outputRef.current.scrollHeight
+      const element = outputRef.current
+      const isScrolledToBottom =
+        element.scrollHeight - element.clientHeight <= element.scrollTop + 1
+      if (isScrolledToBottom) {
+        element.scrollTop = element.scrollHeight
+      }
     }
   }, [output])
 
