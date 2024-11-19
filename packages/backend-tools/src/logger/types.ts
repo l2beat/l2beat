@@ -22,6 +22,7 @@ export interface LoggerOptions {
   service?: string
   tag?: string
   feature?: string
+  module?: string
   chain?: string
   project?: string
   utc: boolean
@@ -36,6 +37,7 @@ export interface LogEntry {
   time: Date
   service?: string
   feature?: string
+  module?: string
   chain?: string
   project?: string
   message?: string

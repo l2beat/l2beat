@@ -16,6 +16,7 @@ export class LogFormatterEcs implements LogFormatter {
       },
       labels: {
         feature: entry.feature,
+        module: entry.module,
         chain: entry.chain,
         project: entry.project,
       },

@@ -34,6 +34,8 @@ export function createTrackedTxsModule(
     return
   }
 
+  logger = logger.tag({ module: 'tracked-txs' })
+
   const indexerService = new IndexerService(peripherals.database)
 
   const hourlyIndexer = new HourlyIndexer(logger, clock, 'tracked-txs')

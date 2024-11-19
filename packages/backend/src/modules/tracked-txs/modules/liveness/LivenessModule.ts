@@ -15,7 +15,7 @@ export function createLivenessModule(
     return
   }
 
-  logger = logger.tag({ feature: 'liveness' })
+  logger = logger.tag({ feature: 'liveness', module: 'liveness' })
 
   const livenessUpdater = new LivenessUpdater(peripherals.database, logger)
 

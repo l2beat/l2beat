@@ -28,7 +28,7 @@ export function initTvlModule(
     return
   }
 
-  logger = logger.tag({ feature: 'tvl' })
+  logger = logger.tag({ feature: 'tvl', module: 'tvl' })
 
   const dependencies = new TvlDependencies(
     peripherals.database,

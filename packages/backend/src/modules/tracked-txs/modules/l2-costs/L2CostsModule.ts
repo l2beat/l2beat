@@ -15,7 +15,7 @@ export function createL2CostsModule(
     return
   }
 
-  logger = logger.tag({ feature: 'costs' })
+  logger = logger.tag({ feature: 'costs', module: 'costs' })
 
   const l2CostsUpdater = new L2CostsUpdater(peripherals.database, logger)
 

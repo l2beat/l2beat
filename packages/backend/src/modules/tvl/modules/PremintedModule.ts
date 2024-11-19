@@ -55,7 +55,7 @@ function createIndexers(
   descendantPriceIndexer: DescendantIndexer,
   blockTimestampIndexers?: Map<string, BlockTimestampIndexer>,
 ) {
-  const logger = dependencies.logger
+  const logger = dependencies.logger.tag({ module: 'preminted' })
   const indexerService = dependencies.getIndexerService()
   const syncOptimizer = dependencies.getSyncOptimizer()
   const circulatingSupplyService = dependencies.getCirculatingSupplyService()

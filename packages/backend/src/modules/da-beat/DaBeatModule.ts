@@ -20,7 +20,10 @@ export function createDaBeatModule(
     return
   }
 
-  logger = logger.tag({ feature: 'dabeat' })
+  logger = logger.tag({
+    feature: 'dabeat',
+    module: 'dabeat',
+  })
 
   const pricesRefresher = new DaBeatPricesRefresher(
     peripherals.database,

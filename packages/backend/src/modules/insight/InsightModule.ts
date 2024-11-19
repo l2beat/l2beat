@@ -21,7 +21,7 @@ export function createInsightModule(
     return
   }
 
-  logger = logger.tag({ feature: 'insights' })
+  logger = logger.tag({ feature: 'insights', module: 'insights' })
 
   const pricesRefresher = new InsightPriceRefresher(
     peripherals.database,
