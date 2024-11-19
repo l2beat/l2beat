@@ -18,7 +18,7 @@ export function buildLayerZeroV1Source({
   networkConfig: { chainId, networkId, explorerClient, publicClient, name },
   queue,
 }: Dependencies) {
-  logger = logger.for('LayerZeroV1Source').tag(name)
+  logger = logger.for('LayerZeroV1Source').tag({ tag: name })
 
   return async function () {
     logger.info(`Syncing tokens from LayerZero...`)

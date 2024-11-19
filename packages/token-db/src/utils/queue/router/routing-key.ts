@@ -69,7 +69,7 @@ export function routingKey({
           )
         } else {
           logger
-            .tag(from.name)
+            .tag({ tag: from.name })
             .debug('No queue for routing key', { routingKey })
         }
       },

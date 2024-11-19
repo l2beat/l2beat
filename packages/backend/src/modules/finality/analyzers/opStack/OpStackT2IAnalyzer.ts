@@ -24,7 +24,10 @@ export class OpStackT2IAnalyzer extends BaseAnalyzer {
     private readonly opts: SpanBatchDecoderOpts,
   ) {
     super(provider, db, projectId)
-    this.logger = logger.for(this).tag(projectId.toString())
+    this.logger = logger.for(this).tag({
+      tag: projectId,
+      project: projectId,
+    })
     this.channelBank = new ChannelBank(projectId, this.logger)
   }
 

@@ -1,11 +1,17 @@
-import { Block, Bytes, json } from '@l2beat/shared-pure'
+import { Block, Bytes, EthereumAddress, json } from '@l2beat/shared-pure'
 import { generateId } from '../../tools/generateId'
 import {
   ClientCore,
   ClientCoreDependencies as ClientCoreDependencies,
 } from '../ClientCore'
 import { BlockClient } from '../types'
-import { CallParameters, EVMBlockResponse, Quantity, RPCError } from './types'
+import {
+  CallParameters,
+  EVMBalanceResponse,
+  EVMBlockResponse,
+  Quantity,
+  RPCError,
+} from './types'
 
 interface Dependencies extends ClientCoreDependencies {
   url: string
@@ -37,6 +43,28 @@ export class RpcClient2 extends ClientCore implements BlockClient {
       throw new Error(`Block ${blockNumber}: Error during parsing`)
     }
     return { ...block.data.result }
+  }
+
+  async getBalance(holder: EthereumAddress, blockNumber: number | 'latest') {
+    const method = 'eth_getBalance'
+    const encodedNumber =
+      blockNumber === 'latest' ? 'latest' : Quantity.encode(BigInt(blockNumber))
+    const balanceResponse = await this.query(method, [
+      holder.toString(),
+      encodedNumber,
+    ])
+
+    const balance = EVMBalanceResponse.safeParse(balanceResponse)
+    if (!balance.success) {
+      this.$.logger.warn(
+        `Cannot fetch ${holder} at block ${blockNumber}`,
+        JSON.stringify(balanceResponse),
+      )
+      throw new Error(
+        `Balance of ${holder} at block ${blockNumber}: Error during parsing`,
+      )
+    }
+    return balance.data.result
   }
 
   async call(
