@@ -9319,6 +9319,27 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Fire Bitcoin",
+      "coingeckoId": "ignition-fbtc",
+      "address": "0xC96dE26018A54D51c097160568752c4E3BD6C364",
+      "symbol": "FBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1725879531,
+      "coingeckoListingTimestamp": 1720828800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39182/large/FBTC_LOGO.png?1720850455",
+      "chainId": 60808,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "FBTC FireBridge"
+          }
+        ]
+      }
+    },
+    {
       "name": "Andy",
       "coingeckoId": "andyerc",
       "address": "0xd43D8aDAC6A4C7d9Aeece7c3151FcA8f23752cf8",

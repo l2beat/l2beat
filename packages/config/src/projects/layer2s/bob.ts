@@ -71,6 +71,7 @@ export const bob: Layer2 = opStackL2({
   chainConfig: {
     name: 'bob',
     chainId: 60808,
+    coingeckoPlatform: 'bob-network',
     explorerUrl: 'https://explorer.gobob.xyz',
     explorerApi: {
       url: 'https://explorer.gobob.xyz/api',
