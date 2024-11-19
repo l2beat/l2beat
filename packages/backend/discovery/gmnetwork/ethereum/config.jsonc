@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "name": "gmnetwork",
   "initialAddresses": [
-    "0xd2726bde3D07645faf5aD7cCF15C94817B3556D6", // L1StandardBridge
+    "0xd2726bde3D07645faf5aD7cCF15C94817B3556D6", // OptimismPortal
     "0xd1fe2eeb5637b0f78bfced9186ebe716ac73deb6" //DAChallenge
   ],
   "names": {
