@@ -49,6 +49,14 @@ export const EVMBalanceResponse = z.object({
   result: Quantity.decode.transform((n) => Number(n)),
 })
 
+export const EVMCallResponse = z.object({
+  result: z.preprocess((s) => {
+    const res = z.string().parse(s)
+    assert(res.startsWith('0x'), 'Call response should start with 0x')
+    return res
+  }, z.string()),
+})
+
 export interface CallParameters {
   from?: EthereumAddress
   to: EthereumAddress
