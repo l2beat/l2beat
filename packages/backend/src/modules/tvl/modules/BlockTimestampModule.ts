@@ -31,7 +31,7 @@ function createBlockTimestampIndexers(
   chains: TvlConfig['chains'],
   dependencies: TvlDependencies,
 ) {
-  const logger = dependencies.logger
+  const logger = dependencies.logger.tag({ module: 'blockTimestamp' })
   const hourlyIndexer = dependencies.getHourlyIndexer()
   const indexerService = dependencies.getIndexerService()
   const db = dependencies.database

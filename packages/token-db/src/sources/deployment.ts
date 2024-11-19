@@ -20,7 +20,7 @@ export function buildDeploymentSource({
   networkConfig,
   queue,
 }: Dependencies) {
-  logger = logger.for('DeploymentSource').tag(networkConfig.name)
+  logger = logger.for('DeploymentSource').tag({ tag: networkConfig.name })
 
   return async function (tokenId: string) {
     const token = await db.token.findById(tokenId)

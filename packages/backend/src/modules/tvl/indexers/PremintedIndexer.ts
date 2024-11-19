@@ -12,7 +12,10 @@ export class PremintedIndexer extends ManagedChildIndexer {
     super({
       ...$,
       name: INDEXER_NAMES.PREMINTED,
-      tag: createIndexerTag($.configuration.chain, $.configuration.address),
+      tags: {
+        tag: createIndexerTag($.configuration.chain, $.configuration.address),
+        chain: $.configuration.chain,
+      },
       updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
       configHash: $.minHeight.toString(),
     })

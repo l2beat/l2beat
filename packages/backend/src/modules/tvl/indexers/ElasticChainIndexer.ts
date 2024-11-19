@@ -17,7 +17,10 @@ export class ElasticChainIndexer extends ManagedMultiIndexer<ElasticChainAmountC
     super({
       ...$,
       name: INDEXER_NAMES.ELASTIC_CHAIN,
-      tag: $.chain,
+      tags: {
+        tag: $.chain,
+        chain: $.chain,
+      },
       updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
     })
   }
