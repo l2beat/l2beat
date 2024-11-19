@@ -101,6 +101,7 @@
   "galxegravity-dac-layer-galxegravity-dac-bridge": true,
   "gluon": true,
   "gmnetwork": true,
+  "gmnetwork-da-gmnetworkDABridge": true,
   "gpt": true,
   "gpt-dac-layer-gpt-dac-bridge": true,
   "gravity": true,
