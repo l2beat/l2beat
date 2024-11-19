@@ -1,0 +1,86 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "morph",
+  "initialAddresses": ["0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304", 
+    "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8"], // ETH bridge, ERC20 bridge
+  "names": {
+    "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60": "MorphRollup",
+    "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF": "L1MessageQueueWithGasPriceOracle",
+    "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304": "L1CrossDomainMessenger",
+    "0x87C1D0dAb8d96b69CB91f97F4135E3ed5A49DCF6": "MultipleVersionRollupVerifier",
+    "0x0Dc417F8AF88388737c5053FF73f345f080543F7": "L1Staking"
+  },
+  "overrides": {
+    "L1Staking": {
+      "ignoreMethods": ["getStakers", "stakerSet"]  // TODO: check this contract
+    },
+    "MultipleVersionRollupVerifier": {
+      "description": "Used to update the verifier and keep track of current and old versions.",
+      "ignoreMethods": ["getVerifier"],
+      "fields": {
+        "verifierVersions": {
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "UpdateVerifier",
+            "valueKey": "version"
+          }
+        },
+        "latestVerifier": {
+          "handler": {
+            "type": "array",
+            "maxLength": 20,
+            "indices": "{{ verifierVersions }}"
+          },
+          "returnType": "((uint64 startBatchIndex, address verifier)[])"
+        },
+        "legacyVerifiersLength": {
+          "handler": {
+            "type": "array",
+            "maxLength": 20,
+            "indices": "{{ verifierVersions }}"
+          }
+        }
+      }
+    },
+    "L1CrossDomainMessenger": {
+      "ignoreMethods": [
+        "prevReplayIndex"
+      ]
+    },
+    "L1MessageQueueWithGasPriceOracle": {
+      "ignoreMethods": [
+        "getCrossDomainMessage",
+        "isMessageDropped",
+        "isMessageSkipped",
+        "messageQueue"
+      ]
+    },
+    "MorphRollup": {
+      "ignoreMethods": [
+        "batchChallengedSuccess",
+        "batchDataStore",
+        "batchExist",
+        "batchInChallenge",
+        "batchInsideChallengeWindow",
+        "challenges",
+        "committedBatches",
+        "finalizedStateRoots",
+        "isBatchFinalized"
+      ],
+      "ignoreInWatchMode": [
+        "batchChallenged","lastCommittedBatchIndex", "lastFinalizedBatchIndex"
+      ],
+      "fields": {
+        "challengers": {
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "UpdateChallenger",
+            "valueKey": "account",
+            "flagKey": "status"
+          }
+        },
+      },
+    }
+  }
+}
