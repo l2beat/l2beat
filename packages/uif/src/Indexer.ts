@@ -265,7 +265,6 @@ export abstract class Indexer {
   private async executeUpdate(effect: UpdateEffect): Promise<void> {
     const from = this.state.height + 1
     this.logger.info('Updating', { from, to: effect.targetHeight })
-    this.logMetrics(this.state.height, effect.targetHeight)
     try {
       const newHeight = await this.update(from, effect.targetHeight)
       if (newHeight < from || newHeight > effect.targetHeight) {
