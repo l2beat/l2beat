@@ -37,7 +37,6 @@ export interface Config {
   readonly flags: ResolvedFeatureFlag[]
   readonly verifiers: boolean
   readonly daBeat: DABeatConfig | false
-  readonly insight: boolean
 }
 
 export interface ApiConfig {
