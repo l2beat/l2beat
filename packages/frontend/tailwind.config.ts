@@ -1,4 +1,6 @@
+import containerQueries from '@tailwindcss/container-queries'
 import type { Config } from 'tailwindcss'
+import tailwindcssAnimate from 'tailwindcss-animate'
 import plugin from 'tailwindcss/plugin'
 
 const config: Config = {
@@ -151,6 +153,7 @@ const config: Config = {
         700: '#005DD7',
         800: '#083575',
         900: '#112944',
+        950: '#152A4B',
       },
       slate: {
         600: '#525C6A',
@@ -284,14 +287,14 @@ const config: Config = {
     },
   },
   plugins: [
-    plugin(function ({ addVariant }) {
-      addVariant('sidebar', '.sidebar &')
+    plugin((creator) => {
+      creator.addVariant('sidebar', '.sidebar &')
     }),
-    plugin(function ({ addVariant }) {
-      addVariant('main-page-card', '.main-page-card &')
+    plugin((creator) => {
+      creator.addVariant('main-page-card', '.main-page-card &')
     }),
-    require('tailwindcss-animate'),
-    require('@tailwindcss/container-queries'),
+    tailwindcssAnimate,
+    containerQueries,
   ],
 }
 

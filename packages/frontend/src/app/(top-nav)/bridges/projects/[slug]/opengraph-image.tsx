@@ -5,6 +5,7 @@ import { ProjectOpengraphImage } from '~/components/opengraph-image/project'
 import { env } from '~/env'
 
 export const runtime = 'nodejs'
+export const dynamic = 'force-static'
 
 const size = {
   width: 1200,

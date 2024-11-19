@@ -9,26 +9,99 @@ export const insertToken = actionClient
   .schema(insertTokenSchema)
   .action(async ({ parsedInput }) => {
     revalidatePath('/', 'layout')
-    const { relations, customMeta, ...data } = parsedInput
-    try {
-      const { id } = await db.token.insert(data)
-      return { success: { id } }
-    } catch {
-      return { failure: 'Failed to insert network' }
-    }
+    const { relations, meta, managingEntities, ...data } = parsedInput
+    return await db.transaction(async () => {
+      try {
+        const { id } = await db.token.insert(data)
+        await db.tokenBridge.upsertMany(
+          relations.map((relation) => {
+            if ('sourceTokenId' in relation) {
+              return {
+                ...relation,
+                targetTokenId: id,
+              }
+            }
+            return {
+              ...relation,
+              sourceTokenId: id,
+            }
+          }),
+        )
+        await db.tokenMeta.upsertMany(
+          meta
+            .map((m) => ({
+              ...m,
+              tokenId: id,
+            }))
+            .filter(
+              (m) =>
+                m.source === 'Aggregate' ||
+                m.source === 'Overrides' ||
+                m.externalId,
+            ),
+        )
+        await db.entityToToken.upsertManyOfTokenId(
+          managingEntities.map(({ entityId }) => ({
+            tokenId: id,
+            entityId,
+          })),
+        )
+        return { success: { id } }
+      } catch (e) {
+        return { failure: `Failed to insert token: ${e as string}` }
+      }
+    })
   })
 
 export const updateToken = actionClient
   .schema(updateTokenSchema)
   .action(async ({ parsedInput }) => {
-    const { id, ...data } = parsedInput
+    const { id, relations, meta, managingEntities, ...data } = parsedInput
     revalidatePath('/', 'layout')
-    try {
-      await db.token.update(id, data)
-      return { success: { id } }
-    } catch {
-      return { failure: 'Failed to update network' }
-    }
+    return await db.transaction(async () => {
+      try {
+        await db.token.update(id, data)
+        await db.tokenBridge.deleteByTokenId(id)
+        await db.tokenBridge.upsertMany(
+          relations.map((relation) => {
+            if ('sourceTokenId' in relation) {
+              return {
+                ...relation,
+                targetTokenId: id,
+              }
+            }
+            return {
+              ...relation,
+              sourceTokenId: id,
+            }
+          }),
+        )
+        await db.tokenMeta.deleteByTokenId(id)
+        await db.tokenMeta.upsertMany(
+          meta
+            .map((m) => ({
+              ...m,
+              tokenId: id,
+            }))
+            .filter(
+              (m) =>
+                m.source === 'Aggregate' ||
+                m.source === 'Overrides' ||
+                m.externalId,
+            ),
+        )
+        await db.entityToToken.deleteByTokenId(id)
+        await db.entityToToken.upsertManyOfTokenId(
+          managingEntities.map(({ entityId }) => ({
+            tokenId: id,
+            entityId,
+          })),
+        )
+        return { success: { id } }
+      } catch (e) {
+        return { failure: `Failed to update token: ${e as string}` }
+      }
+    })
   })
 
 export const deleteToken = actionClient
@@ -36,10 +109,15 @@ export const deleteToken = actionClient
   .action(async ({ parsedInput }) => {
     const { id } = parsedInput
     revalidatePath('/', 'layout')
-    try {
-      await db.token.delete(id)
-      return { success: { id } }
-    } catch {
-      return { failure: 'Failed to delete token' }
-    }
+    return await db.transaction(async () => {
+      try {
+        await db.entityToToken.deleteByTokenId(id)
+        await db.tokenBridge.deleteByTokenId(id)
+        await db.tokenMeta.deleteByTokenId(id)
+        await db.token.delete(id)
+        return { success: { id } }
+      } catch (e) {
+        return { failure: `Failed to delete token: ${e as string}` }
+      }
+    })
   })

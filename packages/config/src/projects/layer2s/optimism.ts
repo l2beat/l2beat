@@ -12,6 +12,9 @@ import {
 import { BigNumber } from 'ethers'
 import { formatEther } from 'ethers/lib/utils'
 import {
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   DERIVATION,
   EXITS,
   MILESTONES,
@@ -211,6 +214,13 @@ export const optimism: Layer2 = {
         address: EthereumAddress('0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65'),
         sinceTimestamp: new UnixTime(1625675779),
         source: 'external',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'Canonically (external escrow)',
+            },
+          ],
+        },
         tokens: ['DAI'],
         description: 'DAI Vault for custom DAI Gateway managed by MakerDAO.',
       }),
@@ -220,6 +230,13 @@ export const optimism: Layer2 = {
         sinceTimestamp: new UnixTime(1620680982),
         tokens: ['SNX'],
         source: 'external',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'Canonically (external escrow)',
+            },
+          ],
+        },
         description: 'SNX Vault for custom SNX Gateway managed by Synthetix.',
       }),
       {
@@ -228,6 +245,13 @@ export const optimism: Layer2 = {
         sinceTimestamp: new UnixTime(1610668212),
         tokens: ['SNX'],
         source: 'external',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'Canonically (external escrow)',
+            },
+          ],
+        },
         isHistorical: true,
         chain: 'ethereum',
       },
@@ -237,6 +261,13 @@ export const optimism: Layer2 = {
         sinceTimestamp: new UnixTime(1620680934),
         tokens: ['SNX'],
         source: 'external',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'Canonically (external escrow)',
+            },
+          ],
+        },
         isHistorical: true,
         chain: 'ethereum',
       },
@@ -244,6 +275,13 @@ export const optimism: Layer2 = {
         address: EthereumAddress('0x76943C0D61395d8F2edF9060e1533529cAe05dE6'),
         tokens: ['wstETH'],
         source: 'external',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'Canonically (external escrow)',
+            },
+          ],
+        },
         description:
           'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
       }),
@@ -338,11 +376,13 @@ export const optimism: Layer2 = {
     ],
     coingeckoPlatform: 'optimistic-ethereum',
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (blobs or calldata)'],
-    bridge: { type: 'Enshrined' },
-    mode: 'Transaction data (compressed)',
-  }),
+  dataAvailability: [
+    addSentimentToDataAvailability({
+      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
+      bridge: DA_BRIDGES.ENSHRINED,
+      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+    }),
+  ],
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_INT,

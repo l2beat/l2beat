@@ -1,5 +1,6 @@
 'use client'
 import partition from 'lodash/partition'
+import { DiagramImage } from '~/components/diagram-image'
 import { type DiagramParams } from '~/utils/project/get-diagram-params'
 import { ContractEntry, type TechnologyContract } from '../contract-entry'
 import { ProjectSection } from '../project-section'
@@ -39,25 +40,33 @@ export function ContractsSection(props: ContractsSectionProps) {
 
   const [changedContracts, unchangedContracts] = partition(
     props.contracts,
-    (c) => c.implementationHasChanged,
+    (c) => !!c.implementationChanged || !!c.highSeverityFieldChanged,
   )
 
   const paritionedNativeContracts = Object.fromEntries(
     Object.entries(props.nativeContracts).map(([chainName, contracts]) => {
       return [
         chainName,
-        partition(contracts, (c) => c.implementationHasChanged),
+        partition(
+          contracts,
+          (c) => c.implementationChanged || c.highSeverityFieldChanged,
+        ),
       ]
     }),
   )
 
   const [changedEscrows, unchangedEscrows] = partition(
     props.escrows,
-    (c) => c.implementationHasChanged,
+    (c) => c.implementationChanged || c.highSeverityFieldChanged,
   )
-  const hasContractsImplementationChanged = props.contracts.some(
-    (c) => c.implementationHasChanged,
+  const hasImplementationChanged = props.contracts.some(
+    (c) => !!c.implementationChanged,
   )
+  const hasHighSeverityFieldChanged = props.contracts.some(
+    (c) => !!c.highSeverityFieldChanged,
+  )
+  const hasContractsChanged =
+    hasImplementationChanged || hasHighSeverityFieldChanged
 
   return (
     <ProjectSection
@@ -68,16 +77,11 @@ export function ContractsSection(props: ContractsSectionProps) {
       isUnderReview={props.isUnderReview}
       includeChildrenIfUnderReview
     >
-      {hasContractsImplementationChanged && <ContractsUpdated />}
+      {hasContractsChanged && <ContractsUpdated />}
       {props.isIncomplete && <TechnologyIncompleteNote />}
       {props.diagram && (
         <figure className="mb-8 mt-4 text-center">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            className="inline max-w-full align-[unset] dark:invert"
-            src={props.diagram.src}
-            alt={props.diagram.caption}
-          />
+          <DiagramImage diagram={props.diagram} />
           <figcaption className="text-xs text-gray-500 dark:text-gray-600">
             {props.diagram.caption}
           </figcaption>
@@ -99,7 +103,11 @@ export function ContractsSection(props: ContractsSectionProps) {
               />
             ))}
             {changedContracts.length > 0 && (
-              <ImplementationHasChangedContracts contracts={changedContracts} />
+              <ImplementationHasChangedContracts
+                contracts={changedContracts}
+                hasImplementationChanged={hasImplementationChanged}
+                hasHighSeverityFieldChanged={hasHighSeverityFieldChanged}
+              />
             )}
           </div>
         </>
@@ -125,6 +133,8 @@ export function ContractsSection(props: ContractsSectionProps) {
                   {changedContracts.length > 0 && (
                     <ImplementationHasChangedContracts
                       contracts={changedContracts}
+                      hasImplementationChanged={hasImplementationChanged}
+                      hasHighSeverityFieldChanged={hasHighSeverityFieldChanged}
                     />
                   )}
                 </div>
@@ -151,7 +161,11 @@ export function ContractsSection(props: ContractsSectionProps) {
               />
             ))}
             {changedEscrows.length > 0 && (
-              <ImplementationHasChangedContracts contracts={changedEscrows} />
+              <ImplementationHasChangedContracts
+                contracts={changedEscrows}
+                hasImplementationChanged={hasImplementationChanged}
+                hasHighSeverityFieldChanged={hasHighSeverityFieldChanged}
+              />
             )}
           </div>
         </>
@@ -171,12 +185,13 @@ export function ContractsSection(props: ContractsSectionProps) {
 
 function ImplementationHasChangedContracts(props: {
   contracts: TechnologyContract[]
+  hasImplementationChanged: boolean
+  hasHighSeverityFieldChanged: boolean
 }) {
   return (
     <div className="rounded-lg border border-dashed border-yellow-200 px-4 py-3">
       <div className="flex w-full items-center rounded bg-yellow-700/20 p-4">
-        There are implementation changes and part of the information might be
-        outdated.
+        {statusToText(props)}
       </div>
       {props.contracts.map((contract) => (
         <ContractEntry
@@ -188,4 +203,22 @@ function ImplementationHasChangedContracts(props: {
       ))}
     </div>
   )
+}
+
+function statusToText({
+  hasImplementationChanged,
+  hasHighSeverityFieldChanged,
+}: {
+  hasImplementationChanged: boolean
+  hasHighSeverityFieldChanged: boolean
+}) {
+  if (hasImplementationChanged && hasHighSeverityFieldChanged) {
+    return "There are changes to the following contracts' implementations and properties, and part of the information might be outdated."
+  }
+  if (hasImplementationChanged) {
+    return 'There are implementation changes and part of the information might be outdated.'
+  }
+  if (hasHighSeverityFieldChanged) {
+    return "There are changes to the following contracts' properties, and part of the information might be outdated."
+  }
 }

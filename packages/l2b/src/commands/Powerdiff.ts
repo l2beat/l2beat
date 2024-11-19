@@ -74,7 +74,7 @@ export const diffContext = option({
   defaultValueIsSerializable: true,
 })
 
-export const PowerdiffPath = command({
+const PowerdiffPath = command({
   name: 'path',
   description:
     'Compare two directories recursively using difftastic and serve the result',
@@ -105,7 +105,7 @@ export const PowerdiffPath = command({
   },
 })
 
-export const PowerdiffDiscovery = command({
+const PowerdiffDiscovery = command({
   name: 'discovery',
   description:
     'Compare two directories recursively using difftastic and serve the result',

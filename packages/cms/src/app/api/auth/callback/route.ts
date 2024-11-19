@@ -21,7 +21,7 @@ export async function GET(request: Request): Promise<Response> {
   const url = new URL(request.url)
   const code = url.searchParams.get('code')
   const state = url.searchParams.get('state')
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
   const storedState = cookieStore.get('google_oauth_state')?.value ?? null
   const codeVerifier = cookieStore.get('google_code_verifier')?.value ?? null
   if (

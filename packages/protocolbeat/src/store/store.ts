@@ -1,10 +1,10 @@
 import { create } from 'zustand'
 
-export interface State {
+interface State {
   readonly selected: string | undefined
 }
 
-export interface Actions {
+interface Actions {
   select: (selected: string | undefined) => void
 }
 

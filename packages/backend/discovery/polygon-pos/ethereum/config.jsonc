@@ -75,7 +75,8 @@
       "ignoreRelatives": ["REGISTRATIONS"]
     },
     "StakingNFT": {
-      "ignoreMethods": ["tokenByIndex"]
+      "ignoreMethods": ["tokenByIndex"],
+      "ignoreInWatchMode": ["totalSupply"]
     },
     "RootChain": {
       "fields": {
@@ -115,7 +116,8 @@
         "totalRewardsLiquidated",
         "totalStaked",
         "validatorState",
-        "totalHeimdallFee"
+        "totalHeimdallFee",
+        "NFTCounter"
       ]
     },
     "StakingInfo": {

@@ -30,7 +30,7 @@ export function useServerPagination(
     [urlLimit, limits],
   )
 
-  const pageCount = useMemo(() => Math.ceil(count / limit), [count, limits])
+  const pageCount = useMemo(() => Math.ceil(count / limit), [count, limit])
   const page = useMemo(() => Math.max(urlPage ?? 1, 1), [urlPage])
 
   return {

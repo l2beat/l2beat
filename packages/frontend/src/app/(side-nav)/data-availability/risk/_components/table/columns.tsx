@@ -10,7 +10,7 @@ const columnHelper = createColumnHelper<DaRiskEntry>()
 
 export const [indexColumn, logoColumn] = getDaCommonProjectColumns(columnHelper)
 
-export const daLayerColumn = columnHelper.accessor('name', {
+const daLayerColumn = columnHelper.accessor('name', {
   header: 'DA Layer',
   cell: (ctx) => <DaLayerCell entry={ctx.row.original} />,
   meta: {

@@ -3,6 +3,7 @@
 import Dagre from '@dagrejs/dagre'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
+  type EntityRecord,
   type TokenBridgeRecord,
   type TokenMetaRecord,
   type TokenRecord,
@@ -62,31 +63,40 @@ import '@xyflow/react/dist/style.css'
 import { nanoidSchema } from '~/lib/schemas'
 import { api } from '~/trpc/react'
 
+const metaSchema = z.object({
+  source: z.string(),
+  externalId: z.string(),
+  name: z.string(),
+  symbol: z.string(),
+  decimals: z.string(),
+  logoUrl: z.string().url().or(z.literal('')),
+  contractName: z.string(),
+})
+
 const tokenFormSchema = z.object({
   networkId: nanoidSchema,
-  address: z.string().length(42),
+  address: z.union([
+    z.literal('native'),
+    z.string().length(42, "Must be 42 characters long or 'native'"),
+  ]),
+  managingEntities: z.array(z.object({ entityId: nanoidSchema })),
   backedBy: z.array(
     z.object({
       sourceTokenId: nanoidSchema,
       externalBridgeId: nanoidSchema.or(z.literal('')),
     }),
   ),
-  customMeta: z
-    .object({
-      name: z.string(),
-      symbol: z.string(),
-      decimals: z.string(),
-      logoUrl: z.string().url().or(z.literal('')),
-      contractName: z.string(),
-    })
-    .nullable(),
+  meta: z.array(metaSchema),
 })
+
+const metaEndOrder = [null, 'Overrides', 'Aggregate']
 
 export function EditTokenPage({
   token,
   tokens,
   bridges: links,
   networks,
+  entities,
 }: {
   networks: { id: string; name: string }[]
   bridges: { id: string; name: string }[]
@@ -95,26 +105,51 @@ export function EditTokenPage({
     | (TokenRecord & {
         relations: TokenBridgeRecord[]
         meta: TokenMetaRecord[]
+        managingEntities: { entityId: string }[]
       })
     | null
+  entities: EntityRecord[]
 }) {
   const router = useRouter()
-  const tokenMeta = useMemo(
-    () =>
-      token?.meta && {
-        aggregate: token.meta.filter((m) => m.source === 'Aggregate'),
-        manual: token.meta.find((m) => m.source === 'Manual'),
-        rest: token.meta.filter(
-          (m) => m.source !== 'Aggregate' && m.source !== 'Manual',
-        ),
-      },
-    [token?.meta],
-  )
+  const tokenMeta = useMemo(() => {
+    const arr: z.infer<typeof metaSchema>[] = [
+      ...(token?.meta ?? []).map((m) => ({
+        source: m.source,
+        externalId: m.externalId ?? '',
+        name: m.name ?? '',
+        symbol: m.symbol ?? '',
+        decimals: m.decimals?.toString() ?? '',
+        logoUrl: m.logoUrl ?? '',
+        contractName: m.contractName ?? '',
+      })),
+    ]
+    for (const source of ['Aggregate', 'Overrides', 'CoinGecko']) {
+      if (!arr.find((m) => m.source === source)) {
+        arr.push({
+          source,
+          externalId: '',
+          name: '',
+          symbol: '',
+          decimals: '',
+          logoUrl: '',
+          contractName: '',
+        })
+      }
+    }
+    return arr.sort((a, b) => {
+      const aIndex = metaEndOrder.indexOf(a.source)
+      const bIndex = metaEndOrder.indexOf(b.source)
+      const endOrder =
+        (aIndex !== -1 ? aIndex : 0) - (bIndex !== -1 ? bIndex : 0)
+      return endOrder === 0 ? a.source.localeCompare(b.source) : endOrder
+    })
+  }, [token?.meta])
 
   const form = useForm<z.infer<typeof tokenFormSchema>>({
     defaultValues: {
       networkId: token?.networkId ?? '',
       address: token?.address ?? '',
+      managingEntities: token?.managingEntities ?? [],
       backedBy:
         token?.relations
           .filter((r) => r.sourceTokenId !== token.id)
@@ -122,13 +157,7 @@ export function EditTokenPage({
             sourceTokenId: r.sourceTokenId,
             externalBridgeId: r.externalBridgeId ?? '',
           })) ?? [],
-      customMeta: {
-        name: tokenMeta?.manual?.name ?? '',
-        symbol: tokenMeta?.manual?.symbol ?? '',
-        decimals: tokenMeta?.manual?.decimals?.toString() ?? '',
-        logoUrl: tokenMeta?.manual?.logoUrl ?? '',
-        contractName: tokenMeta?.manual?.contractName ?? '',
-      },
+      meta: tokenMeta,
     },
     resolver: zodResolver(tokenFormSchema),
   })
@@ -138,6 +167,16 @@ export function EditTokenPage({
   const backedBy = useFieldArray({
     control: form.control,
     name: 'backedBy',
+  })
+
+  const managingEntities = useFieldArray({
+    control: form.control,
+    name: 'managingEntities',
+  })
+
+  const meta = useFieldArray({
+    control: form.control,
+    name: 'meta',
   })
 
   const backing =
@@ -153,32 +192,15 @@ export function EditTokenPage({
       const data = {
         networkId: rawData.networkId,
         address: rawData.address,
-        customMeta:
-          rawData.customMeta &&
-          Object.values(rawData.customMeta).some((value) => value !== '')
-            ? {
-                name:
-                  rawData.customMeta.name !== ''
-                    ? rawData.customMeta.name
-                    : null,
-                symbol:
-                  rawData.customMeta.symbol !== ''
-                    ? rawData.customMeta.symbol
-                    : null,
-                decimals:
-                  rawData.customMeta.decimals !== ''
-                    ? parseInt(rawData.customMeta.decimals)
-                    : null,
-                logoUrl:
-                  rawData.customMeta.logoUrl !== ''
-                    ? rawData.customMeta.logoUrl
-                    : null,
-                contractName:
-                  rawData.customMeta.contractName !== ''
-                    ? rawData.customMeta.contractName
-                    : null,
-              }
-            : null,
+        meta: rawData.meta.map((m) => ({
+          ...m,
+          externalId: m.externalId === '' ? null : m.externalId,
+          name: m.name === '' ? null : m.name,
+          symbol: m.symbol === '' ? null : m.symbol,
+          logoUrl: m.logoUrl === '' ? null : m.logoUrl,
+          contractName: m.contractName === '' ? null : m.contractName,
+          decimals: m.decimals ? parseInt(m.decimals) : null,
+        })),
         relations: [
           ...(token?.relations ?? []).filter(
             (r) => r.sourceTokenId === token?.id,
@@ -188,6 +210,7 @@ export function EditTokenPage({
             externalBridgeId: r.externalBridgeId,
           })),
         ],
+        managingEntities: rawData.managingEntities,
       }
       const result = token
         ? await updateToken({ ...data, id: token.id })
@@ -343,109 +366,131 @@ export function EditTokenPage({
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {[
-                    ...(tokenMeta?.aggregate ?? []),
-                    ...(tokenMeta?.rest ?? []),
-                  ].map((meta) => {
+                  {meta.fields.map((field, index) => {
+                    const editMode =
+                      field.source === 'Overrides'
+                        ? ('full' as const)
+                        : field.source === 'CoinGecko'
+                          ? ('externalId' as const)
+                          : ('none' as const)
                     const cellClassName =
-                      meta.source === 'Aggregate' ? 'font-bold' : ''
+                      field.source === 'Aggregate' ? 'font-bold' : ''
                     return (
-                      <TableRow key={meta.source}>
+                      <TableRow key={field.id}>
                         <TableCell className={cellClassName}>
-                          {meta.source}
+                          {field.source}
                         </TableCell>
-                        <TableCell className="max-w-[200px] break-words font-mono text-xs">
-                          {/* eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing */}
-                          {meta.externalId || 'N/A'}
-                        </TableCell>
-                        <TableCell className={cellClassName}>
-                          {meta.name}
-                        </TableCell>
-                        <TableCell className={cellClassName}>
-                          {meta.symbol}
-                        </TableCell>
-                        <TableCell className={cellClassName}>
-                          {meta.decimals}
-                        </TableCell>
-                        <TableCell>{meta.logoUrl}</TableCell>
-                        <TableCell>{meta.contractName}</TableCell>
+                        {editMode !== 'externalId' ? (
+                          <TableCell className="max-w-[200px] break-words font-mono text-xs">
+                            {field.externalId || 'N/A'}
+                          </TableCell>
+                        ) : (
+                          <TableCell>
+                            <FormField
+                              control={form.control}
+                              name={`meta.${index}.externalId`}
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormControl>
+                                    <Input {...field} />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </TableCell>
+                        )}
+                        {editMode === 'full' ? (
+                          <>
+                            <TableCell>
+                              <FormField
+                                control={form.control}
+                                name={`meta.${index}.name`}
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormControl>
+                                      <Input {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <FormField
+                                control={form.control}
+                                name={`meta.${index}.symbol`}
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormControl>
+                                      <Input {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <FormField
+                                control={form.control}
+                                name={`meta.${index}.decimals`}
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormControl>
+                                      <Input type="number" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <FormField
+                                control={form.control}
+                                name={`meta.${index}.logoUrl`}
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormControl>
+                                      <Input {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <FormField
+                                control={form.control}
+                                name={`meta.${index}.contractName`}
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormControl>
+                                      <Input {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                            </TableCell>
+                          </>
+                        ) : (
+                          <>
+                            <TableCell className={cellClassName}>
+                              {field.name}
+                            </TableCell>
+                            <TableCell className={cellClassName}>
+                              {field.symbol}
+                            </TableCell>
+                            <TableCell className={cellClassName}>
+                              {field.decimals}
+                            </TableCell>
+                            <TableCell>{field.logoUrl}</TableCell>
+                            <TableCell>{field.contractName}</TableCell>
+                          </>
+                        )}
                       </TableRow>
                     )
                   })}
-                  <TableRow>
-                    <TableCell>Overrides</TableCell>
-                    <TableCell>N/A</TableCell>
-                    <TableCell>
-                      <FormField
-                        control={form.control}
-                        name="customMeta.name"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <FormField
-                        control={form.control}
-                        name="customMeta.symbol"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <FormField
-                        control={form.control}
-                        name="customMeta.decimals"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input type="number" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <FormField
-                        control={form.control}
-                        name="customMeta.logoUrl"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <FormField
-                        control={form.control}
-                        name="customMeta.contractName"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </TableCell>
-                  </TableRow>
                 </TableBody>
               </Table>
             </CardContent>
@@ -582,70 +627,148 @@ export function EditTokenPage({
               </Button>
             </CardFooter>
           </Card>
-
           {token && (
-            <>
-              <Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Backing</CardTitle>
+                <CardDescription>
+                  Shows which tokens is this token backing.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {backing.length === 0 ? (
+                  <p className="text-sm text-muted-foreground">
+                    This token is not backing any other token.
+                  </p>
+                ) : (
+                  <Table>
+                    <TableHeader>
+                      <TableHead>Token</TableHead>
+                      <TableHead>Link</TableHead>
+                    </TableHeader>
+                    <TableBody>
+                      {backing.map((field, index) => (
+                        <TableRow key={index}>
+                          <TableCell>{field.targetTokenId}</TableCell>
+                          <TableCell>{field.externalBridgeId}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                )}
+              </CardContent>
+            </Card>
+          )}
+          <Card>
+            <CardHeader>
+              <CardTitle>Managing Entities</CardTitle>
+              <CardDescription>
+                Shows which entities manage this token.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {managingEntities.fields.length === 0 ? (
+                <p className="text-sm text-muted-foreground">
+                  This token is not managed by any entity.
+                </p>
+              ) : (
+                <Table>
+                  <TableHeader>
+                    <TableHead>Entity</TableHead>
+                    <TableHead className="w-0" />
+                  </TableHeader>
+                  <TableBody>
+                    {managingEntities.fields.map((field, index) => (
+                      <TableRow key={field.id}>
+                        <TableCell>
+                          <FormField
+                            control={form.control}
+                            name={`managingEntities.${index}.entityId`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormControl>
+                                  <Select
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}
+                                  >
+                                    <SelectTrigger>
+                                      <SelectValue placeholder="Select an entity" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      {entities.map((entity) => (
+                                        <SelectItem
+                                          key={entity.id}
+                                          value={entity.id}
+                                        >
+                                          {entity.name ?? 'Unknown'}{' '}
+                                          <span className="text-xs text-muted-foreground">
+                                            ({entity.id})
+                                          </span>
+                                        </SelectItem>
+                                      ))}
+                                    </SelectContent>
+                                  </Select>
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => managingEntities.remove(index)}
+                          >
+                            <Trash2 className="size-4" />
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              )}
+            </CardContent>
+            <CardFooter className="flex justify-end">
+              <Button
+                type="button"
+                onClick={() => managingEntities.append({ entityId: '' })}
+              >
+                Add
+              </Button>
+            </CardFooter>
+          </Card>
+          {token && (
+            <div className="flex flex-row gap-4">
+              <Card className="flex-1">
                 <CardHeader>
-                  <CardTitle>Backing</CardTitle>
+                  <CardTitle>Token ID</CardTitle>
                   <CardDescription>
-                    Shows which tokens is this token backing.
+                    Unique identifier of this token.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  {backing.length === 0 ? (
-                    <p className="text-sm text-muted-foreground">
-                      This token is not backing any other token.
-                    </p>
-                  ) : (
-                    <Table>
-                      <TableHeader>
-                        <TableHead>Token</TableHead>
-                        <TableHead>Link</TableHead>
-                      </TableHeader>
-                      <TableBody>
-                        {backing.map((field, index) => (
-                          <TableRow key={index}>
-                            <TableCell>{field.targetTokenId}</TableCell>
-                            <TableCell>{field.externalBridgeId}</TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  )}
+                  <ReadonlyCopyInput value={token.id} />
                 </CardContent>
               </Card>
-              <div className="flex flex-row gap-4">
-                <Card className="flex-1">
-                  <CardHeader>
-                    <CardTitle>Token ID</CardTitle>
-                    <CardDescription>
-                      Unique identifier of this token.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <ReadonlyCopyInput value={token.id} />
-                  </CardContent>
-                </Card>
-                <Card className="flex-1">
-                  <CardHeader>
-                    <CardTitle>Delete Token</CardTitle>
-                    <CardDescription>
-                      This action is irreversible and will delete the token.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardFooter className="flex justify-end">
-                    <Button
-                      variant="destructive"
-                      type="button"
-                      onClick={() => setDeleteDialogOpen(true)}
-                    >
-                      Delete Token
-                    </Button>
-                  </CardFooter>
-                </Card>
-              </div>
-            </>
+              <Card className="flex-1">
+                <CardHeader>
+                  <CardTitle>Delete Token</CardTitle>
+                  <CardDescription>
+                    This action is irreversible and will delete the token.
+                  </CardDescription>
+                </CardHeader>
+                <CardFooter className="flex justify-end">
+                  <Button
+                    variant="destructive"
+                    type="button"
+                    onClick={() => setDeleteDialogOpen(true)}
+                  >
+                    Delete Token
+                  </Button>
+                </CardFooter>
+              </Card>
+            </div>
           )}
         </div>
         <DiscardChangesDialog

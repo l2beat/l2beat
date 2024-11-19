@@ -1,8 +1,10 @@
 import { ApiAddressType } from '../../../api/types'
 import { Field, Node } from '../State'
-import type { DiscoveryContract, DiscoveryOutput } from './paseDiscovery'
+import type { DiscoveryContract, DiscoveryOutput } from './parseDiscovery'
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
+
+const IGNORED_FIELDS = ['$pastUpgrades']
 
 function encodeChainAddress(chain: string, value: string): string {
   if (value.includes(':')) {
@@ -68,7 +70,8 @@ function mapFields(
       if (
         typeof value === 'string' &&
         (isAddress(value) || isChainAddress(value)) &&
-        !implementations.includes(value)
+        !implementations.includes(value) &&
+        !IGNORED_FIELDS.includes(key)
       ) {
         if (value === ZERO_ADDRESS) {
           return []
@@ -141,7 +144,7 @@ function getDisplay(
   return { addressType: 'Contract', name }
 }
 
-export function getAsStringArray(value: unknown): string[] {
+function getAsStringArray(value: unknown): string[] {
   if (typeof value === 'string') {
     return [value]
   }

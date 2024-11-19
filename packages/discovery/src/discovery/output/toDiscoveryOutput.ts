@@ -11,6 +11,7 @@ import {
   transformToIssued,
   transformToReceived,
 } from '../permission-resolving/transform'
+import { neuterErrors } from './errors'
 
 export function toDiscoveryOutput(
   name: string,
@@ -29,7 +30,7 @@ export function toDiscoveryOutput(
   }
 }
 
-export function collectUsedTemplatesWithHashes(
+function collectUsedTemplatesWithHashes(
   results: Analysis[],
 ): Record<string, Hash256> {
   const entries: [string, Hash256][] = results
@@ -88,7 +89,7 @@ export function processAnalysis(
           errors:
             Object.keys(x.errors).length === 0
               ? undefined
-              : sortByKeys(x.errors),
+              : sortByKeys(neuterErrors(x.errors)),
           fieldMeta:
             Object.keys(x.fieldsMeta).length > 0 ? x.fieldsMeta : undefined,
           derivedName: x.derivedName,

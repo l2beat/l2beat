@@ -13,25 +13,43 @@ export const insertBridge = actionClient
   .schema(insertBridgeSchema)
   .action(async ({ parsedInput }) => {
     revalidatePath('/', 'layout')
-    try {
-      const id = await db.externalBridge.insert(parsedInput)
-      return { success: { id } }
-    } catch {
-      return { failure: 'Failed to insert bridge' }
-    }
+    const { managingEntities, ...data } = parsedInput
+    return await db.transaction(async () => {
+      try {
+        const { id: externalBridgeId } = await db.externalBridge.insert(data)
+        await db.entityToExternalBridge.upsertManyOfExternalBridgeId(
+          managingEntities.map(({ entityId }) => ({
+            externalBridgeId,
+            entityId,
+          })),
+        )
+        return { success: { id: externalBridgeId } }
+      } catch (e) {
+        return { failure: `Failed to insert link: ${e as string}` }
+      }
+    })
   })
 
 export const updateBridge = actionClient
   .schema(updateBridgeSchema)
   .action(async ({ parsedInput }) => {
-    const { id, ...data } = parsedInput
+    const { id, managingEntities, ...data } = parsedInput
     revalidatePath('/', 'layout')
-    try {
-      await db.externalBridge.update(id, data)
-      return { success: { id } }
-    } catch {
-      return { failure: 'Failed to update bridge' }
-    }
+    return await db.transaction(async () => {
+      try {
+        await db.externalBridge.update(id, data)
+        await db.entityToExternalBridge.deleteByExternalBridgeId(id)
+        await db.entityToExternalBridge.upsertManyOfExternalBridgeId(
+          managingEntities.map(({ entityId }) => ({
+            externalBridgeId: id,
+            entityId,
+          })),
+        )
+        return { success: { id } }
+      } catch (e) {
+        return { failure: `Failed to update link: ${e as string}` }
+      }
+    })
   })
 
 export const deleteBridge = actionClient
@@ -39,10 +57,13 @@ export const deleteBridge = actionClient
   .action(async ({ parsedInput }) => {
     const { id } = parsedInput
     revalidatePath('/', 'layout')
-    try {
-      await db.externalBridge.delete(id)
-      return { success: { id } }
-    } catch {
-      return { failure: 'Failed to delete bridge' }
-    }
+    return await db.transaction(async () => {
+      try {
+        await db.entityToExternalBridge.deleteByExternalBridgeId(id)
+        await db.externalBridge.delete(id)
+        return { success: { id } }
+      } catch (e) {
+        return { failure: `Failed to delete link: ${e as string}` }
+      }
+    })
   })

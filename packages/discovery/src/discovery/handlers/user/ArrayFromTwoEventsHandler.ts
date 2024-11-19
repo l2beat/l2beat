@@ -3,7 +3,6 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import * as z from 'zod'
 
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
 import { getEventFragment } from '../utils/getEventFragment'
@@ -31,7 +30,6 @@ export class ArrayFromTwoEventsHandler implements Handler {
     readonly field: string,
     readonly definition: ArrayFromTwoEventsHandlerDefinition,
     abi: string[],
-    readonly logger: DiscoveryLogger,
   ) {
     this.addFragment = getEventFragment(definition.addEvent, abi, (fragment) =>
       fragment.inputs.some((x) => x.name === definition.addKey),
@@ -57,13 +55,6 @@ export class ArrayFromTwoEventsHandler implements Handler {
     provider: IProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
-    this.logger.logExecution(this.field, [
-      'Querying ',
-      this.addFragment.name,
-      ' and ',
-      this.removeFragment.name,
-    ])
-    // TODO: (sz-piotr) Promise.all provider.getEvents!
     const logs = await provider.getLogs(address, [
       [
         this.abi.getEventTopic(this.addFragment),

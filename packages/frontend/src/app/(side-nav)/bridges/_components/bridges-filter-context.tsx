@@ -16,7 +16,7 @@ export type BridgesFilterContextValue = {
   type?: string
 }
 
-export type MutableBridgesFilterContextValue = BridgesFilterContextValue & {
+type MutableBridgesFilterContextValue = BridgesFilterContextValue & {
   set: (value: Partial<BridgesFilterContextValue>) => void
   reset: () => void
 }

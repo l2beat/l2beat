@@ -254,13 +254,11 @@ async function getStarkWareDiamondFacets(
     ) {
       throw e
     }
-    console.log('Failed to decode upgradeTo data')
 
     if (lastUpgrade.topics[0] === abi.getEventTopic('Upgraded')) {
       // dydx uses the Upgraded event with governance
       // so we cannot get the info from their tx data
       // we need to find the ImplementationAdded event that holds the initializer
-      console.log('Trying to find corresponding ImplementationAdded event')
       const implementationsAdded = await provider.getLogs(address, [
         abi.getEventTopic('ImplementationAdded'),
       ])
@@ -278,7 +276,6 @@ async function getStarkWareDiamondFacets(
 
       data = `0x${correspondingImplementationAdded.data.slice(194)}`
     } else {
-      console.log('Falling back to decoding logs parameters')
       data = `0x${lastUpgrade.data.slice(130)}`
     }
   }

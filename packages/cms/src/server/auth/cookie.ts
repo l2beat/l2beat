@@ -7,13 +7,14 @@ export async function setSession(
   session: Session,
   expiresAt: Date,
 ): Promise<void> {
+  const cookieStore = await cookies()
   const jwt = await new jose.SignJWT(session)
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
     .setExpirationTime(expiresAt)
     .sign(new TextEncoder().encode(env.JWT_SECRET))
 
-  cookies().set('session', jwt, {
+  cookieStore.set('session', jwt, {
     httpOnly: true,
     sameSite: 'lax',
     expires: expiresAt,
@@ -22,8 +23,9 @@ export async function setSession(
   })
 }
 
-export function deleteSession(): void {
-  cookies().set('session', '', {
+export async function deleteSession(): Promise<void> {
+  const cookieStore = await cookies()
+  cookieStore.set('session', '', {
     httpOnly: true,
     sameSite: 'lax',
     expires: new Date(0),
@@ -33,7 +35,7 @@ export function deleteSession(): void {
 }
 
 export async function getSession(): Promise<Session | null> {
-  const jwt = cookies().get('session')?.value
+  const jwt = (await cookies()).get('session')?.value
   if (!jwt) return null
   try {
     const decoded = await jose.jwtVerify(

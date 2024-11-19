@@ -16,6 +16,8 @@ export class DeploymentRepository extends BaseRepository {
   }
 
   async getByTokenIds(tokenIds: string[]): Promise<DeploymentRecord[]> {
+    if (tokenIds.length === 0) return []
+
     const rows = await this.db
       .selectFrom('Deployment')
       .select(selectDeployment)

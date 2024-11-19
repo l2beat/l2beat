@@ -6,12 +6,18 @@ import {
   type SortingFn,
   type Table,
   getMemoOptions,
+  getSortedRowModel,
   memo,
 } from '@tanstack/react-table'
+import { env } from '~/env'
 
 export function getStageSortedRowModel<
   TData extends { id: ProjectId; stage: StageConfig },
 >(): (table: Table<TData>) => () => RowModel<TData> {
+  if (!env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING) {
+    return getSortedRowModel()
+  }
+
   return (table) =>
     memo(
       () => [table.getState().sorting, table.getPreSortedRowModel()],

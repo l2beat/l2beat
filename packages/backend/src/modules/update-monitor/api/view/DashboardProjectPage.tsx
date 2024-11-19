@@ -21,7 +21,7 @@ interface ConfigPageProps {
   config: DiscoveryConfig | undefined
 }
 
-export function DashboardProjectPage(props: ConfigPageProps) {
+function DashboardProjectPage(props: ConfigPageProps) {
   return (
     <Page title={props.projectName + '@' + props.chain}>
       <a href="/status/discovery">⬅ Back</a>

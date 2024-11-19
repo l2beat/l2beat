@@ -12,6 +12,9 @@ import {
 
 import {
   CONTRACTS,
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   DataAvailabilityBridge,
   DataAvailabilityLayer,
   EXITS,
@@ -54,21 +57,21 @@ import {
 import { mergeBadges } from './utils'
 
 export const CELESTIA_DA_PROVIDER: DAProvider = {
-  name: 'Celestia',
+  layer: DA_LAYERS.CELESTIA,
   riskView: RISK_VIEW.DATA_CELESTIA(false),
   technology: TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false),
-  bridge: { type: 'None' },
+  bridge: DA_BRIDGES.NONE,
 }
 
-export interface DAProvider {
-  name: DataAvailabilityLayer
+interface DAProvider {
+  layer: DataAvailabilityLayer
   fallback?: DataAvailabilityLayer
   riskView: ScalingProjectRiskViewEntry
   technology: ScalingProjectTechnologyChoice
   bridge: DataAvailabilityBridge
 }
 
-export interface OpStackConfigCommon {
+interface OpStackConfigCommon {
   createdAt: UnixTime
   daProvider?: DAProvider
   discovery: ProjectDiscovery
@@ -127,7 +130,7 @@ export interface OpStackConfigL3 extends OpStackConfigCommon {
   nativeToken?: string
 }
 
-export function opStackCommon(
+function opStackCommon(
   templateVars: OpStackConfigCommon,
 ): Omit<
   Layer2,
@@ -410,11 +413,9 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
       'FINALIZATION_PERIOD_SECONDS',
     )
 
-  const architectureImage = templateVars.discovery.hasContract(
-    'SuperchainConfig',
-  )
-    ? 'bedrock-superchain'
-    : 'opstack'
+  // 4 cases: Optimium, Optimium + Superchain, Rollup, Rollup + Superchain
+  // archi images defined locally in the project.ts take precedence over this one
+  const architectureImage = `opstack-${daProvider !== undefined ? 'optimium' : 'rollup'}${templateVars.discovery.hasContract('SuperchainConfig') ? '-superchain' : ''}`
 
   return {
     type: 'layer2',
@@ -527,24 +528,25 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
             ]),
       finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
-    dataAvailability:
+    dataAvailability: [
       daProvider !== undefined
         ? addSentimentToDataAvailability({
             layers: daProvider.fallback
-              ? [daProvider.name, daProvider.fallback]
-              : [daProvider.name],
+              ? [daProvider.layer, daProvider.fallback]
+              : [daProvider.layer],
             bridge: daProvider.bridge,
-            mode: 'Transaction data (compressed)',
+            mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
           })
         : addSentimentToDataAvailability({
             layers: [
               templateVars.usesBlobs
-                ? 'Ethereum (blobs or calldata)'
-                : 'Ethereum (calldata)',
+                ? DA_LAYERS.ETH_BLOBS_OR_CALLLDATA
+                : DA_LAYERS.ETH_CALLDATA,
             ],
-            bridge: { type: 'Enshrined' },
-            mode: 'Transaction data (compressed)',
+            bridge: DA_BRIDGES.ENSHRINED,
+            mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
           }),
+    ],
     riskView: {
       stateValidation: {
         ...RISK_VIEW.STATE_NONE,
@@ -832,24 +834,25 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
               },
             )
         : templateVars.stage,
-    dataAvailability:
+    dataAvailability: [
       daProvider !== undefined
         ? addSentimentToDataAvailability({
             layers: daProvider.fallback
-              ? [daProvider.name, daProvider.fallback]
-              : [daProvider.name],
+              ? [daProvider.layer, daProvider.fallback]
+              : [daProvider.layer],
             bridge: daProvider.bridge,
-            mode: 'Transaction data (compressed)',
+            mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
           })
         : addSentimentToDataAvailability({
             layers: [
               templateVars.usesBlobs
-                ? 'Ethereum (blobs or calldata)'
-                : 'Ethereum (calldata)',
+                ? DA_LAYERS.ETH_BLOBS_OR_CALLLDATA
+                : DA_LAYERS.ETH_CALLDATA,
             ],
-            bridge: { type: 'Enshrined' },
-            mode: 'Transaction data (compressed)',
+            bridge: DA_BRIDGES.ENSHRINED,
+            mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
           }),
+    ],
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: [

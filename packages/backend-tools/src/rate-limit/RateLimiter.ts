@@ -68,4 +68,8 @@ export class RateLimiter {
     new RateLimiter({
       callsPerMinute: coingeckoApiKey ? 400 : 10,
     })
+
+  static TEST = new RateLimiter({
+    callsPerMinute: 100_000,
+  })
 }

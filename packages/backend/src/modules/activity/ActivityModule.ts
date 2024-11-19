@@ -69,7 +69,7 @@ function createActivityIndexers(
       case 'zksync':
       case 'starknet':
       case 'loopring':
-      case 'degate':
+      case 'degate3':
       case 'fuel': {
         const [blockTargetIndexer, activityIndexer] = createBlockBasedIndexer(
           clock,

@@ -118,34 +118,34 @@ function useSynchronizeSelection() {
 
 function toNodeFields(input: ApiField[]): Field[] {
   const implementation = input.find((x) => x.name === '$implementation')
-  const banned: string[] = []
-  if (implementation?.value.type === 'address') {
-    banned.push(implementation.value.address)
-  } else if (implementation?.value.type === 'array') {
-    for (const item of implementation.value.values) {
-      if (item.type === 'address') {
-        banned.push(item.address)
-      }
-    }
-  }
-  return input.flatMap((x) => getNodeFields(x.name, x.value, banned))
+  const bannedKeys: string[] = ['$pastUpgrades']
+  const bannedValues: string[] = getAddresses(implementation?.value)
+
+  return input.flatMap((x) =>
+    getNodeFields(x.name, x.value, bannedKeys, bannedValues),
+  )
 }
 
 function getNodeFields(
   path: string,
   value: FieldValue,
-  banned: string[],
+  bannedKeys: string[],
+  bannedValues: string[],
 ): Field[] {
+  if (bannedKeys.includes(path)) {
+    return []
+  }
+
   if (value.type === 'object') {
     return Object.entries(value.value).flatMap(([key, value]) =>
-      getNodeFields(`${path}.${key}`, value, banned),
+      getNodeFields(`${path}.${key}`, value, bannedKeys, bannedValues),
     )
   } else if (value.type === 'array') {
     return value.values.flatMap((value, i) =>
-      getNodeFields(`${path}[${i}]`, value, banned),
+      getNodeFields(`${path}[${i}]`, value, bannedKeys, bannedValues),
     )
   } else if (value.type === 'address') {
-    if (banned.includes(value.address)) {
+    if (bannedValues.includes(value.address)) {
       return []
     }
     return [
@@ -162,4 +162,15 @@ function getNodeFields(
   } else {
     return []
   }
+}
+
+function getAddresses(value: FieldValue | undefined): string[] {
+  if (value?.type === 'array') {
+    return value.values.flatMap((v) => getAddresses(v))
+  } else if (value?.type === 'object') {
+    return Object.values(value).flatMap((v) => getAddresses(v))
+  } else if (value?.type === 'address') {
+    return [value.address]
+  }
+  return []
 }

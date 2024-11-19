@@ -277,6 +277,6 @@ export function getRowTypeClassNames() {
   return 'hover:shadow-none'
 }
 
-export function getRowTypeClassNamesWithoutOpacity() {
+function getRowTypeClassNamesWithoutOpacity() {
   return 'bg-surface-primary group-hover/row:bg-[#EEEEEE] dark:group-hover/row:bg-[#35363A]'
 }

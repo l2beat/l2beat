@@ -31,7 +31,7 @@ jobs:
           cache: 'pnpm'
 
       - run: pnpm install
-      - run: pnpm build
+      - run: pnpm build:public
       - run: |
           cat << EOF > "$HOME/.npmrc"
             //registry.npmjs.org/:_authToken=$NPM_TOKEN

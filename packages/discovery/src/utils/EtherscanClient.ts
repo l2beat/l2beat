@@ -148,7 +148,6 @@ export class EtherscanClient implements IEtherscanClient {
         remappings = decodedSource.remappings
       } catch (e) {
         console.error(e)
-        console.log(source)
       }
     }
 
@@ -340,7 +339,7 @@ const Sources = z.record(z.object({ content: z.string() }))
 const Settings = z.object({ remappings: z.array(z.string()).optional() })
 const EtherscanSource = z.object({ sources: Sources, settings: Settings })
 
-export interface DecodedSource {
+interface DecodedSource {
   sources: [string, string][]
   remappings: string[]
 }

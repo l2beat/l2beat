@@ -1,11 +1,11 @@
 import { type ProjectId } from '@l2beat/shared-pure'
 import Image from 'next/image'
-import Link from 'next/link'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
+import { LinkWithOnHoverPrefetch } from '~/components/link/link-with-on-hover-prefetch'
 
 export interface UsedInProject {
   id: ProjectId
@@ -30,7 +30,7 @@ export function UsedInProjectEntry({
         {implementations.map((project, i) => (
           <Tooltip key={i}>
             <TooltipTrigger disabledOnMobile>
-              <Link
+              <LinkWithOnHoverPrefetch
                 href={`/${project.hrefRoot}/projects/${project.slug}/#${project.targetName}`}
                 className="size-5"
               >
@@ -42,7 +42,7 @@ export function UsedInProjectEntry({
                   alt="Project icon"
                   className="mx-1 inline"
                 />
-              </Link>
+              </LinkWithOnHoverPrefetch>
             </TooltipTrigger>
             <TooltipContent>
               <div>{project.name}</div>

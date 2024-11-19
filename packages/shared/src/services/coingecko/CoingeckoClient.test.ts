@@ -1,6 +1,6 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
-import { CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
+import { expect, mockObject } from 'earl'
 import { Response } from 'node-fetch'
 import { HttpClient2 } from '../../clients'
 import { RetryHandler } from '../../tools'
@@ -10,158 +10,6 @@ import { CoinMarketChartRangeData, CoinMarketChartRangeResult } from './model'
 describe(CoingeckoClient.name, () => {
   const rateLimiter = new RateLimiter({ callsPerMinute: 100_000 })
   const logger = Logger.SILENT
-  describe('query', () => {
-    it('constructs a correct url without api key', async () => {
-      const http = mockObject<HttpClient2>({
-        async fetch(url) {
-          expect(url).toEqual(
-            'https://api.coingecko.com/api/v3/a/b?foo=bar&baz=123',
-          )
-          return new Response(JSON.stringify({ status: '1', message: 'OK' }))
-        },
-      })
-
-      const coingeckoClient = new CoingeckoClient({
-        http,
-        apiKey: undefined,
-        retryHandler: RetryHandler.TEST,
-        logger,
-        rateLimiter,
-      })
-      await coingeckoClient.query('/a/b', { foo: 'bar', baz: '123' })
-    })
-
-    it('constructs a correct url with api key', async () => {
-      const http = mockObject<HttpClient2>({
-        async fetch(url) {
-          expect(url).toEqual(
-            'https://pro-api.coingecko.com/api/v3/a/b?foo=bar&baz=123&x_cg_pro_api_key=myapikey',
-          )
-          return new Response(JSON.stringify({ status: '1', message: 'OK' }))
-        },
-      })
-
-      const coingeckoClient = new CoingeckoClient({
-        http,
-        apiKey: 'myapikey',
-        retryHandler: RetryHandler.TEST,
-        logger,
-        rateLimiter,
-      })
-      await coingeckoClient.query('/a/b', { foo: 'bar', baz: '123' })
-    })
-
-    it('retries on error', async () => {
-      const http = mockObject<HttpClient2>({
-        fetch: mockFn().rejectsWithOnce(new Error()).resolvesToOnce([]),
-      })
-
-      const retryHandler = mockObject<RetryHandler>({
-        retry: async (fn) => fn(),
-      })
-      const coingeckoClient = new CoingeckoClient({
-        http,
-        apiKey: 'myapikey',
-        retryHandler,
-        logger,
-        rateLimiter,
-      })
-      await coingeckoClient.query('call', {})
-
-      expect(http.fetch).toHaveBeenCalledTimes(2)
-      expect(retryHandler.retry).toHaveBeenCalledTimes(1)
-    })
-
-    it('constructs a correct when there are no options', async () => {
-      const http = mockObject<HttpClient2>({
-        async fetch(url) {
-          expect(url).toEqual('https://api.coingecko.com/api/v3/a/b')
-          return new Response(JSON.stringify({ status: '1', message: 'OK' }))
-        },
-      })
-
-      const coingeckoClient = new CoingeckoClient({
-        http,
-        apiKey: undefined,
-        retryHandler: RetryHandler.TEST,
-        logger,
-        rateLimiter,
-      })
-      await coingeckoClient.query('/a/b', {})
-    })
-  })
-
-  describe(CoingeckoClient.prototype.getCoinList.name, () => {
-    it('fetches coins without platforms', async () => {
-      const http = mockObject<HttpClient2>({
-        fetch: async () => [
-          { id: 'asd', symbol: 'ASD', name: 'A Sad Dime' },
-          { id: 'foobar', symbol: 'FBR', name: 'Foobar coin' },
-        ],
-      })
-      const coingeckoClient = new CoingeckoClient({
-        http,
-        apiKey: undefined,
-        retryHandler: RetryHandler.TEST,
-        logger,
-        rateLimiter,
-      })
-      const result = await coingeckoClient.getCoinList()
-      expect(result).toEqual([
-        { id: CoingeckoId('asd'), symbol: 'ASD', name: 'A Sad Dime' },
-        { id: CoingeckoId('foobar'), symbol: 'FBR', name: 'Foobar coin' },
-      ])
-    })
-
-    it('fetches coins with platforms', async () => {
-      const http = mockObject<HttpClient2>({
-        fetch: async () => [
-          {
-            id: 'asd',
-            symbol: 'ASD',
-            name: 'A Sad Dime',
-            platforms: {
-              ethereum: '0x1234',
-              arbitrum: '0x5678',
-            },
-          },
-          {
-            id: 'foobar',
-            symbol: 'FBR',
-            name: 'Foobar coin',
-            platforms: {},
-          },
-        ],
-      })
-      const coingeckoClient = new CoingeckoClient({
-        http,
-        apiKey: undefined,
-        retryHandler: RetryHandler.TEST,
-        logger,
-        rateLimiter,
-      })
-      const result = await coingeckoClient.getCoinList({
-        includePlatform: true,
-      })
-      expect(result).toEqual([
-        {
-          id: CoingeckoId('asd'),
-          symbol: 'ASD',
-          name: 'A Sad Dime',
-          platforms: {
-            ethereum: '0x1234',
-            arbitrum: '0x5678',
-          },
-        },
-        {
-          id: CoingeckoId('foobar'),
-          symbol: 'FBR',
-          name: 'Foobar coin',
-          platforms: {},
-        },
-      ])
-    })
-  })
 
   describe(CoingeckoClient.prototype.getCoinMarketChartRange.name, () => {
     const MOCK_PARSED_DATA: CoinMarketChartRangeResult = {
@@ -239,169 +87,137 @@ describe(CoingeckoClient.name, () => {
         new UnixTime(1622577232),
       )
     })
+  })
 
-    it('tries to obtain new id when coingecko changes it', async () => {
-      const idInConfig = 'dai'
-      const idSupportedByAPI = 'dai-supported'
-      const tokenAddress = '0x6b175474e89094c44da98b954eedeac495271d0f'
-
+  describe(CoingeckoClient.prototype.getCoinList.name, () => {
+    it('fetches coins without platforms', async () => {
       const http = mockObject<HttpClient2>({
-        fetch: mockFn()
-          .throwsOnce(new Error('HTTP error: coin not found'))
-          .throwsOnce(new Error('HTTP error: coin not found'))
-          .resolvesToOnce([
-            {
-              id: idSupportedByAPI,
-              symbol: 'dai',
-              name: 'Dai',
-              platforms: {
-                ethereum: tokenAddress,
-              },
-            },
-          ])
-          .resolvesTo(MOCK_PARSED_DATA),
+        fetch: async () => [
+          { id: 'asd', symbol: 'ASD', name: 'A Sad Dime' },
+          { id: 'foobar', symbol: 'FBR', name: 'Foobar coin' },
+        ],
       })
-      const apiKey = 'password'
       const coingeckoClient = new CoingeckoClient({
         http,
-        apiKey,
+        apiKey: undefined,
         retryHandler: RetryHandler.TEST,
         logger,
         rateLimiter,
       })
-
-      await coingeckoClient.getCoinMarketChartRange(
-        CoingeckoId('dai'),
-        'usd',
-        new UnixTime(1592577232),
-        new UnixTime(1622577232),
-        EthereumAddress(tokenAddress),
-      )
-
-      expect(http.fetch).toHaveBeenCalledTimes(4)
-      expect(http.fetch).toHaveBeenNthCalledWith(
-        1,
-        `https://pro-api.coingecko.com/api/v3/coins/${idInConfig}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232&x_cg_pro_api_key=${apiKey}`,
-        { timeout: 10000 },
-      )
-      expect(http.fetch).toHaveBeenNthCalledWith(
-        2,
-        `https://pro-api.coingecko.com/api/v3/coins/${idInConfig}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232&x_cg_pro_api_key=${apiKey}`,
-        { timeout: 10000 },
-      )
-      expect(http.fetch).toHaveBeenNthCalledWith(
-        3,
-        `https://pro-api.coingecko.com/api/v3/coins/list?include_platform=true&x_cg_pro_api_key=${apiKey}`,
-        { timeout: 10000 },
-      )
-      expect(http.fetch).toHaveBeenNthCalledWith(
-        4,
-        `https://pro-api.coingecko.com/api/v3/coins/${idSupportedByAPI}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232&x_cg_pro_api_key=${apiKey}`,
-        { timeout: 10000 },
-      )
+      const result = await coingeckoClient.getCoinList()
+      expect(result).toEqual([
+        { id: CoingeckoId('asd'), symbol: 'ASD', name: 'A Sad Dime' },
+        { id: CoingeckoId('foobar'), symbol: 'FBR', name: 'Foobar coin' },
+      ])
     })
 
-    it('newly obtained coingeckoId is cached', async () => {
-      const idInConfig = 'dai'
-      const idSupportedByAPI = 'dai-supported'
-      const idSupportedByAPI2 = 'dai-supported'
-      const tokenAddress = '0x6b175474e89094c44da98b954eedeac495271d0f'
-
+    it('fetches coins with platforms', async () => {
       const http = mockObject<HttpClient2>({
-        fetch: mockFn()
-          .throwsOnce(new Error('HTTP error: coin not found'))
-          .throwsOnce(new Error('HTTP error: coin not found')) //retry
-          .resolvesToOnce([
-            {
-              id: idSupportedByAPI,
-              symbol: 'dai',
-              name: 'Dai',
-              platforms: {
-                ethereum: tokenAddress,
-              },
+        fetch: async () => [
+          {
+            id: 'asd',
+            symbol: 'ASD',
+            name: 'A Sad Dime',
+            platforms: {
+              ethereum: '0x1234',
+              arbitrum: '0x5678',
             },
-          ])
-          .resolvesToOnce(MOCK_PARSED_DATA)
-          .throwsOnce(new Error('HTTP error: coin not found'))
-          .throwsOnce(new Error('HTTP error: coin not found')) //retry
-          .resolvesToOnce([
-            {
-              id: idSupportedByAPI2,
-              symbol: 'dai',
-              name: 'Dai',
-              platforms: {
-                ethereum: tokenAddress,
-              },
-            },
-          ])
-          .resolvesToOnce(MOCK_PARSED_DATA),
+          },
+          {
+            id: 'foobar',
+            symbol: 'FBR',
+            name: 'Foobar coin',
+            platforms: {},
+          },
+        ],
       })
-      const apiKey = 'password'
       const coingeckoClient = new CoingeckoClient({
         http,
-        apiKey,
+        apiKey: undefined,
         retryHandler: RetryHandler.TEST,
         logger,
         rateLimiter,
       })
+      const result = await coingeckoClient.getCoinList({
+        includePlatform: true,
+      })
+      expect(result).toEqual([
+        {
+          id: CoingeckoId('asd'),
+          symbol: 'ASD',
+          name: 'A Sad Dime',
+          platforms: {
+            ethereum: '0x1234',
+            arbitrum: '0x5678',
+          },
+        },
+        {
+          id: CoingeckoId('foobar'),
+          symbol: 'FBR',
+          name: 'Foobar coin',
+          platforms: {},
+        },
+      ])
+    })
+  })
 
-      await coingeckoClient.getCoinMarketChartRange(
-        CoingeckoId('dai'),
-        'usd',
-        new UnixTime(1592577232),
-        new UnixTime(1622577232),
-        EthereumAddress(tokenAddress),
-      )
+  describe(CoingeckoClient.prototype.query.name, () => {
+    it('constructs a correct url without api key', async () => {
+      const http = mockObject<HttpClient2>({
+        async fetch(url) {
+          expect(url).toEqual(
+            'https://api.coingecko.com/api/v3/a/b?foo=bar&baz=123',
+          )
+          return new Response(JSON.stringify({ status: '1', message: 'OK' }))
+        },
+      })
 
-      await coingeckoClient.getCoinMarketChartRange(
-        CoingeckoId('dai'),
-        'usd',
-        new UnixTime(1592577232),
-        new UnixTime(1622577232),
-        EthereumAddress(tokenAddress),
-      )
+      const coingeckoClient = new CoingeckoClient({
+        http,
+        apiKey: undefined,
+        retryHandler: RetryHandler.TEST,
+        logger,
+        rateLimiter,
+      })
+      await coingeckoClient.query('/a/b', { foo: 'bar', baz: '123' })
+    })
 
-      expect(http.fetch).toHaveBeenCalledTimes(8)
-      expect(http.fetch).toHaveBeenNthCalledWith(
-        1,
-        `https://pro-api.coingecko.com/api/v3/coins/${idInConfig}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232&x_cg_pro_api_key=${apiKey}`,
-        { timeout: 10000 },
-      )
-      expect(http.fetch).toHaveBeenNthCalledWith(
-        2,
-        `https://pro-api.coingecko.com/api/v3/coins/${idInConfig}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232&x_cg_pro_api_key=${apiKey}`,
-        { timeout: 10000 },
-      )
-      expect(http.fetch).toHaveBeenNthCalledWith(
-        3,
-        `https://pro-api.coingecko.com/api/v3/coins/list?include_platform=true&x_cg_pro_api_key=${apiKey}`,
-        { timeout: 10000 },
-      )
-      expect(http.fetch).toHaveBeenNthCalledWith(
-        4,
-        `https://pro-api.coingecko.com/api/v3/coins/${idSupportedByAPI}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232&x_cg_pro_api_key=${apiKey}`,
-        { timeout: 10000 },
-      )
-      expect(http.fetch).toHaveBeenNthCalledWith(
-        5,
-        `https://pro-api.coingecko.com/api/v3/coins/${idSupportedByAPI}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232&x_cg_pro_api_key=${apiKey}`,
-        { timeout: 10000 },
-      )
-      expect(http.fetch).toHaveBeenNthCalledWith(
-        6,
-        `https://pro-api.coingecko.com/api/v3/coins/${idSupportedByAPI}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232&x_cg_pro_api_key=${apiKey}`,
-        { timeout: 10000 },
-      )
-      expect(http.fetch).toHaveBeenNthCalledWith(
-        7,
-        `https://pro-api.coingecko.com/api/v3/coins/list?include_platform=true&x_cg_pro_api_key=${apiKey}`,
-        { timeout: 10000 },
-      )
-      expect(http.fetch).toHaveBeenNthCalledWith(
-        8,
-        `https://pro-api.coingecko.com/api/v3/coins/${idSupportedByAPI2}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232&x_cg_pro_api_key=${apiKey}`,
-        { timeout: 10000 },
-      )
+    it('constructs a correct url with api key', async () => {
+      const http = mockObject<HttpClient2>({
+        async fetch(url) {
+          expect(url).toEqual(
+            'https://pro-api.coingecko.com/api/v3/a/b?foo=bar&baz=123&x_cg_pro_api_key=myapikey',
+          )
+          return new Response(JSON.stringify({ status: '1', message: 'OK' }))
+        },
+      })
+
+      const coingeckoClient = new CoingeckoClient({
+        http,
+        apiKey: 'myapikey',
+        retryHandler: RetryHandler.TEST,
+        logger,
+        rateLimiter,
+      })
+      await coingeckoClient.query('/a/b', { foo: 'bar', baz: '123' })
+    })
+
+    it('constructs a correct when there are no options', async () => {
+      const http = mockObject<HttpClient2>({
+        async fetch(url) {
+          expect(url).toEqual('https://api.coingecko.com/api/v3/a/b')
+          return new Response(JSON.stringify({ status: '1', message: 'OK' }))
+        },
+      })
+
+      const coingeckoClient = new CoingeckoClient({
+        http,
+        apiKey: undefined,
+        retryHandler: RetryHandler.TEST,
+        logger,
+        rateLimiter,
+      })
+      await coingeckoClient.query('/a/b', {})
     })
   })
 })

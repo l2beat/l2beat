@@ -13,6 +13,9 @@ import {
 import {
   CONTRACTS,
   ChainConfig,
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   DataAvailabilityBridge,
   DataAvailabilityLayer,
   EXITS,
@@ -43,7 +46,7 @@ import { Layer2, Layer2Display, Layer2TxConfig } from '../types'
 import { mergeBadges } from './utils'
 
 export interface DAProvider {
-  name: DataAvailabilityLayer
+  layer: DataAvailabilityLayer
   fallback?: DataAvailabilityLayer
   riskView: ScalingProjectRiskViewEntry
   technology: ScalingProjectTechnologyChoice
@@ -307,20 +310,21 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
             },
     },
     chainConfig: templateVars.chainConfig,
-    dataAvailability:
+    dataAvailability: [
       daProvider !== undefined
         ? addSentimentToDataAvailability({
             layers: daProvider.fallback
-              ? [daProvider.name, daProvider.fallback]
-              : [daProvider.name],
+              ? [daProvider.layer, daProvider.fallback]
+              : [daProvider.layer],
             bridge: daProvider.bridge,
-            mode: 'Transaction data',
+            mode: DA_MODES.TRANSACTION_DATA,
           })
         : addSentimentToDataAvailability({
-            layers: ['Ethereum (calldata)'],
-            bridge: { type: 'Enshrined' },
-            mode: 'Transaction data',
+            layers: [DA_LAYERS.ETH_CALLDATA],
+            bridge: DA_BRIDGES.ENSHRINED,
+            mode: DA_MODES.TRANSACTION_DATA,
           }),
+    ],
     riskView: {
       stateValidation: {
         ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,

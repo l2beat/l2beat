@@ -19,7 +19,6 @@ export const lyra: Layer2 = opStackL2({
   display: {
     name: 'Derive',
     slug: 'derive',
-    architectureImage: 'lyra',
     description:
       'Derive Chain is an L2 scaling solution built using OP Stack specially for the Derive protocol - a settlement protocol for spot, perpetuals, and options trading.',
     links: {

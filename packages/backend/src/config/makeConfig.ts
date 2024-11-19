@@ -232,6 +232,7 @@ export function makeConfig(
         'wss://avail-mainnet.public.blastapi.io/',
       ),
     },
+    insight: flags.isEnabled('insight'),
 
     // Must be last
     flags: flags.getResolved(),

@@ -1,99 +1,82 @@
 import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
 import { env } from '~/env'
 import { db } from '~/server/database'
 import { countPerSecond } from './utils/count-per-second'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import { getLastDayTps, getLastDayUops } from './utils/get-last-day'
 import { getLastDayRatio } from './utils/get-last-day-ratio'
+import { getSyncStatus } from './utils/get-sync-status'
 import {
   getTpsWeeklyChange,
   getUopsWeeklyChange,
 } from './utils/get-weekly-change'
 import { sumTpsCount, sumUopsCount } from './utils/sum-activity-count'
 
-export async function getActivityTableData(projects: (Layer2 | Layer3)[]) {
+export async function getActivityTable(projects: (Layer2 | Layer3)[]) {
   if (env.MOCK) {
     return getMockActivityTableData()
   }
-  noStore()
-  return getCachedActivityTableData(projects)
+  return getActivityTableData(projects)
 }
 
 export type ActivityProjectTableData = NonNullable<ActivityTableData[string]>
-type ActivityTableData = Awaited<ReturnType<typeof getCachedActivityTableData>>
+type ActivityTableData = Awaited<ReturnType<typeof getActivityTableData>>
 
-const getCachedActivityTableData = cache(
-  async (projects: (Layer2 | Layer3)[]) => {
-    const range = getFullySyncedActivityRange('30d')
-    const records = await db.activity.getByProjectsAndTimeRange(
-      [ProjectId.ETHEREUM, ...projects.map((p) => p.id)],
-      range,
-    )
-    const maxCounts = await db.activity.getMaxCountsForProjects()
+async function getActivityTableData(projects: (Layer2 | Layer3)[]) {
+  const range = getFullySyncedActivityRange('30d')
+  const records = await db.activity.getByProjectsAndTimeRange(
+    [ProjectId.ETHEREUM, ...projects.map((p) => p.id)],
+    range,
+  )
+  const maxCounts = await db.activity.getMaxCountsForProjects()
 
-    const grouped = groupBy(records, (r) => r.projectId)
+  const grouped = groupBy(records, (r) => r.projectId)
 
-    const data = Object.fromEntries(
-      Object.entries(grouped).map(([projectId, records]) => {
-        const lastRecord = records.at(-1)
+  const data = Object.fromEntries(
+    Object.entries(grouped).map(([projectId, records]) => {
+      const lastRecord = records.at(-1)
 
-        if (!lastRecord) {
-          return [projectId, undefined]
-        }
+      if (!lastRecord) {
+        return [projectId, undefined]
+      }
 
-        const maxCount = maxCounts[projectId]
-        assert(
-          maxCount !== undefined,
-          `Max count for project ${projectId} not found`,
-        )
+      const maxCount = maxCounts[projectId]
+      assert(
+        maxCount !== undefined,
+        `Max count for project ${projectId} not found`,
+      )
 
-        return [
-          projectId,
-          {
-            tps: {
-              change: getTpsWeeklyChange(records),
-              pastDayCount: getLastDayTps(records),
-              summedCount: sumTpsCount(records),
-              maxCount: {
-                value: countPerSecond(maxCount.count),
-                timestamp: maxCount.countTimestamp.toNumber(),
-              },
+      return [
+        projectId,
+        {
+          tps: {
+            change: getTpsWeeklyChange(records),
+            pastDayCount: getLastDayTps(records),
+            summedCount: sumTpsCount(records),
+            maxCount: {
+              value: countPerSecond(maxCount.count),
+              timestamp: maxCount.countTimestamp.toNumber(),
             },
-            uops: {
-              change: getUopsWeeklyChange(records),
-              pastDayCount: getLastDayUops(records),
-              summedCount: sumUopsCount(records),
-              maxCount: {
-                value: countPerSecond(maxCount.uopsCount),
-                timestamp: maxCount.uopsTimestamp.toNumber(),
-              },
-            },
-            ratio: getLastDayRatio(records),
-            syncStatus: getSyncStatus(lastRecord.timestamp),
           },
-        ]
-      }),
-    )
+          uops: {
+            change: getUopsWeeklyChange(records),
+            pastDayCount: getLastDayUops(records),
+            summedCount: sumUopsCount(records),
+            maxCount: {
+              value: countPerSecond(maxCount.uopsCount),
+              timestamp: maxCount.uopsTimestamp.toNumber(),
+            },
+          },
+          ratio: getLastDayRatio(records),
+          syncStatus: getSyncStatus(lastRecord.timestamp),
+        },
+      ]
+    }),
+  )
 
-    return Object.fromEntries(
-      Object.entries(data).filter(([_, value]) => value),
-    )
-  },
-  ['activityTable'],
-  {
-    revalidate: 10 * UnixTime.MINUTE,
-  },
-)
-
-function getSyncStatus(syncedUntil: UnixTime) {
-  const isSynced = UnixTime.now().add(-2, 'days').lte(syncedUntil)
-  return { isSynced, syncedUntil: syncedUntil.toNumber() }
+  return Object.fromEntries(Object.entries(data).filter(([_, value]) => value))
 }
 
 function getMockActivityTableData(): ActivityTableData {

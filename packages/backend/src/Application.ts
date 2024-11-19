@@ -9,6 +9,7 @@ import { initActivityModule } from './modules/activity/ActivityModule'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
+import { createInsightModule } from './modules/insight/InsightModule'
 import { createLzOAppsModule } from './modules/lz-oapps/createLzOAppsModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
@@ -60,12 +61,14 @@ export class Application {
         config,
         logger,
         peripherals,
+        providers,
         trackedTxsModule?.indexer,
       ),
       createLzOAppsModule(config, logger),
       initTvlModule(config, logger, peripherals, providers, clock),
       createVerifiersModule(config, logger, peripherals, clock),
       createDaBeatModule(config, logger, peripherals, providers, clock),
+      createInsightModule(config, logger, peripherals, providers, clock),
     ]
 
     const apiServer = new ApiServer(

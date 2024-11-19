@@ -21,28 +21,8 @@ import { rimraf } from 'rimraf'
 import { updateDiffHistoryHash } from '../src/modules/update-monitor/utils/hashing'
 
 const FIRST_SECTION_PREFIX = '# Diff at'
-const ALLOWED_SWITCHES = ['--dev', '--save-sources', '--refresh']
 
-// This is a CLI tool. Run logic immediately.
-void updateDiffHistoryFile()
-
-async function updateDiffHistoryFile() {
-  const filtered = process.argv.filter((v) => !ALLOWED_SWITCHES.includes(v))
-  if (filtered.filter((v) => v.startsWith('-')).length > 0) {
-    console.log(
-      'Discovery run with non-default configuration, skipping updating the diff history file...',
-    )
-    process.exit(0)
-  }
-
-  console.log('Updating diff history file...')
-  const params = process.argv.filter((v) => !v.startsWith('-'))
-  const [_node, _sourcefile, chain, projectName] = params
-  if (!chain || !projectName) {
-    console.error('Pass parameters: <chainName> <projectName>')
-    process.exit(1)
-  }
-
+export async function updateDiffHistory(projectName: string, chain: string) {
   // Get discovered.json from main branch and compare to current
   console.log(`Project: ${projectName}`)
   const configReader = new ConfigReader()

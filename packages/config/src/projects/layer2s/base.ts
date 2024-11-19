@@ -11,6 +11,9 @@ import {
 import { BigNumber } from 'ethers'
 import { formatEther } from 'ethers/lib/utils'
 import {
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   DERIVATION,
   EXITS,
   FORCE_TRANSACTIONS,
@@ -181,6 +184,13 @@ export const base: Layer2 = {
         address: EthereumAddress('0x9de443AdC5A411E83F1878Ef24C3F52C61571e72'),
         tokens: ['wstETH'],
         source: 'external',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'Canonical (external escrow)',
+            },
+          ],
+        },
         description:
           'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
       }),
@@ -267,11 +277,13 @@ export const base: Layer2 = {
     ],
     coingeckoPlatform: 'base',
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (blobs or calldata)'],
-    bridge: { type: 'Enshrined' },
-    mode: 'Transaction data (compressed)',
-  }),
+  dataAvailability: [
+    addSentimentToDataAvailability({
+      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
+      bridge: DA_BRIDGES.ENSHRINED,
+      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+    }),
+  ],
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_INT,

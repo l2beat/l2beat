@@ -32,7 +32,7 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
 
   const { columns, valuesStyle, formatYAxisLabel } =
     useActivityChartRenderParams({
-      data,
+      chart: data,
       milestones: [],
       showMainnet: SHOW_MAINNET,
     })

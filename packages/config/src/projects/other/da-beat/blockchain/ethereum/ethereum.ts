@@ -3,13 +3,14 @@ import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
 import { DaLayer } from '../../types/DaLayer'
 import { enshrinedBridge } from './bridges/enshrinedBridge'
 
-export const ethereum: DaLayer = {
+export const ethereum = {
   id: 'ethereum',
   type: 'DaLayer',
   kind: 'PublicBlockchain',
   systemCategory: 'public',
   display: {
-    name: 'Ethereum (EIP-4844)',
+    // name: 'Ethereum (EIP-4844)',
+    name: 'Ethereum',
     slug: 'ethereum',
     description: `Ethereum is a Proof of Stake (PoS) network that enables the creation and execution of smart contracts and decentralized applications (dApps) using its native cryptocurrency, Ether (ETH).
       EIP-4844 allows for blob-carrying transactions containing large amounts of data on the consensus layer, and whose commitment can be accessed by the EVM on the execution layer.`,
@@ -88,7 +89,7 @@ export const ethereum: DaLayer = {
     This method allows ZK rollups to prove that the data used in their validity proof is consistent with the blob data committed to Ethereum.
     `,
   },
-  bridges: [enshrinedBridge],
+  bridges: [enshrinedBridge] as const,
   consensusAlgorithm: {
     name: 'Gasper',
     description: `Ethereum's consensus protocol combines two separate consensus protocols, LMD GHOST and Casper FFG.
@@ -108,4 +109,4 @@ export const ethereum: DaLayer = {
   economicSecurity: {
     type: 'Ethereum',
   },
-}
+} satisfies DaLayer

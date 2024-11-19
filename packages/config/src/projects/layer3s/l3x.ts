@@ -66,6 +66,13 @@ export const l3x: Layer3 = orbitStackL3({
       sinceTimestamp: new UnixTime(1713781465),
       includeInTotal: false,
       source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Canonically (external escrow)',
+          },
+        ],
+      },
       tokens: '*',
       chain: 'arbitrum',
     },
@@ -74,6 +81,13 @@ export const l3x: Layer3 = orbitStackL3({
       sinceTimestamp: new UnixTime(1713781465),
       includeInTotal: false,
       source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Canonically (external escrow)',
+          },
+        ],
+      },
       tokens: '*',
       chain: 'linea',
     },
@@ -82,6 +96,13 @@ export const l3x: Layer3 = orbitStackL3({
       sinceTimestamp: new UnixTime(1713781465),
       includeInTotal: false,
       source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Canonically (external escrow)',
+          },
+        ],
+      },
       tokens: '*',
       chain: 'mode',
     },
@@ -90,6 +111,13 @@ export const l3x: Layer3 = orbitStackL3({
       sinceTimestamp: new UnixTime(1713781465),
       includeInTotal: false,
       source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Canonically (external escrow)',
+          },
+        ],
+      },
       tokens: '*',
       chain: 'blast',
     },

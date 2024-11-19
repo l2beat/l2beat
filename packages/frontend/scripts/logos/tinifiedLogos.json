@@ -212,7 +212,7 @@
   "gpt.png": "4f1f5fc3a4360ff0a56606f5c76efa23",
   "wirex.png": "d4a5dfca3b3d2d88ee7999a8450b28f0",
   "witness.png": "c3c00460efca01baa599701bbfa93140",
-  "invm.png": "01af1efc3a9bbc9f07d67f6aa5fd08c7",
+  "inevm.png": "1bb03a8db13aa36f3af0cbdf784e8ac8",
   "aiechain.png": "8ac2c63b441947f8350698804d37df18",
   "aleph-zero.png": "b9c47b9a47c4114077d5584820b162b7",
   "alphadune.png": "4442b3599a0af168ca7edea3f16873ed",
@@ -288,5 +288,7 @@
   "ink.png": "98a2c5f0a9cf427b2948cb7c7f3b58a5",
   "t1.png": "af448b77b5d1fe2cf49ec4235d5e1f77",
   "river.png": "db7c1342044f187502ef34ef8b1f5336",
-  "shape.png": "027704dfe2268b7dd32a38dc9b744317"
+  "shape.png": "027704dfe2268b7dd32a38dc9b744317",
+  "fluence.png": "18b94a9b0462ec69387f3fdc3d962a77",
+  "blessnet.png": "cd2022600e8be3a9b1f817110d63e4be"
 }

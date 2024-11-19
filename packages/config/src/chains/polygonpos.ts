@@ -5,6 +5,7 @@ import { ChainConfig } from '../common/ChainConfig'
 export const polygonpos: ChainConfig = {
   name: 'polygonpos',
   chainId: 137,
+  blockscoutV2ApiUrl: 'https://polygon.blockscout.com/api/v2',
   explorerUrl: 'https://polygonscan.com',
   explorerApi: {
     url: 'https://api.polygonscan.com/api',

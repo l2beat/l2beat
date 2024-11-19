@@ -1,15 +1,14 @@
 import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
-import { env } from '~/env'
 import { groupByMainCategories } from '~/utils/group-by-main-categories'
 import {
   type ProjectsChangeReport,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
+import { getCurrentEntry } from '../../utils/get-current-entry'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
-import { orderByTvl } from '../tvl/utils/order-by-tvl'
 import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
 
 export async function getScalingDaEntries() {
@@ -34,14 +33,7 @@ export async function getScalingDaEntries() {
     })
     .filter(notUndefined)
 
-  if (env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION) {
-    return {
-      type: 'recategorised' as const,
-      entries: groupByMainCategories(orderByStageAndTvl(entries, tvl)),
-    }
-  }
-
-  return { entries: orderByTvl(entries, tvl) }
+  return groupByMainCategories(orderByStageAndTvl(entries, tvl))
 }
 
 function getScalingDataAvailabilityEntry(
@@ -49,7 +41,8 @@ function getScalingDataAvailabilityEntry(
   projectsChangeReport: ProjectsChangeReport,
   isVerified: boolean,
 ) {
-  if (!project.dataAvailability) return
+  const dataAvailability = getCurrentEntry(project.dataAvailability)
+  if (!dataAvailability) return
 
   return {
     entryType: 'data-availability' as const,
@@ -63,9 +56,9 @@ function getScalingDataAvailabilityEntry(
         projectsChangeReport.hasHighSeverityFieldChanged(project.id),
     }),
     dataAvailability: {
-      layer: project.dataAvailability.layer,
-      bridge: project.dataAvailability.bridge,
-      mode: project.dataAvailability.mode,
+      layer: dataAvailability.layer,
+      bridge: dataAvailability.bridge,
+      mode: dataAvailability.mode,
     },
   }
 }

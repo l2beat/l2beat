@@ -9,7 +9,7 @@ export interface AnomalyEntry {
   })[]
 }
 
-export interface NonAnomalyEntry {
+interface NonAnomalyEntry {
   isAnomaly: false
 }
 

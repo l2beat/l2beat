@@ -103,7 +103,7 @@ export function ScalingProjectStats({ project, className }: Props) {
   )
 }
 
-export interface ProjectStat {
+interface ProjectStat {
   title: string
   value: ReactNode
   tooltip?: string

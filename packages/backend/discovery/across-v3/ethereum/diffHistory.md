@@ -1,3 +1,40 @@
+Generated with discovered.json: 0x52dadfca973170d723ce40d572f31cce6594232a
+
+# Diff at Fri, 08 Nov 2024 09:45:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@53988239f42edde0275ed92d8f3ada4279354f7d block: 20997757
+- current block number: 21142111
+
+## Description
+
+Alephzero adapter added.
+
+## Watched changes
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.Adapters.41455:
++        "0x6F4083304C2cA99B077ACE06a5DcF670615915Af"
+      values.CrossChainContracts.41455:
++        "0x13fDac9F9b4777705db45291bbFF3c972c6d1d97"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Alephzero_Adapter (0x6F4083304C2cA99B077ACE06a5DcF670615915Af)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../across-v3/ethereum/.flat/Alephzero_Adapter.sol | 711 +++++++++++++++++++++
+ 1 file changed, 711 insertions(+)
+```
+
 Generated with discovered.json: 0x06759bc3145293933667947d7cb0ef0a871d648b
 
 # Diff at Mon, 21 Oct 2024 11:03:42 GMT:

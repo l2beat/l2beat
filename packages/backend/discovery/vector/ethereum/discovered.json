@@ -1,8 +1,8 @@
 {
   "name": "vector",
   "chain": "ethereum",
-  "blockNumber": 21122554,
-  "configHash": "0x7ce2e39481e43ed9455cd836c95a3ac783862f136b592be4459ee4698611df5c",
+  "blockNumber": 21184939,
+  "configHash": "0xa03144b7d27afc0d41506d464625d3e41d7e7238e83e26927284bfac6cba7fb0",
   "contracts": [
     {
       "name": "Vector",
@@ -63,8 +63,8 @@
         "headerRangeCommitmentTreeSize": 2048,
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "isRelayerApproved": true,
-        "latestAuthoritySetId": 131,
-        "latestBlock": 536640,
+        "latestAuthoritySetId": 139,
+        "latestBlock": 574430,
         "relayers": ["0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"],
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
@@ -99,8 +99,10 @@
         "$immutable": true,
         "oldVerifier": ["0xc350F063C13a3Ca21331610fe159E697a5c9c2FB", true],
         "oldVerifier2": ["0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc", true],
+        "oldVerifier3": ["0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3", true],
+        "oldVerifier4": ["0x1764C29FBd94865198588f10FC75D4f6636d158d", true],
         "owner": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
-        "verifier": ["0x1764C29FBd94865198588f10FC75D4f6636d158d", false]
+        "verifier": ["0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16", false]
       },
       "fieldMeta": {
         "oldVerifier": {
@@ -109,11 +111,30 @@
         "oldVerifier2": {
           "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-09-21."
         },
+        "oldVerifier3": {
+          "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-11-01."
+        },
+        "oldVerifier4": {
+          "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-11-08."
+        },
         "verifier": {
           "description": "The prover contract address for SP1, and whether it is frozen (true if frozen)."
         }
       },
       "derivedName": "SP1VerifierGateway"
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3",
+      "sourceHashes": [
+        "0x0f6f590ac4c542e7f927f783929cb0bf126657b5207b3c796f77ac9d01433fb5"
+      ],
+      "sinceTimestamp": 1729727375,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0x090690902a12d1d02c07a1ad25aa76bded5f6499e12a11ba127669501b553998",
+        "VERSION": "v3.0.0"
+      }
     },
     {
       "name": "SP1Verifier",
@@ -162,7 +183,7 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "SP1Verifier_OLD",
+      "name": "SP1Verifier",
       "address": "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB",
       "sourceHashes": [
         "0x6e3bfeae0d549b79decfd956f551a8aeac66523cdd66da389ef55eb56ef72aac"
@@ -172,8 +193,7 @@
         "$immutable": true,
         "VERIFIER_HASH": "0xc430ff7f31a22c5f7607f3ed2a2f5621af340bc45a44179319cba5761664e1f0",
         "VERSION": "v1.1.0"
-      },
-      "derivedName": "SP1Verifier"
+      }
     },
     {
       "name": "SuccinctGatewaySP1Multisig",
@@ -199,10 +219,23 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 7,
+        "nonce": 8,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
+      "sourceHashes": [
+        "0x12f4e310568377cf39c9992ed73fee2df73ea33090ec45ec342cfe4e5ce7c25b"
+      ],
+      "sinceTimestamp": 1729727135,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0x54bdcae3adb83d4ce9ed91d99a31da3086e2b117abf3685164e9f28d78670b05",
+        "VERSION": "v3.0.0"
+      }
     }
   ],
   "eoas": [
@@ -262,6 +295,19 @@
       "function renounceOwnership()",
       "function routes(bytes4) view returns (address verifier, bool frozen)",
       "function transferOwnership(address newOwner)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
+    "0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3": [
+      "error InvalidProof()",
+      "error ProofInvalid()",
+      "error PublicInputNotInField()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(uint256[8] proof, uint256[2] input) view",
+      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyCompressedProof(uint256[4] compressedProof, uint256[2] input) view",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc": [
@@ -356,6 +402,15 @@
     "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": [
       "constructor(address _singleton)"
     ],
+    "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16": [
+      "error InvalidProof()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
@@ -408,7 +463,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "succinct/SP1SuccinctGateway": "0xe0ec8df0fec605a6cb059948b08432aee71379584a5fa43412fa24a07701c877",
+    "succinct/SP1SuccinctGateway": "0xc0b1862d6ddf4e09ee2a3baf1ead0eda8461322a213cd66dfd8e013950b9a0cc",
     "succinct/SP1Vector": "0xe1b6515d881fe5c6bf2819550b85bc508c9adf9df527c4be5cf4e0ed65cd4533"
   }
 }

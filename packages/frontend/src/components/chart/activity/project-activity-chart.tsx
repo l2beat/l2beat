@@ -6,6 +6,7 @@ import { type ActivityMetric } from '~/app/(side-nav)/scaling/activity/_componen
 import { ActivityMetricControls } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-controls'
 import { ActivityTimeRangeControls } from '~/app/(side-nav)/scaling/activity/_components/activity-time-range-controls'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
+import { NotSyncedBanner } from '~/components/not-synced-banner'
 import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
 import { type ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/react'
@@ -29,7 +30,7 @@ export function ProjectActivityChart({ milestones, projectId }: Props) {
   const [scale, setScale] = useState<ChartScale>('lin')
   const [showMainnet, setShowMainnet] = useState(true)
 
-  const { data, isLoading } = api.activity.chart.useQuery({
+  const { data: chart, isLoading } = api.activity.chart.useQuery({
     range: timeRange,
     filter: {
       type: 'projects',
@@ -40,7 +41,7 @@ export function ProjectActivityChart({ milestones, projectId }: Props) {
   const { columns, valuesStyle, chartRange, formatYAxisLabel } =
     useActivityChartRenderParams({
       milestones,
-      data,
+      chart,
       showMainnet,
       metric,
     })
@@ -95,6 +96,9 @@ export function ProjectActivityChart({ milestones, projectId }: Props) {
             <RadioGroupItem value="lin">LIN</RadioGroupItem>
           </RadioGroup>
         </div>
+        {chart && !chart.syncStatus.isSynced && (
+          <NotSyncedBanner what="Activity" data={chart} />
+        )}
       </section>
     </ChartProvider>
   )

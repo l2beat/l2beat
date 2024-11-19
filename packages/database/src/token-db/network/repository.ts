@@ -141,6 +141,36 @@ export class NetworkRepository extends BaseRepository {
     }
   }
 
+  async findByChainIdWithConfigs(chainId: number): Promise<
+    | (NetworkRecord & {
+        explorers: NetworkExplorerRecord[]
+        rpcs: NetworkRpcRecord[]
+      })
+    | undefined
+  > {
+    const network = await this.findByChainId(chainId)
+    if (!network) return undefined
+
+    const [explorers, rpcs] = await Promise.all([
+      this.db
+        .selectFrom('NetworkExplorer')
+        .select(selectNetworkExplorer)
+        .where('NetworkExplorer.networkId', '=', network.id)
+        .execute(),
+      this.db
+        .selectFrom('NetworkRpc')
+        .select(selectNetworkRpc)
+        .where('NetworkRpc.networkId', '=', network.id)
+        .execute(),
+    ])
+
+    return {
+      ...network,
+      explorers,
+      rpcs,
+    }
+  }
+
   async findByChainId(chainId: number): Promise<NetworkRecord | undefined> {
     const row = await this.db
       .selectFrom('Network')

@@ -1,6 +1,5 @@
 import { z } from 'zod'
 
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { Handler, HandlerResult } from '../Handler'
 
 export type HardCodedDefinition = z.infer<typeof HardCodedDefinition>
@@ -15,7 +14,6 @@ export class HardCodedHandler implements Handler {
   constructor(
     readonly field: string,
     private readonly definition: HardCodedDefinition,
-    readonly logger: DiscoveryLogger,
   ) {}
 
   execute(): Promise<HandlerResult> {

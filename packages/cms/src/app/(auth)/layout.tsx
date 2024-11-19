@@ -1,4 +1,11 @@
-import { CircleUser, Coins, Menu, Network, SendToBack } from 'lucide-react'
+import {
+  Building,
+  CircleUser,
+  Coins,
+  Menu,
+  Network,
+  SendToBack,
+} from 'lucide-react'
 import Link from 'next/link'
 
 import { redirect } from 'next/navigation'
@@ -34,6 +41,11 @@ const menu = [
     href: '/links' as const,
     icon: SendToBack,
   },
+  {
+    name: 'Entities',
+    href: '/entities' as const,
+    icon: Building,
+  },
 ]
 
 export default async function Layout({
@@ -47,7 +59,7 @@ export default async function Layout({
   // biome-ignore lint/suspicious/useAwait: server action must be async
   async function logout() {
     'use server'
-    deleteSession()
+    await deleteSession()
     redirect('/auth')
   }
 

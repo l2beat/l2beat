@@ -18,6 +18,8 @@ export class TokenBridgeRepository extends BaseRepository {
   async getByTargetTokenIds(
     targetTokenIds: string[],
   ): Promise<TokenBridgeRecord[]> {
+    if (targetTokenIds.length === 0) return []
+
     const rows = await this.db
       .selectFrom('TokenBridge')
       .select(selectTokenBridge)
@@ -80,5 +82,16 @@ export class TokenBridgeRepository extends BaseRepository {
         .execute()
     })
     return records.length
+  }
+
+  async deleteByTokenId(tokenId: string): Promise<bigint> {
+    const result = await this.db
+      .deleteFrom('TokenBridge')
+      .where((eb) =>
+        eb('targetTokenId', '=', tokenId).or('sourceTokenId', '=', tokenId),
+      )
+      .executeTakeFirstOrThrow()
+
+    return result.numDeletedRows
   }
 }

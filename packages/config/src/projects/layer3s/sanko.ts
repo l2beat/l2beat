@@ -63,7 +63,7 @@ export const sanko: Layer3 = orbitStackL3({
   nonTemplateContracts: [
     discovery.getContractDetails('OrbitProxyOFT1_2', {
       description:
-        'OFT Adapter contract using the LayerZero v1 AMB for messaging. This contract can mint tokens on Sanko and steal tokens in the main Bridge escrow. Its security depends on LayerZero v1 security.',
+        'OFT Adapter contract using the LayerZero v1 AMB for messaging. This contract can mint tokens on Sanko and steal tokens in the canonical bridge escrow. Its security depends on LayerZero v1 security.',
     }),
   ],
   nonTemplateEscrows: [
@@ -82,7 +82,14 @@ export const sanko: Layer3 = orbitStackL3({
     ),
     ...discovery.getMultisigPermission(
       'SankoOftMultisig',
-      'Can change security parameters of the DMT token (Sanko gas token) and its OFT (LayerZero) adapters. This includes the permission to mint unlimited tokens or steal tokens in the main bridge.',
+      'Can change security parameters of the DMT token (Sanko gas token) and its OFT (LayerZero) adapters. This includes the permission to mint unlimited tokens or steal tokens in the canonical bridge escrow.',
     ),
+  ],
+  nonTemplateContractRisks: [
+    {
+      category: 'Funds can be stolen if',
+      text: 'the security stack of the whitelisted LayerZero adapter changes or is compromised.',
+      isCritical: true,
+    },
   ],
 })
