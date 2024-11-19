@@ -151,14 +151,18 @@ function opStackCommon(
     ? Badge.DA.Celestia
     : undefined
 
+  const usesBlobs =
+    templateVars.usesBlobs ??
+    templateVars.discovery.getContractValue<{
+      isSequencerSendingBlobTx: boolean
+    }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
+
   if (daProvider === undefined) {
     assert(
       templateVars.isNodeAvailable !== undefined,
       'isNodeAvailable must be defined if no DA provider is defined',
     )
-    daBadge = templateVars.usesBlobs
-      ? Badge.DA.EthereumBlobs
-      : Badge.DA.EthereumCalldata
+    daBadge = usesBlobs ? Badge.DA.EthereumBlobs : Badge.DA.EthereumCalldata
   }
 
   if (daBadge === undefined) {
@@ -204,9 +208,9 @@ function opStackCommon(
       },
       dataAvailability: templateVars.nonTemplateTechnology
         ?.dataAvailability ?? {
-        ...technologyDA(daProvider, templateVars.usesBlobs),
+        ...technologyDA(daProvider, usesBlobs),
         references: [
-          ...technologyDA(daProvider, templateVars.usesBlobs).references,
+          ...technologyDA(daProvider, usesBlobs).references,
           {
             text: 'Derivation: Batch submission - OP Mainnet specs',
             href: 'https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission',
@@ -393,6 +397,12 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     upgradeDelay: 'No delay',
   }
 
+  const usesBlobs =
+    templateVars.usesBlobs ??
+    templateVars.discovery.getContractValue<{
+      isSequencerSendingBlobTx: boolean
+    }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
+
   const postsToCelestia = templateVars.discovery.getContractValue<{
     isSomeTxsLengthEqualToCelestiaDAExample: boolean
   }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
@@ -539,7 +549,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
           })
         : addSentimentToDataAvailability({
             layers: [
-              templateVars.usesBlobs
+              usesBlobs
                 ? DA_LAYERS.ETH_BLOBS_OR_CALLLDATA
                 : DA_LAYERS.ETH_CALLDATA,
             ],
@@ -650,6 +660,12 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     'ETH',
     ...(templateVars.nonTemplateOptimismPortalEscrowTokens ?? []),
   ]
+
+  const usesBlobs =
+    templateVars.usesBlobs ??
+    templateVars.discovery.getContractValue<{
+      isSequencerSendingBlobTx: boolean
+    }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
 
   const postsToCelestia = templateVars.discovery.getContractValue<{
     isSomeTxsLengthEqualToCelestiaDAExample: boolean
@@ -845,7 +861,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
           })
         : addSentimentToDataAvailability({
             layers: [
-              templateVars.usesBlobs
+              usesBlobs
                 ? DA_LAYERS.ETH_BLOBS_OR_CALLLDATA
                 : DA_LAYERS.ETH_CALLDATA,
             ],

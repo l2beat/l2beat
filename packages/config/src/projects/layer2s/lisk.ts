@@ -47,7 +47,6 @@ export const lisk: Layer2 = opStackL2({
   },
   // not ready yet, check this PR https://github.com/ethereum-optimism/superchain-registry/pull/234 or the prepared links in `DERIVATION.OPSTACK('LISK')`
   // stateDerivation: DERIVATION.OPSTACK('LISK'),
-  usesBlobs: true,
   isNodeAvailable: true,
   rpcUrl: 'https://rpc.api.lisk.com',
   discoveryDrivenData: true,

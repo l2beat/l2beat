@@ -48,6 +48,5 @@ export const dbk: Layer2 = opStackL2({
       type: 'general',
     },
   ],
-  usesBlobs: true, // check inbox here https://etherscan.io/address/0xFf00000000000000000000000000000020240603
   discoveryDrivenData: true,
 })
