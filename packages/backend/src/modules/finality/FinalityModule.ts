@@ -34,6 +34,8 @@ export function createFinalityModule(
     return
   }
 
+  logger = logger.tag({ feature: 'finality', module: 'finality' })
+
   if (!trackedTxsIndexer) {
     logger.error('To run finality you have to run tracked transactions module')
     return

@@ -9,7 +9,10 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
     super({
       ...$,
       name: `activity_block_indexer`,
-      tag: $.projectId,
+      tags: {
+        tag: $.projectId,
+        project: $.projectId,
+      },
       updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
     })
   }
