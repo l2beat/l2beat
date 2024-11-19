@@ -1,4 +1,5 @@
 import { AmountRecord } from '@l2beat/database'
+import { RpcClient2 } from '@l2beat/shared'
 import {
   AggLayerL2Token,
   AggLayerNativeEtherPreminted,
@@ -11,7 +12,6 @@ import {
 import { BigNumber, utils } from 'ethers'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { MulticallRequest } from '../../../peripherals/multicall/types'
-import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 
 export const erc20Interface = new utils.Interface([
   'function balanceOf(address account) view returns (uint256)',
@@ -31,7 +31,7 @@ export type Config<T extends AggLayerAmountConfig['type']> =
   AggLayerAmountConfig & { type: T } & { id: string }
 
 export interface AggLayerServiceDependencies {
-  readonly rpcClient: RpcClient
+  readonly rpcClient: RpcClient2
   readonly multicallClient: MulticallClient
   readonly bridgeAddress: EthereumAddress
 }
@@ -173,7 +173,7 @@ export class AggLayerService {
       token.l2BridgeAddress,
       blockNumber,
     )
-    const amount = token.premintedAmount - bridgeBalance.toBigInt()
+    const amount = token.premintedAmount - BigInt(bridgeBalance)
     return {
       configId: token.id,
       amount,

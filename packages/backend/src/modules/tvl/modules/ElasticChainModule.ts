@@ -1,4 +1,6 @@
+import { RateLimiter } from '@l2beat/backend-tools'
 import { ConfigMapping, createAmountId } from '@l2beat/config'
+import { HttpClient2, RetryHandler, RpcClient2 } from '@l2beat/shared'
 import {
   assert,
   ElasticChainEther,
@@ -7,9 +9,7 @@ import {
 } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { ChainTvlConfig, TvlConfig } from '../../../config/Config'
-import { Peripherals } from '../../../peripherals/Peripherals'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
-import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { BlockTimestampIndexer } from '../indexers/BlockTimestampIndexer'
 import { DescendantIndexer } from '../indexers/DescendantIndexer'
 import { ElasticChainIndexer } from '../indexers/ElasticChainIndexer'
@@ -24,7 +24,6 @@ interface ElasticChainModule {
 
 export function initElasticChainModule(
   config: TvlConfig,
-  peripherals: Peripherals,
   dependencies: TvlDependencies,
   configMapping: ConfigMapping,
   descendantPriceIndexer: DescendantIndexer,
@@ -32,7 +31,6 @@ export function initElasticChainModule(
 ): ElasticChainModule | undefined {
   const { dataIndexers, valueIndexers } = createIndexers(
     config,
-    peripherals,
     dependencies,
     configMapping,
     descendantPriceIndexer,
@@ -55,7 +53,6 @@ export function initElasticChainModule(
 
 function createIndexers(
   config: TvlConfig,
-  peripherals: Peripherals,
   dependencies: TvlDependencies,
   configMapping: ConfigMapping,
   descendantPriceIndexer: DescendantIndexer,
@@ -85,10 +82,15 @@ function createIndexers(
       continue
     }
 
-    const rpcClient = peripherals.getClient(RpcClient, {
-      url: chainConfig.config.providerUrl,
-      callsPerMinute: chainConfig.config.providerCallsPerMinute,
+    const rpcClient = new RpcClient2({
       chain: chainConfig.chain,
+      url: chainConfig.config.providerUrl,
+      rateLimiter: new RateLimiter({
+        callsPerMinute: chainConfig.config.providerCallsPerMinute,
+      }),
+      http: new HttpClient2(),
+      logger,
+      retryHandler: RetryHandler.RELIABLE_API(logger),
     })
 
     const bridgeAddress = elasticChainAmountEntries.find(
@@ -126,7 +128,7 @@ function createIndexers(
       elasticChainService,
       serializeConfiguration,
       syncOptimizer,
-      db: peripherals.database,
+      db: dependencies.database,
     })
 
     dataIndexers.push(elasticChainIndexer)
@@ -149,7 +151,7 @@ function createIndexers(
 
       const indexer = new ValueIndexer({
         valueService,
-        db: peripherals.database,
+        db: dependencies.database,
         priceConfigs: [...priceConfigs],
         amountConfigs,
         project: ProjectId(project),

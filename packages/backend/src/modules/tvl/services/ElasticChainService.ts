@@ -1,4 +1,5 @@
 import { AmountRecord } from '@l2beat/database'
+import { RpcClient2 } from '@l2beat/shared'
 import {
   Bytes,
   ElasticChainL2Token,
@@ -9,7 +10,6 @@ import {
 import { BigNumber, utils } from 'ethers'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { MulticallRequest } from '../../../peripherals/multicall/types'
-import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { ElasticChainAmountConfig } from '../indexers/types'
 
 export const erc20Interface = new utils.Interface([
@@ -25,7 +25,7 @@ export type Config<T extends ElasticChainAmountConfig['type']> =
   ElasticChainAmountConfig & { type: T } & { id: string }
 
 export interface ElasticChainServiceDependencies {
-  readonly rpcClient: RpcClient
+  readonly rpcClient: RpcClient2
   readonly multicallClient: MulticallClient
   readonly bridgeAddress: EthereumAddress
 }
