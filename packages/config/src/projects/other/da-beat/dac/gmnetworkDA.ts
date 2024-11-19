@@ -29,7 +29,7 @@ export const gmnetworkDA: DaLayer = {
   systemCategory: 'custom',
   fallback: DA_LAYERS.ETH_CALLDATA,
   display: {
-    name: 'gmnetworkDA',
+    name: 'GM Network DA',
     slug: 'gmnetwork',
     description:
       'GM Network DA is a data availability solution using data availability challenges (DA Challenges).',
