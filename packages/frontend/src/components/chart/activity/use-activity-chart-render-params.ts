@@ -3,7 +3,7 @@ import { useCallback, useMemo } from 'react'
 import { type ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
 import { type ActivityChartData } from '~/server/features/scaling/activity/get-activity-chart'
 import { countPerSecond } from '~/server/features/scaling/activity/utils/count-per-second'
-import { formatUops } from '~/utils/number-format/format-uops'
+import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import { type SeriesStyle } from '../core/styles'
 import { getChartRange } from '../core/utils/get-chart-range-from-columns'
 import { mapMilestones } from '../core/utils/map-milestones'
@@ -28,7 +28,7 @@ export function useActivityChartRenderParams({
 
   const formatYAxisLabel = useCallback(
     (value: number) =>
-      `${formatUops(value, { morePrecision: true })} ${metric === 'tps' ? 'TPS' : 'UOPS'}`,
+      `${formatActivityCount(value, { morePrecision: true })} ${metric === 'tps' ? 'TPS' : 'UOPS'}`,
     [metric],
   )
 

@@ -8,7 +8,7 @@ import { type ActivityChartStats } from '~/server/features/scaling/activity/get-
 import { countPerSecond } from '~/server/features/scaling/activity/utils/count-per-second'
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/react'
-import { formatUops } from '~/utils/number-format/format-uops'
+import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import { Chart } from '../core/chart'
 import { ChartProvider } from '../core/chart-provider'
 import { ScalingFactorTooltip } from './activity-chart-header'
@@ -83,7 +83,9 @@ function Header({ stats }: { stats: ActivityChartStats | undefined }) {
         {stats !== undefined ? (
           <>
             <div className="whitespace-nowrap text-right text-xl font-bold">
-              {formatUops(countPerSecond(stats.uops.latestProjectsTxCount))}{' '}
+              {formatActivityCount(
+                countPerSecond(stats.uops.latestProjectsTxCount),
+              )}{' '}
               UOPS
             </div>
             <div className="flex items-center gap-1">

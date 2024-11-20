@@ -5,12 +5,12 @@ import { ValueWithPercentageChange } from '~/components/table/cells/value-with-p
 import { type CommonProjectColumnsOptions } from '~/components/table/utils/common-project-columns/common-project-columns'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { type ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
+import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import { formatInteger } from '~/utils/number-format/format-integer'
-import { formatUops } from '~/utils/number-format/format-uops'
 import { formatUopsRatio } from '~/utils/number-format/format-uops-ratio'
 import { SyncStatusWrapper } from '../../../finality/_components/table/sync-status-wrapper'
 import { type ActivityMetric } from '../activity-metric-context'
-import { MaxUopsCell } from './max-uops-cell'
+import { MaxCountCell } from './max-count-cell'
 
 export type ScalingActivityTableEntry = ScalingActivityEntry & {
   data: {
@@ -37,7 +37,9 @@ export const getScalingActivityColumns = (
       const data = ctx.row.original.data
       return (
         <SyncStatusWrapper syncStatus={data.syncStatus}>
-          <PrimaryValueCell>{formatUops(data.pastDayCount)}</PrimaryValueCell>
+          <PrimaryValueCell>
+            {formatActivityCount(data.pastDayCount)}
+          </PrimaryValueCell>
         </SyncStatusWrapper>
       )
     },
@@ -55,8 +57,8 @@ export const getScalingActivityColumns = (
       const data = ctx.row.original.data
       return (
         <SyncStatusWrapper syncStatus={data.syncStatus}>
-          <MaxUopsCell
-            maxUops={data.maxCount.value}
+          <MaxCountCell
+            maxCount={data.maxCount.value}
             timestamp={data.maxCount.timestamp}
           />
         </SyncStatusWrapper>

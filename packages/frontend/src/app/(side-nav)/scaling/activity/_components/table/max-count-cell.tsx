@@ -1,18 +1,18 @@
 import { NumberCell } from '~/components/table/cells/number-cell'
 import { TwoRowCell } from '~/components/table/cells/two-row-cell'
 import { formatTimestamp } from '~/utils/dates'
-import { formatUops } from '~/utils/number-format/format-uops'
+import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 
 interface Props {
-  maxUops: number
+  maxCount: number
   timestamp: number
 }
 
-export function MaxUopsCell({ maxUops, timestamp }: Props) {
+export function MaxCountCell({ maxCount, timestamp }: Props) {
   return (
     <TwoRowCell>
       <TwoRowCell.First className="text-right">
-        <NumberCell>{formatUops(maxUops)}</NumberCell>
+        <NumberCell>{formatActivityCount(maxCount)}</NumberCell>
       </TwoRowCell.First>
       <TwoRowCell.Second className="text-right">
         on {formatTimestamp(timestamp)}

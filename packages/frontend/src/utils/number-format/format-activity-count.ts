@@ -1,7 +1,7 @@
 import { getFirstTwoNonZeroPrecision } from '../get-first-two-non-zero-precision'
 import { formatNumber } from './format-number'
 
-export function formatUops(
+export function formatActivityCount(
   uops: number,
   opts?: { morePrecision: boolean },
 ): string {

@@ -8,7 +8,7 @@ import { InfoIcon } from '~/icons/info'
 import { type ActivityChartStats } from '~/server/features/scaling/activity/get-activity-chart-stats'
 import { countPerSecond } from '~/server/features/scaling/activity/utils/count-per-second'
 import { cn } from '~/utils/cn'
-import { formatUops } from '~/utils/number-format/format-uops'
+import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import {
   Tooltip,
   TooltipContent,
@@ -47,7 +47,7 @@ export function ActivityChartHeader({ stats, range }: Props) {
           {stats !== undefined ? (
             <p className="text-right font-bold group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0">
               <span className="text-xl md:text-2xl">
-                {`${formatUops(countPerSecond(stats[metric].latestProjectsTxCount))} ${isTps ? 'TPS' : 'UOPS'}`}
+                {`${formatActivityCount(countPerSecond(stats[metric].latestProjectsTxCount))} ${isTps ? 'TPS' : 'UOPS'}`}
               </span>
             </p>
           ) : (

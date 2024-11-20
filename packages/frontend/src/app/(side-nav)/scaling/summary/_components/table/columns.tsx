@@ -12,7 +12,7 @@ import {
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { sortStages } from '~/components/table/sorting/functions/stage-sorting'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
-import { formatUops } from '~/utils/number-format/format-uops'
+import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import { type ScalingSummaryTableRow } from '../../_utils/to-table-rows'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
@@ -96,7 +96,7 @@ export const scalingSummaryColumns = [
       const data = ctx.row.original.activity
       return (
         <ValueWithPercentageChange change={data?.change}>
-          {formatUops(ctx.getValue())}
+          {formatActivityCount(ctx.getValue())}
         </ValueWithPercentageChange>
       )
     },
