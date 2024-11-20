@@ -34,20 +34,13 @@ export const gmnetworkDA: DaLayer = {
     description:
       'GM Network DA is a data availability solution using data availability challenges (DA Challenges).',
     links: {
-      websites: ['https://gmnetwork.ai/'],
-      apps: ['https://bridge.gmnetwork.ai/'],
-      documentation: ['https://docs.gmnetwork.ai/docs'],
-      explorers: ['https://scan.gmnetwork.ai/'],
+      // was duplicated
+      websites: [],
+      apps: [],
+      documentation: [],
+      explorers: [],
       repositories: [],
-      socialMedia: [
-        'https://x.com/gmnetwork_ai',
-        'https://instagram.com/gmnetwork.ai',
-        'https://medium.com/@gmnetwork',
-        'https://youtube.com/@gmnetwork_ai',
-        'https://discord.com/invite/m4VF9WqzK8',
-        'https://t.me/GMNetwork_AI',
-        'https://t.me/QuestN_Announcement',
-      ],
+      socialMedia: [],
     },
   },
   challengeMechanism: DaChallengeMechanism.DaChallenges,

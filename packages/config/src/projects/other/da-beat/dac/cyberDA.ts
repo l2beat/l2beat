@@ -34,20 +34,12 @@ export const cyberDA: DaLayer = {
     description:
       'CyberDA is a data availability solution using data availability challenges (DA Challenges).',
     links: {
-      websites: ['https://cyber.co/'],
-      apps: [
-        'https://cyber-bridge.alt.technology/',
-        'https://cyber.co/stake',
-        'https://wallet.cyber.co/',
-      ],
-      documentation: ['https://docs.cyber.co/'],
-      explorers: ['https://cyberscan.co/', 'https://7560.routescan.io/'],
-      repositories: ['https://github.com/cyberconnecthq'],
-      socialMedia: [
-        'https://twitter.com/cyberconnecthq',
-        'https://discord.com/invite/cUc8VRGmPs',
-        'https://cyber.co/blog',
-      ],
+      websites: [],
+      apps: [],
+      documentation: [],
+      explorers: [],
+      repositories: [],
+      socialMedia: [],
     },
   },
   challengeMechanism: DaChallengeMechanism.DaChallenges,
