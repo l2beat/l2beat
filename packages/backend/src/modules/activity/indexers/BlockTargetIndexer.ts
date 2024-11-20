@@ -5,6 +5,9 @@ import { Clock } from '../../../tools/Clock'
 import { BlockTimestampProvider } from '../../tvl/services/BlockTimestampProvider'
 
 export class BlockTargetIndexer extends RootIndexer {
+  // used only for runtime invalidation protection
+  blockHeight = 0
+
   constructor(
     logger: Logger,
     private readonly clock: Clock,
@@ -35,9 +38,11 @@ export class BlockTargetIndexer extends RootIndexer {
       await this.blockTimestampProvider.getBlockNumberAtOrBefore(timestamp)
 
     assert(
-      blockNumber >= this.safeHeight,
+      blockNumber >= this.blockHeight,
       `Block number cannot be smaller: ${blockNumber}`,
     )
+
+    this.blockHeight = blockNumber
     return blockNumber
   }
 }

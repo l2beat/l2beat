@@ -16,10 +16,13 @@ describe(BlockTargetIndexer.name, () => {
         getLastHour: () => LAST_HOUR,
       })
 
+      const blockTimestampProvider = mockObject<BlockTimestampProvider>({
+        getBlockNumberAtOrBefore: mockFn().resolvesTo(0),
+      })
       const indexer = new BlockTargetIndexer(
         Logger.SILENT,
         clock,
-        mockBlockTimestampProvider(0),
+        blockTimestampProvider,
         ProjectId('mock'),
       )
 
@@ -36,7 +39,9 @@ describe(BlockTargetIndexer.name, () => {
       })
 
       const BLOCK_NUMBER = 123
-      const blockTimestampProvider = mockBlockTimestampProvider(BLOCK_NUMBER)
+      const blockTimestampProvider = mockObject<BlockTimestampProvider>({
+        getBlockNumberAtOrBefore: mockFn().resolvesTo(BLOCK_NUMBER),
+      })
       const indexer = new BlockTargetIndexer(
         Logger.SILENT,
         clock,
@@ -52,11 +57,29 @@ describe(BlockTargetIndexer.name, () => {
         blockTimestampProvider.getBlockNumberAtOrBefore,
       ).toHaveBeenNthCalledWith(1, LAST_HOUR)
     })
+
+    it('throws when fetch block number is smaller', async () => {
+      const clock = mockObject<Clock>({
+        getLastHour: () => LAST_HOUR,
+      })
+
+      const BLOCK_NUMBER = 123
+      const blockTimestampProvider = mockObject<BlockTimestampProvider>({
+        getBlockNumberAtOrBefore: mockFn()
+          .resolvesToOnce(BLOCK_NUMBER)
+          .resolvesToOnce(BLOCK_NUMBER - 1),
+      })
+      const indexer = new BlockTargetIndexer(
+        Logger.SILENT,
+        clock,
+        blockTimestampProvider,
+        ProjectId('mock'),
+      )
+
+      await indexer.tick()
+      await expect(async () => await indexer.tick()).toBeRejectedWith(
+        'Block number cannot be smaller',
+      )
+    })
   })
 })
-
-function mockBlockTimestampProvider(blockNumber: number) {
-  return mockObject<BlockTimestampProvider>({
-    getBlockNumberAtOrBefore: mockFn().resolvesTo(blockNumber),
-  })
-}
