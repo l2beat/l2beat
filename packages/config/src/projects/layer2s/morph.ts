@@ -1,9 +1,9 @@
-
 import {
   ChainId,
   EthereumAddress,
   ProjectId,
   UnixTime,
+  formatSeconds,
 } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
@@ -32,6 +32,24 @@ const upgradeMorphMultisig = {
 const isEnforcedTxGatewayPaused = discovery.getContractValue<boolean>(
   'EnforcedTxGateway',
   'paused',
+)
+
+const challengeWindow = discovery.getContractValue<number>(
+  'MorphRollup',
+  'finalizationPeriodSeconds',
+)
+
+const challengeBond = discovery.getContractValue<number>(
+  'L1Staking',
+  'challengeBond',
+)
+
+const stakingValue =
+  (discovery.getContractValue<number>('L1Staking', 'stakingValue') / 10) ^ 18
+
+const proofWindow = discovery.getContractValue<number>(
+  'MorphRollup',
+  'proofWindow',
 )
 
 export const morph: Layer2 = {
@@ -215,11 +233,10 @@ export const morph: Layer2 = {
       },
       stateCorrectness: {
         name: '1 round fault proof system',
-        description:
-          'Morph uses an one round fault proof system where whitelisted Challengers, if they find a faulty state root within the xxx challenge window, \
-          they can post xxx bond and request a Zk proof of the state transition. After the challenge, during yyy proving window a ZK proof must be \
-          delivered, otherwise state root is considered invalid and the root proposer is slashed. The zkEVM used is SP1 from Succinct.\
-          If the valid proof is delivered, the Challenger looses the challenge bond.',
+        description: `Morph uses an one round fault proof system where whitelisted Challengers, if they find a faulty state root within the ${formatSeconds(challengeWindow)} challenge window, \
+          they can post ${formatSeconds(challengeBond)} WEI bond and request a Zk proof of the state transition. After the challenge, during ${formatSeconds(proofWindow)} proving window a ZK proof must be \
+          delivered, otherwise state root is considered invalid and the root proposer bond, which is set currently to ${formatSeconds(stakingValue)} ETH is slashed. The zkEVM used is SP1 from Succinct.\
+          If the valid proof is delivered, the Challenger looses the challenge bond.`,
         references: [
           {
             text: 'Rollup.sol - Etherscan source code, commitBatch(), challengeState(), proveState() functions',
@@ -243,13 +260,17 @@ export const morph: Layer2 = {
         ],
       },
       operator: {
-        ...OPERATOR.CENTRALIZED_OPERATOR,
+        name: 'Morph uses decentralised sequencer network',
+        description: `The system uses a decentralised sequencer/proposer network. At the moment all sequencers are run by Morph and - from the point of Ethereum - they don't need \
+        to reach consensus on a block as any one of them can propose a block with an L2 state root on Ethereum. There is a plan to use tendermint with BLS signatures to verify \
+        consensus after Petra upgrade.`,
         references: [
           {
-            text: 'ScrollChain.sol - Etherscan source code, finalizeBundleWithProof() function modifier',
-            href: 'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
+            text: 'L1Staking.sol - Etherscan source code, verifySignature() function',
+            href: 'https://etherscan.io/address/0xDb0734109051DaAB5c32E45e9a5ad0548B2df714#code',
           },
         ],
+        risks: [],
       },
       forceTransactions: {
         ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
@@ -436,6 +457,12 @@ export const morph: Layer2 = {
         discovery.getContractDetails('MorphRollup', {
           description:
             'The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.',
+          ...upgradeMorphMultisig,
+        }),
+        discovery.getContractDetails('L1Staking', {
+          description:
+            'Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures\
+            of stakers (currently not implemented).',
           ...upgradeMorphMultisig,
         }),
         discovery.getContractDetails('L1CrossDomainMessenger', {
