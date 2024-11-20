@@ -60,6 +60,42 @@ describe(BlockTimestampIndexer.name, () => {
       expect(newSafeHeight).toEqual(timestampToSync.toNumber())
     })
 
+    it('throws when fetched block number is smaller than previously fetched', async () => {
+      const from = 100
+      const to = 300
+      const timestampToSync = new UnixTime(200)
+      const syncOptimizer = mockObject<SyncOptimizer>({
+        getTimestampToSync: mockFn().returns(timestampToSync),
+      })
+
+      const BLOCK_NUMBER = 123
+      const blockTimestampProvider = mockObject<BlockTimestampProvider>({
+        getBlockNumberAtOrBefore: mockFn()
+          .returnsOnce(123)
+          .returnsOnce(BLOCK_NUMBER - 1),
+      })
+      const blockTimestampRepository = mockObject<Database['blockTimestamp']>({
+        insert: async () => undefined,
+      })
+
+      const chain = 'ethereum'
+      const indexer = new BlockTimestampIndexer({
+        logger: Logger.SILENT,
+        parents: [],
+        blockTimestampProvider,
+        indexerService: mockObject<IndexerService>({}),
+        db: mockDatabase({ blockTimestamp: blockTimestampRepository }),
+        chain,
+        minHeight: 0,
+        syncOptimizer,
+      })
+
+      await indexer.update(from, to)
+      await expect(async () => await indexer.update(from, to)).toBeRejectedWith(
+        'Block number cannot be smaller',
+      )
+    })
+
     it('returns if optimized timestamp is later than to', async () => {
       const from = 100
       const to = 300
