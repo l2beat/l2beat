@@ -39,7 +39,7 @@ export const lisk: Layer2 = opStackL2({
   l1StandardBridgePremintedTokens: ['LSK'],
   finality: {
     type: 'OPStack-blob',
-    genesisTimestamp: new UnixTime(1714728793),
+    genesisTimestamp: new UnixTime(1714728791),
     minTimestamp: new UnixTime(1714746983), // first blob
     l2BlockTimeSeconds: 2,
     lag: 0,

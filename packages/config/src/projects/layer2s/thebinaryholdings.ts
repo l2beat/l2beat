@@ -34,11 +34,11 @@ export const thebinaryholdings: Layer2 = opStackL2({
   genesisTimestamp: new UnixTime(1719397465),
   finality: {
     type: 'OPStack-blob',
-    genesisTimestamp: new UnixTime(1719398651),
+    genesisTimestamp: new UnixTime(1719397463),
     minTimestamp: new UnixTime(1719397465),
     l2BlockTimeSeconds: 2,
     lag: 0,
-    stateUpdate: 'disabled', // TODO(radomski): gives negatives results, investigate
+    stateUpdate: 'analyze',
   },
   isNodeAvailable: 'UnderReview',
   milestones: [],
