@@ -1,8 +1,8 @@
 {
   "name": "morph",
   "chain": "ethereum",
-  "blockNumber": 21221422,
-  "configHash": "0xec7114ba6206910e1d1afea7723934a717124632c600e5d9d2a9062aed79901f",
+  "blockNumber": 21230693,
+  "configHash": "0x5116e4b79d84bafff62c6ca193be22412bbdc273ae198667197363af3baf9e65",
   "contracts": [
     {
       "name": "L1Staking",
@@ -186,9 +186,9 @@
         "l2BaseFee": 1000000,
         "maxGasLimit": 30000000,
         "MESSENGER": "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
-        "nextCrossDomainMessageIndex": 2557,
+        "nextCrossDomainMessageIndex": 2740,
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-        "pendingQueueIndex": 2116,
+        "pendingQueueIndex": 2389,
         "ROLLUP_CONTRACT": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "whitelistChecker": "0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
       },
@@ -232,6 +232,19 @@
         "messenger": "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "router": "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a"
+      }
+    },
+    {
+      "name": "ZkEvmVerifierV1",
+      "address": "0x6dAece7dFaE212b6A9F55c56FD3cf1462F44069e",
+      "sourceHashes": [
+        "0x3531085f506af5a2423ca2358f5e8e7b16a0f173c3fb648268bc29725123d370"
+      ],
+      "sinceTimestamp": 1729328267,
+      "values": {
+        "$immutable": true,
+        "programVkey": "0x00bc91a65e39100f3b075c9edf1a60fd1cb025b9413ea19c34c62d455e512685",
+        "VERIFIER_HASH": "0xffea2d2e12ed24da258af874d77eee7ee91a1e050ee197052908089e57681e67"
       }
     },
     {
@@ -322,8 +335,8 @@
         "finalizationPeriodSeconds": 172800,
         "inChallenge": false,
         "l1StakingContract": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-        "lastCommittedBatchIndex": 2249,
-        "lastFinalizedBatchIndex": 2105,
+        "lastCommittedBatchIndex": 2342,
+        "lastFinalizedBatchIndex": 2198,
         "LAYER_2_CHAIN_ID": 2818,
         "messageQueue": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
@@ -346,13 +359,16 @@
       "sinceTimestamp": 1729330883,
       "values": {
         "$immutable": true,
+        "latestVerifier": [
+          {
+            "startBatchIndex": 0,
+            "verifier": "0x6dAece7dFaE212b6A9F55c56FD3cf1462F44069e"
+          }
+        ],
+        "legacyVerifiersLength": [0],
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-        "rollup": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
-      },
-      "errors": {
-        "latestVerifier": "Processing error occurred.",
-        "legacyVerifiersLength": "Processing error occurred.",
-        "verifierVersions": "Processing error occurred."
+        "rollup": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+        "verifierVersions": [0]
       },
       "derivedName": "MultipleVersionRollupVerifier"
     },
@@ -473,7 +489,7 @@
         "counterpart": "0x5300000000000000000000000000000000000007",
         "feeVault": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "maxReplayTimes": 3,
-        "messageNonce": 2557,
+        "messageNonce": 2740,
         "messageQueue": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "paused": false,
@@ -727,6 +743,18 @@
       "function setERC20Gateway(address[] _tokens, address[] _gateways)",
       "function setETHGateway(address _newEthGateway)",
       "function transferOwnership(address newOwner)"
+    ],
+    "0x6dAece7dFaE212b6A9F55c56FD3cf1462F44069e": [
+      "constructor(bytes32 _programVkey)",
+      "error InvalidProof()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function programVkey() view returns (bytes32)",
+      "function verifyBatch(bytes proof, bytes32 publicInputHash) view",
+      "function verifyPlonk(bytes proof, bytes publicInputHash) view",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a": [
       "constructor(address _logic, address admin_, bytes _data) payable",

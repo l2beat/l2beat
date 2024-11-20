@@ -39,7 +39,7 @@ const challengeWindow = discovery.getContractValue<number>(
 
 const challengeBond = discovery.getContractValue<number>(
   'L1Staking',
-  'challengeBond',
+  'challengeDeposit',
 )
 
 const upgradeDelay = 0;

@@ -37,7 +37,7 @@
         "verifierVersions": {
           "handler": {
             "type": "arrayFromOneEvent",
-            "event": "WhiteListUpdated",
+            "event": "UpdateVerifier",
             "valueKey": "version"
           }
         },

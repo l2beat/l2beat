@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xf49fc8c74091c7e63de02b414097dd9adfbbee60
+Generated with discovered.json: 0x12c4c1e0f2353900872c127b97827e60ccfaeb24
 
-# Diff at Wed, 20 Nov 2024 13:44:36 GMT:
+# Diff at Wed, 20 Nov 2024 18:19:59 GMT:
 
 - author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
-- current block number: 21221422
+- current block number: 21230693
 
 ## Description
 
@@ -38,6 +38,12 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract L1StandardERC20Gateway (0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierV1 (0x6dAece7dFaE212b6A9F55c56FD3cf1462F44069e)
     +++ description: None
 ```
 
