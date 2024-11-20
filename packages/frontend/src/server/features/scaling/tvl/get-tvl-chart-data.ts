@@ -40,14 +40,14 @@ export async function getTvlChart(...args: Parameters<typeof getTvlChartData>) {
   return getTvlChartData(...args)
 }
 
-export type TvlChartData = Awaited<ReturnType<typeof getCachedTvlChartData>>
+export type TvlChartData = Awaited<ReturnType<typeof getTvlChartData>>
 export async function getTvlChartData({
   range,
   excludeAssociatedTokens,
   filter,
 }: TvlChartDataParams) {
   const projectsFilter = createTvlProjectsFilter(filter)
-  const tvlProjects = getTvlProjects().filter(projectsFilter)
+  const tvlProjects = getTvlProjects(projectsFilter)
 
   const [ethPrices, values] = await Promise.all([
     getEthPrices(),

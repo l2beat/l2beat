@@ -14,17 +14,17 @@ export function get7dTokenBreakdown(
   return get7dTokenBreakdownData(...parameters)
 }
 
-export type LatestTvl = Awaited<ReturnType<typeof getCached7dTokenBreakdown>>
+export type LatestTvl = Awaited<ReturnType<typeof get7dTokenBreakdownData>>
 export async function get7dTokenBreakdownData({
   type,
 }: { type: 'layer2' | 'bridge' }) {
   const filter =
     type === 'layer2'
-      ? (project: TvlProject) =>
+      ? (project: BaseProject) =>
           project.type === 'layer2' || project.type === 'layer3'
-      : (project: TvlProject) => project.type === 'bridge'
+      : (project: BaseProject) => project.type === 'bridge'
 
-  const projectsToQuery = getTvlProjects().filter(filter)
+  const projectsToQuery = getTvlProjects(filter)
 
   const tvlValues = await getTvlValuesForProjects(projectsToQuery, '7d')
 
