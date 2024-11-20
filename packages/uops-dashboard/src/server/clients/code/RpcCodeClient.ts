@@ -1,5 +1,4 @@
 import { createHash } from 'crypto'
-import {} from '@l2beat/shared'
 import { providers } from 'ethers'
 import { Chain } from '../../../chains'
 import { getApiUrl } from '../apiUrls'

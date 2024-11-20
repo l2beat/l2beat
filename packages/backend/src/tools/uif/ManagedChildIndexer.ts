@@ -10,11 +10,12 @@ import { createIndexerId } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import { IndexerService } from './IndexerService'
 import { assertUniqueIndexerId } from './ids'
+import { IndexerTags } from './types'
 
 export interface ManagedChildIndexerOptions extends IndexerOptions {
   parents: Indexer[]
   name: string
-  tag?: string
+  tags?: IndexerTags
   minHeight: number
   indexerService: IndexerService
   logger: Logger
@@ -26,9 +27,9 @@ export abstract class ManagedChildIndexer extends ChildIndexer {
   private readonly indexerId: string
 
   constructor(public readonly options: ManagedChildIndexerOptions) {
-    const logger = options.logger.tag(options.tag)
+    const logger = options.logger.tag(options.tags ?? {})
     super(logger, options.parents, options)
-    this.indexerId = createIndexerId(options.name, options.tag)
+    this.indexerId = createIndexerId(options.name, options.tags?.tag)
     assertUniqueIndexerId(this.indexerId)
   }
 

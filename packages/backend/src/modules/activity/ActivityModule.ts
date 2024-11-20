@@ -28,6 +28,11 @@ export function initActivityModule(
     return
   }
 
+  logger = logger.tag({
+    feature: 'activity',
+    module: 'activity',
+  })
+
   const dependencies = new ActivityDependencies(
     config.activity,
     database,

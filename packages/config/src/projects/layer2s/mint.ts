@@ -58,7 +58,6 @@ export const mint: Layer2 = opStackL2({
     assessCount: subtractOne,
   },
   isNodeAvailable: true,
-  usesBlobs: true,
   genesisTimestamp: new UnixTime(1715608931),
   discoveryDrivenData: true,
   milestones: [

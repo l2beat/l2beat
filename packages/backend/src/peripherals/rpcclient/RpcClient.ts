@@ -28,7 +28,7 @@ export class RpcClient {
     })
     return new RpcClient(
       provider,
-      services.logger.tag(options.chain),
+      services.logger.tag({ tag: options.chain, chain: options.chain }),
       options.callsPerMinute,
     )
   }

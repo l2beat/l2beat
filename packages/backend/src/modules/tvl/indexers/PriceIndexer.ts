@@ -13,7 +13,7 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
     super({
       ...$,
       name: INDEXER_NAMES.PRICE,
-      tag: $.coingeckoId.toString(),
+      tags: { tag: $.coingeckoId.toString() },
       updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
     })
   }

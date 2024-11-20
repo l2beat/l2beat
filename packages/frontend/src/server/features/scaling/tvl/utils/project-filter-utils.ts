@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { type TvlProject } from './get-tvl-projects'
+import { type BaseProject } from './get-tvl-projects'
 
 export const TvlProjectFilter = z.discriminatedUnion('type', [
   z.object({
@@ -19,8 +19,8 @@ export function createTvlProjectsFilter(filter: TvlProjectFilter) {
 
   if (filter.type === 'projects') {
     const projectIds = new Set(filter.projectIds)
-    return (project: TvlProject) => projectIds.has(project.id)
+    return (project: BaseProject) => projectIds.has(project.projectId)
   }
 
-  return (project: TvlProject) => project.type === filter.type
+  return (project: BaseProject) => project.type === filter.type
 }

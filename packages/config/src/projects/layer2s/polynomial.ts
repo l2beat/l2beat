@@ -49,7 +49,6 @@ export const polynomial: Layer2 = opStackL2({
       type: 'general',
     },
   ],
-  usesBlobs: true,
   discoveryDrivenData: true,
   nonTemplateEscrows: [
     {

@@ -22,7 +22,11 @@ import { updateDiffHistoryHash } from '../src/modules/update-monitor/utils/hashi
 
 const FIRST_SECTION_PREFIX = '# Diff at'
 
-export async function updateDiffHistory(projectName: string, chain: string) {
+export async function updateDiffHistory(
+  projectName: string,
+  chain: string,
+  description?: string,
+) {
   // Get discovered.json from main branch and compare to current
   console.log(`Project: ${projectName}`)
   const configReader = new ConfigReader()
@@ -82,10 +86,13 @@ export async function updateDiffHistory(projectName: string, chain: string) {
     getFileVersionOnMainBranch(diffHistoryPath)
 
   if (diff.length > 0 || configRelatedDiff.length > 0) {
-    let description = undefined
+    let previousDescription = undefined
     if (existsSync(diffHistoryPath) && statSync(diffHistoryPath).isFile()) {
       const diskDiffHistory = readFileSync(diffHistoryPath, 'utf-8')
-      description = findDescription(diskDiffHistory, historyFileFromMainBranch)
+      previousDescription = findDescription(
+        diskDiffHistory,
+        historyFileFromMainBranch,
+      )
     }
 
     const newHistoryEntry = generateDiffHistoryMarkdown(
@@ -95,7 +102,7 @@ export async function updateDiffHistory(projectName: string, chain: string) {
       configRelatedDiff,
       mainBranchHash,
       codeDiff,
-      description,
+      description ?? previousDescription,
     )
 
     const diffHistory =
@@ -294,7 +301,9 @@ function generateDiffHistoryMarkdown(
   result.push('')
   result.push('## Description')
   if (description) {
-    result.push(description)
+    result.push('')
+    result.push(description.trim())
+    result.push('')
   } else {
     result.push('')
     if ((blockNumberFromMainBranchDiscovery ?? 0) !== curBlockNumber) {

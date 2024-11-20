@@ -18,7 +18,10 @@ export class ArbitrumT2IAnalyzer extends BaseAnalyzer {
     projectId: ProjectId,
   ) {
     super(provider, db, projectId)
-    this.logger = logger.for(this).tag(projectId.toString())
+    this.logger = logger.for(this).tag({
+      tag: projectId,
+      project: projectId,
+    })
   }
 
   override getTrackedTxSubtype(): TrackedTxsConfigSubtype {
