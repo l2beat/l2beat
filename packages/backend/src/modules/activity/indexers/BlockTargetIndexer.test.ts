@@ -58,7 +58,7 @@ describe(BlockTargetIndexer.name, () => {
       ).toHaveBeenNthCalledWith(1, LAST_HOUR)
     })
 
-    it('throws when fetch block number is smaller', async () => {
+    it('throws when fetched block number is smaller than previously fetched', async () => {
       const clock = mockObject<Clock>({
         getLastHour: () => LAST_HOUR,
       })

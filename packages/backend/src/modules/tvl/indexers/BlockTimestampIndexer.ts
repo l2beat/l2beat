@@ -1,10 +1,10 @@
-import {} from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
 import { BlockTimestampIndexerDeps } from './types'
 
 export class BlockTimestampIndexer extends ManagedChildIndexer {
+  // used only for runtime invalidation protection
   blockHeight = 0
 
   constructor(private readonly $: BlockTimestampIndexerDeps) {
