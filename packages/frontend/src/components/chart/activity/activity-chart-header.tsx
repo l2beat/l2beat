@@ -77,12 +77,10 @@ function SwitchInfoTooltip() {
         <InfoIcon className="size-3.5 fill-blue-700" />
       </TooltipTrigger>
       <TooltipContent>
-        <div className="font-semibold">
-          User Operations Per Second (UOPS) takes into account the user
-          operations, including regular transactions and actions bundled into a
-          single transaction. Transactions Per Second (TPS) takes into account
-          the regular transactions only.
-        </div>
+        User Operations Per Second (UOPS) takes into account the user
+        operations, including regular transactions and actions bundled into a
+        single transaction. Transactions Per Second (TPS) takes into account the
+        regular transactions only.
       </TooltipContent>
     </Tooltip>
   )
