@@ -523,7 +523,7 @@ export const base: Layer2 = {
     risks: [
       {
         category: 'Funds can be stolen if',
-        text: `a contract receives a malicious code upgrade. Upgrades must be approved by both the BaseMultisig1 and the OP FoundationMultisig_2. There is no delay on upgrades.`,
+        text: `a contract receives a malicious code upgrade. Upgrades must be approved by both the BaseMultisig1 and the OpFoundationOperationsSafe. There is no delay on upgrades.`,
       },
     ],
   },

@@ -45,7 +45,6 @@ export const swan: Layer2 = opStackL2({
   //   lag: 0,
   //   stateUpdate: 'disabled',
   // },
-  usesBlobs: true,
   isNodeAvailable: true,
   rpcUrl: 'https://mainnet-rpc01.swanchain.io',
   discoveryDrivenData: true,

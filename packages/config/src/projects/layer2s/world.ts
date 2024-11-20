@@ -39,7 +39,6 @@ export const world: Layer2 = opStackL2({
   },
   discovery,
   genesisTimestamp: new UnixTime(1719432935), // OptiPortal deployed
-  usesBlobs: true,
   rpcUrl: 'https://worldchain-mainnet.g.alchemy.com/public',
   isNodeAvailable: 'UnderReview',
   associatedTokens: ['WLD'],

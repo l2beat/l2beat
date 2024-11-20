@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "gmnetwork",
+  "initialAddresses": [
+    "0xd2726bde3D07645faf5aD7cCF15C94817B3556D6", // OptimismPortal
+    "0xd1fe2eeb5637b0f78bfced9186ebe716ac73deb6" //DAChallenge
+  ],
+  "names": {
+    "0xf040a7A04e914E1b4383C04359D03Ab5F12E7828": "GmMultisig"
+  },
+  "overrides": {
+    "0xB83831efA1Cc1bFF0c29ed0d8df1943F834442A0": {
+      "extends": "opstack/SuperchainConfigFake"
+    }
+  }
+}

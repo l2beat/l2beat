@@ -34,15 +34,12 @@ export const redstoneDA: DaLayer = {
     description:
       'RedstoneDA is a data availability solution using data availability challenges (DA Challenges).',
     links: {
-      websites: ['https://redstone.xyz/'],
-      apps: ['https://redstone.xyz/deposit'],
-      documentation: ['https://redstone.xyz/docs'],
-      explorers: ['https://explorer.redstone.xyz/'],
-      repositories: ['https://github.com/latticexyz/redstone'],
-      socialMedia: [
-        'https://twitter.com/redstonexyz',
-        'https://discord.com/invite/latticexyz',
-      ],
+      websites: [],
+      apps: [],
+      documentation: [],
+      explorers: [],
+      repositories: [],
+      socialMedia: [],
     },
   },
   challengeMechanism: DaChallengeMechanism.DaChallenges,

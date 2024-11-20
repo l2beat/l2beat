@@ -47,7 +47,7 @@ export async function getTvlChartData({
   filter,
 }: TvlChartDataParams) {
   const projectsFilter = createTvlProjectsFilter(filter)
-  const tvlProjects = getTvlProjects().filter(projectsFilter)
+  const tvlProjects = getTvlProjects(projectsFilter)
 
   const [ethPrices, values] = await Promise.all([
     getEthPrices(),

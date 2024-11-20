@@ -34,16 +34,12 @@ export const xterioDA: DaLayer = {
     description:
       'XterioDA is a data availability solution using data availability challenges (DA Challenges).',
     links: {
-      websites: ['https://xter.io/'],
-      apps: ['https://xter.io/', 'https://eth-bridge.xter.io/'],
-      documentation: ['https://stack.optimism.io/'],
-      explorers: ['https://eth.xterscan.io/'],
-      repositories: ['https://github.com/XterioTech'],
-      socialMedia: [
-        'https://x.com/XterioGames',
-        'https://discord.gg/xterio',
-        'https://medium.com/@XterioGames',
-      ],
+      websites: [],
+      apps: [],
+      documentation: [],
+      explorers: [],
+      repositories: [],
+      socialMedia: [],
     },
   },
   challengeMechanism: DaChallengeMechanism.DaChallenges,

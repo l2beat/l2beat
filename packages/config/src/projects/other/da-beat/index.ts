@@ -9,12 +9,14 @@ import { apechainDac } from './dac/apechain'
 import { apexDac } from './dac/apex'
 import { arbitrumNovaDac } from './dac/arbitrumnova'
 import { astarZkEvmDac } from './dac/astarzkEVM'
+import { cyberDA } from './dac/cyberDA'
 import { degenDac } from './dac/degen'
 import { edgelessDac } from './dac/edgeless'
 import { eigenDA } from './dac/eigenDA'
 import { everclearDac } from './dac/everclear'
 import { fluenceDac } from './dac/fluence'
 import { fraxtalDA } from './dac/fraxtalDA'
+import { gmnetworkDA } from './dac/gmnetworkDA'
 import { gptProtocolDac } from './dac/gptProtocol'
 import { galxegravityDac } from './dac/gravity'
 import { hychainDac } from './dac/hychain'
@@ -59,6 +61,7 @@ export const daLayers: DaLayer[] = applyProcessor([
   realDac,
   apexDac,
   arbitrumNovaDac,
+  cyberDA,
   reyaDac,
   xlayerDac,
   sorareDac,
@@ -102,4 +105,5 @@ export const daLayers: DaLayer[] = applyProcessor([
   eigenDA,
   redstoneDA,
   xterioDA,
+  gmnetworkDA,
 ])

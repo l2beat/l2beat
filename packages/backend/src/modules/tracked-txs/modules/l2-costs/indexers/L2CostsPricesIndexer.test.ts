@@ -50,7 +50,7 @@ describe(L2CostsPricesIndexer.name, () => {
       })
 
       const indexer = createIndexer({
-        tag: 'update-nothing-to-save',
+        tags: { tag: 'update-nothing-to-save' },
         db: mockObject<Database>({
           l2CostPrice: repository,
         }),
@@ -84,7 +84,7 @@ describe(L2CostsPricesIndexer.name, () => {
       })
 
       const indexer = createIndexer({
-        tag: 'update-max-rane',
+        tags: { tag: 'update-max-rane' },
         db: mockObject<Database>({
           l2CostPrice: repository,
         }),
@@ -113,7 +113,7 @@ describe(L2CostsPricesIndexer.name, () => {
       })
 
       const indexer = createIndexer({
-        tag: 'fetchPrices',
+        tags: { tag: 'fetchPrices' },
         coingeckoQueryService: coingeckoQueryServiceMock,
       })
 
@@ -139,7 +139,7 @@ describe(L2CostsPricesIndexer.name, () => {
       })
 
       const indexer = createIndexer({
-        tag: 'invalidate',
+        tags: { tag: 'invalidate' },
         db: mockObject<Database>({
           l2CostPrice: repository,
         }),
