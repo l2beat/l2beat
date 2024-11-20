@@ -7775,6 +7775,20 @@
       }
     },
     {
+      "name": "Coinbase Wrapped BTC",
+      "coingeckoId": "coinbase-wrapped-btc",
+      "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+      "symbol": "cbBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1731094732,
+      "coingeckoListingTimestamp": 1726099200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40143/large/cbbtc.webp?1726136727",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Dai Stablecoin",
       "coingeckoId": "dai",
       "address": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",

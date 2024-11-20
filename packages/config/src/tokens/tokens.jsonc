@@ -1702,6 +1702,12 @@
   ],
   "arbitrum": [
     {
+      "symbol": "cbBTC",
+      "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+      "source": "native",
+      "supply": "totalSupply",
+    },
+    {
       "symbol": "PEPE",
       "address": "0x25d887Ce7a35172C62FeBFD67a1856F20FaEbB00",
       "source": "native",
