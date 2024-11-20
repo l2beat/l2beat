@@ -18,6 +18,7 @@ import {
   type ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { groupBy } from 'lodash'
 import { env } from '~/env'
 
 export interface BaseProject {
@@ -81,11 +82,10 @@ export function getTvlProjects(
     )
 
   const tvlAmounts = getTvlAmountsConfig(projects)
-  const tvlAmountsMap: Record<string, AmountConfigEntry[]> = {}
-  for (const amountEntry of tvlAmounts) {
-    tvlAmountsMap[amountEntry.project] ??= []
-    tvlAmountsMap[amountEntry.project]?.push(amountEntry)
-  }
+  const tvlAmountsMap: Record<string, AmountConfigEntry[]> = groupBy(
+    tvlAmounts,
+    (e) => e.project,
+  )
 
   const result = filteredProjects.flatMap(({ projectId, type, slug }) => {
     const amounts = tvlAmountsMap[projectId]
