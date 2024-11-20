@@ -1,6 +1,5 @@
-import { assert } from 'console'
 import { Logger } from '@l2beat/backend-tools'
-import { ProjectId } from '@l2beat/shared-pure'
+import { assert, ProjectId } from '@l2beat/shared-pure'
 import { Indexer, RootIndexer } from '@l2beat/uif'
 import { Clock } from '../../../tools/Clock'
 import { BlockTimestampProvider } from '../../tvl/services/BlockTimestampProvider'

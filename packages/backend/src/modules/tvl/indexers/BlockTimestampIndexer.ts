@@ -1,10 +1,12 @@
 import {} from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
 import { BlockTimestampIndexerDeps } from './types'
 
 export class BlockTimestampIndexer extends ManagedChildIndexer {
+  blockHeight = 0
+
   constructor(private readonly $: BlockTimestampIndexerDeps) {
     super({
       ...$,
@@ -37,6 +39,11 @@ export class BlockTimestampIndexer extends ManagedChildIndexer {
       blockNumber,
     })
 
+    assert(
+      blockNumber >= this.blockHeight,
+      `Block number cannot be smaller: ${blockNumber}`,
+    )
+
     await this.$.db.blockTimestamp.insert({
       chain: this.$.chain,
       timestamp,
@@ -48,6 +55,7 @@ export class BlockTimestampIndexer extends ManagedChildIndexer {
       blockNumber,
     })
 
+    this.blockHeight = blockNumber
     return timestamp.toNumber()
   }
 
