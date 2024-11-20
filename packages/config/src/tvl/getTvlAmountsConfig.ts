@@ -17,6 +17,7 @@ import { elasticChainEscrowToEntries } from './amounts/custom/elasticChainEscrow
 import { getEscrowEntry } from './amounts/escrow'
 import { getPremintedEntry } from './amounts/preminted'
 import { getTotalSupplyEntry } from './amounts/totalSupply'
+import { keyBy } from 'lodash'
 
 export function getTvlAmountsConfig(
   projects: BackendProject[],
@@ -122,10 +123,7 @@ export function getTvlAmountsConfigForProject(
     entries.push(configEntry)
   }
 
-  const chainMap: Record<number, ChainConfig> = {}
-  for (const chain of chains) {
-    chainMap[chain.chainId] = chain
-  }
+  const chainMap = keyBy(chains, (e) => e.chainId)
 
   for (const escrow of project.escrows) {
     switch (escrow.sharedEscrow?.type) {
