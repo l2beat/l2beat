@@ -5,6 +5,7 @@ import {
   ChainId,
   Token,
 } from '@l2beat/shared-pure'
+import { keyBy } from 'lodash'
 import { chainToProject } from '../backend'
 import { BackendProject, BackendProjectEscrow } from '../backend/BackendProject'
 import { chains } from '../chains'
@@ -17,7 +18,6 @@ import { elasticChainEscrowToEntries } from './amounts/custom/elasticChainEscrow
 import { getEscrowEntry } from './amounts/escrow'
 import { getPremintedEntry } from './amounts/preminted'
 import { getTotalSupplyEntry } from './amounts/totalSupply'
-import { keyBy } from 'lodash'
 
 export function getTvlAmountsConfig(
   projects: BackendProject[],
