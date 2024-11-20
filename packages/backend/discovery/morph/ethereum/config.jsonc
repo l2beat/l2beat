@@ -2,8 +2,10 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "morph",
-  "initialAddresses": ["0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304", 
-    "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8"], // ETH bridge, ERC20 bridge
+  "initialAddresses": [
+    "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
+    "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8"
+  ], // ETH bridge, ERC20 bridge
   "names": {
     "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60": "MorphRollup",
     "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF": "L1MessageQueueWithGasPriceOracle",
@@ -11,11 +13,11 @@
     "0x87C1D0dAb8d96b69CB91f97F4135E3ed5A49DCF6": "MultipleVersionRollupVerifier",
     "0x0Dc417F8AF88388737c5053FF73f345f080543F7": "L1Staking",
     "0xB822319ab7848b7cC4537c8409e50f85BFb04377": "MorphAdminMSig",
-    "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a": "L1GatewayRouter",
+    "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a": "L1GatewayRouter"
   },
   "overrides": {
     "L1Staking": {
-      "ignoreMethods": ["getStakers", "stakerSet"]  // TODO: add the whitelist
+      "ignoreMethods": ["getStakers", "stakerSet"] // TODO: add the whitelist
     },
     "L1GatewayRouter": {
       "fields": {
@@ -57,9 +59,7 @@
       }
     },
     "L1CrossDomainMessenger": {
-      "ignoreMethods": [
-        "prevReplayIndex"
-      ]
+      "ignoreMethods": ["prevReplayIndex"]
     },
     "L1MessageQueueWithGasPriceOracle": {
       "ignoreMethods": [
@@ -82,7 +82,9 @@
         "isBatchFinalized"
       ],
       "ignoreInWatchMode": [
-        "batchChallenged","lastCommittedBatchIndex", "lastFinalizedBatchIndex"
+        "batchChallenged",
+        "lastCommittedBatchIndex",
+        "lastFinalizedBatchIndex"
       ],
       "fields": {
         "challengers": {
@@ -92,8 +94,8 @@
             "valueKey": "account",
             "flagKey": "status"
           }
-        },
-      },
+        }
+      }
     }
   }
 }

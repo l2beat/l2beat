@@ -1,14 +1,10 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { underReviewL2 } from './templates/underReview'
-import { Layer2 } from './types'
+
 import {
   ChainId,
   EthereumAddress,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
-import { getStage } from './common/stages/getStage'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -18,12 +14,13 @@ import {
   NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
-  STATE_CORRECTNESS,
   STATE_ZKP_SN,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { getStage } from './common/stages/getStage'
+import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('scroll')
 
@@ -125,12 +122,26 @@ export const morph: Layer2 = {
         },
         chain: 'ethereum',
       },
+      {
+        address: EthereumAddress('0x2C8314f5AADa5D7a9D32eeFebFc43aCCAbe1b289'),
+        sinceTimestamp: new UnixTime(1729308239),
+        tokens: ['USDC'],
+        source: 'external',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'Canonically (external escrow)',
+            },
+          ],
+        },
+        chain: 'ethereum',
+      },
     ],
     dataAvailability: [
       addSentimentToDataAvailability({
         layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
         bridge: DA_BRIDGES.ENSHRINED,
-        mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,  // TODO: check
+        mode: DA_MODES.TRANSACTION_DATA_COMPRESSED, // TODO: check
       }),
     ],
     riskView: {
@@ -426,7 +437,7 @@ export const morph: Layer2 = {
           description:
             'The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.',
           ...upgradeMorphMultisig,
-        }), 
+        }),
         discovery.getContractDetails('L1CrossDomainMessenger', {
           description:
             'Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.',
@@ -435,8 +446,8 @@ export const morph: Layer2 = {
         discovery.getContractDetails('L1MessageQueueWithGasPriceOracle', {
           description:
             'Contains the array of queued L1 -> L2 messages, either appended using the L1ScrollMessenger or the EnforcedTxGateway. The latter contract, which would allow users to send L2 messages from L1 with their own address as the sender, is not enabled yet.',
-            ...upgradeMorphMultisig,
-          }),
+          ...upgradeMorphMultisig,
+        }),
         discovery.getContractDetails('Whitelist', {
           description:
             'Contract implementing a generic whitelist. Currently used to define the actor that can relay the L2 basefee on L1.',
@@ -482,14 +493,21 @@ export const morph: Layer2 = {
       ),
       {
         name: 'Sequencers',
-        accounts: discovery.getPermissionedAccounts('L1Staking', 'getActiveStakers'),
-        description: 'Actors allowed to commit transaction batches and propose state roots.',
+        accounts: discovery.getPermissionedAccounts(
+          'L1Staking',
+          'getActiveStakers',
+        ),
+        description:
+          'Actors allowed to commit transaction batches and propose state roots.',
       },
       {
         name: 'Challengers',
-        accounts: discovery.getPermissionedAccounts('MorphRollup', 'challengers'),
+        accounts: discovery.getPermissionedAccounts(
+          'MorphRollup',
+          'challengers',
+        ),
         description: 'Actors allowed to challenge proposed state roots.',
-      }
+      },
     ],
   },
 }
