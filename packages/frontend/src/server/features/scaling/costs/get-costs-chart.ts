@@ -66,11 +66,41 @@ async function getCostsChartData({
     [fromToQuery, to.add(-1, resolution === 'daily' ? 'days' : 'hours')],
     resolution,
   )
-  const result = timestamps.map(
-    (timestamp) =>
-      summedByTimestamp.find((entry) => entry[0] === timestamp.toNumber()) ??
-      ([timestamp.toNumber(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] as const),
-  )
+  const result = timestamps.map((timestamp) => {
+    const entry = summedByTimestamp.get(timestamp.toNumber())
+    if (!entry) {
+      return [
+        timestamp.toNumber(),
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        undefined,
+        undefined,
+        undefined,
+      ] as const
+    }
+    return [
+      timestamp.toNumber(),
+      entry.overheadGas,
+      entry.overheadGasEth,
+      entry.overheadGasUsd,
+      entry.calldataGas,
+      entry.calldataGasEth,
+      entry.calldataGasUsd,
+      entry.computeGas,
+      entry.computeGasEth,
+      entry.computeGasUsd,
+      entry.blobsGas,
+      entry.blobsGasEth,
+      entry.blobsGasUsd,
+    ] as const
+  })
   return result
 }
 
@@ -160,24 +190,5 @@ function sumByTimestamp(
     })
   }
 
-  const asArray = Array.from(result.entries()).map(
-    ([timestamp, record]) =>
-      [
-        timestamp,
-        record.overheadGas,
-        record.overheadGasEth,
-        record.overheadGasUsd,
-        record.calldataGas,
-        record.calldataGasEth,
-        record.calldataGasUsd,
-        record.computeGas,
-        record.computeGasEth,
-        record.computeGasUsd,
-        record.blobsGas,
-        record.blobsGasEth,
-        record.blobsGasUsd,
-      ] as const,
-  )
-
-  return asArray
+  return result
 }
