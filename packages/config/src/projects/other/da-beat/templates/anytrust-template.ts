@@ -172,7 +172,14 @@ export function AnytrustDAC(template: TemplateVars): DacDaLayer {
     name,
     slug: template.project.display.slug,
     description: layerDescription,
-    links,
+    links: { // was duplicating the same links from the bridge
+      websites: [],
+      apps: [],
+      documentation: [],
+      explorers: [],
+      repositories: [],
+      socialMedia: [],
+    },
   }
 
   const dacLayer: DacDaLayer = {
