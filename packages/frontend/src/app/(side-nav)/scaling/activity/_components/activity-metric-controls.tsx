@@ -11,16 +11,10 @@ export function ActivityMetricControls<T extends string>({
 }: Props<T>) {
   return (
     <RadioGroup value={value} onValueChange={onValueChange} variant="gradient">
-      <RadioGroupItem
-        value="uops"
-        className="px-[6px] py-[2px] text-xl leading-5"
-      >
+      <RadioGroupItem value="uops" className="px-[6px] md:text-xl">
         UOPS
       </RadioGroupItem>
-      <RadioGroupItem
-        value="tps"
-        className="px-[6px] py-[2px] text-xl leading-5"
-      >
+      <RadioGroupItem value="tps" className="px-[6px] md:text-xl">
         TPS
       </RadioGroupItem>
     </RadioGroup>
