@@ -7,7 +7,7 @@ import {
 
 import { EthereumAddress } from '@l2beat/shared-pure'
 import chalk from 'chalk'
-import { command, positional, run, string } from 'cmd-ts'
+import { command, option, optional, positional, run, string } from 'cmd-ts'
 import { isEmpty } from 'lodash'
 import { discoverAndUpdateDiffHistory } from './discoveryWrapper'
 
@@ -26,6 +26,13 @@ const args = {
     type: string,
     displayName: 'projectQuery',
     description: `${DiscoverCommandArgs.project.description} or an address, projects containing that address will be discovered`,
+  }),
+  message: option({
+    type: optional(string),
+    long: 'message',
+    short: 'm',
+    description:
+      'Message that will be written in the description section of diffHistory.md',
   }),
 }
 
@@ -51,7 +58,7 @@ const cmd = command({
           chain,
         }
 
-        await discoverAndUpdateDiffHistory(config)
+        await discoverAndUpdateDiffHistory(config, args.message)
       }
     }
   },
