@@ -154,229 +154,229 @@ export const morph: Layer2 = {
         },
         chain: 'ethereum',
       },
-    ],
-    dataAvailability: [
-      addSentimentToDataAvailability({
-        layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
-        bridge: DA_BRIDGES.ENSHRINED,
-        mode: DA_MODES.TRANSACTION_DATA_COMPRESSED, // TODO: check
-      }),
-    ],
-    riskView: {
-      stateValidation: {
-        ...STATE_ZKP_SN,
-        sources: [
-          {
-            contract: 'ScrollChain',
-            references: [
-              'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
-            ],
-          },
-        ],
-      },
-      dataAvailability: {
-        ...RISK_VIEW.DATA_ON_CHAIN,
-        sources: [
-          {
-            contract: 'ScrollChain',
-            references: [
-              'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
-            ],
-          },
-        ],
-      },
-      exitWindow: {
-        ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
-        sources: [
-          {
-            contract: 'ScrollChain',
-            references: [
-              'https://etherscan.io/address/0xa13BAF47339d63B743e7Da8741db5456DAc1E556#code#F1#L154',
-            ],
-          },
-        ],
-      },
-      sequencerFailure: {
-        ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
-        sources: [
-          {
-            contract: 'L1MessageQueue',
-            references: [
-              'https://etherscan.io/address/0x137CC585F607EDeBBc3CA6360AffCFeab507B374#code',
-            ],
-          },
-          {
-            contract: 'EnforcedTxGateway',
-            references: [
-              'https://etherscan.io/address/0x642af405bF64660665B37977449C9C536B806318#code',
-            ],
-          },
-        ],
-      },
-      proposerFailure: {
-        ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
-        sources: [
-          {
-            contract: 'ScrollChain',
-            references: [
-              'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
-            ],
-          },
-        ],
-      },
-      validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-      destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-    },
-    technology: {
-      newCryptography: {
-        ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
-      },
-      stateCorrectness: {
-        name: '1 round fault proof system',
-        description: `Morph uses an one round fault proof system where whitelisted Challengers, if they find a faulty state root within the ${formatSeconds(challengeWindow)} challenge window, \
-          they can post ${formatSeconds(challengeBond)} WEI bond and request a Zk proof of the state transition. After the challenge, during ${formatSeconds(proofWindow)} proving window a ZK proof must be \
-          delivered, otherwise state root is considered invalid and the root proposer bond, which is set currently to ${formatSeconds(stakingValue)} ETH is slashed. The zkEVM used is SP1 from Succinct.\
-          If the valid proof is delivered, the Challenger looses the challenge bond.`,
-        references: [
-          {
-            text: 'Rollup.sol - Etherscan source code, commitBatch(), challengeState(), proveState() functions',
-            href: 'https://etherscan.io/address/0x073403e147a8e607b80985fe458c0b527287278f#code#F1#L204',
-          },
-        ],
-        risks: [
-          {
-            category: 'Funds can be lost if',
-            text: 'whitelisted challenger does not post a challenge of an incorrect state root.',
-          },
-        ],
-      },
-      dataAvailability: {
-        ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
-        references: [
-          {
-            text: 'Rollup.sol - Etherscan source code commitBatch() and commitBatchWithBlobProof() functions',
-            href: 'https://etherscan.io/address/0x073403e147a8e607b80985fe458c0b527287278#code',
-          },
-        ],
-      },
-      operator: {
-        name: 'Morph uses decentralised sequencer network',
-        description: `The system uses a decentralised sequencer/proposer network. At the moment all sequencers are run by Morph and - from the point of Ethereum - they don't need \
-        to reach consensus on a block as any one of them can propose a block with an L2 state root on Ethereum. There is a plan to use tendermint with BLS signatures to verify \
-        consensus after Petra upgrade.`,
-        references: [
-          {
-            text: 'L1Staking.sol - Etherscan source code, verifySignature() function',
-            href: 'https://etherscan.io/address/0xDb0734109051DaAB5c32E45e9a5ad0548B2df714#code',
-          },
-        ],
-        risks: [],
-      },
-      forceTransactions: {
-        ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
-        references: [
-          {
-            text: 'EnforcedTxGateway.sol - Etherscan source code',
-            href: 'https://etherscan.io/address/0x642af405bF64660665B37977449C9C536B806318#code',
-          },
-        ],
-      },
-      exitMechanisms: [
+    ]
+  },
+  dataAvailability: [
+    addSentimentToDataAvailability({
+      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
+      bridge: DA_BRIDGES.ENSHRINED,
+      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED, // TODO: check
+    }),
+  ],
+  riskView: {
+    stateValidation: {
+      ...STATE_ZKP_SN,
+      sources: [
         {
-          ...EXITS.REGULAR('zk', 'no proof'),
-          risks: [EXITS.OPERATOR_CENSORS_WITHDRAWAL],
+          contract: 'ScrollChain',
           references: [
-            {
-              text: 'L1ETHGateway.sol - Etherscan source code, finalizeWithdrawETH function',
-              href: 'https://etherscan.io/address/0x546E0bF31FB6e7babD493452e4e6999191367B42#code',
-            },
+            'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
           ],
         },
       ],
     },
-    contracts: {
-      addresses: [
-        discovery.getContractDetails('MorphRollup', {
-          description:
-            'The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.',
-          ...upgradeMorphMultisig,
-        }),
-        discovery.getContractDetails('L1Staking', {
-          description:
-            'Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures\
-            of stakers (currently not implemented).',
-          ...upgradeMorphMultisig,
-        }),
-        discovery.getContractDetails('L1CrossDomainMessenger', {
-          description:
-            'Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.',
-          ...upgradeMorphMultisig,
-        }),
-        discovery.getContractDetails('L1MessageQueueWithGasPriceOracle', {
-          description:
-            'Contains the array of queued L1 -> L2 messages, either appended using the L1ScrollMessenger or the EnforcedTxGateway. The latter contract, which would allow users to send L2 messages from L1 with their own address as the sender, is not enabled yet.',
-          ...upgradeMorphMultisig,
-        }),
-        discovery.getContractDetails('Whitelist', {
-          description:
-            'Contract implementing a generic whitelist. Currently used to define the actor that can relay the L2 basefee on L1.',
-        }),
-        discovery.getContractDetails('MultipleVersionRollupVerifier', {
-          description:
-            'Contract used to update the verifier and keep track of current and old versions.',
-        }),
-        discovery.getContractDetails('ZkEvmVerifierV1', {
-          description:
-            'Current verifier using calldata for DA, used to prepare data for the PlonkVerifierV0.', // TODO: check
-        }),
-        discovery.getContractDetails('L1ETHGateway', {
-          description: 'Contract used to bridge ETH from L1 to L2.',
-          ...upgradeMorphMultisig,
-        }),
-        discovery.getContractDetails('L1StandardERC20Gateway', {
-          description:
-            'Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.',
-          ...upgradeMorphMultisig,
-        }),
-        discovery.getContractDetails('L1GatewayRouter', {
-          description:
-            'Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.',
-          ...upgradeMorphMultisig,
-        }),
-        discovery.getContractDetails('EnforcedTxGateway', {
-          description:
-            'Contracts to force L1 -> L2 messages with the proper sender.',
-          ...upgradeMorphMultisig,
-          pausable: {
-            paused: isEnforcedTxGatewayPaused,
-            pausableBy: ['ScrollOwner'],
-          },
-        }),
+    dataAvailability: {
+      ...RISK_VIEW.DATA_ON_CHAIN,
+      sources: [
+        {
+          contract: 'ScrollChain',
+          references: [
+            'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
+          ],
+        },
+      ],
+    },
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
+      sources: [
+        {
+          contract: 'ScrollChain',
+          references: [
+            'https://etherscan.io/address/0xa13BAF47339d63B743e7Da8741db5456DAc1E556#code#F1#L154',
+          ],
+        },
+      ],
+    },
+    sequencerFailure: {
+      ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
+      sources: [
+        {
+          contract: 'L1MessageQueue',
+          references: [
+            'https://etherscan.io/address/0x137CC585F607EDeBBc3CA6360AffCFeab507B374#code',
+          ],
+        },
+        {
+          contract: 'EnforcedTxGateway',
+          references: [
+            'https://etherscan.io/address/0x642af405bF64660665B37977449C9C536B806318#code',
+          ],
+        },
+      ],
+    },
+    proposerFailure: {
+      ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+      sources: [
+        {
+          contract: 'ScrollChain',
+          references: [
+            'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
+          ],
+        },
+      ],
+    },
+    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
+    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
+  },
+  technology: {
+    newCryptography: {
+      ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
+    },
+    stateCorrectness: {
+      name: '1 round fault proof system',
+      description: `Morph uses an one round fault proof system where whitelisted Challengers, if they find a faulty state root within the ${formatSeconds(challengeWindow)} challenge window, \
+          they can post ${formatSeconds(challengeBond)} WEI bond and request a Zk proof of the state transition. After the challenge, during ${formatSeconds(proofWindow)} proving window a ZK proof must be \
+          delivered, otherwise state root is considered invalid and the root proposer bond, which is set currently to ${formatSeconds(stakingValue)} ETH is slashed. The zkEVM used is SP1 from Succinct.\
+          If the valid proof is delivered, the Challenger looses the challenge bond.`,
+      references: [
+        {
+          text: 'Rollup.sol - Etherscan source code, commitBatch(), challengeState(), proveState() functions',
+          href: 'https://etherscan.io/address/0x073403e147a8e607b80985fe458c0b527287278f#code#F1#L204',
+        },
+      ],
+      risks: [
+        {
+          category: 'Funds can be lost if',
+          text: 'whitelisted challenger does not post a challenge of an incorrect state root.',
+        },
+      ],
+    },
+    dataAvailability: {
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
+      references: [
+        {
+          text: 'Rollup.sol - Etherscan source code commitBatch() and commitBatchWithBlobProof() functions',
+          href: 'https://etherscan.io/address/0x073403e147a8e607b80985fe458c0b527287278#code',
+        },
+      ],
+    },
+    operator: {
+      name: 'Morph uses decentralised sequencer network',
+      description: `The system uses a decentralised sequencer/proposer network. At the moment all sequencers are run by Morph and - from the point of Ethereum - they don't need \
+        to reach consensus on a block as any one of them can propose a block with an L2 state root on Ethereum. There is a plan to use tendermint with BLS signatures to verify \
+        consensus after Petra upgrade.`,
+      references: [
+        {
+          text: 'L1Staking.sol - Etherscan source code, verifySignature() function',
+          href: 'https://etherscan.io/address/0xDb0734109051DaAB5c32E45e9a5ad0548B2df714#code',
+        },
       ],
       risks: [],
     },
-    permissions: [
-      ...discovery.getMultisigPermission(
-        'MorphAdminMSig',
-        'Can upgrade proxies and the verifier without delay. It can also revert non finalized batches, remove sequencers and provers and pause contracts.',
-      ),
+    forceTransactions: {
+      ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
+      references: [
+        {
+          text: 'EnforcedTxGateway.sol - Etherscan source code',
+          href: 'https://etherscan.io/address/0x642af405bF64660665B37977449C9C536B806318#code',
+        },
+      ],
+    },
+    exitMechanisms: [
       {
-        name: 'Sequencers',
-        accounts: discovery.getPermissionedAccounts(
-          'L1Staking',
-          'getActiveStakers',
-        ),
-        description:
-          'Actors allowed to commit transaction batches and propose state roots.',
-      },
-      {
-        name: 'Challengers',
-        accounts: discovery.getPermissionedAccounts(
-          'MorphRollup',
-          'challengers',
-        ),
-        description: 'Actors allowed to challenge proposed state roots.',
+        ...EXITS.REGULAR('zk', 'no proof'),
+        risks: [EXITS.OPERATOR_CENSORS_WITHDRAWAL],
+        references: [
+          {
+            text: 'L1ETHGateway.sol - Etherscan source code, finalizeWithdrawETH function',
+            href: 'https://etherscan.io/address/0x546E0bF31FB6e7babD493452e4e6999191367B42#code',
+          },
+        ],
       },
     ],
   },
+  contracts: {
+    addresses: [
+      discovery.getContractDetails('MorphRollup', {
+        description:
+          'The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.',
+        ...upgradeMorphMultisig,
+      }),
+      discovery.getContractDetails('L1Staking', {
+        description:
+          'Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures\
+            of stakers (currently not implemented).',
+        ...upgradeMorphMultisig,
+      }),
+      discovery.getContractDetails('L1CrossDomainMessenger', {
+        description:
+          'Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.',
+        ...upgradeMorphMultisig,
+      }),
+      discovery.getContractDetails('L1MessageQueueWithGasPriceOracle', {
+        description:
+          'Contains the array of queued L1 -> L2 messages, either appended using the L1ScrollMessenger or the EnforcedTxGateway. The latter contract, which would allow users to send L2 messages from L1 with their own address as the sender, is not enabled yet.',
+        ...upgradeMorphMultisig,
+      }),
+      discovery.getContractDetails('Whitelist', {
+        description:
+          'Contract implementing a generic whitelist. Currently used to define the actor that can relay the L2 basefee on L1.',
+      }),
+      discovery.getContractDetails('MultipleVersionRollupVerifier', {
+        description:
+          'Contract used to update the verifier and keep track of current and old versions.',
+      }),
+      discovery.getContractDetails('ZkEvmVerifierV1', {
+        description:
+          'Current verifier using calldata for DA, used to prepare data for the PlonkVerifierV0.', // TODO: check
+      }),
+      discovery.getContractDetails('L1ETHGateway', {
+        description: 'Contract used to bridge ETH from L1 to L2.',
+        ...upgradeMorphMultisig,
+      }),
+      discovery.getContractDetails('L1StandardERC20Gateway', {
+        description:
+          'Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.',
+        ...upgradeMorphMultisig,
+      }),
+      discovery.getContractDetails('L1GatewayRouter', {
+        description:
+          'Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.',
+        ...upgradeMorphMultisig,
+      }),
+      discovery.getContractDetails('EnforcedTxGateway', {
+        description:
+          'Contracts to force L1 -> L2 messages with the proper sender.',
+        ...upgradeMorphMultisig,
+        pausable: {
+          paused: isEnforcedTxGatewayPaused,
+          pausableBy: ['ScrollOwner'],
+        },
+      }),
+    ],
+    risks: [],
+  },
+  permissions: [
+    ...discovery.getMultisigPermission(
+      'MorphAdminMSig',
+      'Can upgrade proxies and the verifier without delay. It can also revert non finalized batches, remove sequencers and provers and pause contracts.',
+    ),
+    {
+      name: 'Sequencers',
+      accounts: discovery.getPermissionedAccounts(
+        'L1Staking',
+        'getActiveStakers',
+      ),
+      description:
+        'Actors allowed to commit transaction batches and propose state roots.',
+    },
+    {
+      name: 'Challengers',
+      accounts: discovery.getPermissionedAccounts(
+        'MorphRollup',
+        'challengers',
+      ),
+      description: 'Actors allowed to challenge proposed state roots.',
+    },
+  ],
 }
