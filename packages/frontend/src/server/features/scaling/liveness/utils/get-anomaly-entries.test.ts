@@ -4,7 +4,7 @@ import { describe, it } from 'mocha'
 import { type LivenessAnomaly } from '../types'
 import { toAnomalyIndicatorEntries } from './get-anomaly-entries'
 
-describe.only(toAnomalyIndicatorEntries.name, () => {
+describe(toAnomalyIndicatorEntries.name, () => {
   const now = UnixTime.now()
 
   it('returns array of 30 entries', () => {

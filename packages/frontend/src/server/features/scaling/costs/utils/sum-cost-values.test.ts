@@ -1,7 +1,7 @@
 import { expect } from 'earl'
 import { sumValues } from './sum-cost-values'
 
-describe.only('sumValues', () => {
+describe('sumValues', () => {
   it('should sum single record correctly', () => {
     const records = [
       {

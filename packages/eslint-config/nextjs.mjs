@@ -4,6 +4,7 @@ import { fixupConfigRules } from '@eslint/compat'
 import { FlatCompat } from '@eslint/eslintrc'
 import js from '@eslint/js'
 
+import mochaPlugin from 'eslint-plugin-mocha'
 import tailwind from 'eslint-plugin-tailwindcss'
 import tsEslint from 'typescript-eslint'
 
@@ -87,10 +88,19 @@ const tailwindConfigs = tsEslint.config(
   },
 )
 
+const mochaConfigs = tsEslint.config(mochaPlugin.configs.flat.recommended, {
+  rules: {
+    'mocha/no-mocha-arrows': 'off',
+    'mocha/no-exclusive-tests': 'error',
+    'mocha/no-setup-in-describe': 'off',
+  },
+})
+
 const config = tsEslint.config(
   ...nonFlatConfigs,
   ...typescriptConfigs,
   ...tailwindConfigs,
+  ...mochaConfigs,
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument
   {
     rules: {

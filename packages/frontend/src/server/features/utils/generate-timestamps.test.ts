@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { generateTimestamps } from './generate-timestamps'
 
-describe.only('generateTimestamps', () => {
+describe('generateTimestamps', () => {
   const from = new UnixTime(0) // Jan 1, 1970
   const to = new UnixTime(86400 * 3) // Jan 4, 1970
 

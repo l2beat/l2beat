@@ -6,6 +6,7 @@ import { type LivenessRecordWithConfig } from './get-liveness-by-type-since'
 
 describe(calculateIntervals.name, () => {
   const NOW = UnixTime.now()
+
   it('returns calculated intervals', () => {
     const records: LivenessRecordWithConfig[] = [
       mockObject<LivenessRecordWithConfig>({

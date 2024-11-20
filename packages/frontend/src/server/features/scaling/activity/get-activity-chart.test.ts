@@ -5,7 +5,7 @@ import { expect, mockFn, mockObject } from 'earl'
 import { type ActivityRepository } from '@l2beat/database/dist/activity/repository'
 import { getActivityChart } from './get-activity-chart'
 
-describe.only(getActivityChart.name, () => {
+describe(getActivityChart.name, () => {
   const START_OF_TODAY = UnixTime.now().toStartOf('day')
 
   const record = (

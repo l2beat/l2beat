@@ -4,7 +4,7 @@ import {
   formatPercent,
 } from './calculate-percentage-change'
 
-describe.only('calculatePercentageChange', () => {
+describe('calculatePercentageChange', () => {
   it('returns 0 when now equals then', () => {
     expect(calculatePercentageChange(100, 100)).toEqual(0)
   })
