@@ -16,6 +16,7 @@ import { eigenDA } from './dac/eigenDA'
 import { everclearDac } from './dac/everclear'
 import { fluenceDac } from './dac/fluence'
 import { fraxtalDA } from './dac/fraxtalDA'
+import { gmnetworkDA } from './dac/gmnetworkDA'
 import { gptProtocolDac } from './dac/gptProtocol'
 import { galxegravityDac } from './dac/gravity'
 import { hychainDac } from './dac/hychain'
@@ -104,4 +105,5 @@ export const daLayers: DaLayer[] = applyProcessor([
   eigenDA,
   redstoneDA,
   xterioDA,
+  gmnetworkDA,
 ])
