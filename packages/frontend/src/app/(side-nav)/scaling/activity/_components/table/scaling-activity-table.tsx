@@ -34,7 +34,11 @@ export function ScalingActivityTable({
   const { metric } = useActivityMetricContext()
 
   const tableEntries = useMemo(() => {
-    const tableEntries = entries.map((e) => mapToTableEntry(e, metric))
+    const tableEntries = entries
+      .map((e) => mapToTableEntry(e, metric))
+      .sort((a, b) => {
+        return b.data.pastDayCount - a.data.pastDayCount
+      })
     return tableEntries ?? []
   }, [entries, metric])
 
