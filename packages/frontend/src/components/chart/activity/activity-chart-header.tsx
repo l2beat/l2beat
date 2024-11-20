@@ -33,7 +33,7 @@ export function ActivityChartHeader({ stats, range }: Props) {
             <h1 className="whitespace-nowrap text-xl font-bold max-md:ml-1 md:text-2xl">
               Daily average
             </h1>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-2">
               <ActivityMetricControls
                 value={metric}
                 onValueChange={setMetric}
@@ -78,8 +78,10 @@ function SwitchInfoTooltip() {
       </TooltipTrigger>
       <TooltipContent>
         <div className="font-semibold">
-          Select <span className="italic">User Ops</span> Per Second or
-          <span className="italic">Transactions</span> Per Second
+          User Operations Per Second (UOPS) takes into account the user
+          operations, including regular transactions and actions bundled into a
+          single transaction. Transactions Per Second (TPS) takes into account
+          the regular transactions only.
         </div>
       </TooltipContent>
     </Tooltip>
