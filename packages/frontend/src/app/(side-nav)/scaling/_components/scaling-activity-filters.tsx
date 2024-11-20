@@ -57,7 +57,7 @@ function ExplorerButton() {
     <Link
       href="https://uops.l2beat.com/"
       target="_blank"
-      className="flex w-fit items-center gap-1 rounded-lg bg-gradient-to-r from-purple-100 to-pink-100 px-2 py-1 text-sm font-semibold text-white"
+      className="flex w-fit items-center gap-1 rounded-lg bg-gradient-to-r from-purple-100 to-pink-100 px-2 py-1 text-sm font-semibold text-white max-md:ml-4"
     >
       <span>🔍</span>
       <span>UOPS Explorer</span>
