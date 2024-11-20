@@ -1,3 +1,4 @@
+import { assert } from 'console'
 import { Logger } from '@l2beat/backend-tools'
 import { ProjectId } from '@l2beat/shared-pure'
 import { Indexer, RootIndexer } from '@l2beat/uif'
@@ -34,6 +35,10 @@ export class BlockTargetIndexer extends RootIndexer {
     const blockNumber =
       await this.blockTimestampProvider.getBlockNumberAtOrBefore(timestamp)
 
+    assert(
+      blockNumber >= this.safeHeight,
+      `Block number cannot be smaller: ${blockNumber}`,
+    )
     return blockNumber
   }
 }
