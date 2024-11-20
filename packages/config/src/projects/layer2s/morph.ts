@@ -12,7 +12,7 @@ import {
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
-  STATE_ZKP_SN,
+  STATE_FP_INT_ZK,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
@@ -165,15 +165,9 @@ export const morph: Layer2 = {
   ],
   riskView: {
     stateValidation: {
-      ...STATE_ZKP_SN,
-      sources: [
-        {
-          contract: 'MorphRollup',
-          references: [
-            'https://etherscan.io/address/0x073403E147a8e607b80985fe458c0B527287278F#code',
-          ],
-        },
-      ],
+      ...STATE_FP_INT_ZK,
+      sentiment: 'bad',
+      secondLine: `${formatSeconds(challengeWindow)} challenge period`,
     },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
@@ -220,7 +214,7 @@ export const morph: Layer2 = {
         {
           contract: 'MorphRollup',
           references: [
-            'https://etherscan.io/address/0x073403E147a8e607b80985fe458c0B527287278F#code', 
+            'https://etherscan.io/address/0x073403E147a8e607b80985fe458c0B527287278F#code',
           ],
         },
       ],
