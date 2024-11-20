@@ -130,7 +130,13 @@ export interface ApiProjectContract extends ApiAddressEntry {
 
 export interface ApiAbi {
   address: string
-  entries: string[]
+  entries: ApiAbiEntry[]
+}
+
+export interface ApiAbiEntry {
+  value: string
+  signature?: string
+  topic?: string
 }
 
 export interface ApiCodeResponse {
