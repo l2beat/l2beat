@@ -46,10 +46,10 @@ function AbiCode({ entries }: { entries: ApiAbiEntry[] }) {
             </span>
           ))}
           {entry.signature && (
-            <span className="text-aux-grey"> // {entry.signature}</span>
+            <span className="text-coffee-400"> // {entry.signature}</span>
           )}
           {entry.topic && (
-            <span className="text-aux-grey"> // {entry.topic}</span>
+            <span className="text-coffee-400"> // {entry.topic}</span>
           )}
           {i !== entries.length - 1 && <br />}
         </Fragment>
