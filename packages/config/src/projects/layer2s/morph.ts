@@ -20,7 +20,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
-const discovery = new ProjectDiscovery('scroll')
+const discovery = new ProjectDiscovery('morph')
 
 const upgradeMorphMultisig = {
   upgradableBy: ['MorphMultisig'],
@@ -168,9 +168,9 @@ export const morph: Layer2 = {
       ...STATE_ZKP_SN,
       sources: [
         {
-          contract: 'ScrollChain',
+          contract: 'MorphRollup',
           references: [
-            'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
+            'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code', // TODO: change
           ],
         },
       ],
@@ -179,9 +179,9 @@ export const morph: Layer2 = {
       ...RISK_VIEW.DATA_ON_CHAIN,
       sources: [
         {
-          contract: 'ScrollChain',
+          contract: 'MorphRollup',
           references: [
-            'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
+            'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',// TODO: change
           ],
         },
       ],
@@ -190,9 +190,9 @@ export const morph: Layer2 = {
       ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
       sources: [
         {
-          contract: 'ScrollChain',
+          contract: 'MorhpRollup',
           references: [
-            'https://etherscan.io/address/0xa13BAF47339d63B743e7Da8741db5456DAc1E556#code#F1#L154',
+            'https://etherscan.io/address/0xa13BAF47339d63B743e7Da8741db5456DAc1E556#code#F1#L154', // TODO: change
           ],
         },
       ],
@@ -218,9 +218,9 @@ export const morph: Layer2 = {
       ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
       sources: [
         {
-          contract: 'ScrollChain',
+          contract: 'MorphRollup',
           references: [
-            'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
+            'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code', // TODO: change
           ],
         },
       ],
@@ -315,7 +315,7 @@ export const morph: Layer2 = {
       }),
       discovery.getContractDetails('L1MessageQueueWithGasPriceOracle', {
         description:
-          'Contains the array of queued L1 -> L2 messages, either appended using the L1ScrollMessenger or the EnforcedTxGateway. The latter contract, which would allow users to send L2 messages from L1 with their own address as the sender, is not enabled yet.',
+          'Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway. The latter contract, which would allow users to send L2 messages from L1 with their own address as the sender, is not enabled yet.',
         ...upgradeMorphMultisig,
       }),
       discovery.getContractDetails('Whitelist', {
@@ -350,7 +350,7 @@ export const morph: Layer2 = {
         ...upgradeMorphMultisig,
         pausable: {
           paused: isEnforcedTxGatewayPaused,
-          pausableBy: ['ScrollOwner'],
+          pausableBy: ['MorphAdminMSig'],
         },
       }),
     ],
