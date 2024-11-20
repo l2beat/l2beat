@@ -23,7 +23,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('morph')
 
 const upgradeMorphMultisig = {
-  upgradableBy: ['MorphMultisig'],
+  upgradableBy: ['MorphAdminMSig'],
   upgradeDelay: 'No delay',
 }
 
@@ -42,7 +42,7 @@ const challengeBond = discovery.getContractValue<number>(
   'challengeDeposit',
 )
 
-const upgradeDelay = 0;
+const upgradeDelay = 0
 
 const stakingValue =
   (discovery.getContractValue<number>('L1Staking', 'stakingValue') / 10) ^ 18
@@ -154,7 +154,7 @@ export const morph: Layer2 = {
         },
         chain: 'ethereum',
       },
-    ]
+    ],
   },
   dataAvailability: [
     addSentimentToDataAvailability({
@@ -170,7 +170,7 @@ export const morph: Layer2 = {
         {
           contract: 'MorphRollup',
           references: [
-            'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code', // TODO: change
+            'https://etherscan.io/address/0x073403E147a8e607b80985fe458c0B527287278F#code',
           ],
         },
       ],
@@ -181,7 +181,7 @@ export const morph: Layer2 = {
         {
           contract: 'MorphRollup',
           references: [
-            'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',// TODO: change
+            'https://etherscan.io/address/0x073403E147a8e607b80985fe458c0B527287278F#code',
           ],
         },
       ],
@@ -190,9 +190,9 @@ export const morph: Layer2 = {
       ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
       sources: [
         {
-          contract: 'MorhpRollup',
+          contract: 'MorphRollup',
           references: [
-            'https://etherscan.io/address/0xa13BAF47339d63B743e7Da8741db5456DAc1E556#code#F1#L154', // TODO: change
+            'https://etherscan.io/address/0x073403E147a8e607b80985fe458c0B527287278F#code',
           ],
         },
       ],
@@ -201,15 +201,15 @@ export const morph: Layer2 = {
       ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
       sources: [
         {
-          contract: 'L1MessageQueue',
+          contract: 'L1MessageQueueWithGasPriceOracle',
           references: [
-            'https://etherscan.io/address/0x137CC585F607EDeBBc3CA6360AffCFeab507B374#code',
+            'https://etherscan.io/address/0x828F68e2E05a34fA836416F124350E25021876ac#code',
           ],
         },
         {
           contract: 'EnforcedTxGateway',
           references: [
-            'https://etherscan.io/address/0x642af405bF64660665B37977449C9C536B806318#code',
+            'https://etherscan.io/address/0xCb13746Fc891fC2e7D824870D00a26F43fE6123e#code',
           ],
         },
       ],
@@ -220,7 +220,7 @@ export const morph: Layer2 = {
         {
           contract: 'MorphRollup',
           references: [
-            'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code', // TODO: change
+            'https://etherscan.io/address/0x073403E147a8e607b80985fe458c0B527287278F#code', 
           ],
         },
       ],
@@ -278,7 +278,7 @@ export const morph: Layer2 = {
       references: [
         {
           text: 'EnforcedTxGateway.sol - Etherscan source code',
-          href: 'https://etherscan.io/address/0x642af405bF64660665B37977449C9C536B806318#code',
+          href: 'https://etherscan.io/address/0xCb13746Fc891fC2e7D824870D00a26F43fE6123e#code',
         },
       ],
     },
@@ -289,7 +289,7 @@ export const morph: Layer2 = {
         references: [
           {
             text: 'L1ETHGateway.sol - Etherscan source code, finalizeWithdrawETH function',
-            href: 'https://etherscan.io/address/0x546E0bF31FB6e7babD493452e4e6999191367B42#code',
+            href: 'https://etherscan.io/address/0x63eeCb6bE6087B094c2CBAA34f2902593eAE979c#code',
           },
         ],
       },
@@ -372,10 +372,7 @@ export const morph: Layer2 = {
     },
     {
       name: 'Challengers',
-      accounts: discovery.getPermissionedAccounts(
-        'MorphRollup',
-        'challengers',
-      ),
+      accounts: discovery.getPermissionedAccounts('MorphRollup', 'challengers'),
       description: 'Actors allowed to challenge proposed state roots.',
     },
   ],
