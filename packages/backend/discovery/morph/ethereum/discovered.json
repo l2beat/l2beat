@@ -2,7 +2,7 @@
   "name": "morph",
   "chain": "ethereum",
   "blockNumber": 21221422,
-  "configHash": "0xc2a7cc7e5e241e4217b217c9c33ba83186a652008bb39c45778a3f1afd15bb8f",
+  "configHash": "0xec7114ba6206910e1d1afea7723934a717124632c600e5d9d2a9062aed79901f",
   "contracts": [
     {
       "name": "L1Staking",
@@ -235,19 +235,6 @@
       }
     },
     {
-      "name": "ZkEvmVerifierV1",
-      "address": "0x6dAece7dFaE212b6A9F55c56FD3cf1462F44069e",
-      "sourceHashes": [
-        "0x3531085f506af5a2423ca2358f5e8e7b16a0f173c3fb648268bc29725123d370"
-      ],
-      "sinceTimestamp": 1729328267,
-      "values": {
-        "$immutable": true,
-        "programVkey": "0x00bc91a65e39100f3b075c9edf1a60fd1cb025b9413ea19c34c62d455e512685",
-        "VERIFIER_HASH": "0xffea2d2e12ed24da258af874d77eee7ee91a1e050ee197052908089e57681e67"
-      }
-    },
-    {
       "name": "L1GatewayRouter",
       "address": "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
       "sourceHashes": [
@@ -282,8 +269,10 @@
         "defaultERC20Gateway": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
         "ethGateway": "0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68",
         "gatewayInContext": "0x0000000000000000000000000000000000000000",
+        "gateways": ["0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68"],
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377"
-      }
+      },
+      "derivedName": "L1GatewayRouter"
     },
     {
       "name": "MorphRollup",
@@ -357,21 +346,18 @@
       "sinceTimestamp": 1729330883,
       "values": {
         "$immutable": true,
-        "latestVerifier": [
-          {
-            "startBatchIndex": 0,
-            "verifier": "0x6dAece7dFaE212b6A9F55c56FD3cf1462F44069e"
-          }
-        ],
-        "legacyVerifiersLength": [0],
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-        "rollup": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-        "verifierVersions": [0]
+        "rollup": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+      },
+      "errors": {
+        "latestVerifier": "Processing error occurred.",
+        "legacyVerifiersLength": "Processing error occurred.",
+        "verifierVersions": "Processing error occurred."
       },
       "derivedName": "MultipleVersionRollupVerifier"
     },
     {
-      "name": "Safe",
+      "name": "MorphAdminMSig",
       "address": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -401,7 +387,8 @@
         "multisigThreshold": "5 of 8 (63%)",
         "nonce": 17,
         "VERSION": "1.4.1"
-      }
+      },
+      "derivedName": "Safe"
     },
     {
       "name": "EnforcedTxGateway",
@@ -740,18 +727,6 @@
       "function setERC20Gateway(address[] _tokens, address[] _gateways)",
       "function setETHGateway(address _newEthGateway)",
       "function transferOwnership(address newOwner)"
-    ],
-    "0x6dAece7dFaE212b6A9F55c56FD3cf1462F44069e": [
-      "constructor(bytes32 _programVkey)",
-      "error InvalidProof()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function programVkey() view returns (bytes32)",
-      "function verifyBatch(bytes proof, bytes32 publicInputHash) view",
-      "function verifyPlonk(bytes proof, bytes publicInputHash) view",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a": [
       "constructor(address _logic, address admin_, bytes _data) payable",

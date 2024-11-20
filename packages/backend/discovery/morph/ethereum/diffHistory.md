@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xcaf9062e80f32b8277d922aa79e90b69ae8a1afd
+Generated with discovered.json: 0xf49fc8c74091c7e63de02b414097dd9adfbbee60
 
-# Diff at Tue, 19 Nov 2024 13:20:40 GMT:
+# Diff at Wed, 20 Nov 2024 13:44:36 GMT:
 
 - author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
 - current block number: 21221422
@@ -43,12 +43,6 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract ZkEvmVerifierV1 (0x6dAece7dFaE212b6A9F55c56FD3cf1462F44069e)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract L1GatewayRouter (0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a)
     +++ description: None
 ```
@@ -67,7 +61,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract Safe (0xB822319ab7848b7cC4537c8409e50f85BFb04377)
+    contract MorphAdminMSig (0xB822319ab7848b7cC4537c8409e50f85BFb04377)
     +++ description: None
 ```
 
