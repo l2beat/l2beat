@@ -45,7 +45,7 @@ const challengeBond = discovery.getContractValue<number>(
 const upgradeDelay = 0
 
 const stakingValue =
-  (discovery.getContractValue<number>('L1Staking', 'stakingValue') / 10) ^ 18
+  (discovery.getContractValue<number>('L1Staking', 'stakingValue') / 10 ** 18)
 
 const proofWindow = discovery.getContractValue<number>(
   'MorphRollup',
