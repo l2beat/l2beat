@@ -10,9 +10,9 @@ import { getCurrentEntry } from '../../utils/get-current-entry'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import {
-  orderByStageAndPastDayTps,
-  sortByTps,
-} from '../utils/order-by-stage-and-past-day-tps'
+  orderByStageAndPastDayUops,
+  sortByUops,
+} from '../utils/order-by-stage-and-past-day-uops'
 import {
   type ActivityProjectTableData,
   getActivityTable,
@@ -49,21 +49,21 @@ export async function getScalingActivityEntries() {
       )
     })
     .filter(notUndefined)
-    .sort((a, b) => b.data.pastDayTps - a.data.pastDayTps)
+    .sort((a, b) => b.data.uops.pastDayCount - a.data.uops.pastDayCount)
 
   const categorisedEntries = groupByMainCategories(
-    orderByStageAndPastDayTps(entries),
+    orderByStageAndPastDayUops(entries),
   )
 
   if (!env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING) {
     return {
-      rollups: [ethereumEntry, ...categorisedEntries.rollups].sort(sortByTps),
+      rollups: [ethereumEntry, ...categorisedEntries.rollups].sort(sortByUops),
       validiumsAndOptimiums: [
         ethereumEntry,
         ...categorisedEntries.validiumsAndOptimiums,
-      ].sort(sortByTps),
+      ].sort(sortByUops),
       others: categorisedEntries.others
-        ? [ethereumEntry, ...categorisedEntries.others].sort(sortByTps)
+        ? [ethereumEntry, ...categorisedEntries.others].sort(sortByUops)
         : undefined,
     }
   }

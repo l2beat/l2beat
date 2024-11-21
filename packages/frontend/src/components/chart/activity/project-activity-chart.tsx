@@ -2,6 +2,8 @@
 
 import { type Milestone } from '@l2beat/config'
 import { useState } from 'react'
+import { type ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
+import { ActivityMetricControls } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-controls'
 import { ActivityTimeRangeControls } from '~/app/(side-nav)/scaling/activity/_components/activity-time-range-controls'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { NotSyncedBanner } from '~/components/not-synced-banner'
@@ -24,6 +26,7 @@ interface Props {
 
 export function ProjectActivityChart({ milestones, projectId }: Props) {
   const [timeRange, setTimeRange] = useState<ActivityTimeRange>('30d')
+  const [metric, setMetric] = useState<ActivityMetric>('uops')
   const [scale, setScale] = useState<ChartScale>('lin')
   const [showMainnet, setShowMainnet] = useState(true)
 
@@ -40,6 +43,7 @@ export function ProjectActivityChart({ milestones, projectId }: Props) {
       milestones,
       chart,
       showMainnet,
+      metric,
     })
 
   return (
@@ -55,6 +59,7 @@ export function ProjectActivityChart({ milestones, projectId }: Props) {
           {...data}
           showEthereum={showMainnet}
           singleProject
+          metric={metric}
         />
       )}
     >
@@ -69,17 +74,20 @@ export function ProjectActivityChart({ milestones, projectId }: Props) {
         </ChartControlsWrapper>
         <Chart />
         <div className="flex justify-between gap-4">
-          <Checkbox
-            id="show-mainnet"
-            checked={showMainnet}
-            onCheckedChange={(state) => setShowMainnet(!!state)}
-          >
-            <div className="flex flex-row items-center gap-2">
-              <EthereumLineIcon className="hidden h-1.5 w-2.5 sm:inline-block" />
-              <span className="max-lg:hidden">ETH Mainnet Transactions</span>
-              <span className="lg:hidden">ETH Txs</span>
-            </div>
-          </Checkbox>
+          <div className="flex gap-2">
+            <ActivityMetricControls value={metric} onValueChange={setMetric} />
+            <Checkbox
+              id="show-mainnet"
+              checked={showMainnet}
+              onCheckedChange={(state) => setShowMainnet(!!state)}
+            >
+              <div className="flex flex-row items-center gap-2">
+                <EthereumLineIcon className="hidden h-1.5 w-2.5 sm:inline-block" />
+                <span className="max-lg:hidden">{`ETH Mainnet ${metric === 'uops' ? 'Operations' : 'Transactions'}`}</span>
+                <span className="lg:hidden">{`ETH ${metric === 'uops' ? 'UOPS' : 'TPS'}`}</span>
+              </div>
+            </Checkbox>
+          </div>
           <RadioGroup
             value={scale}
             onValueChange={(value) => setScale(value as ChartScale)}

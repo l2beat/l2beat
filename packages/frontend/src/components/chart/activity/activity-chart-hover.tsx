@@ -1,13 +1,15 @@
-import { countToTps } from '~/server/features/scaling/activity/utils/count-to-tps'
+import { type ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
+import { countPerSecond } from '~/server/features/scaling/activity/utils/count-per-second'
 import { formatTimestamp } from '~/utils/dates'
+import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import { formatInteger } from '~/utils/number-format/format-integer'
-import { formatTps } from '~/utils/number-format/format-tps'
 
 interface Props {
   timestamp: number
   count: number
   ethereumCount: number
   showEthereum: boolean
+  metric?: ActivityMetric
   singleProject?: boolean
 }
 
@@ -23,7 +25,7 @@ export function ActivityChartHover(props: Props) {
       <div className="flex w-full items-center justify-between gap-2">
         <div className="flex items-center gap-1">
           <span className="text-sm text-gray-700 dark:text-gray-50 ">
-            Average TPS
+            {`Average ${props.metric === 'tps' ? 'TPS' : 'UOPS'}`}
           </span>
         </div>
       </div>
@@ -34,7 +36,7 @@ export function ActivityChartHover(props: Props) {
           <span>{props.singleProject ? 'Project' : 'Projects'}</span>
         </div>
         <span className="whitespace-nowrap font-bold tabular-nums">
-          {formatTps(countToTps(props.count), {
+          {formatActivityCount(countPerSecond(props.count), {
             morePrecision: !!props.singleProject,
           })}
         </span>
@@ -47,7 +49,7 @@ export function ActivityChartHover(props: Props) {
             <span>Ethereum</span>
           </div>
           <span className="whitespace-nowrap font-bold tabular-nums">
-            {formatTps(countToTps(props.ethereumCount), {
+            {formatActivityCount(countPerSecond(props.ethereumCount), {
               morePrecision: !!props.singleProject,
             })}
           </span>
@@ -57,7 +59,7 @@ export function ActivityChartHover(props: Props) {
       <div className="mt-2 flex w-full items-center justify-between gap-2">
         <div className="flex items-center gap-1">
           <span className="text-sm text-gray-700 dark:text-gray-50 ">
-            Transaction count
+            {props.metric === 'tps' ? 'Transactions count' : 'Operations count'}
           </span>
         </div>
       </div>

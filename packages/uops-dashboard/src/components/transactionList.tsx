@@ -42,8 +42,8 @@ export function TransactionList({
   }
 
   return (
-    <div className="m-10">
-      <table className="w-full text-left text-gray-500 text-sm rtl:text-right dark:text-gray-400">
+    <div className="m-3 overflow-x-auto rounded-lg md:m-10">
+      <table className="min-w-full text-left text-gray-500 text-sm rtl:text-right dark:text-gray-400">
         <thead className="bg-gray-50 text-gray-700 text-xs uppercase dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th scope="col" className="px-6 py-3">
