@@ -10,9 +10,9 @@ import {
   DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
+  FRONTRUNNING_RISK,
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
-  STATE_FP_INT_ZK,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
@@ -229,8 +229,8 @@ export const morph: Layer2 = {
     stateCorrectness: {
       name: 'Single round fault proof system',
       description: `Morph uses an one round fault proof system where whitelisted Challengers, if they find a faulty state root within the ${formatSeconds(challengeWindow)} challenge window, \
-          they can post ${formatSeconds(challengeBond)} WEI bond and request a Zk proof of the state transition. After the challenge, during ${formatSeconds(proofWindow)} proving window a ZK proof must be \
-          delivered, otherwise state root is considered invalid and the root proposer bond, which is set currently to ${formatSeconds(stakingValue)} ETH is slashed. The zkEVM used is SP1 from Succinct.\
+          they can post ${challengeBond} WEI bond and request a Zk proof of the state transition. After the challenge, during ${formatSeconds(proofWindow)} proving window a ZK proof must be \
+          delivered, otherwise state root is considered invalid and the root proposer bond, which is set currently to ${stakingValue} ETH is slashed. The zkEVM used is SP1 from Succinct.\
           If the valid proof is delivered, the Challenger looses the challenge bond.`,
       references: [
         {
@@ -265,13 +265,13 @@ export const morph: Layer2 = {
           href: 'https://etherscan.io/address/0xDb0734109051DaAB5c32E45e9a5ad0548B2df714#code',
         },
       ],
-      risks: [],
+      risks: [FRONTRUNNING_RISK],
     },
     forceTransactions: {
       ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
       description:
         FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM.description +
-        " Even though EnforcedTxGateway is enabled, sequencers can still skip (censor) transactions.",
+        ' Even though EnforcedTxGateway is enabled, sequencers can still skip (censor) transactions.',
       references: [
         {
           text: 'EnforcedTxGateway.sol - Etherscan source code',
@@ -282,7 +282,7 @@ export const morph: Layer2 = {
           href: 'https://etherscan.io/address/0x073403e147a8e607b80985fe458c0b527287278f#code#F1#L242',
         },
       ],
-      // 
+      //
     },
     exitMechanisms: [
       {
