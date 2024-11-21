@@ -17,6 +17,10 @@ export function TransactionList({
       return b.operationsCount - a.operationsCount
     }
 
+    if (a.details !== b.details) {
+      return a.details ? -1 : 1
+    }
+
     // sort by type
     if (a.type === b.type) {
       return 0
