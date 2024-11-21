@@ -1,0 +1,9 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "bob",
+  "name": "bob",
+  "initialAddresses": ["0x49b072158564Db36304518FFa37B1cFc13916A90"], // solvRouter
+  "names": {
+  },
+  "overrides": {}
+}

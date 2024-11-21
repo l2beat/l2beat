@@ -247,4 +247,14 @@ export const chains: ChainConfig[] = [
       url: 'https://api.blastscan.io/api',
     },
   },
+  {
+    name: 'bob',
+    chainId: 60808,
+    shortName: 'bob',
+    multicall: getMulticall3Config(0),
+    explorer: {
+      type: 'blockscout',
+      url: 'https://explorer.gobob.xyz/api',
+    },
+  },
 ] as const satisfies ChainConfig[]
