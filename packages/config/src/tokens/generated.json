@@ -6687,6 +6687,20 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Smoovie Phone",
+      "coingeckoId": "smoovie-phone",
+      "address": "0x3f710cBd0F4268719C6c2E5E078a4CAfAeED7d45",
+      "symbol": "SP",
+      "decimals": 18,
+      "deploymentTimestamp": 1718739529,
+      "coingeckoListingTimestamp": 1724198400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39837/large/4969E83A-4FC0-42DD-820A-02779632123D.jpeg?1724255150",
+      "chainId": 1996,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "USD Coin",
       "coingeckoId": "usd-coin",
       "address": "0xC06Ed0eB5c0e25fa71B37A3F33CFa62C7d9dD542",
@@ -7773,6 +7787,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "Coinbase Wrapped BTC",
+      "coingeckoId": "coinbase-wrapped-btc",
+      "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+      "symbol": "cbBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1731094732,
+      "coingeckoListingTimestamp": 1726099200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40143/large/cbbtc.webp?1726136727",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "name": "Dai Stablecoin",

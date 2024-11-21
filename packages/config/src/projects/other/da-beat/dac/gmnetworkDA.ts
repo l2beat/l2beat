@@ -4,9 +4,9 @@ import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
 import { DaChallengeMechanism } from '../types/DaChallengeMechanism'
 import { DaLayer } from '../types/DaLayer'
-import { xterioDABridge } from './bridges/xterioDABridge'
+import { gmnetworkDABridge } from './bridges/gmnetworkDABridge'
 
-const discovery = new ProjectDiscovery('xterio')
+const discovery = new ProjectDiscovery('gmnetwork')
 
 const daChallengeWindow = formatSeconds(
   discovery.getContractValue<number>(
@@ -22,18 +22,19 @@ const daResolveWindow = formatSeconds(
   ) * 12, // in blocks, to seconds
 )
 
-export const xterioDA: DaLayer = {
-  id: 'xterio-da',
+export const gmnetworkDA: DaLayer = {
+  id: 'gmnetwork-da',
   type: 'DaLayer',
   kind: 'No DAC',
   systemCategory: 'custom',
   fallback: DA_LAYERS.ETH_CALLDATA,
   display: {
-    name: 'XterioDA',
-    slug: 'xterio',
+    name: 'GM Network DA',
+    slug: 'gmnetwork',
     description:
-      'XterioDA is a data availability solution using data availability challenges (DA Challenges).',
+      'GM Network DA is a data availability solution using data availability challenges (DA Challenges).',
     links: {
+      // was duplicated
       websites: [],
       apps: [],
       documentation: [],
@@ -46,10 +47,10 @@ export const xterioDA: DaLayer = {
   technology: {
     description: `
     ## Architecture
-    ![XterioDA layer](/images/da-layer-technology/xterioda/architecture.png#center)
+    ![gmnetworkDA layer](/images/da-layer-technology/gmnetworkda/architecture.png#center)
 
     ## Data Availability Challenges
-    Xterio relies on DA challenges for data availability. 
+    GM Network relies on DA challenges for data availability. 
     The DA Provider submits an input commitment on Ethereum, and users can request the data behind the commitment off-chain from the DA Provider.
     If a DA challenger finds that the data behind a tx data commitment is not available, they can submit a challenge which requires locking a bond within ${daChallengeWindow}. 
     A challenge can be resolved by publishing the preimage data within an additional ${daResolveWindow}.
@@ -78,7 +79,7 @@ export const xterioDA: DaLayer = {
       },
     ],
   },
-  bridges: [xterioDABridge],
+  bridges: [gmnetworkDABridge],
   risks: {
     economicSecurity: DaEconomicSecurityRisk.DAChallengesNoFunds,
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,

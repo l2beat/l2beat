@@ -4,9 +4,9 @@ import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
 import { DaChallengeMechanism } from '../types/DaChallengeMechanism'
 import { DaLayer } from '../types/DaLayer'
-import { xterioDABridge } from './bridges/xterioDABridge'
+import { cyberDABridge } from './bridges/cyberDABridge'
 
-const discovery = new ProjectDiscovery('xterio')
+const discovery = new ProjectDiscovery('cyber')
 
 const daChallengeWindow = formatSeconds(
   discovery.getContractValue<number>(
@@ -22,17 +22,17 @@ const daResolveWindow = formatSeconds(
   ) * 12, // in blocks, to seconds
 )
 
-export const xterioDA: DaLayer = {
-  id: 'xterio-da',
+export const cyberDA: DaLayer = {
+  id: 'cyber-da',
   type: 'DaLayer',
   kind: 'No DAC',
   systemCategory: 'custom',
   fallback: DA_LAYERS.ETH_CALLDATA,
   display: {
-    name: 'XterioDA',
-    slug: 'xterio',
+    name: 'CyberDA',
+    slug: 'cyber',
     description:
-      'XterioDA is a data availability solution using data availability challenges (DA Challenges).',
+      'CyberDA is a data availability solution using data availability challenges (DA Challenges).',
     links: {
       websites: [],
       apps: [],
@@ -46,16 +46,16 @@ export const xterioDA: DaLayer = {
   technology: {
     description: `
     ## Architecture
-    ![XterioDA layer](/images/da-layer-technology/xterioda/architecture.png#center)
+    ![CyberDA layer](/images/da-layer-technology/cyberda/architecture.png#center)
 
     ## Data Availability Challenges
-    Xterio relies on DA challenges for data availability. 
+    Cyber relies on DA challenges for data availability. 
     The DA Provider submits an input commitment on Ethereum, and users can request the data behind the commitment off-chain from the DA Provider.
     If a DA challenger finds that the data behind a tx data commitment is not available, they can submit a challenge which requires locking a bond within ${daChallengeWindow}. 
     A challenge can be resolved by publishing the preimage data within an additional ${daResolveWindow}.
     In such case, a portion of the challenger bond is burned, with the exact amount estimated as the cost incurred by the resolver to publish the full data, meaning that the resolver and challenger will approximately lose the same amount of funds.
     The system is not secure if the malicious sequencer is able to outspend the altruistic challengers. 
-    If instead, after a challenge, the preimage data is not published, the chain reorgs to the last fully derivable state.
+    If instead, after a challenge, the preimage data is not published, the chain reorgs to the last fully derivable state. 
   `,
     references: [
       {
@@ -70,15 +70,15 @@ export const xterioDA: DaLayer = {
     risks: [
       {
         category: 'Funds can be lost if',
-        text: `the sequencer posts an invalid data availability certificate and there are no challengers.`,
+        text: `the sequencer posts an invalid data availability commitment and there are no challengers.`,
       },
       {
         category: 'Funds can be lost if',
-        text: `the sequencer posts an invalid data availability certificate, and he is able to outspend the challengers.`,
+        text: `the sequencer posts an invalid data availability commitment, and he is able to outspend the challengers.`,
       },
     ],
   },
-  bridges: [xterioDABridge],
+  bridges: [cyberDABridge],
   risks: {
     economicSecurity: DaEconomicSecurityRisk.DAChallengesNoFunds,
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
