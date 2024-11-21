@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x5eee3971ab4144323b5d80fcc9ca4a630463748a
+
+# Diff at Thu, 21 Nov 2024 07:24:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@de1745323b367dd0fbb18ad6c862147dd90e90b0 block: 20640712
+- current block number: 21234596
+
+## Description
+
+Config related: new gnosisSafe template match.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20640712 (main branch discovery), not current.
+
+```diff
+    contract Connext Fee Multisig (0x7bE978Cc84612E08f7844672B0E6A6F367FE2b6A) {
+    +++ description: None
+      values.getOwners:
+-        ["0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f","0xade09131C6f43fe22C2CbABb759636C43cFc181e","0x7fB1B8D2C4a8186426Fb12a4Ae483f0093ED2315","0xb71C02f99c42424257745827F1C2beBD7Fa1e936","0xD7a8070F0875915dB9b9E03bD47A0b973d19130b"]
+      values.getThreshold:
+-        1
+      template:
++        "GnosisSafe"
+    }
+```
+
 Generated with discovered.json: 0xcf3e778e85b0bbce6938806bdcff1180b6c74580
 
 # Diff at Fri, 18 Oct 2024 10:53:54 GMT:
