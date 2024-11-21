@@ -51,17 +51,21 @@ export function runDiscoveryUi() {
 
   // Start executing one of predefined commands
   // and stream the output back to the client
-  app.post('/api/terminal/execute', (req, res) => {
-    const { command, project, chain } = req.body
+  app.get('/api/terminal/execute', (req, res) => {
+    const { command, project, chain } = req.query
     if (!command || !project || !chain) {
       res.status(400).send('Missing required parameters')
       return
     }
     if (command !== 'discover') {
       res.status(400).send('Invalid command')
+      return
     }
 
-    res.setHeader('Content-Type', 'text/plain')
+    res.setHeader('Content-Type', 'text/event-stream')
+    res.setHeader('Cache-Control', 'no-cache')
+    res.setHeader('Connection', 'keep-alive')
+
     executeTerminalCommand(
       `(cd ../backend && pnpm discover ${chain} ${project})`,
       res,

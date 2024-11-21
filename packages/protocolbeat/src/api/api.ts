@@ -47,26 +47,11 @@ export async function getPreview(project: string): Promise<ApiPreviewResponse> {
   return data as ApiPreviewResponse
 }
 
-export async function executeCommand(
+export function executeCommand(
   command: string,
   project: string,
   chain: string,
-): Promise<ReadableStream<string>> {
-  const response = await fetch('/api/terminal/execute', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ command, project, chain }),
-  })
-
-  if (!response.ok) {
-    throw new Error('Failed to execute command')
-  }
-
-  if (!response.body) {
-    throw new Error('Response body is null')
-  }
-
-  return response.body.pipeThrough(new TextDecoderStream())
+): EventSource {
+  const params = new URLSearchParams({ command, project, chain })
+  return new EventSource(`/api/terminal/execute?${params}`)
 }

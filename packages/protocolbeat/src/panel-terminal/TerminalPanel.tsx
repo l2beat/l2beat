@@ -54,21 +54,26 @@ export function TerminalPanel() {
     setIsRunning(true)
 
     try {
-      const stream = await executeCommand('discover', project, discoveryChain)
+      const eventSource = executeCommand('discover', project, discoveryChain)
       abortControllerRef.current = new AbortController()
 
-      const reader = stream.getReader()
-      while (!abortControllerRef.current.signal.aborted) {
-        const { value, done } = await reader.read()
-        if (done) break
-        addOutput(value)
+      eventSource.onmessage = (event) => {
+        const text = event.data.toString()
+        addOutput(text.endsWith('\n') ? text : text + '\n')
       }
+
+      eventSource.onerror = () => {
+        eventSource.close()
+        setIsRunning(false)
+        queryClient.invalidateQueries({ queryKey: ['projects', project] })
+      }
+
+      abortControllerRef.current.signal.addEventListener('abort', () => {
+        eventSource.close()
+      })
     } catch (error) {
       addOutput(`Error: ${error}`)
-    } finally {
       setIsRunning(false)
-      // Invalidate all queries for this project to trigger a refetch
-      await queryClient.invalidateQueries({ queryKey: ['projects', project] })
     }
   }
 
