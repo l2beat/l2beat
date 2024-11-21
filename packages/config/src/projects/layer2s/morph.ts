@@ -46,7 +46,7 @@ const challengeBond = discovery.getContractValue<number>(
 const upgradeDelay = 0
 
 const stakingValue =
-  (discovery.getContractValue<number>('L1Staking', 'stakingValue') / 10 ** 18)
+  discovery.getContractValue<number>('L1Staking', 'stakingValue') / 10 ** 18
 
 const proofWindow = discovery.getContractValue<number>(
   'MorphRollup',
@@ -230,7 +230,7 @@ export const morph: Layer2 = {
     stateCorrectness: {
       name: 'Single round fault proof system',
       description: `Morph uses an one round fault proof system where whitelisted Challengers, if they find a faulty state root within the ${formatSeconds(challengeWindow)} challenge window, \
-          they can post ${challengeBond} WEI bond and request a Zk proof of the state transition. After the challenge, during ${formatSeconds(proofWindow)} proving window a ZK proof must be \
+          they can post ${challengeBond} WEI bond and request a ZK proof of the state transition. After the challenge, during ${formatSeconds(proofWindow)} proving window a ZK proof must be \
           delivered, otherwise state root is considered invalid and the root proposer bond, which is set currently to ${stakingValue} ETH is slashed. The zkEVM used is SP1 from Succinct.\
           If the valid proof is delivered, the Challenger looses the challenge bond.`,
       references: [
