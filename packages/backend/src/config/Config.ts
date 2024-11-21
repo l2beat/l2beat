@@ -12,6 +12,8 @@ import { ChainConverter } from '@l2beat/shared-pure'
 import { ActivityTransactionConfig } from '../modules/activity/ActivityTransactionConfig'
 import { MulticallConfigEntry } from '../peripherals/multicall/types'
 import { ResolvedFeatureFlag } from './FeatureFlags'
+import { BlockApi } from './chain/BlockApi'
+import { IndexerApi } from './chain/IndexerApi'
 import { FinalityProjectConfig } from './features/finality'
 
 export interface Config {
@@ -37,6 +39,7 @@ export interface Config {
   readonly flags: ResolvedFeatureFlag[]
   readonly verifiers: boolean
   readonly daBeat: DABeatConfig | false
+  readonly chainConfig: ChainConfig[]
 }
 
 export interface ApiConfig {
@@ -119,6 +122,12 @@ export interface EtherscanChainConfig {
   readonly type: 'etherscan'
   readonly apiKey: string
   readonly url: string
+}
+
+export interface ChainConfig {
+  readonly name: string
+  readonly blockApis: BlockApi[]
+  readonly indexerApis: IndexerApi[]
 }
 
 export interface ChainTvlConfig {

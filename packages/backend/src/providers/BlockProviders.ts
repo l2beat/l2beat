@@ -12,9 +12,9 @@ import {
   StarknetClient,
   ZksyncLiteClient,
 } from '@l2beat/shared'
-import { assert, ProjectId, assertUnreachable } from '@l2beat/shared-pure'
+import { assert, assertUnreachable } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
-import { ActivityConfig } from '../config/Config'
+import { ChainConfig } from '../config/Config'
 import { BlockTimestampProvider } from '../modules/tvl/services/BlockTimestampProvider'
 import { StarkexClient } from '../peripherals/starkex/StarkexClient'
 
@@ -23,7 +23,6 @@ export class BlockProviders {
   timestampProviders: Map<string, BlockTimestampProvider> = new Map()
 
   constructor(
-    private readonly config: ActivityConfig,
     private readonly clients: BlockClient[],
     readonly starkexClient: StarkexClient | undefined,
     private readonly indexerClients: BlockIndexerClient[],
@@ -45,41 +44,20 @@ export class BlockProviders {
   }
 
   getBlockProvider(chain: string) {
-    const provider = this.blockProviders.get(chain)
-    assert(provider, `Provider not found: ${chain}`)
-    return provider
+    const blockProvider = this.blockProviders.get(chain)
+    assert(blockProvider, `BlockProvider not found: ${chain}`)
+    return blockProvider
   }
 
   // TODO: refactor in the same way as blocks
   getBlockTimestampProvider(chain: string) {
-    const project = this.config.projects.find((p) => p.id === chain)
-    assert(project, `Project ${chain} not found`)
-
-    const indexerClients = this.indexerClients.filter((c) => c.chain === chain)
-
-    switch (project.config.type) {
-      case 'rpc':
-      case 'zksync':
-      case 'fuel':
-      case 'starknet':
-      case 'degate3':
-      case 'loopring': {
-        const blockProvider = this.getBlockProvider(chain)
-        return new BlockTimestampProvider({
-          indexerClients,
-          blockProvider,
-        })
-      }
-      case 'starkex': {
-        throw new Error('Starkex should not be handled with this method')
-      }
-      default:
-        assertUnreachable(project.config)
-    }
+    const timestampProvider = this.timestampProviders.get(chain)
+    assert(timestampProvider, `TimestampProvider not found: ${chain}`)
+    return timestampProvider
   }
 }
 
-export function initBlockProviders(config: ActivityConfig): BlockProviders {
+export function initBlockProviders(chains: ChainConfig[]): BlockProviders {
   let starkexClient: StarkexClient | undefined
 
   const blockClients: BlockClient[] = []
@@ -89,104 +67,100 @@ export function initBlockProviders(config: ActivityConfig): BlockProviders {
   const http2 = new HttpClient2()
   const logger = Logger.SILENT
 
-  for (const project of config.projects) {
-    if (project.blockExplorerConfig) {
-      indexerClients.push(
-        new BlockIndexerClient(http, new RateLimiter({ callsPerMinute: 120 }), {
-          ...project.blockExplorerConfig,
-          chain: project.id,
-        }),
+  for (const chain of chains) {
+    for (const indexerApi of chain.indexerApis) {
+      const indexerClient = new BlockIndexerClient(
+        http,
+        new RateLimiter({ callsPerMinute: 120 }),
+        {
+          chain: chain.name,
+          ...indexerApi,
+        },
       )
+      indexerClients.push(indexerClient)
     }
 
-    switch (project.config.type) {
-      case 'rpc': {
-        const retryHandler =
-          project.id === ProjectId('zkfair')
-            ? RetryHandler.UNRELIABLE_API(logger)
-            : RetryHandler.RELIABLE_API(logger)
+    for (const blockApi of chain.blockApis) {
+      const retryHandler =
+        blockApi.retryStrategy === 'RELIABLE'
+          ? RetryHandler.RELIABLE_API(logger)
+          : RetryHandler.UNRELIABLE_API(logger)
+      const rateLimiter = new RateLimiter({
+        callsPerMinute: blockApi.callsPerMinute,
+      })
 
-        // TODO: handle multiple urls
-        const rpcClient = new RpcClient2({
-          url: project.config.url,
-          chain: project.id,
-          http: http2,
-          rateLimiter: new RateLimiter({
-            callsPerMinute: project.config.callsPerMinute,
-          }),
-          // TODO: handle different retry strategies
-          retryHandler,
-          logger,
-        })
+      switch (blockApi.type) {
+        case 'rpc': {
+          const rpcClient = new RpcClient2({
+            chain: chain.name,
+            url: blockApi.url,
+            http: http2,
+            rateLimiter,
+            retryHandler,
+            logger,
+          })
+          blockClients.push(rpcClient)
+          break
+        }
 
-        blockClients.push(rpcClient)
+        case 'zksync': {
+          const zksyncLiteClient = new ZksyncLiteClient({
+            url: blockApi.url,
+            http: http2,
+            rateLimiter,
+            retryHandler,
+            logger,
+          })
+          blockClients.push(zksyncLiteClient)
+          break
+        }
 
-        break
+        case 'starknet': {
+          const starknetClient = new StarknetClient({
+            url: blockApi.url,
+            http: http2,
+            rateLimiter,
+            retryHandler,
+            logger,
+          })
+          blockClients.push(starknetClient)
+          break
+        }
+        case 'loopring':
+        case 'degate3': {
+          const loopringClient = new LoopringClient({
+            url: blockApi.url,
+            type: blockApi.type,
+            http: http2,
+            rateLimiter,
+            retryHandler,
+            logger,
+          })
+          blockClients.push(loopringClient)
+          break
+        }
+        case 'fuel': {
+          const fuelClient = new FuelClient({
+            url: blockApi.url,
+            http: http2,
+            rateLimiter,
+            retryHandler,
+            logger,
+          })
+          blockClients.push(fuelClient)
+          break
+        }
+        case 'starkex': {
+          starkexClient = new StarkexClient(blockApi.apiKey, http, logger, {
+            callsPerMinute: blockApi.callsPerMinute,
+          })
+          break
+        }
+        default:
+          assertUnreachable(blockApi)
       }
-      case 'zksync': {
-        const zksyncLiteClient = new ZksyncLiteClient({
-          url: project.config.url,
-          http: http2,
-          rateLimiter: new RateLimiter({
-            callsPerMinute: project.config.callsPerMinute,
-          }),
-          retryHandler: RetryHandler.RELIABLE_API(logger),
-          logger,
-        })
-        blockClients.push(zksyncLiteClient)
-        break
-      }
-      case 'starknet': {
-        const starknetClient = new StarknetClient({
-          url: project.config.url,
-          http: http2,
-          rateLimiter: new RateLimiter({
-            callsPerMinute: project.config.callsPerMinute,
-          }),
-          retryHandler: RetryHandler.RELIABLE_API(logger),
-          logger,
-        })
-        blockClients.push(starknetClient)
-        break
-      }
-      case 'loopring':
-      case 'degate3': {
-        const loopringClient = new LoopringClient({
-          http: http2,
-          logger,
-          rateLimiter: new RateLimiter({
-            callsPerMinute: project.config.callsPerMinute,
-          }),
-          retryHandler: RetryHandler.RELIABLE_API(logger),
-          url: project.config.url,
-          type: project.config.type,
-        })
-        blockClients.push(loopringClient)
-        break
-      }
-      case 'starkex': {
-        starkexClient = new StarkexClient(config.starkexApiKey, http, logger, {
-          callsPerMinute: config.starkexCallsPerMinute,
-        })
-        break
-      }
-      case 'fuel': {
-        const fuelClient = new FuelClient({
-          url: project.config.url,
-          http: http2,
-          rateLimiter: new RateLimiter({
-            callsPerMinute: project.config.callsPerMinute,
-          }),
-          retryHandler: RetryHandler.RELIABLE_API(logger),
-          logger,
-        })
-        blockClients.push(fuelClient)
-        break
-      }
-      default:
-        assertUnreachable(project.config)
     }
   }
 
-  return new BlockProviders(config, blockClients, starkexClient, indexerClients)
+  return new BlockProviders(blockClients, starkexClient, indexerClients)
 }

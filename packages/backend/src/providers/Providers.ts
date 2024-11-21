@@ -14,10 +14,10 @@ import {
   initCirculatingSupplyProviders,
 } from './CirculatingSupplyProviders'
 import { PriceProviders, initPriceProviders } from './PriceProviders'
-import { TvlBlockProviders, initTvlBlockProviders } from './TvlBlockProviders'
+import { TvlBlockProviders } from './TvlBlockProviders'
 
 export class Providers {
-  block: BlockProviders | undefined
+  block: BlockProviders
   price: PriceProviders | undefined
   circulatingSupply: CirculatingSupplyProviders | undefined
   tvlBlock: TvlBlockProviders | undefined
@@ -62,21 +62,13 @@ export class Providers {
       rateLimiter: new RateLimiter({ callsPerMinute: 60 }),
       retryHandler: RetryHandler.RELIABLE_API(logger),
     })
-    this.block = config.activity
-      ? initBlockProviders(config.activity)
-      : undefined
+    this.block = initBlockProviders(config.chainConfig)
     this.circulatingSupply = config.tvl
       ? initCirculatingSupplyProviders(this.coingeckoClient)
       : undefined
-    this.tvlBlock = config.tvl ? initTvlBlockProviders(config.tvl) : undefined
     this.price = config.tvl
       ? initPriceProviders(this.coingeckoClient)
       : undefined
-  }
-
-  getBlockProviders() {
-    assert(this.block, 'Block providers unintended access')
-    return this.block
   }
 
   getPriceProviders() {
@@ -90,10 +82,5 @@ export class Providers {
       'Circulating Supply providers unintended access',
     )
     return this.circulatingSupply
-  }
-
-  getTvlBlockProviders() {
-    assert(this.tvlBlock, 'TVL Block providers unintended access')
-    return this.tvlBlock
   }
 }
