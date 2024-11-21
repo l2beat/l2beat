@@ -240,7 +240,7 @@ export const morph: Layer2 = {
       ],
       risks: [
         {
-          category: 'Funds can be lost if',
+          category: 'Funds can be stolen if',
           text: 'whitelisted challenger does not post a challenge of an incorrect state root.',
         },
       ],
@@ -269,12 +269,20 @@ export const morph: Layer2 = {
     },
     forceTransactions: {
       ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
+      description:
+        FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM.description +
+        " Even though EnforcedTxGateway is enabled, sequencers can still skip (censor) transactions.",
       references: [
         {
           text: 'EnforcedTxGateway.sol - Etherscan source code',
           href: 'https://etherscan.io/address/0xCb13746Fc891fC2e7D824870D00a26F43fE6123e#code',
         },
+        {
+          text: 'Rollup.sol - proposer can indicate which messages were skipped',
+          href: 'https://etherscan.io/address/0x073403e147a8e607b80985fe458c0b527287278f#code#F1#L242',
+        },
       ],
+      // 
     },
     exitMechanisms: [
       {
