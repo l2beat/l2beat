@@ -59,6 +59,7 @@ export function ProjectActivityChart({ milestones, projectId }: Props) {
           {...data}
           showEthereum={showMainnet}
           singleProject
+          syncedUntil={chart?.syncStatus.syncedUntil}
           metric={metric}
         />
       )}
