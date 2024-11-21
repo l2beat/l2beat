@@ -207,7 +207,7 @@ export const DATA_EXTERNAL_L3: ScalingProjectRiskViewEntry = {
 export const DATA_EXTERNAL_CHALLENGES: ScalingProjectRiskViewEntry = {
   value: 'External',
   description:
-    'Proof construction and state derivation rely fully on data that is NOT published onchain. A custom data availability (DA) provider witout attestations is used and DA can be challenged.',
+    'Proof construction and state derivation rely fully on data that is NOT published onchain. A custom data availability (DA) provider without attestations is used and data unavailability can be challenged.',
   sentiment: 'bad',
 }
 
