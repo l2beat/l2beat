@@ -62,6 +62,8 @@ export function TerminalPanel() {
         addOutput(text.endsWith('\n') ? text : text + '\n')
       }
 
+      // This is a known quirk of the SSE protocol - normal completion and
+      // errors both go through the error handler
       eventSource.onerror = () => {
         eventSource.close()
         setIsRunning(false)
