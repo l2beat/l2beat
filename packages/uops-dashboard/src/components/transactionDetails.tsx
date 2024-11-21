@@ -80,7 +80,7 @@ export function TransactionDetails({
         <div
           id="default-modal"
           tabIndex={-1}
-          className="fixed inset-0 flex items-center justify-center"
+          className="fixed inset-0 flex items-center justify-center bg-black/50"
         >
           <div className="relative max-h-full w-full max-w-3xl p-4">
             <div className="relative rounded-lg bg-white shadow dark:bg-gray-700">
@@ -112,7 +112,7 @@ export function TransactionDetails({
                 </button>
               </div>
 
-              <div className="p-4 md:p-5">
+              <div className="overflow-x-auto p-4 md:p-5">
                 <p className="mb-4 text-base text-gray-500 leading-relaxed dark:text-gray-400">
                   Hash:
                   <a

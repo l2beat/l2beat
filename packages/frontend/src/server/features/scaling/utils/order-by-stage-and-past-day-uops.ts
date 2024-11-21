@@ -7,21 +7,23 @@ interface BaseProject {
   name: string
   stage: StageConfig
   data: {
-    pastDayTps: number
+    uops: {
+      pastDayCount: number
+    }
   }
 }
 
-export function orderByStageAndPastDayTps<T extends BaseProject>(
+export function orderByStageAndPastDayUops<T extends BaseProject>(
   projects: T[],
 ): T[] {
   if (!env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING) {
-    return projects.sort(sortByTps)
+    return projects.sort(sortByUops)
   }
 
-  return projects.sort(sortByStageAndTps)
+  return projects.sort(sortByStageAndUops)
 }
 
-const sortByStageAndTps = <T extends BaseProject>(a: T, b: T) => {
+const sortByStageAndUops = <T extends BaseProject>(a: T, b: T) => {
   const stageA = a.stage.stage
   const stageB = b.stage.stage
 
@@ -35,8 +37,8 @@ const sortByStageAndTps = <T extends BaseProject>(a: T, b: T) => {
     return 1
   }
 
-  const aTps = a.data.pastDayTps
-  const bTps = b.data.pastDayTps
+  const aTps = a.data.uops.pastDayCount
+  const bTps = b.data.uops.pastDayCount
   if (aTps !== bTps) {
     return bTps - aTps
   }
@@ -44,9 +46,9 @@ const sortByStageAndTps = <T extends BaseProject>(a: T, b: T) => {
   return a.name.localeCompare(b.name)
 }
 
-export const sortByTps = <T extends BaseProject>(a: T, b: T) => {
-  const aTps = a.data.pastDayTps
-  const bTps = b.data.pastDayTps
+export const sortByUops = <T extends BaseProject>(a: T, b: T) => {
+  const aTps = a.data.uops.pastDayCount
+  const bTps = b.data.uops.pastDayCount
   if (aTps !== bTps) {
     return bTps - aTps
   }

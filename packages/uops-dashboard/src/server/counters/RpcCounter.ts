@@ -11,6 +11,9 @@ import {
   ENTRY_POINT_ADDRESS_0_6_0,
   ENTRY_POINT_ADDRESS_0_7_0,
   ERC4337_methods,
+  MULTICALLV3_methods,
+  MULTICALL_V3,
+  MULTICALL_V3_ZKSYNCERA,
   Method,
   Operation,
   SAFE_EXEC_TRANSACTION_SELECTOR,
@@ -19,6 +22,7 @@ import {
   isEip712,
   isErc4337,
   isGnosisSafe,
+  isMulticallv3,
 } from '@l2beat/shared'
 import { assert, Block, Transaction } from '@l2beat/shared-pure'
 import { generateId } from '../../utils/generateId'
@@ -89,9 +93,16 @@ export class RpcCounter implements Counter {
   }
 
   mapTransaction(tx: Transaction): CountedTransaction {
-    const methods = ERC4337_methods.concat(SAFE_methods).concat(EIP712_methods)
+    const methods = ERC4337_methods.concat(SAFE_methods)
+      .concat(EIP712_methods)
+      .concat(MULTICALLV3_methods)
 
-    if (isErc4337(tx) || isGnosisSafe(tx) || isEip712(tx)) {
+    if (
+      isErc4337(tx) ||
+      isGnosisSafe(tx) ||
+      isEip712(tx) ||
+      isMulticallv3(tx)
+    ) {
       const countedOperation = this.countUserOperations(
         tx.data as string,
         tx.to ?? '',
@@ -258,6 +269,9 @@ export class RpcCounter implements Counter {
         return 'Safe: Multi Send Call Only 1.3.0'
       case SAFE_EXEC_TRANSACTION_SELECTOR:
         return 'Safe: Singleton 1.3.0'
+      case MULTICALL_V3:
+      case MULTICALL_V3_ZKSYNCERA:
+        return 'Multicall v3'
     }
 
     switch (type) {

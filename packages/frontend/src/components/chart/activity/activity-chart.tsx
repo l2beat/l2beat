@@ -5,6 +5,7 @@ import {
   useScalingFilter,
   useScalingFilterValues,
 } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
+import { useActivityMetricContext } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
 import { useActivityTimeRangeContext } from '~/app/(side-nav)/scaling/activity/_components/activity-time-range-context'
 import { ActivityTimeRangeControls } from '~/app/(side-nav)/scaling/activity/_components/activity-time-range-controls'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
@@ -28,6 +29,7 @@ interface Props {
 
 export function ActivityChart({ milestones, entries }: Props) {
   const { timeRange, setTimeRange } = useActivityTimeRangeContext()
+  const { metric } = useActivityMetricContext()
   const filters = useScalingFilterValues()
   const includeFilter = useScalingFilter()
   const [scale, setScale] = useLocalStorage<ChartScale>(
@@ -60,6 +62,7 @@ export function ActivityChart({ milestones, entries }: Props) {
       milestones,
       chart: data,
       showMainnet,
+      metric,
     })
 
   return (
@@ -73,6 +76,7 @@ export function ActivityChart({ milestones, entries }: Props) {
         <ActivityChartHover
           {...data}
           showEthereum={showMainnet}
+          metric={metric}
           singleProject={filter.projectIds?.length === 1}
         />
       )}
@@ -98,9 +102,9 @@ export function ActivityChart({ milestones, entries }: Props) {
               <div className="flex flex-row items-center gap-2">
                 <EthereumLineIcon className="hidden h-1.5 w-2.5 sm:inline-block" />
                 <span className="hidden md:inline">
-                  ETH Mainnet Transactions
+                  {`ETH Mainnet ${metric === 'uops' ? 'Operations' : 'Transactions'}`}
                 </span>
-                <span className="md:hidden">ETH Txs</span>
+                <span className="md:hidden">{`ETH ${metric === 'uops' ? 'UOPS' : 'TPS'}`}</span>
               </div>
             </Checkbox>
           </div>

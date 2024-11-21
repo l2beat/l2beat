@@ -1,7 +1,7 @@
 {
   "name": "metal",
   "chain": "ethereum",
-  "blockNumber": 21121967,
+  "blockNumber": 21235655,
   "configHash": "0x58bcf46f979d0927881ebf04616bfd267dc9d8e9e2001e64273760ba63eb88c6",
   "contracts": [
     {
@@ -124,7 +124,7 @@
         ],
         "$upgradeCount": 4,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620045",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620066",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -319,10 +319,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 9612000,
-        "latestOutputIndex": 444,
-        "nextBlockNumber": 9633600,
-        "nextOutputIndex": 445,
+        "latestBlockNumber": 10303200,
+        "latestOutputIndex": 476,
+        "nextBlockNumber": 10324800,
+        "nextOutputIndex": 477,
         "proposer": "0xC8187d40AD440328104A52BBed2D8Efc5ab1F1F6",
         "PROPOSER": "0xC8187d40AD440328104A52BBed2D8Efc5ab1F1F6",
         "startingBlockNumber": 0,
@@ -428,7 +428,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 21114467
+          "prevBlockNum": 21228858
         },
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
@@ -504,7 +504,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 57,
+        "nonce": 62,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -820,7 +820,7 @@
       }
     },
     {
-      "name": "OptimismFoundationMultisig_1",
+      "name": "OpFoundationUpgradeSafe",
       "address": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -943,7 +943,7 @@
       }
     },
     {
-      "name": "OptimismFoundationMultisig_2",
+      "name": "OpFoundationOperationsSafe",
       "address": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
       "template": "GnosisSafe",
       "sourceHashes": [

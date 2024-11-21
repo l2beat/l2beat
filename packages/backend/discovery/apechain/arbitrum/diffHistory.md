@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x84a720c33a1f021a7acdff72253ca94c5a5c6dc1
+
+# Diff at Thu, 21 Nov 2024 07:27:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@de1745323b367dd0fbb18ad6c862147dd90e90b0 block: 267469765
+- current block number: 276713373
+
+## Description
+
+Config related: new gnosisSafe template match.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 267469765 (main branch discovery), not current.
+
+```diff
+    contract ApeChainMultisig (0x2B1FbeE3c7D278bFD9E179893FF304fE49FA7DDF) {
+    +++ description: None
+      values.getOwners:
+-        ["0x83F58bBB1a940E364ED2dE775D1FD5218135cCE3","0x651cF50272Ffa8f6D954080DF743410Bb0aa7AFa","0x8765bb776b00A14198025283988c23F72D330E2a","0x65c10dD3d50B10D0E1Bb459675b03367B1b52eD1"]
+      values.getThreshold:
+-        3
+      template:
++        "GnosisSafe"
+    }
+```
+
 Generated with discovered.json: 0xb9db02fba53339cc04259d6fa9097baff18c1fd6
 
 # Diff at Fri, 15 Nov 2024 08:18:15 GMT:
