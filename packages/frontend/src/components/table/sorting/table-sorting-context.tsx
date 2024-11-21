@@ -1,12 +1,11 @@
 'use client'
 
-import { type ColumnDef, type SortingState } from '@tanstack/react-table'
+import { type ColumnSort, type SortingState } from '@tanstack/react-table'
 import {
   type Dispatch,
   type SetStateAction,
   createContext,
   useContext,
-  useMemo,
   useState,
 } from 'react'
 
@@ -17,8 +16,9 @@ const TableSortingContext = createContext<{
 
 export function TableSortingProvider({
   children,
-}: { children: React.ReactNode }) {
-  const [sorting, setSorting] = useState<SortingState>([])
+  initialSort,
+}: { children: React.ReactNode; initialSort: ColumnSort }) {
+  const [sorting, setSorting] = useState<SortingState>([initialSort])
 
   return (
     <TableSortingContext.Provider value={{ sorting, setSorting }}>
@@ -27,10 +27,7 @@ export function TableSortingProvider({
   )
 }
 
-export function useTableSorting<T>({
-  initialSort,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-}: { initialSort: SortingState; columns: ColumnDef<T, any>[] }) {
+export function useTableSorting() {
   const context = useContext(TableSortingContext)
   if (!context) {
     throw new Error(
@@ -38,13 +35,5 @@ export function useTableSorting<T>({
     )
   }
 
-  const memoized = useMemo(
-    () => ({
-      ...context,
-      sorting: context.sorting.length > 0 ? context.sorting : initialSort,
-    }),
-    [context, initialSort],
-  )
-
-  return memoized
+  return context
 }

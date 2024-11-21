@@ -6,6 +6,7 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
+import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import { type ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
 import { type CategorisedScalingEntries } from '~/utils/group-by-main-categories'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
@@ -22,6 +23,12 @@ export function ScalingRiskTables(props: Props) {
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(includeFilters),
     others: props.others?.filter(includeFilters) ?? [],
   }
+
+  const initialSort = {
+    id: '#',
+    desc: false,
+  }
+
   return (
     <>
       <ScalingFilters
@@ -49,16 +56,22 @@ export function ScalingRiskTables(props: Props) {
             </DirectoryTabsTrigger>
           )}
         </DirectoryTabsList>
-        <DirectoryTabsContent value="rollups">
-          <ScalingRiskTable entries={filteredEntries.rollups} rollups />
-        </DirectoryTabsContent>
-        <DirectoryTabsContent value="validiums-and-optimiums">
-          <ScalingRiskTable entries={filteredEntries.validiumsAndOptimiums} />
-        </DirectoryTabsContent>
-        {filteredEntries.others.length > 0 && (
-          <DirectoryTabsContent value="others">
-            <ScalingRiskTable entries={filteredEntries.others} />
+        <TableSortingProvider initialSort={initialSort}>
+          <DirectoryTabsContent value="rollups">
+            <ScalingRiskTable entries={filteredEntries.rollups} rollups />
           </DirectoryTabsContent>
+        </TableSortingProvider>
+        <TableSortingProvider initialSort={initialSort}>
+          <DirectoryTabsContent value="validiums-and-optimiums">
+            <ScalingRiskTable entries={filteredEntries.validiumsAndOptimiums} />
+          </DirectoryTabsContent>
+        </TableSortingProvider>
+        {filteredEntries.others.length > 0 && (
+          <TableSortingProvider initialSort={initialSort}>
+            <DirectoryTabsContent value="others">
+              <ScalingRiskTable entries={filteredEntries.others} />
+            </DirectoryTabsContent>
+          </TableSortingProvider>
         )}
       </DirectoryTabs>
     </>

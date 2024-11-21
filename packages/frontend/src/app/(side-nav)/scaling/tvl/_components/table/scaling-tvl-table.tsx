@@ -4,6 +4,7 @@ import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/basic-table'
 import { RollupsTable } from '~/components/table/rollups-table'
 import { getStageSortedRowModel } from '~/components/table/sorting/get-stage-sorting-row-model'
+import { useTableSorting } from '~/components/table/sorting/table-sorting-context'
 import { useTable } from '~/hooks/use-table'
 import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
 import { useScalingAssociatedTokensContext } from '../../../_components/scaling-associated-tokens-context'
@@ -17,6 +18,7 @@ interface Props {
 
 export function ScalingTvlTable({ entries, rollups }: Props) {
   const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
+  const { sorting, setSorting } = useTableSorting()
 
   const allProjects = useMemo(
     () =>
@@ -33,13 +35,11 @@ export function ScalingTvlTable({ entries, rollups }: Props) {
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: rollups ? getStageSortedRowModel() : getSortedRowModel(),
     manualFiltering: true,
+    state: {
+      sorting,
+    },
+    onSortingChange: setSorting,
     initialState: {
-      sorting: [
-        {
-          id: 'total',
-          desc: true,
-        },
-      ],
       columnPinning: {
         left: ['#', 'logo'],
       },

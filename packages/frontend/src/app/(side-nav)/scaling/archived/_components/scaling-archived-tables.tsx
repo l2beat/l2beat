@@ -7,6 +7,7 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
+import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import { type ScalingArchivedEntry } from '~/server/features/scaling/archived/get-scaling-archived-entries'
 import { type CategorisedScalingEntries } from '~/utils/group-by-main-categories'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
@@ -23,6 +24,12 @@ export function ScalingArchivedTables({
     validiumsAndOptimiums: entries.validiumsAndOptimiums.filter(includeFilters),
     others: entries.others?.filter(includeFilters) ?? [],
   }
+
+  const initialSort = {
+    id: 'total',
+    desc: true,
+  }
+
   return (
     <>
       <ScalingUpcomingAndArchivedFilters
@@ -50,18 +57,24 @@ export function ScalingArchivedTables({
             </DirectoryTabsTrigger>
           )}
         </DirectoryTabsList>
-        <DirectoryTabsContent value="rollups">
-          <ScalingArchivedTable entries={filteredEntries.rollups} />
-        </DirectoryTabsContent>
-        <DirectoryTabsContent value="validiums-and-optimiums">
-          <ScalingArchivedTable
-            entries={filteredEntries.validiumsAndOptimiums}
-          />
-        </DirectoryTabsContent>
-        {filteredEntries.others.length > 0 && (
-          <DirectoryTabsContent value="others">
-            <ScalingArchivedTable entries={filteredEntries.others} />
+        <TableSortingProvider initialSort={initialSort}>
+          <DirectoryTabsContent value="rollups">
+            <ScalingArchivedTable entries={filteredEntries.rollups} />
           </DirectoryTabsContent>
+        </TableSortingProvider>
+        <TableSortingProvider initialSort={initialSort}>
+          <DirectoryTabsContent value="validiums-and-optimiums">
+            <ScalingArchivedTable
+              entries={filteredEntries.validiumsAndOptimiums}
+            />
+          </DirectoryTabsContent>
+        </TableSortingProvider>
+        {filteredEntries.others.length > 0 && (
+          <TableSortingProvider initialSort={initialSort}>
+            <DirectoryTabsContent value="others">
+              <ScalingArchivedTable entries={filteredEntries.others} />
+            </DirectoryTabsContent>
+          </TableSortingProvider>
         )}
       </DirectoryTabs>
     </>

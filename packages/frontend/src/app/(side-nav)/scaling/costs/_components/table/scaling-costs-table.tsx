@@ -1,9 +1,11 @@
 'use client'
+
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/basic-table'
 import { RollupsTable } from '~/components/table/rollups-table'
 import { getStageSortedRowModel } from '~/components/table/sorting/get-stage-sorting-row-model'
+import { useTableSorting } from '~/components/table/sorting/table-sorting-context'
 import { useTable } from '~/hooks/use-table'
 import { type CostsTableData } from '~/server/features/scaling/costs/get-costs-table-data'
 import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
@@ -22,46 +24,37 @@ interface Props {
   rollups?: boolean
 }
 
-export function ScalingCostsTable(props: Props) {
+export function ScalingCostsTable({ entries, rollups }: Props) {
   const { range } = useCostsTimeRangeContext()
   const { unit } = useCostsUnitContext()
   const { metric } = useCostsMetricContext()
+  const { sorting, setSorting } = useTableSorting()
 
   const { data } = api.costs.table.useQuery({ range })
 
   const tableEntries = useMemo(() => {
-    const tableEntries = props.entries.map((e) =>
-      mapToTableEntry(e, data, unit),
-    )
+    const tableEntries = entries.map((e) => mapToTableEntry(e, data, unit))
     return tableEntries ? calculateDataByType(tableEntries, metric) : []
-  }, [data, props.entries, metric, unit])
+  }, [data, entries, metric, unit])
 
   const table = useTable({
     data: tableEntries,
     columns: scalingCostsColumns,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: props.rollups
-      ? getStageSortedRowModel()
-      : getSortedRowModel(),
+    getSortedRowModel: rollups ? getStageSortedRowModel() : getSortedRowModel(),
     manualFiltering: true,
+    state: {
+      sorting,
+    },
+    onSortingChange: setSorting,
     initialState: {
-      sorting: [
-        {
-          id: '#',
-          desc: false,
-        },
-      ],
       columnPinning: {
         left: ['#', 'logo'],
       },
     },
   })
 
-  return props.rollups ? (
-    <RollupsTable table={table} />
-  ) : (
-    <BasicTable table={table} />
-  )
+  return rollups ? <RollupsTable table={table} /> : <BasicTable table={table} />
 }
 
 function mapToTableEntry(
