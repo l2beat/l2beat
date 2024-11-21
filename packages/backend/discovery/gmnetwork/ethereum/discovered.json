@@ -1,7 +1,7 @@
 {
   "name": "gmnetwork",
   "chain": "ethereum",
-  "blockNumber": 21222656,
+  "blockNumber": 21235441,
   "configHash": "0xf3ce25a8d3629872ba1de3eaca66b38c60388031efcddf0c53870013c8f0790b",
   "contracts": [
     {
@@ -195,10 +195,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 7160400,
-        "latestOutputIndex": 1325,
-        "nextBlockNumber": 7165800,
-        "nextOutputIndex": 1326,
+        "latestBlockNumber": 7236000,
+        "latestOutputIndex": 1339,
+        "nextBlockNumber": 7241400,
+        "nextOutputIndex": 1340,
         "proposer": "0x4FACE9ec6237C04a22d434989Beb30b43055886D",
         "PROPOSER": "0x4FACE9ec6237C04a22d434989Beb30b43055886D",
         "startingBlockNumber": 0,
@@ -520,7 +520,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 21221117
+          "prevBlockNum": 21234500
         },
         "paused": false,
         "superchainConfig": "0xB83831efA1Cc1bFF0c29ed0d8df1943F834442A0",
@@ -554,7 +554,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621648",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621650",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,

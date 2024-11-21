@@ -212,6 +212,13 @@ export const DATA_EXTERNAL_L3: ScalingProjectRiskViewEntry = {
   sentiment: 'bad',
 }
 
+export const DATA_EXTERNAL_CHALLENGES: ScalingProjectRiskViewEntry = {
+  value: 'External',
+  description:
+    'Proof construction and state derivation rely fully on data that is NOT published onchain. A custom data availability (DA) provider without attestations is used, but data unavailability can be challenged.',
+  sentiment: 'bad',
+}
+
 export function DATA_CELESTIA(
   isUsingBlobstream: boolean,
 ): ScalingProjectRiskViewEntry {
@@ -623,6 +630,7 @@ export const RISK_VIEW = {
   DATA_EXTERNAL_MEMO,
   DATA_EXTERNAL,
   DATA_EXTERNAL_L3,
+  DATA_EXTERNAL_CHALLENGES,
   DATA_CELESTIA,
 
   // validatedBy
