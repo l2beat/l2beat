@@ -60,9 +60,7 @@
     },
     "L1CrossDomainMessenger": {
       "ignoreMethods": ["prevReplayIndex"],
-      "ignoreInWatchMode": [
-        "messageNonce"
-      ]
+      "ignoreInWatchMode": ["messageNonce"]
     },
     "L1MessageQueueWithGasPriceOracle": {
       "ignoreMethods": [
@@ -71,9 +69,7 @@
         "isMessageSkipped",
         "messageQueue"
       ],
-      "ignoreInWatchMode": [
-        "pendingQueueIndex", "nextCrossDomainMessageIndex"
-      ]
+      "ignoreInWatchMode": ["pendingQueueIndex", "nextCrossDomainMessageIndex"]
     },
     "MorphRollup": {
       "ignoreMethods": [
