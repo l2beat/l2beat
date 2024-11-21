@@ -286,7 +286,7 @@ export const morph: Layer2 = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('zk', 'no proof'),
+        ...EXITS.REGULAR('optimistic', 'merkle proof', challengeWindow),
         risks: [EXITS.OPERATOR_CENSORS_WITHDRAWAL],
         references: [
           {
