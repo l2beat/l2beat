@@ -285,7 +285,7 @@ describe(RpcCounter.name, () => {
 
       expect(result).toEqual({
         from: 'tx.from',
-        type: 'Multicall V3',
+        type: 'Multicall v3',
         hash: 'tx.hash',
         operationsCount: 1,
         includesBatch: false,
