@@ -121,7 +121,7 @@ export class RpcCounter implements Counter {
 
       return {
         from: tx.from,
-        type: this.getTransactionType(tx.type, tx.to),
+        type: this.getTransactionType(tx.type, tx.to, tx.data),
         hash: tx.hash,
         operationsCount: countedOperation.count,
         details: countedOperation,
@@ -136,7 +136,7 @@ export class RpcCounter implements Counter {
 
     return {
       from: tx.from,
-      type: this.getTransactionType(tx.type, tx.to),
+      type: this.getTransactionType(tx.type, tx.to, tx.data),
       hash: tx.hash,
       operationsCount: 1,
       includesBatch: false,
@@ -259,7 +259,11 @@ export class RpcCounter implements Counter {
     }
   }
 
-  getTransactionType(type: string, to?: string | null): string {
+  getTransactionType(
+    type: string,
+    to?: string,
+    data?: string | string[],
+  ): string {
     switch (to?.toLowerCase()) {
       case ENTRY_POINT_ADDRESS_0_6_0:
         return 'ERC-4337 Entry Point 0.6.0'
@@ -272,6 +276,12 @@ export class RpcCounter implements Counter {
       case MULTICALL_V3:
       case MULTICALL_V3_ZKSYNCERA:
         return 'Multicall v3'
+    }
+
+    const selector = data?.slice(0, 10)
+    switch (selector) {
+      case SAFE_EXEC_TRANSACTION_SELECTOR:
+        return 'Safe: Singleton 1.3.0'
     }
 
     switch (type) {
