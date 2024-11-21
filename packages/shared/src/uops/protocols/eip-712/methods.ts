@@ -1,6 +1,6 @@
 import { parseAbiItem } from 'viem'
 import { Method } from '../../types'
-import { defineMethod } from '../defineMetod'
+import { defineMethod } from '../defineMethod'
 
 export const EIP712_methods: Method[] = [
   defineMethod(
