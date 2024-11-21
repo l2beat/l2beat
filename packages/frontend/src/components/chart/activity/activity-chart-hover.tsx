@@ -11,6 +11,7 @@ interface Props {
   showEthereum: boolean
   metric?: ActivityMetric
   singleProject?: boolean
+  syncedUntil?: number
 }
 
 export function ActivityChartHover(props: Props) {
@@ -36,9 +37,11 @@ export function ActivityChartHover(props: Props) {
           <span>{props.singleProject ? 'Project' : 'Projects'}</span>
         </div>
         <span className="whitespace-nowrap font-bold tabular-nums">
-          {formatActivityCount(countPerSecond(props.count), {
-            morePrecision: !!props.singleProject,
-          })}
+          {props.syncedUntil && props.syncedUntil < props.timestamp
+            ? 'Not synced'
+            : formatActivityCount(countPerSecond(props.count), {
+                morePrecision: !!props.singleProject,
+              })}
         </span>
       </div>
 
@@ -70,7 +73,9 @@ export function ActivityChartHover(props: Props) {
           <span>{props.singleProject ? 'Project' : 'Projects'}</span>
         </div>
         <span className="whitespace-nowrap font-bold tabular-nums">
-          {formatInteger(props.count)}
+          {props.syncedUntil && props.syncedUntil < props.timestamp
+            ? 'Not synced'
+            : formatInteger(props.count)}
         </span>
       </div>
 
