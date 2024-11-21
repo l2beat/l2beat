@@ -26,6 +26,7 @@ const Checkbox = ({
       id={id}
       className={cn(
         'peer size-5 shrink-0 rounded bg-pure-white disabled:cursor-not-allowed disabled:opacity-50 dark:bg-black',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1',
         'sidebar:data-[state=unchecked]:border-2 sidebar:data-[state=unchecked]:border-surface-tertiary',
       )}
       {...props}

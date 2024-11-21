@@ -68,5 +68,19 @@ export const morph: Layer2 = underReviewL2({
       },
       chain: 'ethereum',
     },
+    {
+      address: EthereumAddress('0x2C8314f5AADa5D7a9D32eeFebFc43aCCAbe1b289'),
+      sinceTimestamp: new UnixTime(1729308239),
+      tokens: ['USDC'],
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Canonically (external escrow)',
+          },
+        ],
+      },
+      chain: 'ethereum',
+    },
   ],
 })

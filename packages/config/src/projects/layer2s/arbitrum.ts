@@ -537,7 +537,6 @@ export const arbitrum: Layer2 = orbitStackL2({
       ],
     },
   },
-  usesBlobs: true,
   isNodeAvailable: true,
   nodeSourceLink: 'https://github.com/OffchainLabs/nitro/',
   stage: getStage(

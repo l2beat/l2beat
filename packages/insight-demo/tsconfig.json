@@ -1,8 +1,0 @@
-{
-  "extends": "@l2beat/typescript-config/nextjs",
-  "compilerOptions": {
-    "paths": {
-      "react": ["./node_modules/@types/react"]
-    }
-  }
-}

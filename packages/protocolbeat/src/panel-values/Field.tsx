@@ -25,7 +25,7 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
           {field.description}
         </div>
       )}
-      <div className="overflow-x-auto bg-coffee-900 px-5 py-0.5">
+      <div className="overflow-x-auto bg-coffee-900 px-10 py-0.5">
         <FieldValueDisplay topLevel value={field.value} />
       </div>
     </li>

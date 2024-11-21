@@ -1702,6 +1702,12 @@
   ],
   "arbitrum": [
     {
+      "symbol": "cbBTC",
+      "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "symbol": "PEPE",
       "address": "0x25d887Ce7a35172C62FeBFD67a1856F20FaEbB00",
       "source": "native",
@@ -4507,6 +4513,12 @@
   ],
   "sanko": [
     {
+      "symbol": "SP",
+      "address": "0x3f710cBd0F4268719C6c2E5E078a4CAfAeED7d45",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "symbol": "SMOKE",
       "address": "0xe78a3857593083dd6e1f7859e1b711401fc6f2cc",
       "source": "native",
@@ -4637,6 +4649,21 @@
         "bridges": [
           {
             "name": "Veno.finance"
+          }
+        ]
+      }
+    }
+  ],
+  "bob": [
+    {
+      "symbol": "FBTC",
+      "address": "0xC96dE26018A54D51c097160568752c4E3BD6C364",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "FBTC FireBridge"
           }
         ]
       }

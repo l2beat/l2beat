@@ -39,7 +39,6 @@ export const optopia: Layer2 = opStackL2({
   //   lag: 0,
   //   stateUpdate: 'disabled',
   // },
-  usesBlobs: true,
   isNodeAvailable: true,
   rpcUrl: 'https://rpc-mainnet-2.optopia.ai', // chainId: 62050
   discoveryDrivenData: true,
