@@ -149,7 +149,7 @@ export class FinalityIndexer extends ChildIndexer {
     return {
       ...baseResult,
       averageStateUpdate:
-        Math.round(mean(stateUpdateDelays)) - averageTimeToInclusion,
+        Math.round(mean(stateUpdateDelays))
     }
   }
 
