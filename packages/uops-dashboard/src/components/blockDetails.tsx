@@ -6,7 +6,7 @@ export function BlockDetails({ block }: { block: BlockWithChain }) {
   }, 0)
 
   return (
-    <div className="mx-3 mt-10 block overflow-x-scroll rounded-lg border border-gray-200 bg-white p-4 shadow hover:bg-gray-100 md:mx-10 md:p-6 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+    <div className="mx-3 mt-10 block overflow-x-auto rounded-lg border border-gray-200 bg-white p-4 shadow hover:bg-gray-100 md:mx-10 md:p-6 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
       <h5 className="mb-2 font-bold text-2xl text-gray-900 tracking-tight dark:text-white">
         Block details
       </h5>
