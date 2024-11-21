@@ -2,6 +2,7 @@ import {
   ENTRY_POINT_ADDRESS_0_6_0,
   ENTRY_POINT_ADDRESS_0_7_0,
   Method,
+  MULTICALL_V3,
   SAFE_EXEC_TRANSACTION_SELECTOR,
   SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
 } from '@l2beat/shared'
@@ -79,6 +80,20 @@ describe(RpcUopsAnalyzer.name, () => {
       const tx = {
         to: EthereumAddress.random(),
         data: `${SAFE_EXEC_TRANSACTION_SELECTOR}1234abcd`,
+        hash: '0x0',
+      }
+
+      analyzer.countUserOperations = mockFn().returns(2)
+
+      const count = analyzer.mapTransaction(tx)
+      expect(count).toEqual(2)
+    })
+
+    it('should handle Multicall v3', () => {
+      const analyzer = new RpcUopsAnalyzer()
+      const tx = {
+        to: MULTICALL_V3,
+        data: '0x1234abcd',
         hash: '0x0',
       }
 

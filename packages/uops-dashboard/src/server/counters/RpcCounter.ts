@@ -269,7 +269,7 @@ export class RpcCounter implements Counter {
       case SAFE_EXEC_TRANSACTION_SELECTOR:
         return 'Safe: Singleton 1.3.0'
       case MULTICALL_V3:
-        return 'Multicall V3'
+        return 'Multicall v3'
     }
 
     switch (type) {
