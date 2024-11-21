@@ -5,6 +5,7 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 import {
+  CONTRACTS,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
@@ -356,7 +357,7 @@ export const morph: Layer2 = {
         },
       }),
     ],
-    risks: [],
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
     ...discovery.getMultisigPermission(
