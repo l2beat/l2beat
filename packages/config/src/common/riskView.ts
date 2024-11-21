@@ -45,7 +45,7 @@ export const STATE_FP_INT: ScalingProjectRiskViewEntry = {
   definingMetric: Infinity,
 }
 
-export const STATE_FP_1R_ZK: ScalingProjectRiskViewEntry = {
+export const STATE_FP_INT_ZK: ScalingProjectRiskViewEntry = {
   value: 'Fraud proofs (INT, ZK)',
   description:
     'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. ZK proofs are used to adjudicate the correctness of the last step.',
@@ -53,7 +53,7 @@ export const STATE_FP_1R_ZK: ScalingProjectRiskViewEntry = {
   definingMetric: Infinity,
 }
 
-export const STATE_FP_INT_ZK: ScalingProjectRiskViewEntry = {
+export const STATE_FP_1R_ZK: ScalingProjectRiskViewEntry = {
   value: 'Fraud proofs (1R, ZK)',
   description:
     'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Single round proofs (1R) only require a single transaction to resolve. ZK proofs are used to prove the correctness of the state transition.',
@@ -452,13 +452,13 @@ export const PROPOSER_USE_ESCAPE_HATCH_MP_NFT: ScalingProjectRiskViewEntry = {
 }
 
 export const PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE: ScalingProjectRiskViewEntry =
-{
-  ...PROPOSER_USE_ESCAPE_HATCH_MP,
-  description:
-    PROPOSER_USE_ESCAPE_HATCH_MP.description +
-    ' Positions will be closed using the average price from the last batch state update.',
-  definingMetric: Infinity,
-}
+  {
+    ...PROPOSER_USE_ESCAPE_HATCH_MP,
+    description:
+      PROPOSER_USE_ESCAPE_HATCH_MP.description +
+      ' Positions will be closed using the average price from the last batch state update.',
+    definingMetric: Infinity,
+  }
 
 export function PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
   delay: number,
@@ -519,10 +519,10 @@ export function EXIT_WINDOW(
     (windowText === 'None'
       ? `There is no window for users to exit in case of an unwanted regular upgrade${instantlyUpgradable}.`
       : `Users have ${windowText} to exit funds in case of an unwanted regular upgrade. There is a ${formatSeconds(
-        upgradeDelay,
-      )} delay before a regular upgrade is applied${instantlyUpgradable}, and withdrawals can take up to ${formatSeconds(
-        exitDelay,
-      )} to be processed.`) +
+          upgradeDelay,
+        )} delay before a regular upgrade is applied${instantlyUpgradable}, and withdrawals can take up to ${formatSeconds(
+          exitDelay,
+        )} to be processed.`) +
     (options.existsBlocklist
       ? ' Users can be explicitly censored from withdrawing (Blocklist on L1).'
       : '')
@@ -606,6 +606,7 @@ export const RISK_VIEW = {
   STATE_FP_1R,
   STATE_FP_INT,
   STATE_FP_INT_ZK,
+  STATE_FP_1R_ZK,
   STATE_ZKP_SN,
   STATE_ZKP_ST,
   STATE_ZKP_ST_SN_WRAP,

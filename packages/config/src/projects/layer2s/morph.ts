@@ -165,7 +165,7 @@ export const morph: Layer2 = {
   ],
   riskView: {
     stateValidation: {
-      ...STATE_FP_INT_ZK,
+      ...RISK_VIEW.STATE_FP_1R_ZK,
       sentiment: 'bad',
       secondLine: `${formatSeconds(challengeWindow)} challenge period`,
     },
@@ -227,7 +227,7 @@ export const morph: Layer2 = {
       ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
     },
     stateCorrectness: {
-      name: '1 round fault proof system',
+      name: 'Single round fault proof system',
       description: `Morph uses an one round fault proof system where whitelisted Challengers, if they find a faulty state root within the ${formatSeconds(challengeWindow)} challenge window, \
           they can post ${formatSeconds(challengeBond)} WEI bond and request a Zk proof of the state transition. After the challenge, during ${formatSeconds(proofWindow)} proving window a ZK proof must be \
           delivered, otherwise state root is considered invalid and the root proposer bond, which is set currently to ${formatSeconds(stakingValue)} ETH is slashed. The zkEVM used is SP1 from Succinct.\
