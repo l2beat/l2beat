@@ -92,7 +92,10 @@
       "TransparentUpgradeableProxy"
     ],
     ["0x283ccfbafddc747b71aec3c1e29fb824156a8f09", "DropERC1155"],
-    ["0x0000000000000000000000000000000000000000", "SimpleStorage"]
+    ["0x0000000000000000000000000000000000000000", "SimpleStorage"],
+    ["0xdbbe5e9b1daa91430cf0772fcebe53f6c6f137df", "MedianMKRUSD"],
+    ["0x2f73b6567b866302e132273f67661fb89b5a66f2", "MedianWSTETHUSD"],
+    ["0x64de91f5a373cd4c28de3600cb34c7c6ce410c85", "MedianETHUSD"]
   ],
   "METHODS": [
     ["0xfec93e49", "follow"],
@@ -163,7 +166,8 @@
     ["0xa694fc3a", "stake"],
     ["0x1aa3a008", "register"],
     ["0x049104e5", "redeem"],
-    ["0xf242432a", "safeTransferFrom"]
+    ["0xf242432a", "safeTransferFrom"],
+    ["0x89bbb8b2", "poke"]
   ],
   "IMPLEMENTATIONS": [
     [

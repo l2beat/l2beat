@@ -1,7 +1,7 @@
 import { ethers } from 'ethers'
 import { parseAbiItem } from 'viem'
 import { Method, Operation } from '../../types'
-import { defineMethod } from '../defineMetod'
+import { defineMethod } from '../defineMethod'
 import { SAFE_EXEC_TRANSACTION_SIGNATURE } from './const'
 
 export const SAFE_methods: Method[] = [
