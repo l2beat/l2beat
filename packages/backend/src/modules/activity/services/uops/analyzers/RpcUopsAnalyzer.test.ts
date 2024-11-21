@@ -1,8 +1,8 @@
 import {
   ENTRY_POINT_ADDRESS_0_6_0,
   ENTRY_POINT_ADDRESS_0_7_0,
-  Method,
   MULTICALL_V3,
+  Method,
   SAFE_EXEC_TRANSACTION_SELECTOR,
   SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
 } from '@l2beat/shared'

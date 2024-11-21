@@ -167,7 +167,8 @@
     ["0x1aa3a008", "register"],
     ["0x049104e5", "redeem"],
     ["0xf242432a", "safeTransferFrom"],
-    ["0x89bbb8b2", "poke"]
+    ["0x89bbb8b2", "poke"],
+    ["0x00000082", "artefact_keep"]
   ],
   "IMPLEMENTATIONS": [
     [

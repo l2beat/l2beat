@@ -13,6 +13,7 @@ import {
   ERC4337_methods,
   MULTICALLV3_methods,
   MULTICALL_V3,
+  MULTICALL_V3_ZKSYNCERA,
   Method,
   Operation,
   SAFE_EXEC_TRANSACTION_SELECTOR,
@@ -269,6 +270,7 @@ export class RpcCounter implements Counter {
       case SAFE_EXEC_TRANSACTION_SELECTOR:
         return 'Safe: Singleton 1.3.0'
       case MULTICALL_V3:
+      case MULTICALL_V3_ZKSYNCERA:
         return 'Multicall v3'
     }
 

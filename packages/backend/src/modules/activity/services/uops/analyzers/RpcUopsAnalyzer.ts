@@ -21,9 +21,8 @@ export class RpcUopsAnalyzer {
   }
 
   mapTransaction(tx: Transaction): number {
-    const methods = ERC4337_methods
-      .concat(SAFE_methods)
-      .concat(MULTICALLV3_methods)
+    const methods =
+      ERC4337_methods.concat(SAFE_methods).concat(MULTICALLV3_methods)
 
     if (isErc4337(tx) || isGnosisSafe(tx) || isMulticallv3(tx)) {
       assert(
