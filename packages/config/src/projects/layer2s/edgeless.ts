@@ -42,59 +42,20 @@ export const edgeless: Layer2 = orbitStackL2({
       address: EthereumAddress('0xbD95aa0f68B95e6C01d02F1a36D8fde29C6C8e7b'),
       sinceTimestamp: new UnixTime(1711057199),
       tokens: ['ETH', 'stETH'],
+      source: 'external',
       chain: 'ethereum',
     },
     {
       address: EthereumAddress('0xBCc1Ceb75De4BBb75918627E7CB301DF9Ccc8aF9'),
       sinceTimestamp: new UnixTime(1713942971),
       tokens: ['ETH', 'ezETH'],
+      source: 'external',
       chain: 'ethereum',
     },
   ],
-  nonTemplatePermissions: [
-    discovery.contractAsPermissioned(
-      discovery.getContract('OrbitProxyAdmin'),
-      'Admin of main Orbit contracts. Controlled by the UpgradeExecutor.',
-    ),
-    ...discovery.getMultisigPermission(
-      'ExecutorMultisig',
-      'Multisig that can execute upgrades on the main Orbit contracts via the UpgradeExecutor.',
-    ),
-    discovery.contractAsPermissioned(
-      discovery.getContract('StrategiesProxyAdmin'),
-      'Admin of the strategies contracts.',
-    ),
-    {
-      name: 'StrategyManager',
-      accounts: [
-        discovery.getPermissionedAccount('StrategiesProxyAdmin', 'owner'),
-      ],
-      description:
-        'Can upgrade the StakingManager, EdgelessDeposit, RenzoStrategy and EthStrategy contracts via the StrategiesProxyAdmin, including adding and removing strategies.',
-    },
-  ],
-  nonTemplateContracts: [
-    discovery.getContractDetails('EdgelessDeposit', {
-      description:
-        'Receives deposits and issues ewETH tokens. Funds are forwarded to the StakingManger contract.',
-      ...strategiesUpgrades,
-    }),
-    discovery.getContractDetails('StakingManager', {
-      description:
-        'Manages strategies to be used with funds forwarded from the EdgelessDeposit contract.',
-      ...strategiesUpgrades,
-    }),
-    discovery.getContractDetails('RenzoStrategy', {
-      description: 'Deposits funds into the Renzo protocol.',
-      ...strategiesUpgrades,
-    }),
-    discovery.getContractDetails('EthStrategy', {
-      description: 'Deposits funds into the Lido protocol.',
-      ...strategiesUpgrades,
-    }),
-  ],
+  discoveryDrivenData: true,
   discovery,
-  bridge: discovery.getContract('Bridge'),
+  bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
 })
