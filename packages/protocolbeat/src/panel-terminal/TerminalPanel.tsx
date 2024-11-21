@@ -1,10 +1,11 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { executeCommand, getProject } from '../api/api'
 import { useTerminalStore } from './store'
 
 export function TerminalPanel() {
+  const queryClient = useQueryClient()
   const { project } = useParams()
   const [discoveryChain, setDiscoveryChain] = useState<string | undefined>(
     undefined,
@@ -71,6 +72,8 @@ export function TerminalPanel() {
       addOutput(`Error: ${error}`)
     } finally {
       setIsRunning(false)
+      // Invalidate all queries for this project to trigger a refetch
+      await queryClient.invalidateQueries({ queryKey: ['projects', project] })
     }
   }
 
