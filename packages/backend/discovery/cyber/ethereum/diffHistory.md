@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xe43312744c054321d2d54f9264a48db1d5b4af2b
+Generated with discovered.json: 0x47fe6bf030ecaf91fadefbf9d704e5caeb318a98
 
-# Diff at Thu, 21 Nov 2024 08:41:37 GMT:
+# Diff at Thu, 21 Nov 2024 10:16:05 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@de1745323b367dd0fbb18ad6c862147dd90e90b0 block: 20032828
-- current block number: 21234976
+- current block number: 21235446
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Move to discodriven data.
 
 ## Config/verification related changes
 
@@ -33,18 +33,6 @@ discovery. Values are for block 20032828 (main branch discovery), not current.
 +        "opstack/DataAvailabilityChallenge"
       description:
 +        "The DataAvailabilityChallenge contract is used to challenge the full availability of data behind commimted transaction data hashes. See the technology section for more details."
-    }
-```
-
-```diff
-    contract SuperchainConfig (0x1aeC4c3BE47C30d0BEfa7514Cf9D99EaC596959D) {
-    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
-      template:
--        "opstack/SuperchainConfigFake"
-+        "opstack/SuperchainConfig"
-      description:
--        "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
-+        "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
     }
 ```
 

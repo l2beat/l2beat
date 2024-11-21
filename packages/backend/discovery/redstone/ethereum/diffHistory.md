@@ -1,3 +1,128 @@
+Generated with discovered.json: 0x6f93c14f61f0d8e7caf08aecad3a17b704c22283
+
+# Diff at Thu, 21 Nov 2024 10:13:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@de1745323b367dd0fbb18ad6c862147dd90e90b0 block: 19831040
+- current block number: 21235431
+
+## Description
+
+Move to discodriven data.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19831040 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract FaultDisputeGame (0x5A50b05676705cd0189970d806a7c9d2a0201Da7)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MIPS (0x66D6be83984e3F026B4a9e2D8Fb082ecDBd43648)
+    +++ description: None
+```
+
+```diff
+    contract RedstoneMultisig (0x70FdbCb066eD3621647Ddf61A1f40aaC6058Bc89) {
+    +++ description: None
+      name:
+-        "ProxyAdminOwner"
++        "RedstoneMultisig"
+      receivedPermissions.10:
+-        {"permission":"upgrade","target":"0xC7bCb0e8839a28A1cFadd1CF716de9016CdA51ae","via":[{"address":"0xCC53b447aFe07926423aB96D5496b1af30485ED2"}]}
+      receivedPermissions.9:
+-        {"permission":"upgrade","target":"0xc473ca7E02af24c129c2eEf51F2aDf0411c1Df69","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","via":[{"address":"0xCC53b447aFe07926423aB96D5496b1af30485ED2"}]}
+      receivedPermissions.8.target:
+-        "0xa426A052f657AEEefc298b3B5c35a470e4739d69"
++        "0xC7bCb0e8839a28A1cFadd1CF716de9016CdA51ae"
+      receivedPermissions.7.target:
+-        "0xa130523fD22e2a9D78F8aB232b01ff552845B4A9"
++        "0xc473ca7E02af24c129c2eEf51F2aDf0411c1Df69"
+      receivedPermissions.7.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.6.target:
+-        "0x97A2dA87d3439b172e6DD027220e01c9Cb565B80"
++        "0xa426A052f657AEEefc298b3B5c35a470e4739d69"
+      receivedPermissions.5.target:
+-        "0x8f68E849eaf8EB943536F9d1D49Ea9C9b5868b98"
++        "0x97A2dA87d3439b172e6DD027220e01c9Cb565B80"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DisputeGameFactory (0x8f68E849eaf8EB943536F9d1D49Ea9C9b5868b98)
+    +++ description: None
+```
+
+```diff
+    contract DataAvailabilityChallenge (0x97A2dA87d3439b172e6DD027220e01c9Cb565B80) {
+    +++ description: The DataAvailabilityChallenge contract is used to challenge the full availability of data behind commimted transaction data hashes. See the technology section for more details.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0x70FdbCb066eD3621647Ddf61A1f40aaC6058Bc89","via":[{"address":"0xCC53b447aFe07926423aB96D5496b1af30485ED2","delay":0}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.target:
+-        "0x70FdbCb066eD3621647Ddf61A1f40aaC6058Bc89"
++        "0xb356B146F1629c49C44344464F69BCDAfb4bb664"
+      issuedPermissions.0.via.0:
+-        {"address":"0xCC53b447aFe07926423aB96D5496b1af30485ED2","delay":0}
+      template:
++        "opstack/DataAvailabilityChallenge"
+      description:
++        "The DataAvailabilityChallenge contract is used to challenge the full availability of data behind commimted transaction data hashes. See the technology section for more details."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DelayedWETH (0xa130523fD22e2a9D78F8aB232b01ff552845B4A9)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (0xC5E3333f1Dd5e5bBca0Cf49B8799E0Eb567000ba)
+    +++ description: None
+```
+
+```diff
+    contract ProxyAdmin (0xCC53b447aFe07926423aB96D5496b1af30485ED2) {
+    +++ description: None
+      directlyReceivedPermissions.10:
+-        {"permission":"upgrade","target":"0xC7bCb0e8839a28A1cFadd1CF716de9016CdA51ae"}
+      directlyReceivedPermissions.9:
+-        {"permission":"upgrade","target":"0xc473ca7E02af24c129c2eEf51F2aDf0411c1Df69","description":"upgrading the bridge implementation can give access to all funds escrowed therein."}
+      directlyReceivedPermissions.8.target:
+-        "0xa426A052f657AEEefc298b3B5c35a470e4739d69"
++        "0xC7bCb0e8839a28A1cFadd1CF716de9016CdA51ae"
+      directlyReceivedPermissions.7.target:
+-        "0xa130523fD22e2a9D78F8aB232b01ff552845B4A9"
++        "0xc473ca7E02af24c129c2eEf51F2aDf0411c1Df69"
+      directlyReceivedPermissions.7.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      directlyReceivedPermissions.6.target:
+-        "0x97A2dA87d3439b172e6DD027220e01c9Cb565B80"
++        "0xa426A052f657AEEefc298b3B5c35a470e4739d69"
+      directlyReceivedPermissions.5.target:
+-        "0x8f68E849eaf8EB943536F9d1D49Ea9C9b5868b98"
++        "0x97A2dA87d3439b172e6DD027220e01c9Cb565B80"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PreimageOracle (0xE7d0fE72637B3C949cd81c63A4Ff1fb23feeF3b2)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x7d991160ad9ad14a7c5265df1310c37cec84d286
 
 # Diff at Fri, 01 Nov 2024 12:23:53 GMT:

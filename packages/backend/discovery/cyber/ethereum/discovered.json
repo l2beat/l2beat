@@ -1,8 +1,8 @@
 {
   "name": "cyber",
   "chain": "ethereum",
-  "blockNumber": 21234976,
-  "configHash": "0x220f95d6800a88a53311e707faf6267c92fc5ddba4f06edf4da5412d90affc24",
+  "blockNumber": 21235446,
+  "configHash": "0x16b4859481fdfd0c27ce2eeaf04c5590f4e6c8ee7dbcfc8bbf7fefd564866a8e",
   "contracts": [
     {
       "name": "DataAvailabilityChallenge",
@@ -134,13 +134,13 @@
     {
       "name": "SuperchainConfig",
       "address": "0x1aeC4c3BE47C30d0BEfa7514Cf9D99EaC596959D",
-      "template": "opstack/SuperchainConfig",
+      "template": "opstack/SuperchainConfigFake",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
+      "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
       "categories": ["Upgrades&Governance"],
       "issuedPermissions": [
         {
@@ -565,10 +565,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 9351000,
-        "latestOutputIndex": 5194,
-        "nextBlockNumber": 9352800,
-        "nextOutputIndex": 5195,
+        "latestBlockNumber": 9354600,
+        "latestOutputIndex": 5196,
+        "nextBlockNumber": 9356400,
+        "nextOutputIndex": 5197,
         "proposer": "0xF2987f0A626c8D29dFB2E0A21144ca3026d6F1E1",
         "PROPOSER": "0xF2987f0A626c8D29dFB2E0A21144ca3026d6F1E1",
         "startingBlockNumber": 0,
@@ -1160,7 +1160,7 @@
     "opstack/L2OutputOracle": "0x2da233df369518b2564031e603ae272763f51cec1bc780ab0a814e46046b47a2",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
     "opstack/OptimismPortal": "0x5fb419891d613086f39879ae360e765fdb6d154ef5ea5b2f5f98a4443a1b4839",
-    "opstack/SuperchainConfig": "0x76190197170f60e32f3e466ca757cb0bde1055ea134384678dd0911e7a5338ef",
+    "opstack/SuperchainConfigFake": "0x49e6353b6089be214c9fc1f021124f840323a29f519b5240594dd16c3a775ca8",
     "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3"
   }
 }

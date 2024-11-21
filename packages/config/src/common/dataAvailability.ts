@@ -120,14 +120,6 @@ export const DA_LAYERS = {
     fallbackDescription: undefined,
     secondLine: undefined,
   },
-  XTERIO_DA: {
-    value: 'XterioDA',
-    sentiment: 'warning',
-    description:
-      'The data is posted to XterioDA which is a separate data availability module developed by the Xterio team. Data is posted off chain, and only hashes of data are published on an on chain inbox.',
-    fallbackDescription: undefined,
-    secondLine: undefined,
-  },
   EIGEN_DA: {
     value: 'EigenDA',
     sentiment: 'warning',

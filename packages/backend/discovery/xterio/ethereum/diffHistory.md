@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x65cc56f9b029587bd69e011abfe757ce250b4bdf
+Generated with discovered.json: 0x1bd74f0191e14275cbe5440b90726e98c85dd929
 
-# Diff at Thu, 21 Nov 2024 08:58:31 GMT:
+# Diff at Thu, 21 Nov 2024 10:14:24 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@de1745323b367dd0fbb18ad6c862147dd90e90b0 block: 20327427
-- current block number: 21235060
+- current block number: 21235438
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Move to discodriven data.
 
 ## Config/verification related changes
 
@@ -107,18 +107,6 @@ discovery. Values are for block 20327427 (main branch discovery), not current.
       directlyReceivedPermissions.1.target:
 -        "0x0eCe16401A80551345bB672f177f51A8755FF775"
 +        "0x16193e14197c10109F3e81b938153A04A2a00190"
-    }
-```
-
-```diff
-    contract SuperchainConfig (0xcbF423525a5471Fc5037a5397F99f6F09fe41379) {
-    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
-      template:
--        "opstack/SuperchainConfigFake"
-+        "opstack/SuperchainConfig"
-      description:
--        "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
-+        "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
     }
 ```
 

@@ -9,5 +9,10 @@
   ],
   "names": {
     "0xc2259E7Fb719411f97aBdCdf449f6Ba3B9D75398": "CyberMultisig"
+  },
+  "overrides": {
+    "0x1aeC4c3BE47C30d0BEfa7514Cf9D99EaC596959D": {
+      "extends": "opstack/SuperchainConfigFake"
+    }
   }
 }

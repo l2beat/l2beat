@@ -161,8 +161,8 @@ function CELESTIA_OFF_CHAIN(
 }
 
 function DACHALLENGES_OFF_CHAIN(
-  daChallengeWindow: number,
-  daResolveWindow: number,
+  daChallengeWindow: string,
+  daResolveWindow: string,
   isNodeAvailable: boolean,
 ): ScalingProjectTechnologyChoice {
   const risks: ScalingProjectRisk[] = [
@@ -187,8 +187,7 @@ function DACHALLENGES_OFF_CHAIN(
       they can submit a challenge which requires locking a bond within ${daChallengeWindow}. A challenge can be resolved by publishing the preimage data within an additional ${daResolveWindow}. 
       In such a case, a portion of the challenger bond is burned, with the exact amount estimated as the cost incurred by the resolver to publish the full data, 
       meaning that the resolver and challenger will approximately lose the same amount of funds. The system is not secure if the malicious sequencer is able to outspend the altruistic challengers. 
-      If instead, after a challenge, the preimage data is not published, the chain reorgs to the last fully derivable state.
-      ${isNodeAvailable ? '' : ' This mechanism fully depends on the derivation rule of the L2 node and can only be verified in its source code, which in this case is not made available.'}`,
+      If instead, after a challenge, the preimage data is not published, the chain reorgs to the last fully derivable state.${isNodeAvailable ? '' : ' This mechanism fully depends on the derivation rule of the L2 node and can only be verified in its source code, which in this case is not made available.'}`,
     references: [
       {
         text: 'OP Plasma specification',

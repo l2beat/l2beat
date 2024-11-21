@@ -8,5 +8,10 @@
   ],
   "names": {
     "0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574": "XterioMultisig"
+  },
+  "overrides": {
+    "0xcbF423525a5471Fc5037a5397F99f6F09fe41379": {
+      "extends": "opstack/SuperchainConfigFake"
+    }
   }
 }
