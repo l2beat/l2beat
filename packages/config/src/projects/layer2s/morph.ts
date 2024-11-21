@@ -232,7 +232,7 @@ export const morph: Layer2 = {
       description: `Morph uses an one round fault proof system where whitelisted Challengers, if they find a faulty state root within the ${formatSeconds(challengeWindow)} challenge window, \
           can post a ${challengeBond} WEI bond and request a ZK proof of the state transition. After the challenge, during a ${formatSeconds(proofWindow)} proving window, a ZK proof must be \
           delivered, otherwise the state root is considered invalid and the root proposer bond, which is set currently to ${stakingValue} ETH, is slashed. The zkEVM used is SP1 from Succinct.\
-          If the valid proof is delivered, the Challenger loses the challenge bond.`,
+          If the valid proof is delivered, the Challenger loses the challenge bond. The MorphAdminMSig can override any batch (both unfinalized and finalized), potentially disallowing the ability to provide valid ZK proofs.`,
       references: [
         {
           text: 'Rollup.sol - Etherscan source code, commitBatch(), challengeState(), proveState() functions',
@@ -243,6 +243,10 @@ export const morph: Layer2 = {
         {
           category: 'Funds can be stolen if',
           text: 'whitelisted challenger does not post a challenge of an incorrect state root.',
+        },
+        {
+          category: 'Funds can be lost if',
+          text: 'the owner overrides finalized batches.',
         },
       ],
     },
@@ -362,7 +366,7 @@ export const morph: Layer2 = {
   permissions: [
     ...discovery.getMultisigPermission(
       'MorphAdminMSig',
-      'Can upgrade proxies and the verifier without delay. It can also revert non finalized batches, remove sequencers and provers and pause contracts.',
+      'Can upgrade proxies and the verifier without delay. It can also overwrite any batch (both unfinalized and finalized), remove sequencers and provers and pause contracts.',
     ),
     {
       name: 'Sequencers',
