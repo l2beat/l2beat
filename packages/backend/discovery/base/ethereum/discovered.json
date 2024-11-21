@@ -1,7 +1,7 @@
 {
   "name": "base",
   "chain": "ethereum",
-  "blockNumber": 21221926,
+  "blockNumber": 21235652,
   "configHash": "0x79d49d9effb8a6c58de654b752c387415fcda5505d682b2eac7dc0d4b0c478bc",
   "contracts": [
     {
@@ -451,7 +451,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 481,
+        "gameCount": 527,
         "gameImpls": [
           "0xCd3c0194db74C23807D4B90A5181e1B28cF7007C",
           "0x19009dEBF8954B610f207D5925EEDe827805986e",
@@ -527,7 +527,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 21221925
+          "prevBlockNum": 21235642
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -953,7 +953,7 @@
         ],
         "$upgradeCount": 4,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292928619",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292930250",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1304,7 +1304,7 @@
         "name": "Wrapped Ether",
         "owner": "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
         "symbol": "WETH",
-        "totalSupply": "20345013000000000000",
+        "totalSupply": "20425013000000000000",
         "version": "1.1.0"
       },
       "derivedName": "DelayedWETH"

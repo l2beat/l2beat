@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x91517b1842d3791ea27d696c4b47130ef49320d3
+
+# Diff at Thu, 21 Nov 2024 10:57:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@de1745323b367dd0fbb18ad6c862147dd90e90b0 block: 21121967
+- current block number: 21235655
+
+## Description
+
+Rename OP-Foundation multisigs
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21121967 (main branch discovery), not current.
+
+```diff
+    contract OpFoundationUpgradeSafe (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      name:
+-        "OptimismFoundationMultisig_1"
++        "OpFoundationUpgradeSafe"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      name:
+-        "OptimismFoundationMultisig_2"
++        "OpFoundationOperationsSafe"
+    }
+```
+
 Generated with discovered.json: 0xbe4574b40bbfa4fbca5d402e27fcbc7bff3f69bf
 
 # Diff at Tue, 05 Nov 2024 14:13:22 GMT:
