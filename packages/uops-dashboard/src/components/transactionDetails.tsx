@@ -112,7 +112,7 @@ export function TransactionDetails({
                 </button>
               </div>
 
-              <div className="overflow-x-scroll p-4 md:p-5">
+              <div className="overflow-x-auto p-4 md:p-5">
                 <p className="mb-4 text-base text-gray-500 leading-relaxed dark:text-gray-400">
                   Hash:
                   <a
