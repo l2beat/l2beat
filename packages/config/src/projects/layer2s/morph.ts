@@ -230,9 +230,9 @@ export const morph: Layer2 = {
     stateCorrectness: {
       name: 'Single round fault proof system',
       description: `Morph uses an one round fault proof system where whitelisted Challengers, if they find a faulty state root within the ${formatSeconds(challengeWindow)} challenge window, \
-          they can post ${challengeBond} WEI bond and request a ZK proof of the state transition. After the challenge, during ${formatSeconds(proofWindow)} proving window a ZK proof must be \
-          delivered, otherwise state root is considered invalid and the root proposer bond, which is set currently to ${stakingValue} ETH is slashed. The zkEVM used is SP1 from Succinct.\
-          If the valid proof is delivered, the Challenger looses the challenge bond.`,
+          can post a ${challengeBond} WEI bond and request a ZK proof of the state transition. After the challenge, during a ${formatSeconds(proofWindow)} proving window, a ZK proof must be \
+          delivered, otherwise the state root is considered invalid and the root proposer bond, which is set currently to ${stakingValue} ETH, is slashed. The zkEVM used is SP1 from Succinct.\
+          If the valid proof is delivered, the Challenger loses the challenge bond.`,
       references: [
         {
           text: 'Rollup.sol - Etherscan source code, commitBatch(), challengeState(), proveState() functions',
