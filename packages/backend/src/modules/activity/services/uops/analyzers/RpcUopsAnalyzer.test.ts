@@ -1,4 +1,5 @@
 import {
+  EIP712_TX_TYPE,
   ENTRY_POINT_ADDRESS_0_6_0,
   ENTRY_POINT_ADDRESS_0_7_0,
   MULTICALL_V3,
@@ -81,6 +82,21 @@ describe(RpcUopsAnalyzer.name, () => {
         to: EthereumAddress.random(),
         data: `${SAFE_EXEC_TRANSACTION_SELECTOR}1234abcd`,
         hash: '0x0',
+      }
+
+      analyzer.countUserOperations = mockFn().returns(2)
+
+      const count = analyzer.mapTransaction(tx)
+      expect(count).toEqual(2)
+    })
+
+    it('should handle EIP-712', () => {
+      const analyzer = new RpcUopsAnalyzer()
+      const tx = {
+        to: '0x123',
+        data: '0x1234abcd',
+        hash: '0x0',
+        type: EIP712_TX_TYPE,
       }
 
       analyzer.countUserOperations = mockFn().returns(2)

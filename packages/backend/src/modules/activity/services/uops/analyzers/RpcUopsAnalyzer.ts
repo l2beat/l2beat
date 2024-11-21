@@ -1,11 +1,13 @@
 import { isArray, sum } from 'lodash'
 
 import {
+  EIP712_methods,
   ERC4337_methods,
   MULTICALLV3_methods,
   Method,
   Operation,
   SAFE_methods,
+  isEip712,
   isErc4337,
   isGnosisSafe,
   isMulticallv3,
@@ -21,10 +23,16 @@ export class RpcUopsAnalyzer {
   }
 
   mapTransaction(tx: Transaction): number {
-    const methods =
-      ERC4337_methods.concat(SAFE_methods).concat(MULTICALLV3_methods)
+    const methods = ERC4337_methods.concat(SAFE_methods)
+      .concat(EIP712_methods)
+      .concat(MULTICALLV3_methods)
 
-    if (isErc4337(tx) || isGnosisSafe(tx) || isMulticallv3(tx)) {
+    if (
+      isErc4337(tx) ||
+      isGnosisSafe(tx) ||
+      isEip712(tx) ||
+      isMulticallv3(tx)
+    ) {
       assert(
         tx.data && !isArray(tx.data),
         `EVM Transaction should have data: ${tx.hash}`,
