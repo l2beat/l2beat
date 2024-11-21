@@ -164,7 +164,7 @@ export const DA_BRIDGES = {
     value: 'None + DA challenges',
     sentiment: 'bad',
     description:
-      'There is no bridge that can attest if the data has been made available. However, there is a mechanism that allows users to challenge unavailability of data.',
+      'There is no bridge that can attest if the data has been made available. However, there is a mechanism that allows users to challenge the unavailability of data.',
   },
   ENSHRINED: {
     value: 'Enshrined',

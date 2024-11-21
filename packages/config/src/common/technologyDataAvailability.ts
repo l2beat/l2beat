@@ -1,3 +1,4 @@
+import { ScalingProjectRisk } from './ScalingProjectRisk'
 import { ScalingProjectTechnologyChoice } from './ScalingProjectTechnologyChoice'
 
 const ON_CHAIN_CALLDATA: ScalingProjectTechnologyChoice = {
@@ -159,6 +160,49 @@ function CELESTIA_OFF_CHAIN(
   }
 }
 
+function DACHALLENGES_OFF_CHAIN(
+  daChallengeWindow: number,
+  daResolveWindow: number,
+  isNodeAvailable: boolean,
+): ScalingProjectTechnologyChoice {
+  const risks: ScalingProjectRisk[] = [
+    {
+      category: 'Funds can be stolen if',
+      text: 'the sequencer is malicious and is able to economically outspend the altruistic challengers.',
+    },
+    {
+      category: 'Funds can be stolen if',
+      text: 'there is no challenger willing to challenge unavailable data commitments.',
+    },
+  ]
+  if (!isNodeAvailable) {
+    risks.push({
+      category: 'Funds can be stolen if',
+      text: 'the source-unavailable L2 node is configured to ignore successful DA challenges.',
+    })
+  }
+  return {
+    name: 'Data required to compute fraud proof is published offchain without onchain attestations',
+    description: `Xterio relies on DA challenges for data availability. If a DA challenger finds that the data behind a tx data commitment is not available, 
+      they can submit a challenge which requires locking a bond within ${daChallengeWindow}. A challenge can be resolved by publishing the preimage data within an additional ${daResolveWindow}. 
+      In such a case, a portion of the challenger bond is burned, with the exact amount estimated as the cost incurred by the resolver to publish the full data, 
+      meaning that the resolver and challenger will approximately lose the same amount of funds. The system is not secure if the malicious sequencer is able to outspend the altruistic challengers. 
+      If instead, after a challenge, the preimage data is not published, the chain reorgs to the last fully derivable state.
+      ${isNodeAvailable ? '' : ' This mechanism fully depends on the derivation rule of the L2 node and can only be verified in its source code, which in this case is not made available.'}`,
+    references: [
+      {
+        text: 'OP Plasma specification',
+        href: 'https://github.com/ethereum-optimism/specs/blob/main/specs/experimental/alt-da.md',
+      },
+      {
+        text: 'Universal Plasma and DA Challenges - Ethresear.ch',
+        href: 'https://ethresear.ch/t/universal-plasma-and-da-challenges/18629',
+      },
+    ],
+    risks,
+  }
+}
+
 export const TECHNOLOGY_DATA_AVAILABILITY = {
   ON_CHAIN_CALLDATA,
   ON_CHAIN_BLOB_OR_CALLDATA,
@@ -170,4 +214,5 @@ export const TECHNOLOGY_DATA_AVAILABILITY = {
   ANYTRUST_OFF_CHAIN,
   PLASMA_OFF_CHAIN,
   CELESTIA_OFF_CHAIN,
+  DACHALLENGES_OFF_CHAIN,
 }

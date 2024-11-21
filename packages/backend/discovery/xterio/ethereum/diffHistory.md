@@ -1,3 +1,168 @@
+Generated with discovered.json: 0x65cc56f9b029587bd69e011abfe757ce250b4bdf
+
+# Diff at Thu, 21 Nov 2024 08:58:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@de1745323b367dd0fbb18ad6c862147dd90e90b0 block: 20327427
+- current block number: 21235060
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20327427 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract PreimageOracle (0x089A4754538B74Ff63Bc6AbeaD7A95973aB03572)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DelayedWETH (0x0eCe16401A80551345bB672f177f51A8755FF775)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (0x15b689D90a62C3F7380054C8867b7e7f17Fa7F4B)
+    +++ description: None
+```
+
+```diff
+    contract DataAvailabilityChallenge (0x16193e14197c10109F3e81b938153A04A2a00190) {
+    +++ description: The DataAvailabilityChallenge contract is used to challenge the full availability of data behind commimted transaction data hashes. See the technology section for more details.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574","via":[{"address":"0x9e48d6bBca781c23392Ec459BfB3657C40a794A8","delay":0}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.target:
+-        "0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574"
++        "0xCf06c459AE59d4f47469BcE535afC3485Ce89dBf"
+      issuedPermissions.0.via.0:
+-        {"address":"0x9e48d6bBca781c23392Ec459BfB3657C40a794A8","delay":0}
+      template:
++        "opstack/DataAvailabilityChallenge"
+      description:
++        "The DataAvailabilityChallenge contract is used to challenge the full availability of data behind commimted transaction data hashes. See the technology section for more details."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MIPS (0x253DdBb3549e0CEFaaaA7f71BE502C5b94771dDc)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DisputeGameFactory (0x443164F044D8840479234e00E7aD5bb06b85fC78)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract FaultDisputeGame (0x56c7D88ee46BfD6cab37508E2e39e985a68007a4)
+    +++ description: None
+```
+
+```diff
+    contract ProxyAdmin (0x9e48d6bBca781c23392Ec459BfB3657C40a794A8) {
+    +++ description: None
+      directlyReceivedPermissions.10:
+-        {"permission":"upgrade","target":"0xcbF423525a5471Fc5037a5397F99f6F09fe41379"}
+      directlyReceivedPermissions.9:
+-        {"permission":"upgrade","target":"0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A"}
+      directlyReceivedPermissions.8.target:
+-        "0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C"
++        "0xcbF423525a5471Fc5037a5397F99f6F09fe41379"
+      directlyReceivedPermissions.7.target:
+-        "0x5A0492D20D984eE904E46E6Ff24572bc755abb28"
++        "0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A"
+      directlyReceivedPermissions.6.target:
+-        "0x515A0c8b1d9574C65EA1924eCd767B1d9b6AC32f"
++        "0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C"
+      directlyReceivedPermissions.5.target:
+-        "0x443164F044D8840479234e00E7aD5bb06b85fC78"
++        "0x5A0492D20D984eE904E46E6Ff24572bc755abb28"
+      directlyReceivedPermissions.4.target:
+-        "0x2AD84AbD52050956AcC9c490D024b821A59e3FB6"
++        "0x515A0c8b1d9574C65EA1924eCd767B1d9b6AC32f"
+      directlyReceivedPermissions.4.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      directlyReceivedPermissions.3.target:
+-        "0x28d56C3BBbe4807c19Cc81E6D5207Fb681C3726b"
++        "0x2AD84AbD52050956AcC9c490D024b821A59e3FB6"
+      directlyReceivedPermissions.3.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      directlyReceivedPermissions.2.target:
+-        "0x16193e14197c10109F3e81b938153A04A2a00190"
++        "0x28d56C3BBbe4807c19Cc81E6D5207Fb681C3726b"
+      directlyReceivedPermissions.1.target:
+-        "0x0eCe16401A80551345bB672f177f51A8755FF775"
++        "0x16193e14197c10109F3e81b938153A04A2a00190"
+    }
+```
+
+```diff
+    contract SuperchainConfig (0xcbF423525a5471Fc5037a5397F99f6F09fe41379) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      template:
+-        "opstack/SuperchainConfigFake"
++        "opstack/SuperchainConfig"
+      description:
+-        "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
++        "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
+    }
+```
+
+```diff
+    contract XterioMultisig (0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574) {
+    +++ description: None
+      name:
+-        "RollupOwnerMultisig"
++        "XterioMultisig"
+      receivedPermissions.10:
+-        {"permission":"upgrade","target":"0xcbF423525a5471Fc5037a5397F99f6F09fe41379","via":[{"address":"0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"}]}
+      receivedPermissions.9:
+-        {"permission":"upgrade","target":"0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A","via":[{"address":"0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"}]}
+      receivedPermissions.8.target:
+-        "0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C"
++        "0xcbF423525a5471Fc5037a5397F99f6F09fe41379"
+      receivedPermissions.7.target:
+-        "0x5A0492D20D984eE904E46E6Ff24572bc755abb28"
++        "0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A"
+      receivedPermissions.6.target:
+-        "0x515A0c8b1d9574C65EA1924eCd767B1d9b6AC32f"
++        "0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C"
+      receivedPermissions.5.target:
+-        "0x443164F044D8840479234e00E7aD5bb06b85fC78"
++        "0x5A0492D20D984eE904E46E6Ff24572bc755abb28"
+      receivedPermissions.4.target:
+-        "0x2AD84AbD52050956AcC9c490D024b821A59e3FB6"
++        "0x515A0c8b1d9574C65EA1924eCd767B1d9b6AC32f"
+      receivedPermissions.4.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.3.target:
+-        "0x28d56C3BBbe4807c19Cc81E6D5207Fb681C3726b"
++        "0x2AD84AbD52050956AcC9c490D024b821A59e3FB6"
+      receivedPermissions.3.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.2.target:
+-        "0x16193e14197c10109F3e81b938153A04A2a00190"
++        "0x28d56C3BBbe4807c19Cc81E6D5207Fb681C3726b"
+      receivedPermissions.1.target:
+-        "0x0eCe16401A80551345bB672f177f51A8755FF775"
++        "0x16193e14197c10109F3e81b938153A04A2a00190"
+    }
+```
+
 Generated with discovered.json: 0x56609e695292eeaa9edd00b3549023c873120e65
 
 # Diff at Fri, 01 Nov 2024 12:24:17 GMT:

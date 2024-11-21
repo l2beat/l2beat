@@ -3,63 +3,10 @@
   "chain": "ethereum",
   "name": "xterio",
   "initialAddresses": [
-    "0x2AD84AbD52050956AcC9c490D024b821A59e3FB6",
-    "0x16193e14197c10109F3e81b938153A04A2a00190",
-    "0x443164F044D8840479234e00E7aD5bb06b85fC78"
+    "0x2AD84AbD52050956AcC9c490D024b821A59e3FB6", // L1StandardBridge
+    "0x16193e14197c10109F3e81b938153A04A2a00190" // DataAvailabilityChallenge
   ],
   "names": {
-    "0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A": "OptimismPortal",
-    "0x2AD84AbD52050956AcC9c490D024b821A59e3FB6": "L1StandardBridge",
-    "0x28d56C3BBbe4807c19Cc81E6D5207Fb681C3726b": "L1ERC721Bridge",
-    "0x5A0492D20D984eE904E46E6Ff24572bc755abb28": "L2OutputOracle",
-    "0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C": "SystemConfig",
-    "0x702dF90E92A6841c9013faE6D724ddFA8F141d5C": "L1CrossDomainMessenger",
-    "0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574": "RollupOwnerMultisig",
-    "0x16193e14197c10109F3e81b938153A04A2a00190": "DataAvailabilityChallenge",
-    "0x443164F044D8840479234e00E7aD5bb06b85fC78": "DisputeGameFactory",
-    "0x089A4754538B74Ff63Bc6AbeaD7A95973aB03572": "PreimageOracle"
-  },
-  "overrides": {
-    "0xcbF423525a5471Fc5037a5397F99f6F09fe41379": {
-      "extends": "opstack/SuperchainConfigFake"
-    },
-    "PreimageOracle": {
-      "ignoreMethods": ["zeroHashes"]
-    },
-    "DisputeGameFactory": {
-      "ignoreMethods": ["gameAtIndex"],
-      "fields": {
-        "gameImpls": {
-          "handler": {
-            "type": "array",
-            "length": 5
-          }
-        },
-        "initBonds": {
-          "handler": {
-            "type": "array",
-            "length": 5
-          }
-        }
-      }
-    },
-    "OptimismPortal": {
-      "extends": "opstack/OptimismPortal"
-    },
-    "L1StandardBridge": {
-      "extends": "opstack/L1StandardBridge"
-    },
-    "L1ERC721Bridge": {
-      "extends": "opstack/L1ERC721Bridge"
-    },
-    "L2OutputOracle": {
-      "extends": "opstack/L2OutputOracle"
-    },
-    "SystemConfig": {
-      "extends": "opstack/SystemConfig"
-    },
-    "L1CrossDomainMessenger": {
-      "extends": "opstack/L1CrossDomainMessenger"
-    }
+    "0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574": "XterioMultisig"
   }
 }
