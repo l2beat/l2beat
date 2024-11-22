@@ -1,3 +1,283 @@
+Generated with discovered.json: 0xea39f03c2a2b14f40d83705240bef1054c6ff480
+
+# Diff at Thu, 21 Nov 2024 10:53:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@de1745323b367dd0fbb18ad6c862147dd90e90b0 block: 21041831
+- current block number: 21235631
+
+## Description
+
+ArbOS v20 upgrade (to known contracts). Move to discoverydriven data.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract OneStepProofEntry (0x09824fe72BFF474d16D9c2774432E381BBD60662)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMemory (0x4811500e0d376Fa8d2EA3CCb7c61E0afB4F5A7f1)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+    contract RollupProxy (0x890025891508a463A636f81D2f532a97210240de) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ description: ArbOS version derived from known wasmModuleRoots.
+      values.arbOsFromWmRoot:
+-        "ArbOS v11.1 wasmModuleRoot"
++        "ArbOS v20 wasmModuleRoot"
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "0x68e4fe5023f792d4ef584796c84d710303a5e12ea02d6e37e2b5e9c4332507c4"
++        "0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4"
+    }
+```
+
+```diff
+    contract ChallengeManager (0x893057442A952E3254CA53d007AD6BBB502f557e) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      sourceHashes.1:
+-        "0x7e1cd1e10119e118ffaa576ddbe1c0f9810a0859a4bf2f65a4ff596c0ed4183d"
++        "0x58a6261c83c2766f749641902ad6fdb695ea189d2747f073b57a8f35b9a547e5"
+      values.$implementation:
+-        "0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754"
++        "0x38B79f7D08326833051AA4D0a119D8095247716f"
+      values.$pastUpgrades.1:
++        ["2024-11-18T17:15:59.000Z","0xbc68abaef39524b8b9ee1cf1d43eee32963c1c9c3ebf91e38a9e40d9b1fadcb3",["0x38B79f7D08326833051AA4D0a119D8095247716f"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.osp:
+-        "0x09824fe72BFF474d16D9c2774432E381BBD60662"
++        "0xcd6fda29E15919de86De6E94C348776d544cFa6E"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMath (0x89AF7C4C2198c426cFe6E86de0680A0850503e06)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverHostIo (0x99a2A31300816C1FA3f40818AC9280fe7271F878)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProver0 (0xDf94F0474F205D086dbc2e66D69a856FCf520622)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+    contract SequencerInbox (0xFfbf2b49524e09B1F1fBcA707B830e79c68c2086) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      sourceHashes.1:
+-        "0x08792f333db7e8a060c38033f92e3fc10c30e2648c56fc49c7460ee1c94343a0"
++        "0x50cf57b01499408fa99da27cf0fee96ec30f0d40667d1aa090c442bc80f0636b"
+      values.$implementation:
+-        "0x873484Ba63353C8b71210ce123B465512d408B27"
++        "0x5054375f50f36812d1C45E6091b167aaFC3cA5b6"
+      values.$pastUpgrades.1:
++        ["2024-11-18T17:15:59.000Z","0xbc68abaef39524b8b9ee1cf1d43eee32963c1c9c3ebf91e38a9e40d9b1fadcb3",["0x5054375f50f36812d1C45E6091b167aaFC3cA5b6"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.batchPosterManager:
++        "0x0000000000000000000000000000000000000000"
+      values.BROTLI_MESSAGE_HEADER_FLAG:
++        "0x00"
+      values.DAS_MESSAGE_HEADER_FLAG:
++        "0x80"
+      values.DATA_BLOB_HEADER_FLAG:
++        "0x50"
+      values.isUsingFeeToken:
++        true
+      values.reader4844:
++        "0x4Cc63d9A2aA0E0168F5EDfFA2D31d1F8cF0C270E"
+      values.TREE_DAS_MESSAGE_HEADER_FLAG:
++        "0x08"
+      values.ZERO_HEAVY_MESSAGE_HEADER_FLAG:
++        "0x20"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProver0 (0x05cd95968709034744797cC37a58FD43fabFff9F)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverHostIo (0x34da361b71484F3F6B459531852ff4a60C36fE55)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMemory (0x7B3cF41acea4230183e4e367c456d878467925Bf)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProofEntry (0xcd6fda29E15919de86De6E94C348776d544cFa6E)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMath (0xdFa7A279F4DF9dd16cA91094ac429eC5B12EDB94)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+## Source code changes
+
+```diff
+.../ChallengeManager/ChallengeManager.sol          |   6 +
+ .../OneStepProverHostIo.sol                        | 107 +++-
+ .../SequencerInbox/SequencerInbox.sol              | 662 ++++++++++++++++-----
+ 3 files changed, 611 insertions(+), 164 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21041831 (main branch discovery), not current.
+
+```diff
+    contract StakingManager (0x1e6d08769be5Dc83d38C64C5776305Ad6F01c227) {
+    +++ description: Manages strategies to be used with funds forwarded from the EdgelessDeposit contract.
+      issuedPermissions.0.target:
+-        "0xa5f13fbc57f14Bf322C900Cae0F67b4819364281"
++        "0xcB58d1142e53e37aDE44E1F125248FbfAc99352A"
+      issuedPermissions.0.via.0:
++        {"address":"0xa5f13fbc57f14Bf322C900Cae0F67b4819364281","delay":0}
+      description:
++        "Manages strategies to be used with funds forwarded from the EdgelessDeposit contract."
+    }
+```
+
+```diff
+    contract EdgelessMultisig (0x4dE424B0BDe70504Ad7b3c644EaAd052F4D993b4) {
+    +++ description: None
+      name:
+-        "ExecutorMultisig"
++        "EdgelessMultisig"
+    }
+```
+
+```diff
+    contract ERC20Outbox (0x5e8749760c5051fF80b73319cCf4d05ef9959563) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      name:
+-        "Outbox"
++        "ERC20Outbox"
+      displayName:
++        "Outbox"
+    }
+```
+
+```diff
+    contract L1OrbitERC20Gateway (0x6a1B2ea25c3099CAFcbd4E60a3Ae251E52B69e78) {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      name:
+-        "L1ERC20Gateway"
++        "L1OrbitERC20Gateway"
+    }
+```
+
+```diff
+    contract ERC20Bridge (0x6B595398152999bBc759D5D8ed8169793F915488) {
+    +++ description: Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      name:
+-        "Bridge"
++        "ERC20Bridge"
+      displayName:
++        "Bridge"
+    }
+```
+
+```diff
+    contract EdgelessDeposit (0x7E0bc314535f430122caFEF18eAbd508d62934bf) {
+    +++ description: Receives deposits and issues ewETH tokens. Funds are forwarded to the StakingManger contract.
+      issuedPermissions.0.target:
+-        "0xa5f13fbc57f14Bf322C900Cae0F67b4819364281"
++        "0xcB58d1142e53e37aDE44E1F125248FbfAc99352A"
+      issuedPermissions.0.via.0:
++        {"address":"0xa5f13fbc57f14Bf322C900Cae0F67b4819364281","delay":0}
+      description:
++        "Receives deposits and issues ewETH tokens. Funds are forwarded to the StakingManger contract."
+    }
+```
+
+```diff
+    contract L1OrbitCustomGateway (0x99790790B030CF116efed1c7577e2262072EfCc9) {
+    +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
+      name:
+-        "L1CustomGateway"
++        "L1OrbitCustomGateway"
+    }
+```
+
+```diff
+    contract StrategiesProxyAdmin (0xa5f13fbc57f14Bf322C900Cae0F67b4819364281) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x1e6d08769be5Dc83d38C64C5776305Ad6F01c227"},{"permission":"upgrade","target":"0x7E0bc314535f430122caFEF18eAbd508d62934bf"},{"permission":"upgrade","target":"0xBCc1Ceb75De4BBb75918627E7CB301DF9Ccc8aF9"},{"permission":"upgrade","target":"0xbD95aa0f68B95e6C01d02F1a36D8fde29C6C8e7b"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x1e6d08769be5Dc83d38C64C5776305Ad6F01c227"},{"permission":"upgrade","target":"0x7E0bc314535f430122caFEF18eAbd508d62934bf"},{"permission":"upgrade","target":"0xBCc1Ceb75De4BBb75918627E7CB301DF9Ccc8aF9"},{"permission":"upgrade","target":"0xbD95aa0f68B95e6C01d02F1a36D8fde29C6C8e7b"}]
+    }
+```
+
+```diff
+    contract RenzoStrategy (0xBCc1Ceb75De4BBb75918627E7CB301DF9Ccc8aF9) {
+    +++ description: Deposits funds into the Renzo protocol.
+      issuedPermissions.0.target:
+-        "0xa5f13fbc57f14Bf322C900Cae0F67b4819364281"
++        "0xcB58d1142e53e37aDE44E1F125248FbfAc99352A"
+      issuedPermissions.0.via.0:
++        {"address":"0xa5f13fbc57f14Bf322C900Cae0F67b4819364281","delay":0}
+      description:
++        "Deposits funds into the Renzo protocol."
+    }
+```
+
+```diff
+    contract EthStrategy (0xbD95aa0f68B95e6C01d02F1a36D8fde29C6C8e7b) {
+    +++ description: Deposits funds into the Lido protocol.
+      issuedPermissions.0.target:
+-        "0xa5f13fbc57f14Bf322C900Cae0F67b4819364281"
++        "0xcB58d1142e53e37aDE44E1F125248FbfAc99352A"
+      issuedPermissions.0.via.0:
++        {"address":"0xa5f13fbc57f14Bf322C900Cae0F67b4819364281","delay":0}
+      description:
++        "Deposits funds into the Lido protocol."
+    }
+```
+
+```diff
+    contract ERC20Inbox (0xf51551afD112a50Fc5EDa0454111078fE6E6096E) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      name:
+-        "Inbox"
++        "ERC20Inbox"
+      displayName:
++        "Inbox"
+    }
+```
+
 Generated with discovered.json: 0x788082b9f78a873b5c629c85fa5d048c9a48810a
 
 # Diff at Fri, 15 Nov 2024 08:18:09 GMT:

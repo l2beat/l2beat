@@ -9,7 +9,7 @@ describe(BlockProvider.name, () => {
       const rpc = mockObject<RpcClient2>({
         getBlockWithTransactions: async () => block(1),
       })
-      const provider = new BlockProvider([rpc])
+      const provider = new BlockProvider('chain', [rpc])
 
       const result = await provider.getBlockWithTransactions(1)
 
@@ -28,7 +28,7 @@ describe(BlockProvider.name, () => {
         getBlockWithTransactions: async () => block(1),
       })
 
-      const provider = new BlockProvider([rpc_one, rpc_two, rpc_three])
+      const provider = new BlockProvider('chain', [rpc_one, rpc_two, rpc_three])
 
       const result = await provider.getBlockWithTransactions(1)
 
@@ -50,7 +50,7 @@ describe(BlockProvider.name, () => {
         getBlockWithTransactions: mockFn().rejectsWith(new Error('ERROR')),
       })
 
-      const provider = new BlockProvider([rpc_one, rpc_two, rpc_three])
+      const provider = new BlockProvider('chain', [rpc_one, rpc_two, rpc_three])
 
       await expect(() => provider.getBlockWithTransactions(1)).toBeRejectedWith(
         'ERROR',
@@ -79,7 +79,7 @@ describe(BlockProvider.name, () => {
           .resolvesToOnce(block(801)),
       })
 
-      const provider = new BlockProvider([client])
+      const provider = new BlockProvider('chain', [client])
 
       const blockNumber = await provider.getBlockNumberAtOrBefore(
         new UnixTime(800 * 100),
@@ -113,7 +113,7 @@ describe(BlockProvider.name, () => {
           .resolvesToOnce(block(801)),
       })
 
-      const provider = new BlockProvider([client, client2])
+      const provider = new BlockProvider('chain', [client, client2])
 
       const blockNumber = await provider.getBlockNumberAtOrBefore(
         new UnixTime(800 * 100),
@@ -137,7 +137,7 @@ describe(BlockProvider.name, () => {
         getLatestBlockNumber: mockFn().rejectsWith(new Error('3')),
       })
 
-      const provider = new BlockProvider([client, client2, client3])
+      const provider = new BlockProvider('chain', [client, client2, client3])
 
       await expect(
         async () => await provider.getBlockNumberAtOrBefore(new UnixTime(800)),

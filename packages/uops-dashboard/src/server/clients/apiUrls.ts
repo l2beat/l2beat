@@ -17,7 +17,9 @@ const API_URLS: Map<ChainId, string> = new Map([
   ['silicon', 'https://rpc.silicon.network'],
   ['starknet', 'https://starknet-mainnet.public.blastapi.io'],
   ['taiko', 'https://rpc.taiko.xyz'],
+  ['worldchain', 'https://worldchain-mainnet.g.alchemy.com/public'],
   ['xai', 'https://xai-chain.net/rpc'],
+  ['zircuit', 'https://zircuit1-mainnet.p2pify.com'],
   ['zksync-era', 'https://mainnet.era.zksync.io'],
   ['zora', 'https://rpc.zora.energy'],
 ])
@@ -30,6 +32,7 @@ const SCAN_URLS: Map<ChainId, string> = new Map([
   ['nova', 'https://api-nova.arbiscan.io'],
   ['optimism', 'https://api.optimism.io'],
   ['taiko', 'https://api.taikoscan.io'],
+  ['worldchain', 'https://api.worldscan.org'],
   ['xai', 'https://api.xaiscan.io'],
   ['zksync-era', 'https://api-era.zksync.network'],
 ])

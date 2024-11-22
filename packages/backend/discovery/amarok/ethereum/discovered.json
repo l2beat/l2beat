@@ -1,7 +1,7 @@
 {
   "name": "amarok",
   "chain": "ethereum",
-  "blockNumber": 20640712,
+  "blockNumber": 21234596,
   "configHash": "0xa8586a9cc9764821729519efbbdaac1754212cb07e84c4c373f9caedbd6b83d9",
   "contracts": [
     {
@@ -27,7 +27,7 @@
         "disputeBlocks": 120,
         "DOMAIN": 6648936,
         "FINALIZED_HASH": "0x0000000000000000000000000000000000000000000000000000000000000001",
-        "getLastCompletedSnapshotId": 958340,
+        "getLastCompletedSnapshotId": 962318,
         "getSnapshotDuration": 1800,
         "home": "0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc",
         "lastSentBlock": 20634538,
@@ -37,7 +37,7 @@
         "MIRROR_DOMAIN": 6648936,
         "mirrorConnector": "0x0000000000000000000000000000000000000000",
         "optimisticMode": true,
-        "outboundRoot": "0x189230f1b1442bc7866c56ef1b652a54bad5c941a72ecb74e06242415c7cabe2",
+        "outboundRoot": "0xb659dfd6b08e594bebc838571a351aa90e71159a3a1e1b70778a3229fc54c025",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "PROCESS_GAS": 850000,
@@ -71,7 +71,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "120764936105541869690942776",
+        "totalSupply": "122080258363850862555614065",
         "totalSupplyAt": [
           "100000000000000000000000000",
           "100000000000000000000000000",
@@ -240,7 +240,7 @@
         "$immutable": true,
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1725012695,
+        "getCurrentTime": 1732173863,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -296,7 +296,7 @@
         "getPendingInboundRootsCount": 0,
         "getSnapshotDuration": 1800,
         "hubDomain": 6648936,
-        "lastSavedAggregateRootTimestamp": 1725011147,
+        "lastSavedAggregateRootTimestamp": 1732161347,
         "MAX_DOMAINS": 500,
         "MERKLE": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
         "minDisputeBlocks": 60,
@@ -305,7 +305,7 @@
         "paused": false,
         "pendingInboundRoots": { "first": 1238, "last": 1237 },
         "proposed": "0x0000000000000000000000000000000000000000",
-        "proposedAggregateRootHash": "0x8a2bb03fe34e07155ab82ed138a61a71efb7a7f0e8f5d277ec9d9f46a47dc942",
+        "proposedAggregateRootHash": "0x8403d32383a9214f5f7ddea9e3ab5d7b6efff890d4b955f4d1b76837b03eadcc",
         "proposedTimestamp": 0,
         "renounced": false,
         "watcherManager": "0x79e6E0242405A66B2dd8B96DEd3b2F0216Fd417d"
@@ -474,6 +474,7 @@
     {
       "name": "Connext Fee Multisig",
       "address": "0x7bE978Cc84612E08f7844672B0E6A6F367FE2b6A",
+      "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
         "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
@@ -494,17 +495,9 @@
         "$threshold": 1,
         "domainSeparator": "0x85c145b13d4438dc49721762b9f7f4d2fd606426a963cdcb0d45810cd73b7d94",
         "getChainId": 1,
-        "getOwners": [
-          "0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f",
-          "0xade09131C6f43fe22C2CbABb759636C43cFc181e",
-          "0x7fB1B8D2C4a8186426Fb12a4Ae483f0093ED2315",
-          "0xb71C02f99c42424257745827F1C2beBD7Fa1e936",
-          "0xD7a8070F0875915dB9b9E03bD47A0b973d19130b"
-        ],
-        "getThreshold": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 5 (20%)",
-        "nonce": 10,
+        "nonce": 18,
         "VERSION": "1.4.1"
       },
       "derivedName": "SafeL2"
@@ -566,7 +559,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 699,
+        "nonce": 749,
         "VERSION": "1.3.0"
       }
     },
@@ -854,7 +847,7 @@
         "LIQUIDITY_FEE_NUMERATOR": 9995,
         "lpTokenTargetAddress": "0xf7DE5aCeEeE6091d1103209C337fA00D0B4b9092",
         "maxRoutersPerTransfer": 5,
-        "nonce": 64264,
+        "nonce": 68628,
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "proposed": "0x0000000000000000000000000000000000000000",

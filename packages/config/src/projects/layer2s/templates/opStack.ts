@@ -63,6 +63,24 @@ export const CELESTIA_DA_PROVIDER: DAProvider = {
   bridge: DA_BRIDGES.NONE,
 }
 
+export function DACHALLENGES_DA_PROVIDER(
+  daChallengeWindow: string,
+  daResolveWindow: string,
+  isNodeAvailable: boolean = false,
+  daLayer: DataAvailabilityLayer = DA_LAYERS.EXTERNAL,
+): DAProvider {
+  return {
+    layer: daLayer,
+    riskView: RISK_VIEW.DATA_EXTERNAL_CHALLENGES,
+    technology: TECHNOLOGY_DATA_AVAILABILITY.DACHALLENGES_OFF_CHAIN(
+      daChallengeWindow,
+      daResolveWindow,
+      isNodeAvailable,
+    ),
+    bridge: DA_BRIDGES.NONE_WITH_DA_CHALLENGES,
+  }
+}
+
 interface DAProvider {
   layer: DataAvailabilityLayer
   fallback?: DataAvailabilityLayer

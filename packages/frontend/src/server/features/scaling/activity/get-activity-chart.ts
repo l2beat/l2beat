@@ -1,8 +1,4 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
 import { env } from '~/env'
 import { db } from '~/server/database'
 import { getRangeWithMax } from '~/utils/range/range'
@@ -81,33 +77,51 @@ async function getActivityChartData(
           timestamp: entry.timestamp,
           count: 0,
           ethereumCount: 0,
+          uopsCount: 0,
+          ethereumUopsCount: 0,
         }
       }
 
       if (isEthereum) {
         acc[timestamp].ethereumCount += entry.count
+        acc[timestamp].ethereumUopsCount += entry.uopsCount ?? entry.count
       } else {
         acc[timestamp].count += entry.count
+        acc[timestamp].uopsCount += entry.uopsCount ?? entry.count
       }
 
       return acc
     },
     {} as Record<
       number,
-      { timestamp: UnixTime; count: number; ethereumCount: number }
+      {
+        timestamp: UnixTime
+        count: number
+        ethereumCount: number
+        uopsCount: number
+        ethereumUopsCount: number
+      }
     >,
   )
   const timestamps = generateTimestamps(
     [startTimestamp, adjustedRange[1]],
     'daily',
   )
-  const result: [number, number, number][] = timestamps.map((timestamp) => {
-    const entry = aggregatedEntries[timestamp.toNumber()]
-    if (!entry) {
-      return [+timestamp, 0, 0]
-    }
-    return [+timestamp, entry.count, entry.ethereumCount]
-  })
+  const result: [number, number, number, number, number][] = timestamps.map(
+    (timestamp) => {
+      const entry = aggregatedEntries[timestamp.toNumber()]
+      if (!entry) {
+        return [+timestamp, 0, 0, 0, 0]
+      }
+      return [
+        +timestamp,
+        entry.count,
+        entry.ethereumCount,
+        entry.uopsCount,
+        entry.ethereumUopsCount,
+      ]
+    },
+  )
 
   return {
     data: result,
@@ -127,7 +141,7 @@ function getMockActivityChart(
   const timestamps = generateTimestamps(adjustedRange, 'daily')
 
   return {
-    data: timestamps.map((timestamp) => [+timestamp, 15, 11]),
+    data: timestamps.map((timestamp) => [+timestamp, 15, 11, 16, 12]),
     syncStatus: getSyncStatus(adjustedRange[1]),
   }
 }
