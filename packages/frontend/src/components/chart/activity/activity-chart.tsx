@@ -141,7 +141,6 @@ function Controls({
         )}
         {isClient ? (
           <Checkbox
-            id="show-mainnet"
             checked={showMainnet}
             onCheckedChange={(state) => setShowMainnet(!!state)}
           >
