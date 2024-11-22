@@ -76,7 +76,11 @@ export function ProjectActivityChart({ milestones, projectId }: Props) {
         <Chart />
         <div className="flex justify-between gap-4">
           <div className="flex gap-2">
-            <ActivityMetricControls value={metric} onValueChange={setMetric} />
+            <ActivityMetricControls
+              value={metric}
+              onValueChange={setMetric}
+              projectChart
+            />
             <Checkbox
               id="show-mainnet"
               checked={showMainnet}
