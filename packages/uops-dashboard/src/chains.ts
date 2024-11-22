@@ -243,7 +243,7 @@ export const SUPPORTED_CHAINS: Chain[] = [
     suggestedBlocksCount: 100,
     batchSize: 10,
     getBlockLink: (blockNumber: number) =>
-      `https://explorer.zircuit.com//block/${blockNumber}`,
+      `https://explorer.zircuit.com//blocks/${blockNumber}`,
     getTxLink: (txHash: string) => `https://explorer.zircuit.com/tx/${txHash}`,
     getContractLink: (address: string) =>
       `https://explorer.zircuit.com/address/${address}`,
