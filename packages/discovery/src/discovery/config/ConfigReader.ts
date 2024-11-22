@@ -171,7 +171,7 @@ export class ConfigReader {
 
       const hasConfig = chainFiles.includes('config.jsonc')
       const hasDiscovered = chainFiles.includes('discovered.json')
-      if (!hasConfig && !hasDiscovered) {
+      if (!hasConfig || !hasDiscovered) {
         continue
       }
 
