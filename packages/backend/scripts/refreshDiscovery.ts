@@ -129,6 +129,6 @@ function discoveryNeedsRefresh(
   }
 
   if (outdatedTemplates.length > 0) {
-    return `template configs have changed: ${outdatedTemplates.join(', ')}`
+    return `template configs or criteria have changed: ${outdatedTemplates.join(', ')}`
   }
 }
