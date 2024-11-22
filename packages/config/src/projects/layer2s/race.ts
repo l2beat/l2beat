@@ -1,10 +1,8 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { subtractOne } from '../../common/assessCount'
+import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
-import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-
 
 const discovery = new ProjectDiscovery('race')
 
@@ -44,5 +42,5 @@ export const race: Layer2 = opStackL2({
   },
   rpcUrl: 'https://racemainnet.io',
   isNodeAvailable: 'UnderReview',
-  discoveryDrivenData: true
+  discoveryDrivenData: true,
 })
