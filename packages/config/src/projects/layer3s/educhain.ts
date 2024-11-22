@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
@@ -15,8 +15,10 @@ export const educhain: Layer3 = orbitStackL3({
   display: {
     name: 'EDU',
     slug: 'edu-chain',
+    redWarning:
+      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     description:
-      'EDU Chain is an upcoming Layer 3 on Arbitrum, built on the Orbit stack. It is designed to onboard real-world educational economies to blockchain and establish an innovative “Learn Own Earn” model for education.',
+      'EDU Chain is Layer 3 on Arbitrum, built on the Orbit stack. It is designed to onboard real-world educational economies to the blockchain and establish an innovative “Learn Own Earn” model for education.',
     links: {
       websites: ['https://opencampus.xyz/'],
       apps: ['https://bridge.gelato.network/bridge/edu-chain'],
@@ -27,13 +29,37 @@ export const educhain: Layer3 = orbitStackL3({
     },
     activityDataSource: 'Blockchain RPC',
   },
-
-  associatedTokens: ['EDU'],
   rpcUrl: 'https://rpc.edu-chain.raas.gelato.cloud',
+  discoveryDrivenData: true,
+  associatedTokens: ['EDU'],
+  nativeToken: 'EDU',
+  nonTemplateEscrows: [
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0x419e439e5c0B839d6e31d7C438939EEE1A4f4184'),
+      name: 'StandardGateway',
+      description:
+        'Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination.',
+      tokens: '*',
+    }),
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0xDd7A9dEcBB0b16B37fE6777e245b18fC0aC63759'),
+      name: 'CustomGateway',
+      description:
+        'Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.',
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Canonically (custom escrow)',
+          },
+        ],
+      },
+      tokens: '*',
+    }),
+  ],
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  discoveryDrivenData: true,
   milestones: [
     {
       name: 'Mainnet launch',

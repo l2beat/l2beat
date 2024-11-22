@@ -1714,6 +1714,21 @@
   ],
   "arbitrum": [
     {
+      "symbol": "EDU",
+      "address": "0xf8173a39c56a554837C4C7f104153A005D284D11",
+      "coingeckoId": "edu-coin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "SOL",
       "address": "0x2bcC6D6CdBbDC0a4071e48bb3B969b06B3330c07",
       "coingeckoId": "solana",

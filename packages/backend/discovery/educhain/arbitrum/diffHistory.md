@@ -1,13 +1,13 @@
-Generated with discovered.json: 0xaa681d0d575c7cfc3fa63eec87dfa83a61913e55
+Generated with discovered.json: 0xa515bb05ef37fd1473042623b53002f7d12486e6
 
-# Diff at Fri, 22 Nov 2024 09:30:28 GMT:
+# Diff at Fri, 22 Nov 2024 09:54:16 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 277086269
+- current block number: 277091956
 
 ## Description
 
-Standard orbit stack L3, no launch announcement yet.
+Standard orbit stack L3 with native token EDU and admin EOA, launch on Dec 2nd (Gelato).
 
 ## Initial discovery
 
@@ -27,6 +27,12 @@ Standard orbit stack L3, no launch announcement yet.
 +   Status: CREATED
     contract OneStepProverHostIo (0x33c1514Bf90e202d242C299b37C60f908aa206D4)
     +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract L1OrbitERC20Gateway (0x419e439e5c0B839d6e31d7C438939EEE1A4f4184)
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
 ```
 
 ```diff
@@ -87,6 +93,18 @@ Standard orbit stack L3, no launch announcement yet.
 +   Status: CREATED
     contract OneStepProofEntry (0xD89d54007079071cBA859127318b9F34eeB78049)
     +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract L1OrbitGatewayRouter (0xDa4ac9E9cB8Af8afBB2Df1ffe7b82efEA17ba0f6)
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+```
+
+```diff
++   Status: CREATED
+    contract L1OrbitCustomGateway (0xDd7A9dEcBB0b16B37fE6777e245b18fC0aC63759)
+    +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
 ```
 
 ```diff

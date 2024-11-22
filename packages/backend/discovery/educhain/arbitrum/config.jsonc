@@ -3,10 +3,8 @@
   "chain": "arbitrum",
   "name": "educhain",
   "initialAddresses": [
-    "0x2F12c50b46adB01a4961AdDa5038c0974C7C78e8" // Bridge
-  ],
-  "names": {
-    "0xeC475675629B38E42d4aC5d40761618268E7Ed21": "AlephZeroMultisig"
-  },
-  "overrides": {}
+    "0x2F12c50b46adB01a4961AdDa5038c0974C7C78e8", // Bridge
+    "0x419e439e5c0B839d6e31d7C438939EEE1A4f4184", // StandardGateway
+    "0xDd7A9dEcBB0b16B37fE6777e245b18fC0aC63759" //CustomGateway
+  ]
 }
