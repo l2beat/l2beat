@@ -11,6 +11,7 @@ import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
 import { Config, DiscordConfig } from './Config'
 import { FeatureFlags } from './FeatureFlags'
+import { getChainConfig } from './chain/getChainConfig'
 import {
   getChainActivityBlockExplorerConfig,
   getChainActivityConfig,
@@ -20,7 +21,6 @@ import { getFinalityConfigurations } from './features/finality'
 import { getTvlConfig } from './features/tvl'
 import { getChainDiscoveryConfig } from './features/updateMonitor'
 import { getGitCommitHash } from './getGitCommitHash'
-import { getChainConfig } from './chain/getChainConfig'
 
 interface MakeConfigOptions {
   name: string
@@ -57,35 +57,35 @@ export function makeConfig(
     },
     database: isLocal
       ? {
-        connection: {
-          connectionString: env.string('LOCAL_DB_URL'),
-          ssl: !env.string('LOCAL_DB_URL').includes('localhost')
-            ? { rejectUnauthorized: false }
-            : undefined,
-        },
-        freshStart: env.boolean('FRESH_START', false),
-        enableQueryLogging: env.boolean('ENABLE_QUERY_LOGGING', false),
-        connectionPoolSize: {
-          // defaults used by knex
-          min: 2,
-          max: 10,
-        },
-        isReadonly,
-      }
+          connection: {
+            connectionString: env.string('LOCAL_DB_URL'),
+            ssl: !env.string('LOCAL_DB_URL').includes('localhost')
+              ? { rejectUnauthorized: false }
+              : undefined,
+          },
+          freshStart: env.boolean('FRESH_START', false),
+          enableQueryLogging: env.boolean('ENABLE_QUERY_LOGGING', false),
+          connectionPoolSize: {
+            // defaults used by knex
+            min: 2,
+            max: 10,
+          },
+          isReadonly,
+        }
       : {
-        freshStart: false,
-        enableQueryLogging: env.boolean('ENABLE_QUERY_LOGGING', false),
-        connection: {
-          connectionString: env.string('DATABASE_URL'),
-          ssl: { rejectUnauthorized: false },
+          freshStart: false,
+          enableQueryLogging: env.boolean('ENABLE_QUERY_LOGGING', false),
+          connection: {
+            connectionString: env.string('DATABASE_URL'),
+            ssl: { rejectUnauthorized: false },
+          },
+          connectionPoolSize: {
+            // our heroku plan allows us for up to 400 open connections
+            min: 20,
+            max: 200,
+          },
+          isReadonly,
         },
-        connectionPoolSize: {
-          // our heroku plan allows us for up to 400 open connections
-          min: 20,
-          max: 200,
-        },
-        isReadonly,
-      },
     coingeckoApiKey: env.string('COINGECKO_API_KEY'),
     api: {
       port: env.integer('PORT', isLocal ? 3000 : undefined),
@@ -103,9 +103,9 @@ export function makeConfig(
     metricsAuth: isLocal
       ? false
       : {
-        user: env.string('METRICS_AUTH_USER'),
-        pass: env.string('METRICS_AUTH_PASS'),
-      },
+          user: env.string('METRICS_AUTH_USER'),
+          pass: env.string('METRICS_AUTH_PASS'),
+        },
     tvl: flags.isEnabled('tvl') && tvlConfig,
     trackedTxsConfig: flags.isEnabled('tracked-txs') && {
       bigQuery: {

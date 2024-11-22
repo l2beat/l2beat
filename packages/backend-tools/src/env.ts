@@ -6,7 +6,7 @@ export function getEnv(): Env {
 }
 
 export class Env {
-  constructor(private readonly env: Record<string, string | undefined>) { }
+  constructor(private readonly env: Record<string, string | undefined>) {}
 
   private resolve(
     key: string | string[],

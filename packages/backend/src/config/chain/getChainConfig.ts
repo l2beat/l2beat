@@ -41,7 +41,7 @@ export function getChainConfig(env: Env): ChainConfig[] {
 
     const blockApis: BlockApi[] = []
     const rpcUrls = getRpcUrlsFromEnv(env, chain)
-    for (let url of rpcUrls) {
+    for (const url of rpcUrls) {
       const callsPerMinute = env.integer(
         `${chain.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
         60,
