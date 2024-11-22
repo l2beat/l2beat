@@ -3,10 +3,10 @@ import path from 'path'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { BufferReader, decodeSpanBatch } from './decodeSpanBatch'
+import { BufferReader, decodeBatch } from './decodeBatch'
 import { byteArrFromHexStr } from './utils'
 
-describe(decodeSpanBatch.name, () => {
+describe(decodeBatch.name, () => {
   it('should decode the blob', () => {
     const buff = readFileSync(path.join(__dirname, 'stub/batch_base.json'))
     const stub = JSON.parse(buff.toString()) as {
@@ -15,7 +15,7 @@ describe(decodeSpanBatch.name, () => {
     }
 
     const batch = byteArrFromHexStr(stub.batch)
-    const data = decodeSpanBatch(batch, {
+    const data = decodeBatch(batch, {
       l2BlockTimeSeconds: 2,
       genesisTimestamp: new UnixTime(1686789347),
     })

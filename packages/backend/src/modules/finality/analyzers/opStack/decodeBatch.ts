@@ -1,19 +1,52 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
+import { rlpDecode } from '../../utils/rlpDecode'
 
-const SPAN_BATCH_VERSION = 1
+const BATCH_VERSION_0 = 0
+const BATCH_VERSION_1 = 1
 
 export interface SpanBatchDecoderOpts {
   l2BlockTimeSeconds: number
   genesisTimestamp: UnixTime
 }
 
-// https://specs.optimism.io/protocol/holocene/derivation.html#span-batches
-export function decodeSpanBatch(batch: Uint8Array, opts: SpanBatchDecoderOpts) {
+export function decodeBatch(batch: Uint8Array, opts: SpanBatchDecoderOpts) {
+  const version = batch[0]
   assert(
-    batch[0] === SPAN_BATCH_VERSION,
+    version === BATCH_VERSION_0 || version === BATCH_VERSION_1,
     `Invalid batch version for span batch`,
   )
 
+  switch (version) {
+    case BATCH_VERSION_0:
+      return decodeBatchVersion0(batch, opts)
+    case BATCH_VERSION_1:
+      return decodeSpanBatch(batch, opts)
+  }
+}
+
+// https://specs.optimism.io/protocol/derivation.html#batch-format
+function decodeBatchVersion0(batch: Uint8Array, opts: SpanBatchDecoderOpts) {
+  // skip version byte
+  const batchData = batch.slice(1)
+
+  const data = rlpDecode(batchData) as Uint8Array[]
+
+  const timestamp = data[3].reduce((acc, byte) => (acc << 8) | byte, 0)
+  const txCount = data[4].length
+  const blockNumber =
+    (timestamp - opts.genesisTimestamp.toNumber()) / opts.l2BlockTimeSeconds
+
+  const blockWithTimestamps = {
+    timestamp,
+    blockNumber,
+    txCount,
+  }
+
+  return [blockWithTimestamps]
+}
+
+// https://specs.optimism.io/protocol/holocene/derivation.html#span-batches
+function decodeSpanBatch(batch: Uint8Array, opts: SpanBatchDecoderOpts) {
   // skip version byte
   const batchData = batch.slice(1)
   const reader = new BufferReader(batchData)
