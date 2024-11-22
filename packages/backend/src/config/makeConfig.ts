@@ -11,6 +11,7 @@ import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
 import { Config, DiscordConfig } from './Config'
 import { FeatureFlags } from './FeatureFlags'
+import { getChainConfig } from './chain/getChainConfig'
 import {
   getChainActivityBlockExplorerConfig,
   getChainActivityConfig,
@@ -232,6 +233,7 @@ export function makeConfig(
         'wss://avail-mainnet.public.blastapi.io/',
       ),
     },
+    chainConfig: getChainConfig(env),
     // Must be last
     flags: flags.getResolved(),
   }

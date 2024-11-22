@@ -3,7 +3,10 @@ import { BlockClient } from '../../clients'
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 
 export class BlockProvider {
-  constructor(private readonly clients: BlockClient[]) {
+  constructor(
+    private readonly chain: string,
+    private readonly clients: BlockClient[],
+  ) {
     assert(clients.length > 0, 'Clients cannot be empty')
   }
 
@@ -18,7 +21,7 @@ export class BlockProvider {
       }
     }
 
-    throw new Error('Programmer error: Clients should not be empty')
+    throw new Error(`Missing ${this.chain.toUpperCase()}_RPC_URL`)
   }
 
   async getBlockNumberAtOrBefore(
@@ -40,6 +43,6 @@ export class BlockProvider {
       }
     }
 
-    throw new Error('Programmer error: Clients should not be empty')
+    throw new Error(`Missing ${this.chain.toUpperCase()}_RPC_URL`)
   }
 }
