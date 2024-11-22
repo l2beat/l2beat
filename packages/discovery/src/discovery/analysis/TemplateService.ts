@@ -25,7 +25,7 @@ interface ShapeCriteria {
   validAddresses?: string[]
 }
 
-interface Shape {
+export interface Shape {
   criteria?: ShapeCriteria
   hashes: Hash256[]
 }
