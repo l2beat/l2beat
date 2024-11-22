@@ -14,9 +14,9 @@ import {
 } from '@l2beat/shared'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
+import { ChainApi } from '../config/chain/ChainApi'
 import { BlockTimestampProvider } from '../modules/tvl/services/BlockTimestampProvider'
 import { StarkexClient } from '../peripherals/starkex/StarkexClient'
-import { ChainApi } from '../config/chain/ChainApi'
 
 export class BlockProviders {
   blockProviders: Map<string, BlockProvider> = new Map()

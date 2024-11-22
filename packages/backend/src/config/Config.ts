@@ -12,8 +12,8 @@ import { ChainConverter } from '@l2beat/shared-pure'
 import { ActivityTransactionConfig } from '../modules/activity/ActivityTransactionConfig'
 import { MulticallConfigEntry } from '../peripherals/multicall/types'
 import { ResolvedFeatureFlag } from './FeatureFlags'
-import { FinalityProjectConfig } from './features/finality'
 import { ChainApi } from './chain/ChainApi'
+import { FinalityProjectConfig } from './features/finality'
 
 export interface Config {
   readonly name: string
@@ -96,10 +96,10 @@ export interface TrackedTxsConfig {
   readonly uses: {
     readonly liveness: boolean
     readonly l2costs:
-    | {
-      readonly aggregatorEnabled: boolean
-    }
-    | false
+      | {
+          readonly aggregatorEnabled: boolean
+        }
+      | false
   }
 }
 
@@ -123,8 +123,6 @@ export interface EtherscanChainConfig {
   readonly url: string
 }
 
-
-
 export interface ChainTvlConfig {
   readonly chain: string
   readonly config?: {
@@ -134,9 +132,9 @@ export interface ChainTvlConfig {
     readonly providerCallsPerMinute: number
     readonly minBlockTimestamp: UnixTime
     readonly blockExplorerConfig:
-    | EtherscanChainConfig
-    | BlockscoutChainConfig
-    | undefined
+      | EtherscanChainConfig
+      | BlockscoutChainConfig
+      | undefined
     readonly multicallConfig: MulticallConfigEntry[]
   }
 }
@@ -156,9 +154,9 @@ export interface ActivityConfig {
     id: ProjectId
     config: ActivityTransactionConfig
     blockExplorerConfig:
-    | EtherscanChainConfig
-    | BlockscoutChainConfig
-    | undefined
+      | EtherscanChainConfig
+      | BlockscoutChainConfig
+      | undefined
   }[]
 }
 
