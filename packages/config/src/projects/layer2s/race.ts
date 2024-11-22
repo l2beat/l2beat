@@ -1,12 +1,18 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { subtractOne } from '../../common/assessCount'
 import { Badge } from '../badges'
-import { underReviewL2 } from './templates/underReview'
+import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 
-export const race: Layer2 = underReviewL2({
-  id: 'race',
+
+const discovery = new ProjectDiscovery('race')
+
+export const race: Layer2 = opStackL2({
+  additionalPurposes: ['RWA'],
+  discovery,
   createdAt: new UnixTime(1726563843), // 2024-09-17T09:04:03Z
+  genesisTimestamp: new UnixTime(1726563843), // ???
   badges: [
     Badge.Stack.OPStack,
     Badge.VM.EVM,
@@ -18,9 +24,7 @@ export const race: Layer2 = underReviewL2({
     slug: 'race',
     description:
       'Race Network is a Layer-2 designed for the tokenization and distribution of real-world assets (RWA).',
-    purposes: ['RWA'],
     category: 'Optimistic Rollup',
-    provider: 'OP Stack',
     links: {
       websites: ['https://raceecosystem.com/'],
       apps: [
@@ -39,19 +43,6 @@ export const race: Layer2 = underReviewL2({
     activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://racemainnet.io',
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://racemainnet.io',
-    startBlock: 1,
-    defaultCallsPerMinute: 1500,
-    assessCount: subtractOne,
-  },
-  escrows: [
-    {
-      chain: 'ethereum',
-      address: EthereumAddress('0x680969A6c58183987c8126ca4DE6b59C6540Cd2a'), // ERC20Bridge
-      sinceTimestamp: new UnixTime(1720427195),
-      tokens: '*',
-    },
-  ],
+  isNodeAvailable: 'UnderReview',
+  discoveryDrivenData: true
 })
