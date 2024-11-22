@@ -7,7 +7,7 @@ import { BufferReader, decodeBatch } from './decodeBatch'
 import { byteArrFromHexStr } from './utils'
 
 describe(decodeBatch.name, () => {
-  it('should decode the blob', () => {
+  it('should decode the span batch blob', () => {
     const buff = readFileSync(path.join(__dirname, 'stub/batch_base.json'))
     const stub = JSON.parse(buff.toString()) as {
       batch: string
@@ -18,6 +18,21 @@ describe(decodeBatch.name, () => {
     const data = decodeBatch(batch, {
       l2BlockTimeSeconds: 2,
       genesisTimestamp: new UnixTime(1686789347),
+    })
+    expect(data).toEqual(stub.decoded)
+  })
+
+  it('should decode the batch v0 blob', () => {
+    const buff = readFileSync(path.join(__dirname, 'stub/batch_version0.json'))
+    const stub = JSON.parse(buff.toString()) as {
+      batch: string
+      decoded: { timestamp: number; blockNumber: number; txCount: number }[]
+    }
+
+    const batch = byteArrFromHexStr(stub.batch)
+    const data = decodeBatch(batch, {
+      l2BlockTimeSeconds: 2,
+      genesisTimestamp: new UnixTime(1708809815),
     })
     expect(data).toEqual(stub.decoded)
   })
