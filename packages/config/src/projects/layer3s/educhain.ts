@@ -13,7 +13,7 @@ export const educhain: Layer3 = orbitStackL3({
   additionalPurposes: ['Social'],
   hostChain: ProjectId('arbitrum'),
   display: {
-    name: 'EDU',
+    name: 'EDU Chain',
     slug: 'edu-chain',
     redWarning:
       'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
