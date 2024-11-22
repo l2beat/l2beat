@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xdf3d486e4fa488630360d2ef25cf7ac6cdf6975e
+
+# Diff at Fri, 22 Nov 2024 11:06:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@47360b3fe185e6a526c31e0dfe4ad128b9d7db9f block: 268839192
+- current block number: 277109146
+
+## Description
+
+Multisig member removed.
+
+## Watched changes
+
+```diff
+    contract Sanko Multisig (0x420B4d16119127E4b96E55CB8a9D0c2828a161BB) {
+    +++ description: None
+      values.$members.5:
+-        "0x45931634c4496e9cdc3d0cCA700A387d581b6009"
+      values.$members.4:
+-        "0x201598e7F51dD57FF41a1743aBd5892EaFED97a0"
++        "0x45931634c4496e9cdc3d0cCA700A387d581b6009"
+      values.$members.3:
+-        "0xC75725f4644D54865d11B78d3Ca6b7779FA61581"
++        "0x201598e7F51dD57FF41a1743aBd5892EaFED97a0"
+      values.$members.2:
+-        "0x4919167EA334BE84B1604Cbc82A26A7746D5943e"
++        "0xC75725f4644D54865d11B78d3Ca6b7779FA61581"
+      values.multisigThreshold:
+-        "4 of 6 (67%)"
++        "4 of 5 (80%)"
+    }
+```
+
 Generated with discovered.json: 0x80431a0161106f0270f1a1d7fe67cdf52bba035e
 
 # Diff at Fri, 15 Nov 2024 08:18:20 GMT:
