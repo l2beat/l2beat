@@ -11,7 +11,7 @@ export function SmartAccountList({
         <thead className="bg-gray-50 text-gray-700 text-xs uppercase dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th scope="col" className="px-6 py-3">
-              Signature
+              Smart Account Signature
             </th>
             <th scope="col" className="px-6 py-3">
               Count
