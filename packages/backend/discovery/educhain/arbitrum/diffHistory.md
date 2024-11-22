@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xa515bb05ef37fd1473042623b53002f7d12486e6
+Generated with discovered.json: 0x47d4aba19e12f6d72ef3adb2eafba6bf24edc13c
 
-# Diff at Fri, 22 Nov 2024 09:54:16 GMT:
+# Diff at Fri, 22 Nov 2024 10:17:14 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 277091956
+- current block number: 277097441
 
 ## Description
 
@@ -115,7 +115,7 @@ Standard orbit stack L3 with native token EDU and admin EOA, launch on Dec 2nd (
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafeL2 (0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b)
+    contract EduFastConfirmerMultisig (0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b)
     +++ description: None
 ```
 
