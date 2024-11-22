@@ -180,7 +180,12 @@
     ["0x00000082", "artefact_keep"],
     ["0x5a2b4fe8", "create"],
     ["0xcf81464b", "upgradeByETH"],
-    ["0x282d3fdf", "lock"]
+    ["0x282d3fdf", "lock"],
+    ["0x2d69f27d", "f"],
+    ["0xc2267387", "mint"],
+    ["0x614a7479", "mint"],
+    ["0xa41e6ceb", "claim"],
+    ["0xb6b55f25", "deposit"]
   ],
   "IMPLEMENTATIONS": [
     [
