@@ -19,9 +19,9 @@ export const educhain: Layer3 = orbitStackL3({
       'EDU Chain is an upcoming Layer 3 on Arbitrum, built on the Orbit stack. It is designed to onboard real-world educational economies to blockchain and establish an innovative “Learn Own Earn” model for education.',
     links: {
       websites: ['https://opencampus.xyz/'],
-      apps: [],
-      documentation: ['https://userdocs.opencampus.xyz'],
-      explorers: ['https://opencampus-codex.blockscout.com/'],
+      apps: ['https://bridge.gelato.network/bridge/edu-chain'],
+      documentation: ['https://userdocs.opencampus.xyz/edu-chain/introduction'],
+      explorers: ['https://educhain.blockscout.com/'],
       repositories: ['https://github.com/opencampus-xyz'],
       socialMedia: ['https://x.com/opencampus_xyz'],
     },
@@ -29,7 +29,7 @@ export const educhain: Layer3 = orbitStackL3({
   },
 
   associatedTokens: ['EDU'],
-  rpcUrl: 'https://rpc.open-campus-codex.gelato.digital',
+  rpcUrl: 'https://rpc.edu-chain.raas.gelato.cloud',
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
@@ -37,9 +37,9 @@ export const educhain: Layer3 = orbitStackL3({
   milestones: [
     {
       name: 'Mainnet launch',
-      link: '', //TODO
-      date: '2024-01-01T00:00:00Z', //TODO
-      description: 'Educhain L3 is open for all users.',
+      link: 'https://medium.com/edu-chain', //TODO
+      date: '2024-12-02T00:00:00Z',
+      description: 'Educhain L3 opens its mainnet to all users.',
       type: 'general',
     },
   ],
