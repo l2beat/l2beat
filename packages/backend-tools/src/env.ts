@@ -6,7 +6,7 @@ export function getEnv(): Env {
 }
 
 export class Env {
-  constructor(private readonly env: Record<string, string | undefined>) {}
+  constructor(private readonly env: Record<string, string | undefined>) { }
 
   private resolve(
     key: string | string[],
@@ -98,6 +98,6 @@ function throwMissingEnvVar(keys: string | string[]): never {
       )}`,
     )
   } else {
-    throw new Error(`Missing environment variable: ${keys}!`)
+    throw new Error(`Missing environment variable: ${keys}`)
   }
 }

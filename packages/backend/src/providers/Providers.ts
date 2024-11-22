@@ -14,13 +14,11 @@ import {
   initCirculatingSupplyProviders,
 } from './CirculatingSupplyProviders'
 import { PriceProviders, initPriceProviders } from './PriceProviders'
-import { TvlBlockProviders } from './TvlBlockProviders'
 
 export class Providers {
   block: BlockProviders
   price: PriceProviders | undefined
   circulatingSupply: CirculatingSupplyProviders | undefined
-  tvlBlock: TvlBlockProviders | undefined
   coingeckoClient: CoingeckoClient
   degateClient: LoopringClient
   loopringClient: LoopringClient
