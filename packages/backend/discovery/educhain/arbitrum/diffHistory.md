@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x5b89166bafc806d23b6bf1f4ce93690880e0a0f7
+Generated with discovered.json: 0xaa681d0d575c7cfc3fa63eec87dfa83a61913e55
 
-# Diff at Wed, 13 Nov 2024 11:20:05 GMT:
+# Diff at Fri, 22 Nov 2024 09:30:28 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 274018675
+- current block number: 277086269
 
 ## Description
 
@@ -62,7 +62,7 @@ Standard orbit stack L3, no launch announcement yet.
 ```diff
 +   Status: CREATED
     contract UpgradeExecutor (0x9132151475ACCf0662C545Bc81FbC1741d978EE0)
-    +++ description: Central contract defining the access control for upgrading the system contract implementations.
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
 ```
 
 ```diff
