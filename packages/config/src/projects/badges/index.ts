@@ -316,6 +316,12 @@ export const badges = {
       description: 'The project is built on the Cartesi stack',
     },
     type: BadgeType.Stack,
+  Scroll: {
+    display: {
+      name: 'Built on the Scroll stack',
+      description: 'The project is built on the Scroll stack',
+    },
+    type: BadgeType.Stack,
   },
   LoopringFork: {
     display: {
