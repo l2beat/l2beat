@@ -80,30 +80,43 @@ export class TemplateService {
     sources: ContractSources,
     address: EthereumAddress,
   ): string[] {
-    const result: string[] = []
+    const result: [string, number][] = []
     if (!sources.isVerified) {
-      return result
+      return []
     }
 
     const needleSource = flattenFirstSource(sources)
     if (needleSource === undefined) {
-      return result
+      return []
     }
 
     const needleHash = sha2_256bit(formatIntoHashable(needleSource))
     const allShapes = this.getAllShapes()
     for (const [templateId, shape] of Object.entries(allShapes)) {
+      const criteriaMathes: string[] = []
       if (shape.criteria && shape.criteria.validAddresses) {
         if (!shape.criteria.validAddresses.includes(address)) {
           continue
+        } else {
+          criteriaMathes.push('validAddress')
         }
       }
       if (shape.hashes.includes(needleHash)) {
-        result.push(templateId)
+        criteriaMathes.push('implementation')
+        result.push([templateId, criteriaMathes.length])
       }
     }
 
-    return result
+    const maxMatches = Math.max(...result.map(([, matches]) => matches))
+
+    // remove results that have less than maxMatches
+    // so that more specific match trumps more general ones
+    const filteredResult = result
+      .filter(([, matches]) => matches === maxMatches)
+      .map(([templateId]) => templateId)
+    filteredResult.sort()
+
+    return filteredResult
   }
 
   loadContractTemplate(template: string): DiscoveryContract {
@@ -121,6 +134,17 @@ export class TemplateService {
 
   getTemplateHash(template: string): Hash256 {
     const templateJson = this.loadContractTemplate(template)
+    const shapeCriteriaPath = path.join(
+      this.rootPath,
+      TEMPLATES_PATH,
+      template,
+      TEMPLATE_SHAPE_FOLDER,
+      'criteria.json',
+    )
+    if (existsSync(shapeCriteriaPath)) {
+      const criteria = JSON.parse(readFileSync(shapeCriteriaPath, 'utf8'))
+      return hashJson({ config: templateJson, criteria } as json)
+    }
     return hashJson(templateJson as json)
   }
 
