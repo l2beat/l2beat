@@ -11,7 +11,7 @@ import { discoverAndUpdateDiffHistory } from './discoveryWrapper'
 const configReader = new ConfigReader()
 const templateService = new TemplateService()
 const allTemplateHashes = templateService.getAllTemplateHashes()
-const allShapeHashes = templateService.getAllShapes()
+const allShapes = templateService.getAllShapes()
 
 void main().catch((e) => {
   console.log(e)
@@ -96,9 +96,9 @@ function discoveryNeedsRefresh(
 
     if (contract.template !== undefined) {
       if (
-        allShapeHashes[contract.template].hashes.length > 0 &&
+        allShapes[contract.template].hashes.length > 0 &&
         config.overrides.get(contract.address).extends === undefined &&
-        !allShapeHashes[contract.template].hashes
+        !allShapes[contract.template].hashes
           .map((h) => h.toString())
           .includes(hashes[0])
       ) {
@@ -106,7 +106,7 @@ function discoveryNeedsRefresh(
       }
     } else {
       if (
-        Object.values(allShapeHashes)
+        Object.values(allShapes)
           .flatMap((h) => h.toString())
           .includes(hashes[0])
       ) {
