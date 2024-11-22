@@ -5,6 +5,14 @@
   "initialAddresses": [
     "0x680969A6c58183987c8126ca4DE6b59C6540Cd2a" // ERC20 Bridge
   ],
-  "names": {},
-  "overrides": {}
+  "names": {
+    "0x5A669B2193718F189b0576c0cdcedfEd6f40F9Ea": "RaceMultisig1",
+    "0x2E7B9465B25C081c07274A31DbD05C6146f67961": "RaceMultisig2",
+    "0xBac1ad52745162c0aA3711fe88Df1Cc67034a3B9": "RaceMultisig3"
+  },
+  "overrides": {
+    "0xCB73B7348705a9F925643150Eb00350719380FF8": {
+      "extends": "opstack/SuperchainConfigFake"
+    }
+  }
 }

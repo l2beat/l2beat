@@ -1,13 +1,13 @@
-Generated with discovered.json: 0xf72d9a375a57f5c9a3324aee649b03c71f2b4f4e
+Generated with discovered.json: 0x04137dcf3e21cfeed1d653ff5ab2b77a21536f04
 
-# Diff at Fri, 22 Nov 2024 09:11:24 GMT:
+# Diff at Fri, 22 Nov 2024 11:21:25 GMT:
 
-- author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
-- current block number: 21242289
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- current block number: 21242938
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Standard opstack rollup with 3 weird multisigs and fake superchain.
 
 ## Initial discovery
 
@@ -31,7 +31,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x2E7B9465B25C081c07274A31DbD05C6146f67961)
+    contract RaceMultisig2 (0x2E7B9465B25C081c07274A31DbD05C6146f67961)
     +++ description: None
 ```
 
@@ -43,7 +43,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x5A669B2193718F189b0576c0cdcedfEd6f40F9Ea)
+    contract RaceMultisig1 (0x5A669B2193718F189b0576c0cdcedfEd6f40F9Ea)
     +++ description: None
 ```
 
@@ -67,14 +67,14 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0xBac1ad52745162c0aA3711fe88Df1Cc67034a3B9)
+    contract RaceMultisig3 (0xBac1ad52745162c0aA3711fe88Df1Cc67034a3B9)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
     contract SuperchainConfig (0xCB73B7348705a9F925643150Eb00350719380FF8)
-    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
 ```
 
 ```diff
