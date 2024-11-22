@@ -29,7 +29,7 @@ export class BlockProviders {
   ) {
     const byChain = groupBy(clients, (c) => c.chain)
     for (const [chain, clients] of Object.entries(byChain)) {
-      const block = new BlockProvider(clients)
+      const block = new BlockProvider(chain, clients)
       this.blockProviders.set(chain, block)
 
       const indexerClients = this.indexerClients.filter(

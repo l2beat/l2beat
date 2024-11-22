@@ -11,67 +11,11 @@ export function getChainConfig(env: Env): ChainConfig[] {
   const { configuredChains, projects } = getConfiguredChains()
 
   const rpcChains: ChainConfig[] = []
-  for (const rpcChain of configuredChains) {
-    const project = projects.find((p) => p.id === rpcChain)
-    assert(project, `${rpcChain}: Project not found`)
-
-    const indexerConfig = project.chainConfig?.explorerApi
-    const indexerApis: IndexerApi[] = []
-    if (indexerConfig) {
-      const type = indexerConfig.type
-      const url = indexerConfig.url
-
-      if (type === 'etherscan') {
-        indexerApis.push({
-          type,
-          url,
-          apiKey: env.string(`${rpcChain.toUpperCase()}_ETHERSCAN_API_KEY`),
-        })
-      } else {
-        indexerApis.push({
-          type,
-          url,
-        })
-      }
-    }
-
-    const blockApis: BlockApi[] = []
-    const rpcUrl = env.optionalString(`${rpcChain.toUpperCase()}_RPC_URL`)
-    if (rpcUrl) {
-      const callsPerMinute = env.integer(
-        `${rpcChain.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
-        60,
-      )
-      blockApis.push({
-        type: 'rpc',
-        url: rpcUrl,
-        callsPerMinute,
-        // TODO: add configuration param
-        retryStrategy: rpcChain === 'zkfair' ? 'UNRELIABLE' : 'RELIABLE',
-      })
-    }
-
-    const defaultRpcConfig = project.config.transactionApi
-    if (defaultRpcConfig && defaultRpcConfig.type === 'rpc') {
-      blockApis.push({
-        type: 'rpc',
-        url: defaultRpcConfig.defaultUrl,
-        callsPerMinute: defaultRpcConfig.defaultCallsPerMinute ?? 60,
-        // TODO: add configuration param
-        retryStrategy: rpcChain === 'zkfair' ? 'UNRELIABLE' : 'RELIABLE',
-      })
-    }
-
-    if (blockApis.length > 0) {
-      rpcChains.push({
-        name: rpcChain,
-        indexerApis,
-        blockApis,
-      })
-    }
-  }
-
   for (const chain of configuredChains) {
+    if (chain === 'ethereum') {
+      rpcChains.push(getEthereumConfig(env))
+      continue
+    }
     const project = projects.find((p) => p.id === chain)
     assert(project, `${chain}: Project not found`)
 
@@ -96,15 +40,15 @@ export function getChainConfig(env: Env): ChainConfig[] {
     }
 
     const blockApis: BlockApi[] = []
-    const rpcUrl = env.optionalString(`${chain.toUpperCase()}_RPC_URL`)
-    if (rpcUrl) {
+    const rpcUrls = getRpcUrlsFromEnv(env, chain)
+    for (let url of rpcUrls) {
       const callsPerMinute = env.integer(
         `${chain.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
         60,
       )
       blockApis.push({
         type: 'rpc',
-        url: rpcUrl,
+        url,
         callsPerMinute,
         // TODO: add configuration param
         retryStrategy: chain === 'zkfair' ? 'UNRELIABLE' : 'RELIABLE',
@@ -131,10 +75,17 @@ export function getChainConfig(env: Env): ChainConfig[] {
     }
   }
 
-  const ethereum = getEthereumConfig(env)
   const otherChains = getOtherChains(env)
 
-  return [ethereum, ...rpcChains, ...otherChains]
+  return [...rpcChains, ...otherChains]
+}
+
+function getRpcUrlsFromEnv(env: Env, chain: string) {
+  return [
+    env.optionalString(`${chain.toUpperCase()}_RPC_URL`),
+    env.optionalString(`${chain.toUpperCase()}_RPC_URL_FOR_TVL`),
+    env.optionalString(`${chain.toUpperCase()}_RPC_URL_FOR_ACTIVITY`),
+  ].filter(notUndefined)
 }
 
 function getConfiguredChains() {
@@ -172,7 +123,7 @@ function getEthereumConfig(env: Env): ChainConfig {
       {
         type: 'etherscan',
         url: 'https://api.etherscan.io/api',
-        apiKey: env.string('ETHEREUM_RPC_URL_FOR_TVL'),
+        apiKey: env.string('ETHEREUM_ETHERSCAN_API_KEY'),
       },
     ],
     blockApis: [
