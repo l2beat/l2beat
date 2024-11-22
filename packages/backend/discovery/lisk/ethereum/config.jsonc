@@ -7,10 +7,5 @@
   ],
   "names": {
     "0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45": "LiskRollupOwnerMultisig"
-  },
-  "overrides": {
-    "0x26C7bFB430d68Bf74d2d52497836d4336b555dE7": {
-      "extends": "opstack/SuperchainConfigFake"
-    }
   }
 }
