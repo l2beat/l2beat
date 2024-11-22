@@ -1,8 +1,8 @@
 {
   "name": "educhain",
   "chain": "arbitrum",
-  "blockNumber": 277091956,
-  "configHash": "0xd2149b60d286230d6196e9d51292076c34bae4bd0df3b65165bb26df1a2ecc3b",
+  "blockNumber": 277097441,
+  "configHash": "0x41948154eaf05c3987dfe8e0b0c95a402e43845a73d24ea5ae7f392001f2f2ef",
   "contracts": [
     {
       "name": "ChallengeManager",
@@ -832,7 +832,7 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "GnosisSafeL2",
+      "name": "EduFastConfirmerMultisig",
       "address": "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -865,7 +865,8 @@
         "multisigThreshold": "1 of 1 (100%)",
         "nonce": 199,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafeL2"
     },
     {
       "name": "OneStepProverMemory",
