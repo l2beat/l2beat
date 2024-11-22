@@ -107,10 +107,11 @@ function discoveryNeedsRefresh(
     } else {
       if (
         Object.values(allShapes)
+          .map((s) => s.hashes)
           .flatMap((h) => h.toString())
           .includes(hashes[0])
       ) {
-        return 'A contract which currently does not have a template matches a template'
+        return `A contract (${contract.name}) which currently does not have a template matches an implementation`
       }
     }
   }
