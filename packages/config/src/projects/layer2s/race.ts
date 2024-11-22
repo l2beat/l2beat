@@ -1,6 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
@@ -10,7 +9,7 @@ export const race: Layer2 = opStackL2({
   additionalPurposes: ['RWA'],
   discovery,
   createdAt: new UnixTime(1726563843), // 2024-09-17T09:04:03Z
-  genesisTimestamp: new UnixTime(1726563843), // ???
+  genesisTimestamp: new UnixTime(1720421591), // ???
   display: {
     name: 'Race Network',
     slug: 'race',
@@ -23,9 +22,9 @@ export const race: Layer2 = opStackL2({
         'https://bridge.race.foundation/',
         'https://raceecosystem.com/onboarding',
       ],
-      documentation: [],
-      explorers: [], // https://testnet.racescan.io/ testnet explorer only
-      repositories: [],
+      documentation: ['https://raceecosystem.gitbook.io/docs'],
+      explorers: ['https://racescan.io/'],
+      repositories: ['https://github.com/RACE-Ecosystem/RACE-Chain'],
       socialMedia: [
         'https://x.com/RACEecosystem',
         'https://facebook.com/RACEecosystem/',
@@ -35,6 +34,6 @@ export const race: Layer2 = opStackL2({
     activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://racemainnet.io',
-  isNodeAvailable: 'UnderReview',
+  isNodeAvailable: true,
   discoveryDrivenData: true,
 })
