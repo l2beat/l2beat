@@ -2,15 +2,15 @@ import { Env } from '@l2beat/backend-tools'
 import { chains, layer2s, layer3s, tokenList } from '@l2beat/config'
 import { assert, notUndefined } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
-import { ChainConfig } from '../Config'
 import { getChainsWithTokens } from '../features/chains'
-import { BlockApi } from './BlockApi'
 import { IndexerApi } from './IndexerApi'
+import { ChainApi } from './ChainApi'
+import { BlockApi } from './BlockApi'
 
-export function getChainConfig(env: Env): ChainConfig[] {
+export function getChainConfig(env: Env): ChainApi[] {
   const { configuredChains, projects } = getConfiguredChains()
 
-  const rpcChains: ChainConfig[] = []
+  const rpcChains: ChainApi[] = []
   for (const chain of configuredChains) {
     if (chain === 'ethereum') {
       rpcChains.push(getEthereumConfig(env))
@@ -116,7 +116,7 @@ function getConfiguredChains() {
   return { configuredChains, projects }
 }
 
-function getEthereumConfig(env: Env): ChainConfig {
+function getEthereumConfig(env: Env): ChainApi {
   return {
     name: 'ethereum',
     indexerApis: [
@@ -137,8 +137,8 @@ function getEthereumConfig(env: Env): ChainConfig {
   }
 }
 
-function getOtherChains(env: Env): ChainConfig[] {
-  const chains: ChainConfig[] = [
+function getOtherChains(env: Env): ChainApi[] {
+  const chains: ChainApi[] = [
     {
       name: 'zksync',
       indexerApis: [],

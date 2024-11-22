@@ -14,9 +14,9 @@ import {
 } from '@l2beat/shared'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
-import { ChainConfig } from '../config/Config'
 import { BlockTimestampProvider } from '../modules/tvl/services/BlockTimestampProvider'
 import { StarkexClient } from '../peripherals/starkex/StarkexClient'
+import { ChainApi } from '../config/chain/ChainApi'
 
 export class BlockProviders {
   blockProviders: Map<string, BlockProvider> = new Map()
@@ -57,7 +57,7 @@ export class BlockProviders {
   }
 }
 
-export function initBlockProviders(chains: ChainConfig[]): BlockProviders {
+export function initBlockProviders(chains: ChainApi[]): BlockProviders {
   let starkexClient: StarkexClient | undefined
 
   const blockClients: BlockClient[] = []
