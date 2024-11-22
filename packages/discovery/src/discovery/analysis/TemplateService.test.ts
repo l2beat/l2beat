@@ -24,7 +24,7 @@ describe(TemplateService.prototype.findMatchingTemplates.name, () => {
     expect(result).toEqual(['opstack/SuperchainConfigFake'])
   })
 
-  it('matches ONLY opstack/SuperchainConfig because address is in validAddresses', () => {
+  it('matches ONLY opstack/SuperchainConfig because address is in validAddresses and is more specific', () => {
     const templateService = new TemplateService()
     templateService.getAllShapes = mockFn().returns(templateShapes)
     const result = templateService.findMatchingTemplates(
