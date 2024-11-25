@@ -129,7 +129,11 @@ export const scalingSummaryValidiumAndOptimiumsColumns = [
         <TwoRowCell>
           <TwoRowCell.First>{latestValue.layer.value}</TwoRowCell.First>
           {ctx.row.original.dataAvailability && (
-            <TwoRowCell.Second>{latestValue.bridge.value}</TwoRowCell.Second>
+            <TwoRowCell.Second>
+              {latestValue.bridge.value === 'None'
+                ? 'No bridge'
+                : latestValue.bridge.value}
+            </TwoRowCell.Second>
           )}
         </TwoRowCell>
       )

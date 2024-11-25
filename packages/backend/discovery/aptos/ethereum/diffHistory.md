@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xb1eda2ab4c32b9d300756514b39f9386692c669c
+
+# Diff at Mon, 25 Nov 2024 10:45:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@62a44faa52866a55f9881cb2852ac75b1fcc60b0 block: 21027624
+- current block number: 21264260
+
+## Description
+
+MS signer change.
+
+## Watched changes
+
+```diff
+    contract Aptos Multisig (0x65bb797c2B9830d891D87288F029ed8dACc19705) {
+    +++ description: None
+      values.$members.4:
+-        "0xF05F4211ad15A8e49b49C0436067CFFfEa783aA4"
++        "0x7C8D1Db01130acEEc5fF892c99a18c4b4BAdC326"
+    }
+```
+
 Generated with discovered.json: 0x52d4c1a2aa58abc622344ec257b2ed0e550efb8b
 
 # Diff at Wed, 23 Oct 2024 10:15:33 GMT:

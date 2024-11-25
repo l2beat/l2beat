@@ -1,7 +1,7 @@
 {
   "name": "stargatev2",
   "chain": "ethereum",
-  "blockNumber": 21184760,
+  "blockNumber": 21264298,
   "configHash": "0xcfafca102a8fef0c60f0d35d20956b99c39d79582a1d98d1f869dddfa3a2538e",
   "contracts": [
     {
@@ -136,14 +136,14 @@
         "lpToken": "0xD646CD9Dff77097b454a5a148BeaE6615e3bC2e2",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "20529995501475077",
-        "poolBalance": "1810439404000000000000",
+        "plannerFee": "20814345347260489",
+        "poolBalance": "1719110950000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
-        "treasuryFee": 742723,
-        "tvl": "6000299035000000000000"
+        "treasuryFee": 736231,
+        "tvl": "6000203720000000000000"
       }
     },
     {
@@ -195,7 +195,7 @@
           "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070",
           "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d",
           "0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523",
-          "0xF05F4211ad15A8e49b49C0436067CFFfEa783aA4",
+          "0x7C8D1Db01130acEEc5fF892c99a18c4b4BAdC326",
           "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0"
         ],
         "$threshold": 3,
@@ -203,7 +203,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 817,
+        "nonce": 820,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -330,14 +330,14 @@
         "lpToken": "0xfcb42A0e352a08AbD50b8EE68d01f581B6Dfd80A",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "206255249383634113",
-        "poolBalance": "8399990916000000000000",
+        "plannerFee": "235610765902790463",
+        "poolBalance": "8262549063000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x0000000000000000000000000000000000000000",
-        "treasuryFee": 2430594,
-        "tvl": "13075005521000000000000"
+        "treasuryFee": 3372728,
+        "tvl": "12580316047000000000000"
       }
     },
     {
@@ -395,14 +395,14 @@
         "lpToken": "0x17BBC9BD51A52aAf4d2CC6652630DaF4fdB358F7",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "245214435497605485",
-        "poolBalance": 5776427874550,
+        "plannerFee": "254825742320656768",
+        "poolBalance": 3865966992466,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "treasuryFee": 50372877791,
-        "tvl": 16041255383943
+        "treasuryFee": 54030828494,
+        "tvl": 15241949546600
       }
     },
     {
@@ -517,14 +517,14 @@
         "lpToken": "0x5DaAee9EF143faFF495B581e9863570e83F99d31",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "203458100356200655",
-        "poolBalance": 22942615406055,
+        "plannerFee": "212242150396215841",
+        "poolBalance": 19557273585642,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "treasuryFee": 26123448427,
-        "tvl": 19158432264533
+        "treasuryFee": 37036510778,
+        "tvl": 21385375719897
       }
     },
     {
@@ -620,7 +620,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 185,
+        "nonce": 189,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -684,11 +684,11 @@
     { "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e" },
     { "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5" },
     { "address": "0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523" },
+    { "address": "0x7C8D1Db01130acEEc5fF892c99a18c4b4BAdC326" },
     { "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327" },
     { "address": "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936" },
     { "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5" },
-    { "address": "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0" },
-    { "address": "0xF05F4211ad15A8e49b49C0436067CFFfEa783aA4" }
+    { "address": "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0" }
   ],
   "abis": {
     "0x1041D127b2d4BC700F0F563883bC689502606918": [
