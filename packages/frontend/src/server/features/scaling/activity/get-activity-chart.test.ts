@@ -12,11 +12,12 @@ describe(getActivityChart.name, () => {
     timestamp: UnixTime,
     projectId: ProjectId,
     count: number,
+    uopsCount: number | null,
   ): ActivityRecord => ({
     timestamp,
     projectId,
     count,
-    uopsCount: 0,
+    uopsCount,
     start: 0,
     end: 0,
   })
@@ -34,11 +35,11 @@ describe(getActivityChart.name, () => {
 
   it('aggregates data correctly for multiple projects', async () => {
     const mockRecords = [
-      record(START_OF_TODAY.add(-2, 'days'), ProjectId('arbitrum'), 200),
-      record(START_OF_TODAY.add(-2, 'days'), ProjectId.ETHEREUM, 2000),
-      record(START_OF_TODAY.add(-1, 'days'), ProjectId('arbitrum'), 100),
-      record(START_OF_TODAY.add(-1, 'days'), ProjectId('optimism'), 50),
-      record(START_OF_TODAY.add(-1, 'days'), ProjectId.ETHEREUM, 1000),
+      record(START_OF_TODAY.add(-2, 'days'), ProjectId('arbitrum'), 200, null),
+      record(START_OF_TODAY.add(-2, 'days'), ProjectId.ETHEREUM, 2000, 2100),
+      record(START_OF_TODAY.add(-1, 'days'), ProjectId('arbitrum'), 100, 110),
+      record(START_OF_TODAY.add(-1, 'days'), ProjectId('optimism'), 50, 55),
+      record(START_OF_TODAY.add(-1, 'days'), ProjectId.ETHEREUM, 1000, 1050),
     ]
 
     const mockDb = mockObject<Database>({
@@ -55,17 +56,17 @@ describe(getActivityChart.name, () => {
     )
     expect(result.data).toHaveLength(2)
     expect(result.data).toEqual([
-      [+START_OF_TODAY.add(-2, 'days'), 200, 2000],
-      [+START_OF_TODAY.add(-1, 'days'), 150, 1000],
+      [+START_OF_TODAY.add(-2, 'days'), 200, 2000, 200, 2100],
+      [+START_OF_TODAY.add(-1, 'days'), 150, 1000, 165, 1050],
     ])
   })
 
   it('handles single project filter correctly', async () => {
     const mockRecords = [
-      record(START_OF_TODAY.add(-5, 'days'), ProjectId('arbitrum'), 200),
-      record(START_OF_TODAY.add(-5, 'days'), ProjectId.ETHEREUM, 2000),
-      record(START_OF_TODAY.add(-4, 'days'), ProjectId('arbitrum'), 100),
-      record(START_OF_TODAY.add(-4, 'days'), ProjectId.ETHEREUM, 1000),
+      record(START_OF_TODAY.add(-5, 'days'), ProjectId('arbitrum'), 200, 300),
+      record(START_OF_TODAY.add(-5, 'days'), ProjectId.ETHEREUM, 2000, 2100),
+      record(START_OF_TODAY.add(-4, 'days'), ProjectId('arbitrum'), 100, 115),
+      record(START_OF_TODAY.add(-4, 'days'), ProjectId.ETHEREUM, 1000, 1075),
     ]
 
     const mockDb = mockObject<Database>({
@@ -82,8 +83,8 @@ describe(getActivityChart.name, () => {
 
     expect(result.data).toHaveLength(2)
     expect(result.data).toEqual([
-      [+START_OF_TODAY.add(-5, 'days'), 200, 2000],
-      [+START_OF_TODAY.add(-4, 'days'), 100, 1000],
+      [+START_OF_TODAY.add(-5, 'days'), 200, 2000, 300, 2100],
+      [+START_OF_TODAY.add(-4, 'days'), 100, 1000, 115, 1075],
     ])
     expect(result.syncStatus.isSynced).toEqual(false)
     expect(result.syncStatus.syncedUntil).toEqual(
@@ -93,11 +94,11 @@ describe(getActivityChart.name, () => {
 
   it('fills missing data points with zeros', async () => {
     const mockRecords = [
-      record(START_OF_TODAY.add(-3, 'days'), ProjectId('arbitrum'), 200),
-      record(START_OF_TODAY.add(-3, 'days'), ProjectId.ETHEREUM, 2000),
+      record(START_OF_TODAY.add(-3, 'days'), ProjectId('arbitrum'), 200, null),
+      record(START_OF_TODAY.add(-3, 'days'), ProjectId.ETHEREUM, 2000, 2100),
       // Gap in data
-      record(START_OF_TODAY.add(-1, 'days'), ProjectId('arbitrum'), 100),
-      record(START_OF_TODAY.add(-1, 'days'), ProjectId.ETHEREUM, 1000),
+      record(START_OF_TODAY.add(-1, 'days'), ProjectId('arbitrum'), 100, 110),
+      record(START_OF_TODAY.add(-1, 'days'), ProjectId.ETHEREUM, 1000, 1050),
     ]
 
     const mockDb = mockObject<Database>({
@@ -110,9 +111,9 @@ describe(getActivityChart.name, () => {
 
     expect(result.data).toHaveLength(3)
     expect(result.data).toEqual([
-      [+START_OF_TODAY.add(-3, 'days'), 200, 2000],
-      [+START_OF_TODAY.add(-2, 'days'), 0, 0],
-      [+START_OF_TODAY.add(-1, 'days'), 100, 1000],
+      [+START_OF_TODAY.add(-3, 'days'), 200, 2000, 200, 2100],
+      [+START_OF_TODAY.add(-2, 'days'), 0, 0, 0, 0],
+      [+START_OF_TODAY.add(-1, 'days'), 100, 1000, 110, 1050],
     ])
   })
 })

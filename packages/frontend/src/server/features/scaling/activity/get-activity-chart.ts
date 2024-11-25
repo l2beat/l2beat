@@ -16,7 +16,7 @@ import { type ActivityTimeRange } from './utils/range'
 
 /**
  * A function that computes values for chart data of the activity over time.
- * @returns [timestamp, projectsTxCount, ethereumTxCount][] - all numbers
+ * @returns [timestamp, projectsTxCount, ethereumTxCount, projectsUopsCount, ethereumUopsCount][] - all numbers
  */
 export function getActivityChart(
   ...parameters: Parameters<typeof getActivityChartData>
