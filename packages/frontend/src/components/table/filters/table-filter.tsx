@@ -1,16 +1,8 @@
 'use client'
-import { assert } from '@l2beat/shared-pure'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '~/components/core/select'
+import { useId } from 'react'
+import { ChevronIcon } from '~/icons/chevron'
 import { CloseIcon } from '~/icons/close'
 import { cn } from '~/utils/cn'
-
-const UNDEFINED_VALUE = 'undefined-value'
 
 interface Option<T extends string> {
   label: string
@@ -25,86 +17,67 @@ interface Props<T extends string> {
 }
 
 export function TableFilter<T extends string>(props: Props<T>) {
-  if (props.value) {
-    return <SelectedValue {...props} />
-  }
-
-  return <TableFilterSelect {...props} />
-}
-
-function SelectedValue<T extends string>({
-  options,
-  value,
-  onValueChange,
-}: Props<T>) {
-  const option = options.find((option) => option.value === value)
-  assert(option, 'Option not found')
-  return (
-    <button
-      onClick={() => onValueChange(undefined)}
-      className={cn(
-        'flex h-8 cursor-pointer select-none items-center justify-center gap-1.5 whitespace-pre rounded-lg px-2.5 text-xs font-medium text-brand outline-none transition-colors md:text-sm',
-        'sidebar:bg-surface-primary sidebar:hover:bg-surface-tertiary sidebar:main-page-card:bg-surface-secondary',
-      )}
-    >
-      <span>{option.label}</span>
-      <div className="inline-flex size-3 items-center justify-center rounded-sm bg-current">
-        <CloseIcon className="size-2.5 fill-white dark:fill-black dark:group-hover:fill-gray-950" />
-      </div>
-    </button>
+  const id = useId()
+  const selectedOption = props.options.find(
+    (option) => option.value === props.value,
   )
-}
-
-function TableFilterSelect<T extends string>({
-  title,
-  options,
-  value,
-  onValueChange,
-}: Props<T>) {
-  // Select component does not support undefined values
-  // so we need to replace them with a special value
-  // that will be handled by the onValueChange handler
-  const mappedOptions = replaceUndefined(options)
-
   return (
-    <Select
-      value={value ?? ''}
-      onValueChange={(v) => {
-        const mappedValue = (v === UNDEFINED_VALUE ? undefined : v) as
-          | T
-          | undefined
-        onValueChange(mappedValue)
-      }}
-      disabled={options.length === 0}
-    >
-      <SelectTrigger>
-        <SelectValue placeholder={title} />
-      </SelectTrigger>
-      <SelectContent className="flex flex-col" align="start">
-        {mappedOptions.map((option) => (
-          <SelectItem key={option.label} value={option.value}>
-            {option.label}
-          </SelectItem>
+    <label htmlFor={id} className="relative">
+      <select
+        id={id}
+        className="peer absolute left-0 top-0 size-full opacity-0"
+        value={props.value ?? ''}
+        disabled={!props.value && props.options.length < 2}
+        onChange={(e) =>
+          props.onValueChange((e.target.value as T | '') || undefined)
+        }
+        onMouseDown={(e) => {
+          if (props.value) {
+            e.preventDefault()
+            props.onValueChange(undefined)
+          }
+        }}
+        onKeyDown={(e) => {
+          if (props.value) {
+            if (e.code === 'Space') {
+              e.preventDefault()
+              props.onValueChange(undefined)
+            } else if (e.code === 'ArrowDown' || e.code === 'ArrowUp') {
+              e.preventDefault()
+            }
+          }
+        }}
+      >
+        <option value="" disabled>
+          Select {props.title}:
+        </option>
+        {props.options.map(({ label, value }) => (
+          <option key={value} value={value}>
+            {label}
+          </option>
         ))}
-      </SelectContent>
-    </Select>
+      </select>
+      <div
+        className={cn(
+          'group flex min-h-8 select-none items-center justify-between gap-1.5 whitespace-nowrap rounded-lg px-3 py-1 shadow-sm',
+          'text-xs font-medium leading-none md:text-sm [&>span]:line-clamp-1',
+          'bg-gray-200 sidebar:!bg-surface-primary sidebar:main-page-card:!bg-surface-secondary dark:bg-zinc-700',
+          'peer-disabled:cursor-not-allowed peer-disabled:opacity-75',
+          'ring-inset ring-brand peer-focus:outline-none peer-focus:ring-2',
+          'z-20 transition-colors',
+          props.value &&
+            'text-brand peer-hover:!bg-surface-tertiary sidebar:main-page-card:peer-hover:!bg-surface-tertiary',
+        )}
+      >
+        {selectedOption?.label ?? props.title}{' '}
+        {props.value ? (
+          <div className="inline-flex size-3 items-center justify-center rounded-sm bg-current">
+            <CloseIcon className="size-2.5 fill-white dark:fill-black dark:group-hover:fill-gray-950" />
+          </div>
+        ) : (
+          <ChevronIcon className="size-2.5 fill-current stroke-[1.8px] transition-transform md:size-3" />
+        )}
+      </div>
+    </label>
   )
-}
-
-function replaceUndefined<T extends string>(
-  options: Option<T>[],
-): {
-  label: string
-  value: T
-}[] {
-  return options.map((option) => {
-    if (option.value === undefined) {
-      return { label: option.label, value: UNDEFINED_VALUE as T }
-    }
-
-    return {
-      label: option.label,
-      value: option.value,
-    }
-  })
 }
