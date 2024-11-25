@@ -4,7 +4,7 @@ import { ClientCore, ClientCoreDependencies } from '../ClientCore'
 import {
   StarkexApiErrorResponse,
   StarkexApiSuccessResponse,
-} from './parseStarkexApiResponse'
+} from './types'
 
 interface Dependencies extends ClientCoreDependencies {
   apiKey: string
