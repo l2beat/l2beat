@@ -24,20 +24,30 @@ export function aggregateActivityRecords(entries: ActivityRecord[]) {
           timestamp: entry.timestamp,
           count: 0,
           ethereumCount: 0,
+          uopsCount: 0,
+          ethereumUopsCount: 0,
         }
       }
 
       if (isEthereum) {
         acc[timestamp].ethereumCount += entry.count
+        acc[timestamp].ethereumUopsCount += entry.uopsCount ?? entry.count
       } else {
         acc[timestamp].count += entry.count
+        acc[timestamp].uopsCount += entry.uopsCount ?? entry.count
       }
 
       return acc
     },
     {} as Record<
       number,
-      { timestamp: UnixTime; count: number; ethereumCount: number }
+      {
+        timestamp: UnixTime
+        count: number
+        ethereumCount: number
+        uopsCount: number
+        ethereumUopsCount: number
+      }
     >,
   )
 
