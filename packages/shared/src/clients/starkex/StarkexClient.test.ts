@@ -24,7 +24,8 @@ describe(StarkexClient.name, () => {
       })
 
       const path = '/resource'
-      await starkexClient.query(API_URL, path, 'foo')
+      const body = { foo: 'bar' }
+      await starkexClient.query(API_URL, path, body)
 
       expect(httpClient.fetch).toHaveBeenCalledWith(
         API_URL + path + '?key=' + API_KEY,
@@ -34,7 +35,7 @@ describe(StarkexClient.name, () => {
             accept: 'application/json',
             'Content-Type': 'application/json',
           },
-          body: expect.anything(),
+          body: JSON.stringify(body),
           timeout: expect.a(Number),
         },
       )
