@@ -1,8 +1,9 @@
 import { type Milestone } from '@l2beat/config'
 import { useCallback, useMemo } from 'react'
+import { type ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
 import { type ActivityChartData } from '~/server/features/scaling/activity/get-activity-chart'
-import { countToTps } from '~/server/features/scaling/activity/utils/count-to-tps'
-import { formatTps } from '~/utils/number-format/format-tps'
+import { countPerSecond } from '~/server/features/scaling/activity/utils/count-per-second'
+import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import { type SeriesStyle } from '../core/styles'
 import { getChartRange } from '../core/utils/get-chart-range-from-columns'
 import { mapMilestones } from '../core/utils/map-milestones'
@@ -11,12 +12,14 @@ interface Params {
   milestones: Milestone[]
   chart: ActivityChartData | undefined
   showMainnet: boolean
+  metric?: ActivityMetric
 }
 
 export function useActivityChartRenderParams({
   milestones,
   chart,
   showMainnet,
+  metric,
 }: Params) {
   const mappedMilestones = useMemo(
     () => mapMilestones(milestones),
@@ -24,27 +27,39 @@ export function useActivityChartRenderParams({
   )
 
   const formatYAxisLabel = useCallback(
-    (value: number) => `${formatTps(value, { morePrecision: true })} TPS`,
-    [],
+    (value: number) =>
+      `${formatActivityCount(value, { morePrecision: true })} ${metric === 'tps' ? 'TPS' : 'UOPS'}`,
+    [metric],
   )
 
   const columns = useMemo(
     () =>
       chart?.data.map((dataPoint) => {
-        const [timestamp, count, ethereumCount] = dataPoint
+        const [timestamp, count, ethereumCount, uopsCount, ethereumUopsCount] =
+          dataPoint
         const milestone = mappedMilestones[timestamp]
-        const tps = countToTps(count)
-        const ethereumTps = countToTps(ethereumCount)
+        const tps = countPerSecond(count)
+        const ethereumTps = countPerSecond(ethereumCount)
+        const uops = countPerSecond(uopsCount)
+        const ethereumUops = countPerSecond(ethereumUopsCount)
+
+        const isTps = metric === 'tps'
+        const projectsValue = isTps ? tps : uops
+        const ethereumValue = isTps ? ethereumTps : ethereumUops
 
         return {
           values: showMainnet
-            ? [{ value: tps }, { value: ethereumTps }]
-            : [{ value: tps }],
-          data: { timestamp, count, ethereumCount },
+            ? [{ value: projectsValue }, { value: ethereumValue }]
+            : [{ value: projectsValue }],
+          data: {
+            timestamp,
+            count: isTps ? count : uopsCount,
+            ethereumCount: isTps ? ethereumCount : ethereumUopsCount,
+          },
           milestone,
         }
       }) ?? [],
-    [chart, mappedMilestones, showMainnet],
+    [chart, mappedMilestones, showMainnet, metric],
   )
 
   const chartRange = useMemo(() => getChartRange(chart?.data), [chart])

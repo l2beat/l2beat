@@ -46,3 +46,12 @@ export async function getPreview(project: string): Promise<ApiPreviewResponse> {
   const data = await res.json()
   return data as ApiPreviewResponse
 }
+
+export function executeCommand(
+  command: string,
+  project: string,
+  chain: string,
+): EventSource {
+  const params = new URLSearchParams({ command, project, chain })
+  return new EventSource(`/api/terminal/execute?${params}`)
+}

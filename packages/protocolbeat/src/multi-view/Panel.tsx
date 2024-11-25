@@ -27,7 +27,7 @@ export function Panel(props: {
       <div
         className={clsx(
           // This value has to be updated to account for other element sizes!
-          'max-h-[calc(100vh-108px)] flex-1 overflow-y-scroll',
+          'max-h-[calc(100vh-108px)] flex-1 overflow-y-auto',
           isPickedUp && 'hidden',
         )}
       >

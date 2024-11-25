@@ -17,7 +17,10 @@ export class AggLayerIndexer extends ManagedMultiIndexer<AggLayerAmountConfig> {
     super({
       ...$,
       name: INDEXER_NAMES.AGGLAYER,
-      tag: $.chain,
+      tags: {
+        tag: $.chain,
+        chain: $.chain,
+      },
       updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
     })
   }

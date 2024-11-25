@@ -22,7 +22,7 @@ export function initPriceProviders(
   const logger = Logger.SILENT
   const coingeckoQueryService = new CoingeckoQueryService(
     coingeckoClient,
-    logger.tag('prices'),
+    logger.tag({ tag: 'prices' }),
   )
 
   return new PriceProviders(coingeckoQueryService)

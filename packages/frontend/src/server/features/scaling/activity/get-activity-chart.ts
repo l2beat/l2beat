@@ -69,13 +69,21 @@ async function getActivityChartData(
     'daily',
   )
 
-  const data: [number, number, number][] = timestamps.map((timestamp) => {
-    const entry = aggregatedEntries[timestamp.toNumber()]
-    if (!entry) {
-      return [+timestamp, 0, 0]
-    }
-    return [+timestamp, entry.count, entry.ethereumCount]
-  })
+  const data: [number, number, number, number, number][] = timestamps.map(
+    (timestamp) => {
+      const entry = aggregatedEntries[timestamp.toNumber()]
+      if (!entry) {
+        return [+timestamp, 0, 0, 0, 0]
+      }
+      return [
+        +timestamp,
+        entry.count,
+        entry.ethereumCount,
+        entry.uopsCount,
+        entry.ethereumUopsCount,
+      ]
+    },
+  )
   return {
     data,
     syncStatus,
@@ -95,7 +103,7 @@ function getMockActivityChart(
   const timestamps = generateTimestamps(adjustedRange, 'daily')
 
   return {
-    data: timestamps.map((timestamp) => [+timestamp, 15, 11]),
+    data: timestamps.map((timestamp) => [+timestamp, 15, 11, 16, 12]),
     syncStatus: getSyncStatus(adjustedRange[1]),
   }
 }

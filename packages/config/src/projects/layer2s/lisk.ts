@@ -39,7 +39,7 @@ export const lisk: Layer2 = opStackL2({
   l1StandardBridgePremintedTokens: ['LSK'],
   finality: {
     type: 'OPStack-blob',
-    genesisTimestamp: new UnixTime(1714728793),
+    genesisTimestamp: new UnixTime(1714728791),
     minTimestamp: new UnixTime(1714746983), // first blob
     l2BlockTimeSeconds: 2,
     lag: 0,
@@ -47,7 +47,6 @@ export const lisk: Layer2 = opStackL2({
   },
   // not ready yet, check this PR https://github.com/ethereum-optimism/superchain-registry/pull/234 or the prepared links in `DERIVATION.OPSTACK('LISK')`
   // stateDerivation: DERIVATION.OPSTACK('LISK'),
-  usesBlobs: true,
   isNodeAvailable: true,
   rpcUrl: 'https://rpc.api.lisk.com',
   discoveryDrivenData: true,

@@ -28,6 +28,8 @@ export function createUpdateMonitorModule(
     return
   }
 
+  logger = logger.tag({ feature: 'update_monitor', module: 'update_monitor' })
+
   const configReader = new ConfigReader()
 
   const discordClient = config.updateMonitor.discord

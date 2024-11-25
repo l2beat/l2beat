@@ -13,7 +13,10 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     super({
       ...$,
       name: INDEXER_NAMES.CHAIN_AMOUNT,
-      tag: $.chain,
+      tags: {
+        tag: $.chain,
+        chain: $.chain,
+      },
       updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
     })
   }

@@ -87,7 +87,10 @@ export class Channel {
     projectId: ProjectId,
     private readonly logger: Logger,
   ) {
-    this.logger = this.logger.tag(`${projectId.toString()}:${this.l1Origin}`)
+    this.logger = this.logger.tag({
+      tag: `${projectId}:${this.l1Origin}`,
+      project: projectId,
+    })
   }
 
   addFrames(newFrames: Frame[]) {

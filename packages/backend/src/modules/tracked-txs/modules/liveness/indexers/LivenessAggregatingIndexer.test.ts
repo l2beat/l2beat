@@ -241,13 +241,13 @@ describe(LivenessAggregatingIndexer.name, () => {
 })
 
 function createIndexer(options: {
-  tag?: string
+  tag: string
   livenessRepository?: Database['liveness']
   aggregatedLivenessRepository?: Database['aggregatedLiveness']
   indexerService?: IndexerService
 }) {
   return new LivenessAggregatingIndexer({
-    tag: options.tag,
+    tags: { tag: options.tag },
     indexerService: options.indexerService ?? mockObject<IndexerService>(),
     logger: Logger.SILENT,
     minHeight: 0,

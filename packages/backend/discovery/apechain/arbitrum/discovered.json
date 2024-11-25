@@ -1,7 +1,7 @@
 {
   "name": "apechain",
   "chain": "arbitrum",
-  "blockNumber": 267469765,
+  "blockNumber": 276713373,
   "configHash": "0xdb52fddbbcc0a8a566a780751e6589f2f2a89b04e523ff49b7fd295cda3937c3",
   "contracts": [
     {
@@ -95,6 +95,7 @@
     {
       "name": "ApeChainMultisig",
       "address": "0x2B1FbeE3c7D278bFD9E179893FF304fE49FA7DDF",
+      "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
         "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
@@ -175,6 +176,7 @@
           "target": "0xe032d15909e90f9A36901abB08944653e9E87d72"
         }
       ],
+      "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1727880613,
       "values": {
         "$immutable": false,
@@ -188,13 +190,6 @@
         "$threshold": 3,
         "domainSeparator": "0x462284f2b1dc9ce80f6c014bf156a3296fe4271baefef7f11f4063a7c5fc06c2",
         "getChainId": 42161,
-        "getOwners": [
-          "0x83F58bBB1a940E364ED2dE775D1FD5218135cCE3",
-          "0x651cF50272Ffa8f6D954080DF743410Bb0aa7AFa",
-          "0x8765bb776b00A14198025283988c23F72D330E2a",
-          "0x65c10dD3d50B10D0E1Bb459675b03367B1b52eD1"
-        ],
-        "getThreshold": 3,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
         "nonce": 2,
@@ -274,12 +269,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1120,
+        "firstUnresolvedNode": 1758,
         "inbox": "0x1B98e4ED82Ee1a91A65a38C690e2266364064D15",
         "isERC20Enabled": false,
         "lastStakeBlock": 20628667,
-        "latestConfirmed": 1119,
-        "latestNodeCreated": 1269,
+        "latestConfirmed": 1757,
+        "latestNodeCreated": 1909,
         "loserStakeEscrow": "0x5737CDBb3a67001441C0DA8b86e6b1826705601c",
         "minimumAssertionPeriod": 75,
         "outbox": "0x4F405BA65291063d8A524c2bDf55d4e67405c2aF",
@@ -467,13 +462,13 @@
           "0xf383814AE1eD316ed7d6FeA28810C77E8a15A49F"
         ],
         "allowedOutboxList": ["0x4F405BA65291063d8A524c2bDf55d4e67405c2aF"],
-        "delayedMessageCount": 127,
+        "delayedMessageCount": 284,
         "nativeToken": "0x7f9FBf9bDd3F4105C478b996B648FE6e828a1e98",
         "nativeTokenDecimals": 18,
         "rollup": "0x374de579AE15aD59eD0519aeAf1A23F348Df259c",
         "sequencerInbox": "0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C",
-        "sequencerMessageCount": 6536,
-        "sequencerReportedSubMessageCount": 1739702
+        "sequencerMessageCount": 14826,
+        "sequencerReportedSubMessageCount": 4856916
       },
       "derivedName": "ERC20Bridge"
     },
@@ -689,7 +684,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 6536,
+        "batchCount": 14826,
         "batchPosterManager": "0x5737CDBb3a67001441C0DA8b86e6b1826705601c",
         "batchPosters": ["0x845205C0F5109282954Bba4217aDA2a27Fdd89fF"],
         "bridge": "0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8",
@@ -725,7 +720,7 @@
         "rollup": "0x374de579AE15aD59eD0519aeAf1A23F348Df259c",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 127,
+        "totalDelayedMessagesRead": 284,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1422,6 +1417,7 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "orbitstack/ChallengeManager": "0xc4fbc82c5001579bb1f880d92a3510cda3dc4a65e284fc300363ce048c2fb6d7",
     "orbitstack/OneStepProofEntry": "0xf3bff5da86f9bbb5f9ac93a0f2239f0769d051b67a44be2e52c322799e3b8d4f",
     "orbitstack/OneStepProver0": "0x80f18705038deef096683a89d16549bf343ada57cac1f2750df2f06fbbaed5ca",

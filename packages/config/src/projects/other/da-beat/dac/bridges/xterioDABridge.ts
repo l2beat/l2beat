@@ -73,7 +73,7 @@ export const xterioDABridge = {
           'Central actor allowed to relay DA commitments to the DA bridge.',
       },
       ...discovery.getMultisigPermission(
-        'RollupOwnerMultisig',
+        'XterioMultisig',
         'Owner of the ProxyAdmin and the rollup system. It can change any system component.',
       ),
       {

@@ -32,7 +32,7 @@ export const polynomial: Layer2 = opStackL2({
   rpcUrl: 'https://rpc.polynomial.fi',
   finality: {
     type: 'OPStack-blob',
-    genesisTimestamp: new UnixTime(1718038307),
+    genesisTimestamp: new UnixTime(1718038175),
     minTimestamp: new UnixTime(1718049059),
     l2BlockTimeSeconds: 2,
     lag: 0,
@@ -49,7 +49,6 @@ export const polynomial: Layer2 = opStackL2({
       type: 'general',
     },
   ],
-  usesBlobs: true,
   discoveryDrivenData: true,
   nonTemplateEscrows: [
     {

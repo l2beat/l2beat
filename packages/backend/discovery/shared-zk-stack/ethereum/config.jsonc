@@ -280,6 +280,15 @@
             "args": [325, 3]
           }
         },
+        "treasureThirdBatchTS": {
+          "description": "If non-zero, the third batch has been posted (launch monitor).",
+          "severity": "MEDIUM",
+          "handler": {
+            "type": "call",
+            "method": "getCommittedBatchTimestamp",
+            "args": [61166, 3]
+          }
+        },
         "revertedBlocks": {
           "handler": {
             "type": "stateFromEvent",

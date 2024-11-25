@@ -12,6 +12,7 @@ import { ChainConverter } from '@l2beat/shared-pure'
 import { ActivityTransactionConfig } from '../modules/activity/ActivityTransactionConfig'
 import { MulticallConfigEntry } from '../peripherals/multicall/types'
 import { ResolvedFeatureFlag } from './FeatureFlags'
+import { ChainApi } from './chain/ChainApi'
 import { FinalityProjectConfig } from './features/finality'
 
 export interface Config {
@@ -37,7 +38,7 @@ export interface Config {
   readonly flags: ResolvedFeatureFlag[]
   readonly verifiers: boolean
   readonly daBeat: DABeatConfig | false
-  readonly insight: boolean
+  readonly chainConfig: ChainApi[]
 }
 
 export interface ApiConfig {

@@ -15,25 +15,42 @@ export async function getActivityChartStats(
   const latestData = chartData.at(-1)
   if (!latestData) {
     return {
-      latestProjectsTxCount: 0,
-      scalingFactor: 0,
+      tps: {
+        latestProjectsTxCount: 0,
+        scalingFactor: 0,
+      },
+      uops: {
+        latestProjectsTxCount: 0,
+        scalingFactor: 0,
+      },
     }
   }
 
   const totalTxs = chartData.slice(-7)?.reduce(
     (acc, curr) => {
-      acc.ethereum += curr[2]
-      acc.rest += curr[1]
+      acc.restTps += curr[1]
+      acc.ethereumTps += curr[2]
+      acc.restUops += curr[3]
+      acc.ethereumUops += curr[4]
       return acc
     },
-    { ethereum: 0, rest: 0 },
+    { ethereumTps: 0, restTps: 0, ethereumUops: 0, restUops: 0 },
   )
 
   return {
-    latestProjectsTxCount: latestData[1],
-    scalingFactor:
-      totalTxs.ethereum === 0
-        ? 0
-        : (totalTxs.rest + totalTxs.ethereum) / totalTxs.ethereum,
+    tps: {
+      latestProjectsTxCount: latestData[1],
+      scalingFactor:
+        totalTxs.ethereumTps === 0
+          ? 0
+          : (totalTxs.restTps + totalTxs.ethereumTps) / totalTxs.ethereumTps,
+    },
+    uops: {
+      latestProjectsTxCount: latestData[3],
+      scalingFactor:
+        totalTxs.ethereumUops === 0
+          ? 0
+          : (totalTxs.restUops + totalTxs.ethereumUops) / totalTxs.ethereumUops,
+    },
   }
 }

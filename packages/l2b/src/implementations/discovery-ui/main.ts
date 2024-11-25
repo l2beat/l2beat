@@ -1,6 +1,7 @@
 import { join } from 'path'
 import { ConfigReader } from '@l2beat/discovery'
 import express from 'express'
+import { executeTerminalCommand } from './executeTerminalCommand'
 import { getCode } from './getCode'
 import { getPreview } from './getPreview'
 import { getProject } from './getProject'
@@ -13,6 +14,8 @@ export function runDiscoveryUi() {
   const STATIC_ROOT = join(__dirname, '../../../../protocolbeat/build')
   const DISCOVERY_ROOT = join(__dirname, '../../../../backend')
   const configReader = new ConfigReader(DISCOVERY_ROOT)
+
+  app.use(express.json())
 
   app.get('/api/projects', (_req, res) => {
     const response = getProjects(configReader)
@@ -44,6 +47,29 @@ export function runDiscoveryUi() {
 
   app.get(['/ui', '/ui/*'], (_req, res) => {
     res.sendFile(join(STATIC_ROOT, 'index.html'))
+  })
+
+  // Start executing one of predefined commands
+  // and stream the output back to the client
+  app.get('/api/terminal/execute', (req, res) => {
+    const { command, project, chain } = req.query
+    if (!command || !project || !chain) {
+      res.status(400).send('Missing required parameters')
+      return
+    }
+    if (command !== 'discover') {
+      res.status(400).send('Invalid command')
+      return
+    }
+
+    res.setHeader('Content-Type', 'text/event-stream')
+    res.setHeader('Cache-Control', 'no-cache')
+    res.setHeader('Connection', 'keep-alive')
+
+    executeTerminalCommand(
+      `(cd ../backend && pnpm discover ${chain} ${project})`,
+      res,
+    )
   })
 
   app.use(express.static(STATIC_ROOT))

@@ -1,3 +1,86 @@
+Generated with discovered.json: 0xc18eb8ea91524ae0c35320c5d45eeacf4a7106d7
+
+# Diff at Fri, 22 Nov 2024 08:34:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@292f23170122adf00047246ebc612907f3cba48f block: 20211335
+- current block number: 21242106
+
+## Description
+
+Config related (ProxyAdmin template match).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20211335 (main branch discovery), not current.
+
+```diff
+    contract LockingInfo (0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"
++        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      issuedPermissions.0.via.0:
++        {"address":"0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8","delay":0}
+    }
+```
+
+```diff
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      receivedPermissions.7:
++        {"permission":"upgrade","target":"0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"}
+      receivedPermissions.6:
++        {"permission":"upgrade","target":"0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"}
+      receivedPermissions.5.target:
+-        "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
++        "0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
+      receivedPermissions.5.via:
++        [{"address":"0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]
+      receivedPermissions.4.target:
+-        "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
++        "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
+      receivedPermissions.3.target:
+-        "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
++        "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
+      receivedPermissions.2.target:
+-        "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
++        "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
+      receivedPermissions.1.target:
+-        "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
++        "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
+      receivedPermissions.1.via:
++        [{"address":"0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"},{"permission":"upgrade","target":"0xD54c868362C2098E0E46F12E7D924C6A332952Dd"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"},{"permission":"upgrade","target":"0xD54c868362C2098E0E46F12E7D924C6A332952Dd"}]
+    }
+```
+
+```diff
+    contract LockingPool (0xD54c868362C2098E0E46F12E7D924C6A332952Dd) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"
++        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      issuedPermissions.0.via.0:
++        {"address":"0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8","delay":0}
+    }
+```
+
 Generated with discovered.json: 0x9d98c92aed2ee7c458049d4a169109e311e347cc
 
 # Diff at Mon, 21 Oct 2024 12:46:03 GMT:

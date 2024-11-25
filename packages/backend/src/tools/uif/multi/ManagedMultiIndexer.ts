@@ -16,15 +16,15 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
   private readonly indexerId: string
 
   constructor(readonly options: ManagedMultiIndexerOptions<T>) {
-    const logger = options.logger.tag(options.tag)
+    const logger = options.logger.tag(options.tags ?? {})
     super(logger, options.parents, options)
 
     assert(
       options.configurations.length > 0,
-      `Configurations should not be empty ${options.tag}`,
+      `Configurations should not be empty ${options.tags?.tag}`,
     )
 
-    this.indexerId = createIndexerId(options.name, options.tag)
+    this.indexerId = createIndexerId(options.name, options.tags?.tag)
     assertUniqueIndexerId(this.indexerId)
     for (const configuration of options.configurations) {
       assertUniqueConfigId(configuration.id)

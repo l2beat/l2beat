@@ -72,7 +72,7 @@ export const redstoneDABridge = {
           'Central actor allowed to relay DA commitments to the DA bridge.',
       },
       ...discovery.getMultisigPermission(
-        'ProxyAdminOwner',
+        'RedstoneMultisig',
         'Owner of the ProxyAdmin and the rollup system. It can change any system component.',
       ),
       {

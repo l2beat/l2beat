@@ -5,6 +5,7 @@ import {
   ChainId,
   Token,
 } from '@l2beat/shared-pure'
+import { keyBy } from 'lodash'
 import { chainToProject } from '../backend'
 import { BackendProject, BackendProjectEscrow } from '../backend/BackendProject'
 import { chains } from '../chains'
@@ -122,6 +123,8 @@ export function getTvlAmountsConfigForProject(
     entries.push(configEntry)
   }
 
+  const chainMap = keyBy(chains, (e) => e.chainId)
+
   for (const escrow of project.escrows) {
     switch (escrow.sharedEscrow?.type) {
       case 'AggLayer': {
@@ -144,7 +147,7 @@ export function getTvlAmountsConfigForProject(
       }
       default: {
         for (const token of escrow.tokens) {
-          const chain = chains.find((x) => x.chainId === +token.chainId)
+          const chain = chainMap[+token.chainId]
           assert(chain, `Chain not found for token ${token.id}`)
           assert(
             chain.name === escrow.chain,

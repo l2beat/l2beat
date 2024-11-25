@@ -34,7 +34,6 @@ export const bobanetwork: Layer2 = opStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  usesBlobs: true,
   rpcUrl: 'https://mainnet.boba.network/',
   transactionApi: {
     type: 'rpc',

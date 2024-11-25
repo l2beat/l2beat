@@ -126,7 +126,6 @@ export const blast: Layer2 = opStackL2({
     }),
   ],
   isNodeAvailable: true,
-  usesBlobs: true,
   associatedTokens: ['BLAST'],
   nodeSourceLink: 'https://github.com/blast-io/blast',
   discoveryDrivenData: true,

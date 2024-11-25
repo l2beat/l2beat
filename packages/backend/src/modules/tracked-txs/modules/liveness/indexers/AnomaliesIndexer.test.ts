@@ -352,14 +352,14 @@ describe(AnomaliesIndexer.name, () => {
 })
 
 function createIndexer(options: {
-  tag?: string
+  tag: string
   livenessRepository?: Database['liveness']
   anomaliesRepository?: Database['anomalies']
   indexerService?: IndexerService
   transaction?: Database['transaction']
 }) {
   return new AnomaliesIndexer({
-    tag: options.tag,
+    tags: { tag: options.tag },
     indexerService: options.indexerService ?? mockObject<IndexerService>(),
     logger: Logger.SILENT,
     minHeight: 0,
