@@ -5,7 +5,7 @@ import { expect } from 'earl'
 import { aggregateActivityRecords } from './aggregate-activity-records'
 
 describe(aggregateActivityRecords.name, () => {
-  const NOW = UnixTime.now()
+  const NOW = UnixTime.now().toStartOf('day')
 
   it('aggregates activity records correctly', () => {
     const records: ActivityRecord[] = [
@@ -24,13 +24,13 @@ describe(aggregateActivityRecords.name, () => {
         count: 150, // 100 + 50
         ethereumCount: 1000,
         uopsCount: 300,
-        ethereumUopsCount: 2100,
+        ethereumUopsCount: 1000,
       },
       [NOW.add(1, 'days').toNumber()]: {
         timestamp: NOW.add(1, 'days'),
         count: 200,
         ethereumCount: 2000,
-        uopsCount: 2100,
+        uopsCount: 200,
         ethereumUopsCount: 2100,
       },
     })
