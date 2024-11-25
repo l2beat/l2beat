@@ -7,7 +7,7 @@ import { DasErasureCodingProof } from '../../types/DasErasureCodingProof'
 import { DasErasureCodingScheme } from '../../types/DasErasureCodingScheme'
 
 export const espressoDA: DaLayer = {
-  id: 'espresso',
+  id: 'espressoDA',
   type: 'DaLayer',
   kind: 'PublicBlockchain',
   systemCategory: 'public',
@@ -15,7 +15,7 @@ export const espressoDA: DaLayer = {
     name: 'EspressoDA',
     slug: 'espressoDA',
     description:
-      '',
+      'Espresso DA (Tiramisu) is a three-layer data availability (DA) solution based on the HotShot consensus.',
     links: {
       websites: ['https://espressosys.com/'],
       documentation: ['https://docs.espressosys.com/'],
@@ -32,15 +32,17 @@ export const espressoDA: DaLayer = {
   technology: {
     description: `
     ## Architecture
+    ![EspressoDA architecture](/images/da-layer-technology/espressoDA/architecture.png#center)
 
     ## Consensus
 
+    EspressoDA uses HotShot.
+    
     ## Data Availability Sampling (DAS)
 
     ## Erasure Coding Proof
 
     ## L2s Data Availability
-
     `,
     references: [],
     risks: [],
