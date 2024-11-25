@@ -22,7 +22,7 @@ export function TableFilter<T extends string>(props: Props<T>) {
     (option) => option.value === props.value,
   )
   return (
-    <label htmlFor={id} className="relative">
+    <label htmlFor={id} className="relative text-xs md:text-sm">
       <select
         id={id}
         className="peer absolute left-0 top-0 size-full opacity-0"
@@ -60,7 +60,7 @@ export function TableFilter<T extends string>(props: Props<T>) {
       <div
         className={cn(
           'group flex min-h-8 select-none items-center justify-between gap-1.5 whitespace-nowrap rounded-lg px-3 py-1 shadow-sm',
-          'text-xs font-medium leading-none md:text-sm [&>span]:line-clamp-1',
+          'font-medium leading-none [&>span]:line-clamp-1',
           'bg-gray-200 sidebar:!bg-surface-primary sidebar:main-page-card:!bg-surface-secondary dark:bg-zinc-700',
           'peer-disabled:cursor-not-allowed peer-disabled:opacity-75',
           'ring-inset ring-brand peer-focus:outline-none peer-focus:ring-2',
