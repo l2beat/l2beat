@@ -1,13 +1,13 @@
-Generated with discovered.json: 0x91aa04e14352b9071acbd2fca8b095a4ea379f43
+Generated with discovered.json: 0x6a9946ba73b4d28b3ca4c149b0eeabef852f0767
 
-# Diff at Mon, 25 Nov 2024 14:24:59 GMT:
+# Diff at Mon, 25 Nov 2024 14:36:48 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 21265352
+- current block number: 21265411
 
 ## Description
 
-Standard opstack L2
+Standard opstack L2 in alt-DA mode with unused DAChallenge contract (and unreferenced DisputeGame but instead L2OutputOracle).
 
 ## Initial discovery
 
@@ -19,8 +19,14 @@ Standard opstack L2
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x03eC1C43434E2f910A2fb984906cd2470fdb39c8)
+    contract AutomataMultisig (0x03eC1C43434E2f910A2fb984906cd2470fdb39c8)
     +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DataAvailabilityChallenge (0x08c5DCDD5e46d31CC1591ee15b084663507597f3)
+    +++ description: The DataAvailabilityChallenge contract is used to challenge the full availability of data behind commimted transaction data hashes. See the technology section for more details.
 ```
 
 ```diff
@@ -62,7 +68,7 @@ Standard opstack L2
 ```diff
 +   Status: CREATED
     contract SuperchainConfig (0xDf87154Ed6cF332931b70014bA3d9dF423074FfF)
-    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
 ```
 
 ```diff

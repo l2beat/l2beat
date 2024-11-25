@@ -1,8 +1,8 @@
 {
   "name": "automata",
   "chain": "ethereum",
-  "blockNumber": 21265352,
-  "configHash": "0x0da5bad00dd0056fc1802f765b21183a5923ada3a6e843a14ac008e4d53fce55",
+  "blockNumber": 21265411,
+  "configHash": "0xdf5fedb6a4e18a833e678971f707edab9dc979902f96e74958a39a138b7cfeb9",
   "contracts": [
     {
       "name": "L1ERC721Bridge",
@@ -48,7 +48,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "AutomataMultisig",
       "address": "0x03eC1C43434E2f910A2fb984906cd2470fdb39c8",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -66,6 +66,11 @@
         {
           "permission": "upgrade",
           "target": "0x00bd00c5C7F60e222D9CB8040270Ba929241A280",
+          "via": [{ "address": "0x7617f4a55d62b9EE49578D9C90593e58E607415F" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x08c5DCDD5e46d31CC1591ee15b084663507597f3",
           "via": [{ "address": "0x7617f4a55d62b9EE49578D9C90593e58E607415F" }]
         },
         {
@@ -124,6 +129,57 @@
         "multisigThreshold": "3 of 4 (75%)",
         "nonce": 19,
         "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "DataAvailabilityChallenge",
+      "address": "0x08c5DCDD5e46d31CC1591ee15b084663507597f3",
+      "template": "opstack/DataAvailabilityChallenge",
+      "sourceHashes": [
+        "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
+        "0x61fee1dc963816dc535a7c3634947d11e5adf660665a8996c384ba8d74c0aab2"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "The DataAvailabilityChallenge contract is used to challenge the full availability of data behind commimted transaction data hashes. See the technology section for more details.",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x49eC5Bd8C9cC35Ce26b87E534d2E36980621dDD2",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x03eC1C43434E2f910A2fb984906cd2470fdb39c8",
+          "via": [
+            {
+              "address": "0x7617f4a55d62b9EE49578D9C90593e58E607415F",
+              "delay": 0
+            }
+          ]
+        }
+      ],
+      "sinceTimestamp": 1721184863,
+      "values": {
+        "$admin": "0x7617f4a55d62b9EE49578D9C90593e58E607415F",
+        "$implementation": "0x5206FAA5f1686697188FAe8e6347eAc5575Ed6e3",
+        "$pastUpgrades": [
+          [
+            "2024-07-17T02:54:47.000Z",
+            "0xd181edae7537465e56cee1aedaef625da1efa7cd7fb836057f278f1cc81eb74c",
+            ["0x5206FAA5f1686697188FAe8e6347eAc5575Ed6e3"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "bondSize": "103486250000000000",
+        "challengeWindow": 3600,
+        "fixedResolutionCost": 72925,
+        "owner": "0x49eC5Bd8C9cC35Ce26b87E534d2E36980621dDD2",
+        "resolverRefundPercentage": 100,
+        "resolveWindow": 3600,
+        "variableResolutionCost": 16640,
+        "variableResolutionCostPrecision": 1000,
+        "version": "1.0.0"
       }
     },
     {
@@ -244,6 +300,10 @@
         {
           "permission": "upgrade",
           "target": "0x00bd00c5C7F60e222D9CB8040270Ba929241A280"
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x08c5DCDD5e46d31CC1591ee15b084663507597f3"
         },
         {
           "permission": "upgrade",
@@ -495,13 +555,13 @@
     {
       "name": "SuperchainConfig",
       "address": "0xDf87154Ed6cF332931b70014bA3d9dF423074FfF",
-      "template": "opstack/SuperchainConfig",
+      "template": "opstack/SuperchainConfigFake",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
+      "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
       "categories": ["Upgrades&Governance"],
       "issuedPermissions": [
         {
@@ -625,6 +685,11 @@
       "receivedPermissions": [
         {
           "permission": "configure",
+          "target": "0x08c5DCDD5e46d31CC1591ee15b084663507597f3",
+          "description": "can upgrade the parameters of DA challenges like the bond size or refund percentages, potentially making challenges infeasable or insecure."
+        },
+        {
+          "permission": "configure",
           "target": "0x72934D7AEDC1A2d889ca89Aaf064CD9455E64d00",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
         }
@@ -693,6 +758,16 @@
       "function createStandardL2Token(address _remoteToken, string _name, string _symbol) returns (address)",
       "function initialize(address _bridge)",
       "function version() view returns (string)"
+    ],
+    "0x08c5DCDD5e46d31CC1591ee15b084663507597f3": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
     "0x24574dbF51a36b8ffaAf07B3B44eC0a261731fB2": [
       "constructor()",
@@ -803,6 +878,48 @@
       "function superchainConfig() view returns (address)",
       "function systemConfig() view returns (address)",
       "function version() pure returns (string)"
+    ],
+    "0x5206FAA5f1686697188FAe8e6347eAc5575Ed6e3": [
+      "constructor()",
+      "error BondTooLow(uint256 balance, uint256 required)",
+      "error ChallengeExists()",
+      "error ChallengeNotActive()",
+      "error ChallengeNotExpired()",
+      "error ChallengeWindowNotOpen()",
+      "error InvalidCommitmentLength(uint8 commitmentType, uint256 expectedLength, uint256 actualLength)",
+      "error InvalidInputData(bytes providedDataCommitment, bytes expectedCommitment)",
+      "error InvalidResolverRefundPercentage(uint256 invalidResolverRefundPercentage)",
+      "error UnknownCommitmentType(uint8 commitmentType)",
+      "error WithdrawalFailed()",
+      "event BalanceChanged(address account, uint256 balance)",
+      "event ChallengeStatusChanged(uint256 indexed challengedBlockNumber, bytes challengedCommitment, uint8 status)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RequiredBondSizeChanged(uint256 challengeWindow)",
+      "event ResolverRefundPercentageChanged(uint256 resolverRefundPercentage)",
+      "function balances(address) view returns (uint256)",
+      "function bondSize() view returns (uint256)",
+      "function challenge(uint256 challengedBlockNumber, bytes challengedCommitment) payable",
+      "function challengeWindow() view returns (uint256)",
+      "function deposit() payable",
+      "function fixedResolutionCost() view returns (uint256)",
+      "function getChallenge(uint256 challengedBlockNumber, bytes challengedCommitment) view returns (tuple(address challenger, uint256 lockedBond, uint256 startBlock, uint256 resolvedBlock))",
+      "function getChallengeStatus(uint256 challengedBlockNumber, bytes challengedCommitment) view returns (uint8)",
+      "function initialize(address _owner, uint256 _challengeWindow, uint256 _resolveWindow, uint256 _bondSize, uint256 _resolverRefundPercentage)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function resolve(uint256 challengedBlockNumber, bytes challengedCommitment, bytes resolveData)",
+      "function resolveWindow() view returns (uint256)",
+      "function resolverRefundPercentage() view returns (uint256)",
+      "function setBondSize(uint256 _bondSize)",
+      "function setResolverRefundPercentage(uint256 _resolverRefundPercentage)",
+      "function transferOwnership(address newOwner)",
+      "function unlockBond(uint256 challengedBlockNumber, bytes challengedCommitment)",
+      "function validateCommitment(bytes commitment) pure",
+      "function variableResolutionCost() view returns (uint256)",
+      "function variableResolutionCostPrecision() view returns (uint256)",
+      "function version() view returns (string)",
+      "function withdraw()"
     ],
     "0x5Bf18b3c88b0B04BDC2C8F0c55362D14aCFB2168": [
       "constructor()",
@@ -1061,13 +1178,14 @@
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
+    "opstack/DataAvailabilityChallenge": "0xc92391a74d76d40f6eb90fe429375d0386646b2ae41da47a3daa7674eca75a12",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0x9111ef1dcd42452953522f42115f0396e80b8ffacbe0ee0e3f62763880a6b6cc",
     "opstack/L2OutputOracle": "0x2da233df369518b2564031e603ae272763f51cec1bc780ab0a814e46046b47a2",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
     "opstack/OptimismPortal": "0x5fb419891d613086f39879ae360e765fdb6d154ef5ea5b2f5f98a4443a1b4839",
-    "opstack/SuperchainConfig": "0x76190197170f60e32f3e466ca757cb0bde1055ea134384678dd0911e7a5338ef",
+    "opstack/SuperchainConfigFake": "0x49e6353b6089be214c9fc1f021124f840323a29f519b5240594dd16c3a775ca8",
     "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3"
   }
 }
