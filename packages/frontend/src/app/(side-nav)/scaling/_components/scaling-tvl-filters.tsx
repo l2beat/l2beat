@@ -45,7 +45,7 @@ export function ScalingTvlFilters({
   return (
     <div
       className={cn(
-        'flex flex-col-reverse gap-x-4 gap-y-2 [@media(min-width:1400px)]:flex-row [@media(min-width:1400px)]:justify-between',
+        'flex flex-col gap-2 [@media(min-width:1400px)]:flex-row [@media(min-width:1400px)]:justify-between',
         className,
       )}
     >
