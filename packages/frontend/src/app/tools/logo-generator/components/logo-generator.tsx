@@ -17,6 +17,7 @@ interface Props {
 }
 
 export function LogoGenerator({ projects }: Props) {
+  throw new Error('Not implemented')
   const [size, setSize] = useState(32)
   const [borderRadius, setBorderRadius] = useState(0)
   const [hideUpcoming, setHideUpcoming] = useState(false)
