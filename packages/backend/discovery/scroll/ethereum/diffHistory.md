@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x8805237f1312263093e4828c630a57292dd03616
+
+# Diff at Mon, 25 Nov 2024 10:51:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@62a44faa52866a55f9881cb2852ac75b1fcc60b0 block: 21184190
+- current block number: 21264288
+
+## Description
+
+Same one signer removed from ExecutorMultisig and EmergencyMultisig.
+
+## Watched changes
+
+```diff
+    contract ExecutorMultisig (0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) {
+    +++ description: None
+      values.$members.4:
+-        "0x568993632c34604098e35a184C52aD390c70f754"
+      values.$members.3:
+-        "0xd7bC70ecf344C279eB78C8899Ba5538e2e3A0632"
++        "0x568993632c34604098e35a184C52aD390c70f754"
+      values.multisigThreshold:
+-        "1 of 5 (20%)"
++        "1 of 4 (25%)"
+    }
+```
+
+```diff
+    contract EmergencyMultisig (0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) {
+    +++ description: None
+      values.$members.4:
+-        "0x568993632c34604098e35a184C52aD390c70f754"
+      values.$members.3:
+-        "0xd7bC70ecf344C279eB78C8899Ba5538e2e3A0632"
++        "0x568993632c34604098e35a184C52aD390c70f754"
+      values.multisigThreshold:
+-        "2 of 5 (40%)"
++        "2 of 4 (50%)"
+    }
+```
+
 Generated with discovered.json: 0x8523c24bfac779038af8583a650b1aca37ec8f83
 
 # Diff at Thu, 14 Nov 2024 06:38:22 GMT:
