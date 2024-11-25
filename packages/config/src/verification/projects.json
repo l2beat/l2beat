@@ -27,6 +27,8 @@
   "arithmic": true,
   "astarzkevm": true,
   "astarzkevm-dac-layer-astarzkevm-dac-bridge": true,
+  "automata": true,
+  "automata-da-automataDABridge": true,
   "avail-no-bridge": true,
   "avail-vector": true,
   "avalanche": true,
