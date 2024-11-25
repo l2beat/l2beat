@@ -8597,7 +8597,8 @@
       "iconUrl": "https://assets.coingecko.com/coins/images/21159/large/_UMAMI-200px.jpg?1696520536",
       "chainId": 42161,
       "source": "native",
-      "supply": "circulatingSupply"
+      "supply": "circulatingSupply",
+      "untilTimestamp": 1731196800
     },
     {
       "name": "USD Coin",
