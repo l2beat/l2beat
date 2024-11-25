@@ -4586,6 +4586,12 @@
       "supply": "totalSupply",
       "excludeFromTotal": true,
       "coingeckoId": "tether"
+    },
+    {
+      "symbol": "solvBTC",
+      "address": "0x541fd749419ca806a8bc7da8ac23d346f2df8b77",
+      "source": "native",
+      "supply": "totalSupply"
     }
   ],
   "rari": [
