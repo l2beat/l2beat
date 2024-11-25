@@ -2,7 +2,6 @@ import { daLayers } from '@l2beat/config'
 import { ImageResponse } from 'next/og'
 import { NextResponse } from 'next/server'
 import { ProjectOpengraphImage } from '~/components/opengraph-image/project'
-import { env } from '~/env'
 import { getBaseUrl } from '~/utils/get-base-url'
 
 export const runtime = 'nodejs'
