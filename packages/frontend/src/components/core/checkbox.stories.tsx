@@ -17,7 +17,6 @@ type Story = StoryObj<typeof meta>
 
 export const Unchecked: Story = {
   args: {
-    id: 'unchecked',
     children: 'Unchecked',
   },
 }
@@ -32,7 +31,6 @@ export const Checked: Story = {
 
 export const Disabled: Story = {
   args: {
-    id: 'disabled',
     children: 'Disabled',
     disabled: true,
   },

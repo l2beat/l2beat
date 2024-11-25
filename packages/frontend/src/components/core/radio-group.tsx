@@ -40,6 +40,7 @@ const RadioGroupItem = ({
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1',
         'group-data-[variant=highlighted]/radio-group:data-[state=checked]:bg-gradient-to-r group-data-[variant=highlighted]/radio-group:data-[state=checked]:from-purple-100 group-data-[variant=highlighted]/radio-group:data-[state=checked]:to-pink-100 group-data-[variant=highlighted]/radio-group:data-[state=checked]:text-white',
         'data-[state=checked]:bg-pure-white dark:data-[state=checked]:bg-black',
+        'sidebar:data-[state=checked]:!bg-surface-tertiary sidebar:main-page-card:data-[state=checked]:!bg-pure-white dark:sidebar:main-page-card:data-[state=checked]:!bg-black',
         className,
       )}
       {...props}
