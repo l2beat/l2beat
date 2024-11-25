@@ -274,9 +274,6 @@ export const morph: Layer2 = {
     },
     forceTransactions: {
       ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
-      description:
-        FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM.description +
-        ' Even though EnforcedTxGateway is enabled, sequencers can still skip (censor) transactions.',
       references: [
         {
           text: 'EnforcedTxGateway.sol - Etherscan source code',
@@ -287,7 +284,6 @@ export const morph: Layer2 = {
           href: 'https://etherscan.io/address/0x073403e147a8e607b80985fe458c0b527287278f#code#F1#L242',
         },
       ],
-      //
     },
     exitMechanisms: [
       {
@@ -321,8 +317,7 @@ export const morph: Layer2 = {
         ...upgradeMorphMultisig,
       }),
       discovery.getContractDetails('L1MessageQueueWithGasPriceOracle', {
-        description:
-          'Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway. The latter contract, which would allow users to send L2 messages from L1 with their own address as the sender, is not enabled yet.',
+        description: `Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.${isEnforcedTxGatewayPaused ? ' The latter contract, which would allow users to send L2 messages from L1 with their own address as the sender, is not enabled (paused).' : ''}`,
         ...upgradeMorphMultisig,
       }),
       discovery.getContractDetails('Whitelist', {

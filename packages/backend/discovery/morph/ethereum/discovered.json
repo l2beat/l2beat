@@ -1,7 +1,7 @@
 {
   "name": "morph",
   "chain": "ethereum",
-  "blockNumber": 21236006,
+  "blockNumber": 21264263,
   "configHash": "0x4c0e946428b6b753e0f7147b44adbbdcb9b8cdba0c6f9231e0b725859f019ed5",
   "contracts": [
     {
@@ -187,9 +187,9 @@
         "l2BaseFee": 1000000,
         "maxGasLimit": 30000000,
         "MESSENGER": "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
-        "nextCrossDomainMessageIndex": 2832,
+        "nextCrossDomainMessageIndex": 3180,
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-        "pendingQueueIndex": 2561,
+        "pendingQueueIndex": 2945,
         "ROLLUP_CONTRACT": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "whitelistChecker": "0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
       },
@@ -336,8 +336,8 @@
         "finalizationPeriodSeconds": 172800,
         "inChallenge": false,
         "l1StakingContract": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-        "lastCommittedBatchIndex": 2395,
-        "lastFinalizedBatchIndex": 2252,
+        "lastCommittedBatchIndex": 2679,
+        "lastFinalizedBatchIndex": 2535,
         "LAYER_2_CHAIN_ID": 2818,
         "messageQueue": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
@@ -402,7 +402,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 17,
+        "nonce": 18,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
@@ -452,7 +452,7 @@
         "feeVault": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "messageQueue": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-        "paused": false
+        "paused": true
       }
     },
     {
@@ -491,7 +491,7 @@
         "counterpart": "0x5300000000000000000000000000000000000007",
         "feeVault": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "maxReplayTimes": 3,
-        "messageNonce": 2832,
+        "messageNonce": 3180,
         "messageQueue": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "paused": false,
