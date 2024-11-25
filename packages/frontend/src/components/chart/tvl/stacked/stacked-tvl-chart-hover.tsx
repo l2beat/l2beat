@@ -36,14 +36,17 @@ export function StackedTvlChartHover(props: Props) {
     },
   ]
   return (
-    <div className="flex min-w-52 flex-col gap-1">
-      <div className="whitespace-nowrap">
+    <div className="flex w-36 flex-col gap-1 xs:!w-52">
+      <div>
         {formatTimestamp(props.timestamp, {
           mode: 'datetime',
         })}
       </div>
       <div className="flex w-full items-center justify-between gap-2">
-        <span className="text-sm text-gray-700 dark:text-gray-50">
+        <span className="text-sm text-gray-700 dark:text-gray-50 xs:hidden">
+          Total
+        </span>
+        <span className="hidden text-sm text-gray-700 dark:text-gray-50 xs:inline">
           Total value locked
         </span>
         {total}
