@@ -4554,6 +4554,12 @@
   ],
   "taiko": [
     {
+      "symbol": "solvBTC",
+      "address": "0x541fd749419ca806a8bc7da8ac23d346f2df8b77",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "symbol": "USDC.e",
       "address": "0x19e26B0638bf63aa9fa4d14c6baF8D52eBE86C5C",
       "source": "external",
@@ -4586,12 +4592,6 @@
       "supply": "totalSupply",
       "excludeFromTotal": true,
       "coingeckoId": "tether"
-    },
-    {
-      "symbol": "solvBTC",
-      "address": "0x541fd749419ca806a8bc7da8ac23d346f2df8b77",
-      "source": "native",
-      "supply": "totalSupply"
     }
   ],
   "rari": [
