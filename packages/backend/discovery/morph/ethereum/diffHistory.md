@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x56f6b20b52991cc5411b3c1be7d76e32754c863d
+
+# Diff at Mon, 25 Nov 2024 10:45:45 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@62a44faa52866a55f9881cb2852ac75b1fcc60b0 block: 21236006
+- current block number: 21264263
+
+## Description
+
+EnforcedTxGateway paused after our nudge on twitter.
+
+## Watched changes
+
+```diff
+    contract EnforcedTxGateway (0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7) {
+    +++ description: None
+      values.paused:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x770c6ce5d96d0b1315ca7492b36eb7b735e8611e
 
 # Diff at Thu, 21 Nov 2024 12:08:57 GMT:

@@ -69,7 +69,11 @@ async function getTokensDataForProject(
         return undefined
       }
       const price = pricesMap.get(priceConfig.configId)
-      assert(price, 'Price not found for id ' + priceConfig.configId)
+
+      assert(
+        price,
+        `Price not found. Price configId: ${priceConfig.configId}, amount configId: ${a.configId}`,
+      )
 
       return {
         assetId: priceConfig.assetId,

@@ -27,10 +27,14 @@ export async function getLatestAmountForConfigurations(
     const dataByConfigId = groupBy(data, 'configId')
 
     for (const laggingConfig of status.lagging) {
+      const config = configurations.find((c) => c.configId === laggingConfig.id)
+      if (!config || config.untilTimestamp?.lt(targetTimestamp)) {
+        continue
+      }
+
       const latestRecord = dataByConfigId[laggingConfig.id]?.find((d) =>
         d.timestamp.equals(laggingConfig.latestTimestamp),
       )
-
       if (latestRecord) {
         lagging.set(laggingConfig.id, {
           latestTimestamp: laggingConfig.latestTimestamp,
@@ -40,7 +44,6 @@ export async function getLatestAmountForConfigurations(
       }
     }
   }
-
   return {
     amounts,
     lagging,
