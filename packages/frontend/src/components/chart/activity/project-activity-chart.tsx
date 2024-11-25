@@ -82,7 +82,6 @@ export function ProjectActivityChart({ milestones, projectId }: Props) {
               projectChart
             />
             <Checkbox
-              id="show-mainnet"
               checked={showMainnet}
               onCheckedChange={(state) => setShowMainnet(!!state)}
             >
