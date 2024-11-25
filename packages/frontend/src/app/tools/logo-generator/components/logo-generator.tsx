@@ -17,7 +17,6 @@ interface Props {
 }
 
 export function LogoGenerator({ projects }: Props) {
-  throw new Error('Not implemented')
   const [size, setSize] = useState(32)
   const [borderRadius, setBorderRadius] = useState(0)
   const [hideUpcoming, setHideUpcoming] = useState(false)
@@ -57,9 +56,10 @@ export function LogoGenerator({ projects }: Props) {
             id="type"
             value={types}
             multiple
-            onChange={(e) =>
+            onChange={(e) => {
               setTypes(Array.from(e.target.selectedOptions).map((o) => o.value))
-            }
+              throw new Error('Not implemented')
+            }}
           >
             <option value="layer2">Layer 2s</option>
             <option value="layer3">Layer 3s</option>
