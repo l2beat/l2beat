@@ -1,6 +1,6 @@
+import { StarkexClient } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { StarkexClient } from '../../../../peripherals/starkex/StarkexClient'
 import { activityRecord } from '../../utils/aggregatePerDay.test'
 import { StarkexTxsCountService } from './StarkexTxsCountService'
 
