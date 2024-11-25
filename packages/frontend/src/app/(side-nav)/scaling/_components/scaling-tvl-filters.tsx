@@ -55,7 +55,6 @@ export function ScalingTvlFilters({
         showRollupsOnly={showRollupsOnly}
       />
       <Checkbox
-        id="exclude-associated-tokens"
         checked={excludeAssociatedTokens}
         onCheckedChange={(checked) => setExcludeAssociatedTokens(!!checked)}
         className="max-md:ml-4"

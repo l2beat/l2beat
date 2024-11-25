@@ -210,8 +210,6 @@ function initializeConfigurations(
             minTimestamp: configuration.minTimestamp,
             stateUpdateMode: configuration.stateUpdate,
           }
-        case 'OPStack':
-          return
         case 'Loopring':
           return {
             projectId: configuration.projectId,

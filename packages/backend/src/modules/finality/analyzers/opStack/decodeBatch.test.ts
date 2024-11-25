@@ -3,11 +3,11 @@ import path from 'path'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { BufferReader, decodeSpanBatch } from './decodeSpanBatch'
+import { BufferReader, decodeBatch } from './decodeBatch'
 import { byteArrFromHexStr } from './utils'
 
-describe(decodeSpanBatch.name, () => {
-  it('should decode the blob', () => {
+describe(decodeBatch.name, () => {
+  it('should decode the span batch blob', () => {
     const buff = readFileSync(path.join(__dirname, 'stub/batch_base.json'))
     const stub = JSON.parse(buff.toString()) as {
       batch: string
@@ -15,9 +15,24 @@ describe(decodeSpanBatch.name, () => {
     }
 
     const batch = byteArrFromHexStr(stub.batch)
-    const data = decodeSpanBatch(batch, {
+    const data = decodeBatch(batch, {
       l2BlockTimeSeconds: 2,
       genesisTimestamp: new UnixTime(1686789347),
+    })
+    expect(data).toEqual(stub.decoded)
+  })
+
+  it('should decode the batch v0 blob', () => {
+    const buff = readFileSync(path.join(__dirname, 'stub/batch_version0.json'))
+    const stub = JSON.parse(buff.toString()) as {
+      batch: string
+      decoded: { timestamp: number; blockNumber: number; txCount: number }[]
+    }
+
+    const batch = byteArrFromHexStr(stub.batch)
+    const data = decodeBatch(batch, {
+      l2BlockTimeSeconds: 2,
+      genesisTimestamp: new UnixTime(1708809815),
     })
     expect(data).toEqual(stub.decoded)
   })
