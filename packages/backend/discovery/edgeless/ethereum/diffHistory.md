@@ -1,3 +1,144 @@
+Generated with discovered.json: 0x5c2ede640b82d0c4d7b085de9810b8d1784bcb9f
+
+# Diff at Mon, 25 Nov 2024 10:42:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@62a44faa52866a55f9881cb2852ac75b1fcc60b0 block: 21235631
+- current block number: 21264245
+
+## Description
+
+ArbOS v32 upgrade to known contracts with unused fastConfirmer.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract OneStepProver0 (0x05cd95968709034744797cC37a58FD43fabFff9F)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverHostIo (0x34da361b71484F3F6B459531852ff4a60C36fE55)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMemory (0x7B3cF41acea4230183e4e367c456d878467925Bf)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+    contract RollupProxy (0x890025891508a463A636f81D2f532a97210240de) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      sourceHashes.2:
+-        "0xef94a66bd5339efd18fb9ca1f8031482e7ef7bbe6c5a0a10fae254ab83712406"
++        "0x7ee21b18b2e18c636bfafc08ff72692cc43302b2599ba75f0abad67282866dd5"
+      sourceHashes.1:
+-        "0x8b48118fe606012c0dcac2ccc1821785935aec89fab8f219f47b32c482b0017e"
++        "0x9349e73cbc2d2b818c1d79711574ba210b56249d8d3845bc78c776caf8f8ff42"
+      values.$implementation.1:
+-        "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"
++        "0x4944f77757AE7050A7EF843FacA82FC449aB5901"
+      values.$implementation.0:
+-        "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A"
++        "0xA798E033b1B3976d77a4A6aeDC496873a7264156"
+      values.$pastUpgrades.1:
++        ["2024-11-24T16:28:35.000Z","0xf0976079c29124f6917774cf38e659b554b89d59a451fd9c6ebe546e87b53cbd",["0xA798E033b1B3976d77a4A6aeDC496873a7264156","0x4944f77757AE7050A7EF843FacA82FC449aB5901"]]
+      values.$upgradeCount:
+-        1
++        2
++++ description: ArbOS version derived from known wasmModuleRoots.
+      values.arbOsFromWmRoot:
+-        "ArbOS v20 wasmModuleRoot"
++        "ArbOS v32 wasmModuleRoot"
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4"
++        "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39"
+      values.anyTrustFastConfirmer:
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract ChallengeManager (0x893057442A952E3254CA53d007AD6BBB502f557e) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      sourceHashes.1:
+-        "0x58a6261c83c2766f749641902ad6fdb695ea189d2747f073b57a8f35b9a547e5"
++        "0x1a095768302d7d1c3d02375eaa3341833b4f1aaac707e1c608bce478c87cbf27"
+      values.$implementation:
+-        "0x38B79f7D08326833051AA4D0a119D8095247716f"
++        "0x92726c81BbECbC9b871304B290b412EC78cF842b"
+      values.$pastUpgrades.2:
++        ["2024-11-24T16:28:35.000Z","0xf0976079c29124f6917774cf38e659b554b89d59a451fd9c6ebe546e87b53cbd",["0x92726c81BbECbC9b871304B290b412EC78cF842b"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.osp:
+-        "0xcd6fda29E15919de86De6E94C348776d544cFa6E"
++        "0x1F58949AB4C6A65C4055f45fdF9297C5F216CD95"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProofEntry (0xcd6fda29E15919de86De6E94C348776d544cFa6E)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMath (0xdFa7A279F4DF9dd16cA91094ac429eC5B12EDB94)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProofEntry (0x1F58949AB4C6A65C4055f45fdF9297C5F216CD95)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverHostIo (0x251E34E4644D06b319AD39c602b857E47cCa13C3)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMemory (0x6119D59799E83329847de25Dc787A0D9ab4c0323)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProver0 (0xaac292Cb9a205A140003775529181787fdbc4DC6)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMath (0xE6068c35d4FB1899b9419cE3e7B66D318C652847)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+## Source code changes
+
+```diff
+.../ChallengeManager/ChallengeManager.sol          | 404 ++++++----
+ .../OneStepProofEntry.sol                          | 485 +++++++++--
+ .../{.flat@21235631 => .flat}/OneStepProver0.sol   | 765 +++++++++++++-----
+ .../OneStepProverHostIo.sol                        | 892 +++++++++++++++++----
+ .../OneStepProverMath.sol                          |  65 +-
+ .../OneStepProverMemory.sol                        | 315 ++++++--
+ .../RollupProxy/RollupAdminLogic.1.sol             | 370 ++++++---
+ .../RollupProxy/RollupUserLogic.2.sol              | 415 ++++++----
+ 8 files changed, 2766 insertions(+), 945 deletions(-)
+```
+
 Generated with discovered.json: 0xea39f03c2a2b14f40d83705240bef1054c6ff480
 
 # Diff at Thu, 21 Nov 2024 10:53:29 GMT:
