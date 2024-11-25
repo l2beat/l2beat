@@ -409,6 +409,20 @@
       "supply": "zero"
     },
     {
+      "name": "Automata",
+      "coingeckoId": "automata",
+      "address": "0xA2120b9e674d3fC3875f415A7DF52e382F141225",
+      "symbol": "ATA",
+      "decimals": 18,
+      "deploymentTimestamp": 1622409616,
+      "coingeckoListingTimestamp": 1623024000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/15985/large/ATA_Icon_%28Profile_2%29.png?1720487988",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Axie Infinity Shard",
       "coingeckoId": "axie-infinity",
       "address": "0xBB0E17EF65F82Ab018d8EDd776e8DD940327B28b",
@@ -8593,12 +8607,12 @@
       "decimals": 9,
       "deploymentTimestamp": 1638219842,
       "coingeckoListingTimestamp": 1638403200,
+      "untilTimestamp": 1731196800,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/21159/large/_UMAMI-200px.jpg?1696520536",
       "chainId": 42161,
       "source": "native",
-      "supply": "circulatingSupply",
-      "untilTimestamp": 1731196800
+      "supply": "circulatingSupply"
     },
     {
       "name": "USD Coin",

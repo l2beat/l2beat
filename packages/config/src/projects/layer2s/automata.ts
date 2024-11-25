@@ -43,6 +43,8 @@ export const automata: Layer2 = opStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
+  associatedTokens: ['ATA'],
+  nonTemplateOptimismPortalEscrowTokens: ['ATA'],
   isNodeAvailable: 'UnderReview',
   rpcUrl: 'https://rpc.ata.network/',
   discovery,
