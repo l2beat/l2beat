@@ -32,14 +32,9 @@ export const hychain: Layer2 = orbitStackL2({
   discovery,
   nativeToken: 'TOPIA',
   associatedTokens: ['TOPIA'],
-  bridge: discovery.getContract('Bridge'),
+  bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   rpcUrl: 'https://rpc.hychain.com/http',
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'HychainMultisig',
-      'Can execute upgrades via the UpgradeExecutor.',
-    ),
-  ],
+  discoveryDrivenData: true,
 })

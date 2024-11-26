@@ -1,11 +1,11 @@
 {
   "name": "hychain",
   "chain": "ethereum",
-  "blockNumber": 21041836,
-  "configHash": "0xebc6e15f3457960a1016fa5bb22b14d5f9006a445829433cc3b2d29057941b4c",
+  "blockNumber": 21272771,
+  "configHash": "0x05ddb853160e40ab50f48c4cdca88967af64a9cfe223303d7a8e7608213411f7",
   "contracts": [
     {
-      "name": "Outbox",
+      "name": "ERC20Outbox",
       "address": "0x0389E24A4Bc96518169f83F50FCDdA442dD8eAFd",
       "template": "orbitstack/Outbox",
       "sourceHashes": [
@@ -13,6 +13,7 @@
         "0x3073f29910dee50069a001fb20e58cca3dcc1b3c8da4b91809af2dd356ef0c8c"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "Outbox",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
       "issuedPermissions": [
         {
@@ -52,8 +53,7 @@
         "l2ToL1WithdrawalAmount": 0,
         "OUTBOX_VERSION": 2,
         "rollup": "0x8f98f9ae2f2836Ed3a628c23311Ad9976B9fBF1B"
-      },
-      "derivedName": "ERC20Outbox"
+      }
     },
     {
       "name": "OneStepProofEntry",
@@ -179,7 +179,7 @@
       }
     },
     {
-      "name": "Bridge",
+      "name": "ERC20Bridge",
       "address": "0x73C6af7029E714DFf1F1554F88b79B335011Da68",
       "template": "orbitstack/Bridge",
       "sourceHashes": [
@@ -187,6 +187,7 @@
         "0x057de68a7007d55f4394ba6eafb2c802efcaf13583ff9342ea4d0ee3924d9be1"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "Bridge",
       "description": "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
       "issuedPermissions": [
         {
@@ -227,14 +228,13 @@
           "0x617f70525Dc4D2BBbd6ADFd3781DbEAe5C8F0048"
         ],
         "allowedOutboxList": ["0x0389E24A4Bc96518169f83F50FCDdA442dD8eAFd"],
-        "delayedMessageCount": 8013,
+        "delayedMessageCount": 9121,
         "nativeToken": "0xcccCb68e1A848CBDB5b60a974E07aAE143ed40C3",
         "rollup": "0x8f98f9ae2f2836Ed3a628c23311Ad9976B9fBF1B",
         "sequencerInbox": "0xaF5800ADF22301968613c37DA9C3C2a486eA915A",
-        "sequencerMessageCount": 5709,
-        "sequencerReportedSubMessageCount": 2515368
-      },
-      "derivedName": "ERC20Bridge"
+        "sequencerMessageCount": 6506,
+        "sequencerReportedSubMessageCount": 2805065
+      }
     },
     {
       "name": "HychainMultisig",
@@ -414,8 +414,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["0x798Fa726f0B4DF564681446D051b344E3FE4a6ca"]
-      },
-      "derivedName": "UpgradeExecutor"
+      }
     },
     {
       "name": "OneStepProverMath",
@@ -504,12 +503,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1146,
+        "firstUnresolvedNode": 1274,
         "inbox": "0xD6c596b7ca17870DD50D322393deCE6C2085a116",
         "isERC20Enabled": false,
         "lastStakeBlock": 19366386,
-        "latestConfirmed": 1145,
-        "latestNodeCreated": 1170,
+        "latestConfirmed": 1273,
+        "latestNodeCreated": 1299,
         "loserStakeEscrow": "0x42875471D43d54B538B333F041E75a9a45Bf3Aa0",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0389E24A4Bc96518169f83F50FCDdA442dD8eAFd",
@@ -552,7 +551,6 @@
           "description": "Emitted on createChallenge() in RollupUserLogic."
         }
       },
-      "derivedName": "RollupProxy",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -637,7 +635,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 5709,
+        "batchCount": 6506,
         "batchPosters": ["0xC1d59449a546bA80d332De629724df8e9A9e9584"],
         "bridge": "0x73C6af7029E714DFf1F1554F88b79B335011Da68",
         "dacKeyset": {
@@ -661,17 +659,16 @@
         "rollup": "0x8f98f9ae2f2836Ed3a628c23311Ad9976B9fBF1B",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 8012
+        "totalDelayedMessagesRead": 9120
       },
       "fieldMeta": {
         "maxTimeVariation": {
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
-      },
-      "derivedName": "SequencerInbox"
+      }
     },
     {
-      "name": "Inbox",
+      "name": "ERC20Inbox",
       "address": "0xD6c596b7ca17870DD50D322393deCE6C2085a116",
       "template": "orbitstack/Inbox",
       "sourceHashes": [
@@ -679,6 +676,7 @@
         "0xcb390b491549387c8fcc09fb22fbea7adf54cc74b7247a0c738369ddd7049b92"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "Inbox",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
       "issuedPermissions": [
         {
@@ -714,8 +712,7 @@
         "maxDataSize": 117964,
         "paused": false,
         "sequencerInbox": "0xaF5800ADF22301968613c37DA9C3C2a486eA915A"
-      },
-      "derivedName": "ERC20Inbox"
+      }
     },
     {
       "name": "OneStepProver0",
@@ -771,8 +768,7 @@
         "resultReceiver": "0x8f98f9ae2f2836Ed3a628c23311Ad9976B9fBF1B",
         "sequencerInbox": "0xaF5800ADF22301968613c37DA9C3C2a486eA915A",
         "totalChallengesCreated": 0
-      },
-      "derivedName": "ChallengeManager"
+      }
     }
   ],
   "eoas": [
