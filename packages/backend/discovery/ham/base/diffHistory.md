@@ -1,3 +1,57 @@
+Generated with discovered.json: 0xdefa84646cb9452a4fe7ca1a08d0fb4a72886250
+
+# Diff at Mon, 18 Nov 2024 17:14:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b54f69b0d6666908da980a31e5f52da87009f1ab block: 17827903
+- current block number: 22580368
+
+## Description
+
+Signer changes, gas limit raised.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 2 (0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d) {
+    +++ description: None
+      values.$members.3:
+-        "0x4919167EA334BE84B1604Cbc82A26A7746D5943e"
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 4 (75%)"
++        "2 of 3 (67%)"
+    }
+```
+
+```diff
+    contract SystemConfig (0xad22377De22537e4e6bd192AeBCa524a79B0d3Fd) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        30000000
++        45000000
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 17827903 (main branch discovery), not current.
+
+```diff
+    contract Caldera Multisig 2 (0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d) {
+    +++ description: None
+      name:
+-        "HamMultisig2"
++        "Caldera Multisig 2"
+    }
+```
+
 Generated with discovered.json: 0x4d55f2d920b7cd616e93c2536e16e16254aa5069
 
 # Diff at Fri, 01 Nov 2024 12:24:21 GMT:

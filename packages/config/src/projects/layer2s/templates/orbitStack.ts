@@ -310,6 +310,14 @@ function orbitStackCommon(
   Layer2,
   'type' | 'display' | 'config' | 'isArchived' | 'stage' | 'riskView'
 > {
+  const usesBlobs =
+    templateVars.usesBlobs ??
+    templateVars.discovery.getContractValueOrUndefined(
+      'SequencerInbox',
+      'postsBlobs',
+    ) ??
+    false
+
   const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
     templateVars.discovery,
   )
@@ -336,9 +344,7 @@ function orbitStackCommon(
       'DA badge is required for external DA',
     )
   }
-  const daBadge = templateVars.usesBlobs
-    ? Badge.DA.EthereumBlobs
-    : Badge.DA.EthereumCalldata
+  const daBadge = usesBlobs ? Badge.DA.EthereumBlobs : Badge.DA.EthereumCalldata
 
   const validators: ScalingProjectPermission = {
     name: 'Validators/Proposers',
@@ -419,7 +425,7 @@ function orbitStackCommon(
               })
             })()
           : {
-              ...(templateVars.usesBlobs
+              ...(usesBlobs
                 ? TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA
                 : TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL),
               references: [
@@ -532,6 +538,18 @@ function orbitStackCommon(
 }
 
 export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
+  assert(
+    templateVars.hostChain !== 'Multiple',
+    'Unable to automatically stack risks for multiple chains, please override stackedRiskView in the template.',
+  )
+  const layer2s = require('..').layer2s as Layer2[]
+
+  const baseChain = layer2s.find((l2) => l2.id === templateVars.hostChain)
+  assert(
+    baseChain,
+    `Could not find base chain ${templateVars.hostChain} in layer2s`,
+  )
+
   const blockNumberOpcodeTimeSeconds =
     templateVars.blockNumberOpcodeTimeSeconds ?? 12 // currently only for the case of Degen Chain (built on OP stack chain which returns `block.number` based on 2 second block times, orbit host chains do not do this)
 
@@ -613,47 +631,34 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
   }
 
   const getStackedRisks = () => {
-    assert(
-      templateVars.hostChain !== 'Multiple',
-      'Unable to automatically stack risks for multiple chains, please override stackedRiskView in the template.',
-    )
-    const layer2s = require('..').layer2s as Layer2[]
-
-    const baseChainRiskView = layer2s.find(
-      (l2) => l2.id === templateVars.hostChain,
-    )?.riskView
-    assert(
-      baseChainRiskView,
-      `Could not find base chain ${templateVars.hostChain} in layer2s`,
-    )
     return {
       stateValidation:
         templateVars.stackedRiskView?.stateValidation ??
         pickWorseRisk(
           riskView.stateValidation,
-          baseChainRiskView.stateValidation,
+          baseChain.riskView.stateValidation,
         ),
       dataAvailability:
         templateVars.stackedRiskView?.dataAvailability ??
         pickWorseRisk(
           riskView.dataAvailability,
-          baseChainRiskView.dataAvailability,
+          baseChain.riskView.dataAvailability,
         ),
       exitWindow:
         templateVars.stackedRiskView?.exitWindow ??
-        pickWorseRisk(riskView.exitWindow, baseChainRiskView.exitWindow),
+        pickWorseRisk(riskView.exitWindow, baseChain.riskView.exitWindow),
       sequencerFailure:
         templateVars.stackedRiskView?.sequencerFailure ??
         sumRisk(
           riskView.sequencerFailure,
-          baseChainRiskView.sequencerFailure,
+          baseChain.riskView.sequencerFailure,
           RISK_VIEW.SEQUENCER_SELF_SEQUENCE,
         ),
       proposerFailure:
         templateVars.stackedRiskView?.sequencerFailure ??
         sumRisk(
           riskView.proposerFailure,
-          baseChainRiskView.proposerFailure,
+          baseChain.riskView.proposerFailure,
           RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
         ),
       validatedBy:
@@ -730,9 +735,9 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
               rollupNodeLink: templateVars.nodeSourceLink,
             },
           )),
-    dataAvailability: [
-      postsToExternalDA
-        ? (() => {
+    dataAvailability: postsToExternalDA
+      ? [
+          (() => {
             const DAC = templateVars.discovery.getContractValue<{
               membersCount: number
               requiredSignatures: number
@@ -747,17 +752,9 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
               }),
               mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
             })
-          })()
-        : addSentimentToDataAvailability({
-            layers: [
-              templateVars.usesBlobs
-                ? DA_LAYERS.ETH_BLOBS_OR_CALLLDATA
-                : DA_LAYERS.ETH_CALLDATA,
-            ],
-            bridge: DA_BRIDGES.ENSHRINED,
-            mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-          }),
-    ],
+          })(),
+        ]
+      : baseChain.dataAvailability,
     stackedRiskView: getStackedRisks(),
     riskView,
     config: {
@@ -853,6 +850,14 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       ? 'orbit-optimium'
       : 'orbit-rollup'
 
+  const usesBlobs =
+    templateVars.usesBlobs ??
+    templateVars.discovery.getContractValueOrUndefined(
+      'SequencerInbox',
+      'postsBlobs',
+    ) ??
+    false
+
   return {
     type: 'layer2',
     ...orbitStackCommon(templateVars, ETHEREUM_EXPLORER_URL, 12),
@@ -935,7 +940,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           })()
         : addSentimentToDataAvailability({
             layers: [
-              templateVars.usesBlobs
+              usesBlobs
                 ? DA_LAYERS.ETH_BLOBS_OR_CALLLDATA
                 : DA_LAYERS.ETH_CALLDATA,
             ],

@@ -299,7 +299,7 @@ export class TestRootIndexer extends RootIndexer {
     name?: string,
     retryStrategy?: { tickRetryStrategy?: RetryStrategy },
   ) {
-    super(Logger.SILENT.tag(name), retryStrategy ?? {})
+    super(Logger.SILENT.tag({ tag: name }), retryStrategy ?? {})
 
     const oldDispatch = Reflect.get(this, 'dispatch')
     Reflect.set(this, 'dispatch', (action: IndexerAction) => {
@@ -392,7 +392,7 @@ class TestChildIndexer extends ChildIndexer {
       updateRetryStrategy?: RetryStrategy
     },
   ) {
-    super(Logger.SILENT.tag(name), parents, retryStrategy ?? {})
+    super(Logger.SILENT.tag({ tag: name }), parents, retryStrategy ?? {})
 
     const oldDispatch = Reflect.get(this, 'dispatch')
     Reflect.set(this, 'dispatch', (action: IndexerAction) => {

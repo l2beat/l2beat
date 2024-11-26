@@ -1,7 +1,7 @@
 import { ActivityRecord } from '@l2beat/database'
+import { StarkexClient } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
-import { StarkexClient } from '../../../../peripherals/starkex/StarkexClient'
 
 export class StarkexTxsCountService {
   constructor(

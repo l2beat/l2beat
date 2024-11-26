@@ -1,7 +1,7 @@
 {
   "name": "metis",
   "chain": "ethereum",
-  "blockNumber": 20211335,
+  "blockNumber": 21242106,
   "configHash": "0x6550d030fed3b00ba55a8cbdceab43d131d61699b914915ddbd5fb38b8a3c710",
   "contracts": [
     {
@@ -42,8 +42,13 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8",
-          "via": []
+          "target": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+          "via": [
+            {
+              "address": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8",
+              "delay": 0
+            }
+          ]
         }
       ],
       "ignoreInWatchMode": ["totalLocked", "totalRewardsLiquidated"],
@@ -73,8 +78,8 @@
         "minLock": "20000000000000000000000",
         "owner": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "rewardPayer": "0x62478E4eeb4070fE399866aB05e821AB97200947",
-        "totalLocked": "339093856307591721079574",
-        "totalRewardsLiquidated": "4544427360727035000000"
+        "totalLocked": "489592026707194902745743",
+        "totalRewardsLiquidated": "21186281823923435000000"
       },
       "derivedName": "LockingInfo"
     },
@@ -94,10 +99,10 @@
       "values": {
         "$immutable": true,
         "DEFAULT_CHAINID": 1088,
-        "getGlobalMetadata": "0x00000000000000000000000000000000000066827a2300010b333d",
-        "getGlobalMetadataByChainId": "0x00000000000000000000000000000000000066827a2300010b333d",
-        "length": 24151,
-        "lengthByChainId": 24151,
+        "getGlobalMetadata": "0x00000000000000000000000000000000000067403cc30001224b5a",
+        "getGlobalMetadataByChainId": "0x00000000000000000000000000000000000067403cc30001224b5a",
+        "length": 26062,
+        "lengthByChainId": 26062,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain"
       },
@@ -163,6 +168,11 @@
         },
         {
           "permission": "upgrade",
+          "target": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
+          "via": [{ "address": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8" }]
+        },
+        {
+          "permission": "upgrade",
           "target": "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
         },
         {
@@ -175,11 +185,22 @@
         },
         {
           "permission": "upgrade",
+          "target": "0xD54c868362C2098E0E46F12E7D924C6A332952Dd",
+          "via": [{ "address": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8" }]
+        },
+        {
+          "permission": "upgrade",
           "target": "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
         },
         {
           "permission": "upgrade",
           "target": "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -203,7 +224,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 24,
+        "nonce": 34,
         "VERSION": "1.3.0"
       },
       "fieldMeta": {
@@ -237,8 +258,8 @@
         "getLastBlockNumber": 19431495,
         "getLastTimestamp": 1710398153,
         "getNextQueueIndex": 36284,
-        "getNumPendingQueueElements": 2048,
-        "getQueueLength": 38332,
+        "getNumPendingQueueElements": 3031,
+        "getQueueLength": 39315,
         "getTotalBatches": 42647,
         "getTotalElements": 15214530,
         "l2GasDiscountDivisor": 32,
@@ -293,7 +314,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 6,
+        "nonce": 11,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -356,10 +377,11 @@
     {
       "name": "ProxyAdmin",
       "address": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8",
+      "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x1c9416031605fbda74b5da95a290e00995eaed2f6f6ba85ff2681131efe940a0"
       ],
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "target": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
@@ -469,12 +491,12 @@
         "batches": "0x10739F09f6e62689c0aA8A1878816de9e166d6f9",
         "DEFAULT_CHAINID": 1088,
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1719826979,
-        "getLastSequencerTimestampByChainId": 1719826979,
-        "getTotalBatches": 24151,
-        "getTotalBatchesByChainId": 24151,
-        "getTotalElements": 17511229,
-        "getTotalElementsByChainId": 17511229,
+        "getLastSequencerTimestamp": 1732263107,
+        "getLastSequencerTimestampByChainId": 1732263107,
+        "getTotalBatches": 26062,
+        "getTotalBatchesByChainId": 26062,
+        "getTotalElements": 19024730,
+        "getTotalElementsByChainId": 19024730,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
       },
@@ -510,8 +532,13 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8",
-          "via": []
+          "target": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+          "via": [
+            {
+              "address": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8",
+              "delay": 0
+            }
+          ]
         }
       ],
       "ignoreInWatchMode": [
@@ -538,14 +565,14 @@
           ]
         ],
         "$upgradeCount": 2,
-        "BLOCK_REWARD": "10629122270000000",
-        "currentBatch": 20,
+        "BLOCK_REWARD": "41168150680000000",
+        "currentBatch": 65,
         "escrow": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
         "exitDelayPeriod": 1814400,
         "mpcAddress": "0xD294A6f4287edbFeBF9d57B79ce657BD33bB8b3b",
         "owner": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "paused": false,
-        "rewardPerBlock": "10629122270000000",
+        "rewardPerBlock": "41168150680000000",
         "sequencers": [
           [
             "0x05B755a8B2fEc50391B5C38B2afB206Ba0e8e50E",
@@ -582,10 +609,34 @@
             "0xEc05be638D1941c788244603AEbB5B937cD72C21",
             "0x0Cf6ab3c169B0169E35aD58D350CbACdaF80E139",
             2
+          ],
+          [
+            "0xb6112C3613B2B6E2dB0ee0216e7D20399777114D",
+            "0x652016b5718cB79d3FA360701F2d30982d7c4D7B",
+            "0x0000000000000000000000000000000000000000",
+            2
+          ],
+          [
+            "0xbd3BaD2a57C49E5B3Bb4b05a737cC3673a9E9f55",
+            "0xD4Eec5110Df06888211275594F340C43cD882f00",
+            "0x0Cf6ab3c169B0169E35aD58D350CbACdaF80E139",
+            2
+          ],
+          [
+            "0x9D56F28b85Eddc058Fc911e8c6393Bd0BD4835A5",
+            "0xaDd60572c4F39c5c9D7053A7F9e16B5d59Be6563",
+            "0x0Cf6ab3c169B0169E35aD58D350CbACdaF80E139",
+            2
+          ],
+          [
+            "0x680f8981e28fC48a1ed657895e5642960E0cf3E9",
+            "0x8594f6eB82e4140a3b7A2c045d85f02a6c2DCDf2",
+            "0x680f8981e28fC48a1ed657895e5642960E0cf3E9",
+            2
           ]
         ],
         "signerUpdateThrottle": 1,
-        "totalSequencers": 6,
+        "totalSequencers": 10,
         "WITHDRAWAL_DELAY": 1814400
       },
       "derivedName": "LockingPool"
@@ -1280,6 +1331,7 @@
     ]
   },
   "usedTemplates": {
+    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba"
   }

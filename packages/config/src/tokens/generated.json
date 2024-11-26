@@ -409,6 +409,20 @@
       "supply": "zero"
     },
     {
+      "name": "Automata",
+      "coingeckoId": "automata",
+      "address": "0xA2120b9e674d3fC3875f415A7DF52e382F141225",
+      "symbol": "ATA",
+      "decimals": 18,
+      "deploymentTimestamp": 1622409616,
+      "coingeckoListingTimestamp": 1623024000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/15985/large/ATA_Icon_%28Profile_2%29.png?1720487988",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Axie Infinity Shard",
       "coingeckoId": "axie-infinity",
       "address": "0xBB0E17EF65F82Ab018d8EDd776e8DD940327B28b",
@@ -6673,15 +6687,15 @@
       }
     },
     {
-      "name": "smoke the ticker",
-      "coingeckoId": "smoke-the-ticker",
-      "address": "0xe78A3857593083dD6e1F7859e1B711401FC6f2cc",
-      "symbol": "SMOKE",
+      "name": "Smoovie Phone",
+      "coingeckoId": "smoovie-phone",
+      "address": "0x3f710cBd0F4268719C6c2E5E078a4CAfAeED7d45",
+      "symbol": "SP",
       "decimals": 18,
-      "deploymentTimestamp": 1716185196,
-      "coingeckoListingTimestamp": 1718755200,
+      "deploymentTimestamp": 1718739529,
+      "coingeckoListingTimestamp": 1724198400,
       "category": "other",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/38767/large/smoke.png?1718766917",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39837/large/4969E83A-4FC0-42DD-820A-02779632123D.jpeg?1724255150",
       "chainId": 1996,
       "source": "native",
       "supply": "circulatingSupply"
@@ -7775,6 +7789,20 @@
       }
     },
     {
+      "name": "Coinbase Wrapped BTC",
+      "coingeckoId": "coinbase-wrapped-btc",
+      "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+      "symbol": "cbBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1731094732,
+      "coingeckoListingTimestamp": 1726099200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40143/large/cbbtc.webp?1726136727",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Dai Stablecoin",
       "coingeckoId": "dai",
       "address": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
@@ -8565,6 +8593,7 @@
       "decimals": 9,
       "deploymentTimestamp": 1638219842,
       "coingeckoListingTimestamp": 1638403200,
+      "untilTimestamp": 1731196800,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/21159/large/_UMAMI-200px.jpg?1696520536",
       "chainId": 42161,
@@ -9317,6 +9346,27 @@
       "chainId": 59144,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "Fire Bitcoin",
+      "coingeckoId": "ignition-fbtc",
+      "address": "0xC96dE26018A54D51c097160568752c4E3BD6C364",
+      "symbol": "FBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1725879531,
+      "coingeckoListingTimestamp": 1720828800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39182/large/FBTC_LOGO.png?1720850455",
+      "chainId": 60808,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "FBTC FireBridge"
+          }
+        ]
+      }
     },
     {
       "name": "Andy",

@@ -8,7 +8,7 @@ import { BaseAnalyzer } from '../types/BaseAnalyzer'
 import type { L2Block, Transaction } from '../types/BaseAnalyzer'
 import { ChannelBank } from './ChannelBank'
 import { getRollupData } from './blobToData'
-import { SpanBatchDecoderOpts, decodeSpanBatch } from './decodeSpanBatch'
+import { SpanBatchDecoderOpts, decodeBatch } from './decodeBatch'
 import { getFrames } from './getFrames'
 import { getBatchFromChannel } from './utils'
 
@@ -24,7 +24,10 @@ export class OpStackT2IAnalyzer extends BaseAnalyzer {
     private readonly opts: SpanBatchDecoderOpts,
   ) {
     super(provider, db, projectId)
-    this.logger = logger.for(this).tag(projectId.toString())
+    this.logger = logger.for(this).tag({
+      tag: projectId,
+      project: projectId,
+    })
     this.channelBank = new ChannelBank(projectId, this.logger)
   }
 
@@ -54,8 +57,7 @@ export class OpStackT2IAnalyzer extends BaseAnalyzer {
 
       const result = []
       for (const encodedBatch of encodedBatches) {
-        // We only support span batches
-        const blocksWithTimestamps = decodeSpanBatch(encodedBatch, this.opts)
+        const blocksWithTimestamps = decodeBatch(encodedBatch, this.opts)
         assert(blocksWithTimestamps.length > 0, 'No blocks in the batch')
 
         const delays = blocksWithTimestamps.map((block) => ({

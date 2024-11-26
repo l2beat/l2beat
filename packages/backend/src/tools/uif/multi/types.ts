@@ -2,6 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { Database } from '@l2beat/database'
 import { Indexer, IndexerOptions, RetryStrategy } from '@l2beat/uif'
 import { IndexerService } from '../IndexerService'
+import { IndexerTags } from '../types'
 
 export interface Configuration<T> {
   id: string
@@ -35,7 +36,7 @@ export interface ConfigurationRange<T> {
 export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
   parents: Indexer[]
   name: string
-  tag?: string
+  tags?: IndexerTags
   indexerService: IndexerService
   configurations: Configuration<T>[]
   serializeConfiguration: (value: T) => string

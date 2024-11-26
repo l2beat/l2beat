@@ -53,7 +53,7 @@ function createCirculatingSupplyIndexers(
   dependencies: TvlDependencies,
 ) {
   const circulatingSupplyService = dependencies.getCirculatingSupplyService()
-  const logger = dependencies.logger
+  const logger = dependencies.logger.tag({ module: 'circulatingSupply' })
   const indexerService = dependencies.getIndexerService()
   const db = dependencies.database
   const hourlyIndexer = dependencies.getHourlyIndexer()

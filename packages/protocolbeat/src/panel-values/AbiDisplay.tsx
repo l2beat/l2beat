@@ -1,5 +1,5 @@
 import { Fragment } from 'react/jsx-runtime'
-import { ApiAbi } from '../api/types'
+import { ApiAbi, ApiAbiEntry } from '../api/types'
 import * as solidity from '../panel-code/solidity'
 import { AddressDisplay } from './AddressDisplay'
 
@@ -27,7 +27,7 @@ export function AbiDisplay({ abis }: { abis: ApiAbi[] }) {
   )
 }
 
-function AbiCode({ entries }: { entries: string[] }) {
+function AbiCode({ entries }: { entries: ApiAbiEntry[] }) {
   if (entries.length === 0) {
     return (
       <code>
@@ -40,11 +40,17 @@ function AbiCode({ entries }: { entries: string[] }) {
     <code>
       {entries.map((entry, i) => (
         <Fragment key={i}>
-          {entry.split(/\b/).map((word, i) => (
+          {entry.value.split(/\b/).map((word, i) => (
             <span key={i} className={getClassName(word)}>
               {word}
             </span>
           ))}
+          {entry.signature && (
+            <span className="text-coffee-400"> // {entry.signature}</span>
+          )}
+          {entry.topic && (
+            <span className="text-coffee-400"> // {entry.topic}</span>
+          )}
           {i !== entries.length - 1 && <br />}
         </Fragment>
       ))}

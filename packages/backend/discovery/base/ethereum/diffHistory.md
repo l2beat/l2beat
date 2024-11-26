@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xc322ae7a01d53cc98b9f8e28ad3ac6c78adc9bfd
+
+# Diff at Tue, 19 Nov 2024 12:58:27 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@4c4fda2e697ffddc3e55c5773edb75671d0818a1 block: 21098564
+- current block number: 21221926
+
+## Description
+
+Multisig renaming.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21098564 (main branch discovery), not current.
+
+```diff
+    contract OpFoundationUpgradeSafe (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      name:
+-        "OptimismFoundationMultisig_1"
++        "OpFoundationUpgradeSafe"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      name:
+-        "OptimismFoundationMultisig_2"
++        "OpFoundationOperationsSafe"
+    }
+```
+
 Generated with discovered.json: 0xfd48d3e8dc6707d3fa398c9807223d7d1b636fbf
 
 # Diff at Sat, 02 Nov 2024 07:48:06 GMT:

@@ -45,6 +45,10 @@ export const EVMBlockResponse = z.object({
   }),
 })
 
+export const EVMBalanceResponse = z.object({
+  result: Quantity.decode.transform((n) => Number(n)),
+})
+
 export interface CallParameters {
   from?: EthereumAddress
   to: EthereumAddress

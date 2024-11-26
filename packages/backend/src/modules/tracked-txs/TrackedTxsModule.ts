@@ -34,6 +34,8 @@ export function createTrackedTxsModule(
     return
   }
 
+  logger = logger.tag({ module: 'tracked-txs' })
+
   const indexerService = new IndexerService(peripherals.database)
 
   const hourlyIndexer = new HourlyIndexer(logger, clock, 'tracked-txs')
@@ -91,7 +93,7 @@ export function createTrackedTxsModule(
     const coingeckoClient = providers.coingeckoClient
     const coingeckoQueryService = new CoingeckoQueryService(
       coingeckoClient,
-      logger.tag('trackedTxs'),
+      logger.tag({ tag: 'trackedTxs' }),
     )
 
     l2CostPricesIndexer = new L2CostsPricesIndexer({
