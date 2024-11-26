@@ -86,7 +86,7 @@ const tvsColumn = columnHelper.accessor('tvs', {
 })
 
 const slashableStakeColumn = columnHelper.accessor('economicSecurity', {
-  header: () => <span className="text-right">{'Slashable\nstake'}</span>,
+  header: () => <span className="text-right">Slashable</span>,
   cell: (ctx) => {
     const value = ctx.getValue()
     if (ctx.row.original.risks.economicSecurity.type === 'Unknown') {
