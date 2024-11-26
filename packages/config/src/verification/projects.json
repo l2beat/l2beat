@@ -85,6 +85,7 @@
   "educhain": true,
   "eigen-da-eigenda-bridge": true,
   "eigen-da-no-bridge": true,
+  "espressoDA-HotShotLightClient": false,
   "espressoDA-no-bridge": true,
   "ethernity": true,
   "everclear": true,
