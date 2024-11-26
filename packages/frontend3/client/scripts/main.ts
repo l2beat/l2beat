@@ -1,3 +1,3 @@
-import { world } from "./hello";
+import { world } from './hello'
 
 console.log(`Hello ${world}!`)

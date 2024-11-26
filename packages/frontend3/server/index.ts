@@ -1,23 +1,30 @@
 import express from 'express'
-import { join } from 'path'
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { App } from './App'
-import { App2 } from './App2'
+import { initStaticAssets } from './assets'
+import { DuckPage } from './pages/Duck'
+import { HomePage } from './pages/Home'
 
 const app = express()
 
 app.get('/', (_req, res) => {
-  const html = `<!DOCTYPE html>${renderToStaticMarkup(createElement(App))}`
+  const html = `<!DOCTYPE html>${renderToStaticMarkup(createElement(HomePage))}`
   res.send(html)
 })
 
-app.get('/app2', (_req, res) => {
-  const html = `<!DOCTYPE html>${renderToStaticMarkup(createElement(App2))}`
+app.get('/duck', (_req, res) => {
+  const html = `<!DOCTYPE html>${renderToStaticMarkup(createElement(DuckPage))}`
   res.send(html)
 })
 
-app.use('/dev-static', express.static(join(__dirname, '../client/static')))
+const assets = initStaticAssets()
+app.use(
+  assets.handlerPath,
+  express.static(
+    assets.staticPath,
+    assets.enableCache ? { maxAge: Infinity, immutable: true } : undefined,
+  ),
+)
 
 const port = 2021
 app.listen(port, () => {

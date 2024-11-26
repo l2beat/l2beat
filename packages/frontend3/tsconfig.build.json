@@ -1,0 +1,11 @@
+{
+  "extends": "@l2beat/typescript-config/react",
+  "include": ["server"],
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "dist/server",
+    "module": "CommonJS",
+    "target": "es2020",
+    "esModuleInterop": true
+  }
+}

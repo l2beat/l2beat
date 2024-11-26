@@ -1,7 +1,14 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.7.0/schema.json",
   "files": {
-    "ignore": ["node_modules/", ".cache/", "dist/", ".next/"]
+    "ignore": [
+      "node_modules/",
+      ".cache/",
+      "dist/",
+      ".next/",
+      "client/static/main.css",
+      "client/static/main.js"
+    ]
   },
   "formatter": {
     "enabled": true,

@@ -4,10 +4,9 @@
   "private": true,
   "scripts": {
     "clean": "rm -rf dist",
-    "prebuild": "pnpm clean",
-    "build": "echo \"???\"",
-    "build:scripts": "esbuild --bundle --outfile=static/main.js scripts/main.ts",
-    "start": "./scripts/watch.sh",
+    "build": "./scripts/build.sh",
+    "start": "NODE_ENV=production node dist/server/index.js",
+    "dev": "./scripts/dev.sh",
     "format": "biome format .",
     "format:fix": "biome format --write .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
