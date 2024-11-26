@@ -1,3 +1,129 @@
+Generated with discovered.json: 0xc6828cafd5f7b17222cd917c640ffe4306dbd4b0
+
+# Diff at Tue, 26 Nov 2024 21:35:53 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@da6b69f0f332050fffe643f1c53ec628c1b4f7fc block: 20928041
+- current block number: 21274648
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20928041 (main branch discovery), not current.
+
+```diff
+    contract BLSRegistry (0x1eD35B793d887e028493dAC4a11AA5Feb811dd67) {
+    +++ description: This contract stores the number of Mantle DA operators and their public keys. It also store the quorum threshold and the minimum stake required to be part of the quorum.
+      issuedPermissions.11:
++        {"permission":"upgrade","target":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","via":[{"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb","delay":0}]}
+      issuedPermissions.10:
++        {"permission":"configure","target":"0xcEb157a9bB9c80a845d5924e8CEAA591Caf705a5","via":[]}
+      issuedPermissions.9:
++        {"permission":"configure","target":"0xc1dEd495E1dDf089B2b41d6397C0aBa04BDA1A21","via":[]}
+      issuedPermissions.8:
++        {"permission":"configure","target":"0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01","via":[]}
+      issuedPermissions.7:
++        {"permission":"configure","target":"0xB61298691FE0df10634A67dd83b2253E74cbF7fb","via":[]}
+      issuedPermissions.6:
++        {"permission":"configure","target":"0x8BEF0466b7C2CbFD753eF340e062dF06E93ADA7f","via":[]}
+      issuedPermissions.5:
++        {"permission":"configure","target":"0x8A3D6c77E5BAcE8cb0822B28E4Fc56FC06fB5645","via":[]}
+      issuedPermissions.4:
++        {"permission":"configure","target":"0x717c3DC6Df69c316d6Ac593077BC84Cc86f214A4","via":[]}
+      issuedPermissions.3:
++        {"permission":"configure","target":"0x6cc5A6F5a9E4757790e4068Aa9757226Cb854B64","via":[]}
+      issuedPermissions.2:
++        {"permission":"configure","target":"0x550b3CB2D5fB5E4F0A08322CaC7b04291558CDa8","via":[]}
+      issuedPermissions.1:
++        {"permission":"configure","target":"0x1888e4aC2Ab37A73B33448B87bABdD1ce1dcBAbe","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.target:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "0x0B6F2C77C3740A5e6f88A4eCdd02C10BE8a2e323"
+      issuedPermissions.0.via.0:
+-        {"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb","delay":0}
+    }
+```
+
+```diff
+    contract MantleEngineeringMultisig (0x2F44BD2a54aC3fB20cd7783cF94334069641daC9) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"guard","target":"0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb"}
+      receivedPermissions.1.permission:
+-        "guard"
++        "configure"
+      receivedPermissions.1.target:
+-        "0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb"
++        "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1"
+      receivedPermissions.1.description:
++        "@@ The owner of the DA bridge. This entity is responsible for managing the bridge, @@"
+    }
+```
+
+```diff
+    contract PauserRegistry2 (0x4ca725D446EcE6e3fFd3E072A6f2A6a16Ca492D0) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","target":"0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1","description":"@@ manages permissions for the DataLayrServiceManager contract @@"}]
+    }
+```
+
+```diff
+    contract EigenDataLayerChain (0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","target":"0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01","description":"@@ relayer authorized to post data commitments to the DA bridge @@"}]
+    }
+```
+
+```diff
+    contract DataLayrServiceManager (0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1) {
+    +++ description: This contract is the main entry point for data availability. It is responsible for storing transaction data headers and confirming the data store by verifying operators signatures.
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","via":[{"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb","delay":0}]}
+      issuedPermissions.1:
++        {"permission":"configure","target":"0x4ca725D446EcE6e3fFd3E072A6f2A6a16Ca492D0","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.target:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9"
+      issuedPermissions.0.via.0:
+-        {"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb","delay":0}
+    }
+```
+
+```diff
+    contract RegistryPermission (0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01) {
+    +++ description: None
+      issuedPermissions.3:
++        {"permission":"upgrade","target":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","via":[{"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83","delay":0}]}
+      issuedPermissions.2:
++        {"permission":"configure","target":"0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A","via":[]}
+      issuedPermissions.1:
++        {"permission":"configure","target":"0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.target:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "0x207E804758e28F2b3fD6E4219671B327100b82f8"
+      issuedPermissions.0.via.0:
+-        {"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83","delay":0}
+      receivedPermissions:
++        [{"permission":"configure","target":"0x1eD35B793d887e028493dAC4a11AA5Feb811dd67","description":"@@ manages permissions for the BLSRegistry contract @@"}]
+    }
+```
+
 Generated with discovered.json: 0xe53857c87cf6112b4a07960caadccfe172c5ded2
 
 # Diff at Fri, 01 Nov 2024 12:09:55 GMT:

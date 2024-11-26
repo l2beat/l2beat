@@ -77,7 +77,25 @@
         "taskNumber",
         "latestTime"
       ],
-      "ignoreInWatchMode": ["dataStoresForDuration"]
+      "ignoreInWatchMode": ["dataStoresForDuration"],
+      "fields": {
+        "owner": {
+          "target": {
+            "permissions": [{
+              "type": "configure",
+              "description": "@@ The owner of the DA bridge. This entity is responsible for managing the bridge, @@"
+            }]
+          }
+        },
+        "pauserRegistry": {
+          "target": {
+            "permissions": [{
+              "type": "configure",
+              "description": "@@ manages permissions for the DataLayrServiceManager contract @@"
+            }]
+          }
+        }
+      }
     },
     "BLSRegistry": {
       "description": "This contract stores the number of Mantle DA operators and their public keys. It also store the quorum threshold and the minimum stake required to be part of the quorum.",
@@ -93,7 +111,22 @@
         "getLengthOfTotalStakeHistory"
       ],
       "fields": {
+        "permissionManager": {
+          "target": {
+            "permissions": [{
+              "type": "configure",
+              "description": "@@ manages permissions for the BLSRegistry contract @@"
+            }]
+          }
+        },
         "operatorList": {
+          "target": {
+            "permissions": [{
+              "type": "configure",
+              // configure -> signDACommitments OR alias of configure type
+              "description": "@@ authorized to sign data commitments for the DA bridge @@"
+            }]
+          },
           "handler": {
             "type": "array",
             "method": "operatorList",
@@ -144,7 +177,22 @@
     },
     "RegistryPermission": {
       "fields": {
+        "permissionPerson": {
+          "target": {
+            "permissions": [{
+              "type": "configure",
+              "description": "@@ authorized to register or change status of DA node operators @@"
+            }]
+          }
+        },
         "dataStorePermission": {
+          "target": {
+            "permissions": [{
+              // configure -> post DA Commitments
+              "type": "configure",
+              "description": "@@ relayer authorized to post data commitments to the DA bridge @@"
+            }]
+          },
           "handler": {
             "type": "arrayFromTwoEvents",
             "addEvent": "AddDataStoreRollupPermission",
