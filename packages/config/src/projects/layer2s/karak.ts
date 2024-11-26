@@ -14,9 +14,9 @@ export const karak: Layer2 = opStackL2({
   badges: [Badge.DA.Celestia, Badge.RaaS.Caldera],
   discovery,
   display: {
-    name: 'Karak',
-    slug: 'karak',
-    description: 'Karak is a general-purpose Optimium.',
+    name: 'K2',
+    slug: 'K2',
+    description: 'K2 is a general-purpose Optimium.',
     links: {
       websites: ['https://karak.network/'],
       apps: ['https://karak.network/karak-xp/'],
@@ -36,10 +36,10 @@ export const karak: Layer2 = opStackL2({
   discoveryDrivenData: true,
   milestones: [
     {
-      name: 'Karak Network Early Access Launch',
+      name: 'K2 Network Early Access Launch',
       link: 'https://x.com/Karak_Network/status/1762561646999068899?s=20',
       date: '2024-02-27T00:00:00Z',
-      description: 'Karak Network is live on mainnet.',
+      description: 'K2 Network is live on mainnet.',
       type: 'general',
     },
   ],
