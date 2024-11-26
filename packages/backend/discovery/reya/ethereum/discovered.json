@@ -1,8 +1,8 @@
 {
   "name": "reya",
   "chain": "ethereum",
-  "blockNumber": 21093393,
-  "configHash": "0x722f38a8f350f2f2fffeba8bc488838b71143a23aa13e4b4434127f2346b616e",
+  "blockNumber": 21272482,
+  "configHash": "0xaeddcc9fea83f1c1abcfc36c17573c8096e1036d91b8d3c08981b47915a05846",
   "contracts": [
     {
       "name": "OneStepProverHostIo",
@@ -86,8 +86,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"]
-      },
-      "derivedName": "UpgradeExecutor"
+      }
     },
     {
       "name": "OneStepProverMemory",
@@ -107,11 +106,7 @@
         "0xd9b36ec321be937cc727b5bdb0afa0e1a0a28448ef1a202d4f181a01ce57bdc8"
       ],
       "sinceTimestamp": 1701973151,
-      "values": {
-        "$immutable": true,
-        "REYA_STAKERS": [["0x6106B6480DE82E3eC2680d7c61A9D18d71Bf9122"], false]
-      },
-      "derivedName": "ValidatorUtils"
+      "values": { "$immutable": true }
     },
     {
       "name": "OneStepProver0",
@@ -173,13 +168,12 @@
           "0xFd9f59554351122b231F832a0e0A1aBb0604D7fd"
         ],
         "allowedOutboxList": ["0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9"],
-        "delayedMessageCount": 21456,
+        "delayedMessageCount": 22786,
         "rollup": "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A",
         "sequencerInbox": "0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d",
-        "sequencerMessageCount": 20214,
-        "sequencerReportedSubMessageCount": 49020783
-      },
-      "derivedName": "Bridge"
+        "sequencerMessageCount": 21501,
+        "sequencerReportedSubMessageCount": 51649609
+      }
     },
     {
       "name": "Outbox",
@@ -228,8 +222,7 @@
         "l2ToL1Timestamp": 0,
         "OUTBOX_VERSION": 2,
         "rollup": "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A"
-      },
-      "derivedName": "Outbox"
+      }
     },
     {
       "name": "RollupProxy",
@@ -311,12 +304,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 1861,
+        "firstUnresolvedNode": 1910,
         "inbox": "0x672109752635177ebcb17F2C7e04575A709014BD",
         "isERC20Enabled": false,
         "lastStakeBlock": 19347657,
-        "latestConfirmed": 1860,
-        "latestNodeCreated": 1872,
+        "latestConfirmed": 1909,
+        "latestNodeCreated": 1922,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9",
@@ -356,7 +349,6 @@
           "description": "Emitted on createChallenge() in RollupUserLogic."
         }
       },
-      "derivedName": "RollupProxy",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -481,7 +473,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 20214,
+        "batchCount": 21501,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xf5636Df6f86f31668aeAe9bB8a1C4F0ED147926a"],
         "bridge": "0x383c03c4EfF819E73409DbC690755a9992393814",
@@ -498,7 +490,6 @@
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "DATA_BLOB_HEADER_FLAG": "0x50",
         "HEADER_LENGTH": 40,
-        "IS_HARDCODED_SEQUENCER_BATCH_POSTER": true,
         "isUsingFeeToken": false,
         "keySetUpdates": 2,
         "maxDataSize": 117964,
@@ -513,7 +504,7 @@
         "rollup": "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 21455,
+        "totalDelayedMessagesRead": 22785,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -521,8 +512,7 @@
         "maxTimeVariation": {
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
-      },
-      "derivedName": "SequencerInbox"
+      }
     },
     {
       "name": "ChallengeManager",
@@ -577,8 +567,7 @@
         "resultReceiver": "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A",
         "sequencerInbox": "0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d",
         "totalChallengesCreated": 0
-      },
-      "derivedName": "ChallengeManager"
+      }
     },
     {
       "name": "ProxyAdmin",
