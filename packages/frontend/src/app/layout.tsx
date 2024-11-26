@@ -13,6 +13,7 @@ import { roboto } from '../fonts'
 import '../styles/globals.css'
 import { SearchBarContextProvider } from '~/components/search-bar/search-bar-context'
 import { searchBarProjects } from '~/components/search-bar/search-bar-projects'
+import { RealUserMonitoring } from '~/utils/observability/real-user-monitoring'
 
 export const metadata: Metadata = getDefaultMetadata()
 
@@ -40,6 +41,7 @@ export default async function RootLayout({
         />
       </head>
       <body className={roboto.variable}>
+        <RealUserMonitoring />
         <PlausibleProvider
           domain={env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
           enabled={env.NEXT_PUBLIC_PLAUSIBLE_ENABLED}

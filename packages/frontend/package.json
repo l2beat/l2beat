@@ -20,6 +20,7 @@
     "tinify-logos": "tsx scripts/logos/tinifyLogos.ts"
   },
   "dependencies": {
+    "@elastic/apm-rum": "^5.16.0",
     "@l2beat/backend": "workspace:*",
     "@l2beat/config": "workspace:*",
     "@l2beat/database": "workspace:*",
@@ -50,6 +51,7 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
     "dotenv": "^16.4.5",
+    "elastic-apm-node": "^4.8.1",
     "fuzzysort": "^3.1.0",
     "gray-matter": "^4.0.3",
     "js-cookie": "^3.0.5",

@@ -49,6 +49,8 @@ export const env = createEnv({
     NEXT_PUBLIC_PLAUSIBLE_ENABLED: coerceBoolean.optional(),
     NEXT_PUBLIC_SHOW_HIRING_BADGE: featureFlag.default('false'),
     NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID: z.string().optional(),
+    NEXT_PUBLIC_APM_URL: z.string().optional(),
+    NEXT_PUBLIC_ENVIRONMENT: z.string().optional(),
   },
 
   /**
@@ -80,6 +82,8 @@ export const env = createEnv({
     NEXT_PUBLIC_SHOW_HIRING_BADGE: process.env.FEATURE_FLAG_HIRING,
     NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID:
       process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID,
+    NEXT_PUBLIC_APM_URL: process.env.NEXT_PUBLIC_APM_URL,
+    NEXT_PUBLIC_ENVIRONMENT: process.env.NEXT_PUBLIC_ENVIRONMENT,
   },
 
   /**
