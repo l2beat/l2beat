@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x30b6e8e37943866064b25195ddbddf770ac12a2f
+Generated with discovered.json: 0x8c5ee42e1b0912548155687267565dd0f81e1f8b
 
-# Diff at Tue, 26 Nov 2024 15:12:22 GMT:
+# Diff at Tue, 26 Nov 2024 16:00:30 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@31664f2b27e53f2ac36a87f40bdcb50c37ab9504 block: 269220300
-- current block number: 278542355
+- current block number: 278553826
 
 ## Description
 
@@ -90,6 +90,12 @@ discovery. Values are for block 269220300 (main branch discovery), not current.
 
 ```diff
 -   Status: DELETED
+    contract GnosisSafeL2 (0x7eC7e03563f781ED4c56BBC4c5F28C1B4dB932ff)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
     contract BucketTracker (0xa83825Dc4D94513d1C907b319EE8224FA63A29B2)
     +++ description: None
 ```
@@ -157,9 +163,17 @@ discovery. Values are for block 269220300 (main branch discovery), not current.
 ```diff
     contract SentryReferee (0xfD41041180571C5D371BEA3D9550E55653671198) {
     +++ description: The referee contract manages the Xai Sentry protocol. Sentry nodes that are tasked to watch the state transitions on Xai receive esXAI rewards for their service. These watchers participate in a game with a central 'challenger' by posting their assertions to make sure they are actually watching. In case of a malicious state transition, sentries are supposed to raise an alarm offchain. The referee contract is also a whitelisted address in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. New staking through this contract is disabled in favor of the new v2 staking. V1 Stakers can continue to get staking rewards here or withdraw/migrate their assets.
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7","0xfeBC06428a15C6618Baa5589C3E9C40ACF71aA79"]},"CHALLENGER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xC74c1e08963CEEf0e1F2F2a2eeB879f443e86836"]},"KYC_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x7eC7e03563f781ED4c56BBC4c5F28C1B4dB932ff","0xCBA55AAD91BB119794C48AF09A734Fc31A4CDF56","0x83f396d217820386464e8E99205DCf090d0DD04c"]}}
       description:
 +        "The referee contract manages the Xai Sentry protocol. Sentry nodes that are tasked to watch the state transitions on Xai receive esXAI rewards for their service. These watchers participate in a game with a central 'challenger' by posting their assertions to make sure they are actually watching. In case of a malicious state transition, sentries are supposed to raise an alarm offchain. The referee contract is also a whitelisted address in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. New staking through this contract is disabled in favor of the new v2 staking. V1 Stakers can continue to get staking rewards here or withdraw/migrate their assets."
     }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafeL2 (0xfeBC06428a15C6618Baa5589C3E9C40ACF71aA79)
+    +++ description: None
 ```
 
 Generated with discovered.json: 0xd2d78e1158c0f33ba3269855cf148129a9947d3d

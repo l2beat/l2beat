@@ -1,8 +1,8 @@
 {
   "name": "xai",
   "chain": "arbitrum",
-  "blockNumber": 278542355,
-  "configHash": "0x5bdfa899527cc81ed4a76f695ba572a9b7a583503fe516da12d94cffe19a68b9",
+  "blockNumber": 278553826,
+  "configHash": "0x9bc9308a46649854266250f47cda29645a652cc58448278ff19c85af46e5e426",
   "contracts": [
     {
       "name": "XaiMultisig2",
@@ -584,38 +584,8 @@
         "nativeToken": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66",
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerInbox": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
-        "sequencerMessageCount": 119088,
-        "sequencerReportedSubMessageCount": 60879688
-      }
-    },
-    {
-      "name": "GnosisSafeL2",
-      "address": "0x7eC7e03563f781ED4c56BBC4c5F28C1B4dB932ff",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1701577969,
-      "values": {
-        "$immutable": false,
-        "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
-        "$members": [
-          "0x1f097F3f928415cD28e1B2cC6f0F3960f4fCa6fc",
-          "0xbBE90F6748C82623F130A4486722a436c5a72440",
-          "0xE529a3271f9CC84B1FE9107ab4764a8dF177782a",
-          "0x807daF80b03Fd3C2709FFe0AeBEED617BC0a347c",
-          "0xa2E7768789921a36eCFe8c239dBd8213120fFF83"
-        ],
-        "$threshold": 3,
-        "domainSeparator": "0xbb2069976a9447898df54626b5b03b9051987f2129973f6d9f34d150e49fe2fc",
-        "getChainId": 42161,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 6,
-        "VERSION": "1.3.0"
+        "sequencerMessageCount": 119102,
+        "sequencerReportedSubMessageCount": 60887785
       }
     },
     {
@@ -714,7 +684,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 119088,
+        "batchCount": 119102,
         "batchPosterManager": "0x000d8C5A70B8805DF02f409F2715d05B9A63E871",
         "batchPosters": ["0x7F68dba68E72a250004812fe04F1123Fca89aBa9"],
         "bridge": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
@@ -1024,12 +994,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 7466,
+        "firstUnresolvedNode": 7467,
         "inbox": "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
         "isERC20Enabled": false,
         "lastStakeBlock": 18944658,
-        "latestConfirmed": 7465,
-        "latestNodeCreated": 7617,
+        "latestConfirmed": 7466,
+        "latestNodeCreated": 7618,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x1E400568AD4840dbE50FB32f306B842e9ddeF726",
@@ -1355,32 +1325,11 @@
           ]
         ],
         "$upgradeCount": 9,
-        "accessControl": {
-          "DEFAULT_ADMIN_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7",
-              "0xfeBC06428a15C6618Baa5589C3E9C40ACF71aA79"
-            ]
-          },
-          "CHALLENGER_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0xC74c1e08963CEEf0e1F2F2a2eeB879f443e86836"]
-          },
-          "KYC_ADMIN_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "0x7eC7e03563f781ED4c56BBC4c5F28C1B4dB932ff",
-              "0xCBA55AAD91BB119794C48AF09A734Fc31A4CDF56",
-              "0x83f396d217820386464e8E99205DCf090d0DD04c"
-            ]
-          }
-        },
         "calculateChallengeEmissionAndTier": [
           "35673515981735159817351",
           "625000000000000000000000000"
         ],
-        "challengeCounter": 8358,
+        "challengeCounter": 8359,
         "CHALLENGER_ROLE": "0xe752add323323eb13e36c71ee508dfd16d74e9e4c4fd78786ba97989e5e13818",
         "challengerPublicKey": "0x977f9fe1d570ba7e48ea76566718023b260ed56eba368ff20dca06e99e650804126663c1a5febdb065ef139a0156a9ad",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -1406,36 +1355,6 @@
         "xaiAddress": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66"
       },
       "derivedName": "Referee9"
-    },
-    {
-      "name": "GnosisSafeL2",
-      "address": "0xfeBC06428a15C6618Baa5589C3E9C40ACF71aA79",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1701577470,
-      "values": {
-        "$immutable": false,
-        "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
-        "$members": [
-          "0x807daF80b03Fd3C2709FFe0AeBEED617BC0a347c",
-          "0xE529a3271f9CC84B1FE9107ab4764a8dF177782a",
-          "0xbBE90F6748C82623F130A4486722a436c5a72440",
-          "0x1f097F3f928415cD28e1B2cC6f0F3960f4fCa6fc",
-          "0xa2E7768789921a36eCFe8c239dBd8213120fFF83"
-        ],
-        "$threshold": 3,
-        "domainSeparator": "0xdb02ea5ca1b3035f4062349ec108c0fc2e47e7c8b533bdc258b4e7db78431e32",
-        "getChainId": 42161,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 6,
-        "VERSION": "1.3.0"
-      }
     }
   ],
   "eoas": [
@@ -1507,14 +1426,11 @@
     },
     { "address": "0x7f910C718bAF6698FBF9b56e047ECd52d157bAD6" },
     { "address": "0x807daF80b03Fd3C2709FFe0AeBEED617BC0a347c" },
-    { "address": "0x83f396d217820386464e8E99205DCf090d0DD04c" },
     { "address": "0x90D77E3a3B660E54E04cD622937765d2375FB2e3" },
     { "address": "0xa2E7768789921a36eCFe8c239dBd8213120fFF83" },
     { "address": "0xbBE90F6748C82623F130A4486722a436c5a72440" },
     { "address": "0xC65de812db42Bfa8bd4E0fCf6ffcad8fe3072D44" },
     { "address": "0xc7185e37A4aB4Af0E77bC08249CD2590AE3E1b51" },
-    { "address": "0xC74c1e08963CEEf0e1F2F2a2eeB879f443e86836" },
-    { "address": "0xCBA55AAD91BB119794C48AF09A734Fc31A4CDF56" },
     { "address": "0xd096e8dE90D34de758B0E0bA4a796eA2e1e272cF" },
     { "address": "0xd427165292B2E39cdac102eD963B14fFBACc964a" },
     { "address": "0xd4318D959B46d555143f56E03077028aB94D85d2" },
@@ -2055,9 +1971,6 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x7eC7e03563f781ED4c56BBC4c5F28C1B4dB932ff": [
-      "constructor(address _singleton)"
-    ],
     "0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab": [
       "constructor(uint256 _maxDataSize)",
       "error DataTooLarge(uint256 dataLength, uint256 maxDataLength)",
@@ -2528,9 +2441,6 @@
       "function updateWhitelistAmounts(address[] _toWhitelist, uint16[] _amounts)",
       "function whitelistAmounts(address) view returns (uint16)",
       "function withdrawFunds()"
-    ],
-    "0xfeBC06428a15C6618Baa5589C3E9C40ACF71aA79": [
-      "constructor(address _singleton)"
     ]
   },
   "usedTemplates": {
