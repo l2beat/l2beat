@@ -299,83 +299,86 @@ export const morph: Layer2 = {
     ],
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('MorphRollup', {
-        description:
-          'The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.',
-        ...upgradeMorphMultisig,
-      }),
-      discovery.getContractDetails('L1Staking', {
-        description:
-          'Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures\
-            of stakers (currently not implemented).',
-        ...upgradeMorphMultisig,
-      }),
-      discovery.getContractDetails('L1CrossDomainMessenger', {
-        description:
-          'Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.',
-        ...upgradeMorphMultisig,
-      }),
-      discovery.getContractDetails('L1MessageQueueWithGasPriceOracle', {
-        description: `Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.${isEnforcedTxGatewayPaused ? ' The latter contract, which would allow users to send L2 messages from L1 with their own address as the sender, is not enabled (paused).' : ''}`,
-        ...upgradeMorphMultisig,
-      }),
-      discovery.getContractDetails('Whitelist', {
-        description:
-          'Contract implementing a generic whitelist. Currently used to define the actor that can relay the L2 basefee on L1.',
-      }),
-      discovery.getContractDetails('MultipleVersionRollupVerifier', {
-        description:
-          'Contract used to update the verifier and keep track of current and old versions.',
-      }),
-      discovery.getContractDetails('ZkEvmVerifierV1', {
-        description:
-          'Current verifier using calldata for DA, used to prepare data for the PlonkVerifierV0.', // TODO: check
-      }),
-      discovery.getContractDetails('L1ETHGateway', {
-        description: 'Contract used to bridge ETH from L1 to L2.',
-        ...upgradeMorphMultisig,
-      }),
-      discovery.getContractDetails('L1StandardERC20Gateway', {
-        description:
-          'Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.',
-        ...upgradeMorphMultisig,
-      }),
-      discovery.getContractDetails('L1GatewayRouter', {
-        description:
-          'Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.',
-        ...upgradeMorphMultisig,
-      }),
-      discovery.getContractDetails('EnforcedTxGateway', {
-        description:
-          'Contracts to force L1 -> L2 messages with the proper sender.',
-        ...upgradeMorphMultisig,
-        pausable: {
-          paused: isEnforcedTxGatewayPaused,
-          pausableBy: ['MorphAdminMSig'],
-        },
-      }),
-    ],
+    addresses: discovery.getDiscoveredContracts(),
+    // [
+    //   discovery.getContractDetails('MorphRollup', {
+    //     description:
+    //       'The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.',
+    //     ...upgradeMorphMultisig,
+    //   }),
+    //   discovery.getContractDetails('L1Staking', {
+    //     description:
+    //       'Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures\
+    //         of stakers (currently not implemented).',
+    //     ...upgradeMorphMultisig,
+    //   }),
+    //   discovery.getContractDetails('L1CrossDomainMessenger', {
+    //     description:
+    //       'Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.',
+    //     ...upgradeMorphMultisig,
+    //   }),
+    //   discovery.getContractDetails('L1MessageQueueWithGasPriceOracle', {
+    //     description: `Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.${isEnforcedTxGatewayPaused ? ' The latter contract, which would allow users to send L2 messages from L1 with their own address as the sender, is not enabled (paused).' : ''}`,
+    //     ...upgradeMorphMultisig,
+    //   }),
+    //   discovery.getContractDetails('Whitelist', {
+    //     description:
+    //       'Contract implementing a generic whitelist. Currently used to define the actor that can relay the L2 basefee on L1.',
+    //   }),
+    //   discovery.getContractDetails('MultipleVersionRollupVerifier', {
+    //     description:
+    //       'Contract used to update the verifier and keep track of current and old versions.',
+    //   }),
+    //   discovery.getContractDetails('ZkEvmVerifierV1', {
+    //     description:
+    //       'Current verifier using calldata for DA, used to prepare data for the PlonkVerifierV0.', // TODO: check
+    //   }),
+    //   discovery.getContractDetails('L1ETHGateway', {
+    //     description: 'Contract used to bridge ETH from L1 to L2.',
+    //     ...upgradeMorphMultisig,
+    //   }),
+    //   discovery.getContractDetails('L1StandardERC20Gateway', {
+    //     description:
+    //       'Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.',
+    //     ...upgradeMorphMultisig,
+    //   }),
+    //   discovery.getContractDetails('L1GatewayRouter', {
+    //     description:
+    //       'Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.',
+    //     ...upgradeMorphMultisig,
+    //   }),
+    //   discovery.getContractDetails('EnforcedTxGateway', {
+    //     description:
+    //       'Contracts to force L1 -> L2 messages with the proper sender.',
+    //     ...upgradeMorphMultisig,
+    //     pausable: {
+    //       paused: isEnforcedTxGatewayPaused,
+    //       pausableBy: ['MorphAdminMSig'],
+    //     },
+    //   }),
+    // ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  permissions: [
-    ...discovery.getMultisigPermission(
-      'MorphAdminMSig',
-      'Can upgrade proxies and the verifier without delay. It can also overwrite any batch (both unfinalized and finalized), remove sequencers and provers and pause contracts.',
-    ),
-    {
-      name: 'Sequencers',
-      accounts: discovery.getPermissionedAccounts(
-        'L1Staking',
-        'getActiveStakers',
-      ),
-      description:
-        'Actors allowed to commit transaction batches and propose state roots.',
-    },
-    {
-      name: 'Challengers',
-      accounts: discovery.getPermissionedAccounts('MorphRollup', 'challengers'),
-      description: 'Actors allowed to challenge proposed state roots.',
-    },
-  ],
+  permissions: discovery.getDiscoveredPermissions(),
+  //[
+  //   ...discovery.getMultisigPermission(
+  //     'MorphAdminMSig',
+  //     'Can upgrade proxies and the verifier without delay. It can also overwrite any batch (both unfinalized and finalized), remove sequencers and provers and pause contracts.',
+  //   ),
+  //   {
+  //     name: 'Sequencers',
+  //     accounts: discovery.getPermissionedAccounts(
+  //       'L1Staking',
+  //       'getActiveStakers',
+  //     ),
+  //     description:
+  //       'Actors allowed to commit transaction batches and propose state roots.',
+  //   },
+  //   {
+  //     name: 'Challengers',
+  //     accounts: discovery.getPermissionedAccounts('MorphRollup', 'challengers'),
+  //     description: 'Actors allowed to challenge proposed state roots.',
+  //   },
+  // 
+  //],
 }

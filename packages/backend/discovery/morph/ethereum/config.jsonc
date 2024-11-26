@@ -13,11 +13,39 @@
     "0x87C1D0dAb8d96b69CB91f97F4135E3ed5A49DCF6": "MultipleVersionRollupVerifier",
     "0x0Dc417F8AF88388737c5053FF73f345f080543F7": "L1Staking",
     "0xB822319ab7848b7cC4537c8409e50f85BFb04377": "MorphAdminMSig",
-    "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a": "L1GatewayRouter"
+    "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a": "L1GatewayRouter",
+    "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0": "ProxyAdmin",
+    "0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7": "EnforcedTxGateway"
   },
   "overrides": {
+    "EnforcedTxGateway": {
+      "description": "Contracts to force L1 -> L2 messages with the proper sender. Currently paused: {{ paused }}",
+      "fields": {
+        "owner": {
+          "target": {
+            "permissions": [{"type": "configure", "description": "can pause and unpause"}]
+          }
+        }
+      }
+    },
+    "ProxyAdmin": {
+      "fields": {
+        "owner": {
+          "target": {
+            "permissions": [{"type": "act"}]
+          }
+        }
+      }
+    },
     "L1Staking": {
-      "ignoreMethods": ["getStakers", "stakerSet"] // TODO: add the whitelist
+      "ignoreMethods": ["getStakers", "stakerSet"], // TODO: add the whitelist
+      "fields": {
+        "getActiveStakers": {
+          "target": {
+            "permissions": [{"type": "sequence", "description": "Actors allowed to commit transaction batches and propose state roots"}]
+          }
+        }
+      }
     },
     "L1GatewayRouter": {
       "fields": {
@@ -95,6 +123,14 @@
             "event": "UpdateChallenger",
             "valueKey": "account",
             "flagKey": "status"
+          },
+          "target": {
+            "permissions": [{"type": "challenge"}]
+          }
+        },
+        "owner": {
+          "target": {
+            "permissions": [{"type": "configure", "description": "can pause and unpause, override any batch, revert batch, update proof window, update challengers, modify verifiers"}],
           }
         }
       }
