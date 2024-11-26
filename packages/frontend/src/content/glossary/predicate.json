@@ -1,0 +1,6 @@
+{
+    "term": "Predicate",
+    "match": ["predicate"],
+    "definition": "A predicate is a pure function that can return true or false, and is sent inside a transaction as bytecode and checked at transaction validity time. If it evaluates to false the transaction will not be processed, and no gas will be used. If it evaluates to true, any coins belonging to the address equal to the Merkle root of the predicate bytecode may be spent by the transaction.",
+    "isSpicy": false
+  }
