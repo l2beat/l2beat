@@ -70,12 +70,12 @@ export class PriceService {
         to,
       )
     } catch (error) {
-      const latestHour = assertLatestHour(coingeckoId, from, to, error)
+      assertLatestHour(from, to, error, coingeckoId)
 
       const priceFromDb = await this.getLatestPriceFromDb(
-        coingeckoId,
-        latestHour,
+        to,
         configurations,
+        coingeckoId,
       )
 
       return [priceFromDb]
@@ -83,27 +83,31 @@ export class PriceService {
   }
 
   private async getLatestPriceFromDb(
-    coingeckoId: CoingeckoId,
     latestHour: UnixTime,
     configurations: Configuration<CoingeckoPriceConfigEntry>[],
+    coingeckoId: CoingeckoId,
   ) {
-    const records = await this.$.database.price.getByConfigIdsInRange(
+    const fallbackPrice = await this.$.database.price.getLatestPrice(
       configurations.map((c) => c.id),
-      latestHour,
-      latestHour,
     )
 
-    const fallback = records.find((r) => r.timestamp.equals(latestHour))
-
-    assert(fallback, `DB fallback failed: ${coingeckoId}`)
+    assert(
+      fallbackPrice,
+      `Latest price not found for ${coingeckoId} @ ${latestHour.toNumber()}`,
+    )
 
     this.$.logger.error(
       'DB fallback triggered: failed to fetch price from Coingecko',
-      { coingeckoId, latestHour: latestHour.toNumber() },
+      {
+        coingeckoId,
+        latestHour: latestHour.toNumber(),
+        fallbackPrice: JSON.stringify(fallbackPrice),
+      },
     )
+
     return {
-      value: fallback.priceUsd,
-      timestamp: fallback.timestamp,
+      value: fallbackPrice.priceUsd,
+      timestamp: fallbackPrice.timestamp,
     }
   }
 
@@ -116,14 +120,17 @@ export class PriceService {
 }
 
 function assertLatestHour(
-  coingeckoId: CoingeckoId,
   from: UnixTime,
   to: UnixTime,
   error: unknown,
+  coingeckoId: CoingeckoId,
 ) {
   const diff = to.toNumber() - from.toNumber()
   if (diff >= 3600) throw error
-  assert(to.isFull('hour'), `DB fallback failed: ${coingeckoId}`)
+  assert(
+    to.isFull('hour'),
+    `Latest hour assert failed for ${coingeckoId} <${from.toNumber()},${to.toNumber()}>`,
+  )
 
   return to
 }
