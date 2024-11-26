@@ -4521,13 +4521,6 @@
       "address": "0x3f710cBd0F4268719C6c2E5E078a4CAfAeED7d45",
       "source": "native",
       "supply": "circulatingSupply"
-    },
-    {
-      "symbol": "SMOKE",
-      "address": "0xe78a3857593083dd6e1f7859e1b711401fc6f2cc",
-      "source": "native",
-      "supply": "circulatingSupply",
-      "coingeckoId": "smoke-the-ticker"
     }
   ],
   "xchain": [
