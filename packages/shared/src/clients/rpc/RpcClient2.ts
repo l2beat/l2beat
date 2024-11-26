@@ -46,7 +46,10 @@ export class RpcClient2 extends ClientCore implements BlockClient {
     return { ...block.data.result }
   }
 
-  async getBalance(holder: EthereumAddress, blockNumber: number | 'latest') {
+  async getBalance(
+    holder: EthereumAddress,
+    blockNumber: number | 'latest',
+  ): Promise<bigint> {
     const method = 'eth_getBalance'
     const encodedNumber =
       blockNumber === 'latest' ? 'latest' : Quantity.encode(BigInt(blockNumber))
@@ -91,6 +94,7 @@ export class RpcClient2 extends ClientCore implements BlockClient {
     const callResult = EVMCallResponse.safeParse(callResponse)
 
     if (!callResult.success) {
+      this.$.logger.warn('Error during call', JSON.stringify(callResponse))
       throw new Error('Call response: Error during parsing')
     }
 

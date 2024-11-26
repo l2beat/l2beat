@@ -79,7 +79,7 @@ export class AmountService {
         return {
           configId: configuration.id,
           type: configuration.type,
-          amount: BigInt(amount),
+          amount,
         }
       }),
     )
