@@ -36,24 +36,40 @@ export const espressoDA: DaLayer = {
 
     ## Consensus
 
-    EspressoDA uses the HotShot consensus. HotShot is a communication-efficient proof-of-stake consensus protocol that is permissioned and Byzantine Fault Tolerant (BFT). 
-    Built on HotStuff-2, it achieves linear communication complexity using a pacemaker module to synchronize views. 
-    The protocol ensures safety and liveness as long as over two-thirds of the stake is controlled by honest nodes.
+    EspressoDA uses the HotShot consensus protocol, a communication-efficient, permissioned proof-of-stake system that is Byzantine Fault Tolerant (BFT). 
+    Built on HotStuff-2, it achieves linear communication complexity using a pacemaker module to synchronize views and ensures safety and liveness as long as over two-thirds of the stake is controlled by honest nodes.
 
-    HotShot operates in a view-by-view manner, with each view assigning a leader and an external builder. 
-    During a view, the consensus proposer (or delegate) finalizes a block with a certificate of availability. 
+    HotShot operates in a view-by-view manner, where each view designates a leader and an external builder. 
+    During a view, the consensus proposer (or delegate) finalizes a block with a certificate of availability by utilizing Tiramisu for data availability.
+
+    ## Data Availability Certificate
+
+    Once the proposer sends data to HotShot node operators, they initiate Tiramisu's three layers of data availability:
+    
+    - **Savoiardi**: Disperses the data to all nodes.
+    - **Mascarpone**: Uploads the data and commitment to a small DA committee.
+    - **Cocoa**: Uploads the data and commitment to a content delivery network (CDN). 
+
+
+    A DA certificate consists of two components: the retrievability certificate and the optimistic DAC certificate:
+
+    - **Retrievability Certificate**: Formed when the DA leader collects 1/3 + 1  strong votes either from committee nodes or regular nodes, or 1/3 + m normal votes, where ( m ) is the number of VID shares into which the block was split.
+    - **Optimistic DAC Certificate**: Formed when the DA leader gathers 2*(S - T) + 1 strong votes from the DA committee, where S represents the committee size and T the threshold for the committee. 
+
+    Once the DAC is formed, the DA leader stops broadcasting data to the nodes.
 
     ## L2s Data Availability
-    Using Tiramisu for data availability, the proposer performs three concurrent actions for the block payload: 
-    
-    - Compute the payload commitment 
-    - Disperse to all nodes (Savoiardi).
-    - Upload to a small DA committee (Mascarpone).
-    - Upload to a content delivery network (Cocoa).
+  
+    The life cycle of L2 rollup transactions begins with users submitting transactions to the Tiramisu DA mempool through an RPC endpoint, including a namespace ID to indicate the target L2 rollup. 
+    A DA leader collects and disperses these transactions across Tiramisu's layers to form a DA certificate. Simultaneously, a leader in the HotShot Consensus layer broadcasts a proposal with a vector commitment for the transactions. 
+    The finalization of the block commitment in HotShot establishes data availability for the corresponding transactions.
+    After block finalization in HotShot, the Espresso Sequencer propagates the commitment and quorum certificates to the L1 sequencer contract, which verifies the certificate ZK-proof. 
 
-    To retrieve data, users can query any of the three sources, with the Savoiardi layer being the slowest due to the need to reconstruct the data from the erasure-coded shares.
-    L2s will be able to call a verifyInclusion function on a L1 light client smart contract to verify that a blob is included in the EspressoDA HotShot chain.
-    `,
+    ![EspressoDA architecture with L2s](/images/da-layer-technology/espressoDA/architectureL2.png#center)
+
+    Users can retrieve data by querying any of Tiramisu's layers, though the Savoiardi layer is slower due to the reconstruction of erasure-coded shares. L2s can also use a verifyInclusion function on an L1 light client smart contract to confirm a blob's inclusion in the EspressoDA HotShot chain.
+    
+ `,
     references: [],
     risks: [],
   },
