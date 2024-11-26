@@ -39,7 +39,9 @@
       "fields": {
         "owner": {
           "target": {
-            "permissions": [{"type": "configure", "description": "can pause and unpause"}]
+            "permissions": [
+              { "type": "configure", "description": "can pause and unpause" }
+            ]
           }
         }
       }
@@ -48,7 +50,7 @@
       "fields": {
         "owner": {
           "target": {
-            "permissions": [{"type": "act"}]
+            "permissions": [{ "type": "act" }]
           }
         }
       }
@@ -59,7 +61,12 @@
       "fields": {
         "getActiveStakers": {
           "target": {
-            "permissions": [{"type": "sequence", "description": "Actors allowed to commit transaction batches and propose state roots"}]
+            "permissions": [
+              {
+                "type": "sequence",
+                "description": "Actors allowed to commit transaction batches and propose state roots"
+              }
+            ]
           }
         }
       }
@@ -146,12 +153,17 @@
             "flagKey": "status"
           },
           "target": {
-            "permissions": [{"type": "challenge"}]
+            "permissions": [{ "type": "challenge" }]
           }
         },
         "owner": {
           "target": {
-            "permissions": [{"type": "configure", "description": "can pause and unpause, override any batch, revert batch, update proof window, update challengers, modify verifiers"}],
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "can pause and unpause, override any batch, revert batch, update proof window, update challengers, modify verifiers"
+              }
+            ]
           }
         }
       }
