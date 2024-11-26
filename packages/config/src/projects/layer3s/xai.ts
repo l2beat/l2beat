@@ -1,9 +1,4 @@
-import {
-  assert,
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -11,26 +6,6 @@ import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 import { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('xai', 'arbitrum')
-
-// orbitStack template currently does not support upgradeability
-const upgradeability = {
-  upgradableBy: ['ProxyAdmin (through UpgradeExecutor)'],
-  upgradeDelay: 'No delay',
-}
-const stakingUpgradeability = {
-  upgradableBy: ['StakingProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
-
-assert(
-  sameArrays(
-    discovery.get$Admins('SentryReferee'),
-    discovery.get$Admins('PoolFactory'),
-    discovery.get$Admins('NodeLicenseRegistry'),
-    [discovery.getContract('StakingProxyAdmin').address],
-  ),
-  'The upgradeability changed, please review it in the .ts descriptions.',
-)
 
 export const xai: Layer3 = orbitStackL3({
   createdAt: new UnixTime(1701958025), // 2023-12-07T14:07:05Z
@@ -57,7 +32,7 @@ export const xai: Layer3 = orbitStackL3({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  bridge: discovery.getContract('Bridge'),
+  bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   associatedTokens: ['XAI'],
@@ -112,49 +87,7 @@ export const xai: Layer3 = orbitStackL3({
         'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
     }),
   ],
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'XaiMultisig',
-      'Multisig that can execute upgrades via the UpgradeExecutor.',
-    ),
-    {
-      name: 'Xai Deployer (StakingProxyAdmin owner)',
-      accounts: [
-        discovery.getPermissionedAccount('StakingProxyAdmin', 'owner'),
-      ],
-      description:
-        'The Xai Deployer EOA can upgrade all staking v2 related contracts (NodeLicenseRegistry, PoolFactory, SentryReferee, StakingPool) instantly and potentially steal all funds.',
-    },
-  ],
-  nonTemplateContracts: [
-    discovery.getContractDetails('L1GatewayRouter', {
-      description: 'Router managing token <--> gateway mapping.',
-      ...upgradeability,
-    }),
-    discovery.getContractDetails('SentryReferee', {
-      description:
-        "The referee contract manages the Xai Sentry protocol. Sentry nodes that are tasked to watch the state transitions on Xai receive esXAI rewards for their service. These watchers participate in a game with a central 'challenger' by posting their assertions to make sure they are actually watching. In case of a malicious state transition, sentries are supposed to raise an alarm offchain. \
-        The referee contract is also a whitelisted address in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. New staking through this contract is disabled in favor of the new v2 staking. V1 Stakers can continue to get staking rewards here or withdraw/migrate their assets.",
-      ...stakingUpgradeability,
-    }),
-    discovery.getContractDetails('PoolFactory', {
-      description: (() => {
-        const stakingEnabled = <boolean>(
-          discovery.getContractValue('PoolFactory', 'stakingEnabled')
-        )
-        const description = `The PoolFactory allows creating and managing staking pools for V2 staking. Users can stake esXAI (and / or Sentry Keys) in pools. This contract's address is whitelisted in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. V2 staking through this contract is currently ${
-          stakingEnabled ? 'enabled' : 'disabled'
-        }.`
-        return description
-      })(),
-      ...stakingUpgradeability,
-    }),
-    discovery.getContractDetails('NodeLicenseRegistry', {
-      description:
-        'This is the contract where Xai Sentry Keys to run a node are minted.',
-      ...stakingUpgradeability,
-    }),
-  ],
+  discoveryDrivenData: true,
   milestones: [
     {
       name: 'XAI Mainnet Launch',
@@ -165,19 +98,3 @@ export const xai: Layer3 = orbitStackL3({
     },
   ],
 })
-
-function sameArrays<T>(...arrays: T[][]) {
-  const first = new Set(arrays[0] ?? [])
-  return arrays
-    .map((x) => new Set(x))
-    .every((set) => {
-      if (set.size !== first.size) return false
-      for (const x of set) {
-        if (!first.has(x)) return false
-      }
-      for (const x of first) {
-        if (!set.has(x)) return false
-      }
-      return true
-    })
-}
