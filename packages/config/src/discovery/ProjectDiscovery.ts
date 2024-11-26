@@ -178,7 +178,7 @@ export class ProjectDiscovery {
       isUpcoming,
       chain: this.chain,
       includeInTotal:
-        (includeInTotal ?? this.chain === 'ethereum') ? true : includeInTotal,
+        includeInTotal ?? this.chain === 'ethereum' ? true : includeInTotal,
       source,
       bridgedUsing,
       isHistorical,
@@ -775,15 +775,10 @@ export class ProjectDiscovery {
         `Conflicting descriptions found ${descriptions}`,
       )
 
-      let description = roleDescriptions[role].description
-      if (descriptions.length === 1) {
-        description = descriptions[0]
-      }
-
       const accounts = addresses.map((a) => this.formatPermissionedAccount(a))
       result.push({
         ...roleDescriptions[role],
-        description,
+        description: descriptions[0] ?? roleDescriptions[role].description,
         accounts,
         fromRole: true,
       })
