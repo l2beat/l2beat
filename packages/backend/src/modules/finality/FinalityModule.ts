@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { assert, assertUnreachable, notUndefined } from '@l2beat/shared-pure'
 
-import { BlobClient, LoopringClient, StarknetClient } from '@l2beat/shared'
+import { BlobProvider, LoopringClient, StarknetClient } from '@l2beat/shared'
 import { Config } from '../../config'
 import { FinalityProjectConfig } from '../../config/features/finality'
 import { ClientClass, Peripherals } from '../../peripherals/Peripherals'
@@ -47,16 +47,12 @@ export function createFinalityModule(
     chain: 'ethereum',
   })
 
-  const blobClient = peripherals.getClient(BlobClient, {
-    beaconApiUrl: config.finality.beaconApiUrl,
-    rpcUrl: config.finality.ethereumProviderUrl,
-    callsPerMinute: config.finality.beaconApiCPM,
-    timeout: config.finality.beaconApiTimeout,
-  })
+  const blobProvider = providers.blob?.getBlobProvider()
+  assert(blobProvider, 'Blob client is required for finality module')
 
   const runtimeConfigurations = initializeConfigurations(
     ethereumClient,
-    blobClient,
+    blobProvider,
     logger,
     config.finality.configurations,
     peripherals,
@@ -91,7 +87,7 @@ export function createFinalityModule(
 
 function initializeConfigurations(
   ethereumRPC: RpcClient,
-  blobClient: BlobClient,
+  blobProvider: BlobProvider,
   logger: Logger,
   configs: FinalityProjectConfig[],
   peripherals: Peripherals,
@@ -134,7 +130,7 @@ function initializeConfigurations(
             projectId: configuration.projectId,
             analyzers: {
               timeToInclusion: new OpStackT2IAnalyzer(
-                blobClient,
+                blobProvider,
                 logger,
                 ethereumRPC,
                 peripherals.database,
@@ -160,7 +156,7 @@ function initializeConfigurations(
             projectId: configuration.projectId,
             analyzers: {
               timeToInclusion: new ArbitrumT2IAnalyzer(
-                blobClient,
+                blobProvider,
                 logger,
                 ethereumRPC,
                 peripherals.database,
