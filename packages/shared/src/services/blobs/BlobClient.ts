@@ -2,6 +2,7 @@ import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import { utils } from 'ethers'
 import { z } from 'zod'
 
+import { HttpClient2 } from '../../clients'
 import { HttpClient } from '../HttpClient'
 
 interface BlobClientOptions {
@@ -15,7 +16,7 @@ export class BlobClient {
   constructor(
     private readonly beaconApiUrl: string,
     private readonly rpcUrl: string,
-    private readonly httpClient: HttpClient,
+    private readonly httpClient: HttpClient2,
     private readonly logger: Logger,
     options: BlobClientOptions,
   ) {
