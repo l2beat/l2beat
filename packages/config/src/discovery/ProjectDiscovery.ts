@@ -775,14 +775,15 @@ export class ProjectDiscovery {
         `Conflicting descriptions found ${descriptions}`,
       )
 
-      const defaultDescription = roleDescriptions[role]
+      let description = roleDescriptions[role].description
       if (descriptions.length === 1) {
-        defaultDescription.description = descriptions[0]
+        description = descriptions[0]
       }
 
       const accounts = addresses.map((a) => this.formatPermissionedAccount(a))
       result.push({
-        ...defaultDescription,
+        ...roleDescriptions[role],
+        description,
         accounts,
         fromRole: true,
       })
