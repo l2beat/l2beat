@@ -33,24 +33,8 @@ export const playblock: Layer3 = orbitStackL3({
   // nativeToken: 'PBG',
   // associatedTokens: ['PBG'],
   rpcUrl: 'https://playnance.drpc.org/',
-  bridge: discovery.getContract('Bridge'),
+  bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  nonTemplatePermissions: [
-    {
-      name: 'RollupOwnerEOA',
-      accounts: discovery.getAccessControlRolePermission(
-        'UpgradeExecutor',
-        'EXECUTOR_ROLE',
-      ),
-      description:
-        'This address has the Executor role and can upgrade the rollup contracts (via ProxyAdmin) without delay, potentially stealing all funds.',
-    },
-  ],
-  nonTemplateContracts: [
-    discovery.getContractDetails('ProxyAdmin', {
-      description:
-        'This contract can upgrade the implementations of the rollup proxies.',
-    }),
-  ],
+  discoveryDrivenData: true,
 })
