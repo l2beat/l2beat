@@ -22,7 +22,7 @@ app.use(
   assets.handlerPath,
   express.static(
     assets.staticPath,
-    assets.enableCache ? { maxAge: Infinity, immutable: true } : undefined,
+    assets.enableCache ? { maxAge: '1y', immutable: true } : undefined,
   ),
 )
 

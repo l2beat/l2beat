@@ -23,7 +23,7 @@ export function initStaticAssets() {
     return {
       handlerPath: staticPath,
       staticPath: join(__dirname, '../static'),
-      enableCache: false,
+      enableCache: true,
     }
   } catch {
     const random = Math.floor(Math.random() * 2 ** 16)
@@ -33,7 +33,7 @@ export function initStaticAssets() {
     return {
       handlerPath: staticPath,
       staticPath: join(__dirname, '../client/static'),
-      enableCache: true,
+      enableCache: false,
     }
   }
 }
