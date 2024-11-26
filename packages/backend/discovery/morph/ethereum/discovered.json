@@ -1,8 +1,8 @@
 {
   "name": "morph",
   "chain": "ethereum",
-  "blockNumber": 21264263,
-  "configHash": "0x70c29b504dc1541e094b2437cf2d7bec199bca43969e0ece376afa8881f94c63",
+  "blockNumber": 21272621,
+  "configHash": "0x91fd0420a08583eaa097af1bac257fcbeae5b34f99a8d22a05e04ef420ea0301",
   "contracts": [
     {
       "name": "L1Staking",
@@ -12,7 +12,7 @@
         "0x351d32023ef4c9c047e2ded56496285abbd64e6b818f635853724d6918661122"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures of stakers (currently not implemented)",
+      "description": "Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures of stakers (currently not implemented).",
       "issuedPermissions": [
         {
           "permission": "sequence",
@@ -115,7 +115,7 @@
         "0xeaf8251bfabe03ffd453e312b616d019dd7b0fa4a67298ba9756c5c13a5d8b7c"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contract used to bridge ETH from L1 to L2",
+      "description": "Contract used to bridge ETH from L1 to L2.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -207,7 +207,7 @@
         "0xe43c8aca9b520edaff0a7339959cee77a47b241a07c6d0dd9836e466caf35e72"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.${isEnforcedTxGatewayPaused ? ' The latter contract, which would allow users to send L2 messages from L1 with their own address as the sender, is not enabled (paused)",
+      "description": "Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -242,9 +242,9 @@
         "l2BaseFee": 1000000,
         "maxGasLimit": 30000000,
         "MESSENGER": "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
-        "nextCrossDomainMessageIndex": 3180,
+        "nextCrossDomainMessageIndex": 3245,
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-        "pendingQueueIndex": 2945,
+        "pendingQueueIndex": 3064,
         "ROLLUP_CONTRACT": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "whitelistChecker": "0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
       },
@@ -258,7 +258,7 @@
         "0xa93dc4ec78ab93af1f0e80e7f4a46479115b99d7830bcef40bc1546809b58f0c"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list",
+      "description": "Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -303,7 +303,7 @@
       "sourceHashes": [
         "0x3531085f506af5a2423ca2358f5e8e7b16a0f173c3fb648268bc29725123d370"
       ],
-      "description": "Current SP1 verifier using Blobs for DA, used to prepare data for the PlonkVerifierV0",
+      "description": "Current SP1 verifier using Blobs for DA, used to prepare data for the PlonkVerifierV0.",
       "sinceTimestamp": 1729328267,
       "values": {
         "$immutable": true,
@@ -320,7 +320,7 @@
         "0xf3090fefca73bff62cc9256f5a3a138a2d248f3067048c920dde508a710a8758"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway",
+      "description": "Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -366,7 +366,7 @@
         "0xb1afd290858bf0702793a7fd0a214fc9c1c0aa70ff5755193bdd20073e5d0ca1"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist",
+      "description": "The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.",
       "issuedPermissions": [
         {
           "permission": "challenge",
@@ -422,8 +422,8 @@
         "finalizationPeriodSeconds": 172800,
         "inChallenge": false,
         "l1StakingContract": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-        "lastCommittedBatchIndex": 2679,
-        "lastFinalizedBatchIndex": 2535,
+        "lastCommittedBatchIndex": 2763,
+        "lastFinalizedBatchIndex": 2619,
         "LAYER_2_CHAIN_ID": 2818,
         "messageQueue": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
@@ -563,7 +563,7 @@
         "0xb52cf98f79a1b9d6847244beac7ecf26b52a6f424a07d5be2fa8b0708c6144d6"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contracts to force L1 -> L2 messages with the proper sender. Currently paused: true",
+      "description": "Contracts to force L1 -> L2 messages with the proper sender. Currently paused: true.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -623,7 +623,7 @@
         "0x1a0a7d2a0ed1f83c7043abd7a9f1f24c979e7e86e258c7968ed007894fbf2a4a"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender",
+      "description": "Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -657,7 +657,7 @@
         "counterpart": "0x5300000000000000000000000000000000000007",
         "feeVault": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "maxReplayTimes": 3,
-        "messageNonce": 3180,
+        "messageNonce": 3245,
         "messageQueue": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "paused": false,
@@ -672,7 +672,7 @@
       "sourceHashes": [
         "0x6ea636875dfe6299e58d86fdd103fb219f30d1360320b1a068ad33ca3444c8d6"
       ],
-      "description": "Contract implementing a generic whitelist. Currently used to define the actor that can relay the L2 basefee on L1",
+      "description": "Contract implementing a generic whitelist. Currently used to define the actor that can relay the L2 basefee on L1.",
       "sinceTimestamp": 1729328435,
       "values": {
         "$immutable": true,

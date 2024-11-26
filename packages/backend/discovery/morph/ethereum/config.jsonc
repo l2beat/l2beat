@@ -23,19 +23,19 @@
   },
   "overrides": {
     "Whitelist": {
-      "description": "Contract implementing a generic whitelist. Currently used to define the actor that can relay the L2 basefee on L1"
+      "description": "Contract implementing a generic whitelist. Currently used to define the actor that can relay the L2 basefee on L1."
     },
     "L1StandardERC20Gateway": {
-      "description": "Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list"
+      "description": "Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list."
     },
     "L1ETHGateway": {
-      "description": "Contract used to bridge ETH from L1 to L2"
+      "description": "Contract used to bridge ETH from L1 to L2."
     },
     "ZkEvmVerifierV1": {
-      "description": "Current SP1 verifier using Blobs for DA, used to prepare data for the PlonkVerifierV0"
+      "description": "Current SP1 verifier using Blobs for DA, used to prepare data for the PlonkVerifierV0."
     },
     "EnforcedTxGateway": {
-      "description": "Contracts to force L1 -> L2 messages with the proper sender. Currently paused: {{ paused }}",
+      "description": "Contracts to force L1 -> L2 messages with the proper sender. Currently paused: {{ paused }}.",
       "fields": {
         "owner": {
           "target": {
@@ -56,7 +56,7 @@
       }
     },
     "L1Staking": {
-      "description": "Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures of stakers (currently not implemented)",
+      "description": "Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures of stakers (currently not implemented).",
       "ignoreMethods": ["getStakers", "stakerSet"], // TODO: add the whitelist
       "fields": {
         "getActiveStakers": {
@@ -72,7 +72,7 @@
       }
     },
     "L1GatewayRouter": {
-      "description": "Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway",
+      "description": "Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.",
       "fields": {
         "gateways": {
           "handler": {
@@ -112,12 +112,12 @@
       }
     },
     "L1CrossDomainMessenger": {
-      "description": "Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender",
+      "description": "Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.",
       "ignoreMethods": ["prevReplayIndex"],
       "ignoreInWatchMode": ["messageNonce"]
     },
     "L1MessageQueueWithGasPriceOracle": {
-      "description": "Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway",
+      "description": "Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.",
       "ignoreMethods": [
         "getCrossDomainMessage",
         "isMessageDropped",
@@ -127,7 +127,7 @@
       "ignoreInWatchMode": ["pendingQueueIndex", "nextCrossDomainMessageIndex"]
     },
     "MorphRollup": {
-      "description": "The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist",
+      "description": "The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.",
       "ignoreMethods": [
         "batchChallengedSuccess",
         "batchDataStore",

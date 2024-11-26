@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x3c2fa3c731228f6f54b5bb0bba65f9f2ebbd2456
+Generated with discovered.json: 0x3040bc3142e7ed49d847e3c57d67f3fa373616d0
 
-# Diff at Tue, 26 Nov 2024 12:37:21 GMT:
+# Diff at Tue, 26 Nov 2024 14:48:58 GMT:
 
 - author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
 - comparing to: main@870cd1dcc81bc3cf8bef8fe79c76929e42c7c886 block: 21264263
-- current block number: 21264263
+- current block number: 21272621
 
 ## Description
 
@@ -18,7 +18,7 @@ discovery. Values are for block 21264263 (main branch discovery), not current.
 
 ```diff
     contract L1Staking (0x0Dc417F8AF88388737c5053FF73f345f080543F7) {
-    +++ description: Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures of stakers (currently not implemented)
+    +++ description: Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures of stakers (currently not implemented).
       issuedPermissions.7:
 +        {"permission":"upgrade","target":"0xB822319ab7848b7cC4537c8409e50f85BFb04377","via":[{"address":"0x31110622D6CA24c9FF307d6ae1715F16E47F16A0","delay":0}]}
       issuedPermissions.6:
@@ -40,20 +40,20 @@ discovery. Values are for block 21264263 (main branch discovery), not current.
 -        "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"
 +        "0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796"
       description:
-+        "Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures of stakers (currently not implemented)"
++        "Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures of stakers (currently not implemented)."
     }
 ```
 
 ```diff
     contract L1ETHGateway (0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68) {
-    +++ description: Contract used to bridge ETH from L1 to L2
+    +++ description: Contract used to bridge ETH from L1 to L2.
       issuedPermissions.0.target:
 -        "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"
 +        "0xB822319ab7848b7cC4537c8409e50f85BFb04377"
       issuedPermissions.0.via.0:
 +        {"address":"0x31110622D6CA24c9FF307d6ae1715F16E47F16A0","delay":0}
       description:
-+        "Contract used to bridge ETH from L1 to L2"
++        "Contract used to bridge ETH from L1 to L2."
     }
 ```
 
@@ -69,54 +69,54 @@ discovery. Values are for block 21264263 (main branch discovery), not current.
 
 ```diff
     contract L1MessageQueueWithGasPriceOracle (0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF) {
-    +++ description: Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.${isEnforcedTxGatewayPaused ? ' The latter contract, which would allow users to send L2 messages from L1 with their own address as the sender, is not enabled (paused)
+    +++ description: Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.
       issuedPermissions.0.target:
 -        "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"
 +        "0xB822319ab7848b7cC4537c8409e50f85BFb04377"
       issuedPermissions.0.via.0:
 +        {"address":"0x31110622D6CA24c9FF307d6ae1715F16E47F16A0","delay":0}
       description:
-+        "Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.${isEnforcedTxGatewayPaused ? ' The latter contract, which would allow users to send L2 messages from L1 with their own address as the sender, is not enabled (paused)"
++        "Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway."
     }
 ```
 
 ```diff
     contract L1StandardERC20Gateway (0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8) {
-    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.
       issuedPermissions.0.target:
 -        "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"
 +        "0xB822319ab7848b7cC4537c8409e50f85BFb04377"
       issuedPermissions.0.via.0:
 +        {"address":"0x31110622D6CA24c9FF307d6ae1715F16E47F16A0","delay":0}
       description:
-+        "Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list"
++        "Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list."
     }
 ```
 
 ```diff
     contract ZkEvmVerifierV1 (0x6dAece7dFaE212b6A9F55c56FD3cf1462F44069e) {
-    +++ description: Current SP1 verifier using Blobs for DA, used to prepare data for the PlonkVerifierV0
+    +++ description: Current SP1 verifier using Blobs for DA, used to prepare data for the PlonkVerifierV0.
       description:
-+        "Current SP1 verifier using Blobs for DA, used to prepare data for the PlonkVerifierV0"
++        "Current SP1 verifier using Blobs for DA, used to prepare data for the PlonkVerifierV0."
     }
 ```
 
 ```diff
     contract L1GatewayRouter (0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a) {
-    +++ description: Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway
+    +++ description: Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.
       issuedPermissions.0.target:
 -        "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"
 +        "0xB822319ab7848b7cC4537c8409e50f85BFb04377"
       issuedPermissions.0.via.0:
 +        {"address":"0x31110622D6CA24c9FF307d6ae1715F16E47F16A0","delay":0}
       description:
-+        "Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway"
++        "Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway."
     }
 ```
 
 ```diff
     contract MorphRollup (0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) {
-    +++ description: The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist
+    +++ description: The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.
       issuedPermissions.2:
 +        {"permission":"upgrade","target":"0xB822319ab7848b7cC4537c8409e50f85BFb04377","via":[{"address":"0x31110622D6CA24c9FF307d6ae1715F16E47F16A0","delay":0}]}
       issuedPermissions.1:
@@ -128,7 +128,7 @@ discovery. Values are for block 21264263 (main branch discovery), not current.
 -        "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"
 +        "0xB822319ab7848b7cC4537c8409e50f85BFb04377"
       description:
-+        "The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist"
++        "The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist."
     }
 ```
 
@@ -144,7 +144,7 @@ discovery. Values are for block 21264263 (main branch discovery), not current.
 
 ```diff
     contract EnforcedTxGateway (0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7) {
-    +++ description: Contracts to force L1 -> L2 messages with the proper sender. Currently paused: true
+    +++ description: Contracts to force L1 -> L2 messages with the proper sender. Currently paused: true.
       issuedPermissions.1:
 +        {"permission":"upgrade","target":"0xB822319ab7848b7cC4537c8409e50f85BFb04377","via":[{"address":"0x31110622D6CA24c9FF307d6ae1715F16E47F16A0","delay":0}]}
       issuedPermissions.0.permission:
@@ -154,28 +154,28 @@ discovery. Values are for block 21264263 (main branch discovery), not current.
 -        "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"
 +        "0xB822319ab7848b7cC4537c8409e50f85BFb04377"
       description:
-+        "Contracts to force L1 -> L2 messages with the proper sender. Currently paused: true"
++        "Contracts to force L1 -> L2 messages with the proper sender. Currently paused: true."
     }
 ```
 
 ```diff
     contract L1CrossDomainMessenger (0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304) {
-    +++ description: Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender
+    +++ description: Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.
       issuedPermissions.0.target:
 -        "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"
 +        "0xB822319ab7848b7cC4537c8409e50f85BFb04377"
       issuedPermissions.0.via.0:
 +        {"address":"0x31110622D6CA24c9FF307d6ae1715F16E47F16A0","delay":0}
       description:
-+        "Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender"
++        "Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender."
     }
 ```
 
 ```diff
     contract Whitelist (0xFFafDd9167777C0e5421e0B6789D6d7A5E386984) {
-    +++ description: Contract implementing a generic whitelist. Currently used to define the actor that can relay the L2 basefee on L1
+    +++ description: Contract implementing a generic whitelist. Currently used to define the actor that can relay the L2 basefee on L1.
       description:
-+        "Contract implementing a generic whitelist. Currently used to define the actor that can relay the L2 basefee on L1"
++        "Contract implementing a generic whitelist. Currently used to define the actor that can relay the L2 basefee on L1."
     }
 ```
 
