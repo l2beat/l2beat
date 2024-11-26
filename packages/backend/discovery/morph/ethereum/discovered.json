@@ -2,7 +2,7 @@
   "name": "morph",
   "chain": "ethereum",
   "blockNumber": 21264263,
-  "configHash": "0x29d54eb5ca544e934e53232969b2e053ac17e4d7ca7e024a85ec11eb7220d903",
+  "configHash": "0x70c29b504dc1541e094b2437cf2d7bec199bca43969e0ece376afa8881f94c63",
   "contracts": [
     {
       "name": "L1Staking",
@@ -12,6 +12,7 @@
         "0x351d32023ef4c9c047e2ded56496285abbd64e6b818f635853724d6918661122"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures of stakers (currently not implemented)",
       "issuedPermissions": [
         {
           "permission": "sequence",
@@ -114,6 +115,7 @@
         "0xeaf8251bfabe03ffd453e312b616d019dd7b0fa4a67298ba9756c5c13a5d8b7c"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract used to bridge ETH from L1 to L2",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -147,7 +149,8 @@
         "messenger": "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "router": "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a"
-      }
+      },
+      "derivedName": "L1ETHGateway"
     },
     {
       "name": "ProxyAdmin",
@@ -204,6 +207,7 @@
         "0xe43c8aca9b520edaff0a7339959cee77a47b241a07c6d0dd9836e466caf35e72"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.${isEnforcedTxGatewayPaused ? ' The latter contract, which would allow users to send L2 messages from L1 with their own address as the sender, is not enabled (paused)",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -254,6 +258,7 @@
         "0xa93dc4ec78ab93af1f0e80e7f4a46479115b99d7830bcef40bc1546809b58f0c"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -289,7 +294,8 @@
         "messenger": "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "router": "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a"
-      }
+      },
+      "derivedName": "L1StandardERC20Gateway"
     },
     {
       "name": "ZkEvmVerifierV1",
@@ -297,12 +303,14 @@
       "sourceHashes": [
         "0x3531085f506af5a2423ca2358f5e8e7b16a0f173c3fb648268bc29725123d370"
       ],
+      "description": "Current SP1 verifier using Blobs for DA, used to prepare data for the PlonkVerifierV0",
       "sinceTimestamp": 1729328267,
       "values": {
         "$immutable": true,
         "programVkey": "0x00bc91a65e39100f3b075c9edf1a60fd1cb025b9413ea19c34c62d455e512685",
         "VERIFIER_HASH": "0xffea2d2e12ed24da258af874d77eee7ee91a1e050ee197052908089e57681e67"
-      }
+      },
+      "derivedName": "ZkEvmVerifierV1"
     },
     {
       "name": "L1GatewayRouter",
@@ -312,6 +320,7 @@
         "0xf3090fefca73bff62cc9256f5a3a138a2d248f3067048c920dde508a710a8758"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -357,6 +366,7 @@
         "0xb1afd290858bf0702793a7fd0a214fc9c1c0aa70ff5755193bdd20073e5d0ca1"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist",
       "issuedPermissions": [
         {
           "permission": "challenge",
@@ -613,6 +623,7 @@
         "0x1a0a7d2a0ed1f83c7043abd7a9f1f24c979e7e86e258c7968ed007894fbf2a4a"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -661,11 +672,13 @@
       "sourceHashes": [
         "0x6ea636875dfe6299e58d86fdd103fb219f30d1360320b1a068ad33ca3444c8d6"
       ],
+      "description": "Contract implementing a generic whitelist. Currently used to define the actor that can relay the L2 basefee on L1",
       "sinceTimestamp": 1729328435,
       "values": {
         "$immutable": true,
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377"
-      }
+      },
+      "derivedName": "Whitelist"
     }
   ],
   "eoas": [
