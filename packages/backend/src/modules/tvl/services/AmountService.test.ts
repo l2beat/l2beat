@@ -31,7 +31,7 @@ describe(AmountService.name, () => {
 
   it('calls RPC if multicall does not support native balance', async () => {
     const mockRpc = mockObject<RpcClient2>({
-      getBalance: () => Promise.resolve(0),
+      getBalance: () => Promise.resolve(BigInt(0)),
     })
     const mockMulticall = mockObject<MulticallClient>({
       isNativeBalanceSupported: () => false,
