@@ -31,23 +31,13 @@ export const everclear: Layer2 = orbitStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  nonTemplatePermissions: [
-    {
-      name: 'AdminEOA',
-      accounts: discovery.getAccessControlRolePermission(
-        'UpgradeExecutor',
-        'EXECUTOR_ROLE',
-      ),
-      description:
-        'Can upgrade any project implementation via UpgradeExecutor, potentially gaining access to all funds.',
-    },
-  ],
   associatedTokens: ['NEXT'],
   rpcUrl: 'https://rpc.everclear.raas.gelato.cloud',
   discovery,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+  discoveryDrivenData: true,
   milestones: [
     {
       name: 'Mainnet Beta launch',
