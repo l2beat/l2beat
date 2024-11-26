@@ -34,15 +34,13 @@ export const mantleDA: DaLayer = {
     description:
       'Mantle DA is a data availability solution built on EigenDA contracts, which have been forked and significantly modified.',
     links: {
-      websites: ['https://mantle.xyz'],
-      documentation: ['https://docs-v2.mantle.xyz/intro/risk-management/da'],
-      repositories: ['https://github.com/mantlenetworkio'],
+      // was duplicated
+      websites: [],
       apps: [],
-      explorers: ['https://explorer.mantle.xyz/mantle-da'],
-      socialMedia: [
-        'https://twitter.com/0xMantle',
-        'https://t.me/mantlenetwork',
-      ],
+      documentation: [],
+      explorers: [],
+      repositories: [],
+      socialMedia: [],
     },
   },
   technology: {

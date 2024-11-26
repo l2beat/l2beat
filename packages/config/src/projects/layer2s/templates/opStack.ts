@@ -63,6 +63,24 @@ export const CELESTIA_DA_PROVIDER: DAProvider = {
   bridge: DA_BRIDGES.NONE,
 }
 
+export function DACHALLENGES_DA_PROVIDER(
+  daChallengeWindow: string,
+  daResolveWindow: string,
+  isNodeAvailable: boolean = false,
+  daLayer: DataAvailabilityLayer = DA_LAYERS.EXTERNAL,
+): DAProvider {
+  return {
+    layer: daLayer,
+    riskView: RISK_VIEW.DATA_EXTERNAL_CHALLENGES,
+    technology: TECHNOLOGY_DATA_AVAILABILITY.DACHALLENGES_OFF_CHAIN(
+      daChallengeWindow,
+      daResolveWindow,
+      isNodeAvailable,
+    ),
+    bridge: DA_BRIDGES.NONE_WITH_DA_CHALLENGES,
+  }
+}
+
 interface DAProvider {
   layer: DataAvailabilityLayer
   fallback?: DataAvailabilityLayer
@@ -151,14 +169,18 @@ function opStackCommon(
     ? Badge.DA.Celestia
     : undefined
 
+  const usesBlobs =
+    templateVars.usesBlobs ??
+    templateVars.discovery.getContractValue<{
+      isSequencerSendingBlobTx: boolean
+    }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
+
   if (daProvider === undefined) {
     assert(
       templateVars.isNodeAvailable !== undefined,
       'isNodeAvailable must be defined if no DA provider is defined',
     )
-    daBadge = templateVars.usesBlobs
-      ? Badge.DA.EthereumBlobs
-      : Badge.DA.EthereumCalldata
+    daBadge = usesBlobs ? Badge.DA.EthereumBlobs : Badge.DA.EthereumCalldata
   }
 
   if (daBadge === undefined) {
@@ -204,9 +226,9 @@ function opStackCommon(
       },
       dataAvailability: templateVars.nonTemplateTechnology
         ?.dataAvailability ?? {
-        ...technologyDA(daProvider, templateVars.usesBlobs),
+        ...technologyDA(daProvider, usesBlobs),
         references: [
-          ...technologyDA(daProvider, templateVars.usesBlobs).references,
+          ...technologyDA(daProvider, usesBlobs).references,
           {
             text: 'Derivation: Batch submission - OP Mainnet specs',
             href: 'https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission',
@@ -393,6 +415,12 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     upgradeDelay: 'No delay',
   }
 
+  const usesBlobs =
+    templateVars.usesBlobs ??
+    templateVars.discovery.getContractValue<{
+      isSequencerSendingBlobTx: boolean
+    }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
+
   const postsToCelestia = templateVars.discovery.getContractValue<{
     isSomeTxsLengthEqualToCelestiaDAExample: boolean
   }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
@@ -539,7 +567,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
           })
         : addSentimentToDataAvailability({
             layers: [
-              templateVars.usesBlobs
+              usesBlobs
                 ? DA_LAYERS.ETH_BLOBS_OR_CALLLDATA
                 : DA_LAYERS.ETH_CALLDATA,
             ],
@@ -646,6 +674,13 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
 }
 
 export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
+  const layer2s = require('..').layer2s as Layer2[]
+  const baseChain = layer2s.find((l2) => l2.id === templateVars.hostChain)
+  assert(
+    baseChain,
+    `Could not find base chain ${templateVars.hostChain} in layer2s`,
+  )
+
   const optimismPortalTokens = [
     'ETH',
     ...(templateVars.nonTemplateOptimismPortalEscrowTokens ?? []),
@@ -735,36 +770,27 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
       templateVars.hostChain !== 'Multiple',
       'Unable to automatically stack risks for multiple chains, please override stackedRiskView in the template.',
     )
-    const layer2s = require('..').layer2s as Layer2[]
-
-    const baseChainRiskView = layer2s.find(
-      (l2) => l2.id === templateVars.hostChain,
-    )?.riskView
-    assert(
-      baseChainRiskView,
-      `Could not find base chain ${templateVars.hostChain} in layer2s`,
-    )
     return {
       stateValidation: pickWorseRisk(
         riskView.stateValidation,
-        baseChainRiskView.stateValidation,
+        baseChain.riskView.stateValidation,
       ),
       dataAvailability: pickWorseRisk(
         riskView.dataAvailability,
-        baseChainRiskView.dataAvailability,
+        baseChain.riskView.dataAvailability,
       ),
       exitWindow: pickWorseRisk(
         riskView.exitWindow,
-        baseChainRiskView.exitWindow,
+        baseChain.riskView.exitWindow,
       ),
       sequencerFailure: sumRisk(
         riskView.sequencerFailure,
-        baseChainRiskView.sequencerFailure,
+        baseChain.riskView.sequencerFailure,
         RISK_VIEW.SEQUENCER_SELF_SEQUENCE,
       ),
       proposerFailure: sumRisk(
         riskView.proposerFailure,
-        baseChainRiskView.proposerFailure,
+        baseChain.riskView.proposerFailure,
         RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
       ),
       validatedBy: riskView.validatedBy,
@@ -834,25 +860,18 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
               },
             )
         : templateVars.stage,
-    dataAvailability: [
+    dataAvailability:
       daProvider !== undefined
-        ? addSentimentToDataAvailability({
-            layers: daProvider.fallback
-              ? [daProvider.layer, daProvider.fallback]
-              : [daProvider.layer],
-            bridge: daProvider.bridge,
-            mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-          })
-        : addSentimentToDataAvailability({
-            layers: [
-              templateVars.usesBlobs
-                ? DA_LAYERS.ETH_BLOBS_OR_CALLLDATA
-                : DA_LAYERS.ETH_CALLDATA,
-            ],
-            bridge: DA_BRIDGES.ENSHRINED,
-            mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-          }),
-    ],
+        ? [
+            addSentimentToDataAvailability({
+              layers: daProvider.fallback
+                ? [daProvider.layer, daProvider.fallback]
+                : [daProvider.layer],
+              bridge: daProvider.bridge,
+              mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+            }),
+          ]
+        : baseChain.dataAvailability,
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: [

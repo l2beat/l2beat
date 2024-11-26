@@ -2,9 +2,9 @@ import { type ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { db } from '~/server/database'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
-import { getLastDayTps } from './utils/get-last-day-tps'
-import { getTpsWeeklyChange } from './utils/get-tps-weekly-change'
-import { sumActivityCount } from './utils/sum-activity-count'
+import { getLastDayUops } from './utils/get-last-day'
+import { getUopsWeeklyChange } from './utils/get-weekly-change'
+import { sumUopsCount } from './utils/sum-activity-count'
 
 export async function getActivityProjectStats(projectId: ProjectId) {
   if (env.MOCK) {
@@ -23,19 +23,19 @@ async function getActivityProjectStatsData(projectId: ProjectId) {
   if (counts.length === 0) {
     return
   }
-  const summed = sumActivityCount(counts)
+  const summed = sumUopsCount(counts)
 
   return {
     txCount: summed,
-    lastDayTps: getLastDayTps(counts),
-    tpsWeeklyChange: getTpsWeeklyChange(counts),
+    lastDayUops: getLastDayUops(counts),
+    uopsWeeklyChange: getUopsWeeklyChange(counts),
   }
 }
 
 function getMockActivityProjectStatsData(): ActivityProjectStats {
   return {
-    lastDayTps: 15,
+    lastDayUops: 15,
     txCount: 1500,
-    tpsWeeklyChange: 0.1,
+    uopsWeeklyChange: 0.1,
   }
 }

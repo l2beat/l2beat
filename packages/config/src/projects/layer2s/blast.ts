@@ -88,7 +88,11 @@ export const blast: Layer2 = opStackL2({
     ],
   },
   finality: {
-    type: 'OPStack',
+    type: 'OPStack-blob',
+    // timestamp of the first blob tx
+    minTimestamp: new UnixTime(1716846455),
+    l2BlockTimeSeconds: 2,
+    genesisTimestamp: new UnixTime(1708809815),
     lag: 0,
     stateUpdate: 'disabled',
   },
@@ -126,7 +130,6 @@ export const blast: Layer2 = opStackL2({
     }),
   ],
   isNodeAvailable: true,
-  usesBlobs: true,
   associatedTokens: ['BLAST'],
   nodeSourceLink: 'https://github.com/blast-io/blast',
   discoveryDrivenData: true,

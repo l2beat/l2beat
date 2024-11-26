@@ -34,6 +34,7 @@ export const fluence: Layer2 = orbitStackL2({
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
+      //standardGateway
       address: EthereumAddress('0x5d436201d1fD53Dc9ECeA4268f257C6fC87c598D'),
       tokens: '*',
     }),

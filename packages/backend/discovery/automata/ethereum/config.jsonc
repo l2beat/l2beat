@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "automata",
+  "initialAddresses": [
+    "0xD52ba64CBE1e3B44167f810622fBef36bE24d95c", // OptimismPortal
+    "0x08c5DCDD5e46d31CC1591ee15b084663507597f3" // DAChallenge
+  ],
+  "names": {
+    "0x03eC1C43434E2f910A2fb984906cd2470fdb39c8": "AutomataMultisig"
+  },
+  "overrides": {
+    "0xB52337F38747D6931f2976eEa24A3f3F6B7CDEA2": {
+      "ignoreDiscovery": true // disputeGameFactory: ignored as L2OutputOracle is used instead
+    },
+    "0xDf87154Ed6cF332931b70014bA3d9dF423074FfF": {
+      "extends": "opstack/SuperchainConfigFake"
+    }
+  }
+}

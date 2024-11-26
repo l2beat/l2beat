@@ -25,7 +25,7 @@ import {
   notUndefined,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { groupBy, isArray, isString, sum } from 'lodash'
+import { groupBy, isArray, isString, sum, uniq } from 'lodash'
 
 import { join } from 'path'
 import {
@@ -483,6 +483,18 @@ export class ProjectDiscovery {
     return result
   }
 
+  getContractValueBigInt(contractIdentifier: string, key: string): bigint {
+    const result = this.getContractValueOrUndefined(contractIdentifier, key)
+    assert(
+      isNonNullable(result),
+      `Value of key ${key} does not exist in ${contractIdentifier} contract (${this.projectName})`,
+    )
+
+    assert(typeof result === 'string' || typeof result === 'number')
+
+    return BigInt(result)
+  }
+
   getAddressFromValue(
     contractIdentifier: string,
     key: string,
@@ -750,9 +762,23 @@ export class ProjectDiscovery {
       }
 
       const addresses = matching.map((c) => c.address)
+      const descriptions = uniq(
+        matching
+          .flatMap((c) =>
+            (c.receivedPermissions ?? []).filter((p) => p.permission === role),
+          )
+          .map((p) => p.description)
+          .filter((d) => d !== undefined),
+      )
+      assert(
+        descriptions.length <= 1,
+        `Conflicting descriptions found ${descriptions}`,
+      )
+
       const accounts = addresses.map((a) => this.formatPermissionedAccount(a))
       result.push({
         ...roleDescriptions[role],
+        description: descriptions[0] ?? roleDescriptions[role].description,
         accounts,
         fromRole: true,
       })

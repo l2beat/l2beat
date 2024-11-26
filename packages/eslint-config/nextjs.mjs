@@ -48,7 +48,7 @@ const typescriptConfigs = tsEslint.config(
       ],
 
       '@typescript-eslint/no-unused-vars': [
-        'warn',
+        'error',
         {
           argsIgnorePattern: '^_',
           destructuredArrayIgnorePattern: '^_',

@@ -3,12 +3,16 @@ import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { env } from '~/env'
 import { db } from '~/server/database'
-import { countToTps } from './utils/count-to-tps'
+import { countPerSecond } from './utils/count-per-second'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
-import { getLastDayTps } from './utils/get-last-day-tps'
+import { getLastDayTps, getLastDayUops } from './utils/get-last-day'
+import { getLastDayRatio } from './utils/get-last-day-ratio'
 import { getSyncStatus } from './utils/get-sync-status'
-import { getTpsWeeklyChange } from './utils/get-tps-weekly-change'
-import { sumActivityCount } from './utils/sum-activity-count'
+import {
+  getTpsWeeklyChange,
+  getUopsWeeklyChange,
+} from './utils/get-weekly-change'
+import { sumTpsCount, sumUopsCount } from './utils/sum-activity-count'
 
 export async function getActivityTable(projects: (Layer2 | Layer3)[]) {
   if (env.MOCK) {
@@ -26,7 +30,7 @@ async function getActivityTableData(projects: (Layer2 | Layer3)[]) {
     [ProjectId.ETHEREUM, ...projects.map((p) => p.id)],
     range,
   )
-  const maxCounts = await db.activity.getMaxCountForProjects()
+  const maxCounts = await db.activity.getMaxCountsForProjects()
 
   const grouped = groupBy(records, (r) => r.projectId)
 
@@ -47,13 +51,25 @@ async function getActivityTableData(projects: (Layer2 | Layer3)[]) {
       return [
         projectId,
         {
-          change: getTpsWeeklyChange(records),
-          pastDayTps: getLastDayTps(records),
-          maxTps: {
-            value: countToTps(maxCount.count),
-            timestamp: maxCount.timestamp.toNumber(),
+          tps: {
+            change: getTpsWeeklyChange(records),
+            pastDayCount: getLastDayTps(records),
+            summedCount: sumTpsCount(records),
+            maxCount: {
+              value: countPerSecond(maxCount.count),
+              timestamp: maxCount.countTimestamp.toNumber(),
+            },
           },
-          summedCount: sumActivityCount(records),
+          uops: {
+            change: getUopsWeeklyChange(records),
+            pastDayCount: getLastDayUops(records),
+            summedCount: sumUopsCount(records),
+            maxCount: {
+              value: countPerSecond(maxCount.uopsCount),
+              timestamp: maxCount.uopsTimestamp.toNumber(),
+            },
+          },
+          ratio: getLastDayRatio(records),
           syncStatus: getSyncStatus(lastRecord.timestamp),
         },
       ]
@@ -74,13 +90,25 @@ function getMockActivityTableData(): ActivityTableData {
     projects.map((project) => [
       project.id,
       {
-        change: Math.random(),
-        pastDayTps: 20,
-        maxTps: {
-          value: 30,
-          timestamp: UnixTime.now().toNumber(),
+        tps: {
+          change: Math.random(),
+          pastDayCount: 19,
+          summedCount: 1500,
+          maxCount: {
+            value: 30,
+            timestamp: UnixTime.now().toNumber(),
+          },
         },
-        summedCount: 1500,
+        uops: {
+          change: Math.random(),
+          pastDayCount: 20,
+          summedCount: 1550,
+          maxCount: {
+            value: 30,
+            timestamp: UnixTime.now().add(-1, 'days').toNumber(),
+          },
+        },
+        ratio: 1.1,
         syncStatus: getSyncStatus(UnixTime.now()),
       },
     ]),

@@ -6,12 +6,15 @@ import {
 } from '@l2beat/discovery-types'
 import { DiscoveryContract } from '@l2beat/discovery/dist/discovery/config/RawDiscoveryConfig'
 import { EthereumAddress } from '@l2beat/shared-pure'
+import { utils } from 'ethers'
+import { getContractName } from './getContractName'
 import { getContractType } from './getContractType'
 import { getMeta } from './getMeta'
 import { parseFieldValue } from './parseFieldValue'
 import { toAddress } from './toAddress'
 import {
   AddressFieldValue,
+  ApiAbiEntry,
   ApiAddressEntry,
   ApiAddressType,
   ApiProjectChain,
@@ -139,7 +142,7 @@ function contractFromDiscovery(
   const implementations = get$Implementations(contract.values)
 
   return {
-    name: contract.name || undefined,
+    name: getContractName(contract),
     type: getContractType(contract),
     template: contract.template,
     description: contract.description,
@@ -148,8 +151,25 @@ function contractFromDiscovery(
     fields,
     abis: [contract.address, ...implementations].map((address) => ({
       address: toAddress(chain, address),
-      entries: abis[address] ?? [],
+      entries: (abis[address] ?? []).map((e) => abiEntry(e)),
     })),
+  }
+}
+
+function abiEntry(entry: string): ApiAbiEntry {
+  if (entry.startsWith('constructor')) {
+    return { value: entry }
+  }
+
+  const iface = new utils.Interface([entry])
+  return {
+    value: entry,
+    topic: entry.startsWith('event')
+      ? iface.getEventTopic(entry.slice(6))
+      : undefined,
+    signature: entry.startsWith('function')
+      ? iface.getSighash(entry.slice(9))
+      : undefined,
   }
 }
 

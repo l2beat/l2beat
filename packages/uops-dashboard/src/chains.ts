@@ -8,7 +8,6 @@ export type ChainId =
   | 'immutablex'
   | 'linea'
   | 'lyra'
-  | 'taiko'
   | 'mantle'
   | 'nova'
   | 'optimism'
@@ -16,7 +15,10 @@ export type ChainId =
   | 'scroll'
   | 'silicon'
   | 'starknet'
+  | 'taiko'
+  | 'worldchain'
   | 'xai'
+  | 'zircuit'
   | 'zksync-era'
   | 'zora'
 
@@ -214,6 +216,17 @@ export const SUPPORTED_CHAINS: Chain[] = [
       `https://taikoscan.io/address/${address}`,
   },
   {
+    id: 'worldchain',
+    name: 'World Chain',
+    suggestedBlocksCount: 100,
+    batchSize: 10,
+    getBlockLink: (blockNumber: number) =>
+      `https://worldscan.org/block/${blockNumber}`,
+    getTxLink: (txHash: string) => `https://worldscan.org/tx/${txHash}`,
+    getContractLink: (address: string) =>
+      `https://worldscan.org/address/${address}`,
+  },
+  {
     id: 'xai',
     name: 'Xai',
     suggestedBlocksCount: 100,
@@ -223,6 +236,17 @@ export const SUPPORTED_CHAINS: Chain[] = [
     getTxLink: (txHash: string) => `https://xaiscan.io/tx/${txHash}`,
     getContractLink: (address: string) =>
       `https://xaiscan.io/address/${address}`,
+  },
+  {
+    id: 'zircuit',
+    name: 'Zircuit',
+    suggestedBlocksCount: 100,
+    batchSize: 10,
+    getBlockLink: (blockNumber: number) =>
+      `https://explorer.zircuit.com//blocks/${blockNumber}`,
+    getTxLink: (txHash: string) => `https://explorer.zircuit.com/tx/${txHash}`,
+    getContractLink: (address: string) =>
+      `https://explorer.zircuit.com/address/${address}`,
   },
   {
     id: 'zksync-era',

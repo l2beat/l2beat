@@ -1,7 +1,6 @@
 import { Database } from '@l2beat/database'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
 import { ActivityConfig } from '../../config/Config'
-import { BlockProviders } from '../../providers/BlockProviders'
 import { Providers } from '../../providers/Providers'
 import { BlockTimestampProvider } from '../tvl/services/BlockTimestampProvider'
 import { TxsCountService } from './indexers/types'
@@ -13,16 +12,14 @@ import { StarknetUopsAnalyzer } from './services/uops/analyzers/StarknetUopsAnal
 export class ActivityDependencies {
   private readonly rpcUopsAnalyzer: RpcUopsAnalyzer
   private readonly starknetUopsAnalyzer: StarknetUopsAnalyzer
-  private readonly blockProviders: BlockProviders
 
   constructor(
     private readonly config: ActivityConfig,
     readonly database: Database,
-    providers: Providers,
+    private readonly providers: Providers,
   ) {
     this.rpcUopsAnalyzer = new RpcUopsAnalyzer()
     this.starknetUopsAnalyzer = new StarknetUopsAnalyzer()
-    this.blockProviders = providers.getBlockProviders()
   }
 
   getTxsCountService(chain: string): TxsCountService {
@@ -31,7 +28,7 @@ export class ActivityDependencies {
 
     switch (project.config.type) {
       case 'rpc': {
-        const provider = this.blockProviders.getBlockProvider(chain)
+        const provider = this.providers.block.getBlockProvider(chain)
 
         return new BlockTxsCountService({
           provider,
@@ -41,7 +38,7 @@ export class ActivityDependencies {
         })
       }
       case 'starknet': {
-        const provider = this.blockProviders.getBlockProvider(chain)
+        const provider = this.providers.block.getBlockProvider(chain)
         return new BlockTxsCountService({
           provider,
           projectId: project.id,
@@ -52,7 +49,7 @@ export class ActivityDependencies {
       case 'fuel':
       case 'degate3':
       case 'loopring': {
-        const provider = this.blockProviders.getBlockProvider(chain)
+        const provider = this.providers.block.getBlockProvider(chain)
         return new BlockTxsCountService({
           provider,
           projectId: project.id,
@@ -60,11 +57,11 @@ export class ActivityDependencies {
       }
       case 'starkex': {
         assert(
-          this.blockProviders.starkexClient,
+          this.providers.block.starkexClient,
           'starkexClient should be defined',
         )
         return new StarkexTxsCountService(
-          this.blockProviders.starkexClient,
+          this.providers.block.starkexClient,
           project.id,
           project.config.product,
         )
@@ -76,6 +73,6 @@ export class ActivityDependencies {
   }
 
   getBlockTimestampProvider(chain: string): BlockTimestampProvider {
-    return this.blockProviders.getBlockTimestampProvider(chain)
+    return this.providers.block.getBlockTimestampProvider(chain)
   }
 }

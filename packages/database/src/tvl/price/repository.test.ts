@@ -61,6 +61,31 @@ describeDatabase(PriceRepository.name, (db) => {
     })
   })
 
+  describe(PriceRepository.prototype.getLatestPrice.name, () => {
+    it('finds latest price for configurations', async () => {
+      await repository.insertMany([
+        saved('a', new UnixTime(100), 100),
+        saved('a', new UnixTime(200), 200),
+
+        saved('b', new UnixTime(100), 100),
+        saved('b', new UnixTime(200), 200),
+        saved('b', new UnixTime(300), 300),
+
+        saved('c', new UnixTime(100), 100),
+        saved('c', new UnixTime(200), 200),
+        saved('c', new UnixTime(300), 300),
+        saved('c', new UnixTime(400), 300),
+      ])
+
+      const result = await repository.getLatestPrice([
+        'a'.repeat(12),
+        'b'.repeat(12),
+      ])
+
+      expect(result).toEqual(saved('b', new UnixTime(300), 300))
+    })
+  })
+
   describe(PriceRepository.prototype.findByConfigAndTimestamp.name, () => {
     it('finds by config and timestamp', async () => {
       await repository.insertMany([

@@ -90,29 +90,57 @@ export class ActivityRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getMaxCountForProjects() {
-    const subquery = this.db
+  async getMaxCountsForProjects() {
+    const uopsSubquery = this.db
       .selectFrom('Activity')
-      .select(['projectId', (eb) => eb.fn.max('count').as('max_count')])
+      .select([
+        'projectId',
+        (eb) =>
+          eb.fn
+            .max(eb.fn.coalesce('Activity.uopsCount', 'Activity.count'))
+            .as('max_uops_count'),
+      ])
       .groupBy('projectId')
       .as('t2')
 
     const rows = await this.db
       .selectFrom('Activity as t1')
-      .innerJoin(subquery, (join) =>
+      .innerJoin(uopsSubquery, (join) =>
         join
           .onRef('t1.projectId', '=', 't2.projectId')
-          .onRef('t1.count', '=', 't2.max_count'),
+          .onRef(
+            (eb) => eb.fn.coalesce('t1.uopsCount', 't1.count'),
+            '=',
+            't2.max_uops_count',
+          ),
       )
-      .select(['t1.projectId', 't1.count as max_count', 't1.timestamp'])
+      .innerJoin('Activity as count_table', (join) =>
+        join
+          .onRef('t1.projectId', '=', 'count_table.projectId')
+          .onRef('count_table.count', '=', (eb) =>
+            eb
+              .selectFrom('Activity as max_count')
+              .select(eb.fn.max('count').as('max_count'))
+              .whereRef('max_count.projectId', '=', 't1.projectId'),
+          ),
+      )
+      .select([
+        't1.projectId',
+        (eb) => eb.fn.coalesce('t1.uopsCount', 't1.count').as('max_uops_count'),
+        't1.timestamp as uops_timestamp',
+        'count_table.count as max_count',
+        'count_table.timestamp as count_timestamp',
+      ])
       .execute()
 
     return Object.fromEntries(
       rows.map((row) => [
         row.projectId,
         {
+          uopsCount: Number(row.max_uops_count),
+          uopsTimestamp: UnixTime.fromDate(row.uops_timestamp),
           count: Number(row.max_count),
-          timestamp: UnixTime.fromDate(row.timestamp),
+          countTimestamp: UnixTime.fromDate(row.count_timestamp),
         },
       ]),
     )

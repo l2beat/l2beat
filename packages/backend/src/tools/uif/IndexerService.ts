@@ -1,5 +1,4 @@
 import { Database, IndexerStateRecord } from '@l2beat/database'
-import {} from '@l2beat/shared-pure'
 import { Configuration, SavedConfiguration } from './multi/types'
 
 export class IndexerService {

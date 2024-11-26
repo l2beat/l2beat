@@ -27,6 +27,19 @@ export class PriceRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getLatestPrice(configIds: string[]): Promise<PriceRecord | undefined> {
+    if (configIds.length === 0) return undefined
+
+    const row = await this.db
+      .selectFrom('Price')
+      .select(selectPrice)
+      .where('configurationId', 'in', configIds)
+      .orderBy('timestamp', 'desc')
+      .executeTakeFirst()
+
+    return row ? toRecord(row) : undefined
+  }
+
   async getByTimestamp(timestamp: UnixTime): Promise<PriceRecord[]> {
     const rows = await this.db
       .selectFrom('Price')

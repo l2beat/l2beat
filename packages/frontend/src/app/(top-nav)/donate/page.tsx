@@ -1,6 +1,6 @@
 import { compact } from 'lodash'
 import { type Metadata } from 'next'
-import { toDataURL } from 'qrcode'
+import Image from 'next/image'
 import { ContentWrapper } from '~/components/content-wrapper'
 import { OutLink } from '~/components/out-link'
 import { env } from '~/env'
@@ -19,13 +19,6 @@ export default async function Page() {
   const gitcoinOption = env.NEXT_PUBLIC_GITCOIN_ROUND_LIVE
 
   const donateAddress = '0x41626BA92c0C2a1aD38fC83920300434082B1870'
-  const qrCodeUrl = await toDataURL(donateAddress, {
-    color: {
-      light: '#fafafa',
-    },
-    errorCorrectionLevel: 'H',
-    margin: 0,
-  })
 
   const networks = compact([
     {
@@ -53,11 +46,7 @@ export default async function Page() {
 
   return (
     <div>
-      <Header
-        ethereumAddress={donateAddress}
-        qrCodeUrl={qrCodeUrl}
-        networks={networks}
-      />
+      <Header ethereumAddress={donateAddress} networks={networks} />
       <ContentWrapper className="leading-[1.15]">
         <main>
           <DonateFundingSources />
@@ -69,7 +58,6 @@ export default async function Page() {
 
 interface HeaderProps {
   ethereumAddress: string
-  qrCodeUrl: string
   networks: {
     name: string
     linkURL: string
@@ -105,11 +93,11 @@ async function Header(props: HeaderProps) {
             <div className="relative my-12 flex items-center justify-center md:hidden">
               <div className="z-10 flex flex-col items-center justify-center">
                 <div className="size-[184px] rounded-xl bg-white p-3">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <Image
                     alt="QR Code of donate address"
-                    src={props.qrCodeUrl}
-                    className="size-40"
+                    src="/images/qr-codes/donate.png"
+                    width={160}
+                    height={160}
                     style={{
                       imageRendering: 'pixelated',
                     }}
@@ -146,11 +134,11 @@ async function Header(props: HeaderProps) {
           <div className="relative col-span-5 hidden items-center justify-center md:flex">
             <div className="z-10 flex flex-col items-center justify-center">
               <div className="size-[236px] rounded-xl bg-white p-3">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                   alt="QR Code of donate address"
-                  src={props.qrCodeUrl}
-                  className="size-[212px]"
+                  src="/images/qr-codes/donate.png"
+                  width={212}
+                  height={212}
                   style={{
                     imageRendering: 'pixelated',
                   }}

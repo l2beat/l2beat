@@ -1,5 +1,4 @@
 import { z } from 'zod'
-import {} from '../apiUrls'
 import type { ContractClient } from './ContractClient'
 
 const Response = z.object({
