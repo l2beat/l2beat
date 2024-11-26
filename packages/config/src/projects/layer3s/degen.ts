@@ -1,5 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import { CONTRACTS } from '../../common'
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -51,6 +52,7 @@ export const degen: Layer3 = orbitStackL3({
       text: 'the security stack of the whitelisted LayerZero adapter changes or is compromised.',
       isCritical: true,
     },
+    CONTRACTS.UPGRADE_NO_DELAY_RISK,
   ],
   associatedTokens: ['DEGEN'],
   milestones: [
