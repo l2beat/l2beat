@@ -82,6 +82,7 @@
   "educhain": true,
   "eigen-da-eigenda-bridge": true,
   "eigen-da-no-bridge": true,
+  "espressoDA-no-bridge": true,
   "ethernity": true,
   "everclear": true,
   "everclear-dac-layer-everclear-dac-bridge": true,
