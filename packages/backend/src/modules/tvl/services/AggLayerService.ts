@@ -9,7 +9,7 @@ import {
   UnixTime,
   notUndefined,
 } from '@l2beat/shared-pure'
-import { BigNumber, utils } from 'ethers'
+import { utils } from 'ethers'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { MulticallRequest } from '../../../peripherals/multicall/types'
 
@@ -114,14 +114,12 @@ export class AggLayerService {
           amount: 0n,
         }
       }
-      const [value] = erc20Interface.decodeFunctionResult(
-        'totalSupply',
-        response.data.toString(),
-      )
+      const amount = BigInt(response.data.toString())
+
       return {
         configId: token.id,
         timestamp,
-        amount: (value as BigNumber).toBigInt(),
+        amount,
       }
     })
   }
@@ -195,15 +193,11 @@ export class AggLayerService {
       },
       blockNumber,
     )
-
-    const [totalSupply] = erc20Interface.decodeFunctionResult(
-      'totalSupply',
-      response.toString(),
-    )
+    const amount = BigInt(response.toString())
 
     return {
       configId: token.id,
-      amount: (totalSupply as BigNumber).toBigInt(),
+      amount,
       timestamp,
     }
   }

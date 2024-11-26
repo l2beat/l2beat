@@ -11,7 +11,7 @@ import { partition } from 'lodash'
 
 import { AmountRecord } from '@l2beat/database'
 import { RpcClient2 } from '@l2beat/shared'
-import { BigNumber, utils } from 'ethers'
+import { utils } from 'ethers'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import {
   MulticallRequest,
@@ -196,12 +196,7 @@ export function encodeGetEthBalance(
 }
 
 function decodeGetEthBalance(response: Bytes) {
-  return (
-    multicallInterface.decodeFunctionResult(
-      'getEthBalance',
-      response.toString(),
-    )[0] as BigNumber
-  ).toBigInt()
+  return BigInt(response.toString())
 }
 
 export function encodeErc20BalanceQuery(
@@ -217,12 +212,7 @@ export function encodeErc20BalanceQuery(
 }
 
 function decodeErc20BalanceQuery(response: Bytes): bigint {
-  const [value] = erc20Interface.decodeFunctionResult(
-    'balanceOf',
-    response.toString(),
-  )
-
-  return (value as BigNumber).toBigInt()
+  return BigInt(response.toString())
 }
 
 export function encodeErc20TotalSupplyQuery(
@@ -235,10 +225,5 @@ export function encodeErc20TotalSupplyQuery(
 }
 
 function decodeErc20TotalSupplyQuery(response: Bytes): bigint {
-  const [value] = erc20Interface.decodeFunctionResult(
-    'totalSupply',
-    response.toString(),
-  )
-
-  return (value as BigNumber).toBigInt()
+  return BigInt(response.toString())
 }
