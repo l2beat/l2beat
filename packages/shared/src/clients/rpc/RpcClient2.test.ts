@@ -70,7 +70,7 @@ describe(RpcClient2.name, () => {
       const address = EthereumAddress.random()
       const result = await rpc.getBalance(address, 'latest')
 
-      expect(result).toEqual(123)
+      expect(result).toEqual(BigInt(123))
       expect(http.fetch.calls[0].args[1]?.body).toEqual(
         JSON.stringify({
           method: 'eth_getBalance',
