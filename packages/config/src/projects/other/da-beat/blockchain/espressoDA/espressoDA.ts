@@ -36,13 +36,23 @@ export const espressoDA: DaLayer = {
 
     ## Consensus
 
-    EspressoDA uses HotShot.
-    
-    ## Data Availability Sampling (DAS)
+    EspressoDA uses the HotShot consensus. HotShot is a communication-efficient proof-of-stake consensus protocol that is permissioned and Byzantine Fault Tolerant (BFT). 
+    Built on HotStuff-2, it achieves linear communication complexity using a pacemaker module to synchronize views. 
+    The protocol ensures safety and liveness as long as over two-thirds of the stake is controlled by honest nodes.
 
-    ## Erasure Coding Proof
+    HotShot operates in a view-by-view manner, with each view assigning a leader and an external builder. 
+    During a view, the consensus proposer (or delegate) finalizes a block with a certificate of availability. 
 
     ## L2s Data Availability
+    Using Tiramisu for data availability, the proposer performs three concurrent actions for the block payload: 
+    
+    - Compute the payload commitment 
+    - Disperse to all nodes (Savoiardi).
+    - Upload to a small DA committee (Mascarpone).
+    - Upload to a content delivery network (Cocoa).
+
+    To retrieve data, users can query any of the three sources, with the Savoiardi layer being the slowest due to the need to reconstruct the data from the erasure-coded shares.
+    L2s will be able to call a verifyInclusion function on a L1 light client smart contract to verify that a blob is included in the EspressoDA HotShot chain.
     `,
     references: [],
     risks: [],
@@ -61,20 +71,17 @@ export const espressoDA: DaLayer = {
   consensusAlgorithm: {
     name: 'HotShot',
     description: ``,
-    blockTime: 8,
-    consensusFinality: 1, 
-    unbondingPeriod: UnixTime.DAY * 21, 
+    blockTime: 8, // average block time
+    consensusFinality: 1,
+    unbondingPeriod: UnixTime.DAY * 21,
   },
   dataAvailabilitySampling: {
     erasureCodingScheme: DasErasureCodingScheme.TwoDReedSolomon,
     erasureCodingProof: DasErasureCodingProof.ValidityProofs,
   },
-  pruningWindow: 86400 * 30, // 30 days in seconds
+  pruningWindow: 0, // does not prune
   risks: {
-    economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
-    fraudDetection: DaFraudDetectionRisk.DasWithNoBlobsReconstruction(true),
-  },
-  economicSecurity: {
-    type: 'Celestia',
+    economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,
+    fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
   },
 }
