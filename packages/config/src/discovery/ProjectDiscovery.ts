@@ -178,7 +178,7 @@ export class ProjectDiscovery {
       isUpcoming,
       chain: this.chain,
       includeInTotal:
-        includeInTotal ?? this.chain === 'ethereum' ? true : includeInTotal,
+        (includeInTotal ?? this.chain === 'ethereum') ? true : includeInTotal,
       source,
       bridgedUsing,
       isHistorical,
@@ -768,7 +768,7 @@ export class ProjectDiscovery {
             (c.receivedPermissions ?? []).filter((p) => p.permission === role),
           )
           .map((p) => p.description)
-          .filter((d) => d !== undefined)
+          .filter((d) => d !== undefined),
       )
       assert(
         descriptions.length <= 1,
@@ -776,8 +776,8 @@ export class ProjectDiscovery {
       )
 
       const defaultDescription = roleDescriptions[role]
-      if(descriptions.length === 1) {
-          defaultDescription.description = descriptions[0]
+      if (descriptions.length === 1) {
+        defaultDescription.description = descriptions[0]
       }
 
       const accounts = addresses.map((a) => this.formatPermissionedAccount(a))
