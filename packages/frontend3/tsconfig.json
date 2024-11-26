@@ -1,0 +1,7 @@
+{
+  "extends": "@l2beat/typescript-config/react",
+  "compilerOptions": {
+    // We need to repeat this for esbuild to pick it up
+    "jsx": "react-jsx"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "@l2beat/frontend3",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "clean": "rm -rf dist",
+    "prebuild": "pnpm clean",
+    "build": "echo \"???\"",
+    "build:scripts": "esbuild --bundle --outfile=static/main.js scripts/main.ts",
+    "start": "./scripts/watch.sh",
+    "format": "biome format .",
+    "format:fix": "biome format --write .",
+    "lint:fix": "biome check --formatter-enabled=false --write .",
+    "lint": "biome check --formatter-enabled=false .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "express": "^5.0.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@l2beat/typescript-config": "workspace:*",
+    "@types/express": "^5.0.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "tailwindcss": "^3.4.14"
+  }
+}
