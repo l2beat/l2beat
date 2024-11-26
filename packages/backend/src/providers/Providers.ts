@@ -8,6 +8,7 @@ import {
 } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { Config } from '../config'
+import { BlobProviders, initBlobProviders } from './BlobProviders'
 import { BlockProviders, initBlockProviders } from './BlockProviders'
 import {
   CirculatingSupplyProviders,
@@ -19,6 +20,7 @@ export class Providers {
   block: BlockProviders
   price: PriceProviders | undefined
   circulatingSupply: CirculatingSupplyProviders | undefined
+  blob: BlobProviders | undefined
   coingeckoClient: CoingeckoClient
   degateClient: LoopringClient
   loopringClient: LoopringClient
@@ -67,6 +69,7 @@ export class Providers {
     this.price = config.tvl
       ? initPriceProviders(this.coingeckoClient)
       : undefined
+    this.blob = config.finality ? initBlobProviders(config.finality) : undefined
   }
 
   getPriceProviders() {
@@ -80,5 +83,10 @@ export class Providers {
       'Circulating Supply providers unintended access',
     )
     return this.circulatingSupply
+  }
+
+  getBlobProviders() {
+    assert(this.blob, 'Blob providers unintended access')
+    return this.blob
   }
 }

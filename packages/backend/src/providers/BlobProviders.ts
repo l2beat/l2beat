@@ -1,0 +1,35 @@
+import { Logger } from '@l2beat/backend-tools'
+import { BlobClient, BlobProvider, HttpClient } from '@l2beat/shared'
+import { assert } from '@l2beat/shared-pure'
+import { Config } from '../config'
+
+export class BlobProviders {
+  private readonly blobProvider: BlobProvider
+  constructor(private readonly blobClient: BlobClient) {
+    this.blobProvider = new BlobProvider(blobClient)
+  }
+
+  getBlobProvider() {
+    return this.blobProvider
+  }
+}
+
+export function initBlobProviders(
+  finalityConfig: Config['finality'],
+): BlobProviders {
+  assert(finalityConfig, 'Finality config is required')
+
+  const logger = Logger.SILENT
+  const http = new HttpClient()
+  const blobClient = new BlobClient(
+    finalityConfig.beaconApiUrl,
+    finalityConfig.ethereumProviderUrl,
+    http,
+    logger,
+    {
+      callsPerMinute: finalityConfig.beaconApiCPM,
+      timeout: finalityConfig.beaconApiTimeout,
+    },
+  )
+  return new BlobProviders(blobClient)
+}
