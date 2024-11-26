@@ -4707,6 +4707,20 @@
       "supply": "zero"
     },
     {
+      "name": "Virtual Protocol",
+      "coingeckoId": "virtual-protocol",
+      "address": "0x44ff8620b8cA30902395A7bD3F2407e1A091BF73",
+      "symbol": "VIRTUAL",
+      "decimals": 18,
+      "deploymentTimestamp": 1703308271,
+      "coingeckoListingTimestamp": 1703721600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34057/large/LOGOMARK.png?1708356054",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "VLX",
       "coingeckoId": "velas",
       "address": "0x8C543AED163909142695f2d2aCd0D55791a9Edb9",
@@ -7162,6 +7176,20 @@
       }
     },
     {
+      "name": "Keyboard Cat",
+      "coingeckoId": "keyboard-cat-base",
+      "address": "0x9a26F5433671751C3276a065f57e5a02D2817973",
+      "symbol": "KEYCAT",
+      "decimals": 18,
+      "deploymentTimestamp": 1711420407,
+      "coingeckoListingTimestamp": 1711929600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36608/large/keyboard_cat.jpeg?1711965348",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "LayerZero",
       "coingeckoId": "layerzero",
       "address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
@@ -7337,6 +7365,20 @@
       "coingeckoListingTimestamp": 1690761600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/31126/large/2023-08-11_13.21.24.png?1697025145",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "name": "UnlockProtocolToken",
+      "coingeckoId": "unlockprotocoltoken",
+      "address": "0xaC27fa800955849d6D17cC8952Ba9dD6EAA66187",
+      "symbol": "UP",
+      "decimals": 18,
+      "deploymentTimestamp": 1722859969,
+      "coingeckoListingTimestamp": 1731283200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51457/large/up2.png?1731318758",
       "chainId": 8453,
       "source": "native",
       "supply": "circulatingSupply"
