@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xe6e432dff3e86ca742b1e87d73800934d44f40c8
+
+# Diff at Wed, 27 Nov 2024 13:56:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3b9391cfe483e60a1853eeae6e47b4de475aac4e block: 21184706
+- current block number: 21279524
+
+## Description
+
+Owner for WOO changed two times. The intermediate owner EOA was https://etherscan.io/address/0xc031C368b51c28266396273b0C6ce2489b00969d who changed some peers and configs.
+
+## Watched changes
+
+```diff
+    contract WooTokenOFTAdapter (0xAd6cA80Fe4D3c54f6433fF725d744772AaE87711) {
+    +++ description: None
+      values.owner:
+-        "0x39e4fac1A21AE1D8c76B0ac52aC0417398fE738d"
++        "0x155EEF9731aFf5aE6cB2741F7bEC0f005037aCB0"
+    }
+```
+
 Generated with discovered.json: 0xf8073d8b8ed50a1a342d050ed69f56f9f7dc70f9
 
 # Diff at Thu, 14 Nov 2024 08:21:41 GMT:
