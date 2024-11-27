@@ -1,0 +1,10 @@
+{
+    "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+    "chain": "base",
+    "name": "base-fees",
+    "initialAddresses": [
+      "0x4200000000000000000000000000000000000019", //SequencerFeeVault
+      "0x4200000000000000000000000000000000000011", //BaseFeeVault
+      "0x420000000000000000000000000000000000001a" //L1FeeVault
+    ]
+}
