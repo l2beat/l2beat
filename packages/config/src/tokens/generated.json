@@ -8827,6 +8827,28 @@
       }
     },
     {
+      "name": "Wrapped SOL",
+      "coingeckoId": "solana",
+      "address": "0x2bcC6D6CdBbDC0a4071e48bb3B969b06B3330c07",
+      "symbol": "SOL",
+      "decimals": 9,
+      "deploymentTimestamp": 1671137208,
+      "coingeckoListingTimestamp": 1586563200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/4128/large/solana.png?1718769756",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole Token Bridge",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
       "name": "Xai",
       "coingeckoId": "xai-blockchain",
       "address": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66",
