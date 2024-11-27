@@ -4,6 +4,7 @@
   "tasks": {
     "build": {
       "env": [
+        "CI",
         "DATABASE_URL",
         "EXCLUDED_TVL_PROJECTS",
         "EXCLUDED_ACTIVITY_PROJECTS",
@@ -12,6 +13,7 @@
         "FEATURE_FLAG_HIRING",
         "MOCK",
         "NODE_ENV",
+        "NEXT_RUNTIME",
         "PORT",
         "SKIP_ENV_VALIDATION",
         "VERCEL_GIT_COMMIT_REF",
