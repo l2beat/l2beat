@@ -146,6 +146,9 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
   )
   const bridge = shared.getContract('Bridge')
 
+  const finalizationPeriod =
+    templateVars.display.finality?.finalizationPeriod ?? 0
+
   return {
     type: 'layer2',
     createdAt: templateVars.createdAt,
@@ -158,7 +161,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       provider: 'Polygon',
       tvlWarning: templateVars.display.tvlWarning,
       finality: templateVars.display.finality ?? {
-        finalizationPeriod: 0,
+        finalizationPeriod,
         warnings: {
           timeToInclusion: {
             sentiment: 'neutral',
@@ -328,6 +331,10 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     riskView: {
       stateValidation: {
         ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
+        secondLine:
+          finalizationPeriod > 0
+            ? `${formatSeconds(finalizationPeriod)} execution delay`
+            : 'No delay',
         sources: [
           {
             contract: rollupManagerContract.name,

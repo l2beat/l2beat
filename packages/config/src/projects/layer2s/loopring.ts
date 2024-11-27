@@ -3,6 +3,7 @@ import {
   EthereumAddress,
   ProjectId,
   UnixTime,
+  formatSeconds,
 } from '@l2beat/shared-pure'
 
 import {
@@ -44,6 +45,7 @@ const upgrades = {
 }
 
 const upgradeDelay = 0
+const finalizationPeriod = 0
 
 export const loopring: Layer2 = {
   type: 'layer2',
@@ -84,7 +86,7 @@ export const loopring: Layer2 = {
         'Loopring is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
     },
     finality: {
-      finalizationPeriod: 0,
+      finalizationPeriod,
     },
   },
   config: {
@@ -163,7 +165,13 @@ export const loopring: Layer2 = {
     }),
   ],
   riskView: {
-    stateValidation: RISK_VIEW.STATE_ZKP_SN,
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_SN,
+      secondLine:
+        finalizationPeriod > 0
+          ? `${formatSeconds(finalizationPeriod)} execution delay`
+          : 'No delay',
+    },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, forcedWithdrawalDelay),
     sequencerFailure: {

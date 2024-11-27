@@ -70,6 +70,7 @@ const longTimelockUpgradeability = {
   upgradableBy: ['Safety Module Admin'],
   upgradeDelay: `${formatSeconds(longTimelockDelay)}`,
 }
+const finalizationPeriod = 0
 
 export const dydx: Layer2 = {
   type: 'layer2',
@@ -125,7 +126,7 @@ export const dydx: Layer2 = {
         'dYdX is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. The verification is done as part of the state update.',
     },
     finality: {
-      finalizationPeriod: 0,
+      finalizationPeriod,
     },
   },
   config: {
@@ -190,6 +191,10 @@ export const dydx: Layer2 = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
+      secondLine:
+        finalizationPeriod > 0
+          ? `${formatSeconds(finalizationPeriod)} execution delay`
+          : 'No delay',
       sources: [
         {
           contract: 'StarkPerpetual',
