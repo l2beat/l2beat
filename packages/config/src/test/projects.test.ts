@@ -1,8 +1,9 @@
 import { assert, EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { bridges, layer2s, layer3s } from '../'
+import { bridges, Layer2, layer2s, Layer3, layer3s } from '../'
 import { checkRisk } from './helpers'
+import { NON_DISCOVERY_DRIVEN_PROJECTS } from './constants'
 
 describe('projects', () => {
   describe('every slug is valid', () => {
@@ -196,5 +197,31 @@ describe('projects', () => {
 
       expect(l3sWithInvalidHostChain).toEqual([])
     })
+  })
+
+  describe('all new projects are discovery driven', () => {
+    const isNormalProject = (p: Layer2 | Layer3) => {
+      return (
+        p.isArchived !== true &&
+        p.isUpcoming !== true &&
+        p.isUnderReview !== true
+      )
+    }
+
+    const allProjects: (Layer2 | Layer3)[] = [...layer2s, ...layer3s]
+    const projects = allProjects.filter(
+      (p) =>
+        isNormalProject(p) &&
+        !NON_DISCOVERY_DRIVEN_PROJECTS.includes(p.id.toString()),
+    )
+
+    for (const p of projects) {
+      it(`${p.id.toString()} is discovery driven`, () => {
+        assert(
+          p.discoveryDrivenData === true,
+          'New projects are expected to be discovery driven. Read the comment in constants.ts',
+        )
+      })
+    }
   })
 })
