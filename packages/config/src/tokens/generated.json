@@ -5043,6 +5043,20 @@
       "supply": "zero"
     },
     {
+      "name": "Zircuit",
+      "coingeckoId": "zircuit",
+      "address": "0xfd418e42783382E86Ae91e445406600Ba144D162",
+      "symbol": "ZRC",
+      "decimals": 18,
+      "deploymentTimestamp": 1722714659,
+      "coingeckoListingTimestamp": 1732492800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35960/large/zircuit_token_icon_2.png?1732502352",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "zkLend Token",
       "coingeckoId": "zklend-2",
       "address": "0xb2606492712D311be8f41d940AFE8CE742A52D44",
