@@ -12,6 +12,7 @@ import { discoverAndUpdateDiffHistory } from './discoveryWrapper'
 const configReader = new ConfigReader()
 const templateService = new TemplateService()
 const allTemplateHashes = templateService.getAllTemplateHashes()
+const allShapes = templateService.getAllShapes()
 
 void main().catch((e) => {
   console.log(e)
@@ -100,7 +101,10 @@ function discoveryNeedsRefresh(
       contract.address,
     )
 
-    if (contract.template !== undefined) {
+    if (
+      contract.template !== undefined &&
+      allShapes[contract.template].hashes.length > 0
+    ) {
       if (config.overrides.get(contract.address).extends === undefined) {
         if (matchingTemplates.length === 0) {
           return `A contract "${contract.name}" with template "${contract.template}", no longer matches any template`
