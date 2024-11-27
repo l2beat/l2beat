@@ -7,6 +7,7 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { type CategorisedScalingEntries } from '~/utils/group-by-main-categories'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
@@ -24,6 +25,11 @@ export function ScalingSummaryTables(props: Props) {
     rollups: props.rollups.filter(includeFilters),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(includeFilters),
     others: props.others?.filter(includeFilters) ?? [],
+  }
+
+  const initialSort = {
+    id: 'total',
+    desc: true,
   }
 
   return (
@@ -55,21 +61,27 @@ export function ScalingSummaryTables(props: Props) {
             )}
           </DirectoryTabsTrigger>
         </DirectoryTabsList>
-        <DirectoryTabsContent value="rollups">
-          <ScalingSummaryRollupsTable entries={filteredEntries.rollups} />
-        </DirectoryTabsContent>
-        <DirectoryTabsContent value="validiums-and-optimiums">
-          <ScalingSummaryValidiumsAndOptimiumsTable
-            entries={filteredEntries.validiumsAndOptimiums}
-          />
-        </DirectoryTabsContent>
-        <DirectoryTabsContent value="others">
-          {filteredEntries.others.length > 0 ? (
-            <ScalingSummaryOthersTable entries={filteredEntries.others} />
-          ) : (
-            <OthersComingSoonNotice />
-          )}
-        </DirectoryTabsContent>
+        <TableSortingProvider initialSort={initialSort}>
+          <DirectoryTabsContent value="rollups">
+            <ScalingSummaryRollupsTable entries={filteredEntries.rollups} />
+          </DirectoryTabsContent>
+        </TableSortingProvider>
+        <TableSortingProvider initialSort={initialSort}>
+          <DirectoryTabsContent value="validiums-and-optimiums">
+            <ScalingSummaryValidiumsAndOptimiumsTable
+              entries={filteredEntries.validiumsAndOptimiums}
+            />
+          </DirectoryTabsContent>
+        </TableSortingProvider>
+        <TableSortingProvider initialSort={initialSort}>
+          <DirectoryTabsContent value="others">
+            {filteredEntries.others.length > 0 ? (
+              <ScalingSummaryOthersTable entries={filteredEntries.others} />
+            ) : (
+              <OthersComingSoonNotice />
+            )}
+          </DirectoryTabsContent>
+        </TableSortingProvider>
       </DirectoryTabs>
     </>
   )
