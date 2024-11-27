@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xb5f1f88016b07d76f8d6a883b987da97d8363150
+
+# Diff at Mon, 25 Nov 2024 10:53:07 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@62a44faa52866a55f9881cb2852ac75b1fcc60b0 block: 21184760
+- current block number: 21264298
+
+## Description
+
+MS signer change.
+
+## Watched changes
+
+```diff
+    contract Stargate Multisig (0x65bb797c2B9830d891D87288F029ed8dACc19705) {
+    +++ description: None
+      values.$members.4:
+-        "0xF05F4211ad15A8e49b49C0436067CFFfEa783aA4"
++        "0x7C8D1Db01130acEEc5fF892c99a18c4b4BAdC326"
+    }
+```
+
 Generated with discovered.json: 0x8b0a477ff755972982f608b4f4e4badb3dfff4d2
 
 # Diff at Thu, 14 Nov 2024 08:32:35 GMT:

@@ -1,4 +1,3 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { TotalCell } from '~/app/(side-nav)/scaling/summary/_components/table/total-cell'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
@@ -12,7 +11,7 @@ import {
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { sortStages } from '~/components/table/sorting/functions/stage-sorting'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
-import { formatTps } from '~/utils/number-format/format-tps'
+import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import { type ScalingSummaryTableRow } from '../../_utils/to-table-rows'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
@@ -90,24 +89,23 @@ export const scalingSummaryColumns = [
       },
     },
   ),
-  columnHelper.accessor('activity.pastDayTps', {
-    header: 'Past day TPS',
+  columnHelper.accessor('activity.pastDayUops', {
+    header: 'Past day UOPS',
     cell: (ctx) => {
       const data = ctx.row.original.activity
       if (!data) {
         return <NoDataBadge />
       }
-
       return (
-        <ValueWithPercentageChange change={data.change}>
-          {formatTps(ctx.getValue())}
+        <ValueWithPercentageChange change={data?.change}>
+          {formatActivityCount(ctx.getValue())}
         </ValueWithPercentageChange>
       )
     },
     sortUndefined: 'last',
     meta: {
       align: 'right',
-      tooltip: 'Transactions per second averaged over the past day.',
+      tooltip: 'User operations per second averaged over the past day.',
     },
   }),
 ]
@@ -117,12 +115,7 @@ export const scalingSummaryValidiumAndOptimiumsColumns = [
   columnHelper.display({
     header: 'DA Layer',
     cell: (ctx) => {
-      const now = UnixTime.now()
-      const latestValue = ctx.row.original.dataAvailability?.find(
-        (entry) =>
-          (!entry.sinceTimestamp || entry.sinceTimestamp.lte(now)) &&
-          (!entry.untilTimestamp || entry.untilTimestamp.gt(now)),
-      )
+      const latestValue = ctx.row.original.dataAvailability
       if (!latestValue) {
         return <NoDataBadge />
       }
@@ -130,7 +123,11 @@ export const scalingSummaryValidiumAndOptimiumsColumns = [
         <TwoRowCell>
           <TwoRowCell.First>{latestValue.layer.value}</TwoRowCell.First>
           {ctx.row.original.dataAvailability && (
-            <TwoRowCell.Second>{latestValue.bridge.value}</TwoRowCell.Second>
+            <TwoRowCell.Second>
+              {latestValue.bridge.value === 'None'
+                ? 'No bridge'
+                : latestValue.bridge.value}
+            </TwoRowCell.Second>
           )}
         </TwoRowCell>
       )

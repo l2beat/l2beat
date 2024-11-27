@@ -18,6 +18,23 @@ describe('DA-BEAT', () => {
         })
       })
     })
+
+    describe(`${layer.display.name} does not have duplicated links`, () => {
+      const getFlatLinks = (links: Record<string, string[]>) =>
+        Object.values(links).flatMap((link) => link)
+
+      const links = getFlatLinks(layer.display.links)
+      const uniqueLinks = new Set(links)
+
+      for (const bridge of layer.bridges) {
+        it(`should not have duplicated links with ${bridge.display.name}`, () => {
+          const hasUniqueLinks = getFlatLinks(bridge.display.links).every(
+            (link) => !uniqueLinks.has(link),
+          )
+          expect(hasUniqueLinks).toEqual(true)
+        })
+      }
+    })
   })
 
   describe('synchronization with scaling projects - layer2s and layer3s', () => {

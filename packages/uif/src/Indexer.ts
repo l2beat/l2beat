@@ -265,7 +265,6 @@ export abstract class Indexer {
   private async executeUpdate(effect: UpdateEffect): Promise<void> {
     const from = this.state.height + 1
     this.logger.info('Updating', { from, to: effect.targetHeight })
-    this.logMetrics(this.state.height, effect.targetHeight)
     try {
       const newHeight = await this.update(from, effect.targetHeight)
       if (newHeight < from || newHeight > effect.targetHeight) {
@@ -291,8 +290,15 @@ export abstract class Indexer {
           to: effect.targetHeight,
           attempt,
         })
-      } else {
+      } else if (attempt >= 10) {
         this.logger.error('Update failed', {
+          error,
+          from,
+          to: effect.targetHeight,
+          attempt,
+        })
+      } else {
+        this.logger.warn('Update failed', {
           error,
           from,
           to: effect.targetHeight,

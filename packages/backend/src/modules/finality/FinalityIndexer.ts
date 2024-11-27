@@ -148,8 +148,7 @@ export class FinalityIndexer extends ChildIndexer {
     const stateUpdateDelays = batchesToStateUpdateDelays(t2iBatches, suBatches)
     return {
       ...baseResult,
-      averageStateUpdate:
-        Math.round(mean(stateUpdateDelays)) - averageTimeToInclusion,
+      averageStateUpdate: Math.round(mean(stateUpdateDelays)),
     }
   }
 

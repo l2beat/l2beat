@@ -1,18 +1,25 @@
 {
   "name": "cyber",
   "chain": "ethereum",
-  "blockNumber": 20032828,
-  "configHash": "0x97252a70e3faf7b591b3b3e71da4f375b7333cee680d1838ef1e2ed84d0324b9",
+  "blockNumber": 21235446,
+  "configHash": "0x16b4859481fdfd0c27ce2eeaf04c5590f4e6c8ee7dbcfc8bbf7fefd564866a8e",
   "contracts": [
     {
       "name": "DataAvailabilityChallenge",
       "address": "0x10E34EfE14E4D270C0f77Bf1aF01b6C832161B49",
+      "template": "opstack/DataAvailabilityChallenge",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0xc3e65c7b165290e34daf0095d095072dd3684f21965a97ddedde3ab52b34b04a"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The DataAvailabilityChallenge contract is used to challenge the full availability of data behind commimted transaction data hashes. See the technology section for more details.",
       "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xc76C563185d01284AdbC9cF5bb909162dD2F15e7",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0xc2259E7Fb719411f97aBdCdf449f6Ba3B9D75398",
@@ -95,8 +102,7 @@
         "paused": false,
         "superchainConfig": "0x1aeC4c3BE47C30d0BEfa7514Cf9D99EaC596959D",
         "version": "2.1.0"
-      },
-      "derivedName": "L1StandardBridge"
+      }
     },
     {
       "name": "AddressManager",
@@ -170,8 +176,7 @@
         "paused": false,
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.1.0"
-      },
-      "derivedName": "SuperchainConfig"
+      }
     },
     {
       "name": "OptimismPortal",
@@ -221,15 +226,14 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 21000,
-          "prevBlockNum": 20032435
+          "prevBlockNum": 21232352
         },
         "paused": false,
         "superchainConfig": "0x1aeC4c3BE47C30d0BEfa7514Cf9D99EaC596959D",
         "SYSTEM_CONFIG": "0x5D1F4bbaF6D484fA9D5D9705f92dE6063bff6055",
         "systemConfig": "0x5D1F4bbaF6D484fA9D5D9705f92dE6063bff6055",
         "version": "2.5.0"
-      },
-      "derivedName": "OptimismPortal"
+      }
     },
     {
       "name": "L1CrossDomainMessenger",
@@ -256,7 +260,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619998",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620946",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -273,8 +277,7 @@
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "superchainConfig": "0x1aeC4c3BE47C30d0BEfa7514Cf9D99EaC596959D",
         "version": "2.3.0"
-      },
-      "derivedName": "L1CrossDomainMessenger"
+      }
     },
     {
       "name": "L1ERC721Bridge",
@@ -434,7 +437,7 @@
           "systemTxMaxGas": 1000000,
           "maximumBaseFee": "340282366920938463463374607431768211455"
         },
-        "scalar": 40000,
+        "scalar": 160000,
         "sequencerInbox": "0xfF00000000000000000000000000000000001d88",
         "START_BLOCK_SLOT": "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f",
         "startBlock": 19681300,
@@ -448,8 +451,7 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         }
-      },
-      "derivedName": "SystemConfig"
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -563,10 +565,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 2100600,
-        "latestOutputIndex": 1166,
-        "nextBlockNumber": 2102400,
-        "nextOutputIndex": 1167,
+        "latestBlockNumber": 9354600,
+        "latestOutputIndex": 5196,
+        "nextBlockNumber": 9356400,
+        "nextOutputIndex": 5197,
         "proposer": "0xF2987f0A626c8D29dFB2E0A21144ca3026d6F1E1",
         "PROPOSER": "0xF2987f0A626c8D29dFB2E0A21144ca3026d6F1E1",
         "startingBlockNumber": 0,
@@ -579,11 +581,10 @@
         "FINALIZATION_PERIOD_SECONDS": {
           "description": "Challenge period (Number of seconds until a state root is finalized)."
         }
-      },
-      "derivedName": "L2OutputOracle"
+      }
     },
     {
-      "name": "ProxyAdminOwner",
+      "name": "CyberMultisig",
       "address": "0xc2259E7Fb719411f97aBdCdf449f6Ba3B9D75398",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -700,6 +701,11 @@
     {
       "address": "0xc76C563185d01284AdbC9cF5bb909162dD2F15e7",
       "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x10E34EfE14E4D270C0f77Bf1aF01b6C832161B49",
+          "description": "can upgrade the parameters of DA challenges like the bond size or refund percentages, potentially making challenges infeasable or insecure."
+        },
         {
           "permission": "configure",
           "target": "0x5D1F4bbaF6D484fA9D5D9705f92dE6063bff6055",
@@ -1147,6 +1153,7 @@
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
+    "opstack/DataAvailabilityChallenge": "0xc92391a74d76d40f6eb90fe429375d0386646b2ae41da47a3daa7674eca75a12",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0x9111ef1dcd42452953522f42115f0396e80b8ffacbe0ee0e3f62763880a6b6cc",

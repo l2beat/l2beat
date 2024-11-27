@@ -45,7 +45,9 @@ export class ChainService {
       case 'scroll':
       case 'silicon':
       case 'taiko':
+      case 'worldchain':
       case 'xai':
+      case 'zircuit':
       case 'zksync-era':
       case 'zora': {
         this.client = new RpcClient2({

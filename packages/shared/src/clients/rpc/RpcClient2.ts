@@ -9,6 +9,7 @@ import {
   CallParameters,
   EVMBalanceResponse,
   EVMBlockResponse,
+  EVMCallResponse,
   Quantity,
   RPCError,
 } from './types'
@@ -40,12 +41,19 @@ export class RpcClient2 extends ClientCore implements BlockClient {
 
     const block = EVMBlockResponse.safeParse(blockResponse)
     if (!block.success) {
+      this.$.logger.warn(`Invalid response`, {
+        blockNumber,
+        response: JSON.stringify(blockResponse),
+      })
       throw new Error(`Block ${blockNumber}: Error during parsing`)
     }
     return { ...block.data.result }
   }
 
-  async getBalance(holder: EthereumAddress, blockNumber: number | 'latest') {
+  async getBalance(
+    holder: EthereumAddress,
+    blockNumber: number | 'latest',
+  ): Promise<bigint> {
     const method = 'eth_getBalance'
     const encodedNumber =
       blockNumber === 'latest' ? 'latest' : Quantity.encode(BigInt(blockNumber))
@@ -56,10 +64,11 @@ export class RpcClient2 extends ClientCore implements BlockClient {
 
     const balance = EVMBalanceResponse.safeParse(balanceResponse)
     if (!balance.success) {
-      this.$.logger.warn(
-        `Cannot fetch ${holder} at block ${blockNumber}`,
-        JSON.stringify(balanceResponse),
-      )
+      this.$.logger.warn(`Invalid response`, {
+        blockNumber,
+        holder,
+        response: JSON.stringify(balanceResponse),
+      })
       throw new Error(
         `Balance of ${holder} at block ${blockNumber}: Error during parsing`,
       )
@@ -86,8 +95,15 @@ export class RpcClient2 extends ClientCore implements BlockClient {
     }
 
     const params = [callObject, encodedNumber]
-    const bytes = (await this.query(method, params)) as string
-    return Bytes.fromHex(bytes)
+    const callResponse = await this.query(method, params)
+    const callResult = EVMCallResponse.safeParse(callResponse)
+
+    if (!callResult.success) {
+      this.$.logger.warn('Error during call', JSON.stringify(callResponse))
+      throw new Error('Call response: Error during parsing')
+    }
+
+    return Bytes.fromHex(callResult.data.result)
   }
 
   async query(

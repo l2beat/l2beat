@@ -10,7 +10,7 @@ import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { type CategorisedScalingEntries } from '~/utils/group-by-main-categories'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
-import { ScalingTvlFilters } from '../../_components/scaling-tvl-filters'
+import { ScalingSummaryFilters } from '../../_components/scaling-summary-filters'
 import { OthersComingSoonNotice } from './table/others-coming-soon-notice'
 import { ScalingSummaryOthersTable } from './table/scaling-summary-others-table'
 import { ScalingSummaryRollupsTable } from './table/scaling-summary-rollups-table'
@@ -29,7 +29,7 @@ export function ScalingSummaryTables(props: Props) {
   return (
     <>
       <HorizontalSeparator className="my-4 !border-divider max-md:hidden" />
-      <ScalingTvlFilters
+      <ScalingSummaryFilters
         items={[
           ...filteredEntries.rollups,
           ...filteredEntries.validiumsAndOptimiums,

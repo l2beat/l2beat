@@ -39,10 +39,5 @@ export type Layer2FinalityConfig =
       l2BlockTimeSeconds: number
       stateUpdate: StateUpdateMode
     }
-  | {
-      type: 'OPStack'
-      lag: number
-      stateUpdate: StateUpdateMode
-    }
 
 export type FinalityType = Layer2FinalityConfig['type']

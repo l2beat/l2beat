@@ -1,4 +1,3 @@
-import { merge } from 'lodash'
 import { Layer2 } from '../../../layer2s'
 import { Layer3 } from '../../../layer3s'
 import {
@@ -70,7 +69,6 @@ export function StarkexDAC(template: TemplateVars): DacDaLayer {
   // Common
   const name = `${template.project.display.name} DAC`
   const usedIn = toUsedInProject([template.project])
-  const links = merge(template.project.display.links, template.links)
 
   // "Bridge" backfill for DAC
   const bridgeDescription =
@@ -105,7 +103,14 @@ export function StarkexDAC(template: TemplateVars): DacDaLayer {
     description: bridgeDescription,
     warning: template.warning,
     redWarning: template.redWarning,
-    links,
+    links: {
+      apps: template.links?.apps ?? [],
+      documentation: template.links?.documentation ?? [],
+      explorers: template.links?.explorers ?? [],
+      repositories: template.links?.repositories ?? [],
+      socialMedia: template.links?.socialMedia ?? [],
+      websites: template.links?.websites ?? [],
+    },
   }
 
   const dacBridge: DacBridge = {
@@ -167,7 +172,7 @@ export function StarkexDAC(template: TemplateVars): DacDaLayer {
     name,
     slug: template.project.display.slug,
     description: layerDescription,
-    links,
+    links: template.project.display.links,
   }
 
   const dacLayer: DacDaLayer = {

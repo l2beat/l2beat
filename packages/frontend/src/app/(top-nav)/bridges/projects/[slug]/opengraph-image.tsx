@@ -2,10 +2,9 @@ import { bridges } from '@l2beat/config'
 import { ImageResponse } from 'next/og'
 import { NextResponse } from 'next/server'
 import { ProjectOpengraphImage } from '~/components/opengraph-image/project'
-import { env } from '~/env'
+import { getBaseUrl } from '~/utils/get-base-url'
 
 export const runtime = 'nodejs'
-export const dynamic = 'force-static'
 
 const size = {
   width: 1200,
@@ -40,7 +39,7 @@ export default async function Image({ params }: Props) {
   if (!project) {
     return NextResponse.json({ error: 'Project not found' }, { status: 404 })
   }
-  const baseUrl = env.VERCEL_URL ?? 'http://localhost:3000'
+  const baseUrl = getBaseUrl()
   const [robotoMedium, robotoBold] = [
     fetch(`${baseUrl}/fonts/roboto/roboto-latin-500.ttf`).then((res) =>
       res.arrayBuffer(),

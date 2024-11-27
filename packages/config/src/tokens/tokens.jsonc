@@ -1,6 +1,14 @@
 {
   "ethereum": [
     {
+      "symbol": "VIRTUAL",
+      "address": "0x44ff8620b8cA30902395A7bD3F2407e1A091BF73"
+    },
+    {
+      "symbol": "ATA",
+      "address": "0xA2120b9e674d3fC3875f415A7DF52e382F141225"
+    },
+    {
       "symbol": "SPX",
       "address": "0xE0f63A424a4439cBE457D80E4f4b51aD25b2c56C"
     },
@@ -1702,6 +1710,12 @@
   ],
   "arbitrum": [
     {
+      "symbol": "cbBTC",
+      "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "symbol": "PEPE",
       "address": "0x25d887Ce7a35172C62FeBFD67a1856F20FaEbB00",
       "source": "native",
@@ -2698,6 +2712,24 @@
     }
   ],
   "base": [
+    {
+      "symbol": "UP",
+      "address": "0xaC27fa800955849d6D17cC8952Ba9dD6EAA66187",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "MIGGLES",
+      "address": "0xB1a03EdA10342529bBF8EB700a06C60441fEf25d",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "KEYCAT",
+      "address": "0x9a26F5433671751C3276a065f57e5a02D2817973",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
     {
       "symbol": "SPX",
       "address": "0x50dA645f148798F68EF2d7dB7C1CB22A6819bb2C",
@@ -4507,11 +4539,10 @@
   ],
   "sanko": [
     {
-      "symbol": "SMOKE",
-      "address": "0xe78a3857593083dd6e1f7859e1b711401fc6f2cc",
+      "symbol": "SP",
+      "address": "0x3f710cBd0F4268719C6c2E5E078a4CAfAeED7d45",
       "source": "native",
-      "supply": "circulatingSupply",
-      "coingeckoId": "smoke-the-ticker"
+      "supply": "circulatingSupply"
     }
   ],
   "xchain": [
@@ -4541,6 +4572,34 @@
     }
   ],
   "taiko": [
+    {
+      "symbol": "SolvBTC.BBN",
+      "address": "0xCC0966D8418d412c599A6421b760a847eB169A8c",
+      "coingeckoId": "solv-protocol-solvbtc-bbn",
+      "source": "external",
+      "supply": "totalSupply", // not yet lock-mintable on taiko 24/11/26
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "SolvBTC",
+      "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
+      "coingeckoId": "solv-btc",
+      "source": "external",
+      "supply": "totalSupply", // not yet lock-mintable on taiko 24/11/26
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
+    },
     {
       "symbol": "USDC.e",
       "address": "0x19e26B0638bf63aa9fa4d14c6baF8D52eBE86C5C",

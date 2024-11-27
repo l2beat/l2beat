@@ -33,7 +33,6 @@ export const l3x: Layer3 = orbitStackL3({
       repositories: [],
       socialMedia: ['https://t.me/l3x_protocol', 'https://x.com/l3x_protocol'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
     name: 'l3x',
@@ -47,7 +46,6 @@ export const l3x: Layer3 = orbitStackL3({
     minTimestampForTvl: new UnixTime(1714618907),
     coingeckoPlatform: 'l3x',
   },
-  rpcUrl: 'https://rpc-mainnet.l3x.com',
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
