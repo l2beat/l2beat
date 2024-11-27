@@ -10,10 +10,9 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { BigNumber } from 'ethers'
 
+import { RpcClient2 } from '@l2beat/shared'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
-import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { ChainAmountConfig } from '../indexers/types'
 import {
   AmountService,
@@ -31,8 +30,8 @@ describe(AmountService.name, () => {
   const timestamp = new UnixTime(923_234)
 
   it('calls RPC if multicall does not support native balance', async () => {
-    const mockRpc = mockObject<RpcClient>({
-      getBalance: () => Promise.resolve(BigNumber.from(0)),
+    const mockRpc = mockObject<RpcClient2>({
+      getBalance: () => Promise.resolve(BigInt(0)),
     })
     const mockMulticall = mockObject<MulticallClient>({
       isNativeBalanceSupported: () => false,
@@ -64,7 +63,7 @@ describe(AmountService.name, () => {
     })
 
     const service = new AmountService({
-      rpcClient: mockObject<RpcClient>({}),
+      rpcClient: mockObject<RpcClient2>({}),
       multicallClient: mockMulticall,
       logger: Logger.SILENT,
     })
@@ -88,7 +87,7 @@ describe(AmountService.name, () => {
     })
 
     const service = new AmountService({
-      rpcClient: mockObject<RpcClient>({}),
+      rpcClient: mockObject<RpcClient2>({}),
       multicallClient: mockMulticall,
       logger: Logger.SILENT,
     })
@@ -126,7 +125,7 @@ describe(AmountService.name, () => {
         ]),
       })
       const service = new AmountService({
-        rpcClient: mockObject<RpcClient>({}),
+        rpcClient: mockObject<RpcClient2>({}),
         multicallClient,
         logger: Logger.SILENT,
       })
