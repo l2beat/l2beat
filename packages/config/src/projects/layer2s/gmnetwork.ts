@@ -49,7 +49,11 @@ export const gmnetwork: Layer2 = opStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  daProvider: DACHALLENGES_DA_PROVIDER(daChallengeWindow, daResolveWindow),
+  daProvider: DACHALLENGES_DA_PROVIDER(
+    daChallengeWindow,
+    daResolveWindow,
+    'https://github.com/ethereum-optimism/optimism/releases/tag/op-node%2Fv1.7.5',
+  ), // source: altlayer on telegram
   genesisTimestamp: new UnixTime(1717656409),
   rpcUrl: 'https://rpc.gmnetwork.ai/',
   discoveryDrivenData: true,
