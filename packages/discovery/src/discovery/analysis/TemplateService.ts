@@ -33,6 +33,7 @@ export interface Shape {
 export class TemplateService {
   private readonly loadedTemplates: Record<string, DiscoveryContract> = {}
   private shapeHashes: Record<string, Shape> | undefined
+  private allTemplateHashes: Record<string, Hash256> | undefined
 
   constructor(private readonly rootPath: string = '') {}
 
@@ -161,11 +162,15 @@ export class TemplateService {
   }
 
   getAllTemplateHashes(): Record<string, Hash256> {
+    if (this.allTemplateHashes !== undefined) {
+      return this.allTemplateHashes
+    }
     const result: Record<string, Hash256> = {}
     const allTemplates = this.listAllTemplates()
     for (const templateId of Object.keys(allTemplates)) {
       result[templateId] = this.getTemplateHash(templateId)
     }
+    this.allTemplateHashes = result
     return result
   }
 
