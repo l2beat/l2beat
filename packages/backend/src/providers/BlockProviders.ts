@@ -9,6 +9,7 @@ import {
   LoopringClient,
   RetryHandler,
   RpcClient2,
+  StarkexClient,
   StarknetClient,
   ZksyncLiteClient,
 } from '@l2beat/shared'
@@ -16,7 +17,6 @@ import { assert, assertUnreachable } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { ChainApi } from '../config/chain/ChainApi'
 import { BlockTimestampProvider } from '../modules/tvl/services/BlockTimestampProvider'
-import { StarkexClient } from '../peripherals/starkex/StarkexClient'
 
 export class BlockProviders {
   blockProviders: Map<string, BlockProvider> = new Map()
@@ -151,8 +151,12 @@ export function initBlockProviders(chains: ChainApi[]): BlockProviders {
           break
         }
         case 'starkex': {
-          starkexClient = new StarkexClient(blockApi.apiKey, http, logger, {
-            callsPerMinute: blockApi.callsPerMinute,
+          starkexClient = new StarkexClient({
+            apiKey: blockApi.apiKey,
+            http: http2,
+            retryHandler,
+            logger,
+            rateLimiter,
           })
           break
         }

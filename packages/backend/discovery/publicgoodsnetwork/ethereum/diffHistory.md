@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x460884ac8fa58dba8bbb255ed7bb94bc81022108
+
+# Diff at Wed, 27 Nov 2024 14:00:26 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3b9391cfe483e60a1853eeae6e47b4de475aac4e block: 21078677
+- current block number: 21279547
+
+## Description
+
+Two signers added to PGN multisig, executed by a signer associated with Conduit. No other actions from this MS.
+
+## Watched changes
+
+```diff
+    contract PgnMultisig (0x39E13D1AB040F6EA58CE19998edCe01B3C365f84) {
+    +++ description: None
+      values.$members.7:
++        "0xc2E2B715d9e302947Ec7e312fd2384b5a1296099"
+      values.$members.6:
++        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+      values.$members.5:
+-        "0xc2E2B715d9e302947Ec7e312fd2384b5a1296099"
++        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+      values.$members.4:
+-        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
++        "0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c"
+      values.$members.3:
+-        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
++        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+      values.$members.2:
+-        "0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c"
++        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+      values.$members.1:
+-        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
++        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.$members.0:
+-        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
++        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 8 (38%)"
+    }
+```
+
 Generated with discovered.json: 0x8229c8426a1a9e39d13779faa53aecfe2fc2299e
 
 # Diff at Fri, 01 Nov 2024 12:10:23 GMT:

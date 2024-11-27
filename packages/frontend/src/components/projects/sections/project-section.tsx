@@ -23,7 +23,7 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
       id={props.id}
       className={cn(
         'mt-10 md:rounded-lg md:bg-gray-100 md:p-8 md:dark:bg-zinc-900',
-        props.nested && 'mt-8',
+        props.nested && 'mt-10 md:p-0',
         props.className,
       )}
     >

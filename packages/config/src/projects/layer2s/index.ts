@@ -12,6 +12,7 @@ import { arbitrum } from './arbitrum'
 import { arcology } from './arcology'
 import { arithmic } from './arithmic'
 import { astarzkevm } from './astarzkevm'
+import { automata } from './automata'
 import { axonum } from './axonum'
 import { aztecV1 } from './aztecV1'
 import { aztecV2 } from './aztecV2'
@@ -127,6 +128,7 @@ import { rss3 } from './rss3'
 import { scroll } from './scroll'
 import { shape } from './shape'
 import { silicon } from './silicon'
+import { singularityfinance } from './singularityfinance'
 import { socialnetwork } from './socialnetwork'
 import { soneium } from './soneium'
 import { soon } from './soon'
@@ -182,6 +184,7 @@ export const layer2s: Layer2[] = [
   aiechain,
   alephzero,
   allo,
+  automata,
   ancient,
   apex,
   arbitrum,
@@ -304,6 +307,7 @@ export const layer2s: Layer2[] = [
   rss3,
   scroll,
   silicon,
+  singularityfinance,
   sophon,
   soneium,
   socialnetwork,

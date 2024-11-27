@@ -26,7 +26,7 @@ export const river: Layer2 = opStackL2({
     activityDataSource: 'Blockchain RPC',
   },
   isNodeAvailable: true,
-  rpcUrl: 'https://explorer.river.build/api',
+  rpcUrl: 'https://mainnet.rpc.river.build',
   genesisTimestamp: new UnixTime(1716094800), //first sequencer tx
   discoveryDrivenData: true,
 })

@@ -1,4 +1,3 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { TotalCell } from '~/app/(side-nav)/scaling/summary/_components/table/total-cell'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
@@ -116,12 +115,7 @@ export const scalingSummaryValidiumAndOptimiumsColumns = [
   columnHelper.display({
     header: 'DA Layer',
     cell: (ctx) => {
-      const now = UnixTime.now()
-      const latestValue = ctx.row.original.dataAvailability?.find(
-        (entry) =>
-          (!entry.sinceTimestamp || entry.sinceTimestamp.lte(now)) &&
-          (!entry.untilTimestamp || entry.untilTimestamp.gt(now)),
-      )
+      const latestValue = ctx.row.original.dataAvailability
       if (!latestValue) {
         return <NoDataBadge />
       }
@@ -129,7 +123,11 @@ export const scalingSummaryValidiumAndOptimiumsColumns = [
         <TwoRowCell>
           <TwoRowCell.First>{latestValue.layer.value}</TwoRowCell.First>
           {ctx.row.original.dataAvailability && (
-            <TwoRowCell.Second>{latestValue.bridge.value}</TwoRowCell.Second>
+            <TwoRowCell.Second>
+              {latestValue.bridge.value === 'None'
+                ? 'No bridge'
+                : latestValue.bridge.value}
+            </TwoRowCell.Second>
           )}
         </TwoRowCell>
       )

@@ -52,7 +52,7 @@ export function runDiscoveryUi() {
   // Start executing one of predefined commands
   // and stream the output back to the client
   app.get('/api/terminal/execute', (req, res) => {
-    const { command, project, chain } = req.query
+    const { command, project, chain, devMode } = req.query
     if (!command || !project || !chain) {
       res.status(400).send('Missing required parameters')
       return
@@ -67,7 +67,7 @@ export function runDiscoveryUi() {
     res.setHeader('Connection', 'keep-alive')
 
     executeTerminalCommand(
-      `(cd ../backend && pnpm discover ${chain} ${project})`,
+      `(cd ../backend && pnpm discover ${chain} ${project} ${devMode === 'true' ? '--dev' : ''})`,
       res,
     )
   })
