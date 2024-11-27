@@ -1,7 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { type NextRequest, NextResponse } from 'next/server'
-import { db } from '~/server/database'
 import { getActivityChart } from '~/server/features/scaling/activity/get-activity-chart'
 import { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 
@@ -15,7 +14,7 @@ export async function GET(request: NextRequest) {
 
 const getCachedResponse = cache(
   async (range: ActivityTimeRange) => {
-    const { data } = await getActivityChart(db, { type: 'all' }, range)
+    const { data } = await getActivityChart({ type: 'all' }, range)
 
     const latestActivityData = data.at(-1)
 
