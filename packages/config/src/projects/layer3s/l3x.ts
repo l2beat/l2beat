@@ -1,5 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
@@ -63,14 +64,7 @@ export const l3x: Layer3 = orbitStackL3({
       address: EthereumAddress('0x0809F0Ee8e72b2e2069e0f618cBbCB2399D452c7'),
       sinceTimestamp: new UnixTime(1713781465),
       includeInTotal: false,
-      source: 'external',
-      bridgedUsing: {
-        bridges: [
-          {
-            name: 'Canonically (external escrow)',
-          },
-        ],
-      },
+      ...ESCROW.CANONICAL_EXTERNAL,
       tokens: '*',
       chain: 'arbitrum',
     },
@@ -78,14 +72,7 @@ export const l3x: Layer3 = orbitStackL3({
       address: EthereumAddress('0x0809F0Ee8e72b2e2069e0f618cBbCB2399D452c7'),
       sinceTimestamp: new UnixTime(1713781465),
       includeInTotal: false,
-      source: 'external',
-      bridgedUsing: {
-        bridges: [
-          {
-            name: 'Canonically (external escrow)',
-          },
-        ],
-      },
+      ...ESCROW.CANONICAL_EXTERNAL,
       tokens: '*',
       chain: 'linea',
     },
@@ -93,14 +80,7 @@ export const l3x: Layer3 = orbitStackL3({
       address: EthereumAddress('0x0809F0Ee8e72b2e2069e0f618cBbCB2399D452c7'),
       sinceTimestamp: new UnixTime(1713781465),
       includeInTotal: false,
-      source: 'external',
-      bridgedUsing: {
-        bridges: [
-          {
-            name: 'Canonically (external escrow)',
-          },
-        ],
-      },
+      ...ESCROW.CANONICAL_EXTERNAL,
       tokens: '*',
       chain: 'mode',
     },
@@ -108,14 +88,7 @@ export const l3x: Layer3 = orbitStackL3({
       address: EthereumAddress('0x0809F0Ee8e72b2e2069e0f618cBbCB2399D452c7'),
       sinceTimestamp: new UnixTime(1713781465),
       includeInTotal: false,
-      source: 'external',
-      bridgedUsing: {
-        bridges: [
-          {
-            name: 'Canonically (external escrow)',
-          },
-        ],
-      },
+      ...ESCROW.CANONICAL_EXTERNAL,
       tokens: '*',
       chain: 'blast',
     },

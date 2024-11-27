@@ -1,6 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { EXITS } from '../../common'
+import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
@@ -104,27 +105,13 @@ export const blast: Layer2 = opStackL2({
       description:
         'Pre-launch Blast Vault that keeps stETH. Funds from this Vault can be migrated to Blast bridge.',
       tokens: ['stETH'],
-      source: 'external',
-      bridgedUsing: {
-        bridges: [
-          {
-            name: 'Canonically (external escrow)',
-          },
-        ],
-      },
+      ...ESCROW.CANONICAL_EXTERNAL,
     }),
     discovery.getEscrowDetails({
       address: EthereumAddress('0x98078db053902644191f93988341E31289E1C8FE'),
       name: 'Interest-bearing ETH Vault',
       tokens: ['ETH', 'stETH'],
-      source: 'external',
-      bridgedUsing: {
-        bridges: [
-          {
-            name: 'Canonically (external escrow)',
-          },
-        ],
-      },
+      ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'Escrow for ETH that is invested into a yield-bearing contracts such as stETH.',
     }),
