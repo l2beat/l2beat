@@ -1,7 +1,7 @@
 import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect, mockFn } from 'earl'
 import { ContractSources } from '../source/SourceCodeService'
-import { Shape, TemplateService } from './TemplateService'
+import { Shape, TemplateService, hashFirstSource } from './TemplateService'
 
 const CORRECT_SUPERCHAIN_CONFIG_ADDR = EthereumAddress(
   '0x95703e0982140D16f8ebA6d158FccEde42f04a4C',
@@ -13,12 +13,16 @@ const CORRECT_SUPERCHAIN_CONFIG_IMPLEMENATION_HASH = Hash256(
   '0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d',
 )
 
-describe(TemplateService.prototype.findMatchingTemplates.name, () => {
+const CORRECT_SUPERCHAIN_SOURCES_HASH = Hash256(
+  '0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d',
+)
+
+describe(TemplateService.prototype.findMatchingTemplatesByHash.name, () => {
   it("doesn't match opstack/SuperchainConfig because address is not in validAddresses", () => {
     const templateService = new TemplateService()
     templateService.getAllShapes = mockFn().returns(templateShapes)
-    const result = templateService.findMatchingTemplates(
-      superchainConfigSources,
+    const result = templateService.findMatchingTemplatesByHash(
+      CORRECT_SUPERCHAIN_SOURCES_HASH,
       FAKE_SUPERCHAIN_CONFIG_ADDR,
     )
     expect(result).toEqual(['opstack/SuperchainConfigFake'])
@@ -27,14 +31,21 @@ describe(TemplateService.prototype.findMatchingTemplates.name, () => {
   it('matches ONLY opstack/SuperchainConfig because address is in validAddresses and is more specific', () => {
     const templateService = new TemplateService()
     templateService.getAllShapes = mockFn().returns(templateShapes)
-    const result = templateService.findMatchingTemplates(
-      superchainConfigSources,
+    const result = templateService.findMatchingTemplatesByHash(
+      CORRECT_SUPERCHAIN_SOURCES_HASH,
       CORRECT_SUPERCHAIN_CONFIG_ADDR,
     )
     // The opstack/SuperchainConfigFake template is not returned
     // even though there is an implementation match. That's because
     // the more specific match (criteria+hash) is found.
     expect(result).toEqual(['opstack/SuperchainConfig'])
+  })
+})
+
+describe(hashFirstSource.name, () => {
+  it('coorectly hashes the first source', () => {
+    const hash = hashFirstSource(superchainConfigSources)
+    expect(hash).toEqual(CORRECT_SUPERCHAIN_SOURCES_HASH)
   })
 })
 

@@ -80,17 +80,19 @@ export class TemplateService {
     sources: ContractSources,
     address: EthereumAddress,
   ): string[] {
+    const sourceHash = hashFirstSource(sources)
+    if (sourceHash === undefined) {
+      return []
+    }
+    return this.findMatchingTemplatesByHash(sourceHash, address)
+  }
+
+  findMatchingTemplatesByHash(
+    sourcesHash: Hash256,
+    address: EthereumAddress,
+  ): string[] {
     const result: [string, number][] = []
-    if (!sources.isVerified) {
-      return []
-    }
 
-    const needleSource = flattenFirstSource(sources)
-    if (needleSource === undefined) {
-      return []
-    }
-
-    const needleHash = sha2_256bit(formatIntoHashable(needleSource))
     const allShapes = this.getAllShapes()
     for (const [templateId, shape] of Object.entries(allShapes)) {
       const criteriaMathes: string[] = []
@@ -101,7 +103,7 @@ export class TemplateService {
           criteriaMathes.push('validAddress')
         }
       }
-      if (shape.hashes.includes(needleHash)) {
+      if (shape.hashes.includes(sourcesHash)) {
         criteriaMathes.push('implementation')
         result.push([templateId, criteriaMathes.length])
       }
@@ -134,17 +136,6 @@ export class TemplateService {
 
   getTemplateHash(template: string): Hash256 {
     const templateJson = this.loadContractTemplate(template)
-    const shapeCriteriaPath = path.join(
-      this.rootPath,
-      TEMPLATES_PATH,
-      template,
-      TEMPLATE_SHAPE_FOLDER,
-      'criteria.json',
-    )
-    if (existsSync(shapeCriteriaPath)) {
-      const criteria = JSON.parse(readFileSync(shapeCriteriaPath, 'utf8'))
-      return hashJson({ config: templateJson, criteria } as json)
-    }
     return hashJson(templateJson as json)
   }
 
@@ -221,4 +212,16 @@ function listAllPaths(path: string): string[] {
     result = result.concat(listAllPaths(subPath))
   }
   return result
+}
+
+export function hashFirstSource(sources: ContractSources): Hash256 | undefined {
+  if (!sources.isVerified) {
+    return
+  }
+
+  const flattenedSource = flattenFirstSource(sources)
+  if (flattenedSource === undefined) {
+    return
+  }
+  return sha2_256bit(formatIntoHashable(flattenedSource))
 }

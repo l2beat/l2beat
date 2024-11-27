@@ -5,13 +5,13 @@ import {
   getChainConfig,
 } from '@l2beat/discovery'
 import { DiscoveryOutput } from '@l2beat/discovery-types'
+import { Hash256 } from '@l2beat/shared-pure'
 import { keyInYN } from 'readline-sync'
 import { discoverAndUpdateDiffHistory } from './discoveryWrapper'
 
 const configReader = new ConfigReader()
 const templateService = new TemplateService()
 const allTemplateHashes = templateService.getAllTemplateHashes()
-const allShapes = templateService.getAllShapes()
 
 void main().catch((e) => {
   console.log(e)
@@ -94,25 +94,23 @@ function discoveryNeedsRefresh(
       continue
     }
 
+    const sourcesHash = Hash256(hashes[0])
+    const matchingTemplates = templateService.findMatchingTemplatesByHash(
+      sourcesHash,
+      contract.address,
+    )
+
     if (contract.template !== undefined) {
-      if (
-        allShapes[contract.template].hashes.length > 0 &&
-        config.overrides.get(contract.address).extends === undefined &&
-        !allShapes[contract.template].hashes
-          .map((h) => h.toString())
-          .includes(hashes[0])
-      ) {
-        return 'A contract which currently has a template, no longer matches that template'
+      if (config.overrides.get(contract.address).extends === undefined) {
+        if (matchingTemplates.length === 0) {
+          return `A contract "${contract.name}" with template "${contract.template}", no longer matches any template`
+        }
+        if (contract.template !== matchingTemplates[0]) {
+          return `A contract "${contract.name}" matches a different template: "${contract.template} -> ${matchingTemplates.join(', ')}"`
+        }
       }
-    } else {
-      if (
-        Object.values(allShapes)
-          .map((s) => s.hashes)
-          .flatMap((h) => h.toString())
-          .includes(hashes[0])
-      ) {
-        return `A contract (${contract.name}) which currently does not have a template matches an implementation`
-      }
+    } else if (matchingTemplates.length > 0) {
+      return `A contract "${contract.name}" without template now matches: "${matchingTemplates.join(', ')}"`
     }
   }
 
@@ -130,6 +128,6 @@ function discoveryNeedsRefresh(
   }
 
   if (outdatedTemplates.length > 0) {
-    return `template configs or criteria have changed: ${outdatedTemplates.join(', ')}`
+    return `template configs has changed: ${outdatedTemplates.join(', ')}`
   }
 }
