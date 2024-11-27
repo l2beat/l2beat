@@ -1,9 +1,9 @@
 import { assert, EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { bridges, Layer2, layer2s, Layer3, layer3s } from '../'
-import { checkRisk } from './helpers'
+import { Layer2, Layer3, bridges, layer2s, layer3s } from '../'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from './constants'
+import { checkRisk } from './helpers'
 
 describe('projects', () => {
   describe('every slug is valid', () => {
