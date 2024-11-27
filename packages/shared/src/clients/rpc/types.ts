@@ -1,4 +1,4 @@
-import { assert, Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import { assert, Bytes, EthereumAddress, HEX_REGEX } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 export const Quantity = {
@@ -46,7 +46,11 @@ export const EVMBlockResponse = z.object({
 })
 
 export const EVMBalanceResponse = z.object({
-  result: Quantity.decode.transform((n) => Number(n)),
+  result: Quantity.decode,
+})
+
+export const EVMCallResponse = z.object({
+  result: z.string().regex(HEX_REGEX, 'Invalid hex string'),
 })
 
 export interface CallParameters {

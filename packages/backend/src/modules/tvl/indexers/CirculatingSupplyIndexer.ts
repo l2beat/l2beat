@@ -6,6 +6,7 @@ import { CirculatingSupplyIndexerDeps } from './types'
 
 export class CirculatingSupplyIndexer extends ManagedChildIndexer {
   private readonly configurationId: string
+  private readonly maxHeight: number | undefined
 
   constructor(private readonly $: CirculatingSupplyIndexerDeps) {
     super({
@@ -18,10 +19,20 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
       configHash: $.minHeight.toString(),
     })
     this.configurationId = createAmountId($.configuration)
+    this.maxHeight = this.$.configuration.untilTimestamp?.toNumber()
   }
 
   async update(from: number, to: number): Promise<number> {
-    const adjustedTo = this.$.circulatingSupplyService.getAdjustedTo(from, to)
+    if (this.maxHeight && from > this.maxHeight) {
+      this.logger.info('Skipping update due to maxHeight', {
+        from,
+        to,
+        maxHeight: this.maxHeight,
+      })
+      return to
+    }
+
+    const adjustedTo = this.getAdjustedTo(from, to)
 
     const amounts =
       await this.$.circulatingSupplyService.fetchCirculatingSupplies(
@@ -50,6 +61,14 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
     })
 
     return adjustedTo.toNumber()
+  }
+
+  private getAdjustedTo(from: number, to: number) {
+    const adjustedTo = this.$.circulatingSupplyService.getAdjustedTo(from, to)
+
+    return this.maxHeight && this.maxHeight < adjustedTo.toNumber()
+      ? new UnixTime(this.maxHeight)
+      : adjustedTo
   }
 
   override async invalidate(targetHeight: number): Promise<number> {

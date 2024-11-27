@@ -27,10 +27,10 @@ export const zeronetwork: Layer2 = zkStackL2({
   ],
   createdAt: new UnixTime(1721214420), // 2024-07-17T11:07:00Z
   display: {
-    name: 'ZERϴ Network',
+    name: 'ZERO Network',
     slug: 'zeronetwork',
     description:
-      'ZERϴ Network is an L2 by the Zerion wallet team, utilizing the ZK stack and native account abstraction, allowing Zerion wallet users gasless and prioritized transactions.',
+      'ZERO Network is an L2 by the Zerion wallet team, utilizing the ZK stack and native account abstraction, allowing Zerion wallet users gasless and prioritized transactions.',
     links: {
       websites: ['https://zero.network/'],
       apps: [

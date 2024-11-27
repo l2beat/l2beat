@@ -9,6 +9,7 @@ import { apechainDac } from './dac/apechain'
 import { apexDac } from './dac/apex'
 import { arbitrumNovaDac } from './dac/arbitrumnova'
 import { astarZkEvmDac } from './dac/astarzkEVM'
+import { automataDA } from './dac/automataDA'
 import { cyberDA } from './dac/cyberDA'
 import { degenDac } from './dac/degen'
 import { edgelessDac } from './dac/edgeless'
@@ -56,6 +57,7 @@ export const ethereumDaLayer = ethereum
 
 export const daLayers: DaLayer[] = applyProcessor([
   // Permissioned DACs
+  automataDA,
   galxegravityDac,
   immutableXDac,
   realDac,
