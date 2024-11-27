@@ -41,7 +41,7 @@ export class BlockTimestampIndexer extends ManagedChildIndexer {
 
     assert(
       blockNumber >= this.blockHeight,
-      `Block number cannot be smaller: ${blockNumber}`,
+      `Block number cannot be smaller: ${blockNumber} < ${this.blockHeight}`,
     )
 
     await this.$.db.blockTimestamp.insert({

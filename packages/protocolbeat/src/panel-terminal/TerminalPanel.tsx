@@ -10,6 +10,7 @@ export function TerminalPanel() {
   const [discoveryChain, setDiscoveryChain] = useState<string | undefined>(
     undefined,
   )
+  const [devMode, setDevMode] = useState(false)
   const abortControllerRef = useRef<AbortController>()
   const outputRef = useRef<HTMLDivElement>(null)
   const { output, isRunning, addOutput, setIsRunning, clear } =
@@ -54,7 +55,12 @@ export function TerminalPanel() {
     setIsRunning(true)
 
     try {
-      const eventSource = executeCommand('discover', project, discoveryChain)
+      const eventSource = executeCommand(
+        'discover',
+        project,
+        discoveryChain,
+        devMode,
+      )
       abortControllerRef.current = new AbortController()
 
       eventSource.onmessage = (event) => {
@@ -93,6 +99,15 @@ export function TerminalPanel() {
             </option>
           ))}
         </select>
+        <label className="flex items-center gap-1">
+          <input
+            type="checkbox"
+            checked={devMode}
+            onChange={(e) => setDevMode(e.target.checked)}
+            className="h-4 w-4 appearance-none rounded border border-coffee-200 bg-coffee-800 checked:bg-autumn-300"
+          />
+          <span className="text-xs">--dev</span>
+        </label>
         <button
           onClick={handleExecute}
           disabled={isRunning}

@@ -9,6 +9,7 @@ import {
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/basic-table'
 import { RollupsTable } from '~/components/table/rollups-table'
+import { useTableSorting } from '~/components/table/sorting/table-sorting-context'
 import { env } from '~/env'
 import { useTable } from '~/hooks/use-table'
 import { type ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
@@ -32,6 +33,7 @@ export function ScalingActivityTable({
   customSortedRowModel,
 }: Props) {
   const { metric } = useActivityMetricContext()
+  const { sorting, setSorting } = useTableSorting()
 
   const tableEntries = useMemo(() => {
     const tableEntries = entries
@@ -50,8 +52,11 @@ export function ScalingActivityTable({
     data: tableEntries,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: customSortedRowModel ?? getSortedRowModel(),
+    state: {
+      sorting,
+    },
+    onSortingChange: setSorting,
     initialState: {
-      sorting: [{ id: 'data_pastDayCount', desc: true }],
       columnPinning: {
         left: ['#', 'logo'],
       },

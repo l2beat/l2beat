@@ -7,6 +7,7 @@ import {
 import { DiscoveryContract } from '@l2beat/discovery/dist/discovery/config/RawDiscoveryConfig'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
+import { getContractName } from './getContractName'
 import { getContractType } from './getContractType'
 import { getMeta } from './getMeta'
 import { parseFieldValue } from './parseFieldValue'
@@ -141,7 +142,7 @@ function contractFromDiscovery(
   const implementations = get$Implementations(contract.values)
 
   return {
-    name: contract.name || undefined,
+    name: getContractName(contract),
     type: getContractType(contract),
     template: contract.template,
     description: contract.description,

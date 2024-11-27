@@ -290,8 +290,15 @@ export abstract class Indexer {
           to: effect.targetHeight,
           attempt,
         })
-      } else {
+      } else if (attempt >= 10) {
         this.logger.error('Update failed', {
+          error,
+          from,
+          to: effect.targetHeight,
+          attempt,
+        })
+      } else {
+        this.logger.warn('Update failed', {
           error,
           from,
           to: effect.targetHeight,

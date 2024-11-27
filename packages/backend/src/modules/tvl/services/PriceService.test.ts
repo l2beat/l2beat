@@ -76,7 +76,7 @@ describe(PriceService.name, () => {
         getUsdPriceHistoryHourly: mockFn().rejectsWith(new Error('error')),
       })
       const priceTable = mockObject<Database['price']>({
-        getByConfigIdsInRange: async () => [price('id', to.toNumber())],
+        getLatestPrice: async () => price('id', to.toNumber()),
       })
 
       const service = new PriceService({
@@ -98,11 +98,7 @@ describe(PriceService.name, () => {
         from,
         to,
       )
-      expect(priceTable.getByConfigIdsInRange).toHaveBeenOnlyCalledWith(
-        ['id'],
-        to,
-        to,
-      )
+      expect(priceTable.getLatestPrice).toHaveBeenOnlyCalledWith(['id'])
     })
 
     it('works only for latest hour', async () => {

@@ -3,6 +3,7 @@ import { compact } from 'lodash'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
 import { groupByMainCategories } from '~/utils/group-by-main-categories'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
+import { getCurrentEntry } from '../../utils/get-current-entry'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import {
   type ActivityLatestUopsData,
@@ -76,6 +77,7 @@ function getScalingSummaryEntry(
         })
       : undefined
   const associatedTokensExcludedWarnings = compact([project.display.tvlWarning])
+  const dataAvailability = getCurrentEntry(project.dataAvailability)
 
   const common = {
     entryType: 'scaling' as const,
@@ -85,7 +87,7 @@ function getScalingSummaryEntry(
       hasImplementationChanged,
       hasHighSeverityFieldChanged,
     }),
-    dataAvailability: project.dataAvailability,
+    dataAvailability,
     mainPermissions: project.display.mainPermissions,
     tvl: {
       breakdown: latestTvl?.breakdown,
