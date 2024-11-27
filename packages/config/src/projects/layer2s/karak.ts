@@ -15,7 +15,7 @@ export const karak: Layer2 = opStackL2({
   discovery,
   display: {
     name: 'K2',
-    slug: 'K2',
+    slug: 'k2',
     description: 'K2 is a general-purpose Optimium.',
     links: {
       websites: ['https://karak.network/'],
