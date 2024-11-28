@@ -1,13 +1,13 @@
-Generated with discovered.json: 0x9cf0007632804c7c7b0700a835ff02233917d4bf
+Generated with discovered.json: 0x754b548df252478896dd5c5013f62524d16d8b7f
 
-# Diff at Wed, 06 Nov 2024 23:38:18 GMT:
+# Diff at Thu, 28 Nov 2024 15:02:25 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current block number: 22073466
+- current block number: 23008392
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial discovery.
 
 ## Initial discovery
 
@@ -55,6 +55,12 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract L1ERC721Bridge (0x3D748542A3bb90952d90f99F3fbfDAD8B6756B0A)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
     contract L2CrossDomainMessenger (0x4200000000000000000000000000000000000007)
     +++ description: None
 ```
@@ -79,13 +85,25 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafeL2 (0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d)
+    contract Caldera Multisig 2 (0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
+    contract OptimismMintableERC20Factory (0x88Ac5Be224B0bA925A9CA73a4FAFbA171849ec06)
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+```
+
+```diff
++   Status: CREATED
     contract SystemConfig (0xA9Bc65Ff5A3106351fa92B04C91d505BcCd92Cad)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
++   Status: CREATED
+    contract  (0xadA565Abc1Fe7358259c22dd0A7372229d943388)
     +++ description: None
 ```
 
@@ -104,5 +122,5 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract SuperchainConfig (0xe736142a3e957660cBae61AC4bD61e5b65635140)
-    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
 ```

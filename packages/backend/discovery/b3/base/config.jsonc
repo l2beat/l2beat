@@ -3,9 +3,7 @@
     "chain": "base",
     "name": "b3",
     "initialAddresses": ["0x769547a723783FCA36BAaf1ECcf9dfdbF6d09F38"],
-    "names": {
-      "0xA9Bc65Ff5A3106351fa92B04C91d505BcCd92Cad": "SystemConfig"
-    },
+    "names": {},
     "overrides": {}
-  }
+}
   
