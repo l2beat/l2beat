@@ -2,7 +2,7 @@ import { type Layer2FinalityConfig } from '@l2beat/config'
 import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { keyBy, mapValues } from 'lodash'
 import { env } from '~/env'
-import { db } from '~/server/database'
+import { getDb } from '~/server/database'
 import { type FinalityData, type FinalityDataPoint } from './schema'
 
 export type FinalityProjectConfig = {
@@ -18,6 +18,7 @@ export async function getFinality(projects: FinalityProjectConfig[]) {
 }
 
 async function getFinalityData(projects: FinalityProjectConfig[]) {
+  const db = getDb()
   const projectIds = projects.map((p) => p.projectId)
   const records = await db.finality.getLatestGroupedByProjectId(projectIds)
 

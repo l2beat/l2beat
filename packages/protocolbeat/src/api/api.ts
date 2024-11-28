@@ -51,7 +51,13 @@ export function executeCommand(
   command: string,
   project: string,
   chain: string,
+  devMode: boolean,
 ): EventSource {
-  const params = new URLSearchParams({ command, project, chain })
+  const params = new URLSearchParams({
+    command,
+    project,
+    chain,
+    devMode: devMode.toString(),
+  })
   return new EventSource(`/api/terminal/execute?${params}`)
 }

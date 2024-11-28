@@ -59,6 +59,7 @@ export function makeConfig(
       ? {
           connection: {
             connectionString: env.string('LOCAL_DB_URL'),
+            application_name: 'BE-LOCAL',
             ssl: !env.string('LOCAL_DB_URL').includes('localhost')
               ? { rejectUnauthorized: false }
               : undefined,
@@ -77,6 +78,7 @@ export function makeConfig(
           enableQueryLogging: env.boolean('ENABLE_QUERY_LOGGING', false),
           connection: {
             connectionString: env.string('DATABASE_URL'),
+            application_name: 'BE-PROD',
             ssl: { rejectUnauthorized: false },
           },
           connectionPoolSize: {

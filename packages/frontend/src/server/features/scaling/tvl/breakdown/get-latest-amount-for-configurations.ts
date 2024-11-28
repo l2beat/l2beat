@@ -1,12 +1,13 @@
 import { type AmountConfigEntry, UnixTime } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
-import { db } from '~/server/database'
+import { getDb } from '~/server/database'
 import { getAmountsStatus } from '../sync-status/get-amounts-status'
 
 export async function getLatestAmountForConfigurations(
   configurations: (AmountConfigEntry & { configId: string })[],
   targetTimestamp: UnixTime,
 ) {
+  const db = getDb()
   const amounts = await db.amount.getByIdsAndTimestamp(
     configurations.map((c) => c.configId),
     targetTimestamp,
