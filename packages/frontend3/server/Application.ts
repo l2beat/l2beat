@@ -30,16 +30,13 @@ export class Application {
       : new MockActivityService(projectService)
 
     const app = express()
-    const routers = [ApiRouter(), PageRouter(activityService), StaticRouter()]
+    app.use(ApiRouter())
+    app.use(PageRouter(activityService))
+    app.use(StaticRouter())
 
     this.start = () => {
-      for (const router of routers) {
-        app.use(router)
-      }
-
-      const port = 8347 // BEAT
-      app.listen(port, () => {
-        console.log(`Listening on: http://localhost:${port}`)
+      app.listen(config.port, () => {
+        console.log(`Listening on: http://localhost:${config.port}`)
       })
     }
   }
