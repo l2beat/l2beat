@@ -19,6 +19,7 @@ import {
   addSentimentToDataAvailability,
 } from '../../common'
 import { subtractOne } from '../../common/assessCount'
+import { ESCROW } from '../../common/escrow'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
@@ -163,14 +164,7 @@ export const kroma: Layer2 = {
         address: EthereumAddress('0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e'),
         sinceTimestamp: new UnixTime(1700122827),
         tokens: ['USDC'],
-        source: 'external',
-        bridgedUsing: {
-          bridges: [
-            {
-              name: 'Canonically (external escrow)',
-            },
-          ],
-        },
+        ...ESCROW.CANONICAL_EXTERNAL,
         description: 'Main entry point for users depositing USDC.',
       }),
     ],

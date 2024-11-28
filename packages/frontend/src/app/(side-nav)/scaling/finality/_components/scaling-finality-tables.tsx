@@ -6,6 +6,7 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
+import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/get-scaling-finality-entries'
 import { type CategorisedScalingEntries } from '~/utils/group-by-main-categories'
 import { BaseScalingFilters } from '../../_components/base-scaling-filters'
@@ -22,6 +23,12 @@ export function ScalingFinalityTables(props: Props) {
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(includeFilters),
     others: props.others?.filter(includeFilters) ?? [],
   }
+
+  const initialSort = {
+    id: '#',
+    desc: false,
+  }
+
   return (
     <>
       <BaseScalingFilters
@@ -42,13 +49,17 @@ export function ScalingFinalityTables(props: Props) {
             </DirectoryTabsTrigger>
           )}
         </DirectoryTabsList>
-        <DirectoryTabsContent value="rollups">
-          <ScalingFinalityTable entries={filteredEntries.rollups} rollups />
-        </DirectoryTabsContent>
-        {filteredEntries.others.length > 0 && (
-          <DirectoryTabsContent value="others">
-            <ScalingFinalityTable entries={filteredEntries.others} />
+        <TableSortingProvider initialSort={initialSort}>
+          <DirectoryTabsContent value="rollups">
+            <ScalingFinalityTable entries={filteredEntries.rollups} rollups />
           </DirectoryTabsContent>
+        </TableSortingProvider>
+        {filteredEntries.others.length > 0 && (
+          <TableSortingProvider initialSort={initialSort}>
+            <DirectoryTabsContent value="others">
+              <ScalingFinalityTable entries={filteredEntries.others} />
+            </DirectoryTabsContent>
+          </TableSortingProvider>
         )}
       </DirectoryTabs>
     </>

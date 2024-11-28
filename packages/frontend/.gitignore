@@ -3,3 +3,5 @@
 
 *storybook.log
 storybook-static
+# Sentry Config File
+.env.sentry-build-plugin

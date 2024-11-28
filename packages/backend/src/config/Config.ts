@@ -53,6 +53,7 @@ export interface ApiConfig {
 export interface DatabaseConfig {
   readonly connection: {
     connectionString: string
+    application_name: string
     ssl?: {
       rejectUnauthorized?: boolean
     }

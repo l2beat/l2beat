@@ -70,7 +70,7 @@ describe(RpcClient2.name, () => {
       const address = EthereumAddress.random()
       const result = await rpc.getBalance(address, 'latest')
 
-      expect(result).toEqual(123)
+      expect(result).toEqual(BigInt(123))
       expect(http.fetch.calls[0].args[1]?.body).toEqual(
         JSON.stringify({
           method: 'eth_getBalance',
@@ -85,7 +85,7 @@ describe(RpcClient2.name, () => {
   describe(RpcClient2.prototype.call.name, () => {
     it('calls eth_call with correct parameters', async () => {
       const http = mockObject<HttpClient2>({
-        fetch: async () => '0x123abc',
+        fetch: async () => ({ result: '0x123abc' }),
       })
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
@@ -122,7 +122,7 @@ describe(RpcClient2.name, () => {
 
     it('handles numeric block numbers', async () => {
       const http = mockObject<HttpClient2>({
-        fetch: async () => '0x1',
+        fetch: async () => ({ result: '0x1' }),
       })
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
@@ -156,7 +156,7 @@ describe(RpcClient2.name, () => {
 
     it('includes from address if provided', async () => {
       const http = mockObject<HttpClient2>({
-        fetch: async () => '0x',
+        fetch: async () => ({ result: '0x' }),
       })
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
@@ -192,7 +192,7 @@ describe(RpcClient2.name, () => {
 
     it('handles empty response', async () => {
       const http = mockObject<HttpClient2>({
-        fetch: async () => '0x',
+        fetch: async () => ({ result: '0x' }),
       })
       const rpc = mockClient({ http })
 

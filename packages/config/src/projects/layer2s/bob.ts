@@ -1,5 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
+import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
@@ -31,26 +32,12 @@ export const bob: Layer2 = opStackL2({
     discovery.getEscrowDetails({
       address: EthereumAddress('0x091dF5E1284E49fA682407096aD34cfD42B95B72'),
       tokens: ['wstETH'],
-      source: 'external',
-      bridgedUsing: {
-        bridges: [
-          {
-            name: 'Canonically (external escrow)',
-          },
-        ],
-      },
+      ...ESCROW.CANONICAL_EXTERNAL,
     }),
     discovery.getEscrowDetails({
       address: EthereumAddress('0x450D55a4B4136805B0e5A6BB59377c71FC4FaCBb'),
       tokens: ['USDC'],
-      source: 'external',
-      bridgedUsing: {
-        bridges: [
-          {
-            name: 'Canonically (external escrow)',
-          },
-        ],
-      },
+      ...ESCROW.CANONICAL_EXTERNAL,
     }),
   ],
   genesisTimestamp: new UnixTime(1712861989),

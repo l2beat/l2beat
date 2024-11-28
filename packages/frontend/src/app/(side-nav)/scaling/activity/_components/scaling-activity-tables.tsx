@@ -7,6 +7,7 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
 import { getStageSortedRowModel } from '~/components/table/sorting/get-stage-sorting-row-model'
+import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import { type ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
 import { type CategorisedScalingEntries } from '~/utils/group-by-main-categories'
 import { ScalingActivityFilters } from '../../_components/scaling-activity-filters'
@@ -27,6 +28,12 @@ export function ScalingActivityTables({
     validiumsAndOptimiums: validiumsAndOptimiums.filter(includeFilters),
     others: others?.filter(includeFilters) ?? [],
   }
+
+  const initialSort = {
+    id: 'data_pastDayCount',
+    desc: true,
+  }
+
   return (
     <>
       <ScalingActivityFilters
@@ -55,26 +62,32 @@ export function ScalingActivityTables({
             </DirectoryTabsTrigger>
           )}
         </DirectoryTabsList>
-        <DirectoryTabsContent value="rollups">
-          <ScalingActivityTable
-            entries={filteredEntries.rollups}
-            rollups
-            customSortedRowModel={getStageSortedRowModel()}
-          />
-        </DirectoryTabsContent>
-        <DirectoryTabsContent value="validiums-and-optimiums">
-          <ScalingActivityTable
-            entries={filteredEntries.validiumsAndOptimiums}
-            customSortedRowModel={getStageSortedRowModel()}
-          />
-        </DirectoryTabsContent>
-        {filteredEntries.others.length > 0 && (
-          <DirectoryTabsContent value="others">
+        <TableSortingProvider initialSort={initialSort}>
+          <DirectoryTabsContent value="rollups">
             <ScalingActivityTable
-              entries={filteredEntries.others}
+              entries={filteredEntries.rollups}
+              rollups
               customSortedRowModel={getStageSortedRowModel()}
             />
           </DirectoryTabsContent>
+        </TableSortingProvider>
+        <TableSortingProvider initialSort={initialSort}>
+          <DirectoryTabsContent value="validiums-and-optimiums">
+            <ScalingActivityTable
+              entries={filteredEntries.validiumsAndOptimiums}
+              customSortedRowModel={getStageSortedRowModel()}
+            />
+          </DirectoryTabsContent>
+        </TableSortingProvider>
+        {filteredEntries.others.length > 0 && (
+          <TableSortingProvider initialSort={initialSort}>
+            <DirectoryTabsContent value="others">
+              <ScalingActivityTable
+                entries={filteredEntries.others}
+                customSortedRowModel={getStageSortedRowModel()}
+              />
+            </DirectoryTabsContent>
+          </TableSortingProvider>
         )}
       </DirectoryTabs>
     </>

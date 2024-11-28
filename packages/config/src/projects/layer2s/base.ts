@@ -23,6 +23,7 @@ import {
   addSentimentToDataAvailability,
 } from '../../common'
 import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
+import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import { Badge } from '../badges'
@@ -183,14 +184,7 @@ export const base: Layer2 = {
       discovery.getEscrowDetails({
         address: EthereumAddress('0x9de443AdC5A411E83F1878Ef24C3F52C61571e72'),
         tokens: ['wstETH'],
-        source: 'external',
-        bridgedUsing: {
-          bridges: [
-            {
-              name: 'Canonical (external escrow)',
-            },
-          ],
-        },
+        ...ESCROW.CANONICAL_EXTERNAL,
         description:
           'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
       }),

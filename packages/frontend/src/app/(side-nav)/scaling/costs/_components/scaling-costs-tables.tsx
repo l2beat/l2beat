@@ -6,6 +6,7 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
+import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { type CategorisedScalingEntries } from '~/utils/group-by-main-categories'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
@@ -25,6 +26,12 @@ export function ScalingCostsTables(props: Props) {
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(includeFilters),
     others: props.others?.filter(includeFilters) ?? [],
   }
+
+  const initialSort = {
+    id: '#',
+    desc: false,
+  }
+
   return (
     <>
       <Controls
@@ -45,13 +52,17 @@ export function ScalingCostsTables(props: Props) {
             </DirectoryTabsTrigger>
           )}
         </DirectoryTabsList>
-        <DirectoryTabsContent value="rollups">
-          <ScalingCostsTable entries={filteredEntries.rollups} rollups />
-        </DirectoryTabsContent>
-        {filteredEntries.others.length > 0 && (
-          <DirectoryTabsContent value="others">
-            <ScalingCostsTable entries={filteredEntries.others} />
+        <TableSortingProvider initialSort={initialSort}>
+          <DirectoryTabsContent value="rollups">
+            <ScalingCostsTable entries={filteredEntries.rollups} rollups />
           </DirectoryTabsContent>
+        </TableSortingProvider>
+        {filteredEntries.others.length > 0 && (
+          <TableSortingProvider initialSort={initialSort}>
+            <DirectoryTabsContent value="others">
+              <ScalingCostsTable entries={filteredEntries.others} />
+            </DirectoryTabsContent>
+          </TableSortingProvider>
         )}
       </DirectoryTabs>
     </>

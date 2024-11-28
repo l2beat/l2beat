@@ -1,4 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
@@ -46,14 +47,7 @@ export const world: Layer2 = opStackL2({
     discovery.getEscrowDetails({
       address: EthereumAddress('0x153A69e4bb6fEDBbAaF463CB982416316c84B2dB'),
       name: 'External USDC Vault',
-      source: 'external',
-      bridgedUsing: {
-        bridges: [
-          {
-            name: 'Canonically (external escrow)',
-          },
-        ],
-      },
+      ...ESCROW.CANONICAL_EXTERNAL,
       description: 'Custom external escrow for USDC bridged to Worldchain.',
       tokens: ['USDC'],
     }),

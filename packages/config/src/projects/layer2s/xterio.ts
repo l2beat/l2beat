@@ -46,7 +46,11 @@ export const xterio: Layer2 = opStackL2({
     activityDataSource: 'Blockchain RPC',
   },
   isNodeAvailable: 'UnderReview',
-  daProvider: DACHALLENGES_DA_PROVIDER(daChallengeWindow, daResolveWindow),
+  daProvider: DACHALLENGES_DA_PROVIDER(
+    daChallengeWindow,
+    daResolveWindow,
+    'https://github.com/ethereum-optimism/optimism/releases/tag/op-node%2Fv1.7.5',
+  ), // source: altlayer on telegram
   discoveryDrivenData: true,
   genesisTimestamp: new UnixTime(1716537433),
   rpcUrl: 'https://xterio-eth.alt.technology/',

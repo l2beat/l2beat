@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
@@ -39,14 +40,7 @@ export const inevm: Layer3 = orbitStackL3({
       name: 'CustomGateway',
       description:
         'Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.',
-      source: 'external',
-      bridgedUsing: {
-        bridges: [
-          {
-            name: 'Canonically (custom escrow)',
-          },
-        ],
-      },
+      ...ESCROW.CANONICAL_EXTERNAL,
       tokens: '*',
     }),
   ],

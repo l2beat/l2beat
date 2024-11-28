@@ -1,6 +1,10 @@
 {
   "ethereum": [
     {
+      "symbol": "ZRC",
+      "address": "0xfd418e42783382E86Ae91e445406600Ba144D162"
+    },
+    {
       "symbol": "VIRTUAL",
       "address": "0x44ff8620b8cA30902395A7bD3F2407e1A091BF73"
     },
@@ -1709,6 +1713,21 @@
     }
   ],
   "arbitrum": [
+    {
+      "symbol": "SOL",
+      "address": "0x2bcC6D6CdBbDC0a4071e48bb3B969b06B3330c07",
+      "coingeckoId": "solana",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole Token Bridge",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
     {
       "symbol": "cbBTC",
       "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",

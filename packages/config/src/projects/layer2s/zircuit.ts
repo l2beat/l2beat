@@ -77,6 +77,8 @@ export const zircuit: Layer2 = opStackL2({
     minTimestampForTvl: new UnixTime(1719936217),
   },
   nonTemplateExcludedTokens: ['rswETH', 'rsETH'],
+  l1StandardBridgePremintedTokens: ['ZRC'],
+  associatedTokens: ['ZRC'],
   nonTemplatePermissions: [
     {
       name: 'Admins of SuperchainConfig',

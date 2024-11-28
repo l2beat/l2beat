@@ -1,7 +1,7 @@
 {
   "name": "chainport",
   "chain": "ethereum",
-  "blockNumber": 21078715,
+  "blockNumber": 21279513,
   "configHash": "0x722bdc74afa4186d83f17ede56db3b5fde5f89d6a296169858d275ccc239df59",
   "contracts": [
     {
@@ -174,16 +174,16 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0xdd37184C6BF02Aea66Ed3eCb8fcccfeADF801609",
           "0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7",
-          "0x894107B7b5051409f279E8300774B2f62Febe057",
-          "0x00040D1445683B7Ef71bf2D94CB7Fe2224Eba8d8"
+          "0x894107B7b5051409f279E8300774B2f62Febe057"
         ],
         "$threshold": 2,
         "domainSeparator": "0x6ff8db429aea0adcadf7f7b4b96be80cf9a3a712bedcf4525d275fdcda9a5dcd",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 203,
+        "nonce": 205,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -221,7 +221,8 @@
     {
       "name": "EOAVault3",
       "address": "0xD2238E8c085E5059F8DFC52256530210bc7250F6"
-    }
+    },
+    { "address": "0xdd37184C6BF02Aea66Ed3eCb8fcccfeADF801609" }
   ],
   "abis": {
     "0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa": [

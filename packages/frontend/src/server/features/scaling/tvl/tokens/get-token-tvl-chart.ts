@@ -6,6 +6,7 @@ import {
   asNumber,
   branded,
 } from '@l2beat/shared-pure'
+import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
@@ -42,69 +43,76 @@ export async function getTokenTvlChart(params: TokenTvlChartParams) {
   if (env.MOCK) {
     return getMockTokenTvlChartData(params)
   }
-  return getTokenTvlChartData(params)
+  return getCachedTokenTvlChartData(params)
 }
 
-type TokenTvlChart = Awaited<ReturnType<typeof getTokenTvlChartData>>
-async function getTokenTvlChartData({ token, range }: TokenTvlChartParams) {
-  const targetTimestamp = UnixTime.now().toStartOf('hour').add(-2, 'hours')
-  const resolution = rangeToResolution(range)
+type TokenTvlChart = Awaited<ReturnType<typeof getCachedTokenTvlChartData>>
 
-  const project = [...layer2s, ...layer3s, ...bridges].find(
-    (p) => p.id === token.projectId,
-  )
-  assert(project, 'Project not found')
-  const backendProject = toBackendProject(project)
-  const configMapping = getConfigMapping(backendProject)
+export const getCachedTokenTvlChartData = cache(
+  async ({ token, range }: TokenTvlChartParams) => {
+    const targetTimestamp = UnixTime.now().toStartOf('hour').add(-2, 'hours')
+    const resolution = rangeToResolution(range)
 
-  const tokenAmountConfigs = configMapping.getAmountsByProjectAndToken(
-    project.id,
-    token,
-  )
-  const firstTokenAmountConfig = tokenAmountConfigs[0]
-  assert(firstTokenAmountConfig, 'No token amount config found')
+    const project = [...layer2s, ...layer3s, ...bridges].find(
+      (p) => p.id === token.projectId,
+    )
+    assert(project, 'Project not found')
+    const backendProject = toBackendProject(project)
+    const configMapping = getConfigMapping(backendProject)
 
-  const adjustedRange = getAdjustedRange(
-    range,
-    resolution,
-    firstTokenAmountConfig.sinceTimestamp,
-    targetTimestamp,
-  )
+    const tokenAmountConfigs = configMapping.getAmountsByProjectAndToken(
+      project.id,
+      token,
+    )
+    const firstTokenAmountConfig = tokenAmountConfigs[0]
+    assert(firstTokenAmountConfig, 'No token amount config found')
 
-  const tokenPriceConfig = configMapping.getPriceConfigFromAmountConfig(
-    firstTokenAmountConfig,
-  )
+    const adjustedRange = getAdjustedRange(
+      range,
+      resolution,
+      firstTokenAmountConfig.sinceTimestamp,
+      targetTimestamp,
+    )
 
-  const timestamps = generateTimestamps(adjustedRange, resolution)
-  const [tokenAmounts, tokenPrices] = await Promise.all([
-    getTokenAmounts({
-      configurations: tokenAmountConfigs,
-      range: adjustedRange,
-      timestamps,
-    }),
-    getTokenPrices(tokenPriceConfig, adjustedRange, resolution),
-  ])
+    const tokenPriceConfig = configMapping.getPriceConfigFromAmountConfig(
+      firstTokenAmountConfig,
+    )
 
-  const decimals = firstTokenAmountConfig.decimals
-  const data: [number, number, number][] = []
-  for (const timestamp of timestamps) {
-    const amount = tokenAmounts.amounts[timestamp.toNumber()]
-    const price = tokenPrices.prices[timestamp.toNumber()]
-    assert(amount !== undefined && price !== undefined, 'No amount or price')
-    const usdValue = calculateValue({
-      amount,
-      priceUsd: price,
-      decimals,
-    })
-    data.push([
-      timestamp.toNumber(),
-      asNumber(amount, decimals),
-      asNumber(usdValue, 2),
+    const timestamps = generateTimestamps(adjustedRange, resolution)
+    const [tokenAmounts, tokenPrices] = await Promise.all([
+      getTokenAmounts({
+        configurations: tokenAmountConfigs,
+        range: adjustedRange,
+        timestamps,
+      }),
+      getTokenPrices(tokenPriceConfig, adjustedRange, resolution),
     ])
-  }
 
-  return data
-}
+    const decimals = firstTokenAmountConfig.decimals
+    const data: [number, number, number][] = []
+    for (const timestamp of timestamps) {
+      const amount = tokenAmounts.amounts[timestamp.toNumber()]
+      const price = tokenPrices.prices[timestamp.toNumber()]
+      assert(amount !== undefined && price !== undefined, 'No amount or price')
+      const usdValue = calculateValue({
+        amount,
+        priceUsd: price,
+        decimals,
+      })
+      data.push([
+        timestamp.toNumber(),
+        asNumber(amount, decimals),
+        asNumber(usdValue, 2),
+      ])
+    }
+
+    return data
+  },
+  ['token-tvl-chart'],
+  {
+    revalidate: 10 * UnixTime.MINUTE,
+  },
+)
 
 function getMockTokenTvlChartData(params: TokenTvlChartParams): TokenTvlChart {
   const resolution = rangeToResolution(params.range)

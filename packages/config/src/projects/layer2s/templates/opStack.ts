@@ -66,7 +66,7 @@ export const CELESTIA_DA_PROVIDER: DAProvider = {
 export function DACHALLENGES_DA_PROVIDER(
   daChallengeWindow: string,
   daResolveWindow: string,
-  isNodeAvailable: boolean = false,
+  nodeSourceLink?: string,
   daLayer: DataAvailabilityLayer = DA_LAYERS.EXTERNAL,
 ): DAProvider {
   return {
@@ -75,7 +75,7 @@ export function DACHALLENGES_DA_PROVIDER(
     technology: TECHNOLOGY_DATA_AVAILABILITY.DACHALLENGES_OFF_CHAIN(
       daChallengeWindow,
       daResolveWindow,
-      isNodeAvailable,
+      nodeSourceLink,
     ),
     bridge: DA_BRIDGES.NONE_WITH_DA_CHALLENGES,
   }
