@@ -1,5 +1,6 @@
 import { daLayers } from '@l2beat/config/build/src/projects/other/da-beat/index'
 import { notFound } from 'next/navigation'
+import { env } from 'process'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/highlightable-link-context'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/desktop-project-navigation'
 import { MobileProjectNavigation } from '~/components/projects/navigation/mobile-project-navigation'
@@ -18,6 +19,7 @@ interface Props {
 
 export const revalidate = 600
 export async function generateStaticParams() {
+  if (env.VERCEL_ENV === 'preview') return []
   return daLayers.flatMap((layer) =>
     layer.bridges.map((bridge) => ({
       layer: layer.display.slug,

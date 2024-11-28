@@ -1,6 +1,7 @@
 import { type Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { ContentWrapper } from '~/components/content-wrapper'
+import { env } from '~/env'
 import { getVerifiers } from '~/server/features/zk-catalog/get-verifiers'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ZK_CATALOG_ASK_FOR_VERIFICATION_LINK } from '../_utils/get-zk-catalog-view'
@@ -16,6 +17,7 @@ interface Props {
 
 export const revalidate = 3600
 export async function generateStaticParams() {
+  if (env.VERCEL_ENV === 'preview') return []
   return zkCatalogProjects.map((project) => ({
     project: project.display.slug,
   }))

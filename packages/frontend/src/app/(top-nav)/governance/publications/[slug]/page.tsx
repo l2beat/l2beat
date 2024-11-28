@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
+import { env } from 'process'
 import { ContentWrapper } from '~/components/content-wrapper'
 import { FullPageHeader } from '~/components/full-page-header'
 import { Article } from '~/components/markdown/article'
@@ -20,8 +21,9 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  const publications = getCollection('publications')
+  if (env.VERCEL_ENV === 'preview') return []
 
+  const publications = getCollection('publications')
   return publications.map((publication) => ({
     slug: publication.id,
   }))
