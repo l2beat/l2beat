@@ -5,6 +5,7 @@ import { ContentWrapper } from '~/components/content-wrapper'
 import { FullPageHeader } from '~/components/full-page-header'
 import { Article } from '~/components/markdown/article'
 import { getCollection, getCollectionEntry } from '~/content/get-collection'
+import { env } from '~/env'
 import { roboto_serif } from '~/fonts'
 import { cn } from '~/utils/cn'
 import { getDefaultMetadata } from '~/utils/metadata'
@@ -12,7 +13,6 @@ import {
   type GovernancePublicationEntry,
   getGovernancePublicationEntry,
 } from '../../_utils/get-governance-publication-entry'
-import { env } from '~/env'
 
 interface Props {
   params: Promise<{
