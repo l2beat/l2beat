@@ -44,6 +44,7 @@
   sequencerFailure: {
     definingMetric: 1209600
     description: "Users can force the sequencer to include a trade or a withdrawal transaction by submitting a request through L1. If the sequencer censors or is down for 14d, users can use the exit hatch to withdraw their funds. Users are required to find a counterparty for the trade by out of system means."
+    secondLine: "14d delay"
     sentiment: "good"
     sources: [
       {
@@ -58,6 +59,7 @@
   stateValidation: {
     definingMetric: Infinity
     description: "STARKs are zero knowledge proofs that ensure state correctness."
+    secondLine: undefined
     sentiment: "good"
     sources: [
       {

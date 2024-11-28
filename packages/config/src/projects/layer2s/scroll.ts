@@ -21,6 +21,7 @@ import {
   addSentimentToDataAvailability,
 } from '../../common'
 import { ESCROW } from '../../common/escrow'
+import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { PROOFS } from '../other/zk-catalog/common/proofSystems'
@@ -53,6 +54,7 @@ const isEnforcedTxGatewayPaused = discovery.getContractValue<boolean>(
 )
 
 const upgradeDelay = 0
+const finalizationPeriod = 0
 
 export const scroll: Layer2 = {
   type: 'layer2',
@@ -112,8 +114,7 @@ export const scroll: Layer2 = {
             'Transaction data batches that have not yet been proven can be reverted.',
         },
       },
-
-      finalizationPeriod: 0,
+      finalizationPeriod,
     },
   },
   stage: getStage({
@@ -328,6 +329,7 @@ export const scroll: Layer2 = {
   riskView: {
     stateValidation: {
       ...STATE_ZKP_SN,
+      secondLine: formatExecutionDelay(finalizationPeriod),
       sources: [
         {
           contract: 'ScrollChain',

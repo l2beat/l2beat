@@ -950,7 +950,7 @@
         {
           "permission": "sequence",
           "target": "0xF75206c49c1694594E3e69252E519434f1579876",
-          "description": "can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
         }
       ]
     },
@@ -1652,7 +1652,7 @@
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
     "orbitstack/RollupEventInbox": "0x0608b35e1df8a51677a6392869e50b60a1ff7137f71f40bddf83143a5ef640c1",
     "orbitstack/RollupProxy_fastConfirm": "0x91c9d3536cb44155adbb51ee7d5712c88dab3fed8850fde3967215b257571df5",
-    "orbitstack/SequencerInbox": "0x58bf3ad8ac9dc1181ff793e330641c545ee2d9558fce65d2ee39d483c2490494",
+    "orbitstack/SequencerInbox": "0x88542722d1f831549b0b3c814ee5d973fed5780765ae1a05e607dffef0df3154",
     "orbitstack/UpgradeExecutor": "0xa8c2617950ce46d982abd852226ebcc1aacaf9c8c7daeda793b53a790eced777"
   }
 }

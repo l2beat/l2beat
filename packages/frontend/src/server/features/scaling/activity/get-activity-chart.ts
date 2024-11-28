@@ -4,6 +4,7 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getRangeWithMax } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generate-timestamps'
+import { aggregateActivityRecords } from './utils/aggregate-activity-records'
 import { getActivityProjects } from './utils/get-activity-projects'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import { getSyncStatus } from './utils/get-sync-status'
@@ -15,7 +16,7 @@ import { type ActivityTimeRange } from './utils/range'
 
 /**
  * A function that computes values for chart data of the activity over time.
- * @returns [timestamp, projectsTxCount, ethereumTxCount][] - all numbers
+ * @returns [timestamp, projectsTxCount, ethereumTxCount, projectsUopsCount, ethereumUopsCount][] - all numbers
  */
 export function getActivityChart(
   ...parameters: Parameters<typeof getCachedActivityChartData>
@@ -57,59 +58,20 @@ export const getCachedActivityChartData = cache(
       }
     }
 
-    const startTimestamp = entries.find(
-      (e) => e.projectId !== ProjectId.ETHEREUM && e.count > 0,
-    )?.timestamp
-
-    if (!startTimestamp) {
+    const aggregatedEntries = aggregateActivityRecords(entries)
+    if (!aggregatedEntries || Object.values(aggregatedEntries).length === 0) {
       return { data: [], syncStatus }
     }
 
-    const startIndex = entries.findIndex(
-      (e) => e.timestamp.toNumber() === startTimestamp.toNumber(),
-    )
-
-    const aggregatedEntries = entries.slice(startIndex).reduce(
-      (acc, entry) => {
-        const timestamp = entry.timestamp.toNumber()
-        const isEthereum = entry.projectId === ProjectId.ETHEREUM
-
-        if (!acc[timestamp]) {
-          acc[timestamp] = {
-            timestamp: entry.timestamp,
-            count: 0,
-            ethereumCount: 0,
-            uopsCount: 0,
-            ethereumUopsCount: 0,
-          }
-        }
-
-        if (isEthereum) {
-          acc[timestamp].ethereumCount += entry.count
-          acc[timestamp].ethereumUopsCount += entry.uopsCount ?? entry.count
-        } else {
-          acc[timestamp].count += entry.count
-          acc[timestamp].uopsCount += entry.uopsCount ?? entry.count
-        }
-
-        return acc
-      },
-      {} as Record<
-        number,
-        {
-          timestamp: UnixTime
-          count: number
-          ethereumCount: number
-          uopsCount: number
-          ethereumUopsCount: number
-        }
-      >,
+    const startTimestamp = Math.min(
+      ...Object.keys(aggregatedEntries).map(Number),
     )
     const timestamps = generateTimestamps(
-      [startTimestamp, adjustedRange[1]],
+      [new UnixTime(startTimestamp), adjustedRange[1]],
       'daily',
     )
-    const result: [number, number, number, number, number][] = timestamps.map(
+
+    const data: [number, number, number, number, number][] = timestamps.map(
       (timestamp) => {
         const entry = aggregatedEntries[timestamp.toNumber()]
         if (!entry) {
@@ -124,9 +86,8 @@ export const getCachedActivityChartData = cache(
         ]
       },
     )
-
     return {
-      data: result,
+      data,
       syncStatus,
     }
   },

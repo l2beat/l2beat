@@ -160,10 +160,7 @@ export function BasicTable<T extends BasicTableEntry>(
           })}
         </TableHeaderRow>
         <TableHeaderRow>
-          <th
-            colSpan={100}
-            className="mx-0.5 h-0.5 rounded-full bg-surface-tertiary"
-          />
+          <th colSpan={100} className="mx-0.5 h-0.5 rounded-full bg-divider" />
         </TableHeaderRow>
       </TableHeader>
       <TableBody>

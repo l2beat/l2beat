@@ -14,6 +14,7 @@ import {
   RISK_VIEW,
   addSentimentToDataAvailability,
 } from '../../common'
+import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import { Badge } from '../badges'
@@ -26,6 +27,7 @@ const discovery = new ProjectDiscovery('zkspace')
 const upgradeDelay = HARDCODED.ZKSPACE.UPGRADE_NOTICE_PERIOD
 const upgradeDelayString = formatSeconds(upgradeDelay)
 const forcedWithdrawalDelay = HARDCODED.ZKSPACE.PRIORITY_EXPIRATION_PERIOD
+const finalizationPeriod = 0
 
 const upgradeability = {
   upgradableBy: ['zkSpace Admin'],
@@ -68,7 +70,7 @@ export const zkspace: Layer2 = {
         'ZK Space is a ZK rollup based on ZKsync Lite’s code base that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
     },
     finality: {
-      finalizationPeriod: 0,
+      finalizationPeriod,
     },
   },
   config: {
@@ -122,6 +124,7 @@ export const zkspace: Layer2 = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
+      secondLine: formatExecutionDelay(finalizationPeriod),
       sources: [
         {
           contract: 'Verifier',
