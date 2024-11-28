@@ -4,14 +4,12 @@ import {
   TemplateService,
   getChainConfig,
 } from '@l2beat/discovery'
-import { DiscoveryOutput } from '@l2beat/discovery-types'
 import { keyInYN } from 'readline-sync'
+import { discoveryNeedsRefresh } from '../src/tools/discoveryNeedsRefresh'
 import { discoverAndUpdateDiffHistory } from './discoveryWrapper'
 
 const configReader = new ConfigReader()
 const templateService = new TemplateService()
-const allTemplateHashes = templateService.getAllTemplateHashes()
-const allShapeHashes = templateService.getAllShapeHashes()
 
 void main().catch((e) => {
   console.log(e)
@@ -42,7 +40,7 @@ async function main() {
     const discovery = configReader.readDiscovery(config.name, config.chain)
     const needsRefreshReason = refreshAll
       ? '--all flag was provided'
-      : discoveryNeedsRefresh(discovery, config)
+      : discoveryNeedsRefresh(discovery, config, templateService)
     if (needsRefreshReason !== undefined) {
       toRefresh.push({
         config,
@@ -72,63 +70,5 @@ async function main() {
         })
       }
     }
-  }
-}
-
-// returns reason or undefined
-function discoveryNeedsRefresh(
-  discovery: DiscoveryOutput,
-  config: DiscoveryConfig,
-): string | undefined {
-  for (const contract of discovery.contracts) {
-    if (contract.sourceHashes === undefined) {
-      continue
-    }
-    const hashes =
-      contract.sourceHashes.length === 1
-        ? contract.sourceHashes
-        : contract.sourceHashes.slice(1)
-
-    if (hashes.length > 1) {
-      // NOTE(radomski): Diamonds don't really work well with templates right now
-      continue
-    }
-
-    if (contract.template !== undefined) {
-      if (
-        allShapeHashes[contract.template].length > 0 &&
-        config.overrides.get(contract.address).extends === undefined &&
-        !allShapeHashes[contract.template]
-          .map((h) => h.toString())
-          .includes(hashes[0])
-      ) {
-        return 'A contract which currently has a template, no longer matches that template'
-      }
-    } else {
-      if (
-        Object.values(allShapeHashes)
-          .flatMap((h) => h.toString())
-          .includes(hashes[0])
-      ) {
-        return 'A contract which currently does not have a template matches a template'
-      }
-    }
-  }
-
-  if (discovery.configHash !== config.hash) {
-    return 'project config or used template has changed'
-  }
-
-  const outdatedTemplates = []
-  for (const [templateId, templateHash] of Object.entries(
-    discovery.usedTemplates,
-  )) {
-    if (templateHash !== allTemplateHashes[templateId]) {
-      outdatedTemplates.push(templateId)
-    }
-  }
-
-  if (outdatedTemplates.length > 0) {
-    return `template configs have changed: ${outdatedTemplates.join(', ')}`
   }
 }

@@ -1,3 +1,59 @@
+Generated with discovered.json: 0x6b4451f52fc53753b06a5e6c2b586009711ccf1c
+
+# Diff at Wed, 27 Nov 2024 16:31:37 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@52044f8d0f05b06186da6190067676efd0c6048e block: 43367152
+- current block number: 43367152
+
+## Description
+
+Config related change. A ProxyAdmin template was matched for EraProxyAdmin.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 43367152 (main branch discovery), not current.
+
+```diff
+    contract EraOwner (0x3334552599C9aA1FE08CfF276A02033FF37646ca) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"upgrade","target":"0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A"}
+      receivedPermissions.0.target:
+-        "0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A"
++        "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08"
+      receivedPermissions.0.via:
++        [{"address":"0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98"}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98"}]
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98"
++        "0x3334552599C9aA1FE08CfF276A02033FF37646ca"
+      issuedPermissions.0.via.0:
++        {"address":"0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98","delay":0}
+    }
+```
+
+```diff
+    contract EraProxyAdmin (0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08"}]
+    }
+```
+
 Generated with discovered.json: 0x24ef1f4f9192ab0f1eadd05220d2f9b51b2d399c
 
 # Diff at Mon, 21 Oct 2024 11:15:36 GMT:
