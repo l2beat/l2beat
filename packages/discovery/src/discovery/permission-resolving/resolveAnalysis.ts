@@ -39,10 +39,10 @@ export function resolveAnalysis(analyses: Analysis[]): ResolvedPermission[] {
     }
 
     for (const entry of analysis.combinedMeta.permissions ?? []) {
-        const entryAddress = entry.target
-        if (entryAddress === EthereumAddress.ZERO) {
-            continue
-        }
+      const entryAddress = entry.target
+      if (entryAddress === EthereumAddress.ZERO) {
+        continue
+      }
 
       graph[entryAddress.toString()] ??= {
         address: entry.target,
