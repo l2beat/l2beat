@@ -44,7 +44,7 @@ export const scalingTvlColumns = [
                   external: data.breakdown.external,
                   native: data.breakdown.native,
                 }}
-                change={data.totalChange}
+                change={data.change.total}
               />
             )
           },

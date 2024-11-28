@@ -42,11 +42,18 @@ const getCached7dTokenBreakdown = cache(
           breakdown.native + breakdown.canonical + breakdown.external
         const oldTotal =
           oldBreakdown.native + oldBreakdown.canonical + oldBreakdown.external
+        const associatedTotal =
+          breakdown.associated.native +
+          breakdown.associated.canonical +
+          breakdown.associated.external
+        const oldAssociatedTotal =
+          oldBreakdown.associated.native +
+          oldBreakdown.associated.canonical +
+          oldBreakdown.associated.external
         return [
           projectId,
           {
             total: total / 100,
-            totalChange: calculatePercentageChange(total, oldTotal),
             breakdown: {
               native: breakdown.native / 100,
               canonical: breakdown.canonical / 100,
@@ -58,6 +65,7 @@ const getCached7dTokenBreakdown = cache(
               },
             },
             change: {
+              total: calculatePercentageChange(total, oldTotal),
               native: calculatePercentageChange(
                 breakdown.native,
                 oldBreakdown.native,
@@ -69,6 +77,24 @@ const getCached7dTokenBreakdown = cache(
               external: calculatePercentageChange(
                 breakdown.external,
                 oldBreakdown.external,
+              ),
+            },
+            associatedTokensExcludedChange: {
+              total: calculatePercentageChange(
+                total - associatedTotal,
+                oldTotal - oldAssociatedTotal,
+              ),
+              native: calculatePercentageChange(
+                breakdown.native - breakdown.associated.native,
+                oldBreakdown.native - oldBreakdown.associated.native,
+              ),
+              canonical: calculatePercentageChange(
+                breakdown.canonical - breakdown.associated.canonical,
+                oldBreakdown.canonical - oldBreakdown.associated.canonical,
+              ),
+              external: calculatePercentageChange(
+                breakdown.external - breakdown.associated.external,
+                oldBreakdown.external - oldBreakdown.associated.external,
               ),
             },
           },
@@ -101,7 +127,6 @@ function getMockTvlBreakdownData(): SevenDayTvlBreakdown {
         project.id,
         {
           total: 60,
-          totalChange: 0.4,
           breakdown: {
             canonical: 30,
             native: 20,
@@ -113,9 +138,16 @@ function getMockTvlBreakdownData(): SevenDayTvlBreakdown {
             },
           },
           change: {
+            total: 0.4,
             canonical: 0.5,
             native: 0.25,
             external: 0.25,
+          },
+          associatedTokensExcludedChange: {
+            total: 0.3,
+            canonical: 0.4,
+            native: 0.15,
+            external: 0.15,
           },
         },
       ]),
