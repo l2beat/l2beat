@@ -87,9 +87,10 @@ export const HotShotLightClient = {
   permissions: {
     ethereum: [],
   },
-  requiredMembers: 0, // currently 0 since threshold is not enforced
+  requiredMembers: 67, // 2/3 + 1
   membersCount: 100, // max allowed node operators
   knownMembers: [
+    // key mapping: https://docs.google.com/spreadsheets/d/1GB9HYE7T25QLJQoa2TuA4c43oHk-t8uWkychRNuMcpg/edit?gid=0#gid=0
     {
       external: true,
       name: '01node Validator',

@@ -52,11 +52,11 @@ export const espressoDA: DaLayer = {
     - **Cocoa**: Uploads the full data to a content delivery network (CDN). \  
 
       
-    Once nodes receive and store the data, they return votes to the proposer. Strong votes are votes from nodes storing the full data, while normal votes are votes from nodes storing erasure-coded shares of the data.
+    Once nodes receive and store the data, they return votes to the proposer. DAVotes are votes from committee nodes storing the full data, while QuorumVotes are votes from nodes storing erasure-coded shares of the data.
     A DA certificate consists of two components, the retrievability certificate and the optimistic DAC certificate:
 
-    - **Retrievability Certificate**: Formed when the DA leader collects 1/3 + 1  strong votes either from committee nodes or regular nodes, or 1/3 + m normal votes, where ( m ) is the number of VID shares into which the block was split.
-    - **Optimistic DAC Certificate**: Formed when the DA leader gathers 2*(S - T) + 1 strong votes from the DA committee, where S represents the committee size and T the threshold for the committee. 
+    - **Retrievability Certificate**: Formed when the DA leader collects 1/3 + 1  DAVotes either from committee nodes, or 1/3 + m QuorumVotes, where ( m ) is the number of VID shares into which the block was split.
+    - **Optimistic DAC Certificate**: Formed when the DA leader gathers 2*(S - T) + 1 DAVotes from the DA committee, where S represents the committee size and T the threshold for the committee. Currenlty, the committee size is 21 members, so the threshold is 15 signatures.
 
     Once the DAC is formed, the DA leader stops broadcasting data to the nodes.
 
