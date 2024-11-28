@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
-import { env } from 'process'
 import { ContentWrapper } from '~/components/content-wrapper'
 import { FullPageHeader } from '~/components/full-page-header'
 import { Article } from '~/components/markdown/article'
@@ -13,6 +12,7 @@ import {
   type GovernancePublicationEntry,
   getGovernancePublicationEntry,
 } from '../../_utils/get-governance-publication-entry'
+import { env } from '~/env'
 
 interface Props {
   params: Promise<{

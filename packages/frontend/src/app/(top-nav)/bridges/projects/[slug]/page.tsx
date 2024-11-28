@@ -1,6 +1,5 @@
 import { bridges } from '@l2beat/config/build/src/projects/bridges'
 import { notFound } from 'next/navigation'
-import { env } from 'process'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/highlightable-link-context'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/desktop-project-navigation'
 import { MobileProjectNavigation } from '~/components/projects/navigation/mobile-project-navigation'
@@ -10,6 +9,7 @@ import { getBridgesProjectEntry } from '~/server/features/bridges/project/get-br
 import { HydrateClient } from '~/trpc/server'
 import { getProjectMetadata } from '~/utils/metadata'
 import { BridgesProjectSummary } from './_components/bridges-project-summary'
+import { env } from '~/env'
 
 export const revalidate = 600
 export async function generateStaticParams() {

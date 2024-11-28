@@ -1,6 +1,5 @@
 import { daLayers } from '@l2beat/config/build/src/projects/other/da-beat/index'
 import { notFound } from 'next/navigation'
-import { env } from 'process'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/highlightable-link-context'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/desktop-project-navigation'
 import { MobileProjectNavigation } from '~/components/projects/navigation/mobile-project-navigation'
@@ -9,6 +8,7 @@ import { ProjectDetails } from '~/components/projects/project-details'
 import { getDaProjectEntry } from '~/server/features/data-availability/project/get-da-project-entry'
 import { getProjectMetadata } from '~/utils/metadata'
 import { DaProjectSummary } from '../_components/da-project-summary'
+import { env } from '~/env'
 
 interface Props {
   params: Promise<{
