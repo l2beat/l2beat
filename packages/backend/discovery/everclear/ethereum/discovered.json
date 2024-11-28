@@ -1,7 +1,7 @@
 {
   "name": "everclear",
   "chain": "ethereum",
-  "blockNumber": 21285555,
+  "blockNumber": 21285826,
   "configHash": "0x9ca2a8b70cc18aa3574803df17cb1bf823f53d2e1b843bf217847159e6137dcc",
   "contracts": [
     {

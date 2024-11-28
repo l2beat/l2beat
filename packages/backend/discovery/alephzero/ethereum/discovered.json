@@ -1,7 +1,7 @@
 {
   "name": "alephzero",
   "chain": "ethereum",
-  "blockNumber": 21285708,
+  "blockNumber": 21285821,
   "configHash": "0x1cf44bfc5d773742e42816e3389638cd95c760b39cc12694f1c56a1846d66c38",
   "contracts": [
     {

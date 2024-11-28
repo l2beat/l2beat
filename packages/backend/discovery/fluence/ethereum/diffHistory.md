@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x2affda6b62b9dc86ba1a5a5ac7715e8d8c9b90de
+Generated with discovered.json: 0xdffab1f8db92b29c484eba8f9145ce0295b925df
 
-# Diff at Thu, 28 Nov 2024 10:51:55 GMT:
+# Diff at Thu, 28 Nov 2024 11:13:59 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@cba708dac9336030203b425721a33c9db2b14313 block: 21270981
-- current block number: 21285719
+- comparing to: main@4e0645053ebfcfcef2e7fd8c8410bad53373a3c4 block: 21270981
+- current block number: 21285829
 
 ## Description
 
@@ -118,7 +118,7 @@ Gelato MS added as second executor.
  2 files changed, 988 insertions(+)
 ```
 
-Generated with discovered.json: 0xa38577f5ddfc25fccd18a07643350d31ac7b6699
+Generated with discovered.json: 0x23eeabd5772a47856f34b6f15686a7c5ec0c5b4f
 
 # Diff at Tue, 26 Nov 2024 09:19:11 GMT:
 

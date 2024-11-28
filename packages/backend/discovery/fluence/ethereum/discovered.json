@@ -1,7 +1,7 @@
 {
   "name": "fluence",
   "chain": "ethereum",
-  "blockNumber": 21285719,
+  "blockNumber": 21285829,
   "configHash": "0x9d816d3fa4d275a73ace500776da83a8646aca1f31a7ff61dfa8a3009a826ae6",
   "contracts": [
     {
