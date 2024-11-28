@@ -8103,7 +8103,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Chainlink CCIP"
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
           }
         ]
       }
