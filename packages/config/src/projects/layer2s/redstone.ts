@@ -49,7 +49,7 @@ export const redstone: Layer2 = opStackL2({
   daProvider: DACHALLENGES_DA_PROVIDER(
     daChallengeWindow,
     daResolveWindow,
-    true,
+    'https://github.com/latticexyz/redstone',
     DA_LAYERS.REDSTONE_DA,
   ),
   discoveryDrivenData: true,
