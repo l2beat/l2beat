@@ -51,13 +51,6 @@
         "0x35fac1a306db1eec90fef4226afce6dcef2eee934335f4d2f51625a68f10f273"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0x0000000000000000000000000000000000000000",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1725464663,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
@@ -118,13 +111,6 @@
         "0x1fa3aa6d12bbe8ca52b062a380218f557f1d37748cca158f023af1bc7a0e278b"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0x0000000000000000000000000000000000000000",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getNextOutgoingMessageNonce",
         "totalDeposited",
@@ -213,13 +199,6 @@
         "0x183fd58e0c8aaff660b72b7753154fcb311db3b7932357b1a8a1416fdd53caf0"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0x0000000000000000000000000000000000000000",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1724767847,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
@@ -272,7 +251,7 @@
   "eoas": [
     {
       "address": "0x0000000000000000000000000000000000000000",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "target": "0xa4cA04d02bfdC3A2DF56B9b6994520E69dF43F67"
