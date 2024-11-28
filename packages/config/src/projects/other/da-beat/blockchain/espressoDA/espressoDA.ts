@@ -56,8 +56,9 @@ export const espressoDA: DaLayer = {
     A DA certificate consists of two components, the retrievability certificate and the optimistic DAC certificate:
 
     - **Retrievability Certificate**: Formed when the DA leader collects 1/3 + m QuorumVotes, where ( m ) is the number of VID shares into which the block was split.
-    - **Optimistic DAC Certificate**: Formed when the DA leader gathers 2/3 + 1 DAVotes from the DA committee. Currently, the committee size is 21 members, so the threshold is 15 signatures.
+    - **Optimistic DAC Certificate**: Formed when the DA leader gathers 2/3 + 1 DAVotes from the DA committee. Currently, the committee size is 21 members, so the threshold is 15 signatures. \  
 
+    
     Once the DAC is formed, the DA leader stops broadcasting data to the nodes.
 
     ## L2s Data Availability
