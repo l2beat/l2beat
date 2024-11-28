@@ -8,7 +8,7 @@ import { orbitStackL2 } from './templates/orbitStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('kinto')
-const l2discovery = new ProjectDiscovery('kinto', 'kinto')
+const _l2discovery = new ProjectDiscovery('kinto', 'kinto')
 
 // Validators: https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/kinto-validators
 // SC: https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/security-council

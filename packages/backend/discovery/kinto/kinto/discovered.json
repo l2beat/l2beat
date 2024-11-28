@@ -1,8 +1,8 @@
 {
   "name": "kinto",
   "chain": "kinto",
-  "blockNumber": 542579,
-  "configHash": "0xab1a4d97fe81ab9c6e5995667dd867be3680f8925a2fd4dc1d9a2ef39dd7b168",
+  "blockNumber": 542592,
+  "configHash": "0x1a0ad6168dcd8c80fdee7b606b80a5243d0421b74fb5407bd752b65a460fa72e",
   "contracts": [
     {
       "name": "BridgedKinto",
@@ -230,7 +230,7 @@
         "appRegistry": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
         "COST_OF_POST": 200000,
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
-        "getDeposit": "27365615258519734604",
+        "getDeposit": "27366004806653734604",
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "MAX_COST_OF_PREVERIFICATION": 4000000,
         "MAX_COST_OF_VERIFICATION": 530000,
@@ -354,7 +354,7 @@
         "capacitorFactory__": "0x35B1Ca86D564e69FA38Ee456C12c78A62e78Aa4c",
         "chainSlug": 7887,
         "executionManager__": "0xc8a4D2fd77c155fd52e65Ab07F337aBF84495Ead",
-        "globalMessageCount": 4486,
+        "globalMessageCount": 4487,
         "hasher__": "0x9652Dd5e1388CA80712470122F27be0d1c33B48b",
         "nominee": "0x0000000000000000000000000000000000000000",
         "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
@@ -883,7 +883,7 @@
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
         "rewardsDistributor": "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA",
-        "totalWallets": 30207
+        "totalWallets": 30210
       },
       "derivedName": "KintoWalletFactory"
     },
@@ -1027,15 +1027,15 @@
         "$upgradeCount": 7,
         "bonusAmount": 0,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getTotalLimit": "338153583792913604897836",
-        "getUnclaimedLimit": "194782530032615161258879",
+        "getTotalLimit": "338192799753646320481219",
+        "getUnclaimedLimit": "194818745993347876842262",
         "KINTO": "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87",
         "NEW_USER_REWARD": "1000000000000000000",
         "NEW_USER_REWARD_TIMESTAMP": 1729785402,
         "quarters": 40,
         "root": "0xc8521b39dab96ca415e2b4d944345b737d3fe18540f6e6ff7c1b17b68acf8afe",
         "startTime": 1718690400,
-        "totalClaimed": "143371053760298443638957",
+        "totalClaimed": "143374053760298443638957",
         "totalTokens": "4000000000000000000000000",
         "UPDATER_ROLE": "0x56730d7d989818781b81ff2da8c4c452dd13af73dfb8c4f4723e21d17335fd24",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
@@ -1129,7 +1129,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "accesscontrol": {
+        "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": ["0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"]
@@ -1175,7 +1175,7 @@
           "https://kinto.xyz/api/v1/nft-kinto-id/3",
           "https://kinto.xyz/api/v1/nft-kinto-id/4"
         ],
-        "totalSupply": 30353,
+        "totalSupply": 30356,
         "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3",
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
       },

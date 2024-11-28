@@ -1,13 +1,13 @@
-Generated with discovered.json: 0xe049e94d49cf50bc75c6910c4ec74ae7abb4da58
+Generated with discovered.json: 0x21f441d6751e8ff431614fc1e0884fa511fea846
 
-# Diff at Thu, 28 Nov 2024 12:26:21 GMT:
+# Diff at Thu, 28 Nov 2024 12:52:13 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 542579
+- current block number: 542592
 
 ## Description
 
-Initial discovery for Kinto on Kinto: Focusing on the AppRegistry, KintoID and smartwallet 'KintoWallet'.
+Initial discovery for Kinto on Kinto: Focusing on the AppRegistry, KintoID and 'KintoWallet' smartwallet.
 
 ## Initial discovery
 

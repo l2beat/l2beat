@@ -65,7 +65,7 @@
       "ignoreMethods": ["proxiableUUID", "tokenByIndex"],
       "ignoreInWatchMode": ["lastMonitoredAt", "totalSupply"],
       "fields": {
-        "accesscontrol": {
+        "accessControl": {
           "handler": {
             "type": "accessControl"
           }
