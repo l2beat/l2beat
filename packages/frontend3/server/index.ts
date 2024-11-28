@@ -1,4 +1,6 @@
 import { Application } from './Application'
+import { getConfig } from './config/getConfig'
 
-const app = new Application()
+const config = getConfig()
+const app = new Application(config)
 app.start()

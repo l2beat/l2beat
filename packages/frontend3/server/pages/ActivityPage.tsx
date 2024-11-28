@@ -1,12 +1,8 @@
 import { Page } from '../components/Page'
+import { ActivityProject } from '../services/ActivityService'
 
 interface Props {
-  projects: {
-    id: string
-    name: string
-    currentTps: number
-    maxTps: number
-  }[]
+  projects: ActivityProject[]
 }
 
 export function ActivityPage(props: Props) {
@@ -15,19 +11,19 @@ export function ActivityPage(props: Props) {
       <table>
         <thead>
           <tr>
-            <td>#</td>
-            <td>Name</td>
-            <td>TPS</td>
-            <td>Max TPS</td>
+            <td className="px-2 py-1 text-left">#</td>
+            <td className="px-2 py-1 text-left">Name</td>
+            <td className="px-2 py-1 text-right">TPS</td>
+            <td className="px-2 py-1 text-right">Max TPS</td>
           </tr>
         </thead>
         <tbody>
           {props.projects.map((project, i) => (
             <tr key={project.id}>
-              <td>{i + 1}</td>
-              <td>{project.name}</td>
-              <td>{project.currentTps}</td>
-              <td>{project.maxTps}</td>
+              <td className="px-2 py-1">{i + 1}</td>
+              <td className="px-2 py-1">{project.name}</td>
+              <td className="px-2 py-1 text-right">{project.currentTps}</td>
+              <td className="px-2 py-1 text-right">{project.maxTps}</td>
             </tr>
           ))}
         </tbody>
