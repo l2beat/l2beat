@@ -3,12 +3,12 @@ import { ConfigReader, TemplateService } from '@l2beat/discovery'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { isEqual } from 'lodash'
+import { discoveryNeedsRefresh } from '../../../tools/discoveryNeedsRefresh'
 import { getDiffHistoryHash, getDiscoveryHash } from '../utils/hashing'
 
 describe('discovery config.jsonc', () => {
   const configReader = new ConfigReader()
   const templateService = new TemplateService()
-  const allTemplateHashes = templateService.getAllTemplateHashes()
 
   const chainConfigs = configReader
     .readAllChains()
@@ -136,50 +136,20 @@ describe('discovery config.jsonc', () => {
   })
 
   it('committed discovery config hash, template hashes and shapeFilesHash are up to date', () => {
-    const outdatedConfigHashes: string[] = []
-    const outdatedTemplateHashes: string[] = []
     for (const configs of chainConfigs ?? []) {
       for (const c of configs) {
         const discovery = configReader.readDiscovery(c.name, c.chain)
 
-        // Disable this check because it is too strict
-        // and soon, with new formatter and 1-to-1 shape comparison,
-        // it will not be necessary anymore.
-        //
-        // assert(
-        //   discovery.shapeFilesHash === shapeFilesHash,
-        //   `Looks like you have added/moved/removed/modified shape files. This requires refreshing discovery of all projects. Run "pnpm refresh-discovery"`,
-        // )
-
-        const outdatedTemplates = []
-        for (const [templateId, templateHash] of Object.entries(
-          discovery.usedTemplates,
-        )) {
-          if (templateHash !== allTemplateHashes[templateId]) {
-            outdatedTemplates.push(templateId)
-          }
-        }
-        if (outdatedTemplates.length > 0) {
-          outdatedTemplateHashes.push(
-            `${c.chain}-${c.name} (${outdatedTemplates.join(', ')})`,
-          )
-        }
-        if (discovery.configHash !== c.hash) {
-          outdatedConfigHashes.push(`${c.chain}-${c.name}`)
-        }
+        const needsDiscoveryReason = discoveryNeedsRefresh(
+          discovery,
+          c,
+          templateService,
+        )
+        assert(
+          needsDiscoveryReason === undefined,
+          `${c.chain}/${c.name} project is outdated: ${needsDiscoveryReason}.\n Run "pnpm refresh-discovery"`,
+        )
       }
-      assert(
-        outdatedConfigHashes.length === 0,
-        `Following projects have outdated hashes (chain-project): ${outdatedConfigHashes.join(
-          ', ',
-        )}. Run "pnpm refresh-discovery"`,
-      )
-      assert(
-        outdatedTemplateHashes.length === 0,
-        `Following projects use outdated templates: ${outdatedTemplateHashes.join(
-          ', ',
-        )}. Run "pnpm refresh-discovery"`,
-      )
     }
   })
 

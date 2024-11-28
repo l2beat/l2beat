@@ -41,6 +41,10 @@ import {
 } from '../../../common'
 import { ChainConfig } from '../../../common/ChainConfig'
 import { subtractOne } from '../../../common/assessCount'
+import {
+  formatChallengePeriod,
+  formatDelay,
+} from '../../../common/formatDelays'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../../discovery/values/hardcoded'
 import { Badge, BadgeId, badges } from '../../badges'
@@ -578,9 +582,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     riskView: {
       stateValidation: {
         ...RISK_VIEW.STATE_NONE,
-        secondLine: `${formatSeconds(
-          FINALIZATION_PERIOD_SECONDS,
-        )} challenge period`,
+        secondLine: formatChallengePeriod(FINALIZATION_PERIOD_SECONDS),
       },
       dataAvailability: {
         ...riskViewDA(daProvider),
@@ -592,13 +594,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
         ],
       },
       exitWindow: {
-        ...RISK_VIEW.EXIT_WINDOW(
-          0,
-          templateVars.discovery.getContractValue<number>(
-            'L2OutputOracle',
-            'FINALIZATION_PERIOD_SECONDS',
-          ),
-        ),
+        ...RISK_VIEW.EXIT_WINDOW(0, FINALIZATION_PERIOD_SECONDS),
         sources: [
           {
             contract: portal.name,
@@ -612,6 +608,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
           // so we assume it to be the same value as in other op stack chains
           HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
         ),
+        secondLine: formatDelay(HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS),
         sources: [
           {
             contract: portal.name,
@@ -700,6 +697,12 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     )
   }
 
+  const FINALIZATION_PERIOD_SECONDS: number =
+    templateVars.discovery.getContractValue<number>(
+      'L2OutputOracle',
+      'FINALIZATION_PERIOD_SECONDS',
+    )
+
   const portal =
     templateVars.portal ?? templateVars.discovery.getContract('OptimismPortal')
   const l2OutputOracle =
@@ -714,7 +717,10 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
   }
 
   const riskView = {
-    stateValidation: RISK_VIEW.STATE_NONE,
+    stateValidation: {
+      ...RISK_VIEW.STATE_NONE,
+      secondLine: formatChallengePeriod(FINALIZATION_PERIOD_SECONDS),
+    },
     dataAvailability: {
       ...riskViewDA(daProvider),
       sources: [
@@ -725,13 +731,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
       ],
     },
     exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(
-        0,
-        templateVars.discovery.getContractValue<number>(
-          'L2OutputOracle',
-          'FINALIZATION_PERIOD_SECONDS',
-        ),
-      ),
+      ...RISK_VIEW.EXIT_WINDOW(0, FINALIZATION_PERIOD_SECONDS),
       sources: [
         {
           contract: portal.name,
@@ -745,6 +745,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
         // so we assume it to be the same value as in other op stack chains
         HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
       ),
+      secondLine: formatDelay(HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS),
       sources: [
         {
           contract: portal.name,

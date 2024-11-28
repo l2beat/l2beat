@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
@@ -57,15 +58,10 @@ export const sanko: Layer3 = orbitStackL3({
   nativeToken: 'DMT',
   associatedTokens: ['DMT'],
   rpcUrl: 'https://mainnet.sanko.xyz',
-  bridge: discovery.getContract('Bridge'),
+  bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  nonTemplateContracts: [
-    discovery.getContractDetails('OrbitProxyOFT1_2', {
-      description:
-        'OFT Adapter contract using the LayerZero v1 AMB for messaging. This contract can mint tokens on Sanko and steal tokens in the canonical bridge escrow. Its security depends on LayerZero v1 security.',
-    }),
-  ],
+  discoveryDrivenData: true,
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       includeInTotal: false,
@@ -75,21 +71,12 @@ export const sanko: Layer3 = orbitStackL3({
         'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
     }),
   ],
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'Sanko Multisig',
-      'Rollup Owner: Can execute upgrades for the entire rollup system via the UpgradeExecutor.',
-    ),
-    ...discovery.getMultisigPermission(
-      'SankoOftMultisig',
-      'Can change security parameters of the DMT token (Sanko gas token) and its OFT (LayerZero) adapters. This includes the permission to mint unlimited tokens or steal tokens in the canonical bridge escrow.',
-    ),
-  ],
   nonTemplateContractRisks: [
     {
       category: 'Funds can be stolen if',
       text: 'the security stack of the whitelisted LayerZero adapter changes or is compromised.',
       isCritical: true,
     },
+    CONTRACTS.UPGRADE_NO_DELAY_RISK,
   ],
 })

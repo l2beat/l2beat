@@ -19,6 +19,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
   getCommittee,
@@ -208,8 +209,12 @@ export const apex: Layer2 = {
       includingSHARPUpgradeDelaySeconds,
       minFreezeGracePeriod,
     ),
-    sequencerFailure:
-      RISK_VIEW.SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL(minFreezeGracePeriod),
+    sequencerFailure: {
+      ...RISK_VIEW.SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL(
+        minFreezeGracePeriod,
+      ),
+      secondLine: formatDelay(minFreezeGracePeriod),
+    },
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.CANONICAL_USDC,

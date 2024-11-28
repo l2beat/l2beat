@@ -1,11 +1,11 @@
 {
   "name": "degen",
   "chain": "base",
-  "blockNumber": 22580502,
-  "configHash": "0x34f65ac78587c73a86da257c0c460cbe87415de33379e44e44e13d162fa538cd",
+  "blockNumber": 22921651,
+  "configHash": "0xbb75fa8ad596810324ed3adb9e13a7652abda66db1bf1d0f01732267faab72a3",
   "contracts": [
     {
-      "name": "Inbox",
+      "name": "ERC20Inbox",
       "address": "0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7",
       "template": "orbitstack/Inbox",
       "sourceHashes": [
@@ -13,6 +13,7 @@
         "0xcb390b491549387c8fcc09fb22fbea7adf54cc74b7247a0c738369ddd7049b92"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "Inbox",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
       "issuedPermissions": [
         {
@@ -48,8 +49,7 @@
         "maxDataSize": 104857,
         "paused": false,
         "sequencerInbox": "0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221"
-      },
-      "derivedName": "ERC20Inbox"
+      }
     },
     {
       "name": "ValidatorUtils",
@@ -77,6 +77,14 @@
       "sourceHashes": [
         "0xdf38c41dfed5147dbd3a1a8d8947ff056a36aa5d6232aa2c5c9dd2b5f4d1ca42"
       ],
+      "description": "The UTB contract serves as an L2<->L3 gateway by integrating with Decent (LayerZero app) to allow bridging and swapping in- and out of Degen L3. This is achieved using external modules (smart contracts) like swappers and bridgers that can be registered in the UTB contract.",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x690f4e2f19717A06E1C146B2dCE68c2d23e36f4c",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1709053969,
       "values": {
         "$immutable": true,
@@ -99,7 +107,7 @@
         "0x50cf57b01499408fa99da27cf0fee96ec30f0d40667d1aa090c442bc80f0636b"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "State batches / commitments get posted here.",
+      "description": "A sequencer (registered in this contract) can submit transaction batches or commitments here.",
       "issuedPermissions": [
         {
           "permission": "sequence",
@@ -139,7 +147,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 31721,
+        "batchCount": 31738,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xa3582189403F67a9CDB1CE0Ac066c954FFd3f205"],
         "bridge": "0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C",
@@ -169,7 +177,7 @@
         "rollup": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 148009,
+        "totalDelayedMessagesRead": 148149,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -177,8 +185,7 @@
         "maxTimeVariation": {
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
-      },
-      "derivedName": "SequencerInbox"
+      }
     },
     {
       "name": "ChallengeManager",
@@ -228,8 +235,7 @@
         "resultReceiver": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
         "sequencerInbox": "0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221",
         "totalChallengesCreated": 0
-      },
-      "derivedName": "ChallengeManager"
+      }
     },
     {
       "name": "OneStepProverMath",
@@ -386,7 +392,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 3,
+        "nonce": 4,
         "VERSION": "1.4.1"
       },
       "derivedName": "SafeL2"
@@ -462,8 +468,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["0x871e290d5447b958131F6d44f915F10032436ee6"]
-      },
-      "derivedName": "UpgradeExecutor"
+      }
     },
     {
       "name": "OneStepProver0",
@@ -564,12 +569,12 @@
         "confirmPeriodBlocks": 241920,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1562,
+        "firstUnresolvedNode": 1578,
         "inbox": "0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7",
         "isERC20Enabled": false,
         "lastStakeBlock": 12468814,
-        "latestConfirmed": 1561,
-        "latestNodeCreated": 1572,
+        "latestConfirmed": 1577,
+        "latestNodeCreated": 1588,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xe63ddb12FBb6211a73F12a4367b10dA0834B82da",
@@ -609,7 +614,6 @@
           "description": "Emitted on createChallenge() in RollupUserLogic."
         }
       },
-      "derivedName": "RollupProxy",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -645,6 +649,14 @@
       "sourceHashes": [
         "0xa6648e861cb9df5f8a3d15fc05c8f842f7f8a47136470f83c5d452f2b4eca4e6"
       ],
+      "description": "As a designated allowed outbox, this contract can access all funds of the canonical bridge escrow. It also interfaces with the LayerZero AMB, giving this external bridge access to the Degen L3 canonical bridge and making canonical bridge security dependent on LayerZero security.",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x3C12B77aE8B7DD1FEB63D1D6a2A819AcdA0a41d2",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1729063511,
       "values": {
         "$immutable": true,
@@ -666,7 +678,7 @@
       "derivedName": "OrbitERC20OFTAdapter"
     },
     {
-      "name": "Outbox",
+      "name": "ERC20Outbox",
       "address": "0xe63ddb12FBb6211a73F12a4367b10dA0834B82da",
       "template": "orbitstack/Outbox",
       "sourceHashes": [
@@ -674,6 +686,7 @@
         "0x3073f29910dee50069a001fb20e58cca3dcc1b3c8da4b91809af2dd356ef0c8c"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "Outbox",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
       "issuedPermissions": [
         {
@@ -713,11 +726,10 @@
         "l2ToL1WithdrawalAmount": 0,
         "OUTBOX_VERSION": 2,
         "rollup": "0xD34F3a11F10DB069173b32d84F02eDA578709143"
-      },
-      "derivedName": "ERC20Outbox"
+      }
     },
     {
-      "name": "Bridge",
+      "name": "ERC20Bridge",
       "address": "0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C",
       "template": "orbitstack/Bridge",
       "sourceHashes": [
@@ -725,6 +737,7 @@
         "0x057de68a7007d55f4394ba6eafb2c802efcaf13583ff9342ea4d0ee3924d9be1"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "Bridge",
       "description": "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
       "issuedPermissions": [
         {
@@ -768,14 +781,13 @@
           "0xe63ddb12FBb6211a73F12a4367b10dA0834B82da",
           "0xDb8E759859058952c34953c8469f464109826e52"
         ],
-        "delayedMessageCount": 148019,
+        "delayedMessageCount": 148150,
         "nativeToken": "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed",
         "rollup": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
         "sequencerInbox": "0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221",
-        "sequencerMessageCount": 31721,
-        "sequencerReportedSubMessageCount": 24612010
-      },
-      "derivedName": "ERC20Bridge"
+        "sequencerMessageCount": 31738,
+        "sequencerReportedSubMessageCount": 24703528
+      }
     },
     {
       "name": "OneStepProverHostIo",
@@ -848,18 +860,34 @@
     { "address": "0x39CF304731099e756204219BF0a8cCc4738dE9dD" },
     {
       "name": "OftAdapterEOA",
-      "address": "0x3C12B77aE8B7DD1FEB63D1D6a2A819AcdA0a41d2"
+      "address": "0x3C12B77aE8B7DD1FEB63D1D6a2A819AcdA0a41d2",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xDb8E759859058952c34953c8469f464109826e52",
+          "description": "Can control the LayerZero OrbitERC20OFTAdapter contract for the DEGEN token and thus potentially steal all funds from the canonical bridge."
+        }
+      ]
     },
     { "address": "0x3f0030b9Ca695Abd41b2B619F3298e172e4FCAD6" },
     { "address": "0x5EABE7f6673311EdD1Ad17A76ce148c2Bb56aF01" },
-    { "address": "0x690f4e2f19717A06E1C146B2dCE68c2d23e36f4c" },
+    {
+      "address": "0x690f4e2f19717A06E1C146B2dCE68c2d23e36f4c",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x43019F8BE1F192587883b67dEA2994999f5a2de2",
+          "description": "directly controls the UTB contract's critical functions like updating all roles and modules."
+        }
+      ]
+    },
     {
       "address": "0xa3582189403F67a9CDB1CE0Ac066c954FFd3f205",
       "receivedPermissions": [
         {
           "permission": "sequence",
           "target": "0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221",
-          "description": "can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
         }
       ]
     },
@@ -1572,7 +1600,7 @@
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
     "orbitstack/RollupEventInbox": "0x0608b35e1df8a51677a6392869e50b60a1ff7137f71f40bddf83143a5ef640c1",
     "orbitstack/RollupProxy": "0x88165b83156dbb5b288912a52adc278d223904d0c933472cb3950a05ba456170",
-    "orbitstack/SequencerInbox": "0x58bf3ad8ac9dc1181ff793e330641c545ee2d9558fce65d2ee39d483c2490494",
+    "orbitstack/SequencerInbox": "0x88542722d1f831549b0b3c814ee5d973fed5780765ae1a05e607dffef0df3154",
     "orbitstack/UpgradeExecutor": "0xa8c2617950ce46d982abd852226ebcc1aacaf9c8c7daeda793b53a790eced777"
   }
 }
