@@ -97,10 +97,10 @@ export interface TrackedTxsConfig {
   readonly uses: {
     readonly liveness: boolean
     readonly l2costs:
-    | {
-      readonly aggregatorEnabled: boolean
-    }
-    | false
+      | {
+          readonly aggregatorEnabled: boolean
+        }
+      | false
   }
 }
 
@@ -133,9 +133,9 @@ export interface ChainTvlConfig {
     readonly providerCallsPerMinute: number
     readonly minBlockTimestamp: UnixTime
     readonly blockExplorerConfig:
-    | EtherscanChainConfig
-    | BlockscoutChainConfig
-    | undefined
+      | EtherscanChainConfig
+      | BlockscoutChainConfig
+      | undefined
     readonly multicallConfig: MulticallConfigEntry[]
   }
 }
@@ -155,9 +155,9 @@ export interface ActivityConfig {
     id: ProjectId
     config: ActivityTransactionConfig
     blockExplorerConfig:
-    | EtherscanChainConfig
-    | BlockscoutChainConfig
-    | undefined
+      | EtherscanChainConfig
+      | BlockscoutChainConfig
+      | undefined
   }[]
 }
 
