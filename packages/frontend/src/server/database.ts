@@ -1,14 +1,22 @@
 import { type Database, createDatabase } from '@l2beat/database'
 import { env } from '~/env'
 
-export const db = !env.MOCK
-  ? createDatabase({
-      application_name: createConnectionTag(),
-      connectionString: env.DATABASE_URL,
-      ssl: ssl(),
-      ...pool(),
-    })
-  : createThrowingProxy()
+let db: Database | undefined
+
+export function getDb() {
+  if (!db) {
+    db = !env.MOCK
+      ? createDatabase({
+          application_name: createConnectionTag(),
+          connectionString: env.DATABASE_URL,
+          ssl: ssl(),
+          ...pool(),
+        })
+      : createThrowingProxy()
+  }
+
+  return db
+}
 
 function createThrowingProxy() {
   return new Proxy({} as Database, {
@@ -20,9 +28,10 @@ function createThrowingProxy() {
   })
 }
 
+// Tag is limited to 63 characters, so it will cut off the excess
 function createConnectionTag() {
-  // Tag is limited to 63 characters, so it will cut off the excess
-  const base = `FE-${toShort()}`
+  const suffix = env.NODE_ENV === 'production' ? 'prod' : 'dev'
+  const base = `FE-${suffix}`
 
   if (env.VERCEL_ENV === 'preview') {
     return `${base}-${env.VERCEL_GIT_COMMIT_REF}-${env.VERCEL_GIT_COMMIT_SHA}`
@@ -50,8 +59,4 @@ function pool() {
     min: 2,
     max: 5,
   }
-}
-
-function toShort() {
-  return env.NODE_ENV === 'production' ? 'prod' : 'dev'
 }

@@ -1,6 +1,6 @@
 import { createPriceId } from '@l2beat/config'
 import { AssetId, CoingeckoId, UnixTime } from '@l2beat/shared-pure'
-import { db } from '~/server/database'
+import { getDb } from '~/server/database'
 
 const ethPriceId = createPriceId({
   type: 'coingecko',
@@ -12,6 +12,7 @@ const ethPriceId = createPriceId({
 })
 
 export async function getEthPrices() {
+  const db = getDb()
   const prices = await db.price.getByConfigIdsInRange(
     [ethPriceId],
     UnixTime.ZERO,

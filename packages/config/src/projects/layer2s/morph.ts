@@ -17,6 +17,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { ESCROW } from '../../common/escrow'
 import { formatChallengePeriod } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
@@ -108,42 +109,21 @@ export const morph: Layer2 = {
         address: EthereumAddress('0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1'),
         sinceTimestamp: new UnixTime(1729307783),
         tokens: '*',
-        source: 'external',
-        bridgedUsing: {
-          bridges: [
-            {
-              name: 'Canonically (external escrow)',
-            },
-          ],
-        },
+        ...ESCROW.CANONICAL_EXTERNAL,
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0xc9045350712A1DCC3A74Eca18Bc985424Bbe7535'),
         sinceTimestamp: new UnixTime(1729308239),
         tokens: ['USDC'],
-        source: 'external',
-        bridgedUsing: {
-          bridges: [
-            {
-              name: 'Canonically (external escrow)',
-            },
-          ],
-        },
+        ...ESCROW.CANONICAL_EXTERNAL,
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x2C8314f5AADa5D7a9D32eeFebFc43aCCAbe1b289'),
         sinceTimestamp: new UnixTime(1729308239),
         tokens: ['USDC'],
-        source: 'external',
-        bridgedUsing: {
-          bridges: [
-            {
-              name: 'Canonically (external escrow)',
-            },
-          ],
-        },
+        ...ESCROW.CANONICAL_EXTERNAL,
         chain: 'ethereum',
       },
     ],

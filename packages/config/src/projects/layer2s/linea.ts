@@ -24,6 +24,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { ESCROW } from '../../common/escrow'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { PERFORMED_BY } from '../other/zk-catalog'
@@ -130,14 +131,7 @@ export const linea: Layer2 = {
       discovery.getEscrowDetails({
         address: EthereumAddress('0x504A330327A089d8364C4ab3811Ee26976d388ce'),
         sinceTimestamp: new UnixTime(1691079071),
-        source: 'external',
-        bridgedUsing: {
-          bridges: [
-            {
-              name: 'Canonically (external escrow)',
-            },
-          ],
-        },
+        ...ESCROW.CANONICAL_EXTERNAL,
         tokens: ['USDC'],
       }),
       discovery.getEscrowDetails({
