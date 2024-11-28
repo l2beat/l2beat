@@ -2,13 +2,14 @@ import { getVerifiersFromConfig } from '@l2beat/config/build/src/projects/other/
 import { UnixTime, branded } from '@l2beat/shared-pure'
 import { z } from 'zod'
 import { env } from '~/env'
-import { db } from '~/server/database'
+import { getDb } from '~/server/database'
 
 export async function getVerifiers() {
   if (env.MOCK) {
     return getMockVerifiers()
   }
 
+  const db = getDb()
   const verifiers = getVerifiersFromConfig()
 
   const coercedQueries = verifiers.map(async (verifier) => {

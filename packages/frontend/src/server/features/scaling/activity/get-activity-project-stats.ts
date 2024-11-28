@@ -1,6 +1,6 @@
 import { type ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
-import { db } from '~/server/database'
+import { getDb } from '~/server/database'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import { getLastDayUops } from './utils/get-last-day'
 import { getUopsWeeklyChange } from './utils/get-weekly-change'
@@ -18,6 +18,7 @@ type ActivityProjectStats = Awaited<
   ReturnType<typeof getActivityProjectStatsData>
 >
 async function getActivityProjectStatsData(projectId: ProjectId) {
+  const db = getDb()
   const range = getFullySyncedActivityRange('30d')
   const counts = await db.activity.getByProjectAndTimeRange(projectId, range)
   if (counts.length === 0) {

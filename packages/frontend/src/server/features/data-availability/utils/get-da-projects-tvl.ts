@@ -2,7 +2,7 @@ import { layer2s, layer3s } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { env } from '~/env'
-import { db } from '~/server/database'
+import { getDb } from '~/server/database'
 
 export async function getDaProjectsTvl(projectIds: ProjectId[]) {
   if (env.MOCK) {
@@ -13,6 +13,7 @@ export async function getDaProjectsTvl(projectIds: ProjectId[]) {
 
 type DaProjectsTvl = Awaited<ReturnType<typeof getDaProjectsTvlData>>
 async function getDaProjectsTvlData(projectIds: ProjectId[]) {
+  const db = getDb()
   const values = await db.value.getLatestValues(projectIds)
 
   const byProject = groupBy(values, 'projectId')

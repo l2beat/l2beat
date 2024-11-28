@@ -3,7 +3,7 @@ import { daEconomicSecurityMeta } from '@l2beat/config/build/src/projects/other/
 import { notUndefined } from '@l2beat/shared-pure'
 import { compact, keyBy, round } from 'lodash'
 import { env } from '~/env'
-import { db } from '~/server/database'
+import { getDb } from '~/server/database'
 import { type EconomicSecurityData } from '../project/utils/get-da-project-economic-security'
 
 export async function getDaProjectsEconomicSecurity(): Promise<
@@ -20,6 +20,7 @@ type ProjectsEconomicSecurity = Awaited<
 >
 async function getProjectsEconomicSecurityData() {
   // TODO: It's probably better to not fetch all data at once
+  const db = getDb()
   const stakes = Object.fromEntries(
     (await db.stake.getAll()).map((s) => [s.id, s.thresholdStake]),
   )
