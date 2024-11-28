@@ -21,6 +21,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
 import { getStage } from './common/stages/getStage'
@@ -225,6 +226,7 @@ export const dydx: Layer2 = {
     },
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL(freezeGracePeriod),
+      secondLine: formatDelay(freezeGracePeriod),
       sources: [
         {
           contract: 'StarkPerpetual',
