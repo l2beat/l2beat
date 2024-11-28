@@ -1,4 +1,4 @@
-import { Page } from '../Page'
+import { Page } from '../components/Page'
 
 export function HomePage() {
   return (

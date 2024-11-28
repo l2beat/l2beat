@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { asset } from './assets'
-import { resetAppId } from './components/ClientApp'
+import { asset } from '../assets'
+import { resetAppId } from './ClientApp'
 
 interface Props {
   title: string

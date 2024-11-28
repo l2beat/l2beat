@@ -1,4 +1,4 @@
-import { Page } from '../Page'
+import { Page } from '../components/Page'
 import { asset } from '../assets'
 import { ClientApp } from '../components/ClientApp'
 
