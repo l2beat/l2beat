@@ -72,6 +72,7 @@ describe('dates', () => {
       )
     })
   })
+
   describe(formatTimestamp.name, () => {
     describe('without options', () => {
       it('returns date with short month name and without time', () => {
@@ -89,6 +90,7 @@ describe('dates', () => {
         expect(formatTimestamp(date3)).toEqual('2030 Jan 01')
       })
     })
+
     describe('with options', () => {
       describe('mode', () => {
         describe('date', () => {
@@ -113,6 +115,7 @@ describe('dates', () => {
             )
           })
         })
+
         describe('datetime', () => {
           it('returns date with short month name and time', () => {
             const date1 = UnixTime.fromDate(
@@ -159,6 +162,7 @@ describe('dates', () => {
           })
         })
       })
+
       describe('longMonthName', () => {
         it('returns date with long month name and without time', () => {
           const date1 = UnixTime.fromDate(
