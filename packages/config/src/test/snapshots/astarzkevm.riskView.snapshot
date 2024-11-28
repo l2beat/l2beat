@@ -58,7 +58,7 @@
   stateValidation: {
     definingMetric: Infinity
     description: "STARKs and SNARKs are zero knowledge proofs that ensure state correctness. STARKs proofs are wrapped in SNARKs proofs for efficiency. SNARKs require a trusted setup."
-    secondLine: "No delay"
+    secondLine: undefined
     sentiment: "good"
     sources: [
       {

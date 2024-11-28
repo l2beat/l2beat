@@ -41,7 +41,7 @@
   stateValidation: {
     definingMetric: Infinity
     description: "SNARKs are zero knowledge proofs that ensure state correctness, but require trusted setup."
-    secondLine: "No delay"
+    secondLine: undefined
     sentiment: "good"
     sources: [
       {
