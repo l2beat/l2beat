@@ -1,6 +1,7 @@
 import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 
 import { MILESTONES, NUGGETS, RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
+import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import {
@@ -291,14 +292,7 @@ export const nova: Layer2 = orbitStackL2({
       address: EthereumAddress('0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3'),
       sinceTimestamp: new UnixTime(1659620187),
       tokens: ['DAI'],
-      source: 'external',
-      bridgedUsing: {
-        bridges: [
-          {
-            name: 'Canonically (external escrow)',
-          },
-        ],
-      },
+      ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'DAI Vault for custom DAI Gateway. Fully controlled by MakerDAO governance.',
       ...upgradeExecutorUpgradeability,
@@ -315,14 +309,7 @@ export const nova: Layer2 = orbitStackL2({
       address: EthereumAddress('0x23122da8C581AA7E0d07A36Ff1f16F799650232f'),
       sinceTimestamp: new UnixTime(1659620187),
       tokens: '*',
-      source: 'external',
-      bridgedUsing: {
-        bridges: [
-          {
-            name: 'Canonically (custom escrow)',
-          },
-        ],
-      },
+      ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'Main entry point for users depositing ERC20 tokens that require minting a custom token on the L2.',
       ...upgradeExecutorUpgradeability,
