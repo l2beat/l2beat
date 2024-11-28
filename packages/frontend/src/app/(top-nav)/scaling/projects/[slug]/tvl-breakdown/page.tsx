@@ -15,6 +15,7 @@ const scalingProjects = [...layer2s, ...layer3s]
 
 export const revalidate = 3600
 export async function generateStaticParams() {
+  if (env.VERCEL_ENV === 'preview') return []
   return scalingProjects.map((project) => ({ slug: project.display.slug }))
 }
 
