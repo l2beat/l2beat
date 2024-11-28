@@ -1,5 +1,6 @@
-import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import { CONTRACTS } from '../../common'
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -41,69 +42,17 @@ export const degen: Layer3 = orbitStackL3({
     assessCount: subtractOne,
     startBlock: 1,
   },
-  bridge: discovery.getContract('Bridge'),
+  bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'DegenMultisig',
-      (() => {
-        const discoveredAdminOwner = discovery.getAddressFromValue(
-          'ProxyAdmin',
-          'owner',
-        )
-        const discoveredUpgradeExecutorAddy =
-          discovery.getContract('UpgradeExecutor').address
-        const discoveredExecutor = discovery.getAccessControlField(
-          'UpgradeExecutor',
-          'EXECUTOR_ROLE',
-        ).members[0]
-        const discoveredRollupOwnerMultisig =
-          discovery.getContract('DegenMultisig').address
-        assert(
-          discoveredAdminOwner === discoveredUpgradeExecutorAddy &&
-            discoveredExecutor === discoveredRollupOwnerMultisig,
-          'Update the permissions section if this changes.',
-        )
-        const description =
-          'Has the executor role of the UpgradeExecutor and indirectly owns the ProxyAdmin (can upgrade the whole system).'
-        return description
-      })(),
-    ),
-    {
-      name: 'UTBAdmin',
-      accounts: discovery.getAccessControlRolePermission(
-        'UTBDecent',
-        'DEFAULT_ADMIN_ROLE',
-      ),
-      description:
-        'The UTBAdmin directly controls the UTB contracts critical functions like updating all roles and modules.',
-    },
-    {
-      name: 'OftAdapterEOA',
-      accounts: [
-        discovery.getPermissionedAccount('OrbitERC20OFTAdapter', 'owner'),
-      ],
-      description:
-        'Can control the LayerZero OrbitERC20OFTAdapter contract for the DEGEN token and thus potentially steal all funds from the canonical bridge.',
-    },
-  ],
-  nonTemplateContracts: [
-    discovery.getContractDetails('UTBDecent', {
-      description:
-        'The UTB contract serves as an L2<->L3 gateway by integrating with Decent (LayerZero app) to allow bridging and swapping in- and out of Degen L3. This is achieved using external modules (smart contracts) like swappers and bridgers that can be registered in the UTB contract.',
-    }),
-    discovery.getContractDetails('OrbitERC20OFTAdapter', {
-      description:
-        'as a desiganted allowed outbox, this contract can access all funds of the canonical bridge escrow. It also interfaces with the LayerZero AMB, giving this external bridge access to the Degen L3 canonical bridge and making canonical bridge security dependent on LayerZero security.',
-    }),
-  ],
+  discoveryDrivenData: true,
   nonTemplateContractRisks: [
     {
       category: 'Funds can be stolen if',
       text: 'the security stack of the whitelisted LayerZero adapter changes or is compromised.',
       isCritical: true,
     },
+    CONTRACTS.UPGRADE_NO_DELAY_RISK,
   ],
   associatedTokens: ['DEGEN'],
   milestones: [

@@ -30,12 +30,6 @@ export const winr: Layer3 = orbitStackL3({
   rpcUrl: 'https://rpc.winr.games',
   associatedTokens: ['WINR'],
   nativeToken: 'WINR',
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'ConduitMultisig2',
-      'Can upgrade any system contract and potentially steal all funds.',
-    ),
-  ],
   nonTemplateEscrows: [
     {
       chain: 'arbitrum',
@@ -157,7 +151,8 @@ export const winr: Layer3 = orbitStackL3({
       includeInTotal: false,
     },
   ],
-  bridge: discovery.getContract('Bridge'),
+  bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+  discoveryDrivenData: true,
 })
