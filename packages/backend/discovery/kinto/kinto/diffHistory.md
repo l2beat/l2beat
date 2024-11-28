@@ -1,13 +1,13 @@
-Generated with discovered.json: 0xd11e10cdcdd776b4b91e53ef0d26b3b9b3da89b6
+Generated with discovered.json: 0x0592bba9627511f609077cb31340b23744701268
 
-# Diff at Wed, 06 Nov 2024 09:27:04 GMT:
+# Diff at Thu, 28 Nov 2024 11:35:57 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 249569
+- current block number: 542550
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+initial discovery.
 
 ## Initial discovery
 
@@ -97,7 +97,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract KintoWallet (0x25EA8c663BA8cCd79284B8c4001e7A245071885c)
+    contract SafeBeaconProxy (0x25EA8c663BA8cCd79284B8c4001e7A245071885c)
     +++ description: None
 ```
 
