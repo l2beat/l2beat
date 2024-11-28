@@ -1,9 +1,4 @@
-import {
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-  formatSeconds,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -16,6 +11,7 @@ import {
   RISK_VIEW,
   addSentimentToDataAvailability,
 } from '../../common'
+import { formatChallengePeriod } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { Layer2 } from './types'
@@ -115,7 +111,7 @@ export const metis: Layer2 = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,
-      secondLine: `${formatSeconds(CHALLENGE_PERIOD_SECONDS)} challenge period`,
+      secondLine: formatChallengePeriod(CHALLENGE_PERIOD_SECONDS),
     },
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_MEMO,
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),

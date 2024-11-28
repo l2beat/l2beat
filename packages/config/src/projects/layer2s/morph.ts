@@ -17,6 +17,8 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { ESCROW } from '../../common/escrow'
+import { formatChallengePeriod } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
@@ -107,42 +109,21 @@ export const morph: Layer2 = {
         address: EthereumAddress('0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1'),
         sinceTimestamp: new UnixTime(1729307783),
         tokens: '*',
-        source: 'external',
-        bridgedUsing: {
-          bridges: [
-            {
-              name: 'Canonically (external escrow)',
-            },
-          ],
-        },
+        ...ESCROW.CANONICAL_EXTERNAL,
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0xc9045350712A1DCC3A74Eca18Bc985424Bbe7535'),
         sinceTimestamp: new UnixTime(1729308239),
         tokens: ['USDC'],
-        source: 'external',
-        bridgedUsing: {
-          bridges: [
-            {
-              name: 'Canonically (external escrow)',
-            },
-          ],
-        },
+        ...ESCROW.CANONICAL_EXTERNAL,
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x2C8314f5AADa5D7a9D32eeFebFc43aCCAbe1b289'),
         sinceTimestamp: new UnixTime(1729308239),
         tokens: ['USDC'],
-        source: 'external',
-        bridgedUsing: {
-          bridges: [
-            {
-              name: 'Canonically (external escrow)',
-            },
-          ],
-        },
+        ...ESCROW.CANONICAL_EXTERNAL,
         chain: 'ethereum',
       },
     ],
@@ -158,7 +139,7 @@ export const morph: Layer2 = {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_1R_ZK,
       sentiment: 'bad',
-      secondLine: `${formatSeconds(challengeWindow)} challenge period`,
+      secondLine: formatChallengePeriod(challengeWindow),
     },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
@@ -166,7 +147,7 @@ export const morph: Layer2 = {
         {
           contract: 'MorphRollup',
           references: [
-            'https://etherscan.io/address/0x073403E147a8e607b80985fe458c0B527287278F#code',
+            'https://etherscan.io/address/0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A#code',
           ],
         },
       ],
@@ -177,7 +158,7 @@ export const morph: Layer2 = {
         {
           contract: 'MorphRollup',
           references: [
-            'https://etherscan.io/address/0x073403E147a8e607b80985fe458c0B527287278F#code',
+            'https://etherscan.io/address/0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A#code',
           ],
         },
       ],
@@ -205,7 +186,7 @@ export const morph: Layer2 = {
         {
           contract: 'MorphRollup',
           references: [
-            'https://etherscan.io/address/0x073403E147a8e607b80985fe458c0B527287278F#code',
+            'https://etherscan.io/address/0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A#code',
           ],
         },
       ],
@@ -226,7 +207,7 @@ export const morph: Layer2 = {
       references: [
         {
           text: 'Rollup.sol - Etherscan source code, commitBatch(), challengeState(), proveState() functions',
-          href: 'https://etherscan.io/address/0x073403e147a8e607b80985fe458c0b527287278f#code#F1#L204',
+          href: 'https://etherscan.io/address/0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A#code#F1#L219',
         },
       ],
       risks: [
@@ -271,7 +252,7 @@ export const morph: Layer2 = {
         },
         {
           text: 'Rollup.sol - proposer can indicate which messages were skipped',
-          href: 'https://etherscan.io/address/0x073403e147a8e607b80985fe458c0b527287278f#code#F1#L242',
+          href: 'https://etherscan.io/address/0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A#code#F1#L258',
         },
       ],
     },

@@ -1,11 +1,11 @@
 {
   "name": "xai",
   "chain": "arbitrum",
-  "blockNumber": 269220300,
-  "configHash": "0xf5b46f263687b958fdf86ce6d2a85a9f4229ac7bec3494e7346d6b70c118d02d",
+  "blockNumber": 278553826,
+  "configHash": "0x9bc9308a46649854266250f47cda29645a652cc58448278ff19c85af46e5e426",
   "contracts": [
     {
-      "name": "GnosisSafeAdminMember",
+      "name": "XaiMultisig2",
       "address": "0x000d8C5A70B8805DF02f409F2715d05B9A63E871",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -28,7 +28,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 12,
+        "nonce": 13,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -155,31 +155,10 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E"]
-      },
-      "derivedName": "UpgradeExecutor"
-    },
-    {
-      "name": "BucketTracker",
-      "address": "0x1582e73D95F33E39B421F9224D9e7daF4508408E",
-      "sourceHashes": [
-        "0x24f4060d81bbea737c636f9646fa1a2ee2a40035bd6a40e58fed39d5867928e6"
-      ],
-      "sinceTimestamp": 1712865928,
-      "values": {
-        "_totalDividendsDistributed": 0,
-        "$immutable": true,
-        "decimals": 0,
-        "esXaiAddress": "0x0000000000000000000000000000000000000000",
-        "name": "",
-        "owner": "0x0000000000000000000000000000000000000000",
-        "symbol": "",
-        "totalDividendsDistributed": 0,
-        "totalSupply": 0,
-        "trackerOwner": "0x0000000000000000000000000000000000000000"
       }
     },
     {
-      "name": "Outbox",
+      "name": "ERC20Outbox",
       "address": "0x1E400568AD4840dbE50FB32f306B842e9ddeF726",
       "template": "orbitstack/Outbox",
       "sourceHashes": [
@@ -187,6 +166,7 @@
         "0x3073f29910dee50069a001fb20e58cca3dcc1b3c8da4b91809af2dd356ef0c8c"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "Outbox",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
       "issuedPermissions": [
         {
@@ -226,11 +206,10 @@
         "l2ToL1WithdrawalAmount": 0,
         "OUTBOX_VERSION": 2,
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336"
-      },
-      "derivedName": "ERC20Outbox"
+      }
     },
     {
-      "name": "L1GatewayRouter",
+      "name": "L1OrbitGatewayRouter",
       "address": "0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35",
       "template": "orbitstack/GatewayRouter",
       "sourceHashes": [
@@ -274,8 +253,7 @@
         "owner": "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F",
         "router": "0x0000000000000000000000000000000000000000",
         "whitelist": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "L1OrbitGatewayRouter"
+      }
     },
     {
       "name": "ERC20RollupEventInbox",
@@ -368,8 +346,7 @@
         "resultReceiver": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerInbox": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
         "totalChallengesCreated": 0
-      },
-      "derivedName": "ChallengeManager"
+      }
     },
     {
       "name": "XaiMultisig",
@@ -505,51 +482,6 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "StakingPool",
-      "address": "0x599C8489256Fb17b66d499d907F30b8022a29443",
-      "sourceHashes": [
-        "0x5fab3d0f8f434afcc4313dcfd8583d24b79a87e93701172b3b17451ded52f00e"
-      ],
-      "sinceTimestamp": 1712865925,
-      "values": {
-        "$immutable": true,
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "delegateOwner": "0x0000000000000000000000000000000000000000",
-        "description": "",
-        "esXaiAddress": "0x0000000000000000000000000000000000000000",
-        "esXaiStakeBucket": "0x0000000000000000000000000000000000000000",
-        "getDelegateOwner": "0x0000000000000000000000000000000000000000",
-        "getPoolOwner": "0x0000000000000000000000000000000000000000",
-        "getStakedKeys": [],
-        "keyBucket": "0x0000000000000000000000000000000000000000",
-        "keyBucketShare": 0,
-        "logo": "",
-        "name": "",
-        "ownerShare": 0,
-        "POOL_ADMIN": "0x12ad05bde78c5ab75238ce885307f96ecd482bb402ef831f99e7018a0f169b7b",
-        "poolOwner": "0x0000000000000000000000000000000000000000",
-        "poolOwnerClaimableRewards": 0,
-        "refereeAddress": "0x0000000000000000000000000000000000000000",
-        "socials": [],
-        "stakedBucketShare": 0,
-        "stakedKeys": []
-      },
-      "derivedName": "StakingPool"
-    },
-    {
-      "name": "PoolBeacon",
-      "address": "0x5f9D168d3435747335b1B3dC7e4d42e3510087C7",
-      "sourceHashes": [
-        "0xbc25202c962ba06d0d9766c3d0f0752bebe0e04c3e81c8e524f1bb56c511f344"
-      ],
-      "sinceTimestamp": 1712865929,
-      "values": {
-        "$immutable": true,
-        "implementation": "0x599C8489256Fb17b66d499d907F30b8022a29443",
-        "owner": "0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7"
-      }
-    },
-    {
       "name": "PoolProxyDeployer",
       "address": "0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD",
       "sourceHashes": [
@@ -557,6 +489,7 @@
         "0xfe7d4f8b4f6b1198e1260974eeca86c30dbb95347dd52003ca893a8421f63f2f"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Manages beacon addresses for the v2 staking pools.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -585,20 +518,8 @@
         "esXaiBeacon": "0x6Bc4e6B2c13Ba42e933b23AFAb8a58bbbBa5D02B",
         "keyBucketBeacon": "0xfB93c2e5E41BD0ffd2E99A88e6d2A8D4F542d39a",
         "poolBeacon": "0x5f9D168d3435747335b1B3dC7e4d42e3510087C7"
-      }
-    },
-    {
-      "name": "PoolBeacon",
-      "address": "0x6Bc4e6B2c13Ba42e933b23AFAb8a58bbbBa5D02B",
-      "sourceHashes": [
-        "0xbc25202c962ba06d0d9766c3d0f0752bebe0e04c3e81c8e524f1bb56c511f344"
-      ],
-      "sinceTimestamp": 1712865932,
-      "values": {
-        "$immutable": true,
-        "implementation": "0x1582e73D95F33E39B421F9224D9e7daF4508408E",
-        "owner": "0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7"
-      }
+      },
+      "derivedName": "PoolProxyDeployer"
     },
     {
       "name": "ValidatorUtils",
@@ -610,7 +531,7 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "Bridge",
+      "name": "ERC20Bridge",
       "address": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
       "template": "orbitstack/Bridge",
       "sourceHashes": [
@@ -618,6 +539,7 @@
         "0x057de68a7007d55f4394ba6eafb2c802efcaf13583ff9342ea4d0ee3924d9be1"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "Bridge",
       "description": "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
       "issuedPermissions": [
         {
@@ -658,43 +580,12 @@
           "0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8"
         ],
         "allowedOutboxList": ["0x1E400568AD4840dbE50FB32f306B842e9ddeF726"],
-        "delayedMessageCount": 90528,
+        "delayedMessageCount": 90780,
         "nativeToken": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66",
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerInbox": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
-        "sequencerMessageCount": 103552,
-        "sequencerReportedSubMessageCount": 53233622
-      },
-      "derivedName": "ERC20Bridge"
-    },
-    {
-      "name": "GnosisSafeL2",
-      "address": "0x7eC7e03563f781ED4c56BBC4c5F28C1B4dB932ff",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1701577969,
-      "values": {
-        "$immutable": false,
-        "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
-        "$members": [
-          "0x1f097F3f928415cD28e1B2cC6f0F3960f4fCa6fc",
-          "0xbBE90F6748C82623F130A4486722a436c5a72440",
-          "0xE529a3271f9CC84B1FE9107ab4764a8dF177782a",
-          "0x807daF80b03Fd3C2709FFe0AeBEED617BC0a347c",
-          "0xa2E7768789921a36eCFe8c239dBd8213120fFF83"
-        ],
-        "$threshold": 3,
-        "domainSeparator": "0xbb2069976a9447898df54626b5b03b9051987f2129973f6d9f34d150e49fe2fc",
-        "getChainId": 42161,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 6,
-        "VERSION": "1.3.0"
+        "sequencerMessageCount": 119102,
+        "sequencerReportedSubMessageCount": 60887785
       }
     },
     {
@@ -793,7 +684,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 103552,
+        "batchCount": 119102,
         "batchPosterManager": "0x000d8C5A70B8805DF02f409F2715d05B9A63E871",
         "batchPosters": ["0x7F68dba68E72a250004812fe04F1123Fca89aBa9"],
         "bridge": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
@@ -829,7 +720,7 @@
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 90528,
+        "totalDelayedMessagesRead": 90780,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -837,31 +728,10 @@
         "maxTimeVariation": {
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
-      },
-      "derivedName": "SequencerInbox"
-    },
-    {
-      "name": "BucketTracker",
-      "address": "0xa83825Dc4D94513d1C907b319EE8224FA63A29B2",
-      "sourceHashes": [
-        "0x24f4060d81bbea737c636f9646fa1a2ee2a40035bd6a40e58fed39d5867928e6"
-      ],
-      "sinceTimestamp": 1712865927,
-      "values": {
-        "_totalDividendsDistributed": 0,
-        "$immutable": true,
-        "decimals": 0,
-        "esXaiAddress": "0x0000000000000000000000000000000000000000",
-        "name": "",
-        "owner": "0x0000000000000000000000000000000000000000",
-        "symbol": "",
-        "totalDividendsDistributed": 0,
-        "totalSupply": 0,
-        "trackerOwner": "0x0000000000000000000000000000000000000000"
       }
     },
     {
-      "name": "Inbox",
+      "name": "ERC20Inbox",
       "address": "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
       "template": "orbitstack/Inbox",
       "sourceHashes": [
@@ -869,6 +739,7 @@
         "0xcb390b491549387c8fcc09fb22fbea7adf54cc74b7247a0c738369ddd7049b92"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "Inbox",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
       "issuedPermissions": [
         {
@@ -904,8 +775,7 @@
         "maxDataSize": 104857,
         "paused": false,
         "sequencerInbox": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1"
-      },
-      "derivedName": "ERC20Inbox"
+      }
     },
     {
       "name": "OneStepProofEntry",
@@ -925,7 +795,7 @@
       }
     },
     {
-      "name": "L1ERC20Gateway",
+      "name": "L1OrbitERC20Gateway",
       "address": "0xb591cE747CF19cF30e11d656EB94134F523A9e77",
       "template": "orbitstack/ERC20Gateway",
       "sourceHashes": [
@@ -969,8 +839,7 @@
         "l2BeaconProxyFactory": "0xC65de812db42Bfa8bd4E0fCf6ffcad8fe3072D44",
         "router": "0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35",
         "whitelist": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "L1OrbitERC20Gateway"
+      }
     },
     {
       "name": "NodeLicenseRegistry",
@@ -980,6 +849,7 @@
         "0x1b5b7bb8aa9932be3a7e263d3905e78382f86318e4252b53a05c67152ede1de1"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "This is the contract where Xai Sentry Keys to run a node are minted.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1049,7 +919,7 @@
         "referralDiscountPercentage": 5,
         "referralRewardPercentage": 15,
         "symbol": "SNL",
-        "totalSupply": 35179
+        "totalSupply": 35180
       },
       "derivedName": "NodeLicense5"
     },
@@ -1124,12 +994,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 6820,
+        "firstUnresolvedNode": 7467,
         "inbox": "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
         "isERC20Enabled": false,
         "lastStakeBlock": 18944658,
-        "latestConfirmed": 6819,
-        "latestNodeCreated": 6972,
+        "latestConfirmed": 7466,
+        "latestNodeCreated": 7618,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x1E400568AD4840dbE50FB32f306B842e9ddeF726",
@@ -1169,7 +1039,6 @@
           "description": "Emitted on createChallenge() in RollupUserLogic."
         }
       },
-      "derivedName": "RollupProxy",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -1246,7 +1115,7 @@
       }
     },
     {
-      "name": "StakingProxyAdmin",
+      "name": "ProxyAdmin",
       "address": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
@@ -1282,8 +1151,7 @@
       "values": {
         "$immutable": true,
         "owner": "0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7"
-      },
-      "derivedName": "ProxyAdmin"
+      }
     },
     {
       "name": "OneStepProverMath",
@@ -1304,6 +1172,7 @@
         "0x317ab76b0d59c8c31385b5239fb1bdfff324c9629c5e8d74b82808349fbb169a"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The PoolFactory allows creating and managing staking pools for V2 staking. Users can stake esXAI (and / or Sentry Keys) in pools. This contract's address is whitelisted in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. V2 staking through this contract is currently set to true.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1333,7 +1202,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "deployerAddress": "0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD",
         "esXaiAddress": "0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c",
-        "getPoolsCount": 269,
+        "getPoolsCount": 272,
         "nodeLicenseAddress": "0xbc14d8563b248B79689ECbc43bBa53290e0b6b66",
         "refereeAddress": "0xfD41041180571C5D371BEA3D9550E55653671198",
         "stakingEnabled": true,
@@ -1345,20 +1214,7 @@
       "derivedName": "PoolFactory"
     },
     {
-      "name": "PoolBeacon",
-      "address": "0xfB93c2e5E41BD0ffd2E99A88e6d2A8D4F542d39a",
-      "sourceHashes": [
-        "0xbc25202c962ba06d0d9766c3d0f0752bebe0e04c3e81c8e524f1bb56c511f344"
-      ],
-      "sinceTimestamp": 1712865934,
-      "values": {
-        "$immutable": true,
-        "implementation": "0xa83825Dc4D94513d1C907b319EE8224FA63A29B2",
-        "owner": "0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7"
-      }
-    },
-    {
-      "name": "FundsReiceiverMultisig",
+      "name": "XaiFundsReiceiverMultisig",
       "address": "0xFCF7248C495d6fd3641eE43F861c48Ebe402c878",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -1386,7 +1242,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 56,
+        "nonce": 58,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -1399,6 +1255,7 @@
         "0x049618a11ae7ca2b4087908a6cb43e2102853e1798710e66a169be6fd6d4ed99"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The referee contract manages the Xai Sentry protocol. Sentry nodes that are tasked to watch the state transitions on Xai receive esXAI rewards for their service. These watchers participate in a game with a central 'challenger' by posting their assertions to make sure they are actually watching. In case of a malicious state transition, sentries are supposed to raise an alarm offchain. The referee contract is also a whitelisted address in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. New staking through this contract is disabled in favor of the new v2 staking. V1 Stakers can continue to get staking rewards here or withdraw/migrate their assets.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1468,38 +1325,17 @@
           ]
         ],
         "$upgradeCount": 9,
-        "accessControl": {
-          "DEFAULT_ADMIN_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7",
-              "0xfeBC06428a15C6618Baa5589C3E9C40ACF71aA79"
-            ]
-          },
-          "CHALLENGER_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0xC74c1e08963CEEf0e1F2F2a2eeB879f443e86836"]
-          },
-          "KYC_ADMIN_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "0x7eC7e03563f781ED4c56BBC4c5F28C1B4dB932ff",
-              "0xCBA55AAD91BB119794C48AF09A734Fc31A4CDF56",
-              "0x83f396d217820386464e8E99205DCf090d0DD04c"
-            ]
-          }
-        },
         "calculateChallengeEmissionAndTier": [
           "35673515981735159817351",
           "625000000000000000000000000"
         ],
-        "challengeCounter": 7712,
+        "challengeCounter": 8359,
         "CHALLENGER_ROLE": "0xe752add323323eb13e36c71ee508dfd16d74e9e4c4fd78786ba97989e5e13818",
         "challengerPublicKey": "0x977f9fe1d570ba7e48ea76566718023b260ed56eba368ff20dca06e99e650804126663c1a5febdb065ef139a0156a9ad",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "esXaiAddress": "0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c",
         "gasSubsidyRecipient": "0x94F4aBC83eae00b693286B6eDCa09e1D76183C97",
-        "getKycWalletCount": 6558,
+        "getKycWalletCount": 6561,
         "isCheckingAssertions": true,
         "KYC_ADMIN_ROLE": "0x811427a0fa4932aef534bba16bc34e9b7b2d7d2a79c475fca1765f6cc1faebea",
         "maxKeysPerPool": 1000,
@@ -1519,36 +1355,6 @@
         "xaiAddress": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66"
       },
       "derivedName": "Referee9"
-    },
-    {
-      "name": "GnosisSafeL2",
-      "address": "0xfeBC06428a15C6618Baa5589C3E9C40ACF71aA79",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1701577470,
-      "values": {
-        "$immutable": false,
-        "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
-        "$members": [
-          "0x807daF80b03Fd3C2709FFe0AeBEED617BC0a347c",
-          "0xE529a3271f9CC84B1FE9107ab4764a8dF177782a",
-          "0xbBE90F6748C82623F130A4486722a436c5a72440",
-          "0x1f097F3f928415cD28e1B2cC6f0F3960f4fCa6fc",
-          "0xa2E7768789921a36eCFe8c239dBd8213120fFF83"
-        ],
-        "$threshold": 3,
-        "domainSeparator": "0xdb02ea5ca1b3035f4062349ec108c0fc2e47e7c8b533bdc258b4e7db78431e32",
-        "getChainId": 42161,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 6,
-        "VERSION": "1.3.0"
-      }
     }
   ],
   "eoas": [
@@ -1614,20 +1420,17 @@
         {
           "permission": "sequence",
           "target": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
-          "description": "can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
         }
       ]
     },
     { "address": "0x7f910C718bAF6698FBF9b56e047ECd52d157bAD6" },
     { "address": "0x807daF80b03Fd3C2709FFe0AeBEED617BC0a347c" },
-    { "address": "0x83f396d217820386464e8E99205DCf090d0DD04c" },
     { "address": "0x90D77E3a3B660E54E04cD622937765d2375FB2e3" },
     { "address": "0xa2E7768789921a36eCFe8c239dBd8213120fFF83" },
     { "address": "0xbBE90F6748C82623F130A4486722a436c5a72440" },
     { "address": "0xC65de812db42Bfa8bd4E0fCf6ffcad8fe3072D44" },
     { "address": "0xc7185e37A4aB4Af0E77bC08249CD2590AE3E1b51" },
-    { "address": "0xC74c1e08963CEEf0e1F2F2a2eeB879f443e86836" },
-    { "address": "0xCBA55AAD91BB119794C48AF09A734Fc31A4CDF56" },
     { "address": "0xd096e8dE90D34de758B0E0bA4a796eA2e1e272cF" },
     { "address": "0xd427165292B2E39cdac102eD963B14fFBACc964a" },
     { "address": "0xd4318D959B46d555143f56E03077028aB94D85d2" },
@@ -1744,31 +1547,6 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "0x1582e73D95F33E39B421F9224D9e7daF4508408E": [
-      "event Claim(address indexed account, uint256 amount)",
-      "event DividendWithdrawn(address indexed to, uint256 weiAmount)",
-      "event DividendsDistributed(address indexed from, uint256 weiAmount)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function _totalDividendsDistributed() view returns (uint256)",
-      "function accumulativeDividendOf(address _owner) view returns (uint256)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function decimals() view returns (uint256)",
-      "function distributeDividends(uint256 amount)",
-      "function esXaiAddress() view returns (address)",
-      "function getAccount(address _account) view returns (address account, uint256 withdrawableDividends, uint256 totalDividends, uint256 lastClaimTime)",
-      "function initialize(address _trackerOwner, address _esXaiAddress, string __name, string __symbol, uint256 __decimals)",
-      "function lastClaimTimes(address) view returns (uint256)",
-      "function name() view returns (string)",
-      "function owner() view returns (address)",
-      "function processAccount(address account) returns (bool)",
-      "function setBalance(address account, uint256 newBalance)",
-      "function symbol() view returns (string)",
-      "function totalDividendsDistributed() view returns (uint256)",
-      "function totalSupply() view returns (uint256)",
-      "function trackerOwner() view returns (address)",
-      "function withdrawableDividendOf(address _owner) view returns (uint256)",
-      "function withdrawnDividendOf(address _owner) view returns (uint256)"
     ],
     "0x18FD37A4FB9E1F06d9383958aFd236771F15A8cb": [
       "constructor()",
@@ -2028,65 +1806,6 @@
     "0x526a6E634aD36bB0007c4422586c135F1F9B525a": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, uint32 internalsOffset) mod)"
     ],
-    "0x599C8489256Fb17b66d499d907F30b8022a29443": [
-      "event Initialized(uint8 version)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function POOL_ADMIN() view returns (bytes32)",
-      "function claimRewards(address user)",
-      "function createUnstakeEsXaiRequest(address user, uint256 amount, uint256 period)",
-      "function createUnstakeKeyRequest(address user, uint256 keyAmount, uint256 period)",
-      "function createUnstakeOwnerLastKeyRequest(address owner, uint256 period)",
-      "function delegateOwner() view returns (address)",
-      "function description() view returns (string)",
-      "function esXaiAddress() view returns (address)",
-      "function esXaiStakeBucket() view returns (address)",
-      "function getDelegateOwner() view returns (address)",
-      "function getPoolInfo() view returns (tuple(address poolAddress, address owner, address keyBucketTracker, address esXaiBucketTracker, uint256 keyCount, uint256 totalStakedAmount, uint256 updateSharesTimestamp, uint32 ownerShare, uint32 keyBucketShare, uint32 stakedBucketShare) baseInfo, string _name, string _description, string _logo, string[] _socials, uint32[] _pendingShares, uint256 _ownerStakedKeys, uint256 _ownerRequestedUnstakeKeyAmount, uint256 _ownerLatestUnstakeRequestLockTime)",
-      "function getPoolOwner() view returns (address)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function getStakedAmounts(address user) view returns (uint256)",
-      "function getStakedKeys() view returns (uint256[])",
-      "function getStakedKeysCount() view returns (uint256)",
-      "function getStakedKeysCountForUser(address user) view returns (uint256)",
-      "function getUndistributedClaimAmount(address user) view returns (uint256 claimAmountFromKeys, uint256 claimAmountFromEsXai, uint256 claimAmount, uint256 ownerAmount)",
-      "function getUnstakeRequest(address account, uint256 index) view returns (tuple(bool open, bool isKeyRequest, uint256 amount, uint256 lockTime, uint256 completeTime, uint256[5] __gap))",
-      "function getUnstakeRequestCount(address account) view returns (uint256)",
-      "function getUserPoolData(address user) view returns (uint256 userStakedEsXaiAmount, uint256 userClaimAmount, uint256[] userStakedKeyIds, uint256 unstakeRequestkeyAmount, uint256 unstakeRequestesXaiAmount)",
-      "function getUserRequestedUnstakeAmounts(address user) view returns (uint256 keyAmount, uint256 esXaiAmount)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function initShares(uint32 _ownerShare, uint32 _keyBucketShare, uint32 _stakedBucketShare)",
-      "function initialize(address _refereeAddress, address _esXaiAddress, address _owner, address _delegateOwner, address _keyBucket, address _esXaiStakeBucket)",
-      "function isUserEngagedWithPool(address user) view returns (bool)",
-      "function keyBucket() view returns (address)",
-      "function keyBucketShare() view returns (uint32)",
-      "function keyIdIndex(uint256) view returns (uint256)",
-      "function logo() view returns (string)",
-      "function name() view returns (string)",
-      "function ownerShare() view returns (uint32)",
-      "function poolOwner() view returns (address)",
-      "function poolOwnerClaimableRewards() view returns (uint256)",
-      "function refereeAddress() view returns (address)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function socials(uint256) view returns (string)",
-      "function stakeEsXai(address owner, uint256 amount)",
-      "function stakeKeys(address owner, uint256[] keyIds)",
-      "function stakedAmounts(address) view returns (uint256)",
-      "function stakedBucketShare() view returns (uint32)",
-      "function stakedKeys(uint256) view returns (uint256)",
-      "function stakedKeysIndices(uint256) view returns (uint256)",
-      "function stakedKeysOfOwner(address, uint256) view returns (uint256)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function unstakeEsXai(address owner, uint256 unstakeRequestIndex, uint256 amount)",
-      "function unstakeKeys(address owner, uint256 unstakeRequestIndex, uint256[] keyIds)",
-      "function updateDelegateOwner(address delegate)",
-      "function updateMetadata(string[3] _metaData, string[] _socials)",
-      "function updateShares(uint32 _ownerShare, uint32 _keyBucketShare, uint32 _stakedBucketShare, uint256 period)"
-    ],
     "0x5A195953555A11d2a4b654DCa3aE4f9f19eBC3E2": [
       "event Initialized(uint8 version)",
       "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
@@ -2129,15 +1848,6 @@
       "function timeout(uint64 challengeIndex)",
       "function totalChallengesCreated() view returns (uint64)"
     ],
-    "0x5f9D168d3435747335b1B3dC7e4d42e3510087C7": [
-      "constructor(address _implementation)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function implementation() view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function update(address _implementation)"
-    ],
     "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1": [
       "constructor()",
       "event Initialized(uint8 version)",
@@ -2164,15 +1874,6 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
-    ],
-    "0x6Bc4e6B2c13Ba42e933b23AFAb8a58bbbBa5D02B": [
-      "constructor(address _implementation)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function implementation() view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function update(address _implementation)"
     ],
     "0x6c21303F5986180B1394d2C89f3e883890E2867b": [
       "function areUnresolvedNodesLinear(address rollup) view returns (bool)",
@@ -2270,9 +1971,6 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x7eC7e03563f781ED4c56BBC4c5F28C1B4dB932ff": [
-      "constructor(address _singleton)"
-    ],
     "0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab": [
       "constructor(uint256 _maxDataSize)",
       "error DataTooLarge(uint256 dataLength, uint256 maxDataLength)",
@@ -2354,31 +2052,6 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "0xa83825Dc4D94513d1C907b319EE8224FA63A29B2": [
-      "event Claim(address indexed account, uint256 amount)",
-      "event DividendWithdrawn(address indexed to, uint256 weiAmount)",
-      "event DividendsDistributed(address indexed from, uint256 weiAmount)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function _totalDividendsDistributed() view returns (uint256)",
-      "function accumulativeDividendOf(address _owner) view returns (uint256)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function decimals() view returns (uint256)",
-      "function distributeDividends(uint256 amount)",
-      "function esXaiAddress() view returns (address)",
-      "function getAccount(address _account) view returns (address account, uint256 withdrawableDividends, uint256 totalDividends, uint256 lastClaimTime)",
-      "function initialize(address _trackerOwner, address _esXaiAddress, string __name, string __symbol, uint256 __decimals)",
-      "function lastClaimTimes(address) view returns (uint256)",
-      "function name() view returns (string)",
-      "function owner() view returns (address)",
-      "function processAccount(address account) returns (bool)",
-      "function setBalance(address account, uint256 newBalance)",
-      "function symbol() view returns (string)",
-      "function totalDividendsDistributed() view returns (uint256)",
-      "function totalSupply() view returns (uint256)",
-      "function trackerOwner() view returns (address)",
-      "function withdrawableDividendOf(address _owner) view returns (uint256)",
-      "function withdrawnDividendOf(address _owner) view returns (uint256)"
     ],
     "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -2603,15 +2276,6 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xfB93c2e5E41BD0ffd2E99A88e6d2A8D4F542d39a": [
-      "constructor(address _implementation)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function implementation() view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function update(address _implementation)"
-    ],
     "0xfCa2657FC4456Ac256A78A31aAB1128F5e1d2D40": [
       "event Approval(address indexed owner, address indexed operator, bool approved)",
       "event AssertionCheckingToggled(bool newState)",
@@ -2777,9 +2441,6 @@
       "function updateWhitelistAmounts(address[] _toWhitelist, uint16[] _amounts)",
       "function whitelistAmounts(address) view returns (uint16)",
       "function withdrawFunds()"
-    ],
-    "0xfeBC06428a15C6618Baa5589C3E9C40ACF71aA79": [
-      "constructor(address _singleton)"
     ]
   },
   "usedTemplates": {
@@ -2798,7 +2459,7 @@
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
     "orbitstack/RollupEventInbox": "0x0608b35e1df8a51677a6392869e50b60a1ff7137f71f40bddf83143a5ef640c1",
     "orbitstack/RollupProxy": "0x88165b83156dbb5b288912a52adc278d223904d0c933472cb3950a05ba456170",
-    "orbitstack/SequencerInbox": "0x58bf3ad8ac9dc1181ff793e330641c545ee2d9558fce65d2ee39d483c2490494",
+    "orbitstack/SequencerInbox": "0x88542722d1f831549b0b3c814ee5d973fed5780765ae1a05e607dffef0df3154",
     "orbitstack/UpgradeExecutor": "0xa8c2617950ce46d982abd852226ebcc1aacaf9c8c7daeda793b53a790eced777"
   }
 }

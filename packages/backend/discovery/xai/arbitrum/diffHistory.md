@@ -1,3 +1,181 @@
+Generated with discovered.json: 0x6318fba4ca93fe72e6cb3df7399d001df64639b8
+
+# Diff at Wed, 27 Nov 2024 13:46:30 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@3b9391cfe483e60a1853eeae6e47b4de475aac4e block: 269220300
+- current block number: 278553826
+
+## Description
+
+Move to discodriven data.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 269220300 (main branch discovery), not current.
+
+```diff
+    contract XaiMultisig2 (0x000d8C5A70B8805DF02f409F2715d05B9A63E871) {
+    +++ description: None
+      name:
+-        "GnosisSafeAdminMember"
++        "XaiMultisig2"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract BucketTracker (0x1582e73D95F33E39B421F9224D9e7daF4508408E)
+    +++ description: None
+```
+
+```diff
+    contract ERC20Outbox (0x1E400568AD4840dbE50FB32f306B842e9ddeF726) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      name:
+-        "Outbox"
++        "ERC20Outbox"
+      displayName:
++        "Outbox"
+    }
+```
+
+```diff
+    contract L1OrbitGatewayRouter (0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      name:
+-        "L1GatewayRouter"
++        "L1OrbitGatewayRouter"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract StakingPool (0x599C8489256Fb17b66d499d907F30b8022a29443)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PoolBeacon (0x5f9D168d3435747335b1B3dC7e4d42e3510087C7)
+    +++ description: None
+```
+
+```diff
+    contract PoolProxyDeployer (0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD) {
+    +++ description: Manages beacon addresses for the v2 staking pools.
+      description:
++        "Manages beacon addresses for the v2 staking pools."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PoolBeacon (0x6Bc4e6B2c13Ba42e933b23AFAb8a58bbbBa5D02B)
+    +++ description: None
+```
+
+```diff
+    contract ERC20Bridge (0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f) {
+    +++ description: Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      name:
+-        "Bridge"
++        "ERC20Bridge"
+      displayName:
++        "Bridge"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafeL2 (0x7eC7e03563f781ED4c56BBC4c5F28C1B4dB932ff)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BucketTracker (0xa83825Dc4D94513d1C907b319EE8224FA63A29B2)
+    +++ description: None
+```
+
+```diff
+    contract ERC20Inbox (0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      name:
+-        "Inbox"
++        "ERC20Inbox"
+      displayName:
++        "Inbox"
+    }
+```
+
+```diff
+    contract L1OrbitERC20Gateway (0xb591cE747CF19cF30e11d656EB94134F523A9e77) {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      name:
+-        "L1ERC20Gateway"
++        "L1OrbitERC20Gateway"
+    }
+```
+
+```diff
+    contract NodeLicenseRegistry (0xbc14d8563b248B79689ECbc43bBa53290e0b6b66) {
+    +++ description: This is the contract where Xai Sentry Keys to run a node are minted.
+      description:
++        "This is the contract where Xai Sentry Keys to run a node are minted."
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723) {
+    +++ description: None
+      name:
+-        "StakingProxyAdmin"
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract PoolFactory (0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5) {
+    +++ description: The PoolFactory allows creating and managing staking pools for V2 staking. Users can stake esXAI (and / or Sentry Keys) in pools. This contract's address is whitelisted in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. V2 staking through this contract is currently set to true.
+      description:
++        "The PoolFactory allows creating and managing staking pools for V2 staking. Users can stake esXAI (and / or Sentry Keys) in pools. This contract's address is whitelisted in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. V2 staking through this contract is currently set to true."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PoolBeacon (0xfB93c2e5E41BD0ffd2E99A88e6d2A8D4F542d39a)
+    +++ description: None
+```
+
+```diff
+    contract XaiFundsReiceiverMultisig (0xFCF7248C495d6fd3641eE43F861c48Ebe402c878) {
+    +++ description: The designated fundsReceiver in the NodeLicenseRegistry. Receives all ETH from 'Sentry Node License' mints.
+      name:
+-        "FundsReiceiverMultisig"
++        "XaiFundsReiceiverMultisig"
+    }
+```
+
+```diff
+    contract SentryReferee (0xfD41041180571C5D371BEA3D9550E55653671198) {
+    +++ description: The referee contract manages the Xai Sentry protocol. Sentry nodes that are tasked to watch the state transitions on Xai receive esXAI rewards for their service. These watchers participate in a game with a central 'challenger' by posting their assertions to make sure they are actually watching. In case of a malicious state transition, sentries are supposed to raise an alarm offchain. The referee contract is also a whitelisted address in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. New staking through this contract is disabled in favor of the new v2 staking. V1 Stakers can continue to get staking rewards here or withdraw/migrate their assets.
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7","0xfeBC06428a15C6618Baa5589C3E9C40ACF71aA79"]},"CHALLENGER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xC74c1e08963CEEf0e1F2F2a2eeB879f443e86836"]},"KYC_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x7eC7e03563f781ED4c56BBC4c5F28C1B4dB932ff","0xCBA55AAD91BB119794C48AF09A734Fc31A4CDF56","0x83f396d217820386464e8E99205DCf090d0DD04c"]}}
+      description:
++        "The referee contract manages the Xai Sentry protocol. Sentry nodes that are tasked to watch the state transitions on Xai receive esXAI rewards for their service. These watchers participate in a game with a central 'challenger' by posting their assertions to make sure they are actually watching. In case of a malicious state transition, sentries are supposed to raise an alarm offchain. The referee contract is also a whitelisted address in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. New staking through this contract is disabled in favor of the new v2 staking. V1 Stakers can continue to get staking rewards here or withdraw/migrate their assets."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafeL2 (0xfeBC06428a15C6618Baa5589C3E9C40ACF71aA79)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xd2d78e1158c0f33ba3269855cf148129a9947d3d
 
 # Diff at Fri, 15 Nov 2024 08:18:21 GMT:

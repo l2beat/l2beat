@@ -23,7 +23,9 @@ import {
   addSentimentToDataAvailability,
 } from '../../common'
 import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
+import { ESCROW } from '../../common/escrow'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
+import { formatChallengePeriod, formatDelay } from '../../common/formatDelays'
 import { OPERATOR } from '../../common/operator'
 import { TECHNOLOGY_DATA_AVAILABILITY } from '../../common/technologyDataAvailability'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -213,14 +215,7 @@ export const optimism: Layer2 = {
       discovery.getEscrowDetails({
         address: EthereumAddress('0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65'),
         sinceTimestamp: new UnixTime(1625675779),
-        source: 'external',
-        bridgedUsing: {
-          bridges: [
-            {
-              name: 'Canonically (external escrow)',
-            },
-          ],
-        },
+        ...ESCROW.CANONICAL_EXTERNAL,
         tokens: ['DAI'],
         description: 'DAI Vault for custom DAI Gateway managed by MakerDAO.',
       }),
@@ -229,14 +224,7 @@ export const optimism: Layer2 = {
         address: EthereumAddress('0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f'),
         sinceTimestamp: new UnixTime(1620680982),
         tokens: ['SNX'],
-        source: 'external',
-        bridgedUsing: {
-          bridges: [
-            {
-              name: 'Canonically (external escrow)',
-            },
-          ],
-        },
+        ...ESCROW.CANONICAL_EXTERNAL,
         description: 'SNX Vault for custom SNX Gateway managed by Synthetix.',
       }),
       {
@@ -244,14 +232,7 @@ export const optimism: Layer2 = {
         address: EthereumAddress('0x045e507925d2e05D114534D0810a1abD94aca8d6'),
         sinceTimestamp: new UnixTime(1610668212),
         tokens: ['SNX'],
-        source: 'external',
-        bridgedUsing: {
-          bridges: [
-            {
-              name: 'Canonically (external escrow)',
-            },
-          ],
-        },
+        ...ESCROW.CANONICAL_EXTERNAL,
         isHistorical: true,
         chain: 'ethereum',
       },
@@ -260,28 +241,14 @@ export const optimism: Layer2 = {
         address: EthereumAddress('0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068'),
         sinceTimestamp: new UnixTime(1620680934),
         tokens: ['SNX'],
-        source: 'external',
-        bridgedUsing: {
-          bridges: [
-            {
-              name: 'Canonically (external escrow)',
-            },
-          ],
-        },
+        ...ESCROW.CANONICAL_EXTERNAL,
         isHistorical: true,
         chain: 'ethereum',
       },
       discovery.getEscrowDetails({
         address: EthereumAddress('0x76943C0D61395d8F2edF9060e1533529cAe05dE6'),
         tokens: ['wstETH'],
-        source: 'external',
-        bridgedUsing: {
-          bridges: [
-            {
-              name: 'Canonically (external escrow)',
-            },
-          ],
-        },
+        ...ESCROW.CANONICAL_EXTERNAL,
         description:
           'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
       }),
@@ -394,7 +361,7 @@ export const optimism: Layer2 = {
           ],
         },
       ],
-      secondLine: `${formatSeconds(maxClockDuration)} challenge period`,
+      secondLine: formatChallengePeriod(maxClockDuration),
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: {
@@ -408,6 +375,7 @@ export const optimism: Layer2 = {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
         HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
       ),
+      secondLine: formatDelay(HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS),
     },
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,

@@ -15,6 +15,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { formatChallengePeriod } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -135,7 +136,7 @@ export const fuel: Layer2 = {
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,
-      secondLine: `${formatSeconds(challengePeriod)} challenge period`,
+      secondLine: formatChallengePeriod(challengePeriod),
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, challengePeriod),

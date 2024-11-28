@@ -137,8 +137,10 @@ export class AddressAnalyzer {
       overrides?.extends === undefined &&
       (suggestedTemplates === undefined || suggestedTemplates.size === 0)
     ) {
-      const matchingTemplates =
-        this.templateService.findMatchingTemplates(sources)
+      const matchingTemplates = this.templateService.findMatchingTemplates(
+        sources,
+        address,
+      )
       const template = matchingTemplates[0]
       if (template !== undefined) {
         // extend template even on error to make sure pruning works

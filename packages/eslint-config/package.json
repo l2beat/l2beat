@@ -15,6 +15,7 @@
     "@eslint/eslintrc": "^3.1.0",
     "@eslint/js": "9.13.0",
     "@types/eslint": "^9.6.1",
+    "@types/eslint-plugin-mocha": "^10.4.0",
     "@types/eslint-plugin-tailwindcss": "^3.17.0",
     "@types/eslint__eslintrc": "^2.1.2",
     "@types/eslint__js": "^8.42.3",
@@ -23,6 +24,7 @@
     "eslint": "9.13.0",
     "eslint-config-next": "15.0.1",
     "eslint-config-turbo": "^2.2.3",
+    "eslint-plugin-mocha": "^10.5.0",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-tailwindcss": "^3.17.5",
     "typescript-eslint": "^8.12.0"

@@ -42,6 +42,10 @@ import {
   sumRisk,
 } from '../../../common'
 import { subtractOne } from '../../../common/assessCount'
+import {
+  formatChallengePeriod,
+  formatDelay,
+} from '../../../common/formatDelays'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { Badge, BadgeId, badges } from '../../badges'
 import { Layer3, Layer3Display } from '../../layer3s/types'
@@ -595,7 +599,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
         nOfChallengers,
         challengePeriodSeconds,
       ),
-      secondLine: `${formatSeconds(challengePeriodSeconds)} challenge period`,
+      secondLine: formatChallengePeriod(challengePeriodSeconds),
     },
     dataAvailability:
       (templateVars.nonTemplateRiskView?.dataAvailability ?? postsToExternalDA)
@@ -614,14 +618,16 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     exitWindow:
       templateVars.nonTemplateRiskView?.exitWindow ??
       RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
-    sequencerFailure:
-      templateVars.nonTemplateRiskView?.sequencerFailure ??
-      RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),
-    proposerFailure:
-      templateVars.nonTemplateRiskView?.proposerFailure ??
-      RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
+    sequencerFailure: templateVars.nonTemplateRiskView?.sequencerFailure ?? {
+      ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),
+      secondLine: formatDelay(selfSequencingDelaySeconds),
+    },
+    proposerFailure: templateVars.nonTemplateRiskView?.proposerFailure ?? {
+      ...RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
         challengePeriodSeconds + validatorAfkTimeSeconds,
       ), // see `_validatorIsAfk()` https://basescan.org/address/0xB7202d306936B79Ba29907b391faA87D3BEec33A#code#F1#L50
+      secondLine: formatDelay(challengePeriodSeconds + validatorAfkTimeSeconds),
+    },
     validatedBy:
       templateVars.nonTemplateRiskView?.validatedBy ??
       RISK_VIEW.VALIDATED_BY_L2(templateVars.hostChain),
@@ -954,7 +960,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           nOfChallengers,
           challengePeriodSeconds,
         ),
-        secondLine: `${formatSeconds(challengePeriodSeconds)} challenge period`,
+        secondLine: formatChallengePeriod(challengePeriodSeconds),
       },
       dataAvailability:
         (templateVars.nonTemplateRiskView?.dataAvailability ??
@@ -974,14 +980,18 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       exitWindow:
         templateVars.nonTemplateRiskView?.exitWindow ??
         RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
-      sequencerFailure:
-        templateVars.nonTemplateRiskView?.sequencerFailure ??
-        RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),
-      proposerFailure:
-        templateVars.nonTemplateRiskView?.proposerFailure ??
-        RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
+      sequencerFailure: templateVars.nonTemplateRiskView?.sequencerFailure ?? {
+        ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),
+        secondLine: formatDelay(selfSequencingDelaySeconds),
+      },
+      proposerFailure: templateVars.nonTemplateRiskView?.proposerFailure ?? {
+        ...RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
           challengePeriodSeconds + validatorAfkTimeSeconds,
         ), // see `_validatorIsAfk()` https://basescan.org/address/0xB7202d306936B79Ba29907b391faA87D3BEec33A#code#F1#L50
+        secondLine: formatDelay(
+          challengePeriodSeconds + validatorAfkTimeSeconds,
+        ),
+      },
       validatedBy:
         templateVars.nonTemplateRiskView?.validatedBy ??
         RISK_VIEW.VALIDATED_BY_ETHEREUM,

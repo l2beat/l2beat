@@ -2,7 +2,7 @@
   "name": "lisk",
   "chain": "ethereum",
   "blockNumber": 21078724,
-  "configHash": "0x7c0dc303944810ab5fd5ddfdc972200b5ebb9d9c9c87849da5003b0ecfe229eb",
+  "configHash": "0x54b600f138a147f390a890b238a88a803b26d43d59f30b55edf592f85fcc7e87",
   "contracts": [
     {
       "name": "SystemConfig",

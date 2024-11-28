@@ -80,12 +80,7 @@ export const reya: Layer2 = orbitStackL2({
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   rpcUrl: 'https://rpc.reya.network',
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'GelatoMultisig',
-      'Multisig that can execute upgrades via the UpgradeExecutor.',
-    ),
-  ],
+  discoveryDrivenData: true,
   milestones: [
     {
       name: 'Reya DEX launch',

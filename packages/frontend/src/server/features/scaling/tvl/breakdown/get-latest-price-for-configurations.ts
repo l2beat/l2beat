@@ -3,13 +3,14 @@ import {
   type PriceConfigEntry,
   type UnixTime,
 } from '@l2beat/shared-pure'
-import { db } from '~/server/database'
+import { getDb } from '~/server/database'
 import { getConfigurationsStatus } from '../sync-status/get-configurations-status'
 
 export async function getLatestPriceForConfigurations(
   configurations: (PriceConfigEntry & { configId: string })[],
   targetTimestamp: UnixTime,
 ) {
+  const db = getDb()
   const [prices, status] = await Promise.all([
     db.price.getByTimestamp(targetTimestamp),
     getConfigurationsStatus(configurations, targetTimestamp),

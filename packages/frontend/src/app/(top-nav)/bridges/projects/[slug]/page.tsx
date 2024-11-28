@@ -5,6 +5,7 @@ import { DesktopProjectNavigation } from '~/components/projects/navigation/deskt
 import { MobileProjectNavigation } from '~/components/projects/navigation/mobile-project-navigation'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 import { ProjectDetails } from '~/components/projects/project-details'
+import { env } from '~/env'
 import { getBridgesProjectEntry } from '~/server/features/bridges/project/get-bridges-project-entry'
 import { HydrateClient } from '~/trpc/server'
 import { getProjectMetadata } from '~/utils/metadata'
@@ -12,6 +13,7 @@ import { BridgesProjectSummary } from './_components/bridges-project-summary'
 
 export const revalidate = 600
 export async function generateStaticParams() {
+  if (env.VERCEL_ENV === 'preview') return []
   return bridges.map((layer) => ({
     slug: layer.display.slug,
   }))

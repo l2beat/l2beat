@@ -1,0 +1,87 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "kinto",
+  "name": "kinto",
+  "initialAddresses": [
+    "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b", // appRegistry
+    "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a", // kintoadmin smartwallet
+    "0x87f0eE85bF3198654900a422832157abBba30828", // KintoWallet beacon
+    "0x8d2D899402ed84b6c0510bB1ad34ee436ADDD20d", // bundleBulker
+    "0x340487b92808B84c2bd97C87B590EE81267E04a7", // L2GatewayRouter
+    "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd", // SponsorPaymaster
+    "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75", // KintoWalletFactory
+    "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7", // KintoID
+    "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb" // EntryPoint
+  ],
+  "names": {
+    "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b": "KintoAppRegistry",
+    "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7": "KintoID",
+    "0x87f0eE85bF3198654900a422832157abBba30828": "KintoWalletBeacon",
+    "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a": "KintoAdminMultisig",
+    "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75": "KintoWalletFactory",
+    "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd": "SponsorPaymaster",
+    "0xE90C1e020D9d2A74045A1365bd5abEe87Aee8D7C": "KintoWalletBeacon_implemention",
+    "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03": "Faucet",
+    "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA": "RewardsDistributor",
+    "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87": "BridgedKinto",
+    "0x793500709506652Fcc61F0d2D0fDa605638D4293": "Treasury",
+    "0x3e9727470C66B1e77034590926CDe0242B5A3dCc": "Socket"
+  },
+  "overrides": {
+    "Socket": {
+      "ignoreInWatchMode": ["globalMessageCount"]
+    },
+    "Treasury": {
+      "ignoreMethods": ["proxiableUUID"]
+    },
+    "BridgedKinto": {
+      "ignoreMethods": ["proxiableUUID"],
+      "ignoreInWatchMode": ["totalSupply"]
+    },
+    "RewardsDistributor": {
+      "ignoreMethods": ["proxiableUUID", "getRewards", "rewardsPerQuarter"],
+      "ignoreInWatchMode": [
+        "getTotalLimit",
+        "getUnclaimedLimit",
+        "totalClaimed"
+      ]
+    },
+    "Faucet": {
+      "ignoreMethods": ["proxiableUUID"]
+    },
+    "KintoWalletBeacon_implemention": {
+      "description": "Implementation for all KintoWallets, managed by a beacon proxy.",
+      "ignoreMethods": ["getAccessPoint"]
+    },
+    "SponsorPaymaster": {
+      "ignoreMethods": ["proxiableUUID"],
+      "ignoreInWatchMode": ["getDeposit"]
+    },
+    "KintoWalletFactory": {
+      "ignoreMethods": ["proxiableUUID"]
+    },
+    "KintoID": {
+      "description": "Manages Kinto's KYC system: KYC provider addresses and the KYC status of users.",
+      "ignoreMethods": ["proxiableUUID", "tokenByIndex"],
+      "ignoreInWatchMode": ["lastMonitoredAt", "totalSupply"],
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
+    },
+    "KintoAppRegistry": {
+      "description": "Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs. Accordingly, users can only transact from their smart wallets.",
+      "ignoreMethods": [
+        "proxiableUUID",
+        "reservedContracts",
+        "systemContracts",
+        "tokenByIndex",
+        "tokenIdToApp"
+      ],
+      "ignoreRelatives": ["getReservedContracts", "getSystemContracts"]
+    }
+  }
+}
