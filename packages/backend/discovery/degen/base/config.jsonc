@@ -16,7 +16,7 @@
   },
   "overrides": {
     "OrbitERC20OFTAdapter": {
-      "description": "as a desiganted allowed outbox, this contract can access all funds of the canonical bridge escrow. It also interfaces with the LayerZero AMB, giving this external bridge access to the Degen L3 canonical bridge and making canonical bridge security dependent on LayerZero security.",
+      "description": "As a designated allowed outbox, this contract can access all funds of the canonical bridge escrow. It also interfaces with the LayerZero AMB, giving this external bridge access to the Degen L3 canonical bridge and making canonical bridge security dependent on LayerZero security.",
       "ignoreRelatives": ["endpoint", "token"],
       "fields": {
         "owner": {

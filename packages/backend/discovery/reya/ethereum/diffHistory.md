@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x995e12f7a8cb71a28edb86b32e8069ba2d2f5d1b
+Generated with discovered.json: 0xd26a67eb93204103ffb714847bfd06389cd5368b
 
-# Diff at Tue, 26 Nov 2024 14:21:14 GMT:
+# Diff at Wed, 27 Nov 2024 13:22:43 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@31664f2b27e53f2ac36a87f40bdcb50c37ab9504 block: 21093393
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@3b9391cfe483e60a1853eeae6e47b4de475aac4e block: 21093393
 - current block number: 21272482
 
 ## Description

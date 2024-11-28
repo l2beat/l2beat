@@ -2,7 +2,7 @@
   "name": "degen",
   "chain": "base",
   "blockNumber": 22921651,
-  "configHash": "0x62a29fdc4b6e36e84f27cc169e5121544325250fd9f8a980e7fe2e3956826cd5",
+  "configHash": "0xbb75fa8ad596810324ed3adb9e13a7652abda66db1bf1d0f01732267faab72a3",
   "contracts": [
     {
       "name": "ERC20Inbox",
@@ -649,7 +649,7 @@
       "sourceHashes": [
         "0xa6648e861cb9df5f8a3d15fc05c8f842f7f8a47136470f83c5d452f2b4eca4e6"
       ],
-      "description": "as a desiganted allowed outbox, this contract can access all funds of the canonical bridge escrow. It also interfaces with the LayerZero AMB, giving this external bridge access to the Degen L3 canonical bridge and making canonical bridge security dependent on LayerZero security.",
+      "description": "As a designated allowed outbox, this contract can access all funds of the canonical bridge escrow. It also interfaces with the LayerZero AMB, giving this external bridge access to the Degen L3 canonical bridge and making canonical bridge security dependent on LayerZero security.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -887,7 +887,7 @@
         {
           "permission": "sequence",
           "target": "0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221",
-          "description": "can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
         }
       ]
     },
@@ -1600,7 +1600,7 @@
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
     "orbitstack/RollupEventInbox": "0x0608b35e1df8a51677a6392869e50b60a1ff7137f71f40bddf83143a5ef640c1",
     "orbitstack/RollupProxy": "0x88165b83156dbb5b288912a52adc278d223904d0c933472cb3950a05ba456170",
-    "orbitstack/SequencerInbox": "0x58bf3ad8ac9dc1181ff793e330641c545ee2d9558fce65d2ee39d483c2490494",
+    "orbitstack/SequencerInbox": "0x88542722d1f831549b0b3c814ee5d973fed5780765ae1a05e607dffef0df3154",
     "orbitstack/UpgradeExecutor": "0xa8c2617950ce46d982abd852226ebcc1aacaf9c8c7daeda793b53a790eced777"
   }
 }

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xccb4e74b89c10c9d4767fd57db0fc14af13633e1
+Generated with discovered.json: 0x8d5ead9c8c45b54da433c780dd575aa9201e32a7
 
-# Diff at Tue, 26 Nov 2024 14:51:10 GMT:
+# Diff at Wed, 27 Nov 2024 13:46:31 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@31664f2b27e53f2ac36a87f40bdcb50c37ab9504 block: 22580502
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@3b9391cfe483e60a1853eeae6e47b4de475aac4e block: 22580502
 - current block number: 22921651
 
 ## Description
@@ -48,9 +48,9 @@ discovery. Values are for block 22580502 (main branch discovery), not current.
 
 ```diff
     contract OrbitERC20OFTAdapter (0xDb8E759859058952c34953c8469f464109826e52) {
-    +++ description: as a desiganted allowed outbox, this contract can access all funds of the canonical bridge escrow. It also interfaces with the LayerZero AMB, giving this external bridge access to the Degen L3 canonical bridge and making canonical bridge security dependent on LayerZero security.
+    +++ description: As a designated allowed outbox, this contract can access all funds of the canonical bridge escrow. It also interfaces with the LayerZero AMB, giving this external bridge access to the Degen L3 canonical bridge and making canonical bridge security dependent on LayerZero security.
       description:
-+        "as a desiganted allowed outbox, this contract can access all funds of the canonical bridge escrow. It also interfaces with the LayerZero AMB, giving this external bridge access to the Degen L3 canonical bridge and making canonical bridge security dependent on LayerZero security."
++        "As a designated allowed outbox, this contract can access all funds of the canonical bridge escrow. It also interfaces with the LayerZero AMB, giving this external bridge access to the Degen L3 canonical bridge and making canonical bridge security dependent on LayerZero security."
       issuedPermissions:
 +        [{"permission":"configure","target":"0x3C12B77aE8B7DD1FEB63D1D6a2A819AcdA0a41d2","via":[]}]
     }
