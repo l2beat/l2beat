@@ -4,9 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev --turbopack",
-    "dev:noturbo": "next dev",
+    "dev": "next dev",
+    "dev:turbo": "next dev --turbopack",
     "dev:mock": "MOCK=true pnpm dev",
+    "dev:turbo-mock": "MOCK=true pnpm dev:turbo",
     "build": "next build",
     "build:dependencies": "cd ../.. && pnpm build:dependencies",
     "start": "next start",
