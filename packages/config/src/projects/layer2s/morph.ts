@@ -146,7 +146,7 @@ export const morph: Layer2 = {
         {
           contract: 'MorphRollup',
           references: [
-            'https://etherscan.io/address/0x073403E147a8e607b80985fe458c0B527287278F#code',
+            'https://etherscan.io/address/0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A#code',
           ],
         },
       ],
@@ -157,7 +157,7 @@ export const morph: Layer2 = {
         {
           contract: 'MorphRollup',
           references: [
-            'https://etherscan.io/address/0x073403E147a8e607b80985fe458c0B527287278F#code',
+            'https://etherscan.io/address/0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A#code',
           ],
         },
       ],
@@ -185,7 +185,7 @@ export const morph: Layer2 = {
         {
           contract: 'MorphRollup',
           references: [
-            'https://etherscan.io/address/0x073403E147a8e607b80985fe458c0B527287278F#code',
+            'https://etherscan.io/address/0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A#code',
           ],
         },
       ],
@@ -206,7 +206,7 @@ export const morph: Layer2 = {
       references: [
         {
           text: 'Rollup.sol - Etherscan source code, commitBatch(), challengeState(), proveState() functions',
-          href: 'https://etherscan.io/address/0x073403e147a8e607b80985fe458c0b527287278f#code#F1#L204',
+          href: 'https://etherscan.io/address/0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A#code#F1#L219',
         },
       ],
       risks: [
@@ -251,7 +251,7 @@ export const morph: Layer2 = {
         },
         {
           text: 'Rollup.sol - proposer can indicate which messages were skipped',
-          href: 'https://etherscan.io/address/0x073403e147a8e607b80985fe458c0b527287278f#code#F1#L242',
+          href: 'https://etherscan.io/address/0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A#code#F1#L258',
         },
       ],
     },
