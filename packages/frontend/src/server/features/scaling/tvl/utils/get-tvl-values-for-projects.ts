@@ -1,7 +1,7 @@
 import { type ValueRecord } from '@l2beat/database'
 import { assert } from '@l2beat/shared-pure'
 import { type Dictionary, groupBy } from 'lodash'
-import { db } from '~/server/database'
+import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
 import { type TvlProject } from './get-tvl-projects'
 import { getTvlTargetTimestamp } from './get-tvl-target-timestamp'
@@ -12,6 +12,7 @@ export async function getTvlValuesForProjects(
   projects: TvlProject[],
   range: TvlChartRange,
 ) {
+  const db = getDb()
   const { days, resolution } = getRangeConfig(range)
   const target = getTvlTargetTimestamp()
 

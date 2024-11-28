@@ -1,7 +1,7 @@
 import { type Layer2, type Layer3 } from '@l2beat/config'
 import { groupBy } from 'lodash'
 import { env } from '~/env'
-import { db } from '~/server/database'
+import { getDb } from '~/server/database'
 import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import { getLastDayUops } from './utils/get-last-day'
@@ -17,6 +17,7 @@ export type ActivityLatestUopsData = Awaited<
   ReturnType<typeof getActivityLatestUopsData>
 >
 async function getActivityLatestUopsData(projects: (Layer2 | Layer3)[]) {
+  const db = getDb()
   const range = getFullySyncedActivityRange('2d')
   const records = await db.activity.getByProjectsAndTimeRange(
     projects.map((p) => p.id),

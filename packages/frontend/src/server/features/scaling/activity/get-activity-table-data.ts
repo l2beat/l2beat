@@ -2,7 +2,7 @@ import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { env } from '~/env'
-import { db } from '~/server/database'
+import { getDb } from '~/server/database'
 import { countPerSecond } from './utils/count-per-second'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import { getLastDayTps, getLastDayUops } from './utils/get-last-day'
@@ -25,6 +25,7 @@ export type ActivityProjectTableData = NonNullable<ActivityTableData[string]>
 type ActivityTableData = Awaited<ReturnType<typeof getActivityTableData>>
 
 async function getActivityTableData(projects: (Layer2 | Layer3)[]) {
+  const db = getDb()
   const range = getFullySyncedActivityRange('30d')
   const records = await db.activity.getByProjectsAndTimeRange(
     [ProjectId.ETHEREUM, ...projects.map((p) => p.id)],

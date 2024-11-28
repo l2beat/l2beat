@@ -1,6 +1,6 @@
 import { type IndexerStateRecord } from '@l2beat/database'
 import { assert, type AmountConfigEntry, UnixTime } from '@l2beat/shared-pure'
-import { db } from '~/server/database'
+import { getDb } from '~/server/database'
 import { getExclusionBoundary } from './get-exclusion-boundary'
 
 export async function getStatus<
@@ -11,6 +11,7 @@ export async function getStatus<
   getIndexerId: (entry: T) => string,
   findConfig: (indexer: IndexerStateRecord, entries: T[]) => T | undefined,
 ) {
+  const db = getDb()
   const processed = new Set<string>()
   const lagging: { id: string; latestTimestamp: UnixTime }[] = []
   const excluded = new Set<string>()
