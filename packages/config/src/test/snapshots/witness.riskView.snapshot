@@ -31,6 +31,7 @@
   }
   proposerFailure: {
     description: "If the Proposer fails, users can leverage the source available prover to submit proofs to the L1 bridge. There is a 5d delay for proving and a 5d delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state."
+    secondLine: "10d delay"
     sentiment: "good"
     sources: [
       {
