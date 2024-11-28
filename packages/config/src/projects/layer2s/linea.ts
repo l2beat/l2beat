@@ -25,6 +25,7 @@ import {
   addSentimentToDataAvailability,
 } from '../../common'
 import { ESCROW } from '../../common/escrow'
+import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { PERFORMED_BY } from '../other/zk-catalog'
 import { getStage } from './common/stages/getStage'
@@ -71,6 +72,8 @@ const withdrawalLimitInWei = discovery.getContractValue<number>(
   'limitInWei',
 )
 
+const finalizationPeriod = 0
+
 const withdrawalLimitString = `Currently, there is a general limit of ${utils.formatEther(
   withdrawalLimitInWei,
 )} ETH that can be withdrawn within each ${formatSeconds(
@@ -115,7 +118,7 @@ export const linea: Layer2 = {
         'Linea is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1. Tx data, proofs and state roots are currently posted in the same transaction. Blocks can also be finalized by the operator without the need to provide a proof.',
     },
     finality: {
-      finalizationPeriod: 0,
+      finalizationPeriod,
     },
   },
   config: {
@@ -309,6 +312,7 @@ export const linea: Layer2 = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
+      secondLine: formatExecutionDelay(finalizationPeriod),
       sources: [
         {
           contract: 'zkEVM',

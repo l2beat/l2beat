@@ -49,6 +49,7 @@
   stateValidation: {
     definingMetric: Infinity
     description: "STARKs are zero knowledge proofs that ensure state correctness."
+    secondLine: undefined
     sentiment: "good"
     sources: [
       {

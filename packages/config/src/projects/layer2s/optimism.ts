@@ -25,6 +25,7 @@ import {
 import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
 import { ESCROW } from '../../common/escrow'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
+import { formatChallengePeriod, formatDelay } from '../../common/formatDelays'
 import { OPERATOR } from '../../common/operator'
 import { TECHNOLOGY_DATA_AVAILABILITY } from '../../common/technologyDataAvailability'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -360,7 +361,7 @@ export const optimism: Layer2 = {
           ],
         },
       ],
-      secondLine: `${formatSeconds(maxClockDuration)} challenge period`,
+      secondLine: formatChallengePeriod(maxClockDuration),
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: {
@@ -374,6 +375,7 @@ export const optimism: Layer2 = {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
         HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
       ),
+      secondLine: formatDelay(HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS),
     },
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,

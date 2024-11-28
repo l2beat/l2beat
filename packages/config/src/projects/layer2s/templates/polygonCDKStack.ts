@@ -39,6 +39,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../../common'
+import { formatDelay, formatExecutionDelay } from '../../../common/formatDelays'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { Badge, BadgeId, badges } from '../../badges'
 import { getStage } from '../common/stages/getStage'
@@ -146,6 +147,9 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
   )
   const bridge = shared.getContract('Bridge')
 
+  const finalizationPeriod =
+    templateVars.display.finality?.finalizationPeriod ?? 0
+
   return {
     type: 'layer2',
     createdAt: templateVars.createdAt,
@@ -158,7 +162,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       provider: 'Polygon',
       tvlWarning: templateVars.display.tvlWarning,
       finality: templateVars.display.finality ?? {
-        finalizationPeriod: 0,
+        finalizationPeriod,
         warnings: {
           timeToInclusion: {
             sentiment: 'neutral',
@@ -328,6 +332,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     riskView: {
       stateValidation: {
         ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
+        secondLine: formatExecutionDelay(finalizationPeriod),
         sources: [
           {
             contract: rollupManagerContract.name,
@@ -364,6 +369,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
         description:
           RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK.description +
           ` There is a ${trustedAggregatorTimeoutString} delay for proving and a ${pendingStateTimeoutString} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
+        secondLine: formatDelay(trustedAggregatorTimeout + pendingStateTimeout),
         sources: [
           {
             contract: rollupManagerContract.name,

@@ -20,6 +20,7 @@ import {
 } from '../../common'
 import { subtractOne } from '../../common/assessCount'
 import { ESCROW } from '../../common/escrow'
+import { formatChallengePeriod } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
@@ -233,7 +234,7 @@ export const kroma: Layer2 = {
         RISK_VIEW.STATE_FP_INT_ZK.description +
         " The challenge protocol can be subject to delay attacks and can fail under certain conditions. The current system doesn't use posted L2 txs batches on L1 as inputs to prove a fault, meaning that DA is not enforced.",
       sentiment: 'bad',
-      secondLine: `${formatSeconds(finalizationPeriod)} challenge period`,
+      secondLine: formatChallengePeriod(finalizationPeriod),
     },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,

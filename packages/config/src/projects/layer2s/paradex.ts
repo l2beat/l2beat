@@ -20,6 +20,7 @@ import {
 } from '../../common'
 import { ESCROW } from '../../common/escrow'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
+import { formatExecutionDelay } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
 import { STATE_CORRECTNESS } from '../../common/stateCorrectness'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -47,6 +48,7 @@ const escrowUSDCDelaySeconds = discovery.getContractValue<number>(
 )
 
 const minDelay = Math.min(upgradeDelaySeconds, escrowUSDCDelaySeconds)
+const finalizationPeriod = 0
 
 function formatMaxTotalBalanceString(
   ticker: string,
@@ -99,7 +101,7 @@ export const paradex: Layer2 = {
         'Paradex is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. Proofs are aggregated with other projects using SHARP and state updates have to refer to proved claims.',
     },
     finality: {
-      finalizationPeriod: 0,
+      finalizationPeriod,
     },
   },
   config: {
@@ -249,6 +251,7 @@ export const paradex: Layer2 = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
+      secondLine: formatExecutionDelay(finalizationPeriod),
       sources: [
         {
           contract: 'Paradex',

@@ -33,6 +33,7 @@ import {
   addSentimentToDataAvailability,
 } from '../../../common'
 import { ChainConfig } from '../../../common/ChainConfig'
+import { formatExecutionDelay } from '../../../common/formatDelays'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { BadgeId } from '../../badges'
 import { PROOFS } from '../../other/zk-catalog/common/proofSystems'
@@ -341,6 +342,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     riskView: {
       stateValidation: {
         ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
+        secondLine: formatExecutionDelay(executionDelayS),
         sources: [
           {
             contract: 'ValidatorTimelock',
