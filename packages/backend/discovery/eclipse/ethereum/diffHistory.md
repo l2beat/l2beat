@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x08f21bc66e8c18fa7c5ea045498684bf3b850e2b
+
+# Diff at Thu, 28 Nov 2024 11:02:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@4e0645053ebfcfcef2e7fd8c8410bad53373a3c4 block: 21121371
+- current block number: 21121371
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21121371 (main branch discovery), not current.
+
+```diff
+    contract EtherBridge (0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0x0000000000000000000000000000000000000000","via":[]}]
+    }
+```
+
+```diff
+    contract Mailbox (0xb23B2492f7A9631104A5877F7FFA00633660968d) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0x0000000000000000000000000000000000000000","via":[]}]
+    }
+```
+
+```diff
+    contract Treasury (0xD7E4b67E735733aC98a88F13d087D8aac670E644) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0x0000000000000000000000000000000000000000","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x03f973eaa951078e3ce4e868aba5cb0f8b34d015
 
 # Diff at Tue, 05 Nov 2024 12:13:10 GMT:

@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x85d767346d91de6b36db4f1f5b5821850c0e271b
+
+# Diff at Thu, 28 Nov 2024 11:03:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@4e0645053ebfcfcef2e7fd8c8410bad53373a3c4 block: 278532431
+- current block number: 278532431
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 278532431 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.4:
+-        {"permission":"validate","target":"0x964C83a66F78b67F75f076e386C433A1a10cefDB","via":[]}
+      issuedPermissions.3.target:
+-        "0x839ed36E86D36328c687a211CBe36C271065BAfD"
++        "0x964C83a66F78b67F75f076e386C433A1a10cefDB"
+      issuedPermissions.2.target:
+-        "0x795aA8E945b571c57b12E7b5B77De10A88a1FADe"
++        "0x839ed36E86D36328c687a211CBe36C271065BAfD"
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "validate"
+      issuedPermissions.1.target:
+-        "0x420B4d16119127E4b96E55CB8a9D0c2828a161BB"
++        "0x795aA8E945b571c57b12E7b5B77De10A88a1FADe"
+      issuedPermissions.1.via.0:
+-        {"address":"0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276","delay":0}
+      issuedPermissions.0.permission:
+-        "configure"
++        "upgrade"
+      issuedPermissions.0.target:
+-        "0x0000000000000000000000000000000000000000"
++        "0x420B4d16119127E4b96E55CB8a9D0c2828a161BB"
+      issuedPermissions.0.via.0:
++        {"address":"0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276","delay":0}
+    }
+```
+
 Generated with discovered.json: 0xe1d5040a8e26447582f44e236d052687cd1df9d0
 
 # Diff at Wed, 27 Nov 2024 13:44:45 GMT:

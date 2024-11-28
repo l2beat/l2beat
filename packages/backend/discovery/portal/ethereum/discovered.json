@@ -41,13 +41,6 @@
         "0x54a3c2ca728fd6aafdaa31a7f0d44cffbdfaa544fba87e938e3447de88b9f006"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0x0000000000000000000000000000000000000000",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1686938183,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
@@ -81,13 +74,6 @@
         "0x06093cab28394b5790c0a8281474cd818235258958a294ecad796fb89e7d017c"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0x0000000000000000000000000000000000000000",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1631535967,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
@@ -166,13 +152,6 @@
         "0xe8f857d15277c4009dd17c5e936579a00645b4b99609769258bc629c3ea1821b"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0x0000000000000000000000000000000000000000",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1632219043,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
@@ -272,13 +251,6 @@
         "0xb51bdb80364d69b22f5cafd3aee42a605a60f5fc3116509bea8352fbfa04c532"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0x0000000000000000000000000000000000000000",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1628093444,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
@@ -348,13 +320,6 @@
         "0xc5187968f2cb1166db32924199e148c88684177ee3c51e0b7ceb5905febb2bcd"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0x0000000000000000000000000000000000000000",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1682018903,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
@@ -409,7 +374,7 @@
   "eoas": [
     {
       "address": "0x0000000000000000000000000000000000000000",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "target": "0x27428DD2d3DD32A4D7f7C497eAaa23130d894911"

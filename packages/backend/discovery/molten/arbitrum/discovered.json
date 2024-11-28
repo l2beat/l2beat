@@ -28,11 +28,6 @@
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
       "issuedPermissions": [
         {
-          "permission": "configure",
-          "target": "0x0000000000000000000000000000000000000000",
-          "via": []
-        },
-        {
           "permission": "upgrade",
           "target": "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF",
           "via": [
@@ -900,7 +895,7 @@
   "eoas": [
     {
       "address": "0x0000000000000000000000000000000000000000",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "configure",
           "target": "0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",

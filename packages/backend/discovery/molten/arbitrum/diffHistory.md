@@ -1,3 +1,45 @@
+Generated with discovered.json: 0xcac9e38c0dff2a66afe80cdfbc7d05a6c708d4ad
+
+# Diff at Thu, 28 Nov 2024 11:03:26 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@4e0645053ebfcfcef2e7fd8c8410bad53373a3c4 block: 275817646
+- current block number: 275817646
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 275817646 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.2:
+-        {"permission":"validate","target":"0x152FFeF04881BD1390D2A52009f42d56EaC7AA03","via":[]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "validate"
+      issuedPermissions.1.target:
+-        "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"
++        "0x152FFeF04881BD1390D2A52009f42d56EaC7AA03"
+      issuedPermissions.1.via.0:
+-        {"address":"0x92ff91308F5f1036435f23c2F4F136Bb7475425d","delay":0}
+      issuedPermissions.0.permission:
+-        "configure"
++        "upgrade"
+      issuedPermissions.0.target:
+-        "0x0000000000000000000000000000000000000000"
++        "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"
+      issuedPermissions.0.via.0:
++        {"address":"0x92ff91308F5f1036435f23c2F4F136Bb7475425d","delay":0}
+    }
+```
+
 Generated with discovered.json: 0xeb0313172f93da33ef7c13adfb7eb00e14a6b048
 
 # Diff at Mon, 18 Nov 2024 16:55:49 GMT:

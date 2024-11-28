@@ -19,6 +19,10 @@ export function resolveAnalysis(analyses: Analysis[]): ResolvedPermission[] {
     }
 
     const address = analysis.address
+    if (address === EthereumAddress.ZERO) {
+      continue
+    }
+
     graph[address.toString()] ??= {
       address,
       delay: 0,
@@ -35,7 +39,12 @@ export function resolveAnalysis(analyses: Analysis[]): ResolvedPermission[] {
     }
 
     for (const entry of analysis.combinedMeta.permissions ?? []) {
-      graph[entry.target.toString()] ??= {
+      const entryAddress = entry.target
+      if (entryAddress === EthereumAddress.ZERO) {
+        continue
+      }
+
+      graph[entryAddress.toString()] ??= {
         address: entry.target,
         delay: 0,
         threshold,
@@ -43,7 +52,7 @@ export function resolveAnalysis(analyses: Analysis[]): ResolvedPermission[] {
         canActIndependently:
           analysis.combinedMeta?.canActIndependently ?? false,
       }
-      graph[entry.target.toString()]?.edges.push({
+      graph[entryAddress.toString()]?.edges.push({
         toNode: address,
         delay: entry.delay,
         permission: entry.type,
