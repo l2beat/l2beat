@@ -7,10 +7,5 @@
   ],
   "names": {
     "0x2876c43B17A5750CBea5E2A3C42718374E21D5a2": "RiverMultisig"
-  },
-  "overrides": {
-    "0xb6aFBB2A7299e968c9f98f8b518bD89e670a420A": {
-      "extends": "opstack/SuperchainConfigFake"
-    }
   }
 }

@@ -9,9 +9,6 @@
     "0xB68361AAac2Bc8a4b8BFe36B8C6d0B429b5930ea": "EthernityMultisig"
   },
   "overrides": {
-    "0x14B768F93f256Ad8D2d018930DBdAe61306c4752": {
-      "extends": "opstack/SuperchainConfigFake"
-    },
     "0xFcdb270B674911D321F1014c347EaBB1c55134FB": {
       // FaultDisputeGame ignored because the OptiPortal 2.8.0 does not use it
       "ignoreDiscovery": true

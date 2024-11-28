@@ -2,7 +2,7 @@
   "name": "worldchain",
   "chain": "ethereum",
   "blockNumber": 21141719,
-  "configHash": "0xad1e5bb1d4e4a62e256a89a10ecc12c340d628c23b3bb273fcb8fa9c2a4fa4de",
+  "configHash": "0x240314a7383f52ca9f8f8cd941ca1d9c086e6425126d789c812401ca9894e669",
   "contracts": [
     {
       "name": "L1OpUSDCBridgeAdapter",
