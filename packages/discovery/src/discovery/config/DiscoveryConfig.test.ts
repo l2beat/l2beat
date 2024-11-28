@@ -35,8 +35,10 @@ const CONFIG = new DiscoveryConfig(
     },
   },
   {
-    [ADDRESS_B.toString()]: 'B Common Name',
-    [ADDRESS_C.toString()]: 'C Common Name',
+    all: {
+      [ADDRESS_B.toString()]: 'B Common Name',
+      [ADDRESS_C.toString()]: 'C Common Name',
+    },
   },
 )
 
