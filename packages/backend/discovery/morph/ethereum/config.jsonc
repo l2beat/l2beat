@@ -137,7 +137,8 @@
         "challenges",
         "committedBatches",
         "finalizedStateRoots",
-        "isBatchFinalized"
+        "isBatchFinalized",
+        "committedStateRoots"
       ],
       "ignoreInWatchMode": [
         "batchChallenged",
