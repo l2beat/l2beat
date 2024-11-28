@@ -218,7 +218,7 @@ export const HotShotLightClient = {
     committeeSecurity: DaCommitteeSecurityRisk.LimitedCommitteeSecurity(
       'Permissioned',
       undefined,
-      20,
+      100,
     ),
     upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(),
     relayerFailure: DaRelayerFailureRisk.NoMechanism,
