@@ -1,8 +1,8 @@
 {
   "name": "kinto",
   "chain": "kinto",
-  "blockNumber": 542578,
-  "configHash": "0x0344b5909678602f9bc3440a03c0bcbc3b19c65a7d67fef6c63befdc1a7bd36c",
+  "blockNumber": 542579,
+  "configHash": "0xab1a4d97fe81ab9c6e5995667dd867be3680f8925a2fd4dc1d9a2ef39dd7b168",
   "contracts": [
     {
       "name": "BridgedKinto",
@@ -12,6 +12,7 @@
         "0x44215a226a4f9bbe6261cc55102df996258b9a5a2456bcfd1e33e7bb9886a8a7"
       ],
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1718926428,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
@@ -148,6 +149,7 @@
           "via": []
         }
       ],
+      "ignoreInWatchMode": ["getDeposit"],
       "sinceTimestamp": 1703803667,
       "values": {
         "$admin": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
@@ -345,6 +347,7 @@
       "sourceHashes": [
         "0x0647c0b13e7b71462cd40679e9dfcfb5f26b3971447ac5457901f3a86da859d7"
       ],
+      "ignoreInWatchMode": ["globalMessageCount"],
       "sinceTimestamp": 1715810609,
       "values": {
         "$immutable": true,
@@ -357,7 +360,8 @@
         "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
         "transmitManager__": "0x6332e56A423480A211E301Cb85be12814e9238Bb",
         "version": "0x484f1c5889188a0a81068ce8c49d8f7c3b3f1b0c1723b50ebd656a8d4f99e356"
-      }
+      },
+      "derivedName": "Socket"
     },
     {
       "name": "",
@@ -974,6 +978,11 @@
         "0xd15c713ccbe36c94f3701cc26df68875ded4c439ee290c429fd64be35c66d8ad"
       ],
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": [
+        "getTotalLimit",
+        "getUnclaimedLimit",
+        "totalClaimed"
+      ],
       "sinceTimestamp": 1719513260,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
@@ -1018,8 +1027,8 @@
         "$upgradeCount": 7,
         "bonusAmount": 0,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getTotalLimit": "338119873463788813691419",
-        "getUnclaimedLimit": "194748819703490370052462",
+        "getTotalLimit": "338153583792913604897836",
+        "getUnclaimedLimit": "194782530032615161258879",
         "KINTO": "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87",
         "NEW_USER_REWARD": "1000000000000000000",
         "NEW_USER_REWARD_TIMESTAMP": 1729785402,
@@ -1077,6 +1086,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages Kinto's KYC system: KYC provider addresses and the KYC status of users.",
+      "ignoreInWatchMode": ["lastMonitoredAt", "totalSupply"],
       "sinceTimestamp": 1703803592,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",

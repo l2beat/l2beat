@@ -24,17 +24,27 @@
     "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03": "Faucet",
     "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA": "RewardsDistributor",
     "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87": "BridgedKinto",
-    "0x793500709506652Fcc61F0d2D0fDa605638D4293": "Treasury"
+    "0x793500709506652Fcc61F0d2D0fDa605638D4293": "Treasury",
+    "0x3e9727470C66B1e77034590926CDe0242B5A3dCc": "Socket"
   },
   "overrides": {
+    "Socket": {
+      "ignoreInWatchMode": ["globalMessageCount"]
+    },
     "Treasury": {
       "ignoreMethods": ["proxiableUUID"]
     },
     "BridgedKinto": {
-      "ignoreMethods": ["proxiableUUID"]
+      "ignoreMethods": ["proxiableUUID"],
+      "ignoreInWatchMode": ["totalSupply"]
     },
     "RewardsDistributor": {
-      "ignoreMethods": ["proxiableUUID", "getRewards", "rewardsPerQuarter"]
+      "ignoreMethods": ["proxiableUUID", "getRewards", "rewardsPerQuarter"],
+      "ignoreInWatchMode": [
+        "getTotalLimit",
+        "getUnclaimedLimit",
+        "totalClaimed"
+      ]
     },
     "Faucet": {
       "ignoreMethods": ["proxiableUUID"]
@@ -44,7 +54,8 @@
       "ignoreMethods": ["getAccessPoint"]
     },
     "SponsorPaymaster": {
-      "ignoreMethods": ["proxiableUUID"]
+      "ignoreMethods": ["proxiableUUID"],
+      "ignoreInWatchMode": ["getDeposit"]
     },
     "KintoWalletFactory": {
       "ignoreMethods": ["proxiableUUID"]
@@ -52,6 +63,7 @@
     "KintoID": {
       "description": "Manages Kinto's KYC system: KYC provider addresses and the KYC status of users.",
       "ignoreMethods": ["proxiableUUID", "tokenByIndex"],
+      "ignoreInWatchMode": ["lastMonitoredAt", "totalSupply"],
       "fields": {
         "accesscontrol": {
           "handler": {
