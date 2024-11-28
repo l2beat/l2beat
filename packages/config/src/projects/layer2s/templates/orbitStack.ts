@@ -42,7 +42,10 @@ import {
   sumRisk,
 } from '../../../common'
 import { subtractOne } from '../../../common/assessCount'
-import { formatDelay } from '../../../common/formatDelays'
+import {
+  formatChallengePeriod,
+  formatDelay,
+} from '../../../common/formatDelays'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { Badge, BadgeId, badges } from '../../badges'
 import { Layer3, Layer3Display } from '../../layer3s/types'
@@ -596,7 +599,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
         nOfChallengers,
         challengePeriodSeconds,
       ),
-      secondLine: `${formatSeconds(challengePeriodSeconds)} challenge period`,
+      secondLine: formatChallengePeriod(challengePeriodSeconds),
     },
     dataAvailability:
       (templateVars.nonTemplateRiskView?.dataAvailability ?? postsToExternalDA)
@@ -957,7 +960,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           nOfChallengers,
           challengePeriodSeconds,
         ),
-        secondLine: `${formatSeconds(challengePeriodSeconds)} challenge period`,
+        secondLine: formatChallengePeriod(challengePeriodSeconds),
       },
       dataAvailability:
         (templateVars.nonTemplateRiskView?.dataAvailability ??

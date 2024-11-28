@@ -23,6 +23,7 @@ import {
   addSentimentToDataAvailability,
 } from '../../common'
 import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
+import { formatChallengePeriod } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import { Badge } from '../badges'
@@ -295,7 +296,7 @@ export const base: Layer2 = {
           ],
         },
       ],
-      secondLine: `${formatSeconds(maxClockDuration)} challenge period`,
+      secondLine: formatChallengePeriod(maxClockDuration),
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, FINALIZATION_PERIOD_SECONDS), // different than op mainnet!

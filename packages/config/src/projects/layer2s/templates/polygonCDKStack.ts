@@ -39,7 +39,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../../common'
-import { formatDelay } from '../../../common/formatDelays'
+import { formatDelay, formatExecutionDelay } from '../../../common/formatDelays'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { Badge, BadgeId, badges } from '../../badges'
 import { getStage } from '../common/stages/getStage'
@@ -332,10 +332,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     riskView: {
       stateValidation: {
         ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
-        secondLine:
-          finalizationPeriod > 0
-            ? `${formatSeconds(finalizationPeriod)} execution delay`
-            : 'No delay',
+        secondLine: formatExecutionDelay(finalizationPeriod),
         sources: [
           {
             contract: rollupManagerContract.name,

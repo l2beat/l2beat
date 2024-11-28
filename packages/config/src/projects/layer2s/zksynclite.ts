@@ -19,6 +19,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import { Badge } from '../badges'
@@ -169,10 +170,7 @@ export const zksynclite: Layer2 = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
-      secondLine:
-        finalizationPeriod > 0
-          ? `${formatSeconds(finalizationPeriod)} execution delay`
-          : 'No delay',
+      secondLine: formatExecutionDelay(finalizationPeriod),
       sources: [
         {
           contract: 'ZkSync',

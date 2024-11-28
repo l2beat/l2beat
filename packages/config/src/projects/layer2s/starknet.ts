@@ -23,6 +23,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
   getProxyGovernance,
@@ -770,10 +771,7 @@ export const starknet: Layer2 = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
-      secondLine:
-        finalizationPeriod > 0
-          ? `${formatSeconds(finalizationPeriod)} execution delay`
-          : 'No delay',
+      secondLine: formatExecutionDelay(finalizationPeriod),
       sources: [
         {
           contract: 'Starknet',

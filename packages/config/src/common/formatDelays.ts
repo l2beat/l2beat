@@ -7,3 +7,7 @@ export function formatDelay(delay: number) {
 export function formatExecutionDelay(delay: number) {
   return delay ? `${formatSeconds(delay)} execution delay` : undefined
 }
+
+export function formatChallengePeriod(period: number) {
+  return period ? `${formatSeconds(period)} challenge period` : undefined
+}

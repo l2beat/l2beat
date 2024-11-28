@@ -41,7 +41,10 @@ import {
 } from '../../../common'
 import { ChainConfig } from '../../../common/ChainConfig'
 import { subtractOne } from '../../../common/assessCount'
-import { formatDelay } from '../../../common/formatDelays'
+import {
+  formatChallengePeriod,
+  formatDelay,
+} from '../../../common/formatDelays'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../../discovery/values/hardcoded'
 import { Badge, BadgeId, badges } from '../../badges'
@@ -579,9 +582,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     riskView: {
       stateValidation: {
         ...RISK_VIEW.STATE_NONE,
-        secondLine: `${formatSeconds(
-          FINALIZATION_PERIOD_SECONDS,
-        )} challenge period`,
+        secondLine: formatChallengePeriod(FINALIZATION_PERIOD_SECONDS),
       },
       dataAvailability: {
         ...riskViewDA(daProvider),
@@ -718,9 +719,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
   const riskView = {
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,
-      secondLine: `${formatSeconds(
-        FINALIZATION_PERIOD_SECONDS,
-      )} challenge period`,
+      secondLine: formatChallengePeriod(FINALIZATION_PERIOD_SECONDS),
     },
     dataAvailability: {
       ...riskViewDA(daProvider),

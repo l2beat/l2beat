@@ -3,7 +3,6 @@ import {
   EthereumAddress,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 
 import {
@@ -20,6 +19,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { PROOFS } from '../other/zk-catalog/common/proofSystems'
@@ -167,10 +167,7 @@ export const loopring: Layer2 = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
-      secondLine:
-        finalizationPeriod > 0
-          ? `${formatSeconds(finalizationPeriod)} execution delay`
-          : 'No delay',
+      secondLine: formatExecutionDelay(finalizationPeriod),
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, forcedWithdrawalDelay),

@@ -19,6 +19,7 @@ import {
   addSentimentToDataAvailability,
 } from '../../common'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
+import { formatExecutionDelay } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
 import { STATE_CORRECTNESS } from '../../common/stateCorrectness'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -256,10 +257,7 @@ export const paradex: Layer2 = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
-      secondLine:
-        finalizationPeriod > 0
-          ? `${formatSeconds(finalizationPeriod)} execution delay`
-          : 'No delay',
+      secondLine: formatExecutionDelay(finalizationPeriod),
       sources: [
         {
           contract: 'Paradex',

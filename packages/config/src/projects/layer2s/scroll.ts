@@ -20,6 +20,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { PROOFS } from '../other/zk-catalog/common/proofSystems'
@@ -362,10 +363,7 @@ export const scroll: Layer2 = {
   riskView: {
     stateValidation: {
       ...STATE_ZKP_SN,
-      secondLine:
-        finalizationPeriod > 0
-          ? `${formatSeconds(finalizationPeriod)} execution delay`
-          : 'No delay',
+      secondLine: formatExecutionDelay(finalizationPeriod),
       sources: [
         {
           contract: 'ScrollChain',

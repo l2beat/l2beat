@@ -24,6 +24,7 @@ import {
 } from '../../common'
 import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
+import { formatChallengePeriod } from '../../common/formatDelays'
 import { OPERATOR } from '../../common/operator'
 import { TECHNOLOGY_DATA_AVAILABILITY } from '../../common/technologyDataAvailability'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -394,7 +395,7 @@ export const optimism: Layer2 = {
           ],
         },
       ],
-      secondLine: `${formatSeconds(maxClockDuration)} challenge period`,
+      secondLine: formatChallengePeriod(maxClockDuration),
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: {

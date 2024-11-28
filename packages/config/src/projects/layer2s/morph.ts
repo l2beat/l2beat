@@ -17,6 +17,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { formatChallengePeriod } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
@@ -158,7 +159,7 @@ export const morph: Layer2 = {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_1R_ZK,
       sentiment: 'bad',
-      secondLine: `${formatSeconds(challengeWindow)} challenge period`,
+      secondLine: formatChallengePeriod(challengeWindow),
     },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,

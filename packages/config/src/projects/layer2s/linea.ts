@@ -24,6 +24,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { PERFORMED_BY } from '../other/zk-catalog'
 import { getStage } from './common/stages/getStage'
@@ -317,10 +318,7 @@ export const linea: Layer2 = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
-      secondLine:
-        finalizationPeriod > 0
-          ? `${formatSeconds(finalizationPeriod)} execution delay`
-          : 'No delay',
+      secondLine: formatExecutionDelay(finalizationPeriod),
       sources: [
         {
           contract: 'zkEVM',
