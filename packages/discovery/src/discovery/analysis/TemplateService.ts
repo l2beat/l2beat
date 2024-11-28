@@ -96,17 +96,17 @@ export class TemplateService {
 
     const allShapes = this.getAllShapes()
     for (const [templateId, shape] of Object.entries(allShapes)) {
-      const criteriaMathes: string[] = []
+      const criteriaMatches: string[] = []
       if (shape.criteria && shape.criteria.validAddresses) {
         if (!shape.criteria.validAddresses.includes(address)) {
           continue
         } else {
-          criteriaMathes.push('validAddress')
+          criteriaMatches.push('validAddress')
         }
       }
       if (shape.hashes.includes(sourcesHash)) {
-        criteriaMathes.push('implementation')
-        result.push([templateId, criteriaMathes.length])
+        criteriaMatches.push('implementation')
+        result.push([templateId, criteriaMatches.length])
       }
     }
 
