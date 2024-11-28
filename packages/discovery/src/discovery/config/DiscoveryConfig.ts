@@ -3,7 +3,7 @@ import type { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 
 import { DiscoveryOutput } from '@l2beat/discovery-types'
 import { ConfigReader } from './ConfigReader'
-import { DiscoveryOverrides } from './DiscoveryOverrides'
+import { CommonAddressNames, DiscoveryOverrides } from './DiscoveryOverrides'
 import type {
   DiscoveryContract,
   DiscoveryCustomType,
@@ -19,7 +19,7 @@ export class DiscoveryConfig {
 
   constructor(
     private readonly config: RawDiscoveryConfig,
-    private readonly commonAddressNames: Record<string, string> = {},
+    commonAddressNames: CommonAddressNames = {},
     private readonly globalTypes: Record<string, DiscoveryCustomType> = {},
     configReader: ConfigReader = new ConfigReader(),
   ) {
