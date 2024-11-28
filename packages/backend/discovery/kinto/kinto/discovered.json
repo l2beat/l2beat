@@ -1,79 +1,9 @@
 {
   "name": "kinto",
   "chain": "kinto",
-  "blockNumber": 542550,
-  "configHash": "0x76553d0bd68c0ed56db225d3e70507415fc23e4cece7046a2970395a7852e479",
+  "blockNumber": 542578,
+  "configHash": "0x0344b5909678602f9bc3440a03c0bcbc3b19c65a7d67fef6c63befdc1a7bd36c",
   "contracts": [
-    {
-      "name": "",
-      "address": "0x0000000000000000000000000000000000000064",
-      "unverified": true,
-      "sinceTimestamp": 1702607855,
-      "values": { "$immutable": true }
-    },
-    {
-      "name": "",
-      "address": "0x0000000000000000000000000000000000000065",
-      "unverified": true,
-      "sinceTimestamp": 1702607855,
-      "values": { "$immutable": true }
-    },
-    {
-      "name": "",
-      "address": "0x0000000000000000000000000000000000000066",
-      "unverified": true,
-      "sinceTimestamp": 1702607855,
-      "values": { "$immutable": true }
-    },
-    {
-      "name": "",
-      "address": "0x0000000000000000000000000000000000000068",
-      "unverified": true,
-      "sinceTimestamp": 1702607855,
-      "values": { "$immutable": true }
-    },
-    {
-      "name": "",
-      "address": "0x0000000000000000000000000000000000000069",
-      "unverified": true,
-      "sinceTimestamp": 1702607855,
-      "values": { "$immutable": true }
-    },
-    {
-      "name": "",
-      "address": "0x000000000000000000000000000000000000006b",
-      "unverified": true,
-      "sinceTimestamp": 1702607855,
-      "values": { "$immutable": true }
-    },
-    {
-      "name": "",
-      "address": "0x000000000000000000000000000000000000006C",
-      "unverified": true,
-      "sinceTimestamp": 1702607855,
-      "values": { "$immutable": true }
-    },
-    {
-      "name": "",
-      "address": "0x000000000000000000000000000000000000006D",
-      "unverified": true,
-      "sinceTimestamp": 1702607855,
-      "values": { "$immutable": true }
-    },
-    {
-      "name": "",
-      "address": "0x000000000000000000000000000000000000006E",
-      "unverified": true,
-      "sinceTimestamp": 1702607855,
-      "values": { "$immutable": true }
-    },
-    {
-      "name": "",
-      "address": "0x0000000071727De22E5E9d8BAf0edAc6f37da032",
-      "unverified": true,
-      "sinceTimestamp": 1702607855,
-      "values": { "$immutable": true }
-    },
     {
       "name": "BridgedKinto",
       "address": "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87",
@@ -125,48 +55,7 @@
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3"
       },
-      "errors": { "proxiableUUID": "Processing error occurred." }
-    },
-    {
-      "name": "",
-      "address": "0x06FcD8264caF5c28D86eb4630c20004aa1faAaA8",
-      "unverified": true,
-      "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b",
-          "via": [
-            {
-              "address": "0x9eC0253E4174a14C0536261888416451A407Bf79",
-              "delay": 0
-            }
-          ]
-        }
-      ],
-      "sinceTimestamp": 1702609595,
-      "values": {
-        "$admin": "0x9eC0253E4174a14C0536261888416451A407Bf79",
-        "$implementation": "0x8B645011e45bf9fd6627e6D42604A9eEaEBfA9bF",
-        "$pastUpgrades": [
-          [
-            "2023-12-15T03:06:35.000Z",
-            "0x150c0395039eca95e504cce7b11c6ea9dd72f3a064e270776b52bee0231832f3",
-            ["0x0AA61431c585aab527B81dAAf472e51d2c5B4310"]
-          ],
-          [
-            "2023-12-15T03:06:35.000Z",
-            "0x150c0395039eca95e504cce7b11c6ea9dd72f3a064e270776b52bee0231832f3",
-            ["0xB15a112E27d84879055d53cb72d85759bE568c4D"]
-          ],
-          [
-            "2024-04-09T08:17:59.000Z",
-            "0x0c4d3821dcbbe28b55d4f4960f89bbd4e993522230bbe523a555a43abe8e2a7d",
-            ["0x8B645011e45bf9fd6627e6D42604A9eEaEBfA9bF"]
-          ]
-        ],
-        "$upgradeCount": 3
-      }
+      "derivedName": "BridgedKinto"
     },
     {
       "name": "Faucet",
@@ -242,7 +131,7 @@
         "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
       },
-      "errors": { "proxiableUUID": "Processing error occurred." }
+      "derivedName": "Faucet"
     },
     {
       "name": "SponsorPaymaster",
@@ -339,7 +228,7 @@
         "appRegistry": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
         "COST_OF_POST": 200000,
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
-        "getDeposit": "27364374106667734604",
+        "getDeposit": "27365615258519734604",
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "MAX_COST_OF_PREVERIFICATION": 4000000,
         "MAX_COST_OF_VERIFICATION": 530000,
@@ -349,7 +238,7 @@
         "userOpMaxCost": "30000000000000000",
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
       },
-      "errors": { "proxiableUUID": "Processing error occurred." }
+      "derivedName": "SponsorPaymaster"
     },
     {
       "name": "SafeBeaconProxy",
@@ -472,13 +361,6 @@
     },
     {
       "name": "",
-      "address": "0x4e59b44847b379578588920cA78FbF26c0B4956C",
-      "unverified": true,
-      "sinceTimestamp": 1702607855,
-      "values": { "$immutable": true }
-    },
-    {
-      "name": "",
       "address": "0x56Ac0e336f0c3620dCaF8d361E8E14eA73C31f5d",
       "unverified": true,
       "sinceTimestamp": 1715810595,
@@ -492,6 +374,7 @@
         "0xec7b652ce6b00a358ea1be503c5faf2a7bea3f40d4ff81bce6c02bf27a50a3c6"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs. Accordingly, users can only transact from their smart wallets.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -732,7 +615,7 @@
         "owner": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "errors": { "proxiableUUID": "Processing error occurred." }
+      "derivedName": "Treasury"
     },
     {
       "name": "",
@@ -809,11 +692,6 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x06FcD8264caF5c28D86eb4630c20004aa1faAaA8",
-          "via": [{ "address": "0x9eC0253E4174a14C0536261888416451A407Bf79" }]
-        },
-        {
-          "permission": "upgrade",
           "target": "0x340487b92808B84c2bd97C87B590EE81267E04a7",
           "via": [{ "address": "0x9eC0253E4174a14C0536261888416451A407Bf79" }]
         },
@@ -825,11 +703,6 @@
         {
           "permission": "upgrade",
           "target": "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b",
-          "via": [{ "address": "0x9eC0253E4174a14C0536261888416451A407Bf79" }]
-        },
-        {
-          "permission": "upgrade",
-          "target": "0xd563ECBDF90EBA783d0a218EFf158C1263ad02BE",
           "via": [{ "address": "0x9eC0253E4174a14C0536261888416451A407Bf79" }]
         }
       ],
@@ -1006,9 +879,9 @@
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
         "rewardsDistributor": "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA",
-        "totalWallets": 30200
+        "totalWallets": 30207
       },
-      "errors": { "proxiableUUID": "Processing error occurred." }
+      "derivedName": "KintoWalletFactory"
     },
     {
       "name": "BundleBulker",
@@ -1039,10 +912,6 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x06FcD8264caF5c28D86eb4630c20004aa1faAaA8"
-        },
-        {
-          "permission": "upgrade",
           "target": "0x340487b92808B84c2bd97C87B590EE81267E04a7"
         },
         {
@@ -1052,10 +921,6 @@
         {
           "permission": "upgrade",
           "target": "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b"
-        },
-        {
-          "permission": "upgrade",
-          "target": "0xd563ECBDF90EBA783d0a218EFf158C1263ad02BE"
         }
       ],
       "sinceTimestamp": 1702609595,
@@ -1153,81 +1018,29 @@
         "$upgradeCount": 7,
         "bonusAmount": 0,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getRewards": [0, 0, 0, 0, 0],
-        "getTotalLimit": "338077998003042100739503",
-        "getUnclaimedLimit": "194713987842027849988041",
+        "getTotalLimit": "338119873463788813691419",
+        "getUnclaimedLimit": "194748819703490370052462",
         "KINTO": "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87",
         "NEW_USER_REWARD": "1000000000000000000",
         "NEW_USER_REWARD_TIMESTAMP": 1729785402,
         "quarters": 40,
-        "rewardsPerQuarter": [
-          "190476190476190480000000",
-          "181405895691609980000000",
-          "172767519706295220000000",
-          "164540494958376400000000",
-          "156705233293691808000000"
-        ],
         "root": "0xc8521b39dab96ca415e2b4d944345b737d3fe18540f6e6ff7c1b17b68acf8afe",
         "startTime": 1718690400,
-        "totalClaimed": "143364010161014250751462",
+        "totalClaimed": "143371053760298443638957",
         "totalTokens": "4000000000000000000000000",
         "UPDATER_ROLE": "0x56730d7d989818781b81ff2da8c4c452dd13af73dfb8c4f4723e21d17335fd24",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
       },
-      "errors": {
-        "getRewards": "Processing error occurred.",
-        "proxiableUUID": "Processing error occurred.",
-        "rewardsPerQuarter": "Processing error occurred."
-      }
+      "derivedName": "RewardsDistributor"
     },
     {
-      "name": "",
-      "address": "0xd563ECBDF90EBA783d0a218EFf158C1263ad02BE",
-      "unverified": true,
-      "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b",
-          "via": [
-            {
-              "address": "0x9eC0253E4174a14C0536261888416451A407Bf79",
-              "delay": 0
-            }
-          ]
-        }
-      ],
-      "sinceTimestamp": 1702609595,
-      "values": {
-        "$admin": "0x9eC0253E4174a14C0536261888416451A407Bf79",
-        "$implementation": "0xDEa0d8430991bae39E826C7625566792A025B45f",
-        "$pastUpgrades": [
-          [
-            "2023-12-15T03:06:35.000Z",
-            "0x150c0395039eca95e504cce7b11c6ea9dd72f3a064e270776b52bee0231832f3",
-            ["0xeE70c6bd65FfB056Af41cCbFe5d5B94107Ef1859"]
-          ],
-          [
-            "2023-12-15T03:06:35.000Z",
-            "0x150c0395039eca95e504cce7b11c6ea9dd72f3a064e270776b52bee0231832f3",
-            ["0xb28265FC8227a7Af52c4D8c819056713B449cCa9"]
-          ],
-          [
-            "2024-04-09T08:22:01.000Z",
-            "0x5de895005ecf54917e3a78d128a7f1b15d3028c783310247751bcc1dacb16fea",
-            ["0xDEa0d8430991bae39E826C7625566792A025B45f"]
-          ]
-        ],
-        "$upgradeCount": 3
-      }
-    },
-    {
-      "name": "KintoWallet",
+      "name": "KintoWalletBeacon_implemention",
       "address": "0xE90C1e020D9d2A74045A1365bd5abEe87Aee8D7C",
       "sourceHashes": [
         "0x5dd932e70772b9520e522fd66660bc292a8fc07ff9f9bd8da3b7c0f0bf59c89d"
       ],
+      "description": "Implementation for all KintoWallets, managed by a beacon proxy.",
       "sinceTimestamp": 1726848021,
       "values": {
         "$immutable": true,
@@ -1253,7 +1066,7 @@
         "TWO_SIGNERS": 4,
         "WALLET_TARGET_LIMIT": 5
       },
-      "errors": { "getAccessPoint": "Processing error occurred." }
+      "derivedName": "KintoWallet"
     },
     {
       "name": "KintoID",
@@ -1263,6 +1076,7 @@
         "0x499e44fadd43278a5324045ee02ce20064caa49a1f75976a0d8492e2fd93efae"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Manages Kinto's KYC system: KYC provider addresses and the KYC status of users.",
       "sinceTimestamp": 1703803592,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
@@ -1351,7 +1165,7 @@
           "https://kinto.xyz/api/v1/nft-kinto-id/3",
           "https://kinto.xyz/api/v1/nft-kinto-id/4"
         ],
-        "totalSupply": 30346,
+        "totalSupply": 30353,
         "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3",
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
       },
@@ -1389,12 +1203,6 @@
   "abis": {
     "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87": [
       "constructor(address _implementation, bytes _data)",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
-    ],
-    "0x06FcD8264caF5c28D86eb4630c20004aa1faAaA8": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
@@ -2258,12 +2066,6 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function walletFactory() view returns (address)"
-    ],
-    "0xd563ECBDF90EBA783d0a218EFf158C1263ad02BE": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
     ],
     "0xE90C1e020D9d2A74045A1365bd5abEe87Aee8D7C": [
       "constructor(address __entryPoint, address _kintoID, address _kintoApp, address _factory)",

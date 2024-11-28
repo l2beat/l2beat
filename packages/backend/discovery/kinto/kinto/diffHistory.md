@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x0592bba9627511f609077cb31340b23744701268
+Generated with discovered.json: 0x98ae771b42cd8a2168930002999d9a2321e1d5a0
 
-# Diff at Thu, 28 Nov 2024 11:35:57 GMT:
+# Diff at Thu, 28 Nov 2024 12:20:01 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 542550
+- current block number: 542578
 
 ## Description
 
@@ -13,73 +13,7 @@ initial discovery.
 
 ```diff
 +   Status: CREATED
-    contract  (0x0000000000000000000000000000000000000064)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract  (0x0000000000000000000000000000000000000065)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract  (0x0000000000000000000000000000000000000066)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract  (0x0000000000000000000000000000000000000068)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract  (0x0000000000000000000000000000000000000069)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract  (0x000000000000000000000000000000000000006b)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract  (0x000000000000000000000000000000000000006C)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract  (0x000000000000000000000000000000000000006D)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract  (0x000000000000000000000000000000000000006E)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract  (0x0000000071727De22E5E9d8BAf0edAc6f37da032)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract BridgedKinto (0x010700808D59d2bb92257fCafACfe8e5bFF7aB87)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract  (0x06FcD8264caF5c28D86eb4630c20004aa1faAaA8)
     +++ description: None
 ```
 
@@ -133,12 +67,6 @@ initial discovery.
 
 ```diff
 +   Status: CREATED
-    contract  (0x4e59b44847b379578588920cA78FbF26c0B4956C)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract  (0x56Ac0e336f0c3620dCaF8d361E8E14eA73C31f5d)
     +++ description: None
 ```
@@ -146,7 +74,7 @@ initial discovery.
 ```diff
 +   Status: CREATED
     contract KintoAppRegistry (0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b)
-    +++ description: None
+    +++ description: Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs. Accordingly, users can only transact from their smart wallets.
 ```
 
 ```diff
@@ -223,18 +151,12 @@ initial discovery.
 
 ```diff
 +   Status: CREATED
-    contract  (0xd563ECBDF90EBA783d0a218EFf158C1263ad02BE)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract KintoWallet (0xE90C1e020D9d2A74045A1365bd5abEe87Aee8D7C)
-    +++ description: None
+    contract KintoWalletBeacon_implemention (0xE90C1e020D9d2A74045A1365bd5abEe87Aee8D7C)
+    +++ description: Implementation for all KintoWallets, managed by a beacon proxy.
 ```
 
 ```diff
 +   Status: CREATED
     contract KintoID (0xf369f78E3A0492CC4e96a90dae0728A38498e9c7)
-    +++ description: None
+    +++ description: Manages Kinto's KYC system: KYC provider addresses and the KYC status of users.
 ```
