@@ -1,3 +1,5 @@
-import { world } from './hello'
+import { setupApps } from './apps/setup'
+import { setupExpandable } from './bits/expandable'
 
-console.log(`Hello ${world}!`)
+setupApps()
+setupExpandable()

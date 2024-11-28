@@ -1,5 +1,7 @@
 import { ReactNode } from 'react'
+import { renderToStaticMarkup } from 'react-dom/server'
 import { asset } from './assets'
+import { resetAppId } from './components/ClientApp'
 
 interface Props {
   title: string
@@ -26,4 +28,14 @@ export function Page(props: Props) {
       </body>
     </html>
   )
+}
+
+export function renderPage<P extends JSX.IntrinsicAttributes>(
+  Component: React.ComponentType<P>,
+  props: P,
+) {
+  resetAppId() // keep ids the same across re-renders
+
+  const markup = renderToStaticMarkup(<Component {...props} />)
+  return `<!DOCTYPE html>${markup}`
 }
