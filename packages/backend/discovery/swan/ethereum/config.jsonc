@@ -7,10 +7,5 @@
   ],
   "names": {
     "0x6197f64902b9275e6815F9A5b641Ed2291A5d39c": "Swan Network Multisig"
-  },
-  "overrides": {
-    "0xadE916De67511E5C24af4174Be67143d0dA94959": {
-      "extends": "opstack/SuperchainConfigFake"
-    }
   }
 }
