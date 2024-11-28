@@ -13,7 +13,7 @@ export function toTableRows({
       tvl: {
         ...project.tvl,
         data: project.tvl.data && {
-          ...project.tvl.data,
+          total: project.tvl.data.total,
           breakdown: {
             ...project?.tvl.data.breakdown,
             external: excludeAssociatedTokens
@@ -35,6 +35,20 @@ export function toTableRows({
                   canonical: 0,
                   external: 0,
                 },
+          },
+          change: {
+            total: excludeAssociatedTokens
+              ? project.tvl.data.associatedTokensExcludedChange.total
+              : project.tvl.data.change.total,
+            canonical: excludeAssociatedTokens
+              ? project.tvl.data.associatedTokensExcludedChange.canonical
+              : project.tvl.data.change.canonical,
+            native: excludeAssociatedTokens
+              ? project.tvl.data.associatedTokensExcludedChange.native
+              : project.tvl.data.change.native,
+            external: excludeAssociatedTokens
+              ? project.tvl.data.associatedTokensExcludedChange.external
+              : project.tvl.data.change.external,
           },
         },
       },

@@ -1,26 +1,35 @@
 import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
-import {
-  type ProjectsVerificationStatuses,
-  notUndefined,
-} from '@l2beat/shared-pure'
+import { notUndefined } from '@l2beat/shared-pure'
+import { api } from '~/trpc/server'
 import { groupByMainCategories } from '~/utils/group-by-main-categories'
-import { type ProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
+import {
+  type ProjectsChangeReport,
+  getProjectsChangeReport,
+} from '../../projects-change-report/get-projects-change-report'
+import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
-import { type SevenDayTvlBreakdown } from './utils/get-7d-tvl-breakdown'
+import {
+  type SevenDayTvlBreakdown,
+  get7dTvlBreakdown,
+} from './utils/get-7d-tvl-breakdown'
 
-export function getScalingTvlEntries({
-  projectsChangeReport,
-  projectsVerificationStatuses,
-  tvl,
-}: {
-  projectsChangeReport: ProjectsChangeReport
-  projectsVerificationStatuses: ProjectsVerificationStatuses
-  tvl: SevenDayTvlBreakdown
-}) {
+export async function getScalingTvlEntries() {
   const projects = [...layer2s, ...layer3s].filter(
     (project) => !project.isUpcoming && !project.isArchived,
   )
+
+  const [projectsChangeReport, projectsVerificationStatuses, tvl] =
+    await Promise.all([
+      getProjectsChangeReport(),
+      getProjectsVerificationStatuses(),
+      get7dTvlBreakdown(),
+      api.tvl.chart.prefetch({
+        filter: { type: 'layer2' },
+        range: '1y',
+        excludeAssociatedTokens: false,
+      }),
+    ])
 
   const entries = projects
     .map((project) => {
@@ -68,9 +77,11 @@ function getScalingTvlEntry(
     entryType: 'scaling' as const,
     tvl: {
       data: latestTvl && {
+        total: latestTvl.total,
         breakdown: latestTvl.breakdown,
         change: latestTvl.change,
-        totalChange: latestTvl.totalChange,
+        associatedTokensExcludedChange:
+          latestTvl.associatedTokensExcludedChange,
       },
       associatedTokens: project.config.associatedTokens ?? [],
       warnings: [project.display.tvlWarning].filter(notUndefined),
