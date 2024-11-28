@@ -1,7 +1,7 @@
 {
   "name": "fluence",
   "chain": "ethereum",
-  "blockNumber": 21285829,
+  "blockNumber": 21285836,
   "configHash": "0x9d816d3fa4d275a73ace500776da83a8646aca1f31a7ff61dfa8a3009a826ae6",
   "contracts": [
     {
@@ -824,6 +824,11 @@
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
       "issuedPermissions": [
         {
+          "permission": "configure",
+          "target": "0x0000000000000000000000000000000000000000",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0xBc54708fB6C6C97086e3f6554a517DE5EF16c304",
           "via": [
@@ -1032,7 +1037,7 @@
   "eoas": [
     {
       "address": "0x0000000000000000000000000000000000000000",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
           "permission": "configure",
           "target": "0xD085B74A57D1d7947B9C9f8E2d75cB6832d62d0f",
