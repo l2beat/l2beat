@@ -7,6 +7,10 @@ export function HomePage() {
       <a className="text-blue-500 underline" href="/duck">
         Link to duck
       </a>
+      <br />
+      <a className="text-blue-500 underline" href="/activity">
+        Link to activity
+      </a>
     </Page>
   )
 }

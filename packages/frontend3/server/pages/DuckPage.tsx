@@ -1,6 +1,6 @@
-import { Page } from '../components/Page'
 import { asset } from '../assets'
 import { ClientApp } from '../components/ClientApp'
+import { Page } from '../components/Page'
 
 export function DuckPage() {
   return (

@@ -30,7 +30,7 @@ export function Page(props: Props) {
   )
 }
 
-export function renderPage<P extends JSX.IntrinsicAttributes>(
+export function renderPage<P extends {}>(
   Component: React.ComponentType<P>,
   props: P,
 ) {
