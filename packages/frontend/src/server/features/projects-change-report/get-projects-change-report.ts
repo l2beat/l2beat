@@ -9,7 +9,7 @@ import {
 } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
-import { db } from '~/server/database'
+import { getDb } from '~/server/database'
 import { getOnDiskData } from './get-on-disk-data'
 
 export async function getProjectsChangeReport() {
@@ -63,6 +63,7 @@ const getCachedProjectsChangeReport = cache(
   async () => {
     const result: Record<string, ProjectChangeReport> = {}
 
+    const db = getDb()
     const onDisk = getOnDiskData()
     const newDiscoveries = await db.updateMonitor.getAll()
 
