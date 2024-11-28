@@ -1,4 +1,76 @@
-Generated with discovered.json: 0x0a534c8201190e15b7498a40fa071db310731c59
+Generated with discovered.json: 0x8805237f1312263093e4828c630a57292dd03616
+
+# Diff at Mon, 25 Nov 2024 10:51:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@62a44faa52866a55f9881cb2852ac75b1fcc60b0 block: 21184190
+- current block number: 21264288
+
+## Description
+
+Same one signer removed from ExecutorMultisig and EmergencyMultisig.
+
+## Watched changes
+
+```diff
+    contract ExecutorMultisig (0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) {
+    +++ description: None
+      values.$members.4:
+-        "0x568993632c34604098e35a184C52aD390c70f754"
+      values.$members.3:
+-        "0xd7bC70ecf344C279eB78C8899Ba5538e2e3A0632"
++        "0x568993632c34604098e35a184C52aD390c70f754"
+      values.multisigThreshold:
+-        "1 of 5 (20%)"
++        "1 of 4 (25%)"
+    }
+```
+
+```diff
+    contract EmergencyMultisig (0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) {
+    +++ description: None
+      values.$members.4:
+-        "0x568993632c34604098e35a184C52aD390c70f754"
+      values.$members.3:
+-        "0xd7bC70ecf344C279eB78C8899Ba5538e2e3A0632"
++        "0x568993632c34604098e35a184C52aD390c70f754"
+      values.multisigThreshold:
+-        "2 of 5 (40%)"
++        "2 of 4 (50%)"
+    }
+```
+
+Generated with discovered.json: 0x8523c24bfac779038af8583a650b1aca37ec8f83
+
+# Diff at Thu, 14 Nov 2024 06:38:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ea60800af45c71fbd5d292e0f4301ba9afda01fa block: 20891049
+- current block number: 21184190
+
+## Description
+
+Batches reverted due to accidental 'old-version batches'. The reverted batches used the old version 2 and not the new v4 `commitBatchWithBlobProof()`. The post-mortem should appear [here](https://status.scroll.io/incidents/pw1cf3bmxy8s).
+
+In Scroll, batches can be reverted by the EmergencyMultisig anytime before they are proven (which currently happens around 2h after they are commited).
+
+## Watched changes
+
+```diff
+    contract ScrollChain (0xa13BAF47339d63B743e7Da8741db5456DAc1E556) {
+    +++ description: None
+      values.revertedBatches.58:
++        {"batchIndex":346815}
+      values.revertedBatches.57:
++        {"batchIndex":346816}
+      values.revertedBatches.56:
++        {"batchIndex":346817}
+      values.revertedBatches.55:
++        {"batchIndex":346818}
+    }
+```
+
+Generated with discovered.json: 0x37b9192ba10b35d754cdfbbd94be1ecc543bce1d
 
 # Diff at Mon, 21 Oct 2024 12:48:09 GMT:
 

@@ -8,6 +8,8 @@ import { OutLink } from './out-link'
 const localStorageTag = 'top-banner'
 const purpose = 'gg-22'
 
+const enabled = false
+
 export function Banner({ className }: { className?: string }) {
   const isClient = useIsClient()
   const [isHidden, setIsHidden] = useLocalStorage(
@@ -15,7 +17,7 @@ export function Banner({ className }: { className?: string }) {
     false,
   )
 
-  if (isHidden || !isClient) {
+  if (isHidden || !isClient || !enabled) {
     return null
   }
 

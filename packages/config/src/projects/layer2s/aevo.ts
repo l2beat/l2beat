@@ -19,7 +19,6 @@ export const aevo: Layer2 = opStackL2({
   display: {
     name: 'Aevo',
     slug: 'aevo',
-    architectureImage: 'aevo',
     description:
       'Aevo is a high-performance decentralized options exchange, powered by the OP Stack and Celestia DA.',
     links: {
@@ -56,7 +55,7 @@ export const aevo: Layer2 = opStackL2({
   },
   transactionApi: {
     type: 'rpc',
-    defaultUrl: 'https://l2-aevo-mainnet-prod-0.t.conduit.xyz/',
+    defaultUrl: 'https://rpc-aevo-mainnet-prod-0.t.conduit.xyz',
     startBlock: 1,
     defaultCallsPerMinute: 800,
     assessCount: subtractOne,

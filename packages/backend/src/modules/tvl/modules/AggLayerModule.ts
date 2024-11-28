@@ -1,8 +1,10 @@
+import { RateLimiter } from '@l2beat/backend-tools'
 import {
   AGGLAYER_L2BRIDGE_ADDRESS,
   ConfigMapping,
   createAmountId,
 } from '@l2beat/config'
+import { HttpClient2, RetryHandler, RpcClient2 } from '@l2beat/shared'
 import {
   assert,
   AggLayerL2Token,
@@ -12,9 +14,7 @@ import {
 } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { ChainTvlConfig, TvlConfig } from '../../../config/Config'
-import { Peripherals } from '../../../peripherals/Peripherals'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
-import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { AggLayerIndexer } from '../indexers/AggLayerIndexer'
 import { BlockTimestampIndexer } from '../indexers/BlockTimestampIndexer'
 import { DescendantIndexer } from '../indexers/DescendantIndexer'
@@ -29,7 +29,6 @@ interface AggLayerModule {
 
 export function initAggLayerModule(
   config: TvlConfig,
-  peripherals: Peripherals,
   dependencies: TvlDependencies,
   configMapping: ConfigMapping,
   descendantPriceIndexer: DescendantIndexer,
@@ -37,7 +36,6 @@ export function initAggLayerModule(
 ): AggLayerModule | undefined {
   const { dataIndexers, valueIndexers } = createIndexers(
     config,
-    peripherals,
     dependencies,
     configMapping,
     descendantPriceIndexer,
@@ -60,13 +58,12 @@ export function initAggLayerModule(
 
 function createIndexers(
   config: TvlConfig,
-  peripherals: Peripherals,
   dependencies: TvlDependencies,
   configMapping: ConfigMapping,
   descendantPriceIndexer: DescendantIndexer,
   blockTimestampIndexers?: Map<string, BlockTimestampIndexer>,
 ) {
-  const logger = dependencies.logger
+  const logger = dependencies.logger.tag({ module: 'aggLayer' })
   const indexerService = dependencies.getIndexerService()
   const syncOptimizer = dependencies.getSyncOptimizer()
   const valueService = dependencies.getValueService()
@@ -92,10 +89,15 @@ function createIndexers(
       continue
     }
 
-    const rpcClient = peripherals.getClient(RpcClient, {
-      url: chainConfig.config.providerUrl,
-      callsPerMinute: chainConfig.config.providerCallsPerMinute,
+    const rpcClient = new RpcClient2({
       chain: chainConfig.chain,
+      url: chainConfig.config.providerUrl,
+      rateLimiter: new RateLimiter({
+        callsPerMinute: chainConfig.config.providerCallsPerMinute,
+      }),
+      http: new HttpClient2(),
+      logger,
+      retryHandler: RetryHandler.RELIABLE_API(logger),
     })
 
     const aggLayerService = new AggLayerService({
@@ -125,7 +127,7 @@ function createIndexers(
       aggLayerService,
       serializeConfiguration,
       syncOptimizer,
-      db: peripherals.database,
+      db: dependencies.database,
     })
 
     dataIndexers.push(aggLayerIndexer)
@@ -148,7 +150,7 @@ function createIndexers(
 
       const indexer = new ValueIndexer({
         valueService,
-        db: peripherals.database,
+        db: dependencies.database,
         priceConfigs: [...priceConfigs],
         amountConfigs,
         project: ProjectId(project),

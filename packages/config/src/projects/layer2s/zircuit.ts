@@ -66,7 +66,6 @@ export const zircuit: Layer2 = opStackL2({
   genesisTimestamp: new UnixTime(1719936217),
   rpcUrl: 'https://zircuit1-mainnet.p2pify.com/', // other: https://zircuit1-mainnet.liquify.com, https://zircuit-mainnet.drpc.org/
   // Chain ID: 48900
-  usesBlobs: true,
   isNodeAvailable: 'UnderReview',
   nonTemplateTechnology: {
     stateCorrectness: ZIRCUIT_STATE_CORRECTNESS,
@@ -78,6 +77,8 @@ export const zircuit: Layer2 = opStackL2({
     minTimestampForTvl: new UnixTime(1719936217),
   },
   nonTemplateExcludedTokens: ['rswETH', 'rsETH'],
+  l1StandardBridgePremintedTokens: ['ZRC'],
+  associatedTokens: ['ZRC'],
   nonTemplatePermissions: [
     {
       name: 'Admins of SuperchainConfig',

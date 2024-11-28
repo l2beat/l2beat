@@ -8,6 +8,7 @@ import { CodePanel } from './panel-code/CodePanel'
 import { ListPanel } from './panel-list/ListPanel'
 import { NodesPanel } from './panel-nodes/NodesPanel'
 import { PreviewPanel } from './panel-preview/PreviewPanel'
+import { TerminalPanel } from './panel-terminal/TerminalPanel'
 import { ValuesPanel } from './panel-values/ValuesPanel'
 import { usePanelStore } from './store/store'
 
@@ -31,15 +32,16 @@ export function ProjectPage() {
   return <MultiView project={project} panelBodyElement={Panel} />
 }
 
-const PANELS = {
+const PANELS: Record<PanelId, () => JSX.Element> = {
   list: ListPanel,
   values: ValuesPanel,
   nodes: NodesPanel,
   code: CodePanel,
   preview: PreviewPanel,
+  terminal: TerminalPanel,
 }
 
-export function Panel(props: { kind: PanelId }) {
+function Panel(props: { kind: PanelId }) {
   const Component = PANELS[props.kind]
   return <Component />
 }

@@ -1,14 +1,15 @@
-import { Bytes, UnixTime, json } from '@l2beat/shared-pure'
+import { Block, Bytes, EthereumAddress, json } from '@l2beat/shared-pure'
 import { generateId } from '../../tools/generateId'
-import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 import {
   ClientCore,
   ClientCoreDependencies as ClientCoreDependencies,
 } from '../ClientCore'
+import { BlockClient } from '../types'
 import {
   CallParameters,
-  EVMBlock,
+  EVMBalanceResponse,
   EVMBlockResponse,
+  EVMCallResponse,
   Quantity,
   RPCError,
 } from './types'
@@ -19,9 +20,9 @@ interface Dependencies extends ClientCoreDependencies {
   generateId?: () => string
 }
 
-export class RpcClient2 extends ClientCore {
+export class RpcClient2 extends ClientCore implements BlockClient {
   constructor(private readonly $: Dependencies) {
-    super({ ...$ })
+    super($)
   }
 
   async getLatestBlockNumber() {
@@ -29,20 +30,10 @@ export class RpcClient2 extends ClientCore {
     return Number(block.number)
   }
 
-  async getBlockNumberAtOrBefore(timestamp: UnixTime, start = 0) {
-    const end = await this.getLatestBlockNumber()
-    return await getBlockNumberAtOrBefore(
-      timestamp,
-      start,
-      end,
-      this.getBlockWithTransactions.bind(this),
-    )
-  }
-
   /** Calls eth_getBlockByNumber on RPC, includes full transactions bodies.*/
   async getBlockWithTransactions(
     blockNumber: number | 'latest',
-  ): Promise<EVMBlock> {
+  ): Promise<Block> {
     const method = 'eth_getBlockByNumber'
     const encodedNumber =
       blockNumber === 'latest' ? 'latest' : Quantity.encode(BigInt(blockNumber))
@@ -50,9 +41,39 @@ export class RpcClient2 extends ClientCore {
 
     const block = EVMBlockResponse.safeParse(blockResponse)
     if (!block.success) {
+      this.$.logger.warn(`Invalid response`, {
+        blockNumber,
+        response: JSON.stringify(blockResponse),
+      })
       throw new Error(`Block ${blockNumber}: Error during parsing`)
     }
     return { ...block.data.result }
+  }
+
+  async getBalance(
+    holder: EthereumAddress,
+    blockNumber: number | 'latest',
+  ): Promise<bigint> {
+    const method = 'eth_getBalance'
+    const encodedNumber =
+      blockNumber === 'latest' ? 'latest' : Quantity.encode(BigInt(blockNumber))
+    const balanceResponse = await this.query(method, [
+      holder.toString(),
+      encodedNumber,
+    ])
+
+    const balance = EVMBalanceResponse.safeParse(balanceResponse)
+    if (!balance.success) {
+      this.$.logger.warn(`Invalid response`, {
+        blockNumber,
+        holder,
+        response: JSON.stringify(balanceResponse),
+      })
+      throw new Error(
+        `Balance of ${holder} at block ${blockNumber}: Error during parsing`,
+      )
+    }
+    return balance.data.result
   }
 
   async call(
@@ -74,8 +95,15 @@ export class RpcClient2 extends ClientCore {
     }
 
     const params = [callObject, encodedNumber]
-    const bytes = (await this.query(method, params)) as string
-    return Bytes.fromHex(bytes)
+    const callResponse = await this.query(method, params)
+    const callResult = EVMCallResponse.safeParse(callResponse)
+
+    if (!callResult.success) {
+      this.$.logger.warn('Error during call', JSON.stringify(callResponse))
+      throw new Error('Call response: Error during parsing')
+    }
+
+    return Bytes.fromHex(callResult.data.result)
   }
 
   async query(

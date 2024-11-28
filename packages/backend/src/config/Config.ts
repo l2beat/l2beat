@@ -1,4 +1,3 @@
-import { LoggerOptions } from '@l2beat/backend-tools'
 import { DiscoveryChainConfig } from '@l2beat/discovery'
 import {
   AmountConfigEntry,
@@ -13,6 +12,7 @@ import { ChainConverter } from '@l2beat/shared-pure'
 import { ActivityTransactionConfig } from '../modules/activity/ActivityTransactionConfig'
 import { MulticallConfigEntry } from '../peripherals/multicall/types'
 import { ResolvedFeatureFlag } from './FeatureFlags'
+import { ChainApi } from './chain/ChainApi'
 import { FinalityProjectConfig } from './features/finality'
 
 export interface Config {
@@ -38,15 +38,7 @@ export interface Config {
   readonly flags: ResolvedFeatureFlag[]
   readonly verifiers: boolean
   readonly daBeat: DABeatConfig | false
-}
-
-export type LoggerConfig = Pick<LoggerOptions, 'logLevel'> &
-  Partial<LoggerOptions>
-
-export interface LogThrottlerConfig {
-  readonly callsUntilThrottle: number
-  readonly clearIntervalMs: number
-  readonly throttleTimeMs: number
+  readonly chainConfig: ChainApi[]
 }
 
 export interface ApiConfig {
@@ -61,6 +53,7 @@ export interface ApiConfig {
 export interface DatabaseConfig {
   readonly connection: {
     connectionString: string
+    application_name: string
     ssl?: {
       rejectUnauthorized?: boolean
     }

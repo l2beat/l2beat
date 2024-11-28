@@ -8,6 +8,9 @@ import {
 
 import {
   CONTRACTS,
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   NUGGETS,
@@ -16,6 +19,8 @@ import {
   addSentimentToDataAvailability,
 } from '../../common'
 import { subtractOne } from '../../common/assessCount'
+import { ESCROW } from '../../common/escrow'
+import { formatChallengePeriod } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
@@ -160,7 +165,7 @@ export const kroma: Layer2 = {
         address: EthereumAddress('0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e'),
         sinceTimestamp: new UnixTime(1700122827),
         tokens: ['USDC'],
-        source: 'external',
+        ...ESCROW.CANONICAL_EXTERNAL,
         description: 'Main entry point for users depositing USDC.',
       }),
     ],
@@ -206,16 +211,22 @@ export const kroma: Layer2 = {
       },
     ],
     finality: {
-      type: 'OPStack',
+      type: 'OPStack-blob',
+      // timestamp of the first blob tx
+      minTimestamp: new UnixTime(1714032407),
+      l2BlockTimeSeconds: 2,
+      genesisTimestamp: new UnixTime(1693880389),
       lag: 0,
       stateUpdate: 'disabled',
     },
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (blobs or calldata)'],
-    bridge: { type: 'Enshrined' },
-    mode: 'Transaction data',
-  }),
+  dataAvailability: [
+    addSentimentToDataAvailability({
+      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
+      bridge: DA_BRIDGES.ENSHRINED,
+      mode: DA_MODES.TRANSACTION_DATA,
+    }),
+  ],
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_INT_ZK,
@@ -223,7 +234,7 @@ export const kroma: Layer2 = {
         RISK_VIEW.STATE_FP_INT_ZK.description +
         " The challenge protocol can be subject to delay attacks and can fail under certain conditions. The current system doesn't use posted L2 txs batches on L1 as inputs to prove a fault, meaning that DA is not enforced.",
       sentiment: 'bad',
-      secondLine: `${formatSeconds(finalizationPeriod)} challenge period`,
+      secondLine: formatChallengePeriod(finalizationPeriod),
     },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,

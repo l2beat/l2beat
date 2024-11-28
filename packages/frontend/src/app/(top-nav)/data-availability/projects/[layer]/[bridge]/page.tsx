@@ -5,6 +5,7 @@ import { DesktopProjectNavigation } from '~/components/projects/navigation/deskt
 import { MobileProjectNavigation } from '~/components/projects/navigation/mobile-project-navigation'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 import { ProjectDetails } from '~/components/projects/project-details'
+import { env } from '~/env'
 import { getDaProjectEntry } from '~/server/features/data-availability/project/get-da-project-entry'
 import { getProjectMetadata } from '~/utils/metadata'
 import { DaProjectSummary } from '../_components/da-project-summary'
@@ -14,6 +15,17 @@ interface Props {
     layer: string
     bridge: string
   }>
+}
+
+export const revalidate = 600
+export async function generateStaticParams() {
+  if (env.VERCEL_ENV === 'preview') return []
+  return daLayers.flatMap((layer) =>
+    layer.bridges.map((bridge) => ({
+      layer: layer.display.slug,
+      bridge: bridge.display.slug,
+    })),
+  )
 }
 
 export async function generateMetadata(props: Props) {

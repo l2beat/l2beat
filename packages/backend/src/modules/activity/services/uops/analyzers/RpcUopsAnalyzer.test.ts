@@ -1,104 +1,135 @@
 import {
+  EIP712_TX_TYPE,
   ENTRY_POINT_ADDRESS_0_6_0,
   ENTRY_POINT_ADDRESS_0_7_0,
+  MULTICALL_V3,
   Method,
   SAFE_EXEC_TRANSACTION_SELECTOR,
   SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
 } from '@l2beat/shared'
-import { EthereumAddress } from '@l2beat/shared-pure'
-import {
-  EVMBlock,
-  EVMTransaction,
-} from '@l2beat/shared/build/clients/rpc/types'
+import { Block, EthereumAddress, Transaction } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { RpcUopsAnalyzer } from './RpcUopsAnalyzer'
 
 describe(RpcUopsAnalyzer.name, () => {
-  describe(RpcUopsAnalyzer.prototype.analyzeBlock.name, () => {
+  describe(RpcUopsAnalyzer.prototype.calculateUops.name, () => {
     it('should correctly sum the number of txs and uops', async () => {
       const analyzer = new RpcUopsAnalyzer()
-      const tx1 = mockObject<EVMTransaction>()
-      const tx2 = mockObject<EVMTransaction>()
-      const tx3 = mockObject<EVMTransaction>()
+      const tx1 = mockObject<Transaction>()
+      const tx2 = mockObject<Transaction>()
+      const tx3 = mockObject<Transaction>()
 
       analyzer.mapTransaction = mockFn()
         .returnsOnce(1)
         .returnsOnce(2)
         .returnsOnce(4)
 
-      const block = mockObject<EVMBlock>({
+      const block = mockObject<Block>({
         transactions: [tx1, tx2, tx3],
       })
 
-      const result = await analyzer.analyzeBlock(block)
-      expect(result.transactionsLength).toEqual(3)
-      expect(result.uopsLength).toEqual(7)
+      const result = analyzer.calculateUops(block)
+      expect(result).toEqual(7)
     })
   })
 
   describe(RpcUopsAnalyzer.prototype.mapTransaction.name, () => {
-    it('should handle ERC-4337:EntryPoint0.6.0', async () => {
+    it('should handle ERC-4337:EntryPoint0.6.0', () => {
       const analyzer = new RpcUopsAnalyzer()
-      const tx = mockObject<EVMTransaction>({
+      const tx = {
         to: ENTRY_POINT_ADDRESS_0_6_0,
         data: '0x1234abcd',
-      })
+        hash: '0x0',
+      }
 
       analyzer.countUserOperations = mockFn().returns(2)
 
-      const count = await analyzer.mapTransaction(tx)
+      const count = analyzer.mapTransaction(tx)
       expect(count).toEqual(2)
     })
 
-    it('should handle ERC-4337:EntryPoint0.7.0', async () => {
+    it('should handle ERC-4337:EntryPoint0.7.0', () => {
       const analyzer = new RpcUopsAnalyzer()
-      const tx = mockObject<EVMTransaction>({
+      const tx = {
         to: ENTRY_POINT_ADDRESS_0_7_0,
         data: '0x1234abcd',
-      })
+        hash: '0x0',
+      }
 
       analyzer.countUserOperations = mockFn().returns(2)
 
-      const count = await analyzer.mapTransaction(tx)
+      const count = analyzer.mapTransaction(tx)
       expect(count).toEqual(2)
     })
 
-    it('should handle Safe:MultiSendCallOnly1.3.0', async () => {
+    it('should handle Safe:MultiSendCallOnly1.3.0', () => {
       const analyzer = new RpcUopsAnalyzer()
-      const tx = mockObject<EVMTransaction>({
+      const tx = {
         to: SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
         data: '0x1234abcd',
-      })
+        hash: '0x0',
+      }
 
       analyzer.countUserOperations = mockFn().returns(2)
 
-      const count = await analyzer.mapTransaction(tx)
+      const count = analyzer.mapTransaction(tx)
       expect(count).toEqual(2)
     })
 
-    it('should handle Safe:Singleton1.3.0', async () => {
+    it('should handle Safe:Singleton1.3.0', () => {
       const analyzer = new RpcUopsAnalyzer()
-      const tx = mockObject<EVMTransaction>({
+      const tx = {
         to: EthereumAddress.random(),
         data: `${SAFE_EXEC_TRANSACTION_SELECTOR}1234abcd`,
-      })
+        hash: '0x0',
+      }
 
       analyzer.countUserOperations = mockFn().returns(2)
 
-      const count = await analyzer.mapTransaction(tx)
+      const count = analyzer.mapTransaction(tx)
       expect(count).toEqual(2)
     })
 
-    it('should handle unrecognized tx', async () => {
+    it('should handle EIP-712', () => {
       const analyzer = new RpcUopsAnalyzer()
-      const tx = mockObject<EVMTransaction>({
-        to: EthereumAddress.random(),
+      const tx = {
+        to: '0x123',
         data: '0x1234abcd',
-      })
+        hash: '0x0',
+        type: EIP712_TX_TYPE,
+      }
 
       analyzer.countUserOperations = mockFn().returns(2)
 
-      const count = await analyzer.mapTransaction(tx)
+      const count = analyzer.mapTransaction(tx)
+      expect(count).toEqual(2)
+    })
+
+    it('should handle Multicall v3', () => {
+      const analyzer = new RpcUopsAnalyzer()
+      const tx = {
+        to: MULTICALL_V3,
+        data: '0x1234abcd',
+        hash: '0x0',
+      }
+
+      analyzer.countUserOperations = mockFn().returns(2)
+
+      const count = analyzer.mapTransaction(tx)
+      expect(count).toEqual(2)
+    })
+
+    it('should handle unrecognized tx', () => {
+      const analyzer = new RpcUopsAnalyzer()
+      const tx = {
+        to: EthereumAddress.random(),
+        data: '0x1234abcd',
+        hash: '0x0',
+      }
+
+      analyzer.countUserOperations = mockFn().returns(2)
+
+      const count = analyzer.mapTransaction(tx)
       expect(count).toEqual(1)
     })
   })

@@ -1,6 +1,5 @@
 import { createCallerFactory, router } from '~/server/api/trpc'
 import { activityRouter } from './routers/activity'
-import { assetRisksRouter } from './routers/asset-risks'
 import { costsRouter } from './routers/costs'
 import { tvlRouter } from './routers/tvl'
 
@@ -12,7 +11,6 @@ import { tvlRouter } from './routers/tvl'
 export const appRouter = router({
   activity: activityRouter,
   costs: costsRouter,
-  assetRisks: assetRisksRouter,
   tvl: tvlRouter,
 })
 

@@ -11,6 +11,7 @@ import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
 import { Config, DiscordConfig } from './Config'
 import { FeatureFlags } from './FeatureFlags'
+import { getChainConfig } from './chain/getChainConfig'
 import {
   getChainActivityBlockExplorerConfig,
   getChainActivityConfig,
@@ -58,6 +59,7 @@ export function makeConfig(
       ? {
           connection: {
             connectionString: env.string('LOCAL_DB_URL'),
+            application_name: 'BE-LOCAL',
             ssl: !env.string('LOCAL_DB_URL').includes('localhost')
               ? { rejectUnauthorized: false }
               : undefined,
@@ -76,6 +78,7 @@ export function makeConfig(
           enableQueryLogging: env.boolean('ENABLE_QUERY_LOGGING', false),
           connection: {
             connectionString: env.string('DATABASE_URL'),
+            application_name: 'BE-PROD',
             ssl: { rejectUnauthorized: false },
           },
           connectionPoolSize: {
@@ -232,7 +235,7 @@ export function makeConfig(
         'wss://avail-mainnet.public.blastapi.io/',
       ),
     },
-
+    chainConfig: getChainConfig(env),
     // Must be last
     flags: flags.getResolved(),
   }

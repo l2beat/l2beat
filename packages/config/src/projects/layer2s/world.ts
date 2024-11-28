@@ -1,4 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
@@ -39,7 +40,6 @@ export const world: Layer2 = opStackL2({
   },
   discovery,
   genesisTimestamp: new UnixTime(1719432935), // OptiPortal deployed
-  usesBlobs: true,
   rpcUrl: 'https://worldchain-mainnet.g.alchemy.com/public',
   isNodeAvailable: 'UnderReview',
   associatedTokens: ['WLD'],
@@ -47,7 +47,7 @@ export const world: Layer2 = opStackL2({
     discovery.getEscrowDetails({
       address: EthereumAddress('0x153A69e4bb6fEDBbAaF463CB982416316c84B2dB'),
       name: 'External USDC Vault',
-      source: 'external',
+      ...ESCROW.CANONICAL_EXTERNAL,
       description: 'Custom external escrow for USDC bridged to Worldchain.',
       tokens: ['USDC'],
     }),

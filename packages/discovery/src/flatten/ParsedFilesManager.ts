@@ -167,14 +167,21 @@ export class ParsedFilesManager {
     const declarations = declarationNodes.map((d) => {
       assert(d.range !== undefined, 'Invalid contract definition')
 
+      const inheritsFrom = []
+      if (d.type === 'ContractDefinition') {
+        inheritsFrom.push(
+          ...d.baseContracts.map((c) => {
+            // biome-ignore lint/style/noNonNullAssertion: we know it's there
+            return c.baseName.namePath.split('.').at(-1)!
+          }),
+        )
+      }
+
       return {
         ast: d,
         name: d.name ?? '',
         type: getDeclarationType(d),
-        inheritsFrom:
-          d.type === 'ContractDefinition'
-            ? d.baseContracts.map((c) => c.baseName.namePath)
-            : [],
+        inheritsFrom,
         dynamicReferences: [],
         byteRange: {
           start: d.range[0],

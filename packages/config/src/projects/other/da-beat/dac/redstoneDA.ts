@@ -1,4 +1,5 @@
 import { formatSeconds } from '@l2beat/shared-pure'
+import { DA_LAYERS } from '../../../../common'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
 import { DaChallengeMechanism } from '../types/DaChallengeMechanism'
@@ -26,22 +27,19 @@ export const redstoneDA: DaLayer = {
   type: 'DaLayer',
   kind: 'No DAC',
   systemCategory: 'custom',
-  fallback: 'Ethereum (calldata)',
+  fallback: DA_LAYERS.ETH_CALLDATA,
   display: {
     name: 'RedstoneDA',
     slug: 'redstone',
     description:
       'RedstoneDA is a data availability solution using data availability challenges (DA Challenges).',
     links: {
-      websites: ['https://redstone.xyz/'],
-      apps: ['https://redstone.xyz/deposit'],
-      documentation: ['https://redstone.xyz/docs'],
-      explorers: ['https://explorer.redstone.xyz/'],
-      repositories: ['https://github.com/latticexyz/redstone'],
-      socialMedia: [
-        'https://twitter.com/redstonexyz',
-        'https://discord.com/invite/latticexyz',
-      ],
+      websites: [],
+      apps: [],
+      documentation: [],
+      explorers: [],
+      repositories: [],
+      socialMedia: [],
     },
   },
   challengeMechanism: DaChallengeMechanism.DaChallenges,

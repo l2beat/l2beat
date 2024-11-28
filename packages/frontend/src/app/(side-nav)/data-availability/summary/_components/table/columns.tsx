@@ -20,7 +20,7 @@ const columnHelper = createColumnHelper<DaSummaryEntry>()
 
 export const [indexColumn, logoColumn] = getDaCommonProjectColumns(columnHelper)
 
-export const daLayerColumn = columnHelper.accessor('name', {
+const daLayerColumn = columnHelper.accessor('name', {
   header: 'DA Layer',
   cell: (ctx) => <DaLayerCell entry={ctx.row.original} />,
   meta: {
@@ -29,7 +29,7 @@ export const daLayerColumn = columnHelper.accessor('name', {
   },
 })
 
-export const daRisksColumn = columnHelper.display({
+const daRisksColumn = columnHelper.display({
   id: 'da-risks',
   header: 'DA Risks',
   cell: (ctx) => {
@@ -61,7 +61,6 @@ const daBridgeRisksColumn = columnHelper.display({
       />
     )
   },
-  enableSorting: false,
   meta: {
     align: 'center',
   },
@@ -74,7 +73,7 @@ const tvsColumn = columnHelper.accessor('tvs', {
       ctx.row.original.usedIn.length > 0 ? ctx.row.original.tvs : 0
 
     return (
-      <div className="w-full pl-4 text-right text-sm font-medium">
+      <div className="w-full pr-5 text-right text-sm font-medium">
         {formatCurrency(valueToFormat, 'usd')}
       </div>
     )
@@ -87,19 +86,19 @@ const tvsColumn = columnHelper.accessor('tvs', {
 })
 
 const slashableStakeColumn = columnHelper.accessor('economicSecurity', {
-  header: () => <span className="text-right">{'Slashable\nstake'}</span>,
+  header: () => <span className="text-right">Slashable</span>,
   cell: (ctx) => {
     const value = ctx.getValue()
     if (ctx.row.original.risks.economicSecurity.type === 'Unknown') {
       return (
-        <div className="w-full pl-4 text-right text-xs font-medium md:text-sm">
+        <div className="w-full pr-[18px] text-right text-xs font-medium md:text-sm">
           {formatCurrency(0, 'usd')}
         </div>
       )
     }
 
     return (
-      <div className="w-full pl-4 text-right text-xs font-medium md:text-sm">
+      <div className="w-full pr-[18px] text-right text-xs font-medium md:text-sm">
         <DaEconomicSecurityCell value={value} />
       </div>
     )
@@ -133,24 +132,24 @@ const membersColumn = columnHelper.display({
   },
 })
 
-const challengeMechanismColumn = columnHelper.accessor('challengeMechanism', {
+const challengeMechanismColumn = columnHelper.display({
   header: 'Challenge\nmechanism',
   cell: (ctx) => (
     <TwoRowCell>
-      <TwoRowCell.First>{ctx.getValue()?.value ?? 'None'}</TwoRowCell.First>
+      <TwoRowCell.First>
+        {ctx.row.original.challengeMechanism?.value ?? 'None'}
+      </TwoRowCell.First>
     </TwoRowCell>
   ),
-  enableSorting: false,
   meta: {
     tooltip:
-      'Shows if there is a mechanism that enables users to dispute the availability or accuracy of data committed by the DA provider',
+      'Shows if there is a mechanism that  users to dispute the availability or accuracy of data committed by the DA provider',
   },
 })
 
-const fallbackColumn = columnHelper.accessor('fallback', {
+const fallbackColumn = columnHelper.display({
   header: 'Fallback',
-  cell: (ctx) => <DaFallbackCell entry={ctx.row.original} />,
-  enableSorting: false,
+  cell: (ctx) => <DaFallbackCell fallback={ctx.row.original.fallback} />,
   meta: {
     tooltip:
       'Is there a mechanism that allows data to be posted to an alternative DA layer in case of downtime or unavailability of the primary layer? If so, where is the data posted?',
@@ -179,7 +178,7 @@ const daLayerGroup = columnHelper.group({
   ],
 })
 
-export const bridgeColumn = virtual(
+const bridgeColumn = virtual(
   columnHelper.display({
     id: 'bridge',
     header: 'Bridge',

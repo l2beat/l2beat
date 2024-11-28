@@ -1,8 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ConfigMapping } from '@l2beat/config'
+import { Database } from '@l2beat/database'
 import { assert } from '@l2beat/shared-pure'
 import { Config } from '../../../config/Config'
-import { Peripherals } from '../../../peripherals/Peripherals'
 import { Providers } from '../../../providers/Providers'
 import { Clock } from '../../../tools/Clock'
 import { ApplicationModule } from '../../ApplicationModule'
@@ -19,7 +19,7 @@ import { TvlDependencies } from './TvlDependencies'
 export function initTvlModule(
   config: Config,
   logger: Logger,
-  peripherals: Peripherals,
+  database: Database,
   providers: Providers,
   clock: Clock,
 ): ApplicationModule | undefined {
@@ -28,12 +28,9 @@ export function initTvlModule(
     return
   }
 
-  const dependencies = new TvlDependencies(
-    peripherals.database,
-    clock,
-    logger,
-    providers,
-  )
+  logger = logger.tag({ feature: 'tvl', module: 'tvl' })
+
+  const dependencies = new TvlDependencies(database, clock, logger, providers)
 
   const syncOptimizer = dependencies.getSyncOptimizer()
 
@@ -47,12 +44,12 @@ export function initTvlModule(
     clock,
     logger,
     syncOptimizer,
-    peripherals.database,
+    dependencies.database,
     [
-      peripherals.database.amount,
-      peripherals.database.blockTimestamp,
-      peripherals.database.price,
-      peripherals.database.value,
+      dependencies.database.amount,
+      dependencies.database.blockTimestamp,
+      dependencies.database.price,
+      dependencies.database.value,
     ],
   )
 
@@ -76,7 +73,6 @@ export function initTvlModule(
 
   const chainModule = initChainModule(
     config.tvl,
-    peripherals,
     dependencies,
     configMapping,
     priceModule.descendant,
@@ -85,7 +81,6 @@ export function initTvlModule(
 
   const premintedModule = initPremintedModule(
     config.tvl,
-    peripherals,
     dependencies,
     configMapping,
     priceModule.descendant,
@@ -94,7 +89,6 @@ export function initTvlModule(
 
   const aggLayerModule = initAggLayerModule(
     config.tvl,
-    peripherals,
     dependencies,
     configMapping,
     priceModule.descendant,
@@ -103,7 +97,6 @@ export function initTvlModule(
 
   const elasticChainModule = initElasticChainModule(
     config.tvl,
-    peripherals,
     dependencies,
     configMapping,
     priceModule.descendant,

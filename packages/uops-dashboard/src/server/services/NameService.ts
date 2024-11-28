@@ -9,8 +9,8 @@ export class NameService {
   constructor(
     private readonly db: DB,
     private readonly signatureClients: SignatureClient[],
-    private readonly contractClient: ContractClient,
     private readonly codeClient: RpcCodeClient,
+    private readonly contractClient?: ContractClient,
   ) {}
 
   async fillNames(block: CountedBlock): Promise<void> {
@@ -98,6 +98,10 @@ export class NameService {
 
       if (name) {
         names[address] = name
+        continue
+      }
+
+      if (!this.contractClient) {
         continue
       }
 

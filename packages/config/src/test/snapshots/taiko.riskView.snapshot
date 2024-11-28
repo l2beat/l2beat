@@ -28,10 +28,10 @@
     value: "Self sequence"
   }
   stateValidation: {
-    description: "Taiko uses a multi-tier proof system to validate the state. However, current tier proofs include either SGX (secure-enclave) execution verification, or approval by a minimum number of Guardians. State validation through the Zk-proof tier is not yet active. \n        Each proof goes through a cooldown window allowing for contestation. Contested blocks require proof from a higher level tier. If no contestation is made, or the block has been proven by the highest tier, the proof is considered valid.\n        The system allows for an invalid state to be proven by either a compromised SGX instance or compromised Guardians (the highest tier). This can lead to a state being proven as valid when it is not."
+    description: "A multi-tier proof system is used. The tiers are SGX, ZK (RISC0, SP1), Minority Guardian, and Guardian (highest tier). A higher tier proof can challenge a lower one within the challenge period.\n        The system allows for an invalid state to be finalized by compromised Guardians (the highest tier) and does not enforce ZK proofs."
     secondLine: "4h challenge period"
     sentiment: "bad"
-    value: "SGX proofs"
+    value: "Multi-proofs"
   }
   validatedBy: {
     description: "Smart contracts on Ethereum validate all bridge transfers."

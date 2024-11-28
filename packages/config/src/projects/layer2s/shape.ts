@@ -10,7 +10,6 @@ export const shape: Layer2 = opStackL2({
   createdAt: new UnixTime(1730131160), // 2024-10-28
   badges: [Badge.RaaS.Alchemy, Badge.Infra.Superchain],
   discovery,
-  usesBlobs: true,
   display: {
     name: 'Shape',
     slug: 'shape',
@@ -29,7 +28,6 @@ export const shape: Layer2 = opStackL2({
       ],
     },
     activityDataSource: 'Blockchain RPC',
-    architectureImage: 'opstack',
   },
   isNodeAvailable: true,
   rpcUrl: 'https://mainnet.shape.network',

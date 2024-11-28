@@ -7,13 +7,13 @@ export interface OklchColor {
   h: number
 }
 
-export interface RGBColor {
+interface RGBColor {
   r: number
   g: number
   b: number
 }
 
-export const White: OklchColor = { l: 100, c: 0, h: 106 }
+const White: OklchColor = { l: 100, c: 0, h: 106 }
 
 export function oklchColorToCSS(color: OklchColor | undefined): string {
   const { r, g, b } = oklch2rgb(color ?? White)
@@ -30,7 +30,7 @@ const multiplyMatrices = (A: number[], B: number[]) => [
 ]
 
 // NOTE(radomski): Clamps the result between 0 - 255
-export function oklch2rgb(color: OklchColor): RGBColor {
+function oklch2rgb(color: OklchColor): RGBColor {
   const { l, c, h } = color
   const lab = [
     l,

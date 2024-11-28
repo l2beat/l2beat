@@ -11,6 +11,24 @@ export interface ApiProjectResponse {
   chains: ApiProjectChain[]
 }
 
+export interface ApiPreviewResponse {
+  permissionsPerChain: { chain: string; permissions: ApiPreviewPermission[] }[]
+  contractsPerChain: { chain: string; contracts: ApiPreviewContract[] }[]
+}
+
+export interface ApiPreviewPermission {
+  addresses: AddressFieldValue[]
+  name: string
+  description: string
+  multisigParticipants: AddressFieldValue[] | undefined
+}
+
+export interface ApiPreviewContract {
+  addresses: AddressFieldValue[]
+  name: string
+  description: string
+}
+
 export interface ApiProjectChain {
   name: string
   initialContracts: ApiProjectContract[]
@@ -112,7 +130,13 @@ export interface ApiProjectContract extends ApiAddressEntry {
 
 export interface ApiAbi {
   address: string
-  entries: string[]
+  entries: ApiAbiEntry[]
+}
+
+export interface ApiAbiEntry {
+  value: string
+  signature?: string
+  topic?: string
 }
 
 export interface ApiCodeResponse {

@@ -1,3 +1,119 @@
+Generated with discovered.json: 0xe6e432dff3e86ca742b1e87d73800934d44f40c8
+
+# Diff at Wed, 27 Nov 2024 13:56:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3b9391cfe483e60a1853eeae6e47b4de475aac4e block: 21184706
+- current block number: 21279524
+
+## Description
+
+Owner for WOO changed two times. The intermediate owner EOA was https://etherscan.io/address/0xc031C368b51c28266396273b0C6ce2489b00969d who changed some peers and configs.
+
+## Watched changes
+
+```diff
+    contract WooTokenOFTAdapter (0xAd6cA80Fe4D3c54f6433fF725d744772AaE87711) {
+    +++ description: None
+      values.owner:
+-        "0x39e4fac1A21AE1D8c76B0ac52aC0417398fE738d"
++        "0x155EEF9731aFf5aE6cB2741F7bEC0f005037aCB0"
+    }
+```
+
+Generated with discovered.json: 0xf8073d8b8ed50a1a342d050ed69f56f9f7dc70f9
+
+# Diff at Thu, 14 Nov 2024 08:21:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ea60800af45c71fbd5d292e0f4301ba9afda01fa block: 21121843
+- current block number: 21184706
+
+## Description
+
+Polyhedra DVN contract upgraded, new verifiers linked.
+
+## Watched changes
+
+```diff
+    contract PolyhedraDVN (0x8ddF05F9A5c488b4973897E278B58895bF87Cb24) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x28e4c0a9b19237dbabd13c2ff57934b80b69c88954b99bd66c38e3626a030b26"
++        "0x7b47ae15df80519afbed6bca2472ab35b7e20938dfc898ececbbb6d1c7a369a0"
+      values.$implementation:
+-        "0xcb75F0dFFf5c5046CAA9dB1DE56645a962FeFFc2"
++        "0xdFf54e8d2B31A197DC5859739E7177AA31fC3390"
+      values.$pastUpgrades.2:
++        ["2024-11-12T05:45:11.000Z","0xc8f7a01b73f35e11ca4263d71196b6490da462b11cda69f32b53f91177b9b04f",["0xdFf54e8d2B31A197DC5859739E7177AA31fC3390"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.MESSAGE_TOPIC_V1:
+-        "0x3dc6f2ede34d1db05729bbb76e5efd17ec1bc83f98f665e7fba0596dca438b96"
+      values.MESSAGE_TOPIC_V2:
+-        "0x1ab700d4ced0c005b164c0f789fd09fcbb0156d4c2041b8a3bfbcd961cd1567f"
+      values.mptValidator:
+-        "0x8022ceAa2771FdC188a6f3c783e7207F53B121D2"
+      values.zkMptValidator:
+-        "0x4b9D6177a832376867F1723158BD6eF5E9c7fc5f"
+      values.defaultTxValidator:
++        "0x38C967856d17E900042Af447B3346bfF26C8ed4B"
+      values.defaultZkValidator:
++        "0x276816F1931aFac123BdaeA54afF02BE6fd73e14"
+      values.sender:
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EvmZkMptValidator (0x276816F1931aFac123BdaeA54afF02BE6fd73e14)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EvmMptValidator (0x38C967856d17E900042Af447B3346bfF26C8ed4B)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/EvmMptValidator.sol             | 723 +++++++++++++++++++++
+ .../ethereum/.flat/EvmZkMptValidator.sol           | 287 ++++++++
+ .../PolyhedraDVN/ZkBridgeOracleV2.sol              | 687 +++++---------------
+ 3 files changed, 1164 insertions(+), 533 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21121843 (main branch discovery), not current.
+
+```diff
+    contract ReadLib1002 (0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D) {
+    +++ description: None
+      name:
+-        ""
++        "ReadLib1002"
+      unverified:
+-        true
+      values.getTreasuryAndNativeFeeCap:
++        ["0x0000000000000000000000000000000000000000",450000000000000]
+      values.messageLibType:
++        2
+      values.owner:
++        "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92"
+      values.version:
++        {"major":10,"minor":0,"endpointVersion":2}
+      sourceHashes:
++        ["0xf7800be6fd99520201da1404c35bac8a1ed826bbc2134f0a77547e0d7a74c9c1"]
+    }
+```
+
 Generated with discovered.json: 0xf47e257a4f963ed5e4deb297ed84e0342635cca1
 
 # Diff at Tue, 05 Nov 2024 13:48:26 GMT:

@@ -5,6 +5,7 @@ import { Checkbox } from '~/components/core/checkbox'
 import { OverflowWrapper } from '~/components/core/overflow-wrapper'
 import { TableFilter } from '~/components/table/filters/table-filter'
 import { type CommonScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
+import { cn } from '~/utils/cn'
 import { useScalingFilterValues } from './scaling-filter-context'
 
 interface Props {
@@ -83,11 +84,13 @@ export function BaseScalingFilters({
     }))
 
   return (
-    <OverflowWrapper childrenClassName="-m-1 [&>*]:m-1" className={className}>
+    <OverflowWrapper
+      childrenClassName="-m-1 [&>*]:m-1 max-md:pl-4"
+      className={cn('pr-4', className)}
+    >
       <div className="flex flex-row space-x-1">
         {showRollupsOnly && (
           <Checkbox
-            id="rollups-only"
             onCheckedChange={(checked) =>
               filter.set({ rollupsOnly: !!checked })
             }

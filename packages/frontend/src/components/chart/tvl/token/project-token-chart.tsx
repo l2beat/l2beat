@@ -111,7 +111,7 @@ interface ControlsProps {
   setToken: (token: ProjectToken | undefined) => void
 }
 
-export function TokenChartUnitControls({
+function TokenChartUnitControls({
   isBridge,
   unit,
   setUnit,

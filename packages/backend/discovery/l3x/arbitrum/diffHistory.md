@@ -1,3 +1,95 @@
+Generated with discovered.json: 0xb72182fc4a8e2a096857332655d49a5b08c82a4a
+
+# Diff at Fri, 15 Nov 2024 08:18:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a00c2a67d12a174a45864b549412045028598606 block: 270183736
+- current block number: 270183736
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 270183736 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      description:
+-        "Central contract defining the access control for upgrading the system contract implementations."
++        "Central contract defining the access control permissions for upgrading the system contract implementations."
+    }
+```
+
+```diff
+    contract Inbox (0x80de5c4ccDfb7b6a250A9588C2d80F62a2B7d13F) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      template:
++        "orbitstack/Inbox"
+      description:
++        "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds."
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0x817C8Da480bC6b42a5FA88A26e9eD8c0c03968Cf) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      template:
++        "orbitstack/GatewayRouter"
+      displayName:
++        "GatewayRouter"
+      description:
++        "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging."
+    }
+```
+
+```diff
+    contract RollupProxy (0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.3:
+-        {"permission":"upgrade","target":"0x5e31608B400F45846043E93747D72A1a02c5a2f5","via":[{"address":"0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3","delay":0}]}
+      issuedPermissions.2.permission:
+-        "propose"
++        "validate"
+      issuedPermissions.1.permission:
+-        "configure"
++        "upgrade"
+      issuedPermissions.1.via.0.description:
+-        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      issuedPermissions.0.permission:
+-        "challenge"
++        "configure"
+      issuedPermissions.0.target:
+-        "0xfc48f0786b3fA7353F63Acc40973857554A51cA2"
++        "0x5e31608B400F45846043E93747D72A1a02c5a2f5"
+      issuedPermissions.0.via.0:
++        {"address":"0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3","delay":0,"description":"can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."}
+    }
+```
+
+```diff
+    contract SequencerInbox (0xB9450b512Fd3454e9C1a2593C5DF9E71344b5653) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.maxTimeVariation.description:
+-        "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
++        "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
+    }
+```
+
+```diff
+    contract RollupEventInbox (0xc40e1DdDDc4837e63Bfb21EF34d3Ca4A6c78fD15) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      template:
++        "orbitstack/RollupEventInbox"
+      description:
++        "Helper contract sending configuration data over the bridge during the systems initialization."
+    }
+```
+
 Generated with discovered.json: 0x089440c0f5081a954fc5949e6071de0780e294d0
 
 # Diff at Mon, 04 Nov 2024 08:07:46 GMT:

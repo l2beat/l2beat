@@ -10,6 +10,9 @@ import {
 
 import {
   CONTRACTS,
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
@@ -20,6 +23,8 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { ESCROW } from '../../common/escrow'
+import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
   getProxyGovernance,
@@ -233,6 +238,8 @@ const escrowEKUBOMaxTotalBalanceString = formatMaxTotalBalanceString(
   18,
 )
 
+const finalizationPeriod = 0
+
 export const starknet: Layer2 = {
   type: 'layer2',
   id: ProjectId('starknet'),
@@ -271,7 +278,7 @@ export const starknet: Layer2 = {
         'Starknet is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. Proofs are aggregated with other projects using SHARP and state updates have to refer to proved claims.',
     },
     finality: {
-      finalizationPeriod: 0,
+      finalizationPeriod,
     },
     costsWarning: {
       sentiment: 'warning',
@@ -295,7 +302,7 @@ export const starknet: Layer2 = {
         address: EthereumAddress('0x0437465dfb5B79726e35F08559B0cBea55bb585C'),
         sinceTimestamp: new UnixTime(1652101033),
         tokens: ['DAI'],
-        source: 'external',
+        ...ESCROW.CANONICAL_EXTERNAL,
         description:
           'DAI Vault for custom DAI Gateway managed by MakerDAO.' +
           ' ' +
@@ -336,7 +343,7 @@ export const starknet: Layer2 = {
           ' ' +
           escrowWSTETHMaxTotalBalanceString,
         upgradableBy: ['BridgeMultisig'],
-        source: 'external',
+        ...ESCROW.CANONICAL_EXTERNAL,
         upgradeDelay: formatSeconds(escrowWSTETHDelaySeconds),
       }),
       discovery.getEscrowDetails({
@@ -741,14 +748,17 @@ export const starknet: Layer2 = {
       },
     ],
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (blobs or calldata)'],
-    bridge: { type: 'Enshrined' },
-    mode: 'State diffs',
-  }),
+  dataAvailability: [
+    addSentimentToDataAvailability({
+      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
+      bridge: DA_BRIDGES.ENSHRINED,
+      mode: DA_MODES.STATE_DIFFS,
+    }),
+  ],
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
+      secondLine: formatExecutionDelay(finalizationPeriod),
       sources: [
         {
           contract: 'Starknet',

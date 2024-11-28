@@ -5,19 +5,20 @@ import {
   ENTRY_POINT_ADDRESS_0_6_0,
   ENTRY_POINT_ADDRESS_0_7_0,
   ERC4337_methods,
-  EVMBlock,
   EVMTransaction,
+  MULTICALLV3_methods,
+  MULTICALL_V3,
   SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
   SAFE_methods,
 } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import { Block, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { RpcCounter } from './RpcCounter'
 
 describe(RpcCounter.name, () => {
   describe(RpcCounter.prototype.countForBlock.name, () => {
     it('should return block with counted operations', () => {
-      const mockBlock: EVMBlock = createBlock(1)
+      const mockBlock: Block = createBlock(1)
 
       const expectedResult: CountedBlock = {
         ...mockBlock,
@@ -54,7 +55,7 @@ describe(RpcCounter.name, () => {
       const end = UnixTime.now()
       const start = end.add(-1, 'hours')
 
-      const mockBlocks: EVMBlock[] = [
+      const mockBlocks: Block[] = [
         createBlock(1, start),
         createBlock(2),
         createBlock(3, end),
@@ -133,7 +134,7 @@ describe(RpcCounter.name, () => {
         to: 'tx.to',
         hash: 'tx.hash',
         data: 'tx.data',
-        type: 0,
+        type: '0',
       })
 
       expect(result).toEqual({
@@ -168,7 +169,7 @@ describe(RpcCounter.name, () => {
         to: ENTRY_POINT_ADDRESS_0_6_0,
         hash: 'tx.hash',
         data: 'tx.data',
-        type: 2,
+        type: '2',
       })
 
       expect(result).toEqual({
@@ -205,7 +206,7 @@ describe(RpcCounter.name, () => {
         to: SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
         hash: 'tx.hash',
         data: 'tx.data',
-        type: 2,
+        type: '2',
       })
 
       expect(result).toEqual({
@@ -248,6 +249,43 @@ describe(RpcCounter.name, () => {
       expect(result).toEqual({
         from: 'tx.from',
         type: 'EIP-712',
+        hash: 'tx.hash',
+        operationsCount: 1,
+        includesBatch: false,
+        includesUnknown: false,
+        details: mockOperation,
+      })
+    })
+
+    it('should map Multicall v3 txs', () => {
+      const counter = new RpcCounter()
+
+      const mockOperation = {
+        id: 'id',
+        level: 0,
+        methodSelector: '0x123',
+        count: 1,
+        children: [],
+      } as CountedOperation
+
+      counter.countUserOperations = mockFn().returns(mockOperation)
+
+      counter.checkOperations = mockFn().returns({
+        includesBatch: false,
+        includesUnknown: false,
+      })
+
+      const result = counter.mapTransaction({
+        from: 'tx.from',
+        to: MULTICALL_V3,
+        hash: 'tx.hash',
+        data: 'tx.data',
+        type: '2',
+      })
+
+      expect(result).toEqual({
+        from: 'tx.from',
+        type: 'Multicall v3',
         hash: 'tx.hash',
         operationsCount: 1,
         includesBatch: false,
@@ -449,7 +487,7 @@ describe(RpcCounter.name, () => {
       expect(result).toEqual(expectedResult)
     })
 
-    it('should count GnosisSafe user operations', () => {
+    it('should count EIP-712 user operations', () => {
       const calldata =
         '0x8f0273a900000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000001200000000000000000000000009248f1ee8cbd029f3d22a92eb270333a39846fb200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000242e1a7d4d00000000000000000000000000000000000000000000003635c9adc5dea00000000000000000000000000000000000000000000000000000000000000000000000000000000000009248f1ee8cbd029f3d22a92eb270333a39846fb200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000043d18b91200000000000000000000000000000000000000000000000000000000'
 
@@ -493,6 +531,67 @@ describe(RpcCounter.name, () => {
 
       expect(result).toEqual(expectedResult)
     })
+
+    it('should count Multicall v3 user operations', () => {
+      const calldata =
+        '0x82ad56cb0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000280000000000000000000000000000000000000000000000000000000000000042000000000000000000000000000000000000000000000000000000000000005c000000000000000000000000002238bb0085395ae52cd4755456891fc2fd5934d000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000164000000000000000000000000000000000000000000000000000000000075abd795d5418a00000000000000000000000000000000000000000000000000000000673f247b00000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000001bde3868dd9a2ab4288f72284b1a7420d6390db93b5ccec47035c71fe2a98d556c36c863df0c9100b6268a90312c5c1a6a5c4ef1afcbfcf94abbda594818982909743ccd28307a009623a59bd7aff6de4746256859260d30c054fef4fb300f6f3c000000000000000000000000ab2cbae4c5a66eb7c115392e4d15e2cfc877b9e70000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000d1d4b60718a8f91a5a8d7dae6fa0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000b5130cc30be369afeac34b61d60ddfdef84b7b6300000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000010400000082000000000000000000000000000000000000000000000001a611f1666fe84c6300000000000000000000000000000000000000000000000000000000673f247b000000000000000000000000000000000000000000000000000000000000006018358f517cc6527eabfbaafcdc5ff57de7dbd683cf17a8de7f22900d8db2987300000000000000000000000043349fb50ec2494e285810f3fed2d042015a8f210000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000d1d4b6071778f9195a5a8d7dafb0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a770582353b573cbfdcc948751750eeb3ccf23cf000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000104000000820000000000000000000000000000000000000000000000d000db0ce74f1fcf8700000000000000000000000000000000000000000000000000000000673f24af000000000000000000000000000000000000000000000000000000000000006035c86360b9308d16cd50b77c72bf76997a9bf33f671fbc4e692b1bfe96aef7f1000000000000000000000000077495fbdd645b3d667d198fc85f97905c61a4720000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000d161d608a8fa5a8acd9dae6fafb000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000046ef0071b1e2ff6b42d36e5a177ea43ae5917f4e000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000104000000820000000000000000000000000000000000000000000000af8347ea3f83b4000000000000000000000000000000000000000000000000000000000000673f24af0000000000000000000000000000000000000000000000000000000000000060ea078420052ad4433702241a49911a47a9789f6583865544114e0f9b32322427000000000000000000000000cc0c20e3cbcced39dfcad858f68b5330b476f9980000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000d6071778a8f91a8acd7d9dae6fb0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+
+      const expectedResult: CountedOperation = {
+        contractAddress: 'tx.to',
+        contractName: 'Multicall3',
+        count: 4,
+        id: 'id',
+        level: 0,
+        methodName: 'aggregate3',
+        methodSelector: '0x82ad56cb',
+        methodSignature: 'aggregate3((address,bool,bytes)[])',
+        children: [
+          {
+            children: [],
+            contractAddress: '0x02238BB0085395ae52cd4755456891Fc2fd5934D',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodSelector: '0x00000000',
+          },
+          {
+            children: [],
+            contractAddress: '0xb5130cC30Be369AFEaC34B61D60dDFDef84B7B63',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodSelector: '0x00000082',
+          },
+          {
+            children: [],
+            contractAddress: '0xA770582353b573CbfdCC948751750EeB3Ccf23CF',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodSelector: '0x00000082',
+          },
+          {
+            children: [],
+            contractAddress: '0x46ef0071b1E2fF6B42d36e5A177EA43Ae5917f4E',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodSelector: '0x00000082',
+          },
+        ],
+      }
+
+      const counter = new RpcCounter()
+
+      const result = counter.countUserOperations(
+        calldata,
+        'tx.to',
+        MULTICALLV3_methods,
+        () => 'id',
+      )
+
+      expect(result).toEqual(expectedResult)
+    })
   })
 
   describe(RpcCounter.prototype.checkOperations.name, () => {
@@ -528,7 +627,7 @@ describe(RpcCounter.name, () => {
       })
 
       const mockTx = mockObject<EVMTransaction>({
-        type: 2,
+        type: '2',
       })
 
       const counter = new RpcCounter()
@@ -591,7 +690,7 @@ describe(RpcCounter.name, () => {
       })
 
       const mockTx = mockObject<EVMTransaction>({
-        type: 2,
+        type: '2',
       })
 
       const counter = new RpcCounter()
@@ -663,7 +762,7 @@ describe(RpcCounter.name, () => {
   })
 })
 
-function createBlock(number: number, timestamp?: UnixTime): EVMBlock {
+function createBlock(number: number, timestamp?: UnixTime): Block {
   return {
     number,
     timestamp: timestamp?.toNumber() ?? UnixTime.now().toNumber(),
@@ -674,14 +773,14 @@ function createBlock(number: number, timestamp?: UnixTime): EVMBlock {
         to: 'tx1.to',
         hash: 'tx1.hash',
         data: 'tx1.data',
-        type: 2,
+        type: '2',
       },
       {
         from: 'tx2.from',
         to: 'tx2.to',
         hash: 'tx2.hash',
         data: 'tx2.data',
-        type: 2,
+        type: '2',
       },
     ],
   }

@@ -6,10 +6,7 @@ import {
   asNumber,
   branded,
 } from '@l2beat/shared-pure'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
+import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
@@ -36,7 +33,7 @@ export const TokenTvlChartParams = z.object({
 })
 
 export type TokenTvlChartParams = z.infer<typeof TokenTvlChartParams>
-export type TokenParams = z.infer<typeof TokenParams>
+type TokenParams = z.infer<typeof TokenParams>
 
 /**
  * A function that computes values for chart of the token's TVL over time.
@@ -44,14 +41,14 @@ export type TokenParams = z.infer<typeof TokenParams>
  */
 export async function getTokenTvlChart(params: TokenTvlChartParams) {
   if (env.MOCK) {
-    return getMockTokenTvlChart(params)
+    return getMockTokenTvlChartData(params)
   }
-  noStore()
-  return getCachedTokenTvlChart(params)
+  return getCachedTokenTvlChartData(params)
 }
 
-type TokenTvlChart = Awaited<ReturnType<typeof getCachedTokenTvlChart>>
-const getCachedTokenTvlChart = cache(
+type TokenTvlChart = Awaited<ReturnType<typeof getCachedTokenTvlChartData>>
+
+export const getCachedTokenTvlChartData = cache(
   async ({ token, range }: TokenTvlChartParams) => {
     const targetTimestamp = UnixTime.now().toStartOf('hour').add(-2, 'hours')
     const resolution = rangeToResolution(range)
@@ -111,11 +108,13 @@ const getCachedTokenTvlChart = cache(
 
     return data
   },
-  ['tokenTvlChart'],
-  { revalidate: 60 * UnixTime.MINUTE }, // Cache for 1 hour
+  ['token-tvl-chart'],
+  {
+    revalidate: 10 * UnixTime.MINUTE,
+  },
 )
 
-function getMockTokenTvlChart(params: TokenTvlChartParams): TokenTvlChart {
+function getMockTokenTvlChartData(params: TokenTvlChartParams): TokenTvlChart {
   const resolution = rangeToResolution(params.range)
   const [from, to] = getRangeWithMax(params.range, 'hourly')
   const adjustedRange: [UnixTime, UnixTime] = [from ?? to.add(-730, 'days'), to]

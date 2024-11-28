@@ -7,6 +7,9 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
@@ -17,6 +20,8 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { ESCROW } from '../../common/escrow'
+import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { PROOFS } from '../other/zk-catalog/common/proofSystems'
@@ -49,6 +54,7 @@ const isEnforcedTxGatewayPaused = discovery.getContractValue<boolean>(
 )
 
 const upgradeDelay = 0
+const finalizationPeriod = 0
 
 export const scroll: Layer2 = {
   type: 'layer2',
@@ -108,8 +114,7 @@ export const scroll: Layer2 = {
             'Transaction data batches that have not yet been proven can be reverted.',
         },
       },
-
-      finalizationPeriod: 0,
+      finalizationPeriod,
     },
   },
   stage: getStage({
@@ -168,32 +173,32 @@ export const scroll: Layer2 = {
       discovery.getEscrowDetails({
         address: EthereumAddress('0xb2b10a289A229415a124EFDeF310C10cb004B6ff'), // custom gateway
         tokens: '*',
-        source: 'external',
+        ...ESCROW.CANONICAL_EXTERNAL,
         ...upgradesScrollMultisig,
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B'),
         tokens: ['USDC'],
-        source: 'external',
+        ...ESCROW.CANONICAL_EXTERNAL,
         ...upgradesScrollMultisig,
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x67260A8B73C5B77B55c1805218A42A7A6F98F515'),
         tokens: ['DAI'],
-        source: 'external',
+        ...ESCROW.CANONICAL_EXTERNAL,
         ...upgradesScrollMultisig,
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x6625C6332c9F91F2D27c304E729B86db87A3f504'),
         tokens: ['wstETH'],
-        source: 'external',
+        ...ESCROW.CANONICAL_EXTERNAL,
         description:
           'Custom token escrow with third-party governance, using the canonical bridge only for messaging.',
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xA033Ff09f2da45f0e9ae495f525363722Df42b2a'),
         tokens: ['pufETH'],
-        source: 'external',
+        ...ESCROW.CANONICAL_EXTERNAL,
         description:
           'Custom token escrow with third-party governance, using the canonical bridge only for messaging.',
       }),
@@ -314,14 +319,17 @@ export const scroll: Layer2 = {
       stateUpdate: 'disabled',
     },
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (blobs or calldata)'],
-    bridge: { type: 'Enshrined' },
-    mode: 'Transaction data (compressed)',
-  }),
+  dataAvailability: [
+    addSentimentToDataAvailability({
+      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
+      bridge: DA_BRIDGES.ENSHRINED,
+      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+    }),
+  ],
   riskView: {
     stateValidation: {
       ...STATE_ZKP_SN,
+      secondLine: formatExecutionDelay(finalizationPeriod),
       sources: [
         {
           contract: 'ScrollChain',

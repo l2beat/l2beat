@@ -1,7 +1,5 @@
 import { PoolConfig } from 'pg'
 import { ActivityRepository } from './activity/repository'
-import { AssetRisksBalanceRepository } from './asset-risks/balance/repository'
-import { AssetRisksUserRepository } from './asset-risks/user/repository'
 import { CurrentPriceRepository } from './da-beat/current-price/repository'
 import { StakeRepository } from './da-beat/stake/repository'
 import { DiscoveryCacheRepository } from './discovery/discovery-cache/repository'
@@ -17,16 +15,6 @@ import { L2CostPriceRepository } from './other/l2-cost-price/repository'
 import { L2CostRepository } from './other/l2-cost/repository'
 import { LivenessRepository } from './other/liveness/repository'
 import { VerifierStatusRepository } from './other/verifier-status/repository'
-import { BridgeEscrowRepository } from './token-db/bridge-escrow/repository'
-import { CacheRepository } from './token-db/cache/repository'
-import { DeploymentRepository } from './token-db/deployment/repository'
-import { ExternalBridgeRepository } from './token-db/external-bridge/repository'
-import { NetworkExplorerRepository } from './token-db/network-explorer/repository'
-import { NetworkRpcRepository } from './token-db/network-rpc/repository'
-import { NetworkRepository } from './token-db/network/repository'
-import { TokenBridgeRepository } from './token-db/token-bridge/repository'
-import { TokenMetaRepository } from './token-db/token-meta/repository'
-import { TokenRepository } from './token-db/token/repository'
 import { AmountRepository } from './tvl/amount/repository'
 import { BlockTimestampRepository } from './tvl/block-timestamp/repository'
 import { PriceRepository } from './tvl/price/repository'
@@ -47,11 +35,6 @@ export function createDatabase(config?: PoolConfig) {
     activity: new ActivityRepository(db),
     // #endregion
 
-    // #region Asset Risks
-    assetRisksUser: new AssetRisksUserRepository(db),
-    assetRisksBalance: new AssetRisksBalanceRepository(db),
-    // #endregion
-
     // #region DA BEAT
     currentPrice: new CurrentPriceRepository(db),
     stake: new StakeRepository(db),
@@ -62,19 +45,6 @@ export function createDatabase(config?: PoolConfig) {
     updateMonitor: new UpdateMonitorRepository(db),
     updateNotifier: new UpdateNotifierRepository(db),
     flatSources: new FlatSourcesRepository(db),
-    // #endregion
-
-    // #region Token DB
-    bridgeEscrow: new BridgeEscrowRepository(db),
-    cache: new CacheRepository(db),
-    deployment: new DeploymentRepository(db),
-    externalBridge: new ExternalBridgeRepository(db),
-    networkExplorer: new NetworkExplorerRepository(db),
-    networkRpc: new NetworkRpcRepository(db),
-    network: new NetworkRepository(db),
-    token: new TokenRepository(db),
-    tokenBridge: new TokenBridgeRepository(db),
-    tokenMeta: new TokenMetaRepository(db),
     // #endregion
 
     // #region TVL

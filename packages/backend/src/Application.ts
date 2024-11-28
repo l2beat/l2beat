@@ -60,10 +60,11 @@ export class Application {
         config,
         logger,
         peripherals,
+        providers,
         trackedTxsModule?.indexer,
       ),
       createLzOAppsModule(config, logger),
-      initTvlModule(config, logger, peripherals, providers, clock),
+      initTvlModule(config, logger, database, providers, clock),
       createVerifiersModule(config, logger, peripherals, clock),
       createDaBeatModule(config, logger, peripherals, providers, clock),
     ]

@@ -1,3 +1,135 @@
+Generated with discovered.json: 0x7752d046a70b84610ebefb8d8246372dc99ea1cb
+
+# Diff at Mon, 18 Nov 2024 16:54:51 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b54f69b0d6666908da980a31e5f52da87009f1ab block: 271338161
+- current block number: 275817457
+
+## Description
+
+Caldera MS member removed.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig (0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) {
+    +++ description: None
+      values.$members.4:
+-        "0x356000Cec4fC967f8FC372381D983426760A0391"
+      values.$members.3:
+-        "0x4919167EA334BE84B1604Cbc82A26A7746D5943e"
++        "0x356000Cec4fC967f8FC372381D983426760A0391"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 4 (75%)"
+    }
+```
+
+Generated with discovered.json: 0x1a029a4e7515497c38656b25c22fef2403213c62
+
+# Diff at Fri, 15 Nov 2024 08:18:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a00c2a67d12a174a45864b549412045028598606 block: 271338161
+- current block number: 271338161
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 271338161 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (0x139C5A235632EDdad741ff380112B3161d31a21C) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      description:
+-        "Central contract defining the access control for upgrading the system contract implementations."
++        "Central contract defining the access control permissions for upgrading the system contract implementations."
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0x2623C144B4d167f70893f6A8968B98c89a6C5F97) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      template:
++        "orbitstack/GatewayRouter"
+      displayName:
++        "GatewayRouter"
+      description:
++        "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging."
+    }
+```
+
+```diff
+    contract RollupProxy (0x2e988Ea0873C9d712628F0bf38DAFdE754927C89) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.3:
+-        {"permission":"upgrade","target":"0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF","via":[{"address":"0x139C5A235632EDdad741ff380112B3161d31a21C","delay":0}]}
+      issuedPermissions.2.permission:
+-        "propose"
++        "validate"
+      issuedPermissions.1.permission:
+-        "configure"
++        "upgrade"
+      issuedPermissions.1.via.0.description:
+-        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      issuedPermissions.0.permission:
+-        "challenge"
++        "configure"
+      issuedPermissions.0.target:
+-        "0xeCebCfC101c3a1c4dB99902cE1Df914dCAd50a65"
++        "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"
+      issuedPermissions.0.via.0:
++        {"address":"0x139C5A235632EDdad741ff380112B3161d31a21C","delay":0,"description":"can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."}
+    }
+```
+
+```diff
+    contract Inbox (0x37e60F80d921dc5E7f501a7130F31f6548dBa564) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      template:
++        "orbitstack/Inbox"
+      description:
++        "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds."
+    }
+```
+
+```diff
+    contract RollupEventInbox (0x3bC4894370dE0Aa304ed717c2e01866c46F1CEa6) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      template:
++        "orbitstack/RollupEventInbox"
+      description:
++        "Helper contract sending configuration data over the bridge during the systems initialization."
+    }
+```
+
+```diff
+    contract L1CustomGateway (0x8bE956aB42274056ef4471BEb211b33e258b7324) {
+    +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
+      template:
++        "orbitstack/CustomGateway"
+      displayName:
++        "CustomGateway"
+      description:
++        "Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability."
+    }
+```
+
+```diff
+    contract SequencerInbox (0xA436f1867adD490BF1530c636f2FB090758bB6B3) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.maxTimeVariation.description:
+-        "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
++        "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
+    }
+```
+
 Generated with discovered.json: 0x57ee31699ef8257bc209c1692eb74f19e657cfb1
 
 # Diff at Tue, 05 Nov 2024 15:59:33 GMT:

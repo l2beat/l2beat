@@ -13,7 +13,7 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
     super({
       ...$,
       name: INDEXER_NAMES.PRICE,
-      tag: $.coingeckoId.toString(),
+      tags: { tag: $.coingeckoId.toString() },
       updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
     })
   }
@@ -23,9 +23,9 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
     to: number,
     configurations: Configuration<CoingeckoPriceConfigEntry>[],
   ) {
-    const adjustedTo = this.$.priceService.getAdjustedTo(from, to)
+    const adjustedTo = this.$.priceService.calculateAdjustedTo(from, to)
 
-    const prices = await this.$.priceService.fetchPrices(
+    const prices = await this.$.priceService.getPrices(
       new UnixTime(from),
       adjustedTo,
       this.$.coingeckoId,

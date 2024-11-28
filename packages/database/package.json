@@ -30,6 +30,7 @@
     "pg": "^8.8.0"
   },
   "devDependencies": {
+    "@l2beat/typescript-config": "workspace:*",
     "@types/lodash": "^4.17.13",
     "@types/pg": "8.6.5",
     "prisma": "^5.15.0",

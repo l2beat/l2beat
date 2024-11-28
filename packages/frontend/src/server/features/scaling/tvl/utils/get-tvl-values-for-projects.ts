@@ -1,7 +1,7 @@
 import { type ValueRecord } from '@l2beat/database'
 import { assert } from '@l2beat/shared-pure'
 import { type Dictionary, groupBy } from 'lodash'
-import { db } from '~/server/database'
+import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
 import { type TvlProject } from './get-tvl-projects'
 import { getTvlTargetTimestamp } from './get-tvl-target-timestamp'
@@ -12,6 +12,7 @@ export async function getTvlValuesForProjects(
   projects: TvlProject[],
   range: TvlChartRange,
 ) {
+  const db = getDb()
   const { days, resolution } = getRangeConfig(range)
   const target = getTvlTargetTimestamp()
 
@@ -22,13 +23,15 @@ export async function getTvlValuesForProjects(
       .add(-days, 'days')
 
   // NOTE: This cannot be optimized using from because the values need to be interpolated
-  const valueRecords = await db.value.getForProjects(projects.map((p) => p.id))
+  const valueRecords = await db.value.getForProjects(
+    projects.map((p) => p.projectId),
+  )
 
   const valuesByProject = groupBy(valueRecords, 'projectId')
 
   const result: Dictionary<Dictionary<ValueRecord[]>> = {}
   for (const [projectId, projectValues] of Object.entries(valuesByProject)) {
-    const project = projects.find((p) => p.id === projectId)
+    const project = projects.find((p) => p.projectId === projectId)
     assert(project, `Project ${projectId.toString()} not found`)
 
     const valuesByTimestamp = groupBy(projectValues, 'timestamp')

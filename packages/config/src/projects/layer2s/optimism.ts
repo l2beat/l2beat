@@ -12,6 +12,9 @@ import {
 import { BigNumber } from 'ethers'
 import { formatEther } from 'ethers/lib/utils'
 import {
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   DERIVATION,
   EXITS,
   MILESTONES,
@@ -20,7 +23,9 @@ import {
   addSentimentToDataAvailability,
 } from '../../common'
 import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
+import { ESCROW } from '../../common/escrow'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
+import { formatChallengePeriod, formatDelay } from '../../common/formatDelays'
 import { OPERATOR } from '../../common/operator'
 import { TECHNOLOGY_DATA_AVAILABILITY } from '../../common/technologyDataAvailability'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -210,7 +215,7 @@ export const optimism: Layer2 = {
       discovery.getEscrowDetails({
         address: EthereumAddress('0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65'),
         sinceTimestamp: new UnixTime(1625675779),
-        source: 'external',
+        ...ESCROW.CANONICAL_EXTERNAL,
         tokens: ['DAI'],
         description: 'DAI Vault for custom DAI Gateway managed by MakerDAO.',
       }),
@@ -219,7 +224,7 @@ export const optimism: Layer2 = {
         address: EthereumAddress('0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f'),
         sinceTimestamp: new UnixTime(1620680982),
         tokens: ['SNX'],
-        source: 'external',
+        ...ESCROW.CANONICAL_EXTERNAL,
         description: 'SNX Vault for custom SNX Gateway managed by Synthetix.',
       }),
       {
@@ -227,7 +232,7 @@ export const optimism: Layer2 = {
         address: EthereumAddress('0x045e507925d2e05D114534D0810a1abD94aca8d6'),
         sinceTimestamp: new UnixTime(1610668212),
         tokens: ['SNX'],
-        source: 'external',
+        ...ESCROW.CANONICAL_EXTERNAL,
         isHistorical: true,
         chain: 'ethereum',
       },
@@ -236,14 +241,14 @@ export const optimism: Layer2 = {
         address: EthereumAddress('0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068'),
         sinceTimestamp: new UnixTime(1620680934),
         tokens: ['SNX'],
-        source: 'external',
+        ...ESCROW.CANONICAL_EXTERNAL,
         isHistorical: true,
         chain: 'ethereum',
       },
       discovery.getEscrowDetails({
         address: EthereumAddress('0x76943C0D61395d8F2edF9060e1533529cAe05dE6'),
         tokens: ['wstETH'],
-        source: 'external',
+        ...ESCROW.CANONICAL_EXTERNAL,
         description:
           'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
       }),
@@ -338,11 +343,13 @@ export const optimism: Layer2 = {
     ],
     coingeckoPlatform: 'optimistic-ethereum',
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (blobs or calldata)'],
-    bridge: { type: 'Enshrined' },
-    mode: 'Transaction data (compressed)',
-  }),
+  dataAvailability: [
+    addSentimentToDataAvailability({
+      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
+      bridge: DA_BRIDGES.ENSHRINED,
+      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+    }),
+  ],
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_INT,
@@ -354,7 +361,7 @@ export const optimism: Layer2 = {
           ],
         },
       ],
-      secondLine: `${formatSeconds(maxClockDuration)} challenge period`,
+      secondLine: formatChallengePeriod(maxClockDuration),
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: {
@@ -368,6 +375,7 @@ export const optimism: Layer2 = {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
         HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
       ),
+      secondLine: formatDelay(HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS),
     },
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
@@ -575,7 +583,7 @@ export const optimism: Layer2 = {
       'Address allowed to pause withdrawals or blacklist dispute games in case of an emergency. It is controlled by the Security Council multisig, but a module allows the Foundation to act through it. The Security Council can disable the module if the Foundation acts maliciously.',
     ),
     ...discovery.getMultisigPermission(
-      'OptimismFoundationMultisig_1',
+      'OpFoundationUpgradeSafe',
       'Member of the SuperchainProxyAdminOwner.',
     ),
     ...discovery.getMultisigPermission(
@@ -589,7 +597,7 @@ export const optimism: Layer2 = {
       ],
     ),
     ...discovery.getMultisigPermission(
-      'FoundationMultisig_2',
+      'OpFoundationOperationsSafe',
       'This address is the owner of the following contracts: SystemConfig.',
     ),
     discovery.contractAsPermissioned(
@@ -689,7 +697,7 @@ export const optimism: Layer2 = {
         ...l1Upgradeability,
       }),
       discovery.getContractDetails('LivenessModule', {
-        description: `The LivenessModule is a Gnosis Safe nodule used to remove Security Council members that have been inactive for ${livenessInterval} while making sure that the threshold remains above 75%. If the number of members falls below 8, the OptimismFoundationMultisig_1 takes ownership of the multisig.`,
+        description: `The LivenessModule is a Gnosis Safe nodule used to remove Security Council members that have been inactive for ${livenessInterval} while making sure that the threshold remains above 75%. If the number of members falls below 8, the OpFoundationUpgradeSafe takes ownership of the multisig.`,
         ...l1Upgradeability,
       }),
     ],
@@ -783,7 +791,7 @@ export const optimism: Layer2 = {
     ],
   },
   upgradesAndGovernance:
-    'All contracts are upgradable by the `SuperchainProxyAdmin` which is controlled by a 2/2 multisig composed by the Optimism Foundation and a Security Council. The Guardian role is assigned to the Security Council multisig, with a Safe Module that allows the Foundation to act through it to stop withdrawals in the whole Superchain, blacklist dispute games, or deactivate the fault proof system entirely in case of emergencies. The Security Council can remove the module if the Foundation becomes malicious. The single Sequencer actor can be modified by the `FoundationMultisig_2` via the `SystemConfig` contract. The SuperchainProxyAdminOwner can recover dispute bonds in case of bugs that would distribute them incorrectly. \n\nAt the moment, for regular upgrades, the DAO signals its intent by voting on upgrade proposals, but has no direct control over the upgrade process.',
+    'All contracts are upgradable by the `SuperchainProxyAdmin` which is controlled by a 2/2 multisig composed by the Optimism Foundation and a Security Council. The Guardian role is assigned to the Security Council multisig, with a Safe Module that allows the Foundation to act through it to stop withdrawals in the whole Superchain, blacklist dispute games, or deactivate the fault proof system entirely in case of emergencies. The Security Council can remove the module if the Foundation becomes malicious. The single Sequencer actor can be modified by the `OpFoundationOperationsSafe` via the `SystemConfig` contract. The SuperchainProxyAdminOwner can recover dispute bonds in case of bugs that would distribute them incorrectly. \n\nAt the moment, for regular upgrades, the DAO signals its intent by voting on upgrade proposals, but has no direct control over the upgrade process.',
   milestones: [
     {
       name: 'Fallback to permissioned proposals for 26 days.',

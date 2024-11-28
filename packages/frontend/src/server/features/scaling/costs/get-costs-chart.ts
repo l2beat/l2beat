@@ -1,12 +1,9 @@
 import type { AggregatedL2CostRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
+import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { env } from '~/env'
-import { db } from '~/server/database'
+import { getDb } from '~/server/database'
 import { getRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generate-timestamps'
 import { addIfDefined } from './utils/add-if-defined'
@@ -28,18 +25,19 @@ export type CostsChartParams = z.infer<typeof CostsChartParams>
  * @returns [timestamp, overheadGas, overheadEth, overheadUsd, calldataGas, calldataEth, calldataUsd, computeGas, computeEth, computeUsd, blobsGas, blobsEth, blobsUsd][] - all numbers
  */
 export function getCostsChart(
-  ...parameters: Parameters<typeof getCachedCostsChart>
+  ...parameters: Parameters<typeof getCachedCostsChartData>
 ) {
   if (env.MOCK) {
-    return getMockCostsChart(...parameters)
+    return getMockCostsChartData(...parameters)
   }
-  noStore()
-  return getCachedCostsChart(...parameters)
+  return getCachedCostsChartData(...parameters)
 }
 
-export type CostsChartData = Awaited<ReturnType<typeof getCachedCostsChart>>
-const getCachedCostsChart = cache(
+export type CostsChartData = Awaited<ReturnType<typeof getCachedCostsChartData>>
+
+export const getCachedCostsChartData = cache(
   async ({ range: timeRange, filter }: CostsChartParams) => {
+    const db = getDb()
     const projects = getCostsProjects(filter)
     if (projects.length === 0) {
       return []
@@ -68,18 +66,50 @@ const getCachedCostsChart = cache(
       [fromToQuery, to.add(-1, resolution === 'daily' ? 'days' : 'hours')],
       resolution,
     )
-    const result = timestamps.map(
-      (timestamp) =>
-        summedByTimestamp.find((entry) => entry[0] === timestamp.toNumber()) ??
-        ([timestamp.toNumber(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] as const),
-    )
+    const result = timestamps.map((timestamp) => {
+      const entry = summedByTimestamp.get(timestamp.toNumber())
+      if (!entry) {
+        return [
+          timestamp.toNumber(),
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          undefined,
+          undefined,
+          undefined,
+        ] as const
+      }
+      return [
+        timestamp.toNumber(),
+        entry.overheadGas,
+        entry.overheadGasEth,
+        entry.overheadGasUsd,
+        entry.calldataGas,
+        entry.calldataGasEth,
+        entry.calldataGasUsd,
+        entry.computeGas,
+        entry.computeGasEth,
+        entry.computeGasUsd,
+        entry.blobsGas,
+        entry.blobsGasEth,
+        entry.blobsGasUsd,
+      ] as const
+    })
     return result
   },
-  ['costsChartDD'],
-  { revalidate: 10 * UnixTime.MINUTE },
+  ['costs-chart-data'],
+  {
+    revalidate: 10 * UnixTime.MINUTE,
+  },
 )
 
-function getMockCostsChart({
+function getMockCostsChartData({
   range: timeRange,
 }: CostsChartParams): CostsChartData {
   const resolution = rangeToResolution(timeRange)
@@ -165,24 +195,5 @@ function sumByTimestamp(
     })
   }
 
-  const asArray = Array.from(result.entries()).map(
-    ([timestamp, record]) =>
-      [
-        timestamp,
-        record.overheadGas,
-        record.overheadGasEth,
-        record.overheadGasUsd,
-        record.calldataGas,
-        record.calldataGasEth,
-        record.calldataGasUsd,
-        record.computeGas,
-        record.computeGasEth,
-        record.computeGasUsd,
-        record.blobsGas,
-        record.blobsGasEth,
-        record.blobsGasUsd,
-      ] as const,
-  )
-
-  return asArray
+  return result
 }

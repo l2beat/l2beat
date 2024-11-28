@@ -3,7 +3,6 @@ import { utils } from 'ethers'
 import * as z from 'zod'
 
 import { ContractValue, get$Implementations } from '@l2beat/discovery-types'
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { ProxyDetector } from '../../proxies/ProxyDetector'
 import { Handler, HandlerResult } from '../Handler'
@@ -78,7 +77,6 @@ export class PolygonCDKScheduledTransactionHandler implements Handler {
   constructor(
     readonly field: string,
     readonly abi: string[],
-    readonly logger: DiscoveryLogger,
   ) {
     this.timelockInterface = new utils.Interface(abi)
   }
@@ -143,7 +141,6 @@ export class PolygonCDKScheduledTransactionHandler implements Handler {
     const result = await detector.detectProxy(
       provider,
       EthereumAddress(entry.target),
-      DiscoveryLogger.SILENT,
     )
     const addresses = [EthereumAddress(entry.target)]
     if (result !== undefined) {

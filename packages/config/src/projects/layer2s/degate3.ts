@@ -9,6 +9,9 @@ import {
 import { utils } from 'ethers'
 
 import {
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
@@ -18,6 +21,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { PROOFS } from '../other/zk-catalog/common/proofSystems'
@@ -52,6 +56,7 @@ const delay1 = discovery.getContractValue<number>('TimeLock1', 'MINIMUM_DELAY')
 const delay2 = discovery.getContractValue<number>('TimeLock2', 'MINIMUM_DELAY')
 
 const upgradeDelay = Math.min(delay1, delay2)
+const finalizationPeriod = 0
 
 const timelockUpgrades1 = {
   upgradableBy: ['Degate HomeDAO2 Multisig'],
@@ -101,7 +106,7 @@ export const degate3: Layer2 = {
         'DeGate is a ZK rollup based on Loopring’s code base that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
     },
     finality: {
-      finalizationPeriod: 0,
+      finalizationPeriod,
     },
   },
   config: {
@@ -114,7 +119,7 @@ export const degate3: Layer2 = {
       }),
     ],
     transactionApi: {
-      type: 'degate',
+      type: 'degate3',
       defaultUrl: 'https://v1-mainnet-backend.degate.com/order-book-api',
       defaultCallsPerMinute: 120,
     },
@@ -155,13 +160,18 @@ export const degate3: Layer2 = {
       stateUpdate: 'disabled',
     },
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (calldata)'],
-    bridge: { type: 'Enshrined' },
-    mode: 'State diffs',
-  }),
+  dataAvailability: [
+    addSentimentToDataAvailability({
+      layers: [DA_LAYERS.ETH_CALLDATA],
+      bridge: DA_BRIDGES.ENSHRINED,
+      mode: DA_MODES.STATE_DIFFS,
+    }),
+  ],
   riskView: {
-    stateValidation: RISK_VIEW.STATE_ZKP_SN,
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_SN,
+      secondLine: formatExecutionDelay(finalizationPeriod),
+    },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, forcedWithdrawalDelay),
     sequencerFailure: {

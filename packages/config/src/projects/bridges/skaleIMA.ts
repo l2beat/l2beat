@@ -99,7 +99,7 @@ export const skaleIMA: Bridge = {
         {
           contract: 'MessageProxyForMainnet',
           references: [
-            'https://etherscan.io/address/0x64e4cd4Fe42eAB98AcD15fddaC657B1537aa5190#code#F1#L508',
+            'https://etherscan.io/address/0x0AE92a5105111281151b980A0aD680b890bf1944#code#F1#L508',
             'https://etherscan.io/tx/0xb463ae9bacd3b0ba41eea25bdb51b115858bd9997d631bc26ccbb8a4fc3774c7',
           ],
         },

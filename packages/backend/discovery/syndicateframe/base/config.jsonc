@@ -2,9 +2,5 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "base",
   "name": "syndicateframe",
-  "initialAddresses": ["0xF7Cb313CB6D146dAbB8c5E31798BDCeFc67B831b"],
-  "names": {
-    "0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d": "SyndicateFrameMultisig"
-  },
-  "overrides": {}
+  "initialAddresses": ["0xF7Cb313CB6D146dAbB8c5E31798BDCeFc67B831b"]
 }

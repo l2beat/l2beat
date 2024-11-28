@@ -11,8 +11,9 @@ type CategoryTitle =
   // Optimistic
   | 'State root proposals'
   | 'Challenges'
+  | 'Fast confirmations'
 
-type ScalingProjectStateValidationCategory = {
+export type ScalingProjectStateValidationCategory = {
   title: CategoryTitle
   description: string
   risks?: ScalingProjectRisk[]

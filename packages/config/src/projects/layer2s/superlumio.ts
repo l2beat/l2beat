@@ -33,7 +33,7 @@ export const superlumio: Layer2 = opStackL2({
   genesisTimestamp: new UnixTime(1708984633),
   finality: {
     type: 'OPStack-blob',
-    genesisTimestamp: new UnixTime(1708984633),
+    genesisTimestamp: new UnixTime(1708984631),
     minTimestamp: new UnixTime(1708984751),
     l2BlockTimeSeconds: 2,
     lag: 0,
@@ -49,6 +49,5 @@ export const superlumio: Layer2 = opStackL2({
       type: 'general',
     },
   ],
-  usesBlobs: true,
   discoveryDrivenData: true,
 })

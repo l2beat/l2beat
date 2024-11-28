@@ -1,13 +1,13 @@
 import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
 import { compact } from 'lodash'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
-import { env } from '~/env'
 import { groupByMainCategories } from '~/utils/group-by-main-categories'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
+import { getCurrentEntry } from '../../utils/get-current-entry'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import {
-  type ActivityLatestTpsData,
-  getActivityLatestTps,
+  type ActivityLatestUopsData,
+  getActivityLatestUops,
 } from '../activity/get-activity-latest-tps'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import {
@@ -15,7 +15,6 @@ import {
   get7dTokenBreakdown,
 } from '../tvl/utils/get-7d-token-breakdown'
 import { getAssociatedTokenWarning } from '../tvl/utils/get-associated-token-warning'
-import { orderByTvl } from '../tvl/utils/order-by-tvl'
 import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
 
 export type ScalingSummaryEntry = Awaited<
@@ -34,7 +33,7 @@ export async function getScalingSummaryEntries() {
     getProjectsChangeReport(),
     getProjectsVerificationStatuses(),
     get7dTokenBreakdown({ type: 'layer2' }),
-    getActivityLatestTps(projects),
+    getActivityLatestUops(projects),
   ])
 
   const entries = projects.map((project) => {
@@ -57,18 +56,7 @@ export async function getScalingSummaryEntries() {
     Object.entries(tvl.projects).map(([k, v]) => [k, v.breakdown.total]),
   )
 
-  if (env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION) {
-    return {
-      type: 'recategorised' as const,
-      entries: groupByMainCategories(
-        orderByStageAndTvl(entries, remappedForOrdering),
-      ),
-    }
-  }
-
-  return {
-    entries: orderByTvl(entries, remappedForOrdering),
-  }
+  return groupByMainCategories(orderByStageAndTvl(entries, remappedForOrdering))
 }
 
 function getScalingSummaryEntry(
@@ -77,7 +65,7 @@ function getScalingSummaryEntry(
   hasImplementationChanged: boolean,
   hasHighSeverityFieldChanged: boolean,
   latestTvl: LatestTvl['projects'][string] | undefined,
-  activity: ActivityLatestTpsData[string] | undefined,
+  activity: ActivityLatestUopsData[string] | undefined,
 ) {
   const associatedTokenWarning =
     latestTvl && latestTvl.breakdown.total > 0
@@ -89,6 +77,7 @@ function getScalingSummaryEntry(
         })
       : undefined
   const associatedTokensExcludedWarnings = compact([project.display.tvlWarning])
+  const dataAvailability = getCurrentEntry(project.dataAvailability)
 
   const common = {
     entryType: 'scaling' as const,
@@ -98,7 +87,7 @@ function getScalingSummaryEntry(
       hasImplementationChanged,
       hasHighSeverityFieldChanged,
     }),
-    dataAvailability: project.dataAvailability,
+    dataAvailability,
     mainPermissions: project.display.mainPermissions,
     tvl: {
       breakdown: latestTvl?.breakdown,
@@ -113,7 +102,7 @@ function getScalingSummaryEntry(
     },
     activity: activity
       ? {
-          pastDayTps: activity.pastDayTps,
+          pastDayUops: activity.pastDayUops,
           change: activity.change,
         }
       : undefined,

@@ -1,3 +1,162 @@
+Generated with discovered.json: 0x0ee93f9b08e843913565359c4f4c4058b5ac18b3
+
+# Diff at Wed, 27 Nov 2024 13:20:35 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@3b9391cfe483e60a1853eeae6e47b4de475aac4e block: 21041836
+- current block number: 21272771
+
+## Description
+
+Move to discodriven data.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21041836 (main branch discovery), not current.
+
+```diff
+    contract ERC20Outbox (0x0389E24A4Bc96518169f83F50FCDdA442dD8eAFd) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      name:
+-        "Outbox"
++        "ERC20Outbox"
+      displayName:
++        "Outbox"
+    }
+```
+
+```diff
+    contract ERC20Bridge (0x73C6af7029E714DFf1F1554F88b79B335011Da68) {
+    +++ description: Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      name:
+-        "Bridge"
++        "ERC20Bridge"
+      displayName:
++        "Bridge"
+    }
+```
+
+```diff
+    contract ERC20Inbox (0xD6c596b7ca17870DD50D322393deCE6C2085a116) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      name:
+-        "Inbox"
++        "ERC20Inbox"
+      displayName:
++        "Inbox"
+    }
+```
+
+Generated with discovered.json: 0x697622368c046d70f4a6215cc396c5da499a2ca0
+
+# Diff at Fri, 15 Nov 2024 08:18:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a00c2a67d12a174a45864b549412045028598606 block: 21041836
+- current block number: 21041836
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21041836 (main branch discovery), not current.
+
+```diff
+    contract ERC20RollupEventInbox (0x617f70525Dc4D2BBbd6ADFd3781DbEAe5C8F0048) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      template:
++        "orbitstack/RollupEventInbox"
+      displayName:
++        "RollupEventInbox"
+      description:
++        "Helper contract sending configuration data over the bridge during the systems initialization."
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      description:
+-        "Central contract defining the access control for upgrading the system contract implementations."
++        "Central contract defining the access control permissions for upgrading the system contract implementations."
+    }
+```
+
+```diff
+    contract RollupProxy (0x8f98f9ae2f2836Ed3a628c23311Ad9976B9fBF1B) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.5:
+-        {"permission":"upgrade","target":"0x798Fa726f0B4DF564681446D051b344E3FE4a6ca","via":[{"address":"0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881","delay":0}]}
+      issuedPermissions.4:
+-        {"permission":"propose","target":"0xf0DDa810ed19bb640f2A03e8382814e3f0D36e13","via":[]}
+      issuedPermissions.3.permission:
+-        "propose"
++        "validate"
+      issuedPermissions.3.target:
+-        "0x88781Fb85EA68bd5B8bE4C1C0c1ED94f4fd35647"
++        "0xf0DDa810ed19bb640f2A03e8382814e3f0D36e13"
+      issuedPermissions.2.permission:
+-        "configure"
++        "validate"
+      issuedPermissions.2.target:
+-        "0x798Fa726f0B4DF564681446D051b344E3FE4a6ca"
++        "0x88781Fb85EA68bd5B8bE4C1C0c1ED94f4fd35647"
+      issuedPermissions.2.via.0:
+-        {"address":"0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881","delay":0,"description":"can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."}
+      issuedPermissions.1.permission:
+-        "challenge"
++        "upgrade"
+      issuedPermissions.1.target:
+-        "0xf0DDa810ed19bb640f2A03e8382814e3f0D36e13"
++        "0x798Fa726f0B4DF564681446D051b344E3FE4a6ca"
+      issuedPermissions.1.via.0:
++        {"address":"0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881","delay":0}
+      issuedPermissions.0.permission:
+-        "challenge"
++        "configure"
+      issuedPermissions.0.target:
+-        "0x88781Fb85EA68bd5B8bE4C1C0c1ED94f4fd35647"
++        "0x798Fa726f0B4DF564681446D051b344E3FE4a6ca"
+      issuedPermissions.0.via.0:
++        {"address":"0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881","delay":0,"description":"can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."}
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (0x99a2A31300816C1FA3f40818AC9280fe7271F878) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      template:
++        "orbitstack/OneStepProverHostIo"
+      description:
++        "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
+    }
+```
+
+```diff
+    contract SequencerInbox (0xaF5800ADF22301968613c37DA9C3C2a486eA915A) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.maxTimeVariation.description:
+-        "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
++        "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
+    }
+```
+
+```diff
+    contract ChallengeManager (0xE8AcC0E28a82a26D498f2C66B64C56B9Ef996c2e) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      template:
++        "orbitstack/ChallengeManager"
+      description:
++        "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor."
+    }
+```
+
 Generated with discovered.json: 0x6e32a3817c44223f35256892c6f73cb5f66f37d9
 
 # Diff at Mon, 04 Nov 2024 07:56:40 GMT:

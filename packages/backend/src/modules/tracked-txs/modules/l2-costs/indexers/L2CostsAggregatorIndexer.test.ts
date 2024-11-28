@@ -128,7 +128,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
       })
 
       const indexer = createIndexer({
-        tag: 'update-correct',
+        tags: { tag: 'update-correct' },
         db: mockObject<Database>({
           l2Cost: l2CostsRepositoryMock,
           l2CostPrice: l2CostsPricesRepositoryMock,
@@ -173,7 +173,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
       // 2023-05-01 00:30:00
       const to = MIN.add(30, 'minutes')
 
-      const indexer = createIndexer({ tag: 'update-nothing' })
+      const indexer = createIndexer({ tags: { tag: 'update-nothing' } })
 
       indexer.shift = mockFn().returns([MIN, MIN])
 
@@ -187,7 +187,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
 
   describe(L2CostsAggregatorIndexer.prototype.aggregate.name, () => {
     it('aggregates correctly', () => {
-      const indexer = createIndexer({ tag: 'aggregate' })
+      const indexer = createIndexer({ tags: { tag: 'aggregate' } })
 
       const mockedCalculate = mockFn().returns({
         totalGas: 1,
@@ -298,7 +298,9 @@ describe(L2CostsAggregatorIndexer.name, () => {
     })
 
     it('throws if multiplier missing', async () => {
-      const indexer = createIndexer({ tag: 'aggregate-throws-no-multiplier' })
+      const indexer = createIndexer({
+        tags: { tag: 'aggregate-throws-no-multiplier' },
+      })
 
       const trackedTxId = 'dwadad'
       indexer.findTxConfigsWithMultiplier = mockFn().returns([])
@@ -315,7 +317,9 @@ describe(L2CostsAggregatorIndexer.name, () => {
     })
 
     it('throws if prices not available', async () => {
-      const indexer = createIndexer({ tag: 'aggregate-throws-no-price' })
+      const indexer = createIndexer({
+        tags: { tag: 'aggregate-throws-no-price' },
+      })
       const txs = [tx('wada')]
 
       const ethPrices: L2CostPriceRecord[] = [
@@ -376,7 +380,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
       })
 
       const indexer = createIndexer({
-        tag: 'update-correct',
+        tags: { tag: 'update-correct' },
         db: mockObject<Database>({
           l2Cost: l2CostsRepositoryMock,
           l2CostPrice: mockObject<Database['l2CostPrice']>(),
@@ -426,7 +430,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
   })
 
   describe(L2CostsAggregatorIndexer.prototype.calculate.name, () => {
-    const indexer = createIndexer({ tag: 'calculate' })
+    const indexer = createIndexer({ tags: { tag: 'calculate' } })
 
     it('calculates correctly for non blob tx', () => {
       const result = indexer.calculate(tx('dwada'), 2000, 1)
@@ -496,7 +500,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
   })
 
   describe(L2CostsAggregatorIndexer.prototype.shift.name, () => {
-    const indexer = createIndexer({ tag: 'shift' })
+    const indexer = createIndexer({ tags: { tag: 'shift' } })
 
     it('shift to a single day if range longer than day', async () => {
       // 2023-05-01 00:00:01

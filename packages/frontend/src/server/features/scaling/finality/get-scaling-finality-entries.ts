@@ -1,10 +1,8 @@
 import { type Layer2, layer2s } from '@l2beat/config'
 import { UnixTime, notUndefined } from '@l2beat/shared-pure'
-import { env } from '~/env'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
-import { orderByTvl } from '../tvl/utils/order-by-tvl'
 import { getFinality } from './get-finality'
 import { type FinalityData, type FinalityProjectData } from './schema'
 
@@ -13,6 +11,7 @@ import {
   type ProjectsChangeReport,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
+import { getCurrentEntry } from '../../utils/get-current-entry'
 import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
 import { getFinalityConfigurations } from './utils/get-finality-configurations'
 
@@ -44,14 +43,7 @@ export async function getScalingFinalityEntries() {
     })
     .filter(notUndefined)
 
-  if (env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION) {
-    return {
-      type: 'recategorised' as const,
-      entries: groupByMainCategories(orderByStageAndTvl(entries, tvl)),
-    }
-  }
-
-  return { entries: orderByTvl(entries, tvl) }
+  return groupByMainCategories(orderByStageAndTvl(entries, tvl))
 }
 
 function getFinalityData(
@@ -110,6 +102,7 @@ function getScalingFinalityEntry(
   isVerified: boolean,
   projectsChangeReport: ProjectsChangeReport,
 ) {
+  const dataAvailability = getCurrentEntry(project.dataAvailability)
   return {
     entryType: 'finality' as const,
     ...getCommonScalingEntry({
@@ -121,7 +114,7 @@ function getScalingFinalityEntry(
       hasHighSeverityFieldChanged:
         projectsChangeReport.hasHighSeverityFieldChanged(project.id),
     }),
-    dataAvailabilityMode: project.dataAvailability?.mode,
+    dataAvailabilityMode: dataAvailability?.mode,
     data: getFinalityData(finalityProjectData, project),
     finalizationPeriod: project.display.finality?.finalizationPeriod,
   }

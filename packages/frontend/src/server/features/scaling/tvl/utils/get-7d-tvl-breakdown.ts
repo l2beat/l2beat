@@ -2,10 +2,7 @@ import { bridges } from '@l2beat/config'
 import { layer2s } from '@l2beat/config/build/src/projects/layer2s'
 import { layer3s } from '@l2beat/config/build/src/projects/layer3s'
 import { UnixTime } from '@l2beat/shared-pure'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
+import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
 import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
 import { getTvlBreakdown } from './get-tvl-breakdown'
@@ -13,22 +10,21 @@ import { getTvlProjects } from './get-tvl-projects'
 import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
 
 export function get7dTvlBreakdown(
-  ...parameters: Parameters<typeof getCached7dTvlBreakdown>
+  ...parameters: Parameters<typeof getCached7dTokenBreakdown>
 ) {
   if (env.MOCK) {
-    return getMockTvlBreakdown()
+    return getMockTvlBreakdownData()
   }
-  noStore()
-  return getCached7dTvlBreakdown(...parameters)
+  return getCached7dTokenBreakdown(...parameters)
 }
 
 export type SevenDayTvlBreakdown = Awaited<
-  ReturnType<typeof getCached7dTvlBreakdown>
+  ReturnType<typeof getCached7dTokenBreakdown>
 >
-const getCached7dTvlBreakdown = cache(
+const getCached7dTokenBreakdown = cache(
   async () => {
     const tvlValues = await getTvlValuesForProjects(
-      getTvlProjects().filter(
+      getTvlProjects(
         (project) => project.type === 'layer2' || project.type === 'layer3',
       ),
       '7d',
@@ -46,11 +42,18 @@ const getCached7dTvlBreakdown = cache(
           breakdown.native + breakdown.canonical + breakdown.external
         const oldTotal =
           oldBreakdown.native + oldBreakdown.canonical + oldBreakdown.external
+        const associatedTotal =
+          breakdown.associated.native +
+          breakdown.associated.canonical +
+          breakdown.associated.external
+        const oldAssociatedTotal =
+          oldBreakdown.associated.native +
+          oldBreakdown.associated.canonical +
+          oldBreakdown.associated.external
         return [
           projectId,
           {
             total: total / 100,
-            totalChange: calculatePercentageChange(total, oldTotal),
             breakdown: {
               native: breakdown.native / 100,
               canonical: breakdown.canonical / 100,
@@ -62,6 +65,7 @@ const getCached7dTvlBreakdown = cache(
               },
             },
             change: {
+              total: calculatePercentageChange(total, oldTotal),
               native: calculatePercentageChange(
                 breakdown.native,
                 oldBreakdown.native,
@@ -73,6 +77,24 @@ const getCached7dTvlBreakdown = cache(
               external: calculatePercentageChange(
                 breakdown.external,
                 oldBreakdown.external,
+              ),
+            },
+            associatedTokensExcludedChange: {
+              total: calculatePercentageChange(
+                total - associatedTotal,
+                oldTotal - oldAssociatedTotal,
+              ),
+              native: calculatePercentageChange(
+                breakdown.native - breakdown.associated.native,
+                oldBreakdown.native - oldBreakdown.associated.native,
+              ),
+              canonical: calculatePercentageChange(
+                breakdown.canonical - breakdown.associated.canonical,
+                oldBreakdown.canonical - oldBreakdown.associated.canonical,
+              ),
+              external: calculatePercentageChange(
+                breakdown.external - breakdown.associated.external,
+                oldBreakdown.external - oldBreakdown.associated.external,
               ),
             },
           },
@@ -97,7 +119,7 @@ const getCached7dTvlBreakdown = cache(
   },
 )
 
-function getMockTvlBreakdown(): SevenDayTvlBreakdown {
+function getMockTvlBreakdownData(): SevenDayTvlBreakdown {
   return {
     total: 1000,
     projects: Object.fromEntries(
@@ -105,7 +127,6 @@ function getMockTvlBreakdown(): SevenDayTvlBreakdown {
         project.id,
         {
           total: 60,
-          totalChange: 0.4,
           breakdown: {
             canonical: 30,
             native: 20,
@@ -117,9 +138,16 @@ function getMockTvlBreakdown(): SevenDayTvlBreakdown {
             },
           },
           change: {
+            total: 0.4,
             canonical: 0.5,
             native: 0.25,
             external: 0.25,
+          },
+          associatedTokensExcludedChange: {
+            total: 0.3,
+            canonical: 0.4,
+            native: 0.15,
+            external: 0.15,
           },
         },
       ]),

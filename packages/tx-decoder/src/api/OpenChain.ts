@@ -18,7 +18,7 @@ const Response = z.object({
 
 const API_URL = 'https://api.openchain.xyz/signature-database/v1/lookup'
 
-export async function getManyOpenChainSignatures(
+async function getManyOpenChainSignatures(
   selectors: string[],
 ): Promise<Record<string, string[]>> {
   const query = new URLSearchParams({ function: selectors.join(',') })

@@ -1,5 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
+import { DA_BRIDGES, DA_LAYERS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
@@ -11,7 +12,7 @@ export const rss3: Layer2 = opStackL2({
   createdAt: new UnixTime(1705391231), // 2024-01-16T07:47:11Z
   badges: [Badge.DA.NearDA],
   daProvider: {
-    name: 'NearDA',
+    layer: DA_LAYERS.NEAR_DA,
     riskView: {
       value: 'External',
       description:
@@ -49,7 +50,7 @@ export const rss3: Layer2 = opStackL2({
         },
       ],
     },
-    bridge: { type: 'None' },
+    bridge: DA_BRIDGES.NONE,
   },
   associatedTokens: ['RSS3'],
   discovery,
@@ -96,11 +97,6 @@ export const rss3: Layer2 = opStackL2({
         version: '3',
       },
     ],
-  },
-  finality: {
-    type: 'OPStack',
-    lag: 0,
-    stateUpdate: 'disabled',
   },
   genesisTimestamp: new UnixTime(1709858519),
   isNodeAvailable: false,

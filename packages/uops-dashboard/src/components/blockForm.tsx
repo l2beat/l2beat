@@ -94,7 +94,7 @@ export function BlockForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mx-auto max-w-sm">
+    <form onSubmit={handleSubmit} className="mx-auto max-w-sm px-2">
       <ChainDropdown chain={chainId} setChain={handleSetChain} />
       <BlockNumberInput
         value={blockNumber}

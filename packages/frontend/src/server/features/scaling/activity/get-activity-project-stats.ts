@@ -1,51 +1,42 @@
-import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
+import { type ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
-import { db } from '~/server/database'
+import { getDb } from '~/server/database'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
-import { getLastDayTps } from './utils/get-last-day-tps'
-import { getTpsWeeklyChange } from './utils/get-tps-weekly-change'
-import { sumActivityCount } from './utils/sum-activity-count'
+import { getLastDayUops } from './utils/get-last-day'
+import { getUopsWeeklyChange } from './utils/get-weekly-change'
+import { sumUopsCount } from './utils/sum-activity-count'
 
 export async function getActivityProjectStats(projectId: ProjectId) {
   if (env.MOCK) {
-    return getMockActivityProjectStats()
+    return getMockActivityProjectStatsData()
   }
-  noStore()
-  return getCachedActivityProjectStats(projectId)
+
+  return getActivityProjectStatsData(projectId)
 }
 
-export type ActivityProjectStats = Awaited<
-  ReturnType<typeof getCachedActivityProjectStats>
+type ActivityProjectStats = Awaited<
+  ReturnType<typeof getActivityProjectStatsData>
 >
-const getCachedActivityProjectStats = cache(
-  async (projectId: ProjectId) => {
-    const range = getFullySyncedActivityRange('30d')
-    const counts = await db.activity.getByProjectAndTimeRange(projectId, range)
-    if (counts.length === 0) {
-      return
-    }
-    const summed = sumActivityCount(counts)
+async function getActivityProjectStatsData(projectId: ProjectId) {
+  const db = getDb()
+  const range = getFullySyncedActivityRange('30d')
+  const counts = await db.activity.getByProjectAndTimeRange(projectId, range)
+  if (counts.length === 0) {
+    return
+  }
+  const summed = sumUopsCount(counts)
 
-    return {
-      txCount: summed,
-      lastDayTps: getLastDayTps(counts),
-      tpsWeeklyChange: getTpsWeeklyChange(counts),
-    }
-  },
-  ['activityProjectStats'],
-  {
-    revalidate: 6 * UnixTime.HOUR,
-  },
-)
-
-function getMockActivityProjectStats(): ActivityProjectStats {
   return {
-    lastDayTps: 15,
+    txCount: summed,
+    lastDayUops: getLastDayUops(counts),
+    uopsWeeklyChange: getUopsWeeklyChange(counts),
+  }
+}
+
+function getMockActivityProjectStatsData(): ActivityProjectStats {
+  return {
+    lastDayUops: 15,
     txCount: 1500,
-    tpsWeeklyChange: 0.1,
+    uopsWeeklyChange: 0.1,
   }
 }

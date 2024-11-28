@@ -85,7 +85,10 @@ function BridgeCells({
           hasNoBridge={bridge.type === 'NoBridge'}
         />
       </TableCell>
-      <TableCell className="text-right text-sm font-medium">
+      <TableCell
+        className="justify-end pr-[30px]  text-sm font-medium md:pr-[42px]"
+        href={bridge.href}
+      >
         {formatCurrency(bridge.tvs, 'usd')}
       </TableCell>
       <TableCell className="text-sm font-medium">

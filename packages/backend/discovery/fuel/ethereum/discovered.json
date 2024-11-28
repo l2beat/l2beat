@@ -1,7 +1,7 @@
 {
   "name": "fuel",
   "chain": "ethereum",
-  "blockNumber": 21064224,
+  "blockNumber": 21242136,
   "configHash": "0x806b6e12987328e4566d178ecc15cff1171dd77d8a81e748ea34b478960b3f10",
   "contracts": [
     {
@@ -38,7 +38,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 38,
+        "nonce": 39,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -51,13 +51,6 @@
         "0x35fac1a306db1eec90fef4226afce6dcef2eee934335f4d2f51625a68f10f273"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0x0000000000000000000000000000000000000000",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1725464663,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
@@ -118,13 +111,6 @@
         "0x1fa3aa6d12bbe8ca52b062a380218f557f1d37748cca158f023af1bc7a0e278b"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0x0000000000000000000000000000000000000000",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "getNextOutgoingMessageNonce",
         "totalDeposited",
@@ -134,7 +120,7 @@
       "sinceTimestamp": 1724767871,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
-        "$implementation": "0x05f886DDeE0FE07496f6e38b0e140F8eF4655B16",
+        "$implementation": "0x2C4df10a82CF077122eD99573acA6daCd76F2E67",
         "$pastUpgrades": [
           [
             "2024-08-27T14:11:11.000Z",
@@ -150,9 +136,14 @@
             "2024-10-02T14:54:23.000Z",
             "0x03ab218eccdc5ead9a29b416f9279a9c70f24a34191a949d3448856e0b570a79",
             ["0x05f886DDeE0FE07496f6e38b0e140F8eF4655B16"]
+          ],
+          [
+            "2024-11-21T15:58:47.000Z",
+            "0x13b86e46d736db66212cf6a47b0328b72dbd2b769c8f55a00eb1dbaa3427d94b",
+            ["0x2C4df10a82CF077122eD99573acA6daCd76F2E67"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -178,15 +169,15 @@
             "members": ["0x32da601374b38154f05904B16F44A1911Aa6f314"]
           }
         },
-        "currentPeriodAmount": "472459529432000000000",
-        "currentPeriodEnd": 1730129231,
+        "currentPeriodAmount": "85079029443000000000",
+        "currentPeriodEnd": 1732584167,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "depositLimitGlobal": "19572000000000000000000",
+        "depositLimitGlobal": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "ETH_DECIMALS": 18,
         "FUEL_BASE_ASSET_DECIMALS": 9,
         "fuelBaseAssetDecimals": 9,
         "fuelChainStateContract": "0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130",
-        "getNextOutgoingMessageNonce": 185011,
+        "getNextOutgoingMessageNonce": 219765,
         "limitAmount": "7829000000000000000000",
         "MAX_MESSAGE_DATA_SIZE": 65536,
         "paused": false,
@@ -195,7 +186,7 @@
         "RATE_LIMIT_DURATION": 604800,
         "rateLimitEnabled": true,
         "SET_RATE_LIMITER_ROLE": "0x7e5b1c957d4df4bad29cdaceffe50f28f282a0d5096601b958917550d4b2e016",
-        "totalDeposited": "15519872764538000000000",
+        "totalDeposited": "19131428798708000000000",
         "withdrawalsPaused": false
       },
       "derivedName": "FuelMessagePortalV3"
@@ -208,13 +199,6 @@
         "0x183fd58e0c8aaff660b72b7753154fcb311db3b7932357b1a8a1416fdd53caf0"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0x0000000000000000000000000000000000000000",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1724767847,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
@@ -267,7 +251,7 @@
   "eoas": [
     {
       "address": "0x0000000000000000000000000000000000000000",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "target": "0xa4cA04d02bfdC3A2DF56B9b6994520E69dF43F67"
@@ -298,7 +282,7 @@
     { "address": "0xf88b0247e611eE5af8Cf98f5303769Cba8e7177C" }
   ],
   "abis": {
-    "0x05f886DDeE0FE07496f6e38b0e140F8eF4655B16": [
+    "0x2C4df10a82CF077122eD99573acA6daCd76F2E67": [
       "constructor(uint256 _depositLimitGlobal, uint256 _rateLimitDuration)",
       "error AlreadyRelayed()",
       "error AmountPrecisionIncompatibility()",

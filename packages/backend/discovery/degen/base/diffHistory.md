@@ -1,3 +1,329 @@
+Generated with discovered.json: 0x8d5ead9c8c45b54da433c780dd575aa9201e32a7
+
+# Diff at Wed, 27 Nov 2024 13:46:31 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@3b9391cfe483e60a1853eeae6e47b4de475aac4e block: 22580502
+- current block number: 22921651
+
+## Description
+
+Move to discoverydriven data.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22580502 (main branch discovery), not current.
+
+```diff
+    contract ERC20Inbox (0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      name:
+-        "Inbox"
++        "ERC20Inbox"
+      displayName:
++        "Inbox"
+    }
+```
+
+```diff
+    contract UTBDecent (0x43019F8BE1F192587883b67dEA2994999f5a2de2) {
+    +++ description: The UTB contract serves as an L2<->L3 gateway by integrating with Decent (LayerZero app) to allow bridging and swapping in- and out of Degen L3. This is achieved using external modules (smart contracts) like swappers and bridgers that can be registered in the UTB contract.
+      description:
++        "The UTB contract serves as an L2<->L3 gateway by integrating with Decent (LayerZero app) to allow bridging and swapping in- and out of Degen L3. This is achieved using external modules (smart contracts) like swappers and bridgers that can be registered in the UTB contract."
+      issuedPermissions:
++        [{"permission":"configure","target":"0x690f4e2f19717A06E1C146B2dCE68c2d23e36f4c","via":[]}]
+    }
+```
+
+```diff
+    contract SequencerInbox (0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      description:
+-        "State batches / commitments get posted here."
++        "A sequencer (registered in this contract) can submit transaction batches or commitments here."
+    }
+```
+
+```diff
+    contract OrbitERC20OFTAdapter (0xDb8E759859058952c34953c8469f464109826e52) {
+    +++ description: As a designated allowed outbox, this contract can access all funds of the canonical bridge escrow. It also interfaces with the LayerZero AMB, giving this external bridge access to the Degen L3 canonical bridge and making canonical bridge security dependent on LayerZero security.
+      description:
++        "As a designated allowed outbox, this contract can access all funds of the canonical bridge escrow. It also interfaces with the LayerZero AMB, giving this external bridge access to the Degen L3 canonical bridge and making canonical bridge security dependent on LayerZero security."
+      issuedPermissions:
++        [{"permission":"configure","target":"0x3C12B77aE8B7DD1FEB63D1D6a2A819AcdA0a41d2","via":[]}]
+    }
+```
+
+```diff
+    contract ERC20Outbox (0xe63ddb12FBb6211a73F12a4367b10dA0834B82da) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      name:
+-        "Outbox"
++        "ERC20Outbox"
+      displayName:
++        "Outbox"
+    }
+```
+
+```diff
+    contract ERC20Bridge (0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C) {
+    +++ description: Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      name:
+-        "Bridge"
++        "ERC20Bridge"
+      displayName:
++        "Bridge"
+    }
+```
+
+Generated with discovered.json: 0x4dc1e62f8d759083d693975e0570bbb5e477dc3a
+
+# Diff at Mon, 18 Nov 2024 17:19:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b54f69b0d6666908da980a31e5f52da87009f1ab block: 22134218
+- current block number: 22580502
+
+## Description
+
+A new OFT adapter contract (for the DEGEN token) is added as allowed Outbox to the main bridge. This gives the OFT adapter the permission to make any calls as the bridge (including sending all tokens from the bridge). See the Sanko L3 on Arbitrum for a similar contruction. The LayerZero AMB now has access to the canonically escrowed funds and the bridge escrow serves doubly as a canonical escrow and OFT adapter lockbox.
+
+## Watched changes
+
+```diff
+    contract Bridge (0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C) {
+    +++ description: Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      values.allowedOutboxList.1:
++        "0xDb8E759859058952c34953c8469f464109826e52"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OrbitERC20OFTAdapter (0xDb8E759859058952c34953c8469f464109826e52)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../degen/base/.flat/OrbitERC20OFTAdapter.sol      | 1905 ++++++++++++++++++++
+ 1 file changed, 1905 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22134218 (main branch discovery), not current.
+
+```diff
+    contract DegenMultisig (0x871e290d5447b958131F6d44f915F10032436ee6) {
+    +++ description: None
+      values.getOwners:
+-        ["0x39CF304731099e756204219BF0a8cCc4738dE9dD","0x3f0030b9Ca695Abd41b2B619F3298e172e4FCAD6","0x2e42cEfC761e64Bf4442694220d31C2464a6EE21","0x5EABE7f6673311EdD1Ad17A76ce148c2Bb56aF01","0xaCEF7482b54a57F50b1CD8c99d1dC1964202A063"]
+      values.getThreshold:
+-        3
+      template:
++        "GnosisSafe"
+    }
+```
+
+Generated with discovered.json: 0x39fbf742b897feff54977dd9ad15ea242c78c85a
+
+# Diff at Fri, 15 Nov 2024 08:18:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a00c2a67d12a174a45864b549412045028598606 block: 22134218
+- current block number: 22134218
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22134218 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221) {
+    +++ description: State batches / commitments get posted here.
+      fieldMeta.maxTimeVariation.description:
+-        "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
++        "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xaA3A7A2ec2477A61082E1C41a2c6710587917028) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      description:
+-        "Central contract defining the access control for upgrading the system contract implementations."
++        "Central contract defining the access control permissions for upgrading the system contract implementations."
+    }
+```
+
+```diff
+    contract RollupProxy (0xD34F3a11F10DB069173b32d84F02eDA578709143) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.3:
+-        {"permission":"upgrade","target":"0x871e290d5447b958131F6d44f915F10032436ee6","via":[{"address":"0xaA3A7A2ec2477A61082E1C41a2c6710587917028","delay":0}]}
+      issuedPermissions.2.permission:
+-        "propose"
++        "validate"
+      issuedPermissions.1.permission:
+-        "configure"
++        "upgrade"
+      issuedPermissions.1.via.0.description:
+-        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      issuedPermissions.0.permission:
+-        "challenge"
++        "configure"
+      issuedPermissions.0.target:
+-        "0x1BCdC0eCc1e4A31E5dB0542f81895d8319A757Ca"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+      issuedPermissions.0.via.0:
++        {"address":"0xaA3A7A2ec2477A61082E1C41a2c6710587917028","delay":0,"description":"can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."}
+    }
+```
+
+Generated with discovered.json: 0xa7afd5da9d3fbc5f8413a6da688eae16f5fdc056
+
+# Diff at Fri, 08 Nov 2024 09:23:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@53988239f42edde0275ed92d8f3ada4279354f7d block: 22016603
+- current block number: 22134218
+
+## Description
+
+Governance moved to DegenMultisig.
+
+## Watched changes
+
+```diff
+    contract Inbox (0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      issuedPermissions.0.target:
+-        "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+    }
+```
+
+```diff
+    contract SequencerInbox (0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221) {
+    +++ description: State batches / commitments get posted here.
+      issuedPermissions.1.target:
+-        "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+    }
+```
+
+```diff
+    contract ChallengeManager (0x67812161Bbb6aCF891aA6028BC614a660961ceD8) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      issuedPermissions.0.target:
+-        "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+    }
+```
+
+```diff
+    contract ERC20RollupEventInbox (0x766DD3A13d17C6D175975C89225bde89F052dBc4) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      issuedPermissions.0.target:
+-        "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ConduitMultisig3 (0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104)
+    +++ description: None
+```
+
+```diff
+    contract UpgradeExecutor (0xaA3A7A2ec2477A61082E1C41a2c6710587917028) {
+    +++ description: Central contract defining the access control for upgrading the system contract implementations.
+      issuedPermissions.0.target:
+-        "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+      values.executors.0:
+-        "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+    }
+```
+
+```diff
+    contract RollupProxy (0xD34F3a11F10DB069173b32d84F02eDA578709143) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.3.target:
+-        "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+      issuedPermissions.1.target:
+-        "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+    }
+```
+
+```diff
+    contract Outbox (0xe63ddb12FBb6211a73F12a4367b10dA0834B82da) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      issuedPermissions.0.target:
+-        "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+    }
+```
+
+```diff
+    contract Bridge (0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C) {
+    +++ description: Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      issuedPermissions.0.target:
+-        "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DegenMultisig (0x871e290d5447b958131F6d44f915F10032436ee6)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../DegenMultisig/SafeL2.sol}                      | 708 ++++++++++++---------
+ .../DegenMultisig/SafeProxy.p.sol}                 |  10 +-
+ 2 files changed, 420 insertions(+), 298 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22016603 (main branch discovery), not current.
+
+```diff
+    contract ERC20RollupEventInbox (0x766DD3A13d17C6D175975C89225bde89F052dBc4) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      template:
++        "orbitstack/RollupEventInbox"
+      displayName:
++        "RollupEventInbox"
+      description:
++        "Helper contract sending configuration data over the bridge during the systems initialization."
+    }
+```
+
 Generated with discovered.json: 0x9999c42a4fc957a8715e91a613aa9bdfcbbb80ea
 
 # Diff at Tue, 05 Nov 2024 16:03:28 GMT:

@@ -6,6 +6,9 @@ import {
 } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
@@ -16,6 +19,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
   getCommittee,
@@ -104,15 +108,16 @@ export const immutablex: Layer2 = {
       resyncLastDays: 7,
     },
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: ['DAC'],
-    bridge: {
-      type: 'DAC Members',
-      membersCount: committee.accounts.length,
-      requiredSignatures: committee.minSigners,
-    },
-    mode: 'State diffs',
-  }),
+  dataAvailability: [
+    addSentimentToDataAvailability({
+      layers: [DA_LAYERS.DAC],
+      bridge: DA_BRIDGES.DAC_MEMBERS({
+        membersCount: committee.accounts.length,
+        requiredSignatures: committee.minSigners,
+      }),
+      mode: DA_MODES.STATE_DIFFS,
+    }),
+  ],
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: {
@@ -139,7 +144,10 @@ export const immutablex: Layer2 = {
       includingSHARPUpgradeDelaySeconds,
       freezeGracePeriod,
     ),
-    sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(freezeGracePeriod),
+    sequencerFailure: {
+      ...RISK_VIEW.SEQUENCER_FORCE_VIA_L1(freezeGracePeriod),
+      secondLine: formatDelay(freezeGracePeriod),
+    },
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP_NFT,
     destinationToken: RISK_VIEW.CANONICAL,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,

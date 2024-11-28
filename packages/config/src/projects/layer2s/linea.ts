@@ -11,6 +11,9 @@ import { Badge } from '../badges'
 
 import {
   CONTRACTS,
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
@@ -21,6 +24,8 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { ESCROW } from '../../common/escrow'
+import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { PERFORMED_BY } from '../other/zk-catalog'
 import { getStage } from './common/stages/getStage'
@@ -67,6 +72,8 @@ const withdrawalLimitInWei = discovery.getContractValue<number>(
   'limitInWei',
 )
 
+const finalizationPeriod = 0
+
 const withdrawalLimitString = `Currently, there is a general limit of ${utils.formatEther(
   withdrawalLimitInWei,
 )} ETH that can be withdrawn within each ${formatSeconds(
@@ -111,7 +118,7 @@ export const linea: Layer2 = {
         'Linea is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1. Tx data, proofs and state roots are currently posted in the same transaction. Blocks can also be finalized by the operator without the need to provide a proof.',
     },
     finality: {
-      finalizationPeriod: 0,
+      finalizationPeriod,
     },
   },
   config: {
@@ -124,7 +131,7 @@ export const linea: Layer2 = {
       discovery.getEscrowDetails({
         address: EthereumAddress('0x504A330327A089d8364C4ab3811Ee26976d388ce'),
         sinceTimestamp: new UnixTime(1691079071),
-        source: 'external',
+        ...ESCROW.CANONICAL_EXTERNAL,
         tokens: ['USDC'],
       }),
       discovery.getEscrowDetails({
@@ -278,6 +285,7 @@ export const linea: Layer2 = {
   chainConfig: {
     name: 'linea',
     chainId: 59144,
+    blockscoutV2ApiUrl: 'https://api-explorer.linea.build/api/v2',
     explorerUrl: 'https://lineascan.build',
     explorerApi: {
       url: 'https://api.lineascan.build/api',
@@ -294,14 +302,17 @@ export const linea: Layer2 = {
     ],
     coingeckoPlatform: 'linea',
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (blobs or calldata)'],
-    bridge: { type: 'Enshrined' },
-    mode: 'Transaction data (compressed)',
-  }),
+  dataAvailability: [
+    addSentimentToDataAvailability({
+      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
+      bridge: DA_BRIDGES.ENSHRINED,
+      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+    }),
+  ],
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
+      secondLine: formatExecutionDelay(finalizationPeriod),
       sources: [
         {
           contract: 'zkEVM',

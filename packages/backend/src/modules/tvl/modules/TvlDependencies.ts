@@ -3,7 +3,6 @@ import { Database } from '@l2beat/database'
 import { CirculatingSupplyProviders } from '../../../providers/CirculatingSupplyProviders'
 import { PriceProviders } from '../../../providers/PriceProviders'
 import { Providers } from '../../../providers/Providers'
-import { TvlBlockProviders } from '../../../providers/TvlBlockProviders'
 import { Clock } from '../../../tools/Clock'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { HourlyIndexer } from '../indexers/HourlyIndexer'
@@ -22,7 +21,6 @@ export class TvlDependencies {
   private readonly priceProviders: PriceProviders
   private readonly circulatingSupplyProviders: CirculatingSupplyProviders
   private readonly circulatingSupplyService: CirculatingSupplyService
-  private readonly tvlBlockProviders: TvlBlockProviders
 
   constructor(
     readonly database: Database,
@@ -37,13 +35,14 @@ export class TvlDependencies {
     this.priceProviders = providers.getPriceProviders()
     this.priceService = new PriceService({
       priceProvider: this.priceProviders.getPriceProvider(),
+      database,
+      logger,
     })
     this.circulatingSupplyProviders = providers.getCirculatingSupplyProviders()
     this.circulatingSupplyService = new CirculatingSupplyService({
       circulatingSupplyProvider:
         this.circulatingSupplyProviders.getCirculatingSupplyProvider(),
     })
-    this.tvlBlockProviders = providers.getTvlBlockProviders()
   }
 
   getPriceService() {
@@ -71,6 +70,6 @@ export class TvlDependencies {
   }
 
   getBlockTimestampProvider(chain: string): BlockTimestampProvider {
-    return this.tvlBlockProviders.getBlockTimestampProvider(chain)
+    return this.providers.block.getBlockTimestampProvider(chain)
   }
 }

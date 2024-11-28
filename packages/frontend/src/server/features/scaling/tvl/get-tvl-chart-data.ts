@@ -1,10 +1,7 @@
 import { type ValueRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { type Dictionary } from 'lodash'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
+import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
@@ -37,13 +34,12 @@ export type TvlChartDataParams = z.infer<typeof TvlChartDataParams>
  *  chart: [timestamp, native, canonical, external, ethPrice][] - all numbers
  * }
  */
-export async function getTvlChartData(
+export async function getTvlChart(
   ...args: Parameters<typeof getCachedTvlChartData>
 ) {
   if (env.MOCK) {
     return getMockTvlChartData(...args)
   }
-  noStore()
   return getCachedTvlChartData(...args)
 }
 
@@ -51,7 +47,7 @@ export type TvlChartData = Awaited<ReturnType<typeof getCachedTvlChartData>>
 export const getCachedTvlChartData = cache(
   async ({ range, excludeAssociatedTokens, filter }: TvlChartDataParams) => {
     const projectsFilter = createTvlProjectsFilter(filter)
-    const tvlProjects = getTvlProjects().filter(projectsFilter)
+    const tvlProjects = getTvlProjects(projectsFilter)
 
     const [ethPrices, values] = await Promise.all([
       getEthPrices(),
@@ -67,8 +63,10 @@ export const getCachedTvlChartData = cache(
       forTotal,
     })
   },
-  ['getTvlChartData'],
-  { revalidate: 10 * UnixTime.MINUTE },
+  ['tvl-chart-data'],
+  {
+    revalidate: 10 * UnixTime.MINUTE,
+  },
 )
 
 function getChartData(

@@ -22,12 +22,14 @@
   proposerFailure: {
     definingMetric: 636216
     description: "Anyone can become a Proposer after 7d 8h of inactivity from the currently whitelisted Proposers."
+    secondLine: "7d 8h delay"
     sentiment: "good"
     value: "Self propose"
   }
   sequencerFailure: {
     definingMetric: 86400
     description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There is a 1d delay on this operation."
+    secondLine: "1d delay"
     sentiment: "good"
     value: "Self sequence"
   }

@@ -1,3 +1,249 @@
+Generated with discovered.json: 0x42d3d8561e2718f548fe7bbfcb5422a4166fde9b
+
+# Diff at Thu, 28 Nov 2024 11:13:45 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4e0645053ebfcfcef2e7fd8c8410bad53373a3c4 block: 21071398
+- current block number: 21285828
+
+## Description
+
+Gelato MS added as second executor.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.4:
++        {"permission":"validate","target":"0x9C56265ef2989138d264b30fBbA2043902daBdf8","via":[{"address":"0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa","delay":0,"description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}]}
+      issuedPermissions.3.via.0:
+-        {"address":"0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa","delay":0,"description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}
+      issuedPermissions.2.permission:
+-        "validate"
++        "upgrade"
+      issuedPermissions.2.target:
+-        "0x9C56265ef2989138d264b30fBbA2043902daBdf8"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+      issuedPermissions.2.via.0:
++        {"address":"0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a","delay":0}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","via":[{"address":"0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a","delay":0},{"address":"0xe8606A55d105EF857F187C32Ae0E9a168aF8F497","delay":0}]}
+      values.accessControl.EXECUTOR_ROLE.members.1:
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+      values.executors.1:
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+    }
+```
+
+```diff
+    contract ChallengeManager (0x73cfa0F6ae141212115657ad91Ad918E5d34d882) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","via":[{"address":"0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a","delay":0},{"address":"0xe8606A55d105EF857F187C32Ae0E9a168aF8F497","delay":0}]}
+    }
+```
+
+```diff
+    contract ERC20RollupEventInbox (0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","via":[{"address":"0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a","delay":0},{"address":"0xe8606A55d105EF857F187C32Ae0E9a168aF8F497","delay":0}]}
+    }
+```
+
+```diff
+    contract ERC20Bridge (0xa104C0426e95a5538e89131DbB4163d230C35f86) {
+    +++ description: Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","via":[{"address":"0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a","delay":0},{"address":"0xe8606A55d105EF857F187C32Ae0E9a168aF8F497","delay":0}]}
+    }
+```
+
+```diff
+    contract ERC20Outbox (0xB360b2f57c645E847148d7C479b7468AbF6F707d) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","via":[{"address":"0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a","delay":0},{"address":"0xe8606A55d105EF857F187C32Ae0E9a168aF8F497","delay":0}]}
+    }
+```
+
+```diff
+    contract SequencerInbox (0xD80a805c86C14c879420eC6acb366D04D318fC0C) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","via":[{"address":"0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a","delay":0},{"address":"0xe8606A55d105EF857F187C32Ae0E9a168aF8F497","delay":0}]}
+    }
+```
+
+```diff
+    contract ERC20Inbox (0xEa83E8907C89Bc0D9517632f0ba081972E328631) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","via":[{"address":"0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a","delay":0},{"address":"0xe8606A55d105EF857F187C32Ae0E9a168aF8F497","delay":0}]}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GelatoMultisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/GelatoMultisig/GnosisSafe.sol   | 953 +++++++++++++++++++++
+ .../.flat/GelatoMultisig/GnosisSafeProxy.p.sol     |  35 +
+ 2 files changed, 988 insertions(+)
+```
+
+Generated with discovered.json: 0xb19d48e9748bf310d43bde9e258e9d93466fadce
+
+# Diff at Fri, 15 Nov 2024 08:18:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a00c2a67d12a174a45864b549412045028598606 block: 21071398
+- current block number: 21071398
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21071398 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.5:
+-        {"permission":"upgrade","target":"0xa9d1C9D877F235C21d803e4a0b81F8ca6C4c83AC","via":[{"address":"0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a","delay":0}]}
+      issuedPermissions.4:
+-        {"permission":"propose","target":"0x9C56265ef2989138d264b30fBbA2043902daBdf8","via":[{"address":"0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa","delay":0,"description":"can submit state roots to the RollupProxy contract on the host chain."}]}
+      issuedPermissions.3.permission:
+-        "propose"
++        "validate"
+      issuedPermissions.3.via.0:
++        {"address":"0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa","delay":0,"description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}
+      issuedPermissions.2.permission:
+-        "configure"
++        "validate"
+      issuedPermissions.2.via.0:
+-        {"address":"0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa","delay":0,"description":"a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."}
+      issuedPermissions.1.permission:
+-        "challenge"
++        "upgrade"
+      issuedPermissions.1.target:
+-        "0x9C56265ef2989138d264b30fBbA2043902daBdf8"
++        "0xa9d1C9D877F235C21d803e4a0b81F8ca6C4c83AC"
+      issuedPermissions.1.via.0.address:
+-        "0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa"
++        "0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a"
+      issuedPermissions.1.via.0.description:
+-        "can challenge state roots on the host chain."
+      issuedPermissions.0.permission:
+-        "challenge"
++        "configure"
+      issuedPermissions.0.via.0:
++        {"address":"0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa","delay":0,"description":"a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      description:
+-        "Central contract defining the access control for upgrading the system contract implementations."
++        "Central contract defining the access control permissions for upgrading the system contract implementations."
+    }
+```
+
+```diff
+    contract ERC20RollupEventInbox (0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      template:
++        "orbitstack/RollupEventInbox"
+      displayName:
++        "RollupEventInbox"
+      description:
++        "Helper contract sending configuration data over the bridge during the systems initialization."
+    }
+```
+
+```diff
+    contract SequencerInbox (0xD80a805c86C14c879420eC6acb366D04D318fC0C) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.maxTimeVariation.description:
+-        "Settable by the Rollup Owner. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
++        "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
+    }
+```
+
+```diff
+    contract SxNetworkMultisig (0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa) {
+    +++ description: None
+      directlyReceivedPermissions.2:
+-        {"permission":"propose","target":"0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F","description":"can submit state roots to the RollupProxy contract on the host chain."}
+      directlyReceivedPermissions.1.permission:
+-        "configure"
++        "validate"
+      directlyReceivedPermissions.1.description:
+-        "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
++        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+      directlyReceivedPermissions.0.permission:
+-        "challenge"
++        "configure"
+      directlyReceivedPermissions.0.description:
+-        "can challenge state roots on the host chain."
++        "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+    }
+```
+
+Generated with discovered.json: 0x7ecc1402f643d6f6f3aa391195d3d8e2b8f765ce
+
+# Diff at Thu, 07 Nov 2024 11:04:26 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e983273bf2ca9304e4b729faaddf20acae0f6c19 block: 21071398
+- current block number: 21071398
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21071398 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.2.via.0.description:
+-        "can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
++        "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+    }
+```
+
+```diff
+    contract SxNetworkMultisig (0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa) {
+    +++ description: None
+      directlyReceivedPermissions.1.description:
+-        "can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
++        "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+    }
+```
+
 Generated with discovered.json: 0xe82817411d789158534a335af8408a0526897240
 
 # Diff at Mon, 04 Nov 2024 08:00:14 GMT:

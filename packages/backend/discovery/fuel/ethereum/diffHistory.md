@@ -1,3 +1,76 @@
+Generated with discovered.json: 0x70d033c244b9a3911ab8c9186130eef9eb73c1de
+
+# Diff at Thu, 28 Nov 2024 11:02:16 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@4e0645053ebfcfcef2e7fd8c8410bad53373a3c4 block: 21242136
+- current block number: 21242136
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21242136 (main branch discovery), not current.
+
+```diff
+    contract FuelERC20Gateway (0xa4cA04d02bfdC3A2DF56B9b6994520E69dF43F67) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0x0000000000000000000000000000000000000000","via":[]}]
+    }
+```
+
+```diff
+    contract FuelMessagePortal (0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0x0000000000000000000000000000000000000000","via":[]}]
+    }
+```
+
+```diff
+    contract FuelChainState (0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0x0000000000000000000000000000000000000000","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0xb9110d5bef6827cbde4e44ce9b9526bb90bac6ca
+
+# Diff at Fri, 22 Nov 2024 08:40:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@292f23170122adf00047246ebc612907f3cba48f block: 21064224
+- current block number: 21242136
+
+## Description
+
+Upgrade FuelMessagePortal to the same contract code but with a higher (max) global deposit limit. (immutable)
+
+## Watched changes
+
+```diff
+    contract FuelMessagePortal (0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf) {
+    +++ description: None
+      values.$implementation:
+-        "0x05f886DDeE0FE07496f6e38b0e140F8eF4655B16"
++        "0x2C4df10a82CF077122eD99573acA6daCd76F2E67"
+      values.$pastUpgrades.3:
++        ["2024-11-21T15:58:47.000Z","0x13b86e46d736db66212cf6a47b0328b72dbd2b769c8f55a00eb1dbaa3427d94b",["0x2C4df10a82CF077122eD99573acA6daCd76F2E67"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.depositLimitGlobal:
+-        "19572000000000000000000"
++        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+    }
+```
+
 Generated with discovered.json: 0xca8ef6b0cd851905c181a9094d4c17e2e9b3a188
 
 # Diff at Mon, 28 Oct 2024 12:47:32 GMT:

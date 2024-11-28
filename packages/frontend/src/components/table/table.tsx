@@ -1,6 +1,6 @@
-import Link from 'next/link'
 import * as React from 'react'
 import { cn } from '~/utils/cn'
+import { LinkWithOnHoverPrefetch } from '../link/link-with-on-hover-prefetch'
 import { TableTooltip } from './table-tooltip'
 
 const Table = ({
@@ -58,7 +58,7 @@ const TableRow = ({
 }: React.HTMLAttributes<HTMLTableRowElement>) => (
   <TableHeaderRow
     className={cn(
-      'group/row border-b border-b-gray-200 hover:shadow-sm dark:border-b-gray-850',
+      'group/row border-b border-b-divider hover:shadow-sm',
       className,
     )}
     {...props}
@@ -121,7 +121,7 @@ const TableCell = ({
     {...props}
   >
     {href ? (
-      <Link
+      <LinkWithOnHoverPrefetch
         href={href}
         className={cn(
           'flex size-full items-center pr-3 group-first:pl-2 group-last:pr-2 md:pr-4',
@@ -131,7 +131,7 @@ const TableCell = ({
         )}
       >
         {children}
-      </Link>
+      </LinkWithOnHoverPrefetch>
     ) : (
       children
     )}

@@ -1,4 +1,4 @@
-import { merge } from 'lodash'
+import { DA_LAYERS } from '../../../../common'
 import { Layer2 } from '../../../layer2s'
 import { Layer3 } from '../../../layer3s'
 import {
@@ -70,7 +70,6 @@ export function AnytrustDAC(template: TemplateVars): DacDaLayer {
   // Common
   const name = `${template.project.display.name} DAC`
   const usedIn = toUsedInProject([template.project])
-  const links = merge(template.project.display.links, template.links)
 
   // "Bridge" backfill for DAC
   const bridgeDescription =
@@ -104,7 +103,14 @@ export function AnytrustDAC(template: TemplateVars): DacDaLayer {
     description: bridgeDescription,
     warning: template.warning,
     redWarning: template.redWarning,
-    links,
+    links: {
+      apps: template.links?.apps ?? [],
+      documentation: template.links?.documentation ?? [],
+      explorers: template.links?.explorers ?? [],
+      repositories: template.links?.repositories ?? [],
+      socialMedia: template.links?.socialMedia ?? [],
+      websites: template.links?.websites ?? [],
+    },
   }
 
   const dacBridge: DacBridge = {
@@ -171,7 +177,7 @@ export function AnytrustDAC(template: TemplateVars): DacDaLayer {
     name,
     slug: template.project.display.slug,
     description: layerDescription,
-    links,
+    links: template.project.display.links,
   }
 
   const dacLayer: DacDaLayer = {
@@ -179,7 +185,7 @@ export function AnytrustDAC(template: TemplateVars): DacDaLayer {
     kind: 'DAC',
     type: 'DaLayer',
     systemCategory: 'custom',
-    fallback: template.fallback ?? 'Ethereum (blobs)',
+    fallback: template.fallback ?? DA_LAYERS.ETH_BLOBS,
     challengeMechanism: template.challengeMechanism,
     display: layerDisplay,
     technology: {

@@ -17,7 +17,6 @@ export const publicgoodsnetwork: Layer2 = opStackL2({
     name: 'Public Goods Network',
     shortName: 'PGN',
     slug: 'publicgoodsnetwork',
-    architectureImage: 'publicgoodsnetwork',
     description:
       'Public Goods Network is an OP stack chain focused on funding public goods.',
     links: {
@@ -37,11 +36,6 @@ export const publicgoodsnetwork: Layer2 = opStackL2({
     activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.publicgoods.network',
-  finality: {
-    type: 'OPStack',
-    lag: 0,
-    stateUpdate: 'disabled',
-  },
   genesisTimestamp: new UnixTime(1689108083),
   stateDerivation: DERIVATION.OPSTACK('PGN'),
   isNodeAvailable: true,

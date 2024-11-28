@@ -378,11 +378,6 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0x0000000000000000000000000000000000000000",
-          "via": []
-        },
-        {
-          "permission": "configure",
           "target": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
           "via": [
             {
@@ -954,7 +949,7 @@
   "eoas": [
     {
       "address": "0x0000000000000000000000000000000000000000",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "configure",
           "target": "0x5E8422345238F34275888049021821E8E08CAa1f",

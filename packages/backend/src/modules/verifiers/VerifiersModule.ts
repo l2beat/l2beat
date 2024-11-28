@@ -17,6 +17,8 @@ export function createVerifiersModule(
     return
   }
 
+  logger = logger.tag({ feature: 'verifiers', module: 'verifiers' })
+
   const refresher = new VerifiersStatusRefresher({
     db: peripherals.database,
     peripherals,

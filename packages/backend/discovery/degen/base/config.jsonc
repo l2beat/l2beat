@@ -8,100 +8,43 @@
     "0xf70da97812CB96acDF810712Aa562db8dfA3dbEF" // relay bridge
   ],
   "names": {
-    "0xD34F3a11F10DB069173b32d84F02eDA578709143": "RollupProxy",
-    "0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C": "Bridge",
-    "0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221": "SequencerInbox",
-    "0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7": "Inbox",
-    "0xe63ddb12FBb6211a73F12a4367b10dA0834B82da": "Outbox",
-    "0x67812161Bbb6aCF891aA6028BC614a660961ceD8": "ChallengeManager",
-    "0xaA3A7A2ec2477A61082E1C41a2c6710587917028": "UpgradeExecutor",
     "0x43019F8BE1F192587883b67dEA2994999f5a2de2": "UTBDecent", // Decent omnichain service (LayerZero)
-    "0xf70da97812CB96acDF810712Aa562db8dfA3dbEF": "Relay Bridge" // EOA Bridge / Liquidity network https://relay.link/transactions/
+    "0xf70da97812CB96acDF810712Aa562db8dfA3dbEF": "Relay Bridge", // EOA Bridge / Liquidity network https://relay.link/transactions/
+    "0x871e290d5447b958131F6d44f915F10032436ee6": "DegenMultisig",
+    "0xDb8E759859058952c34953c8469f464109826e52": "OrbitERC20OFTAdapter",
+    "0x3C12B77aE8B7DD1FEB63D1D6a2A819AcdA0a41d2": "OftAdapterEOA"
   },
   "overrides": {
-    "RollupProxy": {
-      "extends": "orbitstack/RollupProxy"
-    },
-    "UpgradeExecutor": {
+    "OrbitERC20OFTAdapter": {
+      "description": "As a designated allowed outbox, this contract can access all funds of the canonical bridge escrow. It also interfaces with the LayerZero AMB, giving this external bridge access to the Degen L3 canonical bridge and making canonical bridge security dependent on LayerZero security.",
+      "ignoreRelatives": ["endpoint", "token"],
       "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
-        }
-      }
-    },
-    "Outbox": {
-      "ignoreMethods": ["spent", "isSpent"]
-    },
-    "Bridge": {
-      "ignoreMethods": ["sequencerInboxAccs", "delayedInboxAccs"],
-      "ignoreInWatchMode": [
-        "delayedMessageCount",
-        "sequencerMessageCount",
-        "sequencerReportedSubMessageCount"
-      ],
-      "ignoreRelatives": ["nativeToken"]
-    },
-    "SequencerInbox": {
-      "description": "State batches / commitments get posted here.",
-      "ignoreMethods": ["inboxAccs"],
-      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
-      "fields": {
-        "maxTimeVariation": {
-          "description": "onlyRollupOwner settable. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed.",
-          "returnType": "(uint256 delayBlocks, uint256 futureBlocks, uint256 delaySeconds, uint256 futureSeconds)"
-        },
-        "sequencerVersion": {
-          "handler": {
-            "type": "arbitrumSequencerVersion"
-          }
-        },
-        "dacKeyset": {
-          "handler": {
-            "type": "arbitrumDACKeyset"
-          }
-        },
-        // when this changes, it means the sequencers have changed
-        "setIsBatchPosterCount": {
-          "handler": {
-            "type": "eventCount",
-            "topics": [
-              // event OwnerFunctionCalled(uint256 indexed id);
-              "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
-              // id == 6 is emitted inside setValidator()
-              "0x0000000000000000000000000000000000000000000000000000000000000001"
-            ]
-          }
-        },
-        "batchPosters": {
+        "owner": {
           "target": {
-            "permissions": [{ "type": "sequence" }]
-          },
-          "handler": {
-            "type": "arbitrumActors",
-            "actorType": "batchPoster"
-          }
-        },
-        "keySetUpdates": {
-          "handler": {
-            "type": "eventCount",
-            "topics": [
-              // SetValidKeyset(bytes32,bytes)
-              "0xabca9b7986bc22ad0160eb0cb88ae75411eacfba4052af0b457a9335ef655722"
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "Can control the LayerZero OrbitERC20OFTAdapter contract for the DEGEN token and thus potentially steal all funds from the canonical bridge."
+              }
             ]
           }
         }
       }
-    },
-    "ChallengeManager": {
-      "ignoreMethods": ["challenges"]
     },
     "UTBDecent": {
+      "description": "The UTB contract serves as an L2<->L3 gateway by integrating with Decent (LayerZero app) to allow bridging and swapping in- and out of Degen L3. This is achieved using external modules (smart contracts) like swappers and bridgers that can be registered in the UTB contract.",
       "fields": {
         "accessControl": {
           "handler": {
             "type": "accessControl"
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "directly controls the UTB contract's critical functions like updating all roles and modules."
+              }
+            ]
           }
         }
       }

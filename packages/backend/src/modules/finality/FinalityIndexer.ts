@@ -24,9 +24,16 @@ export class FinalityIndexer extends ChildIndexer {
     private readonly db: Database,
     private readonly configuration: FinalityConfig,
   ) {
-    super(logger.tag(configuration.projectId.toString()), [parentIndexer], {
-      updateRetryStrategy: UPDATE_RETRY_STRATEGY,
-    })
+    super(
+      logger.tag({
+        tag: configuration.projectId,
+        project: configuration.projectId,
+      }),
+      [parentIndexer],
+      {
+        updateRetryStrategy: UPDATE_RETRY_STRATEGY,
+      },
+    )
     this.indexerId = `finality_indexer_${configuration.projectId.toString()}`
   }
 
@@ -141,8 +148,7 @@ export class FinalityIndexer extends ChildIndexer {
     const stateUpdateDelays = batchesToStateUpdateDelays(t2iBatches, suBatches)
     return {
       ...baseResult,
-      averageStateUpdate:
-        Math.round(mean(stateUpdateDelays)) - averageTimeToInclusion,
+      averageStateUpdate: Math.round(mean(stateUpdateDelays)),
     }
   }
 

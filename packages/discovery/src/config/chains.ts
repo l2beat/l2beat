@@ -4,7 +4,7 @@ import { getMulticall3Config } from '../discovery/provider/multicall/MulticallCo
 import { MulticallConfig } from '../discovery/provider/multicall/types'
 import { EtherscanUnsupportedMethods } from '../utils/IEtherscanClient'
 
-export interface ChainConfig {
+interface ChainConfig {
   name: string
   chainId: number
   // See: https://github.com/safe-global/safe-core-sdk/blob/9b64da33bc55615349d527909d4b792e05bb9826/packages/protocol-kit/src/utils/eip-3770/config.ts
@@ -245,6 +245,19 @@ export const chains: ChainConfig[] = [
     explorer: {
       type: 'etherscan',
       url: 'https://api.blastscan.io/api',
+    },
+  },
+  {
+    name: 'kinto',
+    chainId: 7887,
+    shortName: 'kinto',
+    multicall: getMulticall3Config(
+      218560,
+      EthereumAddress('0x2cc0188fA85FD8Ce748C7Df6066873fdcfaD95e9'),
+    ),
+    explorer: {
+      type: 'blockscout',
+      url: 'https://explorer.kinto.xyz/api',
     },
   },
 ] as const satisfies ChainConfig[]

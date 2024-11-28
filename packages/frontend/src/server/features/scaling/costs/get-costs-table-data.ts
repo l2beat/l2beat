@@ -1,8 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
+import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
 import { getLatestActivityForProjects } from '../activity/get-activity-for-projects'
 import { getCostsForProjects } from './get-costs-for-projects'
@@ -10,26 +7,26 @@ import { type LatestCostsProjectResponse } from './types'
 import { getCostsProjects } from './utils/get-costs-projects'
 import { type CostsTimeRange } from './utils/range'
 
-export function getCostsTableData(
+export function getCostsTable(
   ...parameters: Parameters<typeof getCachedCostsTableData>
 ) {
   if (env.MOCK) {
     return getMockCostsTableData()
   }
-  noStore()
   return getCachedCostsTableData(...parameters)
 }
 
 export type CostsTableData = Awaited<ReturnType<typeof getCachedCostsTableData>>
-const getCachedCostsTableData = cache(
+
+export const getCachedCostsTableData = cache(
   async (timeRange: CostsTimeRange) => {
     const projects = getCostsProjects()
     const projectsCosts = await getCostsForProjects(projects, timeRange)
-
     const projectsActivity = await getLatestActivityForProjects(
       projects,
       timeRange,
     )
+
     return Object.fromEntries(
       Object.entries(projectsCosts).map(([projectId, costs]) => {
         return [
@@ -43,8 +40,10 @@ const getCachedCostsTableData = cache(
       }),
     )
   },
-  ['costsTableV2'],
-  { revalidate: 10 * UnixTime.MINUTE },
+  ['costs-table-data'],
+  {
+    revalidate: 10 * UnixTime.MINUTE,
+  },
 )
 
 function getSyncStatus(syncedUntil: UnixTime) {

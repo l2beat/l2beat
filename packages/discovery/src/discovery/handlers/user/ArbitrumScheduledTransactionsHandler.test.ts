@@ -2,7 +2,6 @@ import { ContractValue } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { ArbitrumScheduledTransactionsHandler } from './ArbitrumScheduledTransactionsHandler'
 
@@ -17,7 +16,6 @@ describe(ArbitrumScheduledTransactionsHandler.name, () => {
       [
         'event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)',
       ],
-      DiscoveryLogger.SILENT,
     )
 
     const mockGetMetadata = async (address: EthereumAddress) => ({

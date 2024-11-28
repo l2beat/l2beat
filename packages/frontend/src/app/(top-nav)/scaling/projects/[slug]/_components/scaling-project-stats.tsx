@@ -40,15 +40,15 @@ export function ScalingProjectStats({ project, className }: Props) {
         }
       />
       <ProjectStat
-        title="Daily TPS"
-        tooltip="Transactions per second averaged over the past day displayed together with a percentage change compared to 7D ago."
+        title="Daily UOPS"
+        tooltip="User operations per second averaged over the past day displayed together with a percentage change compared to 7D ago."
         value={
           project.header.activity ? (
             <ValueWithPercentageChange
-              change={project.header.activity.tpsWeeklyChange}
+              change={project.header.activity.uopsWeeklyChange}
               changeClassName="text-base font-medium"
             >
-              {project.header.activity.lastDayTps.toFixed(2)}
+              {project.header.activity.lastDayUops.toFixed(2)}
             </ValueWithPercentageChange>
           ) : (
             <UpcomingBadge />
@@ -103,7 +103,7 @@ export function ScalingProjectStats({ project, className }: Props) {
   )
 }
 
-export interface ProjectStat {
+interface ProjectStat {
   title: string
   value: ReactNode
   tooltip?: string

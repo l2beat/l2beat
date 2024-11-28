@@ -9,7 +9,7 @@ export function formatHeader(title: string): string {
   return `= ${title} `.padEnd(36, '=')
 }
 
-export function formatTable(
+function formatTable(
   logger: CliLogger,
   aIDs: string[],
   bIDs: string[],
@@ -49,7 +49,7 @@ export function formatTable(
   return formatAsAsciiTable(header, rows)
 }
 
-export function computeTableWidth(headerColumns: string[]): number {
+function computeTableWidth(headerColumns: string[]): number {
   const overhead = 5 + headerColumns.length + 2
   const columnWidths = headerColumns.map(
     (column) => Math.max(column.length, 4) + 2,

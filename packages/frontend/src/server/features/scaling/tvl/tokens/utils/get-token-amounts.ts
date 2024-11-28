@@ -1,6 +1,6 @@
 import { type AmountConfigEntry, type UnixTime } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
-import { db } from '~/server/database'
+import { getDb } from '~/server/database'
 import { getAmountsStatus } from '../../sync-status/get-amounts-status'
 
 interface Params {
@@ -16,6 +16,7 @@ export async function getTokenAmounts({
   range,
   timestamps,
 }: Params) {
+  const db = getDb()
   const [from, to] = range
   const amountRecords = await db.amount.getByConfigIdsInRange(
     configurations.map((c) => c.configId),

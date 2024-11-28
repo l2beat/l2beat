@@ -8,6 +8,9 @@ import {
 
 import {
   CONTRACTS,
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   EXITS,
   NEW_CRYPTOGRAPHY,
   NUGGETS,
@@ -15,7 +18,9 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { ESCROW } from '../../common/escrow'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
+import { formatExecutionDelay } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
 import { STATE_CORRECTNESS } from '../../common/stateCorrectness'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -43,6 +48,7 @@ const escrowUSDCDelaySeconds = discovery.getContractValue<number>(
 )
 
 const minDelay = Math.min(upgradeDelaySeconds, escrowUSDCDelaySeconds)
+const finalizationPeriod = 0
 
 function formatMaxTotalBalanceString(
   ticker: string,
@@ -95,7 +101,7 @@ export const paradex: Layer2 = {
         'Paradex is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. Proofs are aggregated with other projects using SHARP and state updates have to refer to proved claims.',
     },
     finality: {
-      finalizationPeriod: 0,
+      finalizationPeriod,
     },
   },
   config: {
@@ -103,7 +109,7 @@ export const paradex: Layer2 = {
       discovery.getEscrowDetails({
         address: EthereumAddress('0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3'),
         tokens: ['USDC'],
-        source: 'external',
+        ...ESCROW.CANONICAL_EXTERNAL,
         upgradableBy: ['USDC Escrow owner'],
         upgradeDelay: formatSeconds(escrowUSDCDelaySeconds),
         description:
@@ -235,14 +241,17 @@ export const paradex: Layer2 = {
       stateUpdate: 'disabled',
     },
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (blobs or calldata)'],
-    bridge: { type: 'Enshrined' },
-    mode: 'State diffs',
-  }),
+  dataAvailability: [
+    addSentimentToDataAvailability({
+      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
+      bridge: DA_BRIDGES.ENSHRINED,
+      mode: DA_MODES.STATE_DIFFS,
+    }),
+  ],
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
+      secondLine: formatExecutionDelay(finalizationPeriod),
       sources: [
         {
           contract: 'Paradex',

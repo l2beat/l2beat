@@ -1,4 +1,6 @@
 import { layer2s, layer3s } from '@l2beat/config'
+import { UnixTime } from '@l2beat/shared-pure'
+import { unstable_cache as cache } from 'next/cache'
 import { NextResponse } from 'next/server'
 import { getTvlBreakdownForProject } from '~/server/features/scaling/tvl/breakdown/get-tvl-breakdown-for-project'
 
@@ -9,17 +11,29 @@ export async function GET(
   props: { params: Promise<{ slug: string }> },
 ) {
   const params = await props.params
-  const project = projects.find((p) => p.display.slug === params.slug)
+  const response = await getCachedResponse(params.slug)
 
-  if (!project) {
-    return NextResponse.json({
-      success: false,
-      error: 'Project not found.',
-    })
-  }
-
-  return NextResponse.json({
-    success: true,
-    data: await getTvlBreakdownForProject(project),
-  })
+  return NextResponse.json(response)
 }
+
+const getCachedResponse = cache(
+  async (slug: string) => {
+    const project = projects.find((p) => p.display.slug === slug)
+
+    if (!project) {
+      return {
+        success: false,
+        error: 'Project not found.',
+      } as const
+    }
+
+    return {
+      success: true,
+      data: await getTvlBreakdownForProject(project),
+    } as const
+  },
+  ['scaling-tvl-project-breakdown-route'],
+  {
+    revalidate: 10 * UnixTime.MINUTE,
+  },
+)

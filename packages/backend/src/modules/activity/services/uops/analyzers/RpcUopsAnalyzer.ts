@@ -1,34 +1,42 @@
-import { sum } from 'lodash'
+import { isArray, sum } from 'lodash'
 
 import {
+  EIP712_methods,
   ERC4337_methods,
+  MULTICALLV3_methods,
   Method,
   Operation,
   SAFE_methods,
+  isEip712,
   isErc4337,
   isGnosisSafe,
+  isMulticallv3,
 } from '@l2beat/shared'
-import {
-  EVMBlock,
-  EVMTransaction,
-} from '@l2beat/shared/build/clients/rpc/types'
-import type { AnalyzedBlock, Analyzer } from '../types'
+import { assert, Block, Transaction } from '@l2beat/shared-pure'
 
-export class RpcUopsAnalyzer implements Analyzer {
-  analyzeBlock(rpcBlock: EVMBlock): AnalyzedBlock {
-    const uops = rpcBlock.transactions.map((tx: EVMTransaction) =>
+export class RpcUopsAnalyzer {
+  calculateUops(rpcBlock: Block) {
+    const uops = rpcBlock.transactions.map((tx: Transaction) =>
       this.mapTransaction(tx),
     )
-    return {
-      uopsLength: sum(uops),
-      transactionsLength: rpcBlock.transactions.length,
-    }
+    return sum(uops)
   }
 
-  mapTransaction(tx: EVMTransaction): number {
+  mapTransaction(tx: Transaction): number {
     const methods = ERC4337_methods.concat(SAFE_methods)
+      .concat(EIP712_methods)
+      .concat(MULTICALLV3_methods)
 
-    if (isErc4337(tx) || isGnosisSafe(tx)) {
+    if (
+      isErc4337(tx) ||
+      isGnosisSafe(tx) ||
+      isEip712(tx) ||
+      isMulticallv3(tx)
+    ) {
+      assert(
+        tx.data && !isArray(tx.data),
+        `EVM Transaction should have data: ${tx.hash}`,
+      )
       return this.countUserOperations(tx.data, methods)
     }
 

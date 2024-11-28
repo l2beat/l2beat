@@ -6,7 +6,7 @@ import {
 } from '~/utils/sentiment'
 import { SingleGrissini } from './single-grissini'
 
-export interface SingleGrissiniDetailsProps {
+interface SingleGrissiniDetailsProps {
   name: string
   sentiment: Sentiment
   value: string

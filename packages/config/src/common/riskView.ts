@@ -53,6 +53,14 @@ export const STATE_FP_INT_ZK: ScalingProjectRiskViewEntry = {
   definingMetric: Infinity,
 }
 
+export const STATE_FP_1R_ZK: ScalingProjectRiskViewEntry = {
+  value: 'Fraud proofs (1R, ZK)',
+  description:
+    'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Single round proofs (1R) only require a single transaction to resolve. ZK proofs are used to prove the correctness of the state transition.',
+  sentiment: 'good',
+  definingMetric: Infinity,
+}
+
 export const STATE_ZKP_SN: ScalingProjectRiskViewEntry = {
   value: 'ZK proofs (SN)',
   description:
@@ -201,6 +209,13 @@ export const DATA_EXTERNAL_L3: ScalingProjectRiskViewEntry = {
   value: 'External',
   description:
     'Proof construction and state derivation rely fully on data that is ultimately NOT published on Ethereum.',
+  sentiment: 'bad',
+}
+
+export const DATA_EXTERNAL_CHALLENGES: ScalingProjectRiskViewEntry = {
+  value: 'External',
+  description:
+    'Proof construction and state derivation rely fully on data that is NOT published onchain. A custom data availability (DA) provider without attestations is used, but data unavailability can be challenged.',
   sentiment: 'bad',
 }
 
@@ -598,6 +613,7 @@ export const RISK_VIEW = {
   STATE_FP_1R,
   STATE_FP_INT,
   STATE_FP_INT_ZK,
+  STATE_FP_1R_ZK,
   STATE_ZKP_SN,
   STATE_ZKP_ST,
   STATE_ZKP_ST_SN_WRAP,
@@ -614,6 +630,7 @@ export const RISK_VIEW = {
   DATA_EXTERNAL_MEMO,
   DATA_EXTERNAL,
   DATA_EXTERNAL_L3,
+  DATA_EXTERNAL_CHALLENGES,
   DATA_CELESTIA,
 
   // validatedBy

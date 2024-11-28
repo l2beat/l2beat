@@ -10,19 +10,7 @@ import {
   layer3s,
   zkCatalogProjects,
 } from '@l2beat/config'
-import { env } from '~/env'
-
-export interface SearchBarProject {
-  id: string
-  isUpcoming: boolean
-  name: string
-  iconUrl: string
-  href: string
-  tags: string[]
-  createdAt: number
-  type: 'layer2' | 'layer3' | 'bridge' | 'da' | 'zk-catalog'
-  filePrepared?: Fuzzysort.Prepared
-}
+import { type SearchBarProject } from './search-bar-entry'
 
 export const searchBarProjects = toSearchBarProjects([
   ...layer2s,
@@ -38,8 +26,10 @@ function toSearchBarProjects(
   return projects.flatMap((project): SearchBarProject | SearchBarProject[] => {
     if (project.type === 'DaLayer') {
       return project.bridges.map((bridge) => ({
+        type: 'project',
         id: `${project.id}-${bridge.id}`,
-        type: 'da' as const,
+        category: 'da',
+        kind: 'da',
         isUpcoming: !!project.isUpcoming,
         name:
           project.kind === 'DAC'
@@ -54,8 +44,10 @@ function toSearchBarProjects(
 
     if (project.type === 'zk-catalog') {
       return {
+        type: 'project',
         id: `zk-catalog-${project.display.slug}`,
-        type: 'zk-catalog' as const,
+        category: 'zkCatalog',
+        kind: 'zkCatalog',
         isUpcoming: false,
         name: project.display.name,
         iconUrl: `/icons/${project.display.slug}.png`,
@@ -66,15 +58,17 @@ function toSearchBarProjects(
     }
 
     const common = {
+      type: 'project',
       id: project.id,
-      type: project.type,
+      category: project.type === 'bridge' ? 'bridges' : 'scaling',
+      kind: project.type,
       isUpcoming: !!project.isUpcoming,
       name: project.display.name,
       iconUrl: `/icons/${project.display.slug}.png`,
       href: getHref(project),
       tags: [project.display.slug],
       createdAt: project.createdAt.toNumber(),
-    }
+    } satisfies SearchBarProject
 
     if (project.type === 'bridge') {
       return common
@@ -87,7 +81,7 @@ function toSearchBarProjects(
             {
               ...common,
               id: `zk-catalog-${project.id}`,
-              type: 'zk-catalog' as const,
+              category: 'zkCatalog' as const,
               href: `/zk-catalog/${project.display.slug}`,
             },
           ]

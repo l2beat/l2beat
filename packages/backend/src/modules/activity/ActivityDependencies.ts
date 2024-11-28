@@ -1,33 +1,25 @@
 import { Database } from '@l2beat/database'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
 import { ActivityConfig } from '../../config/Config'
-import { BlockProviders } from '../../providers/BlockProviders'
 import { Providers } from '../../providers/Providers'
 import { BlockTimestampProvider } from '../tvl/services/BlockTimestampProvider'
 import { TxsCountService } from './indexers/types'
-import { DegateTxsCountService } from './services/txs/DegateTxsCountService'
-import { FuelTxsCountService } from './services/txs/FuelTxsCountService'
-import { LoopringTxsCountService } from './services/txs/LoopringTxsCountService'
-import { RpcTxsCountService } from './services/txs/RpcTxsCountService'
+import { BlockTxsCountService } from './services/txs/BlockTxsCountService'
 import { StarkexTxsCountService } from './services/txs/StarkexTxsCountService'
-import { StarknetTxsCountService } from './services/txs/StarknetTxsCountService'
-import { ZKsyncLiteTxsCountService } from './services/txs/ZKsyncLiteTxsCountService'
 import { RpcUopsAnalyzer } from './services/uops/analyzers/RpcUopsAnalyzer'
 import { StarknetUopsAnalyzer } from './services/uops/analyzers/StarknetUopsAnalyzer'
 
 export class ActivityDependencies {
   private readonly rpcUopsAnalyzer: RpcUopsAnalyzer
   private readonly starknetUopsAnalyzer: StarknetUopsAnalyzer
-  private readonly blockProviders: BlockProviders
 
   constructor(
     private readonly config: ActivityConfig,
     readonly database: Database,
-    providers: Providers,
+    private readonly providers: Providers,
   ) {
     this.rpcUopsAnalyzer = new RpcUopsAnalyzer()
     this.starknetUopsAnalyzer = new StarknetUopsAnalyzer()
-    this.blockProviders = providers.getBlockProviders()
   }
 
   getTxsCountService(chain: string): TxsCountService {
@@ -36,72 +28,42 @@ export class ActivityDependencies {
 
     switch (project.config.type) {
       case 'rpc': {
-        const provider = this.blockProviders.getEvmBlockProvider(chain)
+        const provider = this.providers.block.getBlockProvider(chain)
 
-        return new RpcTxsCountService(
+        return new BlockTxsCountService({
           provider,
-          project.id,
-          this.rpcUopsAnalyzer,
-          project.config.assessCount,
-        )
-      }
-      case 'zksync': {
-        assert(
-          this.blockProviders.zksyncLiteClient,
-          'zksyncLiteClient should be defined',
-        )
-        return new ZKsyncLiteTxsCountService(
-          this.blockProviders.zksyncLiteClient,
-          project.id,
-        )
+          projectId: project.id,
+          assessCount: project.config.assessCount,
+          uopsAnalyzer: this.rpcUopsAnalyzer,
+        })
       }
       case 'starknet': {
-        assert(
-          this.blockProviders.starknetClient,
-          'starknetClient should be defined',
-        )
-        return new StarknetTxsCountService(
-          this.blockProviders.starknetClient,
-          project.id,
-          this.starknetUopsAnalyzer,
-        )
+        const provider = this.providers.block.getBlockProvider(chain)
+        return new BlockTxsCountService({
+          provider,
+          projectId: project.id,
+          uopsAnalyzer: this.starknetUopsAnalyzer,
+        })
       }
+      case 'zksync':
+      case 'fuel':
+      case 'degate3':
       case 'loopring': {
-        assert(
-          this.blockProviders.loopringClient,
-          'loopringClient should be defined',
-        )
-        return new LoopringTxsCountService(
-          this.blockProviders.loopringClient,
-          project.id,
-        )
-      }
-      case 'degate': {
-        assert(
-          this.blockProviders.degateClient,
-          'degateClient should be defined',
-        )
-        return new DegateTxsCountService(
-          this.blockProviders.degateClient,
-          project.id,
-        )
+        const provider = this.providers.block.getBlockProvider(chain)
+        return new BlockTxsCountService({
+          provider,
+          projectId: project.id,
+        })
       }
       case 'starkex': {
         assert(
-          this.blockProviders.starkexClient,
+          this.providers.block.starkexClient,
           'starkexClient should be defined',
         )
         return new StarkexTxsCountService(
-          this.blockProviders.starkexClient,
+          this.providers.block.starkexClient,
           project.id,
           project.config.product,
-        )
-      }
-      case 'fuel': {
-        assert(this.blockProviders.fuelClient, 'fuelClient should be defined')
-        return new FuelTxsCountService(
-          this.blockProviders.fuelClient,
-          project.id,
         )
       }
 
@@ -111,6 +73,6 @@ export class ActivityDependencies {
   }
 
   getBlockTimestampProvider(chain: string): BlockTimestampProvider {
-    return this.blockProviders.getBlockTimestampProvider(chain)
+    return this.providers.block.getBlockTimestampProvider(chain)
   }
 }

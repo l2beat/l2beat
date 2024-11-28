@@ -8,6 +8,9 @@ import { Badge } from '../badges'
 
 import {
   CONTRACTS,
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
@@ -18,6 +21,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { formatDelay, formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
 import { getStage } from './common/stages/getStage'
@@ -67,6 +71,7 @@ const longTimelockUpgradeability = {
   upgradableBy: ['Safety Module Admin'],
   upgradeDelay: `${formatSeconds(longTimelockDelay)}`,
 }
+const finalizationPeriod = 0
 
 export const dydx: Layer2 = {
   type: 'layer2',
@@ -122,7 +127,7 @@ export const dydx: Layer2 = {
         'dYdX is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. The verification is done as part of the state update.',
     },
     finality: {
-      finalizationPeriod: 0,
+      finalizationPeriod,
     },
   },
   config: {
@@ -177,14 +182,17 @@ export const dydx: Layer2 = {
     ],
     finality: 'coming soon',
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (calldata)'],
-    bridge: { type: 'Enshrined' },
-    mode: 'State diffs',
-  }),
+  dataAvailability: [
+    addSentimentToDataAvailability({
+      layers: [DA_LAYERS.ETH_CALLDATA],
+      bridge: DA_BRIDGES.ENSHRINED,
+      mode: DA_MODES.STATE_DIFFS,
+    }),
+  ],
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
+      secondLine: formatExecutionDelay(finalizationPeriod),
       sources: [
         {
           contract: 'StarkPerpetual',
@@ -215,6 +223,7 @@ export const dydx: Layer2 = {
     },
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL(freezeGracePeriod),
+      secondLine: formatDelay(freezeGracePeriod),
       sources: [
         {
           contract: 'StarkPerpetual',

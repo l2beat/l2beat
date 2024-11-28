@@ -90,7 +90,21 @@
     [
       "0x5a7d6b2f92c77fad6ccabd7ee0624e64907eaf3e",
       "TransparentUpgradeableProxy"
-    ]
+    ],
+    ["0x283ccfbafddc747b71aec3c1e29fb824156a8f09", "DropERC1155"],
+    ["0x0000000000000000000000000000000000000000", "SimpleStorage"],
+    ["0xdbbe5e9b1daa91430cf0772fcebe53f6c6f137df", "MedianMKRUSD"],
+    ["0x2f73b6567b866302e132273f67661fb89b5a66f2", "MedianWSTETHUSD"],
+    ["0x64de91f5a373cd4c28de3600cb34c7c6ce410c85", "MedianETHUSD"],
+    ["0x0ec68c5b10f21effb74f2a5c61dfe6b08c0db6cb", "Proxy"],
+    ["0x1bc8fcfbe6aa17e4a7610f51b888f34583d202ec", "DefaultCollateralFactory"],
+    ["0x3f14920c99beb920afa163031c4e47a3e03b3e4a", "SendToken"],
+    ["0x46fd5cfb4c12d87acd3a13e92baa53240c661d93", "SETHProxy"],
+    ["0x455e53cbb86018ac2b8092fdcd39d8444affc3f6", "PolygonEcosystemToken"],
+    ["0xf57e7e7c23978c3caec3c3548e3d615c346e79ff", "IMXToken"],
+    ["0x3fa73f1e5d8a792c80f426fc8f84fbf7ce9bbcac", "AuraLocker"],
+    ["0x1ae7e1d0ce06364ced9ad58225a1705b3e5db92b", "LMEOW"],
+    ["0x6a000f20005980200259b80c5102003040001068", "AugustusV6"]
   ],
   "METHODS": [
     ["0xfec93e49", "follow"],
@@ -159,7 +173,19 @@
     ["0x83bd37f9", "swapCompact"],
     ["0x4357855e", "fulfill"],
     ["0xa694fc3a", "stake"],
-    ["0x1aa3a008", "register"]
+    ["0x1aa3a008", "register"],
+    ["0x049104e5", "redeem"],
+    ["0xf242432a", "safeTransferFrom"],
+    ["0x89bbb8b2", "poke"],
+    ["0x00000082", "artefact_keep"],
+    ["0x5a2b4fe8", "create"],
+    ["0xcf81464b", "upgradeByETH"],
+    ["0x282d3fdf", "lock"],
+    ["0x2d69f27d", "f"],
+    ["0xc2267387", "mint"],
+    ["0x614a7479", "mint"],
+    ["0xa41e6ceb", "claim"],
+    ["0xb6b55f25", "deposit"]
   ],
   "IMPLEMENTATIONS": [
     [

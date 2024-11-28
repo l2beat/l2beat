@@ -2,7 +2,6 @@ import { assert, Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
 
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { ScrollAccessControlHandler } from './ScrollAccessControlHandler'
 
@@ -112,7 +111,6 @@ describe(ScrollAccessControlHandler.name, () => {
         type: 'scrollAccessControl',
       },
       [],
-      DiscoveryLogger.SILENT,
     )
     const value = await handler.execute(provider, address)
     expect(value).toEqual({
@@ -208,7 +206,6 @@ describe(ScrollAccessControlHandler.name, () => {
         'function WARRIOR_ROLE() view returns (bytes32)',
         'function ROGUE_ROLE() view returns (bytes32)',
       ],
-      DiscoveryLogger.SILENT,
     )
     const value = await handler.execute(provider, address)
     expect(value).toEqual({
@@ -266,7 +263,6 @@ describe(ScrollAccessControlHandler.name, () => {
         ignoreRelative: true,
       },
       [],
-      DiscoveryLogger.SILENT,
     )
     const value = await handler.execute(provider, address)
     expect(value).toEqual({

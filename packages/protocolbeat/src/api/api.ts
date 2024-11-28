@@ -1,5 +1,6 @@
 import {
   ApiCodeResponse,
+  ApiPreviewResponse,
   ApiProjectResponse,
   ApiProjectsResponse,
 } from './types'
@@ -35,4 +36,28 @@ export async function getCode(
   }
   const data = await res.json()
   return data as ApiCodeResponse
+}
+
+export async function getPreview(project: string): Promise<ApiPreviewResponse> {
+  const res = await fetch(`/api/projects/${project}/preview`)
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+  return data as ApiPreviewResponse
+}
+
+export function executeCommand(
+  command: string,
+  project: string,
+  chain: string,
+  devMode: boolean,
+): EventSource {
+  const params = new URLSearchParams({
+    command,
+    project,
+    chain,
+    devMode: devMode.toString(),
+  })
+  return new EventSource(`/api/terminal/execute?${params}`)
 }

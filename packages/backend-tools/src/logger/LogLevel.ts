@@ -1,4 +1,4 @@
-export const LOG_LEVELS = [
+const LOG_LEVELS = [
   'NONE',
   'CRITICAL',
   'ERROR',

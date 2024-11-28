@@ -1,15 +1,6 @@
 import { BigQuery, Query } from '@google-cloud/bigquery'
 import { RateLimiter } from '@l2beat/backend-tools'
 
-export interface BigQueryAuth {
-  // Client Email
-  clientEmail: string
-  // Consumer Private Key
-  privateKey: string
-  // Project ID
-  projectId: string
-}
-
 const BYTES_IN_GB = 1024 * 1024 * 1024
 
 export interface BigQueryClientQuery extends Omit<Query, 'maximumBytesBilled'> {

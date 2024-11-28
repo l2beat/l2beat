@@ -1,4 +1,4 @@
-import { CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
 import { CoingeckoQueryService, QueryResultPoint } from '../../services'
 
 export class CirculatingSupplyProvider {
@@ -7,13 +7,12 @@ export class CirculatingSupplyProvider {
   async getCirculatingSupplies(
     coingeckoId: CoingeckoId,
     range: { from: UnixTime; to: UnixTime },
-    address?: EthereumAddress,
   ): Promise<QueryResultPoint[]> {
-    return await this.client.getCirculatingSupplies(coingeckoId, range, address)
+    return await this.client.getCirculatingSupplies(coingeckoId, range)
   }
 
   getAdjustedTo(from: number, to: number): UnixTime {
-    return CoingeckoQueryService.getAdjustedTo(
+    return CoingeckoQueryService.calculateAdjustedTo(
       new UnixTime(from),
       new UnixTime(to),
     )

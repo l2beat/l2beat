@@ -2,6 +2,7 @@ import { type StageConfig } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import { type Row, type Table } from '@tanstack/react-table'
 import React from 'react'
+import { env } from '~/env'
 import { cn } from '~/utils/cn'
 import {
   BasicTable,
@@ -15,6 +16,10 @@ interface BasicEntry extends BasicTableEntry {
 }
 
 export function RollupsTable<T extends BasicEntry>(props: BasicTableProps<T>) {
+  if (!env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING) {
+    return <BasicTable {...props} />
+  }
+
   const { ethereumEntry, stageTwoAndOne, stageZero, rest } =
     getRollupsTableRows(props.table)
 
@@ -64,7 +69,7 @@ function RowDivider({
         colSpan={3}
         className={cn('sticky left-0 z-1 px-0 group-first:pt-1', className)}
       >
-        <div className="h-5 rounded-l bg-surface-tertiary px-2 py-1 text-2xs font-medium leading-none text-zinc-500 dark:text-n-zinc-300">
+        <div className="h-5 rounded-l bg-surface-tertiary px-2 py-1 text-2xs font-medium uppercase leading-none text-zinc-500 dark:text-n-zinc-300">
           {children}
         </div>
       </td>

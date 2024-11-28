@@ -2,7 +2,7 @@
 
 {
   dataAvailability: {
-    description: "Proof construction and state derivation rely on data that is NOT published onchain. Redstone uses a custom data availability provider without attestations, relying though on DA challenges."
+    description: "Proof construction and state derivation rely fully on data that is NOT published onchain. A custom data availability (DA) provider without attestations is used, but data unavailability can be challenged."
     sentiment: "bad"
     sources: [
       {
@@ -45,6 +45,7 @@
   sequencerFailure: {
     definingMetric: 43200
     description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There is a 12h delay on this operation."
+    secondLine: "12h delay"
     sentiment: "good"
     sources: [
       {

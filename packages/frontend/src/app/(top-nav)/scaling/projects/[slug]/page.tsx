@@ -5,6 +5,7 @@ import { DesktopProjectNavigation } from '~/components/projects/navigation/deskt
 import { MobileProjectNavigation } from '~/components/projects/navigation/mobile-project-navigation'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 import { ProjectDetails } from '~/components/projects/project-details'
+import { env } from '~/env'
 import { getScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { HydrateClient } from '~/trpc/server'
 import { getProjectMetadata } from '~/utils/metadata'
@@ -12,7 +13,9 @@ import { ScalingProjectSummary } from './_components/scaling-project-summary'
 
 const scalingProjects = [...layer2s, ...layer3s]
 
+export const revalidate = 600
 export async function generateStaticParams() {
+  if (env.VERCEL_ENV === 'preview') return []
   return scalingProjects.map((layer) => ({
     slug: layer.display.slug,
   }))

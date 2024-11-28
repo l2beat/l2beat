@@ -5,13 +5,13 @@ export function format(source: string) {
   return formatAst(parse(source))
 }
 
-export function formatAst(ast: AST.ASTNode) {
+function formatAst(ast: AST.ASTNode) {
   const out = new OutputStream()
   formatAstNode(ast, out)
   return out.finish()
 }
 
-export function formatAstNode(node: AST.ASTNode, out: OutputStream): void {
+function formatAstNode(node: AST.ASTNode, out: OutputStream): void {
   return FORMATTERS[node.type](node as never, out)
 }
 

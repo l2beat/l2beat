@@ -1,7 +1,7 @@
 import { ethers } from 'ethers'
 import { parseAbiItem } from 'viem'
 import { Method, Operation } from '../../types'
-import { defineMethod } from '../defineMetod'
+import { defineMethod } from '../defineMethod'
 import { SAFE_EXEC_TRANSACTION_SIGNATURE } from './const'
 
 export const SAFE_methods: Method[] = [
@@ -65,7 +65,7 @@ function decodeMultiSendInput(data: string): MultiSendTransaction[] {
   // Read the length of the transaction data
   const length = txBuffer.length
 
-  while (i < length) {
+  while (i < length - 1) {
     // First byte is the operation
     const operation = txBuffer[i]
 

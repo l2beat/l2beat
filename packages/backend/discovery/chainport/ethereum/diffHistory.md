@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x1696acdb8f632b356b3afcfaa947d7f999961ac7
+
+# Diff at Wed, 27 Nov 2024 13:53:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3b9391cfe483e60a1853eeae6e47b4de475aac4e block: 21078715
+- current block number: 21279513
+
+## Description
+
+One MS signer changed.
+
+## Watched changes
+
+```diff
+    contract MultisigVault1 (0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19) {
+    +++ description: None
+      values.$members.2:
+-        "0x00040D1445683B7Ef71bf2D94CB7Fe2224Eba8d8"
++        "0x894107B7b5051409f279E8300774B2f62Febe057"
+      values.$members.1:
+-        "0x894107B7b5051409f279E8300774B2f62Febe057"
++        "0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7"
+      values.$members.0:
+-        "0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7"
++        "0xdd37184C6BF02Aea66Ed3eCb8fcccfeADF801609"
+    }
+```
+
 Generated with discovered.json: 0x63b695297e8904480f6039481c9d4530cf84b525
 
 # Diff at Wed, 30 Oct 2024 13:20:42 GMT:

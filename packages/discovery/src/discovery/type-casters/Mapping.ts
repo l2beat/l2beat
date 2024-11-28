@@ -16,7 +16,6 @@ export const Mapping: BaseTypeCaster = {
     const validated = Validator.parse(arg)
     const mapped = validated[incomingValue.toString()]
     if (mapped === undefined) {
-      console.log(`Value (${incomingValue}) not found in mapping`)
       return incomingValue
     }
 

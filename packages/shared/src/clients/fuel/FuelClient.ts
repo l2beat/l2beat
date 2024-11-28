@@ -1,9 +1,8 @@
-import { UnixTime, json } from '@l2beat/shared-pure'
-import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
+import { Block, json } from '@l2beat/shared-pure'
 import { ClientCore, ClientCoreDependencies } from '../ClientCore'
+import { BlockClient } from '../types'
 import { tai64ToUnix } from './tai64ToUnix'
 import {
-  FuelBlock,
   FuelBlockResponse,
   FuelError,
   FuelLatestBlockNumberResponse,
@@ -13,7 +12,7 @@ interface Dependencies extends ClientCoreDependencies {
   url: string
 }
 
-export class FuelClient extends ClientCore {
+export class FuelClient extends ClientCore implements BlockClient {
   constructor(private readonly $: Dependencies) {
     super({ ...$ })
   }
@@ -22,7 +21,7 @@ export class FuelClient extends ClientCore {
     const query = `query LatestBlocks {
         blocks(last: 1) {
           nodes {
-            height  
+            height
           }
         }
       }`
@@ -42,25 +41,15 @@ export class FuelClient extends ClientCore {
     return Number(latestBlockNumberResponse.data.data.blocks.nodes[0].height)
   }
 
-  async getBlockNumberAtOrBefore(timestamp: UnixTime, start = 0) {
-    const end = await this.getLatestBlockNumber()
-    return await getBlockNumberAtOrBefore(
-      timestamp,
-      start,
-      end,
-      this.getBlock.bind(this),
-    )
-  }
-
-  async getBlock(blockNumber: number): Promise<FuelBlock> {
+  async getBlockWithTransactions(blockNumber: number): Promise<Block> {
     const query = `query Block($height: U32) {
         block(height: $height) {
             id
             height
             header {
                 time
-                transactionsCount
             }
+            transactionIds
         }
       }`
 
@@ -77,11 +66,13 @@ export class FuelClient extends ClientCore {
     }
 
     return {
-      id: blockResponse.data.data.block.id,
-      height: Number(blockResponse.data.data.block.height),
+      hash: blockResponse.data.data.block.id,
+      number: Number(blockResponse.data.data.block.height),
       timestamp: tai64ToUnix(blockResponse.data.data.block.header.time),
-      transactionsCount: Number(
-        blockResponse.data.data.block.header.transactionsCount,
+      transactions: blockResponse.data.data.block.transactionIds.map(
+        (id: string) => ({
+          hash: id,
+        }),
       ),
     }
   }
@@ -109,7 +100,6 @@ export class FuelClient extends ClientCore {
     const parsedError = FuelError.safeParse(response)
 
     if (parsedError.success) {
-      console.log(JSON.stringify(response))
       this.$.logger.warn(`Response validation error`, {
         ...parsedError.data.errors,
       })
@@ -117,5 +107,9 @@ export class FuelClient extends ClientCore {
     }
 
     return { success: true }
+  }
+
+  get chain() {
+    return 'fuel'
   }
 }

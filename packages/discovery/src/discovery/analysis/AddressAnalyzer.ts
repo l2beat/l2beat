@@ -1,14 +1,11 @@
 import {
-  ContractParameters,
   ContractValue,
   FieldMeta,
   get$PastUpgrades,
 } from '@l2beat/discovery-types'
-import { assert, EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
-import { isEqual } from 'lodash'
+import { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 
 import { get$Implementations } from '@l2beat/discovery-types'
-import { DiscoveryLogger } from '../DiscoveryLogger'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
 import {
   DiscoveryContractField,
@@ -58,7 +55,7 @@ export interface ExtendedTemplate {
   templateHash: Hash256
 }
 
-export interface AnalyzedEOA {
+interface AnalyzedEOA {
   type: 'EOA'
   name?: string
   address: EthereumAddress
@@ -73,7 +70,6 @@ export class AddressAnalyzer {
     private readonly sourceCodeService: SourceCodeService,
     private readonly handlerExecutor: HandlerExecutor,
     private readonly templateService: TemplateService,
-    private readonly logger: DiscoveryLogger,
   ) {}
 
   async analyze(
@@ -81,12 +77,10 @@ export class AddressAnalyzer {
     address: EthereumAddress,
     overrides: ContractOverrides | undefined,
     types: Record<string, DiscoveryCustomType> | undefined,
-    logger: DiscoveryLogger,
     suggestedTemplates?: Set<string>,
   ): Promise<Analysis> {
     const code = await provider.getBytecode(address)
     if (code.length === 0) {
-      logger.logEoa()
       return { type: 'EOA', name: overrides?.name, address }
     }
 
@@ -126,7 +120,6 @@ export class AddressAnalyzer {
     const proxy = await this.proxyDetector.detectProxy(
       provider,
       address,
-      logger,
       overrides?.proxyType,
     )
     const implementations = get$Implementations(proxy?.values)
@@ -137,7 +130,6 @@ export class AddressAnalyzer {
       address,
       implementations,
     )
-    logger.logName(sources.name)
 
     const name = overrides?.name ?? sources.name
     // Match templates by shape only if there are no explicitly set
@@ -145,8 +137,10 @@ export class AddressAnalyzer {
       overrides?.extends === undefined &&
       (suggestedTemplates === undefined || suggestedTemplates.size === 0)
     ) {
-      const matchingTemplates =
-        this.templateService.findMatchingTemplates(sources)
+      const matchingTemplates = this.templateService.findMatchingTemplates(
+        sources,
+        address,
+      )
       const template = matchingTemplates[0]
       if (template !== undefined) {
         // extend template even on error to make sure pruning works
@@ -166,13 +160,6 @@ export class AddressAnalyzer {
       }
     }
 
-    const templateLog =
-      extendedTemplate !== undefined
-        ? `"${extendedTemplate?.template}" (${extendedTemplate?.reason})`
-        : 'none'
-
-    logger.log(`  Template: ${templateLog}`)
-
     const { results, values, errors, usedTypes } =
       await this.handlerExecutor.execute(
         provider,
@@ -180,7 +167,6 @@ export class AddressAnalyzer {
         sources.abi,
         overrides,
         types,
-        logger,
       )
 
     const proxyResults = Object.entries(proxy?.values ?? {}).map(
@@ -237,75 +223,6 @@ export class AddressAnalyzer {
     return analysis
   }
 
-  async hasContractChanged(
-    provider: IProvider,
-    contract: ContractParameters,
-    overrides: ContractOverrides,
-    types: Record<string, DiscoveryCustomType> | undefined,
-    abis: Record<string, string[]>,
-  ): Promise<boolean> {
-    const implementations = get$Implementations(contract.values)
-    if (contract.unverified) {
-      // Check if the contract is verified now
-      const { isVerified } = await this.sourceCodeService.getSources(
-        provider,
-        contract.address,
-        implementations,
-      )
-      return isVerified
-    }
-
-    const abi = this.sourceCodeService.getRelevantAbi(
-      abis,
-      contract.address,
-      implementations,
-      contract.ignoreInWatchMode,
-    )
-
-    const { values: newValues, errors } = await this.handlerExecutor.execute(
-      provider,
-      contract.address,
-      abi,
-      overrides,
-      types,
-      this.logger,
-    )
-
-    assert(
-      errors === undefined || Object.keys(errors).length === 0,
-      'Errors during watch mode',
-    )
-
-    const prevRelevantValues = getRelevantValues(
-      contract.values ?? {},
-      contract.ignoreInWatchMode ?? [],
-    )
-
-    if (!isEqual(newValues, prevRelevantValues)) {
-      this.logger.log(
-        `Some values changed on contract ${
-          contract.name
-        }(${contract.address.toString()})`,
-      )
-      return true
-    }
-
-    return false
-  }
-
-  async hasEoaBecomeContract(
-    provider: IProvider,
-    address: EthereumAddress,
-  ): Promise<boolean> {
-    const code = await provider.getBytecode(address)
-    if (code.length > 0) {
-      this.logger.log(`EOA ${address.toString()} became a contract`)
-      return true
-    }
-
-    return false
-  }
-
   getFieldsMeta(
     template: ExtendedTemplate | undefined,
     overrides: ContractOverrides | undefined,
@@ -334,16 +251,4 @@ export class AddressAnalyzer {
 
     return result
   }
-}
-
-function getRelevantValues(
-  contractValues: Record<string, ContractValue | undefined>,
-  ignoreInWatchMode: string[],
-): Record<string, ContractValue | undefined> {
-  return Object.keys(contractValues)
-    .filter((key) => !ignoreInWatchMode.includes(key))
-    .reduce((obj: Record<string, ContractValue | undefined>, key: string) => {
-      obj[key] = contractValues[key]
-      return obj
-    }, {})
 }

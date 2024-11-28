@@ -10,6 +10,7 @@ import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import { TemplateService } from '../analysis/TemplateService'
 import { readJsonc } from '../utils/readJsonc'
 import { DiscoveryConfig } from './DiscoveryConfig'
+import { CommonAddressNames } from './DiscoveryOverrides'
 import {
   DiscoveryCustomType,
   GlobalTypes,
@@ -171,7 +172,7 @@ export class ConfigReader {
 
       const hasConfig = chainFiles.includes('config.jsonc')
       const hasDiscovered = chainFiles.includes('discovered.json')
-      if (!hasConfig || !hasDiscovered) {
+      if (!hasConfig && !hasDiscovered) {
         continue
       }
 
@@ -181,21 +182,18 @@ export class ConfigReader {
     return projects
   }
 
-  private readCommonAddressNames(): Record<string, string> {
+  private readCommonAddressNames(): CommonAddressNames {
     const commonAddressNamesPath = path.join(
       this.rootPath,
       'discovery',
       'commonAddressNames.jsonc',
     )
-    assert(
-      fileExistsCaseSensitive(commonAddressNamesPath),
-      `${commonAddressNamesPath} not found`,
-    )
 
-    return readJsonc(commonAddressNamesPath) as unknown as Record<
-      string,
-      string
-    >
+    if (!fileExistsCaseSensitive(commonAddressNamesPath)) {
+      return {}
+    }
+
+    return readJsonc(commonAddressNamesPath) as unknown as CommonAddressNames
   }
 
   private readGlobalTypes(): Record<string, DiscoveryCustomType> {
@@ -204,10 +202,11 @@ export class ConfigReader {
       'discovery',
       'globalTypes.jsonc',
     )
-    assert(
-      fileExistsCaseSensitive(globalTypesPath),
-      `${globalTypesPath} not found`,
-    )
+
+    if (!fileExistsCaseSensitive(globalTypesPath)) {
+      return {}
+    }
+
     return GlobalTypes.parse(readJsonc(globalTypesPath))
   }
 }

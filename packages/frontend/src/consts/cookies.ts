@@ -1,38 +1,10 @@
-import { type ZodTypeAny, type z } from 'zod'
-import { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
-import { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
-import { TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
+import { type ZodTypeAny, z } from 'zod'
 
 /**
  * Known cookie definitions.
  */
 export const knownCookies = {
-  // Chart range used for preloads.
-  scalingSummaryChartRange: knownCookie(
-    'scaling-summary-chart-range',
-    TvlChartRange,
-    '1y',
-  ),
-  scalingTvlChartRange: knownCookie(
-    'scaling-tvl-chart-range',
-    TvlChartRange,
-    '1y',
-  ),
-  scalingCostsChartRange: knownCookie(
-    'scaling-costs-chart-range',
-    CostsTimeRange,
-    '30d',
-  ),
-  bridgesSummaryChartRange: knownCookie(
-    'bridges-summary-chart-range',
-    TvlChartRange,
-    '1y',
-  ),
-  activityTimeRange: knownCookie(
-    'activity-time-range',
-    ActivityTimeRange,
-    '30d',
-  ),
+  example: knownCookie('example', z.string(), 'example'),
 } satisfies Record<string, KnownCookie>
 
 /**
@@ -50,7 +22,7 @@ function knownCookie<T extends ZodTypeAny = ZodTypeAny>(
   return { key, schema, defaultValue }
 }
 
-export type KnownCookie<T extends ZodTypeAny = ZodTypeAny> = ReturnType<
+type KnownCookie<T extends ZodTypeAny = ZodTypeAny> = ReturnType<
   typeof knownCookie<T>
 >
 

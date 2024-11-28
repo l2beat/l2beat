@@ -11,8 +11,9 @@ import {
   ENTRY_POINT_ADDRESS_0_6_0,
   ENTRY_POINT_ADDRESS_0_7_0,
   ERC4337_methods,
-  EVMBlock,
-  EVMTransaction,
+  MULTICALLV3_methods,
+  MULTICALL_V3,
+  MULTICALL_V3_ZKSYNCERA,
   Method,
   Operation,
   SAFE_EXEC_TRANSACTION_SELECTOR,
@@ -21,25 +22,26 @@ import {
   isEip712,
   isErc4337,
   isGnosisSafe,
+  isMulticallv3,
 } from '@l2beat/shared'
-import { assert } from '@l2beat/shared-pure'
+import { assert, Block, Transaction } from '@l2beat/shared-pure'
 import { generateId } from '../../utils/generateId'
 import { rankBlocks } from '../../utils/rankBlocks'
 import { traverseOperationTree } from '../../utils/traverseOperationTree'
 import type { Counter } from './counter'
 
 export class RpcCounter implements Counter {
-  countForBlock(block: EVMBlock): CountedBlock {
+  countForBlock(block: Block): CountedBlock {
     return {
       ...block,
       status: '<unknown>',
-      transactions: block.transactions.map((tx: EVMTransaction) =>
+      transactions: block.transactions.map((tx: Transaction) =>
         this.mapTransaction(tx),
       ),
     }
   }
 
-  countForBlocks(blocks: EVMBlock[]): StatResults {
+  countForBlocks(blocks: Block[]): StatResults {
     let dateStart = new Date()
     let dateEnd = new Date()
     let numberOfTransactions = 0
@@ -90,10 +92,17 @@ export class RpcCounter implements Counter {
     }
   }
 
-  mapTransaction(tx: EVMTransaction): CountedTransaction {
-    const methods = ERC4337_methods.concat(SAFE_methods).concat(EIP712_methods)
+  mapTransaction(tx: Transaction): CountedTransaction {
+    const methods = ERC4337_methods.concat(SAFE_methods)
+      .concat(EIP712_methods)
+      .concat(MULTICALLV3_methods)
 
-    if (isErc4337(tx) || isGnosisSafe(tx) || isEip712(tx)) {
+    if (
+      isErc4337(tx) ||
+      isGnosisSafe(tx) ||
+      isEip712(tx) ||
+      isMulticallv3(tx)
+    ) {
       const countedOperation = this.countUserOperations(
         tx.data as string,
         tx.to ?? '',
@@ -107,10 +116,12 @@ export class RpcCounter implements Counter {
       )
 
       assert(tx.type, 'Tx type should be defined')
+      assert(tx.from !== undefined, 'From should be defined')
+      assert(tx.hash !== undefined, 'Hash should be defined')
 
       return {
         from: tx.from,
-        type: this.getTransactionType(tx.type, tx.to),
+        type: this.getTransactionType(tx.type, tx.to, tx.data),
         hash: tx.hash,
         operationsCount: countedOperation.count,
         details: countedOperation,
@@ -120,10 +131,12 @@ export class RpcCounter implements Counter {
     }
 
     assert(tx.type !== undefined, 'Tx type should be defined')
+    assert(tx.from !== undefined, 'From should be defined')
+    assert(tx.hash !== undefined, 'Hash should be defined')
 
     return {
       from: tx.from,
-      type: this.getTransactionType(tx.type, tx.to),
+      type: this.getTransactionType(tx.type, tx.to, tx.data),
       hash: tx.hash,
       operationsCount: 1,
       includesBatch: false,
@@ -198,7 +211,7 @@ export class RpcCounter implements Counter {
 
   checkOperations(
     countedOperation: CountedOperation,
-    tx: EVMTransaction,
+    tx: Transaction,
   ): {
     includesBatch: boolean
     includesUnknown: boolean
@@ -246,7 +259,11 @@ export class RpcCounter implements Counter {
     }
   }
 
-  getTransactionType(type: number, to?: string | null): string {
+  getTransactionType(
+    type: string,
+    to?: string,
+    data?: string | string[],
+  ): string {
     switch (to?.toLowerCase()) {
       case ENTRY_POINT_ADDRESS_0_6_0:
         return 'ERC-4337 Entry Point 0.6.0'
@@ -256,16 +273,25 @@ export class RpcCounter implements Counter {
         return 'Safe: Multi Send Call Only 1.3.0'
       case SAFE_EXEC_TRANSACTION_SELECTOR:
         return 'Safe: Singleton 1.3.0'
+      case MULTICALL_V3:
+      case MULTICALL_V3_ZKSYNCERA:
+        return 'Multicall v3'
+    }
+
+    const selector = data?.slice(0, 10)
+    switch (selector) {
+      case SAFE_EXEC_TRANSACTION_SELECTOR:
+        return 'Safe: Singleton 1.3.0'
     }
 
     switch (type) {
-      case 0:
+      case '0':
         return 'Legacy'
-      case 1:
+      case '1':
         return 'EIP-2930'
-      case 2:
+      case '2':
         return 'EIP-1559'
-      case 113:
+      case '113':
         return 'EIP-712'
     }
 

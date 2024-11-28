@@ -22,7 +22,6 @@ export class CirculatingSupplyService {
       await this.$.circulatingSupplyProvider.getCirculatingSupplies(
         configuration.coingeckoId,
         { from, to },
-        undefined,
       )
 
     return circulatingSupplies.map((circulatingSupply) => {
@@ -38,7 +37,7 @@ export class CirculatingSupplyService {
   }
 
   getAdjustedTo(from: number, to: number): UnixTime {
-    return CoingeckoQueryService.getAdjustedTo(
+    return CoingeckoQueryService.calculateAdjustedTo(
       new UnixTime(from),
       new UnixTime(to),
     )

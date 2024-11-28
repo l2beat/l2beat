@@ -4,7 +4,6 @@ import { utils } from 'ethers'
 import { reduce } from 'lodash'
 import * as z from 'zod'
 
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
 import { getEventFragment } from '../utils/getEventFragment'
@@ -46,7 +45,6 @@ export class StateFromEventTupleHandler implements Handler {
     readonly field: string,
     readonly definition: StateFromEventTupleDefinition,
     abi: string[],
-    readonly logger: DiscoveryLogger,
   ) {
     this.fragment = getEventFragment(definition.event, abi, () => true)
     assert(this.fragment.inputs.length === 1, 'Event should have 1 input')
@@ -67,7 +65,6 @@ export class StateFromEventTupleHandler implements Handler {
     provider: IProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
-    this.logger.logExecution(this.field, ['Querying ', this.fragment.name])
     const topics = toTopics(this.abi, this.fragment)
     const logs = await provider.getLogs(address, topics)
 

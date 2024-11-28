@@ -108,7 +108,7 @@ function mergeLogs(
   return result
 }
 
-export async function getPastUpgrades(
+async function getPastUpgrades(
   provider: IProvider,
   address: EthereumAddress,
 ): Promise<DateAddresses[]> {

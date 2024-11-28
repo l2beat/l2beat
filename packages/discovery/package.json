@@ -28,7 +28,6 @@
     "chalk": "^4.1.2",
     "cmd-ts": "^0.13.0",
     "deep-diff": "^1.0.2",
-    "dotenv": "^16.0.3",
     "ethers": "^5.7.2",
     "jsonc-parser": "^3.2.0",
     "lodash": "^4.17.21",
@@ -40,6 +39,7 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
+    "@l2beat/typescript-config": "workspace:*",
     "@types/deep-diff": "^1.0.2",
     "@types/lodash": "^4.14.198",
     "@types/node-fetch": "^2.6.4"
