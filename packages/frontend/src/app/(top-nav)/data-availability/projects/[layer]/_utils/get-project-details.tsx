@@ -42,6 +42,7 @@ export function getProjectDetails({
       ? getMultichainPermissionsSection(
           {
             id: daLayer.id,
+            bridge: daBridge,
             isUnderReview: !!daLayer.isUnderReview,
             permissions: daBridge.permissions,
             dacUsedIn: relatedScalingProject,
