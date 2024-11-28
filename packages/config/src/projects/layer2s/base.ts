@@ -24,7 +24,7 @@ import {
 } from '../../common'
 import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
 import { ESCROW } from '../../common/escrow'
-import { formatChallengePeriod } from '../../common/formatDelays'
+import { formatChallengePeriod, formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import { Badge } from '../badges'
@@ -298,6 +298,7 @@ export const base: Layer2 = {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
         HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
       ),
+      secondLine: formatDelay(HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS),
     },
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
