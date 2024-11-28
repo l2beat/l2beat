@@ -1,7 +1,7 @@
 {
   "name": "skale-ima",
   "chain": "ethereum",
-  "blockNumber": 19719123,
+  "blockNumber": 21285734,
   "configHash": "0x0dd5bab61ec77857fe1c60af951691b7e98a6e3c42494d257ff554f15a42c5e8",
   "contracts": [
     {
@@ -30,7 +30,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 343,
+        "nonce": 377,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -182,7 +182,7 @@
       "address": "0x588801cA36558310D91234aFC2511502282b1621",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
-        "0x7b0e65347fa56a4d48ac991663275c6d3bd6cda491d2b19e0a25927709c7e0cf"
+        "0xf86e44103e5d07e9f6a25146ea2cfc4946eba19bbb8731b704b9f5047202b6b7"
       ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -200,7 +200,7 @@
       "sinceTimestamp": 1626719564,
       "values": {
         "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
-        "$implementation": "0xffC647d4Cef8FB8b365e6B11a0156972e9343f6A",
+        "$implementation": "0x3417B0DD0FBCC22c3111a083992dB8bABaB9e88a",
         "$pastUpgrades": [
           [
             "2021-07-19T18:32:44.000Z",
@@ -236,9 +236,14 @@
             "2023-06-22T10:42:11.000Z",
             "0x8f9002c78a635798016c2423c1a312468a5adc7af1586cdec327f2882bac0cf5",
             ["0xffC647d4Cef8FB8b365e6B11a0156972e9343f6A"]
+          ],
+          [
+            "2024-11-27T15:17:59.000Z",
+            "0x0b3d111d1bb272489d650a99c3bb9cae63a18bc85b51b76bf8d2b49e9fedbfc7",
+            ["0x3417B0DD0FBCC22c3111a083992dB8bABaB9e88a"]
           ]
         ],
-        "$upgradeCount": 7,
+        "$upgradeCount": 8,
         "CONSTANT_SETTER_ROLE": "0x96e3fc3be15159903e053027cff8a23f39a990e0194abcd8ac1cf1b355b8b93c",
         "contractManagerOfSkaleManager": "0xC04A10Fd5e6513242558f47331568aBD6185a310",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -385,7 +390,7 @@
       "address": "0x8629703a9903515818C2FeB45a6f6fA5df8Da404",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
-        "0x38c7c002f7f26b4053f16644ee44ad6d50b4f2df5daf198fedfc8adc2e14589f"
+        "0x35e9599e33157eeee63fd0fb0b76fbb7d42b14c7f969abc8b765417abbae91d5"
       ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -406,7 +411,7 @@
       "sinceTimestamp": 1626719196,
       "values": {
         "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
-        "$implementation": "0x64e4cd4Fe42eAB98AcD15fddaC657B1537aa5190",
+        "$implementation": "0x0AE92a5105111281151b980A0aD680b890bf1944",
         "$pastUpgrades": [
           [
             "2021-07-19T18:26:36.000Z",
@@ -452,9 +457,14 @@
             "2023-06-22T10:42:11.000Z",
             "0x8f9002c78a635798016c2423c1a312468a5adc7af1586cdec327f2882bac0cf5",
             ["0x64e4cd4Fe42eAB98AcD15fddaC657B1537aa5190"]
+          ],
+          [
+            "2024-11-27T15:17:59.000Z",
+            "0x0b3d111d1bb272489d650a99c3bb9cae63a18bc85b51b76bf8d2b49e9fedbfc7",
+            ["0x0AE92a5105111281151b980A0aD680b890bf1944"]
           ]
         ],
-        "$upgradeCount": 9,
+        "$upgradeCount": 10,
         "CHAIN_CONNECTOR_ROLE": "0x2785f35fe7d8743aa971942d8474737bb31895d396eff2cc688a481e0221e191",
         "communityPool": "0x588801cA36558310D91234aFC2511502282b1621",
         "CONSTANT_SETTER_ROLE": "0x96e3fc3be15159903e053027cff8a23f39a990e0194abcd8ac1cf1b355b8b93c",
@@ -469,7 +479,7 @@
         "MESSAGES_LENGTH": 10,
         "PAUSABLE_ROLE": "0x09b6fca8f5f3ab2900d9586d1d15872611c1bd42b268b973ad886d4f2646b560",
         "REVERT_REASON_LENGTH": 64,
-        "version": "2.1.0"
+        "version": "2.2.0"
       },
       "derivedName": "MessageProxyForMainnet"
     },
@@ -657,88 +667,7 @@
     { "address": "0xe8c7E5C70B8a8c9C3896e59062EA3A879270AB4A" }
   ],
   "abis": {
-    "0x13fD1622F0E7e50A87B79cb296cbAf18362631C0": [
-      "constructor(address _masterCopy)"
-    ],
-    "0x2f90BeD90fa0Cc605B86b8623612a2638EB4019a": [
-      "event ActiveEthTransfers(bytes32 indexed schainHash, bool active)",
-      "event Initialized(uint8 version)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function DEPOSIT_BOX_MANAGER_ROLE() view returns (bytes32)",
-      "function LINKER_ROLE() view returns (bytes32)",
-      "function activeEthTransfers(bytes32) view returns (bool)",
-      "function addSchainContract(string schainName, address contractReceiver)",
-      "function approveTransfers(address) view returns (uint256)",
-      "function contractManagerOfSkaleManager() view returns (address)",
-      "function deposit(string schainName) payable",
-      "function depositDirect(string schainName, address receiver) payable",
-      "function disableActiveEthTransfers(string schainName)",
-      "function disableWhitelist(string schainName)",
-      "function enableActiveEthTransfers(string schainName)",
-      "function enableWhitelist(string schainName)",
-      "function gasPayer(bytes32 schainHash, address sender, bytes data) view returns (address)",
-      "function getFunds(string schainName, address receiver, uint256 amount)",
-      "function getMyEth()",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
-      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
-      "function getSchainContract(bytes32 schainHash) view returns (address)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function hasSchainContract(string schainName) view returns (bool)",
-      "function initialize(address contractManagerOfSkaleManagerValue, address newMessageProxy)",
-      "function initialize(address contractManagerOfSkaleManagerValue, address linkerValue, address messageProxyValue)",
-      "function initialize(address newContractManagerOfSkaleManager)",
-      "function isAgentAuthorized(bytes32 schainHash, address sender) view returns (bool)",
-      "function isSchainOwner(address sender, bytes32 schainHash) view returns (bool)",
-      "function isWhitelisted(string schainName) view returns (bool)",
-      "function linker() view returns (address)",
-      "function messageProxy() view returns (address)",
-      "function postMessage(bytes32 schainHash, address sender, bytes data)",
-      "function removeSchainContract(string schainName)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function schainLinks(bytes32) view returns (address)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function transferredAmount(bytes32) view returns (uint256)"
-    ],
-    "0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "0x49F583d263e4Ef938b9E09772D3394c71605Df94": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "0x588801cA36558310D91234aFC2511502282b1621": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "0x64e4cd4Fe42eAB98AcD15fddaC657B1537aa5190": [
+    "0x0AE92a5105111281151b980A0aD680b890bf1944": [
       "event ExtraContractRegistered(bytes32 indexed chainHash, address contractAddress)",
       "event ExtraContractRemoved(bytes32 indexed chainHash, address contractAddress)",
       "event GasCostMessageHeaderWasChanged(uint256 oldValue, uint256 newValue)",
@@ -813,6 +742,131 @@
       "function setVersion(string newVersion)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function version() view returns (string)"
+    ],
+    "0x13fD1622F0E7e50A87B79cb296cbAf18362631C0": [
+      "constructor(address _masterCopy)"
+    ],
+    "0x2f90BeD90fa0Cc605B86b8623612a2638EB4019a": [
+      "event ActiveEthTransfers(bytes32 indexed schainHash, bool active)",
+      "event Initialized(uint8 version)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function DEPOSIT_BOX_MANAGER_ROLE() view returns (bytes32)",
+      "function LINKER_ROLE() view returns (bytes32)",
+      "function activeEthTransfers(bytes32) view returns (bool)",
+      "function addSchainContract(string schainName, address contractReceiver)",
+      "function approveTransfers(address) view returns (uint256)",
+      "function contractManagerOfSkaleManager() view returns (address)",
+      "function deposit(string schainName) payable",
+      "function depositDirect(string schainName, address receiver) payable",
+      "function disableActiveEthTransfers(string schainName)",
+      "function disableWhitelist(string schainName)",
+      "function enableActiveEthTransfers(string schainName)",
+      "function enableWhitelist(string schainName)",
+      "function gasPayer(bytes32 schainHash, address sender, bytes data) view returns (address)",
+      "function getFunds(string schainName, address receiver, uint256 amount)",
+      "function getMyEth()",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
+      "function getSchainContract(bytes32 schainHash) view returns (address)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hasSchainContract(string schainName) view returns (bool)",
+      "function initialize(address contractManagerOfSkaleManagerValue, address newMessageProxy)",
+      "function initialize(address contractManagerOfSkaleManagerValue, address linkerValue, address messageProxyValue)",
+      "function initialize(address newContractManagerOfSkaleManager)",
+      "function isAgentAuthorized(bytes32 schainHash, address sender) view returns (bool)",
+      "function isSchainOwner(address sender, bytes32 schainHash) view returns (bool)",
+      "function isWhitelisted(string schainName) view returns (bool)",
+      "function linker() view returns (address)",
+      "function messageProxy() view returns (address)",
+      "function postMessage(bytes32 schainHash, address sender, bytes data)",
+      "function removeSchainContract(string schainName)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function schainLinks(bytes32) view returns (address)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function transferredAmount(bytes32) view returns (uint256)"
+    ],
+    "0x3417B0DD0FBCC22c3111a083992dB8bABaB9e88a": [
+      "event Initialized(uint8 version)",
+      "event MinTransactionGasWasChanged(uint256 oldValue, uint256 newValue)",
+      "event MultiplierWasChanged(uint256 oldMultiplierNumerator, uint256 oldMultiplierDivider, uint256 newMultiplierNumerator, uint256 newMultiplierDivider)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function CONSTANT_SETTER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function LINKER_ROLE() view returns (bytes32)",
+      "function activeUsers(address, bytes32) view returns (bool)",
+      "function addSchainContract(string schainName, address contractReceiver)",
+      "function checkUserBalance(bytes32 schainHash, address receiver) view returns (bool)",
+      "function contractManagerOfSkaleManager() view returns (address)",
+      "function getBalance(address user, string schainName) view returns (uint256)",
+      "function getRecommendedRechargeAmount(bytes32 schainHash, address receiver) view returns (uint256)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
+      "function getSchainContract(bytes32 schainHash) view returns (address)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hasSchainContract(string schainName) view returns (bool)",
+      "function initialize(address contractManagerOfSkaleManagerValue, address newMessageProxy)",
+      "function initialize(address contractManagerOfSkaleManagerValue, address linker, address messageProxyValue)",
+      "function initialize(address newContractManagerOfSkaleManager)",
+      "function isAgentAuthorized(bytes32 schainHash, address sender) view returns (bool)",
+      "function isSchainOwner(address sender, bytes32 schainHash) view returns (bool)",
+      "function messageProxy() view returns (address)",
+      "function minTransactionGas() view returns (uint256)",
+      "function multiplierDivider() view returns (uint256)",
+      "function multiplierNumerator() view returns (uint256)",
+      "function rechargeUserWallet(string schainName, address user) payable",
+      "function refundGasBySchainWallet(bytes32 schainHash, address node, uint256 gas) returns (bool)",
+      "function refundGasByUser(bytes32 schainHash, address node, address user, uint256 gas) returns (uint256)",
+      "function removeSchainContract(string schainName)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function schainLinks(bytes32) view returns (address)",
+      "function setMinTransactionGas(uint256 newMinTransactionGas)",
+      "function setMultiplier(uint256 newMultiplierNumerator, uint256 newMultiplierDivider)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function withdrawFunds(string schainName, uint256 amount)"
+    ],
+    "0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x49F583d263e4Ef938b9E09772D3394c71605Df94": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x588801cA36558310D91234aFC2511502282b1621": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0x676FAFCE73F5a304988C519407AAc06bD117CdD0": [
       "event Initialized(uint8 version)",
@@ -1179,50 +1233,6 @@
       "function schainLinks(bytes32) view returns (address)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function transferredAmount(address, uint256) view returns (bytes32)"
-    ],
-    "0xffC647d4Cef8FB8b365e6B11a0156972e9343f6A": [
-      "event Initialized(uint8 version)",
-      "event MinTransactionGasWasChanged(uint256 oldValue, uint256 newValue)",
-      "event MultiplierWasChanged(uint256 oldMultiplierNumerator, uint256 oldMultiplierDivider, uint256 newMultiplierNumerator, uint256 newMultiplierDivider)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "function CONSTANT_SETTER_ROLE() view returns (bytes32)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function LINKER_ROLE() view returns (bytes32)",
-      "function activeUsers(address, bytes32) view returns (bool)",
-      "function addSchainContract(string schainName, address contractReceiver)",
-      "function checkUserBalance(bytes32 schainHash, address receiver) view returns (bool)",
-      "function contractManagerOfSkaleManager() view returns (address)",
-      "function getBalance(address user, string schainName) view returns (uint256)",
-      "function getRecommendedRechargeAmount(bytes32 schainHash, address receiver) view returns (uint256)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
-      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
-      "function getSchainContract(bytes32 schainHash) view returns (address)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function hasSchainContract(string schainName) view returns (bool)",
-      "function initialize(address contractManagerOfSkaleManagerValue, address newMessageProxy)",
-      "function initialize(address contractManagerOfSkaleManagerValue, address linker, address messageProxyValue)",
-      "function initialize(address newContractManagerOfSkaleManager)",
-      "function isAgentAuthorized(bytes32 schainHash, address sender) view returns (bool)",
-      "function isSchainOwner(address sender, bytes32 schainHash) view returns (bool)",
-      "function messageProxy() view returns (address)",
-      "function minTransactionGas() view returns (uint256)",
-      "function multiplierDivider() view returns (uint256)",
-      "function multiplierNumerator() view returns (uint256)",
-      "function rechargeUserWallet(string schainName, address user) payable",
-      "function refundGasBySchainWallet(bytes32 schainHash, address node, uint256 gas) returns (bool)",
-      "function refundGasByUser(bytes32 schainHash, address node, address user, uint256 gas) returns (uint256)",
-      "function removeSchainContract(string schainName)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function schainLinks(bytes32) view returns (address)",
-      "function setMinTransactionGas(uint256 newMinTransactionGas)",
-      "function setMultiplier(uint256 newMultiplierNumerator, uint256 newMultiplierDivider)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function withdrawFunds(string schainName, uint256 amount)"
     ]
   },
   "usedTemplates": {

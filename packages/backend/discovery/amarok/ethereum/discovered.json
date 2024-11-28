@@ -1,7 +1,7 @@
 {
   "name": "amarok",
   "chain": "ethereum",
-  "blockNumber": 21234596,
+  "blockNumber": 21285509,
   "configHash": "0xa8586a9cc9764821729519efbbdaac1754212cb07e84c4c373f9caedbd6b83d9",
   "contracts": [
     {
@@ -27,7 +27,7 @@
         "disputeBlocks": 120,
         "DOMAIN": 6648936,
         "FINALIZED_HASH": "0x0000000000000000000000000000000000000000000000000000000000000001",
-        "getLastCompletedSnapshotId": 962318,
+        "getLastCompletedSnapshotId": 962660,
         "getSnapshotDuration": 1800,
         "home": "0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc",
         "lastSentBlock": 20634538,
@@ -37,7 +37,7 @@
         "MIRROR_DOMAIN": 6648936,
         "mirrorConnector": "0x0000000000000000000000000000000000000000",
         "optimisticMode": true,
-        "outboundRoot": "0xb659dfd6b08e594bebc838571a351aa90e71159a3a1e1b70778a3229fc54c025",
+        "outboundRoot": "0x90eebf114ae0616b28e3ec3b87456159ce0ef3451f2fc4507bdae651479e4133",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "PROCESS_GAS": 850000,
@@ -71,7 +71,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "122080258363850862555614065",
+        "totalSupply": "122179508376968153490732495",
         "totalSupplyAt": [
           "100000000000000000000000000",
           "100000000000000000000000000",
@@ -206,24 +206,21 @@
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
           "0xdFa28361aC40679cC5D8EFa74c0421961397f2Eb",
-          "0xc840e73B856f52E5491d6016daf5C7AE5e6beECD",
-          "0x450BCD84a040E6975a8092114A09cD37fA140873",
+          "0x3e11aa01A7eFdD428487ae75F5F4Fe0e5CeCeF06",
+          "0x334CE923420ff1aA4f272e92BF68013D092aE7B4",
           "0x8D09e20b835009E5320cC11E6a6F00aF451aD669",
-          "0x43A257c61e9Ef4750e426eC0770589509469b156",
+          "0x7AE8b0D6353F0931EB9FaC0A3562fA9e4C6Ff933",
           "0x6B44Dba00e92DD035976607CBF62bf1CC6320EC5",
-          "0xe4d19c67ca0E9E3888158062De24321a0B272e73",
-          "0xC832bB8015762B4857459551057EB61c68B93608",
-          "0x320CBa820f33251d480Dcb79F7a9b1cc757aC12e",
-          "0x1b526192C541DE6E23D73b4Afc4b6B45A75aeAdD",
-          "0xf8d8aF083aC452b05b0D2eb4499AD900324b5754",
-          "0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f"
+          "0xBE2Ac45e75c14e9EEf9712a94Dce355f0151f5B1",
+          "0x2eEd1440842990Fa61F0c396f981375Fa6004131",
+          "0xDbDcFbA39D6ace2DaC9Cf5E8fc0Fe80a074FD81b"
         ],
-        "$threshold": 8,
+        "$threshold": 7,
         "domainSeparator": "0x60b1292375dabe167590dda781ba4f2d4f046f849a3b9cbcd167e98c3cfd098a",
         "getChainId": 1,
         "GnosisSafe_modules": ["0x172fB6b07D6aB708dd67392a09e1c40d16dA0460"],
-        "multisigThreshold": "8 of 12 (67%)",
-        "nonce": 70,
+        "multisigThreshold": "7 of 9 (78%)",
+        "nonce": 71,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -240,7 +237,7 @@
         "$immutable": true,
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1732173863,
+        "getCurrentTime": 1732788563,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -296,7 +293,7 @@
         "getPendingInboundRootsCount": 0,
         "getSnapshotDuration": 1800,
         "hubDomain": 6648936,
-        "lastSavedAggregateRootTimestamp": 1732161347,
+        "lastSavedAggregateRootTimestamp": 1732784147,
         "MAX_DOMAINS": 500,
         "MERKLE": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
         "minDisputeBlocks": 60,
@@ -305,7 +302,7 @@
         "paused": false,
         "pendingInboundRoots": { "first": 1238, "last": 1237 },
         "proposed": "0x0000000000000000000000000000000000000000",
-        "proposedAggregateRootHash": "0x8403d32383a9214f5f7ddea9e3ab5d7b6efff890d4b955f4d1b76837b03eadcc",
+        "proposedAggregateRootHash": "0x0000000000000000000000000000000000000000000000000000000000000001",
         "proposedTimestamp": 0,
         "renounced": false,
         "watcherManager": "0x79e6E0242405A66B2dd8B96DEd3b2F0216Fd417d"
@@ -559,7 +556,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 749,
+        "nonce": 750,
         "VERSION": "1.3.0"
       }
     },
@@ -847,7 +844,7 @@
         "LIQUIDITY_FEE_NUMERATOR": 9995,
         "lpTokenTargetAddress": "0xf7DE5aCeEeE6091d1103209C337fA00D0B4b9092",
         "maxRoutersPerTransfer": 5,
-        "nonce": 68628,
+        "nonce": 68715,
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "proposed": "0x0000000000000000000000000000000000000000",
@@ -989,6 +986,30 @@
       "derivedName": "WormholeHubConnector"
     },
     {
+      "name": "GnosisSafe",
+      "address": "0xBE2Ac45e75c14e9EEf9712a94Dce355f0151f5B1",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1668987047,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": ["0xbe8109517300c78f2bbdC00d9EA8Cf597160017E"],
+        "$threshold": 1,
+        "domainSeparator": "0xdd36ef1d1be1948ff409df66d0d8b2846dbecbfe577e22362e58f66a6ac3ccbc",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
+        "nonce": 0,
+        "VERSION": "1.3.0"
+      }
+    },
+    {
       "name": "PolygonHubConnector",
       "address": "0xE8cF9EbB1cFB137c692a0a4E470E257B9417d116",
       "sourceHashes": [
@@ -1094,15 +1115,14 @@
     { "address": "0x0e62f9fa1F9b3E49759Dc94494F5bC37a83d1FAD" },
     { "address": "0x151Ea574C62b505aEe2F89f33D8c152E28A956b0" },
     { "address": "0x1660846ee9A3023034924FB02F85F632AEd66810" },
-    { "address": "0x1b526192C541DE6E23D73b4Afc4b6B45A75aeAdD" },
     { "address": "0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05" },
     { "address": "0x22831e4f21cE65b33EF45df0e212b5bEbF130E5a" },
-    { "address": "0x320CBa820f33251d480Dcb79F7a9b1cc757aC12e" },
+    { "address": "0x2eEd1440842990Fa61F0c396f981375Fa6004131" },
     { "address": "0x32D63da9F776891843C90787CEC54ADA23ABd4C2" },
+    { "address": "0x334CE923420ff1aA4f272e92BF68013D092aE7B4" },
     { "address": "0x33b2aD85f7DbA818e719FB52095dC768E0eD93ec" },
     { "address": "0x363605C0bdE9F1F5053aDA30618d95dbFc109Bf5" },
-    { "address": "0x43A257c61e9Ef4750e426eC0770589509469b156" },
-    { "address": "0x450BCD84a040E6975a8092114A09cD37fA140873" },
+    { "address": "0x3e11aa01A7eFdD428487ae75F5F4Fe0e5CeCeF06" },
     { "address": "0x49a9E7ec76Bc8fDF658d09557305170d9F01D2fA" },
     { "address": "0x4fFA5968857a6C8242E4A6Ded2418155D33e82E7" },
     { "address": "0x56dD71fffD089EdAdbA8eCdaaDb94269713f8f4d" },
@@ -1116,6 +1136,7 @@
     { "address": "0x6FD84ba95525c4cCd218F2f16F646A08B4b0a598" },
     { "address": "0x76CF58cE587bC928fcc5aD895555fd040E06C61a" },
     { "address": "0x79EfFa11d95931A7e1717f9Eb655eE43e35Ef265" },
+    { "address": "0x7AE8b0D6353F0931EB9FaC0A3562fA9e4C6Ff933" },
     { "address": "0x7ce49752fFA7055622f444df3c69598748cb2E5f" },
     { "address": "0x7fB1B8D2C4a8186426Fb12a4Ae483f0093ED2315" },
     { "address": "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe" },
@@ -1130,19 +1151,17 @@
     { "address": "0xb71C02f99c42424257745827F1C2beBD7Fa1e936" },
     { "address": "0xBa11aA59645a56031fedBcCF60D4f111534f2502" },
     { "address": "0xBE7BC00382a50A711D037eAeCAD799bb8805Dfa8" },
+    { "address": "0xbe8109517300c78f2bbdC00d9EA8Cf597160017E" },
     { "address": "0xC4Ae07F276768A3b74AE8c47bc108a2aF0e40eBa" },
     { "address": "0xc770eC66052fe77ff2eF9edF9558236e2D1C41Ef" },
     { "address": "0xc82C7d826b1eD0b2A4E9A2bE72B445416f901FD1" },
-    { "address": "0xC832bB8015762B4857459551057EB61c68B93608" },
-    { "address": "0xc840e73B856f52E5491d6016daf5C7AE5e6beECD" },
     { "address": "0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d" },
     { "address": "0xD7a8070F0875915dB9b9E03bD47A0b973d19130b" },
     { "address": "0xd839958F37f89F80c9520c2f3F4abE29168EeF1B" },
+    { "address": "0xDbDcFbA39D6ace2DaC9Cf5E8fc0Fe80a074FD81b" },
     { "address": "0xdFa28361aC40679cC5D8EFa74c0421961397f2Eb" },
-    { "address": "0xe4d19c67ca0E9E3888158062De24321a0B272e73" },
     { "address": "0xEca085906cb531bdf1F87eFA85c5bE46aA5C9d2c" },
     { "address": "0xF26c772C0fF3a6036bDdAbDAbA22cf65ECa9F97c" },
-    { "address": "0xf8d8aF083aC452b05b0D2eb4499AD900324b5754" },
     { "address": "0xFaAB88015477493cFAa5DFAA533099C590876F21" }
   ],
   "abis": {
@@ -2380,6 +2399,9 @@
       "function setRefundAddress(address _updated)",
       "function verifySender(address _expected) returns (bool)",
       "function withdrawFunds(address _to)"
+    ],
+    "0xBE2Ac45e75c14e9EEf9712a94Dce355f0151f5B1": [
+      "constructor(address _singleton)"
     ],
     "0xBe8D8Ac9a44fBa6cb7A7E02c1E6576E06C7da72D": [
       "error AssetLogic__handleIncomingAsset_feeOnTransferNotSupported()",
