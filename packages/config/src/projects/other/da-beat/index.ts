@@ -10,6 +10,7 @@ import { apexDac } from './dac/apex'
 import { arbitrumNovaDac } from './dac/arbitrumnova'
 import { astarZkEvmDac } from './dac/astarzkEVM'
 import { automataDA } from './dac/automataDA'
+import { blessnetDac } from './dac/blessnet'
 import { cyberDA } from './dac/cyberDA'
 import { degenDac } from './dac/degen'
 import { edgelessDac } from './dac/edgeless'
@@ -22,6 +23,7 @@ import { gptProtocolDac } from './dac/gptProtocol'
 import { galxegravityDac } from './dac/gravity'
 import { hychainDac } from './dac/hychain'
 import { immutableXDac } from './dac/immutablex'
+import { inEVMDac } from './dac/inEVM'
 import { l3xDac } from './dac/l3x'
 import { mantleDA } from './dac/mantleDA'
 import { moltenDac } from './dac/molten'
@@ -57,55 +59,57 @@ export const ethereumDaLayer = ethereum
 
 export const daLayers: DaLayer[] = applyProcessor([
   // Permissioned DACs
-  automataDA,
-  galxegravityDac,
-  immutableXDac,
-  realDac,
-  apexDac,
-  arbitrumNovaDac,
-  cyberDA,
-  reyaDac,
-  xlayerDac,
-  sorareDac,
-  zkfairDac,
-  siliconDac,
-  rhinofiDac,
-  sxnetworkDac,
-  winrDac,
-  astarZkEvmDac,
-  tanxDac,
-  hychainDac,
-  xchainDac,
   alienxDac,
-  sankoDac,
-  myriaDac,
   alephzeroDac,
+  apexDac,
+  apechainDac,
+  arbitrumNovaDac,
+  astarZkEvmDac,
+  automataDA,
+  blessnetDac,
+  cyberDA,
+  degenDac,
   edgelessDac,
   everclearDac,
-  paychainDac,
+  fluenceDac,
+  galxegravityDac,
   gptProtocolDac,
-  witnessDac,
-  apechainDac,
-  degenDac,
+  hychainDac,
+  immutableXDac,
+  inEVMDac,
   l3xDac,
+  mantleDA,
   moltenDac,
+  myriaDac,
+  oevnetworkDac,
+  paychainDac,
   playblockDac,
   popapexDac,
   popbossDac,
   rariDac,
+  realDac,
+  reyaDac,
+  rhinofiDac,
+  sankoDac,
+  siliconDac,
+  sorareDac,
+  sxnetworkDac,
+  tanxDac,
+  winrDac,
+  witnessDac,
   xaiDac,
-  fluenceDac,
-  oevnetworkDac,
+  xchainDac,
+  xlayerDac,
+  zkfairDac,
   // DA Layers
-  // ethereum,
   avail,
   celestia,
-  near,
-  memo,
-  fraxtalDA,
-  mantleDA,
   eigenDA,
+  fraxtalDA,
+  gmnetworkDA,
+  mantleDA,
+  memo,
+  near,
   redstoneDA,
   xterioDA,
-  gmnetworkDA,
 ])

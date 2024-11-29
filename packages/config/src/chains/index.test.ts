@@ -32,7 +32,7 @@ describe('chains', () => {
     )
 
     const contracts = chains
-      .filter((c) => c.name !== 'zksync2') // we are omitting zksync2 because it does not support deploying on the same address and has a different one
+      .filter((c) => c.name !== 'zksync2' && c.name !== 'kinto') // we are omitting zksync2 and kinto as they use different addresses
       .flatMap(
         (x) => x.multicallContracts?.map((y) => [x.name, y] as const) ?? [],
       )
