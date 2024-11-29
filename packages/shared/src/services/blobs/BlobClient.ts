@@ -3,7 +3,6 @@ import { utils } from 'ethers'
 import { z } from 'zod'
 
 import { assert } from '@l2beat/shared-pure'
-import { HttpClient2 } from '../../clients'
 import { HttpClient } from '../HttpClient'
 
 interface BlobClientOptions {
@@ -17,7 +16,7 @@ export class BlobClient {
   constructor(
     private readonly beaconApiUrl: string,
     private readonly rpcUrl: string,
-    private readonly httpClient: HttpClient2,
+    private readonly httpClient: HttpClient,
     private readonly logger: Logger,
     options: BlobClientOptions,
   ) {

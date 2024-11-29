@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { BlobClient, BlobProvider, HttpClient2 } from '@l2beat/shared'
+import { BlobClient, BlobProvider, HttpClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { Config } from '../config'
 
@@ -20,7 +20,7 @@ export function initBlobProviders(
   assert(finalityConfig, 'Finality config is required')
 
   const logger = Logger.SILENT
-  const http = new HttpClient2()
+  const http = new HttpClient()
   const blobClient = new BlobClient(
     finalityConfig.beaconApiUrl,
     finalityConfig.ethereumProviderUrl,
