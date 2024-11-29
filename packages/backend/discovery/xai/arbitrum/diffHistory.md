@@ -1,3 +1,91 @@
+Generated with discovered.json: 0x0f344b80eac1e20b044a684c87716c33458d120b
+
+# Diff at Fri, 29 Nov 2024 11:28:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9776abb8b1f960f6f1ec6ec27558b5eff7eb5b87 block: 278553826
+- current block number: 278553826
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 278553826 (main branch discovery), not current.
+
+```diff
+    contract XaiMultisig2 (0x000d8C5A70B8805DF02f409F2715d05B9A63E871) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"configure","target":"0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1","description":"Add/remove batchPosters (Sequencers)."}]
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.1.description:
+-        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract XaiMultisig (0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract SequencerInbox (0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      issuedPermissions.4:
++        {"permission":"upgrade","target":"0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E","via":[{"address":"0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F","delay":0},{"address":"0x041F85dD87c46B941dc9b15c6628B19ee5358485","delay":0}]}
+      issuedPermissions.3:
++        {"permission":"sequence","target":"0x7F68dba68E72a250004812fe04F1123Fca89aBa9","via":[]}
+      issuedPermissions.2:
++        {"permission":"configure","target":"0xc7185e37A4aB4Af0E77bC08249CD2590AE3E1b51","via":[{"address":"0x000d8C5A70B8805DF02f409F2715d05B9A63E871","delay":0,"description":"Add/remove batchPosters (Sequencers)."}]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.1.target:
+-        "0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E"
++        "0x7f910C718bAF6698FBF9b56e047ECd52d157bAD6"
+      issuedPermissions.1.via.1:
+-        {"address":"0x041F85dD87c46B941dc9b15c6628B19ee5358485","delay":0}
+      issuedPermissions.1.via.0.address:
+-        "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F"
++        "0x000d8C5A70B8805DF02f409F2715d05B9A63E871"
+      issuedPermissions.1.via.0.description:
++        "Add/remove batchPosters (Sequencers)."
+      issuedPermissions.0.permission:
+-        "sequence"
++        "configure"
+      issuedPermissions.0.target:
+-        "0x7F68dba68E72a250004812fe04F1123Fca89aBa9"
++        "0x2B95cdD1adD34461Fe737800c0D5A68d556B51b4"
+      issuedPermissions.0.via.0:
++        {"address":"0x000d8C5A70B8805DF02f409F2715d05B9A63E871","delay":0,"description":"Add/remove batchPosters (Sequencers)."}
+    }
+```
+
+```diff
+    contract RollupProxy (0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.0.via.0.description:
+-        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      fieldMeta.minimumAssertionPeriod:
++        {"description":"Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "}
+    }
+```
+
 Generated with discovered.json: 0x6318fba4ca93fe72e6cb3df7399d001df64639b8
 
 # Diff at Wed, 27 Nov 2024 13:46:30 GMT:

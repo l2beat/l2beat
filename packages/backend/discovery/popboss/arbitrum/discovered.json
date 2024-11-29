@@ -38,7 +38,7 @@
         {
           "permission": "configure",
           "target": "0x330F8fEB25f3427cABA32446728C36ae67f2135b",
-          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
         },
         {
           "permission": "upgrade",
@@ -96,7 +96,7 @@
             {
               "address": "0x246bAB4F36095ABc74052Cc122c318298a9ef876",
               "delay": 0,
-              "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+              "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
             }
           ]
         },
@@ -177,6 +177,9 @@
         "zombieLatestStakedNode": []
       },
       "fieldMeta": {
+        "minimumAssertionPeriod": {
+          "description": "Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "
+        },
         "confirmPeriodBlocks": {
           "description": "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
         },
@@ -480,7 +483,7 @@
         {
           "permission": "configure",
           "target": "0x330F8fEB25f3427cABA32446728C36ae67f2135b",
-          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "via": [{ "address": "0x246bAB4F36095ABc74052Cc122c318298a9ef876" }]
         },
         {
@@ -768,7 +771,16 @@
     }
   ],
   "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
+    {
+      "address": "0x0000000000000000000000000000000000000000",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x6eE94AD8057Fd7Ba4d47bb6278a261c8a9FD4E3f",
+          "description": "Add/remove batchPosters (Sequencers)."
+        }
+      ]
+    },
     { "address": "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f" },
     { "address": "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe" },
     {
@@ -1420,8 +1432,8 @@
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
     "orbitstack/RollupEventInbox": "0x0608b35e1df8a51677a6392869e50b60a1ff7137f71f40bddf83143a5ef640c1",
-    "orbitstack/RollupProxy": "0x88165b83156dbb5b288912a52adc278d223904d0c933472cb3950a05ba456170",
-    "orbitstack/SequencerInbox": "0x88542722d1f831549b0b3c814ee5d973fed5780765ae1a05e607dffef0df3154",
+    "orbitstack/RollupProxy": "0x9ffbe36f064536f2a8ffb61a54a779561f7ddde93379da6475d263ca36e3c6db",
+    "orbitstack/SequencerInbox": "0x5cd19865dbaedc22bb0571435a45b9ec44f18388ca4c83dc971fb6c0be1bdf22",
     "orbitstack/UpgradeExecutor": "0xa8c2617950ce46d982abd852226ebcc1aacaf9c8c7daeda793b53a790eced777"
   }
 }
