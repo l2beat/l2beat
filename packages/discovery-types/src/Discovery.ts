@@ -48,6 +48,7 @@ export type PermissionType =
   | 'propose'
   | 'sequence'
   | 'validate'
+  | 'fastconfirm'
   | 'configure'
   | 'upgrade'
   | 'act'

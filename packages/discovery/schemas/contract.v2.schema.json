@@ -101,6 +101,7 @@
             "validate",
             "sequence",
             "guard",
+            "fastconfirm",
             "configure",
             "upgrade",
             "act"

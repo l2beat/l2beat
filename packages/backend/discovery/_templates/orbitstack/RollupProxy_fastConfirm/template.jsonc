@@ -38,8 +38,8 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
-            "description": "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+            "type": "fastconfirm",
+            "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
           }
         ]
       }

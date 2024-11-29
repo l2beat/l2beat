@@ -22,6 +22,7 @@ export const RolePermissionEntries = [
   'propose',
   'sequence',
   'validate',
+  'fastconfirm',
 ] as const
 
 export const Permission = z.enum([
