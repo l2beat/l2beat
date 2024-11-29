@@ -26,8 +26,7 @@ export class NearStakeAnalyzer extends AbstractStakeAnalyzer {
       body: JSON.stringify(body),
     })
 
-    const json = await res.json()
-    const validators = ValidatorsList.parse(json)
+    const validators = ValidatorsList.parse(res)
 
     const totalStake = validators.result.current_validators.reduce(
       (acc, v) => acc + BigInt(v.stake),

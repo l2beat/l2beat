@@ -5,7 +5,6 @@ import {
   BlockProvider,
   FuelClient,
   HttpClient,
-  HttpClient2,
   LoopringClient,
   RetryHandler,
   RpcClient2,
@@ -64,7 +63,7 @@ export function initBlockProviders(chains: ChainApi[]): BlockProviders {
   const indexerClients: BlockIndexerClient[] = []
 
   const http = new HttpClient()
-  const http2 = new HttpClient2()
+  const http2 = new HttpClient()
   const logger = Logger.SILENT
 
   for (const chain of chains) {
