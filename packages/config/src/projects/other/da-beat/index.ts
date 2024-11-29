@@ -66,7 +66,6 @@ export const daLayers: DaLayer[] = applyProcessor([
   apechainDac,
   arbitrumNovaDac,
   astarZkEvmDac,
-  automataDA,
   blessnetDac,
   cyberDA,
   degenDac,
@@ -102,6 +101,11 @@ export const daLayers: DaLayer[] = applyProcessor([
   xchainDac,
   xlayerDac,
   zkfairDac,
+  // DA Challenges
+  automataDA,
+  gmnetworkDA,
+  redstoneDA,
+  xterioDA,
   // DA Layers
   avail,
   celestia,
@@ -110,10 +114,4 @@ export const daLayers: DaLayer[] = applyProcessor([
   espressoDA,
   eigenDA,
   fraxtalDA,
-  gmnetworkDA,
-  mantleDA,
-  memo,
-  near,
-  redstoneDA,
-  xterioDA,
 ])
