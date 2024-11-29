@@ -1,10 +1,10 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import { json } from '@l2beat/shared-pure'
 import { RetryHandler } from '../tools'
-import { HttpClient2 } from './http/HttpClient2'
+import { HttpClient } from './http/HttpClient'
 
 export interface ClientCoreDependencies {
-  http: HttpClient2
+  http: HttpClient
   rateLimiter: RateLimiter
   retryHandler: RetryHandler
   logger: Logger

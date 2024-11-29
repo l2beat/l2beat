@@ -3,7 +3,7 @@ import { json } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { RetryHandler } from '../tools'
 import { ClientCore } from './ClientCore'
-import { HttpClient2 } from './http/HttpClient2'
+import { HttpClient } from './http/HttpClient'
 
 describe(ClientCore.name, () => {
   describe(ClientCore.prototype.fetch.name, () => {
@@ -50,7 +50,7 @@ describe(ClientCore.name, () => {
 })
 
 function mocks() {
-  const http = mockObject<HttpClient2>({
+  const http = mockObject<HttpClient>({
     fetch: async () => ({ result: 'success' }) as json,
   })
 

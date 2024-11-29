@@ -3,7 +3,7 @@ import { utils } from 'ethers'
 import { z } from 'zod'
 
 import { assert } from '@l2beat/shared-pure'
-import { HttpClient } from '../HttpClient'
+import { HttpClient } from '../../clients'
 
 interface BlobClientOptions {
   callsPerMinute: number | undefined
@@ -89,15 +89,13 @@ export class BlobClient {
   private async call(endpoint: string): Promise<unknown> {
     const url = `${this.beaconApiUrl}${endpoint}`
 
-    const response = await this.httpClient.fetch(url, {
+    return await this.httpClient.fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'gzip',
       },
       timeout: this.timeout,
     })
-    const json = (await response.json()) as unknown
-    return json
   }
 
   private async getTransaction(txHash: string): Promise<{
@@ -153,8 +151,7 @@ export class BlobClient {
       }),
     })
 
-    const json = (await response.json()) as unknown
-    const parsed = RpcResultSchema.parse(json)
+    const parsed = RpcResultSchema.parse(response)
     return parsed.result
   }
 

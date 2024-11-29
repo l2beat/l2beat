@@ -2,7 +2,7 @@ import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import { expect, mockObject } from 'earl'
 
 import { RetryHandler } from '../../tools'
-import { HttpClient2 } from '../http/HttpClient2'
+import { HttpClient } from '../http/HttpClient'
 import {
   STARKEX_BI_API_V2,
   STARKEX_BI_API_V3,
@@ -15,7 +15,7 @@ describe(StarkexClient.name, () => {
 
   describe(StarkexClient.prototype.query.name, () => {
     it('constructs correct url and parameters', async () => {
-      const httpClient = mockObject<HttpClient2>({
+      const httpClient = mockObject<HttpClient>({
         fetch: async () => ({ count: 123 }),
       })
       const starkexClient = mockClient({
@@ -44,7 +44,7 @@ describe(StarkexClient.name, () => {
     it('parses and returns the response', async () => {
       const starkexClient = mockClient({
         apiKey: API_KEY,
-        http: mockObject<HttpClient2>({
+        http: mockObject<HttpClient>({
           fetch: async () => ({ count: 11 }),
         }),
       })
@@ -87,7 +87,7 @@ describe(StarkexClient.name, () => {
         token_id: '_all',
       }
 
-      const httpClient = mockObject<HttpClient2>({
+      const httpClient = mockObject<HttpClient>({
         async fetch(url, init) {
           expect(url).toEqual(
             STARKEX_BI_API_V2 + '/aggregations/count' + `?key=${API_KEY}`,
@@ -115,7 +115,7 @@ describe(StarkexClient.name, () => {
         product: 'immutable',
       }
 
-      const httpClient = mockObject<HttpClient2>({
+      const httpClient = mockObject<HttpClient>({
         async fetch(url, init) {
           expect(url).toEqual(
             STARKEX_BI_API_V3 + '/aggregations/count' + `?key=${API_KEY}`,
@@ -135,7 +135,7 @@ describe(StarkexClient.name, () => {
     })
 
     it('returns the count', async () => {
-      const httpClient = mockObject<HttpClient2>({
+      const httpClient = mockObject<HttpClient>({
         fetch: async () => ({ count: 2137 }),
       })
 
@@ -150,7 +150,7 @@ describe(StarkexClient.name, () => {
 })
 
 function mockClient(deps: {
-  http?: HttpClient2
+  http?: HttpClient
   rateLimiter?: RateLimiter
   retryHandler?: RetryHandler
   logger?: Logger
@@ -159,7 +159,7 @@ function mockClient(deps: {
   return new StarkexClient({
     http:
       deps.http ??
-      mockObject<HttpClient2>({
+      mockObject<HttpClient>({
         fetch: async () => ({ count: 123 }),
       }),
     logger: deps.logger ?? Logger.SILENT,
