@@ -45,12 +45,7 @@ export const xchain: Layer2 = orbitStackL2({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'ConduitMultisig',
-      'Admin that can upgrade the smart contract system (via UpgradeExecutor) at any time and gain access to all funds.',
-    ),
-  ],
+  discoveryDrivenData: true,
   milestones: [
     {
       name: 'Mainnet launch',
