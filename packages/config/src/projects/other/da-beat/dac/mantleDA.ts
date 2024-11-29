@@ -24,7 +24,7 @@ const requiredStakeFormatted = parseFloat(
 ).toLocaleString()
 
 export const mantleDA: DaLayer = {
-  id: 'dac',
+  id: 'mantle-da',
   type: 'DaLayer',
   kind: 'DAC',
   systemCategory: 'custom',
