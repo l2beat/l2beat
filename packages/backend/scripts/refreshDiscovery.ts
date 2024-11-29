@@ -10,7 +10,7 @@ import { discoveryNeedsRefresh } from '../src/tools/discoveryNeedsRefresh'
 import { discoverAndUpdateDiffHistory } from './discoveryWrapper'
 
 const cmd = command({
-  name: 'refresh-discoverydiscover',
+  name: 'refresh-discovery',
   args: {
     all: flag({
       type: boolean,
