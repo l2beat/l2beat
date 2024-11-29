@@ -108,7 +108,7 @@ export class BlockIndexerClient {
 
     if (!httpResponse.ok) {
       throw new Error(
-        `Server responded with non-2XX result: ${httpResponse.status} ${httpResponse.statusText}`,
+        `Server responded with non-2XX result: ${httpResponse.status}`,
       )
     }
 
