@@ -7,7 +7,7 @@ Generated with discovered.json: 0x35ac1bf04ae2243209a36eb3a2853daa40ebe020
 
 ## Description
 
-Updated verifier discovery, old ones frozen (zk cat updated).
+First discovery. HotShotLightClient implementation is unverified.
 
 ## Initial discovery
 
