@@ -1,10 +1,9 @@
 import { z } from 'zod'
 
-const Blob = z.object({
+export const Blob = z.object({
   kzg_commitment: z.string(),
   data: z.string(),
 })
-export type Blob = z.infer<typeof Blob>
 
 export const BlockSidecarSchema = z.object({
   data: z.array(
@@ -14,11 +13,6 @@ export const BlockSidecarSchema = z.object({
     }),
   ),
 })
-
-export interface BlobsInBlock {
-  blobs: Blob[]
-  blockNumber: number
-}
 
 export const RpcErrorSchema = z.object({
   error: z.object({

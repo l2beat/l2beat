@@ -1,5 +1,4 @@
-import { BlobClient } from '../../clients'
-import { BlobsInBlock } from '../../clients/blobs/types'
+import { BlobClient, BlobsInBlock } from '../../clients'
 
 export class BlobProvider {
   constructor(private readonly client: BlobClient) {}

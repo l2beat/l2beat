@@ -1,16 +1,22 @@
 import { utils } from 'ethers'
 
 import { assert, json } from '@l2beat/shared-pure'
+import { z } from 'zod'
 import { ClientCore, ClientCoreDependencies } from '../ClientCore'
 import {
   Blob,
-  BlobsInBlock,
   BlockSidecarSchema,
   BlockWithParentBeaconBlockRootSchema,
   ErrorSchema,
   RpcResponseSchema,
   TxWithBlobsSchema,
 } from './types'
+
+export type Blob = z.infer<typeof Blob>
+export interface BlobsInBlock {
+  blobs: Blob[]
+  blockNumber: number
+}
 
 interface Dependencies extends ClientCoreDependencies {
   beaconApiUrl: string

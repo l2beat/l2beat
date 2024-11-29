@@ -1,5 +1,5 @@
-import { Logger } from '@l2beat/backend-tools'
-import { HttpClient as SharedHttpClient } from '@l2beat/shared'
+import { Logger, RateLimiter } from '@l2beat/backend-tools'
+import { HttpClient2, RetryHandler } from '@l2beat/shared'
 import { BlobClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
@@ -32,6 +32,7 @@ export class AllProviders {
     httpClient: HttpClient,
     private discoveryCache: DiscoveryCache,
   ) {
+    const httpClient2 = new HttpClient2()
     for (const config of chainConfigs) {
       const baseProvider = new providers.StaticJsonRpcProvider(
         config.rpcUrl,
@@ -49,13 +50,16 @@ export class AllProviders {
       let blobClient: BlobClient | undefined
 
       if (config.beaconApiUrl) {
-        blobClient = new BlobClient(
-          config.beaconApiUrl,
-          config.rpcUrl,
-          httpClient as unknown as SharedHttpClient,
-          Logger.SILENT,
-          { callsPerMinute: undefined, timeout: undefined },
-        )
+        blobClient = new BlobClient({
+          beaconApiUrl: config.beaconApiUrl,
+          logger: Logger.SILENT,
+          rpcUrl: config.rpcUrl,
+          retryHandler: RetryHandler.SCRIPT,
+          rateLimiter: new RateLimiter({
+            callsPerMinute: 60,
+          }),
+          http: httpClient2,
+        })
       }
 
       this.config.set(config.name, {
