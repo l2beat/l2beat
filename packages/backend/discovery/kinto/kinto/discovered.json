@@ -1,8 +1,8 @@
 {
   "name": "kinto",
   "chain": "kinto",
-  "blockNumber": 542592,
-  "configHash": "0x1a0ad6168dcd8c80fdee7b606b80a5243d0421b74fb5407bd752b65a460fa72e",
+  "blockNumber": 542901,
+  "configHash": "0x587712b50f690fd83f75e84a9bd0c4d1c313a62ab59b47df6ae977b3fef1cc43",
   "contracts": [
     {
       "name": "BridgedKinto",
@@ -230,7 +230,7 @@
         "appRegistry": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
         "COST_OF_POST": 200000,
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
-        "getDeposit": "27366004806653734604",
+        "getDeposit": "27386797536251334604",
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "MAX_COST_OF_PREVERIFICATION": 4000000,
         "MAX_COST_OF_VERIFICATION": 530000,
@@ -354,7 +354,7 @@
         "capacitorFactory__": "0x35B1Ca86D564e69FA38Ee456C12c78A62e78Aa4c",
         "chainSlug": 7887,
         "executionManager__": "0xc8a4D2fd77c155fd52e65Ab07F337aBF84495Ead",
-        "globalMessageCount": 4487,
+        "globalMessageCount": 4496,
         "hasher__": "0x9652Dd5e1388CA80712470122F27be0d1c33B48b",
         "nominee": "0x0000000000000000000000000000000000000000",
         "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
@@ -750,6 +750,7 @@
           "via": []
         }
       ],
+      "ignoreInWatchMode": ["totalWallets"],
       "sinceTimestamp": 1703803636,
       "values": {
         "$admin": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
@@ -883,7 +884,7 @@
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
         "rewardsDistributor": "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA",
-        "totalWallets": 30210
+        "totalWallets": 30255
       },
       "derivedName": "KintoWalletFactory"
     },
@@ -981,7 +982,8 @@
       "ignoreInWatchMode": [
         "getTotalLimit",
         "getUnclaimedLimit",
-        "totalClaimed"
+        "totalClaimed",
+        "root"
       ],
       "sinceTimestamp": 1719513260,
       "values": {
@@ -1027,15 +1029,15 @@
         "$upgradeCount": 7,
         "bonusAmount": 0,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getTotalLimit": "338192799753646320481219",
-        "getUnclaimedLimit": "194818745993347876842262",
+        "getTotalLimit": "339780661235687696725910",
+        "getUnclaimedLimit": "196316263293037065621063",
         "KINTO": "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87",
         "NEW_USER_REWARD": "1000000000000000000",
         "NEW_USER_REWARD_TIMESTAMP": 1729785402,
         "quarters": 40,
-        "root": "0xc8521b39dab96ca415e2b4d944345b737d3fe18540f6e6ff7c1b17b68acf8afe",
+        "root": "0xfac8908d5cfe388c75cefb4addbba9a7bc773b8a881c625d1012319f853394bf",
         "startTime": 1718690400,
-        "totalClaimed": "143374053760298443638957",
+        "totalClaimed": "143464397942650631104847",
         "totalTokens": "4000000000000000000000000",
         "UPDATER_ROLE": "0x56730d7d989818781b81ff2da8c4c452dd13af73dfb8c4f4723e21d17335fd24",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
@@ -1162,7 +1164,7 @@
           "0x0000000000000000000000000000000000000000"
         ],
         "KYC_PROVIDER_ROLE": "0x6c4079fcac94e7142d8c209744c998efe53a188aadb7e55958f7ad3ea8a1d652",
-        "lastMonitoredAt": 1732770732,
+        "lastMonitoredAt": 1732857189,
         "name": "Kinto ID",
         "ownerOf": [
           "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
@@ -1175,7 +1177,7 @@
           "https://kinto.xyz/api/v1/nft-kinto-id/3",
           "https://kinto.xyz/api/v1/nft-kinto-id/4"
         ],
-        "totalSupply": 30356,
+        "totalSupply": 30400,
         "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3",
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
       },
