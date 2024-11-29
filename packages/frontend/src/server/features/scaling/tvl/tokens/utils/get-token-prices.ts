@@ -3,7 +3,7 @@ import {
   type PriceConfigEntry,
   type UnixTime,
 } from '@l2beat/shared-pure'
-import { db } from '~/server/database'
+import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
 import { getConfigurationsStatus } from '../../sync-status/get-configurations-status'
 import { type TvlChartResolution } from '../../utils/range'
@@ -13,6 +13,7 @@ export async function getTokenPrices(
   range: [UnixTime, UnixTime],
   resolution: TvlChartResolution,
 ) {
+  const db = getDb()
   const [from, to] = range
   const priceRecords = await db.price.getByConfigIdsInRange(
     [configuration.configId],

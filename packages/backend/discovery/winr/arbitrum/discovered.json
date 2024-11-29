@@ -1,8 +1,8 @@
 {
   "name": "winr",
   "chain": "arbitrum",
-  "blockNumber": 269235450,
-  "configHash": "0x7eba19f1d5c941977ec8540c042718aa802dec40aad3624ae50e8db29ea0a219",
+  "blockNumber": 278534982,
+  "configHash": "0xf77e4d0b0cd028cdff2cda657a7aa48082158a113bf5aa88d16f42ef0235755f",
   "contracts": [
     {
       "name": "ChallengeManager",
@@ -47,8 +47,7 @@
         "resultReceiver": "0x2633ea91d15BeE85105C9b27E068f406F2F36a4a",
         "sequencerInbox": "0x8AeDdE55Cb361e73a0B0c0cF2A5bB35E97a20456",
         "totalChallengesCreated": 0
-      },
-      "derivedName": "ChallengeManager"
+      }
     },
     {
       "name": "RollupProxy",
@@ -121,12 +120,12 @@
         "confirmPeriodBlocks": 300,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 313,
+        "firstUnresolvedNode": 1004,
         "inbox": "0x4FeBaEF286Ca477402dafCEeB17C64de481aFB42",
         "isERC20Enabled": false,
         "lastStakeBlock": 19879132,
-        "latestConfirmed": 312,
-        "latestNodeCreated": 363,
+        "latestConfirmed": 1003,
+        "latestNodeCreated": 1004,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xBA99217992620b76aae0D574c70bD313B30D3D1d",
@@ -166,7 +165,6 @@
           "description": "Emitted on createChallenge() in RollupUserLogic."
         }
       },
-      "derivedName": "RollupProxy",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -197,7 +195,7 @@
       ]
     },
     {
-      "name": "Inbox",
+      "name": "ERC20Inbox",
       "address": "0x4FeBaEF286Ca477402dafCEeB17C64de481aFB42",
       "template": "orbitstack/Inbox",
       "sourceHashes": [
@@ -205,6 +203,7 @@
         "0xcb390b491549387c8fcc09fb22fbea7adf54cc74b7247a0c738369ddd7049b92"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "Inbox",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
       "issuedPermissions": [
         {
@@ -240,8 +239,7 @@
         "maxDataSize": 104857,
         "paused": false,
         "sequencerInbox": "0x8AeDdE55Cb361e73a0B0c0cF2A5bB35E97a20456"
-      },
-      "derivedName": "ERC20Inbox"
+      }
     },
     {
       "name": "OneStepProverMemory",
@@ -367,7 +365,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 8 (25%)",
-        "nonce": 38,
+        "nonce": 43,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -470,7 +468,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 8801,
+        "batchCount": 11322,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x1A48A9e82dDb9cd157a67493Cc5E246D0cDd8307"],
         "bridge": "0xF3f01622Ac969156760c32190995F9dC5b3eb7FA",
@@ -500,7 +498,7 @@
         "rollup": "0x2633ea91d15BeE85105C9b27E068f406F2F36a4a",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 1206,
+        "totalDelayedMessagesRead": 1939,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -508,8 +506,7 @@
         "maxTimeVariation": {
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
-      },
-      "derivedName": "SequencerInbox"
+      }
     },
     {
       "name": "OneStepProofEntry",
@@ -529,7 +526,7 @@
       }
     },
     {
-      "name": "Outbox",
+      "name": "ERC20Outbox",
       "address": "0xBA99217992620b76aae0D574c70bD313B30D3D1d",
       "template": "orbitstack/Outbox",
       "sourceHashes": [
@@ -537,6 +534,7 @@
         "0x3073f29910dee50069a001fb20e58cca3dcc1b3c8da4b91809af2dd356ef0c8c"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "Outbox",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
       "issuedPermissions": [
         {
@@ -576,8 +574,7 @@
         "l2ToL1WithdrawalAmount": 0,
         "OUTBOX_VERSION": 2,
         "rollup": "0x2633ea91d15BeE85105C9b27E068f406F2F36a4a"
-      },
-      "derivedName": "ERC20Outbox"
+      }
     },
     {
       "name": "OneStepProverHostIo",
@@ -661,8 +658,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56"]
-      },
-      "derivedName": "UpgradeExecutor"
+      }
     },
     {
       "name": "OneStepProverMath",
@@ -719,7 +715,7 @@
       }
     },
     {
-      "name": "Bridge",
+      "name": "ERC20Bridge",
       "address": "0xF3f01622Ac969156760c32190995F9dC5b3eb7FA",
       "template": "orbitstack/Bridge",
       "sourceHashes": [
@@ -727,6 +723,7 @@
         "0x057de68a7007d55f4394ba6eafb2c802efcaf13583ff9342ea4d0ee3924d9be1"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "Bridge",
       "description": "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
       "issuedPermissions": [
         {
@@ -767,14 +764,13 @@
           "0xe966442c0E8F28C48eF4F02BfF7a29876Dcd30CC"
         ],
         "allowedOutboxList": ["0xBA99217992620b76aae0D574c70bD313B30D3D1d"],
-        "delayedMessageCount": 1206,
+        "delayedMessageCount": 1939,
         "nativeToken": "0xD77B108d4f6cefaa0Cae9506A934e825BEccA46E",
         "rollup": "0x2633ea91d15BeE85105C9b27E068f406F2F36a4a",
         "sequencerInbox": "0x8AeDdE55Cb361e73a0B0c0cF2A5bB35E97a20456",
-        "sequencerMessageCount": 8801,
-        "sequencerReportedSubMessageCount": 21354055
-      },
-      "derivedName": "ERC20Bridge"
+        "sequencerMessageCount": 11322,
+        "sequencerReportedSubMessageCount": 29589071
+      }
     }
   ],
   "eoas": [
@@ -785,7 +781,7 @@
         {
           "permission": "sequence",
           "target": "0x8AeDdE55Cb361e73a0B0c0cF2A5bB35E97a20456",
-          "description": "can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
         }
       ]
     },
@@ -1426,7 +1422,7 @@
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
     "orbitstack/RollupEventInbox": "0x0608b35e1df8a51677a6392869e50b60a1ff7137f71f40bddf83143a5ef640c1",
     "orbitstack/RollupProxy": "0x88165b83156dbb5b288912a52adc278d223904d0c933472cb3950a05ba456170",
-    "orbitstack/SequencerInbox": "0x58bf3ad8ac9dc1181ff793e330641c545ee2d9558fce65d2ee39d483c2490494",
+    "orbitstack/SequencerInbox": "0x88542722d1f831549b0b3c814ee5d973fed5780765ae1a05e607dffef0df3154",
     "orbitstack/UpgradeExecutor": "0xa8c2617950ce46d982abd852226ebcc1aacaf9c8c7daeda793b53a790eced777"
   }
 }

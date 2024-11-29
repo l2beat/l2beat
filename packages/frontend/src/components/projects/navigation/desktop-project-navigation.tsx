@@ -227,10 +227,7 @@ function NavigationSubsectionEntry(props: {
     <a
       key={props.id}
       href={`#${props.id}`}
-      className={cn(
-        'flex flex-row items-center transition-opacity hover:opacity-100',
-        !props.selected && 'opacity-60',
-      )}
+      className={cn('flex flex-row items-center ')}
     >
       <div className="flex flex-row gap-3">
         {/* Left side */}
@@ -241,7 +238,14 @@ function NavigationSubsectionEntry(props: {
           <div className="h-full border-l border-divider" />
         </div>
         {/* Right side */}
-        <div className="flex-1 pb-3">{props.title}</div>
+        <div
+          className={cn(
+            'flex-1 pb-3 transition-opacity hover:opacity-100',
+            !props.selected && 'opacity-60',
+          )}
+        >
+          {props.title}
+        </div>
       </div>
     </a>
   )

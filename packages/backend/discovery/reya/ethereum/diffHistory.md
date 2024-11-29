@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xd26a67eb93204103ffb714847bfd06389cd5368b
+
+# Diff at Wed, 27 Nov 2024 13:22:43 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@3b9391cfe483e60a1853eeae6e47b4de475aac4e block: 21093393
+- current block number: 21272482
+
+## Description
+
+Move to discodriven data.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21093393 (main branch discovery), not current.
+
+```diff
+    contract ValidatorUtils (0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF) {
+    +++ description: None
+      values.REYA_STAKERS:
+-        [["0x6106B6480DE82E3eC2680d7c61A9D18d71Bf9122"],false]
+    }
+```
+
+```diff
+    contract SequencerInbox (0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.IS_HARDCODED_SEQUENCER_BATCH_POSTER:
+-        true
+    }
+```
+
 Generated with discovered.json: 0x46bce8870224c75062ad367340247e04a5e782ac
 
 # Diff at Fri, 15 Nov 2024 08:18:13 GMT:

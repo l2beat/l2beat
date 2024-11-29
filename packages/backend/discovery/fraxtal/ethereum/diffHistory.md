@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xf8f41c681f2b61d2c6f78971b3eab30f17e78f5f
+
+# Diff at Thu, 28 Nov 2024 11:02:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@4e0645053ebfcfcef2e7fd8c8410bad53373a3c4 block: 20927364
+- current block number: 20927364
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20927364 (main branch discovery), not current.
+
+```diff
+    contract frxETH (0x5E8422345238F34275888049021821E8E08CAa1f) {
+    +++ description: frxETH token contract. Fraxtal uses Frax Ether as the designated gas token, allowing users to pay for blockspace with frxETH.
+      issuedPermissions.2:
+-        {"permission":"configure","target":"0xbAFA44EFE7901E04E39Dad13167D089C559c1138","via":[]}
+      issuedPermissions.1.target:
+-        "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27"
++        "0xbAFA44EFE7901E04E39Dad13167D089C559c1138"
+      issuedPermissions.1.via.0:
+-        {"address":"0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA","delay":172800,"description":"can add and remove frxETH minters and set a new timelock address."}
+      issuedPermissions.0.target:
+-        "0x0000000000000000000000000000000000000000"
++        "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27"
+      issuedPermissions.0.via.0:
++        {"address":"0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA","delay":172800,"description":"can add and remove frxETH minters and set a new timelock address."}
+    }
+```
+
 Generated with discovered.json: 0xd6de76886445e0fe91ef3388539f491f685e0518
 
 # Diff at Fri, 01 Nov 2024 12:23:24 GMT:

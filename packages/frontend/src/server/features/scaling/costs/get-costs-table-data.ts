@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
 import { getLatestActivityForProjects } from '../activity/get-activity-for-projects'
 import { getCostsForProjects } from './get-costs-for-projects'
@@ -7,37 +8,43 @@ import { getCostsProjects } from './utils/get-costs-projects'
 import { type CostsTimeRange } from './utils/range'
 
 export function getCostsTable(
-  ...parameters: Parameters<typeof getCostsTableData>
+  ...parameters: Parameters<typeof getCachedCostsTableData>
 ) {
   if (env.MOCK) {
     return getMockCostsTableData()
   }
-
-  return getCostsTableData(...parameters)
+  return getCachedCostsTableData(...parameters)
 }
 
-export type CostsTableData = Awaited<ReturnType<typeof getCostsTableData>>
-async function getCostsTableData(timeRange: CostsTimeRange) {
-  const projects = getCostsProjects()
-  const projectsCosts = await getCostsForProjects(projects, timeRange)
+export type CostsTableData = Awaited<ReturnType<typeof getCachedCostsTableData>>
 
-  const projectsActivity = await getLatestActivityForProjects(
-    projects,
-    timeRange,
-  )
-  return Object.fromEntries(
-    Object.entries(projectsCosts).map(([projectId, costs]) => {
-      return [
-        projectId,
-        {
-          ...withTotal(costs),
-          syncStatus: getSyncStatus(costs.syncedUntil),
-          txCount: projectsActivity[projectId],
-        },
-      ]
-    }),
-  )
-}
+export const getCachedCostsTableData = cache(
+  async (timeRange: CostsTimeRange) => {
+    const projects = getCostsProjects()
+    const projectsCosts = await getCostsForProjects(projects, timeRange)
+    const projectsActivity = await getLatestActivityForProjects(
+      projects,
+      timeRange,
+    )
+
+    return Object.fromEntries(
+      Object.entries(projectsCosts).map(([projectId, costs]) => {
+        return [
+          projectId,
+          {
+            ...withTotal(costs),
+            syncStatus: getSyncStatus(costs.syncedUntil),
+            txCount: projectsActivity[projectId],
+          },
+        ]
+      }),
+    )
+  },
+  ['costs-table-data'],
+  {
+    revalidate: 10 * UnixTime.MINUTE,
+  },
+)
 
 function getSyncStatus(syncedUntil: UnixTime) {
   const isSynced = UnixTime.now()

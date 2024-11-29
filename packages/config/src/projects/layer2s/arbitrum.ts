@@ -7,6 +7,7 @@ import {
   RISK_VIEW,
   UPGRADE_MECHANISM,
 } from '../../common'
+import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
@@ -439,14 +440,7 @@ export const arbitrum: Layer2 = orbitStackL2({
       // Custom ERC20 Gateway
       address: EthereumAddress('0xcEe284F754E854890e311e3280b767F80797180d'),
       tokens: '*',
-      source: 'external',
-      bridgedUsing: {
-        bridges: [
-          {
-            name: 'Canonical (custom escrow)',
-          },
-        ],
-      },
+      ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'Main entry point for users depositing ERC20 tokens that require minting custom tokens on L2.',
       ...upgradeExecutorUpgradeability,
@@ -463,28 +457,14 @@ export const arbitrum: Layer2 = orbitStackL2({
     discovery.getEscrowDetails({
       address: EthereumAddress('0xA10c7CE4b876998858b1a9E12b10092229539400'),
       tokens: ['DAI'],
-      source: 'external',
-      bridgedUsing: {
-        bridges: [
-          {
-            name: 'Canonical (external escrow)',
-          },
-        ],
-      },
+      ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'DAI Vault for custom DAI Gateway. Fully controlled by MakerDAO governance.',
     }),
     discovery.getEscrowDetails({
       address: EthereumAddress('0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a'),
       tokens: ['wstETH'],
-      source: 'external',
-      bridgedUsing: {
-        bridges: [
-          {
-            name: 'Canonical (external escrow)',
-          },
-        ],
-      },
+      ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
     }),
@@ -492,14 +472,7 @@ export const arbitrum: Layer2 = orbitStackL2({
       // LPT L1 Escrow
       address: EthereumAddress('0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A'),
       tokens: ['LPT'],
-      source: 'external',
-      bridgedUsing: {
-        bridges: [
-          {
-            name: 'Canonically (external escrow)',
-          },
-        ],
-      },
+      ...ESCROW.CANONICAL_EXTERNAL,
       description: 'LPT Vault for custom Livepeer Token Gateway.',
     }),
     {

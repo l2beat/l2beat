@@ -1,3 +1,42 @@
+Generated with discovered.json: 0xa1ec9af4eeae57032afb3dfc89bf2faf162aad87
+
+# Diff at Thu, 28 Nov 2024 11:02:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@4e0645053ebfcfcef2e7fd8c8410bad53373a3c4 block: 21041827
+- current block number: 21041827
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21041827 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0xC5b735d05c26579B701Be9bED253Bb588503B26B) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","target":"0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455"}]
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455"}]
+    }
+```
+
+```diff
+    contract RollupProcessorV3 (0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x0000000000000000000000000000000000000000"
++        "0xC5b735d05c26579B701Be9bED253Bb588503B26B"
+      issuedPermissions.0.via.0:
+-        {"address":"0xC5b735d05c26579B701Be9bED253Bb588503B26B","delay":0}
+    }
+```
+
 Generated with discovered.json: 0x71c0d46ab3fbd5ceace5752319b78c495b1f74a2
 
 # Diff at Fri, 25 Oct 2024 09:47:25 GMT:

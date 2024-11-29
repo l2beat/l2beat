@@ -2,7 +2,7 @@
   "name": "popboss",
   "chain": "arbitrum",
   "blockNumber": 269949668,
-  "configHash": "0x0d93843cde687d42bea21ea55c33524a8de0d8f9ea3904f586870d9edcfdd086",
+  "configHash": "0x03a499b3ce0197e9918fbfb1ab53428587c3b4d57f53377e845e94ca961345f8",
   "contracts": [
     {
       "name": "UpgradeExecutor",
@@ -784,7 +784,7 @@
         {
           "permission": "sequence",
           "target": "0x6eE94AD8057Fd7Ba4d47bb6278a261c8a9FD4E3f",
-          "description": "can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
         }
       ]
     },
@@ -1428,7 +1428,7 @@
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
     "orbitstack/RollupEventInbox": "0x0608b35e1df8a51677a6392869e50b60a1ff7137f71f40bddf83143a5ef640c1",
     "orbitstack/RollupProxy": "0x88165b83156dbb5b288912a52adc278d223904d0c933472cb3950a05ba456170",
-    "orbitstack/SequencerInbox": "0x58bf3ad8ac9dc1181ff793e330641c545ee2d9558fce65d2ee39d483c2490494",
+    "orbitstack/SequencerInbox": "0x88542722d1f831549b0b3c814ee5d973fed5780765ae1a05e607dffef0df3154",
     "orbitstack/UpgradeExecutor": "0xa8c2617950ce46d982abd852226ebcc1aacaf9c8c7daeda793b53a790eced777"
   }
 }

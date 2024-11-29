@@ -1,3 +1,219 @@
+Generated with discovered.json: 0x85d767346d91de6b36db4f1f5b5821850c0e271b
+
+# Diff at Thu, 28 Nov 2024 11:03:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@4e0645053ebfcfcef2e7fd8c8410bad53373a3c4 block: 278532431
+- current block number: 278532431
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 278532431 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.4:
+-        {"permission":"validate","target":"0x964C83a66F78b67F75f076e386C433A1a10cefDB","via":[]}
+      issuedPermissions.3.target:
+-        "0x839ed36E86D36328c687a211CBe36C271065BAfD"
++        "0x964C83a66F78b67F75f076e386C433A1a10cefDB"
+      issuedPermissions.2.target:
+-        "0x795aA8E945b571c57b12E7b5B77De10A88a1FADe"
++        "0x839ed36E86D36328c687a211CBe36C271065BAfD"
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "validate"
+      issuedPermissions.1.target:
+-        "0x420B4d16119127E4b96E55CB8a9D0c2828a161BB"
++        "0x795aA8E945b571c57b12E7b5B77De10A88a1FADe"
+      issuedPermissions.1.via.0:
+-        {"address":"0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276","delay":0}
+      issuedPermissions.0.permission:
+-        "configure"
++        "upgrade"
+      issuedPermissions.0.target:
+-        "0x0000000000000000000000000000000000000000"
++        "0x420B4d16119127E4b96E55CB8a9D0c2828a161BB"
+      issuedPermissions.0.via.0:
++        {"address":"0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276","delay":0}
+    }
+```
+
+Generated with discovered.json: 0xe1d5040a8e26447582f44e236d052687cd1df9d0
+
+# Diff at Wed, 27 Nov 2024 13:44:45 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@3b9391cfe483e60a1853eeae6e47b4de475aac4e block: 277109146
+- current block number: 278532431
+
+## Description
+
+Move to discodriven data.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 277109146 (main branch discovery), not current.
+
+```diff
+    contract SankoOftMultisig (0x2227E9C08ae00750e0a5eD8da09Fa321A9DD7185) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","target":"0xa9Aa07F082D9c15D0B6D7e9e5B68b1f898399C29","description":"Can change security parameters of the DMT token (Sanko gas token) and its OFT adapters (LayerZero). This includes the permission to mint unlimited tokens or steal tokens in the canonical bridge escrow."}]
+    }
+```
+
+```diff
+    contract ERC20Bridge (0x2f285781B8d58678a3483de52D618198E4d27532) {
+    +++ description: Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      name:
+-        "Bridge"
++        "ERC20Bridge"
+      displayName:
++        "Bridge"
+    }
+```
+
+```diff
+    contract Sanko Multisig (0x420B4d16119127E4b96E55CB8a9D0c2828a161BB) {
+    +++ description: None
+      receivedPermissions.10:
+-        {"permission":"upgrade","target":"0xb4951c0C41CFceB0D195A95FE66280457A80a990","via":[{"address":"0xd18b1C6376633000c85541F7c15c591Ffe5f9556"},{"address":"0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276"}]}
+      receivedPermissions.9.target:
+-        "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4"
++        "0xb4951c0C41CFceB0D195A95FE66280457A80a990"
+      receivedPermissions.9.via.1:
++        {"address":"0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276"}
+      receivedPermissions.9.via.0.address:
+-        "0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276"
++        "0xd18b1C6376633000c85541F7c15c591Ffe5f9556"
+      receivedPermissions.8.target:
+-        "0x847186fbeEBf41eEe9c230360D0bF8585c0Db57B"
++        "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4"
+      receivedPermissions.8.via.1:
+-        {"address":"0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276"}
+      receivedPermissions.8.via.0.address:
+-        "0xd18b1C6376633000c85541F7c15c591Ffe5f9556"
++        "0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276"
+      receivedPermissions.7.target:
+-        "0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276"
++        "0x847186fbeEBf41eEe9c230360D0bF8585c0Db57B"
+      receivedPermissions.6.target:
+-        "0x718E2a83775343d5c0B1eE0676703cBAF30CaFCD"
++        "0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276"
+      receivedPermissions.5.target:
+-        "0x575d32f7ff0C72921645e302cb14d2757E300786"
++        "0x718E2a83775343d5c0B1eE0676703cBAF30CaFCD"
+      receivedPermissions.4.target:
+-        "0x365ce7234CE515c2e0139f3578b6c5989da1a863"
++        "0x575d32f7ff0C72921645e302cb14d2757E300786"
+      receivedPermissions.3.target:
+-        "0x2f285781B8d58678a3483de52D618198E4d27532"
++        "0x365ce7234CE515c2e0139f3578b6c5989da1a863"
+      receivedPermissions.2.target:
+-        "0x24B68936C13A414cd91437aE7AA730321B9ff159"
++        "0x2f285781B8d58678a3483de52D618198E4d27532"
+      receivedPermissions.1.target:
+-        "0x1f269F38196484ef81e58C0144AaD2c5F6394bB4"
++        "0x24B68936C13A414cd91437aE7AA730321B9ff159"
+      receivedPermissions.0.permission:
+-        "configure"
++        "upgrade"
+      receivedPermissions.0.target:
+-        "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4"
++        "0x1f269F38196484ef81e58C0144AaD2c5F6394bB4"
+      receivedPermissions.0.description:
+-        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      receivedPermissions.0.via.1:
++        {"address":"0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276"}
+      receivedPermissions.0.via.0.address:
+-        "0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276"
++        "0xd18b1C6376633000c85541F7c15c591Ffe5f9556"
+    }
+```
+
+```diff
+    contract ERC20Outbox (0x575d32f7ff0C72921645e302cb14d2757E300786) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      name:
+-        "Outbox"
++        "ERC20Outbox"
+      displayName:
++        "Outbox"
+    }
+```
+
+```diff
+    contract ERC20Inbox (0x718E2a83775343d5c0B1eE0676703cBAF30CaFCD) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      name:
+-        "Inbox"
++        "ERC20Inbox"
+      displayName:
++        "Inbox"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.2:
+-        {"permission":"upgrade","target":"0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4"}
+      directlyReceivedPermissions.1.permission:
+-        "configure"
++        "upgrade"
+      directlyReceivedPermissions.1.description:
+-        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract RollupProxy (0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      template:
+-        "orbitstack/RollupProxy"
++        "orbitstack/RollupProxy_fastConfirm"
+      issuedPermissions.0.target:
+-        "0x420B4d16119127E4b96E55CB8a9D0c2828a161BB"
++        "0x0000000000000000000000000000000000000000"
+      issuedPermissions.0.via.0:
+-        {"address":"0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276","delay":0,"description":"can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."}
+      fieldMeta.minimumAssertionPeriod:
++        {"description":"Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "}
+    }
+```
+
+```diff
+    contract OrbitProxyOFT1_2 (0xa9Aa07F082D9c15D0B6D7e9e5B68b1f898399C29) {
+    +++ description: OFT Adapter contract using the LayerZero v1 AMB for messaging. This contract can mint tokens on Sanko and steal tokens from the canonical bridge escrow. Its security depends on LayerZero v1 security.
+      description:
++        "OFT Adapter contract using the LayerZero v1 AMB for messaging. This contract can mint tokens on Sanko and steal tokens from the canonical bridge escrow. Its security depends on LayerZero v1 security."
+      issuedPermissions:
++        [{"permission":"configure","target":"0x2227E9C08ae00750e0a5eD8da09Fa321A9DD7185","via":[]}]
+    }
+```
+
+```diff
+    contract L1OrbitERC20Gateway (0xb4951c0C41CFceB0D195A95FE66280457A80a990) {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      template:
++        "orbitstack/ERC20Gateway"
+      displayName:
++        "ERC20Gateway"
+      description:
++        "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract."
+    }
+```
+
 Generated with discovered.json: 0xdf3d486e4fa488630360d2ef25cf7ac6cdf6975e
 
 # Diff at Fri, 22 Nov 2024 11:06:19 GMT:

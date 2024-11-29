@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x251bd3fc5a694cc0afc4aaf27f0eec9430eefb52
+
+# Diff at Thu, 28 Nov 2024 10:07:52 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cba708dac9336030203b425721a33c9db2b14313 block: 21272621
+- current block number: 21285500
+
+## Description
+
+Minor upgrade of MorphRollup introducing `committedStateRoots`, a mapping that delivers what it promises. Before there was only a finalizedStateRoots mapping.
+
+This upgrade also adds back the require in `importGenesisBatch()` which prevents calling the function in case the genesis batch is already imported.
+
+## Watched changes
+
+```diff
+    contract MorphRollup (0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) {
+    +++ description: The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.
+      sourceHashes.1:
+-        "0xb1afd290858bf0702793a7fd0a214fc9c1c0aa70ff5755193bdd20073e5d0ca1"
++        "0x2b50f40d48451dfa5ae761371d1c0b18c8c827b34d17c401f629bc743888721e"
+      values.$implementation:
+-        "0x073403E147a8e607b80985fe458c0B527287278F"
++        "0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A"
+      values.$pastUpgrades.3:
++        ["2024-11-28T03:51:59.000Z","0xa452e20183f6860f105cb398bccc9d75dd3758444b956061b3031d1f0a33c424",["0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A"]]
+      values.$upgradeCount:
+-        3
++        4
+    }
+```
+
+## Source code changes
+
+```diff
+.../MorphRollup/Rollup.sol                         | 29 +++++++++++++++++-----
+ 1 file changed, 23 insertions(+), 6 deletions(-)
+```
+
 Generated with discovered.json: 0x3040bc3142e7ed49d847e3c57d67f3fa373616d0
 
 # Diff at Tue, 26 Nov 2024 14:48:58 GMT:

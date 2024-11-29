@@ -2,7 +2,7 @@
   "name": "river",
   "chain": "ethereum",
   "blockNumber": 21065199,
-  "configHash": "0x7ed0c250d3edaf4bd474f55ccdd8f5e165393f49302b6cd81e4b2cd753d6b036",
+  "configHash": "0x7d45316f4acb54779f32a6b318c37b6e4d5318a2000188857e73238fc8484f05",
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",

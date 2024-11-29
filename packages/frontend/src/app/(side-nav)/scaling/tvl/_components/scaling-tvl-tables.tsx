@@ -6,6 +6,7 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
+import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
 import { type CategorisedScalingEntries } from '~/utils/group-by-main-categories'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
@@ -22,6 +23,12 @@ export function ScalingTvlTables(props: Props) {
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(includeFilters),
     others: props.others?.filter(includeFilters) ?? [],
   }
+
+  const initialSort = {
+    id: 'total',
+    desc: true,
+  }
+
   return (
     <>
       <ScalingTvlFilters
@@ -49,16 +56,22 @@ export function ScalingTvlTables(props: Props) {
             </DirectoryTabsTrigger>
           )}
         </DirectoryTabsList>
-        <DirectoryTabsContent value="rollups">
-          <ScalingTvlTable entries={filteredEntries.rollups} rollups />
-        </DirectoryTabsContent>
-        <DirectoryTabsContent value="validiums-and-optimiums">
-          <ScalingTvlTable entries={filteredEntries.validiumsAndOptimiums} />
-        </DirectoryTabsContent>
-        {filteredEntries.others.length > 0 && (
-          <DirectoryTabsContent value="others">
-            <ScalingTvlTable entries={filteredEntries.others} />
+        <TableSortingProvider initialSort={initialSort}>
+          <DirectoryTabsContent value="rollups">
+            <ScalingTvlTable entries={filteredEntries.rollups} rollups />
           </DirectoryTabsContent>
+        </TableSortingProvider>
+        <TableSortingProvider initialSort={initialSort}>
+          <DirectoryTabsContent value="validiums-and-optimiums">
+            <ScalingTvlTable entries={filteredEntries.validiumsAndOptimiums} />
+          </DirectoryTabsContent>
+        </TableSortingProvider>
+        {filteredEntries.others.length > 0 && (
+          <TableSortingProvider initialSort={initialSort}>
+            <DirectoryTabsContent value="others">
+              <ScalingTvlTable entries={filteredEntries.others} />
+            </DirectoryTabsContent>
+          </TableSortingProvider>
         )}
       </DirectoryTabs>
     </>

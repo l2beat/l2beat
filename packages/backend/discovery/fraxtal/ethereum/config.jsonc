@@ -13,9 +13,6 @@
     "0x8306300ffd616049FD7e4b0354a64Da835c1A81C": "frxETHMultisig"
   },
   "overrides": {
-    "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4": {
-      "extends": "opstack/SuperchainConfigFake" // set manually because it matches the real superchainConfig shape
-    },
     "sfrxETH": {
       "description": "Vault token contract (ERC-4626) for staked frxETH. The smart contract receives frxETH tokens and mints sfrxETH tokens.",
       "ignoreMethods": [

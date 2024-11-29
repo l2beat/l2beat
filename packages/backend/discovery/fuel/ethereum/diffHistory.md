@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x70d033c244b9a3911ab8c9186130eef9eb73c1de
+
+# Diff at Thu, 28 Nov 2024 11:02:16 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@4e0645053ebfcfcef2e7fd8c8410bad53373a3c4 block: 21242136
+- current block number: 21242136
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21242136 (main branch discovery), not current.
+
+```diff
+    contract FuelERC20Gateway (0xa4cA04d02bfdC3A2DF56B9b6994520E69dF43F67) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0x0000000000000000000000000000000000000000","via":[]}]
+    }
+```
+
+```diff
+    contract FuelMessagePortal (0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0x0000000000000000000000000000000000000000","via":[]}]
+    }
+```
+
+```diff
+    contract FuelChainState (0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0x0000000000000000000000000000000000000000","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xb9110d5bef6827cbde4e44ce9b9526bb90bac6ca
 
 # Diff at Fri, 22 Nov 2024 08:40:21 GMT:

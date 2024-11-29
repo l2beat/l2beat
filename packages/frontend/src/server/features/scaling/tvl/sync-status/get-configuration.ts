@@ -1,11 +1,12 @@
 import { type MultiIndexerEntry, toIndexerId } from '@l2beat/config'
-import { db } from '~/server/database'
+import { getDb } from '~/server/database'
 
 const MAX_CONFIGURATIONS_LENGTH_FOR_QUERY = 1000
 
 export async function getConfigurations(
   entries: (MultiIndexerEntry & { configId: string })[],
 ) {
+  const db = getDb()
   if (entries.length <= MAX_CONFIGURATIONS_LENGTH_FOR_QUERY) {
     return db.indexerConfiguration.getByConfigurationIds(
       entries.map((c) => c.configId),
