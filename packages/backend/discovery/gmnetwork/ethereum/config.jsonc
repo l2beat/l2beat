@@ -8,10 +8,5 @@
   ],
   "names": {
     "0xf040a7A04e914E1b4383C04359D03Ab5F12E7828": "GmMultisig"
-  },
-  "overrides": {
-    "0xB83831efA1Cc1bFF0c29ed0d8df1943F834442A0": {
-      "extends": "opstack/SuperchainConfigFake"
-    }
   }
 }

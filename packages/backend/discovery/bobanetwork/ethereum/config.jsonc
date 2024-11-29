@@ -7,10 +7,5 @@
   ],
   "names": {
     "0x56121a8612474C3eB65D69a3b871f284705b9bC4": "BobaMultisig"
-  },
-  "overrides": {
-    "0x996ffD627901f10C80A7d4B72A12316D2e77c076": {
-      "extends": "opstack/SuperchainConfigFake"
-    }
   }
 }

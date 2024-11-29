@@ -45,6 +45,9 @@ export class OpStackT2IAnalyzer extends BaseAnalyzer {
       const { blobs, blockNumber } = await this.blobProvider.getRelevantBlobs(
         transaction.txHash,
       )
+      if (blobs.length === 0) {
+        return []
+      }
       const rollupData = getRollupData(blobs)
       const frames = rollupData.map((ru) => getFrames(ru))
       const channel = this.channelBank.addFramesToChannel(frames, blockNumber)

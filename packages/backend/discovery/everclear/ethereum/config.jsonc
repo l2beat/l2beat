@@ -5,44 +5,5 @@
   "initialAddresses": [
     "0x4eb4fB614e1aa3634513319F4Ec7334bC4321356", // Bridge
     "0xA880b3fC75928695ac75e06793277aC4bEA84a3E" // GatewayRouter
-  ],
-  "names": {
-    "0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C": "RollupProxy",
-    "0x4eb4fB614e1aa3634513319F4Ec7334bC4321356": "Bridge",
-    "0xCdA94226d0BAFA963D6011fb2A06dEc7333646e8": "ChallengeManager",
-    "0x7B0517E0104dB60198f9d573C0aB8d480207827E": "SequencerInbox",
-    "0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa": "Outbox",
-    "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B": "UpgradeExecutor"
-  },
-  "overrides": {
-    "ChallengeManager": {
-      "ignoreMethods": ["challenges"]
-    },
-    "RollupProxy": {
-      "extends": "orbitstack/RollupProxy"
-    },
-    "Outbox": {
-      "ignoreMethods": ["spent", "isSpent"]
-    },
-    "Bridge": {
-      "ignoreMethods": ["sequencerInboxAccs", "delayedInboxAccs"],
-      "ignoreInWatchMode": [
-        "delayedMessageCount",
-        "sequencerMessageCount",
-        "sequencerReportedSubMessageCount"
-      ]
-    },
-    "SequencerInbox": {
-      "extends": "orbitstack/SequencerInbox"
-    },
-    "UpgradeExecutor": {
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
-        }
-      }
-    }
-  }
+  ]
 }

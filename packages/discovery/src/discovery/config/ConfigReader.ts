@@ -10,6 +10,7 @@ import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import { TemplateService } from '../analysis/TemplateService'
 import { readJsonc } from '../utils/readJsonc'
 import { DiscoveryConfig } from './DiscoveryConfig'
+import { CommonAddressNames } from './DiscoveryOverrides'
 import {
   DiscoveryCustomType,
   GlobalTypes,
@@ -171,7 +172,7 @@ export class ConfigReader {
 
       const hasConfig = chainFiles.includes('config.jsonc')
       const hasDiscovered = chainFiles.includes('discovered.json')
-      if (!hasConfig || !hasDiscovered) {
+      if (!hasConfig && !hasDiscovered) {
         continue
       }
 
@@ -181,7 +182,7 @@ export class ConfigReader {
     return projects
   }
 
-  private readCommonAddressNames(): Record<string, string> {
+  private readCommonAddressNames(): CommonAddressNames {
     const commonAddressNamesPath = path.join(
       this.rootPath,
       'discovery',
@@ -192,10 +193,7 @@ export class ConfigReader {
       return {}
     }
 
-    return readJsonc(commonAddressNamesPath) as unknown as Record<
-      string,
-      string
-    >
+    return readJsonc(commonAddressNamesPath) as unknown as CommonAddressNames
   }
 
   private readGlobalTypes(): Record<string, DiscoveryCustomType> {

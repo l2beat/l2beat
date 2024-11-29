@@ -12,9 +12,6 @@
   "overrides": {
     "0xB52337F38747D6931f2976eEa24A3f3F6B7CDEA2": {
       "ignoreDiscovery": true // disputeGameFactory: ignored as L2OutputOracle is used instead
-    },
-    "0xDf87154Ed6cF332931b70014bA3d9dF423074FfF": {
-      "extends": "opstack/SuperchainConfigFake"
     }
   }
 }

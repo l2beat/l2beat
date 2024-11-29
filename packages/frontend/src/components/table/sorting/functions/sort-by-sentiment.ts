@@ -3,7 +3,7 @@ import { type Sentiment } from '@l2beat/shared-pure'
 const sentimentOrder: Sentiment[] = ['bad', 'warning', 'neutral', 'good']
 
 export function sortBySentiment<
-  TData extends { sentiment: Sentiment; value: string },
+  TData extends { sentiment: Sentiment; value: string; secondLine?: string },
 >(rowA: TData | undefined, rowB: TData | undefined) {
   if (!rowA && !rowB) {
     return 0
@@ -27,12 +27,17 @@ export function sortBySentiment<
 }
 
 export function sortBySentimentAndAlphabetically<
-  TData extends { sentiment: Sentiment; value: string },
+  TData extends { sentiment: Sentiment; value: string; secondLine?: string },
 >(rowA: TData | undefined, rowB: TData | undefined) {
   const sentimentResult = sortBySentiment(rowA, rowB)
   if (sentimentResult !== 0) {
     return sentimentResult
   }
 
-  return (rowB?.value ?? '').localeCompare(rowA?.value ?? '')
+  const valueComparison = (rowB?.value ?? '').localeCompare(rowA?.value ?? '')
+  if (valueComparison !== 0) {
+    return valueComparison
+  }
+
+  return (rowB?.secondLine ?? '').localeCompare(rowA?.secondLine ?? '')
 }

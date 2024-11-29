@@ -37,6 +37,9 @@ export class ArbitrumT2IAnalyzer extends BaseAnalyzer {
     const { blobs } = await this.blobProvider.getRelevantBlobs(
       transaction.txHash,
     )
+    if (blobs.length === 0) {
+      return []
+    }
 
     const segments = getSegments(blobs)
     // https://linear.app/l2beat/issue/L2B-4752/refactor-finalityindexer-logic-to-allow-analyzers-different

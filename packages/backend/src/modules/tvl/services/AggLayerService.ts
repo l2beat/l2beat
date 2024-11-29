@@ -1,4 +1,5 @@
 import { AmountRecord } from '@l2beat/database'
+import { RpcClient2 } from '@l2beat/shared'
 import {
   AggLayerL2Token,
   AggLayerNativeEtherPreminted,
@@ -8,10 +9,9 @@ import {
   UnixTime,
   notUndefined,
 } from '@l2beat/shared-pure'
-import { BigNumber, utils } from 'ethers'
+import { utils } from 'ethers'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { MulticallRequest } from '../../../peripherals/multicall/types'
-import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 
 export const erc20Interface = new utils.Interface([
   'function balanceOf(address account) view returns (uint256)',
@@ -31,7 +31,7 @@ export type Config<T extends AggLayerAmountConfig['type']> =
   AggLayerAmountConfig & { type: T } & { id: string }
 
 export interface AggLayerServiceDependencies {
-  readonly rpcClient: RpcClient
+  readonly rpcClient: RpcClient2
   readonly multicallClient: MulticallClient
   readonly bridgeAddress: EthereumAddress
 }
@@ -114,14 +114,12 @@ export class AggLayerService {
           amount: 0n,
         }
       }
-      const [value] = erc20Interface.decodeFunctionResult(
-        'totalSupply',
-        response.data.toString(),
-      )
+      const amount = BigInt(response.data.toString())
+
       return {
         configId: token.id,
         timestamp,
-        amount: (value as BigNumber).toBigInt(),
+        amount,
       }
     })
   }
@@ -173,7 +171,7 @@ export class AggLayerService {
       token.l2BridgeAddress,
       blockNumber,
     )
-    const amount = token.premintedAmount - bridgeBalance.toBigInt()
+    const amount = token.premintedAmount - BigInt(bridgeBalance)
     return {
       configId: token.id,
       amount,
@@ -195,15 +193,11 @@ export class AggLayerService {
       },
       blockNumber,
     )
-
-    const [totalSupply] = erc20Interface.decodeFunctionResult(
-      'totalSupply',
-      response.toString(),
-    )
+    const amount = BigInt(response.toString())
 
     return {
       configId: token.id,
-      amount: (totalSupply as BigNumber).toBigInt(),
+      amount,
       timestamp,
     }
   }

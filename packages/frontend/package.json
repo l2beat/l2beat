@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
+    "dev:no-turbo": "next dev",
     "dev:mock": "MOCK=true pnpm dev",
+    "dev:no-turbo-mock": "MOCK=true pnpm dev:no-turbo",
     "build": "next build",
     "build:dependencies": "cd ../.. && pnpm build:dependencies",
     "start": "next start",
@@ -38,6 +40,7 @@
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-tabs": "^1.0.4",
     "@radix-ui/react-tooltip": "^1.0.7",
+    "@sentry/nextjs": "^8",
     "@t3-oss/env-nextjs": "^0.10.1",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tanstack/react-query": "^5.51.11",

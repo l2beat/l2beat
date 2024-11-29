@@ -20,9 +20,6 @@
       "description": "Custom external escrow for USDC bridged to Worldchain.",
       "ignoreMethods": ["proxiableUUID"],
       "ignoreRelatives": ["USDC", "LINKED_ADAPTER"]
-    },
-    "0xa231f8be37e583f276f93dF516D88a043bfe47E3": {
-      "extends": "opstack/SuperchainConfigFake" // manual because otherwise it matches the real superchain shape
     }
   }
 }

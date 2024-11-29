@@ -13,13 +13,66 @@
     "0x87C1D0dAb8d96b69CB91f97F4135E3ed5A49DCF6": "MultipleVersionRollupVerifier",
     "0x0Dc417F8AF88388737c5053FF73f345f080543F7": "L1Staking",
     "0xB822319ab7848b7cC4537c8409e50f85BFb04377": "MorphAdminMSig",
-    "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a": "L1GatewayRouter"
+    "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a": "L1GatewayRouter",
+    "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0": "ProxyAdmin",
+    "0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7": "EnforcedTxGateway",
+    "0xFFafDd9167777C0e5421e0B6789D6d7A5E386984": "Whitelist",
+    "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8": "L1StandardERC20Gateway",
+    "0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68": "L1ETHGateway",
+    "0x6dAece7dFaE212b6A9F55c56FD3cf1462F44069e": "ZkEvmVerifierV1"
   },
   "overrides": {
+    "Whitelist": {
+      "description": "Contract implementing a generic whitelist. Currently used to define the actor that can relay the L2 basefee on L1."
+    },
+    "L1StandardERC20Gateway": {
+      "description": "Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list."
+    },
+    "L1ETHGateway": {
+      "description": "Contract used to bridge ETH from L1 to L2."
+    },
+    "ZkEvmVerifierV1": {
+      "description": "Current SP1 verifier using Blobs for DA, used to prepare data for the PlonkVerifierV0."
+    },
+    "EnforcedTxGateway": {
+      "description": "Contracts to force L1 -> L2 messages with the proper sender. Currently paused: {{ paused }}.",
+      "fields": {
+        "owner": {
+          "target": {
+            "permissions": [
+              { "type": "configure", "description": "can pause and unpause" }
+            ]
+          }
+        }
+      }
+    },
+    "ProxyAdmin": {
+      "fields": {
+        "owner": {
+          "target": {
+            "permissions": [{ "type": "act" }]
+          }
+        }
+      }
+    },
     "L1Staking": {
-      "ignoreMethods": ["getStakers", "stakerSet"] // TODO: add the whitelist
+      "description": "Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures of stakers (currently not implemented).",
+      "ignoreMethods": ["getStakers", "stakerSet"], // TODO: add the whitelist
+      "fields": {
+        "getActiveStakers": {
+          "target": {
+            "permissions": [
+              {
+                "type": "sequence",
+                "description": "Actors allowed to commit transaction batches and propose state roots"
+              }
+            ]
+          }
+        }
+      }
     },
     "L1GatewayRouter": {
+      "description": "Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.",
       "fields": {
         "gateways": {
           "handler": {
@@ -59,10 +112,12 @@
       }
     },
     "L1CrossDomainMessenger": {
+      "description": "Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.",
       "ignoreMethods": ["prevReplayIndex"],
       "ignoreInWatchMode": ["messageNonce"]
     },
     "L1MessageQueueWithGasPriceOracle": {
+      "description": "Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.",
       "ignoreMethods": [
         "getCrossDomainMessage",
         "isMessageDropped",
@@ -72,6 +127,7 @@
       "ignoreInWatchMode": ["pendingQueueIndex", "nextCrossDomainMessageIndex"]
     },
     "MorphRollup": {
+      "description": "The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.",
       "ignoreMethods": [
         "batchChallengedSuccess",
         "batchDataStore",
@@ -81,7 +137,8 @@
         "challenges",
         "committedBatches",
         "finalizedStateRoots",
-        "isBatchFinalized"
+        "isBatchFinalized",
+        "committedStateRoots"
       ],
       "ignoreInWatchMode": [
         "batchChallenged",
@@ -95,6 +152,19 @@
             "event": "UpdateChallenger",
             "valueKey": "account",
             "flagKey": "status"
+          },
+          "target": {
+            "permissions": [{ "type": "challenge" }]
+          }
+        },
+        "owner": {
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "can pause and unpause, override any batch, revert batch, update proof window, update challengers, modify verifiers"
+              }
+            ]
           }
         }
       }

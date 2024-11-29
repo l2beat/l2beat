@@ -22,7 +22,7 @@ const daResolveWindow = formatSeconds(
 
 export const automata: Layer2 = opStackL2({
   createdAt: new UnixTime(1729359609), // 2024-10-19T17:40:09Z
-  badges: [Badge.DA.CustomDA, Badge.Infra.Superchain],
+  badges: [Badge.DA.CustomDA, Badge.Infra.Superchain, Badge.RaaS.AltLayer],
   display: {
     name: 'Automata',
     slug: 'automata',
@@ -49,6 +49,10 @@ export const automata: Layer2 = opStackL2({
   rpcUrl: 'https://rpc.ata.network/',
   discovery,
   genesisTimestamp: new UnixTime(1721183063),
-  daProvider: DACHALLENGES_DA_PROVIDER(daChallengeWindow, daResolveWindow),
+  daProvider: DACHALLENGES_DA_PROVIDER(
+    daChallengeWindow,
+    daResolveWindow,
+    'https://github.com/ethereum-optimism/optimism/releases/tag/v1.7.7',
+  ), // source: altlayer on telegram
   discoveryDrivenData: true,
 })

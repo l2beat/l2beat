@@ -17,21 +17,13 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { ESCROW } from '../../common/escrow'
+import { formatChallengePeriod } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('morph')
-
-const upgradeMorphMultisig = {
-  upgradableBy: ['MorphAdminMSig'],
-  upgradeDelay: 'No delay',
-}
-
-const isEnforcedTxGatewayPaused = discovery.getContractValue<boolean>(
-  'EnforcedTxGateway',
-  'paused',
-)
 
 const challengeWindow = discovery.getContractValue<number>(
   'MorphRollup',
@@ -117,42 +109,21 @@ export const morph: Layer2 = {
         address: EthereumAddress('0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1'),
         sinceTimestamp: new UnixTime(1729307783),
         tokens: '*',
-        source: 'external',
-        bridgedUsing: {
-          bridges: [
-            {
-              name: 'Canonically (external escrow)',
-            },
-          ],
-        },
+        ...ESCROW.CANONICAL_EXTERNAL,
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0xc9045350712A1DCC3A74Eca18Bc985424Bbe7535'),
         sinceTimestamp: new UnixTime(1729308239),
         tokens: ['USDC'],
-        source: 'external',
-        bridgedUsing: {
-          bridges: [
-            {
-              name: 'Canonically (external escrow)',
-            },
-          ],
-        },
+        ...ESCROW.CANONICAL_EXTERNAL,
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x2C8314f5AADa5D7a9D32eeFebFc43aCCAbe1b289'),
         sinceTimestamp: new UnixTime(1729308239),
         tokens: ['USDC'],
-        source: 'external',
-        bridgedUsing: {
-          bridges: [
-            {
-              name: 'Canonically (external escrow)',
-            },
-          ],
-        },
+        ...ESCROW.CANONICAL_EXTERNAL,
         chain: 'ethereum',
       },
     ],
@@ -168,7 +139,7 @@ export const morph: Layer2 = {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_1R_ZK,
       sentiment: 'bad',
-      secondLine: `${formatSeconds(challengeWindow)} challenge period`,
+      secondLine: formatChallengePeriod(challengeWindow),
     },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
@@ -176,7 +147,7 @@ export const morph: Layer2 = {
         {
           contract: 'MorphRollup',
           references: [
-            'https://etherscan.io/address/0x073403E147a8e607b80985fe458c0B527287278F#code',
+            'https://etherscan.io/address/0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A#code',
           ],
         },
       ],
@@ -187,7 +158,7 @@ export const morph: Layer2 = {
         {
           contract: 'MorphRollup',
           references: [
-            'https://etherscan.io/address/0x073403E147a8e607b80985fe458c0B527287278F#code',
+            'https://etherscan.io/address/0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A#code',
           ],
         },
       ],
@@ -215,7 +186,7 @@ export const morph: Layer2 = {
         {
           contract: 'MorphRollup',
           references: [
-            'https://etherscan.io/address/0x073403E147a8e607b80985fe458c0B527287278F#code',
+            'https://etherscan.io/address/0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A#code',
           ],
         },
       ],
@@ -236,7 +207,7 @@ export const morph: Layer2 = {
       references: [
         {
           text: 'Rollup.sol - Etherscan source code, commitBatch(), challengeState(), proveState() functions',
-          href: 'https://etherscan.io/address/0x073403e147a8e607b80985fe458c0b527287278f#code#F1#L204',
+          href: 'https://etherscan.io/address/0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A#code#F1#L219',
         },
       ],
       risks: [
@@ -281,7 +252,7 @@ export const morph: Layer2 = {
         },
         {
           text: 'Rollup.sol - proposer can indicate which messages were skipped',
-          href: 'https://etherscan.io/address/0x073403e147a8e607b80985fe458c0b527287278f#code#F1#L242',
+          href: 'https://etherscan.io/address/0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A#code#F1#L258',
         },
       ],
     },
@@ -299,83 +270,8 @@ export const morph: Layer2 = {
     ],
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('MorphRollup', {
-        description:
-          'The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.',
-        ...upgradeMorphMultisig,
-      }),
-      discovery.getContractDetails('L1Staking', {
-        description:
-          'Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures\
-            of stakers (currently not implemented).',
-        ...upgradeMorphMultisig,
-      }),
-      discovery.getContractDetails('L1CrossDomainMessenger', {
-        description:
-          'Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.',
-        ...upgradeMorphMultisig,
-      }),
-      discovery.getContractDetails('L1MessageQueueWithGasPriceOracle', {
-        description: `Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.${isEnforcedTxGatewayPaused ? ' The latter contract, which would allow users to send L2 messages from L1 with their own address as the sender, is not enabled (paused).' : ''}`,
-        ...upgradeMorphMultisig,
-      }),
-      discovery.getContractDetails('Whitelist', {
-        description:
-          'Contract implementing a generic whitelist. Currently used to define the actor that can relay the L2 basefee on L1.',
-      }),
-      discovery.getContractDetails('MultipleVersionRollupVerifier', {
-        description:
-          'Contract used to update the verifier and keep track of current and old versions.',
-      }),
-      discovery.getContractDetails('ZkEvmVerifierV1', {
-        description:
-          'Current verifier using calldata for DA, used to prepare data for the PlonkVerifierV0.', // TODO: check
-      }),
-      discovery.getContractDetails('L1ETHGateway', {
-        description: 'Contract used to bridge ETH from L1 to L2.',
-        ...upgradeMorphMultisig,
-      }),
-      discovery.getContractDetails('L1StandardERC20Gateway', {
-        description:
-          'Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.',
-        ...upgradeMorphMultisig,
-      }),
-      discovery.getContractDetails('L1GatewayRouter', {
-        description:
-          'Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.',
-        ...upgradeMorphMultisig,
-      }),
-      discovery.getContractDetails('EnforcedTxGateway', {
-        description:
-          'Contracts to force L1 -> L2 messages with the proper sender.',
-        ...upgradeMorphMultisig,
-        pausable: {
-          paused: isEnforcedTxGatewayPaused,
-          pausableBy: ['MorphAdminMSig'],
-        },
-      }),
-    ],
+    addresses: discovery.getDiscoveredContracts(),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  permissions: [
-    ...discovery.getMultisigPermission(
-      'MorphAdminMSig',
-      'Can upgrade proxies and the verifier without delay. It can also overwrite any batch (both unfinalized and finalized), remove sequencers and provers and pause contracts.',
-    ),
-    {
-      name: 'Sequencers',
-      accounts: discovery.getPermissionedAccounts(
-        'L1Staking',
-        'getActiveStakers',
-      ),
-      description:
-        'Actors allowed to commit transaction batches and propose state roots.',
-    },
-    {
-      name: 'Challengers',
-      accounts: discovery.getPermissionedAccounts('MorphRollup', 'challengers'),
-      description: 'Actors allowed to challenge proposed state roots.',
-    },
-  ],
+  permissions: discovery.getDiscoveredPermissions(),
 }

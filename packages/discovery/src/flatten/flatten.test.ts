@@ -174,4 +174,35 @@ contract R1 is C2, C3, C4 {
 }`,
     )
   })
+
+  it('inheritance namespacing', () => {
+    const rootFile: FileContent = {
+      path: 'Root.sol',
+      content: String.raw`
+import './DependencyFile.sol' as Namespace;
+
+contract R1 is Namespace.C2 {
+    function f(address x) public {
+        DC1(x).df();
+    }
+}
+`,
+    }
+
+    const c2File: FileContent = {
+      path: 'DependencyFile.sol',
+      content: String.raw`contract C2 { }`,
+    }
+
+    const flattened = flattenStartingFrom('R1', [rootFile, c2File], [])
+    expect(flattened).toEqual(
+      String.raw`contract C2 { }
+
+contract R1 is Namespace.C2 {
+    function f(address x) public {
+        DC1(x).df();
+    }
+}`,
+    )
+  })
 })

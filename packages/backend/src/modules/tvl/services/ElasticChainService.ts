@@ -1,4 +1,5 @@
 import { AmountRecord } from '@l2beat/database'
+import { RpcClient2 } from '@l2beat/shared'
 import {
   Bytes,
   ElasticChainL2Token,
@@ -6,10 +7,9 @@ import {
   UnixTime,
   notUndefined,
 } from '@l2beat/shared-pure'
-import { BigNumber, utils } from 'ethers'
+import { utils } from 'ethers'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { MulticallRequest } from '../../../peripherals/multicall/types'
-import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { ElasticChainAmountConfig } from '../indexers/types'
 
 export const erc20Interface = new utils.Interface([
@@ -25,7 +25,7 @@ export type Config<T extends ElasticChainAmountConfig['type']> =
   ElasticChainAmountConfig & { type: T } & { id: string }
 
 export interface ElasticChainServiceDependencies {
-  readonly rpcClient: RpcClient
+  readonly rpcClient: RpcClient2
   readonly multicallClient: MulticallClient
   readonly bridgeAddress: EthereumAddress
 }
@@ -85,15 +85,11 @@ export class ElasticChainService {
         timestamp,
       }
     }
-
-    const [totalSupply] = erc20Interface.decodeFunctionResult(
-      'totalSupply',
-      response.toString(),
-    )
+    const amount = BigInt(response.toString())
 
     return {
       configId: token.id,
-      amount: (totalSupply as BigNumber).toBigInt(),
+      amount,
       timestamp,
     }
   }
@@ -139,14 +135,12 @@ export class ElasticChainService {
           amount: 0n,
         }
       }
-      const [value] = erc20Interface.decodeFunctionResult(
-        'totalSupply',
-        response.data.toString(),
-      )
+      const amount = BigInt(response.data.toString())
+
       return {
         configId: token.id,
         timestamp,
-        amount: (value as BigNumber).toBigInt(),
+        amount,
       }
     })
   }

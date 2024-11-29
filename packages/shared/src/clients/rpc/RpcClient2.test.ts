@@ -1,5 +1,5 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
-import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import { Bytes, EthereumAddress, json } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { utils } from 'ethers'
 import { RetryHandler } from '../../tools/RetryHandler'
@@ -22,7 +22,10 @@ describe(RpcClient2.name, () => {
       const result = await rpc.getBlockWithTransactions(100)
 
       expect(result).toEqual({
-        transactions: [mockTx('0'), mockTx(undefined)],
+        transactions: [
+          { to: '0', ...mockTx },
+          { to: undefined, ...mockTx },
+        ],
         timestamp: 100,
         hash: '0xabcdef',
         number: 100,
@@ -70,7 +73,7 @@ describe(RpcClient2.name, () => {
       const address = EthereumAddress.random()
       const result = await rpc.getBalance(address, 'latest')
 
-      expect(result).toEqual(123)
+      expect(result).toEqual(BigInt(123))
       expect(http.fetch.calls[0].args[1]?.body).toEqual(
         JSON.stringify({
           method: 'eth_getBalance',
@@ -85,7 +88,7 @@ describe(RpcClient2.name, () => {
   describe(RpcClient2.prototype.call.name, () => {
     it('calls eth_call with correct parameters', async () => {
       const http = mockObject<HttpClient2>({
-        fetch: async () => '0x123abc',
+        fetch: async () => ({ result: '0x123abc' }),
       })
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
@@ -122,7 +125,7 @@ describe(RpcClient2.name, () => {
 
     it('handles numeric block numbers', async () => {
       const http = mockObject<HttpClient2>({
-        fetch: async () => '0x1',
+        fetch: async () => ({ result: '0x1' }),
       })
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
@@ -156,7 +159,7 @@ describe(RpcClient2.name, () => {
 
     it('includes from address if provided', async () => {
       const http = mockObject<HttpClient2>({
-        fetch: async () => '0x',
+        fetch: async () => ({ result: '0x' }),
       })
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
@@ -192,7 +195,7 @@ describe(RpcClient2.name, () => {
 
     it('handles empty response', async () => {
       const http = mockObject<HttpClient2>({
-        fetch: async () => '0x',
+        fetch: async () => ({ result: '0x' }),
       })
       const rpc = mockClient({ http })
 
@@ -278,27 +281,25 @@ function mockClient(deps: {
   })
 }
 
-const mockResponse = (blockNumber: number) => ({
+const mockResponse = (blockNumber: number): json => ({
   result: {
-    transactions: [mockRawTx('0'), mockRawTx(undefined)],
+    transactions: [{ to: '0', ...mockRawTx }, { ...mockRawTx }],
     timestamp: `0x${blockNumber.toString(16)}`,
     hash: '0xabcdef',
     number: `0x${blockNumber.toString(16)}`,
   },
 })
 
-const mockRawTx = (to: string | undefined) => ({
+const mockRawTx = {
   hash: `0x1`,
   from: '0xf',
-  to,
   input: `0x1`,
   type: '0x2',
-})
+}
 
-const mockTx = (to: string | undefined) => ({
+const mockTx = {
   hash: `0x1`,
   from: '0xf',
-  to,
   data: `0x1`,
   type: '2',
-})
+}

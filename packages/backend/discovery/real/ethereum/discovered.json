@@ -614,6 +614,12 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
+          "permission": "configure",
+          "target": "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
+          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "via": [{ "address": "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a" }]
+        },
+        {
           "permission": "upgrade",
           "target": "0x369001149fe80892665a7b0c17fe8Db6BeFC7F5d",
           "via": [
@@ -795,6 +801,17 @@
               "address": "0x118Ab5501564F1Cfa755d0b3070874a26c1C3A50",
               "delay": 0,
               "description": "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+            }
+          ]
+        },
+        {
+          "permission": "configure",
+          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+          "via": [
+            {
+              "address": "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a",
+              "delay": 0,
+              "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
             }
           ]
         },
@@ -1031,6 +1048,11 @@
           "target": "0xB032ff02cd6425e4b816137207AA8560932180f1"
         },
         {
+          "permission": "configure",
+          "target": "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
+          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+        },
+        {
           "permission": "upgrade",
           "target": "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a"
         }
@@ -1236,7 +1258,7 @@
         {
           "permission": "sequence",
           "target": "0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0",
-          "description": "can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
         }
       ]
     },
@@ -2339,8 +2361,8 @@
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
     "orbitstack/RollupEventInbox": "0x0608b35e1df8a51677a6392869e50b60a1ff7137f71f40bddf83143a5ef640c1",
-    "orbitstack/RollupProxy_fastConfirm": "0x91c9d3536cb44155adbb51ee7d5712c88dab3fed8850fde3967215b257571df5",
-    "orbitstack/SequencerInbox": "0x58bf3ad8ac9dc1181ff793e330641c545ee2d9558fce65d2ee39d483c2490494",
+    "orbitstack/RollupProxy_fastConfirm": "0x5b0d5169c9dd077d33aa8b81a7242ff9a44c23a3e069a8d12944e2a1912d99dd",
+    "orbitstack/SequencerInbox": "0x88542722d1f831549b0b3c814ee5d973fed5780765ae1a05e607dffef0df3154",
     "orbitstack/UpgradeExecutor": "0xa8c2617950ce46d982abd852226ebcc1aacaf9c8c7daeda793b53a790eced777"
   }
 }

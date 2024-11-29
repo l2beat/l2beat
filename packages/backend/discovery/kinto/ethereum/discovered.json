@@ -1,8 +1,8 @@
 {
   "name": "kinto",
   "chain": "ethereum",
-  "blockNumber": 21184697,
-  "configHash": "0xb0c4669c0a76fa4c12b420d9c012bbe961ce837f7c8273be411518a00abf2fc5",
+  "blockNumber": 21292450,
+  "configHash": "0x2f582a24c74ad1764ce44677d855986539300e493f1545d81d17e4c66e1987db",
   "contracts": [
     {
       "name": "Bridger",
@@ -119,7 +119,7 @@
         {
           "permission": "configure",
           "target": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "via": [{ "address": "0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }]
         },
         {
@@ -254,7 +254,7 @@
     {
       "name": "RollupProxy",
       "address": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-      "template": "orbitstack/RollupProxy",
+      "template": "orbitstack/RollupProxy_fastConfirm",
       "sourceHashes": [
         "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca",
         "0x9349e73cbc2d2b818c1d79711574ba210b56249d8d3845bc78c776caf8f8ff42",
@@ -270,7 +270,7 @@
             {
               "address": "0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a",
               "delay": 0,
-              "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+              "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
             }
           ]
         },
@@ -358,12 +358,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 2198,
+        "firstUnresolvedNode": 2258,
         "inbox": "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
         "isERC20Enabled": false,
         "lastStakeBlock": 21107949,
-        "latestConfirmed": 2197,
-        "latestNodeCreated": 2222,
+        "latestConfirmed": 2257,
+        "latestNodeCreated": 2283,
         "loserStakeEscrow": "0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5",
         "minimumAssertionPeriod": 75,
         "outbox": "0x655761AD5FC251F414D6993A73184B0669F278c8",
@@ -393,6 +393,9 @@
         "zombieLatestStakedNode": []
       },
       "fieldMeta": {
+        "minimumAssertionPeriod": {
+          "description": "Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "
+        },
         "confirmPeriodBlocks": {
           "description": "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
         },
@@ -525,7 +528,7 @@
         {
           "permission": "configure",
           "target": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
         },
         {
           "permission": "upgrade",
@@ -826,11 +829,11 @@
           "0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F"
         ],
         "allowedOutboxList": ["0x655761AD5FC251F414D6993A73184B0669F278c8"],
-        "delayedMessageCount": 4256,
+        "delayedMessageCount": 4384,
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerInbox": "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
-        "sequencerMessageCount": 3564,
-        "sequencerReportedSubMessageCount": 255603
+        "sequencerMessageCount": 3685,
+        "sequencerReportedSubMessageCount": 542926
       }
     },
     {
@@ -1027,7 +1030,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 196,
+        "nonce": 201,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1081,7 +1084,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 3564,
+        "batchCount": 3685,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xe27f3f6db6824def1738b2aACe2672aC59046a39"],
         "bridge": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
@@ -1109,7 +1112,7 @@
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 4255,
+        "totalDelayedMessagesRead": 4383,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1121,7 +1124,16 @@
     }
   ],
   "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
+    {
+      "address": "0x0000000000000000000000000000000000000000",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+          "description": "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+        }
+      ]
+    },
     {
       "name": "Hypernative EOA",
       "address": "0x082CBA3929aD00EbB6d81ebE57B0BD24fBF3Fc6B"
@@ -1209,7 +1221,7 @@
         {
           "permission": "sequence",
           "target": "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
-          "description": "can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
         }
       ]
     },
@@ -2002,8 +2014,8 @@
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
     "orbitstack/RollupEventInbox": "0x0608b35e1df8a51677a6392869e50b60a1ff7137f71f40bddf83143a5ef640c1",
-    "orbitstack/RollupProxy": "0x88165b83156dbb5b288912a52adc278d223904d0c933472cb3950a05ba456170",
-    "orbitstack/SequencerInbox": "0x58bf3ad8ac9dc1181ff793e330641c545ee2d9558fce65d2ee39d483c2490494",
+    "orbitstack/RollupProxy_fastConfirm": "0x5b0d5169c9dd077d33aa8b81a7242ff9a44c23a3e069a8d12944e2a1912d99dd",
+    "orbitstack/SequencerInbox": "0x88542722d1f831549b0b3c814ee5d973fed5780765ae1a05e607dffef0df3154",
     "orbitstack/UpgradeExecutor": "0xa8c2617950ce46d982abd852226ebcc1aacaf9c8c7daeda793b53a790eced777"
   }
 }

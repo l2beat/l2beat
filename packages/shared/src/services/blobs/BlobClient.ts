@@ -2,6 +2,7 @@ import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import { utils } from 'ethers'
 import { z } from 'zod'
 
+import { assert } from '@l2beat/shared-pure'
 import { HttpClient2 } from '../../clients'
 import { HttpClient } from '../HttpClient'
 
@@ -53,6 +54,17 @@ export class BlobClient {
   async getRelevantBlobs(txHash: string): Promise<BlobsInBlock> {
     const tx = await this.getTransaction(txHash.toString())
 
+    // Skip blob processing for type 2 transactions
+    if (tx.type === '0x2') {
+      return { blobs: [], blockNumber: tx.blockNumber }
+    }
+
+    // For type 3 transactions, ensure blobVersionedHashes exists
+    assert(
+      tx.blobVersionedHashes,
+      'Type 3 transaction missing blobVersionedHashes',
+    )
+
     const blockSidecar = await this.getBlockSidecar(tx.blockNumber)
     const relevantBlobs = filterOutIrrelevant(
       blockSidecar,
@@ -91,13 +103,15 @@ export class BlobClient {
 
   private async getTransaction(txHash: string): Promise<{
     blockNumber: number
-    blobVersionedHashes: string[]
+    type: string
+    blobVersionedHashes?: string[]
   }> {
     const result = await this.callRpc('eth_getTransactionByHash', [txHash])
     const parsed = TxWithBlobsSchema.parse(result)
 
     return {
       blockNumber: Number(parsed.blockNumber),
+      type: parsed.type,
       blobVersionedHashes: parsed.blobVersionedHashes,
     }
   }
@@ -189,7 +203,8 @@ export interface BlobsInBlock {
 
 const TxWithBlobsSchema = z.object({
   blockNumber: z.string(),
-  blobVersionedHashes: z.array(z.string()),
+  type: z.string(),
+  blobVersionedHashes: z.array(z.string()).optional(),
 })
 
 const BlockWithParentBeaconBlockRootSchema = z.object({

@@ -3,6 +3,7 @@ import { SmartAccountList } from '@/components/smartAccountList'
 import { StatsDetails } from '@/components/statsDetails'
 import { StatsForm } from '@/components/statsForm'
 import type { StatsWithChain } from '@/types'
+import Head from 'next/head'
 import { useState } from 'react'
 import { rankBlocks } from '../../utils/rankBlocks'
 
@@ -57,27 +58,35 @@ export default function StatsPage() {
     })
   }
   return (
-    <main>
-      <h1 className="mt-4 mb-4 text-center font-extrabold text-4xl text-gray-900 leading-none tracking-tight md:text-5xl lg:text-6xl dark:text-white">
-        Block statistics
-      </h1>
-      <p className="mb-6 text-center font-normal text-gray-500 text-lg sm:px-16 lg:text-xl xl:px-48 dark:text-gray-400">
-        Select the chain and provide the number of blocks to analyze. The tool
-        will fetch the data and generate statistics by comparing overall number
-        of transactions to user operations. Subsequent clicks on Go! button will
-        result in fetching more block on top of the previous ones and
-        aggregating the statistics.
-      </p>
-      <StatsForm lastFetched={stats?.startBlock} onUpdate={handleUpdateStats} />
-      {stats && (
-        <>
-          <StatsDetails stats={stats} />
-          {stats.smartAccountUsage && (
-            <SmartAccountList smartAccountUsage={stats.smartAccountUsage} />
-          )}
-          <BlockList blocks={stats.topBlocks} chain={stats.chain} />
-        </>
-      )}
-    </main>
+    <>
+      <Head>
+        <title>UOPS Explorer - L2BEAT</title>
+      </Head>
+      <main>
+        <h1 className="mt-4 mb-4 text-center font-extrabold text-4xl text-gray-900 leading-none tracking-tight md:text-5xl lg:text-6xl dark:text-white">
+          Block statistics
+        </h1>
+        <p className="mb-6 text-center font-normal text-gray-500 text-lg sm:px-16 lg:text-xl xl:px-48 dark:text-gray-400">
+          Select the chain and provide the number of blocks to analyze. The tool
+          will fetch the data and generate statistics by comparing overall
+          number of transactions to user operations. Subsequent clicks on Go!
+          button will result in fetching more block on top of the previous ones
+          and aggregating the statistics.
+        </p>
+        <StatsForm
+          lastFetched={stats?.startBlock}
+          onUpdate={handleUpdateStats}
+        />
+        {stats && (
+          <>
+            <StatsDetails stats={stats} />
+            {stats.smartAccountUsage && (
+              <SmartAccountList smartAccountUsage={stats.smartAccountUsage} />
+            )}
+            <BlockList blocks={stats.topBlocks} chain={stats.chain} />
+          </>
+        )}
+      </main>
+    </>
   )
 }
