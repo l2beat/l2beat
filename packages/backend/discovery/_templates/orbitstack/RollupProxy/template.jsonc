@@ -15,7 +15,7 @@
         "permissions": [
           {
             "type": "configure",
-            "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+            "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
           }
         ]
       }
@@ -33,6 +33,9 @@
         "type": "arbitrumActors",
         "actorType": "validator"
       }
+    },
+    "minimumAssertionPeriod": {
+      "description": "Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "
     },
     "confirmPeriodBlocks": {
       "description": "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
