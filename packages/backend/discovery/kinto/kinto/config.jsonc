@@ -43,7 +43,8 @@
       "ignoreInWatchMode": [
         "getTotalLimit",
         "getUnclaimedLimit",
-        "totalClaimed"
+        "totalClaimed",
+        "root"
       ]
     },
     "Faucet": {
@@ -58,7 +59,8 @@
       "ignoreInWatchMode": ["getDeposit"]
     },
     "KintoWalletFactory": {
-      "ignoreMethods": ["proxiableUUID"]
+      "ignoreMethods": ["proxiableUUID"],
+      "ignoreInWatchMode": ["totalWallets"]
     },
     "KintoID": {
       "description": "Manages Kinto's KYC system: KYC provider addresses and the KYC status of users.",

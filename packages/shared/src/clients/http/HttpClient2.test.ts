@@ -20,7 +20,7 @@ describe(HttpClient2.name, () => {
 
       await expect(
         async () => await http.fetch('https://api', {}),
-      ).toBeRejectedWith('HTTP error: 404 Not Found')
+      ).toBeRejectedWith('HTTP error: 404')
     })
 
     it('supports custom timeout', async function () {

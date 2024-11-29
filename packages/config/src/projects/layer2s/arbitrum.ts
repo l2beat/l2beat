@@ -82,11 +82,14 @@ const treasuryTimelockDelay = l2Discovery.getContractValue<number>(
   'getMinDelay',
 )
 
-const maxTimeVariation = discovery.getContractValue<number[]>(
-  'SequencerInbox',
-  'maxTimeVariation',
-)
-const selfSequencingDelay = maxTimeVariation[2]
+const maxTimeVariation = discovery.getContractValue<{
+  delayBlocks: number
+  futureBlocks: number
+  delaySeconds: number
+  futureSeconds: number
+}>('SequencerInbox', 'maxTimeVariation')
+
+const selfSequencingDelay = maxTimeVariation.delaySeconds
 
 export const arbitrum: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z

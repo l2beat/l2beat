@@ -30,17 +30,12 @@ export const apechain: Layer3 = orbitStackL3({
     activityDataSource: 'Blockchain RPC',
   },
   discovery,
-  bridge: discovery.getContract('Bridge'),
+  bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   rpcUrl: 'https://rpc.apechain.com/http',
   // associatedTokens: ['APE'],
   nativeToken: 'APE',
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'ApeChainMultisig',
-      'Can upgrade any system contract and potentially steal all funds.',
-    ),
-  ],
   overrideEscrows: [],
+  discoveryDrivenData: true,
 })

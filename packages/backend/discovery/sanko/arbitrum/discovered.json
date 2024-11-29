@@ -324,6 +324,12 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
+          "permission": "configure",
+          "target": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
+          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "via": [{ "address": "0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276" }]
+        },
+        {
           "permission": "upgrade",
           "target": "0x1f269F38196484ef81e58C0144AaD2c5F6394bB4",
           "via": [
@@ -587,6 +593,11 @@
           "target": "0xd18b1C6376633000c85541F7c15c591Ffe5f9556"
         },
         {
+          "permission": "configure",
+          "target": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
+          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+        },
+        {
           "permission": "upgrade",
           "target": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4"
         }
@@ -682,6 +693,17 @@
       "proxyType": "Arbitrum proxy",
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
       "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x420B4d16119127E4b96E55CB8a9D0c2828a161BB",
+          "via": [
+            {
+              "address": "0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276",
+              "delay": 0,
+              "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+            }
+          ]
+        },
         {
           "permission": "upgrade",
           "target": "0x420B4d16119127E4b96E55CB8a9D0c2828a161BB",
@@ -1804,7 +1826,7 @@
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
     "orbitstack/RollupEventInbox": "0x0608b35e1df8a51677a6392869e50b60a1ff7137f71f40bddf83143a5ef640c1",
-    "orbitstack/RollupProxy_fastConfirm": "0x91c9d3536cb44155adbb51ee7d5712c88dab3fed8850fde3967215b257571df5",
+    "orbitstack/RollupProxy_fastConfirm": "0x5b0d5169c9dd077d33aa8b81a7242ff9a44c23a3e069a8d12944e2a1912d99dd",
     "orbitstack/SequencerInbox": "0x88542722d1f831549b0b3c814ee5d973fed5780765ae1a05e607dffef0df3154",
     "orbitstack/UpgradeExecutor": "0xa8c2617950ce46d982abd852226ebcc1aacaf9c8c7daeda793b53a790eced777"
   }

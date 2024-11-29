@@ -8,10 +8,5 @@
   ],
   "names": {
     "0x70FdbCb066eD3621647Ddf61A1f40aaC6058Bc89": "RedstoneMultisig"
-  },
-  "overrides": {
-    "0x4b5b41c240173191425F5928bc6bdd0d439331BB": {
-      "extends": "opstack/SuperchainConfigFake"
-    }
   }
 }

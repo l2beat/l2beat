@@ -1,8 +1,8 @@
 {
   "name": "edgeless",
   "chain": "ethereum",
-  "blockNumber": 21264245,
-  "configHash": "0x88010f99eb6aefdcbbada593d10d0abf890703b793c121707b18ea07816c0c5d",
+  "blockNumber": 21292438,
+  "configHash": "0x1da4b101ce685ace2c8a4c9963b81bd7433e14001a1eba9c628c5d665a9a0904",
   "contracts": [
     {
       "name": "StakingManager",
@@ -158,7 +158,7 @@
         {
           "permission": "configure",
           "target": "0x890025891508a463A636f81D2f532a97210240de",
-          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "via": [{ "address": "0xc213d433802ea473e23623476b26FB12e9B4eFe6" }]
         },
         {
@@ -269,7 +269,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -433,12 +433,12 @@
           "0xFa213CdA43f879FfaF17170B6E3b3AbE9900cAB1"
         ],
         "allowedOutboxList": ["0x5e8749760c5051fF80b73319cCf4d05ef9959563"],
-        "delayedMessageCount": 479,
+        "delayedMessageCount": 480,
         "nativeToken": "0xcD0aa40948c662dEDd9F157085fd6369A255F2f7",
         "rollup": "0x890025891508a463A636f81D2f532a97210240de",
         "sequencerInbox": "0xFfbf2b49524e09B1F1fBcA707B830e79c68c2086",
-        "sequencerMessageCount": 227,
-        "sequencerReportedSubMessageCount": 1418
+        "sequencerMessageCount": 229,
+        "sequencerReportedSubMessageCount": 1422
       }
     },
     {
@@ -485,7 +485,7 @@
     {
       "name": "RollupProxy",
       "address": "0x890025891508a463A636f81D2f532a97210240de",
-      "template": "orbitstack/RollupProxy",
+      "template": "orbitstack/RollupProxy_fastConfirm",
       "sourceHashes": [
         "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca",
         "0x9349e73cbc2d2b818c1d79711574ba210b56249d8d3845bc78c776caf8f8ff42",
@@ -501,7 +501,7 @@
             {
               "address": "0xc213d433802ea473e23623476b26FB12e9B4eFe6",
               "delay": 0,
-              "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+              "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
             }
           ]
         },
@@ -567,7 +567,7 @@
         "isERC20Enabled": false,
         "lastStakeBlock": 19487060,
         "latestConfirmed": 206,
-        "latestNodeCreated": 206,
+        "latestNodeCreated": 208,
         "loserStakeEscrow": "0xa43ce4721Ac0faB33E8636e0DDB55E76e3EFF461",
         "minimumAssertionPeriod": 75,
         "outbox": "0x5e8749760c5051fF80b73319cCf4d05ef9959563",
@@ -591,6 +591,9 @@
         "zombieLatestStakedNode": []
       },
       "fieldMeta": {
+        "minimumAssertionPeriod": {
+          "description": "Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "
+        },
         "confirmPeriodBlocks": {
           "description": "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
         },
@@ -912,7 +915,7 @@
         "owner": "0xcB58d1142e53e37aDE44E1F125248FbfAc99352A",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "stakingManager": "0x1e6d08769be5Dc83d38C64C5776305Ad6F01c227",
-        "underlyingAssetAmount": "19904400163593068335",
+        "underlyingAssetAmount": "20009694004662014311",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "derivedName": "EthStrategy"
@@ -951,7 +954,7 @@
         {
           "permission": "configure",
           "target": "0x890025891508a463A636f81D2f532a97210240de",
-          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
         },
         {
           "permission": "upgrade",
@@ -1004,7 +1007,7 @@
         "minter": "0x7E0bc314535f430122caFEF18eAbd508d62934bf",
         "name": "Edgeless Wrapped Eth",
         "symbol": "ewEth",
-        "totalSupply": "19956666923965584350"
+        "totalSupply": "20056666923965584350"
       },
       "derivedName": "WrappedToken"
     },
@@ -1158,7 +1161,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 227,
+        "batchCount": 229,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x4e4aC6F04106964b5B69FDA5EcC207295bCae81f"],
         "bridge": "0x6B595398152999bBc759D5D8ed8169793F915488",
@@ -1188,7 +1191,7 @@
         "rollup": "0x890025891508a463A636f81D2f532a97210240de",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 479,
+        "totalDelayedMessagesRead": 480,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1200,7 +1203,16 @@
     }
   ],
   "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
+    {
+      "address": "0x0000000000000000000000000000000000000000",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x890025891508a463A636f81D2f532a97210240de",
+          "description": "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+        }
+      ]
+    },
     { "address": "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A" },
     { "address": "0x1606f9a327baDb924B1E67CbB4Bd3227EcC7ad9a" },
     {
@@ -2261,7 +2273,7 @@
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
     "orbitstack/RollupEventInbox": "0x0608b35e1df8a51677a6392869e50b60a1ff7137f71f40bddf83143a5ef640c1",
-    "orbitstack/RollupProxy": "0x88165b83156dbb5b288912a52adc278d223904d0c933472cb3950a05ba456170",
+    "orbitstack/RollupProxy_fastConfirm": "0x5b0d5169c9dd077d33aa8b81a7242ff9a44c23a3e069a8d12944e2a1912d99dd",
     "orbitstack/SequencerInbox": "0x88542722d1f831549b0b3c814ee5d973fed5780765ae1a05e607dffef0df3154",
     "orbitstack/UpgradeExecutor": "0xa8c2617950ce46d982abd852226ebcc1aacaf9c8c7daeda793b53a790eced777"
   }

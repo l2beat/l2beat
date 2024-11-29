@@ -7,10 +7,5 @@
   ],
   "names": {
     "0x2C73A1610EE822a8C2C21eddd455e725A3334c8C": "Optopia Multisig"
-  },
-  "overrides": {
-    "0x5e8d351FD046Aa0b3DDA24096751996C0c397C61": {
-      "extends": "opstack/SuperchainConfigFake"
-    }
   }
 }

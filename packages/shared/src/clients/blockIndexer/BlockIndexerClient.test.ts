@@ -1,7 +1,6 @@
 import { RateLimiter } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { Response } from 'node-fetch'
 import { HttpClient } from '../../services'
 import { BlockIndexerClient } from './BlockIndexerClient'
 
@@ -272,7 +271,7 @@ describe(BlockIndexerClient.name, () => {
 
       const etherscanClient = new BlockIndexerClient(httpClient, rate, OPTIONS)
       await expect(etherscanClient.call('mod', 'act', {})).toBeRejectedWith(
-        'Server responded with non-2XX result: 404 Not Found',
+        'Server responded with non-2XX result: 404',
       )
     })
 

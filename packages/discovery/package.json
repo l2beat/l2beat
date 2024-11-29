@@ -32,7 +32,6 @@
     "jsonc-parser": "^3.2.0",
     "lodash": "^4.17.21",
     "mkdirp": "^3.0.0",
-    "node-fetch": "^2.6.7",
     "prettier": "^3.0.3",
     "rimraf": "^5.0.0",
     "sqlite3": "^5.1.6",
@@ -41,7 +40,6 @@
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
     "@types/deep-diff": "^1.0.2",
-    "@types/lodash": "^4.14.198",
-    "@types/node-fetch": "^2.6.4"
+    "@types/lodash": "^4.14.198"
   }
 }

@@ -52,6 +52,14 @@ export const kinto: Layer2 = orbitStackL2({
     },
     // this is the full launch of their mainnet, should be negligible socket bridged tvl before
     minTimestampForTvl: UnixTime.fromDate(new Date('2024-05-21T00:00:01Z')),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0x2cc0188fA85FD8Ce748C7Df6066873fdcfaD95e9'),
+        batchSize: 150,
+        sinceBlock: 218561,
+        version: '3',
+      },
+    ],
   },
   discoveryDrivenData: true,
   isNodeAvailable: true,

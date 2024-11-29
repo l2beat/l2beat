@@ -4,50 +4,5 @@
   "name": "popboss",
   "initialAddresses": [
     "0x53D82686BC9827fEc03bcEe661B37b855A18EcA9" // Inbox
-  ],
-  "names": {
-    "0xEe30EfcaF812d10e1EFE25E9458f76a39DAD3239": "Inbox",
-    "0x330F8fEB25f3427cABA32446728C36ae67f2135b": "RollupProxy",
-    "0x53D82686BC9827fEc03bcEe661B37b855A18EcA9": "Bridge",
-    "0x6eE94AD8057Fd7Ba4d47bb6278a261c8a9FD4E3f": "SequencerInbox",
-    "0xa4270256B160C3Ebec2d6914a906c7EC38D8d072": "Outbox",
-    "0xf3224F90c0A6138209a9EbaFd1971AD1E04eEb0D": "ChallengeManager",
-    "0x246bAB4F36095ABc74052Cc122c318298a9ef876": "UpgradeExecutor",
-    "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF": "ValidatorWalletCreator"
-  },
-  "overrides": {
-    "ValidatorWalletCreator": {
-      "ignoreInWatchMode": ["template"]
-    },
-    "RollupProxy": {
-      "extends": "orbitstack/RollupProxy"
-    },
-    "UpgradeExecutor": {
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
-        }
-      }
-    },
-    "Outbox": {
-      "ignoreMethods": ["spent", "isSpent"]
-    },
-    "Bridge": {
-      "ignoreMethods": ["sequencerInboxAccs", "delayedInboxAccs"],
-      "ignoreInWatchMode": [
-        "delayedMessageCount",
-        "sequencerMessageCount",
-        "sequencerReportedSubMessageCount"
-      ],
-      "ignoreRelatives": ["nativeToken"]
-    },
-    "SequencerInbox": {
-      "extends": "orbitstack/SequencerInbox"
-    },
-    "ChallengeManager": {
-      "ignoreMethods": ["challenges"]
-    }
-  }
+  ]
 }
