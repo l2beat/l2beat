@@ -43,7 +43,7 @@ export const l3x: Layer3 = orbitStackL3({
     minTimestampForTvl: new UnixTime(1714618907),
     coingeckoPlatform: 'l3x',
   },
-  bridge: discovery.getContract('ERC20Bridge'),
+  bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   discoveryDrivenData: true,
