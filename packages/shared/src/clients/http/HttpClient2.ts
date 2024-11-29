@@ -10,15 +10,30 @@ export class HttpClient2 {
     url: string,
     init: RequestInit & { timeout?: number },
   ): Promise<json> {
-    const res = await fetch(url, {
-      ...init,
-      signal: AbortSignal.timeout(init.timeout ?? 10_000),
-    })
+    const timeout = init.timeout ?? 10000
+    const baseUrl = getBaseUrl(url)
 
-    if (!res.ok) {
-      throw new Error(`HTTP error: ${res.status}`)
+    try {
+      const res = await fetch(url, {
+        ...init,
+        signal: AbortSignal.timeout(timeout),
+      })
+
+      if (!res.ok) {
+        throw new Error(`HTTP error: ${res.status} at ${baseUrl}`)
+      }
+
+      return (await res.json()) as json
+    } catch (error) {
+      if ((error as Error).name === 'TimeoutError') {
+        throw new Error(`Timeout at ${baseUrl} after ${timeout}ms`)
+      }
+      throw error
     }
-
-    return (await res.json()) as json
   }
+}
+
+function getBaseUrl(url: string) {
+  const baseUrl = url.match(/^(https?:\/\/[^\/]+)/)?.[1]
+  return baseUrl ? baseUrl : 'NON_HTTP_URL'
 }
