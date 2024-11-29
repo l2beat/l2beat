@@ -7,10 +7,6 @@ import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 import { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('l3x', 'arbitrum')
-const upgradeability = {
-  upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
 
 export const l3x: Layer3 = orbitStackL3({
   createdAt: new UnixTime(1718370384), // 2024-06-14T13:06:24Z
@@ -47,9 +43,10 @@ export const l3x: Layer3 = orbitStackL3({
     minTimestampForTvl: new UnixTime(1714618907),
     coingeckoPlatform: 'l3x',
   },
-  bridge: discovery.getContract('Bridge'),
+  bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+  discoveryDrivenData: true,
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       includeInTotal: false,
@@ -57,7 +54,6 @@ export const l3x: Layer3 = orbitStackL3({
       tokens: '*',
       description:
         'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
-      ...upgradeability,
     }),
     // prelaunch escrows
     {
@@ -91,17 +87,6 @@ export const l3x: Layer3 = orbitStackL3({
       ...ESCROW.CANONICAL_EXTERNAL,
       tokens: '*',
       chain: 'blast',
-    },
-  ],
-  nonTemplatePermissions: [
-    {
-      name: 'RollupOwnerEOA',
-      accounts: discovery.getAccessControlRolePermission(
-        'UpgradeExecutor',
-        'EXECUTOR_ROLE',
-      ),
-      description:
-        'This address has the Executor role and can upgrade the rollup contracts (via ProxyAdmin) without delay, potentially stealing all funds.',
     },
   ],
 })
