@@ -14,7 +14,7 @@ import {
 interface Dependencies extends ClientCoreDependencies {
   beaconApiUrl: string
   rpcUrl: string
-  timeout: number | undefined
+  timeout?: number
 }
 
 export class BlobClient extends ClientCore {
