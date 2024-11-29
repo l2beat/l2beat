@@ -47,33 +47,7 @@ export const popapex: Layer3 = orbitStackL3({
     defaultCallsPerMinute: 5000,
     assessCount: subtractOne,
   },
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'ConduitMultisig2',
-      (() => {
-        const discoveredAdminOwner = discovery.getAddressFromValue(
-          'ProxyAdmin',
-          'owner',
-        )
-        const discoveredUpgradeExecutorAddy =
-          discovery.getContract('UpgradeExecutor').address
-        const discoveredExecutor = discovery.getAccessControlField(
-          'UpgradeExecutor',
-          'EXECUTOR_ROLE',
-        ).members[0]
-        const discoveredRollupOwnerMultisig =
-          discovery.getContract('ConduitMultisig2').address
-        assert(
-          discoveredAdminOwner === discoveredUpgradeExecutorAddy &&
-            discoveredExecutor === discoveredRollupOwnerMultisig,
-          'Update the permissions section if this changes.',
-        )
-        const description =
-          'Has the executor role of the UpgradeExecutor and indirectly owns the ProxyAdmin (can upgrade the whole system).'
-        return description
-      })(),
-    ),
-  ],
+  discoveryDrivenData: true,
   milestones: [
     {
       name: 'Proof of Play Apex halts for two days',
