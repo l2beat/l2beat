@@ -20,14 +20,12 @@ export function MultichainPermissionsSection({
   return (
     <ProjectSection {...sectionProps} includeChildrenIfUnderReview>
       {permissionedEntities && (
-        <h3 className="mt-4 font-bold">The DAC has the following members:</h3>
+        <h3 className="mt-4 font-bold">
+          The Committee has the following members:
+        </h3>
       )}
-      {permissionedEntities?.map((entity) => (
-        <PermissionedEntityEntry
-          key={entity.href}
-          {...entity}
-          className="my-2"
-        />
+      {permissionedEntities?.map((entity, i) => (
+        <PermissionedEntityEntry key={i} {...entity} className="my-2" />
       ))}
 
       <div className="my-4">

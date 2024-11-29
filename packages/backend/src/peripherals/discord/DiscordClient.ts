@@ -4,7 +4,6 @@ https://discord.com/developers/docs/getting-started#configuring-a-bot
 */
 
 import { HttpClient } from '@l2beat/shared'
-import { RequestInit } from 'node-fetch'
 import { Counter } from 'prom-client'
 
 import { RateLimiter } from '@l2beat/backend-tools'

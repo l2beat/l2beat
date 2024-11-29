@@ -1,8 +1,8 @@
 {
   "name": "popboss",
   "chain": "arbitrum",
-  "blockNumber": 269949668,
-  "configHash": "0x0d93843cde687d42bea21ea55c33524a8de0d8f9ea3904f586870d9edcfdd086",
+  "blockNumber": 279491790,
+  "configHash": "0x41798829e9b21a9d76c1184166d79f57ce3bb782db1bc5519e133dbeee6a1685",
   "contracts": [
     {
       "name": "UpgradeExecutor",
@@ -75,8 +75,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56"]
-      },
-      "derivedName": "UpgradeExecutor"
+      }
     },
     {
       "name": "RollupProxy",
@@ -149,12 +148,12 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 134,
+        "firstUnresolvedNode": 190,
         "inbox": "0xEe30EfcaF812d10e1EFE25E9458f76a39DAD3239",
         "isERC20Enabled": false,
         "lastStakeBlock": 20332772,
-        "latestConfirmed": 133,
-        "latestNodeCreated": 145,
+        "latestConfirmed": 189,
+        "latestNodeCreated": 200,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xa4270256B160C3Ebec2d6914a906c7EC38D8d072",
@@ -194,7 +193,6 @@
           "description": "Emitted on createChallenge() in RollupUserLogic."
         }
       },
-      "derivedName": "RollupProxy",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -327,13 +325,12 @@
           "0x6e988B94C12194A925D7802FE75891364C312477"
         ],
         "allowedOutboxList": ["0xa4270256B160C3Ebec2d6914a906c7EC38D8d072"],
-        "delayedMessageCount": 4296,
+        "delayedMessageCount": 6544,
         "rollup": "0x330F8fEB25f3427cABA32446728C36ae67f2135b",
         "sequencerInbox": "0x6eE94AD8057Fd7Ba4d47bb6278a261c8a9FD4E3f",
-        "sequencerMessageCount": 4147,
-        "sequencerReportedSubMessageCount": 19921101
-      },
-      "derivedName": "Bridge"
+        "sequencerMessageCount": 6369,
+        "sequencerReportedSubMessageCount": 28932339
+      }
     },
     {
       "name": "ValidatorUtils",
@@ -430,7 +427,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 4147,
+        "batchCount": 6369,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x75EFAE926BcB72433C70fbfA76588F16338397De"],
         "bridge": "0x53D82686BC9827fEc03bcEe661B37b855A18EcA9",
@@ -460,7 +457,7 @@
         "rollup": "0x330F8fEB25f3427cABA32446728C36ae67f2135b",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 4295,
+        "totalDelayedMessagesRead": 6543,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -468,8 +465,7 @@
         "maxTimeVariation": {
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
-      },
-      "derivedName": "SequencerInbox"
+      }
     },
     {
       "name": "ConduitMultisig2",
@@ -575,7 +571,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 8 (25%)",
-        "nonce": 41,
+        "nonce": 43,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -638,8 +634,7 @@
         "l2ToL1Timestamp": 0,
         "OUTBOX_VERSION": 2,
         "rollup": "0x330F8fEB25f3427cABA32446728C36ae67f2135b"
-      },
-      "derivedName": "Outbox"
+      }
     },
     {
       "name": "OneStepProofEntry",
@@ -724,8 +719,7 @@
         "maxDataSize": 104857,
         "paused": false,
         "sequencerInbox": "0x6eE94AD8057Fd7Ba4d47bb6278a261c8a9FD4E3f"
-      },
-      "derivedName": "Inbox"
+      }
     },
     {
       "name": "ChallengeManager",
@@ -770,8 +764,7 @@
         "resultReceiver": "0x330F8fEB25f3427cABA32446728C36ae67f2135b",
         "sequencerInbox": "0x6eE94AD8057Fd7Ba4d47bb6278a261c8a9FD4E3f",
         "totalChallengesCreated": 0
-      },
-      "derivedName": "ChallengeManager"
+      }
     }
   ],
   "eoas": [
@@ -784,7 +777,7 @@
         {
           "permission": "sequence",
           "target": "0x6eE94AD8057Fd7Ba4d47bb6278a261c8a9FD4E3f",
-          "description": "can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
         }
       ]
     },
@@ -1428,7 +1421,7 @@
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
     "orbitstack/RollupEventInbox": "0x0608b35e1df8a51677a6392869e50b60a1ff7137f71f40bddf83143a5ef640c1",
     "orbitstack/RollupProxy": "0x88165b83156dbb5b288912a52adc278d223904d0c933472cb3950a05ba456170",
-    "orbitstack/SequencerInbox": "0x58bf3ad8ac9dc1181ff793e330641c545ee2d9558fce65d2ee39d483c2490494",
+    "orbitstack/SequencerInbox": "0x88542722d1f831549b0b3c814ee5d973fed5780765ae1a05e607dffef0df3154",
     "orbitstack/UpgradeExecutor": "0xa8c2617950ce46d982abd852226ebcc1aacaf9c8c7daeda793b53a790eced777"
   }
 }

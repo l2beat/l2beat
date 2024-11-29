@@ -10,7 +10,7 @@ import {
 } from '@l2beat/shared-pure'
 import { groupBy, range } from 'lodash'
 import { env } from '~/env'
-import { db } from '~/server/database'
+import { getDb } from '~/server/database'
 import { getConfigurationsSyncedUntil } from '../../utils/get-configurations-synced-until'
 import {
   type TrackedTxsProject,
@@ -34,6 +34,7 @@ export async function getLiveness() {
 }
 
 async function getLivenessData() {
+  const db = getDb()
   const projects: LivenessResponse = {}
 
   const configurations = await db.indexerConfiguration.getByIndexerId(

@@ -43,7 +43,7 @@ export const FetchFlatSources = command({
       return
     }
 
-    const flat = await fetchFlatSources(logger, args.backendUrl)
+    const flat = await fetchFlatSources(args.backendUrl)
 
     assert(
       config.discoveryPath !== undefined || args.outputPath !== undefined,

@@ -36,7 +36,7 @@
         "permissions": [
           {
             "type": "sequence",
-            "description": "can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+            "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
           }
         ]
       },

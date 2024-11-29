@@ -29,6 +29,7 @@ describe(isAnySectionUnderReview.name, () => {
     config: mockObject<Layer2Config>(),
     stage: mockObject<StageConfig>({ stage: 'Stage 1' }),
   }
+
   it('returns false', () => {
     expect(isAnySectionUnderReview(mockProject)).toEqual(false)
   })

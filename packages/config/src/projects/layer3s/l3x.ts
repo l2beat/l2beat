@@ -1,15 +1,12 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 import { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('l3x', 'arbitrum')
-const upgradeability = {
-  upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
 
 export const l3x: Layer3 = orbitStackL3({
   createdAt: new UnixTime(1718370384), // 2024-06-14T13:06:24Z
@@ -49,6 +46,7 @@ export const l3x: Layer3 = orbitStackL3({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+  discoveryDrivenData: true,
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       includeInTotal: false,
@@ -56,21 +54,13 @@ export const l3x: Layer3 = orbitStackL3({
       tokens: '*',
       description:
         'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
-      ...upgradeability,
     }),
     // prelaunch escrows
     {
       address: EthereumAddress('0x0809F0Ee8e72b2e2069e0f618cBbCB2399D452c7'),
       sinceTimestamp: new UnixTime(1713781465),
       includeInTotal: false,
-      source: 'external',
-      bridgedUsing: {
-        bridges: [
-          {
-            name: 'Canonically (external escrow)',
-          },
-        ],
-      },
+      ...ESCROW.CANONICAL_EXTERNAL,
       tokens: '*',
       chain: 'arbitrum',
     },
@@ -78,14 +68,7 @@ export const l3x: Layer3 = orbitStackL3({
       address: EthereumAddress('0x0809F0Ee8e72b2e2069e0f618cBbCB2399D452c7'),
       sinceTimestamp: new UnixTime(1713781465),
       includeInTotal: false,
-      source: 'external',
-      bridgedUsing: {
-        bridges: [
-          {
-            name: 'Canonically (external escrow)',
-          },
-        ],
-      },
+      ...ESCROW.CANONICAL_EXTERNAL,
       tokens: '*',
       chain: 'linea',
     },
@@ -93,14 +76,7 @@ export const l3x: Layer3 = orbitStackL3({
       address: EthereumAddress('0x0809F0Ee8e72b2e2069e0f618cBbCB2399D452c7'),
       sinceTimestamp: new UnixTime(1713781465),
       includeInTotal: false,
-      source: 'external',
-      bridgedUsing: {
-        bridges: [
-          {
-            name: 'Canonically (external escrow)',
-          },
-        ],
-      },
+      ...ESCROW.CANONICAL_EXTERNAL,
       tokens: '*',
       chain: 'mode',
     },
@@ -108,27 +84,9 @@ export const l3x: Layer3 = orbitStackL3({
       address: EthereumAddress('0x0809F0Ee8e72b2e2069e0f618cBbCB2399D452c7'),
       sinceTimestamp: new UnixTime(1713781465),
       includeInTotal: false,
-      source: 'external',
-      bridgedUsing: {
-        bridges: [
-          {
-            name: 'Canonically (external escrow)',
-          },
-        ],
-      },
+      ...ESCROW.CANONICAL_EXTERNAL,
       tokens: '*',
       chain: 'blast',
-    },
-  ],
-  nonTemplatePermissions: [
-    {
-      name: 'RollupOwnerEOA',
-      accounts: discovery.getAccessControlRolePermission(
-        'UpgradeExecutor',
-        'EXECUTOR_ROLE',
-      ),
-      description:
-        'This address has the Executor role and can upgrade the rollup contracts (via ProxyAdmin) without delay, potentially stealing all funds.',
     },
   ],
 })

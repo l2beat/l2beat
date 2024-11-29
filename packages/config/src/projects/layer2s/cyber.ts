@@ -50,7 +50,11 @@ export const cyber: Layer2 = opStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  daProvider: DACHALLENGES_DA_PROVIDER(daChallengeWindow, daResolveWindow),
+  daProvider: DACHALLENGES_DA_PROVIDER(
+    daChallengeWindow,
+    daResolveWindow,
+    'https://github.com/ethereum-optimism/optimism/releases/tag/v1.9.4',
+  ), // source: altlayer on telegram
   chainConfig: {
     name: 'cyber',
     chainId: 7560,

@@ -1,3 +1,62 @@
+Generated with discovered.json: 0x1c2ac7625f15b79882eeb33d996a7925f7977340
+
+# Diff at Thu, 28 Nov 2024 10:54:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cba708dac9336030203b425721a33c9db2b14313 block: 19719123
+- current block number: 21285734
+
+## Description
+
+Minor upgrade of the libraries used in skale contracts.
+
+## Watched changes
+
+```diff
+    contract CommunityPool (0x588801cA36558310D91234aFC2511502282b1621) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7b0e65347fa56a4d48ac991663275c6d3bd6cda491d2b19e0a25927709c7e0cf"
++        "0xf86e44103e5d07e9f6a25146ea2cfc4946eba19bbb8731b704b9f5047202b6b7"
+      values.$implementation:
+-        "0xffC647d4Cef8FB8b365e6B11a0156972e9343f6A"
++        "0x3417B0DD0FBCC22c3111a083992dB8bABaB9e88a"
+      values.$pastUpgrades.7:
++        ["2024-11-27T15:17:59.000Z","0x0b3d111d1bb272489d650a99c3bb9cae63a18bc85b51b76bf8d2b49e9fedbfc7",["0x3417B0DD0FBCC22c3111a083992dB8bABaB9e88a"]]
+      values.$upgradeCount:
+-        7
++        8
+    }
+```
+
+```diff
+    contract MessageProxyForMainnet (0x8629703a9903515818C2FeB45a6f6fA5df8Da404) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x38c7c002f7f26b4053f16644ee44ad6d50b4f2df5daf198fedfc8adc2e14589f"
++        "0x35e9599e33157eeee63fd0fb0b76fbb7d42b14c7f969abc8b765417abbae91d5"
+      values.$implementation:
+-        "0x64e4cd4Fe42eAB98AcD15fddaC657B1537aa5190"
++        "0x0AE92a5105111281151b980A0aD680b890bf1944"
+      values.$pastUpgrades.9:
++        ["2024-11-27T15:17:59.000Z","0x0b3d111d1bb272489d650a99c3bb9cae63a18bc85b51b76bf8d2b49e9fedbfc7",["0x0AE92a5105111281151b980A0aD680b890bf1944"]]
+      values.$upgradeCount:
+-        9
++        10
+      values.version:
+-        "2.1.0"
++        "2.2.0"
+    }
+```
+
+## Source code changes
+
+```diff
+.../CommunityPool/CommunityPool.sol                | 614 ++++++++++++++++++---
+ .../MessageProxyForMainnet.sol                     | 611 +++++++++++++++++---
+ 2 files changed, 1076 insertions(+), 149 deletions(-)
+```
+
 Generated with discovered.json: 0x3502139fb10ecb41cc082f8471baa95ee8b2066c
 
 # Diff at Mon, 21 Oct 2024 11:10:20 GMT:

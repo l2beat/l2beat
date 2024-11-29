@@ -34,66 +34,6 @@
       },
       "ignoreRelatives": ["NOVA_STAKERS"]
     },
-    "RollupProxy": {
-      "extends": "orbitstack/RollupProxy"
-    },
-    "SequencerInbox": {
-      "ignoreMethods": ["inboxAccs"],
-      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
-      "fields": {
-        "sequencerVersion": {
-          "handler": {
-            "type": "arbitrumSequencerVersion"
-          }
-        },
-        "keySetUpdates": {
-          "handler": {
-            "type": "eventCount",
-            "topics": [
-              // SetValidKeyset(bytes32,bytes)
-              "0xabca9b7986bc22ad0160eb0cb88ae75411eacfba4052af0b457a9335ef655722"
-            ]
-          }
-        },
-        "dacKeyset": {
-          "handler": {
-            "type": "arbitrumDACKeyset"
-          }
-        },
-        "batchPosters": {
-          "target": {
-            "permissions": [{ "type": "sequence" }]
-          },
-          "handler": {
-            "type": "arbitrumActors",
-            "actorType": "batchPoster"
-          }
-        }
-      }
-    },
-    "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58": {
-      "ignoreMethods": ["isSpent", "spent"]
-    },
-    "0xA59075221b50C598aED0Eae0bB9869639513af0D": {
-      "ignoreMethods": ["challenges"]
-    },
-    "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd": {
-      "ignoreMethods": ["delayedInboxAccs", "sequencerInboxAccs"],
-      "ignoreInWatchMode": [
-        "delayedMessageCount",
-        "sequencerMessageCount",
-        "sequencerReportedSubMessageCount"
-      ]
-    },
-    "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd": {
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
-        }
-      }
-    },
     "L1Timelock": {
       "ignoreRelatives": ["governanceChainInbox", "l2Timelock"],
       "fields": {
@@ -103,16 +43,6 @@
           }
         }
       }
-    },
-    // L1CustomGateway
-    "0x23122da8C581AA7E0d07A36Ff1f16F799650232f": {
-      "ignoreRelatives": ["counterpartGateway"]
-    },
-    "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48": {
-      "ignoreRelatives": ["counterpartGateway"]
-    },
-    "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf": {
-      "ignoreRelatives": ["counterpartGateway"]
     },
     // Arbitrum One Bridge
     "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": {

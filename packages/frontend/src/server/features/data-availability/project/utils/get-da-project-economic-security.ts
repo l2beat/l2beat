@@ -2,7 +2,7 @@ import { type DaLayer } from '@l2beat/config'
 import { daEconomicSecurityMeta } from '@l2beat/config/build/src/projects/other/da-beat/types/DaEconomicSecurity'
 import { round } from 'lodash'
 import { env } from '~/env'
-import { db } from '~/server/database'
+import { getDb } from '~/server/database'
 
 export type EconomicSecurityData =
   | {
@@ -17,6 +17,7 @@ export async function getDaProjectEconomicSecurity(daLayer: DaLayer) {
   if (env.MOCK) {
     return getMockDaProjectEconomicSecurity(daLayer)
   }
+  const db = getDb()
 
   if (daLayer.kind !== 'PublicBlockchain' || !daLayer.economicSecurity) {
     return undefined

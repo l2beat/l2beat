@@ -16,6 +16,7 @@ describe(sumValuesPerSource.name, () => {
       native: 30000000n,
     })
   })
+
   it('correctly sums total TVL', () => {
     const result = sumValuesPerSource(dataSet, {
       forTotal: true,
@@ -28,6 +29,7 @@ describe(sumValuesPerSource.name, () => {
       native: 27000000n,
     })
   })
+
   it('correctly sums project TVL excluding associated tokens', () => {
     const result = sumValuesPerSource(dataSet, {
       forTotal: false,
@@ -40,6 +42,7 @@ describe(sumValuesPerSource.name, () => {
       native: 24000000n,
     })
   })
+
   it('correctly sums total TVL excluding associated tokens', () => {
     const result = sumValuesPerSource(dataSet, {
       forTotal: true,

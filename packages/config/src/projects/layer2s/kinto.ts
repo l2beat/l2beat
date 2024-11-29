@@ -8,6 +8,7 @@ import { orbitStackL2 } from './templates/orbitStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('kinto')
+const _l2discovery = new ProjectDiscovery('kinto', 'kinto')
 
 // Validators: https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/kinto-validators
 // SC: https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/security-council
@@ -20,7 +21,6 @@ export const kinto: Layer2 = orbitStackL2({
   display: {
     name: 'Kinto',
     slug: 'kinto',
-    headerWarning: '',
     description:
       'Kinto is an Orbit stack L2 with account abstraction and KYC enabled for all users, supporting both modern financial institutions and decentralized protocols.',
     links: {
@@ -52,6 +52,14 @@ export const kinto: Layer2 = orbitStackL2({
     },
     // this is the full launch of their mainnet, should be negligible socket bridged tvl before
     minTimestampForTvl: UnixTime.fromDate(new Date('2024-05-21T00:00:01Z')),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0x2cc0188fA85FD8Ce748C7Df6066873fdcfaD95e9'),
+        batchSize: 150,
+        sinceBlock: 218561,
+        version: '3',
+      },
+    ],
   },
   discoveryDrivenData: true,
   isNodeAvailable: true,

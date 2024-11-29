@@ -1,4 +1,143 @@
-Generated with discovered.json: 0x8e7ee7edef9b34d94c5ab670e22c4cf20b871c66
+Generated with discovered.json: 0x642bdac5a5a12abf39b0acf030201a7865a810fb
+
+# Diff at Fri, 29 Nov 2024 09:31:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c60f4ba86fcd7b86d6876d1634b83081095f33d7 block: 275817646
+- current block number: 275817646
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 275817646 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.2:
++        {"permission":"validate","target":"0x152FFeF04881BD1390D2A52009f42d56EaC7AA03","via":[]}
+      issuedPermissions.1.permission:
+-        "validate"
++        "upgrade"
+      issuedPermissions.1.target:
+-        "0x152FFeF04881BD1390D2A52009f42d56EaC7AA03"
++        "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"
+      issuedPermissions.1.via.0:
++        {"address":"0x92ff91308F5f1036435f23c2F4F136Bb7475425d","delay":0}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.via.0.description:
++        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract Caldera Multisig (0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) {
+    +++ description: None
+      receivedPermissions.10:
++        {"permission":"upgrade","target":"0xE1d32C985825562edAa906fAC39295370Db72195","via":[{"address":"0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"},{"address":"0x92ff91308F5f1036435f23c2F4F136Bb7475425d"}]}
+      receivedPermissions.9.target:
+-        "0xE1d32C985825562edAa906fAC39295370Db72195"
++        "0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"
+      receivedPermissions.8.target:
+-        "0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"
++        "0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF"
+      receivedPermissions.7.target:
+-        "0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF"
++        "0x9676D55Ccd46ce72235b16bA645008D1D3350B14"
+      receivedPermissions.6.target:
+-        "0x9676D55Ccd46ce72235b16bA645008D1D3350B14"
++        "0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
+      receivedPermissions.5.target:
+-        "0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
++        "0x7BB97862CA342B5fbe2AE2cF2E954F6327f587b1"
+      receivedPermissions.4.target:
+-        "0x7BB97862CA342B5fbe2AE2cF2E954F6327f587b1"
++        "0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80"
+      receivedPermissions.3.target:
+-        "0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80"
++        "0x235000876bd58336C802B3546Fc0250f285fCc79"
+      receivedPermissions.2.target:
+-        "0x235000876bd58336C802B3546Fc0250f285fCc79"
++        "0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2"
+      receivedPermissions.1.target:
+-        "0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2"
++        "0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0"
+      receivedPermissions.1.via.1:
+-        {"address":"0x92ff91308F5f1036435f23c2F4F136Bb7475425d"}
+      receivedPermissions.1.via.0.address:
+-        "0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
++        "0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      receivedPermissions.0.description:
++        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x92ff91308F5f1036435f23c2F4F136Bb7475425d) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.2:
++        {"permission":"upgrade","target":"0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0"}
+      directlyReceivedPermissions.1.permission:
+-        "upgrade"
++        "configure"
+      directlyReceivedPermissions.1.description:
++        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+Generated with discovered.json: 0xcac9e38c0dff2a66afe80cdfbc7d05a6c708d4ad
+
+# Diff at Thu, 28 Nov 2024 11:03:26 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@4e0645053ebfcfcef2e7fd8c8410bad53373a3c4 block: 275817646
+- current block number: 275817646
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 275817646 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.2:
+-        {"permission":"validate","target":"0x152FFeF04881BD1390D2A52009f42d56EaC7AA03","via":[]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "validate"
+      issuedPermissions.1.target:
+-        "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"
++        "0x152FFeF04881BD1390D2A52009f42d56EaC7AA03"
+      issuedPermissions.1.via.0:
+-        {"address":"0x92ff91308F5f1036435f23c2F4F136Bb7475425d","delay":0}
+      issuedPermissions.0.permission:
+-        "configure"
++        "upgrade"
+      issuedPermissions.0.target:
+-        "0x0000000000000000000000000000000000000000"
++        "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"
+      issuedPermissions.0.via.0:
++        {"address":"0x92ff91308F5f1036435f23c2F4F136Bb7475425d","delay":0}
+    }
+```
+
+Generated with discovered.json: 0xeb0313172f93da33ef7c13adfb7eb00e14a6b048
 
 # Diff at Mon, 18 Nov 2024 16:55:49 GMT:
 

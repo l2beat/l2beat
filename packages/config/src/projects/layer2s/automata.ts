@@ -49,6 +49,10 @@ export const automata: Layer2 = opStackL2({
   rpcUrl: 'https://rpc.ata.network/',
   discovery,
   genesisTimestamp: new UnixTime(1721183063),
-  daProvider: DACHALLENGES_DA_PROVIDER(daChallengeWindow, daResolveWindow),
+  daProvider: DACHALLENGES_DA_PROVIDER(
+    daChallengeWindow,
+    daResolveWindow,
+    'https://github.com/ethereum-optimism/optimism/releases/tag/v1.7.7',
+  ), // source: altlayer on telegram
   discoveryDrivenData: true,
 })

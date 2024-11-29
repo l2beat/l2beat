@@ -5043,6 +5043,20 @@
       "supply": "zero"
     },
     {
+      "name": "Zircuit",
+      "coingeckoId": "zircuit",
+      "address": "0xfd418e42783382E86Ae91e445406600Ba144D162",
+      "symbol": "ZRC",
+      "decimals": 18,
+      "deploymentTimestamp": 1722714659,
+      "coingeckoListingTimestamp": 1732492800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35960/large/zircuit_token_icon_2.png?1732502352",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "zkLend Token",
       "coingeckoId": "zklend-2",
       "address": "0xb2606492712D311be8f41d940AFE8CE742A52D44",
@@ -8089,7 +8103,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Chainlink CCIP"
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
           }
         ]
       }
@@ -8808,6 +8823,28 @@
           {
             "name": "Transporter",
             "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Wrapped SOL",
+      "coingeckoId": "solana",
+      "address": "0x2bcC6D6CdBbDC0a4071e48bb3B969b06B3330c07",
+      "symbol": "SOL",
+      "decimals": 9,
+      "deploymentTimestamp": 1671137208,
+      "coingeckoListingTimestamp": 1586563200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/4128/large/solana.png?1718769756",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole Token Bridge",
+            "slug": "portal"
           }
         ]
       }

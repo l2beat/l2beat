@@ -13,13 +13,6 @@
         "0x0e469131222e34f50c12fe74205439de113446461e0fbd31fff1a43b081dbbeb"
       ],
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0x0000000000000000000000000000000000000000",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["latestBlock", "latestAuthoritySetId"],
       "sinceTimestamp": 1720128227,
       "values": {
@@ -241,7 +234,7 @@
   "eoas": [
     {
       "address": "0x0000000000000000000000000000000000000000",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "target": "0x02993cdC11213985b9B13224f3aF289F03bf298d"

@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x08be3bca758a6a558eaa261af2e07743cd31e7ae
+
+# Diff at Thu, 28 Nov 2024 10:09:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cba708dac9336030203b425721a33c9db2b14313 block: 21234596
+- current block number: 21285509
+
+## Description
+
+Three signers removed, ALL others changed in Connext Multisig.
+
+## Watched changes
+
+```diff
+    contract Connext Multisig (0x4d50a469fc788a3c0CdC8Fd67868877dCb246625) {
+    +++ description: None
+      values.$members.11:
+-        "0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f"
+      values.$members.10:
+-        "0xf8d8aF083aC452b05b0D2eb4499AD900324b5754"
+      values.$members.9:
+-        "0x1b526192C541DE6E23D73b4Afc4b6B45A75aeAdD"
+      values.$members.8:
+-        "0x320CBa820f33251d480Dcb79F7a9b1cc757aC12e"
++        "0xDbDcFbA39D6ace2DaC9Cf5E8fc0Fe80a074FD81b"
+      values.$members.7:
+-        "0xC832bB8015762B4857459551057EB61c68B93608"
++        "0x2eEd1440842990Fa61F0c396f981375Fa6004131"
+      values.$members.6:
+-        "0xe4d19c67ca0E9E3888158062De24321a0B272e73"
++        "0xBE2Ac45e75c14e9EEf9712a94Dce355f0151f5B1"
+      values.$members.4:
+-        "0x43A257c61e9Ef4750e426eC0770589509469b156"
++        "0x7AE8b0D6353F0931EB9FaC0A3562fA9e4C6Ff933"
+      values.$members.2:
+-        "0x450BCD84a040E6975a8092114A09cD37fA140873"
++        "0x334CE923420ff1aA4f272e92BF68013D092aE7B4"
+      values.$members.1:
+-        "0xc840e73B856f52E5491d6016daf5C7AE5e6beECD"
++        "0x3e11aa01A7eFdD428487ae75F5F4Fe0e5CeCeF06"
+      values.$threshold:
+-        8
++        7
+      values.multisigThreshold:
+-        "8 of 12 (67%)"
++        "7 of 9 (78%)"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xBE2Ac45e75c14e9EEf9712a94Dce355f0151f5B1)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe.sol                                 |   0
+ .../Proxy.p.sol                                    |   0
+ .../GnosisSafe.sol                                 | 953 +++++++++++++++++++++
+ .../GnosisSafeProxy.p.sol                          |  35 +
+ 4 files changed, 988 insertions(+)
+```
+
 Generated with discovered.json: 0x5eee3971ab4144323b5d80fcc9ca4a630463748a
 
 # Diff at Thu, 21 Nov 2024 07:24:43 GMT:

@@ -5,6 +5,7 @@ import { ContentWrapper } from '~/components/content-wrapper'
 import { FullPageHeader } from '~/components/full-page-header'
 import { Article } from '~/components/markdown/article'
 import { getCollection, getCollectionEntry } from '~/content/get-collection'
+import { env } from '~/env'
 import { roboto_serif } from '~/fonts'
 import { cn } from '~/utils/cn'
 import { getDefaultMetadata } from '~/utils/metadata'
@@ -20,8 +21,9 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  const publications = getCollection('publications')
+  if (env.VERCEL_ENV === 'preview') return []
 
+  const publications = getCollection('publications')
   return publications.map((publication) => ({
     slug: publication.id,
   }))

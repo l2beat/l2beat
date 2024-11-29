@@ -1,5 +1,6 @@
 import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 
+import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { Upgradeability, zkStackL2 } from './templates/zkStack'
@@ -139,14 +140,7 @@ export const zksyncera: Layer2 = zkStackL2({
       address: EthereumAddress('0x41527B2d03844dB6b0945f25702cB958b6d55989'),
       sinceTimestamp: new UnixTime(1698058151),
       tokens: ['wstETH'],
-      source: 'external',
-      bridgedUsing: {
-        bridges: [
-          {
-            name: 'Canonically (external escrow)',
-          },
-        ],
-      },
+      ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'Bridge for depositing wrapped stETH (Lido) to ZKsync Era. These deposits and withdrawals do not go through the new shared BridgeHub.',
       upgradableBy: ['Lido (Lido Agent)'],

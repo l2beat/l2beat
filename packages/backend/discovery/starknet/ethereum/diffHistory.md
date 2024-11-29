@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x0b06620a2094a6e93f038629a2befd2aedf38699
+
+# Diff at Thu, 28 Nov 2024 10:33:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cba708dac9336030203b425721a33c9db2b14313 block: 21064813
+- current block number: 21285629
+
+## Description
+
+Starknet [upgrade v0.13.3](https://community.starknet.io/t/starknet-v0-13-3/115053) with new agggregator and StarknetOS programHashes.
+
+## Watched changes
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: None
+      values.aggregatorProgramHash:
+-        "1161178844461337253856226043908368523817098764221830529880464854589141231910"
++        "15787695375210609250491147414005894154890873413229882671403677761527504080"
++++ description: The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.
++++ severity: HIGH
+      values.programHash:
+-        "853638403225561750106379562222782223909906501242604214771127703946595519856"
++        "2397984267054479079853548842566103781972463965746662494980785692480538410509"
+      values.programHashHistory.8:
++        "853638403225561750106379562222782223909906501242604214771127703946595519856"
+    }
+```
+
 Generated with discovered.json: 0xfd3de3014f3317e7380259ce06d3bf6eda73c83f
 
 # Diff at Mon, 21 Oct 2024 11:10:52 GMT:
