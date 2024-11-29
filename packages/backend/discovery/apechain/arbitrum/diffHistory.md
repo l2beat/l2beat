@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x3119fc0fbdeac375f0371d6a26715c44fbd1727a
+Generated with discovered.json: 0x074b9d9bdd7cad50bfcff3657c16294b351517c0
 
-# Diff at Fri, 29 Nov 2024 08:25:57 GMT:
+# Diff at Fri, 29 Nov 2024 09:31:36 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@c60f4ba86fcd7b86d6876d1634b83081095f33d7 block: 276713373
@@ -34,52 +34,9 @@ discovery. Values are for block 276713373 (main branch discovery), not current.
 ```diff
     contract ApeChainMultisig (0x2B1FbeE3c7D278bFD9E179893FF304fE49FA7DDF) {
     +++ description: None
-      receivedPermissions.8:
--        {"permission":"upgrade","target":"0xf383814AE1eD316ed7d6FeA28810C77E8a15A49F","via":[{"address":"0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507"},{"address":"0xe032d15909e90f9A36901abB08944653e9E87d72"}]}
-      receivedPermissions.7.target:
--        "0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C"
-+        "0xf383814AE1eD316ed7d6FeA28810C77E8a15A49F"
-      receivedPermissions.6.target:
--        "0xe032d15909e90f9A36901abB08944653e9E87d72"
-+        "0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C"
-      receivedPermissions.5.target:
--        "0xAB2182C8c9a9d853Cf06A77967D2b3971A453ee1"
-+        "0xe032d15909e90f9A36901abB08944653e9E87d72"
-      receivedPermissions.4.target:
--        "0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8"
-+        "0xAB2182C8c9a9d853Cf06A77967D2b3971A453ee1"
-      receivedPermissions.3.target:
--        "0x4F405BA65291063d8A524c2bDf55d4e67405c2aF"
-+        "0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8"
-      receivedPermissions.2.target:
--        "0x374de579AE15aD59eD0519aeAf1A23F348Df259c"
-+        "0x4F405BA65291063d8A524c2bDf55d4e67405c2aF"
-      receivedPermissions.2.via.1:
-+        {"address":"0xe032d15909e90f9A36901abB08944653e9E87d72"}
-      receivedPermissions.2.via.0.address:
--        "0xe032d15909e90f9A36901abB08944653e9E87d72"
-+        "0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507"
-      receivedPermissions.1.target:
--        "0x1B98e4ED82Ee1a91A65a38C690e2266364064D15"
-+        "0x374de579AE15aD59eD0519aeAf1A23F348Df259c"
-      receivedPermissions.1.via.1:
--        {"address":"0xe032d15909e90f9A36901abB08944653e9E87d72"}
-      receivedPermissions.1.via.0.address:
--        "0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507"
-+        "0xe032d15909e90f9A36901abB08944653e9E87d72"
-      receivedPermissions.0.permission:
--        "configure"
-+        "upgrade"
-      receivedPermissions.0.target:
--        "0x374de579AE15aD59eD0519aeAf1A23F348Df259c"
-+        "0x1B98e4ED82Ee1a91A65a38C690e2266364064D15"
       receivedPermissions.0.description:
 -        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
-      receivedPermissions.0.via.1:
-+        {"address":"0xe032d15909e90f9A36901abB08944653e9E87d72"}
-      receivedPermissions.0.via.0.address:
--        "0xe032d15909e90f9A36901abB08944653e9E87d72"
-+        "0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507"
++        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
     }
 ```
 
@@ -89,21 +46,9 @@ discovery. Values are for block 276713373 (main branch discovery), not current.
       template:
 -        "orbitstack/RollupProxy"
 +        "orbitstack/RollupProxy_fastConfirm"
-      issuedPermissions.2:
--        {"permission":"validate","target":"0xAcB7D670bb95144B88a5Cd1883B87bC5021FD10a","via":[]}
-      issuedPermissions.1.permission:
--        "upgrade"
-+        "validate"
-      issuedPermissions.1.target:
--        "0x2B1FbeE3c7D278bFD9E179893FF304fE49FA7DDF"
-+        "0xAcB7D670bb95144B88a5Cd1883B87bC5021FD10a"
-      issuedPermissions.1.via.0:
--        {"address":"0xe032d15909e90f9A36901abB08944653e9E87d72","delay":0}
-      issuedPermissions.0.permission:
--        "configure"
-+        "upgrade"
       issuedPermissions.0.via.0.description:
 -        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
       fieldMeta.minimumAssertionPeriod:
 +        {"description":"Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "}
     }
@@ -142,13 +87,9 @@ discovery. Values are for block 276713373 (main branch discovery), not current.
 ```diff
     contract UpgradeExecutor (0xe032d15909e90f9A36901abB08944653e9E87d72) {
     +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
-      directlyReceivedPermissions.2:
--        {"permission":"upgrade","target":"0x374de579AE15aD59eD0519aeAf1A23F348Df259c"}
-      directlyReceivedPermissions.1.permission:
--        "configure"
-+        "upgrade"
       directlyReceivedPermissions.1.description:
 -        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
     }
 ```
 
