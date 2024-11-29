@@ -1,53 +1,25 @@
-import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import { utils } from 'ethers'
-import { z } from 'zod'
 
-import { assert } from '@l2beat/shared-pure'
-import { HttpClient } from '../HttpClient'
+import { assert, json } from '@l2beat/shared-pure'
+import { ClientCore, ClientCoreDependencies } from '../ClientCore'
+import {
+  Blob,
+  BlobsInBlock,
+  BlockSidecarSchema,
+  BlockWithParentBeaconBlockRootSchema,
+  ErrorSchema,
+  TxWithBlobsSchema,
+} from './types'
 
-interface BlobClientOptions {
-  callsPerMinute: number | undefined
+interface Dependencies extends ClientCoreDependencies {
+  beaconApiUrl: string
+  rpcUrl: string
   timeout: number | undefined
 }
 
-export class BlobClient {
-  timeout: number
-
-  constructor(
-    private readonly beaconApiUrl: string,
-    private readonly rpcUrl: string,
-    private readonly httpClient: HttpClient,
-    private readonly logger: Logger,
-    options: BlobClientOptions,
-  ) {
-    this.logger = this.logger.for(this)
-    this.timeout = options.timeout ?? 10_000
-    const rateLimiter = new RateLimiter({
-      callsPerMinute: options.callsPerMinute ?? 60,
-    })
-    this.call = rateLimiter.wrap(this.call.bind(this))
-    this.callRpc = rateLimiter.wrap(this.callRpc.bind(this))
-  }
-
-  static create(
-    services: {
-      httpClient: HttpClient
-      logger: Logger
-    },
-    options: {
-      beaconApiUrl: string
-      rpcUrl: string
-      callsPerMinute: number | undefined
-      timeout: number | undefined
-    },
-  ): BlobClient {
-    return new BlobClient(
-      options.beaconApiUrl,
-      options.rpcUrl,
-      services.httpClient,
-      services.logger,
-      options,
-    )
+export class BlobClient extends ClientCore {
+  constructor(private readonly $: Dependencies) {
+    super({ ...$ })
   }
 
   async getRelevantBlobs(txHash: string): Promise<BlobsInBlock> {
@@ -87,17 +59,15 @@ export class BlobClient {
   }
 
   private async call(endpoint: string): Promise<unknown> {
-    const url = `${this.beaconApiUrl}${endpoint}`
+    const url = `${this.$.beaconApiUrl}${endpoint}`
 
-    const response = await this.httpClient.fetch(url, {
+    return await this.fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'gzip',
       },
-      timeout: this.timeout,
+      timeout: this.$.timeout,
     })
-    const json = (await response.json()) as unknown
-    return json
   }
 
   private async getTransaction(txHash: string): Promise<{
@@ -116,7 +86,7 @@ export class BlobClient {
   }
 
   private async getBlockParentBeaconRoot(blockNumber: number): Promise<string> {
-    this.logger.debug(`Getting block ${blockNumber}`, { blockNumber })
+    this.$.logger.debug(`Getting block ${blockNumber}`, { blockNumber })
     const result = await this.callRpc('eth_getBlockByNumber', [
       '0x' + blockNumber.toString(16),
       false,
@@ -124,7 +94,7 @@ export class BlobClient {
     const parsed = BlockWithParentBeaconBlockRootSchema.safeParse(result)
 
     if (!parsed.success) {
-      this.logger.error('Error downloading block', {
+      this.$.logger.error('Error downloading block', {
         blockNumber,
         error: parsed.error,
         result,
@@ -140,7 +110,7 @@ export class BlobClient {
     params?: (string | boolean)[],
   ): Promise<unknown> {
     const id = Math.floor(Math.random() * 1000)
-    const response = await this.httpClient.fetch(this.rpcUrl, {
+    return await this.fetch(this.$.rpcUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -152,10 +122,22 @@ export class BlobClient {
         params,
       }),
     })
+  }
 
-    const json = (await response.json()) as unknown
-    const parsed = RpcResultSchema.parse(json)
-    return parsed.result
+  override validateResponse(response: json): {
+    success: boolean
+    message?: string
+  } {
+    const parsedError = ErrorSchema.safeParse(response)
+
+    if (parsedError.success) {
+      this.$.logger.warn(`Response validation error`, {
+        error: parsedError.data,
+      })
+      return { success: false }
+    }
+
+    return { success: true }
   }
 
   // this is very hacky, but it's the only way i know to get the beacon block id
@@ -179,37 +161,3 @@ function filterOutIrrelevant(
 function kzgCommitmentToVersionedHash(commitment: string): string {
   return '0x01' + utils.sha256(commitment).substring(4)
 }
-
-const Blob = z.object({
-  kzg_commitment: z.string(),
-  data: z.string(),
-})
-export type Blob = z.infer<typeof Blob>
-
-const BlockSidecarSchema = z.object({
-  data: z.array(
-    z.object({
-      kzg_commitment: z.string(),
-      blob: z.string(),
-    }),
-  ),
-})
-
-export interface BlobsInBlock {
-  blobs: Blob[]
-  blockNumber: number
-}
-
-const TxWithBlobsSchema = z.object({
-  blockNumber: z.string(),
-  type: z.string(),
-  blobVersionedHashes: z.array(z.string()).optional(),
-})
-
-const BlockWithParentBeaconBlockRootSchema = z.object({
-  parentBeaconBlockRoot: z.string(),
-})
-
-const RpcResultSchema = z.object({
-  result: z.unknown(),
-})
