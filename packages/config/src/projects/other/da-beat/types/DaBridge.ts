@@ -59,7 +59,12 @@ export type DacBridge = CommonDaBridge & {
   /**  Total members count.  */
   membersCount: number
   /** Data about the DAC members. */
-  knownMembers?: { external: boolean; name: string; href: string }[]
+  knownMembers?: {
+    external: boolean
+    name: string
+    href: string
+    key?: string
+  }[]
   /** Minimum number of members required to sign and attest the data. */
   requiredMembers: number
   /** TEMP: Members field will turn into N/A badge if this is true */
