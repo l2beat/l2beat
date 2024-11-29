@@ -37,5 +37,5 @@ export const apechain: Layer3 = orbitStackL3({
   // associatedTokens: ['APE'],
   nativeToken: 'APE',
   overrideEscrows: [],
-  discoveryDrivenData: true
+  discoveryDrivenData: true,
 })
