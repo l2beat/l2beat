@@ -15,7 +15,7 @@ export async function fetchFlatSources(
       'Accept-Encoding': 'gzip, deflate, br',
     },
   })
-  return FlatSourcesApiResponse.parse(await response.json())
+  return FlatSourcesApiResponse.parse(response)
 }
 
 export function saveIntoDirectory(
