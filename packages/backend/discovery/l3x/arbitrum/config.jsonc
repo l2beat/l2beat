@@ -4,48 +4,6 @@
   "name": "l3x",
   "initialAddresses": [
     "0x59E088d827CB7983Cd0CC64312E472D7cc8a4F44", // Bridge
-    "0x4fF3E70f30f0394Ad62428751Fe3858740595908" //erc20bridge
-  ],
-  "names": {
-    "0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e": "RollupProxy",
-    "0x59E088d827CB7983Cd0CC64312E472D7cc8a4F44": "Bridge",
-    "0x4fF3E70f30f0394Ad62428751Fe3858740595908": "L1ERC20Gateway",
-    "0x211C9893653Aea2088E34765e7039617E95fD8fD": "ChallengeManager",
-    "0xB9450b512Fd3454e9C1a2593C5DF9E71344b5653": "SequencerInbox",
-    "0x1526DAacDAf3EE81E5ae087E0DA8677E8c677CE5": "Outbox",
-    "0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3": "UpgradeExecutor",
-    "0x29994207C5AeDc83F27c5dc16E468f328832d42d": "ProxyAdmin"
-  },
-  "overrides": {
-    "ChallengeManager": {
-      "ignoreMethods": ["challenges"]
-    },
-    "RollupProxy": {
-      "extends": "orbitstack/RollupProxy"
-    },
-    "Outbox": {
-      "ignoreMethods": ["spent", "isSpent"]
-    },
-    "Bridge": {
-      "ignoreMethods": ["sequencerInboxAccs", "delayedInboxAccs"],
-      "ignoreInWatchMode": [
-        "delayedMessageCount",
-        "sequencerMessageCount",
-        "sequencerReportedSubMessageCount"
-      ],
-      "ignoreRelatives": ["nativeToken"]
-    },
-    "SequencerInbox": {
-      "extends": "orbitstack/SequencerInbox"
-    },
-    "UpgradeExecutor": {
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
-        }
-      }
-    }
-  }
+    "0x4fF3E70f30f0394Ad62428751Fe3858740595908" // L1ERC20Gateway
+  ]
 }

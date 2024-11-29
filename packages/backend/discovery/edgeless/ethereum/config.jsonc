@@ -18,9 +18,6 @@
     "0xcD0aa40948c662dEDd9F157085fd6369A255F2f7": "WrappedToken"
   },
   "overrides": {
-    "0x890025891508a463A636f81D2f532a97210240de": {
-      "extends": "orbitstack/RollupProxy"
-    },
     "StakingManager": {
       "description": "Manages strategies to be used with funds forwarded from the EdgelessDeposit contract.",
       "ignoreMethods": ["proxiableUUID"],

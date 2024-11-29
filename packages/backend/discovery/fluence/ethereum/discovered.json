@@ -466,6 +466,11 @@
           "target": "0x1c46E1029C2Bd8b18448faA9Ab0ac03412D46790"
         },
         {
+          "permission": "configure",
+          "target": "0xD085B74A57D1d7947B9C9f8E2d75cB6832d62d0f",
+          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+        },
+        {
           "permission": "upgrade",
           "target": "0xD085B74A57D1d7947B9C9f8E2d75cB6832d62d0f"
         }
@@ -592,6 +597,12 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xD085B74A57D1d7947B9C9f8E2d75cB6832d62d0f",
+          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "via": [{ "address": "0x6BCe4c44668C77ff67730C14d2378857103F53C7" }]
+        },
         {
           "permission": "upgrade",
           "target": "0x06084a0AC843084a1d1B8ba0f67E048e4f8f3B95",
@@ -825,8 +836,25 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0x0000000000000000000000000000000000000000",
-          "via": []
+          "target": "0xBc54708fB6C6C97086e3f6554a517DE5EF16c304",
+          "via": [
+            {
+              "address": "0x6BCe4c44668C77ff67730C14d2378857103F53C7",
+              "delay": 0,
+              "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+            }
+          ]
+        },
+        {
+          "permission": "configure",
+          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+          "via": [
+            {
+              "address": "0x6BCe4c44668C77ff67730C14d2378857103F53C7",
+              "delay": 0,
+              "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+            }
+          ]
         },
         {
           "permission": "upgrade",
@@ -1037,7 +1065,7 @@
   "eoas": [
     {
       "address": "0x0000000000000000000000000000000000000000",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "configure",
           "target": "0xD085B74A57D1d7947B9C9f8E2d75cB6832d62d0f",
@@ -1077,6 +1105,12 @@
     {
       "address": "0xBc54708fB6C6C97086e3f6554a517DE5EF16c304",
       "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xD085B74A57D1d7947B9C9f8E2d75cB6832d62d0f",
+          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "via": [{ "address": "0x6BCe4c44668C77ff67730C14d2378857103F53C7" }]
+        },
         {
           "permission": "upgrade",
           "target": "0x06084a0AC843084a1d1B8ba0f67E048e4f8f3B95",
@@ -1860,7 +1894,7 @@
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
     "orbitstack/RollupEventInbox": "0x0608b35e1df8a51677a6392869e50b60a1ff7137f71f40bddf83143a5ef640c1",
-    "orbitstack/RollupProxy_fastConfirm": "0x91c9d3536cb44155adbb51ee7d5712c88dab3fed8850fde3967215b257571df5",
+    "orbitstack/RollupProxy_fastConfirm": "0x5b0d5169c9dd077d33aa8b81a7242ff9a44c23a3e069a8d12944e2a1912d99dd",
     "orbitstack/SequencerInbox": "0x88542722d1f831549b0b3c814ee5d973fed5780765ae1a05e607dffef0df3154",
     "orbitstack/UpgradeExecutor": "0xa8c2617950ce46d982abd852226ebcc1aacaf9c8c7daeda793b53a790eced777"
   }

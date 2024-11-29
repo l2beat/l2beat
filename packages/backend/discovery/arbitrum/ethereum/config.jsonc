@@ -36,19 +36,9 @@
     "0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A": "LPTL1Escrow"
   },
   "overrides": {
-    "Bridge": {
-      "ignoreMethods": ["delayedInboxAccs", "sequencerInboxAccs"],
-      "ignoreInWatchMode": [
-        "delayedMessageCount",
-        "sequencerMessageCount",
-        "sequencerReportedSubMessageCount"
-      ]
-    },
-    "L1CustomGateway": {
-      "ignoreRelatives": ["counterpartGateway"]
-    },
-    "L1ERC20Gateway": {
-      "ignoreRelatives": ["counterpartGateway"]
+    "0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A": {
+      // pre-nitro rollup contract
+      "ignoreDiscovery": true
     },
     "L1Timelock": {
       "ignoreRelatives": ["l2Timelock"],
@@ -61,65 +51,6 @@
         "scheduledTransactions": {
           "handler": {
             "type": "arbitrumScheduledTransactions"
-          }
-        }
-      }
-    },
-    "RollupProxy": {
-      "extends": "orbitstack/RollupProxy"
-    },
-    "SequencerInbox": {
-      "ignoreMethods": ["inboxAccs"],
-      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
-      "fields": {
-        // getting sequencers from the contract is too complex at the moment
-        // so we hardcode it in config .ts
-        // this field will notify us in case of changes
-        "IS_HARDCODED_SEQUENCER_BATCH_POSTER": {
-          "handler": {
-            "type": "call",
-            "method": "function isBatchPoster(address) external view returns (bool)",
-            "args": ["0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc"]
-          }
-        },
-        "sequencerVersion": {
-          "handler": {
-            "type": "arbitrumSequencerVersion"
-          }
-        },
-        "postsBlobs": {
-          "handler": {
-            "type": "orbitPostsBlobs"
-          }
-        },
-        // when this changes, it means the sequencers have changed
-        "setIsBatchPosterCount": {
-          "handler": {
-            "type": "eventCount",
-            "topics": [
-              // event OwnerFunctionCalled(uint256 indexed id);
-              "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
-              // id == 6 is emitted inside setValidator()
-              "0x0000000000000000000000000000000000000000000000000000000000000001"
-            ]
-          }
-        },
-        "batchPosters": {
-          "target": {
-            "permissions": [{ "type": "sequence" }]
-          },
-          "handler": {
-            "type": "arbitrumActors",
-            "actorType": "batchPoster"
-          }
-        },
-        "keySetUpdates": {
-          "handler": {
-            "type": "eventCount",
-            "topics": [
-              // SetValidKeyset(bytes32,bytes)
-              "0xabca9b7986bc22ad0160eb0cb88ae75411eacfba4052af0b457a9335ef655722"
-            ]
           }
         }
       }
@@ -149,36 +80,13 @@
       },
       "ignoreRelatives": ["ARBITRUM_STAKERS"]
     },
-    "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840": {
-      "ignoreMethods": ["isSpent", "spent"]
-    },
-    "0xe5896783a2F463446E1f624e64Aa6836BE4C6f58": {
-      "ignoreMethods": ["challenges"]
-    },
-    "0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A": {
-      // old Rollup core
-      "ignoreDiscovery": true
-    },
-    "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a": {
+    "OutboxV0": {
       "ignoreMethods": [
         "l2ToL1BatchNum",
         "l2ToL1OutputId",
         "outboxEntryExists",
         "outboxes"
       ]
-    },
-    "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd": {
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
-        }
-      }
-    },
-    // L1GatewayRouter
-    "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef": {
-      "ignoreRelatives": ["counterpartGateway"]
     },
     "wstETHEscrow": {
       "ignoreRelatives": ["l2Token", "l1Token"],
@@ -195,9 +103,6 @@
     },
     "LidoEmergencyBrakeMultisig": {
       "ignoreDiscovery": true
-    },
-    "ValidatorOwnerMultisig": {
-      "ignoreInWatchMode": ["nonce"]
     }
   }
 }
