@@ -27,14 +27,15 @@ const getCachedResponse = cache(
 
     // Strip ethereum data points
     const projectsDataPoints = data.map(
-      ([timestamp, projectsTxCount]) => [timestamp, projectsTxCount] as const,
+      ([timestamp, projectsTxCount, _, projectsUopsCount]) =>
+        [timestamp, projectsTxCount, projectsUopsCount] as const,
     )
 
     return {
       success: true,
       data: {
         chart: {
-          types: ['timestamp', 'count'],
+          types: ['timestamp', 'count', 'uopsCount'],
           data: projectsDataPoints,
         },
       },
