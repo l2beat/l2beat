@@ -8,6 +8,7 @@ import {
   BlockSidecarSchema,
   BlockWithParentBeaconBlockRootSchema,
   ErrorSchema,
+  RpcResponseSchema,
   TxWithBlobsSchema,
 } from './types'
 
@@ -110,7 +111,7 @@ export class BlobClient extends ClientCore {
     params?: (string | boolean)[],
   ): Promise<unknown> {
     const id = Math.floor(Math.random() * 1000)
-    return await this.fetch(this.$.rpcUrl, {
+    const response = await this.fetch(this.$.rpcUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -122,6 +123,7 @@ export class BlobClient extends ClientCore {
         params,
       }),
     })
+    return RpcResponseSchema.parse(response).result
   }
 
   override validateResponse(response: json): {

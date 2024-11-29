@@ -42,3 +42,7 @@ export const TxWithBlobsSchema = z.object({
 export const BlockWithParentBeaconBlockRootSchema = z.object({
   parentBeaconBlockRoot: z.string(),
 })
+
+export const RpcResponseSchema = z.object({
+  result: z.unknown(),
+})
