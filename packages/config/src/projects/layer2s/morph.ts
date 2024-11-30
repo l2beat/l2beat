@@ -138,6 +138,9 @@ export const morph: Layer2 = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_1R_ZK,
+      description:
+        RISK_VIEW.STATE_FP_1R_ZK.description +
+        ' The system currently operates with a single whitelisted challenger.',
       sentiment: 'bad',
       secondLine: formatChallengePeriod(challengeWindow),
     },
