@@ -70,7 +70,7 @@
   }
   stateValidation: {
     definingMetric: Infinity
-    description: "Fraud proofs allow actors watching the chain to prove that the state is incorrect. Single round proofs (1R) only require a single transaction to resolve. ZK proofs are used to prove the correctness of the state transition."
+    description: "Fraud proofs allow actors watching the chain to prove that the state is incorrect. Single round proofs (1R) only require a single transaction to resolve. ZK proofs are used to prove the correctness of the state transition. The system currently operates with a single whitelisted challenger."
     secondLine: "2d challenge period"
     sentiment: "bad"
     value: "Fraud proofs (1R, ZK)"
