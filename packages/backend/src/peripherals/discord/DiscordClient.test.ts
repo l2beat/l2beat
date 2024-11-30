@@ -16,7 +16,7 @@ describe(DiscordClient.name, () => {
           expect(url).toEqual(
             `https://discord.com/api/v10/channels/${config.publicChannelId}/messages`,
           )
-          return new Response(JSON.stringify({ status: '1', message: 'OK' }))
+          return { status: '1', message: 'OK' }
         },
       })
 
@@ -31,7 +31,7 @@ describe(DiscordClient.name, () => {
           expect(url).toEqual(
             `https://discord.com/api/v10/channels/${config.internalChannelId}/messages`,
           )
-          return new Response(JSON.stringify({ status: '1', message: 'OK' }))
+          return { status: '1', message: 'OK' }
         },
       })
 
@@ -46,7 +46,7 @@ describe(DiscordClient.name, () => {
           expect(url).toEqual(
             `https://discord.com/api/v10/channels/${config.publicChannelId}/messages`,
           )
-          return new Response(JSON.stringify({ status: '1', message: 'OK' }))
+          return { status: '1', message: 'OK' }
         },
       })
 
@@ -60,7 +60,7 @@ describe(DiscordClient.name, () => {
       const httpClient = mockObject<HttpClient>({
         async fetch(_, init) {
           expect(init?.body).toEqual(JSON.stringify({ content: message }))
-          return new Response('{}', { status: 200 })
+          return { status: 200 }
         },
       })
       const discord = new DiscordClient(httpClient, config)
@@ -75,7 +75,7 @@ describe(DiscordClient.name, () => {
             Authorization: `Bot ${config.token}`,
             'Content-Type': 'application/json; charset=UTF-8',
           })
-          return new Response('{}', { status: 200 })
+          return { status: 200 }
         },
       })
       const discord = new DiscordClient(httpClient, config)
@@ -90,19 +90,6 @@ describe(DiscordClient.name, () => {
       const message = 'a'.repeat(2001)
       await expect(discord.sendMessage(message, 'PUBLIC')).toBeRejectedWith(
         `Discord error: Message size exceeded (2000 characters)`,
-      )
-    })
-
-    it('throws error', async () => {
-      const error = JSON.stringify({ message: 'error', code: '0001' })
-
-      const httpClient = mockObject<HttpClient>({
-        fetch: async () => new Response(error, { status: 400 }),
-      })
-      const discord = new DiscordClient(httpClient, config)
-
-      await expect(discord.sendMessage('', 'PUBLIC')).toBeRejectedWith(
-        `Discord error: ${error}`,
       )
     })
   })

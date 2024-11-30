@@ -1,9 +1,9 @@
 import { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
+import { HttpClient } from '@l2beat/shared'
 import { InstalledClock, install } from '@sinonjs/fake-timers'
 import { EtherscanClient } from './EtherscanClient'
-import { HttpClient } from './HttpClient'
 
 describe(EtherscanClient.name, () => {
   let time: InstalledClock
@@ -35,10 +35,7 @@ describe(EtherscanClient.name, () => {
     }
 
     const httpClient = mockObject<HttpClient>({
-      fetch: mockFn().resolvesToOnce({
-        text: mockFn().returnsOnce(JSON.stringify(response)),
-        ok: true,
-      }),
+      fetch: mockFn().resolvesToOnce(response),
     })
     const client = new EtherscanClient(httpClient, URL, API_KEY, MIN_TIMESTAMP)
 
@@ -60,10 +57,7 @@ describe(EtherscanClient.name, () => {
       ],
     }
     const httpClient = mockObject<HttpClient>({
-      fetch: mockFn().resolvesToOnce({
-        text: mockFn().returnsOnce(JSON.stringify(response)),
-        ok: true,
-      }),
+      fetch: mockFn().resolvesToOnce(response),
     })
 
     const client = new EtherscanClient(httpClient, URL, API_KEY, MIN_TIMESTAMP)
@@ -92,10 +86,7 @@ describe(EtherscanClient.name, () => {
         .resolvesToOnce({
           error: new Error('no answer'),
         })
-        .resolvesToOnce({
-          text: mockFn().returnsOnce(JSON.stringify(response)),
-          ok: true,
-        }),
+        .resolvesToOnce(response),
     })
 
     const client = new EtherscanClient(httpClient, URL, API_KEY, MIN_TIMESTAMP)
@@ -126,10 +117,7 @@ describe(EtherscanClient.name, () => {
           ok: false,
           status: 408,
         })
-        .resolvesToOnce({
-          text: mockFn().returnsOnce(JSON.stringify(response)),
-          ok: true,
-        }),
+        .resolvesToOnce(response),
     })
 
     const client = new EtherscanClient(httpClient, URL, API_KEY, MIN_TIMESTAMP)
@@ -154,15 +142,7 @@ describe(EtherscanClient.name, () => {
     }
 
     const httpClient = mockObject<HttpClient>({
-      fetch: mockFn()
-        .resolvesToOnce({
-          text: mockFn().returnsOnce('randomrandom'),
-          ok: true,
-        })
-        .resolvesToOnce({
-          text: mockFn().returnsOnce(JSON.stringify(response)),
-          ok: true,
-        }),
+      fetch: mockFn().resolvesToOnce('randomrandom').resolvesToOnce(response),
     })
 
     const client = new EtherscanClient(httpClient, URL, API_KEY, MIN_TIMESTAMP)
@@ -188,15 +168,7 @@ describe(EtherscanClient.name, () => {
     }
 
     const httpClient = mockObject<HttpClient>({
-      fetch: mockFn()
-        .resolvesToOnce({
-          text: mockFn().returnsOnce(JSON.stringify(nokResponse)),
-          ok: true,
-        })
-        .resolvesToOnce({
-          text: mockFn().returnsOnce(JSON.stringify(response)),
-          ok: true,
-        }),
+      fetch: mockFn().resolvesToOnce(nokResponse).resolvesToOnce(response),
     })
 
     const client = new EtherscanClient(httpClient, URL, API_KEY, MIN_TIMESTAMP)
@@ -226,23 +198,10 @@ describe(EtherscanClient.name, () => {
         .resolvesToOnce({
           error: new Error('no answer'),
         })
-        .resolvesToOnce({
-          text: mockFn().returnsOnce(''),
-          ok: false,
-          status: 408,
-        })
-        .resolvesToOnce({
-          text: mockFn().returnsOnce('randomrandom'),
-          ok: true,
-        })
-        .resolvesToOnce({
-          text: mockFn().returnsOnce(JSON.stringify(nokResponse)),
-          ok: true,
-        })
-        .resolvesToOnce({
-          text: mockFn().returnsOnce(JSON.stringify(response)),
-          ok: true,
-        }),
+        .resolvesToOnce('')
+        .resolvesToOnce('randomrandom')
+        .resolvesToOnce(nokResponse)
+        .resolvesToOnce(response),
     })
 
     const client = new EtherscanClient(httpClient, URL, API_KEY, MIN_TIMESTAMP)

@@ -1,7 +1,7 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import { CoingeckoId, UnixTime, json } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { HttpClient2 } from '../../clients'
+import { HttpClient } from '../../clients'
 import { RetryHandler } from '../../tools'
 import { CoingeckoClient } from './CoingeckoClient'
 import { CoinMarketChartRangeData, CoinMarketChartRangeResult } from './model'
@@ -42,7 +42,7 @@ describe(CoingeckoClient.name, () => {
     }
 
     it('fetches historical prices', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => MOCK_PARSED_DATA,
       })
       const coingeckoClient = new CoingeckoClient({
@@ -63,7 +63,7 @@ describe(CoingeckoClient.name, () => {
     })
 
     it('constructs correct url', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         async fetch(url) {
           expect(url).toEqual(
             'https://api.coingecko.com/api/v3/coins/ethereum/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232',
@@ -90,7 +90,7 @@ describe(CoingeckoClient.name, () => {
 
   describe(CoingeckoClient.prototype.getCoinList.name, () => {
     it('fetches coins without platforms', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => [
           { id: 'asd', symbol: 'ASD', name: 'A Sad Dime' },
           { id: 'foobar', symbol: 'FBR', name: 'Foobar coin' },
@@ -111,7 +111,7 @@ describe(CoingeckoClient.name, () => {
     })
 
     it('fetches coins with platforms', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async (): Promise<json> => [
           {
             id: 'asd',
@@ -162,7 +162,7 @@ describe(CoingeckoClient.name, () => {
 
   describe(CoingeckoClient.prototype.query.name, () => {
     it('constructs a correct url without api key', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         async fetch(url): Promise<json> {
           expect(url).toEqual(
             'https://api.coingecko.com/api/v3/a/b?foo=bar&baz=123',
@@ -182,7 +182,7 @@ describe(CoingeckoClient.name, () => {
     })
 
     it('constructs a correct url with api key', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         async fetch(url): Promise<json> {
           expect(url).toEqual(
             'https://pro-api.coingecko.com/api/v3/a/b?foo=bar&baz=123&x_cg_pro_api_key=myapikey',
@@ -202,7 +202,7 @@ describe(CoingeckoClient.name, () => {
     })
 
     it('constructs a correct when there are no options', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         async fetch(url): Promise<json> {
           expect(url).toEqual('https://api.coingecko.com/api/v3/a/b')
           return { status: '1', message: 'OK' }

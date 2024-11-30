@@ -1,6 +1,6 @@
 import { RateLimiter } from '@l2beat/backend-tools'
 import { ConfigMapping } from '@l2beat/config'
-import { HttpClient2, RetryHandler, RpcClient2 } from '@l2beat/shared'
+import { HttpClient, RetryHandler, RpcClient2 } from '@l2beat/shared'
 import { assert, PremintedEntry, ProjectId } from '@l2beat/shared-pure'
 import { TvlConfig } from '../../../config/Config'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
@@ -81,7 +81,7 @@ function createIndexers(
       rateLimiter: new RateLimiter({
         callsPerMinute: chainConfig.config.providerCallsPerMinute,
       }),
-      http: new HttpClient2(),
+      http: new HttpClient(),
       logger,
       retryHandler: RetryHandler.RELIABLE_API(logger),
     })

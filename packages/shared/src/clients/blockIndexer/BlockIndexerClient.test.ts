@@ -1,7 +1,7 @@
 import { RateLimiter } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { HttpClient } from '../../services'
+import { HttpClient } from '../http/HttpClient'
 import { BlockIndexerClient } from './BlockIndexerClient'
 
 const API_URL = 'https://example.com/api'
@@ -20,11 +20,11 @@ describe(BlockIndexerClient.name, () => {
     it('constructs a correct url', async () => {
       const result = 1234
       const httpClient = mockObject<HttpClient>({
-        async fetch() {
-          return new Response(
-            JSON.stringify({ status: '1', message: 'OK', result: `${result}` }),
-          )
-        },
+        fetch: async () => ({
+          status: '1',
+          message: 'OK',
+          result: `${result}`,
+        }),
       })
 
       const arbiscanClient = new BlockIndexerClient(httpClient, rate, OPTIONS)
@@ -34,6 +34,7 @@ describe(BlockIndexerClient.name, () => {
 
       expect(httpClient.fetch).toHaveBeenOnlyCalledWith(
         `${API_URL}?module=block&action=getblocknobytime&timestamp=3141592653&closest=before&apikey=key`,
+        {},
       )
       expect(blockNumber).toEqual(result)
     })
@@ -44,24 +45,16 @@ describe(BlockIndexerClient.name, () => {
       const result = 1234
       const httpClient = mockObject<HttpClient>({
         fetch: mockFn()
-          .resolvesToOnce(
-            new Response(
-              JSON.stringify({
-                status: '1',
-                message: 'NOTOK',
-                result: `Error! No closest block found`,
-              }),
-            ),
-          )
-          .resolvesToOnce(
-            new Response(
-              JSON.stringify({
-                status: '1',
-                message: 'OK',
-                result: `${result}`,
-              }),
-            ),
-          ),
+          .resolvesToOnce({
+            status: '1',
+            message: 'NOTOK',
+            result: `Error! No closest block found`,
+          })
+          .resolvesToOnce({
+            status: '1',
+            message: 'OK',
+            result: `${result}`,
+          }),
       })
 
       const arbiscanClient = new BlockIndexerClient(httpClient, rate, OPTIONS)
@@ -71,6 +64,7 @@ describe(BlockIndexerClient.name, () => {
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         1,
         `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp.toNumber()}&closest=before&apikey=key`,
+        {},
       )
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
@@ -78,6 +72,7 @@ describe(BlockIndexerClient.name, () => {
         `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp
           .add(-10, 'minutes')
           .toNumber()}&closest=before&apikey=key`,
+        {},
       )
 
       expect(blockNumber).toEqual(result)
@@ -94,16 +89,12 @@ describe(BlockIndexerClient.name, () => {
       const gatewayErrorJsonString = JSON.stringify(gatewayError)
       const httpClient = mockObject<HttpClient>({
         fetch: mockFn()
-          .resolvesToOnce(
-            new Response(
-              JSON.stringify({
-                status: '1',
-                message: 'NOTOK',
-                result: `Error! No closest block found`,
-              }),
-            ),
-          )
-          .resolvesToOnce(new Response(gatewayErrorJsonString)),
+          .resolvesToOnce({
+            status: '1',
+            message: 'NOTOK',
+            result: `Error! No closest block found`,
+          })
+          .resolvesToOnce(gatewayErrorJsonString),
       })
 
       const etherscanClient = new BlockIndexerClient(httpClient, rate, OPTIONS)
@@ -115,6 +106,7 @@ describe(BlockIndexerClient.name, () => {
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         1,
         `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp.toNumber()}&closest=before&apikey=key`,
+        {},
       )
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
@@ -122,6 +114,7 @@ describe(BlockIndexerClient.name, () => {
         `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp
           .add(-10, 'minutes')
           .toNumber()}&closest=before&apikey=key`,
+        {},
       )
     })
 
@@ -131,15 +124,11 @@ describe(BlockIndexerClient.name, () => {
       const errorString = '{"error":"string error"}'
       const httpClient = mockObject<HttpClient>({
         fetch: mockFn()
-          .resolvesToOnce(
-            new Response(
-              JSON.stringify({
-                status: '1',
-                message: 'NOTOK',
-                result: `Error! No closest block found`,
-              }),
-            ),
-          )
+          .resolvesToOnce({
+            status: '1',
+            message: 'NOTOK',
+            result: `Error! No closest block found`,
+          })
           .throwsOnce(errorString),
       })
 
@@ -152,6 +141,7 @@ describe(BlockIndexerClient.name, () => {
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         1,
         `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp.toNumber()}&closest=before&apikey=key`,
+        {},
       )
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
@@ -159,6 +149,7 @@ describe(BlockIndexerClient.name, () => {
         `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp
           .add(-10, 'minutes')
           .toNumber()}&closest=before&apikey=key`,
+        {},
       )
     })
 
@@ -167,15 +158,11 @@ describe(BlockIndexerClient.name, () => {
 
       const httpClient = mockObject<HttpClient>({
         fetch: mockFn()
-          .resolvesToOnce(
-            new Response(
-              JSON.stringify({
-                status: '1',
-                message: 'NOTOK',
-                result: `Error! No closest block found`,
-              }),
-            ),
-          )
+          .resolvesToOnce({
+            status: '1',
+            message: 'NOTOK',
+            result: `Error! No closest block found`,
+          })
           .throwsOnce(1234),
       })
 
@@ -188,6 +175,7 @@ describe(BlockIndexerClient.name, () => {
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         1,
         `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp.toNumber()}&closest=before&apikey=key`,
+        {},
       )
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
@@ -195,19 +183,19 @@ describe(BlockIndexerClient.name, () => {
         `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp
           .add(-10, 'minutes')
           .toNumber()}&closest=before&apikey=key`,
+        {},
       )
     })
 
     it('tries to find blockNumber until maximumCallsForBlockTimestamp then throw', async () => {
       const timestamp = UnixTime.fromDate(new Date('2022-07-19T00:00:00Z'))
 
-      const NOT_OK = new Response(
-        JSON.stringify({
-          status: '1',
-          message: 'NOTOK',
-          result: `Error! No closest block found`,
-        }),
-      )
+      const NOT_OK = {
+        status: '1',
+        message: 'NOTOK',
+        result: `Error! No closest block found`,
+      }
+
       const httpClient = mockObject<HttpClient>({
         fetch: mockFn()
           // maximumCallsForBlockTimestamp = 3
@@ -232,9 +220,7 @@ describe(BlockIndexerClient.name, () => {
           expect(url).toEqual(
             `${API_URL}?module=mod&action=act&foo=bar&baz=123&apikey=key`,
           )
-          return new Response(
-            JSON.stringify({ status: '1', message: 'OK', result: '' }),
-          )
+          return { status: '1', message: 'OK', result: '' }
         },
       })
 
@@ -248,9 +234,7 @@ describe(BlockIndexerClient.name, () => {
           expect(url).toEqual(
             `${API_URL}?module=mod&action=act&foo=bar&baz=123`,
           )
-          return new Response(
-            JSON.stringify({ status: '1', message: 'OK', result: '' }),
-          )
+          return { status: '1', message: 'OK', result: '' }
         },
       })
 
@@ -262,23 +246,10 @@ describe(BlockIndexerClient.name, () => {
       await etherscanClient.call('mod', 'act', { foo: 'bar', baz: '123' })
     })
 
-    it('throws on non-2XX result', async () => {
-      const httpClient = mockObject<HttpClient>({
-        async fetch() {
-          return new Response('', { status: 404 })
-        },
-      })
-
-      const etherscanClient = new BlockIndexerClient(httpClient, rate, OPTIONS)
-      await expect(etherscanClient.call('mod', 'act', {})).toBeRejectedWith(
-        'Server responded with non-2XX result: 404',
-      )
-    })
-
     it('throws on malformed json', async () => {
       const httpClient = mockObject<HttpClient>({
         async fetch() {
-          return new Response(JSON.stringify({ foo: 'bar' }))
+          return { foo: 'bar' }
         },
       })
 
@@ -290,7 +261,7 @@ describe(BlockIndexerClient.name, () => {
       const response = { status: '1' as const, message: 'OK', result: [1, 2] }
       const httpClient = mockObject<HttpClient>({
         async fetch() {
-          return new Response(JSON.stringify(response))
+          return response
         },
       })
 
@@ -307,7 +278,7 @@ describe(BlockIndexerClient.name, () => {
       }
       const httpClient = mockObject<HttpClient>({
         async fetch() {
-          return new Response(JSON.stringify(response))
+          return response
         },
       })
 

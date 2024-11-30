@@ -1,7 +1,7 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import {
   CoingeckoClient,
-  HttpClient2,
+  HttpClient,
   LoopringClient,
   RetryHandler,
   StarknetClient,
@@ -28,7 +28,7 @@ export class Providers {
     readonly config: Config,
     readonly logger: Logger,
   ) {
-    const http = new HttpClient2()
+    const http = new HttpClient()
     this.coingeckoClient = new CoingeckoClient({
       apiKey: config.coingeckoApiKey,
       http,

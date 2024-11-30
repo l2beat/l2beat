@@ -4,7 +4,6 @@ https://discord.com/developers/docs/getting-started#configuring-a-bot
 */
 
 import { HttpClient } from '@l2beat/shared'
-import { Counter } from 'prom-client'
 
 import { RateLimiter } from '@l2beat/backend-tools'
 import { DiscordConfig } from '../../config/Config'
@@ -35,10 +34,10 @@ export class DiscordClient {
       throw new Error(`Discord error: Message size exceeded (2000 characters)`)
     }
     if (channel === 'PUBLIC' && this.config.publicChannelId) {
-      return await this.send(message, this.config.publicChannelId)
+      await this.send(message, this.config.publicChannelId)
     }
     if (channel === 'INTERNAL') {
-      return await this.send(message, this.config.internalChannelId)
+      await this.send(message, this.config.internalChannelId)
     }
   }
 
@@ -52,7 +51,7 @@ export class DiscordClient {
       content: message,
     }
 
-    return await this.query(endpoint, {
+    await this.query(endpoint, {
       method: 'POST',
       body: JSON.stringify(body),
     })
@@ -69,19 +68,6 @@ export class DiscordClient {
       ...options,
     })
 
-    if (!res.ok) {
-      // Discord API returns pretty useful errors
-      // this functionality aims to preserve them
-      const body = (await res.json()) as unknown
-      throw new Error(`Discord error: ${JSON.stringify(body)}`)
-    }
-
-    callsCount.inc()
-    return res.json() as unknown
+    return res
   }
 }
-
-const callsCount = new Counter({
-  name: 'discord_client_calls',
-  help: 'Value showing amount of calls to DiscordClient',
-})

@@ -3,7 +3,7 @@ import { Bytes, EthereumAddress, json } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { utils } from 'ethers'
 import { RetryHandler } from '../../tools/RetryHandler'
-import { HttpClient2 } from '../http/HttpClient2'
+import { HttpClient } from '../http/HttpClient'
 import { RpcClient2 } from './RpcClient2'
 
 export const erc20Interface = new utils.Interface([
@@ -14,7 +14,7 @@ export const erc20Interface = new utils.Interface([
 describe(RpcClient2.name, () => {
   describe(RpcClient2.prototype.getBlockWithTransactions.name, () => {
     it('fetches block from rpc and parsers response', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => mockResponse(100),
       })
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
@@ -44,7 +44,7 @@ describe(RpcClient2.name, () => {
 
   describe(RpcClient2.prototype.getLatestBlockNumber.name, () => {
     it('returns number of the block', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => mockResponse(100),
       })
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
@@ -65,7 +65,7 @@ describe(RpcClient2.name, () => {
 
   describe(RpcClient2.prototype.getBalance.name, () => {
     it('returns balance for given address and block', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => ({ result: '0x7B' }),
       })
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
@@ -87,7 +87,7 @@ describe(RpcClient2.name, () => {
 
   describe(RpcClient2.prototype.call.name, () => {
     it('calls eth_call with correct parameters', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => ({ result: '0x123abc' }),
       })
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
@@ -124,7 +124,7 @@ describe(RpcClient2.name, () => {
     })
 
     it('handles numeric block numbers', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => ({ result: '0x1' }),
       })
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
@@ -158,7 +158,7 @@ describe(RpcClient2.name, () => {
     })
 
     it('includes from address if provided', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => ({ result: '0x' }),
       })
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
@@ -194,7 +194,7 @@ describe(RpcClient2.name, () => {
     })
 
     it('handles empty response', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => ({ result: '0x' }),
       })
       const rpc = mockClient({ http })
@@ -213,7 +213,7 @@ describe(RpcClient2.name, () => {
 
   describe(RpcClient2.prototype.query.name, () => {
     it('calls http client with correct params and returns data', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => 'data-returned-from-api',
       })
 
@@ -263,7 +263,7 @@ describe(RpcClient2.name, () => {
 })
 
 function mockClient(deps: {
-  http?: HttpClient2
+  http?: HttpClient
   url?: string
   rateLimiter?: RateLimiter
   retryHandler?: RetryHandler
@@ -272,7 +272,7 @@ function mockClient(deps: {
   return new RpcClient2({
     chain: 'chain',
     url: deps.url ?? 'API_URL',
-    http: deps.http ?? mockObject<HttpClient2>({}),
+    http: deps.http ?? mockObject<HttpClient>({}),
     rateLimiter:
       deps.rateLimiter ?? new RateLimiter({ callsPerMinute: 100_000 }),
     retryHandler: deps.retryHandler ?? RetryHandler.TEST,

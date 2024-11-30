@@ -1,7 +1,7 @@
 import type { Chain } from '@/chains'
 import type { CountedBlock, StatResults } from '@/types'
 import { Logger } from '@l2beat/backend-tools'
-import { HttpClient2, RetryHandler, RpcClient2 } from '@l2beat/shared'
+import { HttpClient, RetryHandler, RpcClient2 } from '@l2beat/shared'
 import { RateLimiter } from '../../../../backend-tools/dist'
 import { getApiKey, getApiUrl, getScanUrl } from '../clients/apiUrls'
 import { BlockClient } from '../clients/block/BlockClient'
@@ -23,7 +23,7 @@ export class ChainService {
   private readonly nameService?: NameService
 
   constructor(chain: Chain, db: DB) {
-    const http = new HttpClient2()
+    const http = new HttpClient()
 
     switch (chain.id) {
       case 'starknet':

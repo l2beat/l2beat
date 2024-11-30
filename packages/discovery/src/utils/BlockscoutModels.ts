@@ -26,9 +26,8 @@ const BlockscoutResponse = z.union([
   BlockscoutErrorResponse,
 ])
 
-export function parseBlockscoutResponse(value: string): BlockscoutResponse {
+export function parseBlockscoutResponse(json: unknown): BlockscoutResponse {
   try {
-    const json: unknown = JSON.parse(value)
     return BlockscoutResponse.parse(json)
   } catch {
     throw new TypeError('Invalid Blockscout response')

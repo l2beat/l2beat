@@ -4,7 +4,7 @@ import {
   ConfigMapping,
   createAmountId,
 } from '@l2beat/config'
-import { HttpClient2, RetryHandler, RpcClient2 } from '@l2beat/shared'
+import { HttpClient, RetryHandler, RpcClient2 } from '@l2beat/shared'
 import {
   assert,
   AggLayerL2Token,
@@ -95,7 +95,7 @@ function createIndexers(
       rateLimiter: new RateLimiter({
         callsPerMinute: chainConfig.config.providerCallsPerMinute,
       }),
-      http: new HttpClient2(),
+      http: new HttpClient(),
       logger,
       retryHandler: RetryHandler.RELIABLE_API(logger),
     })

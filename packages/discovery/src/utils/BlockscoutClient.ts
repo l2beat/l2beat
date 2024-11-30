@@ -1,14 +1,9 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
-import {
-  assert,
-  EthereumAddress,
-  Hash256,
-  UnixTime,
-  getErrorMessage,
-} from '@l2beat/shared-pure'
+import { assert, EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 
 import { ContractSource } from './IEtherscanClient'
 
+import { HttpClient } from '@l2beat/shared'
 import {
   BlockscoutGetBlockNoByTime,
   ContractCreatorAndCreationTxHashResult,
@@ -18,7 +13,6 @@ import {
   UnverifiedContractSourceResult,
   parseBlockscoutResponse,
 } from './BlockscoutModels'
-import { HttpClient } from './HttpClient'
 import {
   EtherscanUnsupportedMethods,
   IEtherscanClient,
@@ -224,59 +218,28 @@ export class BlockscoutClient implements IEtherscanClient {
     })
     const url = `${this.url}?${query.toString()}`
 
-    const start = Date.now()
-    const { httpResponse, error } = await this.httpClient
-      .fetch(url, { timeout: this.timeoutMs })
-      .then(
-        (httpResponse) => ({ httpResponse, error: undefined }),
-        (error: unknown) => ({ httpResponse: undefined, error }),
-      )
-    const timeMs = Date.now() - start
+    const response = await this.httpClient.fetch(url, {
+      timeout: this.timeoutMs,
+    })
 
-    if (!httpResponse) {
-      const message = getErrorMessage(error)
-      this.recordError(module, action, timeMs, message)
-      throw error
-    }
-
-    const text = await httpResponse.text()
-    const blockscoutResponse = tryParseBlockscoutResponse(text)
-
-    if (!httpResponse.ok) {
-      this.recordError(module, action, timeMs, text)
-      throw new Error(
-        `Server responded with non-2XX result: ${httpResponse.status}`,
-      )
-    }
+    const blockscoutResponse = tryParseBlockscoutResponse(response)
 
     if (!blockscoutResponse) {
-      const message = `Invalid Blockscout response [${text}] for request [${url}].`
-      this.recordError(module, action, timeMs, message)
+      const message = `Invalid Blockscout response [${JSON.stringify(response)}] for request [${url}].`
       throw new TypeError(message)
     }
 
     if (blockscoutResponse.message !== 'OK') {
-      this.recordError(module, action, timeMs, blockscoutResponse.result)
       throw new BlockscoutError(blockscoutResponse.result)
     }
 
-    this.logger.debug({ type: 'success', timeMs, module, action })
     return blockscoutResponse.result
-  }
-
-  private recordError(
-    module: string,
-    action: string,
-    timeMs: number,
-    message: string,
-  ) {
-    this.logger.debug({ type: 'error', message, timeMs, module, action })
   }
 }
 
-function tryParseBlockscoutResponse(text: string) {
+function tryParseBlockscoutResponse(response: unknown) {
   try {
-    return parseBlockscoutResponse(text)
+    return parseBlockscoutResponse(response)
   } catch {
     return undefined
   }

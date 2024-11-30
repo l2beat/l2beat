@@ -19,20 +19,19 @@ const EtherscanResponse = z.union([
   EtherscanErrorResponse,
 ])
 
-export function parseEtherscanResponse(value: string): EtherscanResponse {
+export function parseEtherscanResponse(value: unknown): EtherscanResponse {
   try {
-    const json: unknown = JSON.parse(value)
-    return EtherscanResponse.parse(json)
+    return EtherscanResponse.parse(value)
   } catch {
     throw new TypeError('Invalid Etherscan response')
   }
 }
 
 export function tryParseEtherscanResponse(
-  text: string,
+  response: unknown,
 ): EtherscanResponse | undefined {
   try {
-    return parseEtherscanResponse(text)
+    return parseEtherscanResponse(response)
   } catch {
     return undefined
   }
