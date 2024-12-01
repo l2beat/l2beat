@@ -1,5 +1,6 @@
 'use client'
-import { assert } from '@l2beat/shared-pure'
+import assert from 'assert'
+import { KeyboardEvent, MouseEvent, useCallback } from 'react'
 import {
   Select,
   SelectContent,
@@ -24,12 +25,75 @@ interface Props<T extends string> {
   onValueChange: (option: T | undefined) => void
 }
 
-export function TableFilter<T extends string>(props: Props<T>) {
-  if (props.value) {
-    return <SelectedValue {...props} />
-  }
+export function TableFilter<T extends string>({
+  title,
+  options,
+  value,
+  onValueChange,
+}: Props<T>) {
+  // Select component does not support undefined values
+  // so we need to replace them with a special value
+  // that will be handled by the onValueChange handler
+  const mappedOptions = replaceUndefined(options)
 
-  return <TableFilterSelect {...props} />
+  const onClick = useCallback((e: MouseEvent) => {
+    if (value !== undefined) {
+      e.preventDefault()
+      onValueChange(undefined)
+    }
+  }, [])
+
+  const onKeyDown = useCallback((e: KeyboardEvent) => {
+    if (value !== undefined) {
+      if (e.code === 'Space' || e.code === 'Enter') {
+        e.preventDefault()
+        onValueChange(undefined)
+      } else if (e.code === 'ArrowDown' || e.code === 'ArrowUp') {
+        e.preventDefault()
+      }
+    }
+  }, [])
+  return (
+    <Select
+      value={value ?? ''}
+      onValueChange={(newValue) => {
+        if (value !== undefined) {
+          onValueChange(undefined)
+          return
+        }
+        const mappedValue = (
+          newValue === UNDEFINED_VALUE ? undefined : newValue
+        ) as T | undefined
+        onValueChange(mappedValue)
+      }}
+      disabled={
+        options.length < 2 && !options.some((option) => option.value === value)
+      }
+    >
+      <SelectTrigger
+        className={cn(value !== undefined && 'text-brand')}
+        icon={
+          value !== undefined ? (
+            <div className="inline-flex size-3 items-center justify-center rounded-sm bg-current">
+              <CloseIcon className="size-2.5 fill-white dark:fill-black dark:group-hover:fill-gray-950" />
+            </div>
+          ) : undefined
+        }
+        onClick={onClick}
+        onPointerDown={onClick}
+        onKeyDown={onKeyDown}
+      >
+        <SelectValue placeholder={title} />
+      </SelectTrigger>
+      <SelectContent className="flex flex-col" align="start">
+        {mappedOptions.map((option) => (
+          <SelectItem key={option.label} value={option.value}>
+            {option.label}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  )
 }
 
 function SelectedValue<T extends string>({
@@ -52,42 +116,6 @@ function SelectedValue<T extends string>({
         <CloseIcon className="size-2.5 fill-white dark:fill-black dark:group-hover:fill-gray-950" />
       </div>
     </button>
-  )
-}
-
-function TableFilterSelect<T extends string>({
-  title,
-  options,
-  value,
-  onValueChange,
-}: Props<T>) {
-  // Select component does not support undefined values
-  // so we need to replace them with a special value
-  // that will be handled by the onValueChange handler
-  const mappedOptions = replaceUndefined(options)
-
-  return (
-    <Select
-      value={value ?? ''}
-      onValueChange={(v) => {
-        const mappedValue = (v === UNDEFINED_VALUE ? undefined : v) as
-          | T
-          | undefined
-        onValueChange(mappedValue)
-      }}
-      disabled={options.length === 0}
-    >
-      <SelectTrigger>
-        <SelectValue placeholder={title} />
-      </SelectTrigger>
-      <SelectContent className="flex flex-col" align="start">
-        {mappedOptions.map((option) => (
-          <SelectItem key={option.label} value={option.value}>
-            {option.label}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
   )
 }
 
