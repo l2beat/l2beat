@@ -1,6 +1,7 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
-import { CoingeckoId, UnixTime, json } from '@l2beat/shared-pure'
+import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
+import { Response } from 'node-fetch'
 import { HttpClient2 } from '../../clients'
 import { RetryHandler } from '../../tools'
 import { CoingeckoClient } from './CoingeckoClient'
@@ -112,7 +113,7 @@ describe(CoingeckoClient.name, () => {
 
     it('fetches coins with platforms', async () => {
       const http = mockObject<HttpClient2>({
-        fetch: async (): Promise<json> => [
+        fetch: async () => [
           {
             id: 'asd',
             symbol: 'ASD',
@@ -163,11 +164,11 @@ describe(CoingeckoClient.name, () => {
   describe(CoingeckoClient.prototype.query.name, () => {
     it('constructs a correct url without api key', async () => {
       const http = mockObject<HttpClient2>({
-        async fetch(url): Promise<json> {
+        async fetch(url) {
           expect(url).toEqual(
             'https://api.coingecko.com/api/v3/a/b?foo=bar&baz=123',
           )
-          return { status: '1', message: 'OK' }
+          return new Response(JSON.stringify({ status: '1', message: 'OK' }))
         },
       })
 
@@ -183,11 +184,11 @@ describe(CoingeckoClient.name, () => {
 
     it('constructs a correct url with api key', async () => {
       const http = mockObject<HttpClient2>({
-        async fetch(url): Promise<json> {
+        async fetch(url) {
           expect(url).toEqual(
             'https://pro-api.coingecko.com/api/v3/a/b?foo=bar&baz=123&x_cg_pro_api_key=myapikey',
           )
-          return { status: '1', message: 'OK' }
+          return new Response(JSON.stringify({ status: '1', message: 'OK' }))
         },
       })
 
@@ -203,9 +204,9 @@ describe(CoingeckoClient.name, () => {
 
     it('constructs a correct when there are no options', async () => {
       const http = mockObject<HttpClient2>({
-        async fetch(url): Promise<json> {
+        async fetch(url) {
           expect(url).toEqual('https://api.coingecko.com/api/v3/a/b')
-          return { status: '1', message: 'OK' }
+          return new Response(JSON.stringify({ status: '1', message: 'OK' }))
         },
       })
 

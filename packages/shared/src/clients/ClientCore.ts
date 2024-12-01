@@ -1,5 +1,6 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import { json } from '@l2beat/shared-pure'
+import { RequestInit } from 'node-fetch'
 import { RetryHandler } from '../tools'
 import { HttpClient2 } from './http/HttpClient2'
 
@@ -18,13 +19,10 @@ export abstract class ClientCore {
    * Rate limiting and retry handling are built-in.
    *
    * @param url Address to which the request will be sent
-   * @param init Params for the request
+   * @param init Params for the request. We are using `node-fetch` RequestInit type
    * @returns Parsed JSON object
    */
-  async fetch(
-    url: string,
-    init: RequestInit & { timeout?: number },
-  ): Promise<json> {
+  async fetch(url: string, init: RequestInit): Promise<json> {
     try {
       return await this.deps.rateLimiter.call(() => this._fetch(url, init))
     } catch {

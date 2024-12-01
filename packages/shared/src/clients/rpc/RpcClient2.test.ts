@@ -1,5 +1,5 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
-import { Bytes, EthereumAddress, json } from '@l2beat/shared-pure'
+import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { utils } from 'ethers'
 import { RetryHandler } from '../../tools/RetryHandler'
@@ -22,10 +22,7 @@ describe(RpcClient2.name, () => {
       const result = await rpc.getBlockWithTransactions(100)
 
       expect(result).toEqual({
-        transactions: [
-          { to: '0', ...mockTx },
-          { to: undefined, ...mockTx },
-        ],
+        transactions: [mockTx('0'), mockTx(undefined)],
         timestamp: 100,
         hash: '0xabcdef',
         number: 100,
@@ -281,25 +278,27 @@ function mockClient(deps: {
   })
 }
 
-const mockResponse = (blockNumber: number): json => ({
+const mockResponse = (blockNumber: number) => ({
   result: {
-    transactions: [{ to: '0', ...mockRawTx }, { ...mockRawTx }],
+    transactions: [mockRawTx('0'), mockRawTx(undefined)],
     timestamp: `0x${blockNumber.toString(16)}`,
     hash: '0xabcdef',
     number: `0x${blockNumber.toString(16)}`,
   },
 })
 
-const mockRawTx = {
+const mockRawTx = (to: string | undefined) => ({
   hash: `0x1`,
   from: '0xf',
+  to,
   input: `0x1`,
   type: '0x2',
-}
+})
 
-const mockTx = {
+const mockTx = (to: string | undefined) => ({
   hash: `0x1`,
   from: '0xf',
+  to,
   data: `0x1`,
   type: '2',
-}
+})
