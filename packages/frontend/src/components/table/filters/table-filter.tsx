@@ -72,9 +72,7 @@ export function TableFilter<T extends string>({
         ) as T | undefined
         onValueChange(mappedValue)
       }}
-      disabled={
-        options.length < 2 && !options.some((option) => option.value === value)
-      }
+      disabled={options.length < 2 && !!value}
     >
       <SelectTrigger
         className={cn(value !== undefined && 'text-brand')}
