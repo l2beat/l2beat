@@ -72,7 +72,7 @@ export const cronoszkevm: Layer2 = zkStackL2({
     technology: {
       name: 'Data is not stored on chain',
       description:
-        'The transaction data is not recorded on the Ethereum main chain. Transaction data is stored off-chain and only the hashes are posted on-chain by the centralized Sequencer.',
+        'The transaction data is not recorded on the Ethereum main chain. Transaction data is stored off-chain and only the hashes are posted onchain by the centralized Sequencer.',
       risks: [
         {
           category: 'Funds can be lost if',

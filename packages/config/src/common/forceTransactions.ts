@@ -11,7 +11,7 @@ const EXIT_CENSORSHIP: ScalingProjectRisk = {
 const WITHDRAW: ScalingProjectTechnologyChoice = {
   name: 'Users can independently exit the system',
   description:
-    'Independent exit allows the users to escape censorship by withdrawing their funds. The system allows users to  withdraw their funds by submitting a transaction directly to the contract on-chain.',
+    'Independent exit allows the users to escape censorship by withdrawing their funds. The system allows users to  withdraw their funds by submitting a transaction directly to the contract onchain.',
   risks: [EXIT_CENSORSHIP],
   references: [],
 }
@@ -19,7 +19,7 @@ const WITHDRAW: ScalingProjectTechnologyChoice = {
 function WITHDRAW_OR_HALT(delay?: number): ScalingProjectTechnologyChoice {
   return {
     name: 'Users can force exit the system',
-    description: `Force exit allows the users to escape censorship by withdrawing their funds. The system allows users to force the withdrawal of funds by submitting a request directly to the contract on-chain.  The request must be served within ${
+    description: `Force exit allows the users to escape censorship by withdrawing their funds. The system allows users to force the withdrawal of funds by submitting a request directly to the contract onchain.  The request must be served within ${
       delay !== undefined ? formatSeconds(delay) : 'a defined time period'
     }. If this does not happen, the system will halt regular operation and permit trustless withdrawal of funds.`,
     risks: [EXIT_CENSORSHIP],

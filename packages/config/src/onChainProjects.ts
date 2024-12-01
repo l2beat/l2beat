@@ -1,4 +1,4 @@
-// A list of on-chain projects that are not L2s (or prelaunch) or bridges
+// A list of onchain projects that are not L2s (or prelaunch) or bridges
 // (so we don't show them on the frontend), but we still
 // want to monitor using discovery.
 

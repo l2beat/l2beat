@@ -168,7 +168,7 @@ export const DA_BRIDGES = {
     value: 'Optimistic',
     sentiment: 'bad',
     description:
-      'There is a mechanism that allows validators to request that the Sequencer posts data on-chain via L1 contract if they find that data is unavailable.',
+      'There is a mechanism that allows validators to request that the Sequencer posts data onchain via L1 contract if they find that data is unavailable.',
   },
   DAC_MEMBERS: ({
     requiredSignatures,

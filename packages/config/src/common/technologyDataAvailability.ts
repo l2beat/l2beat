@@ -28,7 +28,7 @@ const ON_CHAIN_CANONICAL: ScalingProjectTechnologyChoice = {
 const STARKEX_ON_CHAIN: ScalingProjectTechnologyChoice = {
   name: 'All data required for proofs is published on chain',
   description:
-    "All the relevant data that is used to recover the balances Merkle Tree is published on-chain as calldata. This includes, in addition to the proven new state, the complete list of differences of the users' balances from the previous state.",
+    "All the relevant data that is used to recover the balances Merkle Tree is published onchain as calldata. This includes, in addition to the proven new state, the complete list of differences of the users' balances from the previous state.",
   risks: [],
   references: [
     {
@@ -48,7 +48,7 @@ const STARKNET_ON_CHAIN = (
   const blobOr = usesBlobs ? 'blob or ' : ''
   return {
     name: 'All data required to reconstruct rollup state is published on chain',
-    description: `State diffs are publish on-chain as ${blobOr}calldata on every state update. The state diffs contain information on every contact whose storage was updated, and additional information on contract deployments. From diffs full system state can be recovered. Contracts' code is not published on L1, but can be trustlessly verified if available elsewhere.`,
+    description: `State diffs are publish onchain as ${blobOr}calldata on every state update. The state diffs contain information on every contact whose storage was updated, and additional information on contract deployments. From diffs full system state can be recovered. Contracts' code is not published on L1, but can be trustlessly verified if available elsewhere.`,
     risks: [],
     references: [
       {
@@ -79,7 +79,7 @@ function ANYTRUST_OFF_CHAIN(DAC: {
 }): ScalingProjectTechnologyChoice {
   return {
     ...GENERIC_OFF_CHAIN,
-    description: `Users transactions are not published on-chain, but rather sent to external trusted parties, also known as committee members (DAC). Members of the DAC collectively produce a Data Availability Certificate (comprising BLS signatures from a quorum) guaranteeing that the data behind the new transaction batch will be available until the expiry period elapses (currently a minimum of two weeks). This signature is not verified by L1, however external Validators will skip the batch if BLS signature is not valid resulting. This will result in a fraud proof challenge if this batch is included in a consecutive state update. It is assumed that at least one honest DAC member that signed the batch will reveal tx data to the Validators if Sequencer decides to act maliciously and withhold the data. If the Sequencer cannot gather enough signatures from the DAC, it will "fall back to rollup" mode and by posting the full data directly to the L1 chain. The current DAC threshold is ${DAC.requiredSignatures} out of ${DAC.membersCount}.`,
+    description: `Users transactions are not published onchain, but rather sent to external trusted parties, also known as committee members (DAC). Members of the DAC collectively produce a Data Availability Certificate (comprising BLS signatures from a quorum) guaranteeing that the data behind the new transaction batch will be available until the expiry period elapses (currently a minimum of two weeks). This signature is not verified by L1, however external Validators will skip the batch if BLS signature is not valid resulting. This will result in a fraud proof challenge if this batch is included in a consecutive state update. It is assumed that at least one honest DAC member that signed the batch will reveal tx data to the Validators if Sequencer decides to act maliciously and withhold the data. If the Sequencer cannot gather enough signatures from the DAC, it will "fall back to rollup" mode and by posting the full data directly to the L1 chain. The current DAC threshold is ${DAC.requiredSignatures} out of ${DAC.membersCount}.`,
     risks: [
       ...GENERIC_OFF_CHAIN.risks,
       {
@@ -99,7 +99,7 @@ function ANYTRUST_OFF_CHAIN(DAC: {
 const STARKEX_OFF_CHAIN: ScalingProjectTechnologyChoice = {
   ...GENERIC_OFF_CHAIN,
   description:
-    'The balances of the users are not published on-chain, but rather sent to external trusted parties, also known as committee members. A state update is valid and accepted on-chain only if at least a quorum of the committee members sign a state update.',
+    'The balances of the users are not published onchain, but rather sent to external trusted parties, also known as committee members. A state update is valid and accepted onchain only if at least a quorum of the committee members sign a state update.',
   risks: [
     ...GENERIC_OFF_CHAIN.risks,
     {
