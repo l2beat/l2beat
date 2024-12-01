@@ -1,5 +1,5 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
-import { UnixTime, json } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { RetryHandler } from '../../tools'
 import { HttpClient2 } from '../http/HttpClient2'
@@ -144,7 +144,7 @@ function mockClient(deps: {
 function mockBlock(
   blockId: number,
   type: 'loopring' | 'degate3' = 'loopring',
-): json {
+): unknown {
   const block = {
     blockId,
     createdAt: 1000,

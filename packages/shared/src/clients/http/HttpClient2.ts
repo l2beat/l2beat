@@ -1,4 +1,4 @@
-import { json } from '@l2beat/shared-pure'
+import fetch, { RequestInit } from 'node-fetch'
 
 export class HttpClient2 {
   /**
@@ -6,19 +6,16 @@ export class HttpClient2 {
    * Use this method only when you expect server to return valid JSON.
    * Default timeout is 10_000ms
    */
-  async fetch(
-    url: string,
-    init: RequestInit & { timeout?: number },
-  ): Promise<json> {
+  async fetch(url: string, init: RequestInit) {
     const res = await fetch(url, {
       ...init,
-      signal: AbortSignal.timeout(init.timeout ?? 10_000),
+      timeout: init.timeout ?? 10_000,
     })
 
     if (!res.ok) {
-      throw new Error(`HTTP error: ${res.status}`)
+      throw new Error(`HTTP error: ${res.status} ${res.statusText}`)
     }
 
-    return (await res.json()) as json
+    return res.json()
   }
 }

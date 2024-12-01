@@ -1,5 +1,6 @@
 import path from 'path'
 import { readFile, writeFile } from 'fs/promises'
+import fetch from 'node-fetch'
 
 import { MultichainConfig } from './types'
 
