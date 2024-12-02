@@ -28,7 +28,7 @@ export function ActivityChartHeader({ stats, range }: Props) {
   return (
     <header data-role="chart-header">
       <div className="flex justify-between">
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-1">
           <div className="flex items-start max-md:mb-2 max-md:flex-col md:items-center md:gap-2">
             <h1 className="whitespace-nowrap text-xl font-bold max-md:ml-1 md:text-2xl">
               Daily average
