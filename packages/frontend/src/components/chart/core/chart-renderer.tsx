@@ -41,6 +41,8 @@ export function ChartRenderer() {
       for (const { style, paths } of renderPaths) {
         if (style.fill) {
           for (const path of paths) {
+            ctx.beginPath()
+            ctx.translate(0.5, 0.5)
             ctx.fillStyle = getFillStyle(ctx, style.fill, theme)
             const fillPath = new Path2D(path.path)
             fillPath.lineTo(path.lastX, chart.height)
@@ -54,6 +56,8 @@ export function ChartRenderer() {
       for (const { style, paths } of renderPaths) {
         if (style.line) {
           for (const path of paths) {
+            ctx.beginPath()
+            ctx.translate(0.5, 0.5)
             ctx.lineWidth = Math.floor(2 * window.devicePixelRatio)
             ctx.strokeStyle = getStrokeStyle(ctx, style.line, theme)
             if (path.dashed) {
