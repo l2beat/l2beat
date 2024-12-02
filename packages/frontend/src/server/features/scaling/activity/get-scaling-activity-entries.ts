@@ -1,5 +1,6 @@
 import { type Layer2, type Layer3 } from '@l2beat/config'
 import { assert, ProjectId, notUndefined } from '@l2beat/shared-pure'
+import { type SetOptional } from 'type-fest'
 import { env } from '~/env'
 import { groupByMainCategories } from '~/utils/group-by-main-categories'
 import {
@@ -80,8 +81,9 @@ export async function getScalingActivityEntries() {
   }
 }
 
-export type ScalingActivityEntry = ReturnType<
-  typeof getScalingProjectActivityEntry
+export type ScalingActivityEntry = SetOptional<
+  ReturnType<typeof getScalingProjectActivityEntry>,
+  'href'
 >
 function getScalingProjectActivityEntry(
   project: ActivityProject,
@@ -112,7 +114,7 @@ function getScalingProjectActivityEntry(
 
 function getEthereumEntry(
   data: ActivityProjectTableData,
-): Omit<ScalingActivityEntry, 'href'> {
+): ScalingActivityEntry {
   return {
     ...getCommonScalingEntry({ project: 'ethereum' }),
     entryType: 'activity' as const,
