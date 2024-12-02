@@ -46,8 +46,11 @@ const SelectTrigger = ({
   ref,
   className,
   children,
+  icon,
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.Trigger>) => {
+}: React.ComponentProps<typeof SelectPrimitive.Trigger> & {
+  icon?: React.ReactNode
+}) => {
   const setIsOpen = useSelectContext()
   return (
     <SelectPrimitive.Trigger
@@ -65,7 +68,9 @@ const SelectTrigger = ({
     >
       {children}
       <SelectPrimitive.Icon asChild>
-        <ChevronIcon className="size-2.5 fill-current stroke-[1.8px] transition-transform group-data-[state=open]/trigger:rotate-180 md:size-3" />
+        {icon ?? (
+          <ChevronIcon className="size-2.5 fill-current stroke-[1.8px] transition-transform group-data-[state=open]/trigger:rotate-180 md:size-3" />
+        )}
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   )
