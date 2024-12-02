@@ -3,6 +3,7 @@ import { assert, assertUnreachable, notUndefined } from '@l2beat/shared-pure'
 
 import {
   BlobClient,
+  HttpClient2,
   LoopringClient,
   RetryHandler,
   StarknetClient,
@@ -207,7 +208,7 @@ function initializeConfigurations(
                 ethereumRPC,
                 peripherals.database,
                 configuration.projectId,
-                getStarknetClient(configuration, peripherals, logger),
+                getStarknetClient(configuration, logger),
               ),
             },
             minTimestamp: configuration.minTimestamp,
@@ -264,7 +265,6 @@ function initializeConfigurations(
 
 function getStarknetClient(
   configuration: FinalityProjectConfig,
-  peripherals: Peripherals,
   logger: Logger,
 ) {
   assert(
@@ -274,7 +274,7 @@ function getStarknetClient(
 
   return new StarknetClient({
     url: configuration.url,
-    http: peripherals.httpClient,
+    http: new HttpClient2(),
     logger,
     rateLimiter: new RateLimiter({ callsPerMinute: 60 }),
     retryHandler: RetryHandler.RELIABLE_API(logger),
