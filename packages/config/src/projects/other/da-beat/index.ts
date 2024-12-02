@@ -1,5 +1,6 @@
 import { avail } from './blockchain/avail/avail'
 import { celestia } from './blockchain/celestia/celestia'
+import { espressoDA } from './blockchain/espressoDA/espressoDA'
 import { ethereum } from './blockchain/ethereum/ethereum'
 import { memo } from './blockchain/memo/memo'
 import { near } from './blockchain/near/near'
@@ -65,7 +66,6 @@ export const daLayers: DaLayer[] = applyProcessor([
   apechainDac,
   arbitrumNovaDac,
   astarZkEvmDac,
-  automataDA,
   blessnetDac,
   cyberDA,
   degenDac,
@@ -101,15 +101,17 @@ export const daLayers: DaLayer[] = applyProcessor([
   xchainDac,
   xlayerDac,
   zkfairDac,
+  // DA Challenges
+  automataDA,
+  gmnetworkDA,
+  redstoneDA,
+  xterioDA,
   // DA Layers
   avail,
   celestia,
+  near,
+  memo,
+  espressoDA,
   eigenDA,
   fraxtalDA,
-  gmnetworkDA,
-  mantleDA,
-  memo,
-  near,
-  redstoneDA,
-  xterioDA,
 ])

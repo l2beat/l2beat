@@ -60,15 +60,25 @@ const getCachedResponse = cache(
 
     // Unfortunately, ethereum data is being served along with other projects data
     const dataPoints = data.map(
-      ([timestamp, projectsTxCount, ethereumTxCount]) =>
-        [timestamp, isEthereum ? ethereumTxCount : projectsTxCount] as const,
+      ([
+        timestamp,
+        projectsTxCount,
+        ethereumTxCount,
+        projectsUopsCount,
+        ethereumUopsCount,
+      ]) =>
+        [
+          timestamp,
+          isEthereum ? ethereumTxCount : projectsTxCount,
+          isEthereum ? ethereumUopsCount : projectsUopsCount,
+        ] as const,
     )
 
     return {
       success: true,
       data: {
         chart: {
-          types: ['timestamp', 'count'],
+          types: ['timestamp', 'count', 'uopsCount'],
           data: dataPoints,
         },
       },

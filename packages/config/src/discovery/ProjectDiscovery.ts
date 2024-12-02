@@ -812,6 +812,7 @@ export class ProjectDiscovery {
       propose: 'Is a Proposer',
       sequence: 'Is a Sequencer',
       validate: 'Is a Validator',
+      fastconfirm: 'Is a FastConfirmer',
     }
 
     const formatVia = (via: ResolvedPermissionPath[]) =>
@@ -869,6 +870,7 @@ export class ProjectDiscovery {
       propose: 'Can act as a Proposer',
       sequence: 'Can act as a Sequencer',
       validate: 'Can act as a Validator',
+      fastconfirm: 'Can act as a FastConfirmer',
     }
 
     return Object.entries(
@@ -1113,6 +1115,11 @@ const roleDescriptions: {
     name: 'Validator/Proposer',
     description:
       'Can propose new state roots (called nodes) and challenge state roots on the host chain.',
+  },
+  fastconfirm: {
+    name: 'AnyTrust FastConfirmer',
+    description:
+      'Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.',
   },
 }
 

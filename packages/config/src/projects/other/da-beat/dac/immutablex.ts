@@ -97,7 +97,7 @@ export const immutableXDac = StarkexDAC({
   },
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,
-    committeeSecurity: DaCommitteeSecurityRisk.NoHonestMinimumCommiteeSecurity(
+    committeeSecurity: DaCommitteeSecurityRisk.NoHonestMinimumCommitteeSecurity(
       `${committee.minSigners}/${committee.accounts.length}`,
       requiredHonestMembersPercentage,
     ),

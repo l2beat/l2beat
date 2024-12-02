@@ -59,7 +59,7 @@ export const DA_LAYERS = {
     fallbackDescription:
       'In case posting is not possible for some reason, there is a fallback mechanism to Ethereum.',
   },
-  ETH_BLOBS_OR_CALLLDATA: {
+  ETH_BLOBS_OR_CALLDATA: {
     value: 'Ethereum',
     secondLine: 'Blobs or Calldata',
     sentiment: 'good',

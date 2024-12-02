@@ -105,7 +105,7 @@ export const cyberDABridge = {
   transactionDataType: DacTransactionDataType.TransactionData,
   usedIn: toUsedInProject([cyber]),
   risks: {
-    committeeSecurity: DaCommitteeSecurityRisk.NoCommiteeSecurity(),
+    committeeSecurity: DaCommitteeSecurityRisk.NoCommitteeSecurity(),
     upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay
     relayerFailure: DaRelayerFailureRisk.NoMechanism,
   },

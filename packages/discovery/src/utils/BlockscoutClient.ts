@@ -245,7 +245,7 @@ export class BlockscoutClient implements IEtherscanClient {
     if (!httpResponse.ok) {
       this.recordError(module, action, timeMs, text)
       throw new Error(
-        `Server responded with non-2XX result: ${httpResponse.status}`,
+        `Server responded with non-2XX result: ${httpResponse.status} ${httpResponse.statusText}`,
       )
     }
 

@@ -76,6 +76,14 @@ describe('DA-BEAT', () => {
       expect(projectsWithoutDaBeatEntry).toEqual([])
     })
   })
+
+  describe('no duplicates among the layers', () => {
+    it('should not have duplicates', () => {
+      const ids = daLayers.map((layer) => layer.id)
+      const uniqueIds = new Set(ids)
+      expect(ids).toEqual(Array.from(uniqueIds))
+    })
+  })
 })
 
 function getLatestDataAvailabilityEntry<

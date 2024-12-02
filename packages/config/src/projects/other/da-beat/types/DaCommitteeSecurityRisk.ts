@@ -4,9 +4,9 @@ import { DaRiskViewOptions } from './DaRiskView'
 export type DaCommitteeSecurityRisk =
   | ReturnType<typeof RobustAndDiverseCommittee>
   | ReturnType<typeof LimitedCommitteeSecurity>
-  | ReturnType<typeof NoCommiteeSecurity>
-  | ReturnType<typeof NoDiversityCommiteeSecurity>
-  | ReturnType<typeof NoHonestMinimumCommiteeSecurity>
+  | ReturnType<typeof NoCommitteeSecurity>
+  | ReturnType<typeof NoDiversityCommitteeSecurity>
+  | ReturnType<typeof NoHonestMinimumCommitteeSecurity>
   | typeof NoBridge
   | ReturnType<typeof Auto>
 
@@ -40,17 +40,17 @@ const LimitedCommitteeSecurity = (
         }`,
   }) as const
 
-const NoCommiteeSecurity = (value?: string) =>
+const NoCommitteeSecurity = (value?: string) =>
   ({
-    type: 'NoCommiteeSecurity',
+    type: 'NoCommitteeSecurity',
     value: value ?? 'None',
     sentiment: 'bad',
     description: `The committee does not meet basic security standards, either due to insufficient size, lack of member diversity, or poorly defined threshold parameters. The system lacks an effective DA bridge and it is reliant on the assumption of an honest sequencer, creating significant risks to data integrity and availability.`,
   }) as const
 
-const NoDiversityCommiteeSecurity = (value?: string) =>
+const NoDiversityCommitteeSecurity = (value?: string) =>
   ({
-    type: 'NoDiversityCommiteeSecurity',
+    type: 'NoDiversityCommitteeSecurity',
     value: value ?? 'None',
     sentiment: 'bad',
     description: `The committee requires an honest minority (1/3 or less) of members (or the network stake) to prevent the DA bridge from accepting an unavailable data commitment.
@@ -58,12 +58,12 @@ const NoDiversityCommiteeSecurity = (value?: string) =>
     `,
   }) as const
 
-const NoHonestMinimumCommiteeSecurity = (
+const NoHonestMinimumCommitteeSecurity = (
   value?: string,
   honestMembersPercentage?: string,
 ) =>
   ({
-    type: 'NoHonestMinimumCommiteeSecurity',
+    type: 'NoHonestMinimumCommitteeSecurity',
     value: value ?? 'None',
     sentiment: 'bad',
     description: `The committee should require an honest minority (33% or less) of members to prevent the DA bridge from accepting an unavailable data commitment.
@@ -90,7 +90,7 @@ const Auto = (params?: {
     sentiment: params?.resolved.sentiment ?? 'bad',
     description:
       params?.resolved.sentiment === 'bad'
-        ? NoCommiteeSecurity().description
+        ? NoCommitteeSecurity().description
         : params?.resolved.sentiment === 'warning'
           ? LimitedCommitteeSecurity().description
           : '',
@@ -99,9 +99,9 @@ const Auto = (params?: {
 export const DaCommitteeSecurityRisk = {
   RobustAndDiverseCommittee,
   LimitedCommitteeSecurity,
-  NoCommiteeSecurity,
-  NoDiversityCommiteeSecurity,
-  NoHonestMinimumCommiteeSecurity,
+  NoCommitteeSecurity,
+  NoDiversityCommitteeSecurity,
+  NoHonestMinimumCommitteeSecurity,
   NoBridge,
   Auto,
 } as const satisfies DaRiskViewOptions

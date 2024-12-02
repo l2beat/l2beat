@@ -13,6 +13,13 @@
         "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
       ],
       "proxyType": "gnosis safe",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
+          "description": "Add/remove batchPosters (Sequencers)."
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1704399729,
       "values": {
@@ -118,7 +125,7 @@
         {
           "permission": "configure",
           "target": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
-          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
         },
         {
           "permission": "upgrade",
@@ -361,7 +368,7 @@
         {
           "permission": "configure",
           "target": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
-          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "via": [{ "address": "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F" }]
         },
         {
@@ -646,6 +653,39 @@
       "proxyType": "EIP1967 proxy",
       "description": "A sequencer (registered in this contract) can submit transaction batches or commitments here.",
       "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x2B95cdD1adD34461Fe737800c0D5A68d556B51b4",
+          "via": [
+            {
+              "address": "0x000d8C5A70B8805DF02f409F2715d05B9A63E871",
+              "delay": 0,
+              "description": "Add/remove batchPosters (Sequencers)."
+            }
+          ]
+        },
+        {
+          "permission": "configure",
+          "target": "0x7f910C718bAF6698FBF9b56e047ECd52d157bAD6",
+          "via": [
+            {
+              "address": "0x000d8C5A70B8805DF02f409F2715d05B9A63E871",
+              "delay": 0,
+              "description": "Add/remove batchPosters (Sequencers)."
+            }
+          ]
+        },
+        {
+          "permission": "configure",
+          "target": "0xc7185e37A4aB4Af0E77bC08249CD2590AE3E1b51",
+          "via": [
+            {
+              "address": "0x000d8C5A70B8805DF02f409F2715d05B9A63E871",
+              "delay": 0,
+              "description": "Add/remove batchPosters (Sequencers)."
+            }
+          ]
+        },
         {
           "permission": "sequence",
           "target": "0x7F68dba68E72a250004812fe04F1123Fca89aBa9",
@@ -942,7 +982,7 @@
             {
               "address": "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F",
               "delay": 0,
-              "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+              "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
             }
           ]
         },
@@ -1023,6 +1063,9 @@
         "zombieLatestStakedNode": []
       },
       "fieldMeta": {
+        "minimumAssertionPeriod": {
+          "description": "Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "
+        },
         "confirmPeriodBlocks": {
           "description": "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
         },
@@ -1372,7 +1415,17 @@
         }
       ]
     },
-    { "address": "0x2B95cdD1adD34461Fe737800c0D5A68d556B51b4" },
+    {
+      "address": "0x2B95cdD1adD34461Fe737800c0D5A68d556B51b4",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
+          "description": "Add/remove batchPosters (Sequencers).",
+          "via": [{ "address": "0x000d8C5A70B8805DF02f409F2715d05B9A63E871" }]
+        }
+      ]
+    },
     {
       "address": "0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7",
       "receivedPermissions": [
@@ -1424,13 +1477,33 @@
         }
       ]
     },
-    { "address": "0x7f910C718bAF6698FBF9b56e047ECd52d157bAD6" },
+    {
+      "address": "0x7f910C718bAF6698FBF9b56e047ECd52d157bAD6",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
+          "description": "Add/remove batchPosters (Sequencers).",
+          "via": [{ "address": "0x000d8C5A70B8805DF02f409F2715d05B9A63E871" }]
+        }
+      ]
+    },
     { "address": "0x807daF80b03Fd3C2709FFe0AeBEED617BC0a347c" },
     { "address": "0x90D77E3a3B660E54E04cD622937765d2375FB2e3" },
     { "address": "0xa2E7768789921a36eCFe8c239dBd8213120fFF83" },
     { "address": "0xbBE90F6748C82623F130A4486722a436c5a72440" },
     { "address": "0xC65de812db42Bfa8bd4E0fCf6ffcad8fe3072D44" },
-    { "address": "0xc7185e37A4aB4Af0E77bC08249CD2590AE3E1b51" },
+    {
+      "address": "0xc7185e37A4aB4Af0E77bC08249CD2590AE3E1b51",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
+          "description": "Add/remove batchPosters (Sequencers).",
+          "via": [{ "address": "0x000d8C5A70B8805DF02f409F2715d05B9A63E871" }]
+        }
+      ]
+    },
     { "address": "0xd096e8dE90D34de758B0E0bA4a796eA2e1e272cF" },
     { "address": "0xd427165292B2E39cdac102eD963B14fFBACc964a" },
     { "address": "0xd4318D959B46d555143f56E03077028aB94D85d2" },
@@ -2458,8 +2531,8 @@
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
     "orbitstack/RollupEventInbox": "0x0608b35e1df8a51677a6392869e50b60a1ff7137f71f40bddf83143a5ef640c1",
-    "orbitstack/RollupProxy": "0x88165b83156dbb5b288912a52adc278d223904d0c933472cb3950a05ba456170",
-    "orbitstack/SequencerInbox": "0x88542722d1f831549b0b3c814ee5d973fed5780765ae1a05e607dffef0df3154",
+    "orbitstack/RollupProxy": "0x9ffbe36f064536f2a8ffb61a54a779561f7ddde93379da6475d263ca36e3c6db",
+    "orbitstack/SequencerInbox": "0x5cd19865dbaedc22bb0571435a45b9ec44f18388ca4c83dc971fb6c0be1bdf22",
     "orbitstack/UpgradeExecutor": "0xa8c2617950ce46d982abd852226ebcc1aacaf9c8c7daeda793b53a790eced777"
   }
 }

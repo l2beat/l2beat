@@ -236,7 +236,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
 
   /**
    * Fetches Validators from ValidatorTimelock events:
-   * It is more complicated to accomodate the case in which
+   * It is more complicated to accommodate the case in which
    * a validator is added and removed more than once.
    */
   const validators = () => {
@@ -334,7 +334,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
             mode: DA_MODES.STATE_DIFFS_COMPRESSED,
           })
         : addSentimentToDataAvailability({
-            layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
+            layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
             bridge: DA_BRIDGES.ENSHRINED,
             mode: DA_MODES.STATE_DIFFS_COMPRESSED,
           }),

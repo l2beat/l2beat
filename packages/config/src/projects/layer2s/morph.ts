@@ -130,7 +130,7 @@ export const morph: Layer2 = {
   },
   dataAvailability: [
     addSentimentToDataAvailability({
-      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
+      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
       bridge: DA_BRIDGES.ENSHRINED,
       mode: DA_MODES.TRANSACTION_DATA_COMPRESSED, // TODO: check
     }),
@@ -138,6 +138,9 @@ export const morph: Layer2 = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_1R_ZK,
+      description:
+        RISK_VIEW.STATE_FP_1R_ZK.description +
+        ' The system currently operates with a single whitelisted challenger.',
       sentiment: 'bad',
       secondLine: formatChallengePeriod(challengeWindow),
     },

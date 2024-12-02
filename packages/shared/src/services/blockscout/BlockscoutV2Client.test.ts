@@ -1,5 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
+import { Response } from 'node-fetch'
 import { HttpClient } from '../HttpClient'
 import { BlockscoutV2Client } from './BlockscoutV2Client'
 
@@ -85,7 +86,7 @@ describe(BlockscoutV2Client.name, () => {
 
       const blockscoutClient = new BlockscoutV2Client(httpClient, API_URL)
       await expect(blockscoutClient.call('mod', 'id', 'act')).toBeRejectedWith(
-        'Server responded with non-2XX result: 404',
+        'Server responded with non-2XX result: 404 Not Found',
       )
     })
 

@@ -54,7 +54,7 @@ describe(pickWorseRisk.name, () => {
 })
 
 describe(sumRisk.name, () => {
-  it('returns the sum of the risks if theyre the same and good', () => {
+  it('returns the sum of the risks if they are the same and good', () => {
     const risk1 = createFakeRisk('warning', 40)
     const risk2 = createFakeRisk('warning', 2)
     const expected = createFakeRisk('warning', 42)
