@@ -752,7 +752,7 @@ export const starknet: Layer2 = {
     addSentimentToDataAvailability({
       layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
       bridge: DA_BRIDGES.ENSHRINED,
-      mode: DA_MODES.STATE_DIFFS,
+      mode: DA_MODES.STATE_DIFFS_COMPRESSED,
     }),
   ],
   riskView: {
