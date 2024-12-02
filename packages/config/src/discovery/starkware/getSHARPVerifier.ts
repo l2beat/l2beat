@@ -56,7 +56,7 @@ const CAIRO_BOOTLOADER_PROGRAM = discovery.getContractDetails(
 
 const MEMORY_FACT_REGISTRY = discovery.getContractDetails(
   'MemoryPageFactRegistry',
-  'MemoryPageFactRegistry is one of the many contracts used by SHARP verifier. This one is important as it registers all necessary on-chain data.',
+  'MemoryPageFactRegistry is one of the many contracts used by SHARP verifier. This one is important as it registers all necessary onchain data.',
 )
 
 const OLD_MEMORY_FACT_REGISTRY = discovery.getContractDetails(

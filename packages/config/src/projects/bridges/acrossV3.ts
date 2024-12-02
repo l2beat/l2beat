@@ -46,7 +46,7 @@ export const acrossV3: Bridge = {
     description:
       'Across V3 is a cross-chain optimistic bridge that uses actors called Relayers to fulfill user transfer requests on the destination chain.',
     detailedDescription:
-      'Relayers are later reimbursed by providing a proof of their action to an Optimistic Oracle on Ethereum. Relayer reimbursements over a specific block range are bundled and posted on-chain as merkle roots which uniquely identify the set of all repayments and rebalance instructions. The architecture leverages a single liquidity pool on Ethereum and separate deposit/reimburse pools on destination chains that are rebalanced using canonical bridges.',
+      'Relayers are later reimbursed by providing a proof of their action to an Optimistic Oracle on Ethereum. Relayer reimbursements over a specific block range are bundled and posted onchain as merkle roots which uniquely identify the set of all repayments and rebalance instructions. The architecture leverages a single liquidity pool on Ethereum and separate deposit/reimburse pools on destination chains that are rebalanced using canonical bridges.',
   },
   config: {
     escrows: [

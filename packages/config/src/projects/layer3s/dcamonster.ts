@@ -10,7 +10,7 @@ export const dcamonster: Layer3 = upcomingL3({
     name: 'DCA.Monster',
     slug: 'dcamonster',
     description:
-      'DCA.Monster is an innovative AMM that utilizes ERC20 streams for precise and efficient on-chain Dollar Cost Averaging (DCA), powered by Cartesi Rollups.',
+      'DCA.Monster is an innovative AMM that utilizes ERC20 streams for precise and efficient onchain Dollar Cost Averaging (DCA), powered by Cartesi Rollups.',
     purposes: ['Exchange'],
     category: 'Optimistic Rollup',
     provider: 'Cartesi Rollups',
