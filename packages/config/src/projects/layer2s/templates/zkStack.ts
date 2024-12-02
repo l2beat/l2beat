@@ -236,7 +236,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
 
   /**
    * Fetches Validators from ValidatorTimelock events:
-   * It is more complicated to accomodate the case in which
+   * It is more complicated to accommodate the case in which
    * a validator is added and removed more than once.
    */
   const validators = () => {

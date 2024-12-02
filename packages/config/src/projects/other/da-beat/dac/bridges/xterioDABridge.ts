@@ -101,7 +101,7 @@ export const xterioDABridge = {
   transactionDataType: DacTransactionDataType.TransactionData,
   usedIn: toUsedInProject([xterio]),
   risks: {
-    committeeSecurity: DaCommitteeSecurityRisk.NoCommiteeSecurity(),
+    committeeSecurity: DaCommitteeSecurityRisk.NoCommitteeSecurity(),
     upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay
     relayerFailure: DaRelayerFailureRisk.NoMechanism,
   },

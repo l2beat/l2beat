@@ -100,7 +100,7 @@ export const redstoneDABridge = {
   transactionDataType: DacTransactionDataType.TransactionData,
   usedIn: toUsedInProject([redstone]),
   risks: {
-    committeeSecurity: DaCommitteeSecurityRisk.NoCommiteeSecurity(),
+    committeeSecurity: DaCommitteeSecurityRisk.NoCommitteeSecurity(),
     upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay
     relayerFailure: DaRelayerFailureRisk.NoMechanism,
   },

@@ -50,7 +50,7 @@ export const mantleDA: DaLayer = {
     ![MantleDA architecture](/images/da-layer-technology/mantleda/architecture.png#center)
 
     Mantle DA is an independent DA module that is built on top of an early version of EigenDA smart contracts.
-    The system is made up of two main component: onchain smart contracts for storing and verifying data committments, and an offchain network of permissioned nodes storing the data.
+    The system is made up of two main component: onchain smart contracts for storing and verifying data commitments, and an offchain network of permissioned nodes storing the data.
     The permissioned set of nodes is tasked with providing data availability to the Mantle network. 
     They receive Mantle network transaction data, sign it using a BLS signature scheme, and send back signatures to the sequencer to post commitments to the DataLayrServiceManager (DA Bridge) contract on Ethereum.
     The DA DataLayrServiceManager acts as a verifier smart contract,  verifying that the signatures provided by the sequencer are indeed from node operators who have agreed to be in the quorum.
