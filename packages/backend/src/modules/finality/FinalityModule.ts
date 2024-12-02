@@ -1,7 +1,13 @@
-import { Logger } from '@l2beat/backend-tools'
+import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import { assert, assertUnreachable, notUndefined } from '@l2beat/shared-pure'
 
-import { BlobClient, LoopringClient, StarknetClient } from '@l2beat/shared'
+import {
+  BlobClient,
+  HttpClient2,
+  LoopringClient,
+  RetryHandler,
+  StarknetClient,
+} from '@l2beat/shared'
 import { Config } from '../../config'
 import { FinalityProjectConfig } from '../../config/features/finality'
 import { ClientClass, Peripherals } from '../../peripherals/Peripherals'
@@ -62,7 +68,6 @@ export function createFinalityModule(
     peripherals,
     providers.loopringClient,
     providers.degateClient,
-    providers.starknetClient,
   )
 
   const finalityIndexers = runtimeConfigurations.map(
@@ -97,7 +102,6 @@ function initializeConfigurations(
   peripherals: Peripherals,
   loopringClient: LoopringClient,
   degateClient: LoopringClient,
-  starknetClient: StarknetClient,
 ): FinalityConfig[] {
   return configs
     .map((configuration): FinalityConfig | undefined => {
@@ -204,7 +208,7 @@ function initializeConfigurations(
                 ethereumRPC,
                 peripherals.database,
                 configuration.projectId,
-                starknetClient,
+                getStarknetClient(configuration, logger),
               ),
             },
             minTimestamp: configuration.minTimestamp,
@@ -257,6 +261,24 @@ function initializeConfigurations(
       }
     })
     .filter(notUndefined)
+}
+
+function getStarknetClient(
+  configuration: FinalityProjectConfig,
+  logger: Logger,
+) {
+  assert(
+    configuration.url,
+    `${configuration.projectId.toString()}: Provider URL is not defined`,
+  )
+
+  return new StarknetClient({
+    url: configuration.url,
+    http: new HttpClient2(),
+    logger,
+    rateLimiter: new RateLimiter({ callsPerMinute: 60 }),
+    retryHandler: RetryHandler.RELIABLE_API(logger),
+  })
 }
 
 function getL2Rpc<Client, Options>(
