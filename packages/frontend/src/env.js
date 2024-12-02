@@ -27,6 +27,7 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(['development', 'test', 'production'])
       .default('development'),
+    CRON_SECRET: z.string().optional(),
     VERCEL_GIT_COMMIT_REF: z.string().optional(),
     VERCEL_GIT_COMMIT_SHA: z.string().default('local'),
     VERCEL_URL: z.string().optional(),
@@ -61,6 +62,7 @@ export const env = createEnv({
     ETHEREUM_RPC_URL: process.env.ETHEREUM_RPC_URL,
     MOCK: process.env.MOCK,
     NODE_ENV: process.env.NODE_ENV,
+    CRON_SECRET: process.env.CRON_SECRET,
     VERCEL_GIT_COMMIT_REF: process.env.VERCEL_GIT_COMMIT_REF,
     VERCEL_GIT_COMMIT_SHA: process.env.VERCEL_GIT_COMMIT_SHA,
     VERCEL_ENV: process.env.VERCEL_ENV,

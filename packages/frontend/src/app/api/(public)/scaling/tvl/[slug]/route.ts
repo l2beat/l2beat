@@ -1,5 +1,4 @@
 import { layer2s, layer3s } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { type NextRequest, NextResponse } from 'next/server'
 import { getTvlChart } from '~/server/features/scaling/tvl/get-tvl-chart-data'

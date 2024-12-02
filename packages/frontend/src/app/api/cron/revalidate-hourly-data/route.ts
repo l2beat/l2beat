@@ -1,10 +1,9 @@
 import { revalidatePath, revalidateTag } from 'next/cache'
-import { NextRequest, NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
+import { env } from '~/env'
 
 export async function GET(req: NextRequest) {
-  if (
-    req.headers.get('Authorization') !== `Bearer ${process.env.CRON_SECRET}`
-  ) {
+  if (req.headers.get('Authorization') !== `Bearer ${env.CRON_SECRET}`) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
   }
 
