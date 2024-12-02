@@ -12,6 +12,7 @@ export async function GET(req: NextRequest) {
   revalidatePath('/scaling/liveness')
   revalidatePath('/scaling/finality')
   revalidatePath('/zk-catalog')
+  revalidatePath('/governance')
 
   revalidatePath('/zk-catalog/[project]')
 
