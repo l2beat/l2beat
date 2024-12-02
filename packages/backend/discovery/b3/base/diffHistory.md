@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x754b548df252478896dd5c5013f62524d16d8b7f
+Generated with discovered.json: 0xb36116d226753139194f1305334023be774c0d45
 
-# Diff at Thu, 28 Nov 2024 15:02:25 GMT:
+# Diff at Mon, 02 Dec 2024 14:06:09 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current block number: 23008392
+- current block number: 23179502
 
 ## Description
 
@@ -20,6 +20,12 @@ Initial discovery.
 ```diff
 +   Status: CREATED
     contract GnosisSafeL2 (0x184d44C2DfB6d17C60B9Ca329b7B8630aea325Ce)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x1a35DC7d7A3bd04FE2AD2EAef273B8c76c05860E)
     +++ description: None
 ```
 
@@ -49,7 +55,7 @@ Initial discovery.
 
 ```diff
 +   Status: CREATED
-    contract  (0x3a314A6a3c1470Bf2854960D3Ce9D2435c7Ba794)
+    contract OptimismPortal (0x3a314A6a3c1470Bf2854960D3Ce9D2435c7Ba794)
     +++ description: None
 ```
 
@@ -79,6 +85,18 @@ Initial discovery.
 
 ```diff
 +   Status: CREATED
+    contract L2OutputOracle (0x536cf1ABfD22E61a13753c0F08613aDdF4ca0595)
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x57d8b357DBdcdb83D7330BE1AA9e2549787858d6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract L1StandardBridge (0x769547a723783FCA36BAaf1ECcf9dfdbF6d09F38)
     +++ description: None
 ```
@@ -103,8 +121,8 @@ Initial discovery.
 
 ```diff
 +   Status: CREATED
-    contract  (0xadA565Abc1Fe7358259c22dd0A7372229d943388)
-    +++ description: None
+    contract DisputeGameFactory (0xadA565Abc1Fe7358259c22dd0A7372229d943388)
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
 ```
 
 ```diff
@@ -116,6 +134,12 @@ Initial discovery.
 ```diff
 +   Status: CREATED
     contract GnosisSafeL2 (0xd94E416cf2c7167608B2515B7e4102B41efff94f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xe4acD73c9Af2d74875953C0aEF5E8C5dde0968Ce)
     +++ description: None
 ```
 
