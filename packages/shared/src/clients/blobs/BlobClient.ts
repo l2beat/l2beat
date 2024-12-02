@@ -2,6 +2,7 @@ import { utils } from 'ethers'
 
 import { assert, json } from '@l2beat/shared-pure'
 import { z } from 'zod'
+import { generateId } from '../../tools/generateId'
 import { ClientCore, ClientCoreDependencies } from '../ClientCore'
 import {
   Blob,
@@ -22,6 +23,7 @@ interface Dependencies extends ClientCoreDependencies {
   beaconApiUrl: string
   rpcUrl: string
   timeout?: number
+  generateId?: () => string
 }
 
 export class BlobClient extends ClientCore {
@@ -116,7 +118,7 @@ export class BlobClient extends ClientCore {
     method: string,
     params?: (string | boolean)[],
   ): Promise<unknown> {
-    const id = Math.floor(Math.random() * 1000)
+    const id = this.$.generateId ? this.$.generateId() : generateId()
     const response = await this.fetch(this.$.rpcUrl, {
       method: 'POST',
       headers: {

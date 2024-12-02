@@ -149,10 +149,9 @@ describe(BlobClient.name, () => {
       const http = mockObject<HttpClient2>({
         fetch: async () => ({ result: 'result' }),
       })
-      const client = mockClient({ http })
+      const client = mockClient({ http, generateId: () => 'abc' })
       const method = 'method'
       const params = ['param']
-      Math.floor = () => 1
 
       const result = await client.callRpc(method, params)
 
@@ -160,7 +159,7 @@ describe(BlobClient.name, () => {
       expect(http.fetch.calls[0].args[1]?.body).toEqual(
         JSON.stringify({
           jsonrpc: '2.0',
-          id: 1,
+          id: 'abc',
           method,
           params,
         }),
@@ -181,7 +180,6 @@ describe(BlobClient.name, () => {
       const client = mockClient({ http })
       const method = 'method'
       const params = ['param']
-      Math.floor = () => 1
 
       await expect(client.callRpc(method, params)).toBeRejectedWith(
         'Response validation failed',
@@ -231,5 +229,6 @@ function mockClient(deps: {
     retryHandler: deps.retryHandler ?? RetryHandler.TEST,
     logger: Logger.SILENT,
     timeout: deps.timeout,
+    generateId: deps.generateId,
   })
 }
