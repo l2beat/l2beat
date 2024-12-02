@@ -2,7 +2,20 @@
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
   "ignoreMethods": ["state_dataCommitments", "proxiableUUID"],
   "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
+    "description": "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum.",
   "fields": {
+    "admins": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      }
+    },
+    "guardians": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "GUARDIAN_ROLE"
+      }
+    },
     "accessControl": {
       "handler": {
         "type": "accessControl"

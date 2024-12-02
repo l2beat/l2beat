@@ -1,8 +1,8 @@
 {
   "name": "blobstream",
   "chain": "ethereum",
-  "blockNumber": 21184621,
-  "configHash": "0x47baf8cec9d368c7e17c3fcf75fc973c31081900b9c622a37770d8b11541cb08",
+  "blockNumber": 21315381,
+  "configHash": "0x90d11f1828b3036945f0265477828ef5f01995945a6361470a86511fa9d914dc",
   "contracts": [
     {
       "name": "FunctionVerifier",
@@ -49,6 +49,19 @@
       "sourceHashes": [
         "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
       ],
+      "description": "This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the on-chain verifier contract.",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "target": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1720099223,
       "values": {
         "$immutable": true,
@@ -74,7 +87,8 @@
         },
         "verifier": {
           "description": "The prover contract address for SP1, and whether it is frozen (true if frozen)."
-        }
+        },
+        "owner": { "description": "The owner of the contract." }
       },
       "derivedName": "SP1VerifierGateway"
     },
@@ -110,6 +124,7 @@
       "sourceHashes": [
         "0xa148b7dcb3095dbb66f26d1428d50a59e1cd1384c80b0efe88efead152e6ebe2"
       ],
+      "description": "Users can interact with this contract to request proofs on-chain, emitting a RequestCall event for off-chain provers to consume.",
       "sinceTimestamp": 1706575991,
       "values": {
         "$immutable": true,
@@ -154,6 +169,19 @@
         "0x424268ec553b52a09ec29bc220e95a4dc19def7e459d1cc8a541ee0e2fd578e9"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum.",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "target": "0x8bF34D8df1eF0A8A7f27fC587202848E528018E6",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
       "sinceTimestamp": 1717615307,
       "values": {
@@ -186,6 +214,7 @@
             "members": ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]
           }
         },
+        "admins": ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"],
         "blobstreamProgramVkey": "0x00a6ea49173d4b0b544a24a5a7474e76d1fda8f0f7e541cbb294d2b7249d7bcb",
         "checkRelayer": true,
         "DATA_COMMITMENT_MAX": 1000,
@@ -193,12 +222,13 @@
         "frozen": false,
         "gateway_deprecated": "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776",
         "GUARDIAN_ROLE": "0x55435dd261a4b9b3364963f7738a7a662ad9c84396d64be3365284bb7f0a5041",
+        "guardians": ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"],
         "headerRangeFunctionId_deprecated": "0xdb3232748ba9f2906d9d2ce97d2fac3963d4346de23c30521f346e10ddad82f7",
         "isRelayerApproved": true,
-        "latestBlock": 2787300,
+        "latestBlock": 2920500,
         "nextHeaderFunctionId_depcrecated": "0xf7ab2ac6f5ccf2da79050efcc0dbdb06d5ae05a332f58076aeac7fc8c73811fe",
         "relayers": ["0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"],
-        "state_proofNonce": 1317,
+        "state_proofNonce": 1465,
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "verifier": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "VERSION": "1.1.0"
@@ -214,6 +244,13 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
+          "description": "holds the power to freeze the bridge contract and update the list of authorized relayers."
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1717613015,
       "values": {
@@ -259,6 +296,13 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "description": "admin of the contract. As the manager of router for proof verification, it holds the power to affect the liveness and safety of the bridge."
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1724204135,
       "values": {
@@ -315,6 +359,13 @@
       "sourceHashes": [
         "0x12f4e310568377cf39c9992ed73fee2df73ea33090ec45ec342cfe4e5ce7c25b"
       ],
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "description": "Verifier contract for the header range [latestBlock, targetBlock] proof. The proof is generated by an off-chain prover and submitted by a relayer."
+        }
+      ],
       "sinceTimestamp": 1729727135,
       "values": {
         "$immutable": true,
@@ -323,11 +374,12 @@
       }
     },
     {
-      "name": "",
+      "name": "HeaderRangeVerifier",
       "address": "0xF33a22dFf8017813b95E5a05c9a97BaFE693001E",
       "unverified": true,
       "sinceTimestamp": 1717613795,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": ""
     }
   ],
   "eoas": [
@@ -344,7 +396,16 @@
     { "address": "0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf" },
     { "address": "0x19abbcEC005D4D83692f7A180125bF0FBd24253D" },
     { "address": "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D" },
-    { "address": "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d" },
+    {
+      "address": "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
+          "description": "allowed to call commitHeaderRange() to commit block ranges to the Blobstream contract"
+        }
+      ]
+    },
     { "address": "0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0" },
     { "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54" },
     { "address": "0x793979789Ec179183E396e76c1e241bE0c9eE899" },
@@ -637,7 +698,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "succinct/SP1Blobstream": "0xb0717b3e2a9ebc9678d934fa77de178537019305cf6fd12950b8f116da2a0e9c",
-    "succinct/SP1SuccinctGateway": "0xc0b1862d6ddf4e09ee2a3baf1ead0eda8461322a213cd66dfd8e013950b9a0cc"
+    "succinct/SP1Blobstream": "0xe38c6035b28b8caf29747548c960fbdbf16d62b41448c9c75dcf84be8481f864",
+    "succinct/SP1SuccinctGateway": "0xb92dbeb85454189893bedf59b0ea380ea109ccbf6c04d8a2608335b513c2f363"
   }
 }
