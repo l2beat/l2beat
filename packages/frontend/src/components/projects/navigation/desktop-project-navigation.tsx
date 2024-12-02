@@ -12,13 +12,7 @@ import {
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '~/components/core/select'
+import { Select } from '~/components/core/select'
 import { useRouterWithProgressBar } from '~/components/progress-bar'
 import { useCurrentSection } from '~/hooks/use-current-section'
 import { SummaryIcon } from '~/icons/summary'
@@ -93,24 +87,18 @@ export function DesktopProjectNavigation({
           {projectVariants && (
             <div className="mt-2 pl-12">
               <Select
-                defaultValue={
-                  projectVariants.find((v) => pathname.startsWith(v.href))?.href
+                value={
+                  projectVariants.find((v) => pathname.startsWith(v.href))
+                    ?.href ?? ''
                 }
                 onValueChange={(value) => {
                   router.push(value)
                 }}
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {projectVariants.map((variant) => (
-                    <SelectItem key={variant.href} value={variant.href}>
-                      {variant.title}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                options={projectVariants.map((variant) => ({
+                  label: variant.title,
+                  value: variant.href,
+                }))}
+              />
             </div>
           )}
           <HorizontalSeparator className="my-4" />

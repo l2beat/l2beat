@@ -1,13 +1,6 @@
 import { type Meta, type StoryObj } from '@storybook/react'
-import { userEvent, within } from '@storybook/test'
 import { onlyDesktopModes } from '~/../.storybook/modes'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from './select'
+import { Select } from './select'
 
 const meta = {
   title: 'Atoms/Select',
@@ -17,56 +10,34 @@ const meta = {
       modes: onlyDesktopModes,
     },
   },
+  args: {
+    options: [
+      { label: 'Option 1', value: 'option1' },
+      { label: 'Option 2', value: 'option2' },
+      { label: 'Option 3', value: 'option3' },
+    ],
+  },
+  decorators: [
+    (Story) => (
+      <div className="w-[180px]">
+        <Story />
+      </div>
+    ),
+  ],
 } satisfies Meta<typeof Select>
 
 export default meta
 type Story = StoryObj<typeof Select>
 
 export const Default: Story = {
-  render: () => (
-    <Select>
-      <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Select an option" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="option1">Option 1</SelectItem>
-        <SelectItem value="option2">Option 2</SelectItem>
-        <SelectItem value="option3">Option 3</SelectItem>
-      </SelectContent>
-    </Select>
-  ),
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement)
-    await userEvent.click(canvas.getByRole('combobox'))
+  args: {
+    value: 'option2',
   },
 }
 
-export const WithDefaultValue: Story = {
-  render: () => (
-    <Select defaultValue="option2">
-      <SelectTrigger className="w-[180px]">
-        <SelectValue />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="option1">Option 1</SelectItem>
-        <SelectItem value="option2">Option 2</SelectItem>
-        <SelectItem value="option3">Option 3</SelectItem>
-      </SelectContent>
-    </Select>
-  ),
-}
-
 export const Disabled: Story = {
-  render: () => (
-    <Select disabled>
-      <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Disabled select" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="option1">Option 1</SelectItem>
-        <SelectItem value="option2">Option 2</SelectItem>
-        <SelectItem value="option3">Option 3</SelectItem>
-      </SelectContent>
-    </Select>
-  ),
+  args: {
+    title: 'Select an option',
+    disabled: true,
+  },
 }

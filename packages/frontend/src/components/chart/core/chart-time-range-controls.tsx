@@ -1,10 +1,4 @@
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '~/components/core/select'
+import { Select } from '~/components/core/select'
 import { useIsClient } from '~/hooks/use-is-client'
 import { useBreakpoint } from '~/hooks/use-is-mobile'
 import { cn } from '~/utils/cn'
@@ -12,7 +6,7 @@ import { RadioGroup, RadioGroupItem } from '../../core/radio-group'
 import { Skeleton } from '../../core/skeleton'
 
 interface Props<T extends string> {
-  value: T | undefined
+  value: T
   setValue: (range: T) => void
   options: { value: T; disabled?: boolean; label: string }[]
   projectSection?: boolean
@@ -42,24 +36,7 @@ export function ChartTimeRangeControls<T extends string>({
   }
 
   if (showSelect) {
-    return (
-      <Select value={value} onValueChange={setValue}>
-        <SelectTrigger>
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent>
-          {options.map((option) => (
-            <SelectItem
-              key={option.value}
-              value={option.value}
-              disabled={option.disabled}
-            >
-              {option.label}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-    )
+    return <Select options={options} value={value} onValueChange={setValue} />
   }
 
   return (
