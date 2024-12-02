@@ -1,9 +1,8 @@
 {
-    "$schema": "../../../../discovery/schemas/config.v2.schema.json",
-    "chain": "base",
-    "name": "b3",
-    "initialAddresses": ["0x769547a723783FCA36BAaf1ECcf9dfdbF6d09F38"],
-    "names": {},
-    "overrides": {}
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "base",
+  "name": "b3",
+  "initialAddresses": ["0x769547a723783FCA36BAaf1ECcf9dfdbF6d09F38"],
+  "names": {},
+  "overrides": {}
 }
-  

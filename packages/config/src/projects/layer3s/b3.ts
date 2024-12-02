@@ -5,15 +5,20 @@ import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER } from '../layer2s/templates/opStack'
-import { Layer3 } from './types'
 import { opStackL3 } from '../layer2s/templates/opStack'
+import { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('b3', 'base')
 
 export const b3: Layer3 = opStackL3({
-  createdAt: new UnixTime(1722376845), 
+  createdAt: new UnixTime(1722376845),
   hostChain: ProjectId('base'),
-  badges: [Badge.DA.Celestia, Badge.RaaS.Caldera, Badge.Stack.OPStack, Badge.L3ParentChain.Base],
+  badges: [
+    Badge.DA.Celestia,
+    Badge.RaaS.Caldera,
+    Badge.Stack.OPStack,
+    Badge.L3ParentChain.Base,
+  ],
   daProvider: CELESTIA_DA_PROVIDER,
   associatedTokens: [],
   discovery,
@@ -62,8 +67,7 @@ export const b3: Layer3 = opStackL3({
       name: 'B3 Open Mainnet Launch',
       link: 'https://cryptoslate.com/press-releases/b3-fun-debuts-mainnet-with-record-breaking-367k-wallets-and-47m-transactions-in-just-1-month-of-testnet/',
       date: '2024-08-15T00:00:00.00Z',
-      description:
-        'B3 opens the mainnet to the public.',
+      description: 'B3 opens the mainnet to the public.',
       type: 'general',
     },
   ],
