@@ -100,6 +100,7 @@ function getScalingProjectActivityEntry(
       hasHighSeverityFieldChanged:
         projectsChangeReport.hasHighSeverityFieldChanged(project.id),
     }),
+    href: `/scaling/projects/${project.display.slug}#activity`,
     entryType: 'activity' as const,
     dataSource: project.display.activityDataSource,
     dataAvailability: {
@@ -111,7 +112,7 @@ function getScalingProjectActivityEntry(
 
 function getEthereumEntry(
   data: ActivityProjectTableData,
-): ScalingActivityEntry {
+): Omit<ScalingActivityEntry, 'href'> {
   return {
     ...getCommonScalingEntry({ project: 'ethereum' }),
     entryType: 'activity' as const,
