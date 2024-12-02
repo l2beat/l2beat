@@ -6,7 +6,6 @@ import { LivenessTimeRangeContextProvider } from './_components/liveness-time-ra
 import { LivenessWarning } from './_components/liveness-warning'
 import { ScalingLivenessTables } from './_components/scaling-liveness-tables'
 
-export const revalidate = 600
 export const metadata = getDefaultMetadata({
   openGraph: {
     url: '/scaling/liveness',

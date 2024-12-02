@@ -115,7 +115,7 @@ const getCached7dTokenBreakdown = cache(
   },
   ['getCached7dTokenBreakdown'],
   {
-    revalidate: 10 * UnixTime.MINUTE,
+    tags: ['tvl'],
   },
 )
 

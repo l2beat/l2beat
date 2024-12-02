@@ -54,6 +54,6 @@ const getCachedResponse = cache(
   },
   ['scaling-tvl-route'],
   {
-    revalidate: 10 * UnixTime.MINUTE,
+    tags: ['tvl'],
   },
 )

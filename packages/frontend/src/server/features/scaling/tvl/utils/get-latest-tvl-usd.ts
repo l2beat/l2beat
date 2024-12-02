@@ -38,7 +38,7 @@ const getCachedProjectsLatestTvlUsd = cache(
   },
   ['latestTvlUsd'],
   {
-    revalidate: 10 * UnixTime.MINUTE,
+    tags: ['tvl'],
   },
 )
 

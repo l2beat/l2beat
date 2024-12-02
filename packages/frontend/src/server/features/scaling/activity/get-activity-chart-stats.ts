@@ -61,6 +61,6 @@ export const getCachedActivityChartStats = cache(
   },
   ['activity-chart-stats'],
   {
-    revalidate: UnixTime.HOUR,
+    tags: ['activity'],
   },
 )

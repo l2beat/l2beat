@@ -6,7 +6,6 @@ import { BridgesFilterContextProvider } from '../_components/bridges-filter-cont
 import { BridgesMvpWarning } from '../_components/bridges-mvp-warning'
 import { BridgesArchivedTable } from './_components/table/bridges-archived-table'
 
-export const revalidate = 600
 export const metadata = getDefaultMetadata({
   openGraph: {
     url: '/bridges/archived',

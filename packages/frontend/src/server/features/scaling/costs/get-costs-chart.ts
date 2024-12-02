@@ -105,7 +105,7 @@ export const getCachedCostsChartData = cache(
   },
   ['costs-chart-data'],
   {
-    revalidate: 10 * UnixTime.MINUTE,
+    tags: ['costs'],
   },
 )
 

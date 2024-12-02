@@ -147,7 +147,7 @@ const getCachedProjectsChangeReport = cache(
     return result
   },
   [`projectsChangeReport-${env.VERCEL_GIT_COMMIT_SHA}`],
-  { revalidate: UnixTime.HOUR },
+  { tags: ['update-monitor'] },
 )
 
 function getProjectsChangeReportMock(): ProjectsChangeReport {

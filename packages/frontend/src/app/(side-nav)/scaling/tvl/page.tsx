@@ -9,7 +9,6 @@ import { ScalingAssociatedTokensContextProvider } from '../_components/scaling-a
 import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
 import { ScalingTvlTables } from './_components/scaling-tvl-tables'
 
-export const revalidate = 600
 export const metadata = getDefaultMetadata({
   openGraph: {
     url: '/scaling/tvl',
