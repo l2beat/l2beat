@@ -48,23 +48,10 @@ export function useCostChartRenderParams({ milestones, unit, data }: Params) {
 
   const valuesStyle: SeriesStyle[] = useMemo(
     () => [
-      {
-        line: 'blue',
-        fill: 'blue',
-        point: 'circle',
-      },
-      {
-        line: 'light-yellow',
-        fill: 'light-yellow',
-      },
-      {
-        line: 'pink',
-        fill: 'pink',
-      },
-      {
-        line: 'purple',
-        fill: 'purple',
-      },
+      { fill: 'blue', point: 'circle' },
+      { fill: 'light-yellow' },
+      { fill: 'pink' },
+      { fill: 'purple' },
     ],
     [],
   )
