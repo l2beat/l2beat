@@ -334,7 +334,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
             mode: DA_MODES.STATE_DIFFS_COMPRESSED,
           })
         : addSentimentToDataAvailability({
-            layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
+            layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
             bridge: DA_BRIDGES.ENSHRINED,
             mode: DA_MODES.STATE_DIFFS_COMPRESSED,
           }),
