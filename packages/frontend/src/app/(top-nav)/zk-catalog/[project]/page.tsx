@@ -15,7 +15,6 @@ interface Props {
   }>
 }
 
-export const revalidate = 3600
 export async function generateStaticParams() {
   if (env.VERCEL_ENV === 'preview') return []
   return zkCatalogProjects.map((project) => ({

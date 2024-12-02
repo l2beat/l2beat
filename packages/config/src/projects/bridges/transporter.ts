@@ -84,7 +84,7 @@ export const transporter: Bridge = {
     },
     validation: {
       name: 'Oracle Network',
-      description: `Chainlink Oracle network is responsibile for validating cross-chain messages. For additional security, CCIP uses an off-chain secondary validation network called Risk Management Network.
+      description: `Chainlink Oracle network is responsible for validating cross-chain messages. For additional security, CCIP uses an off-chain secondary validation network called Risk Management Network.
         Each pathway between a source and a destination blockchain contains two Oracle committees. One committee interacts with the CommitStore contract on the destination chain to store the Merkle root 
         of the finalized messages on the source blockchain. After the Risk Management Network verifies the merkle root and submits a voteToBless() transaction, the second oracle committee can execute the message on the destination chain.`,
       references: [

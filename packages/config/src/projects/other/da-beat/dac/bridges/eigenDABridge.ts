@@ -115,6 +115,7 @@ const totalNumberOfRegisteredOperators = discovery.getContractValue<string[]>(
 export const eigenDAbridge = {
   id: 'eigenda-bridge',
   createdAt: new UnixTime(1724426960), // 2024-08-23T15:29:20Z
+  chain: ChainId.ETHEREUM,
   type: 'DAC',
   display: {
     name: 'ServiceManager',
@@ -359,7 +360,6 @@ export const eigenDAbridge = {
       ),
     ],
   },
-  chain: ChainId.ETHEREUM,
   requiredMembers: 0, // currently 0 since threshold is not enforced
   membersCount: 400, // max allowed operators (quorum 1 + quorum 2)
   transactionDataType: DacTransactionDataType.TransactionData,

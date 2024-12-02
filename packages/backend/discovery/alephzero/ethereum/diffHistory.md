@@ -1,3 +1,211 @@
+Generated with discovered.json: 0xf7230a2be77126fc984cb938e6200d57c45cf814
+
+# Diff at Fri, 29 Nov 2024 11:28:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9776abb8b1f960f6f1ec6ec27558b5eff7eb5b87 block: 21285821
+- current block number: 21285821
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21285821 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x1CA12290D954CFe022323b6A6Df92113ed6b1C98) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.2.permission:
+-        "configure"
++        "fastconfirm"
+      issuedPermissions.2.target:
+-        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
++        "0x2b2566944f8ff8a256b39C6A36900991EC1fF3c6"
+      issuedPermissions.2.via.0.address:
+-        "0x830D41c5624EE982cddEd92Ba01DAB3a4856116f"
++        "0xeC475675629B38E42d4aC5d40761618268E7Ed21"
+      issuedPermissions.2.via.0.description:
+-        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+      issuedPermissions.1.target:
+-        "0x2b2566944f8ff8a256b39C6A36900991EC1fF3c6"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+      issuedPermissions.1.via.0.address:
+-        "0xeC475675629B38E42d4aC5d40761618268E7Ed21"
++        "0x830D41c5624EE982cddEd92Ba01DAB3a4856116f"
+      issuedPermissions.1.via.0.description:
+-        "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      issuedPermissions.0.via.0.description:
+-        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x830D41c5624EE982cddEd92Ba01DAB3a4856116f) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.1.description:
+-        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract GelatoMultisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract AlephZeroMultisig (0xeC475675629B38E42d4aC5d40761618268E7Ed21) {
+    +++ description: None
+      directlyReceivedPermissions.0.permission:
+-        "configure"
++        "fastconfirm"
+      directlyReceivedPermissions.0.description:
+-        "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
++        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+    }
+```
+
+Generated with discovered.json: 0x270f86133372a90f06709cc615d913bec2cf532d
+
+# Diff at Fri, 29 Nov 2024 09:31:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c60f4ba86fcd7b86d6876d1634b83081095f33d7 block: 21285821
+- current block number: 21285821
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21285821 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x1CA12290D954CFe022323b6A6Df92113ed6b1C98) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.6:
++        {"permission":"validate","target":"0x2b2566944f8ff8a256b39C6A36900991EC1fF3c6","via":[{"address":"0xeC475675629B38E42d4aC5d40761618268E7Ed21","delay":0,"description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}]}
+      issuedPermissions.5:
++        {"permission":"validate","target":"0x2b2566944f8ff8a256b39C6A36900991EC1fF3c6","via":[]}
+      issuedPermissions.4.permission:
+-        "validate"
++        "upgrade"
+      issuedPermissions.4.target:
+-        "0x2b2566944f8ff8a256b39C6A36900991EC1fF3c6"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+      issuedPermissions.4.via.0.address:
+-        "0xeC475675629B38E42d4aC5d40761618268E7Ed21"
++        "0x830D41c5624EE982cddEd92Ba01DAB3a4856116f"
+      issuedPermissions.4.via.0.description:
+-        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+      issuedPermissions.3.permission:
+-        "validate"
++        "upgrade"
+      issuedPermissions.3.target:
+-        "0x2b2566944f8ff8a256b39C6A36900991EC1fF3c6"
++        "0x257812604076712675ae9788F5Bd738173CA3CE0"
+      issuedPermissions.3.via.0:
++        {"address":"0x830D41c5624EE982cddEd92Ba01DAB3a4856116f","delay":0}
+      issuedPermissions.2.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.2.via.0.description:
++        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.1.target:
+-        "0x257812604076712675ae9788F5Bd738173CA3CE0"
++        "0x2b2566944f8ff8a256b39C6A36900991EC1fF3c6"
+      issuedPermissions.1.via.0.address:
+-        "0x830D41c5624EE982cddEd92Ba01DAB3a4856116f"
++        "0xeC475675629B38E42d4aC5d40761618268E7Ed21"
+      issuedPermissions.1.via.0.description:
++        "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+      issuedPermissions.0.target:
+-        "0x2b2566944f8ff8a256b39C6A36900991EC1fF3c6"
++        "0x257812604076712675ae9788F5Bd738173CA3CE0"
+      issuedPermissions.0.via.0.address:
+-        "0xeC475675629B38E42d4aC5d40761618268E7Ed21"
++        "0x830D41c5624EE982cddEd92Ba01DAB3a4856116f"
+      issuedPermissions.0.via.0.description:
+-        "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
++        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x830D41c5624EE982cddEd92Ba01DAB3a4856116f) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.2:
++        {"permission":"upgrade","target":"0x1CA12290D954CFe022323b6A6Df92113ed6b1C98"}
+      directlyReceivedPermissions.1.permission:
+-        "upgrade"
++        "configure"
+      directlyReceivedPermissions.1.description:
++        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract GelatoMultisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      receivedPermissions.10:
++        {"permission":"upgrade","target":"0xF75206c49c1694594E3e69252E519434f1579876","via":[{"address":"0x80622fe04c5e1c3fbb3A9c62996dB27B53E9F77b"},{"address":"0x830D41c5624EE982cddEd92Ba01DAB3a4856116f"}]}
+      receivedPermissions.9.target:
+-        "0xF75206c49c1694594E3e69252E519434f1579876"
++        "0xeBb17f398ed30d02F2e8733e7c1e5cf566e17812"
+      receivedPermissions.8.target:
+-        "0xeBb17f398ed30d02F2e8733e7c1e5cf566e17812"
++        "0xccaF21F002EAF230c9Fa810B34837a3739B70F7B"
+      receivedPermissions.7.target:
+-        "0xccaF21F002EAF230c9Fa810B34837a3739B70F7B"
++        "0xb9e6987d1E0936b93f512bC89632E15DcA706d87"
+      receivedPermissions.6.target:
+-        "0xb9e6987d1E0936b93f512bC89632E15DcA706d87"
++        "0x830D41c5624EE982cddEd92Ba01DAB3a4856116f"
+      receivedPermissions.5.target:
+-        "0x830D41c5624EE982cddEd92Ba01DAB3a4856116f"
++        "0x73bb50c32a3BD6A1032aa5cFeA048fBDA3D6aF6e"
+      receivedPermissions.4.target:
+-        "0x73bb50c32a3BD6A1032aa5cFeA048fBDA3D6aF6e"
++        "0x56D8EC76a421063e1907503aDd3794c395256AEb"
+      receivedPermissions.3.target:
+-        "0x56D8EC76a421063e1907503aDd3794c395256AEb"
++        "0x4e008aEeA79Fcd5708A7b46CA1732dFAf2a25B7d"
+      receivedPermissions.2.target:
+-        "0x4e008aEeA79Fcd5708A7b46CA1732dFAf2a25B7d"
++        "0x41Ec9456AB918f2aBA81F38c03Eb0B93b78E84d9"
+      receivedPermissions.1.target:
+-        "0x41Ec9456AB918f2aBA81F38c03Eb0B93b78E84d9"
++        "0x1CA12290D954CFe022323b6A6Df92113ed6b1C98"
+      receivedPermissions.1.via.1:
+-        {"address":"0x830D41c5624EE982cddEd92Ba01DAB3a4856116f"}
+      receivedPermissions.1.via.0.address:
+-        "0x80622fe04c5e1c3fbb3A9c62996dB27B53E9F77b"
++        "0x830D41c5624EE982cddEd92Ba01DAB3a4856116f"
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      receivedPermissions.0.description:
++        "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
 Generated with discovered.json: 0x05ec40ea682e69ebd949ae3f1f793cbc54a64952
 
 # Diff at Thu, 28 Nov 2024 11:12:27 GMT:

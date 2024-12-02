@@ -11,4 +11,5 @@ export const onChainProjects: string[] = [
   'cronoszkevm',
   'nebraupa',
   'vector',
+  'espresso',
 ]

@@ -15,7 +15,7 @@ export interface ScalingProjectPermission {
   references?: ScalingProjectReference[]
   /** List of accounts that are participants in this permission, mainly used for MultiSigs */
   participants?: ScalingProjectPermissionedAccount[]
-  /** Indicates wheather the permission comes from a role like Proposer or Guardian */
+  /** Indicates whether the permission comes from a role like Proposer or Guardian */
   fromRole?: boolean
 }
 

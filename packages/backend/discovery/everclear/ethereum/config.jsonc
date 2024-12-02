@@ -5,11 +5,5 @@
   "initialAddresses": [
     "0x4eb4fB614e1aa3634513319F4Ec7334bC4321356", // Bridge
     "0xA880b3fC75928695ac75e06793277aC4bEA84a3E" // GatewayRouter
-  ],
-  "names": {},
-  "overrides": {
-    "0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C": {
-      "extends": "orbitstack/RollupProxy" // fastconfirmer not set
-    }
-  }
+  ]
 }

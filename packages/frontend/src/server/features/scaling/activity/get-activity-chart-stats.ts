@@ -1,4 +1,3 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { getActivityChart } from './get-activity-chart'
 import { type ActivityProjectFilter } from './utils/project-filter-utils'
@@ -61,6 +60,6 @@ export const getCachedActivityChartStats = cache(
   },
   ['activity-chart-stats'],
   {
-    revalidate: UnixTime.HOUR,
+    tags: ['activity'],
   },
 )

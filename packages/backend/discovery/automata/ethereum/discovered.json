@@ -2,7 +2,7 @@
   "name": "automata",
   "chain": "ethereum",
   "blockNumber": 21265411,
-  "configHash": "0xdf5fedb6a4e18a833e678971f707edab9dc979902f96e74958a39a138b7cfeb9",
+  "configHash": "0xbb6f57f5aba3f841c15ea429b1946327535f1a1474304edc4383f41870242169",
   "contracts": [
     {
       "name": "L1ERC721Bridge",

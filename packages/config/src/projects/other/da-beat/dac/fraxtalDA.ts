@@ -3,7 +3,7 @@ import { DaLayer } from '../types/DaLayer'
 import { fraxtalDABridge } from './bridges/fraxtalDABridge'
 
 export const fraxtalDA: DaLayer = {
-  id: 'dac',
+  id: 'fraxtal-da',
   type: 'DaLayer',
   kind: 'No DAC',
   systemCategory: 'custom',

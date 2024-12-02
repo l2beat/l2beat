@@ -12,9 +12,6 @@
   "overrides": {
     "SocketVault_Reya": {
       "ignoreMethods": ["hook__", "token"]
-    },
-    "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A": {
-      "extends": "orbitstack/RollupProxy"
     }
   }
 }

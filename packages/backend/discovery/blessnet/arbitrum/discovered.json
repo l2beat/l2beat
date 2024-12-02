@@ -95,6 +95,11 @@
       "description": "A sequencer (registered in this contract) can submit transaction batches or commitments here.",
       "issuedPermissions": [
         {
+          "permission": "configure",
+          "target": "0xED64BaA244A1Ba3e91bBA2712004b1732078EC4D",
+          "via": []
+        },
+        {
           "permission": "sequence",
           "target": "0xa0899d20D9665EB0FfE311A395FCd481bF38A5Ff",
           "via": []
@@ -238,9 +243,9 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "fastconfirm",
           "target": "0xF9327276c0E0d255543C095AC6D243B555e645D9",
-          "description": "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
         },
         {
           "permission": "validate",
@@ -371,6 +376,12 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xF9327276c0E0d255543C095AC6D243B555e645D9",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "via": [{ "address": "0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3" }]
+        },
         {
           "permission": "upgrade",
           "target": "0x12c0163237819Eb81c469F71Ea0672e3e8dbF6dB",
@@ -510,6 +521,11 @@
         {
           "permission": "act",
           "target": "0xf201805BD417f9E0d229A0C379c3e5B91bf18A8b"
+        },
+        {
+          "permission": "configure",
+          "target": "0xF9327276c0E0d255543C095AC6D243B555e645D9",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
         },
         {
           "permission": "upgrade",
@@ -674,6 +690,17 @@
       "issuedPermissions": [
         {
           "permission": "configure",
+          "target": "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF",
+          "via": [
+            {
+              "address": "0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3",
+              "delay": 0,
+              "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+            }
+          ]
+        },
+        {
+          "permission": "fastconfirm",
           "target": "0x571D6CA61B979A967E055696c822CF8C928d3556",
           "via": []
         },
@@ -878,7 +905,16 @@
     },
     { "address": "0xbf853295743511e8DC5F03809d209C33fC136d24" },
     { "address": "0xD61640d06dC7A61C46d9515680b4DDd2AC51E9A9" },
-    { "address": "0xED64BaA244A1Ba3e91bBA2712004b1732078EC4D" }
+    {
+      "address": "0xED64BaA244A1Ba3e91bBA2712004b1732078EC4D",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x1e751242C9CE10E165969EeD91E5D98587904aad",
+          "description": "Add/remove batchPosters (Sequencers)."
+        }
+      ]
+    }
   ],
   "abis": {
     "0x0BEfa8F5F1e3bf8e02d874375A43EA75AeD9CD39": [
@@ -1509,8 +1545,8 @@
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
     "orbitstack/RollupEventInbox": "0x0608b35e1df8a51677a6392869e50b60a1ff7137f71f40bddf83143a5ef640c1",
-    "orbitstack/RollupProxy_fastConfirm": "0x91c9d3536cb44155adbb51ee7d5712c88dab3fed8850fde3967215b257571df5",
-    "orbitstack/SequencerInbox": "0x88542722d1f831549b0b3c814ee5d973fed5780765ae1a05e607dffef0df3154",
+    "orbitstack/RollupProxy_fastConfirm": "0x2314bbfa0104764ce632ec231b12e2b142a94db57f5442ae68d4a52be7794651",
+    "orbitstack/SequencerInbox": "0x5cd19865dbaedc22bb0571435a45b9ec44f18388ca4c83dc971fb6c0be1bdf22",
     "orbitstack/UpgradeExecutor": "0xa8c2617950ce46d982abd852226ebcc1aacaf9c8c7daeda793b53a790eced777"
   }
 }

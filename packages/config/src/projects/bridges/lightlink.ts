@@ -54,7 +54,7 @@ const publisher = discovery.getContractValue<string>(
 
 const daOracle = discovery.getContractValue<string>('ChainOracle', 'daOracle')
 
-/* Initally added as L2, commented out sections are from the original file. */
+/* Initially added as L2, commented out sections are from the original file. */
 
 const CHALLENGE_WINDOW_SECONDS = discovery.getContractValue<number>(
   'Challenge',

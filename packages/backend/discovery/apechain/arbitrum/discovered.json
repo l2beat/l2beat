@@ -1,17 +1,20 @@
 {
   "name": "apechain",
   "chain": "arbitrum",
-  "blockNumber": 276713373,
-  "configHash": "0x045b94669102e06f801341c655dbe6db921916a672004d81108f0eb2a26e7649",
+  "blockNumber": 279474286,
+  "configHash": "0x5d353031f4fe81f16452c65dddd736381f67d31c40251cac6576413e20036934",
   "contracts": [
     {
-      "name": "Inbox",
+      "name": "ERC20Inbox",
       "address": "0x1B98e4ED82Ee1a91A65a38C690e2266364064D15",
+      "template": "orbitstack/Inbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0xb2c117c2e00734a82fe4ab27d5fe91a6e152c06bbcdbf83db021ad32b6be3e60"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "Inbox",
+      "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -46,8 +49,7 @@
         "maxDataSize": 104857,
         "paused": false,
         "sequencerInbox": "0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C"
-      },
-      "derivedName": "ERC20Inbox"
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -105,7 +107,7 @@
         {
           "permission": "configure",
           "target": "0x374de579AE15aD59eD0519aeAf1A23F348Df259c",
-          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "via": [{ "address": "0xe032d15909e90f9A36901abB08944653e9E87d72" }]
         },
         {
@@ -200,7 +202,7 @@
     {
       "name": "RollupProxy",
       "address": "0x374de579AE15aD59eD0519aeAf1A23F348Df259c",
-      "template": "orbitstack/RollupProxy",
+      "template": "orbitstack/RollupProxy_fastConfirm",
       "sourceHashes": [
         "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca",
         "0x9349e73cbc2d2b818c1d79711574ba210b56249d8d3845bc78c776caf8f8ff42",
@@ -216,7 +218,7 @@
             {
               "address": "0xe032d15909e90f9A36901abB08944653e9E87d72",
               "delay": 0,
-              "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+              "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
             }
           ]
         },
@@ -269,12 +271,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1758,
+        "firstUnresolvedNode": 1949,
         "inbox": "0x1B98e4ED82Ee1a91A65a38C690e2266364064D15",
         "isERC20Enabled": false,
         "lastStakeBlock": 20628667,
-        "latestConfirmed": 1757,
-        "latestNodeCreated": 1909,
+        "latestConfirmed": 1948,
+        "latestNodeCreated": 2100,
         "loserStakeEscrow": "0x5737CDBb3a67001441C0DA8b86e6b1826705601c",
         "minimumAssertionPeriod": 75,
         "outbox": "0x4F405BA65291063d8A524c2bDf55d4e67405c2aF",
@@ -298,6 +300,9 @@
         "zombieLatestStakedNode": []
       },
       "fieldMeta": {
+        "minimumAssertionPeriod": {
+          "description": "Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "
+        },
         "confirmPeriodBlocks": {
           "description": "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
         },
@@ -314,7 +319,6 @@
           "description": "Emitted on createChallenge() in RollupUserLogic."
         }
       },
-      "derivedName": "RollupProxy",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -356,13 +360,16 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "Outbox",
+      "name": "ERC20Outbox",
       "address": "0x4F405BA65291063d8A524c2bDf55d4e67405c2aF",
+      "template": "orbitstack/Outbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0xfc1c087eedce3e4be0593d2e01fcd357b4980c69e03399574b4606e4f3b9ee04"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "Outbox",
+      "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -401,8 +408,7 @@
         "l2ToL1WithdrawalAmount": 0,
         "OUTBOX_VERSION": 2,
         "rollup": "0x374de579AE15aD59eD0519aeAf1A23F348Df259c"
-      },
-      "derivedName": "ERC20Outbox"
+      }
     },
     {
       "name": "OneStepProverMemory",
@@ -416,13 +422,16 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "Bridge",
+      "name": "ERC20Bridge",
       "address": "0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8",
+      "template": "orbitstack/Bridge",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0x730e8c5ec2de9c1ede82d8374adbf127fb1b095f21f58aad54f58469ae135857"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "Bridge",
+      "description": "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -462,15 +471,14 @@
           "0xf383814AE1eD316ed7d6FeA28810C77E8a15A49F"
         ],
         "allowedOutboxList": ["0x4F405BA65291063d8A524c2bDf55d4e67405c2aF"],
-        "delayedMessageCount": 284,
+        "delayedMessageCount": 342,
         "nativeToken": "0x7f9FBf9bDd3F4105C478b996B648FE6e828a1e98",
         "nativeTokenDecimals": 18,
         "rollup": "0x374de579AE15aD59eD0519aeAf1A23F348Df259c",
         "sequencerInbox": "0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C",
-        "sequencerMessageCount": 14826,
-        "sequencerReportedSubMessageCount": 4856916
-      },
-      "derivedName": "ERC20Bridge"
+        "sequencerMessageCount": 16737,
+        "sequencerReportedSubMessageCount": 5784824
+      }
     },
     {
       "name": "OneStepProverMath",
@@ -554,8 +562,7 @@
         "resultReceiver": "0x374de579AE15aD59eD0519aeAf1A23F348Df259c",
         "sequencerInbox": "0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C",
         "totalChallengesCreated": 0
-      },
-      "derivedName": "ChallengeManager"
+      }
     },
     {
       "name": "ValidatorUtils",
@@ -600,7 +607,7 @@
         {
           "permission": "configure",
           "target": "0x374de579AE15aD59eD0519aeAf1A23F348Df259c",
-          "description": "can pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
         },
         {
           "permission": "upgrade",
@@ -637,8 +644,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["0x2B1FbeE3c7D278bFD9E179893FF304fE49FA7DDF"]
-      },
-      "derivedName": "UpgradeExecutor"
+      }
     },
     {
       "name": "SequencerInbox",
@@ -651,6 +657,11 @@
       "proxyType": "EIP1967 proxy",
       "description": "A sequencer (registered in this contract) can submit transaction batches or commitments here.",
       "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x5737CDBb3a67001441C0DA8b86e6b1826705601c",
+          "via": []
+        },
         {
           "permission": "sequence",
           "target": "0x845205C0F5109282954Bba4217aDA2a27Fdd89fF",
@@ -684,7 +695,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 14826,
+        "batchCount": 16737,
         "batchPosterManager": "0x5737CDBb3a67001441C0DA8b86e6b1826705601c",
         "batchPosters": ["0x845205C0F5109282954Bba4217aDA2a27Fdd89fF"],
         "bridge": "0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8",
@@ -720,7 +731,7 @@
         "rollup": "0x374de579AE15aD59eD0519aeAf1A23F348Df259c",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 284,
+        "totalDelayedMessagesRead": 341,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -728,17 +739,19 @@
         "maxTimeVariation": {
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
-      },
-      "derivedName": "SequencerInbox"
+      }
     },
     {
       "name": "ERC20RollupEventInbox",
       "address": "0xf383814AE1eD316ed7d6FeA28810C77E8a15A49F",
+      "template": "orbitstack/RollupEventInbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0x35bd9f6436158f2147578ce95b85de68f435e81f1f3ed3858f7523a8c4825a1a"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "RollupEventInbox",
+      "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -773,8 +786,26 @@
     }
   ],
   "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x5737CDBb3a67001441C0DA8b86e6b1826705601c" },
+    {
+      "address": "0x0000000000000000000000000000000000000000",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "fastconfirm",
+          "target": "0x374de579AE15aD59eD0519aeAf1A23F348Df259c",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+        }
+      ]
+    },
+    {
+      "address": "0x5737CDBb3a67001441C0DA8b86e6b1826705601c",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C",
+          "description": "Add/remove batchPosters (Sequencers)."
+        }
+      ]
+    },
     { "address": "0x651cF50272Ffa8f6D954080DF743410Bb0aa7AFa" },
     { "address": "0x65c10dD3d50B10D0E1Bb459675b03367B1b52eD1" },
     { "address": "0x83F58bBB1a940E364ED2dE775D1FD5218135cCE3" },
@@ -1418,14 +1449,18 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
+    "orbitstack/Bridge": "0x6e309bce5a8758ba24f800f3c0135c502fd5cc22724da5165d8368377eb6c9c8",
     "orbitstack/ChallengeManager": "0xc4fbc82c5001579bb1f880d92a3510cda3dc4a65e284fc300363ce048c2fb6d7",
+    "orbitstack/Inbox": "0x1938bb9de2d7f328ae3e83f2dd9f5d3c5575b599fc097cf9308bac4d5bb3e89e",
     "orbitstack/OneStepProofEntry": "0xf3bff5da86f9bbb5f9ac93a0f2239f0769d051b67a44be2e52c322799e3b8d4f",
     "orbitstack/OneStepProver0": "0x80f18705038deef096683a89d16549bf343ada57cac1f2750df2f06fbbaed5ca",
     "orbitstack/OneStepProverHostIo": "0xacacb7603847a3f0212fdf80c653040278214c00451f763907e270d1f19efec0",
     "orbitstack/OneStepProverMath": "0x8dd8aebb517eb6eaf15437ddbb90dff66f2b14d9d6b5390dd87fbdab15168188",
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
-    "orbitstack/RollupProxy": "0x88165b83156dbb5b288912a52adc278d223904d0c933472cb3950a05ba456170",
-    "orbitstack/SequencerInbox": "0x88542722d1f831549b0b3c814ee5d973fed5780765ae1a05e607dffef0df3154",
+    "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
+    "orbitstack/RollupEventInbox": "0x0608b35e1df8a51677a6392869e50b60a1ff7137f71f40bddf83143a5ef640c1",
+    "orbitstack/RollupProxy_fastConfirm": "0x2314bbfa0104764ce632ec231b12e2b142a94db57f5442ae68d4a52be7794651",
+    "orbitstack/SequencerInbox": "0x5cd19865dbaedc22bb0571435a45b9ec44f18388ca4c83dc971fb6c0be1bdf22",
     "orbitstack/UpgradeExecutor": "0xa8c2617950ce46d982abd852226ebcc1aacaf9c8c7daeda793b53a790eced777"
   }
 }

@@ -17,7 +17,6 @@ interface Props {
   }>
 }
 
-export const revalidate = 600
 export async function generateStaticParams() {
   if (env.VERCEL_ENV === 'preview') return []
   return daLayers.flatMap((layer) =>

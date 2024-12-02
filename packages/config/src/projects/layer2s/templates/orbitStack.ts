@@ -947,7 +947,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
         : addSentimentToDataAvailability({
             layers: [
               usesBlobs
-                ? DA_LAYERS.ETH_BLOBS_OR_CALLLDATA
+                ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
                 : DA_LAYERS.ETH_CALLDATA,
             ],
             bridge: DA_BRIDGES.ENSHRINED,

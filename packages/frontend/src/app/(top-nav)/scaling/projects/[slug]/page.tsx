@@ -13,7 +13,6 @@ import { ScalingProjectSummary } from './_components/scaling-project-summary'
 
 const scalingProjects = [...layer2s, ...layer3s]
 
-export const revalidate = 600
 export async function generateStaticParams() {
   if (env.VERCEL_ENV === 'preview') return []
   return scalingProjects.map((layer) => ({

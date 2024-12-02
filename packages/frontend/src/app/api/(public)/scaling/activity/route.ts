@@ -1,4 +1,3 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { type NextRequest, NextResponse } from 'next/server'
 import { getActivityChart } from '~/server/features/scaling/activity/get-activity-chart'
@@ -27,14 +26,15 @@ const getCachedResponse = cache(
 
     // Strip ethereum data points
     const projectsDataPoints = data.map(
-      ([timestamp, projectsTxCount]) => [timestamp, projectsTxCount] as const,
+      ([timestamp, projectsTxCount, _, projectsUopsCount]) =>
+        [timestamp, projectsTxCount, projectsUopsCount] as const,
     )
 
     return {
       success: true,
       data: {
         chart: {
-          types: ['timestamp', 'count'],
+          types: ['timestamp', 'count', 'uopsCount'],
           data: projectsDataPoints,
         },
       },
@@ -42,6 +42,6 @@ const getCachedResponse = cache(
   },
   ['scaling-activity-route'],
   {
-    revalidate: UnixTime.HOUR,
+    tags: ['activity'],
   },
 )

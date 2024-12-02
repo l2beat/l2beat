@@ -5,6 +5,7 @@
     "build": {
       "env": [
         "CI",
+        "CRON_SECRET",
         "DATABASE_URL",
         "EXCLUDED_TVL_PROJECTS",
         "EXCLUDED_ACTIVITY_PROJECTS",

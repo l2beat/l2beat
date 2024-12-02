@@ -1,7 +1,6 @@
 import { bridges } from '@l2beat/config'
 import { layer2s } from '@l2beat/config/build/src/projects/layer2s'
 import { layer3s } from '@l2beat/config/build/src/projects/layer3s'
-import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
 import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
@@ -115,7 +114,7 @@ const getCached7dTokenBreakdown = cache(
   },
   ['getCached7dTokenBreakdown'],
   {
-    revalidate: 10 * UnixTime.MINUTE,
+    tags: ['tvl'],
   },
 )
 

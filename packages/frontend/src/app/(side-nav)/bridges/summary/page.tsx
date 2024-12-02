@@ -8,7 +8,6 @@ import { BridgesFilterContextProvider } from '../_components/bridges-filter-cont
 import { BridgesMvpWarning } from '../_components/bridges-mvp-warning'
 import { BridgesSummaryTable } from './_components/table/bridges-summary-table'
 
-export const revalidate = 600
 export const metadata = getDefaultMetadata({
   openGraph: {
     url: '/bridges/summary',

@@ -1,3 +1,87 @@
+Generated with discovered.json: 0x5ab02c379209488d67b40755b0562076d19c466b
+
+# Diff at Fri, 29 Nov 2024 09:08:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c60f4ba86fcd7b86d6876d1634b83081095f33d7 block: 20792032
+- current block number: 20792032
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20792032 (main branch discovery), not current.
+
+```diff
+    contract ETH Vault (0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9","via":[{"address":"0xFb504CD4eD46024B83c4337044995CF112205f18"}]},{"permission":"upgrade","target":"0x830433dE03ABedE062660CC629e1A2c714272474","via":[{"address":"0xFb504CD4eD46024B83c4337044995CF112205f18"}]},{"permission":"upgrade","target":"0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0","via":[{"address":"0xFb504CD4eD46024B83c4337044995CF112205f18"}]},{"permission":"upgrade","target":"0xd910f6F23889919fAd9C8cE3171dd557cE0308Da","via":[{"address":"0xFb504CD4eD46024B83c4337044995CF112205f18"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0xFb504CD4eD46024B83c4337044995CF112205f18"}]
+    }
+```
+
+```diff
+    contract USDT Farm (0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xFb504CD4eD46024B83c4337044995CF112205f18"
++        "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a"
+      issuedPermissions.0.via.0:
++        {"address":"0xFb504CD4eD46024B83c4337044995CF112205f18","delay":0}
+    }
+```
+
+```diff
+    contract USDC Farm (0x830433dE03ABedE062660CC629e1A2c714272474) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xFb504CD4eD46024B83c4337044995CF112205f18"
++        "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a"
+      issuedPermissions.0.via.0:
++        {"address":"0xFb504CD4eD46024B83c4337044995CF112205f18","delay":0}
+    }
+```
+
+```diff
+    contract DAI Farm (0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xFb504CD4eD46024B83c4337044995CF112205f18"
++        "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a"
+      issuedPermissions.0.via.0:
++        {"address":"0xFb504CD4eD46024B83c4337044995CF112205f18","delay":0}
+    }
+```
+
+```diff
+    contract WBTC Farm (0xd910f6F23889919fAd9C8cE3171dd557cE0308Da) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xFb504CD4eD46024B83c4337044995CF112205f18"
++        "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a"
+      issuedPermissions.0.via.0:
++        {"address":"0xFb504CD4eD46024B83c4337044995CF112205f18","delay":0}
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xFb504CD4eD46024B83c4337044995CF112205f18) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9"},{"permission":"upgrade","target":"0x830433dE03ABedE062660CC629e1A2c714272474"},{"permission":"upgrade","target":"0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0"},{"permission":"upgrade","target":"0xd910f6F23889919fAd9C8cE3171dd557cE0308Da"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9"},{"permission":"upgrade","target":"0x830433dE03ABedE062660CC629e1A2c714272474"},{"permission":"upgrade","target":"0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0"},{"permission":"upgrade","target":"0xd910f6F23889919fAd9C8cE3171dd557cE0308Da"}]
+    }
+```
+
 Generated with discovered.json: 0x2f5b23b66cea5217e5df4026732e6e30578a907a
 
 # Diff at Mon, 21 Oct 2024 11:08:41 GMT:

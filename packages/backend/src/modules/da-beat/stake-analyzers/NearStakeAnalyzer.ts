@@ -20,8 +20,12 @@ export class NearStakeAnalyzer extends AbstractStakeAnalyzer {
 
     const res = await this.client.fetch(this.url, {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(body),
     })
+
     const json = await res.json()
     const validators = ValidatorsList.parse(json)
 

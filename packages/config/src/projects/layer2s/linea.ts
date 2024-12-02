@@ -304,7 +304,7 @@ export const linea: Layer2 = {
   },
   dataAvailability: [
     addSentimentToDataAvailability({
-      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
+      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
       bridge: DA_BRIDGES.ENSHRINED,
       mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
     }),

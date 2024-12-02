@@ -10,6 +10,16 @@
   ],
   "ignoreRelatives": ["validatorWalletCreator", "rollupEventInbox"],
   "fields": {
+    "owner": {
+      "target": {
+        "permissions": [
+          {
+            "type": "configure",
+            "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+          }
+        ]
+      }
+    },
     "validators": {
       "target": {
         "permissions": [
@@ -28,8 +38,8 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
-            "description": "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+            "type": "fastconfirm",
+            "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
           }
         ]
       }

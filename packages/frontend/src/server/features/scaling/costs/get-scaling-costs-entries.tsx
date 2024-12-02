@@ -44,6 +44,7 @@ function getScalingCostEntry(
         projectsChangeReport.hasHighSeverityFieldChanged(project.id),
     }),
     entryType: 'costs' as const,
+    href: `/scaling/projects/${project.display.slug}#onchain-costs`,
     costsWarning: project.display.costsWarning,
   }
 }

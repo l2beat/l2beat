@@ -4,7 +4,6 @@ import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
 import { ScalingUpcomingTables } from './_components/scaling-upcoming-tables'
 
-export const revalidate = 600
 export const metadata = getDefaultMetadata({
   openGraph: {
     url: '/scaling/upcoming',

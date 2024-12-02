@@ -29,9 +29,6 @@
     "0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f": "Venn EOA 2"
   },
   "overrides": {
-    "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11": {
-      "extends": "orbitstack/RollupProxy" // hack: prevents fastconfirmer permission to be resolved to 0x00 on FE
-    },
     "Bridger": {
       "description": "Bridger gateway that can swap assets to 'L2 final assets' before bridging them to the L2.",
       "ignoreRelatives": [
