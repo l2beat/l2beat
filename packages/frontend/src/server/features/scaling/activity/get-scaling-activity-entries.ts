@@ -1,5 +1,6 @@
 import { type Layer2, type Layer3 } from '@l2beat/config'
 import { assert, ProjectId, notUndefined } from '@l2beat/shared-pure'
+import { type SetOptional } from 'type-fest'
 import { env } from '~/env'
 import { groupByMainCategories } from '~/utils/group-by-main-categories'
 import {
@@ -80,8 +81,9 @@ export async function getScalingActivityEntries() {
   }
 }
 
-export type ScalingActivityEntry = ReturnType<
-  typeof getScalingProjectActivityEntry
+export type ScalingActivityEntry = SetOptional<
+  ReturnType<typeof getScalingProjectActivityEntry>,
+  'href'
 >
 function getScalingProjectActivityEntry(
   project: ActivityProject,
@@ -100,6 +102,7 @@ function getScalingProjectActivityEntry(
       hasHighSeverityFieldChanged:
         projectsChangeReport.hasHighSeverityFieldChanged(project.id),
     }),
+    href: `/scaling/projects/${project.display.slug}#activity`,
     entryType: 'activity' as const,
     dataSource: project.display.activityDataSource,
     dataAvailability: {
