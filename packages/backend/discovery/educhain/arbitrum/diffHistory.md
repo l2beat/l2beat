@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x47d4aba19e12f6d72ef3adb2eafba6bf24edc13c
+Generated with discovered.json: 0x22e6130effae2201921b460f6857aa1d07e6af4c
 
-# Diff at Fri, 22 Nov 2024 10:17:14 GMT:
+# Diff at Mon, 02 Dec 2024 08:55:36 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 277097441
+- current block number: 280513116
 
 ## Description
 
@@ -81,6 +81,12 @@ Standard orbit stack L3 with native token EDU and admin EOA, launch on Dec 2nd (
 +   Status: CREATED
     contract RollupProxy (0xBaE3B462a2A7fb758F66D91170514C10B14Ce914)
     +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+```
+
+```diff
++   Status: CREATED
+    contract GelatoMultisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb)
+    +++ description: None
 ```
 
 ```diff

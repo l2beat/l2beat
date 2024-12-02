@@ -1,7 +1,7 @@
 {
   "name": "educhain",
   "chain": "arbitrum",
-  "blockNumber": 277097441,
+  "blockNumber": 280513116,
   "configHash": "0x41948154eaf05c3987dfe8e0b0c95a402e43845a73d24ea5ae7f392001f2f2ef",
   "contracts": [
     {
@@ -18,6 +18,20 @@
         {
           "permission": "upgrade",
           "target": "0x3c83a8F0cB2Df6790B1828979e2e181C82e8968E",
+          "via": [
+            {
+              "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0",
+              "delay": 0
+            },
+            {
+              "address": "0x79daC9c2deC3E4411a2cB2b0ecf654D27a4AFf0A",
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
           "via": [
             {
               "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0",
@@ -79,6 +93,20 @@
               "delay": 0
             }
           ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+          "via": [
+            {
+              "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0",
+              "delay": 0
+            },
+            {
+              "address": "0x79daC9c2deC3E4411a2cB2b0ecf654D27a4AFf0A",
+              "delay": 0
+            }
+          ]
         }
       ],
       "ignoreInWatchMode": [
@@ -104,12 +132,12 @@
           "0xD36cd2624a7187ED41ec30FC1d6E6B7b3abAf251"
         ],
         "allowedOutboxList": ["0x6339965Cb3002f5c746895e4eD895bd775dbfdf9"],
-        "delayedMessageCount": 40,
+        "delayedMessageCount": 45,
         "nativeToken": "0xf8173a39c56a554837C4C7f104153A005D284D11",
         "rollup": "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
         "sequencerInbox": "0xA3464bf0ed52cFe6676D3e34ab1F4DF53f193631",
-        "sequencerMessageCount": 228,
-        "sequencerReportedSubMessageCount": 11909
+        "sequencerMessageCount": 461,
+        "sequencerReportedSubMessageCount": 45370
       }
     },
     {
@@ -138,6 +166,20 @@
         {
           "permission": "upgrade",
           "target": "0x3c83a8F0cB2Df6790B1828979e2e181C82e8968E",
+          "via": [
+            {
+              "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0",
+              "delay": 0
+            },
+            {
+              "address": "0x79daC9c2deC3E4411a2cB2b0ecf654D27a4AFf0A",
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
           "via": [
             {
               "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0",
@@ -206,6 +248,20 @@
               "delay": 0
             }
           ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+          "via": [
+            {
+              "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0",
+              "delay": 0
+            },
+            {
+              "address": "0x79daC9c2deC3E4411a2cB2b0ecf654D27a4AFf0A",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1721987935,
@@ -243,6 +299,20 @@
         {
           "permission": "upgrade",
           "target": "0x3c83a8F0cB2Df6790B1828979e2e181C82e8968E",
+          "via": [
+            {
+              "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0",
+              "delay": 0
+            },
+            {
+              "address": "0x79daC9c2deC3E4411a2cB2b0ecf654D27a4AFf0A",
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
           "via": [
             {
               "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0",
@@ -367,12 +437,31 @@
               "delay": 0
             }
           ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+          "via": [
+            {
+              "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0",
+              "delay": 0
+            },
+            {
+              "address": "0x79daC9c2deC3E4411a2cB2b0ecf654D27a4AFf0A",
+              "delay": 0
+            }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
           "target": "0x79daC9c2deC3E4411a2cB2b0ecf654D27a4AFf0A"
+        },
+        {
+          "permission": "configure",
+          "target": "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
         },
         {
           "permission": "upgrade",
@@ -402,13 +491,19 @@
           },
           "EXECUTOR_ROLE": {
             "adminRole": "ADMIN_ROLE",
-            "members": ["0x3c83a8F0cB2Df6790B1828979e2e181C82e8968E"]
+            "members": [
+              "0x3c83a8F0cB2Df6790B1828979e2e181C82e8968E",
+              "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+            ]
           }
         },
         "ADMIN_ROLE": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
-        "executors": ["0x3c83a8F0cB2Df6790B1828979e2e181C82e8968E"]
+        "executors": [
+          "0x3c83a8F0cB2Df6790B1828979e2e181C82e8968E",
+          "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+        ]
       }
     },
     {
@@ -440,6 +535,20 @@
               "delay": 0
             }
           ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+          "via": [
+            {
+              "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0",
+              "delay": 0
+            },
+            {
+              "address": "0x79daC9c2deC3E4411a2cB2b0ecf654D27a4AFf0A",
+              "delay": 0
+            }
+          ]
         }
       ],
       "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
@@ -455,7 +564,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 228,
+        "batchCount": 461,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x0816e1EeE08C701001e5a846f5ae2ee93FABb608"],
         "bridge": "0x2F12c50b46adB01a4961AdDa5038c0974C7C78e8",
@@ -486,7 +595,7 @@
         "rollup": "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 40,
+        "totalDelayedMessagesRead": 45,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -510,18 +619,50 @@
       "issuedPermissions": [
         {
           "permission": "configure",
+          "target": "0x3c83a8F0cB2Df6790B1828979e2e181C82e8968E",
+          "via": [
+            {
+              "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0",
+              "delay": 0,
+              "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+            }
+          ]
+        },
+        {
+          "permission": "configure",
+          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+          "via": [
+            {
+              "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0",
+              "delay": 0,
+              "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+            }
+          ]
+        },
+        {
+          "permission": "fastconfirm",
           "target": "0xbdA6d4ecbb176e12314361DF779bdB428f368163",
           "via": [
             {
               "address": "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b",
               "delay": 0,
-              "description": "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+              "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
             }
           ]
         },
         {
           "permission": "upgrade",
           "target": "0x3c83a8F0cB2Df6790B1828979e2e181C82e8968E",
+          "via": [
+            {
+              "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0",
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
           "via": [
             {
               "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0",
@@ -587,12 +728,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 225,
+        "firstUnresolvedNode": 457,
         "inbox": "0x590044e628ea1B9C10a86738Cf7a7eeF52D031B8",
         "isERC20Enabled": false,
         "lastStakeBlock": 20410965,
-        "latestConfirmed": 224,
-        "latestNodeCreated": 224,
+        "latestConfirmed": 456,
+        "latestNodeCreated": 456,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x6339965Cb3002f5c746895e4eD895bd775dbfdf9",
@@ -668,6 +809,140 @@
       ]
     },
     {
+      "name": "GelatoMultisig",
+      "address": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "via": [{ "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x14dBe58192B60b5207b86c751255B34550Bd12Fb",
+          "via": [
+            { "address": "0x79daC9c2deC3E4411a2cB2b0ecf654D27a4AFf0A" },
+            { "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x2F12c50b46adB01a4961AdDa5038c0974C7C78e8",
+          "via": [
+            { "address": "0x79daC9c2deC3E4411a2cB2b0ecf654D27a4AFf0A" },
+            { "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x419e439e5c0B839d6e31d7C438939EEE1A4f4184",
+          "via": [
+            { "address": "0x79daC9c2deC3E4411a2cB2b0ecf654D27a4AFf0A" },
+            { "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x590044e628ea1B9C10a86738Cf7a7eeF52D031B8",
+          "via": [
+            { "address": "0x79daC9c2deC3E4411a2cB2b0ecf654D27a4AFf0A" },
+            { "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x6339965Cb3002f5c746895e4eD895bd775dbfdf9",
+          "via": [
+            { "address": "0x79daC9c2deC3E4411a2cB2b0ecf654D27a4AFf0A" },
+            { "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0",
+          "via": [
+            { "address": "0x79daC9c2deC3E4411a2cB2b0ecf654D27a4AFf0A" },
+            { "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xA3464bf0ed52cFe6676D3e34ab1F4DF53f193631",
+          "via": [
+            { "address": "0x79daC9c2deC3E4411a2cB2b0ecf654D27a4AFf0A" },
+            { "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
+          "via": [{ "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xD36cd2624a7187ED41ec30FC1d6E6B7b3abAf251",
+          "via": [
+            { "address": "0x79daC9c2deC3E4411a2cB2b0ecf654D27a4AFf0A" },
+            { "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xDa4ac9E9cB8Af8afBB2Df1ffe7b82efEA17ba0f6",
+          "via": [
+            { "address": "0x79daC9c2deC3E4411a2cB2b0ecf654D27a4AFf0A" },
+            { "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xDd7A9dEcBB0b16B37fE6777e245b18fC0aC63759",
+          "via": [
+            { "address": "0x79daC9c2deC3E4411a2cB2b0ecf654D27a4AFf0A" },
+            { "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1732780982,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0x28bB9385A588EF4747264D19B9A9F1603591680c",
+          "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2",
+          "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d",
+          "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d",
+          "0xc85aC6d2fdC376F335455D4cCA30c45ED1080849",
+          "0x27b1682E9C5Cb0E58Ff474F3a13EeCC36E708ad3",
+          "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
+          "0xf83bC4688979b13Da02CB94c76cEB169540760b5",
+          "0xebD4919C075417a86F19713dADe101852867A04F"
+        ],
+        "$threshold": 5,
+        "domainSeparator": "0x505b441132966089aacbbaf12f347d6e6136ae9f92621539b4ab6660c699d6fe",
+        "getChainId": 42161,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "5 of 9 (56%)",
+        "nonce": 0,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
       "name": "ERC20RollupEventInbox",
       "address": "0xD36cd2624a7187ED41ec30FC1d6E6B7b3abAf251",
       "template": "orbitstack/RollupEventInbox",
@@ -682,6 +957,20 @@
         {
           "permission": "upgrade",
           "target": "0x3c83a8F0cB2Df6790B1828979e2e181C82e8968E",
+          "via": [
+            {
+              "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0",
+              "delay": 0
+            },
+            {
+              "address": "0x79daC9c2deC3E4411a2cB2b0ecf654D27a4AFf0A",
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
           "via": [
             {
               "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0",
@@ -752,6 +1041,20 @@
               "delay": 0
             }
           ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+          "via": [
+            {
+              "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0",
+              "delay": 0
+            },
+            {
+              "address": "0x79daC9c2deC3E4411a2cB2b0ecf654D27a4AFf0A",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1721992935,
@@ -789,6 +1092,20 @@
         {
           "permission": "upgrade",
           "target": "0x3c83a8F0cB2Df6790B1828979e2e181C82e8968E",
+          "via": [
+            {
+              "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0",
+              "delay": 0
+            },
+            {
+              "address": "0x79daC9c2deC3E4411a2cB2b0ecf654D27a4AFf0A",
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
           "via": [
             {
               "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0",
@@ -842,9 +1159,9 @@
       "proxyType": "gnosis safe",
       "directlyReceivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "fastconfirm",
           "target": "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
-          "description": "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
         },
         {
           "permission": "validate",
@@ -863,7 +1180,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 199,
+        "nonce": 431,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -881,20 +1198,38 @@
     }
   ],
   "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
+    {
+      "address": "0x0000000000000000000000000000000000000000",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xA3464bf0ed52cFe6676D3e34ab1F4DF53f193631",
+          "description": "Add/remove batchPosters (Sequencers)."
+        }
+      ]
+    },
+    { "address": "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e" },
     {
       "address": "0x0816e1EeE08C701001e5a846f5ae2ee93FABb608",
       "receivedPermissions": [
         {
           "permission": "sequence",
           "target": "0xA3464bf0ed52cFe6676D3e34ab1F4DF53f193631",
-          "description": "can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
         }
       ]
     },
+    { "address": "0x27b1682E9C5Cb0E58Ff474F3a13EeCC36E708ad3" },
+    { "address": "0x28bB9385A588EF4747264D19B9A9F1603591680c" },
     {
       "address": "0x3c83a8F0cB2Df6790B1828979e2e181C82e8968E",
       "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "via": [{ "address": "0x9132151475ACCf0662C545Bc81FbC1741d978EE0" }]
+        },
         {
           "permission": "upgrade",
           "target": "0x14dBe58192B60b5207b86c751255B34550Bd12Fb",
@@ -989,15 +1324,18 @@
       ]
     },
     { "address": "0x44c0da87e4443F275503aB429bEE40fe265b59AF" },
+    { "address": "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d" },
+    { "address": "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2" },
     { "address": "0x9E8f79EE5177aBDd76EDfC7D72c8Dc0F16955ae3" },
     { "address": "0xA9f18587F6dE8B1c89a4AdD2c953AB66eD532015" },
+    { "address": "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d" },
     {
       "address": "0xbdA6d4ecbb176e12314361DF779bdB428f368163",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "fastconfirm",
           "target": "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
-          "description": "a fast-confirmer can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
           "via": [{ "address": "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b" }]
         },
         {
@@ -1013,6 +1351,9 @@
         }
       ]
     },
+    { "address": "0xc85aC6d2fdC376F335455D4cCA30c45ED1080849" },
+    { "address": "0xebD4919C075417a86F19713dADe101852867A04F" },
+    { "address": "0xf83bC4688979b13Da02CB94c76cEB169540760b5" },
     { "address": "0xFd25B25576cC0d510F62C88A166F84b3e25208C7" }
   ],
   "abis": {
@@ -1569,6 +1910,9 @@
       "event UpgradedSecondary(address indexed implementation)",
       "function initializeProxy(tuple(uint64 confirmPeriodBlocks, uint64 extraChallengeTimeBlocks, address stakeToken, uint256 baseStake, bytes32 wasmModuleRoot, address owner, address loserStakeEscrow, uint256 chainId, string chainConfig, uint64 genesisBlockNum, tuple(uint256 delayBlocks, uint256 futureBlocks, uint256 delaySeconds, uint256 futureSeconds) sequencerInboxMaxTimeVariation) config, tuple(address bridge, address sequencerInbox, address inbox, address outbox, address rollupEventInbox, address challengeManager, address rollupAdminLogic, address rollupUserLogic, address validatorUtils, address validatorWalletCreator) connectedContracts)"
     ],
+    "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb": [
+      "constructor(address _singleton)"
+    ],
     "0xd106EC93D2c1adaA65C4B17ffc7bB166Ce30DDAe": [
       "event DefaultGatewayUpdated(address newDefaultGateway)",
       "event GatewaySet(address indexed l1Token, address indexed gateway)",
@@ -1622,6 +1966,55 @@
       "function proverHostIo() view returns (address)",
       "function proverMath() view returns (address)",
       "function proverMem() view returns (address)"
+    ],
+    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "0xDa4ac9E9cB8Af8afBB2Df1ffe7b82efEA17ba0f6": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1750,8 +2143,8 @@
     "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
     "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
     "orbitstack/RollupEventInbox": "0x0608b35e1df8a51677a6392869e50b60a1ff7137f71f40bddf83143a5ef640c1",
-    "orbitstack/RollupProxy_fastConfirm": "0x91c9d3536cb44155adbb51ee7d5712c88dab3fed8850fde3967215b257571df5",
-    "orbitstack/SequencerInbox": "0x58bf3ad8ac9dc1181ff793e330641c545ee2d9558fce65d2ee39d483c2490494",
+    "orbitstack/RollupProxy_fastConfirm": "0x2314bbfa0104764ce632ec231b12e2b142a94db57f5442ae68d4a52be7794651",
+    "orbitstack/SequencerInbox": "0x5cd19865dbaedc22bb0571435a45b9ec44f18388ca4c83dc971fb6c0be1bdf22",
     "orbitstack/UpgradeExecutor": "0xa8c2617950ce46d982abd852226ebcc1aacaf9c8c7daeda793b53a790eced777"
   }
 }
