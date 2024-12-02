@@ -7,7 +7,7 @@
     "0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512": "LoopringIOExchangeOwner",
     "0x39B9bf169a7e225ba037C443A40460c77438ea14": "AgentRegistry",
     "0x674bdf20A0F284D710BC40872100128e2d66Bd3f": "DefaultDepositContract",
-    "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97": "ProxyOwner",
+    "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97": "LoopringMultisig",
     "0xF4662bB1C4831fD411a95b8050B3A5998d8A4A5b": "UserStakingPool",
     "0xec3Cc6Cf0252565b56FC7AC396017Df5b9B78a31": "FastWithdrawalAgent",
     "0x52ea1971C05B0169c02a0bBeC05Fe8b5E3A24470": "ForcedWithdrawalAgent"
@@ -44,16 +44,6 @@
             "event": "Shutdown",
             "returnParams": ["timestamp"]
           }
-        }
-      }
-    },
-    "ProxyOwner": {
-      "ignoreInWatchMode": ["nonce"],
-      "fields": {
-        "getOwners": {
-          "description": "Array of addresses that are owners, allowed to chage contract values.",
-          "severity": "LOW",
-          "type": "PERMISSION"
         }
       }
     },
