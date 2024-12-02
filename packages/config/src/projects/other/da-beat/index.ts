@@ -15,6 +15,7 @@ import { blessnetDac } from './dac/blessnet'
 import { cyberDA } from './dac/cyberDA'
 import { degenDac } from './dac/degen'
 import { edgelessDac } from './dac/edgeless'
+import { educhainDac } from './dac/educhain'
 import { eigenDA } from './dac/eigenDA'
 import { everclearDac } from './dac/everclear'
 import { fluenceDac } from './dac/fluence'
@@ -70,6 +71,7 @@ export const daLayers: DaLayer[] = applyProcessor([
   cyberDA,
   degenDac,
   edgelessDac,
+  educhainDac,
   everclearDac,
   fluenceDac,
   galxegravityDac,
