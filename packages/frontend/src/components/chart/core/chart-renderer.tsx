@@ -13,7 +13,7 @@ export function ChartRenderer() {
   const { setRect } = useChartRect()
   const context = useChartContext()
   const { theme: rawTheme } = useTheme()
-  const theme = rawTheme === 'dark' ? 'dark' : 'light'
+  const theme = rawTheme === 'light' ? 'light' : 'dark'
 
   const setupCanvas = useCallback(() => {
     const chart = ref.current
