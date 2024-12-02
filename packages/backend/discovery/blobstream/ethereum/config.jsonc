@@ -18,10 +18,12 @@
       "fields": {
         "relayers": {
           "target": {
-            "permissions": [{
-              "type": "configure",
-              "description": "allowed to call commitHeaderRange() to commit block ranges to the Blobstream contract"
-            }]
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "allowed to call commitHeaderRange() to commit block ranges to the Blobstream contract"
+              }
+            ]
           },
           "handler": {
             "type": "hardcoded",
@@ -36,7 +38,7 @@
                 "description": "holds the power to freeze the bridge contract and update the list of authorized relayers."
               }
             ]
-          }          
+          }
         },
         "isRelayerApproved": {
           "handler": {
