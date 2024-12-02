@@ -4,7 +4,6 @@ import {
   HttpClient2,
   LoopringClient,
   RetryHandler,
-  StarknetClient,
 } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { Config } from '../config'
@@ -24,7 +23,6 @@ export class Providers {
   coingeckoClient: CoingeckoClient
   degateClient: LoopringClient
   loopringClient: LoopringClient
-  starknetClient: StarknetClient
 
   constructor(
     readonly config: Config,
@@ -50,13 +48,6 @@ export class Providers {
     this.loopringClient = new LoopringClient({
       url: 'https://api3.loopring.io/api/v3',
       type: 'loopring',
-      http,
-      logger,
-      rateLimiter: new RateLimiter({ callsPerMinute: 60 }),
-      retryHandler: RetryHandler.RELIABLE_API(logger),
-    })
-    this.starknetClient = new StarknetClient({
-      url: 'https://starknet-mainnet.public.blastapi.io',
       http,
       logger,
       rateLimiter: new RateLimiter({ callsPerMinute: 60 }),

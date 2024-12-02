@@ -1,5 +1,5 @@
 'use client'
-import { assert } from '@l2beat/shared-pure'
+import { type KeyboardEvent, type MouseEvent, useCallback } from 'react'
 import {
   Select,
   SelectContent,
@@ -24,38 +24,7 @@ interface Props<T extends string> {
   onValueChange: (option: T | undefined) => void
 }
 
-export function TableFilter<T extends string>(props: Props<T>) {
-  if (props.value) {
-    return <SelectedValue {...props} />
-  }
-
-  return <TableFilterSelect {...props} />
-}
-
-function SelectedValue<T extends string>({
-  options,
-  value,
-  onValueChange,
-}: Props<T>) {
-  const option = options.find((option) => option.value === value)
-  assert(option, 'Option not found')
-  return (
-    <button
-      onClick={() => onValueChange(undefined)}
-      className={cn(
-        'flex h-8 cursor-pointer select-none items-center justify-center gap-1.5 whitespace-pre rounded-lg px-2.5 text-xs font-medium text-brand outline-none transition-colors md:text-sm',
-        'sidebar:bg-surface-primary sidebar:hover:bg-surface-tertiary sidebar:main-page-card:bg-surface-secondary',
-      )}
-    >
-      <span>{option.label}</span>
-      <div className="inline-flex size-3 items-center justify-center rounded-sm bg-current">
-        <CloseIcon className="size-2.5 fill-white dark:fill-black dark:group-hover:fill-gray-950" />
-      </div>
-    </button>
-  )
-}
-
-function TableFilterSelect<T extends string>({
+export function TableFilter<T extends string>({
   title,
   options,
   value,
@@ -66,18 +35,58 @@ function TableFilterSelect<T extends string>({
   // that will be handled by the onValueChange handler
   const mappedOptions = replaceUndefined(options)
 
+  const onClick = useCallback(
+    (e: MouseEvent) => {
+      if (value !== undefined) {
+        e.preventDefault()
+        onValueChange(undefined)
+      }
+    },
+    [value, onValueChange],
+  )
+
+  const onKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (value !== undefined) {
+        if (e.code === 'Space' || e.code === 'Enter') {
+          e.preventDefault()
+          onValueChange(undefined)
+        } else if (e.code === 'ArrowDown' || e.code === 'ArrowUp') {
+          e.preventDefault()
+        }
+      }
+    },
+    [value, onValueChange],
+  )
+
   return (
     <Select
       value={value ?? ''}
-      onValueChange={(v) => {
-        const mappedValue = (v === UNDEFINED_VALUE ? undefined : v) as
-          | T
-          | undefined
+      onValueChange={(newValue) => {
+        if (value !== undefined) {
+          onValueChange(undefined)
+          return
+        }
+        const mappedValue = (
+          newValue === UNDEFINED_VALUE ? undefined : newValue
+        ) as T | undefined
         onValueChange(mappedValue)
       }}
-      disabled={options.length === 0}
+      disabled={options.length < 2 && !value}
     >
-      <SelectTrigger>
+      <SelectTrigger
+        className={cn(value !== undefined && 'text-brand')}
+        icon={
+          value !== undefined ? (
+            <div className="inline-flex size-3 items-center justify-center rounded-sm bg-current">
+              <CloseIcon className="size-2.5 fill-white dark:fill-black dark:group-hover:fill-gray-950" />
+            </div>
+          ) : undefined
+        }
+        onClick={onClick}
+        onPointerDown={onClick}
+        onKeyDown={onKeyDown}
+      >
         <SelectValue placeholder={title} />
       </SelectTrigger>
       <SelectContent className="flex flex-col" align="start">

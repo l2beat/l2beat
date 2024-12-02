@@ -1,0 +1,12 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/revalidate-hourly-data",
+      "schedule": "30 * * * *"
+    },
+    {
+      "path": "/api/cron/revalidate-daily-data",
+      "schedule": "30 0 * * *"
+    }
+  ]
+}

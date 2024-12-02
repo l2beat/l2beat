@@ -1,6 +1,5 @@
 import { layer2s, layer3s } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
-import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { type NextRequest, NextResponse } from 'next/server'
 import { getActivityChart } from '~/server/features/scaling/activity/get-activity-chart'
@@ -86,6 +85,6 @@ const getCachedResponse = cache(
   },
   ['scaling-activity-project-route'],
   {
-    revalidate: UnixTime.HOUR,
+    tags: ['activity'],
   },
 )

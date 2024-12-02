@@ -6,7 +6,6 @@ import { ZkCatalogPage } from './_components/zk-catalog-page'
 import { getZkCatalogView } from './_utils/get-zk-catalog-view'
 import { zkCatalogProjects } from './_utils/projects'
 
-export const revalidate = 3600
 export const metadata: Metadata = getDefaultMetadata({
   title: 'ZK Catalog - L2BEAT',
   description: 'A catalog of the ZK projects with detailed research.',
