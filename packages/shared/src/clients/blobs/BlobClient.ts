@@ -52,7 +52,7 @@ export class BlobClient extends ClientCore {
     return { blobs: relevantBlobs, blockNumber: tx.blockNumber }
   }
 
-  private async getBlockSidecar(blockNumber: number): Promise<Blob[]> {
+  async getBlockSidecar(blockNumber: number): Promise<Blob[]> {
     const blockId = await this.getBeaconBlockId(blockNumber)
     const endpoint = `eth/v1/beacon/blob_sidecars/${blockId}`
 
@@ -65,7 +65,7 @@ export class BlobClient extends ClientCore {
     }))
   }
 
-  private async call(endpoint: string): Promise<unknown> {
+  async call(endpoint: string): Promise<unknown> {
     const url = `${this.$.beaconApiUrl}${endpoint}`
 
     return await this.fetch(url, {
@@ -77,7 +77,7 @@ export class BlobClient extends ClientCore {
     })
   }
 
-  private async getTransaction(txHash: string): Promise<{
+  async getTransaction(txHash: string): Promise<{
     blockNumber: number
     type: string
     blobVersionedHashes?: string[]
@@ -92,7 +92,7 @@ export class BlobClient extends ClientCore {
     }
   }
 
-  private async getBlockParentBeaconRoot(blockNumber: number): Promise<string> {
+  async getBlockParentBeaconRoot(blockNumber: number): Promise<string> {
     this.$.logger.debug(`Getting block ${blockNumber}`, { blockNumber })
     const result = await this.callRpc('eth_getBlockByNumber', [
       '0x' + blockNumber.toString(16),
@@ -112,7 +112,7 @@ export class BlobClient extends ClientCore {
     return parsed.data.parentBeaconBlockRoot
   }
 
-  private async callRpc(
+  async callRpc(
     method: string,
     params?: (string | boolean)[],
   ): Promise<unknown> {
