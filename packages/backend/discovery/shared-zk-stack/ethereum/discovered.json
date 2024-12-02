@@ -1,7 +1,7 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 21242824,
+  "blockNumber": 21313606,
   "configHash": "0xc302ea45cdb6a30ca599b960570bbf854f33470e2a011932904091aa8aca9871",
   "contracts": [
     {
@@ -229,7 +229,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 168,
+        "nonce": 169,
         "VERSION": "1.3.0"
       },
       "fieldMeta": {
@@ -348,7 +348,7 @@
         ],
         "sophonValidatorsRemoved": [],
         "stateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "treasureThirdBatchTS": 0,
+        "treasureThirdBatchTS": 1732907795,
         "zeronetworkValidatorsAdded": [
           "0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F",
           "0x479B7c95b9509E1A834C994fc94e3581aA8A73B9"
