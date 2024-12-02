@@ -34,12 +34,7 @@ export const HotShotLightClient = {
   },
   contracts: {
     addresses: {
-      ethereum: [
-        discovery.getContractDetails('HotShotLightClient', {
-          description: `The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.
-          `,
-        }),
-      ],
+      ethereum: discovery.getDiscoveredContracts(),
     },
     risks: [
       {
@@ -85,7 +80,7 @@ export const HotShotLightClient = {
     ],
   },
   permissions: {
-    ethereum: [],
+    ethereum: discovery.getDiscoveredPermissions(),
   },
   requiredMembers: 67, // 2/3 + 1
   membersCount: 100, // max allowed node operators
