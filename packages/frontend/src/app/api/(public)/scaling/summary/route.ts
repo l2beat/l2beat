@@ -1,4 +1,3 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { NextResponse } from 'next/server'
 import { getScalingSummaryEntries } from '~/server/features/scaling/summary/get-scaling-summary-entries'
@@ -73,6 +72,6 @@ const getCachedData = cache(
   },
   ['scaling-summary-route'],
   {
-    revalidate: 10 * UnixTime.MINUTE,
+    tags: ['activity'],
   },
 )
