@@ -105,7 +105,7 @@ export const vector = {
       },
       {
         category: 'Funds can be frozen if',
-        text: 'the permissioned relayers are unable to submit DA commitments to the Vector contract.',
+        text: 'excluding the L2-specific DA fallback - the permissioned relayers are unable to submit DA commitments to the Vector contract.',
       },
     ],
   },
