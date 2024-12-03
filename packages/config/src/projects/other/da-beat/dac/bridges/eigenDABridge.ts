@@ -219,6 +219,10 @@ export const eigenDAbridge = {
         category: 'Funds can be lost if',
         text: 'the churn approver or ejectors act maliciously and eject EigenDA operators from a quorum without cause.',
       },
+      {
+        category: 'Funds can be lost if',
+        text: 'the bridge accepts an incorrect or malicious data commitment provided by node operators.',
+      }
     ],
   },
   technology: {
