@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xb36116d226753139194f1305334023be774c0d45
+Generated with discovered.json: 0x16cf8ae6def6f97184452fbcca60b2364c9d6b8a
 
-# Diff at Mon, 02 Dec 2024 14:06:09 GMT:
+# Diff at Tue, 03 Dec 2024 15:03:23 GMT:
 
-- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current block number: 23179502
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- current block number: 23224422
 
 ## Description
 
@@ -19,31 +19,7 @@ Initial discovery.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafeL2 (0x184d44C2DfB6d17C60B9Ca329b7B8630aea325Ce)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract  (0x1a35DC7d7A3bd04FE2AD2EAef273B8c76c05860E)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract GnosisSafeL2 (0x1DA898D47E057Bc9Af0a5709F20acbfF900bDe60)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract GnosisSafeL2 (0x2304CB33d95999dC29f4CeF1e35065e670a70050)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract GnosisSafeL2 (0x28EDB11394eb271212ED66c08f2b7893C04C5D65)
+    contract B3Multisig (0x184d44C2DfB6d17C60B9Ca329b7B8630aea325Ce)
     +++ description: None
 ```
 
@@ -56,7 +32,7 @@ Initial discovery.
 ```diff
 +   Status: CREATED
     contract OptimismPortal (0x3a314A6a3c1470Bf2854960D3Ce9D2435c7Ba794)
-    +++ description: None
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
 ```
 
 ```diff
@@ -67,38 +43,14 @@ Initial discovery.
 
 ```diff
 +   Status: CREATED
-    contract L2CrossDomainMessenger (0x4200000000000000000000000000000000000007)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract L2StandardBridge (0x4200000000000000000000000000000000000010)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract ProxyAdmin (0x4200000000000000000000000000000000000018)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract L2OutputOracle (0x536cf1ABfD22E61a13753c0F08613aDdF4ca0595)
     +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
 ```
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x57d8b357DBdcdb83D7330BE1AA9e2549787858d6)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract L1StandardBridge (0x769547a723783FCA36BAaf1ECcf9dfdbF6d09F38)
-    +++ description: None
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
 ```
 
 ```diff
@@ -121,26 +73,8 @@ Initial discovery.
 
 ```diff
 +   Status: CREATED
-    contract DisputeGameFactory (0xadA565Abc1Fe7358259c22dd0A7372229d943388)
-    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
-```
-
-```diff
-+   Status: CREATED
     contract AddressManager (0xd79005b0f06b2C518893d2Ba31f94429e555b6b1)
     +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
-```
-
-```diff
-+   Status: CREATED
-    contract GnosisSafeL2 (0xd94E416cf2c7167608B2515B7e4102B41efff94f)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract  (0xe4acD73c9Af2d74875953C0aEF5E8C5dde0968Ce)
-    +++ description: None
 ```
 
 ```diff
