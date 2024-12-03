@@ -1,4 +1,3 @@
-import { chunk } from 'lodash'
 import { type Metadata } from 'next'
 import Image from 'next/image'
 import { ContentWrapper } from '~/components/content-wrapper'
@@ -67,7 +66,6 @@ export default function Page() {
 
 function Header() {
   const delegatedProjects = getCollection('delegated-projects')
-  const chunkedProjects = chunk(delegatedProjects, 3)
 
   return (
     <FullPageHeader>
@@ -85,32 +83,25 @@ function Header() {
             <span className="text-sm text-purple-100 dark:text-pink-200">
               DELEGATE YOUR TOKENS
             </span>
-            {chunkedProjects.map((projects, i) => {
-              return (
-                <div
-                  className="mt-2 flex flex-col gap-2 md:flex-row md:flex-wrap"
-                  key={i}
+            <div className="mt-2 grid grid-cols-2 gap-2 md:flex md:flex-wrap">
+              {delegatedProjects.map((delegatedProject) => (
+                <CustomLink
+                  key={delegatedProject.id}
+                  className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-gray-400 bg-gray-100 py-3 text-sm font-medium transition-colors hover:bg-gray-200 dark:border-zinc-500 dark:bg-zinc-800 dark:hover:bg-zinc-900 md:w-max md:px-3 md:py-1"
+                  href={delegatedProject.data.delegateTokensUrl}
+                  underline={false}
                 >
-                  {projects.map((delegatedProject) => (
-                    <CustomLink
-                      key={delegatedProject.id}
-                      className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-gray-400 bg-gray-100 py-3 text-sm font-medium transition-colors hover:bg-gray-200 dark:border-zinc-500 dark:bg-zinc-800 dark:hover:bg-zinc-900 md:w-max md:px-3 md:py-1"
-                      href={delegatedProject.data.delegateTokensUrl}
-                      underline={false}
-                    >
-                      <Image
-                        alt={`Logo of ${delegatedProject.data.name}`}
-                        width={20}
-                        height={20}
-                        src={`/icons/${delegatedProject.data.slug}.png`}
-                      />
-                      {delegatedProject.data.name}
-                      <OutLinkIcon className="fill-current" />
-                    </CustomLink>
-                  ))}
-                </div>
-              )
-            })}
+                  <Image
+                    alt={`Logo of ${delegatedProject.data.name}`}
+                    width={20}
+                    height={20}
+                    src={`/icons/${delegatedProject.data.slug}.png`}
+                  />
+                  {delegatedProject.data.name}
+                  <OutLinkIcon className="fill-current" />
+                </CustomLink>
+              ))}
+            </div>
           </div>
           <p className="mt-6 text-xs md:text-sm">
             If you’d like to see us act as a delegate in another protocol,
