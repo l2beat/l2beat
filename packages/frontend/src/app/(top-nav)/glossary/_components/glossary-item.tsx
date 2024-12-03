@@ -1,4 +1,4 @@
-import { CopyButton } from '~/components/copy-button'
+import { CopyGlossaryButton } from '~/components/copy-button'
 
 import { type CollectionEntry } from '~/content/get-collection'
 import { ChiliIcon } from '~/icons/chili'
@@ -20,7 +20,7 @@ export function GlossaryItem(props: Props) {
             <ChiliIcon className="size-6 shrink-0" />
           )}
         </a>
-        <CopyButton
+        <CopyGlossaryButton
           toCopy={`https://l2beat.com/glossary#${props.entry.id}`}
           className="md:hidden md:group-hover:block md:group-hover:animate-in md:group-hover:fade-in-0"
         />
