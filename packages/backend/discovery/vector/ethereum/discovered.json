@@ -2,7 +2,7 @@
   "name": "vector",
   "chain": "ethereum",
   "blockNumber": 21321417,
-  "configHash": "0xae44a44c76ee4a4205705b8914d84ecad5df97131f88d479051a098d346468a5",
+  "configHash": "0x7cf536c3597d9a6112552f1797db59bd90cc72f886a15b851eb48044197eb2ee",
   "contracts": [
     {
       "name": "Vector",
@@ -306,6 +306,7 @@
     { "address": "0x1fbABAbDcFE0b40a9B5D2aDB054fB74F8fE985f5" },
     { "address": "0x340e77D5e114A9D4891d3a1EbC7419CC85Ca8E4A" },
     {
+      "name": "Relayer",
       "address": "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d",
       "receivedPermissions": [
         {
@@ -528,6 +529,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "succinct/SP1SuccinctGateway": "0x8e07a550d79ad9636ecd48aaf27eed662a4513dbc69cc53361ca27e5ac7640c9",
-    "succinct/SP1Vector": "0x72f43c0bf961be915f01b7af2dbdac6520cc171b085d7afb228c43913e396422"
+    "succinct/SP1Vector": "0x59b44da208c521ac452c75412e63bfb69b49dac182333377722e9dba3da96521"
   }
 }
