@@ -15,7 +15,7 @@ const RobustAndDiverseCommittee = (value?: string) =>
     type: 'RobustAndDiverseCommittee',
     value: value ?? 'Permissionless',
     sentiment: 'good',
-    description: `The committee requires an honest minority (1/3 or less) of members (or the network stake) to prevent the DA bridge from accepting an unavailable data commitment. 
+    description: `The committee requires an honest minority (less than 1/3) of members (or the network stake) to prevent the DA bridge from accepting an unavailable data commitment. 
     Participation in the committee is permissionless, based only on stake requirements and an honest majority of validators processing the new operator's request to join the active set.`,
   }) as const
 
@@ -28,10 +28,10 @@ const LimitedCommitteeSecurity = (
     type: 'LimitedCommitteeSecurity',
     value: value ?? 'Permissioned',
     sentiment: 'warning',
-    description: `The committee requires an honest minority (1/3 or less) of members (or the network stake) to prevent the DA bridge from accepting an unavailable data commitment.
+    description: `The committee requires an honest minority (less than 1/3) of members (or the network stake) to prevent the DA bridge from accepting an unavailable data commitment.
         ${
           totalNumberOfOperators
-            ? `There are ${totalNumberOfOperators} registered operators in the committee, but entry or exit of members is partially controlled by a centralized entity.`
+            ? `There are ${totalNumberOfOperators} operators currently registered in the committee, but entry or exit of members is partially controlled by a centralized entity.`
             : `There are at least 5 external actors in the committee${
                 externalMembersPercentage
                   ? ` (${externalMembersPercentage}%)`
@@ -53,7 +53,7 @@ const NoDiversityCommitteeSecurity = (value?: string) =>
     type: 'NoDiversityCommitteeSecurity',
     value: value ?? 'None',
     sentiment: 'bad',
-    description: `The committee requires an honest minority (1/3 or less) of members (or the network stake) to prevent the DA bridge from accepting an unavailable data commitment.
+    description: `The committee requires an honest minority (less than 1/3) of members (or the network stake) to prevent the DA bridge from accepting an unavailable data commitment.
     However, the committee is not diverse enough to prevent a single entity from controlling the majority of the committee.
     `,
   }) as const
