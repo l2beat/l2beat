@@ -222,7 +222,7 @@ export const eigenDAbridge = {
       {
         category: 'Funds can be lost if',
         text: 'the bridge accepts an incorrect or malicious data commitment provided by node operators.',
-      }
+      },
     ],
   },
   technology: {
