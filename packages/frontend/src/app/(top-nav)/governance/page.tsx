@@ -102,7 +102,7 @@ function Header() {
                         alt={`Logo of ${delegatedProject.data.name}`}
                         width={20}
                         height={20}
-                        src={`/icons/${delegatedProject.id}.png`}
+                        src={`/icons/${delegatedProject.data.slug}.png`}
                       />
                       {delegatedProject.data.name}
                       <OutLinkIcon className="fill-current" />
