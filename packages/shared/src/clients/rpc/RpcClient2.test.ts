@@ -89,6 +89,30 @@ describe(RpcClient2.name, () => {
     })
   })
 
+  describe(RpcClient2.prototype.getTransaction.name, () => {
+    it('fetches tx from rpc and parsers response', async () => {
+      const http = mockObject<HttpClient2>({
+        fetch: async () => ({
+          result: mockRawTx('0x1'),
+        }),
+      })
+      const rpc = mockClient({ http, generateId: () => 'unique-id' })
+
+      const result = await rpc.getTransaction('0xabcd')
+
+      expect(result).toEqual(mockTx('0x1'))
+
+      expect(http.fetch.calls[0].args[1]?.body).toEqual(
+        JSON.stringify({
+          method: 'eth_getTransactionByHash',
+          params: ['0xabcd'],
+          id: 'unique-id',
+          jsonrpc: '2.0',
+        }),
+      )
+    })
+  })
+
   describe(RpcClient2.prototype.getBalance.name, () => {
     it('returns balance for given address and block', async () => {
       const http = mockObject<HttpClient2>({
@@ -324,7 +348,7 @@ const mockRawTx = (to: string | undefined) => ({
   input: `0x1`,
   type: '0x2',
   blockNumber: '0x64',
-  blobVersionedHashes: undefined,
+  blobVersionedHashes: ['0x1', '0x2'],
 })
 
 const mockTx = (to: string | undefined) => ({
@@ -334,5 +358,5 @@ const mockTx = (to: string | undefined) => ({
   data: `0x1`,
   type: '2',
   blockNumber: 100,
-  blobVersionedHashes: undefined,
+  blobVersionedHashes: ['0x1', '0x2'],
 })
