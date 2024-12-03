@@ -1,8 +1,9 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
-import { expect, mockObject } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 import { RetryHandler } from '../../tools'
 import { HttpClient2 } from '../http/HttpClient2'
+import { RpcClient2 } from '../rpc/RpcClient2'
 import { BlobClient } from './BlobClient'
 
 function generateKzgCommitment(): string {
@@ -17,19 +18,19 @@ function generateKzgCommitment(): string {
 describe(BlobClient.name, () => {
   describe(BlobClient.prototype.getRelevantBlobs.name, () => {
     it('should return empty blobs for type 2 transaction', async () => {
-      const client = mockClient({})
-      client.getTransaction = async () => ({
-        type: '0x2',
-        blockNumber: 1,
+      const rpcClient = mockObject<RpcClient2>({
+        getTransaction: mockFn().returns({
+          type: '0x2',
+          blockNumber: 1,
+        }),
       })
+      const client = mockClient({ rpcClient })
 
       const result = await client.getRelevantBlobs('txHash')
       expect(result).toEqual({ blobs: [], blockNumber: 1 })
     })
 
     it('should return blobs for type 3 transaction', async () => {
-      const client = mockClient({})
-
       const kzgCommitment1 = generateKzgCommitment()
       const kzgCommitment2 = generateKzgCommitment()
       const versionedHash1 = '0x01' + utils.sha256(kzgCommitment1).substring(4)
@@ -43,11 +44,14 @@ describe(BlobClient.name, () => {
         data: 'blob2',
       }
 
-      client.getTransaction = async () => ({
-        type: '0x3',
-        blockNumber: 1,
-        blobVersionedHashes: [versionedHash1, versionedHash2],
+      const rpcClient = mockObject<RpcClient2>({
+        getTransaction: mockFn().returns({
+          type: '0x3',
+          blockNumber: 1,
+          blobVersionedHashes: [versionedHash1, versionedHash2],
+        }),
       })
+      const client = mockClient({ rpcClient })
 
       client.getBlockSidecar = async () => [
         blob1,
@@ -63,11 +67,13 @@ describe(BlobClient.name, () => {
     })
 
     it('should throw on missing blobVersionedHashes', async () => {
-      const client = mockClient({})
-      client.getTransaction = async () => ({
-        type: '0x3',
-        blockNumber: 1,
+      const rpcClient = mockObject<RpcClient2>({
+        getTransaction: mockFn().returns({
+          type: '0x3',
+          blockNumber: 1,
+        }),
       })
+      const client = mockClient({ rpcClient })
 
       await expect(client.getRelevantBlobs('txHash')).toBeRejectedWith(
         'Type 3 transaction missing blobVersionedHashes',
@@ -90,8 +96,14 @@ describe(BlobClient.name, () => {
           data: expected,
         }),
       })
-      const client = mockClient({ http, beaconApiUrl: 'example.com/' })
-      client.getBlockParentBeaconRoot = async () => 'root'
+      const rpcClient = mockObject<RpcClient2>({
+        getBlockParentBeaconRoot: async () => 'root',
+      })
+      const client = mockClient({
+        http,
+        beaconApiUrl: 'example.com/',
+        rpcClient,
+      })
 
       const result = await client.getBlockSidecar(1)
 
@@ -105,15 +117,6 @@ describe(BlobClient.name, () => {
         },
       ])
     })
-  })
-
-  describe(BlobClient.prototype.getBlockParentBeaconRoot.name, async () => {
-    it('should call rpc and return result', async () => {})
-    const client = mockClient({})
-    client.callRpc = async () => ({ parentBeaconBlockRoot: 'root' })
-
-    const result = await client.getBlockParentBeaconRoot(1)
-    expect(result).toEqual('root')
   })
 
   describe(BlobClient.prototype.call.name, () => {
@@ -144,61 +147,7 @@ describe(BlobClient.name, () => {
     })
   })
 
-  describe(BlobClient.prototype.callRpc.name, () => {
-    it('should call rpc and return result', async () => {
-      const http = mockObject<HttpClient2>({
-        fetch: async () => ({ result: 'result' }),
-      })
-      const client = mockClient({ http, generateId: () => 'abc' })
-      const method = 'method'
-      const params = ['param']
-
-      const result = await client.callRpc(method, params)
-
-      expect(result).toEqual('result')
-      expect(http.fetch.calls[0].args[1]?.body).toEqual(
-        JSON.stringify({
-          jsonrpc: '2.0',
-          id: 'abc',
-          method,
-          params,
-        }),
-      )
-    })
-
-    it('should throw on rpc error', async () => {
-      const http = mockObject<HttpClient2>({
-        fetch: async () => ({
-          error: {
-            code: -32000,
-            message: 'RPC Error',
-          },
-          id: 1,
-          jsonrpc: '2.0',
-        }),
-      })
-      const client = mockClient({ http })
-      const method = 'method'
-      const params = ['param']
-
-      await expect(client.callRpc(method, params)).toBeRejectedWith(
-        'Response validation failed',
-      )
-    })
-  })
-
   describe(BlobClient.prototype.validateResponse.name, () => {
-    it('handles rpc error', () => {
-      const client = mockClient({})
-      const isValid = client.validateResponse({
-        error: {
-          message: 'Error',
-        },
-      })
-
-      expect(isValid).toEqual({ success: false })
-    })
-
     it('handles beacon error', () => {
       const client = mockClient({})
       const isValid = client.validateResponse({
@@ -214,7 +163,7 @@ describe(BlobClient.name, () => {
 function mockClient(deps: {
   http?: HttpClient2
   beaconApiUrl?: string
-  rpcUrl?: string
+  rpcClient?: RpcClient2
   rateLimiter?: RateLimiter
   retryHandler?: RetryHandler
   generateId?: () => string
@@ -222,7 +171,7 @@ function mockClient(deps: {
 }) {
   return new BlobClient({
     beaconApiUrl: deps.beaconApiUrl ?? 'BEACON_API_URL',
-    rpcUrl: deps.rpcUrl ?? 'RPC_URL',
+    rpcClient: deps.rpcClient ?? mockObject<RpcClient2>({}),
     http: deps.http ?? mockObject<HttpClient2>({}),
     rateLimiter:
       deps.rateLimiter ?? new RateLimiter({ callsPerMinute: 100_000 }),

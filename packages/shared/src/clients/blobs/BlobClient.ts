@@ -4,7 +4,7 @@ import { assert, json } from '@l2beat/shared-pure'
 import { z } from 'zod'
 import { ClientCore, ClientCoreDependencies } from '../ClientCore'
 import { RpcClient2 } from '../rpc/RpcClient2'
-import { Blob, BlockSidecarSchema, ErrorSchema } from './types'
+import { BeaconChainError, Blob, BlockSidecarSchema } from './types'
 
 export type Blob = z.infer<typeof Blob>
 export interface BlobsInBlock {
@@ -86,7 +86,7 @@ export class BlobClient extends ClientCore {
     success: boolean
     message?: string
   } {
-    const parsedError = ErrorSchema.safeParse(response)
+    const parsedError = BeaconChainError.safeParse(response)
 
     if (parsedError.success) {
       this.$.logger.warn(`Response validation error`, {

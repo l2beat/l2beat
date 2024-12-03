@@ -14,18 +14,10 @@ export const BlockSidecarSchema = z.object({
   ),
 })
 
-export const RpcErrorSchema = z.object({
-  error: z.object({
-    message: z.string(),
-  }),
-})
-
-export const BeaconChainErrorSchema = z.object({
+export const BeaconChainError = z.object({
   code: z.number(),
   message: z.string(),
 })
-
-export const ErrorSchema = z.union([RpcErrorSchema, BeaconChainErrorSchema])
 
 export const TxWithBlobsSchema = z.object({
   blockNumber: z.string(),
