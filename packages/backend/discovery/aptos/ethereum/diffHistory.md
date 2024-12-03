@@ -1,3 +1,63 @@
+Generated with discovered.json: 0x5d6fd095a412c796fc5087708ebbb26c8c2397e4
+
+# Diff at Tue, 10 Dec 2024 10:36:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ed5a41ddcad978cfdf826bc7a4827bf4a91c814 block: 21264260
+- current block number: 21264260
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21264260 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract LayerZero Proof Library (0x07245eEa05826F5984c7c3C8F478b04892e4df89)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero Oracle (0x5a54fe5234E811466D5366846283323c954310B2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x76A15d86FbBe691557C8b7A9C4BebF1d8AFE00A7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero Relayer (0x902F09715B6303d4173037652FA7377e5b98089E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xb1eda2ab4c32b9d300756514b39f9386692c669c
 
 # Diff at Mon, 25 Nov 2024 10:45:06 GMT:

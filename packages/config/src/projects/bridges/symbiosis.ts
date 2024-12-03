@@ -123,17 +123,14 @@ export const symbiosis: Bridge = {
         'MetaRouter',
         'An upgradeable contract to process funds by provided route.',
       ),
-      {
-        address: discovery.getContract('Bridge').address,
-        name: 'Bridge',
-        description:
-          'A contract that generates Oracle requests for the Symbiosis relayers network.',
-      },
-      {
-        address: discovery.getContract('Portal').address,
-        name: 'Portal',
-        description: 'A contract that stores "bridged" liquidity.',
-      },
+      discovery.getContractDetails(
+        'Bridge',
+        'A contract that generates Oracle requests for the Symbiosis relayers network.',
+      ),
+      discovery.getContractDetails(
+        'Portal',
+        'A contract that stores "bridged" liquidity.',
+      ),
     ],
     risks: [],
     isIncomplete: true,

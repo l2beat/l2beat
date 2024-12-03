@@ -10,9 +10,11 @@ import {
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Layer2 } from './types'
 
 const upgradeDelay = 604800
+const discovery = new ProjectDiscovery('hermez')
 
 export const hermez: Layer2 = {
   type: 'layer2',
@@ -188,47 +190,17 @@ export const hermez: Layer2 = {
   },
   contracts: {
     addresses: [
-      {
-        name: 'HermezAuctionProtocol',
-        address: EthereumAddress('0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2'),
-        upgradeability: {
-          proxyType: 'EIP1967 proxy',
-          implementations: [
-            EthereumAddress('0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6'),
-          ],
-          admins: [
-            EthereumAddress('0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3'),
-          ],
-        },
-      },
-      {
-        name: 'Hermez',
-        address: EthereumAddress('0xA68D85dF56E733A06443306A095646317B5Fa633'),
-        upgradeability: {
-          proxyType: 'EIP1967 proxy',
-          implementations: [
-            EthereumAddress('0x6D85D79D69b7e190E671C16e8611997152bD3e95'),
-          ],
-          admins: [
-            EthereumAddress('0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3'),
-          ],
-        },
-      },
-      {
-        name: 'ProxyAdmin',
-        address: EthereumAddress('0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3'),
-        description:
-          'Admin of HermezAuctionProtocol and Hermez, owned by the timelock.',
-      },
-      {
-        name: 'WithdrawalDelayer',
-        address: EthereumAddress('0x392361427Ef5e17b69cFDd1294F31ab555c86124'),
-      },
-      {
-        name: 'Timelock',
-        address: EthereumAddress('0xf7b20368Fe3Da5CD40EA43d61F52B23145544Ec3'),
-        description: 'Enforces a 7 day delay on upgrades.',
-      },
+      discovery.getContractDetails('HermezAuctionProtocol'),
+      discovery.getContractDetails('Hermez'),
+      discovery.getContractDetails(
+        'ProxyAdmin',
+        'Admin of HermezAuctionProtocol and Hermez, owned by the timelock.',
+      ),
+      discovery.getContractDetails('WithdrawalDelayer'),
+      discovery.getContractDetails(
+        'Timelock',
+        'Enforces a 7 day delay on upgrades.',
+      ),
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('7 days')],
   },
