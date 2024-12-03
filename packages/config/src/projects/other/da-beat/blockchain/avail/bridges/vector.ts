@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../../../../../discovery/ProjectDiscovery'
 import { DaCommitteeSecurityRisk } from '../../../types'
@@ -10,11 +10,6 @@ const discovery = new ProjectDiscovery('vector')
 
 const chainName = 'Ethereum'
 const updateInterval = 1.5 // hours
-
-const SP1Verifier = discovery.getContractValue<string>(
-  'SuccinctGatewaySP1',
-  'verifier',
-)[0]
 
 const validation = {
   type: 'zk-proof',
@@ -42,14 +37,7 @@ export const vector = {
   validation: validation,
   contracts: {
     addresses: {
-      ethereum: [
-        {
-          name: 'VectorSP1Verifier',
-          address: EthereumAddress(SP1Verifier),
-          description: `Verifier contract for the header range [latestBlock, targetBlock] proof.`,
-        },
-        ...discovery.getDiscoveredContracts(),
-      ],
+      ethereum: discovery.getDiscoveredContracts(),
     },
     risks: [
       {
