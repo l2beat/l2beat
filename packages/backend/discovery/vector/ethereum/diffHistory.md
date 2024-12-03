@@ -1,3 +1,63 @@
+Generated with discovered.json: 0x3037313a232402c0bc40c80190b825ec22a92be2
+
+# Diff at Tue, 03 Dec 2024 10:47:37 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@0396732c6f89bbf1076e12ecc7e5f893a7f251ca block: 21184939
+- current block number: 21321417
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21184939 (main branch discovery), not current.
+
+```diff
+    contract Vector (0x02993cdC11213985b9B13224f3aF289F03bf298d) {
+    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
+      values.admins:
++        ["0xDEd0000E32f8F40414d3ab3a830f735a3553E18e","0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"]
+      values.guardians:
++        ["0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"]
+      values.timelocks:
++        ["0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"]
+      description:
++        "The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum."
+      issuedPermissions:
++        [{"permission":"configure","target":"0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d","via":[]},{"permission":"configure","target":"0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666","via":[]},{"permission":"upgrade","target":"0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666","via":[]}]
+    }
+```
+
+```diff
+    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.
+      description:
++        "This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract."
+      issuedPermissions:
++        [{"permission":"configure","target":"0xCafEf00d348Adbd57c37d1B77e0619C6244C6878","via":[]}]
+    }
+```
+
+```diff
+    contract AvailMultisig (0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","target":"0x02993cdC11213985b9B13224f3aF289F03bf298d","description":"can change state of the Vector contract - freezing the contract and updating the list of authorized relayers."},{"permission":"upgrade","target":"0x02993cdC11213985b9B13224f3aF289F03bf298d"}]
+    }
+```
+
+```diff
+    contract SuccinctGatewaySP1Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","target":"0x3B6041173B80E77f038f3F2C0f9744f04837185e","description":"manager of router for proof verification, it holds the power to affect the liveness and safety of the bridge"}]
+    }
+```
+
 Generated with discovered.json: 0x23f25fadc0df50db455a9050798d68335f58768a
 
 # Diff at Thu, 28 Nov 2024 11:03:13 GMT:
