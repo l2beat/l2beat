@@ -1,3 +1,34 @@
+Generated with discovered.json: 0x59718eeed34401dc97056fdc6f4647e14d993ae4
+
+# Diff at Mon, 02 Dec 2024 07:57:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0cac24376573663e0a362b2f340a124e5238a2bc block: 21084619
+- current block number: 21313475
+
+## Description
+
+Remove one MS signer.
+
+## Watched changes
+
+```diff
+    contract OevNetworkMultisig (0x2bf43034b9559643e986A2fE3cE015a18247b904) {
+    +++ description: None
+      values.$members.6:
+-        "0x15D5fF2dEc328a1cF3D64413caaBdcE29bff050A"
+      values.$members.5:
+-        "0xb004d94314a34627C09E4b8f83D9E7420d99BbFC"
++        "0x15D5fF2dEc328a1cF3D64413caaBdcE29bff050A"
+      values.$members.4:
+-        "0x4919167EA334BE84B1604Cbc82A26A7746D5943e"
++        "0xb004d94314a34627C09E4b8f83D9E7420d99BbFC"
+      values.multisigThreshold:
+-        "4 of 7 (57%)"
++        "4 of 6 (67%)"
+    }
+```
+
 Generated with discovered.json: 0xc63d92dea2764c18b13e58ecca29f80fa58fb025
 
 # Diff at Fri, 29 Nov 2024 11:28:43 GMT:

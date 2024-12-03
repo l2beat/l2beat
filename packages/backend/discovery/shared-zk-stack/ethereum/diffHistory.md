@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xc3e18d834ba499a857aacbf4ae99de7db3c45493
+
+# Diff at Mon, 02 Dec 2024 08:23:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0cac24376573663e0a362b2f340a124e5238a2bc block: 21242824
+- current block number: 21313606
+
+## Description
+
+Treasure.lol is now actively sending batches. No launch announcement yet.
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
++++ description: If non-zero, the third batch has been posted (launch monitor).
++++ severity: MEDIUM
+      values.treasureThirdBatchTS:
+-        0
++        1732907795
+    }
+```
+
 Generated with discovered.json: 0xed104435ef55701aeca108a1798bf308db31f8d9
 
 # Diff at Fri, 22 Nov 2024 10:58:41 GMT:
