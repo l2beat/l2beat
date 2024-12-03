@@ -12,9 +12,9 @@ export const faqItems: FaqItem[] = [
   },
   {
     question:
-      'Why do you need L2BEAT when you already have DeFiLlama and other analytics platforms?',
+      'Why do you need L2BEAT when you already have DeFiLlama, growthepie and other analytics platforms?',
     answer:
-      'While those platforms are great, they primarily focus on tracking TVL (Total Value Locked) in DeFi projects across various chains. In comparison, L2BEAT focuses exclusively on Ethereum scaling projects (L2s and L3s) and reports not just TVL but also various metrics related to the liveness and security of these projects.',
+      'While those platforms are great, they primarily focus on tracking TVL (Total Value Locked) in DeFi projects and other performance metrics across various chains. In comparison, L2BEAT focuses exclusively on the decentralization and trust assumptions of Ethereum scaling projects (L2s and L3s) and reports not just TVL but also various metrics related to the liveness and security of these projects.',
   },
   {
     question:
