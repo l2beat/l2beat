@@ -13,14 +13,8 @@ const discovery = new ProjectDiscovery('b3', 'base')
 export const b3: Layer3 = opStackL3({
   createdAt: new UnixTime(1722376845),
   hostChain: ProjectId('base'),
-  badges: [
-    Badge.DA.Celestia,
-    Badge.RaaS.Caldera,
-    Badge.Stack.OPStack,
-    Badge.L3ParentChain.Base,
-  ],
+  badges: [Badge.DA.Celestia, Badge.RaaS.Caldera, Badge.L3ParentChain.Base],
   daProvider: CELESTIA_DA_PROVIDER,
-  associatedTokens: [],
   discovery,
   additionalPurposes: ['Gaming'],
   display: {
@@ -44,7 +38,7 @@ export const b3: Layer3 = opStackL3({
     activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
-    name: 'B3',
+    name: 'b3',
     chainId: 8333,
     explorerUrl: 'https://explorer.b3.fun/',
     explorerApi: {
