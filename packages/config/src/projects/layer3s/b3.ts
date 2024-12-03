@@ -25,7 +25,7 @@ export const b3: Layer3 = opStackL3({
   additionalPurposes: ['Gaming'],
   display: {
     name: 'B3',
-    slug: 'B3',
+    slug: 'b3',
     architectureImage: 'B3',
     description:
       'B3 is an L3 built on Base to bring gamers and game creators onchain, powered by the OP Stack and Celestia DA.',
