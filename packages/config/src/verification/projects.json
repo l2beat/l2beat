@@ -171,6 +171,7 @@
   "move": true,
   "multichain": true,
   "muster": true,
+  "muster-dac-layer-muster-dac-bridge": true,
   "mvchain": true,
   "mxc": true,
   "myria": true,
