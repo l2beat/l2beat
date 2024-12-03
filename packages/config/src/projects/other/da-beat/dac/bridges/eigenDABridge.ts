@@ -263,7 +263,7 @@ export const eigenDAbridge = {
       },
       {
         category: 'Funds can be frozen if',
-        text: 'excluding the L2-specific DA fallback - the permissioned relayers are unable to submit DA commitments to the bridge contract.',
+        text: 'excluding L2-specific DA fallback - the permissioned relayers are unable to submit DA commitments to the bridge contract.',
       },
       {
         category: 'Funds can be frozen if',
