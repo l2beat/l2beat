@@ -12,33 +12,6 @@ export const erc20Interface = new utils.Interface([
 ])
 
 describe(RpcClient2.name, () => {
-  describe(RpcClient2.prototype.getBlockWithTransactions.name, () => {
-    it('fetches block from rpc and parsers response', async () => {
-      const http = mockObject<HttpClient2>({
-        fetch: async () => mockResponse(100),
-      })
-      const rpc = mockClient({ http, generateId: () => 'unique-id' })
-
-      const result = await rpc.getBlockWithTransactions(100)
-
-      expect(result).toEqual({
-        transactions: [mockTx('0'), mockTx(undefined)],
-        timestamp: 100,
-        hash: '0xabcdef',
-        number: 100,
-      })
-
-      expect(http.fetch.calls[0].args[1]?.body).toEqual(
-        JSON.stringify({
-          method: 'eth_getBlockByNumber',
-          params: ['0x64', true],
-          id: 'unique-id',
-          jsonrpc: '2.0',
-        }),
-      )
-    })
-  })
-
   describe(RpcClient2.prototype.getLatestBlockNumber.name, () => {
     it('returns number of the block', async () => {
       const http = mockObject<HttpClient2>({
@@ -53,6 +26,62 @@ describe(RpcClient2.name, () => {
         JSON.stringify({
           method: 'eth_getBlockByNumber',
           params: ['latest', true],
+          id: 'unique-id',
+          jsonrpc: '2.0',
+        }),
+      )
+    })
+  })
+
+  describe(RpcClient2.prototype.getBlockWithTransactions.name, () => {
+    it('fetches block from rpc and parsers response', async () => {
+      const http = mockObject<HttpClient2>({
+        fetch: async () => mockResponse(100),
+      })
+      const rpc = mockClient({ http, generateId: () => 'unique-id' })
+
+      const result = await rpc.getBlockWithTransactions(100)
+
+      expect(result).toEqual({
+        transactions: [mockTx('0'), mockTx(undefined)],
+        timestamp: 100,
+        hash: '0xabcdef',
+        number: 100,
+        //@ts-expect-error type issue
+        parentBeaconBlockRoot: '0x123',
+      })
+
+      expect(http.fetch.calls[0].args[1]?.body).toEqual(
+        JSON.stringify({
+          method: 'eth_getBlockByNumber',
+          params: ['0x64', true],
+          id: 'unique-id',
+          jsonrpc: '2.0',
+        }),
+      )
+    })
+  })
+
+  describe(RpcClient2.prototype.getBlockWithoutTransaction.name, () => {
+    it('fetches block from rpc and parsers response', async () => {
+      const http = mockObject<HttpClient2>({
+        fetch: async () => mockResponse(100),
+      })
+      const rpc = mockClient({ http, generateId: () => 'unique-id' })
+
+      const result = await rpc.getBlockWithoutTransaction(100)
+
+      expect(result).toEqual({
+        timestamp: 100,
+        hash: '0xabcdef',
+        number: 100,
+        parentBeaconBlockRoot: '0x123',
+      })
+
+      expect(http.fetch.calls[0].args[1]?.body).toEqual(
+        JSON.stringify({
+          method: 'eth_getBlockByNumber',
+          params: ['0x64', false],
           id: 'unique-id',
           jsonrpc: '2.0',
         }),
@@ -284,6 +313,7 @@ const mockResponse = (blockNumber: number) => ({
     timestamp: `0x${blockNumber.toString(16)}`,
     hash: '0xabcdef',
     number: `0x${blockNumber.toString(16)}`,
+    parentBeaconBlockRoot: '0x123',
   },
 })
 
@@ -293,6 +323,8 @@ const mockRawTx = (to: string | undefined) => ({
   to,
   input: `0x1`,
   type: '0x2',
+  blockNumber: '0x64',
+  blobVersionedHashes: undefined,
 })
 
 const mockTx = (to: string | undefined) => ({
@@ -301,4 +333,6 @@ const mockTx = (to: string | undefined) => ({
   to,
   data: `0x1`,
   type: '2',
+  blockNumber: 100,
+  blobVersionedHashes: undefined,
 })

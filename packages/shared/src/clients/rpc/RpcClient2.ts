@@ -42,7 +42,7 @@ export class RpcClient2 extends ClientCore implements BlockClient {
   async getBlockWithTransactions(
     blockNumber: number | 'latest',
   ): Promise<Block> {
-    const blockResponse = await this.queryGetBlock(blockNumber)
+    const blockResponse = await this.queryGetBlock(blockNumber, true)
 
     const block = EVMBlockWithTransactionsResponse.safeParse(blockResponse)
     if (!block.success) {
@@ -56,7 +56,7 @@ export class RpcClient2 extends ClientCore implements BlockClient {
   }
 
   async getBlockWithoutTransaction(blockNumber: number) {
-    const blockResponse = await this.queryGetBlock(blockNumber)
+    const blockResponse = await this.queryGetBlock(blockNumber, false)
 
     const block = EVMBlockResponse.safeParse(blockResponse)
     if (!block.success) {
@@ -80,11 +80,14 @@ export class RpcClient2 extends ClientCore implements BlockClient {
     return block.parentBeaconBlockRoot
   }
 
-  private async queryGetBlock(blockNumber: string | number) {
+  private async queryGetBlock(
+    blockNumber: string | number,
+    includeTxs: boolean,
+  ) {
     const method = 'eth_getBlockByNumber'
     const encodedNumber =
       blockNumber === 'latest' ? 'latest' : Quantity.encode(BigInt(blockNumber))
-    const blockResponse = await this.query(method, [encodedNumber, true])
+    const blockResponse = await this.query(method, [encodedNumber, includeTxs])
     return blockResponse
   }
 
