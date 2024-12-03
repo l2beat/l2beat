@@ -2,16 +2,9 @@ import { utils } from 'ethers'
 
 import { assert, json } from '@l2beat/shared-pure'
 import { z } from 'zod'
-import { generateId } from '../../tools/generateId'
 import { ClientCore, ClientCoreDependencies } from '../ClientCore'
-import {
-  Blob,
-  BlockSidecarSchema,
-  BlockWithParentBeaconBlockRootSchema,
-  ErrorSchema,
-  RpcResponseSchema,
-  TxWithBlobsSchema,
-} from './types'
+import { RpcClient2 } from '../rpc/RpcClient2'
+import { Blob, BlockSidecarSchema, ErrorSchema } from './types'
 
 export type Blob = z.infer<typeof Blob>
 export interface BlobsInBlock {
@@ -21,7 +14,7 @@ export interface BlobsInBlock {
 
 interface Dependencies extends ClientCoreDependencies {
   beaconApiUrl: string
-  rpcUrl: string
+  rpcClient: RpcClient2
   timeout?: number
   generateId?: () => string
 }
@@ -32,7 +25,9 @@ export class BlobClient extends ClientCore {
   }
 
   async getRelevantBlobs(txHash: string): Promise<BlobsInBlock> {
-    const tx = await this.getTransaction(txHash.toString())
+    const tx = await this.$.rpcClient.getTransaction(txHash)
+
+    assert(tx.blockNumber, `Tx ${tx}: No pending txs allowed`)
 
     // Skip blob processing for type 2 transactions
     if (tx.type === '0x2') {
@@ -59,9 +54,17 @@ export class BlobClient extends ClientCore {
     const endpoint = `eth/v1/beacon/blob_sidecars/${blockId}`
 
     const response = await this.call(endpoint)
-    const parsed = BlockSidecarSchema.parse(response)
+    const parsed = BlockSidecarSchema.safeParse(response)
 
-    return parsed.data.map((blob) => ({
+    if (!parsed.success) {
+      this.$.logger.warn('Invalid response', {
+        endpoint,
+        response: JSON.stringify(response),
+      })
+      throw new Error(`Block: ${blockNumber}: Error during sidecar parsing`)
+    }
+
+    return parsed.data.data.map((blob) => ({
       kzg_commitment: blob.kzg_commitment,
       data: blob.blob,
     }))
@@ -77,61 +80,6 @@ export class BlobClient extends ClientCore {
       },
       timeout: this.$.timeout,
     })
-  }
-
-  async getTransaction(txHash: string): Promise<{
-    blockNumber: number
-    type: string
-    blobVersionedHashes?: string[]
-  }> {
-    const result = await this.callRpc('eth_getTransactionByHash', [txHash])
-    const parsed = TxWithBlobsSchema.parse(result)
-
-    return {
-      blockNumber: Number(parsed.blockNumber),
-      type: parsed.type,
-      blobVersionedHashes: parsed.blobVersionedHashes,
-    }
-  }
-
-  async getBlockParentBeaconRoot(blockNumber: number): Promise<string> {
-    this.$.logger.debug(`Getting block ${blockNumber}`, { blockNumber })
-    const result = await this.callRpc('eth_getBlockByNumber', [
-      '0x' + blockNumber.toString(16),
-      false,
-    ])
-    const parsed = BlockWithParentBeaconBlockRootSchema.safeParse(result)
-
-    if (!parsed.success) {
-      this.$.logger.error('Error downloading block', {
-        blockNumber,
-        error: parsed.error,
-        result,
-      })
-      throw parsed.error
-    }
-
-    return parsed.data.parentBeaconBlockRoot
-  }
-
-  async callRpc(
-    method: string,
-    params?: (string | boolean)[],
-  ): Promise<unknown> {
-    const id = this.$.generateId ? this.$.generateId() : generateId()
-    const response = await this.fetch(this.$.rpcUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        jsonrpc: '2.0',
-        id,
-        method,
-        params,
-      }),
-    })
-    return RpcResponseSchema.parse(response).result
   }
 
   override validateResponse(response: json): {
@@ -153,7 +101,7 @@ export class BlobClient extends ClientCore {
   // this is very hacky, but it's the only way i know to get the beacon block id
   // if you know a better way, please fix it
   private async getBeaconBlockId(blockNumber: number): Promise<string> {
-    return await this.getBlockParentBeaconRoot(blockNumber + 1)
+    return await this.$.rpcClient.getBlockParentBeaconRoot(blockNumber + 1)
   }
 }
 

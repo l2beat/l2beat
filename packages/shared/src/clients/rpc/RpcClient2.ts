@@ -1,4 +1,10 @@
-import { Block, Bytes, EthereumAddress, json } from '@l2beat/shared-pure'
+import {
+  assert,
+  Block,
+  Bytes,
+  EthereumAddress,
+  json,
+} from '@l2beat/shared-pure'
 import { generateId } from '../../tools/generateId'
 import {
   ClientCore,
@@ -9,7 +15,9 @@ import {
   CallParameters,
   EVMBalanceResponse,
   EVMBlockResponse,
+  EVMBlockWithTransactionsResponse,
   EVMCallResponse,
+  EVMTransactionResponse,
   Quantity,
   RPCError,
 } from './types'
@@ -34,10 +42,21 @@ export class RpcClient2 extends ClientCore implements BlockClient {
   async getBlockWithTransactions(
     blockNumber: number | 'latest',
   ): Promise<Block> {
-    const method = 'eth_getBlockByNumber'
-    const encodedNumber =
-      blockNumber === 'latest' ? 'latest' : Quantity.encode(BigInt(blockNumber))
-    const blockResponse = await this.query(method, [encodedNumber, true])
+    const blockResponse = await this.queryGetBlock(blockNumber)
+
+    const block = EVMBlockWithTransactionsResponse.safeParse(blockResponse)
+    if (!block.success) {
+      this.$.logger.warn(`Invalid response`, {
+        blockNumber,
+        response: JSON.stringify(blockResponse),
+      })
+      throw new Error(`Block ${blockNumber} with txs: Error during parsing`)
+    }
+    return { ...block.data.result }
+  }
+
+  async getBlockWithoutTransaction(blockNumber: number) {
+    const blockResponse = await this.queryGetBlock(blockNumber)
 
     const block = EVMBlockResponse.safeParse(blockResponse)
     if (!block.success) {
@@ -47,7 +66,41 @@ export class RpcClient2 extends ClientCore implements BlockClient {
       })
       throw new Error(`Block ${blockNumber}: Error during parsing`)
     }
+
     return { ...block.data.result }
+  }
+
+  async getBlockParentBeaconRoot(blockNumber: number): Promise<string> {
+    const block = await this.getBlockWithoutTransaction(blockNumber)
+
+    assert(
+      block.parentBeaconBlockRoot,
+      `Block ${block}: parentBeaconBlockRoot should be defined`,
+    )
+    return block.parentBeaconBlockRoot
+  }
+
+  private async queryGetBlock(blockNumber: string | number) {
+    const method = 'eth_getBlockByNumber'
+    const encodedNumber =
+      blockNumber === 'latest' ? 'latest' : Quantity.encode(BigInt(blockNumber))
+    const blockResponse = await this.query(method, [encodedNumber, true])
+    return blockResponse
+  }
+
+  async getTransaction(txHash: string) {
+    const response = await this.query('eth_getTransactionByHash', [txHash])
+
+    const transaction = EVMTransactionResponse.safeParse(response)
+    if (!transaction.success) {
+      this.$.logger.warn(`Invalid response`, {
+        txHash,
+        response: JSON.stringify(response),
+      })
+      throw new Error(`Tx ${txHash}: Error during parsing`)
+    }
+
+    return { ...transaction.data.result }
   }
 
   async getBalance(
