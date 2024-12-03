@@ -11,9 +11,10 @@ export const faqItems: FaqItem[] = [
       'L2BEAT was created to provide transparent and verifiable insights into emerging layer two (L2) technologies which, in line with the [rollup-centric Ethereum scaling roadmap](https://ethereum-magicians.org/t/a-rollup-centric-ethereum-roadmap/4698) are aimed at scaling Ethereum.',
   },
   {
-    question: 'Why do you need L2BEAT if you have DeFi Pulse, DefiLlama, etc.?',
+    question:
+      'Why do you need L2BEAT when you already have DeFiLlama and other analytics platforms?',
     answer:
-      'While the above-mentioned sites are great, they focus primarily at tracking TVL (Total Value Locked) in DeFi projects on various chains. In comparison L2BEAT will track only L2 projects (at first on Ethereum only) and will eventually report not just TVL but various metrics related to the liveness and security of these projects.',
+      'While those platforms are great, they primarily focus on tracking TVL (Total Value Locked) in DeFi projects across various chains. In comparison, L2BEAT focuses exclusively on Ethereum scaling projects (L2s and L3s) and reports not just TVL but also various metrics related to the liveness and security of these projects.',
   },
   {
     question:
@@ -71,7 +72,7 @@ export const faqItems: FaqItem[] = [
     question: 'What about data availability? Why is it important?',
     answer: [
       "To trustlessly withdraw coins from L2, users need to prove ownership of the coins to L1 smart contract that holds all the funds. For that they need to have access to all L2's transactions or its current state. To not introduce any additional trust assumptions, L2 transactions can simply be recorded on L1 (as cheap calldata).",
-      "For more details on data availability and its importance in security of scaling protocols, see Ethereum.org's [page on the topic](https://ethereum.org/en/developers/docs/data-availability/).",
+      "For more details on data availability and its importance in security of scaling protocols, see our [DA page](https://l2beat.com/data-availability/summary), as well as Ethereum.org's [page on the topic](https://ethereum.org/en/developers/docs/data-availability/).",
     ],
   },
   {
