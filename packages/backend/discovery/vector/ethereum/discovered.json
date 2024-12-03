@@ -2,7 +2,7 @@
   "name": "vector",
   "chain": "ethereum",
   "blockNumber": 21321417,
-  "configHash": "0x65a732827839b7978a4f215ae2a7c4174d73ea7eaa34118a7c8e5876292c176c",
+  "configHash": "0xae44a44c76ee4a4205705b8914d84ecad5df97131f88d479051a098d346468a5",
   "contracts": [
     {
       "name": "Vector",
@@ -66,10 +66,6 @@
             "members": ["0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"]
           }
         },
-        "admins": [
-          "0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
-          "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
-        ],
         "checkRelayer": true,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "frozen": false,
@@ -92,7 +88,7 @@
       "derivedName": "SP1Vector"
     },
     {
-      "name": "SP1Verifier",
+      "name": "Old SP1Verifier",
       "address": "0x1764C29FBd94865198588f10FC75D4f6636d158d",
       "sourceHashes": [
         "0xeb051b88e210e28fd696d01528e3cc9a131a08d69e20bf1983ac8d90dd9b1f4f"
@@ -102,7 +98,8 @@
         "$immutable": true,
         "VERIFIER_HASH": "0x4aca240a3e5296e6a565f98dc728c6f48f8de4792a8fa365038c3b86952176f5",
         "VERSION": "v2.0.0"
-      }
+      },
+      "derivedName": "SP1Verifier"
     },
     {
       "name": "SuccinctGatewaySP1",
@@ -116,6 +113,11 @@
         {
           "permission": "configure",
           "target": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "target": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
           "via": []
         }
       ],
@@ -149,7 +151,7 @@
       "derivedName": "SP1VerifierGateway"
     },
     {
-      "name": "SP1Verifier",
+      "name": "Old SP1Verifier",
       "address": "0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3",
       "sourceHashes": [
         "0x0f6f590ac4c542e7f927f783929cb0bf126657b5207b3c796f77ac9d01433fb5"
@@ -159,10 +161,11 @@
         "$immutable": true,
         "VERIFIER_HASH": "0x090690902a12d1d02c07a1ad25aa76bded5f6499e12a11ba127669501b553998",
         "VERSION": "v3.0.0"
-      }
+      },
+      "derivedName": "SP1Verifier"
     },
     {
-      "name": "SP1Verifier",
+      "name": "Old SP1Verifier",
       "address": "0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc",
       "sourceHashes": [
         "0xabb95b2d66749481071b7a258a3305198760dbaf12d7411cfaba5e4c26cc3a65"
@@ -172,7 +175,8 @@
         "$immutable": true,
         "VERIFIER_HASH": "0xc865c1b60c05baa44075f37d6d88f2e18c64effb9113740b47cdf12b711b8aa4",
         "VERSION": "v1.2.0"
-      }
+      },
+      "derivedName": "SP1Verifier"
     },
     {
       "name": "AvailMultisig",
@@ -219,7 +223,7 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "SP1Verifier",
+      "name": "Old SP1Verifier",
       "address": "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB",
       "sourceHashes": [
         "0x6e3bfeae0d549b79decfd956f551a8aeac66523cdd66da389ef55eb56ef72aac"
@@ -229,7 +233,8 @@
         "$immutable": true,
         "VERIFIER_HASH": "0xc430ff7f31a22c5f7607f3ed2a2f5621af340bc45a44179319cba5761664e1f0",
         "VERSION": "v1.1.0"
-      }
+      },
+      "derivedName": "SP1Verifier"
     },
     {
       "name": "SuccinctGatewaySP1Multisig",
@@ -272,6 +277,13 @@
       "address": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
       "sourceHashes": [
         "0x12f4e310568377cf39c9992ed73fee2df73ea33090ec45ec342cfe4e5ce7c25b"
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
+        }
       ],
       "sinceTimestamp": 1729727135,
       "values": {
@@ -515,7 +527,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "succinct/SP1SuccinctGateway": "0x5d8f5adf27f337291fd0f690f7c53a70b30a5b4eb5bc50e260299d27382cbd2c",
-    "succinct/SP1Vector": "0x4a19fadc4885343d878dce68033c6b0084b6b2b39f95277ae4fb0ef0bdd0bcb7"
+    "succinct/SP1SuccinctGateway": "0x8e07a550d79ad9636ecd48aaf27eed662a4513dbc69cc53361ca27e5ac7640c9",
+    "succinct/SP1Vector": "0x72f43c0bf961be915f01b7af2dbdac6520cc171b085d7afb228c43913e396422"
   }
 }

@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.",
   "fields": {
     "oldVerifier": {
       "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This verifier route was frozen on 2024-09-04.",
@@ -53,6 +54,14 @@
         "args": [
           // first 4 bytes of the blobstream proof are used as identifier
           "0x54bdcae3"
+        ]
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "configure",
+            "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
+          }
         ]
       }
     },
