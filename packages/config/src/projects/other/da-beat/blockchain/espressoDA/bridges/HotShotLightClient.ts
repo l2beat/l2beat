@@ -96,10 +96,12 @@ export const HotShotLightClient = {
       {
         name: 'Relayer',
         description: `Relayer (prover) address that is allowed to call newFinalizedState() to commit block ranges to the Light Client contract.`,
-        accounts: [{
-          address: EthereumAddress(relayer),
-          type: 'EOA',
-        }],
+        accounts: [
+          {
+            address: EthereumAddress(relayer),
+            type: 'EOA',
+          },
+        ],
       },
     ],
   },
