@@ -7043,6 +7043,20 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "AgentFun.AI",
+      "coingeckoId": "agentfun-ai",
+      "address": "0x96733708C4157218B6E6889eb9E16B1df7873061",
+      "symbol": "AGENTFUN",
+      "decimals": 18,
+      "deploymentTimestamp": 1732588679,
+      "coingeckoListingTimestamp": 1732641073,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/52133/standard/AIFUN_%282%29.png?1732639482",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Base God",
       "coingeckoId": "base-god",
       "address": "0x0d97F261b1e88845184f678e2d1e7a98D9FD38dE",

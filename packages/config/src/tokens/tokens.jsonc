@@ -154,6 +154,11 @@
       "category": "stablecoin"
     },
     {
+      "symbol": "AGENTFUN",
+      "coingeckoId": "agentfun-ai",
+      "address": "0x96733708C4157218B6E6889eb9E16B1df7873061"
+    },
+    {
       "symbol": "AGIX",
       "address": "0x5B7533812759B45C2B44C19e320ba2cD2681b542"
     },
