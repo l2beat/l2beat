@@ -115,8 +115,8 @@ function Page() {
               return (
                 <tr className="text-center hover:bg-blue-100" key={id}>
                   <td>{id}</td>
-                  <td>{d[metric].pastDayCount}</td>
-                  <td>{d[metric].maxCount.value}</td>
+                  <td>{d[metric].pastDayCount.toFixed(2)}</td>
+                  <td>{d[metric].maxCount.value.toFixed(2)}</td>
                   <td>{d[metric].summedCount}</td>
                 </tr>
               )
