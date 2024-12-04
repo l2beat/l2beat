@@ -48,9 +48,9 @@ export const espressoDA: DaLayer = {
 
     Once the proposer sends data to HotShot node operators, they initiate Espresso DA's three layers of data availability:
     
-    - **Savoiardi**: Disperses erasure-coded data to all nodes. Savoiardi nodes only store chunks of the data.
-    - **Mascarpone**: Uploads the data and commitment to a small DA committee. Every node in the committee stores the full data.
-    - **Cocoa**: Uploads the full data to a content delivery network (CDN). \  
+    - **VID Layer**: Disperses erasure-coded data to all nodes. Savoiardi nodes only store chunks of the data.
+    - **DA Committee Layer**: Uploads the data and commitment to a small DA committee. Every node in the committee stores the full data.
+    - **CDN Layer**: Uploads the full data to a content delivery network (CDN). \  
 
       
     Once nodes receive and store the data, they return votes to the proposer. DAVotes are votes from committee nodes storing the full data, while QuorumVotes are votes from nodes storing erasure-coded shares of the data.
