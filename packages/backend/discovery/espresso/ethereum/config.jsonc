@@ -6,5 +6,10 @@
   "names": {
     "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458": "HotShotLightClient"
   },
-  "overrides": {}
+  "overrides": {
+    "HotShotLightClient": {
+      "ignoreMethods": ["proxiableUUID","getHotShotCommitment", "stateHistoryCommitments"],
+      "ignoreInWatchMode": []
+    }
+  }
 }
