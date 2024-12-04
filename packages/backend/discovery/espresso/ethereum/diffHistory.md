@@ -8,7 +8,7 @@ Generated with discovered.json: 0x10b5905134bf63cdbf7efb4b46887d31564a0cac
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Light Client contract verified.
 
 ## Watched changes
 
