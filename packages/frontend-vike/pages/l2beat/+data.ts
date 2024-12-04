@@ -1,11 +1,22 @@
 // https://vike.dev/data
 export { data }
 export type Data = Awaited<ReturnType<typeof data>>
-import { layer2s } from '@l2beat/config'
-import type { PageContextServer } from 'vike/types'
+import { UnixTime } from '@l2beat/shared-pure'
+import { getActivityProjectsData } from '../../utils/get-activity-data'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const data = async (pageContext: PageContextServer) => {
-  const layer2Ids = layer2s.map((p) => p.id)
-  return layer2Ids
+const cache = new Map<
+  string,
+  Awaited<ReturnType<typeof getActivityProjectsData>>
+>()
+
+const data = async () => {
+  const key = UnixTime.now().toStartOf('hour').toString()
+
+  if (cache.has(key)) {
+    return cache.get(key)
+  } else {
+    const activityData = await getActivityProjectsData()
+    cache.set(key, activityData)
+    return activityData
+  }
 }

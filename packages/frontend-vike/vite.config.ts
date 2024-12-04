@@ -5,7 +5,7 @@ import { UserConfig } from 'vite'
 const config: UserConfig = {
   plugins: [react(), vike()],
   ssr: {
-    external: ['@l2beat/config'],
+    external: ['@l2beat/config', '@l2beat/shared-pure', '@l2beat/database'],
   },
 }
 

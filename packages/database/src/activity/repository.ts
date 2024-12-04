@@ -54,15 +54,13 @@ export class ActivityRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
-  async getByProjectAndTimeRange(
-    projectId: ProjectId,
+  async getByTimeRange(
     timeRange: [UnixTime, UnixTime],
   ): Promise<ActivityRecord[]> {
     const [from, to] = timeRange
     const rows = await this.db
       .selectFrom('Activity')
       .select(selectActivity)
-      .where('projectId', '=', projectId.toString())
       .where('timestamp', '>=', from.toDate())
       .where('timestamp', '<=', to.toDate())
       .orderBy('timestamp', 'asc')

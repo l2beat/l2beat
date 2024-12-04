@@ -20,7 +20,6 @@ function Layout({
             <Logo />
             <Link href="/">Welcome</Link>
             <Link href="/about">About</Link>
-            <Link href="/star-wars">Data Fetching</Link>
             <Link href="/l2beat">L2BEAT</Link>
           </Sidebar>
           <Content>{children}</Content>
@@ -35,7 +34,6 @@ function Frame({ children }: { children: React.ReactNode }) {
     <div
       style={{
         display: 'flex',
-        maxWidth: 900,
         margin: 'auto',
       }}
     >
