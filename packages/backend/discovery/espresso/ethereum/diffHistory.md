@@ -1,6 +1,6 @@
 Generated with discovered.json: 0x10b5905134bf63cdbf7efb4b46887d31564a0cac
 
-# Diff at Wed, 04 Dec 2024 13:04:29 GMT:
+# Diff at Wed, 04 Dec 2024 14:28:15 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@7dc480bf5499525d0b44afce03521538ecc8ec73 block: 21273402
@@ -53,14 +53,10 @@ discovery. Values are for block 21273402 (main branch discovery), not current.
     +++ description: None
       unverified:
 -        true
-      values.finalizedState:
-+        {"viewNum":330741,"blockHeight":326498,"blockCommRoot":"7626052650991835924151320295231216860698065595252883438564397842518299967014"}
       values.genesisStakeTableState:
 +        {"threshold":34,"blsKeyComm":"1561632536195555148145050274009949812309785157828896392838981322602622136791","schnorrKeyComm":"20147560324529416943341534119711171689827441694011856532375917186049770295574","amountComm":"349594070000690608819508126396071528924936277306125447047023081215269308099"}
       values.genesisState:
 +        {"viewNum":0,"blockHeight":0,"blockCommRoot":0}
-      values.getStateHistoryCount:
-+        246
       values.getVersion:
 +        {"majorVersion":1,"minorVersion":0,"patchVersion":0}
       values.isPermissionedProverEnabled:
@@ -69,8 +65,6 @@ discovery. Values are for block 21273402 (main branch discovery), not current.
 +        "0x34F5af5158171Ffd2475d21dB5fc3B311F221982"
       values.permissionedProver:
 +        "0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947"
-      values.stateHistoryFirstIndex:
-+        17
       values.stateHistoryRetentionPeriod:
 +        864000
       values.UPGRADE_INTERFACE_VERSION:

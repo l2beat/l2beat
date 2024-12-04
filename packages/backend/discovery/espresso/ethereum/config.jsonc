@@ -14,7 +14,7 @@
         "getHotShotCommitment",
         "stateHistoryCommitments"
       ],
-      "ignoreInWatchMode": []
+      "ignoreInWatchMode": ["stateHistoryFirstIndex", "getStateHistoryCount", "finalizedState" ]
     }
   }
 }
