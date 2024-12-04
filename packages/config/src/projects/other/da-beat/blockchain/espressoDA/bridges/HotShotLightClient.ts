@@ -1,4 +1,4 @@
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../../../../../discovery/ProjectDiscovery'
 import { DaCommitteeSecurityRisk } from '../../../types'
@@ -9,6 +9,11 @@ import { DacTransactionDataType } from '../../../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('espresso')
 const updateInterval = 12 // hours
+
+const relayers = discovery.getContractValue<string[]>(
+  'HotShotLightClient',
+  'permissionedProver',
+)
 
 export const HotShotLightClient = {
   id: 'HotShotLightClient',
@@ -85,7 +90,20 @@ export const HotShotLightClient = {
     ],
   },
   permissions: {
-    ethereum: [],
+    ethereum: [
+      ...discovery.getMultisigPermission(
+        'EspressoMultisig',
+        'This multisig is the admin of the Light Client DA bridge contract. It holds the power to change the contract state and upgrade the bridge.',
+      ),
+      {
+        name: 'Relayers',
+        description: `List of prover (relayer) addresses that are allowed to call commitHeaderRange() to commit block ranges to the Blobstream contract.`,
+        accounts: relayers.map((relayer) => ({
+          address: EthereumAddress(relayer),
+          type: 'EOA',
+        })),
+      },
+    ],
   },
   requiredMembers: 67, // 2/3 + 1
   membersCount: 100, // max allowed node operators
