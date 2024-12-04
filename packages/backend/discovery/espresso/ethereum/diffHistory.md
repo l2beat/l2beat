@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x10b5905134bf63cdbf7efb4b46887d31564a0cac
+Generated with discovered.json: 0xbef0fc2ec9350fa46048af184960c5f07bb02d84
 
-# Diff at Wed, 04 Dec 2024 14:28:15 GMT:
+# Diff at Wed, 04 Dec 2024 14:34:00 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@7dc480bf5499525d0b44afce03521538ecc8ec73 block: 21273402
@@ -9,29 +9,6 @@ Generated with discovered.json: 0x10b5905134bf63cdbf7efb4b46887d31564a0cac
 ## Description
 
 Light Client contract verified.
-
-## Watched changes
-
-```diff
-    contract HotShotLightClient (0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458) {
-    +++ description: None
-      values.finalizedState.viewNum:
--        330741
-+        408590
-      values.finalizedState.blockHeight:
--        326498
-+        402316
-      values.finalizedState.blockCommRoot:
--        "7626052650991835924151320295231216860698065595252883438564397842518299967014"
-+        "7768766347258306299729052154827268224670850405230232894938751927139331481640"
-      values.getStateHistoryCount:
--        246
-+        261
-      values.stateHistoryFirstIndex:
--        17
-+        32
-    }
-```
 
 ## Config/verification related changes
 
