@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x0d3e2d9e1aa8f00d8488599beab0373eff3ee1d3
+Generated with discovered.json: 0x10b5905134bf63cdbf7efb4b46887d31564a0cac
 
-# Diff at Wed, 04 Dec 2024 11:56:02 GMT:
+# Diff at Wed, 04 Dec 2024 13:04:29 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@7dc480bf5499525d0b44afce03521538ecc8ec73 block: 21273402
-- current block number: 21328973
+- current block number: 21329314
 
 ## Description
 
@@ -38,6 +38,15 @@ Provide description of changes. This section will be preserved.
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 21273402 (main branch discovery), not current.
+
+```diff
+    contract EspressoMultisig (0x34F5af5158171Ffd2475d21dB5fc3B311F221982) {
+    +++ description: None
+      name:
+-        "Safe"
++        "EspressoMultisig"
+    }
+```
 
 ```diff
     contract HotShotLightClient (0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458) {

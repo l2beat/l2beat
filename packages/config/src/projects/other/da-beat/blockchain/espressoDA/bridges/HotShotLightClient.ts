@@ -10,7 +10,7 @@ import { DacTransactionDataType } from '../../../types/DacTransactionDataType'
 const discovery = new ProjectDiscovery('espresso')
 const updateInterval = 12 // hours
 
-const relayers = discovery.getContractValue<string[]>(
+const relayer = discovery.getContractValue<string>(
   'HotShotLightClient',
   'permissionedProver',
 )
@@ -56,7 +56,7 @@ export const HotShotLightClient = {
   technology: {
     description: `
     ## Architecture
-    The Light Client contract serves as the DA bridge for the Espresso Tiramisu DA solution and is responsible for storing the HotShot consensus state on Ethereum.
+    The Light Client contract serves as the DA bridge for the Espresso DA solution and is responsible for storing the HotShot consensus state on Ethereum.
     
     When HotShot nodes reach consensus, they sign the updated HotShot state using Schnorr signatures, which indicate agreement with the state of the proposed block. These signatures are stored locally on the DA layer nodes.
     
@@ -65,8 +65,6 @@ export const HotShotLightClient = {
     The proof should contain the HotShot state, the stake table information, and the list of Schnorr signatures from the HotShot nodes that formed a quorum and reached consensus on the state, and the new state is accepted only if the proof passes verification.
 
     Currently, attestations are relayed to the Light Client every ${updateInterval} hours.
-
-    Please note that the Light Client implementation is unverified, the information provided is based on Espresso Github repository and Espresso documentation. 
   `,
     references: [
       {
@@ -96,12 +94,12 @@ export const HotShotLightClient = {
         'This multisig is the admin of the Light Client DA bridge contract. It holds the power to change the contract state and upgrade the bridge.',
       ),
       {
-        name: 'Relayers',
-        description: `List of prover (relayer) addresses that are allowed to call commitHeaderRange() to commit block ranges to the Blobstream contract.`,
-        accounts: relayers.map((relayer) => ({
+        name: 'Relayer',
+        description: `Relayer (prover) address that is allowed to call newFinalizedState() to commit block ranges to the Light Client contract.`,
+        accounts: [{
           address: EthereumAddress(relayer),
           type: 'EOA',
-        })),
+        }],
       },
     ],
   },
@@ -133,11 +131,6 @@ export const HotShotLightClient = {
       external: true,
       name: 'deNodes',
       href: 'https://x.com/EspressoSys/status/1861106698825670830',
-    },
-    {
-      external: true,
-      name: '01node Validator',
-      href: 'https://x.com/EspressoSys/status/1861106651471978614',
     },
     {
       external: true,

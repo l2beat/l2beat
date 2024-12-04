@@ -1,11 +1,11 @@
 {
   "name": "espresso",
   "chain": "ethereum",
-  "blockNumber": 21328973,
-  "configHash": "0xd84d5126b1b763bd4d92d9251b4f4c9d8419deda2dbfdc67e310eab1244f9865",
+  "blockNumber": 21329314,
+  "configHash": "0x060344c607daa51877db776b114e3f4fff0644ed74dd8d0d8f940c303ceed5c7",
   "contracts": [
     {
-      "name": "Safe",
+      "name": "EspressoMultisig",
       "address": "0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -36,7 +36,8 @@
         "multisigThreshold": "2 of 3 (67%)",
         "nonce": 0,
         "VERSION": "1.4.1"
-      }
+      },
+      "derivedName": "Safe"
     },
     {
       "name": "HotShotLightClient",
