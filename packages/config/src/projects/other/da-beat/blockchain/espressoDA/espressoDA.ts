@@ -48,7 +48,7 @@ export const espressoDA: DaLayer = {
 
     Once the proposer sends data to HotShot node operators, they initiate Espresso DA's three layers of data availability:
     
-    - **VID Layer**: Disperses erasure-coded data to all nodes. Savoiardi nodes only store chunks of the data.
+    - **VID Layer**: Disperses erasure-coded data to all nodes. VID layer nodes only store chunks of the data.
     - **DA Committee Layer**: Uploads the data and commitment to a small DA committee. Every node in the committee stores the full data.
     - **CDN Layer**: Uploads the full data to a content delivery network (CDN). \  
 
@@ -71,7 +71,7 @@ export const espressoDA: DaLayer = {
 
     ![EspressoDA architecture with L2s](/images/da-layer-technology/espressoDA/architectureL2.png#center)
 
-    Users can retrieve data by querying any of Espresso DA's layers, though the Savoiardi layer is slower due to the reconstruction of erasure-coded shares. L2s can also use a verifyInclusion function on an L1 light client smart contract to confirm a blob's inclusion in the Espresso DA HotShot chain.
+    Users can retrieve data by querying any of Espresso DA's layers, though the VID layer is slower due to the reconstruction of erasure-coded shares. L2s can also use a verifyInclusion function on an L1 light client smart contract to confirm a blob's inclusion in the Espresso DA HotShot chain.
     
  `,
     references: [],
