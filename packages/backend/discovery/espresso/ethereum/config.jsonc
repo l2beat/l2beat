@@ -8,7 +8,11 @@
   },
   "overrides": {
     "HotShotLightClient": {
-      "ignoreMethods": ["proxiableUUID","getHotShotCommitment", "stateHistoryCommitments"],
+      "ignoreMethods": [
+        "proxiableUUID",
+        "getHotShotCommitment",
+        "stateHistoryCommitments"
+      ],
       "ignoreInWatchMode": []
     }
   }
