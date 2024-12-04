@@ -4,7 +4,7 @@ import { everclear } from '../../../layer2s/everclear'
 import { AnytrustDAC } from '../templates/anytrust-template'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
-const discovery = new ProjectDiscovery('alephzero', 'ethereum')
+const discovery = new ProjectDiscovery('everclear', 'ethereum')
 
 const dac = discovery.getContractValue<{
   membersCount: number
