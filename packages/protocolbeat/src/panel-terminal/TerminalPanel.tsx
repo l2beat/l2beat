@@ -64,7 +64,8 @@ export function TerminalPanel() {
       abortControllerRef.current = new AbortController()
 
       eventSource.onmessage = (event) => {
-        const text = event.data.toString()
+        const encoded = event.data.toString()
+        const text = encoded.replace(/\\n/g, '\n')
         addOutput(text.endsWith('\n') ? text : text + '\n')
       }
 
