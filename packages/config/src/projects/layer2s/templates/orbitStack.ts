@@ -311,10 +311,7 @@ function orbitStackCommon(
   templateVars: OrbitStackConfigCommon,
   explorerLinkFormat: string,
   blockNumberOpcodeTimeSeconds: number,
-): Omit<
-  Layer2,
-  'type' | 'display' | 'config' | 'stage' | 'riskView'
-> {
+): Omit<Layer2, 'type' | 'display' | 'config' | 'stage' | 'riskView'> {
   const usesBlobs =
     templateVars.usesBlobs ??
     templateVars.discovery.getContractValueOrUndefined(
