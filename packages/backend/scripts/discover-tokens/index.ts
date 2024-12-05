@@ -1,11 +1,12 @@
 import { existsSync, readFileSync, writeFileSync } from 'fs'
 import path from 'path'
 import { getEnv } from '@l2beat/backend-tools'
+import { layer2s, tokenList } from '@l2beat/config'
 import { providers, utils } from 'ethers'
 import { difference } from 'lodash'
-import { layer2s, tokenList } from '../../src'
+import { RateLimitedProvider } from '../../src/peripherals/rpcclient/RateLimitedProvider'
 
-const BLOCK_RANGE = 200_000 // Safer block range to avoid RPC errors
+const BLOCK_RANGE = 10_000 // Safer block range to avoid RPC errors
 
 const OUTPUT_PATH = path.resolve(__dirname, './discovered.json')
 
@@ -67,20 +68,22 @@ async function main() {
       continue
     }
 
-    const allLogs: providers.Log[] = []
     const toTopic = utils.hexZeroPad(escrow.address, 32)
 
-    for (const [fromBlock, toBlock] of blockRanges) {
+    const logPromises = blockRanges.map(async ([fromBlock, toBlock]) => {
       const logs = await provider.getLogs({
         topics: [transferTopic, null, toTopic],
         fromBlock,
         toBlock,
       })
-      allLogs.push(...logs)
       console.log(
         `Processed blocks ${fromBlock}-${toBlock}, found ${logs.length} logs for escrow ${escrow.address}`,
       )
-    }
+      return logs
+    })
+
+    const logsArrays = await Promise.all(logPromises)
+    const allLogs = logsArrays.flat()
 
     console.log('Total logs found:', allLogs.length)
     const tokensFromLogs = new Set(allLogs.map((l) => l.address))
@@ -110,5 +113,9 @@ main().then(() => {
 
 function getProvider() {
   const env = getEnv()
-  return new providers.JsonRpcProvider(env.string('ETHEREUM_RPC_URL'))
+  const rateLimitedProvider = new RateLimitedProvider(
+    new providers.JsonRpcProvider(env.string('ETHEREUM_RPC_URL')),
+    5000,
+  )
+  return rateLimitedProvider
 }
