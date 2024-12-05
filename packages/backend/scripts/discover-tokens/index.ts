@@ -13,21 +13,37 @@ import { providers, utils } from 'ethers'
 import { RateLimitedProvider } from '../../src/peripherals/rpcclient/RateLimitedProvider'
 
 const OUTPUT_PATH = path.resolve(__dirname, './discovered.json')
+const PROCESSED_ESCROWS_PATH = path.resolve(
+  __dirname,
+  './processedEscrows.json',
+)
 
-interface DiscoveredData {
+interface DiscoveredTokens {
   found: string[]
+}
+
+interface ProcessedEscrows {
   processed: Record<string, number>
 }
 
-function loadExistingData(): DiscoveredData {
+function loadExistingTokens(): DiscoveredTokens {
   if (existsSync(OUTPUT_PATH)) {
     const data = JSON.parse(readFileSync(OUTPUT_PATH, 'utf-8'))
     return {
       found: data.found ?? [],
+    }
+  }
+  return { found: [] }
+}
+
+function loadProcessedEscrows(): ProcessedEscrows {
+  if (existsSync(PROCESSED_ESCROWS_PATH)) {
+    const data = JSON.parse(readFileSync(PROCESSED_ESCROWS_PATH, 'utf-8'))
+    return {
       processed: data.processed ?? {},
     }
   }
-  return { found: [], processed: {} }
+  return { processed: {} }
 }
 
 async function main() {
@@ -50,11 +66,12 @@ async function main() {
 
   const transferTopic = utils.id('Transfer(address,address,uint256)')
   const latestBlock = await provider.getBlockNumber()
-  const existingData = loadExistingData()
+  const existingTokens = loadExistingTokens()
+  const processedEscrows = loadProcessedEscrows()
   const tokenListAddresses = new Set(
     tokenList.map((t) => t.address?.toLowerCase()),
   )
-  const allFoundTokens = new Set(existingData.found)
+  const allFoundTokens = new Set(existingTokens.found)
 
   for (const escrow of escrows) {
     console.log(
@@ -62,7 +79,7 @@ async function main() {
     )
 
     const lastProcessedBlock =
-      existingData.processed?.[escrow.address] ??
+      processedEscrows.processed?.[escrow.address] ??
       (await etherscanClient.getBlockNumberAtOrBefore(escrow.sinceTimestamp))
     const toTopic = utils.hexZeroPad(escrow.address, 32)
 
@@ -87,11 +104,14 @@ async function main() {
       }
     }
 
-    existingData.found = Array.from(allFoundTokens)
-    existingData.processed[escrow.address] = latestBlock
+    existingTokens.found = Array.from(allFoundTokens)
+    processedEscrows.processed[escrow.address] = latestBlock
 
-    const outputJson = JSON.stringify(existingData, null, 2)
-    writeFileSync(OUTPUT_PATH, outputJson + '\n')
+    writeFileSync(OUTPUT_PATH, JSON.stringify(existingTokens, null, 2) + '\n')
+    writeFileSync(
+      PROCESSED_ESCROWS_PATH,
+      JSON.stringify(processedEscrows, null, 2) + '\n',
+    )
 
     console.log('Tokens not found in tokenList:', allFoundTokens.size)
   }
