@@ -58,9 +58,6 @@
           }
         }
       }
-    },
-    "ProxyGovernanceMultisig": {
-      "ignoreInWatchMode": ["nonce"]
     }
   }
 }
