@@ -1,12 +1,13 @@
 import { existsSync, readFileSync, writeFileSync } from 'fs'
 import path from 'path'
-import { getEnv } from '@l2beat/backend-tools'
+import { Logger, RateLimiter, getEnv } from '@l2beat/backend-tools'
 import { layer2s, tokenList } from '@l2beat/config'
+import { CoingeckoClient, HttpClient2, RetryHandler } from '@l2beat/shared'
 import { providers, utils } from 'ethers'
 import { difference } from 'lodash'
 import { RateLimitedProvider } from '../../src/peripherals/rpcclient/RateLimitedProvider'
 
-const BLOCK_RANGE = 10_000 // Safer block range to avoid RPC errors
+const BLOCK_RANGE = 20_000
 
 const OUTPUT_PATH = path.resolve(__dirname, './discovered.json')
 
@@ -44,10 +45,19 @@ function loadExistingData(): DiscoveredData {
 
 async function main() {
   const provider = getProvider()
+  const coingeckoClient = getCoingeckoClient()
   const escrows = layer2s
     .map((layer2) => layer2.config.escrows)
     .flat()
     .filter((e) => e.chain === 'ethereum')
+
+  const coingeckoTokens = await coingeckoClient.getCoinList({
+    includePlatform: true,
+  })
+  const coingeckoTokensMap = new Set(
+    coingeckoTokens.map((t) => t.platforms.ethereum).filter((p) => p !== null),
+  )
+  console.log(Array.from(coingeckoTokensMap), 'tokens found on coingecko')
 
   const transferTopic = utils.id('Transfer(address,address,uint256)')
   const latestBlock = await provider.getBlockNumber()
@@ -87,7 +97,11 @@ async function main() {
 
     console.log('Total logs found:', allLogs.length)
     const tokensFromLogs = new Set(allLogs.map((l) => l.address))
-    tokensFromLogs.forEach((token) => allFoundTokens.add(token))
+    for (const tokenFromLog of tokensFromLogs) {
+      if (coingeckoTokensMap.has(tokenFromLog)) {
+        allFoundTokens.add(tokenFromLog)
+      }
+    }
 
     const notFoundTokensAddresses = difference(
       Array.from(allFoundTokens),
@@ -114,8 +128,25 @@ main().then(() => {
 function getProvider() {
   const env = getEnv()
   const rateLimitedProvider = new RateLimitedProvider(
-    new providers.JsonRpcProvider(env.string('ETHEREUM_RPC_URL')),
+    new providers.JsonRpcProvider(
+      env.string(['DISCOVER_TOKENS_ETHEREUM_RPC_URL', 'ETHEREUM_RPC_URL']),
+    ),
     5000,
   )
   return rateLimitedProvider
+}
+
+function getCoingeckoClient() {
+  const env = getEnv()
+  const coingeckoApiKey = env.optionalString('COINGECKO_API_KEY')
+  const http = new HttpClient2()
+  const rateLimiter = RateLimiter.COINGECKO(coingeckoApiKey)
+  const coingeckoClient = new CoingeckoClient({
+    http,
+    rateLimiter,
+    apiKey: coingeckoApiKey,
+    retryHandler: RetryHandler.SCRIPT,
+    logger: Logger.WARN,
+  })
+  return coingeckoClient
 }
