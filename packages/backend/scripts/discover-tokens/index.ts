@@ -2,12 +2,18 @@ import { existsSync, readFileSync, writeFileSync } from 'fs'
 import path from 'path'
 import { Logger, RateLimiter, getEnv } from '@l2beat/backend-tools'
 import { layer2s, tokenList } from '@l2beat/config'
-import { CoingeckoClient, HttpClient2, RetryHandler } from '@l2beat/shared'
+import {
+  BlockIndexerClient,
+  CoingeckoClient,
+  HttpClient,
+  HttpClient2,
+  RetryHandler,
+} from '@l2beat/shared'
 import { providers, utils } from 'ethers'
 import { difference } from 'lodash'
 import { RateLimitedProvider } from '../../src/peripherals/rpcclient/RateLimitedProvider'
 
-const BLOCK_RANGE = 20_000
+const BLOCK_RANGE = 10_000
 
 const OUTPUT_PATH = path.resolve(__dirname, './discovered.json')
 
@@ -46,6 +52,7 @@ function loadExistingData(): DiscoveredData {
 async function main() {
   const provider = getProvider()
   const coingeckoClient = getCoingeckoClient()
+  const etherscanClient = getEtherscanClient()
   const escrows = layer2s
     .map((layer2) => layer2.config.escrows)
     .flat()
@@ -57,7 +64,6 @@ async function main() {
   const coingeckoTokensMap = new Set(
     coingeckoTokens.map((t) => t.platforms.ethereum).filter((p) => p !== null),
   )
-  console.log(Array.from(coingeckoTokensMap), 'tokens found on coingecko')
 
   const transferTopic = utils.id('Transfer(address,address,uint256)')
   const latestBlock = await provider.getBlockNumber()
@@ -69,7 +75,9 @@ async function main() {
       `Checking logs for escrow: ${escrow.address} - ${escrows.findIndex((e) => e.address === escrow.address) + 1}/${escrows.length}`,
     )
 
-    const lastProcessedBlock = existingData.processed?.[escrow.address] ?? 0
+    const lastProcessedBlock =
+      existingData.processed?.[escrow.address] ??
+      (await etherscanClient.getBlockNumberAtOrBefore(escrow.sinceTimestamp))
     const blockRanges = getBlockRanges(lastProcessedBlock, latestBlock)
     if (blockRanges.length === 0) {
       console.log(
@@ -149,4 +157,18 @@ function getCoingeckoClient() {
     logger: Logger.WARN,
   })
   return coingeckoClient
+}
+
+function getEtherscanClient() {
+  const env = getEnv()
+  return new BlockIndexerClient(
+    new HttpClient(),
+    new RateLimiter({ callsPerMinute: 120 }),
+    {
+      type: 'etherscan',
+      chain: 'ethereum',
+      url: 'https://api.etherscan.io/api',
+      apiKey: env.string('ETHEREUM_ETHERSCAN_API_KEY'),
+    },
+  )
 }
