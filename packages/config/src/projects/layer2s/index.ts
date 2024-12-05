@@ -34,6 +34,7 @@ import { dbk } from './dbk'
 import { degate } from './degate'
 import { degate2 } from './degate2'
 import { degate3 } from './degate3'
+import { degenlayer } from './degenlayer'
 import { dydx } from './dydx'
 import { ebichain } from './ebichain'
 import { edgeless } from './edgeless'
@@ -215,6 +216,7 @@ export const layer2s: Layer2[] = [
   degate,
   degate2,
   degate3,
+  degenlayer,
   dydx,
   edgeless,
   ethernity,
