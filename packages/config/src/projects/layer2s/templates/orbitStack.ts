@@ -145,6 +145,7 @@ interface OrbitStackConfigCommon {
   nativePermissions?: Record<string, ScalingProjectPermission[]> | 'UnderReview'
   additionalPurposes?: ScalingProjectPurpose[]
   discoveryDrivenData?: boolean
+  isArchived?: boolean
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -310,10 +311,7 @@ function orbitStackCommon(
   templateVars: OrbitStackConfigCommon,
   explorerLinkFormat: string,
   blockNumberOpcodeTimeSeconds: number,
-): Omit<
-  Layer2,
-  'type' | 'display' | 'config' | 'isArchived' | 'stage' | 'riskView'
-> {
+): Omit<Layer2, 'type' | 'display' | 'config' | 'stage' | 'riskView'> {
   const usesBlobs =
     templateVars.usesBlobs ??
     templateVars.discovery.getContractValueOrUndefined(
@@ -392,6 +390,7 @@ function orbitStackCommon(
   return {
     id: ProjectId(templateVars.discovery.projectName),
     createdAt: templateVars.createdAt,
+    isArchived: templateVars.isArchived ?? undefined,
     contracts: {
       addresses:
         templateVars.discoveryDrivenData === true
