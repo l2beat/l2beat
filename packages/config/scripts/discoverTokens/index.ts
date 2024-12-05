@@ -5,7 +5,7 @@ import { providers, utils } from 'ethers'
 import { difference } from 'lodash'
 import { layer2s, tokenList } from '../../src'
 
-const BLOCK_RANGE = 500_000 // Safer block range to avoid RPC errors
+const BLOCK_RANGE = 200_000 // Safer block range to avoid RPC errors
 
 const OUTPUT_PATH = path.resolve(__dirname, './discovered.json')
 
