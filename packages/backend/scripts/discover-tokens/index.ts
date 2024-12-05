@@ -10,32 +10,13 @@ import {
   RetryHandler,
 } from '@l2beat/shared'
 import { providers, utils } from 'ethers'
-import { difference } from 'lodash'
 import { RateLimitedProvider } from '../../src/peripherals/rpcclient/RateLimitedProvider'
-
-const BLOCK_RANGE = 10_000
 
 const OUTPUT_PATH = path.resolve(__dirname, './discovered.json')
 
 interface DiscoveredData {
   found: string[]
   processed: Record<string, number>
-}
-
-function getBlockRanges(
-  fromBlock: number,
-  toBlock: number,
-): Array<[number, number]> {
-  const ranges: Array<[number, number]> = []
-  let currentFromBlock = fromBlock
-
-  while (currentFromBlock < toBlock) {
-    const currentToBlock = Math.min(currentFromBlock + BLOCK_RANGE, toBlock)
-    ranges.push([currentFromBlock, currentToBlock])
-    currentFromBlock = currentToBlock + 1
-  }
-
-  return ranges
 }
 
 function loadExistingData(): DiscoveredData {
@@ -62,12 +43,17 @@ async function main() {
     includePlatform: true,
   })
   const coingeckoTokensMap = new Set(
-    coingeckoTokens.map((t) => t.platforms.ethereum).filter((p) => p !== null),
+    coingeckoTokens
+      .map((t) => t.platforms.ethereum?.toLowerCase())
+      .filter((p) => p !== null),
   )
 
   const transferTopic = utils.id('Transfer(address,address,uint256)')
   const latestBlock = await provider.getBlockNumber()
   const existingData = loadExistingData()
+  const tokenListAddresses = new Set(
+    tokenList.map((t) => t.address?.toLowerCase()),
+  )
   const allFoundTokens = new Set(existingData.found)
 
   for (const escrow of escrows) {
@@ -78,43 +64,28 @@ async function main() {
     const lastProcessedBlock =
       existingData.processed?.[escrow.address] ??
       (await etherscanClient.getBlockNumberAtOrBefore(escrow.sinceTimestamp))
-    const blockRanges = getBlockRanges(lastProcessedBlock, latestBlock)
-    if (blockRanges.length === 0) {
-      console.log(
-        `Escrow ${escrow.address} already processed up to ${lastProcessedBlock}`,
-      )
-      continue
-    }
-
     const toTopic = utils.hexZeroPad(escrow.address, 32)
 
-    const logPromises = blockRanges.map(async ([fromBlock, toBlock]) => {
-      const logs = await provider.getLogs({
-        topics: [transferTopic, null, toTopic],
-        fromBlock,
-        toBlock,
-      })
-      console.log(
-        `Processed blocks ${fromBlock}-${toBlock}, found ${logs.length} logs for escrow ${escrow.address}`,
-      )
-      return logs
-    })
+    const allLogs = await getAllLogs(
+      provider,
+      [transferTopic, null, toTopic],
+      lastProcessedBlock,
+      latestBlock,
+    )
 
-    const logsArrays = await Promise.all(logPromises)
-    const allLogs = logsArrays.flat()
+    console.log(
+      `Processed blocks ${lastProcessedBlock}-${latestBlock}, found ${allLogs.length} logs for escrow ${escrow.address}`,
+    )
 
-    console.log('Total logs found:', allLogs.length)
-    const tokensFromLogs = new Set(allLogs.map((l) => l.address))
+    const tokensFromLogs = new Set(allLogs.map((l) => l.address.toLowerCase()))
     for (const tokenFromLog of tokensFromLogs) {
-      if (coingeckoTokensMap.has(tokenFromLog)) {
+      if (
+        coingeckoTokensMap.has(tokenFromLog) &&
+        !tokenListAddresses.has(tokenFromLog)
+      ) {
         allFoundTokens.add(tokenFromLog)
       }
     }
-
-    const notFoundTokensAddresses = difference(
-      Array.from(allFoundTokens),
-      tokenList.map((t) => t.address),
-    )
 
     existingData.found = Array.from(allFoundTokens)
     existingData.processed[escrow.address] = latestBlock
@@ -122,10 +93,7 @@ async function main() {
     const outputJson = JSON.stringify(existingData, null, 2)
     writeFileSync(OUTPUT_PATH, outputJson + '\n')
 
-    console.log(
-      'Tokens not found in tokenList:',
-      notFoundTokensAddresses.length,
-    )
+    console.log('Tokens not found in tokenList:', allFoundTokens.size)
   }
 }
 
@@ -139,7 +107,7 @@ function getProvider() {
     new providers.JsonRpcProvider(
       env.string(['DISCOVER_TOKENS_ETHEREUM_RPC_URL', 'ETHEREUM_RPC_URL']),
     ),
-    5000,
+    4000,
   )
   return rateLimitedProvider
 }
@@ -171,4 +139,41 @@ function getEtherscanClient() {
       apiKey: env.string('ETHEREUM_ETHERSCAN_API_KEY'),
     },
   )
+}
+
+async function getAllLogs(
+  provider: RateLimitedProvider,
+  topics: (string | null)[],
+  fromBlock: number,
+  toBlock: number,
+): Promise<providers.Log[]> {
+  if (fromBlock === toBlock) {
+    return await provider.getLogs({
+      topics,
+      fromBlock,
+      toBlock,
+    })
+  }
+  try {
+    return await provider.getLogs({
+      topics,
+      fromBlock,
+      toBlock,
+    })
+  } catch (e) {
+    if (
+      e instanceof Error &&
+      (e.message.includes('Log response size exceeded') ||
+        e.message.includes('query exceeds max block range 100000'))
+    ) {
+      const midPoint = fromBlock + Math.floor((toBlock - fromBlock) / 2)
+      const [a, b] = await Promise.all([
+        getAllLogs(provider, topics, fromBlock, midPoint),
+        getAllLogs(provider, topics, midPoint + 1, toBlock),
+      ])
+      return a.concat(b)
+    } else {
+      throw e
+    }
+  }
 }
