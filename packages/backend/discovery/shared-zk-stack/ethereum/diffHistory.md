@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x130741beb8896a212215e004768fdc2a13bfb95d
+
+# Diff at Thu, 05 Dec 2024 06:01:51 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7dc480bf5499525d0b44afce03521538ecc8ec73 block: 21313606
+- current block number: 21334370
+
+## Description
+
+GRVT chain is active (chainId says mainnet). No launch announcement yet.
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
++++ description: If non-zero, the third batch has been posted (launch monitor).
++++ severity: MEDIUM
+      values.grvtThirdBatchTS:
+-        0
++        1733327159
+    }
+```
+
 Generated with discovered.json: 0xc3e18d834ba499a857aacbf4ae99de7db3c45493
 
 # Diff at Mon, 02 Dec 2024 08:23:33 GMT:
