@@ -1714,6 +1714,19 @@
   ],
   "arbitrum": [
     {
+      "symbol": "TIA.n",
+      "address": "0xD56734d7f9979dD94FAE3d67C7e928234e71cD4C",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (NTT)"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "SOL",
       "address": "0x2bcC6D6CdBbDC0a4071e48bb3B969b06B3330c07",
       "coingeckoId": "solana",
@@ -2732,6 +2745,54 @@
     }
   ],
   "base": [
+    {
+      "symbol": "CLANKER",
+      "address": "0x1bc0c42215582d5A085795f4baDbaC3ff36d1Bcb",
+      "source": "native",
+      "supply": "totalSupply" // virtuals tokens are fully circulating
+    },
+    {
+      "symbol": "SAINT",
+      "address": "0x7588880d9c78E81FAde7b7e8DC0781E95995a792",
+      "source": "native",
+      "supply": "totalSupply" // virtuals tokens are fully circulating
+    },
+    {
+      "symbol": "SEKOIA",
+      "address": "0x1185cB5122Edad199BdBC0cbd7a0457E448f23c7",
+      "source": "native",
+      "supply": "totalSupply" // virtuals tokens are fully circulating
+    },
+    {
+      "symbol": "VADER",
+      "address": "0x731814e491571A2e9eE3c5b1F7f3b962eE8f4870",
+      "source": "native",
+      "supply": "totalSupply" // virtuals tokens are fully circulating
+    },
+    {
+      "symbol": "CONVO",
+      "address": "0xab964f7b7b6391bd6c4e8512eF00d01f255d9c0D",
+      "source": "native",
+      "supply": "totalSupply" // virtuals tokens are fully circulating
+    },
+    {
+      "symbol": "GAME",
+      "address": "0x1C4CcA7C5DB003824208aDDA61Bd749e55F463a3",
+      "source": "native",
+      "supply": "totalSupply" // virtuals tokens are fully circulating
+    },
+    {
+      "symbol": "LUNA",
+      "address": "0x55cD6469F597452B5A7536e2CD98fDE4c1247ee4",
+      "source": "native",
+      "supply": "totalSupply" // virtuals tokens are fully circulating
+    },
+    {
+      "symbol": "AIXBT",
+      "address": "0x4F9Fd6Be4a90f2620860d680c0d4d5Fb53d1A825",
+      "source": "native",
+      "supply": "totalSupply" // virtuals tokens are fully circulating
+    },
     {
       "symbol": "UP",
       "address": "0xaC27fa800955849d6D17cC8952Ba9dD6EAA66187",
