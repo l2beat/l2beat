@@ -1,9 +1,78 @@
 {
   "name": "kinto",
   "chain": "kinto",
-  "blockNumber": 542901,
-  "configHash": "0x587712b50f690fd83f75e84a9bd0c4d1c313a62ab59b47df6ae977b3fef1cc43",
+  "blockNumber": 583311,
+  "configHash": "0x3612c48547239a6376c0c5e3f3219c05ccb2ea1eba99152bac0fcd72d2a24e1f",
   "contracts": [
+    {
+      "name": "NioGuardians",
+      "address": "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9",
+      "sourceHashes": [
+        "0x174e46b57a32ceeb96f0b081a64012b2239bbf2a63b7d9c738f6aecfed1e9150"
+      ],
+      "ignoreInWatchMode": ["clock"],
+      "sinceTimestamp": 1729791292,
+      "values": {
+        "$immutable": true,
+        "clock": 1733377273,
+        "CLOCK_MODE": "mode=timestamp",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "Nio Guardians",
+          "version": "1",
+          "chainId": 7887,
+          "verifyingContract": "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "getApproved": [],
+        "name": "Nio Guardians",
+        "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+        "ownerOf": [],
+        "symbol": "NIO",
+        "tokenURI": []
+      },
+      "derivedName": "NioGuardians"
+    },
+    {
+      "name": "NioGovernor",
+      "address": "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a",
+      "sourceHashes": [
+        "0x91157f8accd2fc2bcb374d86bd0c9556425dd59299a0e341adfe8a6abd16dc70"
+      ],
+      "ignoreInWatchMode": ["clock"],
+      "sinceTimestamp": 1729791297,
+      "values": {
+        "$immutable": true,
+        "accessManager": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+        "BALLOT_TYPEHASH": "0xf2aad550cf55f045cb27e9c559f9889fdfb6e6cdaa032301d6ea397784ae51d7",
+        "baseDelaySeconds": 259200,
+        "clock": 1733377273,
+        "CLOCK_MODE": "mode=timestamp",
+        "COUNTING_MODE": "support=bravo&quorum=for,abstain",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "NioGovernor",
+          "version": "1",
+          "chainId": 7887,
+          "verifyingContract": "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "EXTENDED_BALLOT_TYPEHASH": "0x3e83946653575f9a39005e1545185629e92736b7528ab20ca3816f315424a811",
+        "name": "NioGovernor",
+        "proposalCount": 0,
+        "proposalDetails": [],
+        "proposalDetailsAt": [],
+        "proposalThreshold": 1,
+        "state": [],
+        "token": "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9",
+        "version": "1",
+        "votingDelay": 259200,
+        "votingPeriod": 432000
+      },
+      "derivedName": "NioGovernor"
+    },
     {
       "name": "BridgedKinto",
       "address": "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87",
@@ -139,7 +208,7 @@
       "address": "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd",
       "sourceHashes": [
         "0xc12cd857412232b0fa14c2227d0d0eb78d6be8ec427f4f01c6fa2a78fa3609c6",
-        "0xf3ee249f14ba49d1740577f11741c5fa41c4f5a406a1abccd4b670a329159275"
+        "0x3bc0ef2f981a9321d8cdbbf6e48db5cbfd6ad378646bade7b2d035407cdd2684"
       ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -153,7 +222,7 @@
       "sinceTimestamp": 1703803667,
       "values": {
         "$admin": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-        "$implementation": "0xcbb3BA88bFD944860463585A557022fceE3Cc280",
+        "$implementation": "0x2A10b80bE8Ee546C52Fde9b58d65D089C6B929BB",
         "$pastUpgrades": [
           [
             "2023-12-28T22:47:47.000Z",
@@ -224,13 +293,18 @@
             "2024-10-11T21:11:24.000Z",
             "0x48bf54ac6eddb8f55a5022a708f4fb84257506e82c543733fa6ad5da57cc6c02",
             ["0xcbb3BA88bFD944860463585A557022fceE3Cc280"]
+          ],
+          [
+            "2024-12-05T01:09:11.000Z",
+            "0x1a916af8dd468332c79abaf6546f4e990c99908a26ac4d0775c63b8eaf295603",
+            ["0x2A10b80bE8Ee546C52Fde9b58d65D089C6B929BB"]
           ]
         ],
-        "$upgradeCount": 14,
+        "$upgradeCount": 15,
         "appRegistry": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
         "COST_OF_POST": 200000,
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
-        "getDeposit": "27386797536251334604",
+        "getDeposit": "33435649015286934604",
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "MAX_COST_OF_PREVERIFICATION": 4000000,
         "MAX_COST_OF_VERIFICATION": 530000,
@@ -278,14 +352,6 @@
         {
           "permission": "upgrade",
           "target": "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd"
-        },
-        {
-          "permission": "upgrade",
-          "target": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"
-        },
-        {
-          "permission": "upgrade",
-          "target": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
         }
       ],
       "sinceTimestamp": 1704061899,
@@ -354,7 +420,7 @@
         "capacitorFactory__": "0x35B1Ca86D564e69FA38Ee456C12c78A62e78Aa4c",
         "chainSlug": 7887,
         "executionManager__": "0xc8a4D2fd77c155fd52e65Ab07F337aBF84495Ead",
-        "globalMessageCount": 4496,
+        "globalMessageCount": 5534,
         "hasher__": "0x9652Dd5e1388CA80712470122F27be0d1c33B48b",
         "nominee": "0x0000000000000000000000000000000000000000",
         "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
@@ -382,13 +448,13 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+          "target": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
           "via": []
         }
       ],
       "sinceTimestamp": 1704852483,
       "values": {
-        "$admin": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+        "$admin": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "$implementation": "0xb9cE6BC89b79c713f34fd15D82a70900fEFD0de1",
         "$pastUpgrades": [
           [
@@ -560,7 +626,7 @@
           "0x4e59b44847b379578588920cA78FbF26c0B4956C"
         ],
         "name": "Kinto APP",
-        "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+        "owner": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "ownerOf": [
           "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
           "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
@@ -746,14 +812,14 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+          "target": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
           "via": []
         }
       ],
       "ignoreInWatchMode": ["totalWallets"],
       "sinceTimestamp": 1703803636,
       "values": {
-        "$admin": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+        "$admin": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "$implementation": "0x1Bc47279D052Edb9C1770242287eFC23317Ed675",
         "$pastUpgrades": [
           [
@@ -882,9 +948,9 @@
         "beacon": "0x87f0eE85bF3198654900a422832157abBba30828",
         "factoryWalletVersion": 34,
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
-        "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+        "owner": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "rewardsDistributor": "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA",
-        "totalWallets": 30255
+        "totalWallets": 39214
       },
       "derivedName": "KintoWalletFactory"
     },
@@ -943,17 +1009,88 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
+          "target": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"
+        },
+        {
+          "permission": "upgrade",
           "target": "0x793500709506652Fcc61F0d2D0fDa605638D4293"
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
         }
       ],
       "sinceTimestamp": 1729791296,
       "values": {
         "$immutable": true,
+        "AdditionalRoles": [
+          { "roleId": "1635978423191113331", "label": "NIO_GOVERNOR_ROLE" },
+          { "roleId": "8663528507529876195", "label": "UPGRADER_ROLE" }
+        ],
         "ADMIN_ROLE": 0,
         "expiration": 604800,
         "minSetback": 432000,
-        "PUBLIC_ROLE": "18446744073709551615"
-      }
+        "OperationScheduled": [],
+        "PUBLIC_ROLE": "18446744073709551615",
+        "RoleAdminChanged": {},
+        "RoleGrantDelayChanged": {
+          "8663528507529876195": {
+            "roleId": "8663528507529876195",
+            "delay": 604800,
+            "since": 1733613166
+          }
+        },
+        "RoleGuardianChanged": {},
+        "RolesGranted": {
+          "0": {
+            "roleId": 0,
+            "account": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+            "delay": 0,
+            "since": 1729791296,
+            "newMember": true
+          },
+          "1635978423191113331": {
+            "roleId": "1635978423191113331",
+            "account": "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a",
+            "delay": 259200,
+            "since": 1729806574,
+            "newMember": true
+          },
+          "8663528507529876195": {
+            "roleId": "8663528507529876195",
+            "account": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+            "delay": 604800,
+            "since": 1733181166,
+            "newMember": true
+          }
+        },
+        "TargetAdminDelayUpdated": {
+          "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75": {
+            "target": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
+            "delay": 604800,
+            "since": 1733613166
+          }
+        },
+        "TargetFunctionRoleUpdated": {
+          "0x793500709506652Fcc61F0d2D0fDa605638D4293": {
+            "target": "0x793500709506652Fcc61F0d2D0fDa605638D4293",
+            "selector": "0x9089e8ae",
+            "roleId": "1635978423191113331"
+          },
+          "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75": {
+            "target": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
+            "selector": "0x3659cfe6",
+            "roleId": "8663528507529876195"
+          },
+          "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b": {
+            "target": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
+            "selector": "0x3659cfe6",
+            "roleId": "8663528507529876195"
+          }
+        }
+      },
+      "fieldMeta": { "OperationScheduled": { "severity": "HIGH" } },
+      "derivedName": "AccessManager"
     },
     {
       "name": "ExecutionManagerDF",
@@ -1029,15 +1166,15 @@
         "$upgradeCount": 7,
         "bonusAmount": 0,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getTotalLimit": "339780661235687696725910",
-        "getUnclaimedLimit": "196316263293037065621063",
+        "getTotalLimit": "351699583811576763090604",
+        "getUnclaimedLimit": "193100450888087418207266",
         "KINTO": "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87",
         "NEW_USER_REWARD": "1000000000000000000",
         "NEW_USER_REWARD_TIMESTAMP": 1729785402,
         "quarters": 40,
-        "root": "0xfac8908d5cfe388c75cefb4addbba9a7bc773b8a881c625d1012319f853394bf",
+        "root": "0xc1bf0ffb5ddd0c2e9a1e7aebc5fff9e55d6d43552ae679dbd95c0c2a16cb217f",
         "startTime": 1718690400,
-        "totalClaimed": "143464397942650631104847",
+        "totalClaimed": "158599132923489344883338",
         "totalTokens": "4000000000000000000000000",
         "UPDATER_ROLE": "0x56730d7d989818781b81ff2da8c4c452dd13af73dfb8c4f4723e21d17335fd24",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
@@ -1164,7 +1301,7 @@
           "0x0000000000000000000000000000000000000000"
         ],
         "KYC_PROVIDER_ROLE": "0x6c4079fcac94e7142d8c209744c998efe53a188aadb7e55958f7ad3ea8a1d652",
-        "lastMonitoredAt": 1732857189,
+        "lastMonitoredAt": 1733358371,
         "name": "Kinto ID",
         "ownerOf": [
           "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
@@ -1177,7 +1314,7 @@
           "https://kinto.xyz/api/v1/nft-kinto-id/3",
           "https://kinto.xyz/api/v1/nft-kinto-id/4"
         ],
-        "totalSupply": 30400,
+        "totalSupply": 39414,
         "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3",
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
       },
@@ -1213,6 +1350,159 @@
     { "address": "0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60" }
   ],
   "abis": {
+    "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9": [
+      "constructor(address initialOwner)",
+      "error CheckpointUnorderedInsertion()",
+      "error ERC5805FutureLookup(uint256 timepoint, uint48 clock)",
+      "error ERC6372InconsistentClock()",
+      "error ERC721IncorrectOwner(address sender, uint256 tokenId, address owner)",
+      "error ERC721InsufficientApproval(address operator, uint256 tokenId)",
+      "error ERC721InvalidApprover(address approver)",
+      "error ERC721InvalidOperator(address operator)",
+      "error ERC721InvalidOwner(address owner)",
+      "error ERC721InvalidReceiver(address receiver)",
+      "error ERC721InvalidSender(address sender)",
+      "error ERC721NonexistentToken(uint256 tokenId)",
+      "error InvalidAccountNonce(address account, uint256 currentNonce)",
+      "error InvalidShortString()",
+      "error NoDelegate()",
+      "error OnlyMintOrBurn()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "error StringTooLong(string str)",
+      "error VotesExpiredSignature(uint256 expiry)",
+      "event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)",
+      "event ApprovalForAll(address indexed owner, address indexed operator, bool approved)",
+      "event DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate)",
+      "event DelegateVotesChanged(address indexed delegate, uint256 previousVotes, uint256 newVotes)",
+      "event EIP712DomainChanged()",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)",
+      "function CLOCK_MODE() pure returns (string)",
+      "function approve(address to, uint256 tokenId)",
+      "function balanceOf(address owner) view returns (uint256)",
+      "function burn(uint256 tokenId)",
+      "function clock() view returns (uint48)",
+      "function delegate(address) pure",
+      "function delegateBySig(address, uint256, uint256, uint8, bytes32, bytes32) pure",
+      "function delegates(address account) view returns (address)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function exists(uint256 tokenId) view returns (bool)",
+      "function getApproved(uint256 tokenId) view returns (address)",
+      "function getPastTotalSupply(uint256 timepoint) view returns (uint256)",
+      "function getPastVotes(address account, uint256 timepoint) view returns (uint256)",
+      "function getVotes(address account) view returns (uint256)",
+      "function isApprovedForAll(address owner, address operator) view returns (bool)",
+      "function mint(address to, uint256 tokenId)",
+      "function name() view returns (string)",
+      "function nonces(address owner) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function ownerOf(uint256 tokenId) view returns (address)",
+      "function renounceOwnership()",
+      "function safeTransferFrom(address from, address to, uint256 tokenId)",
+      "function safeTransferFrom(address from, address to, uint256 tokenId, bytes data)",
+      "function setApprovalForAll(address operator, bool approved)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function symbol() view returns (string)",
+      "function tokenURI(uint256 tokenId) view returns (string)",
+      "function transferFrom(address from, address to, uint256 tokenId)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a": [
+      "constructor(address token, address manager)",
+      "error FailedInnerCall()",
+      "error GovernorAlreadyCastVote(address voter)",
+      "error GovernorAlreadyQueuedProposal(uint256 proposalId)",
+      "error GovernorDisabledDeposit()",
+      "error GovernorInsufficientProposerVotes(address proposer, uint256 votes, uint256 threshold)",
+      "error GovernorInvalidProposalLength(uint256 targets, uint256 calldatas, uint256 values)",
+      "error GovernorInvalidSignature(address voter)",
+      "error GovernorInvalidVoteType()",
+      "error GovernorInvalidVotingPeriod(uint256 votingPeriod)",
+      "error GovernorLockedIgnore()",
+      "error GovernorMismatchedNonce(uint256 proposalId, uint256 expectedNonce, uint256 actualNonce)",
+      "error GovernorNonexistentProposal(uint256 proposalId)",
+      "error GovernorNotQueuedProposal(uint256 proposalId)",
+      "error GovernorOnlyExecutor(address account)",
+      "error GovernorOnlyProposer(address account)",
+      "error GovernorQueueNotImplemented()",
+      "error GovernorRestrictedProposer(address proposer)",
+      "error GovernorUnexpectedProposalState(uint256 proposalId, uint8 current, bytes32 expectedStates)",
+      "error GovernorUnmetDelay(uint256 proposalId, uint256 neededTimestamp)",
+      "error InvalidAccountNonce(address account, uint256 currentNonce)",
+      "error InvalidShortString()",
+      "error QueueEmpty()",
+      "error QueueFull()",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "error StringTooLong(string str)",
+      "event AccessManagerIgnoredSet(address target, bytes4 selector, bool ignored)",
+      "event BaseDelaySet(uint32 oldBaseDelaySeconds, uint32 newBaseDelaySeconds)",
+      "event EIP712DomainChanged()",
+      "event ProposalCanceled(uint256 proposalId)",
+      "event ProposalCreated(uint256 proposalId, address proposer, address[] targets, uint256[] values, string[] signatures, bytes[] calldatas, uint256 voteStart, uint256 voteEnd, string description)",
+      "event ProposalExecuted(uint256 proposalId)",
+      "event ProposalQueued(uint256 proposalId, uint256 etaSeconds)",
+      "event ProposalThresholdSet(uint256 oldProposalThreshold, uint256 newProposalThreshold)",
+      "event VoteCast(address indexed voter, uint256 proposalId, uint8 support, uint256 weight, string reason)",
+      "event VoteCastWithParams(address indexed voter, uint256 proposalId, uint8 support, uint256 weight, string reason, bytes params)",
+      "event VotingDelaySet(uint256 oldVotingDelay, uint256 newVotingDelay)",
+      "event VotingPeriodSet(uint256 oldVotingPeriod, uint256 newVotingPeriod)",
+      "function BALLOT_TYPEHASH() view returns (bytes32)",
+      "function CLOCK_MODE() view returns (string)",
+      "function COUNTING_MODE() pure returns (string)",
+      "function EXTENDED_BALLOT_TYPEHASH() view returns (bytes32)",
+      "function accessManager() view returns (address)",
+      "function baseDelaySeconds() view returns (uint32)",
+      "function cancel(uint256 proposalId)",
+      "function cancel(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) returns (uint256)",
+      "function castVote(uint256 proposalId, uint8 support) returns (uint256)",
+      "function castVoteBySig(uint256 proposalId, uint8 support, address voter, bytes signature) returns (uint256)",
+      "function castVoteWithReason(uint256 proposalId, uint8 support, string reason) returns (uint256)",
+      "function castVoteWithReasonAndParams(uint256 proposalId, uint8 support, string reason, bytes params) returns (uint256)",
+      "function castVoteWithReasonAndParamsBySig(uint256 proposalId, uint8 support, address voter, string reason, bytes params, bytes signature) returns (uint256)",
+      "function clock() view returns (uint48)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function execute(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) payable returns (uint256)",
+      "function execute(uint256 proposalId) payable",
+      "function getVotes(address account, uint256 timepoint) view returns (uint256)",
+      "function getVotesWithParams(address account, uint256 timepoint, bytes params) view returns (uint256)",
+      "function hasVoted(uint256 proposalId, address account) view returns (bool)",
+      "function hashProposal(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) pure returns (uint256)",
+      "function isAccessManagerIgnored(address target, bytes4 selector) view returns (bool)",
+      "function name() view returns (string)",
+      "function nonces(address owner) view returns (uint256)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function proposalCount() view returns (uint256)",
+      "function proposalDeadline(uint256 proposalId) view returns (uint256)",
+      "function proposalDetails(uint256 proposalId) view returns (address[], uint256[], bytes[], bytes32)",
+      "function proposalDetailsAt(uint256 index) view returns (uint256, address[], uint256[], bytes[], bytes32)",
+      "function proposalEta(uint256 proposalId) view returns (uint256)",
+      "function proposalExecutionPlan(uint256 proposalId) view returns (uint32 delay, bool[] indirect, bool[] withDelay)",
+      "function proposalNeedsQueuing(uint256 proposalId) view returns (bool)",
+      "function proposalProposer(uint256 proposalId) view returns (address)",
+      "function proposalSnapshot(uint256 proposalId) view returns (uint256)",
+      "function proposalThreshold() view returns (uint256)",
+      "function proposalVotes(uint256 proposalId) view returns (uint256 againstVotes, uint256 forVotes, uint256 abstainVotes)",
+      "function propose(address[] targets, uint256[] values, bytes[] calldatas, string description) returns (uint256)",
+      "function queue(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) returns (uint256)",
+      "function queue(uint256 proposalId)",
+      "function quorum(uint256) pure returns (uint256)",
+      "function relay(address target, uint256 value, bytes data) payable",
+      "function setAccessManagerIgnored(address target, bytes4[] selectors, bool ignored)",
+      "function setBaseDelaySeconds(uint32 newBaseDelay)",
+      "function setProposalThreshold(uint256 newProposalThreshold)",
+      "function setVotingDelay(uint48 newVotingDelay)",
+      "function setVotingPeriod(uint32 newVotingPeriod)",
+      "function state(uint256 proposalId) view returns (uint8)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function token() view returns (address)",
+      "function version() view returns (string)",
+      "function votingDelay() view returns (uint256)",
+      "function votingPeriod() view returns (uint256)"
+    ],
     "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87": [
       "constructor(address _implementation, bytes _data)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1330,6 +1620,69 @@
       "function walletFactory() view returns (address)",
       "function withdrawStake(address withdrawAddress)",
       "function withdrawTo(address withdrawAddress, uint256 withdrawAmount)"
+    ],
+    "0x2A10b80bE8Ee546C52Fde9b58d65D089C6B929BB": [
+      "constructor(address __entryPoint, address _walletFactory)",
+      "error AccountKYCRequired()",
+      "error AppGasLimitExceeded()",
+      "error AppRateLimitExceeded()",
+      "error DepositNotLocked()",
+      "error DepositTooLow()",
+      "error GasOutsideRangeForPostOp()",
+      "error GasTooHighForUserOp()",
+      "error GasTooHighForVerification()",
+      "error InvalidAmount()",
+      "error InvalidRegistry()",
+      "error InvalidTarget()",
+      "error KintoRateLimitExceeded()",
+      "error OnlyOwner()",
+      "error PaymasterAndDataLengthInvalid()",
+      "error SenderKYCRequired()",
+      "error TokenDepositLocked()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event AppRegistrySet(address oldRegistry, address newRegistry)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Upgraded(address indexed implementation)",
+      "event UserOpMaxCostSet(uint256 oldUserOpMaxCost, uint256 newUserOpMaxCost)",
+      "function COST_OF_POST() view returns (uint256)",
+      "function MAX_COST_OF_PREVERIFICATION() view returns (uint256)",
+      "function MAX_COST_OF_VERIFICATION() view returns (uint256)",
+      "function RATE_LIMIT_PERIOD() view returns (uint256)",
+      "function RATE_LIMIT_THRESHOLD_TOTAL() view returns (uint256)",
+      "function addDepositFor(address account) payable",
+      "function addStake(uint32 unstakeDelaySec) payable",
+      "function appRegistry() view returns (address)",
+      "function appUserLimit(address wallet, address app) view returns (uint256, uint256, uint256, uint256)",
+      "function balances(address) view returns (uint256)",
+      "function contractSpent(address) view returns (uint256)",
+      "function costLimit(address, address) view returns (uint256 lastOperationTime, uint256 operationCount, uint256 ethCostCount)",
+      "function depositInfo(address account) view returns (uint256 amount, uint256 _unlockBlock)",
+      "function entryPoint() view returns (address)",
+      "function getDeposit() view returns (uint256)",
+      "function globalRateLimit(address) view returns (uint256 lastOperationTime, uint256 operationCount, uint256 ethCostCount)",
+      "function initialize(address _owner, address _appRegistry, address _kintoID)",
+      "function kintoID() view returns (address)",
+      "function lockTokenDeposit()",
+      "function owner() view returns (address)",
+      "function postOp(uint8 mode, bytes context, uint256 actualGasCost)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function rateLimit(address, address) view returns (uint256 lastOperationTime, uint256 operationCount, uint256 ethCostCount)",
+      "function renounceOwnership()",
+      "function setAppRegistry(address _newRegistry)",
+      "function setUserOpMaxCost(uint256 _newUserOpMaxCost)",
+      "function transferOwnership(address newOwner)",
+      "function unlockBlock(address) view returns (uint256)",
+      "function unlockStake()",
+      "function unlockTokenDeposit()",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function userOpMaxCost() view returns (uint256)",
+      "function validatePaymasterUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, uint256 callGasLimit, uint256 verificationGasLimit, uint256 preVerificationGas, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, bytes paymasterAndData, bytes signature) userOp, bytes32 userOpHash, uint256 maxCost) returns (bytes context, uint256 validationData)",
+      "function walletFactory() view returns (address)",
+      "function withdrawStake(address withdrawAddress)",
+      "function withdrawTokensTo(address target, uint256 amount)"
     ],
     "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a": [
       "constructor(address beacon, bytes data) payable",
@@ -1926,69 +2279,6 @@
       "function withdrawExecutionFees(uint32 siblingChainSlug_, uint128 amount_, address withdrawTo_)",
       "function withdrawSwitchboardFees(uint32 siblingChainSlug_, address switchboard_, uint128 amount_)",
       "function withdrawTransmissionFees(uint32 siblingChainSlug_, uint128 amount_)"
-    ],
-    "0xcbb3BA88bFD944860463585A557022fceE3Cc280": [
-      "constructor(address __entryPoint, address _walletFactory)",
-      "error AccountKYCRequired()",
-      "error AppGasLimitExceeded()",
-      "error AppRateLimitExceeded()",
-      "error DepositNotLocked()",
-      "error DepositTooLow()",
-      "error GasOutsideRangeForPostOp()",
-      "error GasTooHighForUserOp()",
-      "error GasTooHighForVerification()",
-      "error InvalidAmount()",
-      "error InvalidRegistry()",
-      "error InvalidTarget()",
-      "error KintoRateLimitExceeded()",
-      "error OnlyOwner()",
-      "error PaymasterAndDataLengthInvalid()",
-      "error SenderKYCRequired()",
-      "error TokenDepositLocked()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event AppRegistrySet(address oldRegistry, address newRegistry)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Upgraded(address indexed implementation)",
-      "event UserOpMaxCostSet(uint256 oldUserOpMaxCost, uint256 newUserOpMaxCost)",
-      "function COST_OF_POST() view returns (uint256)",
-      "function MAX_COST_OF_PREVERIFICATION() view returns (uint256)",
-      "function MAX_COST_OF_VERIFICATION() view returns (uint256)",
-      "function RATE_LIMIT_PERIOD() view returns (uint256)",
-      "function RATE_LIMIT_THRESHOLD_TOTAL() view returns (uint256)",
-      "function addDepositFor(address account) payable",
-      "function addStake(uint32 unstakeDelaySec) payable",
-      "function appRegistry() view returns (address)",
-      "function appUserLimit(address wallet, address app) view returns (uint256, uint256, uint256, uint256)",
-      "function balances(address) view returns (uint256)",
-      "function contractSpent(address) view returns (uint256)",
-      "function costLimit(address, address) view returns (uint256 lastOperationTime, uint256 operationCount, uint256 ethCostCount)",
-      "function depositInfo(address account) view returns (uint256 amount, uint256 _unlockBlock)",
-      "function entryPoint() view returns (address)",
-      "function getDeposit() view returns (uint256)",
-      "function globalRateLimit(address) view returns (uint256 lastOperationTime, uint256 operationCount, uint256 ethCostCount)",
-      "function initialize(address _owner, address _appRegistry, address _kintoID)",
-      "function kintoID() view returns (address)",
-      "function lockTokenDeposit()",
-      "function owner() view returns (address)",
-      "function postOp(uint8 mode, bytes context, uint256 actualGasCost)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function rateLimit(address, address) view returns (uint256 lastOperationTime, uint256 operationCount, uint256 ethCostCount)",
-      "function renounceOwnership()",
-      "function setAppRegistry(address _newRegistry)",
-      "function setUserOpMaxCost(uint256 _newUserOpMaxCost)",
-      "function transferOwnership(address newOwner)",
-      "function unlockBlock(address) view returns (uint256)",
-      "function unlockStake()",
-      "function unlockTokenDeposit()",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable",
-      "function userOpMaxCost() view returns (uint256)",
-      "function validatePaymasterUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, uint256 callGasLimit, uint256 verificationGasLimit, uint256 preVerificationGas, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, bytes paymasterAndData, bytes signature) userOp, bytes32 userOpHash, uint256 maxCost) returns (bytes context, uint256 validationData)",
-      "function walletFactory() view returns (address)",
-      "function withdrawStake(address withdrawAddress)",
-      "function withdrawTokensTo(address target, uint256 amount)"
     ],
     "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA": [
       "constructor(address _implementation, bytes _data)",
