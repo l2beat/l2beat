@@ -369,9 +369,8 @@ export class ProjectDiscovery {
         : `It uses the following modules: ${modulesDescriptions.join(', ')}.`
 
     return [
-      `A Gnosis Safe with ${this.getMultisigStats(
-        identifier,
-      )} threshold. ` + fullModulesDescription,
+      `A Gnosis Safe with ${this.getMultisigStats(identifier)} threshold. ` +
+        fullModulesDescription,
     ]
   }
 
