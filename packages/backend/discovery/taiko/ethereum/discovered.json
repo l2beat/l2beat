@@ -1,7 +1,7 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 21215436,
+  "blockNumber": 21334445,
   "configHash": "0x784276e8ab8d26b8692e7d487f4559c6cf326770c350bc09492a651b5f592145",
   "contracts": [
     {
@@ -164,27 +164,27 @@
           "ontakeForkHeight": 538304
         },
         "getLastSyncedBlock": {
-          "blockId_": 577871,
-          "blockHash_": "0xd7c6302cbd22403751dc47eb8748c7548b93ed805f1cb494b84e5f52a0c0d87b",
-          "stateRoot_": "0x30cda8bcda844a6253d3c5a5475d056a2879c3ce4c3e54122232d6cbe5e82681",
-          "verifiedAt_": 1731917039
+          "blockId_": 639231,
+          "blockHash_": "0xce74180a3a4162b08c8d9feed1f19958ca2c122400c18b04622e15cd3baf517f",
+          "stateRoot_": "0xed19745621621bea3d8c4f485b242085616789f6d8f7f376873f5861f6bfe234",
+          "verifiedAt_": 1733364299
         },
         "getLastVerifiedBlock": {
-          "blockId_": 577874,
-          "blockHash_": "0xeb58aa4f603842f72b96927dd74167e57060b7a0ba48b0c98bb95fac41e1cfdc",
+          "blockId_": 639236,
+          "blockHash_": "0x9ce63f4b08896dc374ac835d467e53e9dc512b4656a757afb032f5a2201826cf",
           "stateRoot_": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "verifiedAt_": 1731918167
+          "verifiedAt_": 1733364479
         },
         "getStateVariables": [
           {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 577871,
-            "lastSynecdAt": 1731942719
+            "lastSyncedBlockId": 639231,
+            "lastSynecdAt": 1733378903
           },
           {
-            "numBlocks": 579147,
-            "lastVerifiedBlockId": 577874,
+            "numBlocks": 639793,
+            "lastVerifiedBlockId": 639236,
             "provingPaused": false,
             "__reservedB1": 46,
             "__reservedB2": 17113,
@@ -215,12 +215,12 @@
           "slotA": {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 577871,
-            "lastSynecdAt": 1731942719
+            "lastSyncedBlockId": 639231,
+            "lastSynecdAt": 1733378903
           },
           "slotB": {
-            "numBlocks": 579147,
-            "lastVerifiedBlockId": 577874,
+            "numBlocks": 639793,
+            "lastVerifiedBlockId": 639236,
             "provingPaused": false,
             "__reservedB1": 46,
             "__reservedB2": 17113,
@@ -296,7 +296,7 @@
         ],
         "$upgradeCount": 5,
         "addressManager": "0x0000000000000000000000000000000000000000",
-        "clock": 1731942947,
+        "clock": 1733379395,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -984,7 +984,7 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "0x55d79345Afc87806B690C9f96c4D7BfE2Bca8268",
+          "0xb47fE76aC588101BFBdA9E68F66433bA51E8029a",
           "0x7Cdd1c128Cd72dd252f569eeD942735330937F91",
           "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1",
           "0x6B6072CE402F22fDcFbA1705383D8e280717Cb87"
@@ -994,7 +994,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 60,
+        "nonce": 61,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1122,13 +1122,40 @@
         "INSTANCE_EXPIRY": 31536000,
         "INSTANCE_VALIDITY_DELAY": 0,
         "lastUnpausedAt": 0,
-        "nextInstanceId": 159,
+        "nextInstanceId": 164,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "proxiableUUID": "EXPECT_REVERT"
       },
       "derivedName": "MainnetSgxVerifier"
+    },
+    {
+      "name": "Safe",
+      "address": "0xb47fE76aC588101BFBdA9E68F66433bA51E8029a",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1732702979,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "0x55d79345Afc87806B690C9f96c4D7BfE2Bca8268",
+          "0x7057A707621Fadd422f84DE94A9dF7c4F1AC595C"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0x4d1471e323401d347b11627cf824dfcf21c5307d1377cffaec145c873dc2550d",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 2 (50%)",
+        "nonce": 5,
+        "VERSION": "1.4.1"
+      }
     },
     {
       "name": "MainnetProverSet",
@@ -1255,7 +1282,7 @@
         "impl": "0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 35205,
+        "nextMessageId": 35424,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -1417,6 +1444,7 @@
     { "address": "0x55d79345Afc87806B690C9f96c4D7BfE2Bca8268" },
     { "address": "0x5CfEb9a72256B1b49dc2C98b1b7b99d172D50B68" },
     { "address": "0x6B6072CE402F22fDcFbA1705383D8e280717Cb87" },
+    { "address": "0x7057A707621Fadd422f84DE94A9dF7c4F1AC595C" },
     { "address": "0x7Cdd1c128Cd72dd252f569eeD942735330937F91" },
     { "address": "0xC384B679c028787166b9B3725aC14A60da205861" },
     { "address": "0xd26c4e85BC2fAAc27a320987e340971cF3b47d51" },
@@ -1589,6 +1617,54 @@
       "function getProvider(uint256) view returns (address)",
       "function getTier(uint16 _tierId) pure returns (tuple(bytes32 verifierName, uint96 validityBond, uint96 contestBond, uint24 cooldownWindow, uint16 provingWindow, uint8 maxBlocksToVerifyPerProof))",
       "function getTierIds() pure returns (uint16[] tiers_)"
+    ],
+    "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+      "constructor()",
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "0x45fed11Ba70D4217545F18E27DDAF7D76Ff499f3": [
       "error ContentLengthMismatch()",
@@ -1992,6 +2068,9 @@
       "function unpause()",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xb47fE76aC588101BFBdA9E68F66433bA51E8029a": [
+      "constructor(address _singleton)"
     ],
     "0xB866E9046CAf4D75e2cbCD8b5eA3f07Ea74F7B47": [
       "error FUNC_NOT_IMPLEMENTED()",
