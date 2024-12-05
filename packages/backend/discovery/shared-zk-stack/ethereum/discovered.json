@@ -1,7 +1,7 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 21313606,
+  "blockNumber": 21334370,
   "configHash": "0xc302ea45cdb6a30ca599b960570bbf854f33470e2a011932904091aa8aca9871",
   "contracts": [
     {
@@ -338,7 +338,7 @@
         ],
         "executionDelay": 75600,
         "getName": "ValidatorTimelock",
-        "grvtThirdBatchTS": 0,
+        "grvtThirdBatchTS": 1733327159,
         "owner": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "revertedBlocks": [],
