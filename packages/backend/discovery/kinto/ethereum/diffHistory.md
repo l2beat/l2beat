@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xf530590a982e69048257290867f3c23d5a5deb0c
+
+# Diff at Thu, 05 Dec 2024 11:50:09 GMT:
+
+- author: Piotr Szlachciak (<szlachciak.piotr@gmail.com>)
+- comparing to: main@f9ded76f7930b0c86788e4c4595d553b165b87d1 block: 21292450
+- current block number: 21292450
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21292450 (main branch discovery), not current.
+
+```diff
+    contract ValidatorUtils (0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF) {
+    +++ description: None
+      template:
++        "orbitstack/ValidatorUtils"
+    }
+```
+
+```diff
+    contract SequencerInbox (0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.sequencerVersion:
+-        "0x00"
+      errors:
++        {"sequencerVersion":"Processing error occurred."}
+    }
+```
+
 Generated with discovered.json: 0x03b98aeda868be755255be5223959d487b50d46a
 
 # Diff at Fri, 29 Nov 2024 11:28:41 GMT:
