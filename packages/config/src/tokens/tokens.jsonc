@@ -1714,6 +1714,19 @@
   ],
   "arbitrum": [
     {
+      "symbol": "TIA.n",
+      "address": "0xD56734d7f9979dD94FAE3d67C7e928234e71cD4C",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (NTT)",
+          }
+        ]
+      }
+    },
+    {
       "symbol": "SOL",
       "address": "0x2bcC6D6CdBbDC0a4071e48bb3B969b06B3330c07",
       "coingeckoId": "solana",

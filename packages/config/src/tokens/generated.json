@@ -8755,6 +8755,27 @@
       "supply": "zero"
     },
     {
+      "name": "TIA",
+      "coingeckoId": "bridged-tia-hyperlane",
+      "address": "0xD56734d7f9979dD94FAE3d67C7e928234e71cD4C",
+      "symbol": "TIA.n",
+      "decimals": 6,
+      "deploymentTimestamp": 1699036426,
+      "coingeckoListingTimestamp": 1707004800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33199/large/tia.n.png?1701047832",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (NTT)"
+          }
+        ]
+      }
+    },
+    {
       "name": "Umami",
       "coingeckoId": "umami-finance",
       "address": "0x1622bF67e6e5747b81866fE0b85178a93C7F86e3",
