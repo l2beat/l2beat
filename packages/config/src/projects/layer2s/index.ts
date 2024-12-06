@@ -48,6 +48,7 @@ import { fraxtal } from './fraxtal'
 import { fuel } from './fuel'
 import { fuelv1 } from './fuelv1'
 import { funki } from './funki'
+import { fuse } from './fuse'
 import { galxegravity } from './galxegravity'
 import { gluon } from './gluon'
 import { gmnetwork } from './gmnetwork'
@@ -228,6 +229,7 @@ export const layer2s: Layer2[] = [
   fuel,
   fuelv1,
   funki,
+  fuse,
   gluon,
   gmnetwork,
   gpt,
