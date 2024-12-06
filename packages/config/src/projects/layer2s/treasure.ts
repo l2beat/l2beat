@@ -103,25 +103,6 @@ export const treasure: Layer2 = zkStackL2({
       ],
     },
   },
-  nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
-    discovery.getEscrowDetails({
-      address: bridge.address,
-      tokens: [],
-      description:
-        'Shared bridge for depositing tokens to Treasure and other ZK stack chains.',
-      sharedEscrow: {
-        type: 'ElasticChian',
-        l2BridgeAddress: EthereumAddress(
-          '0x309429DE3621992Cb0ab8982A448c9Cc5c38405b',
-        ),
-        l2EtherAddress: EthereumAddress(
-          '0x898b3560affd6d955b1574d87ee09e46669c60ea',
-        ),
-        tokensToAssignFromL1: [],
-      },
-      ...zkStackUpgrades,
-    }),
-  ],
   nonTemplateContracts: (zkStackUpgrades: Upgradeability) => [
     discovery.getContractDetails('TreasureZkEvm', {
       description:
