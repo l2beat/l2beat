@@ -2,7 +2,8 @@ import { spawn } from 'child_process'
 import { Response } from 'express'
 
 function sendSSE(res: Response, data: string) {
-  res.write(`data: ${data}\n\n`)
+  const sanitizedData = data.replace(/\n/g, '\\n')
+  res.write(`data: ${sanitizedData}\n\n`)
 }
 
 export function executeTerminalCommand(command: string, res: Response): void {
