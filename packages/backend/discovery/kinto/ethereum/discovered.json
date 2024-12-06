@@ -238,6 +238,7 @@
       "sourceHashes": [
         "0xd9b36ec321be937cc727b5bdb0afa0e1a0a28448ef1a202d4f181a01ce57bdc8"
       ],
+      "description": "This contract implements view only utilities for validators.",
       "sinceTimestamp": 1701973151,
       "values": { "$immutable": true }
     },
@@ -1111,12 +1112,12 @@
         "postsBlobs": true,
         "reader4844": "0x434345973Ebf8249398E1EeB03A62bE418B48a05",
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+        "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 1,
         "totalDelayedMessagesRead": 4383,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
-      "errors": { "sequencerVersion": "Processing error occurred." },
       "fieldMeta": {
         "maxTimeVariation": {
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
@@ -2023,6 +2024,6 @@
     "orbitstack/RollupProxy_fastConfirm": "0x2314bbfa0104764ce632ec231b12e2b142a94db57f5442ae68d4a52be7794651",
     "orbitstack/SequencerInbox": "0x5cd19865dbaedc22bb0571435a45b9ec44f18388ca4c83dc971fb6c0be1bdf22",
     "orbitstack/UpgradeExecutor": "0xa8c2617950ce46d982abd852226ebcc1aacaf9c8c7daeda793b53a790eced777",
-    "orbitstack/ValidatorUtils": "0xf35cd02cd97b67077a86f78eb15ec16044957e3420ff5787bcf1b5a715f40d06"
+    "orbitstack/ValidatorUtils": "0x1345b7ce8347b1c8e9609c7b5a42e7494c8447ed73249c9494da50911d9a1e4a"
   }
 }

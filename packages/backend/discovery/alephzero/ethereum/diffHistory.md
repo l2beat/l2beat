@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xe6dfd15c16bf4981a4b6203ecd10b743291fbf5b
+Generated with discovered.json: 0xc56d08f9f30d5cbaa4ffc4f77e37c6c9af949332
 
-# Diff at Thu, 05 Dec 2024 11:46:29 GMT:
+# Diff at Fri, 06 Dec 2024 08:09:24 GMT:
 
 - author: Piotr Szlachciak (<szlachciak.piotr@gmail.com>)
 - comparing to: main@f9ded76f7930b0c86788e4c4595d553b165b87d1 block: 21285821
@@ -18,9 +18,11 @@ discovery. Values are for block 21285821 (main branch discovery), not current.
 
 ```diff
     contract ValidatorUtils (0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF) {
-    +++ description: None
+    +++ description: This contract implements view only utilities for validators.
       template:
 +        "orbitstack/ValidatorUtils"
+      description:
++        "This contract implements view only utilities for validators."
     }
 ```
 

@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x057cd9d738d7eea3109e16170b9f33fe13ddb80a
+Generated with discovered.json: 0x89adeb7ae8ea1d5645a2889bcc63f6c0170cec74
 
-# Diff at Thu, 05 Dec 2024 11:43:17 GMT:
+# Diff at Fri, 06 Dec 2024 08:09:41 GMT:
 
 - author: Piotr Szlachciak (<szlachciak.piotr@gmail.com>)
 - current block number: 21335967
@@ -32,7 +32,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract ValidatorUtils (0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF)
-    +++ description: None
+    +++ description: This contract implements view only utilities for validators.
 ```
 
 ```diff
