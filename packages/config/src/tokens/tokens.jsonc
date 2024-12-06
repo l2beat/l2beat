@@ -4790,6 +4790,48 @@
   ],
   "bob": [
     {
+      "symbol": "SolvBTC.BBN",
+      "address": "0xCC0966D8418d412c599A6421b760a847eB169A8c",
+      "source": "external",
+      "supply": "totalSupply", // doublecounting the underlying solvBTC 24/12/06
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP (via free.tech and solv.finance)",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "SolvBTC",
+      "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
+      "source": "external",
+      "supply": "totalSupply", // doublecounting the underlying wBTC 24/12/06
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP (via free.tech and solv.finance)",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "uniBTC",
+      "address": "0x236f8c0a61dA474dB21B693fB2ea7AAB0c803894",
+      "source": "external",
+      "supply": "totalSupply", // doublecounting the underlying wBTC 24/12/06
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP (via bedrock.technology)",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "FBTC",
       "address": "0xC96dE26018A54D51c097160568752c4E3BD6C364",
       "source": "external",
