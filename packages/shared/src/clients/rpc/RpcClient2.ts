@@ -17,6 +17,7 @@ import {
   EVMBlockResponse,
   EVMBlockWithTransactionsResponse,
   EVMCallResponse,
+  EVMTransactionReceiptResponse,
   EVMTransactionResponse,
   Quantity,
   RPCError,
@@ -104,6 +105,21 @@ export class RpcClient2 extends ClientCore implements BlockClient {
     }
 
     return { ...transaction.data.result }
+  }
+
+  async getTransactionReceipt(txHash: string) {
+    const response = await this.query('eth_getTransactionReceipt', [txHash])
+
+    const receipt = EVMTransactionReceiptResponse.safeParse(response)
+    if (!receipt.success) {
+      this.$.logger.warn(`Invalid response`, {
+        txHash,
+        response: JSON.stringify(response),
+      })
+      throw new Error(`Receipt ${txHash}: Error during parsing`)
+    }
+
+    return { ...receipt.data.result }
   }
 
   async getBalance(

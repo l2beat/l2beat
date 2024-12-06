@@ -113,6 +113,30 @@ describe(RpcClient2.name, () => {
     })
   })
 
+  describe(RpcClient2.prototype.getTransactionReceipt.name, () => {
+    it('fetches tx receipt from rpc and parsers response', async () => {
+      const http = mockObject<HttpClient2>({
+        fetch: async () => ({
+          result: mockReceipt,
+        }),
+      })
+      const rpc = mockClient({ http, generateId: () => 'unique-id' })
+
+      const result = await rpc.getTransactionReceipt('0xabcd')
+
+      expect(result).toEqual(mockReceipt)
+
+      expect(http.fetch.calls[0].args[1]?.body).toEqual(
+        JSON.stringify({
+          method: 'eth_getTransactionReceipt',
+          params: ['0xabcd'],
+          id: 'unique-id',
+          jsonrpc: '2.0',
+        }),
+      )
+    })
+  })
+
   describe(RpcClient2.prototype.getBalance.name, () => {
     it('returns balance for given address and block', async () => {
       const http = mockObject<HttpClient2>({
@@ -360,3 +384,7 @@ const mockTx = (to: string | undefined) => ({
   blockNumber: 100,
   blobVersionedHashes: ['0x1', '0x2'],
 })
+
+const mockReceipt = {
+  logs: [{ topics: ['0xabcd', '0xdcba'], data: '0x1234' }],
+}
