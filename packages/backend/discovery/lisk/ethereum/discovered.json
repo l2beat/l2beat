@@ -1,7 +1,7 @@
 {
   "name": "lisk",
   "chain": "ethereum",
-  "blockNumber": 21342977,
+  "blockNumber": 21343018,
   "configHash": "0x80ed5fb760d1f3250f0475f7934029861e6ebae6582eac9b6f9c97542b8dcb90",
   "contracts": [
     {
@@ -648,7 +648,7 @@
         "0xd311a9b68b7e171b3bc43bd9e7ee705886c2fdd620360576ca49115fd9799d5d"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.",
+      "description": "Escrow for USDC that uses the canonical bridge for messaging but is governed externally.",
       "sinceTimestamp": 1727719139,
       "values": {
         "$admin": "0xD2D7535e099F26EbfbA26d96bD1a661d3531d0e9",
@@ -1244,7 +1244,7 @@
     ]
   },
   "usedTemplates": {
-    "circle/L1OpUSDCBridgeAdapter": "0x01787da1de46553f95f096f6a8db58bf101faa5fe1c4d49b72def1f88a1cc4d5",
+    "circle/L1OpUSDCBridgeAdapter": "0x1135362fb5ab6e4c1e6e4ff6848c83ba9731527375d71fcda7126f6822fe50d0",
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",

@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x419b687c113e3640b670be6124f9a785f2a97a7d
+Generated with discovered.json: 0xb692a1191b502cd01b681db4ab87a83ad01c9835
 
-# Diff at Fri, 06 Dec 2024 10:52:37 GMT:
+# Diff at Fri, 06 Dec 2024 11:00:47 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@da76f61d2c06d695d89e2429e2266a54932319a2 block: 21078724
-- current block number: 21342977
+- current block number: 21343018
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Add external USDC escrow.
 
 ## Config/verification related changes
 
@@ -19,7 +19,7 @@ discovery. Values are for block 21078724 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract L1OpUSDCBridgeAdapter (0xE3622468Ea7dD804702B56ca2a4f88C0936995e6)
-    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
+    +++ description: Escrow for USDC that uses the canonical bridge for messaging but is governed externally.
 ```
 
 Generated with discovered.json: 0x4643eb50cf7ef31cd03bbcb51f9bd08800a664c8
