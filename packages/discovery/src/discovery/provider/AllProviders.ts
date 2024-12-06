@@ -1,5 +1,5 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
-import { HttpClient2, RetryHandler } from '@l2beat/shared'
+import { HttpClient2, RetryHandler, RpcClient2 } from '@l2beat/shared'
 import { BlobClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
@@ -49,11 +49,22 @@ export class AllProviders {
       const etherscanClient = getExplorerClient(httpClient, config.explorer)
       let blobClient: BlobClient | undefined
 
+      const ethereumRpc = new RpcClient2({
+        url: config.rpcUrl,
+        retryHandler: RetryHandler.SCRIPT,
+        rateLimiter: new RateLimiter({
+          callsPerMinute: 60,
+        }),
+        chain: 'ethereum',
+        logger: Logger.SILENT,
+        http: httpClient2,
+      })
+
       if (config.beaconApiUrl) {
         blobClient = new BlobClient({
           beaconApiUrl: config.beaconApiUrl,
           logger: Logger.SILENT,
-          rpcUrl: config.rpcUrl,
+          rpcClient: ethereumRpc,
           retryHandler: RetryHandler.SCRIPT,
           rateLimiter: new RateLimiter({
             callsPerMinute: 60,
