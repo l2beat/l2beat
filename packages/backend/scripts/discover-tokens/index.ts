@@ -20,7 +20,7 @@ const PROCESSED_ESCROWS_PATH = path.resolve(
 )
 
 interface DiscoveredTokens {
-  found: string[]
+  found: { address: string; escrows: string[] }[]
 }
 
 interface ProcessedEscrows {
@@ -72,7 +72,10 @@ async function main() {
   const tokenListAddresses = new Set(
     tokenList.map((t) => t.address?.toLowerCase()),
   )
-  const allFoundTokens = new Set(existingTokens.found)
+  const allFoundTokens = new Map<string, Set<string>>()
+  existingTokens.found.forEach((token) => {
+    allFoundTokens.set(token.address, new Set(token.escrows))
+  })
 
   for (const escrow of escrows) {
     console.log(
@@ -101,11 +104,19 @@ async function main() {
         coingeckoTokensMap.has(tokenFromLog) &&
         !tokenListAddresses.has(tokenFromLog)
       ) {
-        allFoundTokens.add(tokenFromLog)
+        if (!allFoundTokens.has(tokenFromLog)) {
+          allFoundTokens.set(tokenFromLog, new Set())
+        }
+        allFoundTokens.get(tokenFromLog)?.add(escrow.address)
       }
     }
 
-    existingTokens.found = Array.from(allFoundTokens)
+    existingTokens.found = Array.from(allFoundTokens.entries()).map(
+      ([address, escrows]) => ({
+        address,
+        escrows: Array.from(escrows),
+      }),
+    )
     processedEscrows.processed[escrow.address] = latestBlock
 
     writeFileSync(OUTPUT_PATH, JSON.stringify(existingTokens, null, 2) + '\n')
@@ -117,7 +128,7 @@ async function main() {
     console.log('Tokens not found in tokenList:', allFoundTokens.size)
   }
 
-  const chunks = chunk(Array.from(allFoundTokens), 200)
+  const chunks = chunk(Array.from(allFoundTokens.keys()), 150)
 
   const tokenMarketCaps = new Map<string, number>()
   for (const chunk of chunks) {
@@ -135,11 +146,16 @@ async function main() {
     }
   }
 
-  const sortedTokens: string[] = Array.from(allFoundTokens).sort((a, b) => {
-    const mcapA = tokenMarketCaps.get(a) ?? 0
-    const mcapB = tokenMarketCaps.get(b) ?? 0
-    return mcapB - mcapA
-  })
+  const sortedTokens = Array.from(allFoundTokens.entries())
+    .map(([address, escrows]) => ({
+      address,
+      escrows: Array.from(escrows),
+    }))
+    .sort((a, b) => {
+      const mcapA = tokenMarketCaps.get(a.address) ?? 0
+      const mcapB = tokenMarketCaps.get(b.address) ?? 0
+      return mcapB - mcapA
+    })
 
   writeFileSync(
     OUTPUT_PATH,
