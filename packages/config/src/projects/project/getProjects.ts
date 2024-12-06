@@ -5,7 +5,7 @@ import { layer2s } from '../layer2s'
 import { layer3s } from '../layer3s'
 import { bridges } from '../bridges'
 
-export async function getProjects(): Promise<Project[]> {
+export function getProjects(): Project[] {
   const projects: Project[] = []
 
   for (const p of zkCatalogProjects) {
@@ -67,5 +67,5 @@ export async function getProjects(): Promise<Project[]> {
     })
   }
 
-  return await Promise.resolve(projects)
+  return projects
 }

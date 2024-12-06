@@ -5,12 +5,20 @@ import { getProjects } from './getProjects'
 type BasicKeys = 'id' | 'slug' | 'name' | 'addedAt'
 type Key = Exclude<keyof Project, BasicKeys>
 type NonOptionalProject = {
-  [K in Key]-?: Project[K]
+  [K in Key]: Exclude<Project[K], undefined>
 }
-type ProjectWith<K extends Key, O extends Key> = Pick<NonOptionalProject, K> &
+
+export type ProjectWith<K extends Key = never, O extends Key = never> = Pick<
+  NonOptionalProject,
+  K
+> &
   Pick<Project, O | BasicKeys>
 
 export class ProjectService {
+  // TODO: In the future this should be removed and the service should be
+  // created appropriately. For now we use this for simplicity
+  static STATIC = new ProjectService()
+
   constructor(private _getProjects = getProjects) {}
 
   private projects: Promise<Project[]> | undefined
@@ -50,7 +58,7 @@ export class ProjectService {
 
   private async getAllProjects() {
     if (!this.projects) {
-      this.projects = this._getProjects()
+      this.projects = Promise.resolve(this._getProjects())
     }
     return await this.projects
   }
