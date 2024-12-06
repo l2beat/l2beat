@@ -36,7 +36,7 @@ export const treasure: Layer2 = zkStackL2({
       websites: ['https://treasure.lol/'],
       apps: ['https://app.treasure.lol'],
       documentation: ['https://docs.treasure.lol'],
-      explorers: [],
+      explorers: ['https://treasurescan.io'],
       repositories: ['https://github.com/TreasureProject'],
       socialMedia: ['https://x.com/Treasure_DAO'],
     },
@@ -51,6 +51,25 @@ export const treasure: Layer2 = zkStackL2({
     minTimestampForTvl: new UnixTime(1732617294),
   },
   diamondContract: discovery.getContract('TreasureZkEvm'),
+  nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
+    discovery.getEscrowDetails({
+      address: bridge.address,
+      tokens: ['ETH', 'USDC'],
+      description:
+        'Shared bridge for depositing tokens to Treasure and other ZK stack chains.',
+      sharedEscrow: {
+        type: 'ElasticChian',
+        l2BridgeAddress: EthereumAddress(
+          '0xfC1d5dCD080121DaAF366625581ad490414EF294',
+        ),
+        l2EtherAddress: EthereumAddress(
+          '0x0000000000000000000000000000000000000000', // TODO: update from telegram
+        ),
+        tokensToAssignFromL1: ['MAGIC'], // will apparently be bridged externally at a later point
+      },
+      ...zkStackUpgrades,
+    }),
+  ],
   daProvider: {
     layer: DA_LAYERS.EXTERNAL,
     bridge: DA_BRIDGES.NONE,
