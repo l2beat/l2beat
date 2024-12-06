@@ -13,7 +13,11 @@ const discovery = new ProjectDiscovery('b3', 'base')
 export const b3: Layer3 = opStackL3({
   createdAt: new UnixTime(1722376845),
   hostChain: ProjectId('base'),
-  badges: [Badge.DA.Celestia, Badge.RaaS.Caldera, Badge.L3ParentChain.Base],
+  additionalBadges: [
+    Badge.DA.Celestia,
+    Badge.RaaS.Caldera,
+    Badge.L3ParentChain.Base,
+  ],
   daProvider: CELESTIA_DA_PROVIDER,
   discovery,
   additionalPurposes: ['Gaming'],

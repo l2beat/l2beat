@@ -5,6 +5,7 @@ import {
   ProjectId,
   UnixTime,
   formatSeconds,
+  assert,
 } from '@l2beat/shared-pure'
 
 import {
@@ -35,7 +36,7 @@ import {
 import { ChainConfig } from '../../../common/ChainConfig'
 import { formatExecutionDelay } from '../../../common/formatDelays'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
-import { BadgeId } from '../../badges'
+import { Badge, BadgeId, badges } from '../../badges'
 import { PROOFS } from '../../other/zk-catalog/common/proofSystems'
 import { getStage } from '../common/stages/getStage'
 import { StageConfig } from '../common/stages/types'
@@ -45,6 +46,7 @@ import {
   Layer2FinalityConfig,
   Layer2TxConfig,
 } from '../types'
+import { mergeBadges } from './utils'
 
 export interface DAProvider {
   layer: DataAvailabilityLayer
@@ -91,7 +93,7 @@ export interface ZkStackConfigCommon {
   usesBlobs?: boolean
   isUnderReview?: boolean
   stage?: StageConfig
-  badges?: BadgeId[]
+  additionalBadges?: BadgeId[]
   useDiscoveryMetaOnly?: boolean
   additionalPurposes?: ScalingProjectPurpose[]
 }
@@ -104,6 +106,13 @@ export type Upgradeability = {
 export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
   const { discovery, discovery_ZKstackGovL2 } = templateVars
   const daProvider = templateVars.daProvider
+  if (daProvider) {
+    assert(
+      templateVars.additionalBadges?.find((b) => badges[b].type === 'DA') !==
+        undefined,
+      'DA badge missing',
+    )
+  }
 
   const protVotingDelayS = discovery_ZKstackGovL2.getContractValue<number>(
     'ZkProtocolGovernor',
@@ -272,7 +281,10 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     type: 'layer2',
     id: ProjectId(templateVars.discovery.projectName),
     createdAt: templateVars.createdAt,
-    badges: templateVars.badges ?? [],
+    badges: mergeBadges(
+      [Badge.Stack.ZKStack, Badge.VM.EVM, Badge.DA.EthereumBlobs],
+      templateVars.additionalBadges ?? [],
+    ),
     display: {
       purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       upgradesAndGovernanceImage: 'zk-stack',

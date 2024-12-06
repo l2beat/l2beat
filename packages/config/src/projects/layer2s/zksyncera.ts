@@ -63,13 +63,7 @@ export const zksyncera: Layer2 = zkStackL2({
     added: `zksyncValidatorsAdded`,
     removed: 'zksyncValidatorsRemoved',
   },
-  badges: [
-    Badge.VM.EVM,
-    Badge.DA.EthereumBlobs,
-    Badge.Stack.ZKStack,
-    Badge.Other.L3HostChain,
-    Badge.Infra.ElasticChain,
-  ],
+  additionalBadges: [Badge.Other.L3HostChain, Badge.Infra.ElasticChain],
   display: {
     name: 'ZKsync Era',
     slug: 'zksync-era',
