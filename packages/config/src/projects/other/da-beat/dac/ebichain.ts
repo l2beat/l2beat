@@ -1,18 +1,18 @@
 import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
-import { degen } from '../../../layer3s/degen'
+import { ebichain } from '../../../layer2s/ebichain'
 import { AnytrustDAC } from '../templates/anytrust-template'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
-const discovery = new ProjectDiscovery('degen', 'base')
+const discovery = new ProjectDiscovery('ebichain')
 
 const { membersCount, requiredSignatures } = discovery.getContractValue<{
   membersCount: number
   requiredSignatures: number
 }>('SequencerInbox', 'dacKeyset')
 
-export const degenDac = AnytrustDAC({
-  project: degen,
+export const ebichainDac = AnytrustDAC({
+  project: ebichain,
   bridge: {
     createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     contracts: {
@@ -50,12 +50,12 @@ export const degenDac = AnytrustDAC({
             'The contract used to manage the upgrade of the DA bridge and other contracts.',
         },
         ...discovery.getMultisigPermission(
-          'DegenMultisig',
+          'ConduitMultisig',
           `Multisig that can upgrade the DA bridge, upgrade authorized batch posters (relayers), and change the Committee members by updating the valid keyset (via UpgradeExecutor).`,
         ),
       ],
     },
-    chain: ChainId.BASE,
+    chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignatures,
     membersCount: membersCount,
     transactionDataType: DacTransactionDataType.TransactionDataCompressed,
