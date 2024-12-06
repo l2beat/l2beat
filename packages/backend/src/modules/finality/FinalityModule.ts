@@ -1,7 +1,7 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import { assert, assertUnreachable, notUndefined } from '@l2beat/shared-pure'
 
-import { BlobProvider } from '@l2beat/shared'
+import { BlobProvider, RpcClient2 } from '@l2beat/shared'
 import {
   HttpClient2,
   LoopringClient,
@@ -47,11 +47,14 @@ export function createFinalityModule(
     return
   }
 
-  const ethereumClient = peripherals.getClient(RpcClient, {
-    url: config.finality.ethereumProviderUrl,
-    callsPerMinute: config.finality.ethereumProviderCallsPerMinute,
-    chain: 'ethereum',
-  })
+  const ethereumClient = providers.clients.ethereum
+  assert(ethereumClient, 'Ethereum client not defined')
+
+  const loopring = providers.clients.loopring
+  assert(loopring, 'Loopring client not defined')
+
+  const degate = providers.clients.degate
+  assert(degate, 'Degate client not defined')
 
   const blobProvider = providers.blob?.getBlobProvider()
   assert(blobProvider, 'Blob client is required for finality module')
@@ -62,8 +65,8 @@ export function createFinalityModule(
     logger,
     config.finality.configurations,
     peripherals,
-    providers.loopringClient,
-    providers.degateClient,
+    loopring,
+    degate,
   )
 
   const finalityIndexers = runtimeConfigurations.map(
@@ -91,7 +94,7 @@ export function createFinalityModule(
 }
 
 function initializeConfigurations(
-  ethereumRPC: RpcClient,
+  ethereumRPC: RpcClient2,
   blobProvider: BlobProvider,
   logger: Logger,
   configs: FinalityProjectConfig[],

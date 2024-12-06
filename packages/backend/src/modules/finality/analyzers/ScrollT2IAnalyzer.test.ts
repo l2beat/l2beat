@@ -3,9 +3,9 @@ import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 
 import { Database } from '@l2beat/database'
-import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { ScrollT2IAnalyzer } from './ScrollT2IAnalyzer'
 import { L2Block } from './types/BaseAnalyzer'
+import { RpcClient2 } from '@l2beat/shared'
 
 describe(ScrollT2IAnalyzer.name, () => {
   describe(ScrollT2IAnalyzer.prototype.analyze.name, () => {
@@ -21,7 +21,7 @@ describe(ScrollT2IAnalyzer.name, () => {
       ]
 
       const projectId = ProjectId('scroll')
-      const rpcClient = mockObject<RpcClient>({
+      const rpcClient = mockObject<RpcClient2>({
         getTransaction: mockFn().resolvesTo({
           data: mockCommitBatchWithBlobProof(L2_BLOCKS),
         }),

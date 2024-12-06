@@ -3,9 +3,9 @@ import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 
 import { Database } from '@l2beat/database'
-import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { L2Block } from './types/BaseAnalyzer'
 import { zkSyncEraT2IAnalyzer } from './zkSyncEraT2IAnalyzer'
+import { RpcClient2 } from '@l2beat/shared'
 
 describe(zkSyncEraT2IAnalyzer.name, () => {
   describe(zkSyncEraT2IAnalyzer.prototype.analyze.name, () => {
@@ -29,7 +29,7 @@ describe(zkSyncEraT2IAnalyzer.name, () => {
 })
 
 function getMockRpcClient() {
-  return mockObject<RpcClient>({
+  return mockObject<RpcClient2>({
     getTransaction: mockFn().resolvesTo({
       data: getMockCallData(DATA1_BLOCKS),
     }),

@@ -2,8 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { assert, ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 
 import { Database } from '@l2beat/database'
-import { BlobProvider } from '@l2beat/shared'
-import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
+import { BlobProvider, RpcClient2 } from '@l2beat/shared'
 import { BaseAnalyzer } from '../types/BaseAnalyzer'
 import type { L2Block, Transaction } from '../types/BaseAnalyzer'
 import { ChannelBank } from './ChannelBank'
@@ -18,7 +17,7 @@ export class OpStackT2IAnalyzer extends BaseAnalyzer {
   constructor(
     private readonly blobProvider: BlobProvider,
     private readonly logger: Logger,
-    provider: RpcClient,
+    provider: RpcClient2,
     db: Database,
     projectId: ProjectId,
     private readonly opts: SpanBatchDecoderOpts,
