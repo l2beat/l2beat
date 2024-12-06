@@ -5994,6 +5994,20 @@
       }
     },
     {
+      "name": "Kroma",
+      "coingeckoId": "kroma",
+      "address": "0x25500000d700bbE27104577CCcce8eAbCC96c8ad",
+      "symbol": "KRO",
+      "decimals": 18,
+      "deploymentTimestamp": 1720499747,
+      "coingeckoListingTimestamp": 1730246400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30830/large/Kroma-symbol.png?1696529683",
+      "chainId": 255,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Merlin BTC",
       "coingeckoId": "merlin-s-seal-btc",
       "address": "0x0F921c39eFd98809FE6D20a88A4357454578987a",
