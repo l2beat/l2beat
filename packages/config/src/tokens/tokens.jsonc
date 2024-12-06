@@ -3611,6 +3611,12 @@
   ],
   "kroma": [
     {
+      "symbol": "KRO",
+      "address": "0x25500000d700bbE27104577CCcce8eAbCC96c8ad",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "symbol": "M-BTC",
       "address": "0x0F921c39eFd98809FE6D20a88A4357454578987a",
       "coingeckoId": "merlin-s-seal-btc",
