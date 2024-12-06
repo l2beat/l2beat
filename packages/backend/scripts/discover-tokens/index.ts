@@ -10,6 +10,7 @@ import {
   RetryHandler,
 } from '@l2beat/shared'
 import { providers, utils } from 'ethers'
+import { chunk } from 'lodash'
 import { RateLimitedProvider } from '../../src/peripherals/rpcclient/RateLimitedProvider'
 
 const OUTPUT_PATH = path.resolve(__dirname, './discovered.json')
@@ -115,6 +116,35 @@ async function main() {
 
     console.log('Tokens not found in tokenList:', allFoundTokens.size)
   }
+
+  const chunks = chunk(Array.from(allFoundTokens), 200)
+
+  const tokenMarketCaps = new Map<string, number>()
+  for (const chunk of chunks) {
+    const chunkData = (await coingeckoClient.query(
+      '/simple/token_price/ethereum',
+      {
+        vs_currencies: 'usd',
+        include_market_cap: 'true',
+        contract_addresses: chunk.join(','),
+      },
+    )) as Record<string, { usd_market_cap: number }>
+
+    for (const [address, data] of Object.entries(chunkData)) {
+      tokenMarketCaps.set(address, data.usd_market_cap)
+    }
+  }
+
+  const sortedTokens: string[] = Array.from(allFoundTokens).sort((a, b) => {
+    const mcapA = tokenMarketCaps.get(a) ?? 0
+    const mcapB = tokenMarketCaps.get(b) ?? 0
+    return mcapB - mcapA
+  })
+
+  writeFileSync(
+    OUTPUT_PATH,
+    JSON.stringify({ found: sortedTokens }, null, 2) + '\n',
+  )
 }
 
 main().then(() => {
