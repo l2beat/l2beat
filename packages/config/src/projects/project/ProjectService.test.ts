@@ -21,7 +21,7 @@ describe(ProjectService.name, () => {
       isLayer2: true,
     },
   ]
-  const getProjects = () => Promise.resolve(projects)
+  const getProjects = () => projects
 
   it('selects a single project by id', async () => {
     const service = new ProjectService(getProjects)

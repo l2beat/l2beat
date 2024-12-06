@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { chains, OnchainVerifier, ProjectService } from '@l2beat/config'
+import { OnchainVerifier, ProjectService, chains } from '@l2beat/config'
 import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { Clock } from '../../tools/Clock'
