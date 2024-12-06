@@ -7,7 +7,7 @@ Generated with discovered.json: 0x89adeb7ae8ea1d5645a2889bcc63f6c0170cec74
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial discovery of a standard orbit stack Optimium.
 
 ## Initial discovery
 
