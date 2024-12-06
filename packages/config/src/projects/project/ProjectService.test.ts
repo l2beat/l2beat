@@ -1,7 +1,7 @@
-import { expect } from 'earl'
-import { ProjectService } from './ProjectService'
-import { Project } from './Project'
 import { ProjectId } from '@l2beat/shared-pure'
+import { expect } from 'earl'
+import { Project } from './Project'
+import { ProjectService } from './ProjectService'
 
 describe(ProjectService.name, () => {
   const projects: Project[] = [
