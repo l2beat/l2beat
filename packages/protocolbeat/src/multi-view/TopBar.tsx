@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useMultiViewStore } from './store'
 
@@ -7,13 +8,24 @@ export function TopBar(props: { project: string }) {
   const selectedLayout = useMultiViewStore((state) => state.selectedLayout)
   const loadLayout = useMultiViewStore((state) => state.loadLayout)
   const addPanel = useMultiViewStore((state) => state.addPanel)
+  const [isVisible, setIsVisible] = useState(false)
+
   return (
     <div className="flex h-10 select-none items-center justify-between px-2">
       <div className="flex items-center gap-2">
         <Link to="/ui">
           <img className="-top-[3px] relative h-[20px]" src="/logo.svg"></img>
         </Link>
-        <p>{props.project}</p>
+        <div className="h-10 w-[1px] bg-coffee-600" />
+        <div className="flex items-center gap-1">
+          <p>{props.project}</p>
+          <img
+            src={`https://l2beat.com/icons/${props.project}.png`}
+            className="size-5"
+            style={{ display: isVisible ? 'block' : 'none' }}
+            onLoad={() => setIsVisible(true)}
+          />
+        </div>
       </div>
       <div className="flex gap-2">
         <div className="grid grid-cols-6">
