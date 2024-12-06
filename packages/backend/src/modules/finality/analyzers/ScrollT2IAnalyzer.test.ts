@@ -3,9 +3,9 @@ import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 
 import { Database } from '@l2beat/database'
+import { RpcClient2 } from '@l2beat/shared'
 import { ScrollT2IAnalyzer } from './ScrollT2IAnalyzer'
 import { L2Block } from './types/BaseAnalyzer'
-import { RpcClient2 } from '@l2beat/shared'
 
 describe(ScrollT2IAnalyzer.name, () => {
   describe(ScrollT2IAnalyzer.prototype.analyze.name, () => {

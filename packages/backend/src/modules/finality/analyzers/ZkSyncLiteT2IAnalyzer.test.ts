@@ -2,8 +2,8 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { Database } from '@l2beat/database'
-import { ZkSyncLiteT2IAnalyzer } from './ZkSyncLiteT2IAnalyzer'
 import { RpcClient2 } from '@l2beat/shared'
+import { ZkSyncLiteT2IAnalyzer } from './ZkSyncLiteT2IAnalyzer'
 
 describe(ZkSyncLiteT2IAnalyzer.name, () => {
   describe(ZkSyncLiteT2IAnalyzer.prototype.analyze.name, () => {
