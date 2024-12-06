@@ -1,11 +1,11 @@
 import { ContractParameters } from '@l2beat/discovery-types'
 import {
+  assert,
   ChainId,
   EthereumAddress,
   ProjectId,
   UnixTime,
   formatSeconds,
-  assert,
 } from '@l2beat/shared-pure'
 
 import {
