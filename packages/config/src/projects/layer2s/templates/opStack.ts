@@ -132,7 +132,7 @@ interface OpStackConfigCommon {
   usesBlobs?: boolean
   isUnderReview?: boolean
   stage?: StageConfig
-  badges?: BadgeId[]
+  additionalBadges?: BadgeId[]
   discoveryDrivenData?: boolean
   additionalPurposes?: ScalingProjectPurpose[]
 }
@@ -188,7 +188,9 @@ function opStackCommon(
   }
 
   if (daBadge === undefined) {
-    daBadge = templateVars.badges?.find((b) => badges[b].type === 'DA')
+    daBadge = templateVars.additionalBadges?.find(
+      (b) => badges[b].type === 'DA',
+    )
   }
   assert(daBadge !== undefined, 'DA badge must be defined')
 
@@ -388,7 +390,7 @@ function opStackCommon(
     ],
     badges: mergeBadges(
       [Badge.Stack.OPStack, Badge.VM.EVM, daBadge],
-      templateVars.badges ?? [],
+      templateVars.additionalBadges ?? [],
     ),
     discoveryDrivenData: templateVars.discoveryDrivenData,
   }

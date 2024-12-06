@@ -8,7 +8,7 @@ const discovery = new ProjectDiscovery('hychain', 'ethereum')
 
 export const hychain: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1710846977), // 2024-03-19T11:16:17Z
-  badges: [Badge.DA.DAC, Badge.RaaS.Caldera],
+  additionalBadges: [Badge.DA.DAC, Badge.RaaS.Caldera],
   additionalPurposes: ['Gaming'],
   display: {
     name: 'HYCHAIN',

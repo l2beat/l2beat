@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('ebichain')
 export const ebichain: Layer2 = orbitStackL2({
   discovery,
   createdAt: new UnixTime(1726563843), // 2024-09-17T09:04:03Z
-  badges: [Badge.DA.DAC, Badge.RaaS.Conduit],
+  additionalBadges: [Badge.DA.DAC, Badge.RaaS.Conduit],
   additionalPurposes: ['Exchange'],
   display: {
     name: 'Ebi Chain',

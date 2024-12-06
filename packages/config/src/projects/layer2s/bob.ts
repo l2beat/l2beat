@@ -11,7 +11,7 @@ const discovery = new ProjectDiscovery('bob')
 export const bob: Layer2 = opStackL2({
   createdAt: new UnixTime(1704267653), // 2024-01-03T07:40:53Z
   discovery,
-  badges: [Badge.RaaS.Conduit, Badge.Infra.Superchain],
+  additionalBadges: [Badge.RaaS.Conduit, Badge.Infra.Superchain],
   additionalPurposes: ['Bitcoin DApps'],
   display: {
     name: 'BOB',

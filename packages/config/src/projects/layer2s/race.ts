@@ -11,7 +11,7 @@ export const race: Layer2 = opStackL2({
   discovery,
   createdAt: new UnixTime(1726563843), // 2024-09-17T09:04:03Z
   genesisTimestamp: new UnixTime(1720421591),
-  badges: [Badge.Infra.Superchain],
+  additionalBadges: [Badge.Infra.Superchain],
   display: {
     name: 'Race Network',
     slug: 'race',
