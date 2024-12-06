@@ -14,6 +14,8 @@ export const ebichain: Layer2 = orbitStackL2({
   display: {
     name: 'Ebi Chain',
     slug: 'ebichain',
+    headerWarning:
+      'ebi.xyz DEX [is winding down](https://x.com/ebixyzdex/status/1861326984078598388).',
     description:
       'Ebi Chain is a Layer-2 hosting the Ebi.xyz platform, a limit order book decentralised platform for trading perpetual futures.',
     links: {
