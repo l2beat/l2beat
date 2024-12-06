@@ -16,7 +16,7 @@ const _l2discovery = new ProjectDiscovery('kinto', 'kinto')
 export const kinto: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1695735468), // 2023-09-26T13:37:48Z
   discovery,
-  badges: [Badge.RaaS.Caldera],
+  additionalBadges: [Badge.RaaS.Caldera],
   additionalPurposes: ['RWA'],
   display: {
     name: 'Kinto',

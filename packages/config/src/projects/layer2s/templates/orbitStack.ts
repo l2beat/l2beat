@@ -135,7 +135,7 @@ interface OrbitStackConfigCommon {
   trackedTxs?: Layer2TxConfig[]
   chainConfig?: ChainConfig
   usesBlobs?: boolean
-  badges?: BadgeId[]
+  additionalBadges?: BadgeId[]
   stage?: StageConfig
   stateValidation?: ScalingProjectStateValidation
   stateDerivation?: ScalingProjectStateDerivation
@@ -342,7 +342,8 @@ function orbitStackCommon(
   const postsToExternalDA = sequencerVersion !== '0x00'
   if (postsToExternalDA) {
     assert(
-      templateVars.badges?.find((b) => badges[b].type === 'DA') !== undefined,
+      templateVars.additionalBadges?.find((b) => badges[b].type === 'DA') !==
+        undefined,
       'DA badge is required for external DA',
     )
   }
@@ -534,7 +535,7 @@ function orbitStackCommon(
     knowledgeNuggets: templateVars.knowledgeNuggets,
     badges: mergeBadges(
       [Badge.Stack.Orbit, Badge.VM.EVM, daBadge],
-      templateVars.badges ?? [],
+      templateVars.additionalBadges ?? [],
     ),
     discoveryDrivenData: templateVars.discoveryDrivenData,
   }

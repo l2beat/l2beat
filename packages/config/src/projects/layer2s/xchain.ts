@@ -8,7 +8,7 @@ const discovery = new ProjectDiscovery('xchain')
 
 export const xchain: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1690896554), // 2023-08-01T13:29:14Z
-  badges: [Badge.RaaS.Conduit, Badge.DA.DAC],
+  additionalBadges: [Badge.RaaS.Conduit, Badge.DA.DAC],
   display: {
     name: 'XCHAIN',
     slug: 'xchain',

@@ -11,7 +11,7 @@ const discovery = new ProjectDiscovery('real')
 export const real: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1717598702), // 2024-06-05T14:45:02Z
   discovery,
-  badges: [Badge.DA.DAC, Badge.RaaS.Gelato],
+  additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gelato],
   additionalPurposes: ['RWA'],
   display: {
     name: 'Re.al',
