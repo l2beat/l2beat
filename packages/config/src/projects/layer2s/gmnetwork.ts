@@ -30,7 +30,7 @@ export const gmnetwork: Layer2 = opStackL2({
     slug: 'gmnetwork',
     architectureImage: 'opstack-dachallenge',
     description:
-      'GM Network is an OP stack L2 in alt-DA mode aiming to to deepen the integration of smart, connected devices within everyday human activities by blending Artificial Intelligence and the Internet of Things.',
+      'GM Network is an OP stack L2 in alt-DA mode aiming to deepen the integration of smart, connected devices within everyday human activities by blending Artificial Intelligence and the Internet of Things.',
     links: {
       websites: ['https://gmnetwork.ai/'],
       apps: ['https://bridge.gmnetwork.ai/'],
