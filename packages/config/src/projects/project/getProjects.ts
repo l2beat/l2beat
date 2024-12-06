@@ -1,9 +1,9 @@
 import { ProjectId } from '@l2beat/shared-pure'
-import { zkCatalogProjects } from '../other'
-import { Project } from './Project'
+import { bridges } from '../bridges'
 import { layer2s } from '../layer2s'
 import { layer3s } from '../layer3s'
-import { bridges } from '../bridges'
+import { zkCatalogProjects } from '../other'
+import { Project } from './Project'
 
 export function getProjects(): Project[] {
   const projects: Project[] = []
