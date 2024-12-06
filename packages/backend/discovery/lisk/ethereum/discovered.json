@@ -1,8 +1,8 @@
 {
   "name": "lisk",
   "chain": "ethereum",
-  "blockNumber": 21078724,
-  "configHash": "0x54b600f138a147f390a890b238a88a803b26d43d59f30b55edf592f85fcc7e87",
+  "blockNumber": 21342977,
+  "configHash": "0x80ed5fb760d1f3250f0475f7934029861e6ebae6582eac9b6f9c97542b8dcb90",
   "contracts": [
     {
       "name": "SystemConfig",
@@ -171,10 +171,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 7765200,
-        "latestOutputIndex": 718,
-        "nextBlockNumber": 7776000,
-        "nextOutputIndex": 719,
+        "latestBlockNumber": 9374400,
+        "latestOutputIndex": 867,
+        "nextBlockNumber": 9385200,
+        "nextOutputIndex": 868,
         "proposer": "0x0AbD6da1cE10D1cD6c7C9C14b905786D20f3EB23",
         "PROPOSER": "0x0AbD6da1cE10D1cD6c7C9C14b905786D20f3EB23",
         "startingBlockNumber": 0,
@@ -346,7 +346,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 489262,
-          "prevBlockNum": 21078594
+          "prevBlockNum": 21342893
         },
         "paused": false,
         "superchainConfig": "0x26C7bFB430d68Bf74d2d52497836d4336b555dE7",
@@ -411,7 +411,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621644",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622861",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -591,7 +591,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 10,
+        "nonce": 13,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -637,6 +637,48 @@
         "bridge": "0x2658723Bf70c7667De6B25F99fcce13A16D25d08",
         "BRIDGE": "0x2658723Bf70c7667De6B25F99fcce13A16D25d08",
         "version": "1.9.0"
+      }
+    },
+    {
+      "name": "L1OpUSDCBridgeAdapter",
+      "address": "0xE3622468Ea7dD804702B56ca2a4f88C0936995e6",
+      "template": "circle/L1OpUSDCBridgeAdapter",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0xd311a9b68b7e171b3bc43bd9e7ee705886c2fdd620360576ca49115fd9799d5d"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.",
+      "sinceTimestamp": 1727719139,
+      "values": {
+        "$admin": "0xD2D7535e099F26EbfbA26d96bD1a661d3531d0e9",
+        "$implementation": "0x61488ae9dEDCA3f29F5e72bbf23ba975862c20bA",
+        "$pastUpgrades": [
+          [
+            "2024-09-30T17:58:59.000Z",
+            "0x63ba1a0bd2a3d75396e1e3e118057dfc69de7b9303552cd4996d6187dcec7fa1",
+            ["0x61488ae9dEDCA3f29F5e72bbf23ba975862c20bA"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "BRIDGE_MESSAGE_TYPEHASH": "0x87e4683aad14f1869b43140e06b846bd1b00c2e08e9825f6719d163b4cfef2a6",
+        "burnAmount": 0,
+        "burnCaller": "0x0000000000000000000000000000000000000000",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "OpUSDCBridgeAdapter",
+          "version": "1.0.0",
+          "chainId": 1,
+          "verifyingContract": "0xE3622468Ea7dD804702B56ca2a4f88C0936995e6",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "LINKED_ADAPTER": "0x3b1ac69368eb6447F5db2d4E1641380Fa9e40d29",
+        "MESSENGER": "0x31B72D76FB666844C41EdF08dF0254875Dbb7edB",
+        "messengerStatus": 0,
+        "owner": "0xD2D7535e099F26EbfbA26d96bD1a661d3531d0e9",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0",
+        "USDC": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       }
     },
     {
@@ -723,6 +765,7 @@
     }
   ],
   "eoas": [
+    { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x000000000000000000000000000000000000dEaD" },
     { "address": "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e" },
     {
@@ -916,6 +959,78 @@
       "function superchainConfig() view returns (address)",
       "function version() view returns (string)"
     ],
+    "0x61488ae9dEDCA3f29F5e72bbf23ba975862c20bA": [
+      "constructor(address _usdc, address _messenger, address _linkedAdapter)",
+      "error AddressEmptyCode(address target)",
+      "error AddressInsufficientBalance(address account)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error IOpUSDCBridgeAdapter_BlacklistedAddress()",
+      "error IOpUSDCBridgeAdapter_BurnAmountNotSet()",
+      "error IOpUSDCBridgeAdapter_ForbiddenTransaction()",
+      "error IOpUSDCBridgeAdapter_InvalidAddress()",
+      "error IOpUSDCBridgeAdapter_InvalidCaller()",
+      "error IOpUSDCBridgeAdapter_InvalidNonce()",
+      "error IOpUSDCBridgeAdapter_InvalidSender()",
+      "error IOpUSDCBridgeAdapter_InvalidSignature()",
+      "error IOpUSDCBridgeAdapter_InvalidTransaction()",
+      "error IOpUSDCBridgeAdapter_MessageExpired()",
+      "error IOpUSDCBridgeAdapter_MessagingDisabled()",
+      "error IOpUSDCBridgeAdapter_MessagingEnabled()",
+      "error IOpUSDCBridgeAdapter_NotMigrated()",
+      "error IOpUSDCBridgeAdapter_NotUpgrading()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error SafeERC20FailedOperation(address token)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event BurnAmountSet(uint256 _burnAmount)",
+      "event EIP712DomainChanged()",
+      "event Initialized(uint64 version)",
+      "event LockedFundsWithdrawn(address indexed _user, uint256 _amountWithdrawn)",
+      "event MessageFailed(address indexed _spender, address indexed _user, uint256 _amount, address indexed _messenger)",
+      "event MessageReceived(address indexed _spender, address indexed _user, uint256 _amount, address indexed _messenger)",
+      "event MessageSent(address indexed _user, address indexed _to, uint256 _amount, address indexed _messenger, uint32 _minGasLimit)",
+      "event MessagingResumed(address _messenger)",
+      "event MessagingStopped(address _messenger)",
+      "event MigratingToNative(address _messenger, address _caller)",
+      "event MigrationComplete(uint256 _burnedAmount)",
+      "event NonceCanceled(address _caller, uint256 _nonce)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Upgraded(address indexed implementation)",
+      "function BRIDGE_MESSAGE_TYPEHASH() view returns (bytes32)",
+      "function LINKED_ADAPTER() view returns (address)",
+      "function MESSENGER() view returns (address)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function USDC() view returns (address)",
+      "function attemptTransfer(address _to, uint256 _amount)",
+      "function burnAmount() view returns (uint256)",
+      "function burnCaller() view returns (address)",
+      "function burnLockedUSDC()",
+      "function cancelSignature(uint256 _nonce)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function initialize(address _owner)",
+      "function lockedFundsDetails(address _spender, address _user) view returns (uint256 _lockedAmount)",
+      "function messengerStatus() view returns (uint8)",
+      "function migrateToNative(address _roleCaller, address _burnCaller, uint32 _minGasLimitReceiveOnL2, uint32 _minGasLimitSetBurnAmount)",
+      "function owner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function receiveMessage(address _user, address _spender, uint256 _amount)",
+      "function receiveWithdrawLockedFundsPostMigration(address _spender, uint256 _amount)",
+      "function renounceOwnership()",
+      "function resumeMessaging(uint32 _minGasLimit)",
+      "function sendMessage(address _signer, address _to, uint256 _amount, bytes _signature, uint256 _nonce, uint256 _deadline, uint32 _minGasLimit)",
+      "function sendMessage(address _to, uint256 _amount, uint32 _minGasLimit)",
+      "function setBurnAmount(uint256 _amount)",
+      "function stopMessaging(uint32 _minGasLimit)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function userNonces(address _user, uint256 _nonce) view returns (bool _used)",
+      "function withdrawLockedFunds(address _spender, address _user)"
+    ],
     "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb": [
       "constructor(address _singleton)"
     ],
@@ -1047,6 +1162,14 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
+    "0xE3622468Ea7dD804702B56ca2a4f88C0936995e6": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
     "0xe8912070277Dd5D9473904b7F4e6C71290F2AE90": [
       "constructor()",
       "event Initialized(uint8 version)",
@@ -1121,6 +1244,7 @@
     ]
   },
   "usedTemplates": {
+    "circle/L1OpUSDCBridgeAdapter": "0x01787da1de46553f95f096f6a8db58bf101faa5fe1c4d49b72def1f88a1cc4d5",
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
