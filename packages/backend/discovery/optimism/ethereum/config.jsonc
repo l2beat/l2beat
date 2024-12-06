@@ -41,7 +41,8 @@
     "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": "GuardianMultisig",
     "0x0454092516c9A4d636d3CAfA1e82161376C8a748": "LivenessModule",
     "0x82511d494B5C942BE57498a70Fdd7184Ee33B975": "DelayedWETH_PermissionlessGames",
-    "0x9F9b897e37de5052cD70Db6D08474550DDb07f39": "DelayedWETH_PermissionedGames"
+    "0x9F9b897e37de5052cD70Db6D08474550DDb07f39": "DelayedWETH_PermissionedGames",
+    "0x24424336F04440b1c28685a38303aC33C9D14a25": "LivenessGuard"
   },
   "types": {
     "DisputeGameMap": {
@@ -53,6 +54,30 @@
     }
   },
   "overrides": {
+    "SecurityCouncilMultisig": {
+      "fields": {
+        "isL2beatStillAnOwner": {
+          "handler": {
+            "type": "call",
+            "method": "isOwner",
+            "args": ["0x4A7322258c9E690e4CB8Cea6e5251443E956e61E"] // our address in the Security Council
+          }
+        }
+      }
+    },
+    "LivenessGuard": {
+      "ignoreInWatchMode": ["timeSinceLastL2beatInteraction"],
+      "fields": {
+        "timeSinceLastL2beatInteraction": {
+          "handler": {
+            "type": "call",
+            "method": "lastLive",
+            "args": ["0x4A7322258c9E690e4CB8Cea6e5251443E956e61E"] // our address in the Security Council
+          },
+          "returnType": "(TimeSince)"
+        }
+      }
+    },
     "SynthetixBridgeEscrow": {
       "ignoreRelatives": ["owner"]
     },
