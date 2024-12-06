@@ -99,7 +99,7 @@ export const providerMap: Record<
     Icon: TaikoIcon,
     text: "This project is based on Taiko's code base.",
   },
-  'Cartesi Rollups': undefined
+  'Cartesi Rollups': undefined,
 }
 
 interface TypeTooltipProps {
