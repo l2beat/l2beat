@@ -105,7 +105,7 @@ export function initClients(config: Config, logger: Logger): Clients {
         }
         case 'loopring':
         case 'degate3': {
-          const loopringClient = new LoopringClient({
+          const client = new LoopringClient({
             url: blockApi.url,
             type: blockApi.type,
             http: http2,
@@ -113,7 +113,10 @@ export function initClients(config: Config, logger: Logger): Clients {
             retryHandler,
             logger,
           })
-          blockClients.push(loopringClient)
+          blockClients.push(client)
+          blockApi.type === 'loopring'
+            ? (loopringClient = client)
+            : (degateClient = client)
           break
         }
         case 'fuel': {
