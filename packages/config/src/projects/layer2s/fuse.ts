@@ -15,7 +15,7 @@ export const fuse: Layer2 = upcomingL2({
     provider: 'Polygon',
     links: {
       websites: ['https://fuse.io/'],
-      apps: ['https://www.fuse.io/network'],
+      apps: ['https://fuse.io/network'],
       documentation: ['https://docs.fuse.io/fuse-ember/about-fuse-ember-l2/'],
       explorers: ['https://explorer.fuse.io/'],
       repositories: ['https://github.com/fuseio'],
