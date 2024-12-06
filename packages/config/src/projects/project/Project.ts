@@ -1,20 +1,18 @@
-import { ProjectId } from '@l2beat/shared-pure'
-
-type Data = number
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProofVerification } from '../types'
 
 export interface Project {
   id: ProjectId
   slug: string
-  tvl?: Data
-  activity?: Data
-  display?: Data
-  permissions?: Data
-  contracts?: Data
+  name: string
+  addedAt: UnixTime
+  // data
+  proofVerification?: ProofVerification
   // tags
+  isBridge?: true
   isLayer2?: true
   isLayer3?: true
   isScaling?: true
-  isZkCatalog?: true
   isUpcoming?: true
   isUnderReview?: true
   isArchived?: true

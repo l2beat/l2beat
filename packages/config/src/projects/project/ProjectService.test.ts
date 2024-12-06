@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { Project } from './Project'
 import { ProjectService } from './ProjectService'
@@ -8,12 +8,16 @@ describe(ProjectService.name, () => {
     {
       id: ProjectId('foo'),
       slug: 'foochain',
+      name: 'Foo Chain',
+      addedAt: UnixTime.ZERO,
       isLayer2: true,
       isArchived: true,
     },
     {
       id: ProjectId('bar'),
       slug: 'barnetwork',
+      name: 'Bar Network',
+      addedAt: UnixTime.ZERO,
       isLayer2: true,
     },
   ]
@@ -27,6 +31,8 @@ describe(ProjectService.name, () => {
     expect(result).toEqual({
       id: ProjectId('foo'),
       slug: 'foochain',
+      name: 'Foo Chain',
+      addedAt: UnixTime.ZERO,
     })
   })
 
@@ -48,6 +54,8 @@ describe(ProjectService.name, () => {
     expect(result).toEqual({
       id: ProjectId('foo'),
       slug: 'foochain',
+      name: 'Foo Chain',
+      addedAt: UnixTime.ZERO,
       isLayer2: true,
       isLayer3: undefined,
       isArchived: true,
@@ -64,6 +72,8 @@ describe(ProjectService.name, () => {
       {
         id: ProjectId('foo'),
         slug: 'foochain',
+        name: 'Foo Chain',
+        addedAt: UnixTime.ZERO,
         isLayer2: true,
         isLayer3: undefined,
         isArchived: true,
@@ -71,6 +81,8 @@ describe(ProjectService.name, () => {
       {
         id: ProjectId('bar'),
         slug: 'barnetwork',
+        name: 'Bar Network',
+        addedAt: UnixTime.ZERO,
         isLayer2: true,
         isLayer3: undefined,
         isArchived: undefined,

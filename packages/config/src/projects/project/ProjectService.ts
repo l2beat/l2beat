@@ -2,12 +2,13 @@ import { ProjectId } from '@l2beat/shared-pure'
 import { Project } from './Project'
 import { getProjects } from './getProjects'
 
-type Key = Exclude<keyof Project, 'id' | 'slug'>
+type BasicKeys = 'id' | 'slug' | 'name' | 'addedAt'
+type Key = Exclude<keyof Project, BasicKeys>
 type NonOptionalProject = {
   [K in Key]-?: Project[K]
 }
 type ProjectWith<K extends Key, O extends Key> = Pick<NonOptionalProject, K> &
-  Pick<Project, O | 'id' | 'slug'>
+  Pick<Project, O | BasicKeys>
 
 export class ProjectService {
   constructor(private _getProjects = getProjects) {}
@@ -80,6 +81,8 @@ function createMap<K extends Key, O extends Key>(query: {
   const keys = [
     'id',
     'slug',
+    'name',
+    'addedAt',
     ...(query.select ?? []),
     ...(query.optional ?? []),
   ] as (keyof ProjectWith<K, O>)[]
