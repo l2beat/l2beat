@@ -40,6 +40,7 @@ export const treasure: Layer2 = zkStackL2({
       repositories: ['https://github.com/TreasureProject'],
       socialMedia: ['https://x.com/Treasure_DAO'],
     },
+    activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['MAGIC'],
   rpcUrl: 'https://rpc.treasure.lol',
@@ -120,7 +121,7 @@ export const treasure: Layer2 = zkStackL2({
       'Inherits *ChainAdmin* permissions like adding/removing validators in the ValidatorTimelock, adding a TransactionFilterer that can censor transactions, upgrading the Treasure Diamond to a predeployed version of the ZK stack and settings its fee parameters.',
     ),
     {
-      name: 'SophOracleEOA',
+      name: 'TreasureOracleEOA',
       accounts: [
         discovery.getPermissionedAccount(
           'TreasureZkEvmAdmin',
@@ -128,7 +129,7 @@ export const treasure: Layer2 = zkStackL2({
         ),
       ],
       description:
-        'Can set the conversion factor for SOPH deposits to Treasure.',
+        'Can set the conversion factor for MAGIC deposits to Treasure.',
     },
   ],
   milestones: [
