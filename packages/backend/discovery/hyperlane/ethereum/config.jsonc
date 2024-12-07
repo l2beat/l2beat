@@ -1,0 +1,9 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "hyperlane",
+  "initialAddresses": ["0xc005dc82818d67AF737725bD4bf75435d065D239"],
+  "names": {
+    "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6": "HyperlaneMultisig"
+  }
+}
