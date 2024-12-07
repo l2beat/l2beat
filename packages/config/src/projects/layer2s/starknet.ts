@@ -516,6 +516,7 @@ export const starknet: Layer2 = {
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: new UnixTime(1724856227),
+          untilTimestamp: new UnixTime(1732747391),
           programHashes: [
             '853638403225561750106379562222782223909906501242604214771127703946595519856', // Starknet OS
           ],
@@ -530,8 +531,37 @@ export const starknet: Layer2 = {
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: new UnixTime(1724856227),
+          untilTimestamp: new UnixTime(1732747391),
           programHashes: [
-            '1161178844461337253856226043908368523817098764221830529880464854589141231910', // Aggregator
+            '1161178844461337253856226043908368523817098764221830529880464854589141231910', // old Aggregator
+          ],
+        },
+        _hackCostMultiplier: 0.65,
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestamp: new UnixTime(1732747391),
+          programHashes: [
+            '2397984267054479079853548842566103781972463965746662494980785692480538410509', // Starknet OS
+          ],
+        },
+        _hackCostMultiplier: 0.65,
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestamp: new UnixTime(1732747391),
+          programHashes: [
+            '15787695375210609250491147414005894154890873413229882671403677761527504080', // Aggregator (since Starknet v0.13.3)
           ],
         },
         _hackCostMultiplier: 0.65,
