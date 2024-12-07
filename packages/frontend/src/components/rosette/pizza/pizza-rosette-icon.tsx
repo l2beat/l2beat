@@ -11,6 +11,7 @@ interface Props {
   values: RosetteValue[]
   isUnderReview?: boolean
   className?: string
+  circleClassName?: string
   background?: boolean
 }
 
@@ -18,6 +19,7 @@ export function PizzaRosetteIcon({
   values,
   className,
   isUnderReview,
+  circleClassName,
   background = true,
 }: Props) {
   const context = useRosetteTooltipContext()
@@ -72,7 +74,10 @@ export function PizzaRosetteIcon({
             cx="90"
             cy="90"
             r="90"
-            className="fill-gray-100 dark:fill-neutral-700"
+            className={cn(
+              'fill-gray-100 dark:fill-neutral-700',
+              circleClassName,
+            )}
           />
         )}
         <g clipPath="url(#inner-clip)">
