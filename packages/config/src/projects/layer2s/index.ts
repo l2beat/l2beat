@@ -92,6 +92,7 @@ import { move } from './move'
 import { myria } from './myria'
 import { myshell } from './myshell'
 import { nal } from './nal'
+import { namechain } from './namechain'
 import { network3 } from './network3'
 import { neva } from './neva'
 import { nil } from './nil'
@@ -273,6 +274,7 @@ export const layer2s: Layer2[] = [
   myria,
   myshell,
   nal,
+  namechain,
   nil,
   network3,
   neva,
