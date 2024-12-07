@@ -1225,7 +1225,7 @@ contract ManyChainMultiSig is Ownable2Step {
             revert WrongPostOpCount();
         }
 
-        // done with validation, persist in in contract state
+        // done with validation, persist in contract state
         s_seenSignedHashes[signedHash] = true;
         s_expiringRootAndOpCount = ExpiringRootAndOpCount({
             root: root,

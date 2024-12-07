@@ -1440,7 +1440,7 @@ contract PolygonRollupManager is
     );
 
     /**
-     * @dev Emitted when a a rolup type is obsoleted
+     * @dev Emitted when a rolup type is obsoleted
      */
     event ObsoleteRollupType(uint32 indexed rollupTypeID);
 
