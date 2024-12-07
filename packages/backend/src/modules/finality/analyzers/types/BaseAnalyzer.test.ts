@@ -6,9 +6,8 @@ import {
   IndexerConfigurationRecord,
   LivenessRecord,
 } from '@l2beat/database'
-import { createTrackedTxId } from '@l2beat/shared'
+import { RpcClient2, createTrackedTxId } from '@l2beat/shared'
 import { mean } from 'lodash'
-import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
 import {
   BaseAnalyzer,
   Batch,
@@ -53,7 +52,7 @@ describe(BaseAnalyzer.name, () => {
         }),
       })
 
-      const mockProvider = mockObject<RpcClient>({})
+      const mockProvider = mockObject<RpcClient2>({})
       const mockLivenessRepository = mockObject<Database['liveness']>({
         getByConfigurationIdWithinTimeRange:
           mockFn().resolvesTo(mockLivenessRecords),
@@ -152,7 +151,7 @@ describe(batchesToStateUpdateDelays.name, () => {
 
 class MockAnalyzer extends BaseAnalyzer {
   constructor(
-    provider: RpcClient,
+    provider: RpcClient2,
     db: Database,
     projectId: ProjectId,
     private readonly getFinalitySpy: (tx: Transaction) => void,

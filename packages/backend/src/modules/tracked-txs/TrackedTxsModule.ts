@@ -90,7 +90,7 @@ export function createTrackedTxsModule(
     config.trackedTxsConfig.uses.l2costs &&
     config.trackedTxsConfig.uses.l2costs.aggregatorEnabled
   ) {
-    const coingeckoClient = providers.coingeckoClient
+    const coingeckoClient = providers.clients.coingecko
     const coingeckoQueryService = new CoingeckoQueryService(
       coingeckoClient,
       logger.tag({ tag: 'trackedTxs' }),
