@@ -1,4 +1,4 @@
-import { getVerifiersFromConfig } from '@l2beat/config/build/src/projects/other/zk-catalog'
+import { ProjectService } from '@l2beat/config'
 import { UnixTime, branded } from '@l2beat/shared-pure'
 import { z } from 'zod'
 import { env } from '~/env'
@@ -10,29 +10,38 @@ export async function getVerifiers() {
   }
 
   const db = getDb()
-  const verifiers = getVerifiersFromConfig()
-
-  const coercedQueries = verifiers.map(async (verifier) => {
-    const status = await db.verifierStatus.findVerifierStatus(
-      verifier.contractAddress.toString(),
-      verifier.chainId,
-    )
-
-    return {
-      address: verifier.contractAddress.toString(),
-      timestamp: status ? status.lastUsed : null,
-    }
+  const projects = await ProjectService.STATIC.getProjects({
+    select: ['proofVerification'],
+    whereNot: ['isArchived'],
   })
+
+  const coercedQueries = projects
+    .flatMap((p) => p.proofVerification.verifiers)
+    .map(async (verifier) => {
+      const status = await db.verifierStatus.findVerifierStatus(
+        verifier.contractAddress.toString(),
+        verifier.chainId,
+      )
+      return {
+        address: verifier.contractAddress.toString(),
+        timestamp: status ? status.lastUsed : null,
+      }
+    })
 
   return Promise.all(coercedQueries)
 }
 
-function getMockVerifiers() {
-  const verifiers = getVerifiersFromConfig()
-  return verifiers.map((v) => ({
-    address: v.contractAddress.toString(),
-    timestamp: UnixTime.now(),
-  }))
+async function getMockVerifiers() {
+  const projects = await ProjectService.STATIC.getProjects({
+    select: ['proofVerification'],
+    whereNot: ['isArchived'],
+  })
+  return projects
+    .flatMap((p) => p.proofVerification.verifiers)
+    .map((v) => ({
+      address: v.contractAddress.toString(),
+      timestamp: UnixTime.now(),
+    }))
 }
 
 const VerifierStatus = z.object({

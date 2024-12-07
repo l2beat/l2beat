@@ -1,25 +1,16 @@
-import { type OnchainVerifier, type ProofVerification } from '@l2beat/config'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { type OnchainVerifier, type ProjectWith } from '@l2beat/config'
+import { UnixTime } from '@l2beat/shared-pure'
 import { type VerifiersStatuses } from '~/server/features/zk-catalog/get-verifiers'
-import { type Project, type ZkCatalogProofVerification } from './types'
+import { type ZkCatalogProofVerification } from './types'
 
 export function getProofVerification(
-  project: Project,
+  project: ProjectWith<'proofVerification'>,
   verifiersStatuses: VerifiersStatuses,
 ): ZkCatalogProofVerification {
-  let proofVerification: ProofVerification
-
-  if (project.type === 'zk-catalog') {
-    proofVerification = project.proofVerification
-  } else {
-    assert(project.stateValidation?.proofVerification, 'Invalid project')
-    proofVerification = project.stateValidation.proofVerification
-  }
-
   return {
-    ...proofVerification,
-    shortDescription: proofVerification.shortDescription,
-    verifiers: proofVerification.verifiers.map((verifier) => ({
+    ...project.proofVerification,
+    shortDescription: project.proofVerification.shortDescription,
+    verifiers: project.proofVerification.verifiers.map((verifier) => ({
       ...verifier,
       lastUsedDaysAgo: getVerifierLastUsedDaysAgo(verifier, verifiersStatuses),
     })),

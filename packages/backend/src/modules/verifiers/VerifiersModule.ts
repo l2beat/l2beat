@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { chains, getVerifiersFromConfig } from '@l2beat/config'
+import { OnchainVerifier, ProjectService, chains } from '@l2beat/config'
 import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { Clock } from '../../tools/Clock'
@@ -40,4 +40,12 @@ export function createVerifiersModule(
   return {
     start,
   }
+}
+
+export async function getVerifiersFromConfig(): Promise<OnchainVerifier[]> {
+  const projects = await ProjectService.STATIC.getProjects({
+    select: ['proofVerification'],
+    whereNot: ['isArchived'],
+  })
+  return projects.flatMap((p) => p.proofVerification.verifiers)
 }

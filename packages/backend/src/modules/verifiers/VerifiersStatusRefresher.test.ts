@@ -99,7 +99,7 @@ describe(VerifiersStatusRefresher.name, () => {
           verifierStatus: verifierStatusRepositoryMock,
         }),
         verifiersListProvider: mockFn(
-          () => zksMock[0].proofVerification.verifiers,
+          async () => zksMock[0].proofVerification.verifiers,
         ),
       })
 
@@ -131,7 +131,7 @@ describe(VerifiersStatusRefresher.name, () => {
     it('throws if no verifiers found', async () => {
       const refresher = createVerifierStatusRefresher({
         chains: [],
-        verifiersListProvider: () => [],
+        verifiersListProvider: () => Promise.resolve([]),
       })
 
       await expect(() => refresher.refresh()).toBeRejectedWith(
@@ -149,7 +149,7 @@ function createVerifierStatusRefresher(
     peripherals: mockObject<Peripherals>(),
     clock: mockObject<Clock>(),
     logger: Logger.SILENT,
-    verifiersListProvider: () => [],
+    verifiersListProvider: () => Promise.resolve([]),
     chains: [],
     ...deps,
   })
