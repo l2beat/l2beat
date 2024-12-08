@@ -1,3 +1,65 @@
+Generated with discovered.json: 0x5ee6bca91da6a5a968b4ce0113c8e0afe8a8310a
+
+# Diff at Sun, 08 Dec 2024 10:39:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@59fd7a30471906b5a479f280731621e94e22f17c block: 583311
+- current block number: 603429
+
+## Description
+
+KintoID upgrade: Introduction of a per-account `sanctionedAt` timestamp that gets updated to the current timestamp with every new sanction by a KYC provider role. An account is 'sanctions safe' iff 1) the KYC providers were active onchain during the previous 7d (`isSanctionsMonitored(7)`) AND 2.1) the account was never sanctioned OR 2.2) the latest sanction against the account is more than 3d ago.
+
+```
+function isSanctionsSafe(address _account) public view virtual override returns (bool) {
+        return isSanctionsMonitored(7)
+            && (
+                _kycmetas[_account].sanctionsCount == 0
+                    || (sanctionedAt[_account] != 0 && (block.timestamp - sanctionedAt[_account]) > 3 days)
+            );
+    }
+```
+Any KYC provider that is malicious could re-sanction an account at will and the account would never meet the 3d limit to be un-sanctioned even if the SC never approves. Kinto agreed on telegram to introduce a 'cooldown period' of 10d after a sanction during which `sanctionedAt` cannot be updated to the latest TS.
+
+KYC enforcement and upgrades summary:
+1. The use of smartWallets is enforced by the STF and a custom wasmModuleRoot (the l2 node queries `KintoAppRegistry` for a whitelist, all contracts not on the whitelist cannot be called by an EOA, users can thus transact exclusively through the `KintoWallet`)
+2. `KintoWallet` checks the `KintoID` contract for an `isKYC` flag on every transaction (on each signature verification). This flag requires `isSanctionsSafe` which is quoted above.
+3. Since `isSanctionsSafe` is required for any user to transact on Kinto, a change in its state is considered an upgrade. 
+
+We discussed that for a potential stage 1 Kinto, a sanction / censorship of a user can be made by a centralized KYC provider, but the sanction must be voided if not actively confirmed in a short time by the Kinto SecurityCouncil.
+
+If you have read this far, please check out [my soundcloud](https://app.excalidraw.com/s/1Pobo8fNXle/3EeVcMQJj7N).
+
+## Watched changes
+
+```diff
+    contract KintoID (0xf369f78E3A0492CC4e96a90dae0728A38498e9c7) {
+    +++ description: Manages Kinto's KYC system: KYC provider addresses and the KYC status of users.
+      sourceHashes.1:
+-        "0x499e44fadd43278a5324045ee02ce20064caa49a1f75976a0d8492e2fd93efae"
++        "0x3fa7283c94fa2072438a07fb3069ce98694353a7a07f32585e2baa41a856fca9"
+      values.$implementation:
+-        "0xd3642f5CF57A5090F173294F68Df66583521FeA0"
++        "0x7CFe474936fA50181ae7c2C43EeB8806e25bc983"
+      values.$pastUpgrades.7:
++        ["2024-12-06T21:43:59.000Z","0x393717142a85ed552e3d455cd886d11abe37095fa7f7be1dd1db7214a65a74dd",["0x7CFe474936fA50181ae7c2C43EeB8806e25bc983"]]
+      values.$upgradeCount:
+-        7
++        8
+      values.accessControl.GOVERNANCE_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a"]}
+      values.GOVERNANCE_ROLE:
++        "0x71840dc4906352362b0cdaf79870196c8e42acafade72d5d5a6d59291253ceb1"
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@583311 => .flat}/KintoID/KintoID.sol    | 278 +++++++++++++++------
+ 1 file changed, 208 insertions(+), 70 deletions(-)
+```
+
 Generated with discovered.json: 0x7062a13b9aa52460a1fcf602e585207c9ce7735d
 
 # Diff at Thu, 05 Dec 2024 05:41:39 GMT:

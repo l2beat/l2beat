@@ -4637,6 +4637,20 @@
       "supply": "zero"
     },
     {
+      "name": "USD0 Liquid Bond",
+      "coingeckoId": "usd0-liquid-bond",
+      "address": "0x35D8949372D46B7a3D5A56006AE77B215fc69bC0",
+      "symbol": "USD0++",
+      "decimals": 18,
+      "deploymentTimestamp": 1717592195,
+      "coingeckoListingTimestamp": 1721952000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39169/large/0x35d8949372d46b7a3d5a56006ae77b215fc69bc0.png?1720798057",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "USDe",
       "coingeckoId": "ethena-usde",
       "address": "0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
@@ -7947,6 +7961,20 @@
       "chainId": 42161,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "ChainLink Token",
+      "coingeckoId": "chainlink",
+      "address": "0xf97f4df75117a78c1A5a0DBb814Af92458539FB4",
+      "symbol": "LINK",
+      "decimals": 18,
+      "deploymentTimestamp": 1623867040,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1696502009",
+      "chainId": 42161,
+      "source": "canonical",
+      "supply": "zero"
     },
     {
       "name": "CHEESE",
