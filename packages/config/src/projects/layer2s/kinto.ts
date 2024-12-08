@@ -97,6 +97,8 @@ export const kinto: Layer2 = orbitStackL2({
     {
       rollupNodeLink:
         'https://docs.kinto.xyz/kinto-the-safe-l2/building-on-kinto/running-kinto-nodes',
+      securityCouncilReference:
+        'https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/security-council',
     },
   ),
   trackedTxs: [
