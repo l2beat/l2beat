@@ -9184,6 +9184,20 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "CROAK",
+      "coingeckoId": "croak_on_linea",
+      "address": "0xacb54d07ca167934f57f829bee2cc665e1a5ebef",
+      "symbol": "CROAK",
+      "decimals": 18,
+      "deploymentTimestamp": 1716779746,
+      "coingeckoListingTimestamp": 1718064000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/38592/large/Croak-for-coingeko.png?1718092516",
+      "chainId": 59144,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Ether",
       "coingeckoId": "ethereum",
       "symbol": "ETH",
