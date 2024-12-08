@@ -1,8 +1,8 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 21334370,
-  "configHash": "0xc302ea45cdb6a30ca599b960570bbf854f33470e2a011932904091aa8aca9871",
+  "blockNumber": 21342623,
+  "configHash": "0x9b9f7a377fd3716d26f739e3cc745980b2af4e346b80d555f129b4eef935ec41",
   "contracts": [
     {
       "name": "GnosisSafe",
@@ -217,7 +217,7 @@
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
           "0x3F0009D00cc78979d00Eb635490F23E8d6aCc481",
-          "0xe79af29d618141Ffef951B240b250d47030D56d7",
+          "0x8A23548a640De1137e58e2D9600e1c5913E3D674",
           "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc",
           "0x702caCafA54B88e9c54449563Fb2e496e85c78b7",
           "0xFAdb20191Ab38362C50f52909817B74214CA79AE",
@@ -229,7 +229,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 169,
+        "nonce": 170,
         "VERSION": "1.3.0"
       },
       "fieldMeta": {
@@ -348,7 +348,11 @@
         ],
         "sophonValidatorsRemoved": [],
         "stateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "treasureThirdBatchTS": 1732907795,
+        "treasureValidatorsAdded": [
+          "0x2572835e02b59078711aa0800490e80975e4169d",
+          "0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283"
+        ],
+        "treasureValidatorsRemoved": [],
         "zeronetworkValidatorsAdded": [
           "0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F",
           "0x479B7c95b9509E1A834C994fc94e3581aA8A73B9"
@@ -366,10 +370,6 @@
           "description": "If non-zero, the third batch has been posted (launch monitor)."
         },
         "grvtThirdBatchTS": {
-          "severity": "MEDIUM",
-          "description": "If non-zero, the third batch has been posted (launch monitor)."
-        },
-        "treasureThirdBatchTS": {
           "severity": "MEDIUM",
           "description": "If non-zero, the third batch has been posted (launch monitor)."
         }
@@ -745,11 +745,13 @@
     { "address": "0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F" },
     { "address": "0x160669864cDe95c190364ad01eDfbAA32E9DA430" },
     { "address": "0x227230CD05e89f41E67df3E5fC61B18411d147A9" },
+    { "address": "0x2572835e02b59078711aa0800490e80975e4169d" },
     { "address": "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc" },
     { "address": "0x3527439923a63F8C13CF72b8Fe80a77f6e572092" },
     { "address": "0x3620B9e7c75E09cCC37458c7B6EE6c23D8Ee4f0f" },
     { "address": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8" },
     { "address": "0x3F0009D00cc78979d00Eb635490F23E8d6aCc481" },
+    { "address": "0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283" },
     { "address": "0x441e5c8910Ef39996B2D01499509861228cbc2d1" },
     { "address": "0x479B7c95b9509E1A834C994fc94e3581aA8A73B9" },
     { "address": "0x4cc87B0A504047967CeD9A955431B3229237e7de" },
@@ -758,6 +760,7 @@
     { "address": "0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df" },
     { "address": "0x702caCafA54B88e9c54449563Fb2e496e85c78b7" },
     { "address": "0x7fEA26A181A792B5107ee0a31e434F5dBcbBe0B7" },
+    { "address": "0x8A23548a640De1137e58e2D9600e1c5913E3D674" },
     { "address": "0x8b0c64CcaB94d4618Ef834F396F622f61F2b013D" },
     { "address": "0xa376AaF645dbd9b4f501B2A8a97bc21DcA15B001" },
     { "address": "0xACBD581D1BedB2F71d2F5F01f881586e0623d591" },
@@ -766,7 +769,6 @@
     { "address": "0xd5966E3dd25f6086b6aD7D7Fa3292d11b988da95" },
     { "address": "0xD9b0579e2B8387fE153201631EBC4be9dEFA1A6d" },
     { "address": "0xE4F4FdaD61f192EBe9a32b2d2fB47A5802891e14" },
-    { "address": "0xe79af29d618141Ffef951B240b250d47030D56d7" },
     { "address": "0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f" },
     { "address": "0xFAdb20191Ab38362C50f52909817B74214CA79AE" },
     { "address": "0xfd03dA3aeb6807a98db96C1704Ea4CFf031BaEd2" }

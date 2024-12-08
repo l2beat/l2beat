@@ -1,3 +1,46 @@
+Generated with discovered.json: 0xcf618f8ef08526579da3613458e72f09482fd750
+
+# Diff at Fri, 06 Dec 2024 09:41:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@da76f61d2c06d695d89e2429e2266a54932319a2 block: 21334370
+- current block number: 21342623
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: Can instantly upgrade all contracts and roles in the zksync Era contracts
+      values.$members.1:
+-        "0xe79af29d618141Ffef951B240b250d47030D56d7"
++        "0x8A23548a640De1137e58e2D9600e1c5913E3D674"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21334370 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
+      values.treasureThirdBatchTS:
+-        1732907795
+      values.treasureValidatorsAdded:
++        ["0x2572835e02b59078711aa0800490e80975e4169d","0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283"]
+      values.treasureValidatorsRemoved:
++        []
+      fieldMeta.treasureThirdBatchTS:
+-        {"severity":"MEDIUM","description":"If non-zero, the third batch has been posted (launch monitor)."}
+    }
+```
+
 Generated with discovered.json: 0x130741beb8896a212215e004768fdc2a13bfb95d
 
 # Diff at Thu, 05 Dec 2024 06:01:51 GMT:

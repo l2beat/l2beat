@@ -2,38 +2,105 @@
 
 {
   dataAvailability: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
+    description: "Proof construction and state derivation rely fully on data that is NOT published onchain."
+    sentiment: "bad"
+    sources: [
+      {
+        contract: "ValidatorTimelock"
+        references: [
+          "https://etherscan.io/address/0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E#code#F1#L120"
+          "https://etherscan.io/tx/0x9dbf29985eae00b7a1b7dbd5b21eedfb287be17310eb8bef6c524990b6928f63"
+        ]
+      }
+      {
+        contract: "TreasureZkEvm"
+        references: [
+          "https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L216"
+          "https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L52"
+          "https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F11#L120"
+        ]
+      }
+    ]
+    value: "External"
   }
   destinationToken: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
+    description: "ETH transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain."
+    sentiment: "good"
+    value: "Native & Canonical"
   }
   exitWindow: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
+    description: "There is no window for users to exit in case of an unwanted standard upgrade because the central operator can censor withdrawal transactions by implementing a TransactionFilterer with no delay. The standard upgrade delay is 4d 21h."
+    sentiment: "bad"
+    sources: [
+      {
+        contract: "TreasureZkEvm"
+        references: [
+          "https://etherscan.io/address/0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a#code#F1#L114"
+          "https://etherscan.io/address/0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a#code#F1#L128"
+        ]
+      }
+    ]
+    value: "None"
   }
   proposerFailure: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
+    definingMetric: -Infinity
+    description: "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen. There is a decentralized Governance system that can attempt changing Proposers with an upgrade."
+    sentiment: "warning"
+    sources: [
+      {
+        contract: "TreasureZkEvm"
+        references: [
+          "https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L219"
+        ]
+      }
+    ]
+    value: "Cannot withdraw"
   }
   sequencerFailure: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
+    description: "Users can submit transactions to an L1 queue, but can't force them. The sequencer cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencer censors or is down, it is so for everyone."
+    sentiment: "warning"
+    sources: [
+      {
+        contract: "TreasureZkEvm"
+        references: [
+          "https://etherscan.io/address/0xCDB6228b616EEf8Df47D69A372C4f725C43e718C#code#F1#L53"
+          "https://etherscan.io/address/0xE60E94fCCb18a81D501a38959E532C0A85A1be89#code#F1#L95"
+        ]
+      }
+    ]
+    value: "Enqueue via L1"
   }
   stateValidation: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
+    definingMetric: Infinity
+    description: "STARKs and SNARKs are zero knowledge proofs that ensure state correctness. STARKs proofs are wrapped in SNARKs proofs for efficiency. SNARKs require a trusted setup."
+    secondLine: "21h execution delay"
+    sentiment: "good"
+    sources: [
+      {
+        contract: "ValidatorTimelock"
+        references: [
+          "https://etherscan.io/address/0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E#code#F1#L169"
+        ]
+      }
+      {
+        contract: "TreasureZkEvm"
+        references: [
+          "https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L448"
+          "https://etherscan.io/address/0xE60E94fCCb18a81D501a38959E532C0A85A1be89#code#F6#L23"
+        ]
+      }
+      {
+        contract: "Verifier"
+        references: [
+          "https://etherscan.io/address/0x70F3FBf8a427155185Ec90BED8a3434203de9604#code#F1#L343"
+        ]
+      }
+    ]
+    value: "ZK proofs (ST, SN)"
   }
   validatedBy: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
+    description: "Smart contracts on Ethereum validate all bridge transfers."
+    sentiment: "good"
+    value: "Ethereum"
   }
 }
