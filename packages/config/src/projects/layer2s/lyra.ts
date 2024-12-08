@@ -152,6 +152,52 @@ export const lyra: Layer2 = opStackL2({
       chain: 'ethereum',
     },
     {
+      address: EthereumAddress('0x76624ff43D610F64177Bb9c194A2503642e9B803'),
+      sinceTimestamp: new UnixTime(1725056027),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['LBTC'],
+      chain: 'ethereum',
+    },
+    {
+      address: EthereumAddress('0x25d35C8796c9dcD3857abE90D802FC17b1FB55A5'),
+      sinceTimestamp: new UnixTime(1727390399),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['eBTC'],
+      chain: 'ethereum',
+    },
+    {
+      address: EthereumAddress('0x76624ff43D610F64177Bb9c194A2503642e9B803'),
+      sinceTimestamp: new UnixTime(1727390367),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['cbBTC'],
+      chain: 'base',
+      includeInTotal: false,
+    },
+    {
       address: EthereumAddress('0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa'),
       sinceTimestamp: new UnixTime(1705566299),
       source: 'external',

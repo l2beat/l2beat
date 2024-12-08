@@ -38,6 +38,7 @@ export const lisk: Layer2 = opStackL2({
     activityDataSource: 'Blockchain RPC',
   },
   l1StandardBridgePremintedTokens: ['LSK'],
+  nonTemplateExcludedTokens: ['USDC'],
   finality: {
     type: 'OPStack-blob',
     genesisTimestamp: new UnixTime(1714728791),

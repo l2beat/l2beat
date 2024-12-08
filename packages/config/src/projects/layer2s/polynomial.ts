@@ -52,6 +52,21 @@ export const polynomial: Layer2 = opStackL2({
   discoveryDrivenData: true,
   nonTemplateEscrows: [
     {
+      address: EthereumAddress('0xDf9Fa2b420689384E8DD55a706262DC0ED37020F'),
+      sinceTimestamp: new UnixTime(1728993695),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['USD0++'],
+      chain: 'ethereum',
+    },
+    {
       address: EthereumAddress('0x615172e47c0C5A6dA8ea959632Ac0166f7a59eDc'),
       sinceTimestamp: new UnixTime(1721219231),
       source: 'external',

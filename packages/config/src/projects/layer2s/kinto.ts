@@ -214,6 +214,53 @@ export const kinto: Layer2 = orbitStackL2({
         "Bridger gateway that can swap assets to 'L2 final assets' before bridging them to the L2.",
     }),
     {
+      address: EthereumAddress('0xA6Ae29Ce5c38DFE0Dd95B716748ac747f31E4013'),
+      sinceTimestamp: new UnixTime(1730655983),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['LINK'],
+      chain: 'ethereum',
+    },
+    {
+      address: EthereumAddress('0xC9a9f47Ae41Fa4287837751AF7325e87a1dE9326'),
+      sinceTimestamp: new UnixTime(1730656015),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['LINK'],
+      chain: 'arbitrum',
+      includeInTotal: false,
+    },
+    {
+      address: EthereumAddress('0xbE60CC82A67AC7BBA8F41408B0C6833cE73e0E4D'),
+      sinceTimestamp: new UnixTime(1730657767),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['cbBTC'],
+      chain: 'base',
+      includeInTotal: false,
+    },
+    {
       address: EthereumAddress('0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94'),
       sinceTimestamp: new UnixTime(1716142367),
       source: 'external',
