@@ -7,7 +7,7 @@ Generated with discovered.json: 0xee49564a02bd62d500a2c407f8c13e8c3a1c1a3b
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial discovery of a standard zk stack validium.
 
 ## Initial discovery
 
