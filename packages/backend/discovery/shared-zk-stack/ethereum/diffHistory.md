@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x84b9b6d9912626f624bbec1ed2469d79f770962f
+
+# Diff at Sun, 08 Dec 2024 11:51:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@59fd7a30471906b5a479f280731621e94e22f17c block: 21334370
+- current block number: 21357589
+
+## Description
+
+ML MS single member change.
+
+## Watched changes
+
+```diff
+    contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: Can instantly upgrade all contracts and roles in the zksync Era contracts
+      values.$members.1:
+-        "0xe79af29d618141Ffef951B240b250d47030D56d7"
++        "0x8A23548a640De1137e58e2D9600e1c5913E3D674"
+    }
+```
+
 Generated with discovered.json: 0x130741beb8896a212215e004768fdc2a13bfb95d
 
 # Diff at Thu, 05 Dec 2024 06:01:51 GMT:
