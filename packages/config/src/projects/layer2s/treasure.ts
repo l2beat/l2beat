@@ -19,12 +19,7 @@ export const treasure: Layer2 = zkStackL2({
     added: 'treasureValidatorsAdded',
     removed: 'treasureValidatorsRemoved',
   },
-  badges: [
-    Badge.VM.EVM,
-    Badge.DA.CustomDA,
-    Badge.Stack.ZKStack,
-    Badge.Infra.ElasticChain,
-  ],
+  additionalBadges: [Badge.DA.CustomDA],
   createdAt: new UnixTime(1719931843), // 2024-07-02T14:50:43Z
   additionalPurposes: ['Gaming'],
   display: {
