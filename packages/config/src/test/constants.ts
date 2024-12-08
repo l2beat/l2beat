@@ -41,6 +41,7 @@ export const NON_DISCOVERY_DRIVEN_PROJECTS: string[] = [
   'sorare',
   'starknet',
   'taiko',
+  'treasure',
   'brine',
   'termstructure',
   'wirex',
