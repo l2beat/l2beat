@@ -2,7 +2,7 @@ import { join } from 'path'
 import { ConfigReader } from '@l2beat/discovery'
 import express from 'express'
 import { executeTerminalCommand } from './executeTerminalCommand'
-import { getCode } from './getCode'
+import { getCode, getCodePaths } from './getCode'
 import { getPreview } from './getPreview'
 import { getProject } from './getProject'
 import { getProjects } from './getProjects'
@@ -49,25 +49,35 @@ export function runDiscoveryUi() {
     res.sendFile(join(STATIC_ROOT, 'index.html'))
   })
 
-  // Start executing one of predefined commands
-  // and stream the output back to the client
-  app.get('/api/terminal/execute', (req, res) => {
-    const { command, project, chain, devMode } = req.query
-    if (!command || !project || !chain) {
+  app.get('/api/terminal/discover', (req, res) => {
+    const { project, chain, devMode } = req.query
+    if (!project || !chain || !devMode) {
       res.status(400).send('Missing required parameters')
       return
     }
-    if (command !== 'discover') {
-      res.status(400).send('Invalid command')
-      return
-    }
-
-    res.setHeader('Content-Type', 'text/event-stream')
-    res.setHeader('Cache-Control', 'no-cache')
-    res.setHeader('Connection', 'keep-alive')
-
     executeTerminalCommand(
       `(cd ../backend && pnpm discover ${chain} ${project} ${devMode === 'true' ? '--dev' : ''})`,
+      res,
+    )
+  })
+
+  app.get('/api/terminal/match-flat', (req, res) => {
+    const { project, address, against } = req.query
+    if (!project || !address || !against) {
+      res.status(400).send('Missing required parameters')
+      return
+    }
+    const codePaths = getCodePaths(
+      configReader,
+      project.toString(),
+      address.toString(),
+    )
+    const implementationPath =
+      codePaths.length > 1 ? codePaths[1].path : codePaths[0].path
+    const againstPath =
+      against === 'templates' ? './discovery/_templates/' : './discovery/'
+    executeTerminalCommand(
+      `(cd ../backend && l2b match-flat file "${implementationPath}" "${againstPath}")`,
       res,
     )
   })

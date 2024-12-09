@@ -2,7 +2,8 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import Convert from 'ansi-to-html'
 import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { executeCommand, getProject } from '../api/api'
+import { executeDiscover, executeMatchFlat, getProject } from '../api/api'
+import { usePanelStore } from '../store/store'
 import { useTerminalStore } from './store'
 
 export function TerminalPanel() {
@@ -16,6 +17,7 @@ export function TerminalPanel() {
   const outputRef = useRef<HTMLDivElement>(null)
   const { output, isRunning, addOutput, setIsRunning, clear } =
     useTerminalStore()
+  const selectedAddress = usePanelStore((state) => state.selected)
 
   if (!project) {
     throw new Error('Cannot use component outside of project page!')
@@ -50,18 +52,13 @@ export function TerminalPanel() {
     }
   }, [chains, discoveryChain])
 
-  async function handleExecute() {
-    if (!project || !discoveryChain || isRunning) return
+  async function executeCommandWithStreaming(cmd: () => EventSource) {
+    if (isRunning) return
     clear()
     setIsRunning(true)
 
     try {
-      const eventSource = executeCommand(
-        'discover',
-        project,
-        discoveryChain,
-        devMode,
-      )
+      const eventSource = cmd()
       abortControllerRef.current = new AbortController()
 
       eventSource.onmessage = (event) => {
@@ -87,9 +84,30 @@ export function TerminalPanel() {
     }
   }
 
+  async function handleExecute() {
+    if (!project || !discoveryChain) return
+    await executeCommandWithStreaming(() =>
+      executeDiscover(project, discoveryChain, devMode),
+    )
+  }
+
+  async function handleMatchTemplates() {
+    if (!project || !discoveryChain || !selectedAddress) return
+    await executeCommandWithStreaming(() =>
+      executeMatchFlat(project, selectedAddress, 'templates'),
+    )
+  }
+
+  async function handleMatchProjects() {
+    if (!project || !discoveryChain || !selectedAddress) return
+    await executeCommandWithStreaming(() =>
+      executeMatchFlat(project, selectedAddress, 'projects'),
+    )
+  }
+
   return (
     <div className="flex h-full flex-col p-2 text-sm">
-      <div className="sticky top-0 mb-2 flex gap-2">
+      <div className="sticky top-0 mb-2 flex flex-wrap items-center gap-2">
         <select
           value={discoveryChain}
           onChange={(e) => setDiscoveryChain(e.target.value)}
@@ -110,13 +128,30 @@ export function TerminalPanel() {
           />
           <span className="text-xs">--dev</span>
         </label>
-        <button
-          onClick={handleExecute}
-          disabled={isRunning}
-          className="bg-autumn-300 px-4 py-1 text-black disabled:opacity-50"
-        >
-          Run discovery
-        </button>
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            onClick={handleExecute}
+            disabled={isRunning}
+            className="bg-autumn-300 px-4 py-1 text-black disabled:opacity-50"
+          >
+            Run discovery
+          </button>
+          <div className="h-6 w-px bg-coffee-600" />
+          <button
+            onClick={handleMatchTemplates}
+            disabled={isRunning || !selectedAddress}
+            className="bg-autumn-300 px-4 py-1 text-black disabled:opacity-50"
+          >
+            Match templates
+          </button>
+          <button
+            onClick={handleMatchProjects}
+            disabled={isRunning || !selectedAddress}
+            className="bg-autumn-300 px-4 py-1 text-black disabled:opacity-50"
+          >
+            Match projects
+          </button>
+        </div>
       </div>
       <div
         ref={outputRef}
