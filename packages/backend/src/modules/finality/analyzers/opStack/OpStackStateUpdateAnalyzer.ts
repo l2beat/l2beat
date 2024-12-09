@@ -1,6 +1,7 @@
 import { assert, ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 
 import { Database } from '@l2beat/database'
+import { RpcClient2 } from '@l2beat/shared'
 import { providers, utils } from 'ethers'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
 import { BaseAnalyzer } from '../types/BaseAnalyzer'
@@ -13,7 +14,7 @@ export class OpStackStateUpdateAnalyzer extends BaseAnalyzer {
   private abi: utils.Interface
 
   constructor(
-    provider: RpcClient,
+    provider: RpcClient2,
     db: Database,
     projectId: ProjectId,
     private readonly l2BlockTime: number,

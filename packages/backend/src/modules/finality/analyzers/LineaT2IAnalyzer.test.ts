@@ -3,13 +3,14 @@ import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 
 import { Database } from '@l2beat/database'
+import { RpcClient2 } from '@l2beat/shared'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { LineaT2IAnalyzer } from './LineaT2IAnalyzer'
 
 describe(LineaT2IAnalyzer.name, () => {
   describe(LineaT2IAnalyzer.prototype.analyze.name, () => {
     it('correctly decode and returns correct data for calldata example', async () => {
-      const provider = mockObject<RpcClient>({
+      const provider = mockObject<RpcClient2>({
         getTransaction: mockFn().resolvesTo({
           data: mockCallData(2371262, 2371336),
         }),
@@ -40,7 +41,7 @@ describe(LineaT2IAnalyzer.name, () => {
     })
 
     it('correctly decode and returns correct data for blob example', async () => {
-      const provider = mockObject<RpcClient>({
+      const provider = mockObject<RpcClient2>({
         getTransaction: mockFn().resolvesTo({
           data: mockBlobCalldata(2371262, 2371336),
         }),

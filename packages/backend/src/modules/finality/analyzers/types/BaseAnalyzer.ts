@@ -8,9 +8,9 @@ import {
 import { chunk } from 'lodash'
 
 import { Database } from '@l2beat/database'
-import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
 import { LivenessWithConfigService } from '../../../tracked-txs/modules/liveness/services/LivenessWithConfigService'
 
+import { RpcClient2 } from '@l2beat/shared'
 export type Transaction = {
   txHash: string
   timestamp: UnixTime
@@ -28,7 +28,7 @@ export interface Batch {
 
 export abstract class BaseAnalyzer {
   constructor(
-    protected readonly provider: RpcClient,
+    protected readonly provider: RpcClient2,
     protected readonly db: Database,
     protected readonly projectId: ProjectId,
   ) {}

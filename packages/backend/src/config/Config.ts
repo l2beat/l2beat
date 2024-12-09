@@ -35,10 +35,16 @@ export interface Config {
   readonly lzOAppsEnabled: boolean
   readonly statusEnabled: boolean
   readonly chains: { name: string; chainId: ChainId }[]
-  readonly flags: ResolvedFeatureFlag[]
   readonly verifiers: boolean
   readonly daBeat: DABeatConfig | false
   readonly chainConfig: ChainApi[]
+  readonly beaconApi: {
+    readonly url: string
+    readonly callsPerMinute: number
+    readonly timeout: number
+  }
+
+  readonly flags: ResolvedFeatureFlag[]
 }
 
 export interface ApiConfig {
@@ -105,11 +111,6 @@ export interface TrackedTxsConfig {
 }
 
 export interface FinalityConfig {
-  readonly ethereumProviderUrl: string
-  readonly ethereumProviderCallsPerMinute: number
-  readonly beaconApiUrl: string
-  readonly beaconApiCPM: number
-  readonly beaconApiTimeout: number
   readonly configurations: FinalityProjectConfig[]
 }
 
