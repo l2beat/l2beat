@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x9be1172d5698632f2093f903249127d48fc8e8d7
+
+# Diff at Mon, 09 Dec 2024 19:59:01 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@08d3ccfe28a784d003a319e971007097ac1aec27 block: 20361394
+- current block number: 21367187
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20361394 (main branch discovery), not current.
+
+```diff
+    contract AztecFeeDistributor (0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734) {
+    +++ description: Contract responsible for distributing fees and reimbursing gas to Rollup Providers.
+      template:
++        "aztecv1/AztecFeeDistributor"
+      description:
++        "Contract responsible for distributing fees and reimbursing gas to Rollup Providers."
+    }
+```
+
+```diff
+    contract TurboVerifier (0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8) {
+    +++ description: Turbo Plonk ZK verifier.
+      template:
++        "aztecv1/TurboVerifier"
+      description:
++        "Turbo Plonk ZK verifier."
+    }
+```
+
+```diff
+    contract RollupProcessor (0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba) {
+    +++ description: None
+      template:
++        "aztecv1/RollupProcessor"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract HistoricalTurboVerifier (0xd3a6D9De4cbC2CC7529361941e85b1c3269CcBb1)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xa09907ba10fd4a69aa6f0c4a8b9a18a9d3e86ce3
 
 # Diff at Mon, 14 Oct 2024 10:49:32 GMT:
