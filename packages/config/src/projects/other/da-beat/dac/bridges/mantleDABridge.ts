@@ -1,4 +1,4 @@
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
 import { mantle } from '../../../../layer2s/mantle'
 import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../../types'
@@ -14,10 +14,10 @@ const committeeMembers = discovery.getContractValue<number>(
   'numOperators',
 )
 
-const operatorsList = discovery.getContractValue<string[]>(
-  'BLSRegistry',
-  'operatorList',
-)
+// const operatorsList = discovery.getContractValue<string[]>(
+//   'BLSRegistry',
+//   'operatorList',
+// )
 
 const threshold =
   discovery.getContractValue<number>(
@@ -25,15 +25,15 @@ const threshold =
     'quorumThresholdBasisPoints',
   ) / 1000 // Quorum threshold is in basis points, but stake is equal for all members (100k MNT)
 
-const dataStorePermissionList = discovery.getContractValue<string[]>(
-  'RegistryPermission',
-  'dataStorePermission',
-)
+// const dataStorePermissionList = discovery.getContractValue<string[]>(
+//   'RegistryPermission',
+//   'dataStorePermission',
+// )
 
-const registerOperatorManager = discovery.getContractValue<string>(
-  'RegistryPermission',
-  'permissionPerson',
-)
+// const registerOperatorManager = discovery.getContractValue<string>(
+//   'RegistryPermission',
+//   'permissionPerson',
+// )
 
 export const mantleDABridge = {
   id: 'mantleDABridge',
@@ -60,24 +60,32 @@ export const mantleDABridge = {
   },
   contracts: {
     addresses: {
-      ethereum: [
-        discovery.getContractDetails('DataLayrServiceManager', {
-          description:
-            'The DA bridge and the entry point for data availability commitments. It is responsible for storing transaction data headers and confirming the data store by verifying operators signatures.',
-        }),
-        discovery.getContractDetails('BLSRegistry', {
-          description:
-            'This contract stores the number of Mantle DA operators and their public keys. It also store the quorum threshold and the minimum stake required to be part of the quorum.',
-        }),
-        discovery.getContractDetails('RegistryPermission', {
-          description:
-            'This contract is used to manage permissions for the BLSRegistry contract.',
-        }),
-        discovery.getContractDetails('PauserRegistry', {
-          description:
-            'This contract is used to manage permissions for the DataLayrServiceManager contract.',
-        }),
-      ],
+      ethereum: discovery.getDiscoveredContracts(),
+      // .filter(
+      //   (contract) =>
+      //     contract.name === 'DataLayrServiceManager' ||
+      //     contract.name === 'BLSRegistry' ||
+      //     contract.name === 'RegistryPermission' ||
+      //     contract.name === 'PauserRegistry',
+      // ),
+      // ethereum: [
+      //   discovery.getContractDetails('DataLayrServiceManager', {
+      //     description:
+      //       'The DA bridge and the entry point for data availability commitments. It is responsible for storing transaction data headers and confirming the data store by verifying operators signatures.',
+      //   }),
+      //   discovery.getContractDetails('BLSRegistry', {
+      //     description:
+      //       'This contract stores the number of Mantle DA operators and their public keys. It also store the quorum threshold and the minimum stake required to be part of the quorum.',
+      //   }),
+      //   discovery.getContractDetails('RegistryPermission', {
+      //     description:
+      //       'This contract is used to manage permissions for the BLSRegistry contract.',
+      //   }),
+      //   discovery.getContractDetails('PauserRegistry', {
+      //     description:
+      //       'This contract is used to manage permissions for the DataLayrServiceManager contract.',
+      //   }),
+      // ],
     },
     risks: [],
   },
@@ -93,38 +101,44 @@ export const mantleDABridge = {
     `,
   },
   permissions: {
-    ethereum: [
-      ...discovery.getMultisigPermission(
-        'MantleEngineeringMultisig',
-        'The owner of the DA bridge. This entity is responsible for managing the bridge, it can pause the bridge and change various parameters such as the quorum threshold and service fee for node operators.',
-      ),
-      {
-        name: 'Permissioned Operators',
-        description: `List of addresses authorized to sign data commitments for the DA bridge.`,
-        accounts: operatorsList.map((operator) => ({
-          address: EthereumAddress(operator),
-          type: 'EOA',
-        })),
-      },
-      {
-        name: 'Permissioned Data Store',
-        description: `List of relayers authorized to post data commitments to the DA bridge.`,
-        accounts: dataStorePermissionList.map((permissionedAddress) => ({
-          address: EthereumAddress(permissionedAddress),
-          type: 'EOA',
-        })),
-      },
-      {
-        name: 'Register Operator Manager',
-        description: `Address authorized to register or change status of DA node operators.`,
-        accounts: [
-          {
-            address: EthereumAddress(registerOperatorManager),
-            type: 'EOA',
-          },
-        ],
-      },
-    ],
+    ethereum: (() => {
+      const r = discovery.getDiscoveredPermissions()
+      console.dir(r, { depth: null })
+      return r
+    })(),
+    // ethereum: [
+
+    //   ...discovery.getMultisigPermission(
+    //     'MantleEngineeringMultisig',
+    //     'The owner of the DA bridge. This entity is responsible for managing the bridge, it can pause the bridge and change various parameters such as the quorum threshold and service fee for node operators.',
+    //   ),
+    // {
+    //   name: 'Permissioned Operators',
+    //   description: `List of addresses authorized to sign data commitments for the DA bridge.`,
+    //   accounts: operatorsList.map((operator) => ({
+    //     address: EthereumAddress(operator),
+    //     type: 'EOA',
+    //   })),
+    // },
+    // {
+    //   name: 'Permissioned Data Store',
+    //   description: `List of relayers authorized to post data commitments to the DA bridge.`,
+    //   accounts: dataStorePermissionList.map((permissionedAddress) => ({
+    //     address: EthereumAddress(permissionedAddress),
+    //     type: 'EOA',
+    //   })),
+    // },
+    // {
+    //   name: 'Register Operator Manager',
+    //   description: `Address authorized to register or change status of DA node operators.`,
+    //   accounts: [
+    //     {
+    //       address: EthereumAddress(registerOperatorManager),
+    //       type: 'EOA',
+    //     },
+    //   ],
+    // },
+    // ],
   },
   chain: ChainId.ETHEREUM,
   transactionDataType: DacTransactionDataType.TransactionData,
