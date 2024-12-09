@@ -110,93 +110,93 @@ async function main() {
     })
   })
 
-  // for (const escrow of escrows) {
-  //   console.log(
-  //     `Checking logs for escrow: ${escrow.address} - ${escrows.findIndex((e) => e.address === escrow.address) + 1}/${escrows.length}`,
-  //   )
+  for (const escrow of escrows) {
+    console.log(
+      `Checking logs for escrow: ${escrow.address} - ${escrows.findIndex((e) => e.address === escrow.address) + 1}/${escrows.length}`,
+    )
 
-  //   const lastProcessedBlock =
-  //     processedEscrows.processed?.[escrow.address] ??
-  //     (await etherscanClient.getBlockNumberAtOrBefore(escrow.sinceTimestamp))
-  //   const toTopic = utils.hexZeroPad(escrow.address, 32)
+    const lastProcessedBlock =
+      processedEscrows.processed?.[escrow.address] ??
+      (await etherscanClient.getBlockNumberAtOrBefore(escrow.sinceTimestamp))
+    const toTopic = utils.hexZeroPad(escrow.address, 32)
 
-  //   const allLogs = await getAllLogs(
-  //     provider,
-  //     [transferTopic, null, toTopic],
-  //     lastProcessedBlock,
-  //     latestBlock,
-  //   )
+    const allLogs = await getAllLogs(
+      provider,
+      [transferTopic, null, toTopic],
+      lastProcessedBlock,
+      latestBlock,
+    )
 
-  //   console.log(
-  //     `Processed blocks ${lastProcessedBlock}-${latestBlock}, found ${allLogs.length} logs for escrow ${escrow.address}`,
-  //   )
+    console.log(
+      `Processed blocks ${lastProcessedBlock}-${latestBlock}, found ${allLogs.length} logs for escrow ${escrow.address}`,
+    )
 
-  //   const tokensFromLogs = new Set(allLogs.map((l) => l.address.toLowerCase()))
-  //   for (const tokenFromLog of tokensFromLogs) {
-  //     if (
-  //       coingeckoTokensMap.has(tokenFromLog) &&
-  //       !tokenListAddresses.has(tokenFromLog)
-  //     ) {
-  //       if (!allFoundTokens.has(tokenFromLog)) {
-  //         const tokenInfo = coingeckoTokensMap.get(tokenFromLog)
-  //         allFoundTokens.set(tokenFromLog, {
-  //           escrows: new Map(),
-  //           coingeckoId: tokenInfo?.id,
-  //           symbol: tokenInfo?.symbol,
-  //         })
-  //       }
+    const tokensFromLogs = new Set(allLogs.map((l) => l.address.toLowerCase()))
+    for (const tokenFromLog of tokensFromLogs) {
+      if (
+        coingeckoTokensMap.has(tokenFromLog) &&
+        !tokenListAddresses.has(tokenFromLog)
+      ) {
+        if (!allFoundTokens.has(tokenFromLog)) {
+          const tokenInfo = coingeckoTokensMap.get(tokenFromLog)
+          allFoundTokens.set(tokenFromLog, {
+            escrows: new Map(),
+            coingeckoId: tokenInfo?.id,
+            symbol: tokenInfo?.symbol,
+          })
+        }
 
-  //       try {
-  //         const [balance, decimals] = await Promise.all([
-  //           provider.call({
-  //             to: tokenFromLog,
-  //             data: tokenContract.encodeFunctionData('balanceOf', [
-  //               escrow.address,
-  //             ]),
-  //           }),
-  //           provider.call({
-  //             to: tokenFromLog,
-  //             data: tokenContract.encodeFunctionData('decimals'),
-  //           }),
-  //         ])
-  //         const balanceValue = Number(
-  //           utils.formatUnits(balance, Number(decimals)),
-  //         )
-  //         allFoundTokens
-  //           .get(tokenFromLog)
-  //           ?.escrows.set(escrow.address, { balance: balanceValue })
-  //       } catch {
-  //         console.warn(
-  //           `Failed to get balance for token ${tokenFromLog} in escrow ${escrow.address}`,
-  //         )
-  //         allFoundTokens
-  //           .get(tokenFromLog)
-  //           ?.escrows.set(escrow.address, { balance: 0 })
-  //       }
-  //     }
-  //   }
+        try {
+          const [balance, decimals] = await Promise.all([
+            provider.call({
+              to: tokenFromLog,
+              data: tokenContract.encodeFunctionData('balanceOf', [
+                escrow.address,
+              ]),
+            }),
+            provider.call({
+              to: tokenFromLog,
+              data: tokenContract.encodeFunctionData('decimals'),
+            }),
+          ])
+          const balanceValue = Number(
+            utils.formatUnits(balance, Number(decimals)),
+          )
+          allFoundTokens
+            .get(tokenFromLog)
+            ?.escrows.set(escrow.address, { balance: balanceValue })
+        } catch {
+          console.warn(
+            `Failed to get balance for token ${tokenFromLog} in escrow ${escrow.address}`,
+          )
+          allFoundTokens
+            .get(tokenFromLog)
+            ?.escrows.set(escrow.address, { balance: 0 })
+        }
+      }
+    }
 
-  //   existingTokens.found = Array.from(allFoundTokens.entries()).map(
-  //     ([address, data]) => ({
-  //       address,
-  //       escrows: Array.from(data.escrows.entries()).map(([addr, data]) => ({
-  //         address: addr,
-  //         balance: data.balance,
-  //       })),
-  //       coingeckoId: data.coingeckoId,
-  //       symbol: data.symbol,
-  //     }),
-  //   )
-  //   processedEscrows.processed[escrow.address] = latestBlock
+    existingTokens.found = Array.from(allFoundTokens.entries()).map(
+      ([address, data]) => ({
+        address,
+        escrows: Array.from(data.escrows.entries()).map(([addr, data]) => ({
+          address: addr,
+          balance: data.balance,
+        })),
+        coingeckoId: data.coingeckoId,
+        symbol: data.symbol,
+      }),
+    )
+    processedEscrows.processed[escrow.address] = latestBlock
 
-  //   writeFileSync(OUTPUT_PATH, JSON.stringify(existingTokens, null, 2) + '\n')
-  //   writeFileSync(
-  //     PROCESSED_ESCROWS_PATH,
-  //     JSON.stringify(processedEscrows, null, 2) + '\n',
-  //   )
+    writeFileSync(OUTPUT_PATH, JSON.stringify(existingTokens, null, 2) + '\n')
+    writeFileSync(
+      PROCESSED_ESCROWS_PATH,
+      JSON.stringify(processedEscrows, null, 2) + '\n',
+    )
 
-  //   console.log('Tokens not found in tokenList:', allFoundTokens.size)
-  // }
+    console.log('Tokens not found in tokenList:', allFoundTokens.size)
+  }
 
   const chunks = chunk(Array.from(allFoundTokens.keys()), 150)
 
@@ -226,22 +226,29 @@ async function main() {
     .map(([address, data]) => {
       const tokenPrice = tokenMarketData.get(address)?.price ?? 0
       const tokenMcap = tokenMarketData.get(address)?.marketCap ?? 0
+      const escrows = Array.from(data.escrows.entries()).map(
+        ([addr, data]) => ({
+          address: addr,
+          balance: data.balance,
+          value: Math.floor(data.balance * tokenPrice),
+        }),
+      )
       return {
         symbol: data.symbol,
         coingeckoId: data.coingeckoId,
         marketCap: Math.floor(tokenMcap),
+        missingValue: escrows.reduce(
+          (sum, escrow) => sum + (escrow.value ?? 0),
+          0,
+        ),
         address,
-        escrows: Array.from(data.escrows.entries()).map(([addr, data]) => ({
-          address: addr,
-          balance: data.balance,
-          value: Math.floor(data.balance * tokenPrice),
-        })),
+        escrows,
       }
     })
     .sort((a, b) => {
-      const mcapA = a.marketCap ?? 0
-      const mcapB = b.marketCap ?? 0
-      return mcapB - mcapA
+      const missingValueA = a.missingValue ?? 0
+      const missingValueB = b.missingValue ?? 0
+      return missingValueB - missingValueA
     })
 
   writeFileSync(
