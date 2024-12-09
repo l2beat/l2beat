@@ -273,6 +273,7 @@ function getEthereumDetails({ daLayer, daBridge, isVerified }: Params) {
       isUnderReview: !!daLayer.isUnderReview,
       isVerified,
       grissiniValues,
+      description: daLayer.display.description,
     },
   })
 

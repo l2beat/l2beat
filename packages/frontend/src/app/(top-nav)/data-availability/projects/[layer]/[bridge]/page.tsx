@@ -73,6 +73,8 @@ export default async function Page(props: Props) {
   )
   const isNavigationEmpty = navigationSections.length === 0
 
+  const isEthereum = daLayer.id === 'ethereum'
+
   return (
     <>
       {!isNavigationEmpty && (
@@ -93,10 +95,14 @@ export default async function Page(props: Props) {
                 isUnderReview: daProjectEntry.isUnderReview,
               }}
               sections={navigationSections}
-              projectVariants={daLayer.bridges.map((bridge) => ({
-                title: bridge.display.name,
-                href: `/data-availability/projects/${daLayer.display.slug}/${bridge.display.slug}`,
-              }))}
+              projectVariants={
+                !isEthereum
+                  ? daLayer.bridges.map((bridge) => ({
+                      title: bridge.display.name,
+                      href: `/data-availability/projects/${daLayer.display.slug}/${bridge.display.slug}`,
+                    }))
+                  : undefined
+              }
             />
           </div>
           <div className="w-full">
