@@ -37,6 +37,7 @@ export function PizzaRosetteTooltip({
             values={values}
             className="scale-75"
             isUnderReview={isUnderReview}
+            circleClassName="fill-surface-secondary stroke-divider stroke-2 dark:fill-surface-tertiary dark:stroke-zinc-500"
           />
           <PizzaRosetteLabels
             values={values}
