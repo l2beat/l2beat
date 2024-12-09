@@ -34,7 +34,7 @@ import {
 } from '../../discovery/starkware'
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
 import { Badge } from '../badges'
-import { PROOFS } from '../other/zk-catalog/common/proofSystems'
+import { PROOFS } from '../zk-catalog/common/proofSystems'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 

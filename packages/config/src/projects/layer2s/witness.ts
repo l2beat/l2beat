@@ -37,7 +37,7 @@ const upgradeability = {
 export const witness: Layer2 = polygonCDKStack({
   createdAt: new UnixTime(1720180654), // 2024-07-05T11:57:34Z
   discovery,
-  badges: [Badge.DA.DAC],
+  additionalBadges: [Badge.DA.DAC],
   additionalPurposes: ['IoT', 'Oracles'],
   daProvider: {
     layer: DA_LAYERS.DAC,

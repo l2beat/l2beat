@@ -1,7 +1,7 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 21313606,
+  "blockNumber": 21357589,
   "configHash": "0xc302ea45cdb6a30ca599b960570bbf854f33470e2a011932904091aa8aca9871",
   "contracts": [
     {
@@ -217,7 +217,7 @@
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
           "0x3F0009D00cc78979d00Eb635490F23E8d6aCc481",
-          "0xe79af29d618141Ffef951B240b250d47030D56d7",
+          "0x8A23548a640De1137e58e2D9600e1c5913E3D674",
           "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc",
           "0x702caCafA54B88e9c54449563Fb2e496e85c78b7",
           "0xFAdb20191Ab38362C50f52909817B74214CA79AE",
@@ -229,7 +229,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 169,
+        "nonce": 170,
         "VERSION": "1.3.0"
       },
       "fieldMeta": {
@@ -338,7 +338,7 @@
         ],
         "executionDelay": 75600,
         "getName": "ValidatorTimelock",
-        "grvtThirdBatchTS": 0,
+        "grvtThirdBatchTS": 1733327159,
         "owner": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "revertedBlocks": [],
@@ -758,6 +758,7 @@
     { "address": "0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df" },
     { "address": "0x702caCafA54B88e9c54449563Fb2e496e85c78b7" },
     { "address": "0x7fEA26A181A792B5107ee0a31e434F5dBcbBe0B7" },
+    { "address": "0x8A23548a640De1137e58e2D9600e1c5913E3D674" },
     { "address": "0x8b0c64CcaB94d4618Ef834F396F622f61F2b013D" },
     { "address": "0xa376AaF645dbd9b4f501B2A8a97bc21DcA15B001" },
     { "address": "0xACBD581D1BedB2F71d2F5F01f881586e0623d591" },
@@ -766,7 +767,6 @@
     { "address": "0xd5966E3dd25f6086b6aD7D7Fa3292d11b988da95" },
     { "address": "0xD9b0579e2B8387fE153201631EBC4be9dEFA1A6d" },
     { "address": "0xE4F4FdaD61f192EBe9a32b2d2fB47A5802891e14" },
-    { "address": "0xe79af29d618141Ffef951B240b250d47030D56d7" },
     { "address": "0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f" },
     { "address": "0xFAdb20191Ab38362C50f52909817B74214CA79AE" },
     { "address": "0xfd03dA3aeb6807a98db96C1704Ea4CFf031BaEd2" }

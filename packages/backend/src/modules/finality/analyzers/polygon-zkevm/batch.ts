@@ -152,7 +152,7 @@ function rlpToTransaction(
   }
 
   const nonce = BigNumber.from(zeroIfEmpty(rawNonce))
-  const gasPrice = BigNumber.from(rawGasPrice)
+  const gasPrice = BigNumber.from(zeroIfEmpty(rawGasPrice))
   const gasLimit = BigNumber.from(rawGasLimit)
   let to: string | undefined = undefined
 

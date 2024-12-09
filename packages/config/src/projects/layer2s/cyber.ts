@@ -24,7 +24,11 @@ export const cyber: Layer2 = opStackL2({
   createdAt: new UnixTime(1713364684), // 2024-04-17T14:38:04Z
   associatedTokens: ['CYBER'],
   discovery,
-  badges: [Badge.DA.CustomDA, Badge.Infra.Superchain, Badge.RaaS.AltLayer],
+  additionalBadges: [
+    Badge.DA.CustomDA,
+    Badge.Infra.Superchain,
+    Badge.RaaS.AltLayer,
+  ],
   additionalPurposes: ['Social'],
   display: {
     name: 'Cyber',

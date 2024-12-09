@@ -1,14 +1,21 @@
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { PERFORMED_BY } from './common'
+import {
+  ChainId,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import { Project } from '../project/Project'
+import { PERFORMED_BY } from './common/performedBy'
 import { PROOFS } from './common/proofSystems'
-import { ZkCatalogProject } from './types/ZkCatalogProject'
 
-export const worldcoinsemaphore: ZkCatalogProject = {
-  createdAt: new UnixTime(1717506924), // 2024-06-04T13:15:24Z
-  display: {
-    slug: 'worldcoin-semaphore',
-    name: 'Worldcoin Semaphore',
-  },
+export const worldcoinsemaphore: Project = {
+  id: ProjectId('worldcoinsemaphore'),
+  slug: 'worldcoin-semaphore',
+  name: 'Worldcoin Semaphore',
+  addedAt: UnixTime.fromDate(new Date('2024-06-04')),
+  // tags
+  isZkCatalog: true,
+  // data
   proofVerification: {
     shortDescription:
       'Anonymity set inclusion checker for the Worldcoin network.',
@@ -64,5 +71,4 @@ export const worldcoinsemaphore: ZkCatalogProject = {
       },
     ],
   },
-  type: 'zk-catalog',
 }

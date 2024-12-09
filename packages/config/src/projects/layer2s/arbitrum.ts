@@ -93,7 +93,7 @@ const selfSequencingDelay = maxTimeVariation.delaySeconds
 
 export const arbitrum: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
-  badges: [
+  additionalBadges: [
     Badge.VM.WasmVM,
     Badge.Stack.Nitro,
     Badge.Other.Governance,
@@ -453,6 +453,7 @@ export const arbitrum: Layer2 = orbitStackL2({
       address: EthereumAddress('0xa3A7B6F88361F48403514059F1F16C8E78d60EeC'),
       tokens: '*',
       excludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'PEPE', 'rsETH'],
+      premintedTokens: ['LOGX', 'AIUS', 'YBR', 'FFM'],
       description:
         'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
       ...upgradeExecutorUpgradeability,

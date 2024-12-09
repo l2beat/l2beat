@@ -16,13 +16,17 @@ If you want to add a new project to ZK Catalog or update the information for an 
 ### If the project is not listed on the main L2BEAT website
 
 1. Create a new projectName.ts file in `packages/config/src/projects/other/zk-catalog`
-2. Edit the .ts file with the same information as above, but also include the display properties:
+2. Edit the .ts file with the same information as above, but also include the following properties:
 
-```jsx
-display: {
-    slug: 'projectSlug',
-    name: 'projectName',
-  },
+```js
+id: ProjectId('UNIQUE_ID_HERE'),
+slug: 'unique-slug',
+name: 'Project Name',
+addedAt: UnixTime.fromDate(new Date('YYYY-MM-DD'))
+// tags
+isZkCatalog: true
+// data
+proofVerification: { /* The specifics from above */ }
 ```
 
 3. Add a detailed description - this is done by creating a markdown file in `packages/frontend/src/content/zkCatalogDescriptions`. If you want to add any images, make sure to add them in `packages/frontend/src/static/images/zk-catalog`.
