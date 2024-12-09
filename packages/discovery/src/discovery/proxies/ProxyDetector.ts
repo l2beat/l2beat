@@ -26,6 +26,7 @@ import { getPolygonExtensionProxy } from './manual/PolygonExtensionProxy'
 import { getZkSpaceProxy } from './manual/ZkSpaceProxy'
 import { getZkSyncLiteProxy } from './manual/ZkSyncLiteProxy'
 import { getImmutableProxy } from './manual/immutableProxy'
+import { detectBeaconProxy } from './auto/BeaconProxy'
 
 type Detector = (
   provider: IProvider,
@@ -44,6 +45,7 @@ const DEFAULT_AUTO_DETECTORS: Detector[] = [
   detectEip897Proxy,
   detectZeppelinOSProxy,
   detectEip2535proxy,
+  detectBeaconProxy
 ]
 
 export const MANUAL_DETECTORS: Record<ManualProxyType, Detector> = {
