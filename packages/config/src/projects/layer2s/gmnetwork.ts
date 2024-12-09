@@ -23,7 +23,11 @@ const daResolveWindow = formatSeconds(
 export const gmnetwork: Layer2 = opStackL2({
   createdAt: new UnixTime(1732028588), // 2024-11-19T15:03:08
   discovery,
-  badges: [Badge.DA.CustomDA, Badge.Infra.Superchain, Badge.RaaS.AltLayer],
+  additionalBadges: [
+    Badge.DA.CustomDA,
+    Badge.Infra.Superchain,
+    Badge.RaaS.AltLayer,
+  ],
   additionalPurposes: ['AI'],
   display: {
     name: 'GM Network',

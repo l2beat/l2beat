@@ -9,7 +9,11 @@ const discovery = new ProjectDiscovery('apechain', 'arbitrum')
 export const apechain: Layer3 = orbitStackL3({
   createdAt: new UnixTime(1719939717), // 2024-07-02T17:01:57Z
   hostChain: ProjectId('arbitrum'),
-  badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum, Badge.RaaS.Caldera],
+  additionalBadges: [
+    Badge.DA.DAC,
+    Badge.L3ParentChain.Arbitrum,
+    Badge.RaaS.Caldera,
+  ],
   display: {
     name: 'ApeChain',
     slug: 'apechain',

@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x05d320eff815b3c241c92574418be87d8d86f1d6
+
+# Diff at Thu, 05 Dec 2024 06:21:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7dc480bf5499525d0b44afce03521538ecc8ec73 block: 19910271
+- current block number: 21334467
+
+## Description
+
+Second Governor MS added.
+
+## Watched changes
+
+```diff
+    contract StarkExchange (0x5FDCCA53617f4d2b9134B29090C87D01058e27e9) {
+    +++ description: None
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0xD2C37fC6fD89563187f3679304975655e448D192","via":[]}
+      values.$admin:
+-        "0x9C41deab42Bae7c0ec4DB3cECc0faD86F4D6EC91"
++        ["0x9C41deab42Bae7c0ec4DB3cECc0faD86F4D6EC91","0xD2C37fC6fD89563187f3679304975655e448D192"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract IMXProxyGovernanceMultisig2 (0xD2C37fC6fD89563187f3679304975655e448D192)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../IMXProxyGovernanceMultisig2/GnosisSafe.sol     | 953 +++++++++++++++++++++
+ .../GnosisSafeProxy.p.sol                          |  35 +
+ 2 files changed, 988 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19910271 (main branch discovery), not current.
+
+```diff
+    contract IMXProxyGovernanceMultisig1 (0x9C41deab42Bae7c0ec4DB3cECc0faD86F4D6EC91) {
+    +++ description: None
+      name:
+-        "ProxyGovernanceMultisig"
++        "IMXProxyGovernanceMultisig1"
+    }
+```
+
 Generated with discovered.json: 0xd4d8b2065a48ffd2e041bd13b7f423fd023fda45
 
 # Diff at Mon, 21 Oct 2024 11:06:37 GMT:

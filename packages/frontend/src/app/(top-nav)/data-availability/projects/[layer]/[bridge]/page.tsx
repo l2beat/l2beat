@@ -18,7 +18,7 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  if (env.VERCEL_ENV === 'preview') return []
+  if (env.VERCEL_ENV !== 'production') return []
   return daLayers.flatMap((layer) =>
     layer.bridges.map((bridge) => ({
       layer: layer.display.slug,

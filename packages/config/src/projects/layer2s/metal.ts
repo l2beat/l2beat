@@ -11,7 +11,7 @@ export const metal: Layer2 = opStackL2({
   createdAt: new UnixTime(1695904849), // 2023-09-28T12:40:49Z
   discovery,
   associatedTokens: ['MTL'],
-  badges: [Badge.Infra.Superchain, Badge.RaaS.Conduit],
+  additionalBadges: [Badge.Infra.Superchain, Badge.RaaS.Conduit],
   display: {
     name: 'Metal',
     slug: 'metal',

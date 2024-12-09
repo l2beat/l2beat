@@ -37,7 +37,7 @@ const upgradeability = {
 export const xlayer: Layer2 = polygonCDKStack({
   createdAt: new UnixTime(1713983341), // 2024-04-24T18:29:01Z
   discovery,
-  badges: [Badge.DA.DAC, Badge.Infra.AggLayer],
+  additionalBadges: [Badge.DA.DAC, Badge.Infra.AggLayer],
   daProvider: {
     layer: DA_LAYERS.DAC,
     bridge: DA_BRIDGES.DAC_MEMBERS({

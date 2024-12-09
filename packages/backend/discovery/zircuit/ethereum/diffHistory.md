@@ -1,3 +1,49 @@
+Generated with discovered.json: 0x6b1ef83ce197665a204bcae5f0602a71929c06aa
+
+# Diff at Thu, 05 Dec 2024 05:56:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7dc480bf5499525d0b44afce03521538ecc8ec73 block: 20827058
+- current block number: 21334344
+
+## Description
+
+Minor upgrade to the verifier to support another type of dummy proof (`0xFFFF`).
+```
+if (_proof.length == 2 && (bytes2(_proof) == 0xDEAD || bytes2(_proof) == 0xFFFF)) {
+            return bytes("");
+        }
+```
+
+## Watched changes
+
+```diff
+    contract Verifier (0x6BCe7408c0781dcE7b71494274302D4b75a1447c) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x15cce087eeab52950ec9f98df3ec3bb507edb1fac086fa0674aad4994d49049d"
++        "0xa755414175ee27be390c32c78aaacaaf640fea05cd3198de33257a27f282b91f"
+      values.$implementation:
+-        "0x13A06FF21E46BCCd4B03E5Cb04372bB7aE7f2168"
++        "0xa1f99E9E8D23B4945b62eAFF65eCf3D0dE6a0a5e"
+      values.$pastUpgrades.3:
++        ["2024-12-04T15:21:23.000Z","0xa77ba9edb866b52cd4f676f0ff60cc38e85987d4cee650fc232a2a9d13c00dc6",["0xa1f99E9E8D23B4945b62eAFF65eCf3D0dE6a0a5e"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.version:
+-        "0c13cfbb19b823f524a346e7ff5b352e24b8d79b"
++        "c3131379c4bf618f2135c29547049b46923f7dca"
+    }
+```
+
+## Source code changes
+
+```diff
+.../zircuit/ethereum/{.flat@20827058 => .flat}/Verifier/Verifier.sol  | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+```
+
 Generated with discovered.json: 0x09f3f25dd9125f5444f20f332977639589728e0e
 
 # Diff at Fri, 01 Nov 2024 12:11:01 GMT:

@@ -1,5 +1,5 @@
 ---
-  title: "Governance Review #30"
+  title: "Governance Review #31"
   description: "Another full week in DAO governance."
   publishedOn: "2024-11-02"
   authorId: anastassis-oikonomopoulos

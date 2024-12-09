@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x14284eac296180d9fe3cb6f8ef7ebde365ecf724
+
+# Diff at Fri, 06 Dec 2024 08:09:43 GMT:
+
+- author: Piotr Szlachciak (<szlachciak.piotr@gmail.com>)
+- comparing to: main@f9ded76f7930b0c86788e4c4595d553b165b87d1 block: 21272771
+- current block number: 21272771
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21272771 (main branch discovery), not current.
+
+```diff
+    contract ValidatorUtils (0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF) {
+    +++ description: This contract implements view only utilities for validators.
+      template:
++        "orbitstack/ValidatorUtils"
+      description:
++        "This contract implements view only utilities for validators."
+    }
+```
+
 Generated with discovered.json: 0x9d1d74f47e0adf0a6528b1f8f54919a0905b8423
 
 # Diff at Fri, 29 Nov 2024 11:28:40 GMT:

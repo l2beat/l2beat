@@ -9,13 +9,16 @@ const discovery = new ProjectDiscovery('parallel')
 
 export const parallel: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1704289654), // 2024-01-03T13:47:34Z
+  isArchived: true,
   discovery,
-  badges: [],
+  additionalBadges: [],
   display: {
     name: 'Parallel',
     slug: 'parallel',
     redWarning:
       'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
+    headerWarning:
+      'Parallel is [deprecating their Orbit stack Layer 2](https://medium.com/@ParallelFi/the-withdrawal-on-parallel-l2-is-now-available-c3b4b572864e).',
     description:
       'Parallel is an Ethereum L2 solution utilizing Arbitrum Nitro technology.',
     links: {
