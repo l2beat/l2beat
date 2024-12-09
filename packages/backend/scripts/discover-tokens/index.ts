@@ -206,46 +206,72 @@ async function main() {
     console.log('Tokens not found in tokenList:', allFoundTokens.size)
   }
 
-  const chunks = chunk(Array.from(allFoundTokens.keys()), 150)
+  const chunks = chunk(
+    Array.from(allFoundTokens.entries()).map(([address, data]) => ({
+      address,
+      coingeckoId: data.coingeckoId,
+    })),
+    150,
+  )
 
   const tokenMarketData = new Map<
     string,
-    { marketCap: number; price: number }
+    { marketCap: number; price: number; circulatingSupply: number }
   >()
-  for (const chunk of chunks) {
-    const chunkData = (await coingeckoClient.query(
-      '/simple/token_price/ethereum',
-      {
-        vs_currencies: 'usd',
-        include_market_cap: 'true',
-        contract_addresses: chunk.join(','),
-      },
-    )) as Record<string, { usd_market_cap: number; usd: number }>
 
-    for (const [address, data] of Object.entries(chunkData)) {
-      tokenMarketData.set(address, {
-        marketCap: data.usd_market_cap,
-        price: data.usd,
-      })
+  // Get market data including circulating supply
+  for (const chunk of chunks) {
+    const coingeckoIds = chunk
+      .map((t) => t.coingeckoId)
+      .filter((id): id is string => id !== undefined)
+
+    const marketData = (await coingeckoClient.query('/coins/markets', {
+      vs_currency: 'usd',
+      ids: coingeckoIds.join(','),
+    })) as Array<{
+      id: string
+      circulating_supply: number
+      market_cap: number
+      current_price: number
+    }>
+
+    const idToAddressMap = new Map(chunk.map((t) => [t.coingeckoId, t.address]))
+
+    for (const data of marketData) {
+      const address = idToAddressMap.get(data.id)
+      if (address) {
+        tokenMarketData.set(address, {
+          marketCap: data.market_cap,
+          price: data.current_price,
+          circulatingSupply: data.circulating_supply,
+        })
+      }
     }
   }
 
   const sortedTokens = Array.from(allFoundTokens.entries())
     .map(([address, data]) => {
-      const tokenPrice = tokenMarketData.get(address)?.price ?? 0
-      const tokenMcap = tokenMarketData.get(address)?.marketCap ?? 0
-      const escrows = Array.from(data.escrows.entries()).map(
-        ([addr, data]) => ({
+      const marketData = tokenMarketData.get(address)
+      const tokenPrice = marketData?.price ?? 0
+      const tokenMcap = marketData?.marketCap ?? 0
+      const circulatingSupply = marketData?.circulatingSupply ?? 0
+
+      const escrows = Array.from(data.escrows.entries()).map(([addr, data]) => {
+        // Use the smaller value between escrow balance and circulating supply
+        const adjustedBalance = Math.min(data.balance, circulatingSupply)
+        return {
           address: addr,
-          balance: data.balance,
-          value: Math.floor(data.balance * tokenPrice),
+          balance: adjustedBalance,
+          value: Math.floor(adjustedBalance * tokenPrice),
           project: data.project,
-        }),
-      )
+        }
+      })
+
       return {
         symbol: data.symbol,
         coingeckoId: data.coingeckoId,
         marketCap: Math.floor(tokenMcap),
+        circulatingSupply,
         missingValue: escrows.reduce(
           (sum, escrow) => sum + (escrow.value ?? 0),
           0,
