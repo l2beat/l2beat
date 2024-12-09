@@ -25,7 +25,7 @@ const daResolveWindow = formatSeconds(
 export const redstone: Layer2 = opStackL2({
   createdAt: new UnixTime(1714996778), // 2024-05-06T11:59:38Z
   discovery,
-  badges: [Badge.DA.CustomDA, Badge.Infra.Superchain],
+  additionalBadges: [Badge.DA.CustomDA, Badge.Infra.Superchain],
   additionalPurposes: ['Gaming'],
   display: {
     name: 'Redstone',

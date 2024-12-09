@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x192b61dd04f6c257364807da8aea8986386d9358
+
+# Diff at Sun, 08 Dec 2024 11:36:51 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@59fd7a30471906b5a479f280731621e94e22f17c block: 21328604
+- current block number: 21357513
+
+## Description
+
+BlobstreamMultisig signer change.
+
+## Watched changes
+
+```diff
+    contract BlobstreamMultisig (0x8bF34D8df1eF0A8A7f27fC587202848E528018E6) {
+    +++ description: None
+      values.$members.4:
+-        "0xA3fC931613a4E2440a199d47B0076e8b85F33099"
++        "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d"
+    }
+```
+
 Generated with discovered.json: 0x5d5e8b89ea8fc6286182d1699103e9d882101c87
 
 # Diff at Wed, 04 Dec 2024 10:41:31 GMT:

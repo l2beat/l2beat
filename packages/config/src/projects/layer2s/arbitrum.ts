@@ -93,7 +93,7 @@ const selfSequencingDelay = maxTimeVariation.delaySeconds
 
 export const arbitrum: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
-  badges: [
+  additionalBadges: [
     Badge.VM.WasmVM,
     Badge.Stack.Nitro,
     Badge.Other.Governance,

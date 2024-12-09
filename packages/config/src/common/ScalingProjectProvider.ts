@@ -15,6 +15,5 @@ export type Layer2Provider =
 export type Layer3Provider =
   | ScalingProviderBase
   | 'Cartesi Rollups'
-  | 'zkLink Nexus'
   | 'Taiko'
   | 'ZK Stack'

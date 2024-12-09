@@ -1,3 +1,44 @@
+Generated with discovered.json: 0x7066c482913892a0d5497dd83af41388af955677
+
+# Diff at Sun, 08 Dec 2024 13:29:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@59fd7a30471906b5a479f280731621e94e22f17c block: 278553826
+- current block number: 282642841
+
+## Description
+
+Nodelicense that reverts in the the mint() function and prevents minting of new node licenses.
+
+## Watched changes
+
+```diff
+    contract NodeLicenseRegistry (0xbc14d8563b248B79689ECbc43bBa53290e0b6b66) {
+    +++ description: This is the contract where Xai Sentry Keys to run a node are minted.
+      sourceHashes.1:
+-        "0x1b5b7bb8aa9932be3a7e263d3905e78382f86318e4252b53a05c67152ede1de1"
++        "0xc408ffd6d9b25f5dccbe9efa0caca71b711c95f903420227c41605fc4672a46c"
+      values.$implementation:
+-        "0xfD6Bb931D2Ee134E70568ca36584c043cB278734"
++        "0xE6E5356423516C9b75d4Dfb1fCa3973c5B695be8"
+      values.$pastUpgrades.8:
++        ["2024-12-06T17:52:34.000Z","0x394e784074ba95b55fdcea26980e75c894d6fe1295153b97cdb456d010c2a3a0",["0xE6E5356423516C9b75d4Dfb1fCa3973c5B695be8"]]
+      values.$upgradeCount:
+-        8
++        9
+      derivedName:
+-        "NodeLicense5"
++        "NodeLicense7"
+    }
+```
+
+## Source code changes
+
+```diff
+.../NodeLicenseRegistry/NodeLicense7.sol}          | 152 +++++++++++----------
+ 1 file changed, 83 insertions(+), 69 deletions(-)
+```
+
 Generated with discovered.json: 0x284b3b6a1df229a44060d915d13bb4957fa8a862
 
 # Diff at Fri, 06 Dec 2024 08:10:01 GMT:

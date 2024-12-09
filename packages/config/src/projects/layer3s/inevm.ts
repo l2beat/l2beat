@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('inevm', 'arbitrum')
 export const inevm: Layer3 = orbitStackL3({
   createdAt: new UnixTime(1730991877), // 2024-11-07T15:04:37+00:00
   additionalPurposes: ['Interoperability'],
-  badges: [Badge.RaaS.Caldera, Badge.DA.DAC],
+  additionalBadges: [Badge.RaaS.Caldera, Badge.DA.DAC],
   hostChain: ProjectId.ARBITRUM,
   display: {
     name: 'inEVM',

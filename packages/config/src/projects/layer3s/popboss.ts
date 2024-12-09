@@ -10,7 +10,11 @@ const discovery = new ProjectDiscovery('popboss', 'arbitrum')
 
 export const popboss: Layer3 = orbitStackL3({
   createdAt: new UnixTime(1710836229), // 2024-03-19T08:17:09Z
-  badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum, Badge.RaaS.Conduit],
+  additionalBadges: [
+    Badge.DA.DAC,
+    Badge.L3ParentChain.Arbitrum,
+    Badge.RaaS.Conduit,
+  ],
   additionalPurposes: ['Gaming'],
   discovery,
   hostChain: ProjectId('arbitrum'),
