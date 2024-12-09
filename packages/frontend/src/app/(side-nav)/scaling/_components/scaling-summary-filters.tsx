@@ -1,14 +1,9 @@
 'use client'
-import { notUndefined } from '@l2beat/shared-pure'
-import { uniq } from 'lodash'
 import { Checkbox } from '~/components/core/checkbox'
-import { TableFilter } from '~/components/table/filters/table-filter'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { cn } from '~/utils/cn'
-import { getDaLayerValue } from '../data-availability/_components/scaling-da-filters'
-import { BaseScalingFilters } from './base-scaling-filters'
 import { useScalingAssociatedTokensContext } from './scaling-associated-tokens-context'
-import { useScalingFilterValues } from './scaling-filter-context'
+import { ScalingFilters } from './scaling-filters'
 
 interface Props {
   items: ScalingSummaryEntry[]
@@ -23,47 +18,6 @@ export function ScalingSummaryFilters({
 }: Props) {
   const { excludeAssociatedTokens, setExcludeAssociatedTokens } =
     useScalingAssociatedTokensContext()
-  const state = useScalingFilterValues()
-
-  const hostChainOptions = uniq(
-    items.map((item) => item.hostChain ?? 'Ethereum'),
-  )
-    .sort()
-    .map((value) => ({
-      label: value,
-      value,
-    }))
-
-  const daLayerOptions = uniq(
-    items
-      .map(
-        (item) =>
-          item.dataAvailability && getDaLayerValue(item.dataAvailability.layer),
-      )
-      .filter(notUndefined),
-  )
-    .sort()
-    .map((value) => ({
-      label: value,
-      value,
-    }))
-
-  const additionalFilters = (
-    <>
-      <TableFilter
-        title="Host Chain"
-        options={hostChainOptions}
-        value={state.hostChain}
-        onValueChange={(value) => state.set({ hostChain: value })}
-      />
-      <TableFilter
-        title="DA Layer"
-        options={daLayerOptions}
-        value={state.daLayer}
-        onValueChange={(value) => state.set({ daLayer: value })}
-      />
-    </>
-  )
 
   return (
     <div
@@ -72,10 +26,11 @@ export function ScalingSummaryFilters({
         className,
       )}
     >
-      <BaseScalingFilters
+      <ScalingFilters
         items={items}
-        additionalFilters={additionalFilters}
-        showRollupsOnly={showRollupsOnly}
+        showRollupsFilter={showRollupsOnly}
+        showHostChainFilter
+        showDALayerFilter
       />
       <Checkbox
         checked={excludeAssociatedTokens}

@@ -1,6 +1,10 @@
-import { type Layer2, type Layer3 } from '@l2beat/config'
+import {
+  type DataAvailabilityWithSentiment,
+  type Layer2,
+  type Layer3,
+  type ScalingProjectDisplay,
+} from '@l2beat/config'
 import { assert, ProjectId, notUndefined } from '@l2beat/shared-pure'
-import { type SetOptional } from 'type-fest'
 import { env } from '~/env'
 import { groupByMainCategories } from '~/utils/group-by-main-categories'
 import {
@@ -9,7 +13,10 @@ import {
 } from '../../projects-change-report/get-projects-change-report'
 import { getCurrentEntry } from '../../utils/get-current-entry'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
-import { getCommonScalingEntry } from '../get-common-scaling-entry'
+import {
+  type CommonScalingEntry,
+  getCommonScalingEntry,
+} from '../get-common-scaling-entry'
 import {
   orderByStageAndPastDayUops,
   sortByUops,
@@ -81,16 +88,21 @@ export async function getScalingActivityEntries() {
   }
 }
 
-export type ScalingActivityEntry = SetOptional<
-  ReturnType<typeof getScalingProjectActivityEntry>,
-  'href'
->
+export interface ScalingActivityEntry extends CommonScalingEntry {
+  entryType: 'activity'
+  dataSource: ScalingProjectDisplay['activityDataSource']
+  dataAvailability: {
+    layer: DataAvailabilityWithSentiment['layer'] | undefined
+  }
+  data: ActivityProjectTableData
+}
+
 function getScalingProjectActivityEntry(
   project: ActivityProject,
   data: ActivityProjectTableData,
   isVerified: boolean,
   projectsChangeReport: ProjectsChangeReport,
-) {
+): ScalingActivityEntry {
   const currentDataAvailability = getCurrentEntry(project.dataAvailability)
   return {
     ...getCommonScalingEntry({
@@ -103,7 +115,7 @@ function getScalingProjectActivityEntry(
         projectsChangeReport.hasHighSeverityFieldChanged(project.id),
     }),
     href: `/scaling/projects/${project.display.slug}#activity`,
-    entryType: 'activity' as const,
+    entryType: 'activity',
     dataSource: project.display.activityDataSource,
     dataAvailability: {
       layer: currentDataAvailability?.layer,
@@ -117,8 +129,8 @@ function getEthereumEntry(
 ): ScalingActivityEntry {
   return {
     ...getCommonScalingEntry({ project: 'ethereum' }),
-    entryType: 'activity' as const,
-    dataSource: 'Blockchain RPC' as const,
+    entryType: 'activity',
+    dataSource: 'Blockchain RPC',
     dataAvailability: {
       layer: undefined,
     },

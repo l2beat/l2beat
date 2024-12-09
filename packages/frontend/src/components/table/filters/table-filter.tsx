@@ -12,29 +12,14 @@ import { cn } from '~/utils/cn'
 
 const UNDEFINED_VALUE = 'undefined-value'
 
-interface Option<T extends string> {
-  label: string
-  value: T | undefined
-}
-
-interface Props<T extends string> {
+interface Props {
   title: string
-  options: Option<T>[]
-  value: T | undefined
-  onValueChange: (option: T | undefined) => void
+  options: string[]
+  value: string | undefined
+  onValueChange: (option: string | undefined) => void
 }
 
-export function TableFilter<T extends string>({
-  title,
-  options,
-  value,
-  onValueChange,
-}: Props<T>) {
-  // Select component does not support undefined values
-  // so we need to replace them with a special value
-  // that will be handled by the onValueChange handler
-  const mappedOptions = replaceUndefined(options)
-
+export function TableFilter({ title, options, value, onValueChange }: Props) {
   const onClick = useCallback(
     (e: MouseEvent) => {
       if (value !== undefined) {
@@ -67,9 +52,7 @@ export function TableFilter<T extends string>({
           onValueChange(undefined)
           return
         }
-        const mappedValue = (
-          newValue === UNDEFINED_VALUE ? undefined : newValue
-        ) as T | undefined
+        const mappedValue = newValue === UNDEFINED_VALUE ? undefined : newValue
         onValueChange(mappedValue)
       }}
       disabled={options.length < 2 && !value}
@@ -90,30 +73,12 @@ export function TableFilter<T extends string>({
         <SelectValue placeholder={title} />
       </SelectTrigger>
       <SelectContent className="flex flex-col" align="start">
-        {mappedOptions.map((option) => (
-          <SelectItem key={option.label} value={option.value}>
-            {option.label}
+        {options.map((option) => (
+          <SelectItem key={option} value={option}>
+            {option}
           </SelectItem>
         ))}
       </SelectContent>
     </Select>
   )
-}
-
-function replaceUndefined<T extends string>(
-  options: Option<T>[],
-): {
-  label: string
-  value: T
-}[] {
-  return options.map((option) => {
-    if (option.value === undefined) {
-      return { label: option.label, value: UNDEFINED_VALUE as T }
-    }
-
-    return {
-      label: option.label,
-      value: option.value,
-    }
-  })
 }

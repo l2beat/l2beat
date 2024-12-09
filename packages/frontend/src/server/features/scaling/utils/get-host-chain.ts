@@ -1,9 +1,6 @@
-import { type Layer2, type Layer3, layer2s } from '@l2beat/config'
+import { type Layer3, layer2s } from '@l2beat/config'
 
-export function getHostChain(project: Layer2 | Layer3) {
-  if (project.type === 'layer2') {
-    return undefined
-  }
+export function getHostChain(project: Layer3) {
   if (project.hostChain === 'Multiple') {
     return 'Multiple'
   }

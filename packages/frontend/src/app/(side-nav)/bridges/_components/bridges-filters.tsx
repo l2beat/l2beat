@@ -13,25 +13,11 @@ interface Props {
 export function BridgesFilters({ entries }: Props) {
   const filter = useBridgesFilterValues()
 
-  const typeOptions = uniq(entries.map((entry) => entry.category))
-    .sort()
-    .map((value) => ({
-      label: value,
-      value,
-    }))
+  const typeOptions = uniq(entries.map((entry) => entry.category)).sort()
 
   const validatedByOptions = uniq(
     entries.map((entry) => entry.validatedBy?.value),
-  )
-    .sort()
-    .flatMap((value) =>
-      value
-        ? {
-            label: value,
-            value,
-          }
-        : [],
-    )
+  ).sort()
 
   return (
     <OverflowWrapper>
@@ -41,13 +27,13 @@ export function BridgesFilters({ entries }: Props) {
             title="Validated by"
             options={validatedByOptions}
             value={filter.validatedBy}
-            onValueChange={(value) => filter.set({ validatedBy: value })}
+            onValueChange={(validatedBy) => filter.set({ validatedBy })}
           />
           <TableFilter
             title="Type"
             options={typeOptions}
             value={filter.type}
-            onValueChange={(value) => filter.set({ type: value })}
+            onValueChange={(type) => filter.set({ type })}
           />
         </div>
       </div>

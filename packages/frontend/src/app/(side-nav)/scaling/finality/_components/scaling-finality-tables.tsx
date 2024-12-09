@@ -9,8 +9,8 @@ import {
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/get-scaling-finality-entries'
 import { type CategorisedScalingEntries } from '~/utils/group-by-main-categories'
-import { BaseScalingFilters } from '../../_components/base-scaling-filters'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
+import { ScalingFilters } from '../../_components/scaling-filters'
 import { ScalingFinalityTable } from './table/scaling-finality-table'
 
 type Props = CategorisedScalingEntries<ScalingFinalityEntry>
@@ -31,7 +31,7 @@ export function ScalingFinalityTables(props: Props) {
 
   return (
     <>
-      <BaseScalingFilters
+      <ScalingFilters
         items={[
           ...filteredEntries.rollups,
           ...filteredEntries.validiumsAndOptimiums,
