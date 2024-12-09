@@ -40,7 +40,9 @@ export function ScalingFilters({
   const hostChains = uniq(filterables.map((f) => f.hostChain)).sort(
     putFirst('Ethereum'),
   )
-  const daLayers = uniq(filterables.map((f) => f.daLayer)).sort()
+  const daLayers = uniq(filterables.map((f) => f.daLayer)).sort(
+    putFirst('Ethereum'),
+  )
 
   return (
     <OverflowWrapper

@@ -67,14 +67,14 @@ export function useScalingFilter() {
         return true
       }
       return (
-        (!!filters.rollupsOnly && !filterable.isRollup) ||
-        (!!filters.type && filters.type !== filterable.type) ||
-        (!!filters.stack && filters.stack !== filterable.stack) ||
-        (!!filters.stage && filters.stage !== filterable.stage) ||
-        (!!filters.purpose && !filterable.purposes.includes(filters.purpose)) ||
-        (!!filters.hostChain && filters.hostChain !== filterable.hostChain) ||
-        (!!filters.daLayer && filters.daLayer !== filterable.daLayer) ||
-        (!!filters.raas && filters.raas !== filterable.raas)
+        (!filters.rollupsOnly || filterable.isRollup) &&
+        (!filters.type || filters.type === filterable.type) &&
+        (!filters.stack || filters.stack === filterable.stack) &&
+        (!filters.stage || filters.stage === filterable.stage) &&
+        (!filters.purpose || filterable.purposes.includes(filters.purpose)) &&
+        (!filters.hostChain || filters.hostChain === filterable.hostChain) &&
+        (!filters.daLayer || filters.daLayer === filterable.daLayer) &&
+        (!filters.raas || filters.raas === filterable.raas)
       )
     },
     [filters],
