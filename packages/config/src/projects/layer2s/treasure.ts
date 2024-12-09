@@ -58,7 +58,7 @@ export const treasure: Layer2 = zkStackL2({
           '0xfC1d5dCD080121DaAF366625581ad490414EF294',
         ),
         l2EtherAddress: EthereumAddress(
-          '0x0000000000000000000000000000000000000000', // TODO: update from telegram
+          '0x650BE505C391d396A1e0b1f2337EaE77F064fF7f', // unverified
         ),
         tokensToAssignFromL1: ['MAGIC'], // will apparently be bridged externally at a later point
       },
@@ -130,7 +130,7 @@ export const treasure: Layer2 = zkStackL2({
   milestones: [
     {
       name: 'Mainnet launch',
-      link: '',
+      link: 'https://x.com/Treasure_DAO/status/1865101292752040255',
       date: '2024-12-11T00:00:00Z',
       description: 'Treasure mainnet launches for all users.',
       type: 'general',
