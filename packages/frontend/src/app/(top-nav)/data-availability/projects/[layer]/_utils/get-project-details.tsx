@@ -23,7 +23,15 @@ interface Params {
   grissiniValues: RosetteValue[]
 }
 
-export function getProjectDetails({
+export function getProjectDetails(params: Params) {
+  const isEthereum = params.daLayer.id === 'ethereum'
+  if (isEthereum) {
+    return getEthereumDetails(params)
+  }
+  return getRegularDetails(params)
+}
+
+function getRegularDetails({
   daLayer,
   daBridge,
   isVerified,
@@ -202,6 +210,96 @@ export function getProjectDetails({
       },
     })
   }
+
+  if (otherConsiderationsSection.items.length > 0) {
+    items.push({
+      type: 'TechnologySection',
+      props: {
+        id: 'other-considerations',
+        title: 'Other considerations',
+        ...otherConsiderationsSection,
+      },
+    })
+  }
+
+  return items
+}
+
+function getEthereumDetails({ daLayer, daBridge, isVerified }: Params) {
+  /// TODO: REPLACE ME ONCE WE HAVE THEM IN PLACE
+  const grissiniValues: RosetteValue[] = [
+    {
+      name: 'Da Risks',
+      value: 'Self-verify',
+      sentiment: 'good',
+      description: 'Lorem impsum '.repeat(50),
+      warning: undefined,
+    },
+    {
+      name: 'Bridge Risks',
+      value: 'Enshrined',
+      sentiment: 'good',
+      description: 'Lorem impsum '.repeat(50),
+      warning: undefined,
+    },
+  ]
+  const riskSummarySection = getDaProjectRiskSummarySection(
+    daLayer,
+    daBridge,
+    isVerified,
+  )
+
+  const items: ProjectDetailsSection[] = []
+
+  if (
+    riskSummarySection.layer.risks.concat(riskSummarySection.bridge.risks)
+      .length > 0
+  ) {
+    items.push({
+      type: 'DaRiskSummarySection',
+      props: {
+        id: 'risk-summary',
+        title: 'Risk summary',
+        ...riskSummarySection,
+      },
+    })
+  }
+
+  items.push({
+    type: 'GrissiniRiskAnalysisSection',
+    props: {
+      id: 'da-layer-risk-analysis',
+      title: 'Risk analysis',
+      isUnderReview: !!daLayer.isUnderReview,
+      isVerified,
+      grissiniValues,
+    },
+  })
+
+  items.push({
+    type: 'MarkdownSection',
+    props: {
+      id: 'da-layer-technology',
+      title: 'Technology',
+      diagram: {
+        type: 'da-layer-technology',
+        slug: daLayer.display.slug,
+      },
+      content: daLayer.technology.description.concat(
+        '\n\n',
+        daBridge.technology.description,
+      ),
+      mdClassName:
+        'da-beat text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
+      risks: daLayer.technology.risks?.map(toTechnologyRisk),
+      references: daLayer.technology.references,
+    },
+  })
+
+  const otherConsiderationsSection = getDaOtherConsiderationsSection(
+    daLayer,
+    daBridge,
+  )
 
   if (otherConsiderationsSection.items.length > 0) {
     items.push({
