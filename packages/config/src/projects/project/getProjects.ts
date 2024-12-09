@@ -1,8 +1,8 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { bridges } from '../bridges'
 import { layer2s } from '../layer2s'
 import { layer3s } from '../layer3s'
-import { zkCatalogProjects } from '../other'
+import { daLayers, zkCatalogProjects } from '../other'
 import { Project } from './Project'
 
 export function getProjects(): Project[] {
@@ -16,6 +16,8 @@ export function getProjects(): Project[] {
       addedAt: p.createdAt,
       // data
       proofVerification: p.proofVerification,
+      // tags
+      isZkCatalog: true,
     })
   }
 
@@ -29,6 +31,7 @@ export function getProjects(): Project[] {
       proofVerification: p.stateValidation?.proofVerification,
       // tags
       isScaling: true,
+      isZkCatalog: p.stateValidation?.proofVerification ? true : undefined,
       isLayer2: true,
       isArchived: p.isArchived ? true : undefined,
       isUnderReview: p.isUnderReview ? true : undefined,
@@ -46,6 +49,7 @@ export function getProjects(): Project[] {
       proofVerification: p.stateValidation?.proofVerification,
       // tags
       isScaling: true,
+      isZkCatalog: p.stateValidation?.proofVerification ? true : undefined,
       isLayer3: true,
       isArchived: p.isArchived ? true : undefined,
       isUnderReview: p.isUnderReview ? true : undefined,
@@ -64,6 +68,19 @@ export function getProjects(): Project[] {
       isArchived: p.isArchived ? true : undefined,
       isUnderReview: p.isUnderReview ? true : undefined,
       isUpcoming: p.isUpcoming ? true : undefined,
+    })
+  }
+
+  for (const p of daLayers) {
+    projects.push({
+      id: ProjectId(`${p.id}-da-layer`),
+      slug: p.display.slug,
+      name: p.display.name,
+      addedAt: UnixTime.ZERO,
+      // data
+      daBridges: p.bridges,
+      // tags
+      isDaLayer: true,
     })
   }
 
