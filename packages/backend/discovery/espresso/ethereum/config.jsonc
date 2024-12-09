@@ -28,6 +28,14 @@
               "description": "relayer (prover) address that is allowed to call newFinalizedState() to prove the latest HotShot state to the Light Client contract on Ethereum."
             }]
           }
+        },
+        "owner": {
+          "target": {
+            "permissions": [{
+              "type":"configure",
+              "description": "holds the power to change the contract state."
+            }]
+          }
         }
       }
     }

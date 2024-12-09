@@ -1,8 +1,8 @@
 {
   "name": "espresso",
   "chain": "ethereum",
-  "blockNumber": 21364116,
-  "configHash": "0x020f9ea0a86f7f508d35b23c1f7e8e51e3b76585ad0912888afd6539f43bb640",
+  "blockNumber": 21364146,
+  "configHash": "0xe7579de86f18c88f80adbc7142a9c4ece08a5090e7925ab84c7ea580104336af",
   "contracts": [
     {
       "name": "EspressoMultisig",
@@ -14,6 +14,11 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
+          "description": "holds the power to change the contract state."
+        },
         {
           "permission": "upgrade",
           "target": "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458"
@@ -49,6 +54,11 @@
       "proxyType": "EIP1967 proxy",
       "description": "The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.",
       "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
+          "via": []
+        },
         {
           "permission": "configure",
           "target": "0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947",

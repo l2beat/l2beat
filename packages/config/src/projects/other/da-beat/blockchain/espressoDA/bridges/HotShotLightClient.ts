@@ -1,4 +1,4 @@
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../../../../../discovery/ProjectDiscovery'
 import { DaCommitteeSecurityRisk } from '../../../types'
@@ -9,11 +9,6 @@ import { DacTransactionDataType } from '../../../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('espresso')
 const updateInterval = 12 // hours
-
-const relayer = discovery.getContractValue<string>(
-  'HotShotLightClient',
-  'permissionedProver',
-)
 
 export const HotShotLightClient = {
   id: 'HotShotLightClient',
@@ -83,23 +78,7 @@ export const HotShotLightClient = {
     ],
   },
   permissions: {
-    ethereum: [
-      ...discovery.getDiscoveredPermissions(),
-      ...discovery.getMultisigPermission(
-        'EspressoMultisig',
-        'This multisig is the admin of the Light Client DA bridge contract. It holds the power to change the contract state and upgrade the bridge.',
-      ),
-      {
-        name: 'Relayer',
-        description: `Relayer (prover) address that is allowed to call newFinalizedState() to prove the latest HotShot state to the Light Client contract on Ethereum.`,
-        accounts: [
-          {
-            address: EthereumAddress(relayer),
-            type: 'EOA',
-          },
-        ],
-      },
-    ],
+    ethereum: discovery.getDiscoveredPermissions(),
   },
   requiredMembers: 67, // 2/3 + 1
   membersCount: 100, // max allowed node operators

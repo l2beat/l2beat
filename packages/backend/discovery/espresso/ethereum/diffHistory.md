@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x34fb9e8f52e68332819b943fc5fa33208b4f7688
+Generated with discovered.json: 0xd79d3295ef6323bc6841e0c1014e15cbd435320b
 
-# Diff at Mon, 09 Dec 2024 09:41:57 GMT:
+# Diff at Mon, 09 Dec 2024 09:47:53 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
 - comparing to: main@f8ac84ae0d4464e6448214e9891d08430e0cbab4 block: 21329314
-- current block number: 21364116
+- current block number: 21364146
 
 ## Description
 
@@ -17,16 +17,28 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 21329314 (main branch discovery), not current.
 
 ```diff
+    contract EspressoMultisig (0x34F5af5158171Ffd2475d21dB5fc3B311F221982) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"upgrade","target":"0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458"}
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      receivedPermissions.0.description:
++        "holds the power to change the contract state."
+    }
+```
+
+```diff
     contract HotShotLightClient (0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458) {
     +++ description: The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.
-      issuedPermissions.1:
+      issuedPermissions.2:
 +        {"permission":"upgrade","target":"0x34F5af5158171Ffd2475d21dB5fc3B311F221982","via":[]}
+      issuedPermissions.1:
++        {"permission":"configure","target":"0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947","via":[]}
       issuedPermissions.0.permission:
 -        "upgrade"
 +        "configure"
-      issuedPermissions.0.target:
--        "0x34F5af5158171Ffd2475d21dB5fc3B311F221982"
-+        "0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947"
       description:
 +        "The DA bridge contract that stores and verifies HotShot state commitments on Ethereum."
     }
