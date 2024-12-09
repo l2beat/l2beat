@@ -21,7 +21,7 @@ export async function generateStaticParams() {
     where: ['proofVerification'],
     whereNot: ['isArchived'],
   })
-  return projects.map((p) => p.slug)
+  return projects.map((p) => ({ project: p.slug }))
 }
 
 export async function generateMetadata(props: Props): Promise<Metadata | null> {
