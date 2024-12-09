@@ -19,6 +19,9 @@ const PROCESSED_ESCROWS_PATH = path.resolve(
   './processedEscrows.json',
 )
 
+const MIN_MARKET_CAP = 10_000_000
+const MIN_MISSING_VALUE = 10_000
+
 interface DiscoveredTokens {
   found: {
     address: string
@@ -280,6 +283,11 @@ async function main() {
         escrows,
       }
     })
+    .filter(
+      (token) =>
+        token.marketCap >= MIN_MARKET_CAP &&
+        token.missingValue >= MIN_MISSING_VALUE,
+    )
     .sort((a, b) => {
       const missingValueA = a.missingValue ?? 0
       const missingValueB = b.missingValue ?? 0
