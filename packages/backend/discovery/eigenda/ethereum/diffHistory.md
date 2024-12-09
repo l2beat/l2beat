@@ -1,3 +1,120 @@
+Generated with discovered.json: 0x6673a8c90dea6fedf9b6674c697dd929012d9333
+
+# Diff at Mon, 09 Dec 2024 11:29:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@6e20c0da4ccb19e6a71427cc5601e1587d8abd35 block: 21027344
+- current block number: 21027344
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21027344 (main branch discovery), not current.
+
+```diff
+    contract StrategyBase (0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4) {
+    +++ description: None
+      name:
+-        ""
++        "StrategyBase"
+      values.$immutable:
+-        true
+      values.$admin:
++        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      values.$beacon:
++        "0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9"
+      values.$implementation:
++        "0xe9FA8F904d97854C7389b68923262ADCC6C27827"
+      values.$pastUpgrades:
++        []
+      values.$upgradeCount:
++        0
+      values.explanation:
++        "Base Strategy implementation to inherit from for more complex implementations"
+      values.paused:
++        0
+      values.pauserRegistry:
++        "0x0c431C66F4dE941d089625E5B423D00707977060"
+      values.sharesToUnderlying:
++        [0,1,2,3,4]
+      values.sharesToUnderlyingView:
++        [0,1,2,3,4]
+      values.strategyManager:
++        "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
+      values.totalShares:
++        "2532642361157292170453843"
+      values.underlyingToken:
++        "0xF96798F49936EfB1a56F99Ceae924b6B8359afFb"
+      values.underlyingToShares:
++        [0,1,2,3,4]
+      values.underlyingToSharesView:
++        [0,1,2,3,4]
+      proxyType:
++        "Beacon proxy"
+      errors:
++        {"sharesToUnderlying":"Processing error occurred.","sharesToUnderlyingView":"Processing error occurred.","underlyingToShares":"Processing error occurred.","underlyingToSharesView":"Processing error occurred."}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x12a6Bfb2f81267b847743c87767B3A45b897b1C0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AltLayerToken (0x8457CA5040ad67fdebbCC8EdCE889A335Bc0fbFB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x8d254438fD1Bc99f0862D63cB9B33a7b68c8F08D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x90F3068f412D2090A08a83742f8864a2dF385647)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xA7Ee328c8A00BEB30BC70789C4CFdb81a61eBc2f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xAa34B20da3f64BD4574DF818c7FBE2228b35FAAc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xAd9A9c2EbEa3401d9A0e588bBc05455dd9F37570)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakedALT (0xb6D149C8DdA37aAAa2F8AD0934f2e5682C35890B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ERC4626Vault (0xF96798F49936EfB1a56F99Ceae924b6B8359afFb)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xc0703400c7c5f1a01090aac9ca83bc1c8404f8e1
 
 # Diff at Wed, 23 Oct 2024 09:19:29 GMT:

@@ -471,6 +471,34 @@
       }
     },
     {
+      "name": "GnosisSafe",
+      "address": "0x12a6Bfb2f81267b847743c87767B3A45b897b1C0",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1704443315,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0x834F78E947Aafbcb970087bD2acDd2476Bc3f216",
+          "0x065A171B5812a31BDDb1c011273CadEda36fA81C",
+          "0x5f17Ea23387fBAc3E939302D8Beee48f02c28dF7"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x3f99657d0f8df56e47a2c8309f7caa9c8085e200cca1ad00499bc67ded012924",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 9,
+        "VERSION": "1.3.0"
+      }
+    },
+    {
       "name": "EjectionManager",
       "address": "0x130d8EA0052B45554e4C99079B84df292149Bd5E",
       "template": "eigenlayer/EjectionManager",
@@ -812,11 +840,34 @@
       }
     },
     {
-      "name": "",
+      "name": "StrategyBase",
       "address": "0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4",
       "unverified": true,
+      "proxyType": "Beacon proxy",
       "sinceTimestamp": 1724651639,
-      "values": { "$immutable": true }
+      "values": {
+        "$admin": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
+        "$beacon": "0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9",
+        "$implementation": "0xe9FA8F904d97854C7389b68923262ADCC6C27827",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "explanation": "Base Strategy implementation to inherit from for more complex implementations",
+        "paused": 0,
+        "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
+        "sharesToUnderlying": [0, 1, 2, 3, 4],
+        "sharesToUnderlyingView": [0, 1, 2, 3, 4],
+        "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+        "totalShares": "2532642361157292170453843",
+        "underlyingToken": "0xF96798F49936EfB1a56F99Ceae924b6B8359afFb",
+        "underlyingToShares": [0, 1, 2, 3, 4],
+        "underlyingToSharesView": [0, 1, 2, 3, 4]
+      },
+      "errors": {
+        "sharesToUnderlying": "Processing error occurred.",
+        "sharesToUnderlyingView": "Processing error occurred.",
+        "underlyingToShares": "Processing error occurred.",
+        "underlyingToSharesView": "Processing error occurred."
+      }
     },
     {
       "name": "StrategyBaseTVLLimits",
@@ -908,6 +959,34 @@
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
       },
       "derivedName": "ProxyAdmin"
+    },
+    {
+      "name": "AltLayerToken",
+      "address": "0x8457CA5040ad67fdebbCC8EdCE889A335Bc0fbFB",
+      "sourceHashes": [
+        "0x556efc5a7cc2f12a074b4971b49f3246d1b3c555c213d98a410064d4cffadb03"
+      ],
+      "sinceTimestamp": 1704446615,
+      "values": {
+        "$immutable": true,
+        "cap": "10000000000000000000000000000",
+        "decimals": 18,
+        "DOMAIN_SEPARATOR": "0xe14bb7bac71d1505cca6770614274ef3dac5acaeae4731265c769b64037ee82d",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "AltLayer Token",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "0x8457CA5040ad67fdebbCC8EdCE889A335Bc0fbFB",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "name": "AltLayer Token",
+        "owner": "0x12a6Bfb2f81267b847743c87767B3A45b897b1C0",
+        "paused": false,
+        "symbol": "ALT",
+        "totalSupply": "10000000000000000000000000000"
+      }
     },
     {
       "name": "EigenDAServiceManager",
@@ -1075,6 +1154,38 @@
       }
     },
     {
+      "name": "ProxyAdmin",
+      "address": "0x8d254438fD1Bc99f0862D63cB9B33a7b68c8F08D",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "sinceTimestamp": 1711443155,
+      "values": {
+        "$immutable": true,
+        "owner": "0xAd9A9c2EbEa3401d9A0e588bBc05455dd9F37570",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "0x90F3068f412D2090A08a83742f8864a2dF385647",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xF96798F49936EfB1a56F99Ceae924b6B8359afFb"
+        }
+      ],
+      "sinceTimestamp": 1713856451,
+      "values": {
+        "$immutable": true,
+        "owner": "0x8d254438fD1Bc99f0862D63cB9B33a7b68c8F08D",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      }
+    },
+    {
       "name": "StrategyBaseTVLLimits",
       "address": "0x93c4b944D05dfe6df7645A86cd2206016c51564D",
       "template": "eigenlayer/Strategy",
@@ -1228,6 +1339,53 @@
       }
     },
     {
+      "name": "GnosisSafe",
+      "address": "0xA7Ee328c8A00BEB30BC70789C4CFdb81a61eBc2f",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1711090955,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0x834F78E947Aafbcb970087bD2acDd2476Bc3f216",
+          "0x065A171B5812a31BDDb1c011273CadEda36fA81C",
+          "0x5f17Ea23387fBAc3E939302D8Beee48f02c28dF7"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x176f8058f2c5feb91bb4b8efed76602aaabb80cb6f3a8cf7a80c66c2ab8b4ac3",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 0,
+        "VERSION": "1.3.0"
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "0xAa34B20da3f64BD4574DF818c7FBE2228b35FAAc",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xb6D149C8DdA37aAAa2F8AD0934f2e5682C35890B"
+        }
+      ],
+      "sinceTimestamp": 1711443167,
+      "values": {
+        "$immutable": true,
+        "owner": "0x8d254438fD1Bc99f0862D63cB9B33a7b68c8F08D",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      }
+    },
+    {
       "name": "EigenStrategy",
       "address": "0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7",
       "template": "eigenlayer/Strategy",
@@ -1270,6 +1428,34 @@
           "severity": "LOW",
           "description": "Same as TVL limit"
         }
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "0xAd9A9c2EbEa3401d9A0e588bBc05455dd9F37570",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1711090535,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0x834F78E947Aafbcb970087bD2acDd2476Bc3f216",
+          "0x065A171B5812a31BDDb1c011273CadEda36fA81C",
+          "0x5f17Ea23387fBAc3E939302D8Beee48f02c28dF7"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x3a70d9f54569a7137c9e11ac342568245a3c5ce1ce43ae3b4f086e14f6996f8a",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 12,
+        "VERSION": "1.3.0"
       }
     },
     {
@@ -1324,6 +1510,75 @@
       }
     },
     {
+      "name": "StakedALT",
+      "address": "0xb6D149C8DdA37aAAa2F8AD0934f2e5682C35890B",
+      "sourceHashes": [
+        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8",
+        "0x83f75e24d6710dab5e17a6b388a149545eeee6d4a3123a7e551a0b2864c5329c"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xAa34B20da3f64BD4574DF818c7FBE2228b35FAAc",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1711443167,
+      "values": {
+        "$admin": "0xAa34B20da3f64BD4574DF818c7FBE2228b35FAAc",
+        "$implementation": "0xEdbAee53B410D2c59F1B73144E8D500e94B496a0",
+        "$pastUpgrades": [
+          [
+            "2024-03-26T08:52:47.000Z",
+            "0x92d60d02b299ea47bb305d7e5c32359096639d0eb60317c2141f864889dd6543",
+            ["0xEdbAee53B410D2c59F1B73144E8D500e94B496a0"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "activationThreshold": 0,
+        "cooldownSeconds": 1814400,
+        "decimals": 18,
+        "exists": [false, false, false, false, false],
+        "expiryDuration": 900,
+        "MAX_BPS": 10000,
+        "MAX_COOLDOWN_SEC": 4320000,
+        "MAX_EXPIRY": 1099511627775,
+        "MAX_OPERATOR_FEE_BPS": 2000,
+        "MAX_PROTOCOL_FEE_BPS": 2000,
+        "minVotingStake": 0,
+        "name": "Staked ALT",
+        "operatorConfig": 604800,
+        "owner": "0xAd9A9c2EbEa3401d9A0e588bBc05455dd9F37570",
+        "paused": false,
+        "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "PRECISION_FACTOR": "1000000000000000000",
+        "protocolConfig": {
+          "vault": "0xA7Ee328c8A00BEB30BC70789C4CFdb81a61eBc2f",
+          "cooldownSeconds": 604800,
+          "fee": { "cooldownEndTimestamp": 0, "bps": 0, "pendingBPS": 0 }
+        },
+        "stakedToken": "0x8457CA5040ad67fdebbCC8EdCE889A335Bc0fbFB",
+        "stakingStartTimestamp": 1711526400,
+        "symbol": "STALT",
+        "totalActiveOperators": 1,
+        "totalAlerts": 0,
+        "totalCooldownAmount": "9208621787899699438673822",
+        "totalDistributions": 1,
+        "totalFrozenAmount": 0,
+        "totalFrozenCooldownAmount": 0,
+        "totalOperators": 1,
+        "totalStakedAmount": "202053733188053138254691647",
+        "totalSupply": "202053733188053138254691647",
+        "totalVotingStake": "192845111400153438816017825",
+        "uri": ["", "", "", "", ""]
+      },
+      "errors": {
+        "exists": "Processing error occurred.",
+        "uri": "Processing error occurred."
+      }
+    },
+    {
       "name": "IndexRegistry",
       "address": "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030",
       "sourceHashes": [
@@ -1358,12 +1613,79 @@
         "OPERATOR_DOES_NOT_EXIST_ID": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "registryCoordinator": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
       }
+    },
+    {
+      "name": "ERC4626Vault",
+      "address": "0xF96798F49936EfB1a56F99Ceae924b6B8359afFb",
+      "sourceHashes": [
+        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8",
+        "0x9a61e2baf183cb733ce33af42d2ddb35f9917bd780e406901389ab3d46e5f355"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x90F3068f412D2090A08a83742f8864a2dF385647",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1713856451,
+      "values": {
+        "$admin": "0x90F3068f412D2090A08a83742f8864a2dF385647",
+        "$implementation": "0x05E72049fC2f5a9212070be3672Ee3492845d269",
+        "$pastUpgrades": [
+          [
+            "2024-04-23T07:14:11.000Z",
+            "0x0c2f07ad31c8021ac05e63ac8c810baa4757067a8de5b77fe2a47aaaf1030cf5",
+            ["0x05E72049fC2f5a9212070be3672Ee3492845d269"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "altToken": "0x8457CA5040ad67fdebbCC8EdCE889A335Bc0fbFB",
+        "asset": "0xb6D149C8DdA37aAAa2F8AD0934f2e5682C35890B",
+        "convertToAssets": [0, 1, 2, 3, 4],
+        "convertToShares": [0, 0, 1, 2, 3],
+        "decimals": 18,
+        "erc1155StakedALT": "0xb6D149C8DdA37aAAa2F8AD0934f2e5682C35890B",
+        "erc1155TokenID": "568410405686318743940487286198766186786980243511",
+        "name": "Restaked ALT",
+        "owner": "0xAd9A9c2EbEa3401d9A0e588bBc05455dd9F37570",
+        "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "previewDeposit": [0, 0, 1, 2, 3],
+        "previewMint": [0, 2, 3, 4, 5],
+        "previewRedeem": [0, 1, 2, 3, 4],
+        "previewWithdraw": [0, 1, 2, 3, 4],
+        "RewardPools": [
+          [0, 0, ""],
+          [1714464000, 4294967295, "Xterio"],
+          [1715155200, 4294967295, "DODOchain"],
+          [1718625600, 4294967295, "Cyber"],
+          [1720429200, 4294967295, "GM Network"]
+        ],
+        "symbol": "reALT",
+        "totalAssets": "141418371562732820574613714",
+        "totalRewardPools": 4,
+        "totalSupply": "132992704039101288757783478"
+      },
+      "errors": {
+        "convertToAssets": "Processing error occurred.",
+        "convertToShares": "Processing error occurred.",
+        "previewDeposit": "Processing error occurred.",
+        "previewMint": "Processing error occurred.",
+        "previewRedeem": "Processing error occurred.",
+        "previewWithdraw": "Processing error occurred.",
+        "RewardPools": "Processing error occurred."
+      }
     }
   ],
   "eoas": [
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x065A171B5812a31BDDb1c011273CadEda36fA81C" },
     { "address": "0x2bBA03bA38D90634e6afD8C23C16ca01651bc493" },
     { "address": "0x454Ef2f69f91527856E06659f92a66f464C1ca4e" },
     { "address": "0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED" },
+    { "address": "0x5f17Ea23387fBAc3E939302D8Beee48f02c28dF7" },
+    { "address": "0x834F78E947Aafbcb970087bD2acDd2476Bc3f216" },
     { "address": "0x8ED83c6Bb12E441Ca2C3a544F525d4a3Fb6484D8" },
     { "address": "0xaBd099133278ACF0415186c88F34e01b05D116f6" },
     { "address": "0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0" },
@@ -1396,6 +1718,86 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "0x05E72049fC2f5a9212070be3672Ee3492845d269": [
+      "constructor(address erc1155StakedALT_, uint256 erc1155TokenID_, address altToken_)",
+      "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
+      "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
+      "error ERC20InvalidApprover(address approver)",
+      "error ERC20InvalidReceiver(address receiver)",
+      "error ERC20InvalidSender(address sender)",
+      "error ERC20InvalidSpender(address spender)",
+      "error ERC4626ExceededMaxDeposit(address receiver, uint256 assets, uint256 max)",
+      "error ERC4626ExceededMaxMint(address receiver, uint256 shares, uint256 max)",
+      "error ERC4626ExceededMaxRedeem(address owner, uint256 shares, uint256 max)",
+      "error ERC4626ExceededMaxWithdraw(address owner, uint256 assets, uint256 max)",
+      "error InvalidEndTime()",
+      "error InvalidID()",
+      "error InvalidInitialization()",
+      "error InvalidStartTime()",
+      "error MathOverflowedMulDiv()",
+      "error NotInitializing()",
+      "error OptInPeriodEnded()",
+      "error OptInPeriodNotStarted()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error ZeroAddress()",
+      "error ZeroShare()",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Deposit(address indexed sender, address indexed owner, uint256 assets, uint256 shares)",
+      "event Initialized(uint64 version)",
+      "event OptedIn(uint256 indexed id, address user)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RewardPoolCreated(uint256 indexed id, uint64 startTimestamp_, uint64 endTimestamp_, string name_)",
+      "event RewardPoolUpdated(uint256 indexed id, uint64 startTimestamp_, uint64 endTimestamp_, string name_)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Withdraw(address indexed sender, address indexed receiver, address indexed owner, uint256 assets, uint256 shares)",
+      "function RewardPools(uint256) view returns (uint64 startTimestamp, uint64 endTimestamp, string name)",
+      "function acceptOwnership()",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function altToken() view returns (address)",
+      "function approve(address spender, uint256 value) returns (bool)",
+      "function asset() view returns (address)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function claim(uint16 distributionId)",
+      "function convertToAssets(uint256 shares) view returns (uint256)",
+      "function convertToShares(uint256 assets) view returns (uint256)",
+      "function createRewardPool(uint64 startTimestamp_, uint64 endTimestamp_, string name_)",
+      "function decimals() view returns (uint8)",
+      "function deposit(uint256 assets, address receiver) returns (uint256)",
+      "function erc1155StakedALT() view returns (address)",
+      "function erc1155TokenID() view returns (uint256)",
+      "function initialize(address initialOwner, string name_, string symbol_)",
+      "function maxDeposit(address) view returns (uint256)",
+      "function maxMint(address) view returns (uint256)",
+      "function maxRedeem(address owner) view returns (uint256)",
+      "function maxWithdraw(address owner) view returns (uint256)",
+      "function mint(uint256 shares, address receiver) returns (uint256)",
+      "function name() view returns (string)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) pure returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) pure returns (bytes4)",
+      "function optIn(uint256 id)",
+      "function optedInUsers(uint256, address) view returns (bool)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function previewDeposit(uint256 assets) view returns (uint256)",
+      "function previewMint(uint256 shares) view returns (uint256)",
+      "function previewRedeem(uint256 shares) view returns (uint256)",
+      "function previewWithdraw(uint256 assets) view returns (uint256)",
+      "function redeem(uint256 shares, address receiver, address owner) returns (uint256)",
+      "function renounceOwnership()",
+      "function stake()",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function symbol() view returns (string)",
+      "function totalAssets() view returns (uint256)",
+      "function totalRewardPools() view returns (uint256)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 value) returns (bool)",
+      "function transferFrom(address from, address to, uint256 value) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function updateRewardPool(uint256 id_, uint64 startTimestamp_, uint64 endTimestamp_, string name_)",
+      "function withdraw(uint256 assets, address receiver, address owner) returns (uint256)"
+    ],
     "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1417,6 +1819,9 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x12a6Bfb2f81267b847743c87767B3A45b897b1C0": [
+      "constructor(address _singleton)"
     ],
     "0x130d8EA0052B45554e4C99079B84df292149Bd5E": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1696,6 +2101,58 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
+    "0x8457CA5040ad67fdebbCC8EdCE889A335Bc0fbFB": [
+      "constructor(address initialOwner)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ERC20ExceededCap(uint256 increasedSupply, uint256 cap)",
+      "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
+      "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
+      "error ERC20InvalidApprover(address approver)",
+      "error ERC20InvalidCap(uint256 cap)",
+      "error ERC20InvalidReceiver(address receiver)",
+      "error ERC20InvalidSender(address sender)",
+      "error ERC20InvalidSpender(address spender)",
+      "error ERC2612ExpiredSignature(uint256 deadline)",
+      "error ERC2612InvalidSigner(address signer, address owner)",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error InvalidAccountNonce(address account, uint256 currentNonce)",
+      "error InvalidShortString()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error StringTooLong(string str)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event EIP712DomainChanged()",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Unpaused(address account)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 value) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function burn(uint256 value)",
+      "function burnFrom(address account, uint256 value)",
+      "function cap() view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function mint(address to, uint256 amount)",
+      "function name() view returns (string)",
+      "function nonces(address owner) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function renounceOwnership()",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 value) returns (bool)",
+      "function transferFrom(address from, address to, uint256 value) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()"
+    ],
     "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1717,6 +2174,28 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x8d254438fD1Bc99f0862D63cB9B33a7b68c8F08D": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "0x90F3068f412D2090A08a83742f8864a2dF385647": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
     "0x93c4b944D05dfe6df7645A86cd2206016c51564D": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1751,11 +2230,28 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "0xA7Ee328c8A00BEB30BC70789C4CFdb81a61eBc2f": [
+      "constructor(address _singleton)"
+    ],
+    "0xAa34B20da3f64BD4574DF818c7FBE2228b35FAAc": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
     "0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "0xAd9A9c2EbEa3401d9A0e588bBc05455dd9F37570": [
+      "constructor(address _singleton)"
     ],
     "0xAe60d8180437b5C34bB956822ac2710972584473": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1767,6 +2263,17 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xb6D149C8DdA37aAAa2F8AD0934f2e5682C35890B": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
     ],
     "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1927,6 +2434,227 @@
       "function userUnderlying(address user) returns (uint256)",
       "function userUnderlyingView(address user) view returns (uint256)",
       "function withdraw(address depositor, address token, uint256 amountShares)"
+    ],
+    "0xe9FA8F904d97854C7389b68923262ADCC6C27827": [
+      "constructor(address _strategyManager)",
+      "event ExchangeRateEmitted(uint256 rate)",
+      "event Initialized(uint8 version)",
+      "event Paused(address indexed account, uint256 newPausedStatus)",
+      "event PauserRegistrySet(address pauserRegistry, address newPauserRegistry)",
+      "event StrategyTokenSet(address token, uint8 decimals)",
+      "event Unpaused(address indexed account, uint256 newPausedStatus)",
+      "function deposit(address token, uint256 amount) returns (uint256 newShares)",
+      "function explanation() pure returns (string)",
+      "function initialize(address _underlyingToken, address _pauserRegistry)",
+      "function pause(uint256 newPausedStatus)",
+      "function pauseAll()",
+      "function paused(uint8 index) view returns (bool)",
+      "function paused() view returns (uint256)",
+      "function pauserRegistry() view returns (address)",
+      "function setPauserRegistry(address newPauserRegistry)",
+      "function shares(address user) view returns (uint256)",
+      "function sharesToUnderlying(uint256 amountShares) view returns (uint256)",
+      "function sharesToUnderlyingView(uint256 amountShares) view returns (uint256)",
+      "function strategyManager() view returns (address)",
+      "function totalShares() view returns (uint256)",
+      "function underlyingToShares(uint256 amountUnderlying) view returns (uint256)",
+      "function underlyingToSharesView(uint256 amountUnderlying) view returns (uint256)",
+      "function underlyingToken() view returns (address)",
+      "function unpause(uint256 newPausedStatus)",
+      "function userUnderlying(address user) returns (uint256)",
+      "function userUnderlyingView(address user) view returns (uint256)",
+      "function withdraw(address recipient, address token, uint256 amountShares)"
+    ],
+    "0xEdbAee53B410D2c59F1B73144E8D500e94B496a0": [
+      "constructor(address altToken_, uint40 stakingStartTimestamp_)",
+      "error AddressEmptyCode(address target)",
+      "error AddressInsufficientBalance(address account)",
+      "error AlreadyActiveAlert()",
+      "error AlreadyAuthenticated()",
+      "error AlreadyRegistered()",
+      "error AlreadyRemoved()",
+      "error AlreadyVoted()",
+      "error ArrayLengthMismatch()",
+      "error ERC1155InsufficientBalance(address sender, uint256 balance, uint256 needed, uint256 tokenId)",
+      "error ERC1155InvalidApprover(address approver)",
+      "error ERC1155InvalidArrayLength(uint256 idsLength, uint256 valuesLength)",
+      "error ERC1155InvalidOperator(address operator)",
+      "error ERC1155InvalidReceiver(address receiver)",
+      "error ERC1155InvalidSender(address sender)",
+      "error ERC1155MissingApprovalForAll(address operator, address owner)",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error FailedInnerCall()",
+      "error FrozenOperator()",
+      "error GreaterThanMaxCooldownSec()",
+      "error InsufficientAmount()",
+      "error InsufficientCooldown()",
+      "error InvalidBPS()",
+      "error InvalidCooldownAmount()",
+      "error InvalidDestination()",
+      "error InvalidDistributionEndTime()",
+      "error InvalidDistributionStartTime()",
+      "error InvalidInitialization()",
+      "error InvalidStakingStartTime()",
+      "error InvalidStartIndex()",
+      "error LessThanMinStakeToVote()",
+      "error NodeKeyNotAuthenticated()",
+      "error NotInitializing()",
+      "error NotOperator()",
+      "error OperatorMismatch()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error SafeERC20FailedOperation(address token)",
+      "error StakingNotStartedYet()",
+      "error ZeroAddress()",
+      "error ZeroAmount()",
+      "error ZeroUnstakeable()",
+      "error ZeroVotingStake()",
+      "event AlertRemoved(bytes32 messageHash, address admin)",
+      "event AlertVoted(bytes32 messageHash, address operator, uint128 voteCount, bool isActive)",
+      "event ApprovalForAll(address indexed account, address indexed operator, bool approved)",
+      "event CollectFee(uint16 distributionId, address operator, uint256 protocolFee, uint256 operatorFee, uint256 userRewards)",
+      "event CooldownToUnstake(address indexed user, address indexed operator, uint256 amount)",
+      "event CooldownToUpdateOperatorFee(address operator, uint16 feeBPS, uint40 cooldownEndTimestamp)",
+      "event CooldownToUpdateProtocolFee(uint16 feeBPS, uint40 cooldownEndTimestamp)",
+      "event DistributionIndexUpdated(uint256 indexed distributionID, uint256 index)",
+      "event ExpiryDurationUpdated(uint16 duration, address admin)",
+      "event Frozen(address operator, address owner)",
+      "event Initialized(uint64 version)",
+      "event NodeKeyAuthenticated(address nodeKey, address operator)",
+      "event NodeKeyRegistered(address nodeKey, address operator)",
+      "event NodeKeyRemoved(address nodeKey, address operator)",
+      "event OperatorAdded(address operator, address owner)",
+      "event OperatorRegistered(address operator)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event RewardsAccrued(address user, address operator, uint256 amount)",
+      "event RewardsClaimed(address indexed from, address indexed to, address operator, uint256 amount)",
+      "event SetCooldownSecForOperatorFee(uint40 cooldownSeconds)",
+      "event SetCooldownSecForProtocolFee(uint40 cooldownSeconds)",
+      "event SetCooldownSecForUnstaking(uint40 cooldownSeconds)",
+      "event SetMinVotingStake(uint256 minVotingStake)",
+      "event SetOperatorFeeBPS(address operator, uint16 feeBPS)",
+      "event SetProtocolFeeBPS(uint16 feeBPS)",
+      "event Stake(address indexed from, address indexed onBehalfOf, address operator, uint256 assets)",
+      "event TransferBatch(address indexed operator, address indexed from, address indexed to, uint256[] ids, uint256[] values)",
+      "event TransferSingle(address indexed operator, address indexed from, address indexed to, uint256 id, uint256 value)",
+      "event URI(string value, uint256 indexed id)",
+      "event URIUpdated(string)",
+      "event Unpaused(address account)",
+      "event Unstake(address indexed from, address indexed to, address operator, uint256 assets)",
+      "event UserIndexUpdated(uint256 indexed distributionID, address indexed user, address indexed operator, uint256 index)",
+      "function MAX_BPS() view returns (uint256)",
+      "function MAX_COOLDOWN_SEC() view returns (uint40)",
+      "function MAX_EXPIRY() view returns (uint40)",
+      "function MAX_OPERATOR_FEE_BPS() view returns (uint16)",
+      "function MAX_PROTOCOL_FEE_BPS() view returns (uint16)",
+      "function PRECISION_FACTOR() view returns (uint256)",
+      "function acceptOwnership()",
+      "function activationThreshold() view returns (uint256)",
+      "function addressToUint256(address operator) pure returns (uint256)",
+      "function alerts(bytes32) view returns (uint128 voteCount, uint40 expiry, uint16 resetCount, bool isActive)",
+      "function authenticateNodeKey(address nodeKey)",
+      "function balanceOf(address account, uint256 id) view returns (uint256)",
+      "function balanceOf(address staker, address operator) view returns (uint256)",
+      "function balanceOfBatch(address[] accounts, uint256[] ids) view returns (uint256[])",
+      "function claimRewards(uint16 distributionId, address to, address operator, uint256 amount)",
+      "function claimRewardsBatch(uint16[] ids_, address[] recipients_, address[] operators_, uint256[] amounts_)",
+      "function contains(bytes32 messageHash) view returns (bool)",
+      "function cooldownSeconds() view returns (uint40)",
+      "function cooldownToUnstake(address operator, uint256 amountToAdd)",
+      "function cooldownToUpdateOperatorFee(uint16 feeBPS_)",
+      "function cooldownToUpdateProtocolFee(uint16 feeBPS_)",
+      "function cooldowns(address, address) view returns (uint40 timestamp, uint216 amount)",
+      "function createDistribution(uint128 emissionPerSecond_, uint40 startTime_, uint40 endTime_, address rewardToken_, address rewardVault_)",
+      "function decimals() pure returns (uint256)",
+      "function distributionIndex(uint16 distributionId) view returns (uint256)",
+      "function distributionUserIndex(uint16 distributionId, address operator, address staker) view returns (uint256)",
+      "function distributions(uint16) view returns (uint128 emissionPerSecond, address rewardToken, address rewardVault, uint40 startTime, uint40 endTime, uint256 index, uint40 updateTimestamp)",
+      "function exists(uint256 id) view returns (bool)",
+      "function expiryDuration() view returns (uint16)",
+      "function freezeOperator(address operator)",
+      "function getAccruedRewards(uint16 distributionId, address staker, address operator) view returns (uint256)",
+      "function getVotedAlerts(address operator) view returns (bytes32[])",
+      "function initialize(address initialOwner_, string uri_, uint40 cooldownSec_, uint40 cooldownSecForOperatorFeeUpdate_, uint40 cooldownSecForProtocolFeeUpdate_, address protocolFeeVault_, uint16 initialProtocolFeeBPS_, uint256 initialMinVotingStake_, uint16 initialExpiryDuration)",
+      "function isActiveAlert(uint128 voteCount) view returns (bool)",
+      "function isActiveOperator(address operator) view returns (bool)",
+      "function isApprovedForAll(address account, address operator) view returns (bool)",
+      "function isAuthenticated(address nodeKey) view returns (bool)",
+      "function isFrozenOperator(address operator) view returns (bool)",
+      "function isOperator(address operator) view returns (bool)",
+      "function minVotingStake() view returns (uint256)",
+      "function name() pure returns (string)",
+      "function nodeKeys(address) view returns (address)",
+      "function operatorConfig() view returns (uint40 cooldownSeconds)",
+      "function operatorFee(address operator) view returns (uint40 cooldownEndTimestamp, uint16 bps, uint16 pendingBPS)",
+      "function operators(address) view returns (address)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pendingOwner() view returns (address)",
+      "function protocolConfig() view returns (address vault, uint40 cooldownSeconds, tuple(uint40 cooldownEndTimestamp, uint16 bps, uint16 pendingBPS) fee)",
+      "function queryMessageHashes(uint256 start, uint256 querySize) view returns (bytes32[])",
+      "function queryOperators(uint256 start, uint256 querySize) view returns (address[])",
+      "function registerNodeKey(address operator)",
+      "function registerOperator(address operator, uint16 feeBPS_)",
+      "function removeAlert(bytes32 messageHash)",
+      "function removeNodeKey()",
+      "function renounceOwnership()",
+      "function rewardBalance(uint16 distributionId, address operator, address staker) view returns (uint256)",
+      "function rewardBalanceKey(uint16 distributionId, address operator, address staker) pure returns (bytes32)",
+      "function safeBatchTransferFrom(address from, address to, uint256[] ids, uint256[] values, bytes data)",
+      "function safeTransferFrom(address from, address to, uint256 id, uint256 value, bytes data)",
+      "function setApprovalForAll(address operator, bool approved)",
+      "function setCooldownSecForOperatorFee(uint40 cooldownSec_)",
+      "function setCooldownSecForProtocolFee(uint40 cooldownSec_)",
+      "function setCooldownSecForUnstaking(uint40 cooldownSec_)",
+      "function setDistributionEnd(uint16 distributionId, uint40 endTime)",
+      "function setExpiryDuration(uint16 duration)",
+      "function setMinVotingStake(uint256 minVotingStake_)",
+      "function setOperatorFeeBPS()",
+      "function setProtocolFeeBPS()",
+      "function setURI(string newuri)",
+      "function stake(address to, address operator, uint256 amount)",
+      "function stakedToken() view returns (address)",
+      "function stakingStartTimestamp() view returns (uint40)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function switchOperator(address fromOperator, address toOperator, uint256 amount)",
+      "function symbol() pure returns (string)",
+      "function totalActiveOperators() view returns (uint256)",
+      "function totalAlerts() view returns (uint256)",
+      "function totalCooldownAmount() view returns (uint256)",
+      "function totalCooldownAmounts(address) view returns (uint256)",
+      "function totalDistributions() view returns (uint16)",
+      "function totalFrozenAmount() view returns (uint256)",
+      "function totalFrozenCooldownAmount() view returns (uint256)",
+      "function totalOperators() view returns (uint256)",
+      "function totalStakedAmount() view returns (uint256)",
+      "function totalSupply() view returns (uint256)",
+      "function totalSupply(uint256 id) view returns (uint256)",
+      "function totalSupply(address operator) view returns (uint256)",
+      "function totalVotingStake() view returns (uint256)",
+      "function totalVotingStake(address operator) view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function unstake(address to, address operator, uint256 amount)",
+      "function uri(uint256) view returns (string)",
+      "function voteForBlockAlert(uint256 blockNumber)",
+      "function voteForMessageAlert(string message)",
+      "function votedAlerts(address, uint256) view returns (bytes32)",
+      "function votingStake(address staker, address operator) view returns (uint256)"
+    ],
+    "0xF96798F49936EfB1a56F99Ceae924b6B8359afFb": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
     ]
   },
   "usedTemplates": {
