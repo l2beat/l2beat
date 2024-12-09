@@ -14,7 +14,7 @@ export const leaf: Layer2 = upcomingL2({
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
     links: {
-      websites: ['https://www.leafprotocol.com/'],
+      websites: ['https://leafprotocol.com/'],
       apps: [],
       documentation: [],
       explorers: [],
