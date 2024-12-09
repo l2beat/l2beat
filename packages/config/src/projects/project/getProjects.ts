@@ -3,10 +3,11 @@ import { bridges } from '../bridges'
 import { layer2s } from '../layer2s'
 import { layer3s } from '../layer3s'
 import { daLayers, zkCatalogProjects } from '../other'
+import { refactored } from '../refactored'
 import { Project } from './Project'
 
 export function getProjects(): Project[] {
-  const projects: Project[] = []
+  const projects: Project[] = [...refactored]
 
   for (const p of zkCatalogProjects) {
     projects.push({

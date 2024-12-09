@@ -1,5 +1,5 @@
 import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { PERFORMED_BY } from './common'
+import { PERFORMED_BY } from './common/performedBy'
 import { PROOFS } from './common/proofSystems'
 import { ZkCatalogProject } from './types/ZkCatalogProject'
 
