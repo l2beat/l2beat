@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x1ffae2f2e0c49d3a19397c6b4b2d88c4b385e973
+
+# Diff at Sun, 08 Dec 2024 11:46:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@59fd7a30471906b5a479f280731621e94e22f17c block: 21279513
+- current block number: 21357562
+
+## Description
+
+Change congress member scheduled.
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
++++ description: The amount of proposals ever created. Goes up by 1 for each proposal.
++++ severity: MEDIUM
+      values.proposalCount:
+-        61
++        62
+    }
+```
+
 Generated with discovered.json: 0x1696acdb8f632b356b3afcfaa947d7f999961ac7
 
 # Diff at Wed, 27 Nov 2024 13:53:35 GMT:

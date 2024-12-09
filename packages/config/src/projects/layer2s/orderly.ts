@@ -11,7 +11,11 @@ const discovery = new ProjectDiscovery('orderly')
 export const orderly: Layer2 = opStackL2({
   createdAt: new UnixTime(1707309065), // 2024-02-07T12:31:05Z
   daProvider: CELESTIA_DA_PROVIDER,
-  badges: [Badge.DA.Celestia, Badge.Infra.Superchain, Badge.RaaS.Conduit],
+  additionalBadges: [
+    Badge.DA.Celestia,
+    Badge.Infra.Superchain,
+    Badge.RaaS.Conduit,
+  ],
   additionalPurposes: ['Exchange'],
   discovery,
   display: {

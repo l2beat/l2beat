@@ -1,3 +1,62 @@
+Generated with discovered.json: 0xee1b60ed8d7d1a850b28afb307fc8586f8d71fa2
+
+# Diff at Fri, 06 Dec 2024 08:09:47 GMT:
+
+- author: Piotr Szlachciak (<szlachciak.piotr@gmail.com>)
+- comparing to: main@f9ded76f7930b0c86788e4c4595d553b165b87d1 block: 21313475
+- current block number: 21313475
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21313475 (main branch discovery), not current.
+
+```diff
+    contract ValidatorUtils (0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF) {
+    +++ description: This contract implements view only utilities for validators.
+      template:
++        "orbitstack/ValidatorUtils"
+      description:
++        "This contract implements view only utilities for validators."
+    }
+```
+
+Generated with discovered.json: 0x59718eeed34401dc97056fdc6f4647e14d993ae4
+
+# Diff at Mon, 02 Dec 2024 07:57:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0cac24376573663e0a362b2f340a124e5238a2bc block: 21084619
+- current block number: 21313475
+
+## Description
+
+Remove one MS signer.
+
+## Watched changes
+
+```diff
+    contract OevNetworkMultisig (0x2bf43034b9559643e986A2fE3cE015a18247b904) {
+    +++ description: None
+      values.$members.6:
+-        "0x15D5fF2dEc328a1cF3D64413caaBdcE29bff050A"
+      values.$members.5:
+-        "0xb004d94314a34627C09E4b8f83D9E7420d99BbFC"
++        "0x15D5fF2dEc328a1cF3D64413caaBdcE29bff050A"
+      values.$members.4:
+-        "0x4919167EA334BE84B1604Cbc82A26A7746D5943e"
++        "0xb004d94314a34627C09E4b8f83D9E7420d99BbFC"
+      values.multisigThreshold:
+-        "4 of 7 (57%)"
++        "4 of 6 (67%)"
+    }
+```
+
 Generated with discovered.json: 0xc63d92dea2764c18b13e58ecca29f80fa58fb025
 
 # Diff at Fri, 29 Nov 2024 11:28:43 GMT:

@@ -11,11 +11,16 @@ const discovery = new ProjectDiscovery('bob')
 export const bob: Layer2 = opStackL2({
   createdAt: new UnixTime(1704267653), // 2024-01-03T07:40:53Z
   discovery,
-  badges: [Badge.RaaS.Conduit, Badge.Infra.Superchain],
+  additionalBadges: [Badge.RaaS.Conduit, Badge.Infra.Superchain],
   additionalPurposes: ['Bitcoin DApps'],
   display: {
     name: 'BOB',
     slug: 'bob',
+    tvlWarning: {
+      content:
+        'The total TVL doublecounts underlying assets for solvBTC.BBN, solvBTC and uniBTC since they are locked on BOB. We are working on a fix.',
+      sentiment: 'warning',
+    },
     description:
       "BOB (Build on Bitcoin) is an OP Stack rollup that aims to natively support the Bitcoin stack. The current implementation supports a variety of canonical and external bridging for BTC-related assets and a tBTC-v2 LightRelay smart contract for verifying Bitcoin transaction proofs through their blocks' headers on the L2.",
     links: {

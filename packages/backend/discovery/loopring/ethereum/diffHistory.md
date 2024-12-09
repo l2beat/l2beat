@@ -1,3 +1,63 @@
+Generated with discovered.json: 0x652375d3ebc7c2c20ea31124493ddbd9cdb5a9a9
+
+# Diff at Mon, 02 Dec 2024 08:06:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0cac24376573663e0a362b2f340a124e5238a2bc block: 20059608
+- current block number: 21313525
+
+## Description
+
+Change one Multisig signer.
+
+## Watched changes
+
+```diff
+    contract LoopringMultisig (0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97) {
+    +++ description: None
+      values.$members.2:
+-        "0x4CBbD41a2c057cAb8db00AC60f1AB52F36870185"
++        "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
+      values.$members.1:
+-        "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
++        "0x88f8Dbd3dC44c6E2e368258D3eee8EB9A07aF191"
+      values.$members.0:
+-        "0x88f8Dbd3dC44c6E2e368258D3eee8EB9A07aF191"
++        "0xb47fE76aC588101BFBdA9E68F66433bA51E8029a"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0xb47fE76aC588101BFBdA9E68F66433bA51E8029a)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../loopring/ethereum/.flat/Safe/Safe.sol          | 1088 ++++++++++++++++++++
+ .../loopring/ethereum/.flat/Safe/SafeProxy.p.sol   |   37 +
+ 2 files changed, 1125 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20059608 (main branch discovery), not current.
+
+```diff
+    contract LoopringMultisig (0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97) {
+    +++ description: None
+      name:
+-        "ProxyOwner"
++        "LoopringMultisig"
+      fieldMeta:
+-        {"getOwners":{"severity":"LOW","description":"Array of addresses that are owners, allowed to chage contract values."}}
+    }
+```
+
 Generated with discovered.json: 0xdf369d3bcbc7e1fe1597b0265fab2173955de017
 
 # Diff at Mon, 21 Oct 2024 12:45:38 GMT:

@@ -9,7 +9,11 @@ const discovery = new ProjectDiscovery('winr', 'arbitrum')
 export const winr: Layer3 = orbitStackL3({
   createdAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
   discovery,
-  badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum, Badge.RaaS.Conduit],
+  additionalBadges: [
+    Badge.DA.DAC,
+    Badge.L3ParentChain.Arbitrum,
+    Badge.RaaS.Conduit,
+  ],
   additionalPurposes: ['Gaming'],
   hostChain: ProjectId.ARBITRUM,
   display: {

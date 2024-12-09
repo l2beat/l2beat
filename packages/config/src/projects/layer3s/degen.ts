@@ -13,7 +13,11 @@ export const degen: Layer3 = orbitStackL3({
   createdAt: new UnixTime(1712135735), // 2024-04-03T09:15:35Z
   hostChain: ProjectId('base'),
   discovery,
-  badges: [Badge.DA.DAC, Badge.L3ParentChain.Base, Badge.RaaS.Conduit],
+  additionalBadges: [
+    Badge.DA.DAC,
+    Badge.L3ParentChain.Base,
+    Badge.RaaS.Conduit,
+  ],
   additionalPurposes: ['Social'],
   nativeToken: 'DEGEN',
   display: {

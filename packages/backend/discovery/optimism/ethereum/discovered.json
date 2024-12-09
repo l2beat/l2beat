@@ -1,8 +1,8 @@
 {
   "name": "optimism",
   "chain": "ethereum",
-  "blockNumber": 21235656,
-  "configHash": "0x2ff32b5168c8625f92877c791409a8507330aa9fa5d96929bda8eadb1045c041",
+  "blockNumber": 21346059,
+  "configHash": "0x30877bf308df894e9de519c655ff0ebcd6fbcc16cd1f8ddb0ec6f96af8dac005",
   "contracts": [
     {
       "name": "LivenessModule",
@@ -327,12 +327,15 @@
       "sourceHashes": [
         "0xe771f3d1c51456e08e2c93a904b12010870dc4fa79ee82e4bc90433557931f05"
       ],
+      "ignoreInWatchMode": ["timeSinceLastL2beatInteraction"],
       "sinceTimestamp": 1717149791,
       "values": {
         "$immutable": true,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
+        "timeSinceLastL2beatInteraction": "1h 23m",
         "version": "1.0.0"
-      }
+      },
+      "derivedName": "LivenessGuard"
     },
     {
       "name": "L1CrossDomainMessenger",
@@ -404,7 +407,7 @@
         ],
         "$upgradeCount": 10,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292765416",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292768155",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -889,7 +892,7 @@
         "name": "Wrapped Ether",
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "symbol": "WETH",
-        "totalSupply": "20415188000000000000",
+        "totalSupply": "20335188000000000000",
         "version": "1.1.0"
       },
       "derivedName": "DelayedWETH"
@@ -1319,7 +1322,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 440516,
-          "prevBlockNum": 21235520
+          "prevBlockNum": 21346043
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1384,6 +1387,7 @@
         "domainSeparator": "0xdf53d510b56e539b90b369ef08fce3631020fbf921e3136ea5f8747c20bce967",
         "getChainId": 1,
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
+        "isL2beatStillAnOwner": true,
         "multisigThreshold": "10 of 13 (77%)",
         "nonce": 8,
         "VERSION": "1.3.0"
@@ -1478,7 +1482,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 3948,
+        "gameCount": 4316,
         "gameImpls": [
           "0xA6f3DFdbf4855a43c529bc42EDE96797252879af",
           "0x050ed6F6273c7D836a111E42153BC00D0380b87d",

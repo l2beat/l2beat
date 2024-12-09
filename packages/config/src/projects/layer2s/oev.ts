@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('oevnetwork')
 export const oev: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1707313169), // 2024-02-07T13:39:29Z
   additionalPurposes: ['Oracles'],
-  badges: [Badge.RaaS.Caldera, Badge.DA.DAC],
+  additionalBadges: [Badge.RaaS.Caldera, Badge.DA.DAC],
   display: {
     name: 'OEV Network',
     slug: 'oev',
