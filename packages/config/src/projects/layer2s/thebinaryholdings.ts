@@ -9,6 +9,7 @@ const discovery = new ProjectDiscovery('thebinaryholdings')
 export const thebinaryholdings: Layer2 = opStackL2({
   createdAt: new UnixTime(1726668186), // 2024-09-18T14:03:06Z
   discovery,
+  associatedTokens:  ['BNRY'],
   additionalBadges: [Badge.Infra.Superchain],
   display: {
     name: 'The Binary Holdings',
