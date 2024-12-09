@@ -75,19 +75,9 @@ export function useStackedTvlChartRenderParams({
 
   const valuesStyle: SeriesStyle[] = useMemo(
     () => [
-      {
-        line: 'purple',
-        fill: 'purple',
-        point: 'circle',
-      },
-      {
-        line: 'yellow',
-        fill: 'yellow',
-      },
-      {
-        line: 'pink',
-        fill: 'pink',
-      },
+      { fill: 'purple', point: 'circle' },
+      { fill: 'yellow' },
+      { fill: 'pink' },
     ],
     [],
   )
