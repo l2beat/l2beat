@@ -1,4 +1,7 @@
-import { daLayers } from '@l2beat/config/build/src/projects/other/da-beat/index'
+import {
+  daLayers,
+  ethereumDaLayer,
+} from '@l2beat/config/build/src/projects/other/da-beat/index'
 import { notFound } from 'next/navigation'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/highlightable-link-context'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/desktop-project-navigation'
@@ -19,7 +22,7 @@ interface Props {
 
 export async function generateStaticParams() {
   if (env.VERCEL_ENV !== 'production') return []
-  return daLayers.flatMap((layer) =>
+  return daLayers.concat(ethereumDaLayer).flatMap((layer) =>
     layer.bridges.map((bridge) => ({
       layer: layer.display.slug,
       bridge: bridge.display.slug,
@@ -29,7 +32,9 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(props: Props) {
   const params = await props.params
-  const layer = daLayers.find((layer) => layer.display.slug === params.layer)
+  const layer = daLayers
+    .concat(ethereumDaLayer)
+    .find((layer) => layer.display.slug === params.layer)
   if (!layer) {
     notFound()
   }
@@ -54,7 +59,9 @@ export async function generateMetadata(props: Props) {
 
 export default async function Page(props: Props) {
   const params = await props.params
-  const daLayer = daLayers.find((p) => p.display.slug === params.layer)
+  const daLayer = daLayers
+    .concat(ethereumDaLayer)
+    .find((p) => p.display.slug === params.layer)
   if (!daLayer) return notFound()
   const daBridge = daLayer.bridges.find((b) => b.display.slug === params.bridge)
   if (!daBridge) return notFound()
