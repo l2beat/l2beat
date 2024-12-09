@@ -19,9 +19,7 @@ export const leaf: Layer2 = upcomingL2({
       documentation: [],
       explorers: [],
       repositories: [],
-      socialMedia: [
-        'https://x.com/leaf_rollup',
-      ],
+      socialMedia: ['https://x.com/leaf_rollup'],
     },
   },
 })
