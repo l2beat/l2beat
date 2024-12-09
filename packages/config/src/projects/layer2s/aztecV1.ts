@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import {
   DA_BRIDGES,
@@ -37,6 +42,10 @@ function getRollupProviders() {
 
   return [...providers, deployer]
 }
+
+const escapeBlockUpperBound = 4800 // in blocks, immutable
+const escapeBlockLowerBound = 4560 // in blocks, immutable
+const assumedBlockTime = 12 // in seconds
 
 export const aztecV1: Layer2 = {
   isArchived: true,
@@ -143,11 +152,11 @@ export const aztecV1: Layer2 = {
   },
   stateDerivation: {
     nodeSoftware:
-      'There are three ways to run a node and use the escape hatch: By running the [Aztec v2 Ejector](https://github.com/AztecProtocol/aztec-v2-ejector/) during the escape hatch window, 2) by running [falafel](https://github.com/AztecProtocol/aztec-2.0/tree/master/falafel), 3) by running the [SDK](https://developers.aztec.network/#/A%20Private%20Layer%202/zkAssets/emergencyWithdraw) in escape hatch mode and connecting to an [escape hatch server](https://github.com/AztecProtocol/aztec-v2-escape-hatch-server). The two latter methods are no longer recommended by the aztec team.',
+      'There are three ways to run a node and use the escape hatch: By running the [Aztec v2 Ejector](https://github.com/AztecProtocol/aztec-v2-ejector/) during the escape hatch window, 2) by running [falafel](https://github.com/AztecProtocol/aztec-2.0/tree/master/falafel), 3) by running the [SDK](https://developers.aztec.network/#/A%20Private%20Layer%202/zkAssets/emergencyWithdraw) in escape hatch mode and connecting to an [escape hatch server](https://github.com/AztecProtocol/aztec-v2-escape-hatch-server). The two latter methods are no longer recommended by the Aztec team.',
     compressionScheme: 'No compression scheme is used.',
     genesisState: 'No genesis state is used.',
     dataFormat:
-      'The data format used can be found [here](https://github.com/AztecProtocol/aztec-2.0/blob/master/blockchain/contracts/Decoder.sol)',
+      'The data format used can be found [here](https://github.com/AztecProtocol/aztec-2.0/blob/master/blockchain/contracts/Decoder.sol).',
   },
   stage: getStage(
     {
@@ -209,8 +218,7 @@ export const aztecV1: Layer2 = {
     operator: {
       name: 'No operator',
       risks: [],
-      description:
-        'Only specific addresses appointed by the owner were permitted to propose new blocks during regular rollup operation. Since EOL, these operators are not processing the rollup anymore. Periodically a special window (escape hatch) is open during which anyone can propose new blocks.',
+      description: `Only specific addresses appointed by the owner were permitted to propose new blocks during regular rollup operation. Since EOL, these operators are not processing the rollup anymore. Every ${formatSeconds(escapeBlockUpperBound * assumedBlockTime)} a special ${formatSeconds((escapeBlockUpperBound - escapeBlockLowerBound) * assumedBlockTime)} window (escape hatch) is open during which anyone can propose new blocks.`,
       references: [
         {
           text: 'RollupProcessor.sol#L97 - Etherscan source code',
@@ -226,7 +234,7 @@ export const aztecV1: Layer2 = {
       ...FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS,
       description:
         FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS.description +
-        ' Periodically the rollup opens a special window (escape hatch) during which anyone can propose new blocks.',
+        ` Every ${formatSeconds(escapeBlockUpperBound * assumedBlockTime)} the rollup opens a special ${formatSeconds((escapeBlockUpperBound - escapeBlockLowerBound) * assumedBlockTime)} window (escape hatch) during which anyone can propose new blocks.`,
       references: [
         {
           text: 'RollupProcessor.sol#L347 - Etherscan source code',
@@ -279,26 +287,13 @@ export const aztecV1: Layer2 = {
     ],
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'RollupProcessor',
-        'Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside a ZK proof.',
-      ),
-      discovery.getContractDetails(
-        'AztecFeeDistributor',
-        'Contract responsible for distributing fees and reimbursing gas to Rollup Providers.',
-      ),
-      discovery.getContractDetails('TurboVerifier', {
-        description: 'Turbo Plonk zkSNARK Verifier.',
-      }),
-    ],
+    addresses: discovery.getDiscoveredContracts(),
     risks: [],
   },
   permissions: [
     {
       name: 'Rollup Providers',
-      description:
-        'Addresses that can propose new blocks during regular rollup operation.',
+      description: `Addresses that can propose new blocks during regular rollup operation. Every ${formatSeconds(escapeBlockUpperBound * assumedBlockTime)} a special ${formatSeconds((escapeBlockUpperBound - escapeBlockLowerBound) * assumedBlockTime)} window (escape hatch) is open during which anyone can propose new blocks.`,
       accounts: getRollupProviders().map((account) =>
         discovery.formatPermissionedAccount(account),
       ),
