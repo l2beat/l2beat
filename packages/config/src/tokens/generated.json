@@ -367,6 +367,20 @@
       "excludeFromTotal": true
     },
     {
+      "name": "Arbius",
+      "coingeckoId": "arbius",
+      "address": "0x8AFE4055Ebc86Bd2AFB3940c0095C9aca511d852",
+      "symbol": "AIUS",
+      "decimals": 18,
+      "deploymentTimestamp": 1708734479,
+      "coingeckoListingTimestamp": 1707955200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35246/large/arbius-200x-logo.png?1707987961",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "ARPA Token",
       "coingeckoId": "arpa",
       "address": "0xBA50933C268F567BDC86E1aC131BE072C6B0b71a",
@@ -1697,6 +1711,20 @@
       "supply": "zero"
     },
     {
+      "name": "Finanx AI",
+      "coingeckoId": "finanx-ai",
+      "address": "0x939069722D568B5498CcBA4356E800EaefEFD2a5",
+      "symbol": "FNXAI",
+      "decimals": 18,
+      "deploymentTimestamp": 1728389231,
+      "coingeckoListingTimestamp": 1730073600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51119/large/200x200.png?1730126766",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Fire Bitcoin",
       "coingeckoId": "ignition-fbtc",
       "address": "0xC96dE26018A54D51c097160568752c4E3BD6C364",
@@ -1706,6 +1734,20 @@
       "coingeckoListingTimestamp": 1720828800,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39182/large/FBTC_LOGO.png?1720850455",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Florence Finance Medici",
+      "coingeckoId": "florence-finance-medici",
+      "address": "0x72A9B1c9B191781bB15F1b98f443a1d916557c92",
+      "symbol": "FFM",
+      "decimals": 18,
+      "deploymentTimestamp": 1703843831,
+      "coingeckoListingTimestamp": 1704758400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34382/large/M_PNG_200x200_copy.png?1704779326",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -1930,6 +1972,20 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/5992/large/gemini-dollar-gusd.png?1696506408",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "GENOME",
+      "coingeckoId": "genomesdao-genome",
+      "address": "0x7AE4f8885f6cFa41a692cb9DA3789cfa6A83e9f2",
+      "symbol": "GENOME",
+      "decimals": 18,
+      "deploymentTimestamp": 1711981775,
+      "coingeckoListingTimestamp": 1713398400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36763/large/images.jpg?1712282056",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -2467,6 +2523,20 @@
       "supply": "zero"
     },
     {
+      "name": "LogX Network",
+      "coingeckoId": "logx-2",
+      "address": "0xa3F4341C3fEf5963AB04135D2014AC7d68222E19",
+      "symbol": "LOGX",
+      "decimals": 18,
+      "deploymentTimestamp": 1726562651,
+      "coingeckoListingTimestamp": 1727136000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50226/large/Token_200px.png?1726556358",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Lombard Staked Bitcoin",
       "coingeckoId": "lombard-staked-btc",
       "address": "0x8236a87084f8B84306f72007F36F2618A5634494",
@@ -2789,6 +2859,20 @@
       "supply": "zero"
     },
     {
+      "name": "Mog Coin",
+      "coingeckoId": "mog-coin",
+      "address": "0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a",
+      "symbol": "Mog",
+      "decimals": 18,
+      "deploymentTimestamp": 1689822407,
+      "coingeckoListingTimestamp": 1689897600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31059/large/MOG_LOGO_200x200.png?1696529893",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Moonflow",
       "coingeckoId": "moonflow",
       "address": "0x4a52Fa1a1115814c59C643F53f14199b8fb11cEa",
@@ -2798,6 +2882,20 @@
       "coingeckoListingTimestamp": 1706313600,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/34862/large/profile_pic_test_%281%29.jpg?1716085666",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Morpho Token",
+      "coingeckoId": "morpho",
+      "address": "0x58D97B57BB95320F9a05dC918Aef65434969c2B2",
+      "symbol": "MORPHO",
+      "decimals": 18,
+      "deploymentTimestamp": 1731243119,
+      "coingeckoListingTimestamp": 1732060800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29837/large/Morpho-token-icon.png?1726771230",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -5052,6 +5150,20 @@
       "coingeckoListingTimestamp": 1627430400,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/17358/large/Shield_Mark_-_Colored_-_Iridescent.png?1696516909",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "YieldBricks",
+      "coingeckoId": "yieldbricks",
+      "address": "0x9d9535Dae62F5f12aB83F1183DCa1eAd244b0DB3",
+      "symbol": "YBR",
+      "decimals": 18,
+      "deploymentTimestamp": 1730047847,
+      "coingeckoListingTimestamp": 1731369600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51471/large/fjord-token-logo-darkbg.png?1731384618",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
