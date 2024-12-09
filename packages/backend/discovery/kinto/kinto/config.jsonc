@@ -5,7 +5,6 @@
   "initialAddresses": [
     "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b", // appRegistry
     "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a", // kintoadmin smartwallet
-    "0x87f0eE85bF3198654900a422832157abBba30828", // KintoWallet beacon
     "0x8d2D899402ed84b6c0510bB1ad34ee436ADDD20d", // bundleBulker
     "0x340487b92808B84c2bd97C87B590EE81267E04a7", // L2GatewayRouter
     "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd", // SponsorPaymaster
@@ -171,7 +170,8 @@
     },
     "KintoWalletFactory": {
       "ignoreMethods": ["proxiableUUID"],
-      "ignoreInWatchMode": ["totalWallets"]
+      "ignoreInWatchMode": ["totalWallets"],
+      "ignoreRelatives": ["beacon"]
     },
     "KintoID": {
       "description": "Manages Kinto's KYC system: KYC provider addresses and the KYC status of users.",
