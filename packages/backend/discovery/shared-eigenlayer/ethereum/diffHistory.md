@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x951069dec9580ef9487e7c2cbfaf18e249e8a21a
+
+# Diff at Mon, 09 Dec 2024 15:51:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02974be0caac873bba9178e618086aa67aaf0b90 block: 21357574
+- current block number: 21357574
+
+## Description
+
+Config related: Added a new strategy template that matches.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21357574 (main branch discovery), not current.
+
+```diff
+    contract StrategyBase (0xe9FA8F904d97854C7389b68923262ADCC6C27827) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      values.sharesToUnderlying:
+-        []
+      values.sharesToUnderlyingView:
+-        []
+      values.underlyingToShares:
+-        []
+      values.underlyingToSharesView:
+-        []
+      template:
++        "eigenlayer/Strategy"
+      description:
++        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      fieldMeta:
++        {"getTVLLimits":{"severity":"LOW","description":"Maximum TVL of the strategy."},"maxPerDeposit":{"severity":"LOW","description":"Maximum value of one deposit transaction"},"maxTotalDeposits":{"severity":"LOW","description":"Same as TVL limit"}}
+    }
+```
+
 Generated with discovered.json: 0x06c4ee8985395cad773ed62b8f8f893c14ce6a26
 
 # Diff at Sun, 08 Dec 2024 11:49:33 GMT:
