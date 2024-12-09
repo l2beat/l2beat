@@ -11,9 +11,8 @@ import { HydrateClient } from '~/trpc/server'
 import { getProjectMetadata } from '~/utils/metadata'
 import { BridgesProjectSummary } from './_components/bridges-project-summary'
 
-export const revalidate = 600
 export async function generateStaticParams() {
-  if (env.VERCEL_ENV === 'preview') return []
+  if (env.VERCEL_ENV !== 'production') return []
   return bridges.map((layer) => ({
     slug: layer.display.slug,
   }))

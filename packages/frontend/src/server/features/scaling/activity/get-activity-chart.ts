@@ -93,7 +93,7 @@ export const getCachedActivityChartData = cache(
   },
   ['activity-chart-data'],
   {
-    revalidate: UnixTime.HOUR,
+    tags: ['activity'],
   },
 )
 

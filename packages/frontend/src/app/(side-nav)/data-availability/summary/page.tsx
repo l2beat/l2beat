@@ -17,7 +17,6 @@ import { EthereumDaEntry } from './_components/ethereum-da-entry'
 import { DaSummaryCustomTable } from './_components/table/da-summary-custom-table'
 import { DaSummaryPublicTable } from './_components/table/da-summary-public-table'
 
-export const revalidate = 600
 export const metadata = getDefaultMetadata({
   openGraph: {
     url: '/data-availability/summary',

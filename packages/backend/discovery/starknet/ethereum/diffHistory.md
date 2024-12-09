@@ -1,3 +1,25 @@
+Generated with discovered.json: 0xe7ea72fdb3d4832eb7aa5b7eceb44fe8b6271e08
+
+# Diff at Sun, 08 Dec 2024 13:23:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@59fd7a30471906b5a479f280731621e94e22f17c block: 21285629
+- current block number: 21358044
+
+## Description
+
+LidoAgent added as second SecurityAdmin of the wstETHBridge (ignored).
+
+## Watched changes
+
+```diff
+    contract wstETHBridge (0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B) {
+    +++ description: None
+      values.accessControl.SECURITY_ADMIN.members.1:
++        "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
 Generated with discovered.json: 0x0b06620a2094a6e93f038629a2befd2aedf38699
 
 # Diff at Thu, 28 Nov 2024 10:33:59 GMT:

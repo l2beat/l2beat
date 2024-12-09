@@ -6,11 +6,10 @@ import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('degen', 'base')
 
-const dac = discovery.getContractValue<{
+const { membersCount, requiredSignatures } = discovery.getContractValue<{
   membersCount: number
   requiredSignatures: number
 }>('SequencerInbox', 'dacKeyset')
-const { membersCount, requiredSignatures } = dac
 
 export const degenDac = AnytrustDAC({
   project: degen,

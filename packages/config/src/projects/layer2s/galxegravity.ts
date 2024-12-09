@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('galxegravity', 'ethereum')
 export const galxegravity: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1719415787), // 2024-06-26T15:29:47Z
   discovery,
-  badges: [Badge.DA.DAC, Badge.RaaS.Conduit],
+  additionalBadges: [Badge.DA.DAC, Badge.RaaS.Conduit],
   associatedTokens: ['G'],
   nativeToken: 'G',
   display: {

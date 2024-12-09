@@ -21,7 +21,7 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  if (env.VERCEL_ENV === 'preview') return []
+  if (env.VERCEL_ENV !== 'production') return []
 
   const publications = getCollection('publications')
   return publications.map((publication) => ({

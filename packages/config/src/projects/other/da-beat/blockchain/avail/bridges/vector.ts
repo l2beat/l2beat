@@ -58,7 +58,7 @@ export const vector = {
           description: `Verifier contract for the header range [latestBlock, targetBlock] proof.`,
         },
         discovery.getContractDetails('SuccinctGatewaySP1', {
-          description: `This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the on-chain verifier contract.
+          description: `This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.
         `,
         }),
       ],
@@ -105,7 +105,7 @@ export const vector = {
       },
       {
         category: 'Funds can be frozen if',
-        text: 'the permissioned relayers are unable to submit DA commitments to the Vector contract.',
+        text: 'excluding L2-specific DA fallback - the permissioned relayers are unable to submit DA commitments to the Vector contract.',
       },
     ],
   },

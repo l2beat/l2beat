@@ -7,10 +7,10 @@ export const alphadune: Layer3 = upcomingL3({
   createdAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
   hostChain: ProjectId('arbitrum'),
   display: {
-    name: 'AlphaDune',
+    name: 'Alpha Dune Network',
     slug: 'alphadune',
     description:
-      'AlphaDune is an upcoming Layer 3 on Arbitrum, built on the Orbit stack and using Celestia for DA. It aims to be a meta progression layer for games that unlocks value for gamers and developers alike.',
+      'Alpha Dune Network is an upcoming Layer 3 on Arbitrum, built on the Orbit stack and using Celestia for DA. It aims to be a meta progression layer for games that unlocks value for gamers and developers alike.',
     purposes: ['Universal', 'Gaming'],
     category: 'Optimium',
     provider: 'Arbitrum',

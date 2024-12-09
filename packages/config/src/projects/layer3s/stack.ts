@@ -10,7 +10,11 @@ const discovery = new ProjectDiscovery('stack', 'base')
 export const stack: Layer3 = opStackL3({
   createdAt: new UnixTime(1710853988), // 2024-03-19T13:13:08Z
   discovery,
-  badges: [Badge.DA.Celestia, Badge.L3ParentChain.Base, Badge.RaaS.Conduit],
+  additionalBadges: [
+    Badge.DA.Celestia,
+    Badge.L3ParentChain.Base,
+    Badge.RaaS.Conduit,
+  ],
   additionalPurposes: ['Social'],
   hostChain: ProjectId('base'),
   display: {

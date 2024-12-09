@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('swan')
 export const swan: Layer2 = opStackL2({
   createdAt: new UnixTime(1722275591), // 2024-07-29T17:53:11Z
   discovery,
-  badges: [Badge.Infra.Superchain],
+  additionalBadges: [Badge.Infra.Superchain],
   additionalPurposes: ['AI', 'Storage'],
   display: {
     name: 'Swan Chain',

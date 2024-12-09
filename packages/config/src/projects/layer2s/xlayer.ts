@@ -37,7 +37,7 @@ const upgradeability = {
 export const xlayer: Layer2 = polygonCDKStack({
   createdAt: new UnixTime(1713983341), // 2024-04-24T18:29:01Z
   discovery,
-  badges: [Badge.DA.DAC, Badge.Infra.AggLayer],
+  additionalBadges: [Badge.DA.DAC, Badge.Infra.AggLayer],
   daProvider: {
     layer: DA_LAYERS.DAC,
     bridge: DA_BRIDGES.DAC_MEMBERS({
@@ -61,7 +61,7 @@ export const xlayer: Layer2 = polygonCDKStack({
     technology: {
       name: 'Data is not stored on chain',
       description:
-        'The transaction data is not recorded on the Ethereum main chain. Transaction data is stored off-chain and only the hashes are posted on-chain by the Sequencer, after being signed by the DAC members.',
+        'The transaction data is not recorded on the Ethereum main chain. Transaction data is stored off-chain and only the hashes are posted onchain by the Sequencer, after being signed by the DAC members.',
       risks: [
         {
           category: 'Funds can be lost if',

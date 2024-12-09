@@ -59,7 +59,7 @@ export const DA_LAYERS = {
     fallbackDescription:
       'In case posting is not possible for some reason, there is a fallback mechanism to Ethereum.',
   },
-  ETH_BLOBS_OR_CALLLDATA: {
+  ETH_BLOBS_OR_CALLDATA: {
     value: 'Ethereum',
     secondLine: 'Blobs or Calldata',
     sentiment: 'good',
@@ -168,7 +168,7 @@ export const DA_BRIDGES = {
     value: 'Optimistic',
     sentiment: 'bad',
     description:
-      'There is a mechanism that allows validators to request that the Sequencer posts data on-chain via L1 contract if they find that data is unavailable.',
+      'There is a mechanism that allows validators to request that the Sequencer posts data onchain via L1 contract if they find that data is unavailable.',
   },
   DAC_MEMBERS: ({
     requiredSignatures,

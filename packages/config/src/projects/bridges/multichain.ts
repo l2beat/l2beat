@@ -37,7 +37,7 @@ export const multichain: Bridge = {
       description:
         'Multichain (formerly AnySwap) is a Hybrid Bridge that, depending on a token, can act as a Token Bridge or as a Liquidity Network.\
         It uses multiple escrows on a source chain (one per each destination) in addition to tokenized Liquidity Pools (anyToken contracts) - one anyToken contract per token.\
-        It uses an on-chain Router that, depending on the token/destination will choose either TokenBridge or Liquidity Network to bridge assets.',
+        It uses an onchain Router that, depending on the token/destination will choose either TokenBridge or Liquidity Network to bridge assets.',
       references: [],
       risks: [],
     },

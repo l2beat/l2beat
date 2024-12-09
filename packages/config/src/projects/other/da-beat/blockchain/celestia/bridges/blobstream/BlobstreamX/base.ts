@@ -90,8 +90,8 @@ export const blobstreamBase = CELESTIA_BLOBSTREAM({
             'Verifier contract for a single header proof. Used in the rare case in which the validator set changes by more than 2/3 in a single block.',
         },
         discovery.getContractDetails('SuccinctGateway', {
-          description: `This contract is the router for the bridge proofs verification. It stores the mapping between the functionId of the bridge circuit and the address of the on-chain verifier contract.
-        Users can interact with this contract to request proofs on-chain, emitting a RequestCall event for off-chain provers to consume. Once a proof is generated, this contract is used as the on-chain entry point for relayers to fulfill the request and submit the proof.`,
+          description: `This contract is the router for the bridge proofs verification. It stores the mapping between the functionId of the bridge circuit and the address of the onchain verifier contract.
+        Users can interact with this contract to request proofs onchain, emitting a RequestCall event for off-chain provers to consume. Once a proof is generated, this contract is used as the onchain entry point for relayers to fulfill the request and submit the proof.`,
         }),
       ],
     },

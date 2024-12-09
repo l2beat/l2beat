@@ -49,19 +49,19 @@ export async function check(workersCount: number, logger: Logger) {
   const L2BEAT = await checkL2BEAT(workersCount, logger)
   const DABEAT = await checkDABEAT(workersCount, logger)
 
-  const mergedVerficationMap = merge(
+  const mergedVerificationMap = merge(
     L2BEAT.verificationMap,
     DABEAT.verificationMap,
   )
 
-  for (const chain of Object.keys(mergedVerficationMap)) {
+  for (const chain of Object.keys(mergedVerificationMap)) {
     const path = getOutputPath(chain)
-    await saveResult(path, mergedVerficationMap[chain])
+    await saveResult(path, mergedVerificationMap[chain])
   }
 
-  for (const chain of Object.keys(mergedVerficationMap)) {
+  for (const chain of Object.keys(mergedVerificationMap)) {
     const path = getOutputPath(chain)
-    await saveResult(path, mergedVerficationMap[chain])
+    await saveResult(path, mergedVerificationMap[chain])
   }
 
   const projectVerificationMap: VerificationMap = {}
@@ -71,7 +71,7 @@ export async function check(workersCount: number, logger: Logger) {
     projectVerificationMap[id] ??= true
     projectVerificationMap[id] &&= areAllAddressesVerified(
       addresses,
-      mergedVerficationMap[chain],
+      mergedVerificationMap[chain],
     )
   })
 
@@ -81,7 +81,7 @@ export async function check(workersCount: number, logger: Logger) {
     projectVerificationMap[id] ??= true
     projectVerificationMap[id] &&= areAllAddressesVerified(
       addresses,
-      mergedVerficationMap[chain],
+      mergedVerificationMap[chain],
     )
   })
 

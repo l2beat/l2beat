@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('hypr')
 export const hypr: Layer2 = opStackL2({
   createdAt: new UnixTime(1695904849), // 2023-09-28T12:40:49Z
   daProvider: CELESTIA_DA_PROVIDER,
-  badges: [Badge.DA.Celestia],
+  additionalBadges: [Badge.DA.Celestia],
   discovery,
   display: {
     name: 'Hypr',
@@ -42,5 +42,5 @@ export const hypr: Layer2 = opStackL2({
   ],
   discoveryDrivenData: true,
   // rpcUrl: 'https://rpc.hypr.network',
-  // associatedTokens: ['HYPR'], removed due to insufficent price data
+  // associatedTokens: ['HYPR'], removed due to insufficient price data
 })

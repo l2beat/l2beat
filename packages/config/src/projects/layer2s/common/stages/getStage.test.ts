@@ -35,8 +35,8 @@ describe(getStage.name, () => {
         nextStage: 'Stage 2',
         requirements: [
           'Fraud proof submission is open only to whitelisted actors.',
-          'Upgrades unrelated to on-chain provable bugs provide less than 30d to exit.',
-          "The Security Council's actions are not confined to on-chain provable bugs.",
+          'Upgrades unrelated to onchain provable bugs provide less than 30d to exit.',
+          "The Security Council's actions are not confined to onchain provable bugs.",
         ],
       },
       stage: 'Stage 1',
@@ -102,12 +102,12 @@ describe(getStage.name, () => {
             },
             {
               description:
-                'Upgrades unrelated to on-chain provable bugs provide less than 30d to exit.',
+                'Upgrades unrelated to onchain provable bugs provide less than 30d to exit.',
               satisfied: false,
             },
             {
               description:
-                "The Security Council's actions are not confined to on-chain provable bugs.",
+                "The Security Council's actions are not confined to onchain provable bugs.",
               satisfied: false,
             },
           ],
