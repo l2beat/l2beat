@@ -18,15 +18,15 @@ import { HttpClient } from '../utils/HttpClient'
 import { ChainValue } from './types'
 
 export const DiscoverCommandArgs = {
-  chain: positional({
-    type: ChainValue,
-    displayName: 'chain',
-    description: 'name of the chain on which discovery will happen',
-  }),
   project: positional({
     type: string,
     displayName: 'project',
     description: 'name of the project which will be discovered',
+  }),
+  chain: positional({
+    type: ChainValue,
+    displayName: 'chain',
+    description: 'name of the chain on which discovery will happen',
   }),
   dryRun: flag({
     type: boolean,
