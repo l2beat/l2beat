@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x34fb9e8f52e68332819b943fc5fa33208b4f7688
+
+# Diff at Mon, 09 Dec 2024 09:41:57 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@f8ac84ae0d4464e6448214e9891d08430e0cbab4 block: 21329314
+- current block number: 21364116
+
+## Description
+
+Make Espresso discovery-driven.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21329314 (main branch discovery), not current.
+
+```diff
+    contract HotShotLightClient (0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458) {
+    +++ description: The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0x34F5af5158171Ffd2475d21dB5fc3B311F221982","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.target:
+-        "0x34F5af5158171Ffd2475d21dB5fc3B311F221982"
++        "0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947"
+      description:
++        "The DA bridge contract that stores and verifies HotShot state commitments on Ethereum."
+    }
+```
+
 Generated with discovered.json: 0xbef0fc2ec9350fa46048af184960c5f07bb02d84
 
 # Diff at Wed, 04 Dec 2024 14:34:00 GMT:
