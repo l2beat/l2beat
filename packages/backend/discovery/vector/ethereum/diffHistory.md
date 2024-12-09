@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xc85c9adeb7d30dcfd8056af441e8837443b76f61
+Generated with discovered.json: 0xc64da00cbfedeb45667eaf8a70f40d74df6b2660
 
-# Diff at Tue, 03 Dec 2024 11:32:00 GMT:
+# Diff at Mon, 09 Dec 2024 10:15:44 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@0396732c6f89bbf1076e12ecc7e5f893a7f251ca block: 21184939
-- current block number: 21321417
+- comparing to: main@89e8982b383eef3a5fbd1d40b993ff7d9b8230e3 block: 21184939
+- current block number: 21364285
 
 ## Description
 
@@ -31,11 +31,11 @@ discovery. Values are for block 21184939 (main branch discovery), not current.
 ```
 
 ```diff
-    contract Old SP1Verifier (0x1764C29FBd94865198588f10FC75D4f6636d158d) {
+    contract Old SP1Verifier 4 (0x1764C29FBd94865198588f10FC75D4f6636d158d) {
     +++ description: None
       name:
 -        "SP1Verifier"
-+        "Old SP1Verifier"
++        "Old SP1Verifier 4"
     }
 ```
 
@@ -50,20 +50,20 @@ discovery. Values are for block 21184939 (main branch discovery), not current.
 ```
 
 ```diff
-    contract Old SP1Verifier (0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3) {
+    contract Old SP1Verifier 3 (0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3) {
     +++ description: None
       name:
 -        "SP1Verifier"
-+        "Old SP1Verifier"
++        "Old SP1Verifier 3"
     }
 ```
 
 ```diff
-    contract Old SP1Verifier (0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc) {
+    contract Old SP1Verifier 2 (0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc) {
     +++ description: None
       name:
 -        "SP1Verifier"
-+        "Old SP1Verifier"
++        "Old SP1Verifier 2"
     }
 ```
 
@@ -76,11 +76,11 @@ discovery. Values are for block 21184939 (main branch discovery), not current.
 ```
 
 ```diff
-    contract Old SP1Verifier (0xc350F063C13a3Ca21331610fe159E697a5c9c2FB) {
+    contract Old SP1Verifier 1 (0xc350F063C13a3Ca21331610fe159E697a5c9c2FB) {
     +++ description: None
       name:
 -        "SP1Verifier"
-+        "Old SP1Verifier"
++        "Old SP1Verifier 1"
     }
 ```
 

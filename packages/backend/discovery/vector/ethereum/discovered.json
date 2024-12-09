@@ -1,8 +1,8 @@
 {
   "name": "vector",
   "chain": "ethereum",
-  "blockNumber": 21321417,
-  "configHash": "0x7cf536c3597d9a6112552f1797db59bd90cc72f886a15b851eb48044197eb2ee",
+  "blockNumber": 21364285,
+  "configHash": "0xd4ed25c6a91b336b5f8f73e316008a5aeafbd378f5fbe12d3e29053697ecfe86",
   "contracts": [
     {
       "name": "Vector",
@@ -75,8 +75,8 @@
         "headerRangeCommitmentTreeSize": 2048,
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "isRelayerApproved": true,
-        "latestAuthoritySetId": 163,
-        "latestBlock": 656640,
+        "latestAuthoritySetId": 171,
+        "latestBlock": 682560,
         "relayers": ["0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"],
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
@@ -88,7 +88,7 @@
       "derivedName": "SP1Vector"
     },
     {
-      "name": "Old SP1Verifier",
+      "name": "Old SP1Verifier 4",
       "address": "0x1764C29FBd94865198588f10FC75D4f6636d158d",
       "sourceHashes": [
         "0xeb051b88e210e28fd696d01528e3cc9a131a08d69e20bf1983ac8d90dd9b1f4f"
@@ -151,7 +151,7 @@
       "derivedName": "SP1VerifierGateway"
     },
     {
-      "name": "Old SP1Verifier",
+      "name": "Old SP1Verifier 3",
       "address": "0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3",
       "sourceHashes": [
         "0x0f6f590ac4c542e7f927f783929cb0bf126657b5207b3c796f77ac9d01433fb5"
@@ -165,7 +165,7 @@
       "derivedName": "SP1Verifier"
     },
     {
-      "name": "Old SP1Verifier",
+      "name": "Old SP1Verifier 2",
       "address": "0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc",
       "sourceHashes": [
         "0xabb95b2d66749481071b7a258a3305198760dbaf12d7411cfaba5e4c26cc3a65"
@@ -223,7 +223,7 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "Old SP1Verifier",
+      "name": "Old SP1Verifier 1",
       "address": "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB",
       "sourceHashes": [
         "0x6e3bfeae0d549b79decfd956f551a8aeac66523cdd66da389ef55eb56ef72aac"
