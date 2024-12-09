@@ -1,13 +1,21 @@
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import { Project } from '../project/Project'
 import { PROOFS } from './common/proofSystems'
-import { ZkCatalogProject } from './types'
 
-export const payy: ZkCatalogProject = {
-  createdAt: new UnixTime(1721223308), // 2024-07-17T13:35:08Z
-  display: {
-    slug: 'payy',
-    name: 'Payy',
-  },
+export const payy: Project = {
+  // TODO: This should be part of the payy project, but upcomingL2 doesn't support this :(
+  id: ProjectId('payy-zk-catalog'),
+  slug: 'payy',
+  name: 'Payy',
+  addedAt: UnixTime.fromDate(new Date('2024-07-17')),
+  // tags
+  isZkCatalog: true,
+  // data
   proofVerification: {
     shortDescription: 'A privacy-preserving payment system.',
     aggregation: true,
@@ -65,5 +73,4 @@ export const payy: ZkCatalogProject = {
     ],
     requiredTools: [],
   },
-  type: 'zk-catalog',
 }
