@@ -4,6 +4,7 @@ import {
   DaEconomicSecurityType,
   DaLayer,
   daLayers,
+  ethereumDaLayer,
 } from '@l2beat/config'
 import { HttpClient } from '@l2beat/shared'
 import { assertUnreachable } from '@l2beat/shared-pure'
@@ -41,6 +42,7 @@ export class DaBeatStakeRefresher {
         ...new Set(
           compact(
             daLayers
+              .concat(ethereumDaLayer)
               .filter(this.isBlockchainDaLayer)
               .map((layer) => layer.economicSecurity?.type),
           ),
