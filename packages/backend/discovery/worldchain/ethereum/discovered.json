@@ -1,25 +1,19 @@
 {
   "name": "worldchain",
   "chain": "ethereum",
-  "blockNumber": 21141719,
-  "configHash": "0x240314a7383f52ca9f8f8cd941ca1d9c086e6425126d789c812401ca9894e669",
+  "blockNumber": 21343022,
+  "configHash": "0x9957975f01262ce01921009f140299da8d7f4e4587995026616a09352d22e47a",
   "contracts": [
     {
       "name": "L1OpUSDCBridgeAdapter",
       "address": "0x153A69e4bb6fEDBbAaF463CB982416316c84B2dB",
+      "template": "circle/L1OpUSDCBridgeAdapter",
       "sourceHashes": [
         "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
         "0xd311a9b68b7e171b3bc43bd9e7ee705886c2fdd620360576ca49115fd9799d5d"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Custom external escrow for USDC bridged to Worldchain.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0x28fAb3A5b69711cc64B09240d2694d9F0f07eBf6",
-          "via": []
-        }
-      ],
+      "description": "Escrow for USDC that uses the canonical bridge for messaging but is governed externally.",
       "sinceTimestamp": 1724427575,
       "values": {
         "$admin": "0x28fAb3A5b69711cc64B09240d2694d9F0f07eBf6",
@@ -50,8 +44,7 @@
         "owner": "0x28fAb3A5b69711cc64B09240d2694d9F0f07eBf6",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "USDC": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-      },
-      "derivedName": "L1OpUSDCBridgeAdapter"
+      }
     },
     {
       "name": "L2OutputOracle",
@@ -110,10 +103,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 5857200,
-        "latestOutputIndex": 3253,
-        "nextBlockNumber": 5859000,
-        "nextOutputIndex": 3254,
+        "latestBlockNumber": 7072200,
+        "latestOutputIndex": 3928,
+        "nextBlockNumber": 7074000,
+        "nextOutputIndex": 3929,
         "proposer": "0x2307278fC8aB0005974A6DeD2FA6d1187333a223",
         "PROPOSER": "0x2307278fC8aB0005974A6DeD2FA6d1187333a223",
         "startingBlockNumber": 0,
@@ -314,7 +307,7 @@
           "systemTxMaxGas": 1000000,
           "maximumBaseFee": "340282366920938463463374607431768211455"
         },
-        "scalar": "452312848583266388373324160190187140051835877600158453279134670023538254329",
+        "scalar": "452312848583266388373324160190187140051835877600158453279135079729058554361",
         "sequencerInbox": "0xff00000000000000000000000000000000000480",
         "START_BLOCK_SLOT": "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f",
         "startBlock": 20178207,
@@ -543,8 +536,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 1301449,
-          "prevBlockNum": 21141659
+          "prevBoughtGas": 29400,
+          "prevBlockNum": 21342950
         },
         "paused": false,
         "superchainConfig": "0xa231f8be37e583f276f93dF516D88a043bfe47E3",
@@ -628,7 +621,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292624829",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292626973",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -658,15 +651,6 @@
         {
           "permission": "propose",
           "target": "0x19A6d1E9034596196295CF148509796978343c5D"
-        }
-      ]
-    },
-    {
-      "address": "0x28fAb3A5b69711cc64B09240d2694d9F0f07eBf6",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0x153A69e4bb6fEDBbAaF463CB982416316c84B2dB"
         }
       ]
     },
@@ -1156,6 +1140,7 @@
     ]
   },
   "usedTemplates": {
+    "circle/L1OpUSDCBridgeAdapter": "0x1135362fb5ab6e4c1e6e4ff6848c83ba9731527375d71fcda7126f6822fe50d0",
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",

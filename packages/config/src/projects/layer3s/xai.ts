@@ -11,7 +11,7 @@ export const xai: Layer3 = orbitStackL3({
   createdAt: new UnixTime(1701958025), // 2023-12-07T14:07:05Z
   discovery,
   hostChain: ProjectId('arbitrum'),
-  badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum],
+  additionalBadges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum],
   additionalPurposes: ['Gaming'],
   display: {
     name: 'Xai',

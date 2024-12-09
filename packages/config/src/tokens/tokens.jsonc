@@ -1,6 +1,10 @@
 {
   "ethereum": [
     {
+      "symbol": "USD0++",
+      "address": "0x35D8949372D46B7a3D5A56006AE77B215fc69bC0"
+    },
+    {
       "symbol": "ZRC",
       "address": "0xfd418e42783382E86Ae91e445406600Ba144D162"
     },
@@ -1713,6 +1717,12 @@
     }
   ],
   "arbitrum": [
+    {
+      "symbol": "LINK",
+      "address": "0xf97f4df75117a78c1A5a0DBb814Af92458539FB4",
+      "source": "canonical",
+      "supply": "zero"
+    },
     {
       "symbol": "TIA.n",
       "address": "0xD56734d7f9979dD94FAE3d67C7e928234e71cD4C",
@@ -4789,6 +4799,48 @@
     }
   ],
   "bob": [
+    {
+      "symbol": "SolvBTC.BBN",
+      "address": "0xCC0966D8418d412c599A6421b760a847eB169A8c",
+      "source": "external",
+      "supply": "totalSupply", // doublecounting the underlying solvBTC 24/12/06
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP (via free.tech and solv.finance)",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "SolvBTC",
+      "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
+      "source": "external",
+      "supply": "totalSupply", // doublecounting the underlying wBTC 24/12/06
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP (via free.tech and solv.finance)",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "uniBTC",
+      "address": "0x236f8c0a61dA474dB21B693fB2ea7AAB0c803894",
+      "source": "external",
+      "supply": "totalSupply", // doublecounting the underlying wBTC 24/12/06
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP (via bedrock.technology)",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
     {
       "symbol": "FBTC",
       "address": "0xC96dE26018A54D51c097160568752c4E3BD6C364",

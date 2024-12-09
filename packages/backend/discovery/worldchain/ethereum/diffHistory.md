@@ -1,3 +1,34 @@
+Generated with discovered.json: 0xe433c83297981013994bfd3c635714d66bbc7421
+
+# Diff at Fri, 06 Dec 2024 11:02:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@da76f61d2c06d695d89e2429e2266a54932319a2 block: 21141719
+- current block number: 21343022
+
+## Description
+
+External USDC escrow matches new template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21141719 (main branch discovery), not current.
+
+```diff
+    contract L1OpUSDCBridgeAdapter (0x153A69e4bb6fEDBbAaF463CB982416316c84B2dB) {
+    +++ description: Escrow for USDC that uses the canonical bridge for messaging but is governed externally.
+      description:
+-        "Custom external escrow for USDC bridged to Worldchain."
++        "Escrow for USDC that uses the canonical bridge for messaging but is governed externally."
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0x28fAb3A5b69711cc64B09240d2694d9F0f07eBf6","via":[]}]
+      template:
++        "circle/L1OpUSDCBridgeAdapter"
+    }
+```
+
 Generated with discovered.json: 0x7b7224b3c2477973744e2fdf24b3f0357f46ad74
 
 # Diff at Fri, 08 Nov 2024 08:27:24 GMT:

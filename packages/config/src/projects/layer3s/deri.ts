@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('deri', 'arbitrum')
 export const deri = orbitStackL3({
   createdAt: new UnixTime(1701958025), // 2023-12-07T14:07:05Z
   discovery,
-  badges: [Badge.L3ParentChain.Arbitrum],
+  additionalBadges: [Badge.L3ParentChain.Arbitrum],
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Deri',

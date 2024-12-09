@@ -100,7 +100,6 @@ export const providerMap: Record<
     text: "This project is based on Taiko's code base.",
   },
   'Cartesi Rollups': undefined,
-  'zkLink Nexus': undefined,
 }
 
 interface TypeTooltipProps {
