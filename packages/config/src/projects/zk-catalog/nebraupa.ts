@@ -4,7 +4,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { Project } from '../../project/Project'
+import { Project } from '../project/Project'
 import { PROOFS } from './common/proofSystems'
 
 export const nebraupa: Project = {

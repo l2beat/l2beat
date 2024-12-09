@@ -1,13 +1,20 @@
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import { Project } from '../project/Project'
 import { PROOFS } from './common/proofSystems'
-import { ZkCatalogProject } from './types'
 
-export const SP1Vector: ZkCatalogProject = {
-  createdAt: new UnixTime(1726155706), // 2024-09-12T15:41:46Z
-  display: {
-    slug: 'SP1Vector',
-    name: 'SP1Vector',
-  },
+export const sp1vector: Project = {
+  id: ProjectId('sp1vector'),
+  slug: 'SP1Vector', // TODO: lowercase + redirect
+  name: 'SP1Vector',
+  addedAt: UnixTime.fromDate(new Date('2024-09-12')),
+  // tags
+  isZkCatalog: true,
+  // data
   proofVerification: {
     shortDescription: 'Avail ZK light client implementation.',
     aggregation: true,
@@ -111,5 +118,4 @@ export const SP1Vector: ZkCatalogProject = {
       },
     ],
   },
-  type: 'zk-catalog',
 }
