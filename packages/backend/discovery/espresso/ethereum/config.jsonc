@@ -4,11 +4,22 @@
   "name": "espresso",
   "initialAddresses": ["0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458"],
   "names": {
-    "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458": "HotShotLightClient"
+    "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458": "HotShotLightClient",
+    "0x34F5af5158171Ffd2475d21dB5fc3B311F221982": "EspressoMultisig"
   },
   "overrides": {
     "HotShotLightClient": {
-      "description": "The DA bridge contract that stores and verifies HotShot state commitments on Ethereum."
+      "description": "The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.",
+      "ignoreMethods": [
+        "proxiableUUID",
+        "getHotShotCommitment",
+        "stateHistoryCommitments"
+      ],
+      "ignoreInWatchMode": [
+        "stateHistoryFirstIndex",
+        "getStateHistoryCount",
+        "finalizedState"
+      ]
     }
   }
 }

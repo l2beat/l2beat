@@ -14,6 +14,7 @@ import { automataDA } from './dac/automataDA'
 import { blessnetDac } from './dac/blessnet'
 import { cyberDA } from './dac/cyberDA'
 import { degenDac } from './dac/degen'
+import { ebichainDac } from './dac/ebichain'
 import { edgelessDac } from './dac/edgeless'
 import { eigenDA } from './dac/eigenDA'
 import { everclearDac } from './dac/everclear'
@@ -28,6 +29,7 @@ import { inEVMDac } from './dac/inEVM'
 import { l3xDac } from './dac/l3x'
 import { mantleDA } from './dac/mantleDA'
 import { moltenDac } from './dac/molten'
+import { musterDac } from './dac/muster'
 import { myriaDac } from './dac/myria'
 import { oevnetworkDac } from './dac/oevnetwork'
 import { paychainDac } from './dac/payChain'
@@ -69,6 +71,7 @@ export const daLayers: DaLayer[] = applyProcessor([
   blessnetDac,
   cyberDA,
   degenDac,
+  ebichainDac,
   edgelessDac,
   everclearDac,
   fluenceDac,
@@ -80,6 +83,7 @@ export const daLayers: DaLayer[] = applyProcessor([
   l3xDac,
   mantleDA,
   moltenDac,
+  musterDac,
   myriaDac,
   oevnetworkDac,
   paychainDac,

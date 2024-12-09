@@ -3,11 +3,13 @@
 import { captureException } from '@sentry/nextjs'
 import NextError from 'next/error'
 import { useEffect } from 'react'
+import { env } from '~/env'
 
 export default function GlobalError({
   error,
 }: { error: Error & { digest?: string } }) {
   useEffect(() => {
+    if (env.NODE_ENV !== 'production') return
     captureException(error)
   }, [error])
 

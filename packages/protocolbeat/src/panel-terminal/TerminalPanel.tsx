@@ -1,4 +1,5 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
+import Convert from 'ansi-to-html'
 import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { executeCommand, getProject } from '../api/api'
@@ -64,7 +65,8 @@ export function TerminalPanel() {
       abortControllerRef.current = new AbortController()
 
       eventSource.onmessage = (event) => {
-        const text = event.data.toString()
+        const encoded = event.data.toString()
+        const text = encoded.replace(/\\n/g, '\n')
         addOutput(text.endsWith('\n') ? text : text + '\n')
       }
 
@@ -118,10 +120,22 @@ export function TerminalPanel() {
       </div>
       <div
         ref={outputRef}
-        className="flex-1 overflow-auto whitespace-pre bg-black p-2 font-mono text-gray-300"
-      >
-        {output}
-      </div>
+        className="flex-1 overflow-auto whitespace-pre bg-coffee-900 p-2 font-mono text-gray-300"
+        dangerouslySetInnerHTML={{
+          __html: new Convert({
+            fg: '#F0D8BD',
+            bg: '#1D1816',
+            colors: {
+              1: '#FB4A35',
+              2: '#9DDE6C',
+              3: '#FABD30',
+              4: '#8B8BE8',
+              5: '#a73db5',
+              6: '#1c92a8',
+            },
+          }).toHtml(output),
+        }}
+      />
     </div>
   )
 }

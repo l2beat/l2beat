@@ -16,7 +16,7 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  if (env.VERCEL_ENV === 'preview') return []
+  if (env.VERCEL_ENV !== 'production') return []
   return zkCatalogProjects.map((project) => ({
     project: project.display.slug,
   }))

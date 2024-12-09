@@ -10,7 +10,7 @@ export const playblock: Layer3 = orbitStackL3({
   createdAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
   discovery,
   hostChain: ProjectId('nova'),
-  badges: [Badge.DA.DAC, Badge.L3ParentChain.Nova, Badge.RaaS.Gelato],
+  additionalBadges: [Badge.DA.DAC, Badge.L3ParentChain.Nova, Badge.RaaS.Gelato],
   additionalPurposes: ['Gaming'],
   display: {
     redWarning:

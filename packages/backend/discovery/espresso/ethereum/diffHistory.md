@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xce96ab18d3074820b84a095df1e0a31f29ea89b5
+Generated with discovered.json: 0xbef0fc2ec9350fa46048af184960c5f07bb02d84
 
-# Diff at Mon, 02 Dec 2024 14:37:08 GMT:
+# Diff at Wed, 04 Dec 2024 14:34:00 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@fbb831c7299974e6b8a2f29bfe84827fd888c98c block: 21273402
-- current block number: 21315463
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@7dc480bf5499525d0b44afce03521538ecc8ec73 block: 21273402
+- current block number: 21329314
 
 ## Description
 
-Migrate description to discovery config.
+Light Client contract verified.
 
 ## Config/verification related changes
 
@@ -17,10 +17,37 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 21273402 (main branch discovery), not current.
 
 ```diff
+    contract EspressoMultisig (0x34F5af5158171Ffd2475d21dB5fc3B311F221982) {
+    +++ description: None
+      name:
+-        "Safe"
++        "EspressoMultisig"
+    }
+```
+
+```diff
     contract HotShotLightClient (0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458) {
-    +++ description: The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.
-      description:
-+        "The DA bridge contract that stores and verifies HotShot state commitments on Ethereum."
+    +++ description: None
+      unverified:
+-        true
+      values.genesisStakeTableState:
++        {"threshold":34,"blsKeyComm":"1561632536195555148145050274009949812309785157828896392838981322602622136791","schnorrKeyComm":"20147560324529416943341534119711171689827441694011856532375917186049770295574","amountComm":"349594070000690608819508126396071528924936277306125447047023081215269308099"}
+      values.genesisState:
++        {"viewNum":0,"blockHeight":0,"blockCommRoot":0}
+      values.getVersion:
++        {"majorVersion":1,"minorVersion":0,"patchVersion":0}
+      values.isPermissionedProverEnabled:
++        true
+      values.owner:
++        "0x34F5af5158171Ffd2475d21dB5fc3B311F221982"
+      values.permissionedProver:
++        "0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947"
+      values.stateHistoryRetentionPeriod:
++        864000
+      values.UPGRADE_INTERFACE_VERSION:
++        "5.0.0"
+      sourceHashes:
++        ["0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6","0xb39829b8c4f7adee8b3f63d4c34b18a92e40670401393ceb3af7105d95f4b8c4"]
     }
 ```
 

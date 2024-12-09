@@ -9,8 +9,8 @@ import {
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { type CategorisedScalingEntries } from '~/utils/group-by-main-categories'
+import { BaseScalingFilters } from '../../_components/base-scaling-filters'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
-import { ScalingFilters } from '../../_components/scaling-filters'
 import { type CostsMetric, useCostsMetricContext } from './costs-metric-context'
 import { useCostsTimeRangeContext } from './costs-time-range-context'
 import { CostsMetricControls } from './costs-type-controls'
@@ -86,7 +86,7 @@ function Controls({
 
   return (
     <div className="mt-4 flex flex-col gap-2 lg:flex-row lg:justify-between">
-      <ScalingFilters items={entries} />
+      <BaseScalingFilters items={entries} />
       <CostsMetricControls
         value={metric}
         onValueChange={onMetricChange}

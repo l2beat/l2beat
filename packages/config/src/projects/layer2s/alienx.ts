@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('alienx')
 export const alienx: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1719847684), // 2024-07-01T15:28:04Z
   additionalPurposes: ['Gaming', 'AI', 'NFT'],
-  badges: [Badge.RaaS.Caldera, Badge.DA.DAC],
+  additionalBadges: [Badge.RaaS.Caldera, Badge.DA.DAC],
   display: {
     name: 'AlienX',
     slug: 'alienx',

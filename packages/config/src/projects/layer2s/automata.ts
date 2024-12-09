@@ -22,7 +22,11 @@ const daResolveWindow = formatSeconds(
 
 export const automata: Layer2 = opStackL2({
   createdAt: new UnixTime(1729359609), // 2024-10-19T17:40:09Z
-  badges: [Badge.DA.CustomDA, Badge.Infra.Superchain, Badge.RaaS.AltLayer],
+  additionalBadges: [
+    Badge.DA.CustomDA,
+    Badge.Infra.Superchain,
+    Badge.RaaS.AltLayer,
+  ],
   display: {
     name: 'Automata',
     slug: 'automata',

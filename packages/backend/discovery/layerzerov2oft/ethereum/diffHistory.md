@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x563823d469aa3d17fd321481192440eeea736a11
+
+# Diff at Thu, 05 Dec 2024 06:15:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7dc480bf5499525d0b44afce03521538ecc8ec73 block: 21279524
+- current block number: 21334435
+
+## Description
+
+Woo OFT token admin change.
+
+## Watched changes
+
+```diff
+    contract WooTokenOFTAdapter (0xAd6cA80Fe4D3c54f6433fF725d744772AaE87711) {
+    +++ description: None
+      values.owner:
+-        "0x155EEF9731aFf5aE6cB2741F7bEC0f005037aCB0"
++        "0xc031C368b51c28266396273b0C6ce2489b00969d"
+    }
+```
+
 Generated with discovered.json: 0xe6e432dff3e86ca742b1e87d73800934d44f40c8
 
 # Diff at Wed, 27 Nov 2024 13:56:02 GMT:

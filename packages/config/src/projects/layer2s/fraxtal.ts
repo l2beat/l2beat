@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('fraxtal')
 
 export const fraxtal: Layer2 = opStackL2({
   createdAt: new UnixTime(1708511622), // 2024-02-21T10:33:42Z
-  badges: [Badge.DA.CustomDA, Badge.Infra.Superchain],
+  additionalBadges: [Badge.DA.CustomDA, Badge.Infra.Superchain],
   daProvider: {
     layer: DA_LAYERS.FRAXTAL_DA,
     riskView: {

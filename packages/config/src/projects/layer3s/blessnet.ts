@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('blessnet', 'arbitrum')
 export const blessnet: Layer3 = orbitStackL3({
   createdAt: new UnixTime(1731061027), // 2024-11-08T10:17:07+00:00
   additionalPurposes: ['Interoperability'],
-  badges: [Badge.RaaS.Caldera, Badge.DA.DAC],
+  additionalBadges: [Badge.RaaS.Caldera, Badge.DA.DAC],
   hostChain: ProjectId.ARBITRUM,
   display: {
     name: 'Blessnet',

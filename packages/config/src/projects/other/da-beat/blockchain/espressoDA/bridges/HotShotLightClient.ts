@@ -1,4 +1,4 @@
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../../../../../discovery/ProjectDiscovery'
 import { DaCommitteeSecurityRisk } from '../../../types'
@@ -9,6 +9,11 @@ import { DacTransactionDataType } from '../../../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('espresso')
 const updateInterval = 12 // hours
+
+const relayer = discovery.getContractValue<string>(
+  'HotShotLightClient',
+  'permissionedProver',
+)
 
 export const HotShotLightClient = {
   id: 'HotShotLightClient',
@@ -46,7 +51,7 @@ export const HotShotLightClient = {
   technology: {
     description: `
     ## Architecture
-    The Light Client contract serves as the DA bridge for the Espresso Tiramisu DA solution and is responsible for storing the HotShot consensus state on Ethereum.
+    The Light Client contract serves as the DA bridge for the Espresso DA solution and is responsible for storing the HotShot consensus state on Ethereum.
     
     When HotShot nodes reach consensus, they sign the updated HotShot state using Schnorr signatures, which indicate agreement with the state of the proposed block. These signatures are stored locally on the DA layer nodes.
     
@@ -55,8 +60,6 @@ export const HotShotLightClient = {
     The proof should contain the HotShot state, the stake table information, and the list of Schnorr signatures from the HotShot nodes that formed a quorum and reached consensus on the state, and the new state is accepted only if the proof passes verification.
 
     Currently, attestations are relayed to the Light Client every ${updateInterval} hours.
-
-    Please note that the Light Client implementation is unverified, the information provided is based on Espresso Github repository and Espresso documentation. 
   `,
     references: [
       {
@@ -75,12 +78,28 @@ export const HotShotLightClient = {
       },
       {
         category: 'Funds can be frozen if',
-        text: 'the permissioned relayers are unable to submit DA commitments to the Light Client contract.',
+        text: 'excluding L2-specific DA fallback - the permissioned relayers are unable to submit DA commitments to the Light Client contract.',
       },
     ],
   },
   permissions: {
-    ethereum: discovery.getDiscoveredPermissions(),
+    ethereum: [
+      ...discovery.getDiscoveredPermissions(),
+      ...discovery.getMultisigPermission(
+        'EspressoMultisig',
+        'This multisig is the admin of the Light Client DA bridge contract. It holds the power to change the contract state and upgrade the bridge.',
+      ),
+      {
+        name: 'Relayer',
+        description: `Relayer (prover) address that is allowed to call newFinalizedState() to prove the latest HotShot state to the Light Client contract on Ethereum.`,
+        accounts: [
+          {
+            address: EthereumAddress(relayer),
+            type: 'EOA',
+          },
+        ],
+      },
+    ],
   },
   requiredMembers: 67, // 2/3 + 1
   membersCount: 100, // max allowed node operators
@@ -110,11 +129,6 @@ export const HotShotLightClient = {
       external: true,
       name: 'deNodes',
       href: 'https://x.com/EspressoSys/status/1861106698825670830',
-    },
-    {
-      external: true,
-      name: '01node Validator',
-      href: 'https://x.com/EspressoSys/status/1861106651471978614',
     },
     {
       external: true,

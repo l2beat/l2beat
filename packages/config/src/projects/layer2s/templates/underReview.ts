@@ -20,6 +20,7 @@ interface UnderReviewConfigCommon {
   chainConfig?: ChainConfig
   transactionApi?: ScalingProjectTransactionApi
   badges?: BadgeId[]
+  isArchived?: boolean
 }
 
 export interface UnderReviewConfigL2 extends UnderReviewConfigCommon {
@@ -39,6 +40,7 @@ export function underReviewL2(templateVars: UnderReviewConfigL2): Layer2 {
     type: 'layer2',
     id: ProjectId(templateVars.id),
     createdAt: templateVars.createdAt,
+    isArchived: templateVars.isArchived ?? undefined,
     display: templateVars.display,
     stage: {
       stage:
@@ -75,6 +77,7 @@ export function underReviewL3(templateVars: UnderReviewConfigL3): Layer3 {
     isUnderReview: true,
     id: ProjectId(templateVars.id),
     createdAt: templateVars.createdAt,
+    isArchived: templateVars.isArchived ?? undefined,
     hostChain: templateVars.hostChain,
     display: {
       ...templateVars.display,
