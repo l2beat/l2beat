@@ -5,7 +5,7 @@ import {
 } from '@l2beat/discovery-types'
 import { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 
-import { get$Implementations, get$Beacons } from '@l2beat/discovery-types'
+import { get$Beacons, get$Implementations } from '@l2beat/discovery-types'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
 import {
   DiscoveryContractField,
@@ -237,8 +237,8 @@ export class AddressAnalyzer {
     const fieldOverrides: Record<string, DiscoveryContractField>[] = [
       overrides?.fields ?? {},
       template !== undefined
-        ? this.templateService.loadContractTemplate(template.template).fields ??
-          {}
+        ? (this.templateService.loadContractTemplate(template.template)
+            .fields ?? {})
         : {},
     ]
 

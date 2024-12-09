@@ -8,6 +8,7 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { IProvider } from '../provider/IProvider'
 import { detectArbitrumProxy } from './auto/ArbitrumProxy'
 import { detectAxelarProxy as getAxelarProxy } from './auto/AxelarProxy'
+import { detectBeaconProxy } from './auto/BeaconProxy'
 import { detectEip897Proxy } from './auto/Eip897Proxy'
 import { detectEip1967Proxy } from './auto/Eip1967Proxy'
 import { detectEip2535proxy } from './auto/Eip2535Proxy'
@@ -26,7 +27,6 @@ import { getPolygonExtensionProxy } from './manual/PolygonExtensionProxy'
 import { getZkSpaceProxy } from './manual/ZkSpaceProxy'
 import { getZkSyncLiteProxy } from './manual/ZkSyncLiteProxy'
 import { getImmutableProxy } from './manual/immutableProxy'
-import { detectBeaconProxy } from './auto/BeaconProxy'
 
 type Detector = (
   provider: IProvider,
@@ -45,7 +45,7 @@ const DEFAULT_AUTO_DETECTORS: Detector[] = [
   detectEip897Proxy,
   detectZeppelinOSProxy,
   detectEip2535proxy,
-  detectBeaconProxy
+  detectBeaconProxy,
 ]
 
 export const MANUAL_DETECTORS: Record<ManualProxyType, Detector> = {
