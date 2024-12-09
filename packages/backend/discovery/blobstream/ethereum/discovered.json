@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "ethereum",
   "blockNumber": 21357513,
-  "configHash": "0x47baf8cec9d368c7e17c3fcf75fc973c31081900b9c622a37770d8b11541cb08",
+  "configHash": "0x5b348fdc7c3ce799459c67ffcafa5e14db0ebfa468734512f1efbd0fcc72bba2",
   "contracts": [
     {
       "name": "FunctionVerifier",
@@ -87,8 +87,7 @@
         },
         "verifier": {
           "description": "The prover contract address for SP1, and whether it is frozen (true if frozen)."
-        },
-        "owner": { "description": "The owner of the contract." }
+        }
       },
       "derivedName": "SP1VerifierGateway"
     },
@@ -704,6 +703,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "succinct/SP1Blobstream": "0xe38c6035b28b8caf29747548c960fbdbf16d62b41448c9c75dcf84be8481f864",
-    "succinct/SP1SuccinctGateway": "0xb92dbeb85454189893bedf59b0ea380ea109ccbf6c04d8a2608335b513c2f363"
+    "succinct/SP1SuccinctGateway": "0xf63c74ee0338f890cd25ab792940b98a815868369cedb31129277e1b191b1e4b"
   }
 }

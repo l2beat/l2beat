@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "base",
   "blockNumber": 23434494,
-  "configHash": "0xf7125ebf9625c0c0fd7edc2ac7a7c9535e389069c7683b16e89e4fee0e6a4ce2",
+  "configHash": "0xc01e20f4f1876da9be9eff4579f55399b44a23907974a09bebc351850d57e648",
   "contracts": [
     {
       "name": "SP1Verifier",
