@@ -23,6 +23,7 @@ interface DiscoveredTokens {
   found: {
     address: string
     escrows: {
+      project: string
       address: string
       balance?: number
       value?: number
@@ -62,8 +63,9 @@ async function main() {
   const coingeckoClient = getCoingeckoClient()
   const etherscanClient = getEtherscanClient()
   const escrows = layer2s
-    .map((layer2) => layer2.config.escrows)
-    .flat()
+    .flatMap((layer2) =>
+      layer2.config.escrows.flatMap((e) => ({ ...e, projectId: layer2.id })),
+    )
     .filter((e) => e.chain === 'ethereum')
 
   const coingeckoTokens = await coingeckoClient.getCoinList({
@@ -95,7 +97,7 @@ async function main() {
   const allFoundTokens = new Map<
     string,
     {
-      escrows: Map<string, { balance: number }>
+      escrows: Map<string, { balance: number; project: string }>
       coingeckoId?: string
       symbol?: string
     }
@@ -103,7 +105,10 @@ async function main() {
   existingTokens.found.forEach((token) => {
     allFoundTokens.set(token.address, {
       escrows: new Map(
-        token.escrows.map((e) => [e.address, { balance: e.balance ?? 0 }]),
+        token.escrows.map((e) => [
+          e.address,
+          { balance: e.balance ?? 0, project: e.project },
+        ]),
       ),
       coingeckoId: token.coingeckoId,
       symbol: token.symbol,
@@ -162,16 +167,18 @@ async function main() {
           const balanceValue = Number(
             utils.formatUnits(balance, Number(decimals)),
           )
-          allFoundTokens
-            .get(tokenFromLog)
-            ?.escrows.set(escrow.address, { balance: balanceValue })
+          allFoundTokens.get(tokenFromLog)?.escrows.set(escrow.address, {
+            balance: balanceValue,
+            project: escrow.projectId,
+          })
         } catch {
           console.warn(
             `Failed to get balance for token ${tokenFromLog} in escrow ${escrow.address}`,
           )
-          allFoundTokens
-            .get(tokenFromLog)
-            ?.escrows.set(escrow.address, { balance: 0 })
+          allFoundTokens.get(tokenFromLog)?.escrows.set(escrow.address, {
+            balance: 0,
+            project: escrow.projectId,
+          })
         }
       }
     }
@@ -182,6 +189,7 @@ async function main() {
         escrows: Array.from(data.escrows.entries()).map(([addr, data]) => ({
           address: addr,
           balance: data.balance,
+          project: data.project,
         })),
         coingeckoId: data.coingeckoId,
         symbol: data.symbol,
@@ -231,6 +239,7 @@ async function main() {
           address: addr,
           balance: data.balance,
           value: Math.floor(data.balance * tokenPrice),
+          project: data.project,
         }),
       )
       return {
