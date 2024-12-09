@@ -91,7 +91,7 @@ export const wirex: Layer2 = polygonCDKStack({
     technology: {
       name: 'Data is not stored on chain',
       description:
-        'The transaction data is not recorded on the Ethereum main chain. Transaction data is stored off-chain and only the hashes are posted on-chain by the Sequencer, after being signed by the DAC members.',
+        'The transaction data is not recorded on the Ethereum main chain. Transaction data is stored off-chain and only the hashes are posted onchain by the Sequencer, after being signed by the DAC members.',
       risks: [
         {
           category: 'Funds can be lost if',

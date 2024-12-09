@@ -119,7 +119,7 @@ export const HOMEPAGE_MILESTONES: Milestone[] = [
     date: '2024-03-13T00:00:00Z',
     link: 'https://ethereum.org/en/roadmap/danksharding/#what-is-protodanksharding',
     description:
-      'Blobs create a new, cheap way to post data on-chain that is specialized for rollups.',
+      'Blobs create a new, cheap way to post data onchain that is specialized for rollups.',
     type: 'general',
   },
 ]

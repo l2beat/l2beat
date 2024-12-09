@@ -83,7 +83,7 @@ const committeeSecurityColumn = virtual(
     header: 'Committee\nsecurity',
     meta: {
       tooltip:
-        'Shows if the DA bridge can securely confirm that the data availability attestations are backed by the DA layer’s economic security, meaning that the signatures from the DA layer are accurately verified and tracked on-chain.',
+        'Shows if the DA bridge can securely confirm that the data availability attestations are backed by the DA layer’s economic security, meaning that the signatures from the DA layer are accurately verified and tracked onchain.',
     },
   }),
 )

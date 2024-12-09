@@ -146,7 +146,7 @@ export const satellite: Bridge = {
       ),
       discovery.getContractDetails(
         'InterchainGovernance',
-        'Governance contract that executes on-chain governance proposals from Axelar network. It is authorised to upgrade Axelar Gateway.',
+        'Governance contract that executes onchain governance proposals from Axelar network. It is authorised to upgrade Axelar Gateway.',
       ),
       discovery.getContractDetails(
         'Multisig',
