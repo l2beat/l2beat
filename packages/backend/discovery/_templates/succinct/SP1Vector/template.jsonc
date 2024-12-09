@@ -2,10 +2,38 @@
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
   "ignoreMethods": ["state_dataCommitments", "proxiableUUID"],
   "ignoreInWatchMode": ["latestBlock", "latestAuthoritySetId"],
+  "description": "The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.",
   "fields": {
     "accessControl": {
       "handler": {
         "type": "accessControl"
+      }
+    },
+    "guardians": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "GUARDIAN_ROLE"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "configure",
+            "description": "can change state of the Vector contract - freezing the contract and updating the list of authorized relayers."
+          }
+        ]
+      }
+    },
+    "timelocks": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "TIMELOCK_ROLE"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "upgrade"
+          }
+        ]
       }
     }
   }
