@@ -453,6 +453,7 @@ export const arbitrum: Layer2 = orbitStackL2({
       address: EthereumAddress('0xa3A7B6F88361F48403514059F1F16C8E78d60EeC'),
       tokens: '*',
       excludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'PEPE', 'rsETH'],
+      premintedTokens: ['LOGX', 'AIUS', 'YBR', 'FFM'],
       description:
         'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
       ...upgradeExecutorUpgradeability,

@@ -1,6 +1,42 @@
 {
   "ethereum": [
     {
+      "symbol": "FFM",
+      "address": "0x72A9B1c9B191781bB15F1b98f443a1d916557c92"
+    },
+    // { // error when trying to get coingeckoListingTS
+    //   "symbol": "DF",
+    //   "address": "0x431ad2ff6a9C365805eBaD47Ee021148d6f7DBe0"
+    // },
+    {
+      "symbol": "YBR",
+      "address": "0x9d9535Dae62F5f12aB83F1183DCa1eAd244b0DB3"
+    },
+    {
+      "symbol": "LOGX",
+      "address": "0xa3F4341C3fEf5963AB04135D2014AC7d68222E19"
+    },
+    {
+      "symbol": "AIUS",
+      "address": "0x8AFE4055Ebc86Bd2AFB3940c0095C9aca511d852"
+    },
+    {
+      "symbol": "FNXAI",
+      "address": "0x939069722D568B5498CcBA4356E800EaefEFD2a5"
+    },
+    {
+      "symbol": "GENOME",
+      "address": "0x7AE4f8885f6cFa41a692cb9DA3789cfa6A83e9f2"
+    },
+    {
+      "symbol": "MORPHO",
+      "address": "0x58D97B57BB95320F9a05dC918Aef65434969c2B2"
+    },
+    {
+      "symbol": "Mog",
+      "address": "0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a"
+    },
+    {
       "symbol": "USD0++",
       "address": "0x35D8949372D46B7a3D5A56006AE77B215fc69bC0"
     },
