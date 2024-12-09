@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x90747bde3f6aaaaa8c80c557da40d47060dfef5b
+
+# Diff at Mon, 09 Dec 2024 07:10:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c5ae355544e54d305099ba9e1731927821c805f3 block: 21357589
+- current block number: 21363358
+
+## Description
+
+Removed treasure launch monitor (is live) and added validator handlers.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21357589 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
+      values.treasureThirdBatchTS:
+-        1732907795
+      values.treasureValidatorsAdded:
++        ["0x2572835e02b59078711aa0800490e80975e4169d","0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283"]
+      values.treasureValidatorsRemoved:
++        []
+      fieldMeta.treasureThirdBatchTS:
+-        {"severity":"MEDIUM","description":"If non-zero, the third batch has been posted (launch monitor)."}
+    }
+```
+
 Generated with discovered.json: 0x84b9b6d9912626f624bbec1ed2469d79f770962f
 
 # Diff at Sun, 08 Dec 2024 11:51:53 GMT:
