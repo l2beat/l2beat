@@ -2792,6 +2792,37 @@
   ],
   "base": [
     {
+      "symbol": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "sUSDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "CLANKER",
       "address": "0x1bc0c42215582d5A085795f4baDbaC3ff36d1Bcb",
       "source": "native",
