@@ -138,6 +138,7 @@ function getEthereumEntry({ economicSecurity, getTvlSumFor }: Dependencies) {
     slug: ethereumDaLayer.display.slug,
     name: ethereumDaLayer.display.name,
     kind: ethereumDaLayer.kind,
+    href: `/data-availability/projects/${ethereumDaLayer.display.slug}/${ethereumDaLayer.bridges[0].display.slug}`,
     systemCategory: ethereumDaLayer.systemCategory,
     usedIn: ethereumDaLayer.bridges.flatMap((bridge) => bridge.usedIn),
     economicSecurity: economicSecurity[ethereumDaLayer.id],

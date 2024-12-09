@@ -19,6 +19,8 @@ interface Props {
 }
 
 export function DaProjectStats({ project }: Props) {
+  const isEthereum = project.slug === 'ethereum'
+
   const durationStorage =
     project.kind === 'DAC' ||
     project.kind === 'DA Service' ||
@@ -60,6 +62,9 @@ export function DaProjectStats({ project }: Props) {
       />
       <HorizontalSeparator className="col-span-full my-1 max-md:hidden" />
       <ProjectStat title="Duration of storage" {...durationStorage} />
+      {isEthereum && (
+        <ProjectStat title="DA Bridge" value={project.bridges[0]?.name} />
+      )}
       {project.header.numberOfOperators && (
         <ProjectStat
           title="Number of operators"
@@ -67,13 +72,13 @@ export function DaProjectStats({ project }: Props) {
         />
       )}
       <ProjectStat
-        className={cn(!project.header.numberOfOperators && 'md:col-span-2')}
+        // className={cn(!project.header.numberOfOperators && 'md:col-span-2')}
         title="Used by"
         value={
           <ProjectsUsedIn
             usedIn={project.header.usedIn}
             className="flex-wrap justify-start"
-            maxProjects={Infinity}
+            maxProjects={5}
           />
         }
       />
