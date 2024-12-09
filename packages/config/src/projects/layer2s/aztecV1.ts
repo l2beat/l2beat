@@ -54,6 +54,7 @@ export const aztecV1: Layer2 = {
   createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   display: {
     name: 'Zk.Money v1 (Aztec v1)',
+    shortName: 'Zk.Money v1',
     slug: 'aztecv1',
     warning:
       'EOL: Ownership of the rollup contract is irrevocably renounced and Aztec is not running a rollup processor (operator). Users or third parties have to [run the rollup system by themselves](https://github.com/AztecProtocol/aztec-v2-ejector/) to withdraw or transact.',
