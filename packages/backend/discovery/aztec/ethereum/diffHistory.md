@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x9be1172d5698632f2093f903249127d48fc8e8d7
+Generated with discovered.json: 0x2931677f5b3a54b74b5f9861d4181c7e2979050b
 
-# Diff at Mon, 09 Dec 2024 19:59:01 GMT:
+# Diff at Mon, 09 Dec 2024 20:38:45 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@08d3ccfe28a784d003a319e971007097ac1aec27 block: 20361394
-- current block number: 21367187
+- current block number: 21367384
 
 ## Description
 
@@ -18,11 +18,11 @@ discovery. Values are for block 20361394 (main branch discovery), not current.
 
 ```diff
     contract AztecFeeDistributor (0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734) {
-    +++ description: Contract responsible for distributing fees and reimbursing gas to Rollup Providers.
+    +++ description: Contract responsible for distributing fees and reimbursing gas to Rollup Processors.
       template:
 +        "aztecv1/AztecFeeDistributor"
       description:
-+        "Contract responsible for distributing fees and reimbursing gas to Rollup Providers."
++        "Contract responsible for distributing fees and reimbursing gas to Rollup Processors."
     }
 ```
 
