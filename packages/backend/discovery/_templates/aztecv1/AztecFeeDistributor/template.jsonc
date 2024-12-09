@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "AztecFeeDistributor",
-  "description": "Contract responsible for distributing fees and reimbursing gas to Rollup Processors.",
+  "description": "Contract responsible for collecting transaction fees and reimbursing gas to whitelisted Rollup Providers.",
   "ignoreRelatives": ["factory", "router", "WETH"],
   "ignoreInWatchMode": ["txFeeBalance"],
   "fields": {
