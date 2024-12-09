@@ -2,7 +2,7 @@
   "name": "eigenda",
   "chain": "ethereum",
   "blockNumber": 21027344,
-  "configHash": "0x66d48c9dde2cf31d21627515d2c02128e361747ff78ef99174e2bda8d1d898da",
+  "configHash": "0xc76867cd90c061744c68374ce52c25415d58a52ce09b294634b1ae942fa75d4e",
   "contracts": [
     {
       "name": "StakeRegistry",
@@ -854,20 +854,11 @@
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
-        "sharesToUnderlying": [0, 1, 2, 3, 4],
-        "sharesToUnderlyingView": [0, 1, 2, 3, 4],
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
         "totalShares": "2532642361157292170453843",
-        "underlyingToken": "0xF96798F49936EfB1a56F99Ceae924b6B8359afFb",
-        "underlyingToShares": [0, 1, 2, 3, 4],
-        "underlyingToSharesView": [0, 1, 2, 3, 4]
+        "underlyingToken": "0xF96798F49936EfB1a56F99Ceae924b6B8359afFb"
       },
-      "errors": {
-        "sharesToUnderlying": "Processing error occurred.",
-        "sharesToUnderlyingView": "Processing error occurred.",
-        "underlyingToShares": "Processing error occurred.",
-        "underlyingToSharesView": "Processing error occurred."
-      }
+      "derivedName": "StrategyBase"
     },
     {
       "name": "StrategyBaseTVLLimits",
@@ -1539,7 +1530,6 @@
         "activationThreshold": 0,
         "cooldownSeconds": 1814400,
         "decimals": 18,
-        "exists": [false, false, false, false, false],
         "expiryDuration": 900,
         "MAX_BPS": 10000,
         "MAX_COOLDOWN_SEC": 4320000,
@@ -1570,13 +1560,9 @@
         "totalOperators": 1,
         "totalStakedAmount": "202053733188053138254691647",
         "totalSupply": "202053733188053138254691647",
-        "totalVotingStake": "192845111400153438816017825",
-        "uri": ["", "", "", "", ""]
+        "totalVotingStake": "192845111400153438816017825"
       },
-      "errors": {
-        "exists": "Processing error occurred.",
-        "uri": "Processing error occurred."
-      }
+      "derivedName": "StakedALT"
     },
     {
       "name": "IndexRegistry",
@@ -1643,39 +1629,18 @@
         "$upgradeCount": 1,
         "altToken": "0x8457CA5040ad67fdebbCC8EdCE889A335Bc0fbFB",
         "asset": "0xb6D149C8DdA37aAAa2F8AD0934f2e5682C35890B",
-        "convertToAssets": [0, 1, 2, 3, 4],
-        "convertToShares": [0, 0, 1, 2, 3],
         "decimals": 18,
         "erc1155StakedALT": "0xb6D149C8DdA37aAAa2F8AD0934f2e5682C35890B",
         "erc1155TokenID": "568410405686318743940487286198766186786980243511",
         "name": "Restaked ALT",
         "owner": "0xAd9A9c2EbEa3401d9A0e588bBc05455dd9F37570",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "previewDeposit": [0, 0, 1, 2, 3],
-        "previewMint": [0, 2, 3, 4, 5],
-        "previewRedeem": [0, 1, 2, 3, 4],
-        "previewWithdraw": [0, 1, 2, 3, 4],
-        "RewardPools": [
-          [0, 0, ""],
-          [1714464000, 4294967295, "Xterio"],
-          [1715155200, 4294967295, "DODOchain"],
-          [1718625600, 4294967295, "Cyber"],
-          [1720429200, 4294967295, "GM Network"]
-        ],
         "symbol": "reALT",
         "totalAssets": "141418371562732820574613714",
         "totalRewardPools": 4,
         "totalSupply": "132992704039101288757783478"
       },
-      "errors": {
-        "convertToAssets": "Processing error occurred.",
-        "convertToShares": "Processing error occurred.",
-        "previewDeposit": "Processing error occurred.",
-        "previewMint": "Processing error occurred.",
-        "previewRedeem": "Processing error occurred.",
-        "previewWithdraw": "Processing error occurred.",
-        "RewardPools": "Processing error occurred."
-      }
+      "derivedName": "ERC4626Vault"
     }
   ],
   "eoas": [

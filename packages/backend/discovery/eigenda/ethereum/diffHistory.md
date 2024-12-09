@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x6673a8c90dea6fedf9b6674c697dd929012d9333
+Generated with discovered.json: 0xf071513e92c539d7a5a558c967b247b82427d4ee
 
-# Diff at Mon, 09 Dec 2024 11:29:10 GMT:
+# Diff at Mon, 09 Dec 2024 13:18:36 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - comparing to: main@6e20c0da4ccb19e6a71427cc5601e1587d8abd35 block: 21027344
@@ -40,24 +40,14 @@ discovery. Values are for block 21027344 (main branch discovery), not current.
 +        0
       values.pauserRegistry:
 +        "0x0c431C66F4dE941d089625E5B423D00707977060"
-      values.sharesToUnderlying:
-+        [0,1,2,3,4]
-      values.sharesToUnderlyingView:
-+        [0,1,2,3,4]
       values.strategyManager:
 +        "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
       values.totalShares:
 +        "2532642361157292170453843"
       values.underlyingToken:
 +        "0xF96798F49936EfB1a56F99Ceae924b6B8359afFb"
-      values.underlyingToShares:
-+        [0,1,2,3,4]
-      values.underlyingToSharesView:
-+        [0,1,2,3,4]
       proxyType:
 +        "Beacon proxy"
-      errors:
-+        {"sharesToUnderlying":"Processing error occurred.","sharesToUnderlyingView":"Processing error occurred.","underlyingToShares":"Processing error occurred.","underlyingToSharesView":"Processing error occurred."}
     }
 ```
 
