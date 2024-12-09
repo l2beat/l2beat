@@ -15,9 +15,9 @@ export const degenlayer: Layer2 = upcomingL2({
     provider: 'OP Stack',
     links: {
       websites: ['https://degenlayer.wtf/'],
-      apps: [],
+      apps: ['https://bridge-test.degenlayer.wtf/bridge/degenlayer'],
       documentation: ['https://docs.degenlayer.wtf'],
-      explorers: [],
+      explorers: ['https://scan-test.degenlayer.wtf/'],
       repositories: ['https://github.com/coti-io'],
       socialMedia: [
         'https://x.com/degenlayer',
