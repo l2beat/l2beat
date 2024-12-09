@@ -9,13 +9,15 @@ import { ZK_CATALOG_ASK_FOR_VERIFICATION_LINK } from '../_utils/get-zk-catalog-v
 import { ZkCatalogProjectPage } from './_components/zk-catalog-project-page'
 import { getZkCatalogProjectDetails } from './_utils/get-zk-catalog-project-details'
 
-interface Props {
-  params: Promise<{
-    project: string
-  }>
+interface Params {
+  project: string
 }
 
-export async function generateStaticParams() {
+interface Props {
+  params: Promise<Params>
+}
+
+export async function generateStaticParams(): Promise<Params[]> {
   if (env.VERCEL_ENV !== 'production') return []
   const projects = await ProjectService.STATIC.getProjects({
     where: ['proofVerification'],
