@@ -22,7 +22,7 @@ const PROCESSED_ESCROWS_PATH = path.resolve(
 interface DiscoveredTokens {
   found: {
     address: string
-    escrows: string[]
+    escrows: { address: string; value?: number }[]
     coingeckoId?: string
     symbol?: string
     marketCap?: number
@@ -78,6 +78,10 @@ async function main() {
   )
 
   const transferTopic = utils.id('Transfer(address,address,uint256)')
+  const tokenContract = new utils.Interface([
+    'function balanceOf(address) view returns (uint256)',
+    'function decimals() view returns (uint8)',
+  ])
   const latestBlock = await provider.getBlockNumber()
   const existingTokens = loadExistingTokens()
   const processedEscrows = loadProcessedEscrows()
@@ -86,11 +90,15 @@ async function main() {
   )
   const allFoundTokens = new Map<
     string,
-    { escrows: Set<string>; coingeckoId?: string; symbol?: string }
+    {
+      escrows: Map<string, number>
+      coingeckoId?: string
+      symbol?: string
+    }
   >()
   existingTokens.found.forEach((token) => {
     allFoundTokens.set(token.address, {
-      escrows: new Set(token.escrows),
+      escrows: new Map(token.escrows.map((e) => [e.address, e.value ?? 0])),
       coingeckoId: token.coingeckoId,
       symbol: token.symbol,
     })
@@ -126,19 +134,43 @@ async function main() {
         if (!allFoundTokens.has(tokenFromLog)) {
           const tokenInfo = coingeckoTokensMap.get(tokenFromLog)
           allFoundTokens.set(tokenFromLog, {
-            escrows: new Set(),
+            escrows: new Map(),
             coingeckoId: tokenInfo?.id,
             symbol: tokenInfo?.symbol,
           })
         }
-        allFoundTokens.get(tokenFromLog)?.escrows.add(escrow.address)
+
+        try {
+          const [balance, decimals] = await Promise.all([
+            provider.call({
+              to: tokenFromLog,
+              data: tokenContract.encodeFunctionData('balanceOf', [
+                escrow.address,
+              ]),
+            }),
+            provider.call({
+              to: tokenFromLog,
+              data: tokenContract.encodeFunctionData('decimals'),
+            }),
+          ])
+          const value = Number(utils.formatUnits(balance, Number(decimals)))
+          allFoundTokens.get(tokenFromLog)?.escrows.set(escrow.address, value)
+        } catch {
+          console.warn(
+            `Failed to get balance for token ${tokenFromLog} in escrow ${escrow.address}`,
+          )
+          allFoundTokens.get(tokenFromLog)?.escrows.set(escrow.address, 0)
+        }
       }
     }
 
     existingTokens.found = Array.from(allFoundTokens.entries()).map(
       ([address, data]) => ({
         address,
-        escrows: Array.from(data.escrows),
+        escrows: Array.from(data.escrows.entries()).map(([addr, value]) => ({
+          address: addr,
+          value,
+        })),
         coingeckoId: data.coingeckoId,
         symbol: data.symbol,
       }),
@@ -156,7 +188,10 @@ async function main() {
 
   const chunks = chunk(Array.from(allFoundTokens.keys()), 150)
 
-  const tokenMarketCaps = new Map<string, number>()
+  const tokenMarketData = new Map<
+    string,
+    { marketCap: number; price: number }
+  >()
   for (const chunk of chunks) {
     const chunkData = (await coingeckoClient.query(
       '/simple/token_price/ethereum',
@@ -165,21 +200,30 @@ async function main() {
         include_market_cap: 'true',
         contract_addresses: chunk.join(','),
       },
-    )) as Record<string, { usd_market_cap: number }>
+    )) as Record<string, { usd_market_cap: number; usd: number }>
 
     for (const [address, data] of Object.entries(chunkData)) {
-      tokenMarketCaps.set(address, data.usd_market_cap)
+      tokenMarketData.set(address, {
+        marketCap: data.usd_market_cap,
+        price: data.usd,
+      })
     }
   }
 
   const sortedTokens = Array.from(allFoundTokens.entries())
-    .map(([address, data]) => ({
-      symbol: data.symbol,
-      coingeckoId: data.coingeckoId,
-      marketCap: tokenMarketCaps.get(address),
-      address,
-      escrows: Array.from(data.escrows),
-    }))
+    .map(([address, data]) => {
+      const tokenPrice = tokenMarketData.get(address)?.price ?? 0
+      return {
+        symbol: data.symbol,
+        coingeckoId: data.coingeckoId,
+        marketCap: tokenMarketData.get(address)?.marketCap,
+        address,
+        escrows: Array.from(data.escrows.entries()).map(([addr, value]) => ({
+          address: addr,
+          value: value * tokenPrice,
+        })),
+      }
+    })
     .sort((a, b) => {
       const mcapA = a.marketCap ?? 0
       const mcapB = b.marketCap ?? 0
