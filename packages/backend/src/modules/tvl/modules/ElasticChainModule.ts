@@ -96,7 +96,7 @@ function createIndexers(
     const bridgeAddress = elasticChainAmountEntries.find(
       (e) => e.type === 'elasticChainL2Token',
     )?.l2BridgeAddress
-    assert(bridgeAddress, 'Bridge address not found')
+    assert(bridgeAddress, `${chain}: Bridge address not found`)
 
     const elasticChainService = new ElasticChainService({
       rpcClient: rpcClient,
