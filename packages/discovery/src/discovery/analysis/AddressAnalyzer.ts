@@ -5,7 +5,7 @@ import {
 } from '@l2beat/discovery-types'
 import { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 
-import { get$Implementations } from '@l2beat/discovery-types'
+import { get$Beacons, get$Implementations } from '@l2beat/discovery-types'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
 import {
   DiscoveryContractField,
@@ -123,6 +123,7 @@ export class AddressAnalyzer {
       overrides?.proxyType,
     )
     const implementations = get$Implementations(proxy?.values)
+    const beacons = get$Beacons(proxy?.values)
     const pastUpgrades = get$PastUpgrades(proxy?.values)
 
     const sources = await this.sourceCodeService.getSources(
@@ -173,10 +174,15 @@ export class AddressAnalyzer {
       ([field, value]): HandlerResult => ({ field, value }),
     )
 
+    const ignoredAddresses = [
+      ...implementations,
+      ...beacons,
+      ...pastUpgrades.flatMap((e) => e[2]),
+    ]
     const relatives = getRelativesWithSuggestedTemplates(
       results.concat(proxyResults),
       overrides?.ignoreRelatives,
-      implementations.concat(pastUpgrades.flatMap((e) => e[2])),
+      ignoredAddresses,
       overrides?.fields,
     )
 

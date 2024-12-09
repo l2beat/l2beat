@@ -8,6 +8,12 @@ export function get$Implementations(
   return toAddressArray(values?.$implementation)
 }
 
+export function get$Beacons(
+  values: Record<string, ContractValue | undefined> | undefined,
+): EthereumAddress[] {
+  return toAddressArray(values?.$beacon)
+}
+
 export function get$PastUpgrades(
   values: Record<string, ContractValue | undefined> | undefined,
 ): [string, Hash256, EthereumAddress[]][] {
