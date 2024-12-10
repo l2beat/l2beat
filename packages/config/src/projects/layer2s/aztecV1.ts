@@ -58,14 +58,14 @@ export const aztecV1: Layer2 = {
     warning:
       'EOL: Ownership of the rollup contract is irrevocably renounced and Aztec is not running a rollup processor (operator). Users or third parties have to [run the rollup system by themselves](https://github.com/AztecProtocol/aztec-v2-ejector/) to withdraw or transact.',
     description:
-      'Zk.Money v1 is an open source layer 2 network that aims to enable affordable, private crypto payments via zero-knowledge proofs.',
+      'Zk.Money v1 (Aztec v1, or sometimes called Aztec 2.0) is an open source layer 2 network that aims to enable affordable, private crypto payments via zero-knowledge proofs.',
     purposes: ['Private payments'],
     category: 'ZK Rollup',
     links: {
       websites: ['https://aztec.network/'],
       apps: ['https://old.zk.money'],
-      documentation: ['https://developers.aztec.network/'],
-      explorers: ['https://explorer.aztec.network/'],
+      documentation: [],
+      explorers: [],
       repositories: ['https://github.com/AztecProtocol/aztec-2-bug-bounty'],
       socialMedia: [
         'https://twitter.com/aztecnetwork',
@@ -85,6 +85,58 @@ export const aztecV1: Layer2 = {
         tokens: ['ETH', 'DAI', 'renBTC', 'USDT'],
       },
     ],
+    trackedTxs: [
+      {
+        uses: [
+          {
+            type: 'liveness',
+            subtype: 'stateUpdates',
+          },
+          {
+            type: 'l2costs',
+            subtype: 'stateUpdates',
+          },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba',
+          ),
+          selector: '0x06011a46',
+          functionSignature:
+            'function processRollup(bytes proofData, bytes signatures, bytes viewingKeys, bytes providerSignature, address provider, address feeReceiver, uint256 feeLimit)',
+          sinceTimestamp: new UnixTime(1614799636),
+        },
+      },
+      {
+        uses: [
+          {
+            type: 'liveness',
+            subtype: 'stateUpdates',
+          },
+          {
+            type: 'l2costs',
+            subtype: 'stateUpdates',
+          },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba',
+          ),
+          selector: '0xd1c65264',
+          functionSignature:
+            'function escapeHatch(bytes proofData, bytes signatures, bytes viewingKeys)',
+          sinceTimestamp: new UnixTime(1614799636),
+        },
+      },
+    ],
+    liveness: {
+      duplicateData: {
+        from: 'stateUpdates',
+        to: 'proofSubmissions',
+      },
+    },
   },
   dataAvailability: [
     addSentimentToDataAvailability({
@@ -298,6 +350,10 @@ export const aztecV1: Layer2 = {
         discovery.formatPermissionedAccount(account),
       ),
     },
+    ...discovery.getMultisigPermission(
+      'AztecMultisig',
+      "Can update parameters related to the reimbursement of gas to permissioned rollup providers. It doesn't affect the escape hatch mechanism.",
+    ),
   ],
   milestones: [
     {

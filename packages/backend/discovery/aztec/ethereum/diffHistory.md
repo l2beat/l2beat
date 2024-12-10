@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xde388ef11b586f20d65be933236d5e2eb3a41b00
+Generated with discovered.json: 0x82f6636cccc1d904ed46115edbfcc2d6d76ff074
 
-# Diff at Mon, 09 Dec 2024 20:44:25 GMT:
+# Diff at Tue, 10 Dec 2024 09:52:07 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@08d3ccfe28a784d003a319e971007097ac1aec27 block: 20361394
-- current block number: 21367412
+- current block number: 21371328
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Partial discodrive.
 
 ## Config/verification related changes
 
@@ -48,6 +48,15 @@ discovery. Values are for block 20361394 (main branch discovery), not current.
 -   Status: DELETED
     contract HistoricalTurboVerifier (0xd3a6D9De4cbC2CC7529361941e85b1c3269CcBb1)
     +++ description: None
+```
+
+```diff
+    contract AztecMultisig (0xE298a76986336686CC3566469e3520d23D1a8aaD) {
+    +++ description: None
+      name:
+-        "Aztec Multisig"
++        "AztecMultisig"
+    }
 ```
 
 Generated with discovered.json: 0xa09907ba10fd4a69aa6f0c4a8b9a18a9d3e86ce3
