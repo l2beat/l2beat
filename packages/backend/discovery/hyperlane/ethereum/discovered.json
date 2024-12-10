@@ -1,8 +1,8 @@
 {
   "name": "hyperlane",
   "chain": "ethereum",
-  "blockNumber": 21366352,
-  "configHash": "0x558250b20b5d55caa31ff700e6ddadfbd09d40fcb298dd195e7e2c90dd1a822b",
+  "blockNumber": 21373054,
+  "configHash": "0x8880585b2a5cfaafb13d97cc2fb3fec64a4bc8ec39fe96f300a2e4de7f89d106",
   "contracts": [
     {
       "name": "HyperlaneMultisig",
@@ -120,13 +120,28 @@
         "defaultHook": "0x571f1435613381208477ac5d6974310d88AC7cB7",
         "defaultIsm": "0xcFF5f9d69343f4200100dbA755C794012518Ed38",
         "deployedBlock": 18422581,
-        "latestDispatchedId": "0x6bebbef5d7cdb4088b88ab1d0791d81abd363f14002ac7ad94745d1eaf2b717c",
+        "latestDispatchedId": "0xe6832c240a480d21188fe176b2b8199f2c1d2c57114233e078e02a4a62143da8",
         "localDomain": 1,
-        "nonce": 32901,
+        "nonce": 32979,
         "owner": "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6",
         "requiredHook": "0x8B05BF30F6247a90006c5837eA63C7905D79e6d8",
         "VERSION": 3
-      }
+      },
+      "errors": {
+        "metadata": "Processing error occurred.",
+        "validators": "Processing error occurred."
+      },
+      "fieldMeta": {
+        "validators": {
+          "severity": "HIGH",
+          "description": "The validators of the ISM module."
+        },
+        "metadata": {
+          "severity": "HIGH",
+          "description": "The metadata of the MetaProxy."
+        }
+      },
+      "derivedName": "Mailbox"
     },
     {
       "name": "StaticAggregationIsm",
