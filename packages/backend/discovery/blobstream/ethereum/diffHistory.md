@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x3d3e819bc26ea9cb7c242c868401c68ac809bc70
+Generated with discovered.json: 0x75b0aa2e5d079f7e1012b3511cd6c4239420fa25
 
-# Diff at Mon, 09 Dec 2024 10:53:19 GMT:
+# Diff at Tue, 10 Dec 2024 14:41:52 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@6e20c0da4ccb19e6a71427cc5601e1587d8abd35 block: 21357513
+- comparing to: main@9fa33d1fcbebe3872dda2bf08af4ca0484de900b block: 21357513
 - current block number: 21357513
 
 ## Description
@@ -37,6 +37,8 @@ discovery. Values are for block 21357513 (main branch discovery), not current.
 ```diff
     contract Blobstream (0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) {
     +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum.
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]},"TIMELOCK_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]},"GUARDIAN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]}}
       values.admins:
 +        ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]
       values.guardians:

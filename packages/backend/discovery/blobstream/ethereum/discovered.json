@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "ethereum",
   "blockNumber": 21357513,
-  "configHash": "0x5b348fdc7c3ce799459c67ffcafa5e14db0ebfa468734512f1efbd0fcc72bba2",
+  "configHash": "0x593f63f77a5f4fdcc4805bbadec1a873d567d27060366de05292d34c9f8987e4",
   "contracts": [
     {
       "name": "FunctionVerifier",
@@ -204,20 +204,6 @@
           ]
         ],
         "$upgradeCount": 3,
-        "accessControl": {
-          "DEFAULT_ADMIN_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]
-          },
-          "TIMELOCK_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]
-          },
-          "GUARDIAN_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]
-          }
-        },
         "admins": ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"],
         "blobstreamProgramVkey": "0x00a6ea49173d4b0b544a24a5a7474e76d1fda8f0f7e541cbb294d2b7249d7bcb",
         "checkRelayer": true,
@@ -702,7 +688,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "succinct/SP1Blobstream": "0xe38c6035b28b8caf29747548c960fbdbf16d62b41448c9c75dcf84be8481f864",
+    "succinct/SP1Blobstream": "0x6a8194abda828f4c9a8eb72bb4dca0c8fd37c4c978a1e60464c7907baee4b71e",
     "succinct/SP1SuccinctGateway": "0xf63c74ee0338f890cd25ab792940b98a815868369cedb31129277e1b191b1e4b"
   }
 }

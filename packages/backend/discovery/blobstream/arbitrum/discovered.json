@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "arbitrum",
   "blockNumber": 282615739,
-  "configHash": "0xafbebb0a3aab13f4f79da34cd9f5a5473333c849c6a64f5d33d1a7b78187cf6d",
+  "configHash": "0x3842003db27007b73c0bca76477398796ec937e3a0c63c4713732498cfb0a1e8",
   "contracts": [
     {
       "name": "SP1Verifier",
@@ -161,6 +161,13 @@
         "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "description": "holds the power to freeze the bridge contract and update the list of authorized relayers."
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1710506484,
       "values": {
@@ -194,6 +201,18 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum.",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "target": "0x738a9b55304f9fcF776B3BA285e50c0f9eF77997",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
       "sinceTimestamp": 1710651080,
       "values": {
@@ -222,20 +241,6 @@
           ]
         ],
         "$upgradeCount": 4,
-        "accessControl": {
-          "DEFAULT_ADMIN_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]
-          },
-          "TIMELOCK_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]
-          },
-          "GUARDIAN_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]
-          }
-        },
         "admins": ["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"],
         "blobstreamProgramVkey": "0x00a6ea49173d4b0b544a24a5a7474e76d1fda8f0f7e541cbb294d2b7249d7bcb",
         "checkRelayer": true,
@@ -378,7 +383,16 @@
     { "address": "0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf" },
     { "address": "0x19abbcEC005D4D83692f7A180125bF0FBd24253D" },
     { "address": "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D" },
-    { "address": "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d" },
+    {
+      "address": "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "description": "allowed to call commitHeaderRange() to commit block ranges to the Blobstream contract"
+        }
+      ]
+    },
     { "address": "0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0" },
     { "address": "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d" },
     { "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54" },
@@ -709,7 +723,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "succinct/SP1Blobstream": "0xe38c6035b28b8caf29747548c960fbdbf16d62b41448c9c75dcf84be8481f864",
+    "succinct/SP1Blobstream": "0x6a8194abda828f4c9a8eb72bb4dca0c8fd37c4c978a1e60464c7907baee4b71e",
     "succinct/SP1SuccinctGateway": "0xf63c74ee0338f890cd25ab792940b98a815868369cedb31129277e1b191b1e4b"
   }
 }

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x520ff57a0360557aba4cf7cdb01d1f9bb710f281
+Generated with discovered.json: 0x18178bd6f34beec42631d426ef1b911d029c25fb
 
-# Diff at Mon, 09 Dec 2024 10:53:22 GMT:
+# Diff at Tue, 10 Dec 2024 14:41:55 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@6e20c0da4ccb19e6a71427cc5601e1587d8abd35 block: 23434494
+- comparing to: main@9fa33d1fcbebe3872dda2bf08af4ca0484de900b block: 23434494
 - current block number: 23434494
 
 ## Description
@@ -27,14 +27,26 @@ discovery. Values are for block 23434494 (main branch discovery), not current.
 ```
 
 ```diff
+    contract BlobstreamMultisig (0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","target":"0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794","description":"holds the power to freeze the bridge contract and update the list of authorized relayers."}]
+    }
+```
+
+```diff
     contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
     +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum.
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"]},"TIMELOCK_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"]},"GUARDIAN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"]}}
       values.admins:
 +        ["0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"]
       values.guardians:
 +        ["0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"]
       description:
 +        "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum."
+      issuedPermissions:
++        [{"permission":"configure","target":"0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d","via":[]},{"permission":"configure","target":"0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6","via":[]}]
     }
 ```
 

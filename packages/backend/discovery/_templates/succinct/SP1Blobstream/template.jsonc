@@ -11,14 +11,38 @@
       }
     },
     "guardians": {
+      "target": {
+        "permissions": [
+          {
+            "type": "configure",
+            "description": "holds the power to freeze the bridge contract and update the list of authorized relayers."
+          }
+        ]
+      },
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "GUARDIAN_ROLE"
       }
     },
-    "accessControl": {
+    "relayers": {
+      "target": {
+        "permissions": [
+          {
+            "type": "configure",
+            "description": "allowed to call commitHeaderRange() to commit block ranges to the Blobstream contract"
+          }
+        ]
+      },
       "handler": {
-        "type": "accessControl"
+        "type": "hardcoded",
+        "value": ["0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"]
+      }
+    },
+    "isRelayerApproved": {
+      "handler": {
+        "type": "call",
+        "method": "function approvedRelayers(address) view returns (bool)",
+        "args": ["0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"]
       }
     }
   }
