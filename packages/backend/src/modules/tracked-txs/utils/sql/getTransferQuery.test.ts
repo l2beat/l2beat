@@ -37,7 +37,7 @@ describe(getTransferQuery.name, () => {
       return 16 * nonZeroBytes + 4 * zeroBytes;
     """;
 
-    SELECT
+    SELECT DISTINCT
       txs.hash,
       traces.from_address,
       traces.to_address,

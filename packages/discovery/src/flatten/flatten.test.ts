@@ -205,4 +205,35 @@ contract R1 is Namespace.C2 {
 }`,
     )
   })
+
+  it('../ in unit name', () => {
+    const rootFile: FileContent = {
+      path: 'a/b/c/Root.sol',
+      content: String.raw`
+import { StringClass } from '@stdlib/String.sol';
+
+contract R1 is StringClass {
+    function f(address x) public { DC1(x).df(); }
+}
+`,
+    }
+
+    const c2File: FileContent = {
+      path: '../somewhere/String.sol',
+      content: String.raw`contract StringClass { }`,
+    }
+
+    const flattened = flattenStartingFrom(
+      'R1',
+      [rootFile, c2File],
+      ['@stdlib=../somewhere/'],
+    )
+    expect(flattened).toEqual(
+      String.raw`contract StringClass { }
+
+contract R1 is StringClass {
+    function f(address x) public { DC1(x).df(); }
+}`,
+    )
+  })
 })

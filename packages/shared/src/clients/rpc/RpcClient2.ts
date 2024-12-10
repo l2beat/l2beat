@@ -1,4 +1,10 @@
-import { Block, Bytes, EthereumAddress, json } from '@l2beat/shared-pure'
+import {
+  assert,
+  Block,
+  Bytes,
+  EthereumAddress,
+  json,
+} from '@l2beat/shared-pure'
 import { generateId } from '../../tools/generateId'
 import {
   ClientCore,
@@ -8,8 +14,13 @@ import { BlockClient } from '../types'
 import {
   CallParameters,
   EVMBalanceResponse,
+  EVMBlock,
   EVMBlockResponse,
+  EVMBlockWithTransactions,
+  EVMBlockWithTransactionsResponse,
   EVMCallResponse,
+  EVMTransactionReceiptResponse,
+  EVMTransactionResponse,
   Quantity,
   RPCError,
 } from './types'
@@ -26,7 +37,7 @@ export class RpcClient2 extends ClientCore implements BlockClient {
   }
 
   async getLatestBlockNumber() {
-    const block = await this.getBlockWithTransactions('latest')
+    const block = await this.getBlock('latest', false)
     return Number(block.number)
   }
 
@@ -34,20 +45,76 @@ export class RpcClient2 extends ClientCore implements BlockClient {
   async getBlockWithTransactions(
     blockNumber: number | 'latest',
   ): Promise<Block> {
+    return await this.getBlock(blockNumber, true)
+  }
+
+  async getBlockParentBeaconRoot(blockNumber: number): Promise<string> {
+    const block = await this.getBlock(blockNumber, true)
+
+    assert(
+      block.parentBeaconBlockRoot,
+      `Block ${block}: parentBeaconBlockRoot should be defined`,
+    )
+    return block.parentBeaconBlockRoot
+  }
+
+  async getBlock(
+    blockNumber: 'latest' | number,
+    includeTxs: false,
+  ): Promise<EVMBlock>
+  async getBlock(
+    blockNumber: 'latest' | number,
+    includeTxs: true,
+  ): Promise<EVMBlockWithTransactions>
+  async getBlock(blockNumber: 'latest' | number, includeTxs: boolean) {
     const method = 'eth_getBlockByNumber'
     const encodedNumber =
       blockNumber === 'latest' ? 'latest' : Quantity.encode(BigInt(blockNumber))
-    const blockResponse = await this.query(method, [encodedNumber, true])
+    const blockResponse = await this.query(method, [encodedNumber, includeTxs])
 
-    const block = EVMBlockResponse.safeParse(blockResponse)
+    const block = includeTxs
+      ? EVMBlockWithTransactionsResponse.safeParse(blockResponse)
+      : EVMBlockResponse.safeParse(blockResponse)
     if (!block.success) {
       this.$.logger.warn(`Invalid response`, {
         blockNumber,
+        includeTxs,
         response: JSON.stringify(blockResponse),
       })
       throw new Error(`Block ${blockNumber}: Error during parsing`)
     }
+
     return { ...block.data.result }
+  }
+
+  async getTransaction(txHash: string) {
+    const response = await this.query('eth_getTransactionByHash', [txHash])
+
+    const transaction = EVMTransactionResponse.safeParse(response)
+    if (!transaction.success) {
+      this.$.logger.warn(`Invalid response`, {
+        txHash,
+        response: JSON.stringify(response),
+      })
+      throw new Error(`Tx ${txHash}: Error during parsing`)
+    }
+
+    return { ...transaction.data.result }
+  }
+
+  async getTransactionReceipt(txHash: string) {
+    const response = await this.query('eth_getTransactionReceipt', [txHash])
+
+    const receipt = EVMTransactionReceiptResponse.safeParse(response)
+    if (!receipt.success) {
+      this.$.logger.warn(`Invalid response`, {
+        txHash,
+        response: JSON.stringify(response),
+      })
+      throw new Error(`Receipt ${txHash}: Error during parsing`)
+    }
+
+    return { ...receipt.data.result }
   }
 
   async getBalance(
