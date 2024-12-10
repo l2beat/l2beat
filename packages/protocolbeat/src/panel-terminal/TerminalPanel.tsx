@@ -1,10 +1,23 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import Convert from 'ansi-to-html'
+import ansiHTML from 'ansi-html'
 import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { executeDiscover, executeMatchFlat, getProject } from '../api/api'
 import { usePanelStore } from '../store/store'
 import { useTerminalStore } from './store'
+
+ansiHTML.setColors({
+  reset: ['F0D8BD', '1D1816'], // [fg, bg]
+  black: '000000',
+  red: 'FB4A35',
+  green: '9DDE6C',
+  yellow: 'FABD30',
+  blue: '8B8BE8',
+  magenta: 'a73db5',
+  cyan: '1c92a8',
+  lightgrey: 'D3D3D3',
+  darkgrey: 'A9A9A9',
+})
 
 export function TerminalPanel() {
   const queryClient = useQueryClient()
@@ -157,18 +170,7 @@ export function TerminalPanel() {
         ref={outputRef}
         className="flex-1 overflow-auto whitespace-pre bg-coffee-900 p-2 font-mono text-gray-300"
         dangerouslySetInnerHTML={{
-          __html: new Convert({
-            fg: '#F0D8BD',
-            bg: '#1D1816',
-            colors: {
-              1: '#FB4A35',
-              2: '#9DDE6C',
-              3: '#FABD30',
-              4: '#8B8BE8',
-              5: '#a73db5',
-              6: '#1c92a8',
-            },
-          }).toHtml(output),
+          __html: ansiHTML(output),
         }}
       />
     </div>
