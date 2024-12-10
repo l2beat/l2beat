@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x3d02f8160891b07abcc78aaf394982a2e8834f1f
+Generated with discovered.json: 0x3faede84656020a4fb337df71df27f6e760d54f5
 
-# Diff at Fri, 29 Nov 2024 13:54:21 GMT:
+# Diff at Mon, 09 Dec 2024 17:11:12 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 21293775
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- current block number: 21366352
 
 ## Description
 
@@ -37,12 +37,12 @@ Initial discovery of the Mailbox. All related contracts (especially the default 
 
 ```diff
 +   Status: CREATED
-    contract  (0x95f07268a2E0e57ad9a0ac3a4644C3a66204098E)
+    contract Mailbox (0xc005dc82818d67AF737725bD4bf75435d065D239)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract Mailbox (0xc005dc82818d67AF737725bD4bf75435d065D239)
+    contract StaticAggregationIsm (0xcFF5f9d69343f4200100dbA755C794012518Ed38)
     +++ description: None
 ```

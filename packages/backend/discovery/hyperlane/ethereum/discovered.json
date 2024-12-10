@@ -1,7 +1,7 @@
 {
   "name": "hyperlane",
   "chain": "ethereum",
-  "blockNumber": 21293775,
+  "blockNumber": 21366352,
   "configHash": "0x558250b20b5d55caa31ff700e6ddadfbd09d40fcb298dd195e7e2c90dd1a822b",
   "contracts": [
     {
@@ -47,7 +47,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 26,
+        "nonce": 28,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -86,13 +86,6 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "",
-      "address": "0x95f07268a2E0e57ad9a0ac3a4644C3a66204098E",
-      "unverified": true,
-      "sinceTimestamp": 1731802847,
-      "values": { "$immutable": true }
-    },
-    {
       "name": "Mailbox",
       "address": "0xc005dc82818d67AF737725bD4bf75435d065D239",
       "sourceHashes": [
@@ -125,15 +118,24 @@
         ],
         "$upgradeCount": 1,
         "defaultHook": "0x571f1435613381208477ac5d6974310d88AC7cB7",
-        "defaultIsm": "0x95f07268a2E0e57ad9a0ac3a4644C3a66204098E",
+        "defaultIsm": "0xcFF5f9d69343f4200100dbA755C794012518Ed38",
         "deployedBlock": 18422581,
-        "latestDispatchedId": "0x56606e5091b3e52797dd975edee54da21a88c874cdebcba6039930d57292d74a",
+        "latestDispatchedId": "0x6bebbef5d7cdb4088b88ab1d0791d81abd363f14002ac7ad94745d1eaf2b717c",
         "localDomain": 1,
-        "nonce": 31942,
+        "nonce": 32901,
         "owner": "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6",
         "requiredHook": "0x8B05BF30F6247a90006c5837eA63C7905D79e6d8",
         "VERSION": 3
       }
+    },
+    {
+      "name": "StaticAggregationIsm",
+      "address": "0xcFF5f9d69343f4200100dbA755C794012518Ed38",
+      "sourceHashes": [
+        "0xb5f4ee6e43e09d3581b620b0fd361aedc8805270a57297bc93bbec4e6a9fc6e9"
+      ],
+      "sinceTimestamp": 1733174315,
+      "values": { "$immutable": true, "moduleType": 2 }
     }
   ],
   "eoas": [
@@ -210,6 +212,11 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xcFF5f9d69343f4200100dbA755C794012518Ed38": [
+      "function moduleType() view returns (uint8)",
+      "function modulesAndThreshold(bytes) view returns (address[], uint8)",
+      "function verify(bytes _metadata, bytes _message) returns (bool)"
     ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
