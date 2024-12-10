@@ -22,6 +22,8 @@ import {
     display: {
       name: 'Hyperlane',
       slug: 'hyperlane',
+      warning:
+      'The security parameters of each Token Router and non-default ISM module must be individually assessed, and can be changed by their developers.',
       category: 'Token Bridge',
       links: {
         websites: ['https://hyperlane.xyz/'],
@@ -32,9 +34,11 @@ import {
         ],
       },
       description:
-        'Hyperlane is the open interoperability framework.',
+        'Hyperlane is an interoperability protocol for cross-chain communication. It facilitates token bridging between chains through the Hyperchain message passing infrastructure.',
       detailedDescription:
-        '.',
+        `It allows developers to create interchain token bridges by deploying Hyperlane Warp Route contracts and leveraging the Hyperlane Mailbox infrastructure deployed to each chain.
+        Hyperlane deployments can be configured with a custom Interchain Security Module (ISM), which specifies the security model to use. If no custom ISM is configured, the default ISM module will be used.
+        `,
     },
     config: {
       escrows: [],
