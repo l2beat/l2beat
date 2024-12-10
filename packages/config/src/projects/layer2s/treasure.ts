@@ -26,7 +26,7 @@ export const treasure: Layer2 = zkStackL2({
     name: 'Treasure Chain',
     slug: 'treasure',
     description:
-      'Treasure Chain is an upcoming gaming-specific L2 built on the ZK Stack. The Treasure Platform powers end-to-end gaming and game-builder needs including but not limited to Identity, Marketplace, AMM Payments, Analytics and LiveOps.',
+      'Treasure Chain is a gaming-specific L2 built on the ZK Stack. The Treasure Platform powers end-to-end gaming and game-builder needs including but not limited to Identity, Marketplace, AMM Payments, Analytics and LiveOps.',
     links: {
       websites: ['https://treasure.lol/'],
       apps: ['https://app.treasure.lol'],
