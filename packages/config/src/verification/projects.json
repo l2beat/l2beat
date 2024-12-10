@@ -126,6 +126,7 @@
   "hybrid": true,
   "hychain": true,
   "hychain-dac-layer-hychain-dac-bridge": true,
+  "hyperlane": true,
   "hyphen": true,
   "hypr": true,
   "immutablex": true,
