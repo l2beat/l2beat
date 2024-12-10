@@ -14,6 +14,7 @@ import { Powerdiff } from './Powerdiff'
 import { DetectProxy } from './Proxy'
 import { SolFmt } from './SolFmt'
 import { StarknetProgramHashes } from './StarknetProgramHashes'
+import { Init } from './Init'
 import { TVL } from './TVL'
 import { UI } from './UI'
 
@@ -35,6 +36,7 @@ export function getSubcommands() {
     SolFmt,
     StarknetProgramHashes,
     FindL2,
+    Init,
     TVL,
     UI,
   ]
