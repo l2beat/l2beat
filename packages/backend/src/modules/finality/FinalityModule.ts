@@ -1,8 +1,8 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import { assert, assertUnreachable, notUndefined } from '@l2beat/shared-pure'
 
+import { BlobProvider, RpcClient2 } from '@l2beat/shared'
 import {
-  BlobClient,
   HttpClient2,
   LoopringClient,
   RetryHandler,
@@ -47,27 +47,26 @@ export function createFinalityModule(
     return
   }
 
-  const ethereumClient = peripherals.getClient(RpcClient, {
-    url: config.finality.ethereumProviderUrl,
-    callsPerMinute: config.finality.ethereumProviderCallsPerMinute,
-    chain: 'ethereum',
-  })
+  const ethereumClient = providers.clients.ethereum
+  assert(ethereumClient, 'Ethereum client not defined')
 
-  const blobClient = peripherals.getClient(BlobClient, {
-    beaconApiUrl: config.finality.beaconApiUrl,
-    rpcUrl: config.finality.ethereumProviderUrl,
-    callsPerMinute: config.finality.beaconApiCPM,
-    timeout: config.finality.beaconApiTimeout,
-  })
+  const loopring = providers.clients.loopring
+  assert(loopring, 'Loopring client not defined')
+
+  const degate = providers.clients.degate
+  assert(degate, 'Degate client not defined')
+
+  const blobProvider = providers.blob?.getBlobProvider()
+  assert(blobProvider, 'Blob client is required for finality module')
 
   const runtimeConfigurations = initializeConfigurations(
     ethereumClient,
-    blobClient,
+    blobProvider,
     logger,
     config.finality.configurations,
     peripherals,
-    providers.loopringClient,
-    providers.degateClient,
+    loopring,
+    degate,
   )
 
   const finalityIndexers = runtimeConfigurations.map(
@@ -95,8 +94,8 @@ export function createFinalityModule(
 }
 
 function initializeConfigurations(
-  ethereumRPC: RpcClient,
-  blobClient: BlobClient,
+  ethereumRPC: RpcClient2,
+  blobProvider: BlobProvider,
   logger: Logger,
   configs: FinalityProjectConfig[],
   peripherals: Peripherals,
@@ -138,7 +137,7 @@ function initializeConfigurations(
             projectId: configuration.projectId,
             analyzers: {
               timeToInclusion: new OpStackT2IAnalyzer(
-                blobClient,
+                blobProvider,
                 logger,
                 ethereumRPC,
                 peripherals.database,
@@ -164,7 +163,7 @@ function initializeConfigurations(
             projectId: configuration.projectId,
             analyzers: {
               timeToInclusion: new ArbitrumT2IAnalyzer(
-                blobClient,
+                blobProvider,
                 logger,
                 ethereumRPC,
                 peripherals.database,
