@@ -4374,6 +4374,13 @@
       "coingeckoId": "zeek-coin"
     },
     {
+      "symbol": "wrsETH",
+      "address": "0xd4169e045bcf9a86cc00101225d9ed61d2f51af2",
+      "source": "native",
+      "supply": "circulatingSupply",
+      "coingeckoId": "wrapped-rseth"
+    },
+    {
       "symbol": "ZORRO",
       "address": "0x244c238325fc1bdf6eded726ee1b47d55895d944",
       "source": "native",
@@ -4388,6 +4395,13 @@
     {
       "symbol": "ZK",
       "address": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+      "source": "native",
+      "supply": "circulatingSupply",
+      "coingeckoId": "zksync"
+    },
+    {
+      "symbol": "zkETH",
+      "address": "0xb72207e1fb50f341415999732a20b6d25d8127aa",
       "source": "native",
       "supply": "circulatingSupply"
     }
