@@ -1,13 +1,20 @@
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import { Project } from '../project/Project'
 import { PROOFS } from './common/proofSystems'
-import { ZkCatalogProject } from './types'
 
-export const risczero: ZkCatalogProject = {
-  createdAt: new UnixTime(1721807619), // 2024-07-24T07:53:39Z
-  display: {
-    slug: 'risczero',
-    name: 'RISC Zero',
-  },
+export const risczero: Project = {
+  id: ProjectId('riskzero'),
+  slug: 'risczero',
+  name: 'RISC Zero',
+  addedAt: UnixTime.fromDate(new Date('2024-07-24')),
+  // tags
+  isZkCatalog: true,
+  // data
   proofVerification: {
     shortDescription: 'ZK verifier for RISC-V programs.',
     aggregation: true,
@@ -218,5 +225,4 @@ export const risczero: ZkCatalogProject = {
       },
     ],
   },
-  type: 'zk-catalog',
 }

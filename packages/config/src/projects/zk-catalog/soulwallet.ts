@@ -1,13 +1,20 @@
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import { Project } from '../project/Project'
 import { PROOFS } from './common/proofSystems'
-import { ZkCatalogProject } from './types'
 
-export const soulwallet: ZkCatalogProject = {
-  createdAt: new UnixTime(1723627600), // 2024-08-14T09:26:40Z
-  display: {
-    slug: 'soulwallet',
-    name: 'Soul Wallet',
-  },
+export const soulwallet: Project = {
+  id: ProjectId('soulwallet'),
+  slug: 'soulwallet',
+  name: 'Soul Wallet',
+  addedAt: UnixTime.fromDate(new Date('2024-08-14')),
+  // tags
+  isZkCatalog: true,
+  // data
   proofVerification: {
     shortDescription:
       'Smart contract wallet supporting guardians and email recovery with ZK.',
@@ -44,5 +51,4 @@ export const soulwallet: ZkCatalogProject = {
       },
     ],
   },
-  type: 'zk-catalog',
 }

@@ -1,11 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import {
-  ChainConfig,
-  Layer2Display,
-  PERFORMED_BY,
-  ProofVerification,
-  ZkCatalogProject,
-} from '@l2beat/config'
+import { ChainConfig, OnchainVerifier } from '@l2beat/config'
 import {
   BlockscoutInternalTransaction,
   BlockscoutV2Client,
@@ -23,26 +17,15 @@ import {
 } from './VerifiersStatusRefresher'
 
 const zkVerifierAddress = EthereumAddress.random()
-const zksMock: ZkCatalogProject[] = [
+const mockVerifiers: OnchainVerifier[] = [
   {
-    type: 'zk-catalog',
-    createdAt: UnixTime.now(),
-    display: mockObject<Layer2Display>({
-      name: 'zk-mock',
-    }),
-    proofVerification: mockObject<ProofVerification>({
-      verifiers: [
-        {
-          name: 'Example Verifier',
-          description: '',
-          verified: 'failed',
-          contractAddress: zkVerifierAddress,
-          chainId: ChainId.ETHEREUM,
-          subVerifiers: [],
-          performedBy: PERFORMED_BY.l2beat,
-        },
-      ],
-    }),
+    name: 'Example Verifier',
+    description: '',
+    verified: 'failed',
+    contractAddress: zkVerifierAddress,
+    chainId: ChainId.ETHEREUM,
+    subVerifiers: [],
+    performedBy: { name: 'Joe', link: 'https://example.com' },
   },
 ]
 
@@ -98,9 +81,7 @@ describe(VerifiersStatusRefresher.name, () => {
         db: mockDatabase({
           verifierStatus: verifierStatusRepositoryMock,
         }),
-        verifiersListProvider: mockFn(
-          async () => zksMock[0].proofVerification.verifiers,
-        ),
+        verifiersListProvider: mockFn(async () => mockVerifiers),
       })
 
       refresher.getBlockscoutClient = mockFn().returns(

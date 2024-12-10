@@ -16,8 +16,6 @@ export const sxnetwork: Layer2 = orbitStackL2({
   display: {
     name: 'SX Network',
     slug: 'sxnetwork',
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     description:
       "SX Network is an Orbit stack Optimium, built to scale the SX team's existing sports betting platform.",
     links: {
