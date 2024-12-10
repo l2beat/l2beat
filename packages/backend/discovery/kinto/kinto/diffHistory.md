@@ -1,3 +1,38 @@
+Generated with discovered.json: 0x80336ac049b71f83160acf036068f4f3f1f599d7
+
+# Diff at Tue, 10 Dec 2024 07:40:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d01c69c8d162d3e9a035a25c270d68755988c138 block: 612370
+- current block number: 619744
+
+## Description
+
+Config related: rediscover after beaconProxy detector fix.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 612370 (main branch discovery), not current.
+
+```diff
+    contract KintoWallet (0x25EA8c663BA8cCd79284B8c4001e7A245071885c) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x5dd932e70772b9520e522fd66660bc292a8fc07ff9f9bd8da3b7c0f0bf59c89d"
++        "0xc495bc47dd31384c345f3838b96e95d73efd25ded667a30651c10ca67e13a1b4"
+    }
+```
+
+```diff
+    contract KintoAdminMultisig (0x2e2B1c42E38f5af81771e65D87729E57ABD1337a) {
+    +++ description: None
+      values.owners:
+-        ["0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c","0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B","0x08E674c4538caE03B6c05405881dDCd95DcaF5a8","0x94561e98DD5E55271f91A103e4979aa6C493745E"]
+    }
+```
+
 Generated with discovered.json: 0x62043f19ddff2ce218871d32e98be9601fbe58bb
 
 # Diff at Mon, 09 Dec 2024 11:27:23 GMT:
