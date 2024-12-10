@@ -19,8 +19,9 @@ export class CliLogger {
   private lastLines: number = 0
   private lastRedraw: number = 0
   private drawTimeoutId?: ReturnType<typeof setTimeout>
-  private termWidth: number =
-    getWindowSize ? process.stdout.getWindowSize()[0] : 80
+  private termWidth: number = getWindowSize
+    ? process.stdout.getWindowSize()[0]
+    : 80
 
   logLine(input: string) {
     this.logs.push(input + '\n')
