@@ -35,7 +35,8 @@ export interface FilterableScalingEntry {
 }
 
 export interface CommonScalingEntry extends CommonProjectEntry {
-  filterable: FilterableScalingValues
+  // TODO: not undefined?
+  filterable: FilterableScalingValues | undefined
 
   name: string
   shortName: string | undefined

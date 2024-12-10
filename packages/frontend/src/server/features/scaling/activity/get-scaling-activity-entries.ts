@@ -128,12 +128,39 @@ function getEthereumEntry(
   data: ActivityProjectTableData,
 ): ScalingActivityEntry {
   return {
-    ...getCommonScalingEntry({ project: 'ethereum' }),
+    id: ProjectId.ETHEREUM,
+    basicInfo: {
+      name: 'Ethereum',
+      slug: 'ethereum',
+    },
+    statuses: {},
     entryType: 'activity',
     dataSource: 'Blockchain RPC',
     dataAvailability: {
       layer: undefined,
     },
+    filterable: undefined,
     data,
+
+    // TODO: remove all those!
+    name: 'Ethereum',
+    shortName: undefined,
+    slug: 'ethereum',
+    href: '',
+    category: 'Optimistic Rollup',
+    isOther: false,
+    isVerified: true,
+    underReviewStatus: undefined,
+    isArchived: false,
+    isUpcoming: false,
+    warning: undefined,
+    headerWarning: undefined,
+    redWarning: undefined,
+    purposes: [],
+    badges: [],
+    type: 'layer2',
+    provider: undefined,
+    hostChain: undefined,
+    stage: { stage: 'NotApplicable' },
   }
 }
