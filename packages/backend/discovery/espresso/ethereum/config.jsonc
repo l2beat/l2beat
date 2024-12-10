@@ -26,7 +26,7 @@
             "permissions": [
               {
                 "type": "configure",
-                "description": "relayer (prover) address that is allowed to call newFinalizedState() to prove the latest HotShot state to the Light Client contract on Ethereum."
+                "description": "can call newFinalizedState() to prove the latest HotShot state."
               }
             ]
           }
@@ -36,7 +36,7 @@
             "permissions": [
               {
                 "type": "configure",
-                "description": "holds the power to change the contract state."
+                "description": "can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period."
               }
             ]
           }

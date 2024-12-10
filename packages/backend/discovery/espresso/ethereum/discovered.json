@@ -1,8 +1,8 @@
 {
   "name": "espresso",
   "chain": "ethereum",
-  "blockNumber": 21364146,
-  "configHash": "0xe7579de86f18c88f80adbc7142a9c4ece08a5090e7925ab84c7ea580104336af",
+  "blockNumber": 21372994,
+  "configHash": "0xa90e066e0c170f2ab472fcf434175b02618ac06af17426f4325184b9f7499d33",
   "contracts": [
     {
       "name": "EspressoMultisig",
@@ -17,7 +17,7 @@
         {
           "permission": "configure",
           "target": "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
-          "description": "holds the power to change the contract state."
+          "description": "can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period."
         },
         {
           "permission": "upgrade",
@@ -88,9 +88,9 @@
         ],
         "$upgradeCount": 1,
         "finalizedState": {
-          "viewNum": 470780,
-          "blockHeight": 460366,
-          "blockCommRoot": "12429432515390011777076208904984614356742563657730390569558811056150332830633"
+          "viewNum": 483678,
+          "blockHeight": 472918,
+          "blockCommRoot": "18278523005438341224914445701100123357842897512218761818604054787531085550697"
         },
         "genesisStakeTableState": {
           "threshold": 34,
@@ -99,7 +99,7 @@
           "amountComm": "349594070000690608819508126396071528924936277306125447047023081215269308099"
         },
         "genesisState": { "viewNum": 0, "blockHeight": 0, "blockCommRoot": 0 },
-        "getStateHistoryCount": 271,
+        "getStateHistoryCount": 273,
         "getVersion": {
           "majorVersion": 1,
           "minorVersion": 0,
@@ -108,7 +108,7 @@
         "isPermissionedProverEnabled": true,
         "owner": "0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
         "permissionedProver": "0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947",
-        "stateHistoryFirstIndex": 42,
+        "stateHistoryFirstIndex": 44,
         "stateHistoryRetentionPeriod": 864000,
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
@@ -123,7 +123,7 @@
         {
           "permission": "configure",
           "target": "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
-          "description": "relayer (prover) address that is allowed to call newFinalizedState() to prove the latest HotShot state to the Light Client contract on Ethereum."
+          "description": "can call newFinalizedState() to prove the latest HotShot state."
         }
       ]
     },

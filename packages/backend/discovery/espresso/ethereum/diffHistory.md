@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xd79d3295ef6323bc6841e0c1014e15cbd435320b
+Generated with discovered.json: 0x3488c508088a9e61f71889f9042bd10b4a314405
 
-# Diff at Mon, 09 Dec 2024 09:47:53 GMT:
+# Diff at Tue, 10 Dec 2024 15:28:04 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@f8ac84ae0d4464e6448214e9891d08430e0cbab4 block: 21329314
-- current block number: 21364146
+- comparing to: main@9fa33d1fcbebe3872dda2bf08af4ca0484de900b block: 21329314
+- current block number: 21372994
 
 ## Description
 
@@ -25,7 +25,7 @@ discovery. Values are for block 21329314 (main branch discovery), not current.
 -        "upgrade"
 +        "configure"
       receivedPermissions.0.description:
-+        "holds the power to change the contract state."
++        "can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period."
     }
 ```
 
