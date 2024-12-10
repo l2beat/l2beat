@@ -105,7 +105,7 @@ export const zeronetwork: Layer2 = zkStackL2({
       description:
         'Shared bridge for depositing tokens to ZERϴ and other ZK stack chains.',
       sharedEscrow: {
-        type: 'ElasticChian',
+        type: 'ElasticChain',
         l2BridgeAddress: EthereumAddress(
           '0x954ba8223a6BFEC1Cc3867139243A02BA0Bc66e4',
         ),
