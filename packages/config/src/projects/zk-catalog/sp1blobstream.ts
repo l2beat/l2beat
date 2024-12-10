@@ -1,13 +1,20 @@
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import { Project } from '../project/Project'
 import { PROOFS } from './common/proofSystems'
-import { ZkCatalogProject } from './types'
 
-export const SP1Blobstream: ZkCatalogProject = {
-  createdAt: new UnixTime(1725441885), // 2024-09-04T09:24:45Z
-  display: {
-    slug: 'SP1Blobstream',
-    name: 'SP1Blobstream',
-  },
+export const sp1blobstream: Project = {
+  id: ProjectId('sp1blobstream'),
+  slug: 'SP1Blobstream', // TODO: lowercase + redirect
+  name: 'SP1Blobstream',
+  addedAt: UnixTime.fromDate(new Date('2024-09-04')),
+  // tags
+  isZkCatalog: true,
+  // data
   proofVerification: {
     shortDescription: 'Celestia ZK light client implementation.',
     aggregation: true,
@@ -393,5 +400,4 @@ export const SP1Blobstream: ZkCatalogProject = {
       },
     ],
   },
-  type: 'zk-catalog',
 }

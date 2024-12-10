@@ -1,14 +1,21 @@
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { PERFORMED_BY } from './common'
+import {
+  ChainId,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import { Project } from '../project/Project'
+import { PERFORMED_BY } from './common/performedBy'
 import { PROOFS } from './common/proofSystems'
-import { ZkCatalogProject } from './types/ZkCatalogProject'
 
-export const worldcoinsmtb: ZkCatalogProject = {
-  createdAt: new UnixTime(1716456612), // 2024-05-23T09:30:12Z
-  display: {
-    slug: 'worldcoin-smtb',
-    name: 'Worldcoin SMTB',
-  },
+export const worldcoinsmtb: Project = {
+  id: ProjectId('worldcoinsmtb'),
+  slug: 'worldcoin-smtb',
+  name: 'Worldcoin SMTB',
+  addedAt: UnixTime.fromDate(new Date('2024-05-23')),
+  // tags
+  isZkCatalog: true,
+  // data
   proofVerification: {
     shortDescription:
       'ZK program to add or delete users from the Worldcoin anonymity set.',
@@ -123,5 +130,4 @@ export const worldcoinsmtb: ZkCatalogProject = {
       },
     ],
   },
-  type: 'zk-catalog',
 }
