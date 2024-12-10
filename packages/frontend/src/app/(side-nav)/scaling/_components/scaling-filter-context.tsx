@@ -1,6 +1,5 @@
 'use client'
 
-import { notUndefined } from '@l2beat/shared-pure'
 import {
   createContext,
   useCallback,
@@ -9,7 +8,6 @@ import {
   useState,
 } from 'react'
 import { type FilterableScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
-import { type ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/get-scaling-upcoming-entries'
 
 export type ScalingFilterContextValue = {
   rollupsOnly: boolean
@@ -79,33 +77,6 @@ export function useScalingFilter() {
     },
     [filters],
   )
-  return filter
-}
-
-export function useScalingUpcomingFilter() {
-  const scalingFilters = useScalingFilterValues()
-
-  const filter = useCallback(
-    (entry: ScalingUpcomingEntry) => {
-      const checks = [
-        scalingFilters.rollupsOnly !== false
-          ? !!entry.category?.includes('Rollup')
-          : undefined,
-        scalingFilters.type !== undefined
-          ? entry.category === scalingFilters.type
-          : undefined,
-        scalingFilters.stack !== undefined
-          ? entry.provider === scalingFilters.stack
-          : undefined,
-        scalingFilters.purpose !== undefined
-          ? entry.purposes.some((purpose) => purpose === scalingFilters.purpose)
-          : undefined,
-      ].filter(notUndefined)
-      return checks.length === 0 || checks.every(Boolean)
-    },
-    [scalingFilters],
-  )
-
   return filter
 }
 

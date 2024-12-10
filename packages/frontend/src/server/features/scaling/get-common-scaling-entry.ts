@@ -1,23 +1,18 @@
 import {
   type BadgeId,
-  type BadgeType,
   type Layer2,
-  type Layer2Provider,
   type Layer3,
-  type ScalingProjectCategory,
-  type ScalingProjectPurpose,
   type StageConfig,
   badges,
 } from '@l2beat/config'
+import { CommonProjectEntry } from '~/types/common-project-entry'
 import {
-  type UnderReviewStatus,
   getUnderReviewStatus,
   getUnderReviewText,
 } from '~/utils/project/under-review'
 import { getCurrentEntry } from '../utils/get-current-entry'
 import { getHostChain } from './utils/get-host-chain'
 import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
-import { CommonProjectEntry } from '~/types/common-project-entry'
 
 export interface FilterableScalingValues {
   isRollup: boolean
@@ -35,28 +30,8 @@ export interface FilterableScalingEntry {
 }
 
 export interface CommonScalingEntry extends CommonProjectEntry {
-  // TODO: not undefined?
+  stageOrder: number
   filterable: FilterableScalingValues | undefined
-
-  name: string
-  shortName: string | undefined
-  slug: string
-  href: string
-  category: ScalingProjectCategory
-  isOther: boolean
-  isVerified: boolean
-  underReviewStatus: UnderReviewStatus
-  isArchived: boolean
-  isUpcoming: boolean
-  warning: string | undefined
-  headerWarning: string | undefined
-  redWarning: string | undefined
-  purposes: ScalingProjectPurpose[]
-  badges: { badge: BadgeId; kind: BadgeType }[]
-  type: 'layer2' | 'layer3'
-  provider: Layer2Provider | undefined
-  hostChain: string | undefined
-  stage: StageConfig
 }
 
 interface Params {
@@ -98,6 +73,7 @@ export function getCommonScalingEntry({
         hasImplementationChanged,
       }),
     },
+    stageOrder: getStageOrder(project.stage),
     filterable: {
       isRollup: project.display.category.includes('Rollup'),
       type: project.display.category,
@@ -109,34 +85,6 @@ export function getCommonScalingEntry({
         getCurrentEntry(project.dataAvailability)?.layer.value ?? 'Unknown',
       raas: getRaas(project.badges ?? []),
     },
-
-    name: project.display.name,
-    href: `/scaling/projects/${project.display.slug}`,
-    shortName: project.display.shortName,
-    slug: project.display.slug,
-    category: project.display.category,
-    isOther: !!project.display.isOther,
-    isVerified,
-    underReviewStatus: getUnderReviewStatus({
-      isUnderReview: isAnySectionUnderReview(project),
-      hasImplementationChanged,
-      hasHighSeverityFieldChanged,
-    }),
-    isArchived: !!project.isArchived,
-    isUpcoming: !!project.isUpcoming,
-    warning: project.display.warning,
-    headerWarning: project.display.headerWarning,
-    redWarning: project.display.redWarning,
-    purposes: project.display.purposes,
-    badges:
-      project.badges?.map((badge) => ({
-        badge,
-        kind: badges[badge].type,
-      })) ?? [],
-    type: project.type,
-    provider: project.display.provider,
-    hostChain: project.type === 'layer2' ? undefined : getHostChain(project),
-    stage: project.stage ?? ({ stage: 'NotApplicable' } satisfies StageConfig),
   }
 }
 
@@ -150,7 +98,21 @@ function getStage(config: StageConfig | undefined) {
   return config.stage
 }
 
-function getRaas(projectBadges: BadgeId[]) {
+function getStageOrder(config: StageConfig | undefined): number {
+  if (!config) {
+    return -1
+  }
+  const order: Record<StageConfig['stage'], number> = {
+    NotApplicable: -1,
+    UnderReview: -1,
+    'Stage 0': 0,
+    'Stage 1': 1,
+    'Stage 2': 2,
+  }
+  return order[config.stage]
+}
+
+export function getRaas(projectBadges: BadgeId[]) {
   const badge = projectBadges.find((id) => badges[id].type === 'RaaS')
   if (!badge) {
     return 'No RaaS'

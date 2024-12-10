@@ -1,4 +1,10 @@
-import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
+import {
+  type Layer2,
+  type Layer3,
+  WarningWithSentiment,
+  layer2s,
+  layer3s,
+} from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 import { api } from '~/trpc/server'
 import { groupByMainCategories } from '~/utils/group-by-main-categories'
@@ -7,7 +13,10 @@ import {
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
-import { getCommonScalingEntry } from '../get-common-scaling-entry'
+import {
+  CommonScalingEntry,
+  getCommonScalingEntry,
+} from '../get-common-scaling-entry'
 import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
 import {
   type SevenDayTvlBreakdown,
@@ -56,25 +65,61 @@ export async function getScalingTvlEntries() {
   return groupByMainCategories(orderByStageAndTvl(entries, remappedForOrdering))
 }
 
-export type ScalingTvlEntry = Awaited<ReturnType<typeof getScalingTvlEntry>>
+export interface ScalingTvlEntry extends CommonScalingEntry {
+  tvl: {
+    data:
+      | {
+          total: number
+          breakdown: {
+            native: number
+            canonical: number
+            external: number
+            associated: {
+              native: number
+              canonical: number
+              external: number
+            }
+          }
+          change: {
+            total: number
+            native: number
+            canonical: number
+            external: number
+          }
+          associatedTokensExcludedChange: {
+            total: number
+            native: number
+            canonical: number
+            external: number
+          }
+        }
+      | undefined
+    associatedTokens: string[]
+    warnings: WarningWithSentiment[]
+  }
+}
+
 function getScalingTvlEntry(
   project: Layer2 | Layer3,
   isVerified: boolean,
   projectsChangeReport: ProjectsChangeReport,
   latestTvl: SevenDayTvlBreakdown['projects'][string] | undefined,
-) {
+): ScalingTvlEntry {
+  const common = getCommonScalingEntry({
+    project,
+    isVerified,
+    hasImplementationChanged: projectsChangeReport.hasImplementationChanged(
+      project.id,
+    ),
+    hasHighSeverityFieldChanged:
+      projectsChangeReport.hasHighSeverityFieldChanged(project.id),
+  })
   return {
-    ...getCommonScalingEntry({
-      project,
-      isVerified,
-      hasImplementationChanged: projectsChangeReport.hasImplementationChanged(
-        project.id,
-      ),
-      hasHighSeverityFieldChanged:
-        projectsChangeReport.hasHighSeverityFieldChanged(project.id),
-    }),
-    href: `/scaling/projects/${project.display.slug}/tvl-breakdown`,
-    entryType: 'scaling' as const,
+    ...common,
+    basicInfo: {
+      ...common.basicInfo,
+      href: `/scaling/projects/${project.display.slug}/tvl-breakdown`,
+    },
     tvl: {
       data: latestTvl && {
         total: latestTvl.total,

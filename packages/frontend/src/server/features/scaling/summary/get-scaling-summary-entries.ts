@@ -1,4 +1,14 @@
-import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
+import {
+  type Layer2,
+  Layer2Provider,
+  type Layer3,
+  Layer3Provider,
+  ScalingProjectCategory,
+  StageConfig,
+  WarningWithSentiment,
+  layer2s,
+  layer3s,
+} from '@l2beat/config'
 import { compact } from 'lodash'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
 import { groupByMainCategories } from '~/utils/group-by-main-categories'
@@ -9,7 +19,10 @@ import {
   type ActivityLatestUopsData,
   getActivityLatestUops,
 } from '../activity/get-activity-latest-tps'
-import { getCommonScalingEntry } from '../get-common-scaling-entry'
+import {
+  CommonScalingEntry,
+  getCommonScalingEntry,
+} from '../get-common-scaling-entry'
 import {
   type LatestTvl,
   get7dTokenBreakdown,
@@ -17,9 +30,6 @@ import {
 import { getAssociatedTokenWarning } from '../tvl/utils/get-associated-token-warning'
 import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
 
-export type ScalingSummaryEntry = Awaited<
-  ReturnType<typeof getScalingSummaryEntry>
->
 export async function getScalingSummaryEntries() {
   const projects = [...layer2s, ...layer3s].filter(
     (project) => !project.isUpcoming && !project.isArchived,
@@ -59,6 +69,33 @@ export async function getScalingSummaryEntries() {
   return groupByMainCategories(orderByStageAndTvl(entries, remappedForOrdering))
 }
 
+export interface ScalingSummaryEntry extends CommonScalingEntry {
+  category: ScalingProjectCategory
+  provider: Layer2Provider | Layer3Provider | undefined
+  stage: StageConfig
+  tvl: {
+    breakdown:
+      | {
+          total: number
+          ether: number
+          stablecoin: number
+          associated: number
+        }
+      | undefined
+    change: number | undefined
+    associatedTokensExcludedChange: number | undefined
+    associatedTokens: string[]
+    warnings: WarningWithSentiment[]
+    associatedTokensExcludedWarnings: WarningWithSentiment[]
+  }
+  activity:
+    | {
+        pastDayUops: number
+        change: number
+      }
+    | undefined
+}
+
 function getScalingSummaryEntry(
   project: Layer2 | Layer3,
   isVerified: boolean,
@@ -66,7 +103,7 @@ function getScalingSummaryEntry(
   hasHighSeverityFieldChanged: boolean,
   latestTvl: LatestTvl['projects'][string] | undefined,
   activity: ActivityLatestUopsData[string] | undefined,
-) {
+): ScalingSummaryEntry {
   const associatedTokenWarning =
     latestTvl && latestTvl.breakdown.total > 0
       ? getAssociatedTokenWarning({
