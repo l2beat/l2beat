@@ -1,9 +1,9 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import ansiHTML from 'ansi-html'
-import { getProject } from '../api/api'
-import { usePanelStore } from '../store/store'
 import { useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
+import { getProject } from '../api/api'
+import { usePanelStore } from '../store/store'
 import { useTerminalStore } from './store'
 
 ansiHTML.setColors({
