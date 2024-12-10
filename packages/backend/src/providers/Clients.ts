@@ -154,7 +154,7 @@ export function initClients(config: Config, logger: Logger): Clients {
     retryHandler: RetryHandler.RELIABLE_API(logger),
   })
 
-  if (ethereumClient) {
+  if (ethereumClient && config.beaconApi.url) {
     blobClient = new BlobClient({
       beaconApiUrl: config.beaconApi.url,
       rpcClient: ethereumClient,

@@ -39,7 +39,7 @@ export interface Config {
   readonly daBeat: DABeatConfig | false
   readonly chainConfig: ChainApi[]
   readonly beaconApi: {
-    readonly url: string
+    readonly url: string | undefined
     readonly callsPerMinute: number
     readonly timeout: number
   }

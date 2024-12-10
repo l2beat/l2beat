@@ -208,7 +208,7 @@ export function makeConfig(
     },
     chainConfig: getChainConfig(env),
     beaconApi: {
-      url: env.string([
+      url: env.optionalString([
         'ETHEREUM_BEACON_API_URL_FOR_FINALITY',
         'ETHEREUM_BEACON_API_URL',
       ]),
