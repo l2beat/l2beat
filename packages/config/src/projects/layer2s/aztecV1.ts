@@ -59,7 +59,7 @@ export const aztecV1: Layer2 = {
       'EOL: Ownership of the rollup contract is irrevocably renounced and Aztec is not running a rollup processor (operator). Users or third parties have to [run the rollup system by themselves](https://github.com/AztecProtocol/aztec-v2-ejector/) to withdraw or transact.',
     description:
       'Zk.Money v1 (Aztec v1, or sometimes called Aztec 2.0) is an open source layer 2 network that aims to enable affordable, private crypto payments via zero-knowledge proofs.',
-    purposes: ['Private payments'],
+    purposes: ['Payments', 'Privacy'],
     category: 'ZK Rollup',
     links: {
       websites: ['https://aztec.network/'],
