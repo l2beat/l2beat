@@ -1,5 +1,5 @@
 import { StringWithAutocomplete } from '@l2beat/shared-pure'
-import { SubVerifier } from '../../../types'
+import { SubVerifier } from '../../types'
 
 function GROTH16(
   phase1setup: StringWithAutocomplete<'?'>,

@@ -81,8 +81,6 @@ export const witness: Layer2 = polygonCDKStack({
   display: {
     name: 'Witness Chain',
     slug: 'witness',
-    headerWarning:
-      'Witness Chain is using AggLayer, meaning it shares the TVL escrow contracts with Polygon zkEVM and other connected chains.',
     description:
       'Witness Chain is a Validium built on the Polygon CDK stack and Eigenlayer validates services. The purpose of the project is to create a DePIN coordination Layer.',
     links: {

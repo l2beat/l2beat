@@ -1237,22 +1237,35 @@
     {
       "name": "StrategyBase",
       "address": "0xe9FA8F904d97854C7389b68923262ADCC6C27827",
+      "template": "eigenlayer/Strategy",
       "sourceHashes": [
         "0x6be5dd10217b2d3a9bca287766865129906f886adb603752ddcb21538ef683ea"
       ],
+      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
+      "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1723232207,
       "values": {
         "$immutable": true,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "paused": 0,
         "pauserRegistry": "0x0000000000000000000000000000000000000000",
-        "sharesToUnderlying": [],
-        "sharesToUnderlyingView": [],
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
         "totalShares": 0,
-        "underlyingToken": "0x0000000000000000000000000000000000000000",
-        "underlyingToShares": [],
-        "underlyingToSharesView": []
+        "underlyingToken": "0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "getTVLLimits": {
+          "severity": "LOW",
+          "description": "Maximum TVL of the strategy."
+        },
+        "maxPerDeposit": {
+          "severity": "LOW",
+          "description": "Maximum value of one deposit transaction"
+        },
+        "maxTotalDeposits": {
+          "severity": "LOW",
+          "description": "Same as TVL limit"
+        }
       }
     },
     {
@@ -2347,6 +2360,7 @@
     ]
   },
   "usedTemplates": {
+    "eigenlayer/Strategy": "0xecfa84ed37fe2b3a715680ef8f3137e1bfd82351afa85222bc0241a5c8714272",
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
   }
