@@ -1,7 +1,6 @@
-import { existsSync, readFileSync, writeFileSync } from 'fs'
-import path from 'path'
+import { writeFileSync } from 'fs'
 import { Logger, RateLimiter, getEnv } from '@l2beat/backend-tools'
-import { layer2s, tokenList } from '@l2beat/config'
+import { chains, layer2s, tokenList } from '@l2beat/config'
 import {
   BlockIndexerClient,
   CoingeckoClient,
@@ -9,67 +8,75 @@ import {
   HttpClient2,
   RetryHandler,
 } from '@l2beat/shared'
+import { assert, ChainConverter, ChainId } from '@l2beat/shared-pure'
 import { providers, utils } from 'ethers'
-import { chunk } from 'lodash'
+import { chunk, groupBy } from 'lodash'
 import { RateLimitedProvider } from '../../src/peripherals/rpcclient/RateLimitedProvider'
-
-const OUTPUT_PATH = path.resolve(__dirname, './discovered.json')
-const PROCESSED_ESCROWS_PATH = path.resolve(
-  __dirname,
-  './processedEscrows.json',
-)
+import {
+  OUTPUT_PATH,
+  PROCESSED_ESCROWS_PATH,
+  getEscrowKey,
+  loadExistingTokens,
+  loadProcessedEscrows,
+} from './utils'
 
 const MIN_MARKET_CAP = 10_000_000
 const MIN_MISSING_VALUE = 10_000
 
-interface DiscoveredTokens {
-  found: {
-    address: string
-    escrows: {
-      project: string
-      address: string
-      balance?: number
-      value?: number
-    }[]
-    coingeckoId?: string
-    symbol?: string
-    marketCap?: number
-  }[]
+interface ChainConfig {
+  rpcEnvKey: string
+  etherscanUrl: string
+  etherscanEnvKey: string
+  callsPerMinute: number
 }
 
-interface ProcessedEscrows {
-  processed: Record<string, number>
-}
-
-function loadExistingTokens(): DiscoveredTokens {
-  if (existsSync(OUTPUT_PATH)) {
-    const data = JSON.parse(readFileSync(OUTPUT_PATH, 'utf-8'))
-    return {
-      found: data.found ?? [],
-    }
-  }
-  return { found: [] }
-}
-
-function loadProcessedEscrows(): ProcessedEscrows {
-  if (existsSync(PROCESSED_ESCROWS_PATH)) {
-    const data = JSON.parse(readFileSync(PROCESSED_ESCROWS_PATH, 'utf-8'))
-    return {
-      processed: data.processed ?? {},
-    }
-  }
-  return { processed: {} }
+const CHAIN_CONFIG: Record<string, ChainConfig> = {
+  ethereum: {
+    rpcEnvKey: 'ETHEREUM_RPC_URL',
+    etherscanUrl: 'https://api.etherscan.io/api',
+    etherscanEnvKey: 'ETHEREUM_ETHERSCAN_API_KEY',
+    callsPerMinute: 120,
+  },
+  arbitrum: {
+    rpcEnvKey: 'ARBITRUM_RPC_URL',
+    etherscanUrl: 'https://api.arbiscan.io/api',
+    etherscanEnvKey: 'ARBITRUM_ETHERSCAN_API_KEY',
+    callsPerMinute: 120,
+  },
+  optimism: {
+    rpcEnvKey: 'OPTIMISM_RPC_URL',
+    etherscanUrl: 'https://api-optimistic.etherscan.io/api',
+    etherscanEnvKey: 'OPTIMISM_ETHERSCAN_API_KEY',
+    callsPerMinute: 120,
+  },
 }
 
 async function main() {
-  const provider = getProvider()
+  const providers = new Map(
+    Object.keys(CHAIN_CONFIG).map((chain) => [chain, getProvider(chain)]),
+  )
+  const etherscanClients = new Map(
+    Object.keys(CHAIN_CONFIG).map((chain) => [
+      chain,
+      getEtherscanClient(chain),
+    ]),
+  )
   const coingeckoClient = getCoingeckoClient()
-  const etherscanClient = getEtherscanClient()
-  const escrows = layer2s
-    .flatMap((layer2) =>
-      layer2.config.escrows.flatMap((e) => ({ ...e, projectId: layer2.id })),
-    )
-    .filter((e) => e.chain === 'ethereum')
+  const chainConverter = new ChainConverter(
+    chains.map((c) => ({
+      chainId: ChainId(c.chainId),
+      name: c.name,
+    })),
+  )
+
+  const escrowsByChain = groupBy(
+    layer2s
+      .flatMap((layer2) =>
+        layer2.config.escrows.flatMap((e) => ({ ...e, projectId: layer2.id })),
+      )
+      .filter((e) => e.chain === 'ethereum'),
+    'chain',
+  )
 
   const coingeckoTokens = await coingeckoClient.getCoinList({
     includePlatform: true,
@@ -91,11 +98,12 @@ async function main() {
     'function balanceOf(address) view returns (uint256)',
     'function decimals() view returns (uint8)',
   ])
-  const latestBlock = await provider.getBlockNumber()
   const existingTokens = loadExistingTokens()
   const processedEscrows = loadProcessedEscrows()
   const tokenListAddresses = new Set(
-    tokenList.map((t) => t.address?.toLowerCase()),
+    tokenList.map(
+      (t) => `${chainConverter.toName(t.chainId)}:${t.address?.toLowerCase()}`,
+    ),
   )
   const allFoundTokens = new Map<
     string,
@@ -104,109 +112,133 @@ async function main() {
       coingeckoId?: string
       symbol?: string
     }
-  >()
-  existingTokens.found.forEach((token) => {
-    allFoundTokens.set(token.address, {
-      escrows: new Map(
-        token.escrows.map((e) => [
-          e.address,
-          { balance: e.balance ?? 0, project: e.project },
-        ]),
-      ),
-      coingeckoId: token.coingeckoId,
-      symbol: token.symbol,
-    })
-  })
+  >(
+    existingTokens.found.map((t) => [
+      t.address?.toLowerCase(),
+      {
+        escrows: new Map(
+          t.escrows.map((e) => [
+            e.address,
+            { balance: e.balance ?? 0, project: e.project },
+          ]),
+        ),
+        coingeckoId: t.coingeckoId,
+        symbol: t.symbol,
+      },
+    ]),
+  )
 
-  for (const escrow of escrows) {
-    console.log(
-      `Checking logs for escrow: ${escrow.address} - ${escrows.findIndex((e) => e.address === escrow.address) + 1}/${escrows.length}`,
-    )
-
-    const lastProcessedBlock =
-      processedEscrows.processed?.[escrow.address] ??
-      (await etherscanClient.getBlockNumberAtOrBefore(escrow.sinceTimestamp))
-    const toTopic = utils.hexZeroPad(escrow.address, 32)
-
-    const allLogs = await getAllLogs(
-      provider,
-      [transferTopic, null, toTopic],
-      lastProcessedBlock,
-      latestBlock,
-    )
-
-    console.log(
-      `Processed blocks ${lastProcessedBlock}-${latestBlock}, found ${allLogs.length} logs for escrow ${escrow.address}`,
-    )
-
-    const tokensFromLogs = new Set(allLogs.map((l) => l.address.toLowerCase()))
-    for (const tokenFromLog of tokensFromLogs) {
-      if (
-        coingeckoTokensMap.has(tokenFromLog) &&
-        !tokenListAddresses.has(tokenFromLog)
-      ) {
-        if (!allFoundTokens.has(tokenFromLog)) {
-          const tokenInfo = coingeckoTokensMap.get(tokenFromLog)
-          allFoundTokens.set(tokenFromLog, {
-            escrows: new Map(),
-            coingeckoId: tokenInfo?.id,
-            symbol: tokenInfo?.symbol,
-          })
-        }
-
-        try {
-          const [balance, decimals] = await Promise.all([
-            provider.call({
-              to: tokenFromLog,
-              data: tokenContract.encodeFunctionData('balanceOf', [
-                escrow.address,
-              ]),
-            }),
-            provider.call({
-              to: tokenFromLog,
-              data: tokenContract.encodeFunctionData('decimals'),
-            }),
-          ])
-          const balanceValue = Number(
-            utils.formatUnits(balance, Number(decimals)),
-          )
-          allFoundTokens.get(tokenFromLog)?.escrows.set(escrow.address, {
-            balance: balanceValue,
-            project: escrow.projectId,
-          })
-        } catch {
-          console.warn(
-            `Failed to get balance for token ${tokenFromLog} in escrow ${escrow.address}`,
-          )
-          allFoundTokens.get(tokenFromLog)?.escrows.set(escrow.address, {
-            balance: 0,
-            project: escrow.projectId,
-          })
-        }
-      }
+  for (const [chain, chainEscrows] of Object.entries(escrowsByChain)) {
+    if (!CHAIN_CONFIG[chain]) {
+      console.log(`Skipping unsupported chain: ${chain}`)
+      continue
     }
 
-    existingTokens.found = Array.from(allFoundTokens.entries()).map(
-      ([address, data]) => ({
-        address,
-        escrows: Array.from(data.escrows.entries()).map(([addr, data]) => ({
-          address: addr,
-          balance: data.balance,
-          project: data.project,
-        })),
-        coingeckoId: data.coingeckoId,
-        symbol: data.symbol,
-      }),
-    )
-    processedEscrows.processed[escrow.address] = latestBlock
+    const provider = providers.get(chain)
+    assert(provider, `Provider for chain ${chain} not found`)
+    const latestBlock = await provider.getBlockNumber()
+    const etherscanClient = etherscanClients.get(chain)
+    assert(etherscanClient, `Etherscan client for chain ${chain} not found`)
 
-    writeFileSync(OUTPUT_PATH, JSON.stringify(existingTokens, null, 2) + '\n')
-    writeFileSync(
-      PROCESSED_ESCROWS_PATH,
-      JSON.stringify(processedEscrows, null, 2) + '\n',
-    )
+    for (const escrow of chainEscrows) {
+      console.log(
+        `Checking logs for escrow: ${escrow.address} - ${chainEscrows.findIndex((e) => e.address === escrow.address) + 1}/${chainEscrows.length} on ${escrow.chain}`,
+      )
 
-    console.log('Tokens not found in tokenList:', allFoundTokens.size)
+      const lastProcessedBlock =
+        processedEscrows.processed?.[getEscrowKey(chain, escrow.address)] ??
+        (await etherscanClient.getBlockNumberAtOrBefore(escrow.sinceTimestamp))
+      const toTopic = utils.hexZeroPad(escrow.address, 32)
+
+      const allLogs = await getAllLogs(
+        provider,
+        [transferTopic, null, toTopic],
+        lastProcessedBlock,
+        latestBlock,
+      )
+
+      console.log(
+        `Processed blocks ${lastProcessedBlock}-${latestBlock}, found ${allLogs.length} logs for escrow ${escrow.address}`,
+      )
+
+      const tokensFromLogs = new Set(
+        allLogs.map((l) => `${escrow.chain}:${l.address.toLowerCase()}`),
+      )
+      for (const tokenFromLog of tokensFromLogs) {
+        const rawAddress = tokenFromLog.split(':')[1]
+
+        if (
+          // TODO: add chain to coingecko
+          coingeckoTokensMap.has(rawAddress) &&
+          !tokenListAddresses.has(tokenFromLog)
+        ) {
+          if (!allFoundTokens.has(tokenFromLog)) {
+            const tokenInfo = coingeckoTokensMap.get(rawAddress)
+            allFoundTokens.set(tokenFromLog, {
+              escrows: new Map(),
+              coingeckoId: tokenInfo?.id,
+              symbol: tokenInfo?.symbol,
+            })
+          }
+
+          try {
+            const [balance, decimals] = await Promise.all([
+              provider.call({
+                to: rawAddress,
+                data: tokenContract.encodeFunctionData('balanceOf', [
+                  escrow.address,
+                ]),
+              }),
+              provider.call({
+                to: rawAddress,
+                data: tokenContract.encodeFunctionData('decimals'),
+              }),
+            ])
+            const balanceValue = Number(
+              utils.formatUnits(balance, Number(decimals)),
+            )
+            allFoundTokens.get(tokenFromLog)?.escrows.set(escrow.address, {
+              balance: balanceValue,
+              project: escrow.projectId,
+            })
+          } catch {
+            console.warn(
+              `Failed to get balance for token ${tokenFromLog} in escrow ${escrow.address}`,
+            )
+            allFoundTokens.get(tokenFromLog)?.escrows.set(escrow.address, {
+              balance: 0,
+              project: escrow.projectId,
+            })
+          }
+        }
+      }
+
+      const dataToSave = Array.from(allFoundTokens.entries()).map(
+        ([address, data]) => ({
+          address,
+          escrows: Array.from(data.escrows.entries()).map(([addr, data]) => ({
+            address: addr,
+            balance: data.balance,
+            project: data.project,
+          })),
+          coingeckoId: data.coingeckoId,
+          symbol: data.symbol,
+        }),
+      )
+      processedEscrows.processed[getEscrowKey(chain, escrow.address)] =
+        latestBlock
+
+      writeFileSync(
+        OUTPUT_PATH,
+        JSON.stringify({ found: dataToSave }, null, 2) + '\n',
+      )
+      writeFileSync(
+        PROCESSED_ESCROWS_PATH,
+        JSON.stringify(processedEscrows, null, 2) + '\n',
+      )
+
+      console.log('Tokens not found in tokenList:', allFoundTokens.size)
+    }
   }
 
   const chunks = chunk(
@@ -238,23 +270,19 @@ async function main() {
       current_price: number
     }>
 
-    const idToAddressMap = new Map(chunk.map((t) => [t.coingeckoId, t.address]))
-
     for (const data of marketData) {
-      const address = idToAddressMap.get(data.id)
-      if (address) {
-        tokenMarketData.set(address, {
-          marketCap: data.market_cap,
-          price: data.current_price,
-          circulatingSupply: data.circulating_supply,
-        })
-      }
+      tokenMarketData.set(data.id, {
+        marketCap: data.market_cap,
+        price: data.current_price,
+        circulatingSupply: data.circulating_supply,
+      })
     }
   }
 
   const sortedTokens = Array.from(allFoundTokens.entries())
     .map(([address, data]) => {
-      const marketData = tokenMarketData.get(address)
+      assert(data.coingeckoId, `Missing coingeckoId for token ${address}`)
+      const marketData = tokenMarketData.get(data.coingeckoId)
       const tokenPrice = marketData?.price ?? 0
       const tokenMcap = marketData?.marketCap ?? 0
       const circulatingSupply = marketData?.circulatingSupply ?? 0
@@ -275,11 +303,11 @@ async function main() {
         coingeckoId: data.coingeckoId,
         marketCap: Math.floor(tokenMcap),
         circulatingSupply,
+        address,
         missingValue: escrows.reduce(
           (sum, escrow) => sum + (escrow.value ?? 0),
           0,
         ),
-        address,
         escrows,
       }
     })
@@ -304,12 +332,16 @@ main().then(() => {
   console.log('done')
 })
 
-function getProvider() {
+function getProvider(chain: string) {
   const env = getEnv()
+  const config = CHAIN_CONFIG[chain]
+  if (!config) {
+    throw new Error(`Unsupported chain: ${chain}`)
+  }
+
+  const rpcUrl = env.string([config.rpcEnvKey])
   const rateLimitedProvider = new RateLimitedProvider(
-    new providers.JsonRpcProvider(
-      env.string(['DISCOVER_TOKENS_ETHEREUM_RPC_URL', 'ETHEREUM_RPC_URL']),
-    ),
+    new providers.JsonRpcProvider(rpcUrl),
     4000,
   )
   return rateLimitedProvider
@@ -330,16 +362,21 @@ function getCoingeckoClient() {
   return coingeckoClient
 }
 
-function getEtherscanClient() {
+function getEtherscanClient(chain: string) {
   const env = getEnv()
+  const config = CHAIN_CONFIG[chain]
+  if (!config) {
+    throw new Error(`Unsupported chain: ${chain}`)
+  }
+
   return new BlockIndexerClient(
     new HttpClient(),
-    new RateLimiter({ callsPerMinute: 120 }),
+    new RateLimiter({ callsPerMinute: config.callsPerMinute }),
     {
       type: 'etherscan',
-      chain: 'ethereum',
-      url: 'https://api.etherscan.io/api',
-      apiKey: env.string('ETHEREUM_ETHERSCAN_API_KEY'),
+      chain,
+      url: config.etherscanUrl,
+      apiKey: env.string(config.etherscanEnvKey),
     },
   )
 }
@@ -367,7 +404,8 @@ async function getAllLogs(
     if (
       e instanceof Error &&
       (e.message.includes('Log response size exceeded') ||
-        e.message.includes('query exceeds max block range 100000'))
+        e.message.includes('query exceeds max block range 100000') ||
+        e.message.includes('eth_getLogs is limited to a 10,000 range'))
     ) {
       const midPoint = fromBlock + Math.floor((toBlock - fromBlock) / 2)
       const [a, b] = await Promise.all([
