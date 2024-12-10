@@ -81,7 +81,7 @@ const PROPOSE_OWN_BLOCKS: ScalingProjectTechnologyChoice = {
     'Because the block production is open to anyone if users experience censorship from the operator they can propose their own blocks which would include their transactions.',
   risks: [
     {
-      category: 'Users can be censored if',
+      category: 'Funds can be frozen if',
       text: 'the operator refuses to include their transactions and users lack resources to propose blocks themselves.',
     },
   ],

@@ -14,6 +14,7 @@ export const NON_DISCOVERY_DRIVEN_PROJECTS: string[] = [
   'arbitrum',
   'astarzkevm',
   'alienx',
+  'aztec',
   'base',
   'cronoszkevm',
   'honeypot',
