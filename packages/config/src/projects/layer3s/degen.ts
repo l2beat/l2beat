@@ -25,8 +25,6 @@ export const degen: Layer3 = orbitStackL3({
     slug: 'degen',
     description:
       'Degen Chain is an ultra-low-cost L3 for the Degen community built with Arbitrum Orbit, Base for settlement, and AnyTrust for data availability. DEGEN is the native gas token.',
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds. L2BEAT was made aware beforehand that the transfer of RaaS providers for DEGEN chain will include a temporary EOA executor. More on this [here](https://x.com/degentokenbase/status/1865181290540253684).',
     links: {
       websites: ['https://syndicate.io/blog/degen-chain'],
       apps: ['https://bridge.degen.tips/', 'https://degen.tips/'],
