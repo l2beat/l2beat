@@ -14,7 +14,9 @@ import { BlockClient } from '../types'
 import {
   CallParameters,
   EVMBalanceResponse,
+  EVMBlock,
   EVMBlockResponse,
+  EVMBlockWithTransactions,
   EVMBlockWithTransactionsResponse,
   EVMCallResponse,
   EVMTransactionReceiptResponse,
@@ -35,7 +37,7 @@ export class RpcClient2 extends ClientCore implements BlockClient {
   }
 
   async getLatestBlockNumber() {
-    const block = await this.getBlockWithTransactions('latest')
+    const block = await this.getBlock('latest', false)
     return Number(block.number)
   }
 
@@ -43,23 +45,36 @@ export class RpcClient2 extends ClientCore implements BlockClient {
   async getBlockWithTransactions(
     blockNumber: number | 'latest',
   ): Promise<Block> {
-    const blockResponse = await this.queryGetBlock(blockNumber, true)
-
-    const block = EVMBlockWithTransactionsResponse.safeParse(blockResponse)
-    if (!block.success) {
-      this.$.logger.warn(`Invalid response`, {
-        blockNumber,
-        response: JSON.stringify(blockResponse),
-      })
-      throw new Error(`Block ${blockNumber} with txs: Error during parsing`)
-    }
-    return { ...block.data.result }
+    return await this.getBlock(blockNumber, true)
   }
 
-  async getBlockWithoutTransaction(blockNumber: number) {
-    const blockResponse = await this.queryGetBlock(blockNumber, false)
+  async getBlockParentBeaconRoot(blockNumber: number): Promise<string> {
+    const block = await this.getBlock(blockNumber, true)
 
-    const block = EVMBlockResponse.safeParse(blockResponse)
+    assert(
+      block.parentBeaconBlockRoot,
+      `Block ${block}: parentBeaconBlockRoot should be defined`,
+    )
+    return block.parentBeaconBlockRoot
+  }
+
+  async getBlock(
+    blockNumber: 'latest' | number,
+    includeTxs: false,
+  ): Promise<EVMBlock>
+  async getBlock(
+    blockNumber: 'latest' | number,
+    includeTxs: true,
+  ): Promise<EVMBlockWithTransactions>
+  async getBlock(blockNumber: 'latest' | number, includeTxs: boolean) {
+    const method = 'eth_getBlockByNumber'
+    const encodedNumber =
+      blockNumber === 'latest' ? 'latest' : Quantity.encode(BigInt(blockNumber))
+    const blockResponse = await this.query(method, [encodedNumber, includeTxs])
+
+    const block = includeTxs
+      ? EVMBlockWithTransactionsResponse.safeParse(blockResponse)
+      : EVMBlockResponse.safeParse(blockResponse)
     if (!block.success) {
       this.$.logger.warn(`Invalid response`, {
         blockNumber,
@@ -69,27 +84,6 @@ export class RpcClient2 extends ClientCore implements BlockClient {
     }
 
     return { ...block.data.result }
-  }
-
-  async getBlockParentBeaconRoot(blockNumber: number): Promise<string> {
-    const block = await this.getBlockWithoutTransaction(blockNumber)
-
-    assert(
-      block.parentBeaconBlockRoot,
-      `Block ${block}: parentBeaconBlockRoot should be defined`,
-    )
-    return block.parentBeaconBlockRoot
-  }
-
-  private async queryGetBlock(
-    blockNumber: string | number,
-    includeTxs: boolean,
-  ) {
-    const method = 'eth_getBlockByNumber'
-    const encodedNumber =
-      blockNumber === 'latest' ? 'latest' : Quantity.encode(BigInt(blockNumber))
-    const blockResponse = await this.query(method, [encodedNumber, includeTxs])
-    return blockResponse
   }
 
   async getTransaction(txHash: string) {

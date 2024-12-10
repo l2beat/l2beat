@@ -25,7 +25,7 @@ describe(RpcClient2.name, () => {
       expect(http.fetch.calls[0].args[1]?.body).toEqual(
         JSON.stringify({
           method: 'eth_getBlockByNumber',
-          params: ['latest', true],
+          params: ['latest', false],
           id: 'unique-id',
           jsonrpc: '2.0',
         }),
@@ -33,8 +33,8 @@ describe(RpcClient2.name, () => {
     })
   })
 
-  describe(RpcClient2.prototype.getBlockWithTransactions.name, () => {
-    it('fetches block from rpc and parsers response', async () => {
+  describe(RpcClient2.prototype.getBlock.name, () => {
+    it('include tx bodies', async () => {
       const http = mockObject<HttpClient2>({
         fetch: async () => mockResponse(100),
       })
@@ -60,16 +60,14 @@ describe(RpcClient2.name, () => {
         }),
       )
     })
-  })
 
-  describe(RpcClient2.prototype.getBlockWithoutTransaction.name, () => {
-    it('fetches block from rpc and parsers response', async () => {
+    it('do not include tx bodies', async () => {
       const http = mockObject<HttpClient2>({
         fetch: async () => mockResponse(100),
       })
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
-      const result = await rpc.getBlockWithoutTransaction(100)
+      const result = await rpc.getBlock(100, false)
 
       expect(result).toEqual({
         timestamp: 100,

@@ -60,6 +60,7 @@ export const EVMTransactionReceiptResponse = z.object({
   result: EVMTransactionReceipt,
 })
 
+export type EVMBlock = z.infer<typeof EVMBlock>
 const EVMBlock = z.object({
   timestamp: Quantity.decode.transform((n) => Number(n)),
   hash: z.string(),
@@ -71,10 +72,13 @@ export const EVMBlockResponse = z.object({
   result: EVMBlock,
 })
 
+export type EVMBlockWithTransactions = z.infer<typeof EVMBlockWithTransactions>
+const EVMBlockWithTransactions = EVMBlock.extend({
+  transactions: z.array(EVMTransaction),
+})
+
 export const EVMBlockWithTransactionsResponse = z.object({
-  result: EVMBlock.extend({
-    transactions: z.array(EVMTransaction),
-  }),
+  result: EVMBlockWithTransactions,
 })
 
 export const EVMBalanceResponse = z.object({
