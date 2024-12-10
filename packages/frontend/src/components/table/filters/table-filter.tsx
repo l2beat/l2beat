@@ -10,8 +10,6 @@ import {
 import { CloseIcon } from '~/icons/close'
 import { cn } from '~/utils/cn'
 
-const UNDEFINED_VALUE = 'undefined-value'
-
 interface Props {
   title: string
   options: string[]
@@ -52,8 +50,7 @@ export function TableFilter({ title, options, value, onValueChange }: Props) {
           onValueChange(undefined)
           return
         }
-        const mappedValue = newValue === UNDEFINED_VALUE ? undefined : newValue
-        onValueChange(mappedValue)
+        onValueChange(newValue)
       }}
       disabled={options.length < 2 && !value}
     >

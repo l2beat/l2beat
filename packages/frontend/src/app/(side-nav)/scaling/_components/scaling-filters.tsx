@@ -2,12 +2,12 @@ import { uniq } from 'lodash'
 import { Checkbox } from '~/components/core/checkbox'
 import { OverflowWrapper } from '~/components/core/overflow-wrapper'
 import { TableFilter } from '~/components/table/filters/table-filter'
-import { type CommonScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
+import { type FilterableScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
 import { cn } from '~/utils/cn'
 import { useScalingFilterValues } from './scaling-filter-context'
 
 interface Props {
-  items: CommonScalingEntry[]
+  items: FilterableScalingEntry[]
   showRollupsFilter?: boolean
   showHostChainFilter?: boolean
   showDALayerFilter?: boolean

@@ -1,10 +1,10 @@
 import Link from 'next/link'
-import { type ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
+import { type FilterableScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
 import { cn } from '~/utils/cn'
 import { ScalingFilters } from './scaling-filters'
 
 interface Props {
-  items: ScalingActivityEntry[]
+  items: FilterableScalingEntry[]
   className?: string
 }
 export function ScalingActivityFilters({ items, className }: Props) {
