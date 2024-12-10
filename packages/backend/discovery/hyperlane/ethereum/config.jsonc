@@ -5,28 +5,18 @@
   "initialAddresses": ["0xc005dc82818d67AF737725bD4bf75435d065D239"],
   "names": {
     "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6": "HyperlaneMultisig",
-    "0xc005dc82818d67AF737725bD4bf75435d065D239": "Mailbox"
+    "0xc005dc82818d67AF737725bD4bf75435d065D239": "Mailbox",
+    "0xcFF5f9d69343f4200100dbA755C794012518Ed38": "StaticAggregationIsm"
   },
   "overrides": {
-    "Mailbox": {
+    "StaticAggregationIsm": {
       "fields": {
-        "validators": {
-          "description": "The validators of the ISM module.",
+        "modulesAndThreshold":{
+          "description": "The modules and threshold of the ISM module.",
           "handler": {
             "type": "call",
-            "method": "function validatorsAndThreshold(bytes calldata) external view returns (address[] memory, uint8)",
-            "args": [
-              "0x00000000000000000000000019859f152613c192f9c1cb0beb37ad46690a05ac0000000000000000000000000000000000000000000000000de0b6b3a7640000"
-            ] // example token transfer message
-          }
-        },
-        // attempt throguh the metadata function
-        "metadata": {
-          "description": "The metadata of the MetaProxy.",
-          "handler": {
-            "type": "call",
-            "method": "function metadata() external view returns (bytes calldata)",
-            "args": []
+            "method": "function modulesAndThreshold(bytes calldata) external view returns (address[] memory, uint8)",
+            "args": ["0x48656c6c6f21"]
           }
         }
       }

@@ -1,9 +1,34 @@
 {
   "name": "hyperlane",
   "chain": "ethereum",
-  "blockNumber": 21373054,
-  "configHash": "0x8880585b2a5cfaafb13d97cc2fb3fec64a4bc8ec39fe96f300a2e4de7f89d106",
+  "blockNumber": 21373162,
+  "configHash": "0xa643c787c6b9c1fe32b9c8dda54d9f903179270d12983eac510cf33406a26044",
   "contracts": [
+    {
+      "name": "DomainRoutingIsm",
+      "address": "0x325Da85fe34A00F0ac1f7eA2624B2DA6b520A5aA",
+      "sourceHashes": [
+        "0x124560aaa9d0270a185fdedc92cf52b43177f3c5c5550ca5f57d4db83988bcf0"
+      ],
+      "sinceTimestamp": 1733174267,
+      "values": {
+        "$immutable": true,
+        "domains": [
+          888888888, 1000041455, 33139, 42161, 42170, 592, 3776, 253368190,
+          43114, 8333, 8453, 200901, 81457, 60808, 288, 56, 223, 42220, 383353,
+          1000088888, 1116, 7560, 666666666, 2000, 5545, 1408864445, 648, 25327,
+          250, 14, 1000000747, 252, 122, 100, 1625, 1666600000, 1000013371,
+          2525, 6909546, 8217, 255, 59144, 1135, 42, 994873017, 1000073017, 169,
+          5000, 4200, 1000001750, 1088, 185, 34443, 360, 1284, 2818, 1853125230,
+          970, 10, 291, 875, 137, 1101, 1000008008, 227, 70700, 1000012617,
+          111188, 690, 1000000030, 1996, 534352, 1329, 109, 2192, 1399811149,
+          745, 5330, 1000055244, 1923, 167000, 5845, 130, 1480, 88, 480, 660279,
+          196, 543210, 7000, 48900, 324, 7777777
+        ],
+        "moduleType": 1,
+        "owner": "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6"
+      }
+    },
     {
       "name": "HyperlaneMultisig",
       "address": "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6",
@@ -127,20 +152,6 @@
         "requiredHook": "0x8B05BF30F6247a90006c5837eA63C7905D79e6d8",
         "VERSION": 3
       },
-      "errors": {
-        "metadata": "Processing error occurred.",
-        "validators": "Processing error occurred."
-      },
-      "fieldMeta": {
-        "validators": {
-          "severity": "HIGH",
-          "description": "The validators of the ISM module."
-        },
-        "metadata": {
-          "severity": "HIGH",
-          "description": "The metadata of the MetaProxy."
-        }
-      },
       "derivedName": "Mailbox"
     },
     {
@@ -150,7 +161,30 @@
         "0xb5f4ee6e43e09d3581b620b0fd361aedc8805270a57297bc93bbec4e6a9fc6e9"
       ],
       "sinceTimestamp": 1733174315,
-      "values": { "$immutable": true, "moduleType": 2 }
+      "values": {
+        "$immutable": true,
+        "modulesAndThreshold": [
+          [
+            "0x325Da85fe34A00F0ac1f7eA2624B2DA6b520A5aA",
+            "0xE8eE8587242d6bB26C0aE109C600fa9bD6A16E4a"
+          ],
+          2
+        ],
+        "moduleType": 2
+      },
+      "fieldMeta": {
+        "modulesAndThreshold": {
+          "description": "The modules and threshold of the ISM module."
+        }
+      },
+      "derivedName": "StaticAggregationIsm"
+    },
+    {
+      "name": "",
+      "address": "0xE8eE8587242d6bB26C0aE109C600fa9bD6A16E4a",
+      "unverified": true,
+      "sinceTimestamp": 1733174291,
+      "values": { "$immutable": true }
     }
   ],
   "eoas": [
@@ -165,6 +199,22 @@
     { "address": "0xd00d6A31485C93c597D1d8231eeeE0ed17B9844B" }
   ],
   "abis": {
+    "0x325Da85fe34A00F0ac1f7eA2624B2DA6b520A5aA": [
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function domains() view returns (uint256[])",
+      "function initialize(address _owner, uint32[] _domains, address[] __modules)",
+      "function initialize(address _owner)",
+      "function module(uint32 origin) view returns (address)",
+      "function moduleType() view returns (uint8)",
+      "function owner() view returns (address)",
+      "function remove(uint32 _domain)",
+      "function renounceOwnership()",
+      "function route(bytes _message) view returns (address)",
+      "function set(uint32 _domain, address _module)",
+      "function transferOwnership(address newOwner)",
+      "function verify(bytes _metadata, bytes _message) returns (bool)"
+    ],
     "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6": [
       "constructor(address _singleton)"
     ],

@@ -1,15 +1,21 @@
-Generated with discovered.json: 0x39abfc5390a765f4445ce5006f7c77774ac13ff0
+Generated with discovered.json: 0x0ef5421a4a3ca7eb41bbad3cb09600ffae8f044e
 
-# Diff at Tue, 10 Dec 2024 15:40:05 GMT:
+# Diff at Tue, 10 Dec 2024 16:01:52 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current block number: 21373054
+- current block number: 21373162
 
 ## Description
 
 Initial discovery of the Mailbox. All related contracts (especially the default oracle/ISM) are unverified.
 
 ## Initial discovery
+
+```diff
++   Status: CREATED
+    contract DomainRoutingIsm (0x325Da85fe34A00F0ac1f7eA2624B2DA6b520A5aA)
+    +++ description: None
+```
 
 ```diff
 +   Status: CREATED
@@ -44,5 +50,11 @@ Initial discovery of the Mailbox. All related contracts (especially the default 
 ```diff
 +   Status: CREATED
     contract StaticAggregationIsm (0xcFF5f9d69343f4200100dbA755C794012518Ed38)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xE8eE8587242d6bB26C0aE109C600fa9bD6A16E4a)
     +++ description: None
 ```
