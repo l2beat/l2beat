@@ -65,6 +65,7 @@ function getScalingTvlEntry(
       ),
       hasHighSeverityFieldChanged:
         projectsChangeReport.hasHighSeverityFieldChanged(project.id),
+      syncStatus: undefined,
     }),
     href: `/scaling/projects/${project.display.slug}/tvl-breakdown`,
     entryType: 'scaling' as const,

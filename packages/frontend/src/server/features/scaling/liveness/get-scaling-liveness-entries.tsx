@@ -16,7 +16,7 @@ import { getCurrentEntry } from '../../utils/get-current-entry'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import {
-  ProjectsLatestTvlUsd,
+  type ProjectsLatestTvlUsd,
   getProjectsLatestTvlUsd,
 } from '../tvl/utils/get-latest-tvl-usd'
 import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
@@ -66,6 +66,7 @@ function getScalingLivenessEntry(
   tvl: ProjectsLatestTvlUsd,
 ) {
   const dataAvailability = getCurrentEntry(project.dataAvailability)
+  const data = getLivenessData(liveness, project)
   return {
     ...getCommonScalingEntry({
       project,
@@ -75,9 +76,10 @@ function getScalingLivenessEntry(
       hasHighSeverityFieldChanged:
         projectsChangeReport.hasHighSeverityFieldChanged(project.id),
       isVerified,
+      syncStatus: data?.syncStatus,
     }),
     entryType: 'liveness' as const,
-    data: getLivenessData(liveness, project),
+    data,
     explanation: project.display.liveness?.explanation,
     anomalies: toAnomalyIndicatorEntries(liveness.anomalies ?? []),
     dataAvailabilityMode: dataAvailability?.mode,

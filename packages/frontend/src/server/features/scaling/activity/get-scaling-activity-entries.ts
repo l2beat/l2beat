@@ -80,6 +80,7 @@ function getScalingProjectActivityEntry(
       ),
       hasHighSeverityFieldChanged:
         projectsChangeReport.hasHighSeverityFieldChanged(project.id),
+      syncStatus: data.syncStatus,
     }),
     href: `/scaling/projects/${project.display.slug}#activity`,
     dataSource: project.display.activityDataSource,
@@ -119,6 +120,7 @@ function getEthereumEntry(
     // ---
     dataSource: 'Blockchain RPC',
     data,
+    statuses: undefined,
   }
 }
 

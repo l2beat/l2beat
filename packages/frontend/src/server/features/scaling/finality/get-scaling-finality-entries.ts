@@ -3,7 +3,7 @@ import { UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import {
-  ProjectsLatestTvlUsd,
+  type ProjectsLatestTvlUsd,
   getProjectsLatestTvlUsd,
 } from '../tvl/utils/get-latest-tvl-usd'
 import { getFinality } from './get-finality'
@@ -109,6 +109,7 @@ function getScalingFinalityEntry(
   tvl: ProjectsLatestTvlUsd,
 ) {
   const dataAvailability = getCurrentEntry(project.dataAvailability)
+  const data = getFinalityData(finalityProjectData, project)
   return {
     entryType: 'finality' as const,
     ...getCommonScalingEntry({
@@ -119,9 +120,10 @@ function getScalingFinalityEntry(
       ),
       hasHighSeverityFieldChanged:
         projectsChangeReport.hasHighSeverityFieldChanged(project.id),
+      syncStatus: data?.syncStatus,
     }),
     dataAvailabilityMode: dataAvailability?.mode,
-    data: getFinalityData(finalityProjectData, project),
+    data,
     finalizationPeriod: project.display.finality?.finalizationPeriod,
     tvlOrder: tvl[project.id] ?? 0,
   }

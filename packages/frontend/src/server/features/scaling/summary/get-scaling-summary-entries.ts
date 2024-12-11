@@ -83,6 +83,7 @@ function getScalingSummaryEntry(
       isVerified,
       hasImplementationChanged,
       hasHighSeverityFieldChanged,
+      syncStatus: undefined,
     }),
     dataAvailability,
     mainPermissions: project.display.mainPermissions,

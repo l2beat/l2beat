@@ -8,7 +8,7 @@ import { getProjectsVerificationStatuses } from '../../verification-status/get-p
 import { getCostsProjects } from '../costs/utils/get-costs-projects'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import {
-  ProjectsLatestTvlUsd,
+  type ProjectsLatestTvlUsd,
   getProjectsLatestTvlUsd,
 } from '../tvl/utils/get-latest-tvl-usd'
 import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
@@ -47,6 +47,7 @@ function getScalingCostEntry(
       ),
       hasHighSeverityFieldChanged:
         projectsChangeReport.hasHighSeverityFieldChanged(project.id),
+      syncStatus: undefined,
     }),
     entryType: 'costs' as const,
     href: `/scaling/projects/${project.display.slug}#onchain-costs`,

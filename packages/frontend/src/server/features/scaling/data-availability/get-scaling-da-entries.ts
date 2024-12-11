@@ -57,6 +57,7 @@ function getScalingDataAvailabilityEntry(
       ),
       hasHighSeverityFieldChanged:
         projectsChangeReport.hasHighSeverityFieldChanged(project.id),
+      syncStatus: undefined,
     }),
     dataAvailability: {
       layer: dataAvailability.layer,

@@ -7,7 +7,7 @@ import {
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import {
-  ProjectsLatestTvlUsd,
+  type ProjectsLatestTvlUsd,
   getProjectsLatestTvlUsd,
 } from '../tvl/utils/get-latest-tvl-usd'
 import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
@@ -60,6 +60,7 @@ function getScalingRiskEntry(
       ),
       hasHighSeverityFieldChanged:
         projectsChangeReport.hasHighSeverityFieldChanged(project.id),
+      syncStatus: undefined,
     }),
     risks: riskView,
     tvlOrder: tvl[project.id] ?? 0,

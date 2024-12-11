@@ -9,12 +9,15 @@ import {
   type StageConfig,
   badges,
 } from '@l2beat/config'
-import { type ProjectId } from '@l2beat/shared-pure'
 import { env } from 'process'
+import { type SyncStatus } from '~/types/sync-status'
+import { formatTimestamp } from '~/utils/dates'
 import {
   type UnderReviewStatus,
   getUnderReviewStatus,
+  getUnderReviewText,
 } from '~/utils/project/under-review'
+import { type CommonProjectEntry } from '../utils/get-common-project-entry'
 import { getCurrentEntry } from '../utils/get-current-entry'
 import { getHostChain } from './utils/get-host-chain'
 import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
@@ -34,12 +37,7 @@ export interface FilterableScalingEntry {
   filterable: FilterableScalingValues | undefined
 }
 
-export interface CommonScalingEntry {
-  id: ProjectId
-  name: string
-  shortName: string | undefined
-  slug: string
-  href: string | undefined
+export interface CommonScalingEntry extends CommonProjectEntry {
   category: ScalingProjectCategory | undefined
   isOther: boolean | undefined
   isVerified: boolean
@@ -67,6 +65,7 @@ interface Params {
   isVerified: boolean
   hasImplementationChanged: boolean
   hasHighSeverityFieldChanged: boolean
+  syncStatus: SyncStatus | undefined
 }
 
 export function getCommonScalingEntry({
@@ -74,21 +73,25 @@ export function getCommonScalingEntry({
   isVerified,
   hasImplementationChanged,
   hasHighSeverityFieldChanged,
+  syncStatus,
 }: Params): CommonScalingEntry {
+  const underReviewStatus = getUnderReviewStatus({
+    isUnderReview: isAnySectionUnderReview(project),
+    hasImplementationChanged,
+    hasHighSeverityFieldChanged,
+  })
   return {
     id: project.id,
     name: project.display.name,
+    nameSecondLine:
+      project.type === 'layer2' ? undefined : `L3 on ${getHostChain(project)}`,
     href: `/scaling/projects/${project.display.slug}`,
     shortName: project.display.shortName,
     slug: project.display.slug,
     category: project.display.category,
     isOther: !!project.display.isOther,
     isVerified,
-    underReviewStatus: getUnderReviewStatus({
-      isUnderReview: isAnySectionUnderReview(project),
-      hasImplementationChanged,
-      hasHighSeverityFieldChanged,
-    }),
+    underReviewStatus,
     isArchived: !!project.isArchived,
     isUpcoming: !!project.isUpcoming,
     warning: project.display.warning,
@@ -122,6 +125,24 @@ export function getCommonScalingEntry({
       daLayer:
         getCurrentEntry(project.dataAvailability)?.layer.value ?? 'Unknown',
       raas: getRaas(project.badges ?? []),
+    },
+    statuses: {
+      yellowWarning: project.display.headerWarning,
+      redWarning: project.display.redWarning,
+      verificationWarning: !isVerified,
+      underReviewInfo: underReviewStatus
+        ? getUnderReviewText(underReviewStatus)
+        : undefined,
+      syncStatusInfo:
+        syncStatus?.isSynced === false
+          ? `The data for this item is not synced since ${formatTimestamp(
+              syncStatus.syncedUntil,
+              {
+                mode: 'datetime',
+                longMonthName: true,
+              },
+            )}.`
+          : undefined,
     },
   }
 }

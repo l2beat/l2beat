@@ -1,6 +1,10 @@
 import { type Bridge } from '@l2beat/config'
-import { getUnderReviewStatus } from '~/utils/project/under-review'
+import {
+  getUnderReviewStatus,
+  getUnderReviewText,
+} from '~/utils/project/under-review'
 import { isAnySectionUnderReview } from '../scaling/utils/is-any-section-under-review'
+import { type CommonProjectEntry } from '../utils/get-common-project-entry'
 
 interface Params {
   bridge: Bridge
@@ -9,14 +13,26 @@ interface Params {
   hasHighSeverityFieldChanged: boolean
 }
 
-export type BridgesCommonEntry = ReturnType<typeof getCommonBridgesEntry>
+export interface BridgesCommonEntry extends CommonProjectEntry {
+  type: 'Token Bridge' | 'Liquidity Network' | 'Hybrid'
+  filterable: {
+    type: 'Token Bridge' | 'Liquidity Network' | 'Hybrid'
+    validatedBy: string
+  }
+}
 
 export function getCommonBridgesEntry({
   bridge,
   isVerified,
   hasImplementationChanged,
   hasHighSeverityFieldChanged,
-}: Params) {
+}: Params): BridgesCommonEntry {
+  const underReviewStatus = getUnderReviewStatus({
+    isUnderReview: isAnySectionUnderReview(bridge),
+    hasImplementationChanged,
+    hasHighSeverityFieldChanged,
+  })
+
   return {
     id: bridge.id,
     slug: bridge.display.slug,
@@ -24,16 +40,17 @@ export function getCommonBridgesEntry({
     shortName: bridge.display.shortName,
     href: `/bridges/projects/${bridge.display.slug}`,
     type: bridge.display.category,
-    isVerified,
-    underReviewStatus: getUnderReviewStatus({
-      isUnderReview: isAnySectionUnderReview(bridge),
-      hasImplementationChanged,
-      hasHighSeverityFieldChanged,
-    }),
-    warning: bridge.display.warning,
     filterable: {
       type: bridge.display.category,
       validatedBy: bridge.riskView?.validatedBy.value,
+    },
+    statuses: {
+      // TODO: Check if this is correct
+      yellowWarning: bridge.display.warning,
+      verificationWarning: !isVerified,
+      underReviewInfo: underReviewStatus
+        ? getUnderReviewText(underReviewStatus)
+        : undefined,
     },
   }
 }

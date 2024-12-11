@@ -26,5 +26,6 @@ function getScalingUpcomingEntry(project: Layer2 | Layer3) {
     isVerified: true,
     hasImplementationChanged: false,
     hasHighSeverityFieldChanged: false,
+    syncStatus: undefined,
   })
 }

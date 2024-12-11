@@ -53,6 +53,7 @@ function getScalingArchivedEntry(
       ),
       hasHighSeverityFieldChanged:
         projectsChangeReport.hasHighSeverityFieldChanged(project.id),
+      syncStatus: undefined,
     }),
     risks: project.type === 'layer2' ? getL2Risks(project.riskView) : undefined,
     totalTvl: latestTvl?.breakdown.total,
