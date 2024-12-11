@@ -35,7 +35,9 @@ interface Props {
 }
 
 export default async function Image({ params }: Props) {
-  const project = daLayers.find((p) => p.display.slug === params.layer)
+  const project = [...daLayers, ethereumDaLayer].find(
+    (p) => p.display.slug === params.layer,
+  )
   if (!project) {
     return NextResponse.json({ error: 'Project not found' }, { status: 404 })
   }
