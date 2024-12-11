@@ -162,7 +162,7 @@ export function initClients(config: Config, logger: Logger): Clients {
       beaconApiUrl: config.beaconApi.url,
       rpcClient: ethereumClient,
       logger,
-      http,
+      http: http2,
       callsPerMinute: config.beaconApi.callsPerMinute,
       timeout: config.beaconApi.timeout,
       retryStrategy: 'RELIABLE',
