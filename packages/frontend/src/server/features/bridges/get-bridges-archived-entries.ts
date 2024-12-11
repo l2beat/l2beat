@@ -1,14 +1,27 @@
-import { bridges } from '@l2beat/config'
+import {
+  type BridgeDisplay,
+  type BridgeRiskView,
+  bridges,
+} from '@l2beat/config'
 import { getProjectsChangeReport } from '../projects-change-report/get-projects-change-report'
-import { get7dTokenBreakdown } from '../scaling/tvl/utils/get-7d-token-breakdown'
 import { compareTvl } from '../scaling/tvl/utils/compare-tvl'
+import { get7dTokenBreakdown } from '../scaling/tvl/utils/get-7d-token-breakdown'
 import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
-import { getCommonBridgesEntry } from './get-common-bridges-entry'
+import {
+  type CommonBridgesEntry,
+  getCommonBridgesEntry,
+} from './get-common-bridges-entry'
 
-export type BridgesArchivedEntry = Awaited<
-  ReturnType<typeof getBridgesArchivedEntries>
->[number]
-export async function getBridgesArchivedEntries() {
+export interface BridgesArchivedEntry extends CommonBridgesEntry {
+  type: BridgeDisplay['category']
+  validatedBy: BridgeRiskView['validatedBy']
+  totalTvl: number | undefined
+  tvlOrder: number
+}
+
+export async function getBridgesArchivedEntries(): Promise<
+  BridgesArchivedEntry[]
+> {
   const archivedBridges = bridges.filter((bridge) => bridge.isArchived)
   const [tvl7dBreakdown, projectsChangeReport, projectsVerificationStatuses] =
     await Promise.all([
@@ -31,6 +44,8 @@ export async function getBridgesArchivedEntries() {
         hasImplementationChanged,
         hasHighSeverityFieldChanged,
       }),
+      type: bridge.display.category,
+
       validatedBy: bridge.riskView?.validatedBy,
       totalTvl: tvl?.breakdown.total,
       tvlOrder: tvl?.breakdown.total ?? 0,

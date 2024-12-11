@@ -6,7 +6,7 @@ import {
   useMemo,
   useState,
 } from 'react'
-import { type BridgesCommonEntry } from '~/server/features/bridges/get-common-bridges-entry'
+import { type CommonBridgesEntry } from '~/server/features/bridges/get-common-bridges-entry'
 
 export type BridgesFilterContextValue = {
   validatedBy?: string
@@ -46,7 +46,7 @@ export function useBridgesFilter() {
   const filters = useBridgesFilterValues()
 
   const filter = useCallback(
-    ({ filterable }: BridgesCommonEntry) => {
+    ({ filterable }: CommonBridgesEntry) => {
       return (
         (!filters.type || filters.type === filterable.type) &&
         (!filters.validatedBy || filters.validatedBy === filterable.validatedBy)

@@ -10,10 +10,9 @@ interface Params {
   hasHighSeverityFieldChanged: boolean
 }
 
-export interface BridgesCommonEntry extends CommonProjectEntry {
-  type: 'Token Bridge' | 'Liquidity Network' | 'Hybrid'
+export interface CommonBridgesEntry extends CommonProjectEntry {
   filterable: {
-    type: 'Token Bridge' | 'Liquidity Network' | 'Hybrid'
+    type: string
     validatedBy: string
   }
 }
@@ -23,14 +22,13 @@ export function getCommonBridgesEntry({
   isVerified,
   hasImplementationChanged,
   hasHighSeverityFieldChanged,
-}: Params): BridgesCommonEntry {
+}: Params): CommonBridgesEntry {
   return {
     id: bridge.id,
     slug: bridge.display.slug,
     name: bridge.display.name,
     shortName: bridge.display.shortName,
     href: `/bridges/projects/${bridge.display.slug}`,
-    type: bridge.display.category,
     filterable: {
       type: bridge.display.category,
       validatedBy: bridge.riskView?.validatedBy.value,

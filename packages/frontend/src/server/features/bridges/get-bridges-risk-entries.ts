@@ -1,16 +1,24 @@
-import { type Bridge, bridges } from '@l2beat/config'
-import { notUndefined } from '@l2beat/shared-pure'
+import {
+  type Bridge,
+  type BridgeDisplay,
+  type BridgeRiskView,
+  bridges,
+} from '@l2beat/config'
+import { type ValueWithSentiment, notUndefined } from '@l2beat/shared-pure'
 import {
   type ProjectsChangeReport,
   getProjectsChangeReport,
 } from '../projects-change-report/get-projects-change-report'
+import { compareTvl } from '../scaling/tvl/utils/compare-tvl'
 import {
-  ProjectsLatestTvlUsd,
+  type ProjectsLatestTvlUsd,
   getProjectsLatestTvlUsd,
 } from '../scaling/tvl/utils/get-latest-tvl-usd'
-import { compareTvl } from '../scaling/tvl/utils/compare-tvl'
 import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
-import { getCommonBridgesEntry } from './get-common-bridges-entry'
+import {
+  type CommonBridgesEntry,
+  getCommonBridgesEntry,
+} from './get-common-bridges-entry'
 import { getDestination } from './get-destination'
 
 export async function getBridgeRiskEntries() {
@@ -36,6 +44,13 @@ export async function getBridgeRiskEntries() {
   return entries.sort(compareTvl)
 }
 
+export interface BridgesRiskEntry extends CommonBridgesEntry {
+  type: BridgeDisplay['category']
+  destination: ValueWithSentiment<string>
+  tvlOrder: number
+  riskView: BridgeRiskView
+}
+
 function getBridgesRiskEntry(
   bridge: Bridge,
   projectsChangeReport: ProjectsChangeReport,
@@ -54,17 +69,13 @@ function getBridgesRiskEntry(
       hasImplementationChanged,
       hasHighSeverityFieldChanged,
     }),
-    isArchived: bridge.isArchived,
+    type: bridge.display.category,
     destination: getDestination(
       bridge.type === 'bridge'
         ? bridge.technology.destination
         : [bridge.display.name],
     ),
     tvlOrder: tvl[bridge.id] ?? 0,
-    ...bridge.riskView,
+    riskView: bridge.riskView,
   }
 }
-
-export type BridgesRiskEntry = Awaited<
-  ReturnType<typeof getBridgeRiskEntries>
->[number]

@@ -1,19 +1,26 @@
-import { bridges } from '@l2beat/config'
+import {
+  type BridgeDisplay,
+  type ScalingProjectRiskViewEntry,
+  type WarningWithSentiment,
+  bridges,
+} from '@l2beat/config'
 import { type ProjectsVerificationStatuses } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import {
   type ProjectsChangeReport,
   getProjectsChangeReport,
 } from '../projects-change-report/get-projects-change-report'
+import { compareTvl } from '../scaling/tvl/utils/compare-tvl'
 import {
   type LatestTvl,
   get7dTokenBreakdown,
 } from '../scaling/tvl/utils/get-7d-token-breakdown'
 import { getAssociatedTokenWarning } from '../scaling/tvl/utils/get-associated-token-warning'
-import { compareTvl } from '../scaling/tvl/utils/compare-tvl'
 import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
-import { getCommonBridgesEntry } from './get-common-bridges-entry'
-import { getDestination } from './get-destination'
+import {
+  type CommonBridgesEntry,
+  getCommonBridgesEntry,
+} from './get-common-bridges-entry'
 
 export async function getBridgesSummaryEntries() {
   const [tvl7dBreakdown, projectsChangeReport, projectsVerificationStatuses] =
@@ -30,19 +37,41 @@ export async function getBridgesSummaryEntries() {
   })
 }
 
+interface TvlData {
+  breakdown:
+    | {
+        total: number
+        ether: number
+        stablecoin: number
+        associated: number
+      }
+    | undefined
+  change: number | undefined
+  associatedTokens: string[]
+  associatedTokenWarning: WarningWithSentiment | undefined
+  warnings: WarningWithSentiment[]
+}
+
+export interface BridgesSummaryEntry extends CommonBridgesEntry {
+  type: BridgeDisplay['category']
+  tvl: TvlData
+  tvlOrder: number
+  validatedBy: ScalingProjectRiskViewEntry
+}
+
 interface Params {
   tvl7dBreakdown: LatestTvl
   projectsChangeReport: ProjectsChangeReport
   projectsVerificationStatuses: ProjectsVerificationStatuses
 }
 
-function getBridges(params: Params) {
+function getBridges(params: Params): BridgesSummaryEntry[] {
   const { tvl7dBreakdown, projectsChangeReport, projectsVerificationStatuses } =
     params
   const activeBridges = bridges.filter(
     (bridge) => !bridge.isArchived && !bridge.isUpcoming,
   )
-  const entries = activeBridges.map((bridge) => {
+  const entries = activeBridges.map((bridge): BridgesSummaryEntry => {
     const bridgeTvl = tvl7dBreakdown.projects[bridge.id.toString()]
 
     const associatedTokenWarning =
@@ -68,13 +97,7 @@ function getBridges(params: Params) {
         hasImplementationChanged,
         hasHighSeverityFieldChanged,
       }),
-      isArchived: bridge.isArchived,
-      isUpcoming: bridge.isUpcoming,
-      destination: getDestination(
-        bridge.type === 'bridge'
-          ? bridge.technology.destination
-          : [bridge.display.name],
-      ),
+      type: bridge.display.category,
       tvl: {
         breakdown: bridgeTvl?.breakdown,
         change: bridgeTvl?.change,
@@ -90,7 +113,3 @@ function getBridges(params: Params) {
   })
   return entries.sort(compareTvl)
 }
-
-export type BridgesSummaryEntry = Awaited<
-  ReturnType<typeof getBridgesSummaryEntries>
->[number]
