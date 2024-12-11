@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "arbitrum",
   "blockNumber": 282615739,
-  "configHash": "0xd13a5db17eefebe2a6e6d5b29af6783811174b3cce58a0867c100e0ade7f53d0",
+  "configHash": "0x32093522a388d777588d8d6b20f15090940078539eeff07d24409035b460a541",
   "contracts": [
     {
       "name": "SP1Verifier",
@@ -35,6 +35,19 @@
       "template": "succinct/SP1SuccinctGateway",
       "sourceHashes": [
         "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
+      ],
+      "description": "This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "target": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
+          "via": []
+        }
       ],
       "sinceTimestamp": 1719523665,
       "values": {
@@ -263,6 +276,13 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "description": "manager of router for proof verification, it holds the power to affect the liveness and safety of the bridge"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1724204782,
       "values": {
@@ -287,6 +307,13 @@
       "name": "",
       "address": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
       "unverified": true,
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
+        }
+      ],
       "sinceTimestamp": 1729727170,
       "values": { "$immutable": true }
     },
@@ -680,6 +707,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "succinct/SP1Blobstream": "0xb0717b3e2a9ebc9678d934fa77de178537019305cf6fd12950b8f116da2a0e9c",
-    "succinct/SP1SuccinctGateway": "0xc0b1862d6ddf4e09ee2a3baf1ead0eda8461322a213cd66dfd8e013950b9a0cc"
+    "succinct/SP1SuccinctGateway": "0x8e07a550d79ad9636ecd48aaf27eed662a4513dbc69cc53361ca27e5ac7640c9"
   }
 }
