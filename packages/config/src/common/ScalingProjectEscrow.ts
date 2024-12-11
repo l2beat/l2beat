@@ -18,7 +18,7 @@ export interface AggLayerEscrow {
 }
 
 export interface ElasticChainEscrow {
-  type: 'ElasticChian'
+  type: 'ElasticChain'
   l2BridgeAddress: EthereumAddress
   /** ERC20 address of ether on L2 */
   l2EtherAddress: EthereumAddress

@@ -3,13 +3,14 @@ import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 
 import { Database } from '@l2beat/database'
+import { RpcClient2 } from '@l2beat/shared'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
 import { OpStackStateUpdateAnalyzer } from './OpStackStateUpdateAnalyzer'
 
 describe(OpStackStateUpdateAnalyzer.name, () => {
   describe(OpStackStateUpdateAnalyzer.prototype.analyze.name, () => {
     it('correctly decode and returns correct data for calldata example', async () => {
-      const provider = mockObject<RpcClient>({
+      const provider = mockObject<RpcClient2>({
         getTransaction: mockFn().resolvesTo({
           data: mockCallData(348523048),
         }),

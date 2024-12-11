@@ -1,8 +1,9 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import {
+  BlobClient,
   BlockClient,
   BlockIndexerClient,
-  BlockProvider,
+  CoingeckoClient,
   FuelClient,
   HttpClient,
   HttpClient2,
@@ -13,63 +14,34 @@ import {
   StarknetClient,
   ZksyncLiteClient,
 } from '@l2beat/shared'
-import { assert, assertUnreachable } from '@l2beat/shared-pure'
-import { groupBy } from 'lodash'
-import { ChainApi } from '../config/chain/ChainApi'
-import { BlockTimestampProvider } from '../modules/tvl/services/BlockTimestampProvider'
+import { assertUnreachable } from '@l2beat/shared-pure'
+import { Config } from '../config/Config'
 
-export class BlockProviders {
-  blockProviders: Map<string, BlockProvider> = new Map()
-  timestampProviders: Map<string, BlockTimestampProvider> = new Map()
-
-  constructor(
-    private readonly clients: BlockClient[],
-    readonly starkexClient: StarkexClient | undefined,
-    private readonly indexerClients: BlockIndexerClient[],
-  ) {
-    const byChain = groupBy(clients, (c) => c.chain)
-    for (const [chain, clients] of Object.entries(byChain)) {
-      const block = new BlockProvider(chain, clients)
-      this.blockProviders.set(chain, block)
-
-      const indexerClients = this.indexerClients.filter(
-        (c) => c.chain === chain,
-      )
-      const timestamp = new BlockTimestampProvider({
-        blockProvider: block,
-        indexerClients,
-      })
-      this.timestampProviders.set(chain, timestamp)
-    }
-  }
-
-  getBlockProvider(chain: string) {
-    const blockProvider = this.blockProviders.get(chain)
-    assert(blockProvider, `BlockProvider not found: ${chain}`)
-    return blockProvider
-  }
-
-  getBlockTimestampProvider(chain: string) {
-    const timestampProvider = this.timestampProviders.get(chain)
-    assert(timestampProvider, `TimestampProvider not found: ${chain}`)
-    return timestampProvider
-  }
+export interface Clients {
+  block: BlockClient[]
+  indexer: BlockIndexerClient[]
+  starkex: StarkexClient | undefined
+  loopring: LoopringClient | undefined
+  degate: LoopringClient | undefined
+  coingecko: CoingeckoClient
+  blob: BlobClient | undefined
+  ethereum: RpcClient2 | undefined
 }
 
-export function initBlockProviders(
-  chains: ChainApi[],
-  rpcClients: RpcClient2[],
-): BlockProviders {
-  let starkexClient: StarkexClient | undefined
-
-  const blockClients: BlockClient[] = [...rpcClients]
-  const indexerClients: BlockIndexerClient[] = []
-
+export function initClients(config: Config, logger: Logger): Clients {
   const http = new HttpClient()
   const http2 = new HttpClient2()
-  const logger = Logger.SILENT
 
-  for (const chain of chains) {
+  let starkexClient: StarkexClient | undefined
+  let loopringClient: LoopringClient | undefined
+  let degateClient: LoopringClient | undefined
+  let ethereumClient: RpcClient2 | undefined
+  let blobClient: BlobClient | undefined
+
+  const blockClients: BlockClient[] = []
+  const indexerClients: BlockIndexerClient[] = []
+
+  for (const chain of config.chainConfig) {
     for (const indexerApi of chain.indexerApis) {
       const indexerClient = new BlockIndexerClient(
         http,
@@ -102,6 +74,9 @@ export function initBlockProviders(
             logger,
           })
           blockClients.push(rpcClient)
+          if (chain.name === 'ethereum' && ethereumClient === undefined) {
+            ethereumClient = rpcClient
+          }
           break
         }
 
@@ -130,7 +105,7 @@ export function initBlockProviders(
         }
         case 'loopring':
         case 'degate3': {
-          const loopringClient = new LoopringClient({
+          const client = new LoopringClient({
             url: blockApi.url,
             type: blockApi.type,
             http: http2,
@@ -138,7 +113,10 @@ export function initBlockProviders(
             retryHandler,
             logger,
           })
-          blockClients.push(loopringClient)
+          blockClients.push(client)
+          blockApi.type === 'loopring'
+            ? (loopringClient = client)
+            : (degateClient = client)
           break
         }
         case 'fuel': {
@@ -168,5 +146,36 @@ export function initBlockProviders(
     }
   }
 
-  return new BlockProviders(blockClients, starkexClient, indexerClients)
+  const coingeckoClient = new CoingeckoClient({
+    apiKey: config.coingeckoApiKey,
+    http: http2,
+    logger,
+    rateLimiter: RateLimiter.COINGECKO(config.coingeckoApiKey),
+    retryHandler: RetryHandler.RELIABLE_API(logger),
+  })
+
+  if (ethereumClient && config.beaconApi.url) {
+    blobClient = new BlobClient({
+      beaconApiUrl: config.beaconApi.url,
+      rpcClient: ethereumClient,
+      logger,
+      http,
+      rateLimiter: new RateLimiter({
+        callsPerMinute: config.beaconApi.callsPerMinute,
+      }),
+      timeout: config.beaconApi.timeout,
+      retryHandler: RetryHandler.RELIABLE_API(logger),
+    })
+  }
+
+  return {
+    block: blockClients,
+    indexer: indexerClients,
+    starkex: starkexClient,
+    loopring: loopringClient,
+    degate: degateClient,
+    coingecko: coingeckoClient,
+    blob: blobClient,
+    ethereum: ethereumClient,
+  }
 }

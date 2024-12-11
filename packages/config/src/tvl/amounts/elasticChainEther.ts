@@ -16,9 +16,9 @@ export function getElasticChainEtherEntry(
   escrow: BackendProjectEscrow,
   project: BackendProject,
 ): ElasticChainEther {
-  assert(escrow.sharedEscrow?.type === 'ElasticChian')
+  assert(escrow.sharedEscrow?.type === 'ElasticChain')
   assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
-  assert(token.address, 'Token address is required for ElasticChian escrow')
+  assert(token.address, 'Token address is required for ElasticChain escrow')
 
   const source = escrow.source ?? 'canonical'
   const sinceTimestamp = UnixTime.max(

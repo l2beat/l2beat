@@ -15,24 +15,10 @@ export function ScalingUpcomingAndArchivedFilters({ items, className }: Props) {
   const typeOptions = uniq(items.map((item) => item.category))
     .sort()
     .filter((value) => !!value)
-    .map((value) => ({
-      label: value,
-      value,
-    }))
-
   const stackOptions = uniq(items.map((item) => item.provider))
     .sort()
-    .map((value) => ({
-      label: value ?? 'No stack',
-      value,
-    }))
-
-  const purposeOptions = uniq(items.flatMap((item) => item.purposes))
-    .sort()
-    .map((value) => ({
-      label: value,
-      value,
-    }))
+    .map((value) => value ?? 'No stack')
+  const purposeOptions = uniq(items.flatMap((item) => item.purposes)).sort()
 
   return (
     <OverflowWrapper className={className}>
@@ -40,20 +26,20 @@ export function ScalingUpcomingAndArchivedFilters({ items, className }: Props) {
         <TableFilter
           title="Type"
           options={typeOptions}
-          value={filter.category}
-          onValueChange={(value) => filter.set({ category: value })}
+          value={filter.type}
+          onValueChange={(type) => filter.set({ type })}
         />
         <TableFilter
           title="Stack"
           options={stackOptions}
           value={filter.stack}
-          onValueChange={(value) => filter.set({ stack: value })}
+          onValueChange={(stack) => filter.set({ stack })}
         />
         <TableFilter
           title="Purpose"
           options={purposeOptions}
           value={filter.purpose}
-          onValueChange={(value) => filter.set({ purpose: value })}
+          onValueChange={(purpose) => filter.set({ purpose })}
         />
       </div>
     </OverflowWrapper>
