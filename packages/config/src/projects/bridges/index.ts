@@ -15,6 +15,7 @@ import { fraxferry } from './fraxferry'
 import { gravity } from './gravity'
 import { harmony } from './harmony'
 import { hop } from './hop'
+import { hyperlane } from './hyperlane'
 import { hyphen } from './hyphen'
 import { immutablezkevm } from './immutablezkevm'
 import { layerzerov2oft } from './layerzerov2oft'
@@ -68,6 +69,7 @@ export const bridges: Bridge[] = [
   chainport,
   hop,
   hyphen,
+  hyperlane,
   immutablezkevm,
   lzOmnichain,
   layerzerov2oft,
