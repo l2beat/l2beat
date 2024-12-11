@@ -13,7 +13,8 @@
     "linkToken",
     "getAllowList",
     "getNopFeesJuels",
-    "owner"
+    "owner",
+    "tokenPools"
   ],
   "ignoreInWatchMode": [
     "getExpectedNextSequenceNumber",
