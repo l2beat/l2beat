@@ -81,16 +81,25 @@ async function main() {
   const coingeckoTokens = await coingeckoClient.getCoinList({
     includePlatform: true,
   })
+
+  const platformToChainName = new Map(
+    chains.map((chain) => [chain.coingeckoPlatform, chain.name]),
+  )
+
   const coingeckoTokensMap = new Map(
-    coingeckoTokens
-      .filter((t) => t.platforms.ethereum)
-      .map((t) => [
-        t.platforms.ethereum?.toLowerCase(),
-        {
-          id: t.id,
-          symbol: t.symbol,
-        },
-      ]),
+    coingeckoTokens.flatMap((token) =>
+      Object.entries(token.platforms)
+        .filter(
+          ([platform, address]) => address && platformToChainName.has(platform),
+        )
+        .map(([platform, address]) => [
+          `${platformToChainName.get(platform)}:${address?.toLowerCase()}`,
+          {
+            id: token.id,
+            symbol: token.symbol,
+          },
+        ]),
+    ),
   )
 
   const transferTopic = utils.id('Transfer(address,address,uint256)')
@@ -165,21 +174,20 @@ async function main() {
         allLogs.map((l) => `${escrow.chain}:${l.address.toLowerCase()}`),
       )
       for (const tokenFromLog of tokensFromLogs) {
-        const rawAddress = tokenFromLog.split(':')[1]
-
         if (
-          // TODO: add chain to coingecko
-          coingeckoTokensMap.has(rawAddress) &&
+          coingeckoTokensMap.has(tokenFromLog) &&
           !tokenListAddresses.has(tokenFromLog)
         ) {
           if (!allFoundTokens.has(tokenFromLog)) {
-            const tokenInfo = coingeckoTokensMap.get(rawAddress)
+            const tokenInfo = coingeckoTokensMap.get(tokenFromLog)
             allFoundTokens.set(tokenFromLog, {
               escrows: new Map(),
               coingeckoId: tokenInfo?.id,
               symbol: tokenInfo?.symbol,
             })
           }
+
+          const rawAddress = tokenFromLog.split(':')[1]
 
           try {
             const [balance, decimals] = await Promise.all([
