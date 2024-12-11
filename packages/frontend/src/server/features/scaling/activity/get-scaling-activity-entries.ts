@@ -9,7 +9,10 @@ import {
 } from '../../projects-change-report/get-projects-change-report'
 import { getCurrentEntry } from '../../utils/get-current-entry'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
-import { getCommonScalingEntry } from '../get-common-scaling-entry'
+import {
+  type CommonScalingEntry,
+  getCommonScalingEntry,
+} from '../get-common-scaling-entry'
 import {
   orderByStageAndPastDayUops,
   sortByUops,
@@ -33,7 +36,6 @@ export async function getScalingActivityEntries() {
 
   const ethereumData = activityData[ProjectId.ETHEREUM]
   assert(ethereumData !== undefined, 'Ethereum data not found')
-  const ethereumEntry = getEthereumEntry(ethereumData)
 
   const entries = projects
     .map((project) => {
@@ -58,25 +60,34 @@ export async function getScalingActivityEntries() {
 
   if (!env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING) {
     return {
-      rollups: [ethereumEntry, ...categorisedEntries.rollups].sort(sortByUops),
+      rollups: [
+        getEthereumEntry(ethereumData, 'Rollups'),
+        ...categorisedEntries.rollups,
+      ].sort(sortByUops),
       validiumsAndOptimiums: [
-        ethereumEntry,
+        getEthereumEntry(ethereumData, 'ValidiumsAndOptimiums'),
         ...categorisedEntries.validiumsAndOptimiums,
       ].sort(sortByUops),
       others: categorisedEntries.others
-        ? [ethereumEntry, ...categorisedEntries.others].sort(sortByUops)
+        ? [
+            getEthereumEntry(ethereumData, 'Others'),
+            ...categorisedEntries.others,
+          ].sort(sortByUops)
         : undefined,
     }
   }
 
   return {
-    rollups: [ethereumEntry, ...categorisedEntries.rollups],
+    rollups: [
+      getEthereumEntry(ethereumData, 'Rollups'),
+      ...categorisedEntries.rollups,
+    ],
     validiumsAndOptimiums: [
-      ethereumEntry,
+      getEthereumEntry(ethereumData, 'ValidiumsAndOptimiums'),
       ...categorisedEntries.validiumsAndOptimiums,
     ],
     others: categorisedEntries.others
-      ? [ethereumEntry, ...categorisedEntries.others]
+      ? [getEthereumEntry(ethereumData, 'Others'), ...categorisedEntries.others]
       : undefined,
   }
 }
@@ -114,9 +125,34 @@ function getScalingProjectActivityEntry(
 
 function getEthereumEntry(
   data: ActivityProjectTableData,
+  tab: CommonScalingEntry['tab'],
 ): ScalingActivityEntry {
   return {
-    ...getCommonScalingEntry({ project: 'ethereum' }),
+    id: ProjectId.ETHEREUM,
+    name: 'Ethereum',
+    shortName: undefined,
+    slug: 'ethereum',
+    type: undefined,
+    category: undefined,
+    isOther: undefined,
+    provider: undefined,
+    purposes: [],
+    warning: undefined,
+    headerWarning: undefined,
+    redWarning: undefined,
+    isVerified: true,
+    isArchived: false,
+    hostChain: undefined,
+    href: undefined,
+    isUpcoming: false,
+    underReviewStatus: undefined,
+    stage: { stage: 'NotApplicable' as const },
+    badges: [],
+    // ---
+    tab,
+    stageOrder: 3,
+    filterable: undefined,
+    // ---
     entryType: 'activity' as const,
     dataSource: 'Blockchain RPC' as const,
     dataAvailability: {

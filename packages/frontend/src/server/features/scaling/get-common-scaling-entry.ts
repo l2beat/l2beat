@@ -9,7 +9,8 @@ import {
   type StageConfig,
   badges,
 } from '@l2beat/config'
-import { ProjectId } from '@l2beat/shared-pure'
+import { type ProjectId } from '@l2beat/shared-pure'
+import { env } from 'process'
 import {
   type UnderReviewStatus,
   getUnderReviewStatus,
@@ -54,6 +55,10 @@ export interface CommonScalingEntry {
   provider: Layer2Provider | undefined
   hostChain: string | undefined
   stage: StageConfig
+  // ---
+  tab: 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
+  /** 0 - n/a, 1 - stage0, 2 - stage1&2, 3 - ethereum */
+  stageOrder: number
   filterable: FilterableScalingValues | undefined
 }
 
@@ -64,37 +69,12 @@ interface Params {
   hasHighSeverityFieldChanged: boolean
 }
 
-export function getCommonScalingEntry(
-  params: Params | { project: 'ethereum' },
-): CommonScalingEntry {
-  if (params.project === 'ethereum') {
-    return {
-      id: ProjectId.ETHEREUM,
-      name: 'Ethereum',
-      shortName: undefined,
-      slug: 'ethereum',
-      type: undefined,
-      category: undefined,
-      isOther: undefined,
-      provider: undefined,
-      purposes: [],
-      warning: undefined,
-      headerWarning: undefined,
-      redWarning: undefined,
-      isVerified: true,
-      isArchived: false,
-      hostChain: undefined,
-      href: undefined,
-      isUpcoming: false,
-      underReviewStatus: undefined,
-      stage: { stage: 'NotApplicable' as const },
-      badges: [],
-      filterable: undefined,
-    }
-  }
-
-  const { project, isVerified } = params
-
+export function getCommonScalingEntry({
+  project,
+  isVerified,
+  hasImplementationChanged,
+  hasHighSeverityFieldChanged,
+}: Params): CommonScalingEntry {
   return {
     id: project.id,
     name: project.display.name,
@@ -106,8 +86,8 @@ export function getCommonScalingEntry(
     isVerified,
     underReviewStatus: getUnderReviewStatus({
       isUnderReview: isAnySectionUnderReview(project),
-      hasImplementationChanged: params.hasImplementationChanged,
-      hasHighSeverityFieldChanged: params.hasHighSeverityFieldChanged,
+      hasImplementationChanged,
+      hasHighSeverityFieldChanged,
     }),
     isArchived: !!project.isArchived,
     isUpcoming: !!project.isUpcoming,
@@ -124,6 +104,14 @@ export function getCommonScalingEntry(
     provider: project.display.provider,
     hostChain: project.type === 'layer2' ? undefined : getHostChain(project),
     stage: project.stage ?? ({ stage: 'NotApplicable' } satisfies StageConfig),
+    // ---
+    tab:
+      env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS && project.display.isOther
+        ? 'Others'
+        : project.display.category.includes('Rollup')
+          ? 'Rollups'
+          : 'ValidiumsAndOptimiums',
+    stageOrder: getStageOrder(project.stage),
     filterable: {
       isRollup: project.display.category.includes('Rollup'),
       type: project.display.category,
@@ -136,6 +124,16 @@ export function getCommonScalingEntry(
       raas: getRaas(project.badges ?? []),
     },
   }
+}
+
+function getStageOrder(stage: StageConfig | undefined): number {
+  if (stage?.stage === 'Stage 2' || stage?.stage === 'Stage 1') {
+    return 2
+  }
+  if (stage?.stage === 'Stage 0') {
+    return 1
+  }
+  return 0
 }
 
 function getStage(config: StageConfig | undefined) {
