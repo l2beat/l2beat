@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xc22a0c6c233c657115f5134487de8a6759809dbf
+
+# Diff at Wed, 11 Dec 2024 09:57:28 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@28849b80c374bb8843eff17341701a3084c3bdb9 block: 21366345
+- current block number: 21378512
+
+## Description
+
+Changed finalization period from 5 hours to 4.
+
+## Watched changes
+
+```diff
+    contract L2OutputOracle (0x92Ef6Af472b39F1b363da45E35530c24619245A4) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
++++ description: Challenge period (Number of seconds until a state root is finalized).
+      values.FINALIZATION_PERIOD_SECONDS:
+-        18000
++        14400
+      values.finalizationPeriodSeconds:
+-        18000
++        14400
+    }
+```
+
 Generated with discovered.json: 0xf3cc94b95e05fcc954432c345ea9fbac05ea834f
 
 # Diff at Mon, 09 Dec 2024 17:31:44 GMT:
