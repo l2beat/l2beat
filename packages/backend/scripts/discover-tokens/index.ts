@@ -1,6 +1,6 @@
 import { writeFileSync } from 'fs'
 import { Logger, RateLimiter, getEnv } from '@l2beat/backend-tools'
-import { chains, layer2s, tokenList } from '@l2beat/config'
+import { chains, layer2s, layer3s, tokenList } from '@l2beat/config'
 import {
   BlockIndexerClient,
   CoingeckoClient,
@@ -9,6 +9,7 @@ import {
   RetryHandler,
 } from '@l2beat/shared'
 import { assert, ChainConverter, ChainId } from '@l2beat/shared-pure'
+import chalk from 'chalk'
 import { providers, utils } from 'ethers'
 import { chunk, groupBy } from 'lodash'
 import { RateLimitedProvider } from '../../src/peripherals/rpcclient/RateLimitedProvider'
@@ -49,6 +50,12 @@ const CHAIN_CONFIG: Record<string, ChainConfig> = {
     etherscanEnvKey: 'OPTIMISM_ETHERSCAN_API_KEY',
     callsPerMinute: 120,
   },
+  base: {
+    rpcEnvKey: 'BASE_RPC_URL',
+    etherscanUrl: 'https://api.basescan.org/api',
+    etherscanEnvKey: 'BASE_ETHERSCAN_API_KEY',
+    callsPerMinute: 120,
+  },
 }
 
 async function main() {
@@ -70,11 +77,11 @@ async function main() {
   )
 
   const escrowsByChain = groupBy(
-    layer2s
+    [...layer2s, ...layer3s]
       .flatMap((layer2) =>
         layer2.config.escrows.flatMap((e) => ({ ...e, projectId: layer2.id })),
       )
-      .filter((e) => e.chain === 'ethereum'),
+      .filter((e) => e.chain !== 'ethereum'),
     'chain',
   )
 
@@ -139,7 +146,7 @@ async function main() {
 
   for (const [chain, chainEscrows] of Object.entries(escrowsByChain)) {
     if (!CHAIN_CONFIG[chain]) {
-      console.log(`Skipping unsupported chain: ${chain}`)
+      console.log(chalk.red(`Skipping unsupported chain: ${chain}`))
       continue
     }
 
