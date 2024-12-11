@@ -29,7 +29,7 @@ function getScalingUpcomingEntry(project: Layer2 | Layer3) {
     shortName: project.display.shortName,
     category: project.display.category,
     provider: project.display.provider,
-    hostChain: getHostChain(project),
+    hostChain: project.type === 'layer2' ? undefined : getHostChain(project),
     purposes: project.display.purposes,
   }
 }
