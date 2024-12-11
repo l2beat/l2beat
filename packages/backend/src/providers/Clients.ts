@@ -8,13 +8,12 @@ import {
   HttpClient,
   HttpClient2,
   LoopringClient,
-  RetryHandler,
   RpcClient2,
   StarkexClient,
   StarknetClient,
   ZksyncLiteClient,
 } from '@l2beat/shared'
-import { assertUnreachable } from '@l2beat/shared-pure'
+import { assert, assertUnreachable } from '@l2beat/shared-pure'
 import { Config } from '../config/Config'
 
 export interface Clients {
@@ -25,7 +24,8 @@ export interface Clients {
   degate: LoopringClient | undefined
   coingecko: CoingeckoClient
   blob: BlobClient | undefined
-  ethereum: RpcClient2 | undefined
+  starknet: StarknetClient | undefined
+  getRpcClient: (chain: string) => RpcClient2
 }
 
 export function initClients(config: Config, logger: Logger): Clients {
@@ -37,9 +37,11 @@ export function initClients(config: Config, logger: Logger): Clients {
   let degateClient: LoopringClient | undefined
   let ethereumClient: RpcClient2 | undefined
   let blobClient: BlobClient | undefined
+  let starknetClient: StarknetClient | undefined
 
   const blockClients: BlockClient[] = []
   const indexerClients: BlockIndexerClient[] = []
+  const rpcClients: RpcClient2[] = []
 
   for (const chain of config.chainConfig) {
     for (const indexerApi of chain.indexerApis) {
@@ -55,25 +57,18 @@ export function initClients(config: Config, logger: Logger): Clients {
     }
 
     for (const blockApi of chain.blockApis) {
-      const retryHandler =
-        blockApi.retryStrategy === 'RELIABLE'
-          ? RetryHandler.RELIABLE_API(logger)
-          : RetryHandler.UNRELIABLE_API(logger)
-      const rateLimiter = new RateLimiter({
-        callsPerMinute: blockApi.callsPerMinute,
-      })
-
       switch (blockApi.type) {
         case 'rpc': {
           const rpcClient = new RpcClient2({
-            chain: chain.name,
+            sourceName: chain.name,
             url: blockApi.url,
             http: http2,
-            rateLimiter,
-            retryHandler,
+            callsPerMinute: blockApi.callsPerMinute,
+            retryStrategy: blockApi.retryStrategy,
             logger,
           })
           blockClients.push(rpcClient)
+          rpcClients.push(rpcClient)
           if (chain.name === 'ethereum' && ethereumClient === undefined) {
             ethereumClient = rpcClient
           }
@@ -82,10 +77,11 @@ export function initClients(config: Config, logger: Logger): Clients {
 
         case 'zksync': {
           const zksyncLiteClient = new ZksyncLiteClient({
+            sourceName: 'zksynclite',
             url: blockApi.url,
             http: http2,
-            rateLimiter,
-            retryHandler,
+            callsPerMinute: blockApi.callsPerMinute,
+            retryStrategy: blockApi.retryStrategy,
             logger,
           })
           blockClients.push(zksyncLiteClient)
@@ -93,24 +89,27 @@ export function initClients(config: Config, logger: Logger): Clients {
         }
 
         case 'starknet': {
-          const starknetClient = new StarknetClient({
+          const client = new StarknetClient({
+            sourceName: 'starknet',
             url: blockApi.url,
             http: http2,
-            rateLimiter,
-            retryHandler,
+            callsPerMinute: blockApi.callsPerMinute,
+            retryStrategy: blockApi.retryStrategy,
             logger,
           })
-          blockClients.push(starknetClient)
+          blockClients.push(client)
+          starknetClient = client
           break
         }
         case 'loopring':
         case 'degate3': {
           const client = new LoopringClient({
+            sourceName: blockApi.type,
             url: blockApi.url,
             type: blockApi.type,
             http: http2,
-            rateLimiter,
-            retryHandler,
+            callsPerMinute: blockApi.callsPerMinute,
+            retryStrategy: blockApi.retryStrategy,
             logger,
           })
           blockClients.push(client)
@@ -121,10 +120,11 @@ export function initClients(config: Config, logger: Logger): Clients {
         }
         case 'fuel': {
           const fuelClient = new FuelClient({
+            sourceName: 'fuel',
             url: blockApi.url,
             http: http2,
-            rateLimiter,
-            retryHandler,
+            callsPerMinute: blockApi.callsPerMinute,
+            retryStrategy: blockApi.retryStrategy,
             logger,
           })
           blockClients.push(fuelClient)
@@ -132,11 +132,12 @@ export function initClients(config: Config, logger: Logger): Clients {
         }
         case 'starkex': {
           starkexClient = new StarkexClient({
+            sourceName: 'starkex',
             apiKey: blockApi.apiKey,
             http: http2,
-            retryHandler,
+            retryStrategy: blockApi.retryStrategy,
             logger,
-            rateLimiter,
+            callsPerMinute: blockApi.callsPerMinute,
           })
           break
         }
@@ -147,25 +148,31 @@ export function initClients(config: Config, logger: Logger): Clients {
   }
 
   const coingeckoClient = new CoingeckoClient({
+    sourceName: 'coingeckoApi',
     apiKey: config.coingeckoApiKey,
     http: http2,
     logger,
-    rateLimiter: RateLimiter.COINGECKO(config.coingeckoApiKey),
-    retryHandler: RetryHandler.RELIABLE_API(logger),
+    callsPerMinute: config.coingeckoApiKey ? 400 : 10,
+    retryStrategy: 'RELIABLE',
   })
 
   if (ethereumClient && config.beaconApi.url) {
     blobClient = new BlobClient({
+      sourceName: 'beaconApi',
       beaconApiUrl: config.beaconApi.url,
       rpcClient: ethereumClient,
       logger,
       http,
-      rateLimiter: new RateLimiter({
-        callsPerMinute: config.beaconApi.callsPerMinute,
-      }),
+      callsPerMinute: config.beaconApi.callsPerMinute,
       timeout: config.beaconApi.timeout,
-      retryHandler: RetryHandler.RELIABLE_API(logger),
+      retryStrategy: 'RELIABLE',
     })
+  }
+
+  const getRpcClient = (chain: string) => {
+    const client = rpcClients.find((r) => r.chain === chain)
+    assert(client, `${chain}: Client not found`)
+    return client
   }
 
   return {
@@ -176,6 +183,7 @@ export function initClients(config: Config, logger: Logger): Clients {
     degate: degateClient,
     coingecko: coingeckoClient,
     blob: blobClient,
-    ethereum: ethereumClient,
+    starknet: starknetClient,
+    getRpcClient,
   }
 }

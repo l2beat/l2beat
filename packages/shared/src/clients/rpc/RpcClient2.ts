@@ -27,7 +27,6 @@ import {
 
 interface Dependencies extends ClientCoreDependencies {
   url: string
-  chain: string
   generateId?: () => string
 }
 
@@ -209,6 +208,6 @@ export class RpcClient2 extends ClientCore implements BlockClient {
   }
 
   get chain() {
-    return this.$.chain
+    return this.$.sourceName
   }
 }

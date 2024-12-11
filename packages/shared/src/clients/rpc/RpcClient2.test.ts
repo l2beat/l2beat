@@ -1,8 +1,7 @@
-import { Logger, RateLimiter } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { utils } from 'ethers'
-import { RetryHandler } from '../../tools/RetryHandler'
 import { HttpClient2 } from '../http/HttpClient2'
 import { RpcClient2 } from './RpcClient2'
 
@@ -337,17 +336,14 @@ describe(RpcClient2.name, () => {
 function mockClient(deps: {
   http?: HttpClient2
   url?: string
-  rateLimiter?: RateLimiter
-  retryHandler?: RetryHandler
   generateId?: () => string
 }) {
   return new RpcClient2({
-    chain: 'chain',
+    sourceName: 'chain',
     url: deps.url ?? 'API_URL',
     http: deps.http ?? mockObject<HttpClient2>({}),
-    rateLimiter:
-      deps.rateLimiter ?? new RateLimiter({ callsPerMinute: 100_000 }),
-    retryHandler: deps.retryHandler ?? RetryHandler.TEST,
+    callsPerMinute: 100_000,
+    retryStrategy: 'TEST',
     logger: Logger.SILENT,
     generateId: deps.generateId,
   })

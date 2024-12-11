@@ -1,6 +1,4 @@
-import { RateLimiter } from '@l2beat/backend-tools'
 import { ConfigMapping, createAmountId } from '@l2beat/config'
-import { HttpClient2, RetryHandler, RpcClient2 } from '@l2beat/shared'
 import {
   assert,
   EscrowEntry,
@@ -60,10 +58,10 @@ function createIndexers(
   blockTimestampIndexers?: Map<string, BlockTimestampIndexer>,
 ) {
   const logger = dependencies.logger.tag({ module: 'chain' })
-  const indexerService = dependencies.getIndexerService()
-  const syncOptimizer = dependencies.getSyncOptimizer()
+  const indexerService = dependencies.indexerService
+  const syncOptimizer = dependencies.syncOptimizer
   const db = dependencies.database
-  const valueService = dependencies.getValueService()
+  const valueService = dependencies.valueService
 
   const dataIndexers: ChainAmountIndexer[] = []
   const valueIndexers: ValueIndexer[] = []
@@ -83,16 +81,7 @@ function createIndexers(
       continue
     }
 
-    const rpcClient = new RpcClient2({
-      chain: chainConfig.chain,
-      url: chainConfig.config.providerUrl,
-      rateLimiter: new RateLimiter({
-        callsPerMinute: chainConfig.config.providerCallsPerMinute,
-      }),
-      http: new HttpClient2(),
-      logger,
-      retryHandler: RetryHandler.RELIABLE_API(logger),
-    })
+    const rpcClient = dependencies.clients.getRpcClient(chain)
 
     const amountService = new AmountService({
       rpcClient: rpcClient,
