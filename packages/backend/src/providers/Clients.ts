@@ -159,7 +159,7 @@ export function initClients(config: Config, logger: Logger): Clients {
       beaconApiUrl: config.beaconApi.url,
       rpcClient: ethereumClient,
       logger,
-      http,
+      http: http2,
       rateLimiter: new RateLimiter({
         callsPerMinute: config.beaconApi.callsPerMinute,
       }),
