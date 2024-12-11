@@ -1,11 +1,6 @@
 'use client'
 
-import {
-  type RowModel,
-  type Table,
-  getCoreRowModel,
-  getSortedRowModel,
-} from '@tanstack/react-table'
+import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/basic-table'
 import { RollupsTable } from '~/components/table/rollups-table'
@@ -22,16 +17,9 @@ import { getScalingActivityColumns } from './columns'
 interface Props {
   entries: ScalingActivityEntry[]
   rollups?: boolean
-  customSortedRowModel?: (
-    table: Table<ScalingActivityEntry>,
-  ) => () => RowModel<ScalingActivityEntry>
 }
 
-export function ScalingActivityTable({
-  entries,
-  rollups,
-  customSortedRowModel,
-}: Props) {
+export function ScalingActivityTable({ entries, rollups }: Props) {
   const { metric } = useActivityMetricContext()
   const { sorting, setSorting } = useTableSorting()
 
@@ -46,12 +34,11 @@ export function ScalingActivityTable({
 
   const table = useTable({
     columns: getScalingActivityColumns(metric, {
-      activity:
-        !!customSortedRowModel && env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING,
+      activity: env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING,
     }),
     data: tableEntries,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: customSortedRowModel ?? getSortedRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     state: {
       sorting,
     },
