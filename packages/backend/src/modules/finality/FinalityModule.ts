@@ -3,7 +3,6 @@ import { Database } from '@l2beat/database'
 import { assert, assertUnreachable, notUndefined } from '@l2beat/shared-pure'
 import { Config } from '../../config'
 import { FinalityProjectConfig } from '../../config/features/finality'
-import { ClientClass, Peripherals } from '../../peripherals/Peripherals'
 import { Providers } from '../../providers/Providers'
 import { ApplicationModule } from '../ApplicationModule'
 import { TrackedTxsIndexer } from '../tracked-txs/TrackedTxsIndexer'
@@ -248,20 +247,4 @@ function initializeConfigurations(
       }
     })
     .filter(notUndefined)
-}
-
-function getL2Rpc<Client, Options>(
-  configuration: FinalityProjectConfig,
-  peripherals: Peripherals,
-  clientClass: ClientClass<Client, Options>,
-) {
-  assert(
-    configuration.url,
-    `${configuration.projectId.toString()}: L2 provider URL is not defined`,
-  )
-
-  return peripherals.getClient(clientClass, {
-    url: configuration.url,
-    callsPerMinute: configuration.callsPerMinute,
-  } as Options)
 }
