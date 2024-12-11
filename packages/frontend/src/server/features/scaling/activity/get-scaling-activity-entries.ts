@@ -1,22 +1,20 @@
-import { type Layer2, type Layer3 } from '@l2beat/config'
+import {
+  type Layer2,
+  type Layer3,
+  type ScalingProjectDisplay,
+} from '@l2beat/config'
 import { assert, ProjectId, notUndefined } from '@l2beat/shared-pure'
-import { type SetOptional } from 'type-fest'
-import { env } from '~/env'
-import { groupByMainCategories } from '~/utils/group-by-main-categories'
+import { env } from 'process'
+import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectsChangeReport,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
-import { getCurrentEntry } from '../../utils/get-current-entry'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import {
   type CommonScalingEntry,
   getCommonScalingEntry,
 } from '../get-common-scaling-entry'
-import {
-  orderByStageAndPastDayUops,
-  sortByUops,
-} from '../utils/order-by-stage-and-past-day-uops'
 import {
   type ActivityProjectTableData,
   getActivityTable,
@@ -52,57 +50,27 @@ export async function getScalingActivityEntries() {
       )
     })
     .filter(notUndefined)
-    .sort((a, b) => b.data.uops.pastDayCount - a.data.uops.pastDayCount)
-
-  const categorisedEntries = groupByMainCategories(
-    orderByStageAndPastDayUops(entries),
-  )
-
-  if (!env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING) {
-    return {
-      rollups: [
-        getEthereumEntry(ethereumData, 'Rollups'),
-        ...categorisedEntries.rollups,
-      ].sort(sortByUops),
-      validiumsAndOptimiums: [
-        getEthereumEntry(ethereumData, 'ValidiumsAndOptimiums'),
-        ...categorisedEntries.validiumsAndOptimiums,
-      ].sort(sortByUops),
-      others: categorisedEntries.others
-        ? [
-            getEthereumEntry(ethereumData, 'Others'),
-            ...categorisedEntries.others,
-          ].sort(sortByUops)
-        : undefined,
-    }
-  }
-
-  return {
-    rollups: [
+    .concat(
       getEthereumEntry(ethereumData, 'Rollups'),
-      ...categorisedEntries.rollups,
-    ],
-    validiumsAndOptimiums: [
       getEthereumEntry(ethereumData, 'ValidiumsAndOptimiums'),
-      ...categorisedEntries.validiumsAndOptimiums,
-    ],
-    others: categorisedEntries.others
-      ? [getEthereumEntry(ethereumData, 'Others'), ...categorisedEntries.others]
-      : undefined,
-  }
+      getEthereumEntry(ethereumData, 'Others'),
+    )
+    .sort(compareActivityEntry)
+
+  return groupByTabs(entries)
 }
 
-export type ScalingActivityEntry = SetOptional<
-  ReturnType<typeof getScalingProjectActivityEntry>,
-  'href'
->
+export interface ScalingActivityEntry extends CommonScalingEntry {
+  dataSource: ScalingProjectDisplay['activityDataSource']
+  data: ActivityProjectTableData
+}
+
 function getScalingProjectActivityEntry(
   project: ActivityProject,
   data: ActivityProjectTableData,
   isVerified: boolean,
   projectsChangeReport: ProjectsChangeReport,
-) {
-  const currentDataAvailability = getCurrentEntry(project.dataAvailability)
+): ScalingActivityEntry {
   return {
     ...getCommonScalingEntry({
       project,
@@ -114,11 +82,7 @@ function getScalingProjectActivityEntry(
         projectsChangeReport.hasHighSeverityFieldChanged(project.id),
     }),
     href: `/scaling/projects/${project.display.slug}#activity`,
-    entryType: 'activity' as const,
     dataSource: project.display.activityDataSource,
-    dataAvailability: {
-      layer: currentDataAvailability?.layer,
-    },
     data,
   }
 }
@@ -153,11 +117,24 @@ function getEthereumEntry(
     stageOrder: 3,
     filterable: undefined,
     // ---
-    entryType: 'activity' as const,
-    dataSource: 'Blockchain RPC' as const,
-    dataAvailability: {
-      layer: undefined,
-    },
+    dataSource: 'Blockchain RPC',
     data,
   }
+}
+
+function compareActivityEntry(
+  a: ScalingActivityEntry,
+  b: ScalingActivityEntry,
+) {
+  if (env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING) {
+    const stageDiff = b.stageOrder - a.stageOrder
+    if (stageDiff !== 0) {
+      return stageDiff
+    }
+  }
+  const diff = b.data.uops.pastDayCount - a.data.uops.pastDayCount
+  if (diff !== 0) {
+    return diff
+  }
+  return a.name.localeCompare(b.name)
 }

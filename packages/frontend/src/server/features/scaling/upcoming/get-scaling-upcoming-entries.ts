@@ -1,6 +1,6 @@
 import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
-import { groupByMainCategories } from '~/utils/group-by-main-categories'
+import { groupByTabs } from '~/utils/group-by-tabs'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 
 export function getScalingUpcomingEntries() {
@@ -16,7 +16,7 @@ export function getScalingUpcomingEntries() {
     })
     .map((project) => getScalingUpcomingEntry(project))
 
-  return groupByMainCategories(entries)
+  return groupByTabs(entries)
 }
 
 export type ScalingUpcomingEntry = ReturnType<typeof getScalingUpcomingEntry>

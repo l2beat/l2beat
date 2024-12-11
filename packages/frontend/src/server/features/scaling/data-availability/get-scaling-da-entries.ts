@@ -1,6 +1,6 @@
 import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
-import { groupByMainCategories } from '~/utils/group-by-main-categories'
+import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectsChangeReport,
   getProjectsChangeReport,
@@ -33,7 +33,7 @@ export async function getScalingDaEntries() {
     })
     .filter(notUndefined)
 
-  return groupByMainCategories(orderByStageAndTvl(entries, tvl))
+  return groupByTabs(orderByStageAndTvl(entries, tvl))
 }
 
 function getScalingDataAvailabilityEntry(

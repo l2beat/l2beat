@@ -1,5 +1,5 @@
 import { type Layer2 } from '@l2beat/config'
-import { groupByMainCategories } from '~/utils/group-by-main-categories'
+import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectsChangeReport,
   getProjectsChangeReport,
@@ -24,7 +24,7 @@ export async function getScalingCostsEntries() {
     return getScalingCostEntry(project, isVerified, projectsChangeReport)
   })
 
-  return groupByMainCategories(orderByStageAndTvl(entries, tvl))
+  return groupByTabs(orderByStageAndTvl(entries, tvl))
 }
 
 export type ScalingCostsEntry = ReturnType<typeof getScalingCostEntry>

@@ -1,7 +1,7 @@
 import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 import { api } from '~/trpc/server'
-import { groupByMainCategories } from '~/utils/group-by-main-categories'
+import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectsChangeReport,
   getProjectsChangeReport,
@@ -53,7 +53,7 @@ export async function getScalingTvlEntries() {
     ]),
   )
 
-  return groupByMainCategories(orderByStageAndTvl(entries, remappedForOrdering))
+  return groupByTabs(orderByStageAndTvl(entries, remappedForOrdering))
 }
 
 export type ScalingTvlEntry = Awaited<ReturnType<typeof getScalingTvlEntry>>

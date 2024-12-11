@@ -6,7 +6,7 @@ import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
 import { getFinality } from './get-finality'
 import { type FinalityData, type FinalityProjectData } from './schema'
 
-import { groupByMainCategories } from '~/utils/group-by-main-categories'
+import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectsChangeReport,
   getProjectsChangeReport,
@@ -43,7 +43,7 @@ export async function getScalingFinalityEntries() {
     })
     .filter(notUndefined)
 
-  return groupByMainCategories(orderByStageAndTvl(entries, tvl))
+  return groupByTabs(orderByStageAndTvl(entries, tvl))
 }
 
 function getFinalityData(

@@ -7,7 +7,7 @@ import {
 import { getLiveness } from './get-liveness'
 import { type LivenessProject } from './types'
 
-import { groupByMainCategories } from '~/utils/group-by-main-categories'
+import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectsChangeReport,
   getProjectsChangeReport,
@@ -47,7 +47,7 @@ export async function getScalingLivenessEntries() {
     })
     .filter(notUndefined)
 
-  return groupByMainCategories(orderByStageAndTvl(entries, tvl))
+  return groupByTabs(orderByStageAndTvl(entries, tvl))
 }
 
 export type ScalingLivenessEntry = Awaited<
