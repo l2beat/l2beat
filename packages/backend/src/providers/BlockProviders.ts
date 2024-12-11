@@ -49,7 +49,6 @@ export class BlockProviders {
     return blockProvider
   }
 
-  // TODO: refactor in the same way as blocks
   getBlockTimestampProvider(chain: string) {
     const timestampProvider = this.timestampProviders.get(chain)
     assert(timestampProvider, `TimestampProvider not found: ${chain}`)
@@ -57,10 +56,13 @@ export class BlockProviders {
   }
 }
 
-export function initBlockProviders(chains: ChainApi[]): BlockProviders {
+export function initBlockProviders(
+  chains: ChainApi[],
+  rpcClients: RpcClient2[],
+): BlockProviders {
   let starkexClient: StarkexClient | undefined
 
-  const blockClients: BlockClient[] = []
+  const blockClients: BlockClient[] = [...rpcClients]
   const indexerClients: BlockIndexerClient[] = []
 
   const http = new HttpClient()

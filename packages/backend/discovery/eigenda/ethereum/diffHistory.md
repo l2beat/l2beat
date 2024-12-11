@@ -1,3 +1,87 @@
+Generated with discovered.json: 0x266d513bb55e652a9011ddefc4f87da60c466b71
+
+# Diff at Mon, 09 Dec 2024 15:40:04 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02974be0caac873bba9178e618086aa67aaf0b90 block: 21027344
+- current block number: 21365898
+
+## Description
+
+Apply strategy template manually due to unverified proxy.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21027344 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x12a6Bfb2f81267b847743c87767B3A45b897b1C0)
+    +++ description: None
+```
+
+```diff
+    contract StrategyBase (0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      template:
++        "eigenlayer/Strategy"
+      description:
++        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      fieldMeta:
++        {"getTVLLimits":{"severity":"LOW","description":"Maximum TVL of the strategy."},"maxPerDeposit":{"severity":"LOW","description":"Maximum value of one deposit transaction"},"maxTotalDeposits":{"severity":"LOW","description":"Same as TVL limit"}}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract AltLayerToken (0x8457CA5040ad67fdebbCC8EdCE889A335Bc0fbFB)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x8d254438fD1Bc99f0862D63cB9B33a7b68c8F08D)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x90F3068f412D2090A08a83742f8864a2dF385647)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xA7Ee328c8A00BEB30BC70789C4CFdb81a61eBc2f)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xAa34B20da3f64BD4574DF818c7FBE2228b35FAAc)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xAd9A9c2EbEa3401d9A0e588bBc05455dd9F37570)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StakedALT (0xb6D149C8DdA37aAAa2F8AD0934f2e5682C35890B)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ERC4626Vault (0xF96798F49936EfB1a56F99Ceae924b6B8359afFb)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xf071513e92c539d7a5a558c967b247b82427d4ee
 
 # Diff at Mon, 09 Dec 2024 13:18:36 GMT:

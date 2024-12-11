@@ -1,10 +1,9 @@
 'use client'
 
-import { getCoreRowModel } from '@tanstack/react-table'
+import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { useScalingAssociatedTokensContext } from '~/app/(side-nav)/scaling/_components/scaling-associated-tokens-context'
 import { BasicTable } from '~/components/table/basic-table'
-import { getStageSortedRowModel } from '~/components/table/sorting/get-stage-sorting-row-model'
 import { useTableSorting } from '~/components/table/sorting/table-sorting-context'
 import { useTable } from '~/hooks/use-table'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
@@ -32,7 +31,7 @@ export function ScalingSummaryValidiumsAndOptimiumsTable({ entries }: Props) {
     data: tableEntries,
     columns: scalingSummaryValidiumAndOptimiumsColumns,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getStageSortedRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
     state: {
       sorting,

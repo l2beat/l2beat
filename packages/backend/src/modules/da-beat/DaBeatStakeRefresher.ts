@@ -90,9 +90,13 @@ export class DaBeatStakeRefresher {
     )
     this.refreshQueue = new TaskQueue<void>(
       async () => {
-        this.logger.info('Refresh started')
+        this.logger.info('Refresh started', {
+          types: Object.keys(this.analyzers),
+        })
         await this.refresh()
-        this.logger.info('Refresh finished')
+        this.logger.info('Refresh finished', {
+          types: Object.keys(this.analyzers),
+        })
       },
       this.logger.for('refreshQueue'),
       { metricsId: 'DaBeatStakeRefresher' },
@@ -108,14 +112,20 @@ export class DaBeatStakeRefresher {
       Object.entries(this.analyzers).map(async ([type, analyzer]) => {
         try {
           const { totalStake, thresholdStake } = await analyzer.analyze()
-          this.logger.info(`Stake data for ${type} refreshed`)
+          this.logger.info(`Stake data refreshed`, {
+            type,
+            totalStake,
+            thresholdStake,
+          })
           await database.stake.upsert({
             id: type,
             totalStake,
             thresholdStake,
           })
         } catch (e) {
-          this.logger.error(`Failed to refresh stake data for ${type}: ${e}`)
+          this.logger.error(`Failed to refresh stake data: ${e}`, {
+            type,
+          })
         }
       }),
     )
