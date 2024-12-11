@@ -173,8 +173,10 @@ function setProviderGauge(
 ) {
   for (const [key, index] of Object.entries(ProviderMeasurement)) {
     const entry = stats.get(index)
-    const sum = entry.durations.reduce((acc, v) => acc + v)
-    const avg = sum / entry.durations.length
+    let avg = 0
+    if (entry.durations.length > 0) {
+      avg = entry.durations.reduce((acc, v) => acc + v) / entry.durations.length
+    }
 
     countGauge.set({ chain: chain, method: key }, entry.count)
     durationGauge.set({ chain: chain, method: key }, avg)
