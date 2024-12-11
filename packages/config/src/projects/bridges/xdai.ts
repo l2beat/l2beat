@@ -135,6 +135,7 @@ export const xdai: Bridge = {
             EthereumAddress('0xEeE4f8dB4410beBD74A76cB711D096c5E66d0473'),
           ],
         },
+        isVerified: true,
       },
       {
         address: EthereumAddress('0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E'),
@@ -149,6 +150,7 @@ export const xdai: Bridge = {
             EthereumAddress('0x6943A218d58135793F1FE619414eD476C37ad65a'),
           ],
         },
+        isVerified: true,
       },
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],

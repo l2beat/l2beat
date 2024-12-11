@@ -2,7 +2,7 @@
   "name": "metis",
   "chain": "ethereum",
   "blockNumber": 21242106,
-  "configHash": "0x6550d030fed3b00ba55a8cbdceab43d131d61699b914915ddbd5fb38b8a3c710",
+  "configHash": "0x680c32ed6621d7e50db642c378d3b7b93f8245f2a170a2d6d43da72247ddc96e",
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -84,7 +84,7 @@
       "derivedName": "LockingInfo"
     },
     {
-      "name": "ChainStorageContainer",
+      "name": "ChainStorageContainer-SCC-batches",
       "address": "0x10739F09f6e62689c0aA8A1878816de9e166d6f9",
       "sourceHashes": [
         "0x94ea4eb57654b23e5ce34a8f4571a446786efb3080044f3ecfc2f3870e601ee0"
@@ -109,7 +109,7 @@
       "derivedName": "ChainStorageContainer"
     },
     {
-      "name": "ChainStorageContainer",
+      "name": "ChainStorageContainer-CTC-batches",
       "address": "0x38473Feb3A6366757A249dB2cA4fBB2C663416B7",
       "sourceHashes": [
         "0x94ea4eb57654b23e5ce34a8f4571a446786efb3080044f3ecfc2f3870e601ee0"
@@ -120,7 +120,8 @@
         "DEFAULT_CHAINID": 1088,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "CanonicalTransactionChain"
-      }
+      },
+      "derivedName": "ChainStorageContainer"
     },
     {
       "name": "L1StandardBridge",
@@ -503,7 +504,7 @@
       "derivedName": "MVM_StateCommitmentChain"
     },
     {
-      "name": "ChainStorageContainer",
+      "name": "ChainStorageContainer-CTC-queue",
       "address": "0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57",
       "sourceHashes": [
         "0x94ea4eb57654b23e5ce34a8f4571a446786efb3080044f3ecfc2f3870e601ee0"
@@ -519,7 +520,8 @@
         "lengthByChainId": 0,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "CanonicalTransactionChain"
-      }
+      },
+      "derivedName": "ChainStorageContainer"
     },
     {
       "name": "LockingPool",
