@@ -14,7 +14,7 @@ import { DebugTransactionCallResponse } from './DebugTransactionTrace'
 import { ContractDeployment, RawProviders } from './IProvider'
 import { LowLevelProvider } from './LowLevelProvider'
 import { CacheEntry, ReorgAwareCache } from './ReorgAwareCache'
-import { ProviderStats, getZeroStats } from './Stats'
+import { ProviderMeasurement, ProviderStats } from './Stats'
 import { MulticallClient } from './multicall/MulticallClient'
 
 interface ScheduledCall {
@@ -49,7 +49,7 @@ const REVERT_MARKER_VALUE = '{execution reverted}'
 const UNDEFINED_MARKER_VALUE = '{undefined value}'
 
 export class BatchingAndCachingProvider {
-  public stats: ProviderStats = getZeroStats()
+  public stats: ProviderStats = new ProviderStats()
   private calls: ScheduledCall[] = []
   private callsTimeout: ReturnType<typeof setTimeout> | undefined
 
@@ -99,6 +99,7 @@ export class BatchingAndCachingProvider {
     data: Bytes,
     blockNumber: number,
   ): Promise<Bytes> {
+    let duration = -performance.now()
     const entry = await this.cache.entry(
       'call',
       [blockNumber, address, data],
@@ -106,7 +107,8 @@ export class BatchingAndCachingProvider {
     )
     const cached = entry.read()
     if (cached !== undefined) {
-      this.stats.callCount++
+      duration += performance.now()
+      this.stats.mark(ProviderMeasurement.CALL, duration)
       if (cached === REVERT_MARKER_VALUE) {
         throw new Error('Execution reverted')
       } else {
@@ -127,6 +129,7 @@ export class BatchingAndCachingProvider {
   }
 
   private async flushCalls() {
+    const start = performance.now()
     const calls = [...this.calls]
     this.calls = []
 
@@ -152,7 +155,8 @@ export class BatchingAndCachingProvider {
         calls.push(checked)
         toExecute.set(checked.call.blockNumber, calls)
       } else {
-        this.stats.callCount++
+        const duration = performance.now() - start
+        this.stats.mark(ProviderMeasurement.CALL, duration)
         if (cached === REVERT_MARKER_VALUE) {
           checked.call.reject(new Error('Execution reverted'))
         } else {
@@ -203,6 +207,7 @@ export class BatchingAndCachingProvider {
     slot: number | bigint | Bytes,
     blockNumber: number,
   ): Promise<Bytes> {
+    let duration = -performance.now()
     const entry = await this.cache.entry(
       'getStorage',
       [blockNumber, address, slot],
@@ -210,7 +215,8 @@ export class BatchingAndCachingProvider {
     )
     const cached = entry.read()
     if (cached !== undefined) {
-      this.stats.getStorageCount++
+      duration += performance.now()
+      this.stats.mark(ProviderMeasurement.GET_STORAGE, duration)
       return Bytes.fromHex(cached)
     }
     const storage = await this.provider.getStorage(address, slot, blockNumber)
@@ -224,6 +230,7 @@ export class BatchingAndCachingProvider {
     fromBlock: number,
     toBlock: number,
   ): Promise<providers.Log[]> {
+    let duration = -performance.now()
     const topic0 = typeof topics[0] === 'string' ? [topics[0]] : topics[0]
     // Complex case, we can't batch this
     if (fromBlock !== 0 || topics.length !== 1 || !topic0) {
@@ -237,7 +244,8 @@ export class BatchingAndCachingProvider {
       )
       const cached = entry.read()
       if (cached !== undefined) {
-        this.stats.getLogsCount++
+        duration += performance.now()
+        this.stats.mark(ProviderMeasurement.GET_LOGS, duration)
         return parseCacheEntry(cached)
       }
       const logs = await this.provider.getLogs(
@@ -268,6 +276,7 @@ export class BatchingAndCachingProvider {
   }
 
   private async flushLogRequests() {
+    const start = performance.now()
     const logRequests = [...this.logRequests]
     this.logRequests = []
 
@@ -297,7 +306,8 @@ export class BatchingAndCachingProvider {
           missingTopics.push(checked.logRequest.topic0[i]!)
           return []
         }
-        this.stats.getLogsCount++
+        const duration = performance.now() - start
+        this.stats.mark(ProviderMeasurement.GET_LOGS, duration)
         return parseCacheEntry(cached) as providers.Log[]
       })
 
@@ -401,10 +411,12 @@ export class BatchingAndCachingProvider {
   }
 
   async getBlock(blockNumber: number): Promise<providers.Block | undefined> {
+    let duration = -performance.now()
     const entry = await this.cache.entry('getBlock', [blockNumber], undefined)
     const cached = entry.read()
     if (cached !== undefined) {
-      this.stats.getBlockCount++
+      duration += performance.now()
+      this.stats.mark(ProviderMeasurement.GET_BLOCK, duration)
       // This recovers BigNumber instances from the cache
       // BigNumbers are saved in JSON as { type: 'BigNumber', hex: '0x123' }
       return parseCacheEntry(cached)
@@ -422,6 +434,7 @@ export class BatchingAndCachingProvider {
   async getTransaction(
     transactionHash: Hash256,
   ): Promise<providers.TransactionResponse | undefined> {
+    let duration = -performance.now()
     const entry = await this.cache.entry(
       'getTransaction',
       [transactionHash],
@@ -429,7 +442,8 @@ export class BatchingAndCachingProvider {
     )
     const cached = entry.read()
     if (cached !== undefined) {
-      this.stats.getTransactionCount++
+      duration += performance.now()
+      this.stats.mark(ProviderMeasurement.GET_TRANSACTION, duration)
       // This recovers BigNumber instances from the cache
       // BigNumbers are saved in JSON as { type: 'BigNumber', hex: '0x123' }
       return parseCacheEntry(cached)
@@ -449,6 +463,7 @@ export class BatchingAndCachingProvider {
   async getDebugTrace(
     transactionHash: Hash256,
   ): Promise<DebugTransactionCallResponse> {
+    let duration = -performance.now()
     const entry = await this.cache.entry(
       'getDebugTrace',
       [transactionHash],
@@ -456,7 +471,8 @@ export class BatchingAndCachingProvider {
     )
     const cached = entry.read()
     if (cached !== undefined) {
-      this.stats.getDebugTraceCount++
+      duration += performance.now()
+      this.stats.mark(ProviderMeasurement.GET_DEBUG_TRACE, duration)
       return DebugTransactionCallResponse.parse(parseCacheEntry(cached))
     }
     const trace = await this.provider.getDebugTrace(transactionHash)
@@ -468,6 +484,7 @@ export class BatchingAndCachingProvider {
     address: EthereumAddress,
     blockNumber: number,
   ): Promise<Bytes> {
+    let duration = -performance.now()
     const entry = await this.cache.entry(
       'getBytecode',
       [address, blockNumber],
@@ -475,7 +492,8 @@ export class BatchingAndCachingProvider {
     )
     const cached = entry.read()
     if (cached !== undefined) {
-      this.stats.getBytecodeCount++
+      duration += performance.now()
+      this.stats.mark(ProviderMeasurement.GET_BYTECODE, duration)
       return Bytes.fromHex(cached)
     }
     const bytecode = await this.provider.getBytecode(address, blockNumber)
@@ -484,10 +502,12 @@ export class BatchingAndCachingProvider {
   }
 
   async getSource(address: EthereumAddress): Promise<ContractSource> {
+    let duration = -performance.now()
     const entry = await this.cache.entry('getSource', [address], undefined)
     const cached = entry.read()
     if (cached !== undefined) {
-      this.stats.getSourceCount++
+      duration += performance.now()
+      this.stats.mark(ProviderMeasurement.GET_SOURCE, duration)
       return parseCacheEntry(cached)
     }
     const source = await this.provider.getSource(address)
@@ -500,10 +520,12 @@ export class BatchingAndCachingProvider {
   async getDeployment(
     address: EthereumAddress,
   ): Promise<ContractDeployment | undefined> {
+    let duration = -performance.now()
     const entry = await this.cache.entry('getDeployment', [address], undefined)
     const cached = entry.read()
     if (cached !== undefined) {
-      this.stats.getDeploymentCount++
+      duration += performance.now()
+      this.stats.mark(ProviderMeasurement.GET_DEPLOYMENT, duration)
       if (cached === UNDEFINED_MARKER_VALUE) {
         return undefined
       } else {

@@ -7,14 +7,14 @@ import { isRevert } from '../utils/isRevert'
 import { BatchingAndCachingProvider } from './BatchingAndCachingProvider'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'
 import { ContractDeployment, IProvider, RawProviders } from './IProvider'
-import { ProviderStats, getZeroStats } from './Stats'
+import { ProviderMeasurement, ProviderStats } from './Stats'
 
 interface AllProviders {
   get(chain: string, blockNumber: number): IProvider
 }
 
 export class HighLevelProvider implements IProvider {
-  public stats: ProviderStats = getZeroStats()
+  public stats: ProviderStats = new ProviderStats()
 
   constructor(
     private readonly allProviders: AllProviders,
@@ -38,14 +38,24 @@ export class HighLevelProvider implements IProvider {
     return this.provider.raw(cacheKey, fn)
   }
 
-  call(address: EthereumAddress, data: Bytes): Promise<Bytes> {
-    this.stats.callCount++
-    return this.provider.call(address, data, this.blockNumber)
+  async call(address: EthereumAddress, data: Bytes): Promise<Bytes> {
+    let duration = -performance.now()
+    const result = await this.provider.call(address, data, this.blockNumber)
+    duration += performance.now()
+    this.stats.mark(ProviderMeasurement.CALL, duration)
+    return result
   }
 
-  callUnbatched(address: EthereumAddress, data: Bytes): Promise<Bytes> {
-    this.stats.callCount++
-    return this.provider.callUnbatched(address, data, this.blockNumber)
+  async callUnbatched(address: EthereumAddress, data: Bytes): Promise<Bytes> {
+    let duration = -performance.now()
+    const result = await this.provider.callUnbatched(
+      address,
+      data,
+      this.blockNumber,
+    )
+    duration += performance.now()
+    this.stats.mark(ProviderMeasurement.CALL, duration)
+    return result
   }
 
   async callMethod<T>(
@@ -53,14 +63,14 @@ export class HighLevelProvider implements IProvider {
     abi: string | utils.FunctionFragment,
     args: unknown[],
   ): Promise<T | undefined> {
-    this.stats.callCount++
+    let duration = -performance.now()
     const coder = new utils.Interface([abi])
     const fragment =
       typeof abi === 'string' ? Object.values(coder.functions)[0] : abi
     assert(fragment, `Unknown fragment for method: ${abi}`)
     const callData = Bytes.fromHex(coder.encodeFunctionData(fragment, args))
 
-    let decodedResult: utils.Result
+    let decodedResult: utils.Result | undefined
     try {
       const result = await this.provider.call(
         address,
@@ -69,12 +79,22 @@ export class HighLevelProvider implements IProvider {
       )
       decodedResult = coder.decodeFunctionResult(fragment, result.toString())
     } catch (e) {
-      if (isRevert(e)) {
-        return undefined
+      if (!isRevert(e)) {
+        throw e
       }
-      throw e
+      decodedResult = undefined
     }
-    return decodedResult.length === 1 ? decodedResult[0] : (decodedResult as T)
+
+    const result =
+      decodedResult === undefined
+        ? decodedResult
+        : decodedResult.length === 1
+          ? decodedResult[0]
+          : (decodedResult as T)
+
+    duration += performance.now()
+    this.stats.mark(ProviderMeasurement.CALL, duration)
+    return result
   }
 
   async callMethodUnbatched<T>(
@@ -82,14 +102,14 @@ export class HighLevelProvider implements IProvider {
     abi: string | utils.FunctionFragment,
     args: unknown[],
   ): Promise<T | undefined> {
-    this.stats.callCount++
+    let duration = -performance.now()
     const coder = new utils.Interface([abi])
     const fragment =
       typeof abi === 'string' ? Object.values(coder.functions)[0] : abi
     assert(fragment, `Unknown fragment for method: ${abi}`)
     const callData = Bytes.fromHex(coder.encodeFunctionData(fragment, args))
 
-    let decodedResult: utils.Result
+    let decodedResult: utils.Result | undefined
     try {
       const result = await this.provider.callUnbatched(
         address,
@@ -98,51 +118,88 @@ export class HighLevelProvider implements IProvider {
       )
       decodedResult = coder.decodeFunctionResult(fragment, result.toString())
     } catch (e) {
-      if (isRevert(e)) {
-        return undefined
+      if (!isRevert(e)) {
+        throw e
       }
-      throw e
+      decodedResult = undefined
     }
-    return decodedResult.length === 1 ? decodedResult[0] : (decodedResult as T)
+
+    const result =
+      decodedResult === undefined
+        ? decodedResult
+        : decodedResult.length === 1
+          ? decodedResult[0]
+          : (decodedResult as T)
+
+    duration += performance.now()
+    this.stats.mark(ProviderMeasurement.CALL, duration)
+    return result
   }
 
-  getStorage(
+  async getStorage(
     address: EthereumAddress,
     slot: number | bigint | Bytes,
   ): Promise<Bytes> {
-    this.stats.getStorageCount++
-    return this.provider.getStorage(address, slot, this.blockNumber)
+    let duration = -performance.now()
+    const result = await this.provider.getStorage(
+      address,
+      slot,
+      this.blockNumber,
+    )
+    duration += performance.now()
+    this.stats.mark(ProviderMeasurement.GET_STORAGE, duration)
+
+    return result
   }
 
   async getStorageAsAddress(
     address: EthereumAddress,
     slot: number | bigint | Bytes,
   ): Promise<EthereumAddress> {
-    this.stats.getStorageCount++
-    return bytes32ToAddress(
+    let duration = -performance.now()
+    const result = bytes32ToAddress(
       await this.provider.getStorage(address, slot, this.blockNumber),
     )
+    duration += performance.now()
+    this.stats.mark(ProviderMeasurement.GET_STORAGE, duration)
+
+    return result
   }
 
   async getStorageAsBigint(
     address: EthereumAddress,
     slot: number | bigint | Bytes,
   ): Promise<bigint> {
-    this.stats.getStorageCount++
+    let duration = -performance.now()
     const value = await this.provider.getStorage(
       address,
       slot,
       this.blockNumber,
     )
+    duration += performance.now()
+    this.stats.mark(ProviderMeasurement.GET_STORAGE, duration)
     return BigInt(value.toString())
   }
 
-  getLogs(
+  async getLogs(
     address: EthereumAddress,
     topics: (string | string[] | null)[],
   ): Promise<providers.Log[]> {
-    this.stats.getLogsCount += Array.isArray(topics[0]) ? topics[0].length : 1
-    return this.provider.getLogs(address, topics, 0, this.blockNumber)
+    let duration = -performance.now()
+    const result = await this.provider.getLogs(
+      address,
+      topics,
+      0,
+      this.blockNumber,
+    )
+    duration += performance.now()
+    this.stats.mark(
+      ProviderMeasurement.GET_LOGS,
+      duration,
+      Array.isArray(topics[0]) ? topics[0].length : 1,
+    )
+
+    return result
   }
 
   async getEvents(
@@ -150,7 +207,7 @@ export class HighLevelProvider implements IProvider {
     abi: string,
     args: unknown[] = [],
   ): Promise<{ log: providers.Log; event: utils.Result }[]> {
-    this.stats.getLogsCount++
+    let duration = -performance.now()
     const coder = new utils.Interface([abi])
     const fragment = Object.values(coder.events)[0]
     assert(fragment, `Unknown fragment for event: ${abi}`)
@@ -162,46 +219,69 @@ export class HighLevelProvider implements IProvider {
       0,
       this.blockNumber,
     )
-    return logs.map((log) => {
+    const result = logs.map((log) => {
       const event = coder.decodeEventLog(fragment, log.data, log.topics)
       return { log, event }
     })
+
+    duration += performance.now()
+    this.stats.mark(ProviderMeasurement.GET_LOGS, duration)
+
+    return result
   }
 
   async getBlock(blockNumber: number): Promise<providers.Block | undefined> {
-    this.stats.getBlockCount++
-    return await this.provider.getBlock(blockNumber)
+    let duration = -performance.now()
+    const result = await this.provider.getBlock(blockNumber)
+    duration += performance.now()
+    this.stats.mark(ProviderMeasurement.GET_BLOCK, duration)
+    return result
   }
 
-  getTransaction(
+  async getTransaction(
     transactionHash: Hash256,
   ): Promise<providers.TransactionResponse | undefined> {
-    this.stats.getTransactionCount++
-    return this.provider.getTransaction(transactionHash)
+    let duration = -performance.now()
+    const result = await this.provider.getTransaction(transactionHash)
+    duration += performance.now()
+    this.stats.mark(ProviderMeasurement.GET_TRANSACTION, duration)
+    return result
   }
 
-  getDebugTrace(
+  async getDebugTrace(
     transactionHash: Hash256,
   ): Promise<DebugTransactionCallResponse> {
-    this.stats.getDebugTraceCount++
-    return this.provider.getDebugTrace(transactionHash)
+    let duration = -performance.now()
+    const result = await this.provider.getDebugTrace(transactionHash)
+    duration += performance.now()
+    this.stats.mark(ProviderMeasurement.GET_DEBUG_TRACE, duration)
+    return result
   }
 
-  getBytecode(address: EthereumAddress): Promise<Bytes> {
-    this.stats.getBytecodeCount++
-    return this.provider.getBytecode(address, this.blockNumber)
+  async getBytecode(address: EthereumAddress): Promise<Bytes> {
+    let duration = -performance.now()
+    const result = await this.provider.getBytecode(address, this.blockNumber)
+    duration += performance.now()
+    this.stats.mark(ProviderMeasurement.GET_BYTECODE, duration)
+    return result
   }
 
-  getSource(address: EthereumAddress): Promise<ContractSource> {
-    this.stats.getSourceCount++
-    return this.provider.getSource(address)
+  async getSource(address: EthereumAddress): Promise<ContractSource> {
+    let duration = -performance.now()
+    const result = await this.provider.getSource(address)
+    duration += performance.now()
+    this.stats.mark(ProviderMeasurement.GET_SOURCE, duration)
+    return result
   }
 
-  getDeployment(
+  async getDeployment(
     address: EthereumAddress,
   ): Promise<ContractDeployment | undefined> {
-    this.stats.getDeploymentCount++
-    return this.provider.getDeployment(address)
+    let duration = -performance.now()
+    const result = await this.provider.getDeployment(address)
+    duration += performance.now()
+    this.stats.mark(ProviderMeasurement.GET_DEPLOYMENT, duration)
+    return result
   }
 
   getBlobs(txHash: string): Promise<BlobsInBlock> {
