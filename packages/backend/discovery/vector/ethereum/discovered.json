@@ -1,8 +1,8 @@
 {
   "name": "vector",
   "chain": "ethereum",
-  "blockNumber": 21364285,
-  "configHash": "0xd4ed25c6a91b336b5f8f73e316008a5aeafbd378f5fbe12d3e29053697ecfe86",
+  "blockNumber": 21378234,
+  "configHash": "0x5146a24fef95ea537d61394ffdeda3c2716165dc1b165ce288f310c7472c0d48",
   "contracts": [
     {
       "name": "Vector",
@@ -75,8 +75,8 @@
         "headerRangeCommitmentTreeSize": 2048,
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "isRelayerApproved": true,
-        "latestAuthoritySetId": 171,
-        "latestBlock": 682560,
+        "latestAuthoritySetId": 172,
+        "latestBlock": 691059,
         "relayers": ["0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"],
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
@@ -88,7 +88,7 @@
       "derivedName": "SP1Vector"
     },
     {
-      "name": "Old SP1Verifier 4",
+      "name": "SP1Verifier",
       "address": "0x1764C29FBd94865198588f10FC75D4f6636d158d",
       "sourceHashes": [
         "0xeb051b88e210e28fd696d01528e3cc9a131a08d69e20bf1983ac8d90dd9b1f4f"
@@ -98,8 +98,7 @@
         "$immutable": true,
         "VERIFIER_HASH": "0x4aca240a3e5296e6a565f98dc728c6f48f8de4792a8fa365038c3b86952176f5",
         "VERSION": "v2.0.0"
-      },
-      "derivedName": "SP1Verifier"
+      }
     },
     {
       "name": "SuccinctGatewaySP1",
@@ -151,7 +150,7 @@
       "derivedName": "SP1VerifierGateway"
     },
     {
-      "name": "Old SP1Verifier 3",
+      "name": "SP1Verifier",
       "address": "0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3",
       "sourceHashes": [
         "0x0f6f590ac4c542e7f927f783929cb0bf126657b5207b3c796f77ac9d01433fb5"
@@ -161,11 +160,10 @@
         "$immutable": true,
         "VERIFIER_HASH": "0x090690902a12d1d02c07a1ad25aa76bded5f6499e12a11ba127669501b553998",
         "VERSION": "v3.0.0"
-      },
-      "derivedName": "SP1Verifier"
+      }
     },
     {
-      "name": "Old SP1Verifier 2",
+      "name": "SP1Verifier",
       "address": "0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc",
       "sourceHashes": [
         "0xabb95b2d66749481071b7a258a3305198760dbaf12d7411cfaba5e4c26cc3a65"
@@ -175,8 +173,7 @@
         "$immutable": true,
         "VERIFIER_HASH": "0xc865c1b60c05baa44075f37d6d88f2e18c64effb9113740b47cdf12b711b8aa4",
         "VERSION": "v1.2.0"
-      },
-      "derivedName": "SP1Verifier"
+      }
     },
     {
       "name": "AvailMultisig",
@@ -191,7 +188,7 @@
         {
           "permission": "configure",
           "target": "0x02993cdC11213985b9B13224f3aF289F03bf298d",
-          "description": "can change state of the Vector contract - freezing the contract and updating the list of authorized relayers."
+          "description": "can freeze the Vector contract and update the list of authorized relayers."
         },
         {
           "permission": "upgrade",
@@ -223,7 +220,7 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "Old SP1Verifier 1",
+      "name": "SP1Verifier",
       "address": "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB",
       "sourceHashes": [
         "0x6e3bfeae0d549b79decfd956f551a8aeac66523cdd66da389ef55eb56ef72aac"
@@ -233,8 +230,7 @@
         "$immutable": true,
         "VERIFIER_HASH": "0xc430ff7f31a22c5f7607f3ed2a2f5621af340bc45a44179319cba5761664e1f0",
         "VERSION": "v1.1.0"
-      },
-      "derivedName": "SP1Verifier"
+      }
     },
     {
       "name": "SuccinctGatewaySP1Multisig",
@@ -529,6 +525,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "succinct/SP1SuccinctGateway": "0x8e07a550d79ad9636ecd48aaf27eed662a4513dbc69cc53361ca27e5ac7640c9",
-    "succinct/SP1Vector": "0x59b44da208c521ac452c75412e63bfb69b49dac182333377722e9dba3da96521"
+    "succinct/SP1Vector": "0xc2941a3d35e633cd5608c0d372ed85b4804a8ed7044f0b4e186b69899469e624"
   }
 }

@@ -9,6 +9,27 @@
         "type": "accessControl"
       }
     },
+    "isRelayerApproved": {
+      "handler": {
+        "type": "call",
+        "method": "function approvedRelayers(address) view returns (bool)",
+        "args": ["0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"]
+      }
+    },
+    "relayers": {
+      "handler": {
+        "type": "hardcoded",
+        "value": ["0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"]
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "configure",
+            "description": "can call commitHeaderRange() to commit block ranges to the Vector contract."
+          }
+        ]
+      }
+    },
     "guardians": {
       "handler": {
         "type": "accessControl",
@@ -18,7 +39,7 @@
         "permissions": [
           {
             "type": "configure",
-            "description": "can change state of the Vector contract - freezing the contract and updating the list of authorized relayers."
+            "description": "can freeze the Vector contract and update the list of authorized relayers."
           }
         ]
       }

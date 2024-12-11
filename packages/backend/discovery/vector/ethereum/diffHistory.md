@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xc64da00cbfedeb45667eaf8a70f40d74df6b2660
+Generated with discovered.json: 0x4712c6303c518aea8b1549bca8a9c031869461e3
 
-# Diff at Mon, 09 Dec 2024 10:15:44 GMT:
+# Diff at Wed, 11 Dec 2024 09:00:22 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@89e8982b383eef3a5fbd1d40b993ff7d9b8230e3 block: 21184939
-- current block number: 21364285
+- comparing to: main@0e3b4aa609891cbfaf2ac16c5eae6839e5be9f68 block: 21184939
+- current block number: 21378234
 
 ## Description
 
@@ -31,15 +31,6 @@ discovery. Values are for block 21184939 (main branch discovery), not current.
 ```
 
 ```diff
-    contract Old SP1Verifier 4 (0x1764C29FBd94865198588f10FC75D4f6636d158d) {
-    +++ description: None
-      name:
--        "SP1Verifier"
-+        "Old SP1Verifier 4"
-    }
-```
-
-```diff
     contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
     +++ description: This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.
       description:
@@ -50,37 +41,10 @@ discovery. Values are for block 21184939 (main branch discovery), not current.
 ```
 
 ```diff
-    contract Old SP1Verifier 3 (0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3) {
-    +++ description: None
-      name:
--        "SP1Verifier"
-+        "Old SP1Verifier 3"
-    }
-```
-
-```diff
-    contract Old SP1Verifier 2 (0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc) {
-    +++ description: None
-      name:
--        "SP1Verifier"
-+        "Old SP1Verifier 2"
-    }
-```
-
-```diff
     contract AvailMultisig (0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) {
     +++ description: None
       receivedPermissions:
-+        [{"permission":"configure","target":"0x02993cdC11213985b9B13224f3aF289F03bf298d","description":"can change state of the Vector contract - freezing the contract and updating the list of authorized relayers."},{"permission":"upgrade","target":"0x02993cdC11213985b9B13224f3aF289F03bf298d"}]
-    }
-```
-
-```diff
-    contract Old SP1Verifier 1 (0xc350F063C13a3Ca21331610fe159E697a5c9c2FB) {
-    +++ description: None
-      name:
--        "SP1Verifier"
-+        "Old SP1Verifier 1"
++        [{"permission":"configure","target":"0x02993cdC11213985b9B13224f3aF289F03bf298d","description":"can freeze the Vector contract and update the list of authorized relayers."},{"permission":"upgrade","target":"0x02993cdC11213985b9B13224f3aF289F03bf298d"}]
     }
 ```
 
