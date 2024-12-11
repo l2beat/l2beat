@@ -117,7 +117,7 @@ export class Logger {
   tag(
     tags: Pick<
       LoggerOptions,
-      'tag' | 'module' | 'feature' | 'chain' | 'project'
+      'tag' | 'module' | 'feature' | 'chain' | 'project' | 'source'
     >,
   ): Logger {
     return this.configure(tags)
@@ -195,6 +195,7 @@ export class Logger {
       module: this.options.module,
       chain: parsed.chain ?? this.options.chain,
       project: parsed.project ?? this.options.project,
+      source: this.options.source,
     }
   }
 
