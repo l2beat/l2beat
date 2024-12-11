@@ -7,6 +7,10 @@ function sendSSE(res: Response, data: string) {
 }
 
 export function executeTerminalCommand(command: string, res: Response): void {
+  res.setHeader('Content-Type', 'text/event-stream')
+  res.setHeader('Cache-Control', 'no-cache')
+  res.setHeader('Connection', 'keep-alive')
+
   const proc = spawn(command, {
     shell: true,
     env: {

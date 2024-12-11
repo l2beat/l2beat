@@ -34,7 +34,7 @@ export function getTvlConfig(
       c.config.escrows.some(
         (e) =>
           e.sharedEscrow?.type === 'AggLayer' ||
-          e.sharedEscrow?.type === 'ElasticChian',
+          e.sharedEscrow?.type === 'ElasticChain',
       ),
     )
     .map((l) => l.id)

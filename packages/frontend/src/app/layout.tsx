@@ -1,7 +1,8 @@
 import { type Metadata } from 'next'
 import PlausibleProvider from 'next-plausible'
 import { ThemeProvider } from 'next-themes'
-
+import { SearchBarContextProvider } from '~/components/search-bar/search-bar-context'
+import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
 import { getCollection } from '~/content/get-collection'
 import { env } from '~/env'
 import { TRPCReactProvider } from '~/trpc/react'
@@ -11,8 +12,6 @@ import { GlossaryContextProvider } from '../components/markdown/glossary-context
 import { ProgressBar } from '../components/progress-bar'
 import { roboto } from '../fonts'
 import '../styles/globals.css'
-import { SearchBarContextProvider } from '~/components/search-bar/search-bar-context'
-import { searchBarProjects } from '~/components/search-bar/search-bar-projects'
 
 export const metadata: Metadata = getDefaultMetadata()
 
@@ -22,6 +21,7 @@ export default async function RootLayout({
   children: React.ReactNode
 }>) {
   const terms = getCollection('glossary')
+  const searchBarProjects = await getSearchBarProjects()
 
   return (
     // We suppress the hydration warning here because we're using:

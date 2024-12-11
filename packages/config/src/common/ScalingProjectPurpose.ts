@@ -15,7 +15,6 @@ export type ScalingProjectPurpose =
   | 'NFT'
   | 'Oracles'
   | 'Payments'
-  | 'Private payments'
   | 'Privacy'
   | 'Universal'
   | 'Social'
