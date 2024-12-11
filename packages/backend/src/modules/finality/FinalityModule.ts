@@ -76,7 +76,7 @@ function initializeConfigurations(
   database: Database,
   logger: Logger,
 ): FinalityConfig[] {
-  const ethereumclient = providers.clients.getRpcClient('ethereum')
+  const ethereumClient = providers.clients.getRpcClient('ethereum')
 
   const loopringClient = providers.clients.loopring
   assert(loopringClient, 'Loopring client not defined')
@@ -98,7 +98,7 @@ function initializeConfigurations(
             projectId: configuration.projectId,
             analyzers: {
               timeToInclusion: new LineaT2IAnalyzer(
-                ethereumclient,
+                ethereumClient,
                 database,
                 configuration.projectId,
                 providers.clients.getRpcClient(configuration.projectId),
@@ -112,7 +112,7 @@ function initializeConfigurations(
             projectId: configuration.projectId,
             analyzers: {
               timeToInclusion: new zkSyncEraT2IAnalyzer(
-                ethereumclient,
+                ethereumClient,
                 database,
                 configuration.projectId,
               ),
@@ -127,7 +127,7 @@ function initializeConfigurations(
               timeToInclusion: new OpStackT2IAnalyzer(
                 blobProvider,
                 logger,
-                ethereumclient,
+                ethereumClient,
                 database,
                 configuration.projectId,
                 {
@@ -136,7 +136,7 @@ function initializeConfigurations(
                 },
               ),
               stateUpdate: new OpStackStateUpdateAnalyzer(
-                ethereumclient,
+                ethereumClient,
                 database,
                 configuration.projectId,
                 configuration.l2BlockTimeSeconds,
@@ -153,7 +153,7 @@ function initializeConfigurations(
               timeToInclusion: new ArbitrumT2IAnalyzer(
                 blobProvider,
                 logger,
-                ethereumclient,
+                ethereumClient,
                 database,
                 configuration.projectId,
               ),
@@ -166,7 +166,7 @@ function initializeConfigurations(
             projectId: configuration.projectId,
             analyzers: {
               timeToInclusion: new ScrollT2IAnalyzer(
-                ethereumclient,
+                ethereumClient,
                 database,
                 configuration.projectId,
               ),
@@ -179,7 +179,7 @@ function initializeConfigurations(
             projectId: configuration.projectId,
             analyzers: {
               timeToInclusion: new ZkSyncLiteT2IAnalyzer(
-                ethereumclient,
+                ethereumClient,
                 database,
                 configuration.projectId,
               ),
@@ -192,7 +192,7 @@ function initializeConfigurations(
             projectId: configuration.projectId,
             analyzers: {
               timeToInclusion: new StarknetT2IAnalyzer(
-                ethereumclient,
+                ethereumClient,
                 database,
                 configuration.projectId,
                 starknetClient,
@@ -206,7 +206,7 @@ function initializeConfigurations(
             projectId: configuration.projectId,
             analyzers: {
               timeToInclusion: new LoopringT2IAnalyzer(
-                ethereumclient,
+                ethereumClient,
                 database,
                 configuration.projectId,
                 loopringClient,
@@ -220,7 +220,7 @@ function initializeConfigurations(
             projectId: configuration.projectId,
             analyzers: {
               timeToInclusion: new LoopringT2IAnalyzer(
-                ethereumclient,
+                ethereumClient,
                 database,
                 configuration.projectId,
                 degateClient,
@@ -234,7 +234,7 @@ function initializeConfigurations(
             projectId: configuration.projectId,
             analyzers: {
               timeToInclusion: new PolygonZkEvmT2IAnalyzer(
-                ethereumclient,
+                ethereumClient,
                 database,
                 configuration.projectId,
                 providers.clients.getRpcClient(configuration.projectId),
