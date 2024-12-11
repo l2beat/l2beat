@@ -1,8 +1,6 @@
-import { Logger, RateLimiter } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-
-import { RetryHandler } from '../../tools'
 import { HttpClient2 } from '../http/HttpClient2'
 import { ZksyncLiteClient } from './ZksyncLiteClient'
 
@@ -131,17 +129,15 @@ describe(ZksyncLiteClient.name, () => {
 function mockClient(deps: {
   http?: HttpClient2
   url?: string
-  rateLimiter?: RateLimiter
-  retryHandler?: RetryHandler
   generateId?: () => string
 }) {
   return new ZksyncLiteClient({
     url: deps.url ?? 'API_URL',
     http: deps.http ?? mockObject<HttpClient2>({}),
-    rateLimiter:
-      deps.rateLimiter ?? new RateLimiter({ callsPerMinute: 100_000 }),
-    retryHandler: deps.retryHandler ?? RetryHandler.TEST,
+    callsPerMinute: 100_000,
+    retryStrategy: 'TEST',
     logger: Logger.SILENT,
+    sourceName: 'test',
   })
 }
 

@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x58b1c233533fe3790d77fb27e2f53ec183202e79
+
+# Diff at Tue, 10 Dec 2024 11:09:13 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ed5a41ddcad978cfdf826bc7a4827bf4a91c814 block: 282615739
+- current block number: 282615739
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 282615739 (main branch discovery), not current.
+
+```diff
+    contract headerRangeVerifier (0x4d0C32ddA9De7CD89e198cFe5E01470A49b8acD3) {
+    +++ description: None
+      name:
+-        "FunctionVerifier"
++        "headerRangeVerifier"
+    }
+```
+
+```diff
+    contract nextHeaderVerifier (0xfEA1EFaE3cDe8C524168726a7fc46BF2134bb72C) {
+    +++ description: None
+      name:
+-        "FunctionVerifier"
++        "nextHeaderVerifier"
+    }
+```
+
 Generated with discovered.json: 0x6e041fc1949d56d85654cf090fe0c5fa96b0cb79
 
 # Diff at Sun, 08 Dec 2024 11:35:30 GMT:

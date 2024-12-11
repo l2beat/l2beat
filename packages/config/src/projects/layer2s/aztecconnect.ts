@@ -261,12 +261,10 @@ export const aztecconnect: Layer2 = {
       }),
       // rollupBeneficiary is encoded in proofData. Can be set arbitrarily for each rollup.
       // https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L704
-      {
-        address: EthereumAddress('0x4cf32670a53657596E641DFCC6d40f01e4d64927'),
-        description:
-          'Contract responsible for distributing fees and reimbursing gas to Rollup Providers.',
-        name: 'AztecFeeDistributor',
-      },
+      discovery.getContractDetails(
+        'AztecFeeDistributor',
+        'Contract responsible for distributing fees and reimbursing gas to Rollup Providers.',
+      ),
       discovery.getContractDetails(
         'DefiBridgeProxy',
         'Bridge Connector to various DeFi Bridges.',

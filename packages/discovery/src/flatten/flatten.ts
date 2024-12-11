@@ -29,7 +29,7 @@ export function flattenStartingFrom(
     remappingStrings,
     options,
   )
-  const rootContract = parsedFileManager.findDeclaration(rootContractName)
+  const rootContract = parsedFileManager.findRootDeclaration(rootContractName)
   const relationDictionary = generateUsedFromDictionary(
     parsedFileManager,
     rootContract,

@@ -1,7 +1,6 @@
-import { Logger, RateLimiter } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { RetryHandler } from '../../tools'
 import { HttpClient2 } from '../http/HttpClient2'
 import { LoopringClient } from './LoopringClient'
 
@@ -125,8 +124,6 @@ describe(LoopringClient.name, () => {
 
 function mockClient(deps: {
   http?: HttpClient2
-  rateLimiter?: RateLimiter
-  retryHandler?: RetryHandler
   logger?: Logger
   url?: string
   type?: 'loopring' | 'degate3'
@@ -134,10 +131,11 @@ function mockClient(deps: {
   return new LoopringClient({
     http: deps.http ?? mockObject<HttpClient2>(),
     logger: deps.logger ?? Logger.SILENT,
-    rateLimiter: deps.rateLimiter ?? RateLimiter.TEST,
-    retryHandler: deps.retryHandler ?? RetryHandler.TEST,
+    callsPerMinute: 100_000,
+    retryStrategy: 'TEST',
     url: deps.url ?? 'https://example.com',
     type: deps.type ?? 'loopring',
+    sourceName: 'test',
   })
 }
 
