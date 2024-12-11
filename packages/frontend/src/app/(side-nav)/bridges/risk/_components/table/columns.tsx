@@ -51,10 +51,10 @@ export const bridgesRisksColumns = [
         b.original.validatedBy,
       ),
   }),
-  columnHelper.accessor('category', {
+  columnHelper.accessor('type', {
     header: 'Type',
     cell: (ctx) => {
-      return <TypeCell>{ctx.row.original.category}</TypeCell>
+      return <TypeCell>{ctx.getValue()}</TypeCell>
     },
     meta: {
       tooltip:
