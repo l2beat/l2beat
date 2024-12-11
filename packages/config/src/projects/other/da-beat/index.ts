@@ -117,5 +117,3 @@ export const daLayers = applyProcessor([
   eigenDA,
   fraxtalDA,
 ])
-
-export const allDaLayers = [...daLayers, ethereumDaLayer]
