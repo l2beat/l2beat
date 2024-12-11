@@ -287,6 +287,9 @@ async function main() {
     }
   }
 
+  console.log(
+    `Filtering out tokens with market cap < ${MIN_MARKET_CAP} or missing value < ${MIN_MISSING_VALUE}...`,
+  )
   const sortedTokens = Array.from(allFoundTokens.entries())
     .map(([address, data]) => {
       assert(data.coingeckoId, `Missing coingeckoId for token ${address}`)
@@ -329,6 +332,8 @@ async function main() {
       const missingValueB = b.missingValue ?? 0
       return missingValueB - missingValueA
     })
+
+  console.log(`Saving ${sortedTokens.length} tokens...`)
 
   writeFileSync(
     OUTPUT_PATH,
