@@ -1,10 +1,9 @@
 import { bridges } from '@l2beat/config'
-import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../projects-change-report/get-projects-change-report'
 import { get7dTokenBreakdown } from '../scaling/tvl/utils/get-7d-token-breakdown'
 import { orderByTvl } from '../scaling/tvl/utils/order-by-tvl'
-import { isAnySectionUnderReview } from '../scaling/utils/is-any-section-under-review'
 import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
+import { getCommonBridgesEntry } from './get-common-bridges-entry'
 
 export type BridgesArchivedEntry = Awaited<
   ReturnType<typeof getBridgesArchivedEntries>
@@ -26,21 +25,13 @@ export async function getBridgesArchivedEntries() {
     const hasHighSeverityFieldChanged =
       projectsChangeReport.hasHighSeverityFieldChanged(bridge.id.toString())
     return {
-      id: bridge.id,
-      slug: bridge.display.slug,
-      href: `/bridges/projects/${bridge.display.slug}`,
-      name: bridge.display.name,
-      shortName: bridge.display.shortName,
-      isVerified,
-      underReviewStatus: getUnderReviewStatus({
-        isUnderReview: isAnySectionUnderReview(bridge),
+      ...getCommonBridgesEntry({
+        bridge,
+        isVerified,
         hasImplementationChanged,
         hasHighSeverityFieldChanged,
       }),
-      warning: bridge.display.warning,
       validatedBy: bridge.riskView?.validatedBy,
-      category: bridge.display.category,
-      type: bridge.type,
       totalTvl: tvl?.breakdown.total,
     }
   })

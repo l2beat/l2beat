@@ -1,7 +1,6 @@
 import { bridges } from '@l2beat/config'
 import { type ProjectsVerificationStatuses } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
-import { getUnderReviewStatus } from '~/utils/project/under-review'
 import {
   type ProjectsChangeReport,
   getProjectsChangeReport,
@@ -12,8 +11,8 @@ import {
 } from '../scaling/tvl/utils/get-7d-token-breakdown'
 import { getAssociatedTokenWarning } from '../scaling/tvl/utils/get-associated-token-warning'
 import { orderByTvl } from '../scaling/tvl/utils/order-by-tvl'
-import { isAnySectionUnderReview } from '../scaling/utils/is-any-section-under-review'
 import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
+import { getCommonBridgesEntry } from './get-common-bridges-entry'
 import { getDestination } from './get-destination'
 
 export async function getBridgesSummaryEntries() {
@@ -63,25 +62,19 @@ function getBridges(params: Params) {
       projectsChangeReport.hasHighSeverityFieldChanged(bridge.id.toString())
 
     return {
-      id: bridge.id,
-      href: `/bridges/projects/${bridge.display.slug}`,
-      type: bridge.type,
-      shortName: bridge.display.shortName,
-      name: bridge.display.name,
-      slug: bridge.display.slug,
+      ...getCommonBridgesEntry({
+        bridge,
+        isVerified,
+        hasImplementationChanged,
+        hasHighSeverityFieldChanged,
+      }),
       isArchived: bridge.isArchived,
       isUpcoming: bridge.isUpcoming,
-      isVerified,
       destination: getDestination(
         bridge.type === 'bridge'
           ? bridge.technology.destination
           : [bridge.display.name],
       ),
-      underReviewStatus: getUnderReviewStatus({
-        isUnderReview: isAnySectionUnderReview(bridge),
-        hasImplementationChanged,
-        hasHighSeverityFieldChanged,
-      }),
       tvl: {
         breakdown: bridgeTvl?.breakdown,
         change: bridgeTvl?.change,
@@ -92,8 +85,6 @@ function getBridges(params: Params) {
         ]),
       },
       validatedBy: bridge.riskView.validatedBy,
-      category: bridge.display.category,
-      warning: bridge.display.warning,
     }
   })
 
