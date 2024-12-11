@@ -1,6 +1,5 @@
-import { DaEconomicSecurityRisk } from '../../types/DaEconomicSecurityRisk'
-import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
-import { DaLayer } from '../../types/DaLayer'
+import { EthereumDaLayer } from '../../types/DaLayer'
+import { EthereumDaLayerRisks } from '../../types/EthereumDaRisks'
 import { enshrinedBridge } from './bridges/enshrinedBridge'
 
 export const ethereum = {
@@ -102,11 +101,8 @@ export const ethereum = {
     unbondingPeriod: 777600, // current value from validatorqueue.com. Technically it is the sum of 1) Exit Queue (variable) 2) fixed waiting time (27.3 hours), 3) Validator Sweep (variable).
   },
   pruningWindow: 86400 * 18, // 18 days in seconds
-  risks: {
-    economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
-    fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
-  },
+  risks: EthereumDaLayerRisks.SelfVerify,
   economicSecurity: {
     type: 'Ethereum',
   },
-} satisfies DaLayer
+} satisfies EthereumDaLayer

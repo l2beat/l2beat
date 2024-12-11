@@ -45,37 +45,31 @@ function getRegularDetails({
       ? daBridge.usedIn[0]
       : undefined
 
-  const permissionsSection =
-    daBridge.type !== 'Enshrined'
-      ? getMultichainPermissionsSection(
-          {
-            id: daLayer.id,
-            bridge: daBridge,
-            isUnderReview: !!daLayer.isUnderReview,
-            permissions: daBridge.permissions,
-            dacUsedIn: relatedScalingProject,
-          },
-          contractsVerificationStatuses,
-          manuallyVerifiedContracts,
-        )
-      : undefined
+  const permissionsSection = getMultichainPermissionsSection(
+    {
+      id: daLayer.id,
+      bridge: daBridge,
+      isUnderReview: !!daLayer.isUnderReview,
+      permissions: daBridge.permissions,
+      dacUsedIn: relatedScalingProject,
+    },
+    contractsVerificationStatuses,
+    manuallyVerifiedContracts,
+  )
 
-  const contractsSection =
-    daBridge.type !== 'Enshrined'
-      ? getMultiChainContractsSection(
-          {
-            id: daBridge.id,
-            isVerified,
-            slug: daBridge.display.slug,
-            contracts: daBridge.contracts,
-            isUnderReview: daLayer.isUnderReview,
-            dacUsedIn: relatedScalingProject,
-          },
-          contractsVerificationStatuses,
-          manuallyVerifiedContracts,
-          projectsChangeReport,
-        )
-      : undefined
+  const contractsSection = getMultiChainContractsSection(
+    {
+      id: daBridge.id,
+      isVerified,
+      slug: daBridge.display.slug,
+      contracts: daBridge.contracts,
+      isUnderReview: daLayer.isUnderReview,
+      dacUsedIn: relatedScalingProject,
+    },
+    contractsVerificationStatuses,
+    manuallyVerifiedContracts,
+    projectsChangeReport,
+  )
 
   const riskSummarySection = getDaProjectRiskSummarySection(
     daLayer,

@@ -10,13 +10,10 @@ import { DaRelayerFailureRisk } from './DaRelayerFailureRisk'
 import { DaTechnology } from './DaTechnology'
 import { DaUpgradeabilityRisk } from './DaUpgradeabilityRisk'
 import { DacTransactionDataType } from './DacTransactionDataType'
+import { EthereumDaBridgeRisks } from './EthereumDaRisks'
 import { UsedInProject } from './UsedInProject'
 
-export type DaBridge =
-  | NoDaBridge
-  | OnChainDaBridge
-  | DacBridge
-  | EnshrinedBridge
+export type DaBridge = NoDaBridge | OnChainDaBridge | DacBridge
 
 export type NoDaBridge = CommonDaBridge & {
   type: 'NoBridge'
@@ -34,8 +31,9 @@ export type NoDaBridge = CommonDaBridge & {
   contracts: DaBridgeContracts
 }
 
-export type EnshrinedBridge = CommonDaBridge & {
+export type EnshrinedBridge = Omit<CommonDaBridge, 'risks'> & {
   type: 'Enshrined'
+  risks: EthereumDaBridgeRisks
 }
 
 export type OnChainDaBridge = CommonDaBridge & {

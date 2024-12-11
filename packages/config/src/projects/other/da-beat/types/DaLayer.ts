@@ -14,12 +14,13 @@ import { DaFraudDetectionRisk } from './DaFraudDetectionRisk'
 import { DaLinks } from './DaLinks'
 import { DaTechnology } from './DaTechnology'
 import { DataAvailabilitySampling } from './DataAvailabilitySampling'
+import { EthereumDaLayerRisks } from './EthereumDaRisks'
 
 export type DaLayer = BlockchainDaLayer | DacDaLayer
 
 export type BlockchainDaLayer = CommonDaLayer & {
   kind: 'PublicBlockchain'
-  bridges: (OnChainDaBridge | EnshrinedBridge | NoDaBridge)[]
+  bridges: (OnChainDaBridge | NoDaBridge)[]
   /** The period within which full nodes must store and distribute data. @unit seconds */
   pruningWindow: number
   /** Details about data availability sampling. */
@@ -28,6 +29,13 @@ export type BlockchainDaLayer = CommonDaLayer & {
   consensusAlgorithm: DaConsensusAlgorithm
   /** Economic security configuration. */
   economicSecurity?: DaEconomicSecurity
+}
+
+export type EthereumDaLayer = Omit<BlockchainDaLayer, 'risks' | 'bridges'> & {
+  id: 'ethereum'
+  kind: 'PublicBlockchain'
+  bridges: [EnshrinedBridge]
+  risks: EthereumDaLayerRisks
 }
 
 export type DacDaLayer = CommonDaLayer & {

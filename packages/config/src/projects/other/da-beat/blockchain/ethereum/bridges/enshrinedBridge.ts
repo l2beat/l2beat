@@ -1,7 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../../../types'
-import { DaBridge, EnshrinedBridge } from '../../../types/DaBridge'
-import { DaRelayerFailureRisk } from '../../../types/DaRelayerFailureRisk'
+import { EnshrinedBridge } from '../../../types/DaBridge'
+import { EthereumDABridgeRisks } from '../../../types/EthereumDaRisks'
 import { linkByDA } from '../../../utils/link-by-da'
 
 export const enshrinedBridge: EnshrinedBridge = {
@@ -34,12 +33,5 @@ export const enshrinedBridge: EnshrinedBridge = {
     layer: (layer) => layer?.startsWith('Ethereum'),
     bridge: (bridge) => bridge === 'Enshrined',
   }),
-  risks: {
-    committeeSecurity: DaCommitteeSecurityRisk.RobustAndDiverseCommittee(
-      'Ethereum Validators',
-    ),
-    upgradeability: DaUpgradeabilityRisk.Immutable,
-    // we should add a note on the frontend that the specific rollup contracts could be upgradable and the security properties of each depend on the single rollup implementation
-    relayerFailure: DaRelayerFailureRisk.SelfPropose,
-  },
-} satisfies DaBridge
+  risks: EthereumDABridgeRisks.Enshrined,
+}
