@@ -3,6 +3,8 @@ import path from 'path'
 import { ManuallyVerifiedContractsPerChain } from '@l2beat/shared-pure'
 import { ParseError, parse } from 'jsonc-parser'
 
+const memo: Map<string, ManuallyVerifiedContractsPerChain> = new Map()
+
 export function parseManuallyVerifiedContracts(
   content: string,
 ): ManuallyVerifiedContractsPerChain {
@@ -20,9 +22,7 @@ export function parseManuallyVerifiedContracts(
   return ManuallyVerifiedContractsPerChain.parse(parsed)
 }
 
-export function getManuallyVerifiedContracts(
-  chain: string,
-): ManuallyVerifiedContractsPerChain {
+export function readManuallyVerifiedContracts(chain: string) {
   const jsonFilePath = path.resolve(
     __dirname,
     `${chain}/manuallyVerified.jsonc`,
@@ -34,4 +34,17 @@ export function getManuallyVerifiedContracts(
 
   const content = readFileSync(jsonFilePath, 'utf-8')
   return parseManuallyVerifiedContracts(content)
+}
+
+export function getManuallyVerifiedContracts(
+  chain: string,
+): ManuallyVerifiedContractsPerChain {
+  const entry = memo.get(chain)
+  if (entry !== undefined) {
+    return entry
+  }
+
+  const value = readManuallyVerifiedContracts(chain)
+  memo.set(chain, value)
+  return value
 }

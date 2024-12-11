@@ -24,20 +24,14 @@ export async function getScalingSummaryEntries() {
   const projects = [...layer2s, ...layer3s].filter(
     (project) => !project.isUpcoming && !project.isArchived,
   )
-  const [
-    projectsChangeReport,
-    projectsVerificationStatuses,
-    tvl,
-    projectsActivity,
-  ] = await Promise.all([
+  const [projectsChangeReport, tvl, projectsActivity] = await Promise.all([
     getProjectsChangeReport(),
-    getProjectsVerificationStatuses(),
     get7dTokenBreakdown({ type: 'layer2' }),
     getActivityLatestUops(projects),
   ])
 
   const entries = projects.map((project) => {
-    const isVerified = !!projectsVerificationStatuses[project.id.toString()]
+    const isVerified = getProjectsVerificationStatuses(project)
     const latestTvl = tvl.projects[project.id.toString()]
     const activity = projectsActivity[project.id.toString()]
 

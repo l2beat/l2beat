@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "arbitrum",
   "blockNumber": 282615739,
-  "configHash": "0xd13a5db17eefebe2a6e6d5b29af6783811174b3cce58a0867c100e0ade7f53d0",
+  "configHash": "0x453cb8250699195f4d1965340c7278f47f5e5826f14fa85366847aa8f0e2fbe9",
   "contracts": [
     {
       "name": "SP1Verifier",
@@ -66,7 +66,7 @@
       "derivedName": "SP1VerifierGateway"
     },
     {
-      "name": "FunctionVerifier",
+      "name": "headerRangeVerifier",
       "address": "0x4d0C32ddA9De7CD89e198cFe5E01470A49b8acD3",
       "sourceHashes": [
         "0x205b995df6bf32d996abb3bf617459c0102ba36f15f7ec1b12994eba3346f12f"
@@ -76,7 +76,8 @@
         "$immutable": true,
         "CIRCUIT_DIGEST": "0x16cb5c45290c8545b9998275c07e7577fa0962bb6e35597c69de570649b7083f",
         "verificationKeyHash": "0x16cb5c45290c8545b9998275c07e7577fa0962bb6e35597c69de570649b7083f"
-      }
+      },
+      "derivedName": "FunctionVerifier"
     },
     {
       "name": "SP1Verifier",
@@ -321,7 +322,7 @@
       "derivedName": "GnosisSafeL2"
     },
     {
-      "name": "FunctionVerifier",
+      "name": "nextHeaderVerifier",
       "address": "0xfEA1EFaE3cDe8C524168726a7fc46BF2134bb72C",
       "sourceHashes": [
         "0xa56a53a05b7201f86a6987201b5a99cb4f9e7fba1060ecf8290515990b6f6b5e"
@@ -331,7 +332,8 @@
         "$immutable": true,
         "CIRCUIT_DIGEST": "0x16df4a97d228dbf5c20398fa31357d96724dcd1df399d9919b2902f6a42850f1",
         "verificationKeyHash": "0x16df4a97d228dbf5c20398fa31357d96724dcd1df399d9919b2902f6a42850f1"
-      }
+      },
+      "derivedName": "FunctionVerifier"
     }
   ],
   "eoas": [

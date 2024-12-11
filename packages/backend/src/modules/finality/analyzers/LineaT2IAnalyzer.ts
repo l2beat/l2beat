@@ -3,7 +3,6 @@ import { utils } from 'ethers'
 
 import { Database } from '@l2beat/database'
 import { RpcClient2 } from '@l2beat/shared'
-import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { BaseAnalyzer } from './types/BaseAnalyzer'
 import type { L2Block, Transaction } from './types/BaseAnalyzer'
 
@@ -21,7 +20,7 @@ export class LineaT2IAnalyzer extends BaseAnalyzer {
     provider: RpcClient2,
     db: Database,
     projectId: ProjectId,
-    private readonly l2Provider: RpcClient,
+    private readonly l2Provider: RpcClient2,
   ) {
     super(provider, db, projectId)
   }
@@ -43,11 +42,13 @@ export class LineaT2IAnalyzer extends BaseAnalyzer {
     return await Promise.all([
       {
         blockNumber: firstBlockInData,
-        timestamp: (await this.l2Provider.getBlock(firstBlockInData)).timestamp,
+        timestamp: (await this.l2Provider.getBlock(firstBlockInData, false))
+          .timestamp,
       },
       {
         blockNumber: lastBlockInData,
-        timestamp: (await this.l2Provider.getBlock(lastBlockInData)).timestamp,
+        timestamp: (await this.l2Provider.getBlock(lastBlockInData, false))
+          .timestamp,
       },
     ])
   }
