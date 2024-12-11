@@ -1,3 +1,47 @@
+Generated with discovered.json: 0x18e112597e752f06c69d3c1745181823b7fe811b
+
+# Diff at Wed, 11 Dec 2024 05:59:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0e3b4aa609891cbfaf2ac16c5eae6839e5be9f68 block: 619744
+- current block number: 628196
+
+## Description
+
+Minor upgrade that adds a `EXIT_WINDOW_PERIOD` of 10d (from the most recent sanction) to KintoID during which `add-/removeSanction()` reverts. This prevents resetting of sanctionedAt[account] TS to the latest block number, which would re-sanction a user even in the case of SC not confirming.
+
+No changes to the permissions / roles yet.
+
+## Watched changes
+
+```diff
+    contract KintoID (0xf369f78E3A0492CC4e96a90dae0728A38498e9c7) {
+    +++ description: Manages Kinto's KYC system: KYC provider addresses and the KYC status of users.
+      sourceHashes.1:
+-        "0x3fa7283c94fa2072438a07fb3069ce98694353a7a07f32585e2baa41a856fca9"
++        "0xdd266bc2e9cb84472ebc0a2583f1b1cbeb143cedb0763780f10d151ddff8f8ec"
+      values.$implementation:
+-        "0x7CFe474936fA50181ae7c2C43EeB8806e25bc983"
++        "0xaa0726829d41E3C70B84Bc5390cce82afC56871A"
+      values.$pastUpgrades.8:
++        ["2024-12-10T20:00:17.000Z","0x9fa20142e6e04305e74314e6670ecbf65477f470a9251ec55dc52ddcd34940b1",["0xaa0726829d41E3C70B84Bc5390cce82afC56871A"]]
+      values.$upgradeCount:
+-        8
++        9
+      values.EXIT_WINDOW_PERIOD:
++        864000
+      values.SANCTION_EXPIRY_PERIOD:
++        259200
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@619744 => .flat}/KintoID/KintoID.sol    | 38 ++++++++++++++++++----
+ 1 file changed, 32 insertions(+), 6 deletions(-)
+```
+
 Generated with discovered.json: 0x80336ac049b71f83160acf036068f4f3f1f599d7
 
 # Diff at Tue, 10 Dec 2024 07:40:40 GMT:
