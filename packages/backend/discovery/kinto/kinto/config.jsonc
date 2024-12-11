@@ -5,7 +5,6 @@
   "initialAddresses": [
     "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b", // appRegistry
     "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a", // kintoadmin smartwallet
-    "0x87f0eE85bF3198654900a422832157abBba30828", // KintoWallet beacon
     "0x8d2D899402ed84b6c0510bB1ad34ee436ADDD20d", // bundleBulker
     "0x340487b92808B84c2bd97C87B590EE81267E04a7", // L2GatewayRouter
     "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd", // SponsorPaymaster
@@ -16,11 +15,9 @@
   "names": {
     "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b": "KintoAppRegistry",
     "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7": "KintoID",
-    "0x87f0eE85bF3198654900a422832157abBba30828": "KintoWalletBeacon",
     "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a": "KintoAdminMultisig",
     "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75": "KintoWalletFactory",
     "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd": "SponsorPaymaster",
-    "0xE90C1e020D9d2A74045A1365bd5abEe87Aee8D7C": "KintoWalletBeacon_implemention",
     "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03": "Faucet",
     "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA": "RewardsDistributor",
     "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87": "BridgedKinto",
@@ -42,6 +39,10 @@
     }
   },
   "overrides": {
+    "KintoAdminMultisig": {
+      "ignoreMethods": ["owners"],
+      "ignoreInWatchMode": ["getNonce"]
+    },
     "NioGovernor": {
       "ignoreMethods": [
         "proposalDeadline",
@@ -161,17 +162,14 @@
     "Faucet": {
       "ignoreMethods": ["proxiableUUID"]
     },
-    "KintoWalletBeacon_implemention": {
-      "description": "Implementation for all KintoWallets, managed by a beacon proxy.",
-      "ignoreMethods": ["getAccessPoint"]
-    },
     "SponsorPaymaster": {
       "ignoreMethods": ["proxiableUUID"],
       "ignoreInWatchMode": ["getDeposit"]
     },
     "KintoWalletFactory": {
       "ignoreMethods": ["proxiableUUID"],
-      "ignoreInWatchMode": ["totalWallets"]
+      "ignoreInWatchMode": ["totalWallets"],
+      "ignoreRelatives": ["beacon"]
     },
     "KintoID": {
       "description": "Manages Kinto's KYC system: KYC provider addresses and the KYC status of users.",

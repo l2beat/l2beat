@@ -48,6 +48,7 @@ import { fraxtal } from './fraxtal'
 import { fuel } from './fuel'
 import { fuelv1 } from './fuelv1'
 import { funki } from './funki'
+import { fuse } from './fuse'
 import { galxegravity } from './galxegravity'
 import { gluon } from './gluon'
 import { gmnetwork } from './gmnetwork'
@@ -73,6 +74,7 @@ import { lambda } from './lambda'
 import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
 import { layerai } from './layerai'
+import { leaf } from './leaf'
 import { lens } from './lens'
 import { linea } from './linea'
 import { lisk } from './lisk'
@@ -228,6 +230,7 @@ export const layer2s: Layer2[] = [
   fuel,
   fuelv1,
   funki,
+  fuse,
   gluon,
   gmnetwork,
   gpt,
@@ -250,6 +253,7 @@ export const layer2s: Layer2[] = [
   kroma,
   lambda,
   layerai,
+  leaf,
   layer2finance,
   layer2financezk,
   lens,

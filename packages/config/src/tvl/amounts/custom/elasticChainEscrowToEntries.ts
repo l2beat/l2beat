@@ -12,8 +12,8 @@ export function elasticChainEscrowToEntries(
   elasticChainIncludedL1Tokens: string[],
 ) {
   assert(
-    escrow.sharedEscrow?.type === 'ElasticChian',
-    'ElasticChian escrow expected',
+    escrow.sharedEscrow?.type === 'ElasticChain',
+    'ElasticChain escrow expected',
   )
   const entries: AmountConfigEntry[] = []
 

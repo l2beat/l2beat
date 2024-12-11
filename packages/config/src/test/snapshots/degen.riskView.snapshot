@@ -2,8 +2,8 @@
 
 {
   dataAvailability: {
-    definingMetric: 1
-    description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 1/1 that is tasked with protecting and supplying the data."
+    definingMetric: 0.6666666666666666
+    description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 2/3 that is tasked with protecting and supplying the data."
     sentiment: "bad"
     value: "External (DAC)"
   }
@@ -51,8 +51,8 @@
 
 {
   dataAvailability: {
-    definingMetric: 1
-    description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 1/1 that is tasked with protecting and supplying the data."
+    definingMetric: 0.6666666666666666
+    description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 2/3 that is tasked with protecting and supplying the data."
     sentiment: "bad"
     value: "External (DAC)"
   }

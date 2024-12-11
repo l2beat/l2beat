@@ -8,6 +8,8 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('publicgoodsnetwork')
 
+const isPaused = discovery.getContractValue<boolean>('OptimismPortal', 'paused')
+
 export const publicgoodsnetwork: Layer2 = opStackL2({
   createdAt: new UnixTime(1690446197), // 2023-07-27T08:23:17Z
   additionalBadges: [
@@ -21,6 +23,9 @@ export const publicgoodsnetwork: Layer2 = opStackL2({
     name: 'Public Goods Network',
     shortName: 'PGN',
     slug: 'publicgoodsnetwork',
+    headerWarning: isPaused
+      ? 'The OptimismPortal is paused, withdrawals from the canonical bridge are not possible.'
+      : undefined,
     description:
       'Public Goods Network is an OP stack chain focused on funding public goods.',
     links: {
@@ -37,9 +42,7 @@ export const publicgoodsnetwork: Layer2 = opStackL2({
       ],
       socialMedia: ['https://twitter.com/pgn_eth'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
-  rpcUrl: 'https://rpc.publicgoods.network',
   genesisTimestamp: new UnixTime(1689108083),
   stateDerivation: DERIVATION.OPSTACK('PGN'),
   isNodeAvailable: true,

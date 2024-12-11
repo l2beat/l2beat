@@ -27,7 +27,7 @@ import {
 import { ESCROW } from '../../common/escrow'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { PERFORMED_BY } from '../other/zk-catalog'
+import { PERFORMED_BY } from '../zk-catalog/common/performedBy'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
