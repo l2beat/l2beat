@@ -35,11 +35,21 @@ export async function detectZeppelinOSProxy(
   ])
 
   const admins = [owner, admin].filter((a) => a !== EthereumAddress.ZERO)
-  const pastUpgrades = await getPastUpgradesSingleEvent(
-    provider,
-    address,
-    'event Upgraded(address indexed implementation)',
-  )
+  const pastUpgrades = []
+  try {
+    pastUpgrades.push(await getPastUpgradesSingleEvent(
+      provider,
+      address,
+      'event Upgraded(address indexed implementation)',
+    ))
+  } catch {
+    pastUpgrades.push(await getPastUpgradesSingleEvent(
+      provider,
+      address,
+      'event Upgraded(address implementation)',
+    ))
+  }
+
 
   return {
     type: 'ZeppelinOS proxy',
