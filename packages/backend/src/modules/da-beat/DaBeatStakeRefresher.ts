@@ -41,8 +41,7 @@ export class DaBeatStakeRefresher {
       [
         ...new Set(
           compact(
-            daLayers
-              .concat(ethereumDaLayer)
+            [...daLayers, ethereumDaLayer]
               .filter(this.isBlockchainDaLayer)
               .map((layer) => layer.economicSecurity?.type),
           ),

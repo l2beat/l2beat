@@ -1,12 +1,11 @@
-import { DaEconomicSecurityRisk } from '../../types/DaEconomicSecurityRisk'
-import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
-import { DaLayer } from '../../types/DaLayer'
+import { EthereumDaLayer } from '../../types/DaLayer'
+import { EthereumDaLayerRisks } from '../../types/EthereumDaRisks'
 import { enshrinedBridge } from './bridges/enshrinedBridge'
 
 export const ethereum = {
   id: 'ethereum',
   type: 'DaLayer',
-  kind: 'PublicBlockchain',
+  kind: 'EthereumDaLayer',
   systemCategory: 'public',
   display: {
     // name: 'Ethereum (EIP-4844)',
@@ -66,11 +65,12 @@ export const ethereum = {
 
     ## Blobs (EIP-4844)
     [EIP-4844](https://eips.ethereum.org/EIPS/eip-4844) introduces "blob-carrying transactions," a new transaction type under [EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) that allows for the inclusion of large data payloads, or blobs, within transactions. 
+    EIP-4844 introduces "blob-carrying transactions," a new transaction type under EIP-2718 that allows for the inclusion of large data payloads, or blobs, within transactions. 
     These blobs are not directly accessible during EVM execution but can be verified through commitments. 
     The EIP sets a target of 3 blobs of 128kb each, with a maximum of 6 blobs per block, equating to ~0.375 MB to ~0.75 MB of data. 
     On the consensus layer, blobs are referenced in the beacon block and propagated separately as "sidecars," enabling forward compatibility with future data scaling methods like data-availability sampling (DAS). 
-
     EIP-4844 also creates a new blob gas market, which operates similarly to [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559)'s fee mechanism. 
+    EIP-4844 also creates a new blob gas market, which operates similarly to EIP-1559's fee mechanism.  
     The blob base fee adjusts dynamically based on the number of blobs included in each block relative to the target. 
     If a block contains more blobs than the target (3 blobs), the blob base fee increases, discouraging additional blob usage in subsequent blocks. Conversely, if a block contains fewer blobs than the target, the blob base fee decreases, encouraging more blob usage. If the number of blobs in a block matches the target, the blob base fee remains unchanged.
     
@@ -88,6 +88,16 @@ export const ethereum = {
     ZK rollups, on the other hand, use the point evaluation precompile to verify that specific points in the polynomial (represented by the blob) match the expected values. 
     This method allows ZK rollups to prove that the data used in their validity proof is consistent with the blob data committed to Ethereum.
     `,
+    references: [
+      {
+        text: 'EIP-4844',
+        href: 'https://eips.ethereum.org/EIPS/eip-4844',
+      },
+      {
+        text: 'Ethereum Technical Handbook',
+        href: 'https://eth2book.info/latest/',
+      },
+    ],
   },
   bridges: [enshrinedBridge] as const,
   consensusAlgorithm: {
@@ -102,11 +112,8 @@ export const ethereum = {
     unbondingPeriod: 777600, // current value from validatorqueue.com. Technically it is the sum of 1) Exit Queue (variable) 2) fixed waiting time (27.3 hours), 3) Validator Sweep (variable).
   },
   pruningWindow: 86400 * 18, // 18 days in seconds
-  risks: {
-    economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
-    fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
-  },
+  risks: EthereumDaLayerRisks.SelfVerify,
   economicSecurity: {
     type: 'Ethereum',
   },
-} satisfies DaLayer
+} satisfies EthereumDaLayer

@@ -3,7 +3,7 @@ import { DA_LAYERS } from '../../../../common'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
 import { DaChallengeMechanism } from '../types/DaChallengeMechanism'
-import { DaLayer } from '../types/DaLayer'
+import { DacDaLayer } from '../types/DaLayer'
 import { xterioDABridge } from './bridges/xterioDABridge'
 
 const discovery = new ProjectDiscovery('xterio')
@@ -22,7 +22,7 @@ const daResolveWindow = formatSeconds(
   ) * 12, // in blocks, to seconds
 )
 
-export const xterioDA: DaLayer = {
+export const xterioDA: DacDaLayer = {
   id: 'xterio-da',
   type: 'DaLayer',
   kind: 'No DAC',

@@ -3,7 +3,7 @@ import { DA_LAYERS } from '../../../../common'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
 import { DaChallengeMechanism } from '../types/DaChallengeMechanism'
-import { DaLayer } from '../types/DaLayer'
+import { DacDaLayer } from '../types/DaLayer'
 import { cyberDABridge } from './bridges/cyberDABridge'
 
 const discovery = new ProjectDiscovery('cyber')
@@ -22,7 +22,7 @@ const daResolveWindow = formatSeconds(
   ) * 12, // in blocks, to seconds
 )
 
-export const cyberDA: DaLayer = {
+export const cyberDA: DacDaLayer = {
   id: 'cyber-da',
   type: 'DaLayer',
   kind: 'No DAC',

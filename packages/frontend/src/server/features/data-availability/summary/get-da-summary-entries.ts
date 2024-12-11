@@ -8,7 +8,7 @@ import {
   getDaProjectsTvl,
   pickTvlForProjects,
 } from '../utils/get-da-projects-tvl'
-import { getDaBridgeRisks, getDaLayerRisks } from '../utils/get-da-risks'
+import { getDaLayerRisks } from '../utils/get-da-risks'
 import { kindToType } from '../utils/kind-to-layer-type'
 
 export async function getDaSummaryEntries() {
@@ -55,7 +55,7 @@ function getEntries({ economicSecurity, getTvlSumFor }: Dependencies) {
               slug: daBridge.display.slug,
               name: daBridge.display.name,
               href: `/data-availability/projects/${daLayer.display.slug}/${daBridge.display.slug}`,
-              risks: getDaBridgeRisks(daBridge),
+              risks: daBridge.risks,
               isUnderReview: !!daLayer.isUnderReview || daBridge.isUnderReview,
               isVerified: getDaBridgeVerification(daLayer, daBridge),
               warning: daBridge.display.warning,
@@ -124,6 +124,7 @@ function getEthereumEntry({ economicSecurity, getTvlSumFor }: Dependencies) {
     slug: ethereumDaLayer.display.slug,
     name: ethereumDaLayer.display.name,
     kind: ethereumDaLayer.kind,
+    href: `/data-availability/projects/${ethereumDaLayer.display.slug}/${ethereumDaLayer.bridges[0].display.slug}`,
     systemCategory: ethereumDaLayer.systemCategory,
     usedIn: ethereumDaLayer.bridges.flatMap((bridge) => bridge.usedIn),
     economicSecurity: economicSecurity[ethereumDaLayer.id],

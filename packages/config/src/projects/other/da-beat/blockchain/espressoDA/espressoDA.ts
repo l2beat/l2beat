@@ -2,10 +2,10 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { NO_BRIDGE } from '../../templates/no-bridge-template'
 import { DaEconomicSecurityRisk } from '../../types/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
-import { DaLayer } from '../../types/DaLayer'
+import { DacDaLayer } from '../../types/DaLayer'
 import { HotShotLightClient } from './bridges/HotShotLightClient'
 
-export const espressoDA: DaLayer = {
+export const espressoDA: DacDaLayer = {
   id: 'espressoDA',
   type: 'DaLayer',
   kind: 'DA Service',

@@ -19,7 +19,12 @@ export async function getDaProjectEconomicSecurity(daLayer: DaLayer) {
   }
   const db = getDb()
 
-  if (daLayer.kind !== 'PublicBlockchain' || !daLayer.economicSecurity) {
+  if (
+    !(
+      daLayer.kind === 'PublicBlockchain' || daLayer.kind === 'EthereumDaLayer'
+    ) ||
+    !daLayer.economicSecurity
+  ) {
     return undefined
   }
 

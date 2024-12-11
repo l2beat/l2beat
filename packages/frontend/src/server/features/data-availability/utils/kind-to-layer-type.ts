@@ -4,6 +4,7 @@ import { assertUnreachable } from '@l2beat/shared-pure'
 export function kindToType(kind: DaLayer['kind']) {
   switch (kind) {
     case 'PublicBlockchain':
+    case 'EthereumDaLayer':
       return 'Public blockchain'
     case 'DAC':
       return 'Data Availability Committee'
