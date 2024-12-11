@@ -11,6 +11,8 @@ export function kindToType(kind: DaLayer['kind']) {
       return 'DA Service'
     case 'No DAC':
       return 'No DAC'
+    case 'EthereumDaLayer':
+      return 'Ethereum'
     default:
       return assertUnreachable(kind)
   }

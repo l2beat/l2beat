@@ -54,13 +54,11 @@ import { xlayerDac } from './dac/xlayer'
 import { xterioDA } from './dac/xterioDA'
 import { zkfairDac } from './dac/zkfair'
 import { applyProcessor } from './processors'
-import { DaLayer } from './types/DaLayer'
 
 export * from './types'
 
 export const ethereumDaLayer = ethereum
-
-export const daLayers: DaLayer[] = applyProcessor([
+export const daLayers = applyProcessor([
   // Permissioned DACs
   alienxDac,
   alephzeroDac,
@@ -119,3 +117,5 @@ export const daLayers: DaLayer[] = applyProcessor([
   eigenDA,
   fraxtalDA,
 ])
+
+export const allDaLayers = [...daLayers, ethereumDaLayer]

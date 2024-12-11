@@ -25,9 +25,7 @@ import {
 export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
   const uniqueProjectsInUse = [
     ...new Set(
-      daLayer.bridges.flatMap((bridge) =>
-        bridge.usedIn.map((project) => project.id),
-      ),
+      daLayer.bridges.flatMap((bridge) => bridge.usedIn.map((p) => p.id)),
     ),
   ]
   const [
@@ -52,9 +50,16 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
 
   const isVerified =
     !!projectsVerificationStatuses[getDaProjectKey(daLayer, daBridge)]
-  const grissiniValues = mapLayerRisksToRosetteValues(
-    getDaRisks(daLayer, daBridge, layerTvs, economicSecurity),
-  )
+
+  const grissiniValues =
+    daLayer.kind === 'EthereumDaLayer' || daBridge.type === 'Enshrined'
+      ? [
+          ...mapLayerRisksToRosetteValues(daLayer.risks),
+          ...mapBridgeRisksToRosetteValues(daBridge.risks),
+        ]
+      : mapLayerRisksToRosetteValues(
+          getDaRisks(daLayer, daBridge, layerTvs, economicSecurity),
+        )
 
   const projectDetails = getProjectDetails({
     daLayer,
@@ -130,7 +135,9 @@ function getHeader({
     tvs,
     economicSecurity,
     durationStorage:
-      daLayer.kind === 'PublicBlockchain' ? daLayer.pruningWindow : undefined,
+      daLayer.kind === 'PublicBlockchain' || daLayer.kind === 'EthereumDaLayer'
+        ? daLayer.pruningWindow
+        : undefined,
     numberOfOperators: daLayer.numberOfOperators,
     usedIn,
   }

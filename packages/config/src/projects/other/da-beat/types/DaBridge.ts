@@ -13,7 +13,11 @@ import { DacTransactionDataType } from './DacTransactionDataType'
 import { EthereumDaBridgeRisks } from './EthereumDaRisks'
 import { UsedInProject } from './UsedInProject'
 
-export type DaBridge = NoDaBridge | OnChainDaBridge | DacBridge
+export type DaBridge =
+  | NoDaBridge
+  | OnChainDaBridge
+  | DacBridge
+  | EnshrinedBridge
 
 export type NoDaBridge = CommonDaBridge & {
   type: 'NoBridge'
@@ -29,9 +33,11 @@ export type NoDaBridge = CommonDaBridge & {
    * add some complementary information.
    */
   contracts: DaBridgeContracts
+  /** Risks related to given data availability bridge. */
+  risks: DaBridgeRisks
 }
 
-export type EnshrinedBridge = Omit<CommonDaBridge, 'risks'> & {
+export type EnshrinedBridge = CommonDaBridge & {
   type: 'Enshrined'
   risks: EthereumDaBridgeRisks
 }
@@ -48,6 +54,8 @@ export type OnChainDaBridge = CommonDaBridge & {
   }
   /** Data about the contracts used in the bridge - preferably from discovery. */
   contracts: DaBridgeContracts
+  /** Risks related to given data availability bridge. */
+  risks: DaBridgeRisks
 }
 
 export type DacBridge = CommonDaBridge & {
@@ -73,6 +81,8 @@ export type DacBridge = CommonDaBridge & {
   permissions: Record<string, ScalingProjectPermission[]>
   /** Data about the contracts used in the bridge - preferably from discovery. */
   contracts: DaBridgeContracts
+  /** Risks related to given data availability bridge. */
+  risks: DaBridgeRisks
 }
 
 type CommonDaBridge = {
@@ -87,8 +97,6 @@ type CommonDaBridge = {
   technology: DaTechnology
   /** List of projects given bridge is being used in. */
   usedIn: UsedInProject[]
-  /** Risks related to given data availability bridge. */
-  risks: DaBridgeRisks
   /** Other considerations */
   otherConsiderations?: ScalingProjectTechnologyChoice[]
 }

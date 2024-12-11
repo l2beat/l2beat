@@ -16,7 +16,7 @@ import { DaTechnology } from './DaTechnology'
 import { DataAvailabilitySampling } from './DataAvailabilitySampling'
 import { EthereumDaLayerRisks } from './EthereumDaRisks'
 
-export type DaLayer = BlockchainDaLayer | DacDaLayer
+export type DaLayer = BlockchainDaLayer | DacDaLayer | EthereumDaLayer
 
 export type BlockchainDaLayer = CommonDaLayer & {
   kind: 'PublicBlockchain'
@@ -29,18 +29,27 @@ export type BlockchainDaLayer = CommonDaLayer & {
   consensusAlgorithm: DaConsensusAlgorithm
   /** Economic security configuration. */
   economicSecurity?: DaEconomicSecurity
+  /** Risks associated with the data availability layer. */
+  risks: DaLayerRisks
 }
 
-export type EthereumDaLayer = Omit<BlockchainDaLayer, 'risks' | 'bridges'> & {
-  id: 'ethereum'
-  kind: 'PublicBlockchain'
+export type EthereumDaLayer = CommonDaLayer & {
+  kind: 'EthereumDaLayer'
   bridges: [EnshrinedBridge]
   risks: EthereumDaLayerRisks
+  /** The consensus algorithm used by the data availability layer. */
+  consensusAlgorithm: DaConsensusAlgorithm
+  /** Economic security configuration. */
+  economicSecurity?: DaEconomicSecurity
+  /** The period within which full nodes must store and distribute data. @unit seconds */
+  pruningWindow: number
 }
 
 export type DacDaLayer = CommonDaLayer & {
   kind: 'DAC' | 'DA Service' | 'No DAC'
   bridges: (DacBridge | NoDaBridge)[]
+  /** Risks associated with the data availability layer. */
+  risks: DaLayerRisks
 }
 
 export type CommonDaLayer = {
@@ -63,8 +72,6 @@ export type CommonDaLayer = {
   isUnderReview?: boolean
   /** The technology used by the data availability layer. */
   technology: DaTechnology
-  /** Risks associated with the data availability layer. */
-  risks: DaLayerRisks
   /** Other considerations */
   otherConsiderations?: ScalingProjectTechnologyChoice[]
 }

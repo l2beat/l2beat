@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { EnshrinedBridge } from '../../../types/DaBridge'
-import { EthereumDABridgeRisks } from '../../../types/EthereumDaRisks'
+import { EthereumDaBridgeRisks } from '../../../types/EthereumDaRisks'
 import { linkByDA } from '../../../utils/link-by-da'
 
 export const enshrinedBridge: EnshrinedBridge = {
@@ -33,5 +33,5 @@ export const enshrinedBridge: EnshrinedBridge = {
     layer: (layer) => layer?.startsWith('Ethereum'),
     bridge: (bridge) => bridge === 'Enshrined',
   }),
-  risks: EthereumDABridgeRisks.Enshrined,
+  risks: EthereumDaBridgeRisks.Enshrined,
 }

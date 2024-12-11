@@ -8,7 +8,7 @@ import {
   getDaProjectsTvl,
   pickTvlForProjects,
 } from '../utils/get-da-projects-tvl'
-import { getDaBridgeRisks, getDaLayerRisks } from '../utils/get-da-risks'
+import { getDaLayerRisks } from '../utils/get-da-risks'
 import { kindToType } from '../utils/kind-to-layer-type'
 
 export async function getDaSummaryEntries() {
@@ -66,7 +66,7 @@ function getEntries({
               slug: daBridge.display.slug,
               name: daBridge.display.name,
               href: `/data-availability/projects/${daLayer.display.slug}/${daBridge.display.slug}`,
-              risks: getDaBridgeRisks(daBridge),
+              risks: daBridge.risks,
               isUnderReview: !!daLayer.isUnderReview || daBridge.isUnderReview,
               isVerified:
                 !!projectsVerificationStatuses[

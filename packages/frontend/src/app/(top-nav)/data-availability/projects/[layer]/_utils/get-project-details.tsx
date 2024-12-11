@@ -45,31 +45,35 @@ function getRegularDetails({
       ? daBridge.usedIn[0]
       : undefined
 
-  const permissionsSection = getMultichainPermissionsSection(
-    {
-      id: daLayer.id,
-      bridge: daBridge,
-      isUnderReview: !!daLayer.isUnderReview,
-      permissions: daBridge.permissions,
-      dacUsedIn: relatedScalingProject,
-    },
-    contractsVerificationStatuses,
-    manuallyVerifiedContracts,
-  )
+  const permissionsSection =
+    daBridge.type !== 'Enshrined' &&
+    getMultichainPermissionsSection(
+      {
+        id: daLayer.id,
+        bridge: daBridge,
+        isUnderReview: !!daLayer.isUnderReview,
+        permissions: daBridge.permissions,
+        dacUsedIn: relatedScalingProject,
+      },
+      contractsVerificationStatuses,
+      manuallyVerifiedContracts,
+    )
 
-  const contractsSection = getMultiChainContractsSection(
-    {
-      id: daBridge.id,
-      isVerified,
-      slug: daBridge.display.slug,
-      contracts: daBridge.contracts,
-      isUnderReview: daLayer.isUnderReview,
-      dacUsedIn: relatedScalingProject,
-    },
-    contractsVerificationStatuses,
-    manuallyVerifiedContracts,
-    projectsChangeReport,
-  )
+  const contractsSection =
+    daBridge.type !== 'Enshrined' &&
+    getMultiChainContractsSection(
+      {
+        id: daBridge.id,
+        isVerified,
+        slug: daBridge.display.slug,
+        contracts: daBridge.contracts,
+        isUnderReview: daLayer.isUnderReview,
+        dacUsedIn: relatedScalingProject,
+      },
+      contractsVerificationStatuses,
+      manuallyVerifiedContracts,
+      projectsChangeReport,
+    )
 
   const riskSummarySection = getDaProjectRiskSummarySection(
     daLayer,
@@ -219,24 +223,12 @@ function getRegularDetails({
   return items
 }
 
-function getEthereumDetails({ daLayer, daBridge, isVerified }: Params) {
-  /// TODO: REPLACE ME ONCE WE HAVE THEM IN PLACE
-  const grissiniValues: RosetteValue[] = [
-    {
-      name: 'Da Risks',
-      value: 'Self-verify',
-      sentiment: 'good',
-      description: 'Lorem impsum '.repeat(50),
-      warning: undefined,
-    },
-    {
-      name: 'Bridge Risks',
-      value: 'Enshrined',
-      sentiment: 'good',
-      description: 'Lorem impsum '.repeat(50),
-      warning: undefined,
-    },
-  ]
+function getEthereumDetails({
+  daLayer,
+  daBridge,
+  isVerified,
+  grissiniValues,
+}: Params) {
   const riskSummarySection = getDaProjectRiskSummarySection(
     daLayer,
     daBridge,
