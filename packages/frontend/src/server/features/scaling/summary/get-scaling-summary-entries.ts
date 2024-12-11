@@ -85,6 +85,9 @@ function getScalingSummaryEntry(
       hasHighSeverityFieldChanged,
       syncStatus: undefined,
     }),
+    stage: project.stage ?? { stage: 'NotApplicable' },
+    category: project.display.category,
+    provider: project.display.provider,
     dataAvailability,
     mainPermissions: project.display.mainPermissions,
     tvl: {

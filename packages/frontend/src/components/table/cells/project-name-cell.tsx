@@ -8,6 +8,7 @@ import { ShieldIcon } from '~/icons/shield'
 import { UnderReviewIcon } from '~/icons/under-review'
 import { UnverifiedIcon } from '~/icons/unverified'
 import { type CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
+import { getUnderReviewText } from '~/utils/project/under-review'
 import { NotSyncedIcon } from '../../badge/not-synced-badge'
 import { PrimaryValueCell } from './primary-value-cell'
 
@@ -41,12 +42,14 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
             <TooltipContent>{project.statuses?.redWarning}</TooltipContent>
           </Tooltip>
         )}
-        {project.statuses?.underReviewInfo && (
+        {project.statuses?.underReview && (
           <Tooltip>
             <TooltipTrigger>
               <UnderReviewIcon className="size-3.5 md:size-4" />
             </TooltipTrigger>
-            <TooltipContent>{project.statuses.underReviewInfo}</TooltipContent>
+            <TooltipContent>
+              {getUnderReviewText(project.statuses.underReview)}
+            </TooltipContent>
           </Tooltip>
         )}
         {project.statuses?.yellowWarning && (

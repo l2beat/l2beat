@@ -15,7 +15,7 @@ export const All: Story = {
       name: 'All Features Project',
       shortName: 'AFP',
       statuses: {
-        underReviewInfo: 'Under review info',
+        underReview: 'config',
         redWarning: 'Red warning message',
         verificationWarning: true,
         syncStatusInfo: 'Sync status info',

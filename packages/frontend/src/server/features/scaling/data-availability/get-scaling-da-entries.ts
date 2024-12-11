@@ -59,11 +59,13 @@ function getScalingDataAvailabilityEntry(
         projectsChangeReport.hasHighSeverityFieldChanged(project.id),
       syncStatus: undefined,
     }),
+    category: project.display.category,
     dataAvailability: {
       layer: dataAvailability.layer,
       bridge: dataAvailability.bridge,
       mode: dataAvailability.mode,
     },
+    provider: project.display.provider,
     tvlOrder: tvl ?? 0,
   }
 }

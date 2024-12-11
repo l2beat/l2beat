@@ -45,24 +45,15 @@ const getCachedData = cache(
               name: entry.name,
               shortName: entry.shortName,
               slug: entry.slug,
-              type: entry.type,
+              // TODO: type, purposes, isArchived, isUpcoming, badges, hostChain, stage
               category: entry.category,
               provider: entry.provider,
-              purposes: entry.purposes,
-              isArchived: entry.isArchived,
-              hostChain: entry.hostChain,
-              isUpcoming: entry.isUpcoming,
-              isUnderReview: !!entry.underReviewStatus,
-              badges: entry.badges.map(({ badge, kind }) => ({
-                category: kind,
-                name: badge,
-              })),
+              isUnderReview: !!entry.statuses?.underReview,
               tvl: {
                 breakdown: entry.tvl.breakdown,
                 associatedTokens: entry.tvl.associatedTokens,
                 change7d: entry.tvl.change,
               },
-              stage: entry.stage.stage,
               risks: entry.risks,
             },
           ]

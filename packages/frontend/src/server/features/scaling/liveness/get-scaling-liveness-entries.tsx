@@ -79,6 +79,8 @@ function getScalingLivenessEntry(
       syncStatus: data?.syncStatus,
     }),
     entryType: 'liveness' as const,
+    category: project.display.category,
+    provider: project.display.provider,
     data,
     explanation: project.display.liveness?.explanation,
     anomalies: toAnomalyIndicatorEntries(liveness.anomalies ?? []),

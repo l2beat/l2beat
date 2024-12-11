@@ -122,6 +122,8 @@ function getScalingFinalityEntry(
         projectsChangeReport.hasHighSeverityFieldChanged(project.id),
       syncStatus: data?.syncStatus,
     }),
+    category: project.display.category,
+    provider: project.display.provider,
     dataAvailabilityMode: dataAvailability?.mode,
     data,
     finalizationPeriod: project.display.finality?.finalizationPeriod,

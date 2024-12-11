@@ -1,22 +1,14 @@
 import {
   type BadgeId,
-  type BadgeType,
   type Layer2,
-  type Layer2Provider,
   type Layer3,
-  type ScalingProjectCategory,
-  type ScalingProjectPurpose,
   type StageConfig,
   badges,
 } from '@l2beat/config'
-import { env } from 'process'
+import { env } from '~/env'
 import { type SyncStatus } from '~/types/sync-status'
 import { formatTimestamp } from '~/utils/dates'
-import {
-  type UnderReviewStatus,
-  getUnderReviewStatus,
-  getUnderReviewText,
-} from '~/utils/project/under-review'
+import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { type CommonProjectEntry } from '../utils/get-common-project-entry'
 import { getCurrentEntry } from '../utils/get-current-entry'
 import { getHostChain } from './utils/get-host-chain'
@@ -38,22 +30,6 @@ export interface FilterableScalingEntry {
 }
 
 export interface CommonScalingEntry extends CommonProjectEntry {
-  category: ScalingProjectCategory | undefined
-  isOther: boolean | undefined
-  isVerified: boolean
-  underReviewStatus: UnderReviewStatus
-  isArchived: boolean
-  isUpcoming: boolean
-  warning: string | undefined
-  headerWarning: string | undefined
-  redWarning: string | undefined
-  purposes: ScalingProjectPurpose[]
-  badges: { badge: BadgeId; kind: BadgeType }[]
-  type: 'layer2' | 'layer3' | undefined
-  provider: Layer2Provider | undefined
-  hostChain: string | undefined
-  stage: StageConfig
-  // ---
   tab: 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
   /** 0 - n/a, 1 - stage0, 2 - stage1&2, 3 - ethereum */
   stageOrder: number
@@ -75,39 +51,34 @@ export function getCommonScalingEntry({
   hasHighSeverityFieldChanged,
   syncStatus,
 }: Params): CommonScalingEntry {
-  const underReviewStatus = getUnderReviewStatus({
-    isUnderReview: isAnySectionUnderReview(project),
-    hasImplementationChanged,
-    hasHighSeverityFieldChanged,
-  })
   return {
     id: project.id,
+    slug: project.display.slug,
     name: project.display.name,
     nameSecondLine:
       project.type === 'layer2' ? undefined : `L3 on ${getHostChain(project)}`,
-    href: `/scaling/projects/${project.display.slug}`,
     shortName: project.display.shortName,
-    slug: project.display.slug,
-    category: project.display.category,
-    isOther: !!project.display.isOther,
-    isVerified,
-    underReviewStatus,
-    isArchived: !!project.isArchived,
-    isUpcoming: !!project.isUpcoming,
-    warning: project.display.warning,
-    headerWarning: project.display.headerWarning,
-    redWarning: project.display.redWarning,
-    purposes: project.display.purposes,
-    badges:
-      project.badges?.map((badge) => ({
-        badge,
-        kind: badges[badge].type,
-      })) ?? [],
-    type: project.type,
-    provider: project.display.provider,
-    hostChain: project.type === 'layer2' ? undefined : getHostChain(project),
-    stage: project.stage ?? ({ stage: 'NotApplicable' } satisfies StageConfig),
-    // ---
+    href: `/scaling/projects/${project.display.slug}`,
+    statuses: {
+      yellowWarning: project.display.headerWarning,
+      redWarning: project.display.redWarning,
+      verificationWarning: !isVerified,
+      underReview: getUnderReviewStatus({
+        isUnderReview: isAnySectionUnderReview(project),
+        hasImplementationChanged,
+        hasHighSeverityFieldChanged,
+      }),
+      syncStatusInfo:
+        syncStatus?.isSynced === false
+          ? `The data for this item is not synced since ${formatTimestamp(
+              syncStatus.syncedUntil,
+              {
+                mode: 'datetime',
+                longMonthName: true,
+              },
+            )}.`
+          : undefined,
+    },
     tab:
       env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS && project.display.isOther
         ? 'Others'
@@ -125,24 +96,6 @@ export function getCommonScalingEntry({
       daLayer:
         getCurrentEntry(project.dataAvailability)?.layer.value ?? 'Unknown',
       raas: getRaas(project.badges ?? []),
-    },
-    statuses: {
-      yellowWarning: project.display.headerWarning,
-      redWarning: project.display.redWarning,
-      verificationWarning: !isVerified,
-      underReviewInfo: underReviewStatus
-        ? getUnderReviewText(underReviewStatus)
-        : undefined,
-      syncStatusInfo:
-        syncStatus?.isSynced === false
-          ? `The data for this item is not synced since ${formatTimestamp(
-              syncStatus.syncedUntil,
-              {
-                mode: 'datetime',
-                longMonthName: true,
-              },
-            )}.`
-          : undefined,
     },
   }
 }

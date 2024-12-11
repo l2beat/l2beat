@@ -21,11 +21,16 @@ export function getScalingUpcomingEntries() {
 
 export type ScalingUpcomingEntry = ReturnType<typeof getScalingUpcomingEntry>
 function getScalingUpcomingEntry(project: Layer2 | Layer3) {
-  return getCommonScalingEntry({
-    project,
-    isVerified: true,
-    hasImplementationChanged: false,
-    hasHighSeverityFieldChanged: false,
-    syncStatus: undefined,
-  })
+  return {
+    ...getCommonScalingEntry({
+      project,
+      isVerified: true,
+      hasImplementationChanged: false,
+      hasHighSeverityFieldChanged: false,
+      syncStatus: undefined,
+    }),
+    category: project.display.category,
+    provider: project.display.provider,
+    purposes: project.display.purposes,
+  }
 }

@@ -1,8 +1,5 @@
 import { type Bridge } from '@l2beat/config'
-import {
-  getUnderReviewStatus,
-  getUnderReviewText,
-} from '~/utils/project/under-review'
+import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { isAnySectionUnderReview } from '../scaling/utils/is-any-section-under-review'
 import { type CommonProjectEntry } from '../utils/get-common-project-entry'
 
@@ -27,12 +24,6 @@ export function getCommonBridgesEntry({
   hasImplementationChanged,
   hasHighSeverityFieldChanged,
 }: Params): BridgesCommonEntry {
-  const underReviewStatus = getUnderReviewStatus({
-    isUnderReview: isAnySectionUnderReview(bridge),
-    hasImplementationChanged,
-    hasHighSeverityFieldChanged,
-  })
-
   return {
     id: bridge.id,
     slug: bridge.display.slug,
@@ -48,9 +39,11 @@ export function getCommonBridgesEntry({
       // TODO: Check if this is correct
       yellowWarning: bridge.display.warning,
       verificationWarning: !isVerified,
-      underReviewInfo: underReviewStatus
-        ? getUnderReviewText(underReviewStatus)
-        : undefined,
+      underReview: getUnderReviewStatus({
+        isUnderReview: isAnySectionUnderReview(bridge),
+        hasImplementationChanged,
+        hasHighSeverityFieldChanged,
+      }),
     },
   }
 }

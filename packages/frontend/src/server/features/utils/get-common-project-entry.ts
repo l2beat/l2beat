@@ -1,4 +1,5 @@
 import { type ProjectId } from '@l2beat/shared-pure'
+import { type UnderReviewStatus } from '~/utils/project/under-review'
 
 export interface CommonProjectEntry {
   id: ProjectId
@@ -12,7 +13,7 @@ export interface CommonProjectEntry {
         yellowWarning?: string
         redWarning?: string
         verificationWarning?: boolean
-        underReviewInfo?: string
+        underReview?: UnderReviewStatus
         syncStatusInfo?: string
       }
     | undefined

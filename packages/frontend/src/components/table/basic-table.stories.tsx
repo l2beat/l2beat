@@ -93,7 +93,7 @@ const basicTableData: StorybookEntry[] = [
     name: 'zkSync Era',
     href: undefined,
     statuses: {
-      underReviewInfo: 'Some under review info',
+      underReview: 'config',
     },
     data: {
       a: 13,
@@ -130,7 +130,7 @@ const basicTableData: StorybookEntry[] = [
     name: 'Linea',
     href: undefined,
     statuses: {
-      underReviewInfo: 'Some under review info',
+      underReview: 'config',
     },
     data: {
       a: 10,
