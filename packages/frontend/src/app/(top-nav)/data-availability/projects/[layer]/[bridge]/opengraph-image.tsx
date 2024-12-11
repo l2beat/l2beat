@@ -1,4 +1,4 @@
-import { daLayers } from '@l2beat/config'
+import { daLayers, ethereumDaLayer } from '@l2beat/config'
 import { ImageResponse } from 'next/og'
 import { NextResponse } from 'next/server'
 import { ProjectOpengraphImage } from '~/components/opengraph-image/project'
@@ -12,7 +12,7 @@ const size = {
 }
 
 export async function generateStaticParams() {
-  return daLayers.flatMap((layer) => ({
+  return [...daLayers, ethereumDaLayer].flatMap((layer) => ({
     layer: layer.display.slug,
   }))
 }
