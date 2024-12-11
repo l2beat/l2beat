@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xb8f3f471605dadb5bbd518e70db4e7f55794ad71
+
+# Diff at Wed, 11 Dec 2024 10:02:19 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@28849b80c374bb8843eff17341701a3084c3bdb9 block: 20675893
+- current block number: 21378535
+
+## Description
+
+Ronin multisig sent 250k AXS to Ronin bridge.
+
+## Watched changes
+
+```diff
+    contract RoninManagerMultiSig (0x2DA02aC5f19Ae362a4121718d990e655eB628D96) {
+    +++ description: None
+      values.transactionCount:
+-        26
++        27
+    }
+```
+
 Generated with discovered.json: 0x1738944701c59394d29ef8fa043bb1804af34400
 
 # Diff at Mon, 21 Oct 2024 11:09:39 GMT:
