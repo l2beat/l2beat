@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x6e237fc3e7c6a0dfacdf8c3facadcfce1cd29744
+
+# Diff at Tue, 10 Dec 2024 10:36:39 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ed5a41ddcad978cfdf826bc7a4827bf4a91c814 block: 21142111
+- current block number: 21142111
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21142111 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract AcrossConfigStore (0x3B03509645713718B78951126E0A6de6f10043f5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolygonTokenBridger (0x48d990AbDA20afa1fD1da713AbC041B60a922c65)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UMAOptimisticOracle (0xeE3Afe347D5C74317041E2618C49534dAf887c24)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x52dadfca973170d723ce40d572f31cce6594232a
 
 # Diff at Fri, 08 Nov 2024 09:45:41 GMT:

@@ -1,7 +1,6 @@
-import { Logger, RateLimiter } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
-import { RetryHandler } from '../../tools'
 import { HttpClient2 } from '../http/HttpClient2'
 import { RpcClient2 } from '../rpc/RpcClient2'
 import { BlobClient } from './BlobClient'
@@ -164,8 +163,6 @@ function mockClient(deps: {
   http?: HttpClient2
   beaconApiUrl?: string
   rpcClient?: RpcClient2
-  rateLimiter?: RateLimiter
-  retryHandler?: RetryHandler
   generateId?: () => string
   timeout?: number
 }) {
@@ -173,11 +170,11 @@ function mockClient(deps: {
     beaconApiUrl: deps.beaconApiUrl ?? 'BEACON_API_URL',
     rpcClient: deps.rpcClient ?? mockObject<RpcClient2>({}),
     http: deps.http ?? mockObject<HttpClient2>({}),
-    rateLimiter:
-      deps.rateLimiter ?? new RateLimiter({ callsPerMinute: 100_000 }),
-    retryHandler: deps.retryHandler ?? RetryHandler.TEST,
+    callsPerMinute: 100_000,
+    retryStrategy: 'TEST',
     logger: Logger.SILENT,
     timeout: deps.timeout,
     generateId: deps.generateId,
+    sourceName: 'test',
   })
 }

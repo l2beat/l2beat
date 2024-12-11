@@ -1,15 +1,9 @@
-import {
-  assert,
-  ProjectId,
-  TrackedTxsConfigSubtype,
-  notUndefined,
-} from '@l2beat/shared-pure'
+import { assert, ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { z } from 'zod'
 
 import { Database } from '@l2beat/database'
 import { RpcClient2 } from '@l2beat/shared'
-import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
 import { byteArrFromHexStr } from '../opStack/utils'
 import { BaseAnalyzer } from '../types/BaseAnalyzer'
 import type { L2Block, Transaction } from '../types/BaseAnalyzer'
@@ -21,7 +15,7 @@ export class PolygonZkEvmT2IAnalyzer extends BaseAnalyzer {
     provider: RpcClient2,
     db: Database,
     projectId: ProjectId,
-    private readonly l2Provider: RpcClient,
+    private readonly l2Provider: RpcClient2,
   ) {
     super(provider, db, projectId)
   }
@@ -59,7 +53,7 @@ export class PolygonZkEvmT2IAnalyzer extends BaseAnalyzer {
 
     const blockNumbers = transactionsFromNode
       .map((tx) => tx.blockNumber)
-      .filter(notUndefined)
+      .filter((x) => x !== null)
 
     const maxBlockNumber = Math.max(...blockNumbers)
     const minBlockNumber = Math.min(...blockNumbers)
@@ -67,11 +61,13 @@ export class PolygonZkEvmT2IAnalyzer extends BaseAnalyzer {
     return await Promise.all([
       {
         blockNumber: minBlockNumber,
-        timestamp: (await this.l2Provider.getBlock(minBlockNumber)).timestamp,
+        timestamp: (await this.l2Provider.getBlock(minBlockNumber, false))
+          .timestamp,
       },
       {
         blockNumber: maxBlockNumber,
-        timestamp: (await this.l2Provider.getBlock(maxBlockNumber)).timestamp,
+        timestamp: (await this.l2Provider.getBlock(maxBlockNumber, false))
+          .timestamp,
       },
     ])
   }

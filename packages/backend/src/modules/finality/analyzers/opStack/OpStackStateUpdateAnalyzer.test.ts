@@ -4,7 +4,6 @@ import { utils } from 'ethers'
 
 import { Database } from '@l2beat/database'
 import { RpcClient2 } from '@l2beat/shared'
-import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
 import { OpStackStateUpdateAnalyzer } from './OpStackStateUpdateAnalyzer'
 
 describe(OpStackStateUpdateAnalyzer.name, () => {
@@ -54,7 +53,7 @@ describe(OpStackStateUpdateAnalyzer.name, () => {
 })
 
 function mockL2RpcClient(prevTimestamp: number, currentTimestamp: number) {
-  return mockObject<RpcClient>({
+  return mockObject<RpcClient2>({
     getBlock: mockFn()
       .resolvesToOnce({ timestamp: prevTimestamp, number: 100 })
       .resolvesToOnce({ timestamp: currentTimestamp, number: 110 }),

@@ -27,7 +27,6 @@ import {
 
 interface Dependencies extends ClientCoreDependencies {
   url: string
-  chain: string
   generateId?: () => string
 }
 
@@ -49,7 +48,7 @@ export class RpcClient2 extends ClientCore implements BlockClient {
   }
 
   async getBlockParentBeaconRoot(blockNumber: number): Promise<string> {
-    const block = await this.getBlock(blockNumber, true)
+    const block = await this.getBlock(blockNumber, false)
 
     assert(
       block.parentBeaconBlockRoot,
@@ -209,6 +208,6 @@ export class RpcClient2 extends ClientCore implements BlockClient {
   }
 
   get chain() {
-    return this.$.chain
+    return this.$.sourceName
   }
 }

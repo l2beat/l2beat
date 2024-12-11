@@ -1,4 +1,4 @@
-import { type DaBridge, type DaLayer, getDaProjectKey } from '@l2beat/config'
+import { type DaBridge, type DaLayer } from '@l2beat/config'
 import { type UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
 import {
   mapBridgeRisksToRosetteValues,
@@ -10,7 +10,7 @@ import { getDataAvailabilityProjectLinks } from '~/utils/project/get-project-lin
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getContractsVerificationStatuses } from '../../verification-status/get-contracts-verification-statuses'
 import { getManuallyVerifiedContracts } from '../../verification-status/get-manually-verified-contracts'
-import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
+import { getDaBridgeVerification } from '../../verification-status/get-projects-verification-statuses'
 import {
   getDaProjectsTvl,
   pickTvlForProjects,
@@ -31,14 +31,12 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
   const [
     economicSecurity,
     tvlPerProject,
-    projectsVerificationStatuses,
     contractsVerificationStatuses,
     manuallyVerifiedContracts,
     projectsChangeReport,
   ] = await Promise.all([
     getDaProjectEconomicSecurity(daLayer),
     getDaProjectsTvl(uniqueProjectsInUse),
-    getProjectsVerificationStatuses(),
     getContractsVerificationStatuses(daLayer),
     getManuallyVerifiedContracts(daLayer),
     getProjectsChangeReport(),
@@ -48,8 +46,7 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
     tvlPerProject.reduce((acc, value) => acc + value.tvl, 0) / 100
   const getSumFor = pickTvlForProjects(tvlPerProject)
 
-  const isVerified =
-    !!projectsVerificationStatuses[getDaProjectKey(daLayer, daBridge)]
+  const isVerified = getDaBridgeVerification(daLayer, daBridge)
 
   const grissiniValues =
     daLayer.kind === 'EthereumDaLayer' || daBridge.type === 'Enshrined'

@@ -16,20 +16,18 @@ export type BridgesProjectEntry = Awaited<
 
 export async function getBridgesProjectEntry(project: Bridge) {
   const [
-    projectsVerificationStatuses,
     contractsVerificationStatuses,
     manuallyVerifiedContracts,
     projectsChangeReport,
     header,
   ] = await Promise.all([
-    getProjectsVerificationStatuses(),
     getContractsVerificationStatuses(project),
     getManuallyVerifiedContracts(project),
     getProjectsChangeReport(),
     getHeader(project),
   ])
 
-  const isVerified = !!projectsVerificationStatuses[project.id]
+  const isVerified = getProjectsVerificationStatuses(project)
   const hasImplementationChanged =
     projectsChangeReport.hasImplementationChanged(project.id.toString())
   const hasHighSeverityFieldChanged =

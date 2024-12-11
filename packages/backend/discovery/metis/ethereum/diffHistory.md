@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x5e91894fac1cc33d8a28a8c428389bbff89ad8e9
+
+# Diff at Wed, 04 Dec 2024 14:21:32 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@5ce1f4558272638b4ce9e4501463a3fa3ee115cb block: 21242106
+- current block number: 21242106
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21242106 (main branch discovery), not current.
+
+```diff
+    contract ChainStorageContainer-SCC-batches (0x10739F09f6e62689c0aA8A1878816de9e166d6f9) {
+    +++ description: None
+      name:
+-        "ChainStorageContainer"
++        "ChainStorageContainer-SCC-batches"
+    }
+```
+
+```diff
+    contract ChainStorageContainer-CTC-batches (0x38473Feb3A6366757A249dB2cA4fBB2C663416B7) {
+    +++ description: None
+      name:
+-        "ChainStorageContainer"
++        "ChainStorageContainer-CTC-batches"
+    }
+```
+
+```diff
+    contract ChainStorageContainer-CTC-queue (0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57) {
+    +++ description: None
+      name:
+-        "ChainStorageContainer"
++        "ChainStorageContainer-CTC-queue"
+    }
+```
+
 Generated with discovered.json: 0xc18eb8ea91524ae0c35320c5d45eeacf4a7106d7
 
 # Diff at Fri, 22 Nov 2024 08:34:18 GMT:

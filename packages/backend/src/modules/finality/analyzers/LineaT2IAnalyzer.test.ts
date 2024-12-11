@@ -4,7 +4,6 @@ import { utils } from 'ethers'
 
 import { Database } from '@l2beat/database'
 import { RpcClient2 } from '@l2beat/shared'
-import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { LineaT2IAnalyzer } from './LineaT2IAnalyzer'
 
 describe(LineaT2IAnalyzer.name, () => {
@@ -80,7 +79,7 @@ function mockL2RpcClient(timestamps: number[]) {
       timestamp,
     })
   })
-  return mockObject<RpcClient>({
+  return mockObject<RpcClient2>({
     getBlock,
   })
 }

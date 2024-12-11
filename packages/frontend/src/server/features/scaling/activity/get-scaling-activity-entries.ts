@@ -24,12 +24,10 @@ type ActivityProject = Layer2 | Layer3
 
 export async function getScalingActivityEntries() {
   const projects = getActivityProjects()
-  const [projectsVerificationStatuses, projectsChangeReport, activityData] =
-    await Promise.all([
-      getProjectsVerificationStatuses(),
-      getProjectsChangeReport(),
-      getActivityTable(projects),
-    ])
+  const [projectsChangeReport, activityData] = await Promise.all([
+    getProjectsChangeReport(),
+    getActivityTable(projects),
+  ])
 
   const ethereumData = activityData[ProjectId.ETHEREUM]
   assert(ethereumData !== undefined, 'Ethereum data not found')
@@ -37,7 +35,7 @@ export async function getScalingActivityEntries() {
 
   const entries = projects
     .map((project) => {
-      const isVerified = !!projectsVerificationStatuses[project.id]
+      const isVerified = getProjectsVerificationStatuses(project)
       const data = activityData[project.id]
       if (!data) {
         return undefined
