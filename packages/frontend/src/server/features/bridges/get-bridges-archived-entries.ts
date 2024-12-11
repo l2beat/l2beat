@@ -1,7 +1,7 @@
 import { bridges } from '@l2beat/config'
 import { getProjectsChangeReport } from '../projects-change-report/get-projects-change-report'
 import { get7dTokenBreakdown } from '../scaling/tvl/utils/get-7d-token-breakdown'
-import { orderByTvl } from '../scaling/tvl/utils/order-by-tvl'
+import { compareTvl } from '../scaling/tvl/utils/compare-tvl'
 import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 import { getCommonBridgesEntry } from './get-common-bridges-entry'
 
@@ -33,15 +33,8 @@ export async function getBridgesArchivedEntries() {
       }),
       validatedBy: bridge.riskView?.validatedBy,
       totalTvl: tvl?.breakdown.total,
+      tvlOrder: tvl?.breakdown.total ?? 0,
     }
   })
-
-  const remappedForOrdering = Object.fromEntries(
-    Object.entries(tvl7dBreakdown.projects).map(([k, v]) => [
-      k,
-      v.breakdown.total,
-    ]),
-  )
-
-  return orderByTvl(entries, remappedForOrdering)
+  return entries.sort(compareTvl)
 }

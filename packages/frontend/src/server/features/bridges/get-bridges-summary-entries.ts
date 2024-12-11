@@ -10,7 +10,7 @@ import {
   get7dTokenBreakdown,
 } from '../scaling/tvl/utils/get-7d-token-breakdown'
 import { getAssociatedTokenWarning } from '../scaling/tvl/utils/get-associated-token-warning'
-import { orderByTvl } from '../scaling/tvl/utils/order-by-tvl'
+import { compareTvl } from '../scaling/tvl/utils/compare-tvl'
 import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 import { getCommonBridgesEntry } from './get-common-bridges-entry'
 import { getDestination } from './get-destination'
@@ -84,19 +84,11 @@ function getBridges(params: Params) {
           associatedTokenWarning?.sentiment === 'bad' && associatedTokenWarning,
         ]),
       },
+      tvlOrder: bridgeTvl?.breakdown.total ?? 0,
       validatedBy: bridge.riskView.validatedBy,
     }
   })
-
-  // Use data we already pulled instead of fetching it again
-  const remappedForOrdering = Object.fromEntries(
-    Object.entries(tvl7dBreakdown.projects).map(([k, v]) => [
-      k,
-      v.breakdown.total,
-    ]),
-  )
-
-  return orderByTvl(entries, remappedForOrdering)
+  return entries.sort(compareTvl)
 }
 
 export type BridgesSummaryEntry = Awaited<

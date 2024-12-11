@@ -9,7 +9,7 @@ import { getCurrentEntry } from '../../utils/get-current-entry'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
-import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
+import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
 
 export async function getScalingDaEntries() {
   const activeProjects = [...layer2s, ...layer3s].filter(
@@ -29,17 +29,20 @@ export async function getScalingDaEntries() {
         p,
         projectsChangeReport,
         isVerified,
+        tvl[p.id],
       )
     })
     .filter(notUndefined)
+    .sort(compareStageAndTvl)
 
-  return groupByTabs(orderByStageAndTvl(entries, tvl))
+  return groupByTabs(entries)
 }
 
 function getScalingDataAvailabilityEntry(
   project: Layer2 | Layer3,
   projectsChangeReport: ProjectsChangeReport,
   isVerified: boolean,
+  tvl: number | undefined,
 ) {
   const dataAvailability = getCurrentEntry(project.dataAvailability)
   if (!dataAvailability) return
@@ -60,6 +63,7 @@ function getScalingDataAvailabilityEntry(
       bridge: dataAvailability.bridge,
       mode: dataAvailability.mode,
     },
+    tvlOrder: tvl ?? 0,
   }
 }
 

@@ -15,7 +15,7 @@ import {
   get7dTokenBreakdown,
 } from '../tvl/utils/get-7d-token-breakdown'
 import { getAssociatedTokenWarning } from '../tvl/utils/get-associated-token-warning'
-import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
+import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
 
 export type ScalingSummaryEntry = Awaited<
   ReturnType<typeof getScalingSummaryEntry>
@@ -36,27 +36,24 @@ export async function getScalingSummaryEntries() {
     getActivityLatestUops(projects),
   ])
 
-  const entries = projects.map((project) => {
-    const isVerified = !!projectsVerificationStatuses[project.id.toString()]
-    const latestTvl = tvl.projects[project.id.toString()]
-    const activity = projectsActivity[project.id.toString()]
+  const entries = projects
+    .map((project) => {
+      const isVerified = !!projectsVerificationStatuses[project.id.toString()]
+      const latestTvl = tvl.projects[project.id.toString()]
+      const activity = projectsActivity[project.id.toString()]
 
-    return getScalingSummaryEntry(
-      project,
-      isVerified,
-      projectsChangeReport.hasImplementationChanged(project.id),
-      projectsChangeReport.hasHighSeverityFieldChanged(project.id),
-      latestTvl,
-      activity,
-    )
-  })
+      return getScalingSummaryEntry(
+        project,
+        isVerified,
+        projectsChangeReport.hasImplementationChanged(project.id),
+        projectsChangeReport.hasHighSeverityFieldChanged(project.id),
+        latestTvl,
+        activity,
+      )
+    })
+    .sort(compareStageAndTvl)
 
-  // Use data we already pulled instead of fetching it again
-  const remappedForOrdering = Object.fromEntries(
-    Object.entries(tvl.projects).map(([k, v]) => [k, v.breakdown.total]),
-  )
-
-  return groupByTabs(orderByStageAndTvl(entries, remappedForOrdering))
+  return groupByTabs(entries)
 }
 
 function getScalingSummaryEntry(
@@ -106,6 +103,7 @@ function getScalingSummaryEntry(
           change: activity.change,
         }
       : undefined,
+    tvlOrder: latestTvl?.breakdown.total ?? 0,
   }
 
   if (project.type === 'layer2') {

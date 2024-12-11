@@ -7,8 +7,11 @@ import {
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCostsProjects } from '../costs/utils/get-costs-projects'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
-import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
-import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
+import {
+  ProjectsLatestTvlUsd,
+  getProjectsLatestTvlUsd,
+} from '../tvl/utils/get-latest-tvl-usd'
+import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
 
 export async function getScalingCostsEntries() {
   const [tvl, projectsChangeReport, projectsVerificationStatuses] =
@@ -19,17 +22,19 @@ export async function getScalingCostsEntries() {
     ])
   const projects = getCostsProjects()
 
-  const entries = projects.map((project) => {
-    const isVerified = !!projectsVerificationStatuses[project.id.toString()]
-    return getScalingCostEntry(project, isVerified, projectsChangeReport)
-  })
-
-  return groupByTabs(orderByStageAndTvl(entries, tvl))
+  const entries = projects
+    .map((project) => {
+      const isVerified = !!projectsVerificationStatuses[project.id.toString()]
+      return getScalingCostEntry(project, tvl, isVerified, projectsChangeReport)
+    })
+    .sort(compareStageAndTvl)
+  return groupByTabs(entries)
 }
 
 export type ScalingCostsEntry = ReturnType<typeof getScalingCostEntry>
 function getScalingCostEntry(
   project: Layer2,
+  tvl: ProjectsLatestTvlUsd,
   isVerified: boolean,
   projectsChangeReport: ProjectsChangeReport,
 ) {
@@ -46,5 +51,6 @@ function getScalingCostEntry(
     entryType: 'costs' as const,
     href: `/scaling/projects/${project.display.slug}#onchain-costs`,
     costsWarning: project.display.costsWarning,
+    tvlOrder: tvl[project.id] ?? 0,
   }
 }

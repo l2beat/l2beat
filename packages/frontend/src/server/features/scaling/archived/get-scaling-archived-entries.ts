@@ -7,11 +7,11 @@ import {
 } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
+import { compareTvl } from '../tvl/utils/compare-tvl'
 import {
   type LatestTvl,
   get7dTokenBreakdown,
 } from '../tvl/utils/get-7d-token-breakdown'
-import { orderByTvl } from '../tvl/utils/order-by-tvl'
 
 export async function getScalingArchivedEntries() {
   const [projectsChangeReport, projectsVerificationStatuses, tvl] =
@@ -32,11 +32,7 @@ export async function getScalingArchivedEntries() {
     ),
   )
 
-  // Use data we already pulled instead of fetching it again
-  const remappedForOrdering = Object.fromEntries(
-    Object.entries(tvl.projects).map(([k, v]) => [k, v.breakdown.total]),
-  )
-  return groupByTabs(orderByTvl(entries, remappedForOrdering))
+  return groupByTabs(entries.sort(compareTvl))
 }
 
 export type ScalingArchivedEntry = ReturnType<typeof getScalingArchivedEntry>
@@ -60,5 +56,6 @@ function getScalingArchivedEntry(
     }),
     risks: project.type === 'layer2' ? getL2Risks(project.riskView) : undefined,
     totalTvl: latestTvl?.breakdown.total,
+    tvlOrder: latestTvl?.breakdown.total ?? 0,
   }
 }

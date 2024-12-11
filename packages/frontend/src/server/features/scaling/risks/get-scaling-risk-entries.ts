@@ -6,8 +6,11 @@ import {
 } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
-import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
-import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
+import {
+  ProjectsLatestTvlUsd,
+  getProjectsLatestTvlUsd,
+} from '../tvl/utils/get-latest-tvl-usd'
+import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
 
 export type ScalingRiskEntries = Awaited<
   ReturnType<typeof getScalingRiskEntries>
@@ -24,15 +27,18 @@ export async function getScalingRiskEntries() {
     (p) => !p.isUpcoming && !p.isArchived,
   )
 
-  const entries = includedProjects.map((project) =>
-    getScalingRiskEntry(
-      project,
-      !!projectsVerificationStatuses[project.id.toString()],
-      projectsChangeReport,
-    ),
-  )
+  const entries = includedProjects
+    .map((project) =>
+      getScalingRiskEntry(
+        project,
+        !!projectsVerificationStatuses[project.id.toString()],
+        projectsChangeReport,
+        tvl,
+      ),
+    )
+    .sort(compareStageAndTvl)
 
-  return groupByTabs(orderByStageAndTvl(entries, tvl))
+  return groupByTabs(entries)
 }
 
 export type ScalingRiskEntry = ReturnType<typeof getScalingRiskEntry>
@@ -40,6 +46,7 @@ function getScalingRiskEntry(
   project: Layer2 | Layer3,
   isVerified: boolean,
   projectsChangeReport: ProjectsChangeReport,
+  tvl: ProjectsLatestTvlUsd,
 ) {
   const riskView =
     project.type === 'layer3' ? project.stackedRiskView : project.riskView
@@ -55,5 +62,6 @@ function getScalingRiskEntry(
         projectsChangeReport.hasHighSeverityFieldChanged(project.id),
     }),
     risks: riskView,
+    tvlOrder: tvl[project.id] ?? 0,
   }
 }
