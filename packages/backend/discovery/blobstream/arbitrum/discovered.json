@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "arbitrum",
   "blockNumber": 282615739,
-  "configHash": "0x3842003db27007b73c0bca76477398796ec937e3a0c63c4713732498cfb0a1e8",
+  "configHash": "0xcabda3a7293272e4c82a9094e7fcc2fb7cbbd6bdb24006989881876365b5a9a0",
   "contracts": [
     {
       "name": "SP1Verifier",
@@ -165,7 +165,7 @@
         {
           "permission": "configure",
           "target": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
-          "description": "holds the power to freeze the bridge contract and update the list of authorized relayers."
+          "description": "can freeze the bridge contract and update the list of authorized relayers."
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -389,7 +389,7 @@
         {
           "permission": "configure",
           "target": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
-          "description": "allowed to call commitHeaderRange() to commit block ranges to the Blobstream contract"
+          "description": "can call commitHeaderRange() to commit block ranges."
         }
       ]
     },
@@ -723,7 +723,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "succinct/SP1Blobstream": "0x6a8194abda828f4c9a8eb72bb4dca0c8fd37c4c978a1e60464c7907baee4b71e",
+    "succinct/SP1Blobstream": "0x430f33e4829711a009d088dfea3bc6b36a3d98ff176efb9a342431b656ccf953",
     "succinct/SP1SuccinctGateway": "0xf63c74ee0338f890cd25ab792940b98a815868369cedb31129277e1b191b1e4b"
   }
 }

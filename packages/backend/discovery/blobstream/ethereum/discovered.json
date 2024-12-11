@@ -1,8 +1,8 @@
 {
   "name": "blobstream",
   "chain": "ethereum",
-  "blockNumber": 21357513,
-  "configHash": "0x593f63f77a5f4fdcc4805bbadec1a873d567d27060366de05292d34c9f8987e4",
+  "blockNumber": 21378313,
+  "configHash": "0xde26137d19eb80fe4b3bab42cd138c784c92bd9b039972cdef3daa5cdc374d6f",
   "contracts": [
     {
       "name": "FunctionVerifier",
@@ -215,10 +215,10 @@
         "guardians": ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"],
         "headerRangeFunctionId_deprecated": "0xdb3232748ba9f2906d9d2ce97d2fac3963d4346de23c30521f346e10ddad82f7",
         "isRelayerApproved": true,
-        "latestBlock": 2962800,
+        "latestBlock": 2984400,
         "nextHeaderFunctionId_depcrecated": "0xf7ab2ac6f5ccf2da79050efcc0dbdb06d5ae05a332f58076aeac7fc8c73811fe",
         "relayers": ["0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"],
-        "state_proofNonce": 1512,
+        "state_proofNonce": 1536,
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "verifier": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "VERSION": "1.1.0"
@@ -238,7 +238,7 @@
         {
           "permission": "configure",
           "target": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
-          "description": "holds the power to freeze the bridge contract and update the list of authorized relayers."
+          "description": "can freeze the bridge contract and update the list of authorized relayers."
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -392,7 +392,7 @@
         {
           "permission": "configure",
           "target": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
-          "description": "allowed to call commitHeaderRange() to commit block ranges to the Blobstream contract"
+          "description": "can call commitHeaderRange() to commit block ranges."
         }
       ]
     },
@@ -688,7 +688,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "succinct/SP1Blobstream": "0x6a8194abda828f4c9a8eb72bb4dca0c8fd37c4c978a1e60464c7907baee4b71e",
+    "succinct/SP1Blobstream": "0x430f33e4829711a009d088dfea3bc6b36a3d98ff176efb9a342431b656ccf953",
     "succinct/SP1SuccinctGateway": "0xf63c74ee0338f890cd25ab792940b98a815868369cedb31129277e1b191b1e4b"
   }
 }

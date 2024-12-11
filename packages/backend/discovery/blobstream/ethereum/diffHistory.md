@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x75b0aa2e5d079f7e1012b3511cd6c4239420fa25
+Generated with discovered.json: 0x6b4f83f590589a8fad6455c56a077d49c47f8058
 
-# Diff at Tue, 10 Dec 2024 14:41:52 GMT:
+# Diff at Wed, 11 Dec 2024 09:16:43 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@9fa33d1fcbebe3872dda2bf08af4ca0484de900b block: 21357513
-- current block number: 21357513
+- comparing to: main@28849b80c374bb8843eff17341701a3084c3bdb9 block: 21357513
+- current block number: 21378313
 
 ## Description
 
@@ -54,7 +54,7 @@ discovery. Values are for block 21357513 (main branch discovery), not current.
     contract BlobstreamMultisig (0x8bF34D8df1eF0A8A7f27fC587202848E528018E6) {
     +++ description: None
       receivedPermissions:
-+        [{"permission":"configure","target":"0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe","description":"holds the power to freeze the bridge contract and update the list of authorized relayers."}]
++        [{"permission":"configure","target":"0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe","description":"can freeze the bridge contract and update the list of authorized relayers."}]
     }
 ```
 

@@ -15,7 +15,7 @@
         "permissions": [
           {
             "type": "configure",
-            "description": "holds the power to freeze the bridge contract and update the list of authorized relayers."
+            "description": "can freeze the bridge contract and update the list of authorized relayers."
           }
         ]
       },
@@ -29,7 +29,7 @@
         "permissions": [
           {
             "type": "configure",
-            "description": "allowed to call commitHeaderRange() to commit block ranges to the Blobstream contract"
+            "description": "can call commitHeaderRange() to commit block ranges."
           }
         ]
       },
